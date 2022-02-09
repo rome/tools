@@ -15,10 +15,10 @@ use crate::syntax::js_parse_error::{
     expected_property_or_signature, expected_ts_type, expected_ts_type_parameter,
 };
 use crate::syntax::object::{
-    is_at_object_member_name, is_nth_at_object_member_name, parse_object_member_name,
+    is_at_object_member_name, is_nth_at_type_member_name, parse_object_member_name,
 };
-use crate::syntax::stmt::{optional_semi, semi};
-use crate::syntax::typescript::{parse_ts_identifier_binding, try_parse};
+use crate::syntax::stmt::optional_semi;
+use crate::syntax::typescript::try_parse;
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
     is_nth_at_contextual_keyword,
@@ -175,24 +175,6 @@ fn parse_ts_default_type_clause(p: &mut Parser) -> ParsedSyntax {
 
 fn is_nth_at_ts_type_parameters(p: &Parser, n: usize) -> bool {
     p.nth_at(n, T![<])
-}
-
-pub(crate) fn parse_ts_type_alias(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_contextual_keyword(p, "type") {
-        return Absent;
-    }
-
-    let start = p.cur_tok().range().start;
-    let m = p.start();
-    expect_contextual_keyword(p, "type", T![type]);
-    parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_parameters(p).ok();
-    p.expect(T![=]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-
-    semi(p, start..p.cur_tok().range().end);
-
-    Present(m.complete(p, TS_TYPE_ALIAS_STATEMENT))
 }
 
 pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
@@ -668,16 +650,16 @@ fn parse_ts_object_type(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump(T!['{']);
-    ObjectTypeMembers.parse_list(p);
+    TypeMembers.parse_list(p);
     p.expect(T!['}']);
     Present(m.complete(p, TS_OBJECT_TYPE))
 }
 
-struct ObjectTypeMembers;
+pub(crate) struct TypeMembers;
 
-impl ParseNodeList for ObjectTypeMembers {
+impl ParseNodeList for TypeMembers {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_ts_object_type_member(p)
+        parse_ts_type_member(p)
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -694,32 +676,32 @@ impl ParseNodeList for ObjectTypeMembers {
     }
 
     fn list_kind() -> JsSyntaxKind {
-        TS_OBJECT_TYPE_MEMBER_LIST
+        TS_TYPE_MEMBER_LIST
     }
 }
 
-fn parse_ts_object_type_member(p: &mut Parser) -> ParsedSyntax {
-    if is_at_ts_index_signature_object_type_member(p) {
-        return parse_ts_index_signature_object_type_member(p);
+fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
+    if is_at_ts_index_signature_type_member(p) {
+        return parse_ts_index_signature_type_member(p);
     }
 
     match p.cur() {
-        T!['('] | T![<] => parse_ts_call_signature_object_type_member(p),
-        T![new] if is_at_ts_construct_signature_object_type_member(p) => {
-            parse_ts_construct_signature_object_type_member(p)
+        T!['('] | T![<] => parse_ts_call_signature_type_member(p),
+        T![new] if is_at_ts_construct_signature_type_member(p) => {
+            parse_ts_construct_signature_type_member(p)
         }
-        T![ident] if p.cur_src() == "get" && is_nth_at_object_member_name(p, 1) => {
-            parse_ts_getter_signature_object_type_member(p)
+        T![ident] if p.cur_src() == "get" && is_nth_at_type_member_name(p, 1) => {
+            parse_ts_getter_signature_type_member(p)
         }
-        T![ident] if p.cur_src() == "set" && is_nth_at_object_member_name(p, 1) => {
-            parse_ts_setter_signature_object_type_member(p)
+        T![ident] if p.cur_src() == "set" && is_nth_at_type_member_name(p, 1) => {
+            parse_ts_setter_signature_type_member(p)
         }
-        _ => parse_ts_property_or_method_signature_object_type_member(p),
+        _ => parse_ts_property_or_method_signature_type_member(p),
     }
 }
 
-fn parse_ts_object_type_member_semi(p: &mut Parser) {
-    // object type members can either be separated by a comma
+fn parse_ts_type_member_semi(p: &mut Parser) {
+    // type members can either be separated by a comma
     if p.eat(T![,]) {
         return;
     }
@@ -741,14 +723,14 @@ fn parse_ts_object_type_member_semi(p: &mut Parser) {
 // type C = { m(a: string, b: number, c: string): any }
 // type D = { readonly: string, readonly a: number }
 // type E = { m<A, B>(a: A, b: B): never }
-fn parse_ts_property_or_method_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_property_or_method_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     if !is_at_object_member_name(p) {
         return Absent;
     }
 
     let m = p.start();
     let readonly_range =
-        if p.at(T![ident]) && p.cur_src() == "readonly" && is_nth_at_object_member_name(p, 1) {
+        if p.at(T![ident]) && p.cur_src() == "readonly" && is_nth_at_type_member_name(p, 1) {
             let range = p.cur_tok().range();
             p.bump_remap(T![readonly]);
             Some(range)
@@ -762,8 +744,8 @@ fn parse_ts_property_or_method_signature_object_type_member(p: &mut Parser) -> P
 
     if p.at(T!['(']) || p.at(T![<]) {
         parse_ts_call_signature(p);
-        parse_ts_object_type_member_semi(p);
-        let method = m.complete(p, TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER);
+        parse_ts_type_member_semi(p);
+        let method = m.complete(p, TS_METHOD_SIGNATURE_TYPE_MEMBER);
 
         if let Some(readonly_range) = readonly_range {
             p.error(
@@ -777,8 +759,8 @@ fn parse_ts_property_or_method_signature_object_type_member(p: &mut Parser) -> P
         Present(method)
     } else {
         parse_ts_type_annotation(p).ok();
-        parse_ts_object_type_member_semi(p);
-        Present(m.complete(p, TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER))
+        parse_ts_type_member_semi(p);
+        Present(m.complete(p, TS_PROPERTY_SIGNATURE_TYPE_MEMBER))
     }
 }
 
@@ -786,23 +768,23 @@ fn parse_ts_property_or_method_signature_object_type_member(p: &mut Parser) -> P
 // type A = { (): string; }
 // type B = { (a, b, c): number }
 // type C = { <A, B>(a: A, b: B): number }
-fn parse_ts_call_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_call_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     if !(p.at(T!['(']) || p.at(T![<])) {
         return Absent;
     }
 
     let m = p.start();
     parse_ts_call_signature(p);
-    parse_ts_object_type_member_semi(p);
-    Present(m.complete(p, TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER))
+    parse_ts_type_member_semi(p);
+    Present(m.complete(p, TS_CALL_SIGNATURE_TYPE_MEMBER))
 }
 
 // test ts ts_construct_signature_member
 // type A = { new (): string; }
 // type B = { new (a: string, b: number) }
 // type C = { new <A, B>(a: A, b: B): string }
-fn parse_ts_construct_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_ts_construct_signature_object_type_member(p) {
+fn parse_ts_construct_signature_type_member(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_ts_construct_signature_type_member(p) {
         return Absent;
     }
 
@@ -812,9 +794,9 @@ fn parse_ts_construct_signature_object_type_member(p: &mut Parser) -> ParsedSynt
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_type_annotation(p).ok();
-    parse_ts_object_type_member_semi(p);
+    parse_ts_type_member_semi(p);
 
-    Present(m.complete(p, TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER))
+    Present(m.complete(p, TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER))
 }
 
 // test ts ts_getter_signature_member
@@ -824,7 +806,7 @@ fn parse_ts_construct_signature_object_type_member(p: &mut Parser) -> ParsedSynt
 // type C = { get(): number }
 // type D = { get: number }
 // type E = { get }
-fn parse_ts_getter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_getter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     if !(p.at(T![ident]) && p.cur_src() == "get") {
         return Absent;
     }
@@ -835,8 +817,8 @@ fn parse_ts_getter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
     p.expect(T!['(']);
     p.expect(T![')']);
     parse_ts_type_annotation(p).ok();
-    parse_ts_object_type_member_semi(p);
-    Present(m.complete(p, TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER))
+    parse_ts_type_member_semi(p);
+    Present(m.complete(p, TS_GETTER_SIGNATURE_TYPE_MEMBER))
 }
 
 // test ts ts_setter_signature_member
@@ -846,7 +828,7 @@ fn parse_ts_getter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
 // type C = { set(a) }
 // type D = { set: number }
 // type E = { set }
-fn parse_ts_setter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_setter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     if !(p.at(T![ident]) && p.cur_src() == "set") {
         return Absent;
     }
@@ -858,12 +840,12 @@ fn parse_ts_setter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
     parse_formal_parameter(p, ParameterContext::Setter, ExpressionContext::default())
         .or_add_diagnostic(p, expected_parameter);
     p.expect(T![')']);
-    parse_ts_object_type_member_semi(p);
-    Present(m.complete(p, TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER))
+    parse_ts_type_member_semi(p);
+    Present(m.complete(p, TS_SETTER_SIGNATURE_TYPE_MEMBER))
 }
 
 /// Must be at `[ident:]` or `readonly [ident:]`
-fn is_at_ts_index_signature_object_type_member(p: &Parser) -> bool {
+fn is_at_ts_index_signature_type_member(p: &Parser) -> bool {
     let mut offset = 0;
 
     if p.at(T![ident]) && p.cur_src() == "readonly" {
@@ -887,8 +869,8 @@ fn is_at_ts_index_signature_object_type_member(p: &Parser) -> bool {
 // // not an index signature
 // type C = { [a]: string }
 // type D = { readonly [a]: string }
-fn parse_ts_index_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_ts_index_signature_object_type_member(p) {
+fn parse_ts_index_signature_type_member(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_ts_index_signature_type_member(p) {
         return Absent;
     }
 
@@ -911,9 +893,9 @@ fn parse_ts_index_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
         p.err_builder("An index signature must have a type annotation")
             .primary(range, "")
     });
-    parse_ts_object_type_member_semi(p);
+    parse_ts_type_member_semi(p);
 
-    Present(m.complete(p, TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER))
+    Present(m.complete(p, TS_INDEX_SIGNATURE_TYPE_MEMBER))
 }
 
 // test ts ts_tuple_type
@@ -1091,7 +1073,7 @@ fn parse_ts_template_literal_type(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_TEMPLATE_LITERAL_TYPE))
 }
 
-fn is_at_ts_construct_signature_object_type_member(p: &Parser) -> bool {
+fn is_at_ts_construct_signature_type_member(p: &Parser) -> bool {
     p.at(T![new]) && (p.nth_at(1, T!['(']) || is_nth_at_ts_type_parameters(p, 1))
 }
 

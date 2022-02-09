@@ -28,8 +28,8 @@ JsModule {
             ty: TsArrayType {
                 element_type: TsObjectType {
                     l_curly_token: L_CURLY@28..30 "{" [] [Whitespace(" ")],
-                    members: TsObjectTypeMemberList [
-                        TsPropertySignatureObjectTypeMember {
+                    members: TsTypeMemberList [
+                        TsPropertySignatureTypeMember {
                             readonly_token: missing (optional),
                             name: JsLiteralMemberName {
                                 value: IDENT@30..31 "a" [] [],
@@ -80,8 +80,8 @@ JsModule {
       4: TS_ARRAY_TYPE@28..44
         0: TS_OBJECT_TYPE@28..42
           0: L_CURLY@28..30 "{" [] [Whitespace(" ")]
-          1: TS_OBJECT_TYPE_MEMBER_LIST@30..40
-            0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@30..40
+          1: TS_TYPE_MEMBER_LIST@30..40
+            0: TS_PROPERTY_SIGNATURE_TYPE_MEMBER@30..40
               0: (empty)
               1: JS_LITERAL_MEMBER_NAME@30..31
                 0: IDENT@30..31 "a" [] []

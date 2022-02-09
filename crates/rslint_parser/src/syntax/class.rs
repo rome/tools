@@ -4,7 +4,9 @@ use crate::state::{
     EnterParameters, SignatureFlags,
 };
 use crate::syntax::binding::parse_binding;
-use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
+use crate::syntax::expr::{
+    parse_assignment_expression_or_higher, parse_lhs_expr, ExpressionContext,
+};
 use crate::syntax::function::{
     parse_any_parameter, parse_formal_parameter, parse_function_body, parse_parameter_list,
     parse_parameters_list, parse_ts_type_annotation_or_error, ParameterContext,
@@ -19,8 +21,8 @@ use crate::syntax::object::{
 };
 use crate::syntax::stmt::{optional_semi, parse_statements, StatementContext};
 use crate::syntax::typescript::{
-    is_reserved_type_name, parse_ts_return_type_annotation, parse_ts_type_annotation,
-    parse_ts_type_parameters, ts_heritage_clause,
+    is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
+    parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
 };
 use crate::syntax::util::is_at_contextual_keyword;
 use crate::JsSyntaxFeature::TypeScript;
@@ -55,9 +57,6 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 // class foo { set {} }
 // class extends {}
 
-// test_err class_extends_err
-// class A extends bar extends foo {}
-// class A extends bar, foo {}
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
 ///
 /// A class can be invalid if
@@ -134,7 +133,6 @@ impl From<ClassKind> for JsSyntaxKind {
 }
 
 fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
-    let mut class_is_valid = true;
     let class_token_range = p.cur_tok().range();
 
     p.expect(T![class]);
@@ -190,120 +188,153 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
         })
         .ok();
 
-    extends_clause(p).ok();
-
-    if implements_clause(p).is_present() && TypeScript.is_unsupported(p) {
-        class_is_valid = false;
-    }
+    eat_class_heritage_clause(p);
 
     p.expect(T!['{']);
     ClassMembersList.parse_list(p);
     p.expect(T!['}']);
 
-    let mut class_marker = m.complete(p, kind.into());
-
-    if !class_is_valid {
-        class_marker.change_to_unknown(p);
-    }
-
-    class_marker
+    m.complete(p, kind.into())
 }
 
-fn implements_clause(p: &mut Parser) -> ParsedSyntax {
-    if p.cur_src() != "implements" {
+// test_err class_extends_err
+// class A extends bar extends foo {}
+// class B extends bar, foo {}
+// class C implements B {}
+//
+// test_err ts ts_class_heritage_clause_errors
+// class A {}
+// interface Int {}
+// class B implements Int extends A {}
+// class C implements Int implements Int {}
+// class D implements {}
+// class E extends {}
+// class F extends E, {}
+/// Eats a class's 'implements' and 'extends' clauses, attaching them to the current active node.
+/// Implements error recovery in case a class has multiple extends/implements clauses or if they appear
+/// out of order
+fn eat_class_heritage_clause(p: &mut Parser) {
+    let mut first_extends: Option<CompletedMarker> = None;
+    let mut first_implements: Option<CompletedMarker> = None;
+
+    loop {
+        if p.at(T![extends]) {
+            let current = parse_extends_clause(p)
+                .expect("Expected extends clause because parser is positioned at extends keyword");
+
+            match first_extends.as_ref() {
+                None => {
+                    first_extends = {
+                        if let Some(first_implements) = first_implements.as_ref() {
+                            p.error(
+                                p.err_builder("'extends' clause must precede 'implements' clause.")
+                                    .primary(current.range(p), "")
+                                    .secondary(first_implements.range(p), ""),
+                            )
+                        }
+
+                        Some(current)
+                    }
+                }
+                Some(first_extends) => p.error(
+                    p.err_builder("'extends' clause already seen.")
+                        .primary(current.range(p), "")
+                        .secondary(first_extends.range(p), "first 'extends' clause"),
+                ),
+            }
+        } else if is_at_contextual_keyword(p, "implements") {
+            let mut current = parse_ts_implements_clause(p).expect("expected 'implements' clause because parser is positioned at 'implements' keyword.");
+
+            match first_implements.as_ref() {
+                None => {
+                    first_implements = {
+                        if TypeScript.is_unsupported(p) {
+                            p.error(
+                                p.err_builder(
+                                    "classes can only implement interfaces in TypeScript files",
+                                )
+                                .primary(current.range(p), ""),
+                            );
+                            current.change_to_unknown(p);
+                        }
+                        Some(current)
+                    }
+                }
+                Some(first_implements) => {
+                    p.error(
+                        p.err_builder("'implements' clause already seen.")
+                            .primary(current.range(p), "")
+                            .secondary(first_implements.range(p), "first 'implements' clause"),
+                    );
+                }
+            }
+        } else {
+            break;
+        }
+    }
+}
+
+fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![extends]) {
         return Absent;
     }
 
-    let mut is_valid = true;
-    let implements_clause = p.start();
-
-    let start = p.cur_tok().start();
-    p.bump_remap(T![implements]);
-
-    let list = p.start();
-    let elems = ts_heritage_clause(&mut *p, false);
-    // test_err class_implements
-    // class B implements C {}
-    if !p.typescript() {
-        let err = p
-            .err_builder("classes can only implement interfaces in TypeScript files")
-            .primary(start..(p.marker_vec_range(&elems).end), "");
-
-        p.error(err);
-        is_valid = false;
-    }
-
-    let mut progress = ParserProgress::default();
-    while p.cur_src() == "implements" {
-        progress.assert_progressing(p);
-        let start = p.cur_tok().start();
-        p.bump_any();
-        let elems = ts_heritage_clause(&mut *p, false);
-
-        let err = p
-            .err_builder("classes cannot have multiple `implements` clauses")
-            .primary(start..p.marker_vec_range(&elems).end, "");
-
-        p.error(err);
-        is_valid = false;
-    }
-
-    list.complete(p, TS_TYPE_LIST);
-
-    let kind = if is_valid {
-        TS_IMPLEMENTS_CLAUSE
-    } else {
-        JS_UNKNOWN
-    };
-    Present(implements_clause.complete(p, kind))
-}
-
-fn extends_clause(p: &mut Parser) -> ParsedSyntax {
-    if p.cur_src() != "extends" {
-        return Absent;
-    }
-
-    let mut is_valid = true;
     let m = p.start();
-    p.bump_any();
+    let extends_end = p.cur_tok().end();
+    p.bump(T![extends]);
 
-    let mut elems = ts_heritage_clause(p, true);
-    if !elems.is_empty() {
-        // Unwrap expression
-        elems.remove(0).undo_completion(p).abandon(p)
+    if parse_extends_expression(p).is_absent() {
+        p.error(
+            p.err_builder("'extends' list cannot be empty.")
+                .primary(extends_end..extends_end, ""),
+        )
+    } else {
+        TypeScript
+            .parse_exclusive_syntax(p, parse_ts_type_arguments, |p, arguments| {
+                ts_only_syntax_error(p, "type arguments", arguments.range(p).as_range())
+            })
+            .ok();
     }
 
-    for elem in elems {
-        let err = p
-            .err_builder("classes cannot extend multiple classes")
-            .primary(elem.range(p), "");
+    while p.at(T![,]) {
+        let comma_range = p.cur_tok().range();
+        p.bump(T![,]);
 
-        p.error(err);
-        is_valid = false;
+        let extra = p.start();
+        if parse_extends_expression(p).is_absent() {
+            p.error(
+                p.err_builder("Trailing comma not allowed.")
+                    .primary(comma_range, ""),
+            );
+            extra.abandon(p);
+            break;
+        }
+
+        parse_ts_type_arguments(p).ok();
+
+        let extra_class = extra.complete(p, JS_UNKNOWN);
+
+        p.error(
+            p.err_builder("Classes can only extend a single class.")
+                .primary(extra_class.range(p), ""),
+        );
     }
 
-    // handle `extends foo extends bar` explicitly
-    let mut progress = ParserProgress::default();
-    while p.at(T![extends]) {
-        progress.assert_progressing(p);
-        p.bump_any();
+    Present(m.complete(p, JS_EXTENDS_CLAUSE))
+}
 
-        let elems = ts_heritage_clause(p, true);
-        let err = p
-            .err_builder("classes cannot extend multiple classes")
-            .primary(p.marker_vec_range(&elems), "");
-
-        p.error(err);
-        is_valid = false;
+fn parse_extends_expression(p: &mut Parser) -> ParsedSyntax {
+    if p.at(T!['{']) && p.nth_at(1, T!['}']) {
+        // Don't eat the body of the class as an object expression except if we have
+        // * extends {} {
+        // * extends {} implements
+        // * extends {},
+        if !matches!(p.nth(2), T![extends] | T![ident] | T!['{'] | T![,]) {
+            return Absent;
+        }
     }
 
-    let mut completed = m.complete(p, JS_EXTENDS_CLAUSE);
-
-    if !is_valid {
-        completed.change_to_unknown(p);
-    }
-
-    Present(completed)
+    parse_lhs_expr(p, ExpressionContext::default())
 }
 
 struct ClassMembersList;

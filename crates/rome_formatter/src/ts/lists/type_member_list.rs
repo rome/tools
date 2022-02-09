@@ -2,10 +2,10 @@ use crate::{
     format_elements, if_group_breaks, join_elements, soft_line_break_or_space, token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsObjectTypeMemberList;
+use rslint_parser::ast::TsTypeMemberList;
 use rslint_parser::AstNodeList;
 
-impl ToFormatElement for TsObjectTypeMemberList {
+impl ToFormatElement for TsTypeMemberList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let items = self.iter();
         let last_index = items.len().saturating_sub(1);

@@ -19,8 +19,8 @@ JsModule {
                     items: [
                         IMPLEMENTS_KW@15..26 "implements" [] [Whitespace(" ")],
                         TsTypeList [
-                            TsExprWithTypeArgs {
-                                item: JsReferenceIdentifier {
+                            TsNameWithTypeArguments {
+                                name: JsReferenceIdentifier {
                                     value_token: IDENT@26..28 "B" [] [Whitespace(" ")],
                                 },
                                 type_arguments: missing (optional),
@@ -55,7 +55,7 @@ JsModule {
       1: JS_UNKNOWN@15..28
         0: IMPLEMENTS_KW@15..26 "implements" [] [Whitespace(" ")]
         1: TS_TYPE_LIST@26..28
-          0: TS_EXPR_WITH_TYPE_ARGS@26..28
+          0: TS_NAME_WITH_TYPE_ARGUMENTS@26..28
             0: JS_REFERENCE_IDENTIFIER@26..28
               0: IDENT@26..28 "B" [] [Whitespace(" ")]
             1: (empty)

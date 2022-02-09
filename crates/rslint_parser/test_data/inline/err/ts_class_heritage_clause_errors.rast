@@ -1,0 +1,296 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassStatement {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@8..9 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@9..10 "}" [] [],
+        },
+        TsInterfaceStatement {
+            interface_token: INTERFACE_KW@10..21 "interface" [Newline("\n")] [Whitespace(" ")],
+            id: TsIdentifierBinding {
+                name_token: IDENT@21..25 "Int" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@25..26 "{" [] [],
+            members: TsTypeMemberList [],
+            r_curly_token: R_CURLY@26..27 "}" [] [],
+        },
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@34..36 "B" [] [Whitespace(" ")],
+                },
+                TsImplementsClause {
+                    implements_token: IMPLEMENTS_KW@36..47 "implements" [] [Whitespace(" ")],
+                    types: TsTypeList [
+                        TsNameWithTypeArguments {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@47..51 "Int" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                    ],
+                },
+                JsExtendsClause {
+                    extends_token: EXTENDS_KW@51..59 "extends" [] [Whitespace(" ")],
+                    super_class: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@59..61 "A" [] [Whitespace(" ")],
+                        },
+                    },
+                    type_arguments: missing (optional),
+                },
+                L_CURLY@61..62 "{" [] [],
+                JsClassMemberList [],
+                R_CURLY@62..63 "}" [] [],
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@63..70 "class" [Newline("\n")] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@70..72 "C" [] [Whitespace(" ")],
+                },
+                TsImplementsClause {
+                    implements_token: IMPLEMENTS_KW@72..83 "implements" [] [Whitespace(" ")],
+                    types: TsTypeList [
+                        TsNameWithTypeArguments {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@83..87 "Int" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                    ],
+                },
+                TsImplementsClause {
+                    implements_token: IMPLEMENTS_KW@87..98 "implements" [] [Whitespace(" ")],
+                    types: TsTypeList [
+                        TsNameWithTypeArguments {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@98..102 "Int" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                    ],
+                },
+                L_CURLY@102..103 "{" [] [],
+                JsClassMemberList [],
+                R_CURLY@103..104 "}" [] [],
+            ],
+        },
+        JsClassStatement {
+            class_token: CLASS_KW@104..111 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@111..113 "D" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: TsImplementsClause {
+                implements_token: IMPLEMENTS_KW@113..124 "implements" [] [Whitespace(" ")],
+                types: TsTypeList [],
+            },
+            l_curly_token: L_CURLY@124..125 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@125..126 "}" [] [],
+        },
+        JsClassStatement {
+            class_token: CLASS_KW@126..133 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@133..135 "E" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: JsExtendsClause {
+                extends_token: EXTENDS_KW@135..143 "extends" [] [Whitespace(" ")],
+                super_class: missing (required),
+                type_arguments: missing (optional),
+            },
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@143..144 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@144..145 "}" [] [],
+        },
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@152..154 "F" [] [Whitespace(" ")],
+                },
+                JsUnknown {
+                    items: [
+                        EXTENDS_KW@154..162 "extends" [] [Whitespace(" ")],
+                        JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@162..163 "E" [] [],
+                            },
+                        },
+                        COMMA@163..165 "," [] [Whitespace(" ")],
+                    ],
+                },
+                L_CURLY@165..166 "{" [] [],
+                JsClassMemberList [],
+                R_CURLY@166..167 "}" [] [],
+            ],
+        },
+    ],
+    eof_token: EOF@167..168 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..168
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..167
+    0: JS_CLASS_STATEMENT@0..10
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: (empty)
+      5: L_CURLY@8..9 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@9..9
+      7: R_CURLY@9..10 "}" [] []
+    1: TS_INTERFACE_STATEMENT@10..27
+      0: INTERFACE_KW@10..21 "interface" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@21..25
+        0: IDENT@21..25 "Int" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@25..26 "{" [] []
+      5: TS_TYPE_MEMBER_LIST@26..26
+      6: R_CURLY@26..27 "}" [] []
+    2: JS_UNKNOWN_STATEMENT@27..63
+      0: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@34..36
+        0: IDENT@34..36 "B" [] [Whitespace(" ")]
+      2: TS_IMPLEMENTS_CLAUSE@36..51
+        0: IMPLEMENTS_KW@36..47 "implements" [] [Whitespace(" ")]
+        1: TS_TYPE_LIST@47..51
+          0: TS_NAME_WITH_TYPE_ARGUMENTS@47..51
+            0: JS_REFERENCE_IDENTIFIER@47..51
+              0: IDENT@47..51 "Int" [] [Whitespace(" ")]
+            1: (empty)
+      3: JS_EXTENDS_CLAUSE@51..61
+        0: EXTENDS_KW@51..59 "extends" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_EXPRESSION@59..61
+          0: JS_REFERENCE_IDENTIFIER@59..61
+            0: IDENT@59..61 "A" [] [Whitespace(" ")]
+        2: (empty)
+      4: L_CURLY@61..62 "{" [] []
+      5: JS_CLASS_MEMBER_LIST@62..62
+      6: R_CURLY@62..63 "}" [] []
+    3: JS_UNKNOWN_STATEMENT@63..104
+      0: CLASS_KW@63..70 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@70..72
+        0: IDENT@70..72 "C" [] [Whitespace(" ")]
+      2: TS_IMPLEMENTS_CLAUSE@72..87
+        0: IMPLEMENTS_KW@72..83 "implements" [] [Whitespace(" ")]
+        1: TS_TYPE_LIST@83..87
+          0: TS_NAME_WITH_TYPE_ARGUMENTS@83..87
+            0: JS_REFERENCE_IDENTIFIER@83..87
+              0: IDENT@83..87 "Int" [] [Whitespace(" ")]
+            1: (empty)
+      3: TS_IMPLEMENTS_CLAUSE@87..102
+        0: IMPLEMENTS_KW@87..98 "implements" [] [Whitespace(" ")]
+        1: TS_TYPE_LIST@98..102
+          0: TS_NAME_WITH_TYPE_ARGUMENTS@98..102
+            0: JS_REFERENCE_IDENTIFIER@98..102
+              0: IDENT@98..102 "Int" [] [Whitespace(" ")]
+            1: (empty)
+      4: L_CURLY@102..103 "{" [] []
+      5: JS_CLASS_MEMBER_LIST@103..103
+      6: R_CURLY@103..104 "}" [] []
+    4: JS_CLASS_STATEMENT@104..126
+      0: CLASS_KW@104..111 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@111..113
+        0: IDENT@111..113 "D" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: TS_IMPLEMENTS_CLAUSE@113..124
+        0: IMPLEMENTS_KW@113..124 "implements" [] [Whitespace(" ")]
+        1: TS_TYPE_LIST@124..124
+      5: L_CURLY@124..125 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@125..125
+      7: R_CURLY@125..126 "}" [] []
+    5: JS_CLASS_STATEMENT@126..145
+      0: CLASS_KW@126..133 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@133..135
+        0: IDENT@133..135 "E" [] [Whitespace(" ")]
+      2: (empty)
+      3: JS_EXTENDS_CLAUSE@135..143
+        0: EXTENDS_KW@135..143 "extends" [] [Whitespace(" ")]
+        1: (empty)
+        2: (empty)
+      4: (empty)
+      5: L_CURLY@143..144 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@144..144
+      7: R_CURLY@144..145 "}" [] []
+    6: JS_UNKNOWN_STATEMENT@145..167
+      0: CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@152..154
+        0: IDENT@152..154 "F" [] [Whitespace(" ")]
+      2: JS_UNKNOWN@154..165
+        0: EXTENDS_KW@154..162 "extends" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_EXPRESSION@162..163
+          0: JS_REFERENCE_IDENTIFIER@162..163
+            0: IDENT@162..163 "E" [] []
+        2: COMMA@163..165 "," [] [Whitespace(" ")]
+      3: L_CURLY@165..166 "{" [] []
+      4: JS_CLASS_MEMBER_LIST@166..166
+      5: R_CURLY@166..167 "}" [] []
+  3: EOF@167..168 "" [Newline("\n")] []
+--
+error[SyntaxError]: 'extends' clause must precede 'implements' clause.
+  ┌─ ts_class_heritage_clause_errors.ts:3:24
+  │
+3 │ class B implements Int extends A {}
+  │         -------------- ^^^^^^^^^
+
+--
+error[SyntaxError]: 'implements' clause already seen.
+  ┌─ ts_class_heritage_clause_errors.ts:4:24
+  │
+4 │ class C implements Int implements Int {}
+  │         -------------- ^^^^^^^^^^^^^^
+  │         │               
+  │         first 'implements' clause
+
+--
+error[SyntaxError]: 'implements' list cannot be empty.
+  ┌─ ts_class_heritage_clause_errors.ts:5:20
+  │
+5 │ class D implements {}
+  │                    ^
+
+--
+error[SyntaxError]: 'extends' list cannot be empty.
+  ┌─ ts_class_heritage_clause_errors.ts:6:16
+  │
+6 │ class E extends {}
+  │                ^
+
+--
+error[SyntaxError]: Trailing comma not allowed.
+  ┌─ ts_class_heritage_clause_errors.ts:7:18
+  │
+7 │ class F extends E, {}
+  │                  ^
+
+--
+class A {}
+interface Int {}
+class B implements Int extends A {}
+class C implements Int implements Int {}
+class D implements {}
+class E extends {}
+class F extends E, {}

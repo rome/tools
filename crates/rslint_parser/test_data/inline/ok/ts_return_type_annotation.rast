@@ -48,8 +48,8 @@ JsModule {
             eq_token: EQ@36..38 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@38..40 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsMethodSignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsMethodSignatureTypeMember {
                         name: JsLiteralMemberName {
                             value: IDENT@40..44 "test" [] [],
                         },
@@ -98,8 +98,8 @@ JsModule {
             eq_token: EQ@70..72 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@72..74 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsCallSignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsCallSignatureTypeMember {
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@74..75 "(" [] [],
@@ -338,8 +338,8 @@ JsModule {
       3: EQ@36..38 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@38..62
         0: L_CURLY@38..40 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@40..61
-          0: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@40..61
+        1: TS_TYPE_MEMBER_LIST@40..61
+          0: TS_METHOD_SIGNATURE_TYPE_MEMBER@40..61
             0: JS_LITERAL_MEMBER_NAME@40..44
               0: IDENT@40..44 "test" [] []
             1: (empty)
@@ -374,8 +374,8 @@ JsModule {
       3: EQ@70..72 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@72..92
         0: L_CURLY@72..74 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@74..91
-          0: TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER@74..91
+        1: TS_TYPE_MEMBER_LIST@74..91
+          0: TS_CALL_SIGNATURE_TYPE_MEMBER@74..91
             0: (empty)
             1: JS_PARAMETERS@74..77
               0: L_PAREN@74..75 "(" [] []

@@ -100,7 +100,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         T![ident]
             if p.cur_src() == "get"
                 && !p.has_linebreak_before_n(1)
-                && is_nth_at_object_member_name(p, 1) =>
+                && is_nth_at_type_member_name(p, 1) =>
         {
             parse_getter_object_member(p)
         }
@@ -129,7 +129,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         T![ident]
             if p.cur_src() == "set"
                 && !p.has_linebreak_before_n(1)
-                && is_nth_at_object_member_name(p, 1) =>
+                && is_nth_at_type_member_name(p, 1) =>
         {
             parse_setter_object_member(p)
         }
@@ -334,7 +334,7 @@ pub(crate) fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-pub(crate) fn is_nth_at_object_member_name(p: &Parser, offset: usize) -> bool {
+pub(crate) fn is_nth_at_type_member_name(p: &Parser, offset: usize) -> bool {
     let nth = p.nth(offset);
 
     let start_names = token_set![
@@ -350,7 +350,7 @@ pub(crate) fn is_nth_at_object_member_name(p: &Parser, offset: usize) -> bool {
 }
 
 pub(crate) fn is_at_object_member_name(p: &Parser) -> bool {
-    is_nth_at_object_member_name(p, 0)
+    is_nth_at_type_member_name(p, 0)
 }
 
 pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {
@@ -456,5 +456,5 @@ fn is_parser_at_async_method_member(p: &Parser) -> bool {
     p.cur() == T![ident]
         && p.cur_src() == "async"
         && !p.has_linebreak_before_n(1)
-        && (is_nth_at_object_member_name(p, 1) || p.nth_at(1, T![*]))
+        && (is_nth_at_type_member_name(p, 1) || p.nth_at(1, T![*]))
 }

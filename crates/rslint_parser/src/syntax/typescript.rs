@@ -1,29 +1,17 @@
 //! TypeScript specific functions.
 
-mod enums;
+mod statement;
 mod ts_parse_error;
 mod types;
 
-use super::expr::parse_lhs_expr;
-use crate::parser::ParserProgress;
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
-use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{
-    expected_binding, expected_expression, expected_identifier, expected_parameters,
-    expected_ts_type,
-};
+use crate::syntax::js_parse_error::{expected_expression, expected_ts_type};
 
-use crate::state::SignatureFlags;
-use crate::syntax::binding::parse_binding;
-use crate::syntax::function::{parse_function_body, parse_parameter_list, ParameterContext};
-use crate::syntax::stmt::semi;
-use crate::syntax::util::{
-    expect_contextual_keyword, is_at_contextual_keyword, is_nth_at_contextual_keyword,
-};
+use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
-pub(crate) use self::enums::*;
+pub(crate) use self::statement::*;
 pub(crate) use self::types::*;
 
 fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
@@ -65,126 +53,52 @@ pub(crate) fn parse_ts_type_assertion_expression(
     Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))
 }
 
-// FIXME: ts allows trailing commas but this doesnt, we need to figure out a way
-// to peek at the next token and see if its the end of the heritage clause
-pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMarker> {
-    let mut elems = Vec::with_capacity(1);
-    let m = p.start();
-    if exprs {
-        parse_lhs_expr(p, ExpressionContext::default())
-            .or_add_diagnostic(p, js_parse_error::expected_expression);
-    } else {
-        parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
-    }
-
-    parse_ts_type_arguments(p).ok();
-
-    // it doesnt matter if we complete as ts_expr_with_type_args even if its an lhs expr
-    // because exprs: true will only be used with `class extends foo, bar`, in which case
-    // the first expr will be "unwrapped" to go to the class' node and the rest are errors
-    elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
-
-    let mut progress = ParserProgress::default();
-    while p.eat(T![,]) {
-        progress.assert_progressing(p);
-        let m = p.start();
-        if exprs {
-            parse_lhs_expr(p, ExpressionContext::default())
-                .or_add_diagnostic(p, js_parse_error::expected_expression);
-        } else {
-            parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
-        }
-
-        parse_ts_type_arguments(p).ok();
-
-        elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
-    }
-    elems
-}
-
-pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_ts_declare_statement(p) {
+pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "implements") {
         return Absent;
     }
 
+    // test_err class_implements
+    // class B implements C {}
+
     let m = p.start();
-    expect_contextual_keyword(p, "declare", T![declare]);
+    expect_contextual_keyword(p, "implements", T![implements]);
+    expect_ts_type_list(p, "implements");
 
-    match p.cur() {
-        T![function] => {
-            parse_ts_declare_function(p);
-        }
-        T![const] | T![enum] => {
-            // test ts ts_ambient_enum_statement
-            // declare enum A { X, Y, Z }
-            // declare const enum B { X, Y, Z }
-            parse_ts_enum_statement(p).expect(
-                "Expected an enum syntax because the parser is at a `const` or `enum` keyword",
-            );
-        }
-        T![ident] if is_at_contextual_keyword(p, "type") => {
-            // test ts ts_declare_type_alias
-            // declare type A = string;
-            // declare type B = string | number & { a: string, b: number }
-            parse_ts_type_alias(p).expect(
-                "Expected a type alias statement because `is_at_contextual_keyword` returned true",
-            );
-        }
-        _ => unreachable!(
-            "is_at_ts_declare_statement guarantees that the parser is at a declare statement"
-        ),
-    }
-
-    Present(m.complete(p, TS_DECLARE_STATEMENT))
+    Present(m.complete(p, TS_IMPLEMENTS_CLAUSE))
 }
 
-pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
-    if !is_at_contextual_keyword(p, "declare") || p.has_linebreak_before_n(1) {
-        return false;
-    }
+fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
+    let list = p.start();
 
-    if matches!(p.nth(1), T![function]) {
-        return true;
-    }
-
-    if is_nth_at_contextual_keyword(p, 1, "type") {
-        return true;
-    }
-
-    if is_nth_at_ts_enum_statement(p, 1) {
-        return true;
-    }
-
-    false
-}
-
-// test ts ts_declare_function
-// declare function test<A, B, R>(a: A, b: B): R;
-// declare function test2({ a }?: { a: "string" })
-// declare
-// function not_a_declaration() {}
-//
-// test_err ts ts_declare_function_with_body
-// declare function test<A>(a: A): string { return "ambient function with a body"; }
-fn parse_ts_declare_function(p: &mut Parser) -> CompletedMarker {
-    let m = p.start();
-    let start_range = p.cur_tok().start();
-    p.expect(T![function]);
-    parse_binding(p).or_add_diagnostic(p, expected_binding);
-    parse_ts_type_parameters(p).ok();
-    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
-        .or_add_diagnostic(p, expected_parameters);
-    parse_ts_return_type_annotation(p).ok();
-
-    if let Present(body) = parse_function_body(p, SignatureFlags::empty()) {
+    if parse_ts_name_with_type_arguments(p).is_absent() {
         p.error(
-            p.err_builder("A 'declare' function cannot have a function body")
-                .primary(body.range(p), "remove this body"),
-        );
+            p.err_builder(&format!("'{}' list cannot be empty.", clause_name))
+                .primary(p.cur_tok().start()..p.cur_tok().start(), ""),
+        )
     }
 
-    semi(p, start_range..p.cur_tok().start());
-    m.complete(p, TS_DECLARE_FUNCTION)
+    while p.at(T![,]) {
+        let comma_range = p.cur_tok().range();
+        p.bump(T![,]);
+        if parse_ts_name_with_type_arguments(p).is_absent() {
+            p.error(
+                p.err_builder("Trailing comma not allowed.")
+                    .primary(comma_range, ""),
+            );
+            break;
+        }
+    }
+
+    list.complete(p, TS_TYPE_LIST)
+}
+
+fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_name(p).map(|name| {
+        let m = name.precede(p);
+        parse_ts_type_arguments(p).ok();
+        m.complete(p, TS_NAME_WITH_TYPE_ARGUMENTS)
+    })
 }
 
 pub(crate) fn try_parse(

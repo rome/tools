@@ -1233,6 +1233,7 @@ impl JsExtendsClause {
     pub fn super_class(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsFinallyClause {
@@ -3345,10 +3346,10 @@ impl TsBooleanType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsCallSignatureObjectTypeMember {
+pub struct TsCallSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsCallSignatureObjectTypeMember {
+impl TsCallSignatureTypeMember {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -3400,10 +3401,10 @@ impl TsConditionalType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsConstructSignatureObjectTypeMember {
+pub struct TsConstructSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsConstructSignatureObjectTypeMember {
+impl TsConstructSignatureTypeMember {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -3598,10 +3599,10 @@ impl TsEnumStatement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsExprWithTypeArgs {
+pub struct TsExtendsClause {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsExprWithTypeArgs {
+impl TsExtendsClause {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -3609,8 +3610,10 @@ impl TsExprWithTypeArgs {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn item(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
-    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
+    pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
@@ -3663,10 +3666,10 @@ impl TsFunctionType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsGetterSignatureObjectTypeMember {
+pub struct TsGetterSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsGetterSignatureObjectTypeMember {
+impl TsGetterSignatureTypeMember {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -3722,7 +3725,7 @@ impl TsImplementsClause {
     pub fn implements_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn interfaces(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
+    pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImportEqualsDecl {
@@ -3800,10 +3803,29 @@ impl TsImportTypeQualifier {
     pub fn right(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsIndexSignatureObjectTypeMember {
+pub struct TsIndexSignatureParameter {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsIndexSignatureObjectTypeMember {
+impl TsIndexSignatureParameter {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn binding(&self) -> SyntaxResult<JsIdentifierBinding> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
+        support::required_node(&self.syntax, 1usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsIndexSignatureTypeMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsIndexSignatureTypeMember {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -3825,25 +3847,6 @@ impl TsIndexSignatureObjectTypeMember {
         support::required_node(&self.syntax, 4usize)
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsIndexSignatureParameter {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsIndexSignatureParameter {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn binding(&self) -> SyntaxResult<JsIdentifierBinding> {
-        support::required_node(&self.syntax, 0usize)
-    }
-    pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
-        support::required_node(&self.syntax, 1usize)
-    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexedAccessType {
@@ -3887,6 +3890,36 @@ impl TsInferType {
     }
     pub fn type_parameter(&self) -> SyntaxResult<TsTypeParameterName> {
         support::required_node(&self.syntax, 1usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsInterfaceStatement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsInterfaceStatement {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn interface_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn id(&self) -> SyntaxResult<TsIdentifierBinding> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 2usize)
+    }
+    pub fn extends_clause(&self) -> Option<TsExtendsClause> { support::node(&self.syntax, 3usize) }
+    pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 4usize)
+    }
+    pub fn members(&self) -> TsTypeMemberList { support::list(&self.syntax, 5usize) }
+    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 6usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4003,10 +4036,10 @@ impl TsMappedTypeReadonlyModifierClause {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsMethodSignatureObjectTypeMember {
+pub struct TsMethodSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsMethodSignatureObjectTypeMember {
+impl TsMethodSignatureTypeMember {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -4030,6 +4063,21 @@ impl TsMethodSignatureObjectTypeMember {
         support::node(&self.syntax, 4usize)
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsNameWithTypeArguments {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsNameWithTypeArguments {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNamedTupleTypeElement {
@@ -4168,7 +4216,7 @@ impl TsObjectType {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn members(&self) -> TsObjectTypeMemberList { support::list(&self.syntax, 1usize) }
+    pub fn members(&self) -> TsTypeMemberList { support::list(&self.syntax, 1usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -4249,10 +4297,10 @@ impl TsPropertyParameter {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsPropertySignatureObjectTypeMember {
+pub struct TsPropertySignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsPropertySignatureObjectTypeMember {
+impl TsPropertySignatureTypeMember {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -4362,10 +4410,10 @@ impl TsReturnTypeAnnotation {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsSetterSignatureObjectTypeMember {
+pub struct TsSetterSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsSetterSignatureObjectTypeMember {
+impl TsSetterSignatureTypeMember {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -5114,6 +5162,7 @@ pub enum JsAnyStatement {
     JsWithStatement(JsWithStatement),
     TsDeclareStatement(TsDeclareStatement),
     TsEnumStatement(TsEnumStatement),
+    TsInterfaceStatement(TsInterfaceStatement),
     TsTypeAliasStatement(TsTypeAliasStatement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5136,16 +5185,6 @@ pub enum TsAnyDeclaration {
 pub enum TsAnyName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsQualifiedName(TsQualifiedName),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub enum TsAnyObjectTypeMember {
-    TsCallSignatureObjectTypeMember(TsCallSignatureObjectTypeMember),
-    TsConstructSignatureObjectTypeMember(TsConstructSignatureObjectTypeMember),
-    TsGetterSignatureObjectTypeMember(TsGetterSignatureObjectTypeMember),
-    TsIndexSignatureObjectTypeMember(TsIndexSignatureObjectTypeMember),
-    TsMethodSignatureObjectTypeMember(TsMethodSignatureObjectTypeMember),
-    TsPropertySignatureObjectTypeMember(TsPropertySignatureObjectTypeMember),
-    TsSetterSignatureObjectTypeMember(TsSetterSignatureObjectTypeMember),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyPropertyAnnotation {
@@ -5174,6 +5213,16 @@ pub enum TsAnyTupleTypeElement {
     TsOptionalTupleTypeElement(TsOptionalTupleTypeElement),
     TsRestTupleTypeElement(TsRestTupleTypeElement),
     TsType(TsType),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyTypeMember {
+    TsCallSignatureTypeMember(TsCallSignatureTypeMember),
+    TsConstructSignatureTypeMember(TsConstructSignatureTypeMember),
+    TsGetterSignatureTypeMember(TsGetterSignatureTypeMember),
+    TsIndexSignatureTypeMember(TsIndexSignatureTypeMember),
+    TsMethodSignatureTypeMember(TsMethodSignatureTypeMember),
+    TsPropertySignatureTypeMember(TsPropertySignatureTypeMember),
+    TsSetterSignatureTypeMember(TsSetterSignatureTypeMember),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyTypePredicateParameterName {
@@ -7066,6 +7115,10 @@ impl std::fmt::Debug for JsExtendsClause {
             .field(
                 "super_class",
                 &support::DebugSyntaxResult(self.super_class()),
+            )
+            .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
             )
             .finish()
     }
@@ -10166,8 +10219,8 @@ impl From<TsBooleanType> for SyntaxNode {
 impl From<TsBooleanType> for SyntaxElement {
     fn from(n: TsBooleanType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsCallSignatureObjectTypeMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER }
+impl AstNode for TsCallSignatureTypeMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CALL_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -10177,9 +10230,9 @@ impl AstNode for TsCallSignatureObjectTypeMember {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsCallSignatureObjectTypeMember {
+impl std::fmt::Debug for TsCallSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsCallSignatureObjectTypeMember")
+        f.debug_struct("TsCallSignatureTypeMember")
             .field(
                 "type_parameters",
                 &support::DebugOptionalElement(self.type_parameters()),
@@ -10196,11 +10249,11 @@ impl std::fmt::Debug for TsCallSignatureObjectTypeMember {
             .finish()
     }
 }
-impl From<TsCallSignatureObjectTypeMember> for SyntaxNode {
-    fn from(n: TsCallSignatureObjectTypeMember) -> SyntaxNode { n.syntax }
+impl From<TsCallSignatureTypeMember> for SyntaxNode {
+    fn from(n: TsCallSignatureTypeMember) -> SyntaxNode { n.syntax }
 }
-impl From<TsCallSignatureObjectTypeMember> for SyntaxElement {
-    fn from(n: TsCallSignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
+impl From<TsCallSignatureTypeMember> for SyntaxElement {
+    fn from(n: TsCallSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsConditionalType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONDITIONAL_TYPE }
@@ -10244,8 +10297,8 @@ impl From<TsConditionalType> for SyntaxNode {
 impl From<TsConditionalType> for SyntaxElement {
     fn from(n: TsConditionalType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsConstructSignatureObjectTypeMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER }
+impl AstNode for TsConstructSignatureTypeMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -10255,9 +10308,9 @@ impl AstNode for TsConstructSignatureObjectTypeMember {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsConstructSignatureObjectTypeMember {
+impl std::fmt::Debug for TsConstructSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsConstructSignatureObjectTypeMember")
+        f.debug_struct("TsConstructSignatureTypeMember")
             .field("new_token", &support::DebugSyntaxResult(self.new_token()))
             .field(
                 "type_parameters",
@@ -10275,11 +10328,11 @@ impl std::fmt::Debug for TsConstructSignatureObjectTypeMember {
             .finish()
     }
 }
-impl From<TsConstructSignatureObjectTypeMember> for SyntaxNode {
-    fn from(n: TsConstructSignatureObjectTypeMember) -> SyntaxNode { n.syntax }
+impl From<TsConstructSignatureTypeMember> for SyntaxNode {
+    fn from(n: TsConstructSignatureTypeMember) -> SyntaxNode { n.syntax }
 }
-impl From<TsConstructSignatureObjectTypeMember> for SyntaxElement {
-    fn from(n: TsConstructSignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
+impl From<TsConstructSignatureTypeMember> for SyntaxElement {
+    fn from(n: TsConstructSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsConstructorType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_TYPE }
@@ -10541,8 +10594,8 @@ impl From<TsEnumStatement> for SyntaxNode {
 impl From<TsEnumStatement> for SyntaxElement {
     fn from(n: TsEnumStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsExprWithTypeArgs {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
+impl AstNode for TsExtendsClause {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTENDS_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -10552,22 +10605,22 @@ impl AstNode for TsExprWithTypeArgs {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsExprWithTypeArgs {
+impl std::fmt::Debug for TsExtendsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsExprWithTypeArgs")
-            .field("item", &support::DebugSyntaxResult(self.item()))
+        f.debug_struct("TsExtendsClause")
             .field(
-                "type_arguments",
-                &support::DebugOptionalElement(self.type_arguments()),
+                "extends_token",
+                &support::DebugSyntaxResult(self.extends_token()),
             )
+            .field("types", &self.types())
             .finish()
     }
 }
-impl From<TsExprWithTypeArgs> for SyntaxNode {
-    fn from(n: TsExprWithTypeArgs) -> SyntaxNode { n.syntax }
+impl From<TsExtendsClause> for SyntaxNode {
+    fn from(n: TsExtendsClause) -> SyntaxNode { n.syntax }
 }
-impl From<TsExprWithTypeArgs> for SyntaxElement {
-    fn from(n: TsExprWithTypeArgs) -> SyntaxElement { n.syntax.into() }
+impl From<TsExtendsClause> for SyntaxElement {
+    fn from(n: TsExtendsClause) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsExternalModuleRef {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_REF }
@@ -10644,8 +10697,8 @@ impl From<TsFunctionType> for SyntaxNode {
 impl From<TsFunctionType> for SyntaxElement {
     fn from(n: TsFunctionType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsGetterSignatureObjectTypeMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER }
+impl AstNode for TsGetterSignatureTypeMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_GETTER_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -10655,9 +10708,9 @@ impl AstNode for TsGetterSignatureObjectTypeMember {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsGetterSignatureObjectTypeMember {
+impl std::fmt::Debug for TsGetterSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsGetterSignatureObjectTypeMember")
+        f.debug_struct("TsGetterSignatureTypeMember")
             .field("get_token", &support::DebugSyntaxResult(self.get_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -10679,11 +10732,11 @@ impl std::fmt::Debug for TsGetterSignatureObjectTypeMember {
             .finish()
     }
 }
-impl From<TsGetterSignatureObjectTypeMember> for SyntaxNode {
-    fn from(n: TsGetterSignatureObjectTypeMember) -> SyntaxNode { n.syntax }
+impl From<TsGetterSignatureTypeMember> for SyntaxNode {
+    fn from(n: TsGetterSignatureTypeMember) -> SyntaxNode { n.syntax }
 }
-impl From<TsGetterSignatureObjectTypeMember> for SyntaxElement {
-    fn from(n: TsGetterSignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
+impl From<TsGetterSignatureTypeMember> for SyntaxElement {
+    fn from(n: TsGetterSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsIdentifierBinding {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IDENTIFIER_BINDING }
@@ -10727,7 +10780,7 @@ impl std::fmt::Debug for TsImplementsClause {
                 "implements_token",
                 &support::DebugSyntaxResult(self.implements_token()),
             )
-            .field("interfaces", &self.interfaces())
+            .field("types", &self.types())
             .finish()
     }
 }
@@ -10850,50 +10903,6 @@ impl From<TsImportTypeQualifier> for SyntaxNode {
 impl From<TsImportTypeQualifier> for SyntaxElement {
     fn from(n: TsImportTypeQualifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsIndexSignatureObjectTypeMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsIndexSignatureObjectTypeMember {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsIndexSignatureObjectTypeMember")
-            .field(
-                "readonly_token",
-                &support::DebugOptionalElement(self.readonly_token()),
-            )
-            .field(
-                "l_brack_token",
-                &support::DebugSyntaxResult(self.l_brack_token()),
-            )
-            .field("parameter", &support::DebugSyntaxResult(self.parameter()))
-            .field(
-                "r_brack_token",
-                &support::DebugSyntaxResult(self.r_brack_token()),
-            )
-            .field(
-                "type_annotation",
-                &support::DebugSyntaxResult(self.type_annotation()),
-            )
-            .field(
-                "separator_token",
-                &support::DebugOptionalElement(self.separator_token()),
-            )
-            .finish()
-    }
-}
-impl From<TsIndexSignatureObjectTypeMember> for SyntaxNode {
-    fn from(n: TsIndexSignatureObjectTypeMember) -> SyntaxNode { n.syntax }
-}
-impl From<TsIndexSignatureObjectTypeMember> for SyntaxElement {
-    fn from(n: TsIndexSignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
-}
 impl AstNode for TsIndexSignatureParameter {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -10921,6 +10930,50 @@ impl From<TsIndexSignatureParameter> for SyntaxNode {
 }
 impl From<TsIndexSignatureParameter> for SyntaxElement {
     fn from(n: TsIndexSignatureParameter) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsIndexSignatureTypeMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_TYPE_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsIndexSignatureTypeMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsIndexSignatureTypeMember")
+            .field(
+                "readonly_token",
+                &support::DebugOptionalElement(self.readonly_token()),
+            )
+            .field(
+                "l_brack_token",
+                &support::DebugSyntaxResult(self.l_brack_token()),
+            )
+            .field("parameter", &support::DebugSyntaxResult(self.parameter()))
+            .field(
+                "r_brack_token",
+                &support::DebugSyntaxResult(self.r_brack_token()),
+            )
+            .field(
+                "type_annotation",
+                &support::DebugSyntaxResult(self.type_annotation()),
+            )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsIndexSignatureTypeMember> for SyntaxNode {
+    fn from(n: TsIndexSignatureTypeMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsIndexSignatureTypeMember> for SyntaxElement {
+    fn from(n: TsIndexSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsIndexedAccessType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEXED_ACCESS_TYPE }
@@ -10988,6 +11041,51 @@ impl From<TsInferType> for SyntaxNode {
 }
 impl From<TsInferType> for SyntaxElement {
     fn from(n: TsInferType) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsInterfaceStatement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INTERFACE_STATEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsInterfaceStatement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsInterfaceStatement")
+            .field(
+                "interface_token",
+                &support::DebugSyntaxResult(self.interface_token()),
+            )
+            .field("id", &support::DebugSyntaxResult(self.id()))
+            .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
+            .field(
+                "extends_clause",
+                &support::DebugOptionalElement(self.extends_clause()),
+            )
+            .field(
+                "l_curly_token",
+                &support::DebugSyntaxResult(self.l_curly_token()),
+            )
+            .field("members", &self.members())
+            .field(
+                "r_curly_token",
+                &support::DebugSyntaxResult(self.r_curly_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsInterfaceStatement> for SyntaxNode {
+    fn from(n: TsInterfaceStatement) -> SyntaxNode { n.syntax }
+}
+impl From<TsInterfaceStatement> for SyntaxElement {
+    fn from(n: TsInterfaceStatement) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsIntersectionType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INTERSECTION_TYPE }
@@ -11169,8 +11267,8 @@ impl From<TsMappedTypeReadonlyModifierClause> for SyntaxNode {
 impl From<TsMappedTypeReadonlyModifierClause> for SyntaxElement {
     fn from(n: TsMappedTypeReadonlyModifierClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsMethodSignatureObjectTypeMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER }
+impl AstNode for TsMethodSignatureTypeMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -11180,9 +11278,9 @@ impl AstNode for TsMethodSignatureObjectTypeMember {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsMethodSignatureObjectTypeMember {
+impl std::fmt::Debug for TsMethodSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsMethodSignatureObjectTypeMember")
+        f.debug_struct("TsMethodSignatureTypeMember")
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "optional_token_token",
@@ -11204,11 +11302,39 @@ impl std::fmt::Debug for TsMethodSignatureObjectTypeMember {
             .finish()
     }
 }
-impl From<TsMethodSignatureObjectTypeMember> for SyntaxNode {
-    fn from(n: TsMethodSignatureObjectTypeMember) -> SyntaxNode { n.syntax }
+impl From<TsMethodSignatureTypeMember> for SyntaxNode {
+    fn from(n: TsMethodSignatureTypeMember) -> SyntaxNode { n.syntax }
 }
-impl From<TsMethodSignatureObjectTypeMember> for SyntaxElement {
-    fn from(n: TsMethodSignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
+impl From<TsMethodSignatureTypeMember> for SyntaxElement {
+    fn from(n: TsMethodSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsNameWithTypeArguments {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NAME_WITH_TYPE_ARGUMENTS }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsNameWithTypeArguments {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsNameWithTypeArguments")
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
+            )
+            .finish()
+    }
+}
+impl From<TsNameWithTypeArguments> for SyntaxNode {
+    fn from(n: TsNameWithTypeArguments) -> SyntaxNode { n.syntax }
+}
+impl From<TsNameWithTypeArguments> for SyntaxElement {
+    fn from(n: TsNameWithTypeArguments) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsNamedTupleTypeElement {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NAMED_TUPLE_TYPE_ELEMENT }
@@ -11565,8 +11691,8 @@ impl From<TsPropertyParameter> for SyntaxNode {
 impl From<TsPropertyParameter> for SyntaxElement {
     fn from(n: TsPropertyParameter) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsPropertySignatureObjectTypeMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER }
+impl AstNode for TsPropertySignatureTypeMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -11576,9 +11702,9 @@ impl AstNode for TsPropertySignatureObjectTypeMember {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsPropertySignatureObjectTypeMember {
+impl std::fmt::Debug for TsPropertySignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsPropertySignatureObjectTypeMember")
+        f.debug_struct("TsPropertySignatureTypeMember")
             .field(
                 "readonly_token",
                 &support::DebugOptionalElement(self.readonly_token()),
@@ -11599,11 +11725,11 @@ impl std::fmt::Debug for TsPropertySignatureObjectTypeMember {
             .finish()
     }
 }
-impl From<TsPropertySignatureObjectTypeMember> for SyntaxNode {
-    fn from(n: TsPropertySignatureObjectTypeMember) -> SyntaxNode { n.syntax }
+impl From<TsPropertySignatureTypeMember> for SyntaxNode {
+    fn from(n: TsPropertySignatureTypeMember) -> SyntaxNode { n.syntax }
 }
-impl From<TsPropertySignatureObjectTypeMember> for SyntaxElement {
-    fn from(n: TsPropertySignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
+impl From<TsPropertySignatureTypeMember> for SyntaxElement {
+    fn from(n: TsPropertySignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsQualifiedName {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_QUALIFIED_NAME }
@@ -11750,8 +11876,8 @@ impl From<TsReturnTypeAnnotation> for SyntaxNode {
 impl From<TsReturnTypeAnnotation> for SyntaxElement {
     fn from(n: TsReturnTypeAnnotation) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsSetterSignatureObjectTypeMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER }
+impl AstNode for TsSetterSignatureTypeMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_SETTER_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -11761,9 +11887,9 @@ impl AstNode for TsSetterSignatureObjectTypeMember {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsSetterSignatureObjectTypeMember {
+impl std::fmt::Debug for TsSetterSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsSetterSignatureObjectTypeMember")
+        f.debug_struct("TsSetterSignatureTypeMember")
             .field("set_token", &support::DebugSyntaxResult(self.set_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -11782,11 +11908,11 @@ impl std::fmt::Debug for TsSetterSignatureObjectTypeMember {
             .finish()
     }
 }
-impl From<TsSetterSignatureObjectTypeMember> for SyntaxNode {
-    fn from(n: TsSetterSignatureObjectTypeMember) -> SyntaxNode { n.syntax }
+impl From<TsSetterSignatureTypeMember> for SyntaxNode {
+    fn from(n: TsSetterSignatureTypeMember) -> SyntaxNode { n.syntax }
 }
-impl From<TsSetterSignatureObjectTypeMember> for SyntaxElement {
-    fn from(n: TsSetterSignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
+impl From<TsSetterSignatureTypeMember> for SyntaxElement {
+    fn from(n: TsSetterSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsStringLiteralType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_STRING_LITERAL_TYPE }
@@ -15497,6 +15623,11 @@ impl From<TsDeclareStatement> for JsAnyStatement {
 impl From<TsEnumStatement> for JsAnyStatement {
     fn from(node: TsEnumStatement) -> JsAnyStatement { JsAnyStatement::TsEnumStatement(node) }
 }
+impl From<TsInterfaceStatement> for JsAnyStatement {
+    fn from(node: TsInterfaceStatement) -> JsAnyStatement {
+        JsAnyStatement::TsInterfaceStatement(node)
+    }
+}
 impl From<TsTypeAliasStatement> for JsAnyStatement {
     fn from(node: TsTypeAliasStatement) -> JsAnyStatement {
         JsAnyStatement::TsTypeAliasStatement(node)
@@ -15531,6 +15662,7 @@ impl AstNode for JsAnyStatement {
                 | JS_WITH_STATEMENT
                 | TS_DECLARE_STATEMENT
                 | TS_ENUM_STATEMENT
+                | TS_INTERFACE_STATEMENT
                 | TS_TYPE_ALIAS_STATEMENT
         )
     }
@@ -15581,6 +15713,9 @@ impl AstNode for JsAnyStatement {
                 JsAnyStatement::TsDeclareStatement(TsDeclareStatement { syntax })
             }
             TS_ENUM_STATEMENT => JsAnyStatement::TsEnumStatement(TsEnumStatement { syntax }),
+            TS_INTERFACE_STATEMENT => {
+                JsAnyStatement::TsInterfaceStatement(TsInterfaceStatement { syntax })
+            }
             TS_TYPE_ALIAS_STATEMENT => {
                 JsAnyStatement::TsTypeAliasStatement(TsTypeAliasStatement { syntax })
             }
@@ -15615,6 +15750,7 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::JsWithStatement(it) => &it.syntax,
             JsAnyStatement::TsDeclareStatement(it) => &it.syntax,
             JsAnyStatement::TsEnumStatement(it) => &it.syntax,
+            JsAnyStatement::TsInterfaceStatement(it) => &it.syntax,
             JsAnyStatement::TsTypeAliasStatement(it) => &it.syntax,
         }
     }
@@ -15647,6 +15783,7 @@ impl std::fmt::Debug for JsAnyStatement {
             JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsDeclareStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsEnumStatement(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::TsInterfaceStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsTypeAliasStatement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -15679,6 +15816,7 @@ impl From<JsAnyStatement> for SyntaxNode {
             JsAnyStatement::JsWithStatement(it) => it.into(),
             JsAnyStatement::TsDeclareStatement(it) => it.into(),
             JsAnyStatement::TsEnumStatement(it) => it.into(),
+            JsAnyStatement::TsInterfaceStatement(it) => it.into(),
             JsAnyStatement::TsTypeAliasStatement(it) => it.into(),
         }
     }
@@ -15899,153 +16037,6 @@ impl From<TsAnyName> for SyntaxNode {
 }
 impl From<TsAnyName> for SyntaxElement {
     fn from(n: TsAnyName) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
-}
-impl From<TsCallSignatureObjectTypeMember> for TsAnyObjectTypeMember {
-    fn from(node: TsCallSignatureObjectTypeMember) -> TsAnyObjectTypeMember {
-        TsAnyObjectTypeMember::TsCallSignatureObjectTypeMember(node)
-    }
-}
-impl From<TsConstructSignatureObjectTypeMember> for TsAnyObjectTypeMember {
-    fn from(node: TsConstructSignatureObjectTypeMember) -> TsAnyObjectTypeMember {
-        TsAnyObjectTypeMember::TsConstructSignatureObjectTypeMember(node)
-    }
-}
-impl From<TsGetterSignatureObjectTypeMember> for TsAnyObjectTypeMember {
-    fn from(node: TsGetterSignatureObjectTypeMember) -> TsAnyObjectTypeMember {
-        TsAnyObjectTypeMember::TsGetterSignatureObjectTypeMember(node)
-    }
-}
-impl From<TsIndexSignatureObjectTypeMember> for TsAnyObjectTypeMember {
-    fn from(node: TsIndexSignatureObjectTypeMember) -> TsAnyObjectTypeMember {
-        TsAnyObjectTypeMember::TsIndexSignatureObjectTypeMember(node)
-    }
-}
-impl From<TsMethodSignatureObjectTypeMember> for TsAnyObjectTypeMember {
-    fn from(node: TsMethodSignatureObjectTypeMember) -> TsAnyObjectTypeMember {
-        TsAnyObjectTypeMember::TsMethodSignatureObjectTypeMember(node)
-    }
-}
-impl From<TsPropertySignatureObjectTypeMember> for TsAnyObjectTypeMember {
-    fn from(node: TsPropertySignatureObjectTypeMember) -> TsAnyObjectTypeMember {
-        TsAnyObjectTypeMember::TsPropertySignatureObjectTypeMember(node)
-    }
-}
-impl From<TsSetterSignatureObjectTypeMember> for TsAnyObjectTypeMember {
-    fn from(node: TsSetterSignatureObjectTypeMember) -> TsAnyObjectTypeMember {
-        TsAnyObjectTypeMember::TsSetterSignatureObjectTypeMember(node)
-    }
-}
-impl AstNode for TsAnyObjectTypeMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(
-            kind,
-            TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER
-                | TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER
-                | TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER
-                | TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER
-                | TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER
-                | TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER
-                | TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER
-        )
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER => {
-                TsAnyObjectTypeMember::TsCallSignatureObjectTypeMember(
-                    TsCallSignatureObjectTypeMember { syntax },
-                )
-            }
-            TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER => {
-                TsAnyObjectTypeMember::TsConstructSignatureObjectTypeMember(
-                    TsConstructSignatureObjectTypeMember { syntax },
-                )
-            }
-            TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER => {
-                TsAnyObjectTypeMember::TsGetterSignatureObjectTypeMember(
-                    TsGetterSignatureObjectTypeMember { syntax },
-                )
-            }
-            TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER => {
-                TsAnyObjectTypeMember::TsIndexSignatureObjectTypeMember(
-                    TsIndexSignatureObjectTypeMember { syntax },
-                )
-            }
-            TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER => {
-                TsAnyObjectTypeMember::TsMethodSignatureObjectTypeMember(
-                    TsMethodSignatureObjectTypeMember { syntax },
-                )
-            }
-            TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER => {
-                TsAnyObjectTypeMember::TsPropertySignatureObjectTypeMember(
-                    TsPropertySignatureObjectTypeMember { syntax },
-                )
-            }
-            TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER => {
-                TsAnyObjectTypeMember::TsSetterSignatureObjectTypeMember(
-                    TsSetterSignatureObjectTypeMember { syntax },
-                )
-            }
-            _ => return None,
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            TsAnyObjectTypeMember::TsCallSignatureObjectTypeMember(it) => &it.syntax,
-            TsAnyObjectTypeMember::TsConstructSignatureObjectTypeMember(it) => &it.syntax,
-            TsAnyObjectTypeMember::TsGetterSignatureObjectTypeMember(it) => &it.syntax,
-            TsAnyObjectTypeMember::TsIndexSignatureObjectTypeMember(it) => &it.syntax,
-            TsAnyObjectTypeMember::TsMethodSignatureObjectTypeMember(it) => &it.syntax,
-            TsAnyObjectTypeMember::TsPropertySignatureObjectTypeMember(it) => &it.syntax,
-            TsAnyObjectTypeMember::TsSetterSignatureObjectTypeMember(it) => &it.syntax,
-        }
-    }
-}
-impl std::fmt::Debug for TsAnyObjectTypeMember {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            TsAnyObjectTypeMember::TsCallSignatureObjectTypeMember(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            TsAnyObjectTypeMember::TsConstructSignatureObjectTypeMember(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            TsAnyObjectTypeMember::TsGetterSignatureObjectTypeMember(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            TsAnyObjectTypeMember::TsIndexSignatureObjectTypeMember(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            TsAnyObjectTypeMember::TsMethodSignatureObjectTypeMember(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            TsAnyObjectTypeMember::TsPropertySignatureObjectTypeMember(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            TsAnyObjectTypeMember::TsSetterSignatureObjectTypeMember(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-        }
-    }
-}
-impl From<TsAnyObjectTypeMember> for SyntaxNode {
-    fn from(n: TsAnyObjectTypeMember) -> SyntaxNode {
-        match n {
-            TsAnyObjectTypeMember::TsCallSignatureObjectTypeMember(it) => it.into(),
-            TsAnyObjectTypeMember::TsConstructSignatureObjectTypeMember(it) => it.into(),
-            TsAnyObjectTypeMember::TsGetterSignatureObjectTypeMember(it) => it.into(),
-            TsAnyObjectTypeMember::TsIndexSignatureObjectTypeMember(it) => it.into(),
-            TsAnyObjectTypeMember::TsMethodSignatureObjectTypeMember(it) => it.into(),
-            TsAnyObjectTypeMember::TsPropertySignatureObjectTypeMember(it) => it.into(),
-            TsAnyObjectTypeMember::TsSetterSignatureObjectTypeMember(it) => it.into(),
-        }
-    }
-}
-impl From<TsAnyObjectTypeMember> for SyntaxElement {
-    fn from(n: TsAnyObjectTypeMember) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -16369,6 +16360,129 @@ impl From<TsAnyTupleTypeElement> for SyntaxNode {
 }
 impl From<TsAnyTupleTypeElement> for SyntaxElement {
     fn from(n: TsAnyTupleTypeElement) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<TsCallSignatureTypeMember> for TsAnyTypeMember {
+    fn from(node: TsCallSignatureTypeMember) -> TsAnyTypeMember {
+        TsAnyTypeMember::TsCallSignatureTypeMember(node)
+    }
+}
+impl From<TsConstructSignatureTypeMember> for TsAnyTypeMember {
+    fn from(node: TsConstructSignatureTypeMember) -> TsAnyTypeMember {
+        TsAnyTypeMember::TsConstructSignatureTypeMember(node)
+    }
+}
+impl From<TsGetterSignatureTypeMember> for TsAnyTypeMember {
+    fn from(node: TsGetterSignatureTypeMember) -> TsAnyTypeMember {
+        TsAnyTypeMember::TsGetterSignatureTypeMember(node)
+    }
+}
+impl From<TsIndexSignatureTypeMember> for TsAnyTypeMember {
+    fn from(node: TsIndexSignatureTypeMember) -> TsAnyTypeMember {
+        TsAnyTypeMember::TsIndexSignatureTypeMember(node)
+    }
+}
+impl From<TsMethodSignatureTypeMember> for TsAnyTypeMember {
+    fn from(node: TsMethodSignatureTypeMember) -> TsAnyTypeMember {
+        TsAnyTypeMember::TsMethodSignatureTypeMember(node)
+    }
+}
+impl From<TsPropertySignatureTypeMember> for TsAnyTypeMember {
+    fn from(node: TsPropertySignatureTypeMember) -> TsAnyTypeMember {
+        TsAnyTypeMember::TsPropertySignatureTypeMember(node)
+    }
+}
+impl From<TsSetterSignatureTypeMember> for TsAnyTypeMember {
+    fn from(node: TsSetterSignatureTypeMember) -> TsAnyTypeMember {
+        TsAnyTypeMember::TsSetterSignatureTypeMember(node)
+    }
+}
+impl AstNode for TsAnyTypeMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            TS_CALL_SIGNATURE_TYPE_MEMBER
+                | TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
+                | TS_GETTER_SIGNATURE_TYPE_MEMBER
+                | TS_INDEX_SIGNATURE_TYPE_MEMBER
+                | TS_METHOD_SIGNATURE_TYPE_MEMBER
+                | TS_PROPERTY_SIGNATURE_TYPE_MEMBER
+                | TS_SETTER_SIGNATURE_TYPE_MEMBER
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_CALL_SIGNATURE_TYPE_MEMBER => {
+                TsAnyTypeMember::TsCallSignatureTypeMember(TsCallSignatureTypeMember { syntax })
+            }
+            TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER => {
+                TsAnyTypeMember::TsConstructSignatureTypeMember(TsConstructSignatureTypeMember {
+                    syntax,
+                })
+            }
+            TS_GETTER_SIGNATURE_TYPE_MEMBER => {
+                TsAnyTypeMember::TsGetterSignatureTypeMember(TsGetterSignatureTypeMember { syntax })
+            }
+            TS_INDEX_SIGNATURE_TYPE_MEMBER => {
+                TsAnyTypeMember::TsIndexSignatureTypeMember(TsIndexSignatureTypeMember { syntax })
+            }
+            TS_METHOD_SIGNATURE_TYPE_MEMBER => {
+                TsAnyTypeMember::TsMethodSignatureTypeMember(TsMethodSignatureTypeMember { syntax })
+            }
+            TS_PROPERTY_SIGNATURE_TYPE_MEMBER => {
+                TsAnyTypeMember::TsPropertySignatureTypeMember(TsPropertySignatureTypeMember {
+                    syntax,
+                })
+            }
+            TS_SETTER_SIGNATURE_TYPE_MEMBER => {
+                TsAnyTypeMember::TsSetterSignatureTypeMember(TsSetterSignatureTypeMember { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyTypeMember::TsCallSignatureTypeMember(it) => &it.syntax,
+            TsAnyTypeMember::TsConstructSignatureTypeMember(it) => &it.syntax,
+            TsAnyTypeMember::TsGetterSignatureTypeMember(it) => &it.syntax,
+            TsAnyTypeMember::TsIndexSignatureTypeMember(it) => &it.syntax,
+            TsAnyTypeMember::TsMethodSignatureTypeMember(it) => &it.syntax,
+            TsAnyTypeMember::TsPropertySignatureTypeMember(it) => &it.syntax,
+            TsAnyTypeMember::TsSetterSignatureTypeMember(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyTypeMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyTypeMember::TsCallSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyTypeMember::TsConstructSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyTypeMember::TsGetterSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyTypeMember::TsIndexSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyTypeMember::TsMethodSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyTypeMember::TsPropertySignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyTypeMember::TsSetterSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyTypeMember> for SyntaxNode {
+    fn from(n: TsAnyTypeMember) -> SyntaxNode {
+        match n {
+            TsAnyTypeMember::TsCallSignatureTypeMember(it) => it.into(),
+            TsAnyTypeMember::TsConstructSignatureTypeMember(it) => it.into(),
+            TsAnyTypeMember::TsGetterSignatureTypeMember(it) => it.into(),
+            TsAnyTypeMember::TsIndexSignatureTypeMember(it) => it.into(),
+            TsAnyTypeMember::TsMethodSignatureTypeMember(it) => it.into(),
+            TsAnyTypeMember::TsPropertySignatureTypeMember(it) => it.into(),
+            TsAnyTypeMember::TsSetterSignatureTypeMember(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyTypeMember> for SyntaxElement {
+    fn from(n: TsAnyTypeMember) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -17049,11 +17163,6 @@ impl std::fmt::Display for TsAnyName {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyObjectTypeMember {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
 impl std::fmt::Display for TsAnyPropertyAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -17075,6 +17184,11 @@ impl std::fmt::Display for TsAnyTemplateElement {
     }
 }
 impl std::fmt::Display for TsAnyTupleTypeElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAnyTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17874,7 +17988,7 @@ impl std::fmt::Display for TsBooleanType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsCallSignatureObjectTypeMember {
+impl std::fmt::Display for TsCallSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17884,7 +17998,7 @@ impl std::fmt::Display for TsConditionalType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsConstructSignatureObjectTypeMember {
+impl std::fmt::Display for TsConstructSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17929,7 +18043,7 @@ impl std::fmt::Display for TsEnumStatement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsExprWithTypeArgs {
+impl std::fmt::Display for TsExtendsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17944,7 +18058,7 @@ impl std::fmt::Display for TsFunctionType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsGetterSignatureObjectTypeMember {
+impl std::fmt::Display for TsGetterSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17974,12 +18088,12 @@ impl std::fmt::Display for TsImportTypeQualifier {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsIndexSignatureObjectTypeMember {
+impl std::fmt::Display for TsIndexSignatureParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsIndexSignatureParameter {
+impl std::fmt::Display for TsIndexSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17990,6 +18104,11 @@ impl std::fmt::Display for TsIndexedAccessType {
     }
 }
 impl std::fmt::Display for TsInferType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsInterfaceStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -18019,7 +18138,12 @@ impl std::fmt::Display for TsMappedTypeReadonlyModifierClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsMethodSignatureObjectTypeMember {
+impl std::fmt::Display for TsMethodSignatureTypeMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsNameWithTypeArguments {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -18084,7 +18208,7 @@ impl std::fmt::Display for TsPropertyParameter {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsPropertySignatureObjectTypeMember {
+impl std::fmt::Display for TsPropertySignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -18114,7 +18238,7 @@ impl std::fmt::Display for TsReturnTypeAnnotation {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsSetterSignatureObjectTypeMember {
+impl std::fmt::Display for TsSetterSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -19662,55 +19786,6 @@ impl IntoIterator for &TsIntersectionTypeElementList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
-pub struct TsObjectTypeMemberList {
-    syntax_list: SyntaxList,
-}
-impl TsObjectTypeMemberList {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self {
-            syntax_list: syntax.into_list(),
-        }
-    }
-}
-impl AstNode for TsObjectTypeMemberList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OBJECT_TYPE_MEMBER_LIST }
-    fn cast(syntax: SyntaxNode) -> Option<TsObjectTypeMemberList> {
-        if Self::can_cast(syntax.kind()) {
-            Some(TsObjectTypeMemberList {
-                syntax_list: syntax.into_list(),
-            })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
-}
-impl AstNodeList<TsAnyObjectTypeMember> for TsObjectTypeMemberList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
-}
-impl Debug for TsObjectTypeMemberList {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str("TsObjectTypeMemberList ")?;
-        f.debug_list().entries(self.iter()).finish()
-    }
-}
-impl IntoIterator for &TsObjectTypeMemberList {
-    type Item = TsAnyObjectTypeMember;
-    type IntoIter = AstNodeListIterator<TsAnyObjectTypeMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
-}
-impl IntoIterator for TsObjectTypeMemberList {
-    type Item = TsAnyObjectTypeMember;
-    type IntoIter = AstNodeListIterator<TsAnyObjectTypeMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
-}
-#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsTemplateElementList {
     syntax_list: SyntaxList,
 }
@@ -19887,7 +19962,7 @@ impl AstNode for TsTypeList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<TsExprWithTypeArgs> for TsTypeList {
+impl AstSeparatedList<TsNameWithTypeArguments> for TsTypeList {
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsTypeList {
@@ -19897,13 +19972,62 @@ impl Debug for TsTypeList {
     }
 }
 impl IntoIterator for TsTypeList {
-    type Item = SyntaxResult<TsExprWithTypeArgs>;
-    type IntoIter = AstSeparatedListNodesIterator<TsExprWithTypeArgs>;
+    type Item = SyntaxResult<TsNameWithTypeArguments>;
+    type IntoIter = AstSeparatedListNodesIterator<TsNameWithTypeArguments>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &TsTypeList {
-    type Item = SyntaxResult<TsExprWithTypeArgs>;
-    type IntoIter = AstSeparatedListNodesIterator<TsExprWithTypeArgs>;
+    type Item = SyntaxResult<TsNameWithTypeArguments>;
+    type IntoIter = AstSeparatedListNodesIterator<TsNameWithTypeArguments>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct TsTypeMemberList {
+    syntax_list: SyntaxList,
+}
+impl TsTypeMemberList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for TsTypeMemberList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_MEMBER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<TsTypeMemberList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(TsTypeMemberList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<TsAnyTypeMember> for TsTypeMemberList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for TsTypeMemberList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("TsTypeMemberList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &TsTypeMemberList {
+    type Item = TsAnyTypeMember;
+    type IntoIter = AstNodeListIterator<TsAnyTypeMember>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for TsTypeMemberList {
+    type Item = TsAnyTypeMember;
+    type IntoIter = AstNodeListIterator<TsAnyTypeMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -20565,15 +20689,14 @@ impl Debug for DebugSyntaxElement {
                 TS_BOOLEAN_TYPE => {
                     std::fmt::Debug::fmt(&TsBooleanType::cast(node.clone()).unwrap(), f)
                 }
-                TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
-                    &TsCallSignatureObjectTypeMember::cast(node.clone()).unwrap(),
-                    f,
-                ),
+                TS_CALL_SIGNATURE_TYPE_MEMBER => {
+                    std::fmt::Debug::fmt(&TsCallSignatureTypeMember::cast(node.clone()).unwrap(), f)
+                }
                 TS_CONDITIONAL_TYPE => {
                     std::fmt::Debug::fmt(&TsConditionalType::cast(node.clone()).unwrap(), f)
                 }
-                TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
-                    &TsConstructSignatureObjectTypeMember::cast(node.clone()).unwrap(),
+                TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
+                    &TsConstructSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
                 TS_CONSTRUCTOR_TYPE => {
@@ -20605,8 +20728,8 @@ impl Debug for DebugSyntaxElement {
                 TS_ENUM_STATEMENT => {
                     std::fmt::Debug::fmt(&TsEnumStatement::cast(node.clone()).unwrap(), f)
                 }
-                TS_EXPR_WITH_TYPE_ARGS => {
-                    std::fmt::Debug::fmt(&TsExprWithTypeArgs::cast(node.clone()).unwrap(), f)
+                TS_EXTENDS_CLAUSE => {
+                    std::fmt::Debug::fmt(&TsExtendsClause::cast(node.clone()).unwrap(), f)
                 }
                 TS_EXTERNAL_MODULE_REF => {
                     std::fmt::Debug::fmt(&TsExternalModuleRef::cast(node.clone()).unwrap(), f)
@@ -20614,8 +20737,8 @@ impl Debug for DebugSyntaxElement {
                 TS_FUNCTION_TYPE => {
                     std::fmt::Debug::fmt(&TsFunctionType::cast(node.clone()).unwrap(), f)
                 }
-                TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
-                    &TsGetterSignatureObjectTypeMember::cast(node.clone()).unwrap(),
+                TS_GETTER_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
+                    &TsGetterSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
                 TS_IDENTIFIER_BINDING => {
@@ -20633,17 +20756,20 @@ impl Debug for DebugSyntaxElement {
                 TS_IMPORT_TYPE_QUALIFIER => {
                     std::fmt::Debug::fmt(&TsImportTypeQualifier::cast(node.clone()).unwrap(), f)
                 }
-                TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
-                    &TsIndexSignatureObjectTypeMember::cast(node.clone()).unwrap(),
-                    f,
-                ),
                 TS_INDEX_SIGNATURE_PARAMETER => {
                     std::fmt::Debug::fmt(&TsIndexSignatureParameter::cast(node.clone()).unwrap(), f)
                 }
+                TS_INDEX_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
+                    &TsIndexSignatureTypeMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_INDEXED_ACCESS_TYPE => {
                     std::fmt::Debug::fmt(&TsIndexedAccessType::cast(node.clone()).unwrap(), f)
                 }
                 TS_INFER_TYPE => std::fmt::Debug::fmt(&TsInferType::cast(node.clone()).unwrap(), f),
+                TS_INTERFACE_STATEMENT => {
+                    std::fmt::Debug::fmt(&TsInterfaceStatement::cast(node.clone()).unwrap(), f)
+                }
                 TS_INTERSECTION_TYPE => {
                     std::fmt::Debug::fmt(&TsIntersectionType::cast(node.clone()).unwrap(), f)
                 }
@@ -20665,10 +20791,13 @@ impl Debug for DebugSyntaxElement {
                     &TsMappedTypeReadonlyModifierClause::cast(node.clone()).unwrap(),
                     f,
                 ),
-                TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
-                    &TsMethodSignatureObjectTypeMember::cast(node.clone()).unwrap(),
+                TS_METHOD_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
+                    &TsMethodSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_NAME_WITH_TYPE_ARGUMENTS => {
+                    std::fmt::Debug::fmt(&TsNameWithTypeArguments::cast(node.clone()).unwrap(), f)
+                }
                 TS_NAMED_TUPLE_TYPE_ELEMENT => {
                     std::fmt::Debug::fmt(&TsNamedTupleTypeElement::cast(node.clone()).unwrap(), f)
                 }
@@ -20692,9 +20821,6 @@ impl Debug for DebugSyntaxElement {
                 TS_OBJECT_TYPE => {
                     std::fmt::Debug::fmt(&TsObjectType::cast(node.clone()).unwrap(), f)
                 }
-                TS_OBJECT_TYPE_MEMBER_LIST => {
-                    std::fmt::Debug::fmt(&TsObjectTypeMemberList::cast(node.clone()).unwrap(), f)
-                }
                 TS_OPTIONAL_PROPERTY_ANNOTATION => std::fmt::Debug::fmt(
                     &TsOptionalPropertyAnnotation::cast(node.clone()).unwrap(),
                     f,
@@ -20709,8 +20835,8 @@ impl Debug for DebugSyntaxElement {
                 TS_PROPERTY_PARAMETER => {
                     std::fmt::Debug::fmt(&TsPropertyParameter::cast(node.clone()).unwrap(), f)
                 }
-                TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
-                    &TsPropertySignatureObjectTypeMember::cast(node.clone()).unwrap(),
+                TS_PROPERTY_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
+                    &TsPropertySignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
                 TS_QUALIFIED_NAME => {
@@ -20729,8 +20855,8 @@ impl Debug for DebugSyntaxElement {
                 TS_RETURN_TYPE_ANNOTATION => {
                     std::fmt::Debug::fmt(&TsReturnTypeAnnotation::cast(node.clone()).unwrap(), f)
                 }
-                TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
-                    &TsSetterSignatureObjectTypeMember::cast(node.clone()).unwrap(),
+                TS_SETTER_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
+                    &TsSetterSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
                 TS_STRING_LITERAL_TYPE => {
@@ -20781,6 +20907,9 @@ impl Debug for DebugSyntaxElement {
                     std::fmt::Debug::fmt(&TsTypeConstraintClause::cast(node.clone()).unwrap(), f)
                 }
                 TS_TYPE_LIST => std::fmt::Debug::fmt(&TsTypeList::cast(node.clone()).unwrap(), f),
+                TS_TYPE_MEMBER_LIST => {
+                    std::fmt::Debug::fmt(&TsTypeMemberList::cast(node.clone()).unwrap(), f)
+                }
                 TS_TYPE_OPERATOR_TYPE => {
                     std::fmt::Debug::fmt(&TsTypeOperatorType::cast(node.clone()).unwrap(), f)
                 }

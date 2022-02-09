@@ -27,9 +27,10 @@ impl ToFormatElement for JsAnyStatement {
             Self::JsVariableStatement(node) => node.to_format_element(formatter),
             Self::JsWhileStatement(node) => node.to_format_element(formatter),
             Self::JsWithStatement(node) => node.to_format_element(formatter),
-            Self::TsEnumStatement(node) => node.to_format_element(formatter),
             Self::JsFunctionStatement(node) => node.to_format_element(formatter),
+            Self::TsEnumStatement(node) => node.to_format_element(formatter),
             Self::TsTypeAliasStatement(node) => node.to_format_element(formatter),
+            Self::TsInterfaceStatement(node) => node.to_format_element(formatter),
             Self::TsDeclareStatement(node) => node.to_format_element(formatter),
         }
     }

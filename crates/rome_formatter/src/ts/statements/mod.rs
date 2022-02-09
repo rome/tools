@@ -2,4 +2,5 @@
 
 mod declare_statement;
 mod enum_statement;
+mod interface_statement;
 mod type_alias_statement;
