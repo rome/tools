@@ -1266,6 +1266,17 @@ impl ParseSeparatedList for TypeArgumentsList {
 
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
         if parsed_element.is_absent() && !self.recover_on_errors {
+            // test ts type_arguments_no_recovery
+            // for (let i = 0 ; i < 3; ++i) {
+            //     verify.completions({
+            //         marker: `${i + 1}`,
+            //         exact: [
+            //             { name: "foo", replacementSpan: test.ranges()[i] },
+            //             { name: "bar", replacementSpan: test.ranges()[i] },
+            //         ]
+            //     });
+            // }
+
             // Parse conditional expression speculatively tries to parse a list of type arguments
             // The parser shouldn't perform error recovery in that case and simply bail out of parsing
             RecoveryResult::Err(RecoveryError::AlreadyRecovered)
