@@ -32,9 +32,10 @@ type G = {
 type H = {
     a?(): number; b?(): number, c?(): number
     d(): string
-    bvvvvvvvvvvvvvvvvvvvvvv?(loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol,): GG
+    bvvvvvvvvvvvvvvvvvvvvvv?(loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol,): G
 }
 
-type B = {
-
+type LoooooooooooooongTypeReturneeeeeeeeed = "0";
+type I = {
+    new(loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol ): LoooooooooooooongTypeReturneeeeeeeeed
 }

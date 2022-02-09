@@ -5,33 +5,33 @@ expression: type_member.ts
 
 ---
 # Input
-type AA =
+type A =
     {    [   a: string   ] :       number      }
 
-type BB = {
+type B = {
     (a: string, b: symbol, c: symbol, d: symbol )
 }
 
-type CC = {
+type C = {
     (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
 }
-type DD = {
+type D = {
     <Aaaaaaaaaaaaaaaaaaaaa,bvvvvvvvvvvvvvvvvvvvvvv,ceeeeeee,deeeeeeeeeeeeee,deeeeeeeeeeeeeee,deeeeeeeeeeeeeeee,deeeeeeeewweeeeee,>
     (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
 }
 
-type EE = {
+type E = {
     <Aaaaaaaaaaaaaaaaaaaaa>
     (loreum: string )
 }
 
 
-type FF = {
+type F = {
     <Aaaaaaaaaaaaaaaaaaaaa,bvvvvvvvvvvvvvvvvvvvvvv,ceeeeeee,deeeeeeeeeeeeee,deeeeeeeeeeeeeee,deeeeeeeeeeeeeeee,deeeeeeeewweeeeee,>
     (loreum: string )
 }
 
-type GG = {
+type G = {
     <Aaaaaaaaaaaaaaaaaaaaa>
     (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
 }
@@ -39,7 +39,12 @@ type GG = {
 type H = {
     a?(): number; b?(): number, c?(): number
     d(): string
-    bvvvvvvvvvvvvvvvvvvvvvv?(loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol,): GG
+    bvvvvvvvvvvvvvvvvvvvvvv?(loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol,): G
+}
+
+type LoooooooooooooongTypeReturneeeeeeeeed = "0";
+type I = {
+    new(loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol ): LoooooooooooooongTypeReturneeeeeeeeed
 }
 =============================
 # Outputs
@@ -48,11 +53,11 @@ type H = {
 Indent style: Tab
 Line width: 80
 -----
-type AA = { [a: string]: number };
+type A = { [a: string]: number };
 
-type BB = { (a: string, b: symbol, c: symbol, d: symbol) };
+type B = { (a: string, b: symbol, c: symbol, d: symbol) };
 
-type CC = {
+type C = {
 	(
 		loreum: string,
 		ipsum: symbol,
@@ -63,7 +68,7 @@ type CC = {
 		some_other_time: symbol,
 	),
 };
-type DD = {
+type D = {
 	<
 		Aaaaaaaaaaaaaaaaaaaaa,
 		bvvvvvvvvvvvvvvvvvvvvvv,
@@ -83,9 +88,9 @@ type DD = {
 	),
 };
 
-type EE = { <Aaaaaaaaaaaaaaaaaaaaa>(loreum: string) };
+type E = { <Aaaaaaaaaaaaaaaaaaaaa>(loreum: string) };
 
-type FF = {
+type F = {
 	<
 		Aaaaaaaaaaaaaaaaaaaaa,
 		bvvvvvvvvvvvvvvvvvvvvvv,
@@ -97,7 +102,7 @@ type FF = {
 	>(loreum: string),
 };
 
-type GG = {
+type G = {
 	<Aaaaaaaaaaaaaaaaaaaaa>(
 		loreum: string,
 		ipsum: symbol,
@@ -119,6 +124,19 @@ type H = {
 		ipsum: symbol,
 		lapis: symbol,
 		emerald: symbol,
-	): GG,
+	): G,
+};
+
+type LoooooooooooooongTypeReturneeeeeeeeed = "0";
+type I = {
+	new(
+		loreum: string,
+		ipsum: symbol,
+		lapis: symbol,
+		emerald: symbol,
+		consequence: symbol,
+		something_with_long_name: symbol,
+		some_other_time: symbol,
+	): LoooooooooooooongTypeReturneeeeeeeeed,
 };
 
