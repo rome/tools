@@ -35,6 +35,14 @@
 			}
 		}
 	},
+	"categories": [
+		"Formatters"
+	],
+	"keywords": [
+		"Formatter"
+	],
+	"license": "MIT",
+	"preview": true,
 	"scripts": {
 		"compile": "tsc -b",
 		"package": "vsce package -o rome_lsp.vsix",

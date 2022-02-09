@@ -1,19 +1,9 @@
-# Minimal LSP client for development
+# Rome VS Code Extension
 
-## Preparing the LSP server executable
+Adds support for the Rome language server to provide formatting, diagnostics, and code actions.
 
-From the root of the repository:
+## Usage
 
-```
-cargo install --path crates/rome_lsp
-```
+This extension may be bundled with a prebuilt binary for `rome_lsp`, the Rome language server.
 
-Alternately, you can set `"rome.lspBin"` in your vscode config to point to the `rome_lsp` binary of your choice (e.g. a debug build).
-
-## Installing the LSP client extension into VS Code
-
-```
-npm install
-npm run build
-npm run install-extension
-```
+You can set the path to a `rome_lsp` executable using the `"rome.lspBin"` setting in your VS Code Settings.

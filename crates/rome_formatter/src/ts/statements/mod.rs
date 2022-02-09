@@ -1,21 +1,6 @@
-mod block;
-mod break_statement;
-mod continue_statement;
-mod debugger_statement;
-mod do_while_statement;
-mod empty_statement;
-mod expression_statement;
-mod for_in_statement;
-mod for_of_statement;
-mod for_stmt;
-mod function_statement;
-mod if_stmt;
-mod label_statement;
-mod return_statement;
-mod statement;
-mod switch_statement;
-mod throw_statement;
-mod try_statement;
-mod variable_declaration_statement;
-mod while_statement;
-mod with_statement;
+//! Generated file, do not edit by hand, see `xtask/codegen`
+
+mod declare_statement;
+mod enum_statement;
+mod interface_statement;
+mod type_alias_statement;

@@ -437,6 +437,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_ENUM_MEMBER_LIST",
         "TS_ENUM_MEMBER",
         "TS_NAME_WITH_TYPE_ARGUMENTS",
+        "TS_DECLARE_STATEMENT",
+        "TS_DECLARE_FUNCTION",
         "TS_IMPORT_EQUALS_DECL",
         "TS_MODULE_REF",
         "TS_EXTERNAL_MODULE_REF",
@@ -458,7 +460,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 pub struct AstSrc {
     pub nodes: Vec<AstNodeSrc>,
     pub unions: Vec<AstEnumSrc>,
-    lists: BTreeMap<String, AstListSrc>,
+    pub lists: BTreeMap<String, AstListSrc>,
     pub unknowns: Vec<String>,
 }
 

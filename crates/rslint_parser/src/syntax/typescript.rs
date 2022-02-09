@@ -6,7 +6,6 @@ mod types;
 
 use super::expr::parse_lhs_expr;
 use crate::parser::ParserProgress;
-#[allow(deprecated)]
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_expression, expected_identifier, expected_ts_type};
@@ -73,7 +72,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
     // it doesnt matter if we complete as ts_expr_with_type_args even if its an lhs expr
     // because exprs: true will only be used with `class extends foo, bar`, in which case
     // the first expr will be "unwrapped" to go to the class' node and the rest are errors
-    elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
+    elems.push(m.complete(p, TS_NAME_WITH_TYPE_ARGUMENTS));
 
     let mut progress = ParserProgress::default();
     while p.eat(T![,]) {
@@ -88,14 +87,15 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 
         parse_ts_type_arguments(p).ok();
 
-        elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
+        elems.push(m.complete(p, TS_NAME_WITH_TYPE_ARGUMENTS));
     }
     elems
 }
 
-// pub(crate) fn parse_ts_
-
-pub fn try_parse(p: &mut Parser, func: impl FnOnce(&mut Parser) -> ParsedSyntax) -> ParsedSyntax {
+pub(crate) fn try_parse(
+    p: &mut Parser,
+    func: impl FnOnce(&mut Parser) -> ParsedSyntax,
+) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
 
     let res = if p.state.no_recovery {
