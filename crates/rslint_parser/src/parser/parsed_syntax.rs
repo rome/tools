@@ -42,6 +42,7 @@ impl ParsedSyntax {
     /// Converts from `ParsedSyntax` to `Option<CompletedMarker>`.
     ///
     /// Converts `self` into an `Option<CompletedMarker>`, consuming `self`
+    #[inline]
     pub fn ok(self) -> Option<CompletedMarker> {
         match self {
             Absent => None,
@@ -50,6 +51,7 @@ impl ParsedSyntax {
     }
 
     /// Calls `op` if the syntax is present and otherwise returns [ParsedSyntax::Absent]
+    #[inline]
     pub fn and_then<F>(self, op: F) -> ParsedSyntax
     where
         F: FnOnce(CompletedMarker) -> ParsedSyntax,
@@ -61,6 +63,7 @@ impl ParsedSyntax {
     }
 
     /// Calls `op` if the syntax is absent ond otherwise returns [ParsedSyntax::Present]
+    #[inline]
     pub fn or_else<F>(self, op: F) -> ParsedSyntax
     where
         F: FnOnce() -> ParsedSyntax,
@@ -72,12 +75,14 @@ impl ParsedSyntax {
     }
 
     /// Returns `true` if the parsed syntax is [ParsedSyntax::Present]
+    #[inline]
     #[must_use]
     pub fn is_present(&self) -> bool {
         matches!(self, Present(_))
     }
 
     /// Returns `true` if the parsed syntax is [ParsedSyntax::Absent]
+    #[inline]
     #[must_use]
     pub fn is_absent(&self) -> bool {
         matches!(self, Absent)
@@ -88,6 +93,8 @@ impl ParsedSyntax {
     /// # Panics
     ///
     ///  Panics if the current syntax is [ParsedSyntax::Absent]
+    #[inline]
+    #[track_caller]
     pub fn unwrap(self) -> CompletedMarker {
         match self {
             Absent => {
@@ -98,6 +105,7 @@ impl ParsedSyntax {
     }
 
     /// Returns the contained [ParsedSyntax::Present] value or passed default
+    #[inline]
     pub fn unwrap_or(self, default: CompletedMarker) -> CompletedMarker {
         match self {
             Absent => default,
@@ -106,6 +114,7 @@ impl ParsedSyntax {
     }
 
     /// Returns the contained [ParsedSyntax::Present] value or computes it from a clojure.
+    #[inline]
     pub fn unwrap_or_else<F>(self, default: F) -> CompletedMarker
     where
         F: FnOnce() -> CompletedMarker,
@@ -113,6 +122,20 @@ impl ParsedSyntax {
         match self {
             Absent => default(),
             Present(marker) => marker,
+        }
+    }
+
+    /// Returns the contained [ParsedSyntax::Present] value, consuming the self value.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the value is an [ParsedSyntax::Absent] with a custom panic message provided by msg.
+    #[inline]
+    #[track_caller]
+    pub fn expect(self, msg: &str) -> CompletedMarker {
+        match self {
+            Present(marker) => marker,
+            Absent => panic!("{}", msg),
         }
     }
 
@@ -131,6 +154,7 @@ impl ParsedSyntax {
     }
 
     /// Returns the kind of the syntax if it is present or [None] otherwise
+    #[inline]
     pub fn kind(&self) -> Option<JsSyntaxKind> {
         match self {
             Absent => None,
@@ -139,6 +163,7 @@ impl ParsedSyntax {
     }
 
     /// It returns the syntax if present or adds a diagnostic at the current parser position.
+    #[inline]
     pub fn or_add_diagnostic<E, D>(
         self,
         p: &mut Parser,
@@ -161,6 +186,7 @@ impl ParsedSyntax {
     /// It creates and returns a marker preceding this parsed syntax if it is present or starts
     /// a new marker and adds an error to the current parser position.
     /// See [CompletedMarker.precede]
+    #[inline]
     pub fn precede_or_add_diagnostic<E, D>(self, p: &mut Parser, error_builder: E) -> Marker
     where
         E: FnOnce(&Parser, Range<usize>) -> D,
@@ -177,6 +203,7 @@ impl ParsedSyntax {
     }
 
     /// Creates a new marker that precedes this syntax or starts a new marker
+    #[inline]
     pub fn precede(self, p: &mut Parser) -> Marker {
         match self {
             Present(marker) => marker.precede(p),
