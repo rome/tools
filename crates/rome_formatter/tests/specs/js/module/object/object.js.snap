@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 157
 expression: object.js
 
 ---
@@ -27,8 +27,13 @@ let a = {
 	...spread,
 }
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 let a = {
 	...spread,
 

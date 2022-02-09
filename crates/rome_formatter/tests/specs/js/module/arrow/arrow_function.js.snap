@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: arrow_function.js
 
 ---
@@ -9,8 +10,13 @@ async () => {}
 (foo) => {}
 (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,ccccccccccccccccccccccccccccc) => {}
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 () => {};
 async () => {};
 (foo) => {};

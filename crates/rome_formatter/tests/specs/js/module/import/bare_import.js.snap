@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 63
+assertion_line: 157
 expression: bare_import.js
 
 ---
@@ -25,8 +25,13 @@ import "very_long_import_very_long_import_very" assert {
         "type4": /****/ "json",
         "typetypetypetypetypetypetypetypetypetypetype": /****/ "typetypetypetypetypetypetypetypetypetypetypetypetypetype",
         }
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert {
 	type: "json",

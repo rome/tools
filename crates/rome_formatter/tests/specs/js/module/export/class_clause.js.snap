@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: class_clause.js
 
 ---
@@ -15,8 +15,13 @@ export          class A { // small comment
 export default  class
 B {}
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 // another comment
 export class A {
 	// small comment

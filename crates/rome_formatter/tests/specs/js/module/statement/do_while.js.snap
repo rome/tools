@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: do_while.js
 
 ---
@@ -17,8 +17,13 @@ do { // trailing
 }
 
 while (something)
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 do {
 	var foo = 4;
 } while (something);

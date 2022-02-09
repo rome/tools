@@ -12,12 +12,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-function e() {
-    let x: string | number | boolean | RegExp;
-    for (x = "" || 0; typeof x !== "string"; x = "" || true) {
-        x; // number | boolean
-    }
-}
+type A = string;
     "#;
 
     let module = parse(src, 0, Syntax::default().typescript());
@@ -102,7 +97,7 @@ fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, Stri
 }
 
 #[cfg(test)]
-fn run_and_expect_no_errors(path: &str, _: &str, _: &str) {
+fn run_and_expect_no_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
 
@@ -115,7 +110,7 @@ fn run_and_expect_no_errors(path: &str, _: &str, _: &str) {
 }
 
 #[cfg(test)]
-fn run_and_expect_errors(path: &str, _: &str, _: &str) {
+fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
 

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: literal_expression.js
 
 ---
@@ -11,8 +12,13 @@ true
 false
 null
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 "a";
 1;
 45n;

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: named_clause.js
 
 ---
@@ -12,8 +12,13 @@ export {
         buzz as bar,
 
 }
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 export {
 	// the boo api
 	boo,

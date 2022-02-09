@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: variable_declaration.js
 
 ---
@@ -8,8 +8,13 @@ expression: variable_declaration.js
 export let a, d, c;
 
 export const foofoofoofoofoofoofoo = "ahah", barbarbarbarbarbarbar = {}, loremloremloremloremlorem = []
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 export let a, d, c;
 
 export const foofoofoofoofoofoofoo = "ahah",

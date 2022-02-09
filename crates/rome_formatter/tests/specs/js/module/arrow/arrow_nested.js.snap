@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: arrow_nested.js
 
 ---
@@ -33,8 +33,13 @@ runtimeAgent.getProperties(
     },
 );
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 Seq(typeDef.interface.groups).forEach(
 	(group) =>
 		Seq(group.members).forEach(

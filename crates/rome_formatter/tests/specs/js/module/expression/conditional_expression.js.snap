@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: conditional_expression.js
 
 ---
@@ -9,8 +10,13 @@ d
 	? (e + f)
 	: (g + h)
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 a ? b : c;
 d ? (e + f) : (g + h);
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: from_clause.js
 
 ---
@@ -10,8 +10,13 @@ export * from "hey"
 export * as something_bad_will_happen from "something_bad_might_not_happen"
 
 export * as something_bad_will_happen from "something_bad_might_not_happen" assert { "type": "json", "type2": "json3"}
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 export * from "hey";
 
 export * as something_bad_will_happen from "something_bad_might_not_happen";

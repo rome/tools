@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: template.js
 
 ---
@@ -23,8 +23,13 @@ output
   abcd ${ () => { var hey; const looooooooooong_expression = "loooooooooong_expression"; return hey; }}
 output
 `;
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 `something`;
 
 tag`something``something ${" hello"}`;
