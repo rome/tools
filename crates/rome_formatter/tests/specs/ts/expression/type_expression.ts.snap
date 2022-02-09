@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 61
+assertion_line: 163
 expression: type_expression.ts
 
 ---
@@ -34,8 +34,13 @@ type Z = {
     a: string
     b: symbol
 }
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 type A = string;
 type B = number;
 type C = null;
