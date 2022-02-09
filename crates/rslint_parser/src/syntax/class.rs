@@ -189,7 +189,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
         })
         .ok();
 
-    parse_class_heritage_clause(p);
+    eat_class_heritage_clause(p);
 
     p.expect(T!['{']);
     ClassMembersList.parse_list(p);
@@ -208,7 +208,10 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
 // interface Int {}
 // class B implements Int extends A {}
 // class B implements Int implements Int {}
-fn parse_class_heritage_clause(p: &mut Parser) {
+/// Eats a class's 'implements' and 'extends' clauses, attaching them to the current active node.
+/// Implements error recovery in case a class has multiple extends/implements clauses or if they appear
+/// out of order
+fn eat_class_heritage_clause(p: &mut Parser) {
     let mut first_extends: Option<CompletedMarker> = None;
     let mut first_implements: Option<CompletedMarker> = None;
 
