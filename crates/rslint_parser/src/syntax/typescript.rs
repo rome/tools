@@ -17,7 +17,9 @@ use crate::state::SignatureFlags;
 use crate::syntax::binding::parse_binding;
 use crate::syntax::function::{parse_function_body, parse_parameter_list, ParameterContext};
 use crate::syntax::stmt::semi;
-use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
+use crate::syntax::util::{
+    expect_contextual_keyword, is_at_contextual_keyword, is_nth_at_contextual_keyword,
+};
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
@@ -112,6 +114,22 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
         T![function] => {
             parse_ts_declare_function(p);
         }
+        T![const] | T![enum] => {
+            // test ts ts_ambient_enum_statement
+            // declare enum A { X, Y, Z }
+            // declare const enum B { X, Y, Z }
+            parse_ts_enum_statement(p).expect(
+                "Expected an enum syntax because the parser is at a `const` or `enum` keyword",
+            );
+        }
+        T![ident] if is_at_contextual_keyword(p, "type") => {
+            // test ts ts_declare_type_alias
+            // declare type A = string;
+            // declare type B = string | number & { a: string, b: number }
+            parse_ts_type_alias(p).expect(
+                "Expected a type alias statement because `is_at_contextual_keyword` returned true",
+            );
+        }
         _ => unreachable!(
             "is_at_ts_declare_statement guarantees that the parser is at a declare statement"
         ),
@@ -125,7 +143,19 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
         return false;
     }
 
-    matches!(p.nth(1), T![function])
+    if matches!(p.nth(1), T![function]) {
+        return true;
+    }
+
+    if is_nth_at_contextual_keyword(p, 1, "type") {
+        return true;
+    }
+
+    if is_nth_at_ts_enum_statement(p, 1) {
+        return true;
+    }
+
+    false
 }
 
 // test ts ts_declare_function
