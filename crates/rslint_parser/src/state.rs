@@ -36,7 +36,6 @@ pub(crate) struct ParserState {
     /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
     pub duplicate_binding_parent: Option<&'static str>,
     pub name_map: IndexMap<String, Range<usize>>,
-    pub(crate) no_recovery: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -65,7 +64,6 @@ impl ParserState {
             default_item: None,
             name_map: IndexMap::new(),
             duplicate_binding_parent: None,
-            no_recovery: false,
         };
 
         if syntax.top_level_await {

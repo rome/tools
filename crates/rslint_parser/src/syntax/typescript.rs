@@ -193,17 +193,11 @@ pub(crate) fn try_parse(
 ) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
 
-    let res = if p.state.no_recovery {
-        func(p)
-    } else {
-        let last_no_recovery = std::mem::replace(&mut p.state.no_recovery, true);
-        let res = func(p);
-        p.state.no_recovery = last_no_recovery;
-        res
-    };
+    let res = func(p);
 
     if res.is_absent() {
         p.rewind(checkpoint);
     }
+
     res
 }

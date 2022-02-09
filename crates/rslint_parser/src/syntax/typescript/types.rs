@@ -1,10 +1,11 @@
-use crate::parser::RecoveryResult;
+use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{EnterType, SignatureFlags};
 use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::expr::{
     is_at_identifier, is_nth_at_identifier, is_nth_at_identifier_or_keyword,
     parse_big_int_literal_expression, parse_identifier, parse_literal_expression, parse_name,
-    parse_number_literal_expression, parse_reference_identifier, ExpressionContext,
+    parse_number_literal_expression, parse_reference_identifier, parse_template_elements,
+    ExpressionContext,
 };
 use crate::syntax::function::{
     parse_formal_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
@@ -1067,6 +1068,12 @@ fn parse_ts_literal_type(p: &mut Parser) -> ParsedSyntax {
 // type A = `abcd`
 // type B = `a${A}`
 // type C<X extends string> = `c${X}`
+//
+// test_err ts ts_template_literal_error
+// type A = "a";
+// type B = "b"
+// type C = `${A B}bcd`
+// type D = `${A B`
 fn parse_ts_template_literal_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(BACKTICK) {
         return Absent;
@@ -1076,29 +1083,9 @@ fn parse_ts_template_literal_type(p: &mut Parser) -> ParsedSyntax {
     p.bump(BACKTICK);
 
     let elements = p.start();
-    while !p.at(EOF) && !p.at(BACKTICK) {
-        match p.cur() {
-			TEMPLATE_CHUNK => {
-				let m = p.start();
-				p.bump_any();
-				m.complete(p, TS_TEMPLATE_CHUNK_ELEMENT);
-			}
-			DOLLAR_CURLY => {
-				let m = p.start();
-				p.bump_any();
-				parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-				p.expect(T!['}']);
-				m.complete(p, TS_TEMPLATE_ELEMENT);
-			}
-			ERROR_TOKEN => {
-				let err = p
-					.err_builder("Invalid template literal")
-					.primary(p.cur_tok().range(), "");
-				p.err_and_bump(err, JS_UNKNOWN);
-			},
-			t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
-		}
-    }
+    parse_template_elements(p, TS_TEMPLATE_CHUNK_ELEMENT, TS_TEMPLATE_ELEMENT, |p| {
+        parse_ts_type(p).or_add_diagnostic(p, expected_ts_type)
+    });
     elements.complete(p, TS_TEMPLATE_ELEMENT_LIST);
     p.expect(BACKTICK);
     Present(m.complete(p, TS_TEMPLATE_LITERAL_TYPE))
@@ -1235,10 +1222,10 @@ pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     }
 
     try_parse(p, |p| {
-        let arguments = parse_ts_type_arguments(p);
+        let arguments = parse_ts_type_arguments_impl(p, false);
 
         if p.tokens.last_tok().map(|t| t.kind) == Some(T![>]) {
-            arguments
+            Present(arguments)
         } else {
             Absent
         }
@@ -1250,14 +1237,23 @@ pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let m = p.start();
-    p.bump(T![<]);
-    TypeArgumentsList.parse_list(p);
-    p.expect(T![>]);
-    Present(m.complete(p, TS_TYPE_ARGUMENTS))
+    Present(parse_ts_type_arguments_impl(p, true))
 }
 
-struct TypeArgumentsList;
+pub(crate) fn parse_ts_type_arguments_impl(
+    p: &mut Parser,
+    recover_on_errors: bool,
+) -> CompletedMarker {
+    let m = p.start();
+    p.bump(T![<]);
+    TypeArgumentsList { recover_on_errors }.parse_list(p);
+    p.expect(T![>]);
+    m.complete(p, TS_TYPE_ARGUMENTS)
+}
+
+struct TypeArgumentsList {
+    recover_on_errors: bool,
+}
 
 impl ParseSeparatedList for TypeArgumentsList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
@@ -1269,15 +1265,21 @@ impl ParseSeparatedList for TypeArgumentsList {
     }
 
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
-        parsed_element.or_recover(
-            p,
-            &ParseRecovery::new(
-                JS_UNKNOWN,
-                token_set![T![>], T![,], T![ident], T![yield], T![await]],
+        if parsed_element.is_absent() && !self.recover_on_errors {
+            // Parse conditional expression speculatively tries to parse a list of type arguments
+            // The parser shouldn't perform error recovery in that case and simply bail out of parsing
+            RecoveryResult::Err(RecoveryError::AlreadyRecovered)
+        } else {
+            parsed_element.or_recover(
+                p,
+                &ParseRecovery::new(
+                    JS_UNKNOWN,
+                    token_set![T![>], T![,], T![ident], T![yield], T![await]],
+                )
+                .enable_recovery_on_line_break(),
+                expected_ts_type_parameter,
             )
-            .enable_recovery_on_line_break(),
-            expected_ts_type_parameter,
-        )
+        }
     }
 
     fn list_kind() -> JsSyntaxKind {
