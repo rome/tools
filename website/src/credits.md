@@ -10,17 +10,17 @@ layout: layouts/page.liquid
 
 <ul class="team-list">
 	<li>
-		<a href="https://github.com/ematipico">
-			<img src="https://github.com/ematipico.png?s=176">
-			<span>Daniel Frederico Lins Leite</span>
-		</a>
-	</li>
-	<li>
 		<a href="https://github.com/xunilrj">
 			<img src="https://github.com/xunilrj?s=176">
-			<span>Emanuele Stoppa</span>
+			<span>Daniel Frederico Lins Leite</span>
 		</a>
 	</li>		
+	<li>
+		<a href="https://github.com/ematipico">
+			<img src="https://github.com/ematipico.png?s=176">
+			<span>Emanuele Stoppa</span>
+		</a>
+	</li>
 	<li>
 		<a href="https://github.com/leops">
 			<img src="https://github.com/leops?s=176">
