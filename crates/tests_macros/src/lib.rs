@@ -75,10 +75,7 @@ impl Arguments {
         let file_stem = path.file_stem()?;
         let file_stem = file_stem.to_str()?;
         let test_name = file_stem.to_snake();
-        let mut ancestors = path.ancestors();
-        // the first one will yield the path to the current file
-        ancestors.next();
-        let test_directory = ancestors.next().unwrap().display().to_string();
+        let test_directory = path.parent().unwrap().display().to_string();
 
         let test_full_path = path.display().to_string();
         let extension = match path.extension() {
