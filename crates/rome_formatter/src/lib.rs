@@ -51,7 +51,7 @@ mod cst;
 mod format_element;
 mod format_elements;
 mod formatter;
-pub(crate) mod formatter_traits;
+pub mod formatter_traits;
 mod intersperse;
 mod js;
 mod printer;
