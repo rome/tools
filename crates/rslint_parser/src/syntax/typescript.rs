@@ -5,7 +5,7 @@ mod ts_parse_error;
 mod types;
 
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
-use crate::syntax::js_parse_error::{expected_expression, expected_identifier, expected_ts_type};
+use crate::syntax::js_parse_error::{expected_expression, expected_ts_type};
 
 use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{JsSyntaxKind::*, *};
@@ -78,8 +78,16 @@ fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
         )
     }
 
-    while p.eat(T![,]) {
-        parse_ts_name_with_type_arguments(p).or_add_diagnostic(p, expected_identifier);
+    while p.at(T![,]) {
+        let comma_range = p.cur_tok().range();
+        p.bump(T![,]);
+        if parse_ts_name_with_type_arguments(p).is_absent() {
+            p.error(
+                p.err_builder("Trailing comma not allowed.")
+                    .primary(comma_range, ""),
+            );
+            break;
+        }
     }
 
     list.complete(p, TS_TYPE_LIST)

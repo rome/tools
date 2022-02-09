@@ -209,6 +209,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
 // class C implements Int implements Int {}
 // class D implements {}
 // class E extends {}
+// class F extends E, {}
 /// Eats a class's 'implements' and 'extends' clauses, attaching them to the current active node.
 /// Implements error recovery in case a class has multiple extends/implements clauses or if they appear
 /// out of order
@@ -295,9 +296,20 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
             .ok();
     }
 
-    while p.eat(T![,]) {
+    while p.at(T![,]) {
+        let comma_range = p.cur_tok().range();
+        p.bump(T![,]);
+
         let extra = p.start();
-        parse_extends_expression(p).ok();
+        if parse_extends_expression(p).is_absent() {
+            p.error(
+                p.err_builder("Trailing comma not allowed.")
+                    .primary(comma_range, ""),
+            );
+            extra.abandon(p);
+            break;
+        }
+
         parse_ts_type_arguments(p).ok();
 
         let extra_class = extra.complete(p, JS_UNKNOWN);

@@ -120,14 +120,36 @@ JsModule {
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@144..145 "}" [] [],
         },
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@152..154 "F" [] [Whitespace(" ")],
+                },
+                JsUnknown {
+                    items: [
+                        EXTENDS_KW@154..162 "extends" [] [Whitespace(" ")],
+                        JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@162..163 "E" [] [],
+                            },
+                        },
+                        COMMA@163..165 "," [] [Whitespace(" ")],
+                    ],
+                },
+                L_CURLY@165..166 "{" [] [],
+                JsClassMemberList [],
+                R_CURLY@166..167 "}" [] [],
+            ],
+        },
     ],
-    eof_token: EOF@145..146 "" [Newline("\n")] [],
+    eof_token: EOF@167..168 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..146
+0: JS_MODULE@0..168
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..145
+  2: JS_MODULE_ITEM_LIST@0..167
     0: JS_CLASS_STATEMENT@0..10
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
@@ -213,7 +235,20 @@ JsModule {
       5: L_CURLY@143..144 "{" [] []
       6: JS_CLASS_MEMBER_LIST@144..144
       7: R_CURLY@144..145 "}" [] []
-  3: EOF@145..146 "" [Newline("\n")] []
+    6: JS_UNKNOWN_STATEMENT@145..167
+      0: CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@152..154
+        0: IDENT@152..154 "F" [] [Whitespace(" ")]
+      2: JS_UNKNOWN@154..165
+        0: EXTENDS_KW@154..162 "extends" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_EXPRESSION@162..163
+          0: JS_REFERENCE_IDENTIFIER@162..163
+            0: IDENT@162..163 "E" [] []
+        2: COMMA@163..165 "," [] [Whitespace(" ")]
+      3: L_CURLY@165..166 "{" [] []
+      4: JS_CLASS_MEMBER_LIST@166..166
+      5: R_CURLY@166..167 "}" [] []
+  3: EOF@167..168 "" [Newline("\n")] []
 --
 error[SyntaxError]: 'extends' clause must precede 'implements' clause.
   ┌─ ts_class_heritage_clause_errors.ts:3:24
@@ -245,9 +280,17 @@ error[SyntaxError]: 'extends' list cannot be empty.
   │                ^
 
 --
+error[SyntaxError]: Trailing comma not allowed.
+  ┌─ ts_class_heritage_clause_errors.ts:7:18
+  │
+7 │ class F extends E, {}
+  │                  ^
+
+--
 class A {}
 interface Int {}
 class B implements Int extends A {}
 class C implements Int implements Int {}
 class D implements {}
 class E extends {}
+class F extends E, {}

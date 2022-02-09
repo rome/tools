@@ -337,6 +337,7 @@ pub(crate) fn parse_ts_interface_statement(p: &mut Parser) -> ParsedSyntax {
 // interface B implements A {}
 // interface C extends A extends B {}
 // interface D extends {}
+// interface E extends A, {}
 /// Eats an interface's `extends` or an `extends` (not allowed but for better recovery) clauses
 /// Attaches the clauses to the currently active node
 fn eat_interface_heritage_clause(p: &mut Parser) {
