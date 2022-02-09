@@ -324,7 +324,7 @@ pub(crate) fn parse_ts_interface_statement(p: &mut Parser) -> ParsedSyntax {
     expect_contextual_keyword(p, "interface", T![interface]);
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_parameters(p).ok();
-    parse_interface_heritage_clause(p);
+    eat_interface_heritage_clause(p);
     p.expect(T!['{']);
     TypeMembers.parse_list(p);
     p.expect(T!['}']);
@@ -336,7 +336,9 @@ pub(crate) fn parse_ts_interface_statement(p: &mut Parser) -> ParsedSyntax {
 // interface A {}
 // interface B implements A {}
 // interface C extends A extends B {}
-fn parse_interface_heritage_clause(p: &mut Parser) {
+/// Eats an interface's `extends` or an `extends` (not allowed but for better recovery) clauses
+/// Attaches the clauses to the currently active node
+fn eat_interface_heritage_clause(p: &mut Parser) {
     let mut first_extends: Option<CompletedMarker> = None;
     loop {
         if p.at(T![extends]) {
