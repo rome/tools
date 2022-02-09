@@ -11,7 +11,7 @@ layout: layouts/page.liquid
 <ul class="team-list">
 	<li>
 		<a href="https://github.com/xunilrj">
-			<img src="https://github.com/xunilrj?s=176">
+			<img src="https://github.com/xunilrj.png?s=176">
 			<span>Daniel Frederico Lins Leite</span>
 		</a>
 	</li>		
@@ -23,7 +23,7 @@ layout: layouts/page.liquid
 	</li>
 	<li>
 		<a href="https://github.com/leops">
-			<img src="https://github.com/leops?s=176">
+			<img src="https://github.com/leops.png?s=176">
 			<span>Léo-Paul Couturier</span>
 		</a>
 	</li>	
@@ -35,7 +35,7 @@ layout: layouts/page.liquid
 	</li>	
 	<li>
 		<a href="https://github.com/NicholasLYang">
-			<img src="https://github.com/NicholasLYang?s=176">
+			<img src="https://github.com/NicholasLYang.png?s=176">
 			<span>Nicholas Yang</span>
 		</a>
 	</li>
@@ -61,12 +61,6 @@ layout: layouts/page.liquid
 		<a href="https://github.com/EduardoLopes">
 			<img src="https://github.com/EduardoLopes.png?s=176">
 			<span>Eduardo Lopes</span>
-		</a>
-	</li>
-	<li>
-		<a href="https://github.com/ematipico">
-			<img src="https://github.com/ematipico.png?s=176">
-			<span>Emanuele Stoppa</span>
 		</a>
 	</li>
 	<li>
@@ -106,21 +100,9 @@ layout: layouts/page.liquid
 		</a>
 	</li>
 	<li>
-		<a href="https://github.com/sebmck">
-			<img src="https://github.com/sebmck.png?s=176">
-			<span>Sebastian McKenzie</span>
-		</a>
-	</li>
-	<li>
 		<a href="https://github.com/VictorHom">
 			<img src="https://github.com/VictorHom.png?s=176">
 			<span>Victor Hom</span>
-		</a>
-	</li>
-	<li>
-		<a href="https://github.com/yassere">
-			<img src="https://github.com/yassere.png?s=176">
-			<span>Yasser Elassal</span>
 		</a>
 	</li>
 	<li>
