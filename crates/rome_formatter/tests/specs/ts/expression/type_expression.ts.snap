@@ -34,6 +34,38 @@ type Z = {
     a: string
     b: symbol
 }
+
+type AA =
+    {    [   a: string   ] :       number      }
+
+type BB = {
+    (a: string, b: symbol, c: symbol, d: symbol )
+}
+
+type CC = {
+    (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
+}
+type DD = {
+    <Aaaaaaaaaaaaaaaaaaaaa,bvvvvvvvvvvvvvvvvvvvvvv,ceeeeeee,deeeeeeeeeeeeee,deeeeeeeeeeeeeee,deeeeeeeeeeeeeeee,deeeeeeeewweeeeee,>
+    (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
+}
+
+type EE = {
+    <Aaaaaaaaaaaaaaaaaaaaa>
+    (loreum: string )
+}
+
+
+type FF = {
+    <Aaaaaaaaaaaaaaaaaaaaa,bvvvvvvvvvvvvvvvvvvvvvv,ceeeeeee,deeeeeeeeeeeeee,deeeeeeeeeeeeeee,deeeeeeeeeeeeeeee,deeeeeeeewweeeeee,>
+    (loreum: string )
+}
+
+type GG = {
+    <Aaaaaaaaaaaaaaaaaaaaa>
+    (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
+}
+
 =============================
 # Outputs
 ## Output 1
@@ -75,4 +107,65 @@ type W = {
 };
 type X = { a: string, b: symbol };
 type Z = { a: string, b: symbol };
+
+type AA = { [a: string]: number };
+
+type BB = { (a: string, b: symbol, c: symbol, d: symbol) };
+
+type CC = {
+	(
+		loreum: string,
+		ipsum: symbol,
+		lapis: symbol,
+		emerald: symbol,
+		consequence: symbol,
+		something_with_long_name: symbol,
+		some_other_time: symbol,
+	),
+};
+type DD = {
+	<
+		Aaaaaaaaaaaaaaaaaaaaa,
+		bvvvvvvvvvvvvvvvvvvvvvv,
+		ceeeeeee,
+		deeeeeeeeeeeeee,
+		deeeeeeeeeeeeeee,
+		deeeeeeeeeeeeeeee,
+		deeeeeeeewweeeeee,
+	>(
+		loreum: string,
+		ipsum: symbol,
+		lapis: symbol,
+		emerald: symbol,
+		consequence: symbol,
+		something_with_long_name: symbol,
+		some_other_time: symbol,
+	),
+};
+
+type EE = { <Aaaaaaaaaaaaaaaaaaaaa>(loreum: string) };
+
+type FF = {
+	<
+		Aaaaaaaaaaaaaaaaaaaaa,
+		bvvvvvvvvvvvvvvvvvvvvvv,
+		ceeeeeee,
+		deeeeeeeeeeeeee,
+		deeeeeeeeeeeeeee,
+		deeeeeeeeeeeeeeee,
+		deeeeeeeewweeeeee,
+	>(loreum: string),
+};
+
+type GG = {
+	<Aaaaaaaaaaaaaaaaaaaaa>(
+		loreum: string,
+		ipsum: symbol,
+		lapis: symbol,
+		emerald: symbol,
+		consequence: symbol,
+		something_with_long_name: symbol,
+		some_other_time: symbol,
+	),
+};
 

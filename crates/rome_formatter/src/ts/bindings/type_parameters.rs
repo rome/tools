@@ -1,7 +1,27 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsTypeParameters, AstNode};
+use crate::{
+    format_elements, group_elements, if_group_breaks, join_elements, soft_block_indent,
+    soft_line_break, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
+};
+use rslint_parser::ast::TsTypeParameters;
 impl ToFormatElement for TsTypeParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let items = formatter.format_separated(self.items(), || token(","))?;
+
+        Ok(group_elements(formatter.format_delimited(
+            &self.l_angle_token()?,
+            |open_token_trailing, close_token_leading| {
+                Ok(format_elements![
+                    if_group_breaks(soft_line_break()),
+                    soft_block_indent(format_elements![
+                        open_token_trailing,
+                        join_elements(soft_line_break_or_space(), items),
+                        close_token_leading,
+                    ]),
+                    if_group_breaks(soft_line_break()),
+                ])
+            },
+            &self.r_angle_token()?,
+        )?))
     }
 }

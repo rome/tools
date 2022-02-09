@@ -47,7 +47,6 @@ macro_rules! assert_lex {
         )*
 
         if idx < tokens.len() {
-            dbg!(&tokens);
             panic!(
                 "expected {} tokens but lexer returned {}, first unexpected token is '{:?}'",
                 idx,
