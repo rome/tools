@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 157
 expression: currying.js
 
 ---
@@ -23,8 +23,13 @@ const middleware = options => (req, res, next) => {
   // ...
 };
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 const fn = (b) => (c) => (d) => {
 	return 3;
 };

@@ -57,11 +57,13 @@ mod intersperse;
 mod js;
 mod printer;
 mod ts;
+
 pub use formatter::Formatter;
 use rome_rowan::TextRange;
 use rome_rowan::TextSize;
 use rome_rowan::TokenAtOffset;
 use rslint_parser::{parse, Syntax, SyntaxError, SyntaxNode};
+use std::fmt::Display;
 
 pub use format_element::{
     block_indent, concat_elements, empty_element, empty_line, group_elements, hard_line_break,
@@ -143,6 +145,15 @@ impl FromStr for IndentStyle {
     }
 }
 
+impl Display for IndentStyle {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            IndentStyle::Tab => write!(f, "Tab"),
+            IndentStyle::Space(size) => write!(f, "Spaces, size: {}", size),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 pub struct FormatOptions {
     /// The indent style
@@ -167,6 +178,14 @@ impl Default for FormatOptions {
             indent_style: IndentStyle::default(),
             line_width: 80,
         }
+    }
+}
+
+impl Display for FormatOptions {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        writeln!(f, "Indent style: {}", self.indent_style)?;
+        writeln!(f, "Line width: {}", self.line_width)?;
+        Ok(())
     }
 }
 

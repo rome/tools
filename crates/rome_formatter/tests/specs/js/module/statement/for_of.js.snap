@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 159
 expression: for_of.js
 
 ---
@@ -14,8 +14,13 @@ for (const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforc
 
 for await ( const a of b ) {}
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 for (a of b) {}
 
 for (let a of b) {}

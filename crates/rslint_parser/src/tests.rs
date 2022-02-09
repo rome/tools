@@ -102,7 +102,7 @@ fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, Stri
 }
 
 #[cfg(test)]
-fn run_and_expect_no_errors(path: &str, _: &str, _: &str) {
+fn run_and_expect_no_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
 
@@ -115,7 +115,7 @@ fn run_and_expect_no_errors(path: &str, _: &str, _: &str) {
 }
 
 #[cfg(test)]
-fn run_and_expect_errors(path: &str, _: &str, _: &str) {
+fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
 

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: binary_expression.js
 
 ---
@@ -28,8 +29,13 @@ a  ^   b
 a  in  b
 a  instanceof b
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 a + b;
 a < b;
 a > b;

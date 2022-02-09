@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 157
 expression: object_binding.js
 
 ---
@@ -10,8 +10,13 @@ let {d,b:c}=d
 let {x,y=c,z:pp=f,...g}=h
 let {aaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbb=cccccccccccccccccccc,dddddddddddddddddddd:eeeeeeeeeeeeeeeeeeee=ffffffffffffffffffff,...gggggggggggggggggggg}=h
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 let { a } = b;
 let { d, b: c } = d;
 let { x, y = c, z: pp = f, ...g } = h;

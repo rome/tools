@@ -1266,6 +1266,8 @@ dependencies = [
  "rome_rowan",
  "rslint_errors",
  "rslint_parser",
+ "serde",
+ "serde_json",
  "similar",
  "tests_macros",
  "thiserror",

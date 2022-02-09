@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: spread.js
 
 ---
@@ -10,8 +11,13 @@ let b = [...a, ...b];
 let a = [...baaaaaaaaaaaaaaaaaaaaaaaaaaaaa,...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,...cccccccccccccccccccccccccccccc]
 
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 let a = [...a, ...b];
 let b = [...a, ...b];
 [...a];

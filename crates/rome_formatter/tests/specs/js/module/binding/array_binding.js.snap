@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: array_binding.js
 
 ---
@@ -8,8 +9,13 @@ expression: array_binding.js
 let [a="b"]=c
 let [aaaaaaaaaaaaaaaaaaaa=bbbbbbbbbbbbbbbbbbbb,cccccccccccccccccccc=dddddddddddddddddddd]=e
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
 [a = "b"] = c;
 let [a = "b"] = c;
 let [

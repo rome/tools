@@ -20,6 +20,7 @@ struct Variables {
     test_name: String,
     test_full_path: String,
     test_expected_fullpath: String,
+    test_directory: String,
 }
 
 struct AllFiles(GlobWalker);
@@ -74,9 +75,9 @@ impl Arguments {
         let file_stem = path.file_stem()?;
         let file_stem = file_stem.to_str()?;
         let test_name = file_stem.to_snake();
+        let test_directory = path.parent().unwrap().display().to_string();
 
         let test_full_path = path.display().to_string();
-
         let extension = match path.extension() {
             Some(ext) => format!(".{}", ext.to_str().unwrap_or("")),
             None => "".into(),
@@ -91,6 +92,7 @@ impl Arguments {
             test_name,
             test_full_path,
             test_expected_fullpath,
+            test_directory,
         })
     }
 
@@ -104,6 +106,7 @@ impl Arguments {
                 test_name,
                 test_full_path,
                 test_expected_fullpath,
+                test_directory,
             } = Arguments::get_variables(&file).ok_or("Cannot generate variables for this file")?;
 
             let mut test_name = test_name.replace(['-', '.'], "_");
@@ -156,7 +159,8 @@ impl Arguments {
                     let test_file = #test_full_path;
                     let test_expected_file = #test_expected_fullpath;
                     let file_type = #file_type;
-                    #f(test_file, test_expected_file, file_type);
+                    let test_directory = #test_directory;
+                    #f(test_file, test_expected_file, test_directory, file_type);
                 }
             });
         }
