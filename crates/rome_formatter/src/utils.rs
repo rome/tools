@@ -23,6 +23,16 @@ pub(crate) fn format_object_type_member_separator(
     }
 }
 
+/// Utility function to format the node [rslint_parser::ast::JsInitializerClause]
+pub(crate) fn format_initializer_clause(
+    formatter: &Formatter,
+    initializer: Option<JsInitializerClause>,
+) -> FormatResult<FormatElement> {
+    initializer.format_with_or_empty(formatter, |initializer| {
+        format_elements![space_token(), initializer]
+    })
+}
+
 pub(crate) fn format_interpreter(
     interpreter: Option<SyntaxToken>,
     formatter: &Formatter,

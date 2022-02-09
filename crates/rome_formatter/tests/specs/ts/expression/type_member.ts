@@ -39,3 +39,9 @@ type LoooooooooooooongTypeReturneeeeeeeeed = "0";
 type I = {
     new(loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol ): LoooooooooooooongTypeReturneeeeeeeeed
 }
+
+type J = {
+    get     something( ): LoooooooooooooongTypeReturneeeeeeeeed
+}
+
+type K = { set     something( something_with_long_name: string ) }
