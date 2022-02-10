@@ -1,0 +1,68 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
+            declarations: JsVariableDeclarations {
+                kind: VAR_KW@8..12 "var" [] [Whitespace(" ")],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@12..13 "a" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                    COMMA@13..15 "," [] [Whitespace(" ")],
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@15..16 "b" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                    COMMA@16..18 "," [] [Whitespace(" ")],
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@18..19 "c" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@19..20 ";" [] [],
+        },
+    ],
+    eof_token: EOF@20..21 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..21
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..20
+    0: JS_VARIABLE_STATEMENT@0..20
+      0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
+      1: JS_VARIABLE_DECLARATIONS@8..19
+        0: VAR_KW@8..12 "var" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@12..19
+          0: JS_VARIABLE_DECLARATION@12..13
+            0: JS_IDENTIFIER_BINDING@12..13
+              0: IDENT@12..13 "a" [] []
+            1: (empty)
+            2: (empty)
+          1: COMMA@13..15 "," [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATION@15..16
+            0: JS_IDENTIFIER_BINDING@15..16
+              0: IDENT@15..16 "b" [] []
+            1: (empty)
+            2: (empty)
+          3: COMMA@16..18 "," [] [Whitespace(" ")]
+          4: JS_VARIABLE_DECLARATION@18..19
+            0: JS_IDENTIFIER_BINDING@18..19
+              0: IDENT@18..19 "c" [] []
+            1: (empty)
+            2: (empty)
+      2: SEMICOLON@19..20 ";" [] []
+  3: EOF@20..21 "" [Newline("\n")] []

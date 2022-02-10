@@ -28,6 +28,7 @@ JsModule {
                         l_curly_token: L_CURLY@28..29 "{" [] [],
                         statements: JsStatementList [
                             JsVariableStatement {
+                                declare_token: missing (optional),
                                 declarations: JsVariableDeclarations {
                                     kind: VAR_KW@29..38 "var" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                     items: JsVariableDeclarationList [
@@ -85,7 +86,8 @@ JsModule {
             0: L_CURLY@28..29 "{" [] []
             1: JS_STATEMENT_LIST@29..58
               0: JS_VARIABLE_STATEMENT@29..58
-                0: JS_VARIABLE_DECLARATIONS@29..57
+                0: (empty)
+                1: JS_VARIABLE_DECLARATIONS@29..57
                   0: VAR_KW@29..38 "var" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
                   1: JS_VARIABLE_DECLARATION_LIST@38..57
                     0: JS_VARIABLE_DECLARATION@38..57
@@ -96,7 +98,7 @@ JsModule {
                         0: EQ@48..50 "=" [] [Whitespace(" ")]
                         1: JS_STRING_LITERAL_EXPRESSION@50..57
                           0: JS_STRING_LITERAL@50..57 "\"lorem\"" [] []
-                1: SEMICOLON@57..58 ";" [] []
+                2: SEMICOLON@57..58 ";" [] []
             2: R_CURLY@58..62 "}" [Newline("\n"), Whitespace("  ")] []
         3: R_CURLY@62..64 "}" [Newline("\n")] []
   3: EOF@64..65 "" [Newline("\n")] []

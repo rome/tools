@@ -1,6 +1,5 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-mod declaration;
 mod module_ref;
 mod name;
 mod property_annotation;

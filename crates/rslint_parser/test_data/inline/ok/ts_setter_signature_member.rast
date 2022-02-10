@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@5..7 "A" [] [Whitespace(" ")],
@@ -40,6 +41,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@29..35 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@35..37 "B" [] [Whitespace(" ")],
@@ -72,6 +74,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@51..110 "type" [Newline("\n"), Comments("// members that look  ..."), Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@110..112 "C" [] [Whitespace(" ")],
@@ -110,6 +113,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@124..130 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@130..132 "D" [] [Whitespace(" ")],
@@ -139,6 +143,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@149..155 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@155..157 "E" [] [Whitespace(" ")],
@@ -171,12 +176,13 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..166
     0: TS_TYPE_ALIAS_STATEMENT@0..29
-      0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@5..7
+      0: (empty)
+      1: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@5..7
         0: IDENT@5..7 "A" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@7..9 "=" [] [Whitespace(" ")]
-      4: TS_OBJECT_TYPE@9..29
+      3: (empty)
+      4: EQ@7..9 "=" [] [Whitespace(" ")]
+      5: TS_OBJECT_TYPE@9..29
         0: L_CURLY@9..11 "{" [] [Whitespace(" ")]
         1: TS_TYPE_MEMBER_LIST@11..28
           0: TS_SETTER_SIGNATURE_TYPE_MEMBER@11..28
@@ -196,14 +202,15 @@ JsModule {
             4: R_PAREN@26..28 ")" [] [Whitespace(" ")]
             5: (empty)
         2: R_CURLY@28..29 "}" [] []
-      5: (empty)
+      6: (empty)
     1: TS_TYPE_ALIAS_STATEMENT@29..51
-      0: TYPE_KW@29..35 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@35..37
+      0: (empty)
+      1: TYPE_KW@29..35 "type" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@35..37
         0: IDENT@35..37 "B" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@37..39 "=" [] [Whitespace(" ")]
-      4: TS_OBJECT_TYPE@39..51
+      3: (empty)
+      4: EQ@37..39 "=" [] [Whitespace(" ")]
+      5: TS_OBJECT_TYPE@39..51
         0: L_CURLY@39..41 "{" [] [Whitespace(" ")]
         1: TS_TYPE_MEMBER_LIST@41..50
           0: TS_SETTER_SIGNATURE_TYPE_MEMBER@41..50
@@ -220,14 +227,15 @@ JsModule {
             4: R_PAREN@48..50 ")" [] [Whitespace(" ")]
             5: (empty)
         2: R_CURLY@50..51 "}" [] []
-      5: (empty)
+      6: (empty)
     2: TS_TYPE_ALIAS_STATEMENT@51..124
-      0: TYPE_KW@51..110 "type" [Newline("\n"), Comments("// members that look  ..."), Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@110..112
+      0: (empty)
+      1: TYPE_KW@51..110 "type" [Newline("\n"), Comments("// members that look  ..."), Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@110..112
         0: IDENT@110..112 "C" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@112..114 "=" [] [Whitespace(" ")]
-      4: TS_OBJECT_TYPE@114..124
+      3: (empty)
+      4: EQ@112..114 "=" [] [Whitespace(" ")]
+      5: TS_OBJECT_TYPE@114..124
         0: L_CURLY@114..116 "{" [] [Whitespace(" ")]
         1: TS_TYPE_MEMBER_LIST@116..123
           0: TS_METHOD_SIGNATURE_TYPE_MEMBER@116..123
@@ -248,14 +256,15 @@ JsModule {
             4: (empty)
             5: (empty)
         2: R_CURLY@123..124 "}" [] []
-      5: (empty)
+      6: (empty)
     3: TS_TYPE_ALIAS_STATEMENT@124..149
-      0: TYPE_KW@124..130 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@130..132
+      0: (empty)
+      1: TYPE_KW@124..130 "type" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@130..132
         0: IDENT@130..132 "D" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@132..134 "=" [] [Whitespace(" ")]
-      4: TS_OBJECT_TYPE@134..149
+      3: (empty)
+      4: EQ@132..134 "=" [] [Whitespace(" ")]
+      5: TS_OBJECT_TYPE@134..149
         0: L_CURLY@134..136 "{" [] [Whitespace(" ")]
         1: TS_TYPE_MEMBER_LIST@136..148
           0: TS_PROPERTY_SIGNATURE_TYPE_MEMBER@136..148
@@ -269,14 +278,15 @@ JsModule {
                 0: NUMBER_KW@141..148 "number" [] [Whitespace(" ")]
             4: (empty)
         2: R_CURLY@148..149 "}" [] []
-      5: (empty)
+      6: (empty)
     4: TS_TYPE_ALIAS_STATEMENT@149..166
-      0: TYPE_KW@149..155 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@155..157
+      0: (empty)
+      1: TYPE_KW@149..155 "type" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@155..157
         0: IDENT@155..157 "E" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@157..159 "=" [] [Whitespace(" ")]
-      4: TS_OBJECT_TYPE@159..166
+      3: (empty)
+      4: EQ@157..159 "=" [] [Whitespace(" ")]
+      5: TS_OBJECT_TYPE@159..166
         0: L_CURLY@159..161 "{" [] [Whitespace(" ")]
         1: TS_TYPE_MEMBER_LIST@161..165
           0: TS_PROPERTY_SIGNATURE_TYPE_MEMBER@161..165
@@ -287,5 +297,5 @@ JsModule {
             3: (empty)
             4: (empty)
         2: R_CURLY@165..166 "}" [] []
-      5: (empty)
+      6: (empty)
   3: EOF@166..167 "" [Newline("\n")] []

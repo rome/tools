@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -41,6 +42,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@15..20 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -75,6 +77,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@36..41 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -116,7 +119,8 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..52
     0: JS_VARIABLE_STATEMENT@0..15
-      0: JS_VARIABLE_DECLARATIONS@0..15
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@0..15
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@4..15
           0: JS_VARIABLE_DECLARATION@4..15
@@ -139,9 +143,10 @@ JsModule {
               1: JS_IDENTIFIER_EXPRESSION@14..15
                 0: JS_REFERENCE_IDENTIFIER@14..15
                   0: IDENT@14..15 "c" [] []
-      1: (empty)
+      2: (empty)
     1: JS_VARIABLE_STATEMENT@15..36
-      0: JS_VARIABLE_DECLARATIONS@15..36
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@15..36
         0: LET_KW@15..20 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@20..36
           0: JS_VARIABLE_DECLARATION@20..36
@@ -161,9 +166,10 @@ JsModule {
               1: JS_IDENTIFIER_EXPRESSION@35..36
                 0: JS_REFERENCE_IDENTIFIER@35..36
                   0: IDENT@35..36 "c" [] []
-      1: (empty)
+      2: (empty)
     2: JS_VARIABLE_STATEMENT@36..52
-      0: JS_VARIABLE_DECLARATIONS@36..52
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@36..52
         0: LET_KW@36..41 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@41..52
           0: JS_VARIABLE_DECLARATION@41..52
@@ -183,7 +189,7 @@ JsModule {
               1: JS_IDENTIFIER_EXPRESSION@51..52
                 0: JS_REFERENCE_IDENTIFIER@51..52
                   0: IDENT@51..52 "c" [] []
-      1: (empty)
+      2: (empty)
   3: EOF@52..53 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `,` but instead found `b`

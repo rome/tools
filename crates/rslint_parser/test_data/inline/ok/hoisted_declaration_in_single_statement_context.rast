@@ -10,6 +10,7 @@ JsModule {
             },
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
             consequent: JsVariableStatement {
+                declare_token: missing (optional),
                 declarations: JsVariableDeclarations {
                     kind: VAR_KW@10..14 "var" [] [Whitespace(" ")],
                     items: JsVariableDeclarationList [
@@ -41,7 +42,8 @@ JsModule {
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
       4: JS_VARIABLE_STATEMENT@10..16
-        0: JS_VARIABLE_DECLARATIONS@10..15
+        0: (empty)
+        1: JS_VARIABLE_DECLARATIONS@10..15
           0: VAR_KW@10..14 "var" [] [Whitespace(" ")]
           1: JS_VARIABLE_DECLARATION_LIST@14..15
             0: JS_VARIABLE_DECLARATION@14..15
@@ -49,6 +51,6 @@ JsModule {
                 0: IDENT@14..15 "a" [] []
               1: (empty)
               2: (empty)
-        1: SEMICOLON@15..16 ";" [] []
+        2: SEMICOLON@15..16 ";" [] []
       5: (empty)
   3: EOF@16..17 "" [Newline("\n")] []

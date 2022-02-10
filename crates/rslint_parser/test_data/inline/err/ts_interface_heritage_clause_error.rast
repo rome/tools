@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         TsInterfaceStatement {
+            declare_token: missing (optional),
             interface_token: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")],
             id: TsIdentifierBinding {
                 name_token: IDENT@10..12 "A" [] [Whitespace(" ")],
@@ -69,6 +70,7 @@ JsModule {
             ],
         },
         TsInterfaceStatement {
+            declare_token: missing (optional),
             interface_token: INTERFACE_KW@77..88 "interface" [Newline("\n")] [Whitespace(" ")],
             id: TsIdentifierBinding {
                 name_token: IDENT@88..90 "D" [] [Whitespace(" ")],
@@ -83,6 +85,7 @@ JsModule {
             r_curly_token: R_CURLY@99..100 "}" [] [],
         },
         TsInterfaceStatement {
+            declare_token: missing (optional),
             interface_token: INTERFACE_KW@100..111 "interface" [Newline("\n")] [Whitespace(" ")],
             id: TsIdentifierBinding {
                 name_token: IDENT@111..113 "E" [] [Whitespace(" ")],
@@ -114,14 +117,15 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..126
     0: TS_INTERFACE_STATEMENT@0..14
-      0: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@10..12
+      0: (empty)
+      1: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@10..12
         0: IDENT@10..12 "A" [] [Whitespace(" ")]
-      2: (empty)
       3: (empty)
-      4: L_CURLY@12..13 "{" [] []
-      5: TS_TYPE_MEMBER_LIST@13..13
-      6: R_CURLY@13..14 "}" [] []
+      4: (empty)
+      5: L_CURLY@12..13 "{" [] []
+      6: TS_TYPE_MEMBER_LIST@13..13
+      7: R_CURLY@13..14 "}" [] []
     1: JS_UNKNOWN_STATEMENT@14..42
       0: INTERFACE_KW@14..25 "interface" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@25..27
@@ -158,22 +162,24 @@ JsModule {
       5: TS_TYPE_MEMBER_LIST@76..76
       6: R_CURLY@76..77 "}" [] []
     3: TS_INTERFACE_STATEMENT@77..100
-      0: INTERFACE_KW@77..88 "interface" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@88..90
+      0: (empty)
+      1: INTERFACE_KW@77..88 "interface" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@88..90
         0: IDENT@88..90 "D" [] [Whitespace(" ")]
-      2: (empty)
-      3: TS_EXTENDS_CLAUSE@90..98
+      3: (empty)
+      4: TS_EXTENDS_CLAUSE@90..98
         0: EXTENDS_KW@90..98 "extends" [] [Whitespace(" ")]
         1: TS_TYPE_LIST@98..98
-      4: L_CURLY@98..99 "{" [] []
-      5: TS_TYPE_MEMBER_LIST@99..99
-      6: R_CURLY@99..100 "}" [] []
+      5: L_CURLY@98..99 "{" [] []
+      6: TS_TYPE_MEMBER_LIST@99..99
+      7: R_CURLY@99..100 "}" [] []
     4: TS_INTERFACE_STATEMENT@100..126
-      0: INTERFACE_KW@100..111 "interface" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@111..113
+      0: (empty)
+      1: INTERFACE_KW@100..111 "interface" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@111..113
         0: IDENT@111..113 "E" [] [Whitespace(" ")]
-      2: (empty)
-      3: TS_EXTENDS_CLAUSE@113..124
+      3: (empty)
+      4: TS_EXTENDS_CLAUSE@113..124
         0: EXTENDS_KW@113..121 "extends" [] [Whitespace(" ")]
         1: TS_TYPE_LIST@121..124
           0: TS_NAME_WITH_TYPE_ARGUMENTS@121..122
@@ -182,9 +188,9 @@ JsModule {
             1: (empty)
           1: COMMA@122..124 "," [] [Whitespace(" ")]
           2: (empty)
-      4: L_CURLY@124..125 "{" [] []
-      5: TS_TYPE_MEMBER_LIST@125..125
-      6: R_CURLY@125..126 "}" [] []
+      5: L_CURLY@124..125 "{" [] []
+      6: TS_TYPE_MEMBER_LIST@125..125
+      7: R_CURLY@125..126 "}" [] []
   3: EOF@126..127 "" [Newline("\n")] []
 --
 error[SyntaxError]: Interface declaration cannot have 'implements' clause.
