@@ -3105,10 +3105,11 @@ impl JsVariableStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn declarations(&self) -> SyntaxResult<JsVariableDeclarations> {
-        support::required_node(&self.syntax, 0usize)
+        support::required_node(&self.syntax, 1usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsWhileStatement {
@@ -3467,40 +3468,22 @@ impl TsDeclareFunctionStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 3usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 4usize)
     }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 5usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
-        support::node(&self.syntax, 5usize)
+        support::node(&self.syntax, 6usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsDeclareStatement {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsDeclareStatement {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-    pub fn declaration(&self) -> SyntaxResult<TsAnyDeclaration> {
-        support::required_node(&self.syntax, 1usize)
-    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDefaultTypeClause {
@@ -3586,17 +3569,18 @@ impl TsEnumStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 3usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
-    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 4usize) }
+    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 5usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+        support::required_token(&self.syntax, 6usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4610,20 +4594,21 @@ impl TsTypeAliasStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn type_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
     pub fn binding_identifier(&self) -> SyntaxResult<TsIdentifierBinding> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 2usize)
+        support::node(&self.syntax, 3usize)
     }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 5usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAnnotation {
@@ -5162,7 +5147,6 @@ pub enum JsAnyStatement {
     JsWhileStatement(JsWhileStatement),
     JsWithStatement(JsWithStatement),
     TsDeclareFunctionStatement(TsDeclareFunctionStatement),
-    TsDeclareStatement(TsDeclareStatement),
     TsEnumStatement(TsEnumStatement),
     TsInterfaceStatement(TsInterfaceStatement),
     TsTypeAliasStatement(TsTypeAliasStatement),
@@ -5176,12 +5160,6 @@ pub enum JsAnySwitchClause {
 pub enum JsAnyTemplateElement {
     JsTemplateChunkElement(JsTemplateChunkElement),
     JsTemplateElement(JsTemplateElement),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub enum TsAnyDeclaration {
-    TsDeclareFunctionStatement(TsDeclareFunctionStatement),
-    TsEnumStatement(TsEnumStatement),
-    TsTypeAliasStatement(TsTypeAliasStatement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyName {
@@ -9855,6 +9833,10 @@ impl std::fmt::Debug for JsVariableStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsVariableStatement")
             .field(
+                "declare_token",
+                &support::DebugOptionalElement(self.declare_token()),
+            )
+            .field(
                 "declarations",
                 &support::DebugSyntaxResult(self.declarations()),
             )
@@ -10392,6 +10374,10 @@ impl std::fmt::Debug for TsDeclareFunctionStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsDeclareFunctionStatement")
             .field(
+                "declare_token",
+                &support::DebugOptionalElement(self.declare_token()),
+            )
+            .field(
                 "async_token",
                 &support::DebugOptionalElement(self.async_token()),
             )
@@ -10421,37 +10407,6 @@ impl From<TsDeclareFunctionStatement> for SyntaxNode {
 }
 impl From<TsDeclareFunctionStatement> for SyntaxElement {
     fn from(n: TsDeclareFunctionStatement) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TsDeclareStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DECLARE_STATEMENT }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsDeclareStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsDeclareStatement")
-            .field(
-                "declare_token",
-                &support::DebugSyntaxResult(self.declare_token()),
-            )
-            .field(
-                "declaration",
-                &support::DebugSyntaxResult(self.declaration()),
-            )
-            .finish()
-    }
-}
-impl From<TsDeclareStatement> for SyntaxNode {
-    fn from(n: TsDeclareStatement) -> SyntaxNode { n.syntax }
-}
-impl From<TsDeclareStatement> for SyntaxElement {
-    fn from(n: TsDeclareStatement) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsDefaultTypeClause {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DEFAULT_TYPE_CLAUSE }
@@ -10576,6 +10531,10 @@ impl AstNode for TsEnumStatement {
 impl std::fmt::Debug for TsEnumStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsEnumStatement")
+            .field(
+                "declare_token",
+                &support::DebugOptionalElement(self.declare_token()),
+            )
             .field(
                 "const_token",
                 &support::DebugOptionalElement(self.const_token()),
@@ -12190,6 +12149,10 @@ impl AstNode for TsTypeAliasStatement {
 impl std::fmt::Debug for TsTypeAliasStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsTypeAliasStatement")
+            .field(
+                "declare_token",
+                &support::DebugOptionalElement(self.declare_token()),
+            )
             .field("type_token", &support::DebugSyntaxResult(self.type_token()))
             .field(
                 "binding_identifier",
@@ -15628,9 +15591,6 @@ impl From<TsDeclareFunctionStatement> for JsAnyStatement {
         JsAnyStatement::TsDeclareFunctionStatement(node)
     }
 }
-impl From<TsDeclareStatement> for JsAnyStatement {
-    fn from(node: TsDeclareStatement) -> JsAnyStatement { JsAnyStatement::TsDeclareStatement(node) }
-}
 impl From<TsEnumStatement> for JsAnyStatement {
     fn from(node: TsEnumStatement) -> JsAnyStatement { JsAnyStatement::TsEnumStatement(node) }
 }
@@ -15672,7 +15632,6 @@ impl AstNode for JsAnyStatement {
                 | JS_WHILE_STATEMENT
                 | JS_WITH_STATEMENT
                 | TS_DECLARE_FUNCTION_STATEMENT
-                | TS_DECLARE_STATEMENT
                 | TS_ENUM_STATEMENT
                 | TS_INTERFACE_STATEMENT
                 | TS_TYPE_ALIAS_STATEMENT
@@ -15724,9 +15683,6 @@ impl AstNode for JsAnyStatement {
             TS_DECLARE_FUNCTION_STATEMENT => {
                 JsAnyStatement::TsDeclareFunctionStatement(TsDeclareFunctionStatement { syntax })
             }
-            TS_DECLARE_STATEMENT => {
-                JsAnyStatement::TsDeclareStatement(TsDeclareStatement { syntax })
-            }
             TS_ENUM_STATEMENT => JsAnyStatement::TsEnumStatement(TsEnumStatement { syntax }),
             TS_INTERFACE_STATEMENT => {
                 JsAnyStatement::TsInterfaceStatement(TsInterfaceStatement { syntax })
@@ -15764,7 +15720,6 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::JsWhileStatement(it) => &it.syntax,
             JsAnyStatement::JsWithStatement(it) => &it.syntax,
             JsAnyStatement::TsDeclareFunctionStatement(it) => &it.syntax,
-            JsAnyStatement::TsDeclareStatement(it) => &it.syntax,
             JsAnyStatement::TsEnumStatement(it) => &it.syntax,
             JsAnyStatement::TsInterfaceStatement(it) => &it.syntax,
             JsAnyStatement::TsTypeAliasStatement(it) => &it.syntax,
@@ -15798,7 +15753,6 @@ impl std::fmt::Debug for JsAnyStatement {
             JsAnyStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsDeclareFunctionStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsDeclareStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsEnumStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsInterfaceStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsTypeAliasStatement(it) => std::fmt::Debug::fmt(it, f),
@@ -15832,7 +15786,6 @@ impl From<JsAnyStatement> for SyntaxNode {
             JsAnyStatement::JsWhileStatement(it) => it.into(),
             JsAnyStatement::JsWithStatement(it) => it.into(),
             JsAnyStatement::TsDeclareFunctionStatement(it) => it.into(),
-            JsAnyStatement::TsDeclareStatement(it) => it.into(),
             JsAnyStatement::TsEnumStatement(it) => it.into(),
             JsAnyStatement::TsInterfaceStatement(it) => it.into(),
             JsAnyStatement::TsTypeAliasStatement(it) => it.into(),
@@ -15941,71 +15894,6 @@ impl From<JsAnyTemplateElement> for SyntaxNode {
 }
 impl From<JsAnyTemplateElement> for SyntaxElement {
     fn from(n: JsAnyTemplateElement) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
-}
-impl From<TsDeclareFunctionStatement> for TsAnyDeclaration {
-    fn from(node: TsDeclareFunctionStatement) -> TsAnyDeclaration {
-        TsAnyDeclaration::TsDeclareFunctionStatement(node)
-    }
-}
-impl From<TsEnumStatement> for TsAnyDeclaration {
-    fn from(node: TsEnumStatement) -> TsAnyDeclaration { TsAnyDeclaration::TsEnumStatement(node) }
-}
-impl From<TsTypeAliasStatement> for TsAnyDeclaration {
-    fn from(node: TsTypeAliasStatement) -> TsAnyDeclaration {
-        TsAnyDeclaration::TsTypeAliasStatement(node)
-    }
-}
-impl AstNode for TsAnyDeclaration {
-    fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(
-            kind,
-            TS_DECLARE_FUNCTION_STATEMENT | TS_ENUM_STATEMENT | TS_TYPE_ALIAS_STATEMENT
-        )
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            TS_DECLARE_FUNCTION_STATEMENT => {
-                TsAnyDeclaration::TsDeclareFunctionStatement(TsDeclareFunctionStatement { syntax })
-            }
-            TS_ENUM_STATEMENT => TsAnyDeclaration::TsEnumStatement(TsEnumStatement { syntax }),
-            TS_TYPE_ALIAS_STATEMENT => {
-                TsAnyDeclaration::TsTypeAliasStatement(TsTypeAliasStatement { syntax })
-            }
-            _ => return None,
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            TsAnyDeclaration::TsDeclareFunctionStatement(it) => &it.syntax,
-            TsAnyDeclaration::TsEnumStatement(it) => &it.syntax,
-            TsAnyDeclaration::TsTypeAliasStatement(it) => &it.syntax,
-        }
-    }
-}
-impl std::fmt::Debug for TsAnyDeclaration {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            TsAnyDeclaration::TsDeclareFunctionStatement(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyDeclaration::TsEnumStatement(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyDeclaration::TsTypeAliasStatement(it) => std::fmt::Debug::fmt(it, f),
-        }
-    }
-}
-impl From<TsAnyDeclaration> for SyntaxNode {
-    fn from(n: TsAnyDeclaration) -> SyntaxNode {
-        match n {
-            TsAnyDeclaration::TsDeclareFunctionStatement(it) => it.into(),
-            TsAnyDeclaration::TsEnumStatement(it) => it.into(),
-            TsAnyDeclaration::TsTypeAliasStatement(it) => it.into(),
-        }
-    }
-}
-impl From<TsAnyDeclaration> for SyntaxElement {
-    fn from(n: TsAnyDeclaration) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -17171,11 +17059,6 @@ impl std::fmt::Display for JsAnyTemplateElement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyDeclaration {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
 impl std::fmt::Display for TsAnyName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -18027,11 +17910,6 @@ impl std::fmt::Display for TsConstructorType {
     }
 }
 impl std::fmt::Display for TsDeclareFunctionStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for TsDeclareStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -20724,9 +20602,6 @@ impl Debug for DebugSyntaxElement {
                     &TsDeclareFunctionStatement::cast(node.clone()).unwrap(),
                     f,
                 ),
-                TS_DECLARE_STATEMENT => {
-                    std::fmt::Debug::fmt(&TsDeclareStatement::cast(node.clone()).unwrap(), f)
-                }
                 TS_DEFAULT_TYPE_CLAUSE => {
                     std::fmt::Debug::fmt(&TsDefaultTypeClause::cast(node.clone()).unwrap(), f)
                 }

@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@5..7 "A" [] [Whitespace(" ")],
@@ -29,6 +30,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@36..38 "B" [] [Whitespace(" ")],
@@ -79,6 +81,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@70..76 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@76..78 "C" [] [Whitespace(" ")],
@@ -133,6 +136,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@115..121 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@121..123 "D" [] [Whitespace(" ")],
@@ -159,6 +163,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@137..143 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@143..145 "E" [] [Whitespace(" ")],
@@ -184,6 +189,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
+            declare_token: missing (optional),
             type_token: TYPE_KW@160..166 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@166..168 "F" [] [Whitespace(" ")],
@@ -213,12 +219,13 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..179
     0: TS_TYPE_ALIAS_STATEMENT@0..30
-      0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@5..7
+      0: (empty)
+      1: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@5..7
         0: IDENT@5..7 "A" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@7..9 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@9..30
+      3: (empty)
+      4: EQ@7..9 "=" [] [Whitespace(" ")]
+      5: TS_TUPLE_TYPE@9..30
         0: L_BRACK@9..10 "[" [] []
         1: TS_TUPLE_TYPE_ELEMENT_LIST@10..29
           0: TS_STRING_TYPE@10..16
@@ -230,14 +237,15 @@ JsModule {
           4: TS_ANY_TYPE@26..29
             0: ANY_KW@26..29 "any" [] []
         2: R_BRACK@29..30 "]" [] []
-      5: (empty)
+      6: (empty)
     1: TS_TYPE_ALIAS_STATEMENT@30..70
-      0: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@36..38
+      0: (empty)
+      1: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@36..38
         0: IDENT@36..38 "B" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@38..40 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@40..70
+      3: (empty)
+      4: EQ@38..40 "=" [] [Whitespace(" ")]
+      5: TS_TUPLE_TYPE@40..70
         0: L_BRACK@40..41 "[" [] []
         1: TS_TUPLE_TYPE_ELEMENT_LIST@41..69
           0: TS_NAMED_TUPLE_TYPE_ELEMENT@41..50
@@ -267,14 +275,15 @@ JsModule {
             4: TS_ANY_TYPE@66..69
               0: ANY_KW@66..69 "any" [] []
         2: R_BRACK@69..70 "]" [] []
-      5: (empty)
+      6: (empty)
     2: TS_TYPE_ALIAS_STATEMENT@70..115
-      0: TYPE_KW@70..76 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@76..78
+      0: (empty)
+      1: TYPE_KW@70..76 "type" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@76..78
         0: IDENT@76..78 "C" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@78..80 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@80..115
+      3: (empty)
+      4: EQ@78..80 "=" [] [Whitespace(" ")]
+      5: TS_TUPLE_TYPE@80..115
         0: L_BRACK@80..81 "[" [] []
         1: TS_TUPLE_TYPE_ELEMENT_LIST@81..114
           0: TS_NAMED_TUPLE_TYPE_ELEMENT@81..90
@@ -307,14 +316,15 @@ JsModule {
               1: L_BRACK@112..113 "[" [] []
               2: R_BRACK@113..114 "]" [] []
         2: R_BRACK@114..115 "]" [] []
-      5: (empty)
+      6: (empty)
     3: TS_TYPE_ALIAS_STATEMENT@115..137
-      0: TYPE_KW@115..121 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@121..123
+      0: (empty)
+      1: TYPE_KW@115..121 "type" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@121..123
         0: IDENT@121..123 "D" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@123..125 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@125..137
+      3: (empty)
+      4: EQ@123..125 "=" [] [Whitespace(" ")]
+      5: TS_TUPLE_TYPE@125..137
         0: L_BRACK@125..126 "[" [] []
         1: TS_TUPLE_TYPE_ELEMENT_LIST@126..136
           0: TS_NAMED_TUPLE_TYPE_ELEMENT@126..136
@@ -326,14 +336,15 @@ JsModule {
             4: TS_STRING_TYPE@130..136
               0: STRING_KW@130..136 "string" [] []
         2: R_BRACK@136..137 "]" [] []
-      5: (empty)
+      6: (empty)
     4: TS_TYPE_ALIAS_STATEMENT@137..160
-      0: TYPE_KW@137..143 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@143..145
+      0: (empty)
+      1: TYPE_KW@137..143 "type" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@143..145
         0: IDENT@143..145 "E" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@145..147 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@147..160
+      3: (empty)
+      4: EQ@145..147 "=" [] [Whitespace(" ")]
+      5: TS_TUPLE_TYPE@147..160
         0: L_BRACK@147..148 "[" [] []
         1: TS_TUPLE_TYPE_ELEMENT_LIST@148..159
           0: TS_REST_TUPLE_TYPE_ELEMENT@148..159
@@ -344,14 +355,15 @@ JsModule {
               1: L_BRACK@157..158 "[" [] []
               2: R_BRACK@158..159 "]" [] []
         2: R_BRACK@159..160 "]" [] []
-      5: (empty)
+      6: (empty)
     5: TS_TYPE_ALIAS_STATEMENT@160..179
-      0: TYPE_KW@160..166 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@166..168
+      0: (empty)
+      1: TYPE_KW@160..166 "type" [Newline("\n")] [Whitespace(" ")]
+      2: TS_IDENTIFIER_BINDING@166..168
         0: IDENT@166..168 "F" [] [Whitespace(" ")]
-      2: (empty)
-      3: EQ@168..170 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@170..179
+      3: (empty)
+      4: EQ@168..170 "=" [] [Whitespace(" ")]
+      5: TS_TUPLE_TYPE@170..179
         0: L_BRACK@170..171 "[" [] []
         1: TS_TUPLE_TYPE_ELEMENT_LIST@171..178
           0: TS_OPTIONAL_TUPLE_TYPE_ELEMENT@171..178
@@ -359,5 +371,5 @@ JsModule {
               0: STRING_KW@171..177 "string" [] []
             1: QUESTION@177..178 "?" [] []
         2: R_BRACK@178..179 "]" [] []
-      5: (empty)
+      6: (empty)
   3: EOF@179..180 "" [Newline("\n")] []

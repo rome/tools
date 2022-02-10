@@ -8,6 +8,7 @@ JsScript {
     ],
     statements: JsStatementList [
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@19..24 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -57,6 +58,7 @@ JsScript {
                 ],
                 statements: JsStatementList [
                     JsVariableStatement {
+                        declare_token: missing (optional),
                         declarations: JsVariableDeclarations {
                             kind: LET_KW@98..105 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
@@ -111,6 +113,7 @@ JsScript {
                         ],
                         statements: JsStatementList [
                             JsVariableStatement {
+                                declare_token: missing (optional),
                                 declarations: JsVariableDeclarations {
                                     kind: LET_KW@180..187 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                                     items: JsVariableDeclarationList [
@@ -145,6 +148,7 @@ JsScript {
             semicolon_token: SEMICOLON@232..233 ";" [] [],
         },
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@233..238 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -175,6 +179,7 @@ JsScript {
                                     ],
                                     statements: JsStatementList [
                                         JsVariableStatement {
+                                            declare_token: missing (optional),
                                             declarations: JsVariableDeclarations {
                                                 kind: LET_KW@265..272 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                                                 items: JsVariableDeclarationList [
@@ -234,7 +239,8 @@ JsScript {
       1: (empty)
   2: JS_STATEMENT_LIST@19..356
     0: JS_VARIABLE_STATEMENT@19..31
-      0: JS_VARIABLE_DECLARATIONS@19..30
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@19..30
         0: LET_KW@19..24 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@24..30
           0: JS_VARIABLE_DECLARATION@24..30
@@ -245,7 +251,7 @@ JsScript {
               0: EQ@26..28 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@28..30
                 0: JS_NUMBER_LITERAL@28..30 "10" [] []
-      1: SEMICOLON@30..31 ";" [] []
+      2: SEMICOLON@30..31 ";" [] []
     1: JS_EXPRESSION_STATEMENT@31..64
       0: JS_STRING_LITERAL_EXPRESSION@31..44
         0: JS_STRING_LITERAL@31..44 "\"use strict\"" [Newline("\n")] []
@@ -270,7 +276,8 @@ JsScript {
             1: SEMICOLON@97..98 ";" [] []
         2: JS_STATEMENT_LIST@98..147
           0: JS_VARIABLE_STATEMENT@98..112
-            0: JS_VARIABLE_DECLARATIONS@98..111
+            0: (empty)
+            1: JS_VARIABLE_DECLARATIONS@98..111
               0: LET_KW@98..105 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
               1: JS_VARIABLE_DECLARATION_LIST@105..111
                 0: JS_VARIABLE_DECLARATION@105..111
@@ -281,7 +288,7 @@ JsScript {
                     0: EQ@107..109 "=" [] [Whitespace(" ")]
                     1: JS_NUMBER_LITERAL_EXPRESSION@109..111
                       0: JS_NUMBER_LITERAL@109..111 "10" [] []
-            1: SEMICOLON@111..112 ";" [] []
+            2: SEMICOLON@111..112 ";" [] []
           1: JS_EXPRESSION_STATEMENT@112..147
             0: JS_STRING_LITERAL_EXPRESSION@112..127
               0: JS_STRING_LITERAL@112..127 "'use strict'" [Newline("\n"), Whitespace("  ")] []
@@ -309,7 +316,8 @@ JsScript {
                 1: SEMICOLON@179..180 ";" [] []
             2: JS_STATEMENT_LIST@180..229
               0: JS_VARIABLE_STATEMENT@180..194
-                0: JS_VARIABLE_DECLARATIONS@180..193
+                0: (empty)
+                1: JS_VARIABLE_DECLARATIONS@180..193
                   0: LET_KW@180..187 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
                   1: JS_VARIABLE_DECLARATION_LIST@187..193
                     0: JS_VARIABLE_DECLARATION@187..193
@@ -320,7 +328,7 @@ JsScript {
                         0: EQ@189..191 "=" [] [Whitespace(" ")]
                         1: JS_NUMBER_LITERAL_EXPRESSION@191..193
                           0: JS_NUMBER_LITERAL@191..193 "10" [] []
-                1: SEMICOLON@193..194 ";" [] []
+                2: SEMICOLON@193..194 ";" [] []
               1: JS_EXPRESSION_STATEMENT@194..229
                 0: JS_STRING_LITERAL_EXPRESSION@194..209
                   0: JS_STRING_LITERAL@194..209 "\"use strict\"" [Newline("\n"), Whitespace("  ")] []
@@ -329,7 +337,8 @@ JsScript {
         2: R_PAREN@231..232 ")" [] []
       1: SEMICOLON@232..233 ";" [] []
     4: JS_VARIABLE_STATEMENT@233..317
-      0: JS_VARIABLE_DECLARATIONS@233..317
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@233..317
         0: LET_KW@233..238 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@238..317
           0: JS_VARIABLE_DECLARATION@238..317
@@ -355,7 +364,8 @@ JsScript {
                       1: SEMICOLON@264..265 ";" [] []
                   2: JS_STATEMENT_LIST@265..315
                     0: JS_VARIABLE_STATEMENT@265..279
-                      0: JS_VARIABLE_DECLARATIONS@265..278
+                      0: (empty)
+                      1: JS_VARIABLE_DECLARATIONS@265..278
                         0: LET_KW@265..272 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
                         1: JS_VARIABLE_DECLARATION_LIST@272..278
                           0: JS_VARIABLE_DECLARATION@272..278
@@ -366,13 +376,13 @@ JsScript {
                               0: EQ@274..276 "=" [] [Whitespace(" ")]
                               1: JS_NUMBER_LITERAL_EXPRESSION@276..278
                                 0: JS_NUMBER_LITERAL@276..278 "10" [] []
-                      1: SEMICOLON@278..279 ";" [] []
+                      2: SEMICOLON@278..279 ";" [] []
                     1: JS_EXPRESSION_STATEMENT@279..315
                       0: JS_STRING_LITERAL_EXPRESSION@279..294
                         0: JS_STRING_LITERAL@279..294 "\"use strict\"" [Newline("\n"), Whitespace("  ")] []
                       1: SEMICOLON@294..315 ";" [] [Whitespace("  "), Comments("// not a directive")]
                   3: R_CURLY@315..317 "}" [Newline("\n")] []
-      1: (empty)
+      2: (empty)
     5: JS_BLOCK_STATEMENT@317..356
       0: L_CURLY@317..319 "{" [Newline("\n")] []
       1: JS_STATEMENT_LIST@319..354

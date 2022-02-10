@@ -61,6 +61,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: VAR_KW@17..20 "var" [] [],
                 items: JsVariableDeclarationList [],
@@ -141,10 +142,11 @@ JsModule {
           2: (empty)
       1: (empty)
     2: JS_VARIABLE_STATEMENT@17..21
-      0: JS_VARIABLE_DECLARATIONS@17..20
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@17..20
         0: VAR_KW@17..20 "var" [] []
         1: JS_VARIABLE_DECLARATION_LIST@20..20
-      1: SEMICOLON@20..21 ";" [] []
+      2: SEMICOLON@20..21 ";" [] []
     3: JS_EXPRESSION_STATEMENT@21..31
       0: JS_CALL_EXPRESSION@21..31
         0: JS_IDENTIFIER_EXPRESSION@21..26

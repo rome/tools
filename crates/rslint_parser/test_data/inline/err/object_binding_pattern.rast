@@ -3,6 +3,7 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -54,6 +55,7 @@ JsModule {
             semicolon_token: SEMICOLON@29..30 ";" [] [],
         },
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@30..35 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -97,6 +99,7 @@ JsModule {
             semicolon_token: SEMICOLON@61..62 ";" [] [],
         },
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@62..67 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -149,6 +152,7 @@ JsModule {
             semicolon_token: SEMICOLON@93..94 ";" [] [],
         },
         JsVariableStatement {
+            declare_token: missing (optional),
             declarations: JsVariableDeclarations {
                 kind: LET_KW@94..99 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
@@ -199,7 +203,8 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..124
     0: JS_VARIABLE_STATEMENT@0..10
-      0: JS_VARIABLE_DECLARATIONS@0..10
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@0..10
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@4..10
           0: JS_VARIABLE_DECLARATION@4..10
@@ -215,7 +220,7 @@ JsModule {
               2: R_CURLY@8..10 "}" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
-      1: (empty)
+      2: (empty)
     1: JS_UNKNOWN_STATEMENT@10..14
       0: R_CURLY@10..12 "}" [] [Whitespace(" ")]
       1: EQ@12..14 "=" [] [Whitespace(" ")]
@@ -233,7 +238,8 @@ JsModule {
     3: JS_EMPTY_STATEMENT@29..30
       0: SEMICOLON@29..30 ";" [] []
     4: JS_VARIABLE_STATEMENT@30..62
-      0: JS_VARIABLE_DECLARATIONS@30..61
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@30..61
         0: LET_KW@30..35 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@35..61
           0: JS_VARIABLE_DECLARATION@35..61
@@ -258,9 +264,10 @@ JsModule {
                     2: JS_STRING_LITERAL_EXPRESSION@54..60
                       0: JS_STRING_LITERAL@54..60 "\"foo\"" [] [Whitespace(" ")]
                 2: R_CURLY@60..61 "}" [] []
-      1: SEMICOLON@61..62 ";" [] []
+      2: SEMICOLON@61..62 ";" [] []
     5: JS_VARIABLE_STATEMENT@62..94
-      0: JS_VARIABLE_DECLARATIONS@62..93
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@62..93
         0: LET_KW@62..67 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@67..93
           0: JS_VARIABLE_DECLARATION@67..93
@@ -294,9 +301,10 @@ JsModule {
                     2: JS_STRING_LITERAL_EXPRESSION@86..92
                       0: JS_STRING_LITERAL@86..92 "\"foo\"" [] [Whitespace(" ")]
                 2: R_CURLY@92..93 "}" [] []
-      1: SEMICOLON@93..94 ";" [] []
+      2: SEMICOLON@93..94 ";" [] []
     6: JS_VARIABLE_STATEMENT@94..124
-      0: JS_VARIABLE_DECLARATIONS@94..123
+      0: (empty)
+      1: JS_VARIABLE_DECLARATIONS@94..123
         0: LET_KW@94..99 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@99..123
           0: JS_VARIABLE_DECLARATION@99..123
@@ -324,7 +332,7 @@ JsModule {
                 0: L_CURLY@121..122 "{" [] []
                 1: JS_OBJECT_MEMBER_LIST@122..122
                 2: R_CURLY@122..123 "}" [] []
-      1: SEMICOLON@123..124 ";" [] []
+      2: SEMICOLON@123..124 ";" [] []
   3: EOF@124..125 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `:` but instead found `}`

@@ -21,7 +21,9 @@ use crate::syntax::function::{is_at_async_function, parse_function_statement, Li
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement, ts_only_syntax_error};
 use crate::syntax::module::{parse_export, parse_import};
-use crate::syntax::util::is_at_contextual_keyword;
+use crate::syntax::util::{
+    eat_contextual_keyword, is_at_contextual_keyword, is_nth_at_contextual_keyword,
+};
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -204,7 +206,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
             parse_function_statement(p, context)
         }
-        T![ident] if is_at_contextual_keyword(p, "let") && FOLLOWS_LET.contains(p.nth(1)) => {
+        T![ident] if is_nth_at_let_variable_statement(p, 0) => {
             // test_err let_newline_in_async_function
             // async function f() {
             //   let
@@ -239,10 +241,14 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         }
         T![ident] if is_at_ts_declare_statement(p) => {
             let declare_range = p.cur_tok().range();
-            TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
-                p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
-                    .primary(declare_range, "")
-            })
+            TypeScript.parse_exclusive_syntax(
+                p,
+                |p| parse_ts_declare_statement(p, context),
+                |p, _| {
+                    p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
+                        .primary(declare_range, "")
+                },
+            )
         }
         _ => {
             if is_at_identifier(p) && p.nth_at(1, T![:]) {
@@ -901,6 +907,10 @@ pub(crate) fn is_at_variable_declarations(p: &Parser) -> bool {
     }
 }
 
+pub(crate) fn is_nth_at_let_variable_statement(p: &Parser, n: usize) -> bool {
+    is_nth_at_contextual_keyword(p, n, "let") && FOLLOWS_LET.contains(p.nth(n + 1))
+}
+
 /// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
 // test var_decl
 // var a = 5;
@@ -917,42 +927,50 @@ pub(crate) fn is_at_variable_declarations(p: &Parser) -> bool {
 // const e;
 // let [f];
 // const { g };
-fn parse_variable_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+pub(crate) fn parse_variable_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+    let m = p.start();
+
+    let declare = eat_contextual_keyword(p, "declare", T![declare]);
+
     // test_err var_decl_err
     // var a =;
     // const b = 5 let c = 5;
     let start = p.cur_tok().start();
     let is_var = p.at(T![var]);
 
-    parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement).map(
-        |declaration| {
-            let m = declaration.precede(p);
-            semi(p, start..p.cur_tok().start());
+    if parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement { declare })
+        .is_absent()
+    {
+        if declare {
+            p.error(js_parse_error::expected_identifier(p, p.cur_tok().range()));
+        } else {
+            m.abandon(p);
+            return Absent;
+        }
+    }
 
-            let mut statement = m.complete(p, JS_VARIABLE_STATEMENT);
+    semi(p, start..p.cur_tok().start());
 
-            if !is_var && context.is_single_statement() {
-                // test hoisted_declaration_in_single_statement_context
-                // if (true) var a;
-                //
-                // test_err lexical_declaration_in_single_statement_context
-                // if (true) let a;
-                // while (true) const b = 5;
-                p.error(
-                    p.err_builder(
-                        "Lexical declaration cannot appear in a single-statement context",
-                    )
-                    .primary(
-                        statement.range(p),
-                        "Wrap this declaration in a block statement",
-                    ),
-                );
-                statement.change_to_unknown(p);
-            }
+    let mut statement = m.complete(p, JS_VARIABLE_STATEMENT);
 
-            statement
-        },
-    )
+    if !is_var && context.is_single_statement() {
+        // test hoisted_declaration_in_single_statement_context
+        // if (true) var a;
+        //
+        // test_err lexical_declaration_in_single_statement_context
+        // if (true) let a;
+        // while (true) const b = 5;
+        p.error(
+            p.err_builder("Lexical declaration cannot appear in a single-statement context")
+                .primary(
+                    statement.range(p),
+                    "Wrap this declaration in a block statement",
+                ),
+        );
+        statement.change_to_unknown(p);
+    }
+
+    Present(statement)
 }
 
 pub(super) fn parse_variable_declaration_list(
@@ -976,10 +994,19 @@ pub(super) enum VariableDeclarationParent {
     For,
 
     /// Declaration as part of a variable statement (`let a`, `const b`, or `var c`).
-    VariableStatement,
+    VariableStatement { declare: bool },
 
     /// Declaration as part of an export statement: `export let ...`
     Export,
+}
+
+impl VariableDeclarationParent {
+    fn is_declare(&self) -> bool {
+        matches!(
+            self,
+            VariableDeclarationParent::VariableStatement { declare: true }
+        )
+    }
 }
 
 /// Parses a list of JS_VARIABLE_DECLARATION_LIST
@@ -1218,6 +1245,7 @@ fn parse_variable_declaration(
                 }
             }
         } else if initializer.is_none()
+            && !context.parent.is_declare()
             && matches!(
                 id.kind(),
                 JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
@@ -1231,7 +1259,7 @@ fn parse_variable_declaration(
                 );
 
             p.error(err);
-        } else if initializer.is_none() && context.is_const.is_some() {
+        } else if initializer.is_none() && context.is_const.is_some() && !context.parent.is_declare() {
             let err = p
                 .err_builder("Const var declarations must have an initialized value")
                 .primary(id.range(p), "this variable needs to be initialized");

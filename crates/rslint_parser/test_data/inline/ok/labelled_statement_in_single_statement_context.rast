@@ -13,6 +13,7 @@ JsModule {
                 label_token: IDENT@10..16 "label1" [] [],
                 colon_token: COLON@16..18 ":" [] [Whitespace(" ")],
                 body: JsVariableStatement {
+                    declare_token: missing (optional),
                     declarations: JsVariableDeclarations {
                         kind: VAR_KW@18..22 "var" [] [Whitespace(" ")],
                         items: JsVariableDeclarationList [
@@ -53,7 +54,8 @@ JsModule {
         0: IDENT@10..16 "label1" [] []
         1: COLON@16..18 ":" [] [Whitespace(" ")]
         2: JS_VARIABLE_STATEMENT@18..29
-          0: JS_VARIABLE_DECLARATIONS@18..28
+          0: (empty)
+          1: JS_VARIABLE_DECLARATIONS@18..28
             0: VAR_KW@18..22 "var" [] [Whitespace(" ")]
             1: JS_VARIABLE_DECLARATION_LIST@22..28
               0: JS_VARIABLE_DECLARATION@22..28
@@ -64,6 +66,6 @@ JsModule {
                   0: EQ@24..26 "=" [] [Whitespace(" ")]
                   1: JS_NUMBER_LITERAL_EXPRESSION@26..28
                     0: JS_NUMBER_LITERAL@26..28 "10" [] []
-          1: SEMICOLON@28..29 ";" [] []
+          2: SEMICOLON@28..29 ";" [] []
       5: (empty)
   3: EOF@29..30 "" [Newline("\n")] []
