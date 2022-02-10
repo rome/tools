@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: number.js
 
 ---
@@ -60,6 +60,7 @@ fnNumber =
 
 fnNumber =
   // Comment
+
   3;
 
 fnNumber =
@@ -78,6 +79,7 @@ fnNumber =
   3;
 
 var fnNumber = // Comment
+
 3;
 
 var fnNumber = // Comment0

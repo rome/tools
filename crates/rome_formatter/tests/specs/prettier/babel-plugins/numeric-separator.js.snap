@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: numeric-separator.js
 
 ---
@@ -48,6 +48,7 @@ console.log(c.toString(16), b); // c0, 192
 # Output
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-numeric-separator
+
 let budget = 1_000_000_000_000;
 
 // What is the value of `budget`? It's 1 trillion!

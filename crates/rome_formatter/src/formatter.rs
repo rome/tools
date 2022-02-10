@@ -256,7 +256,10 @@ impl Formatter {
                 let comment = Token::from(comment);
 
                 let line_break = if is_single_line {
-                    hard_line_break()
+                    match line_count {
+                        0 | 1 => hard_line_break(),
+                        _ => empty_line(),
+                    }
                 } else {
                     match line_count {
                         0 => space_token(),

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: ramda_compose.js
 
 ---
@@ -87,6 +87,7 @@ followersForUser("JOE").then(
   (followers) => console.log("Followers:", followers),
 );
 // Followers: ["STEVE","SUZY"]
+
 const mapStateToProps = (state) =>
   ({
     users: R.compose(R.filter(R.propEq("status", "active")), R.values)(

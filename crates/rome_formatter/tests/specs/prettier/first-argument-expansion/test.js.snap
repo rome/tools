@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: test.js
 
 ---
@@ -259,6 +259,7 @@ reallyLongLongLongLongLongLongLongLongLongLongLongLongLongLongMethod(
 );
 
 // Don't do the rest of these
+
 func(
   function () {
     thing();

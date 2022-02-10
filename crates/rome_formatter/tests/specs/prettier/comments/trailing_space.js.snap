@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: trailing_space.js
 
 ---
@@ -18,6 +18,7 @@ expression: trailing_space.js
 ```js
 #!/there/is-space-here->         
 // Do not trim trailing whitespace from this source file!
+
 // There is some space here ->
 
 ```

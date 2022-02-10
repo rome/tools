@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: class-properties.js
 
 ---
@@ -38,6 +38,7 @@ class Bork {
 # Output
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-class-properties
+
 class Bork {
   //Property initializer syntax
   instanceProperty = "bork";

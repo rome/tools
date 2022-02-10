@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: import-meta.js
 
 ---
@@ -30,8 +30,11 @@ expression: import-meta.js
 # Output
 ```js
 // https://babeljs.io/docs/en/babel-plugin-syntax-import-meta
+
 // Enabled by default https://github.com/babel/babel/pull/11406
+
 // from https://github.com/tc39/proposal-import-meta
+
 (async () => {
   const response = await fetch(new URL("../hamsters.jpg", import.meta.url));
   const blob = await response.blob();

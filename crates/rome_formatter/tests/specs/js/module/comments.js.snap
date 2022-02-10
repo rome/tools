@@ -62,6 +62,7 @@ Line width: 80
 // import {
 //     func, // trailing comma removal
 // } from 'module';
+
 expression( /* block comment */ );
 
 expression(

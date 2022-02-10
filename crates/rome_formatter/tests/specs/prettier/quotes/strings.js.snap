@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: strings.js
 
 ---
@@ -122,6 +122,7 @@ expression: strings.js
 // Note that even if a string already has the correct enclosing quotes, it is
 // still processed in order to remove unnecessarily escaped quotes within it,
 // for consistency.
+
 // Simple strings.
 "abc";
 "abc";

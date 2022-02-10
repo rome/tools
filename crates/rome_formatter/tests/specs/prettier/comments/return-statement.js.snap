@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: return-statement.js
 
 ---
@@ -210,6 +210,7 @@ function excessiveEverything() {
 //     a
 //   ), b
 // }
+
 function sequenceExpressionInside() {
   return (a, b); // Reason for a
 }

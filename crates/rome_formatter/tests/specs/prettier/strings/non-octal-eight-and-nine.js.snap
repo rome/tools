@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: non-octal-eight-and-nine.js
 
 ---
@@ -19,6 +19,7 @@ expression: non-octal-eight-and-nine.js
 # Output
 ```js
 // https://github.com/babel/babel/pull/11852
+
 "\8", "\9";
 () => {
   "use strict";

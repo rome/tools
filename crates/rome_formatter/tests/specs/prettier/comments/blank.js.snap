@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: blank.js
 
 ---
@@ -37,6 +37,7 @@ expression: blank.js
 // should still exist
 //
 // when printed.
+
 /**
  * @typedef {DataDrivenMapping|ConstantMapping} Mapping
  */
@@ -50,6 +51,7 @@ expression: blank.js
  * @property {Function} tickFormat
  */
 // comment
+
 // comment
 
 ```

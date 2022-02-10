@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: comments.js
 
 ---
@@ -72,6 +72,7 @@ switch(x) {
 switch (true) {
   case true:
   // Good luck getting here
+
   case false:
 }
 
@@ -87,6 +88,7 @@ switch (x) {
     {}
 
   // other
+
   case y:
     {}
 }

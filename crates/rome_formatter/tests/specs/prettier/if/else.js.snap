@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: else.js
 
 ---
@@ -30,6 +30,7 @@ function f() {
 # Output
 ```js
 // Both functions below should be formatted exactly the same
+
 function f() {
   if (position) return { name: pair }; else return {
     name: pair.substring(0, position),

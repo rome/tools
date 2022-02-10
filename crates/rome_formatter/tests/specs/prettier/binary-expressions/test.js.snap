@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: test.js
 
 ---
@@ -32,6 +32,7 @@ foo(obj.property * new Class() && obj instanceof Class && longVariable ? number 
 ```js
 // It should always break the highest precedence operators first, and
 // break them all at the same time.
+
 const x = longVariable + longVariable + longVariable;
 const x1 = longVariable + longVariable + longVariable + longVariable - longVariable + longVariable;
 const x2 = longVariable + longVariable * longVariable + longVariable - longVariable + longVariable;
