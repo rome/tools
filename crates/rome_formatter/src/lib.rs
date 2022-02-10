@@ -568,3 +568,24 @@ function() {
         );
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::format;
+    use crate::FormatOptions;
+    use rslint_parser::{parse, Syntax};
+
+    #[test]
+    fn poc() {
+        let src = r#"let g = [[], [0, 1], [0, 1]      ];
+"#;
+        let syntax = Syntax::default().typescript();
+        let tree = parse(src, 0, syntax);
+        let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
+        assert_eq!(
+            result.as_code(),
+            r#"let g = [[], [0, 1], [0, 1]];
+"#
+        );
+    }
+}

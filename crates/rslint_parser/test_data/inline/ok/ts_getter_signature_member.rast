@@ -74,7 +74,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@114..117 "get" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@117..118 "(" [] [],
@@ -110,7 +110,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@141..144 "get" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@144..146 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
@@ -140,7 +140,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@166..170 "get" [] [Whitespace(" ")],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: missing (optional),
                         separator_token: missing (optional),
                     },

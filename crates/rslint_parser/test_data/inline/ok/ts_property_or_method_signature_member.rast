@@ -18,7 +18,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@11..12 "a" [] [],
                         },
-                        optional_token_token: QUESTION@12..13 "?" [] [],
+                        optional_token: QUESTION@12..13 "?" [] [],
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -31,7 +31,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@23..24 "b" [] [],
                         },
-                        optional_token_token: QUESTION@24..25 "?" [] [],
+                        optional_token: QUESTION@24..25 "?" [] [],
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@25..26 "(" [] [],
@@ -67,7 +67,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@49..50 "a" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@50..52 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -80,7 +80,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@60..61 "b" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@61..62 "(" [] [],
@@ -115,7 +115,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@85..86 "m" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@86..87 "(" [] [],
@@ -193,7 +193,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@138..146 "readonly" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@146..148 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -207,7 +207,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@165..166 "a" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@166..168 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
@@ -236,7 +236,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@188..189 "m" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_parameters: TsTypeParameters {
                             l_angle_token: L_ANGLE@189..190 "<" [] [],
                             items: TsTypeParameterList [

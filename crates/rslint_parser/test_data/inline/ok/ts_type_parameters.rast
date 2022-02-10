@@ -75,7 +75,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@77..78 "x" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@78..80 ":" [] [Whitespace(" ")],
                             ty: TsReferenceType {
@@ -92,7 +92,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@83..84 "y" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@84..86 ":" [] [Whitespace(" ")],
                             ty: TsReferenceType {
@@ -109,7 +109,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@89..90 "z" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@90..92 ":" [] [Whitespace(" ")],
                             ty: TsReferenceType {

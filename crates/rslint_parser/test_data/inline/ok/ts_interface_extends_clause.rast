@@ -29,7 +29,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@20..24 "prop" [] [],
                     },
-                    optional_token_token: missing (optional),
+                    optional_token: missing (optional),
                     type_annotation: TsTypeAnnotation {
                         colon_token: COLON@24..26 ":" [] [Whitespace(" ")],
                         ty: TsReferenceType {

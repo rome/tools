@@ -77,7 +77,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@68..69 "a" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@69..71 ":" [] [Whitespace(" ")],
                             ty: TsReferenceType {

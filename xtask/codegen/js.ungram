@@ -1696,7 +1696,7 @@ TsCallSignatureTypeMember =
 TsPropertySignatureTypeMember =
 	'readonly'?
 	name: JsAnyObjectMemberName
-	optional_token: '?'?
+	optional: '?'?
 	type_annotation: TsTypeAnnotation?
 	separator_token: (',' | ';')?
 
@@ -1713,7 +1713,7 @@ TsConstructSignatureTypeMember =
 //   ^^^^^^^^^^^^
 TsMethodSignatureTypeMember =
 	name: JsAnyObjectMemberName
-	optional_token: '?'?
+	optional: '?'?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?

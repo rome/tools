@@ -29,7 +29,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@29..33 "prop" [] [],
                     },
-                    optional_token_token: missing (optional),
+                    optional_token: missing (optional),
                     type_annotation: TsTypeAnnotation {
                         colon_token: COLON@33..35 ":" [] [Whitespace(" ")],
                         ty: TsStringType {
@@ -42,7 +42,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@43..49 "method" [] [],
                     },
-                    optional_token_token: missing (optional),
+                    optional_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@49..50 "(" [] [],
