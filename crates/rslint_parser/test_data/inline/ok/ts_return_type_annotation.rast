@@ -53,7 +53,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@40..44 "test" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@44..45 "(" [] [],

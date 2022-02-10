@@ -1,7 +1,12 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsIndexSignatureParameter, AstNode};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use rslint_parser::ast::TsIndexSignatureParameter;
+
 impl ToFormatElement for TsIndexSignatureParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let binding = self.binding().format(formatter)?;
+        let type_annotation = self.type_annotation().format(formatter)?;
+
+        Ok(format_elements![binding, type_annotation])
     }
 }

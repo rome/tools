@@ -12,7 +12,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-type A = string;
+type K = { set     something( something_with_long_name: string) }
     "#;
 
     let module = parse(src, 0, Syntax::default().typescript());

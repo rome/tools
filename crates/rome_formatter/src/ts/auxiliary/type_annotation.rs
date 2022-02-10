@@ -1,7 +1,14 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsTypeAnnotation, AstNode};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::{
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+};
+use rslint_parser::ast::TsTypeAnnotation;
+
 impl ToFormatElement for TsTypeAnnotation {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let colon = self.colon_token().format(formatter)?;
+        let ty = self.ty().format(formatter)?;
+
+        Ok(format_elements![colon, space_token(), ty])
     }
 }
