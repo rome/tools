@@ -194,9 +194,10 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         .ok();
 
     let parameter_context = if kind.is_statement() && TypeScript.is_supported(p) {
-        // It isn't known at this point if this a function overload definition (body is missing) or a regular
-        // function implementation. Let's go with the laxer of the two. Ideally, these verifications should be
-        // part of a second compiler pass.
+        // It isn't known at this point if this is a function overload definition (body is missing)
+        // or a regular function implementation.
+        // Let's go with the laxer of the two. Ideally, these verifications should be part of
+        // a second compiler pass.
         ParameterContext::Declaration
     } else {
         ParameterContext::Implementation
