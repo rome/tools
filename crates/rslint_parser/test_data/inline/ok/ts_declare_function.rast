@@ -124,7 +124,7 @@ JsModule {
                                             name: JsLiteralMemberName {
                                                 value: IDENT@80..81 "a" [] [],
                                             },
-                                            optional_token_token: missing (optional),
+                                            optional_token: missing (optional),
                                             type_annotation: TsTypeAnnotation {
                                                 colon_token: COLON@81..83 ":" [] [Whitespace(" ")],
                                                 ty: TsStringLiteralType {

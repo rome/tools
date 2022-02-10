@@ -99,7 +99,7 @@ JsModule {
                             },
                             r_brack_token: R_BRACK@114..115 "]" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@115..117 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -134,7 +134,7 @@ JsModule {
                             },
                             r_brack_token: R_BRACK@148..149 "]" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@149..151 ":" [] [Whitespace(" ")],
                             ty: TsStringType {

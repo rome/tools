@@ -17,7 +17,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@11..12 "a" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@12..14 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -31,7 +31,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@22..23 "b" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@23..25 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
@@ -60,7 +60,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@46..47 "a" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@47..49 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -74,7 +74,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@57..58 "b" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@58..60 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
@@ -103,7 +103,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@81..82 "a" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@82..84 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -117,7 +117,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@92..93 "b" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@93..95 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
@@ -131,7 +131,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@103..104 "c" [] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@104..106 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -160,7 +160,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@126..129 "a" [Newline("\n"), Whitespace("\t")] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@129..131 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
@@ -174,7 +174,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@137..140 "b" [Newline("\n"), Whitespace(" ")] [],
                         },
-                        optional_token_token: missing (optional),
+                        optional_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@140..142 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
