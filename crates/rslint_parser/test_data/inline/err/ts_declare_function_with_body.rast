@@ -5,7 +5,7 @@ JsModule {
         JsUnknownStatement {
             items: [
                 DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
-                JsUnknown {
+                JsUnknownStatement {
                     items: [
                         FUNCTION_KW@8..17 "function" [] [Whitespace(" ")],
                         JsIdentifierBinding {
@@ -80,7 +80,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..81
     0: JS_UNKNOWN_STATEMENT@0..81
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
-      1: JS_UNKNOWN@8..81
+      1: JS_UNKNOWN_STATEMENT@8..81
         0: FUNCTION_KW@8..17 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@17..21
           0: IDENT@17..21 "test" [] []

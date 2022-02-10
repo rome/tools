@@ -105,6 +105,7 @@ JsAnyStatement =
   | TsTypeAliasStatement
   | TsInterfaceStatement
   | TsDeclareStatement
+  | TsDeclareFunctionStatement
 
 
 JsBlockStatement =
@@ -1542,9 +1543,14 @@ TsDeclareStatement =
 TsAnyDeclaration =
 	TsEnumStatement
 	| TsTypeAliasStatement
-	| TsDeclareFunction
+	| TsDeclareFunctionStatement
 
-TsDeclareFunction =
+// declare function test();
+//         ^^^^^^^^^^^^^^^^
+// function test();
+// ^^^^^^^^^^^^^^^^
+TsDeclareFunctionStatement =
+	'async'?
 	'function'
 	id: JsAnyBinding
 	type_parameters: TsTypeParameters?

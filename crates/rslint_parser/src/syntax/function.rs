@@ -53,9 +53,6 @@ use rslint_syntax::{JsSyntaxKind, T};
 // test ts ts_function_statement
 // function test(a: string, b?: number, c="default") {}
 // function test2<A, B extends A, C = A>(a: A, b: B, c: C) {}
-//
-// test_err ts ts_optional_pattern_parameter
-// function test({a, b}?) {}
 pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
@@ -160,6 +157,7 @@ fn is_at_function(p: &Parser) -> bool {
     p.at_ts(token_set![T![async], T![function]]) || is_at_async_function(p, LineBreak::DoNotCheck)
 }
 
+#[inline]
 fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
     let mut flags = SignatureFlags::empty();
 
@@ -170,11 +168,12 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     }
 
     p.expect(T![function]);
-
-    let in_generator = p.eat(T![*]);
-    if in_generator {
+    let generator_range = if p.eat(T![*]) {
         flags |= SignatureFlags::GENERATOR;
-    }
+        p.tokens.last_tok().map(|t| t.range())
+    } else {
+        None
+    };
 
     let id = parse_function_id(p, kind, flags);
 
@@ -194,7 +193,17 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         })
         .ok();
 
-    parse_parameter_list(p, ParameterContext::Implementation, flags)
+    let parameter_context = if kind.is_statement() && TypeScript.is_supported(p) {
+        // It isn't known at this point if this is a function overload definition (body is missing)
+        // or a regular function implementation.
+        // Let's go with the laxer of the two. Ideally, these verifications should be part of
+        // a second compiler pass.
+        ParameterContext::Declaration
+    } else {
+        ParameterContext::Implementation
+    };
+
+    parse_parameter_list(p, parameter_context, flags)
         .or_add_diagnostic(p, js_parse_error::expected_parameters);
 
     TypeScript
@@ -204,23 +213,50 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         })
         .ok();
 
-    if kind.is_statement() {
-        function_body_or_declaration(p, flags);
+    let body = parse_function_body(p, flags);
+
+    // test ts ts_function_overload
+    // function test(a: string): void;
+    // function test(a: string | undefined): void {}
+    // function no_semi(a: string)
+    // function no_semi(a: string) {}
+    // async function async_overload(a: string)
+    // async function async_overload(a: string) {}
+    if body.is_absent()
+        && TypeScript.is_supported(p)
+        && is_semi(p, 0)
+        && matches!(kind, FunctionKind::Statement { declaration: false })
+    {
+        p.eat(T![;]);
+
+        // test_err ts ts_function_overload_generator
+        // function* test(a: string);
+        // function* test(a: string) {}
+        if let Some(generator_range) = generator_range {
+            p.error(
+                p.err_builder("An overload signature cannot be declared as a generator.")
+                    .primary(generator_range, ""),
+            );
+        }
+
+        m.complete(p, TS_DECLARE_FUNCTION_STATEMENT)
     } else {
-        parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_function_body);
+        body.or_add_diagnostic(p, js_parse_error::expected_function_body);
+
+        let mut function = m.complete(p, kind.into());
+
+        // test_err async_or_generator_in_single_statement_context
+        // if (true) async function t() {}
+        // if (true) function* t() {}
+        if matches!(kind, FunctionKind::Statement { declaration: true })
+            && (in_async || generator_range.is_some())
+        {
+            p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block").primary(function.range(p), ""));
+            function.change_to_unknown(p);
+        }
+
+        function
     }
-
-    let mut function = m.complete(p, kind.into());
-
-    // test_err async_or_generator_in_single_statement_context
-    // if (true) async function t() {}
-    // if (true) function* t() {}
-    if kind == (FunctionKind::Statement { declaration: true }) && (in_async || in_generator) {
-        p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block").primary(function.range(p), ""));
-        function.change_to_unknown(p);
-    }
-
-    function
 }
 
 // test_err break_in_nested_function
@@ -269,21 +305,6 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
             // }
             parse_binding(p)
         }
-    }
-}
-
-// TODO #2058 This is probably not ideal (same with the `declare` keyword). We should
-// use a different AST type for function declarations. For example, a function declaration should
-// never have a body but that would be allowed with this approach. Same for interfaces, interface
-// methods should never have a body
-/// Either parses a typescript declaration body or the function body
-pub(super) fn function_body_or_declaration(p: &mut Parser, flags: SignatureFlags) {
-    // omitting the body is allowed in ts
-    if p.typescript() && !p.at(T!['{']) && is_semi(p, 0) {
-        p.eat(T![;]);
-    } else {
-        let body = parse_function_body(p, flags);
-        body.or_add_diagnostic(p, js_parse_error::expected_function_body);
     }
 }
 
@@ -500,7 +521,7 @@ pub(crate) enum ParameterContext {
     /// Parameter of a setter function: `set a(b: string)`
     Setter,
 
-    /// Paramter of an arrow function
+    /// Parameter of an arrow function
     Arrow,
 
     /// Parameter inside a TS property parameter: `constructor(private a)`

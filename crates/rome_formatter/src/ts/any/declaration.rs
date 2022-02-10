@@ -7,7 +7,7 @@ impl ToFormatElement for TsAnyDeclaration {
         match self {
             Self::TsEnumStatement(node) => node.to_format_element(formatter),
             Self::TsTypeAliasStatement(node) => node.to_format_element(formatter),
-            Self::TsDeclareFunction(node) => node.to_format_element(formatter),
+            Self::TsDeclareFunctionStatement(node) => node.to_format_element(formatter),
         }
     }
 }
