@@ -7,7 +7,7 @@ use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
     expected_binding, expected_parameter, expected_parameters, ts_only_syntax_error,
 };
-use crate::syntax::stmt::{is_semi, optional_semi, parse_block_impl, StatementContext};
+use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
 use crate::syntax::typescript::{
     parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
 };
@@ -18,7 +18,6 @@ use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
-use std::ops::Range;
 
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.
