@@ -1,5 +1,5 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-use crate::utils::format_object_type_member_separator;
+use crate::utils::format_type_member_separator;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::TsCallSignatureTypeMember;
 
@@ -8,7 +8,7 @@ impl ToFormatElement for TsCallSignatureTypeMember {
         let type_parameters = self.type_parameters().format_or_empty(formatter)?;
         let parameters = self.parameters().format(formatter)?;
         let return_type_annotation = self.return_type_annotation().format_or_empty(formatter)?;
-        let separator = format_object_type_member_separator(self.separator_token(), formatter)?;
+        let separator = format_type_member_separator(self.separator_token(), formatter)?;
 
         Ok(format_elements![
             type_parameters,

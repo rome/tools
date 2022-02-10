@@ -1,5 +1,5 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-use crate::utils::format_object_type_member_separator;
+use crate::utils::format_type_member_separator;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -17,8 +17,8 @@ impl ToFormatElement for TsIndexSignatureTypeMember {
         let parameter = self.parameter().format(formatter)?;
         let r_bracket = self.r_brack_token().format(formatter)?;
 
-        let separator = format_object_type_member_separator(self.separator_token(), formatter)?;
         let type_annotation = self.type_annotation().format(formatter)?;
+        let separator = format_type_member_separator(self.separator_token(), formatter)?;
 
         Ok(format_elements![
             readonly,
