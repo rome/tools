@@ -158,16 +158,9 @@ JsModule {
         1: JS_IDENTIFIER_EXPRESSION@19..21
           0: JS_REFERENCE_IDENTIFIER@19..21
             0: IDENT@19..21 "B" [] [Whitespace(" ")]
-<<<<<<< HEAD
-        2: (empty)
-      4: (empty)
-      5: L_CURLY@21..22 "{" [] []
-      6: JS_CLASS_MEMBER_LIST@22..108
-=======
       5: (empty)
       6: L_CURLY@21..22 "{" [] []
       7: JS_CLASS_MEMBER_LIST@22..108
->>>>>>> a9eb9c87a (update rast files with the optional abstract for classes)
         0: JS_CONSTRUCTOR_CLASS_MEMBER@22..57
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@22..36

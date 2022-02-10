@@ -2,7 +2,7 @@
 
 mod classes;
 mod statement;
-mod ts_parse_error;
+pub mod ts_parse_error;
 mod types;
 
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};

@@ -444,16 +444,25 @@ fn parse_class_member_impl(
                 .primary(async_range, "");
 
             p.error(err);
-            parse_class_member_name(p).unwrap();
+            parse_class_member_name(p, &modifiers).unwrap();
             parse_constructor_class_member_body(p, member_marker, modifiers)
         } else {
+            // test_err ts typescript_abstract_classes_invalid_abstract_async_member
+            // abstract class B { abstract async a(); }
+            if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
+                let err = p
+                    .err_builder("async members cannot be abstract")
+                    .primary(abstract_range, "");
+                p.error(err);
+            }
+
             parse_method_class_member(p, member_marker, modifiers, flags)
         });
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);
-    let member_name =
-        parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
+    let member_name = parse_class_member_name(p, &modifiers)
+        .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
     if is_at_method_class_member(p, 0) {
         // test class_static_constructor_method
@@ -592,7 +601,7 @@ fn parse_class_member_impl(
                     }
 
                     // So we've seen a get that now must be followed by a getter/setter name
-                    parse_class_member_name(p)
+                    parse_class_member_name(p, &modifiers)
                         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
                     // test_err ts ts_getter_setter_type_parameters
@@ -608,8 +617,9 @@ fn parse_class_member_impl(
                         p.expect(T!['(']);
                         p.expect(T![')']);
                         parse_ts_type_annotation_or_error(p).ok();
-                        parse_function_body(p, SignatureFlags::empty())
-                            .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+
+                        let body = parse_function_body(p, SignatureFlags::empty());
+                        check_body(body, p, modifiers);
 
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
@@ -637,8 +647,8 @@ fn parse_class_member_impl(
                             ));
                         }
 
-                        parse_function_body(p, SignatureFlags::empty())
-                            .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+                        let body = parse_function_body(p, SignatureFlags::empty());
+                        check_body(body, p, modifiers);
 
                         member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
                     };
@@ -695,6 +705,27 @@ fn parse_class_member_impl(
             Absent
         }
     }
+}
+
+// test_err ts typescript_class_member_body
+// class AbstractMembers {
+//     name(): string;
+// }
+// abstract class AbstractMembers {
+//     abstract display(): void { console.log(this.name); }
+//     abstract get my_name() { return this.name; }
+//     abstract set my_name(name) { this.name = name; }
+// }
+fn check_body(body: ParsedSyntax, p: &mut Parser, modifiers: ClassMemberModifiers) {
+    let is_abstract = modifiers.has(ModifierKind::Abstract);
+    let body = if !is_abstract {
+        body.or_add_diagnostic(p, js_parse_error::expected_class_method_body)
+    } else {
+        body.add_diagnostic_if_present(
+            p,
+            crate::syntax::typescript::ts_parse_error::unexpected_abstract_member_with_body,
+        )
+    };
 }
 
 fn is_at_static_initialization_block_class_member(p: &Parser) -> bool {
@@ -914,7 +945,8 @@ fn parse_method_class_member(
     modifiers: ClassMemberModifiers,
     flags: SignatureFlags,
 ) -> CompletedMarker {
-    parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
+    parse_class_member_name(p, &modifiers)
+        .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
     parse_method_class_member_body(p, m, modifiers, flags)
 }
 
@@ -965,7 +997,8 @@ fn parse_method_class_member_body(
         })
         .ok();
 
-    parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+    let body = parse_function_body(p, flags);
+    check_body(body, p, modifiers);
 
     m.complete(p, member_kind)
 }
@@ -1017,8 +1050,8 @@ fn parse_constructor_class_member_body(
         constructor_is_valid = false;
     }
 
-    parse_function_body(p, SignatureFlags::CONSTRUCTOR)
-        .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+    let body = parse_function_body(p, SignatureFlags::CONSTRUCTOR);
+    check_body(body, p, modifiers);
 
     // FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
@@ -1125,15 +1158,18 @@ fn is_at_class_member_name(p: &Parser, offset: usize) -> bool {
 }
 
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
-fn parse_class_member_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_class_member_name(p: &mut Parser, modifiers: &ClassMemberModifiers) -> ParsedSyntax {
     match p.cur() {
-        T![#] => parse_private_class_member_name(p),
+        T![#] => parse_private_class_member_name(p, modifiers),
         T!['['] => parse_computed_member_name(p),
         _ => parse_literal_member_name(p),
     }
 }
 
-pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_private_class_member_name(
+    p: &mut Parser,
+    modifiers: &ClassMemberModifiers,
+) -> ParsedSyntax {
     if !p.at(T![#]) {
         return Absent;
     }
@@ -1157,6 +1193,16 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
         Present(m.complete(p, JS_UNKNOWN))
     } else {
         p.expect(T![ident]);
+
+        // test_err ts typescript_abstract_classes_invalid_abstract_private_member
+        // abstract class A { abstract #name(); };
+        if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
+            let err = p
+                .err_builder("members with private name cannot be abstract")
+                .primary(abstract_range, "");
+            p.error(err);
+        }
+
         Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
     }
 }
@@ -1349,7 +1395,7 @@ struct Modifier {
 /// for all modifiers. These missing markers can later be undone if they are not needed for a specific
 /// member type (for example, `declare` is only allowed on properties).
 #[derive(Debug, Default)]
-struct ClassMemberModifiers {
+pub(crate) struct ClassMemberModifiers {
     // replace length with std::mem::variant_count() when it becomes stable
     modifiers: [Option<Range<usize>>; ModifierKind::__LAST as usize],
 }

@@ -20,6 +20,26 @@ pub(crate) fn is_at_ts_abstract_class_statement(
 
 // test ts typescript_abstract_classes
 // abstract class A {}
+// abstract class ConcreteMembers {
+//     name: string;
+//     constructor(name: string) { this.name = name; }
+//     display(): void { console.log(this.name); }
+//     public get my_name() { return this.name; }
+//     public set my_name(name) { this.name = name; }
+//     #private_method() { }
+// }
+// abstract class AbstractMembers {
+//     abstract name(): string;
+// }
+
+// test_err ts typescript_abstract_classes_incomplete
+// abstract class {};
+
+// test_err ts typescript_abstract_classes_invalid_abstract_constructor
+// abstract class A { abstract constructor();};
+
+
+
 pub(crate) fn parse_ts_abstract_class_statement(
     p: &mut Parser,
     _ctx: StatementContext,

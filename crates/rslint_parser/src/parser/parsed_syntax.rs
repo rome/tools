@@ -162,6 +162,27 @@ impl ParsedSyntax {
         }
     }
 
+    /// Adds a diagnostic at the current parser position if the syntax is present and return its marker.
+    pub fn add_diagnostic_if_present<E, D>(
+        self,
+        p: &mut Parser,
+        error_builder: E,
+    ) -> Option<CompletedMarker>
+    where
+        E: FnOnce(&Parser, Range<usize>) -> D,
+        D: ToDiagnostic,
+    {
+        match self {
+            Present(syntax) => {
+                let range = syntax.range(p);
+                let diagnostic = error_builder(p, range.start().into()..range.end().into());
+                p.error(diagnostic);
+                Some(syntax)
+            }
+            Absent => None,
+        }
+    }
+
     /// It returns the syntax if present or adds a diagnostic at the current parser position.
     #[inline]
     pub fn or_add_diagnostic<E, D>(
