@@ -17,7 +17,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@22..23 "b" [] [],
                     },
-                    optional_token_token: missing (optional),
+                    optional_token: missing (optional),
                     type_annotation: TsTypeAnnotation {
                         colon_token: COLON@23..25 ":" [] [Whitespace(" ")],
                         ty: TsStringType {
@@ -31,7 +31,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@33..34 "c" [] [],
                     },
-                    optional_token_token: missing (optional),
+                    optional_token: missing (optional),
                     type_annotation: TsTypeAnnotation {
                         colon_token: COLON@34..36 ":" [] [Whitespace(" ")],
                         ty: TsNumberType {
