@@ -121,6 +121,7 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@31..35
             0: IDENT@31..35 "bar" [] [Whitespace(" ")]
 <<<<<<< HEAD
+<<<<<<< HEAD
         2: (empty)
       4: (empty)
       5: L_CURLY@35..36 "{" [] []
@@ -130,6 +131,9 @@ JsModule {
       0: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@44..48
 =======
+=======
+        2: (empty)
+>>>>>>> 0a239f12c (updating rast files)
       5: (empty)
       6: L_CURLY@35..36 "{" [] []
       7: JS_CLASS_MEMBER_LIST@36..36
@@ -150,6 +154,7 @@ JsModule {
           1: DOT@59..60 "." [] []
           2: JS_NAME@60..64
             0: IDENT@60..64 "bar" [] [Whitespace(" ")]
+        2: (empty)
       5: (empty)
       6: L_CURLY@64..65 "{" [] []
       7: JS_CLASS_MEMBER_LIST@65..65

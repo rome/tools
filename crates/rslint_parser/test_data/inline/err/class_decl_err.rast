@@ -137,6 +137,7 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@23..27
             0: IDENT@23..27 "bar" [] [Whitespace(" ")]
 <<<<<<< HEAD
+<<<<<<< HEAD
         2: (empty)
       4: (empty)
       5: L_CURLY@27..28 "{" [] []
@@ -146,6 +147,9 @@ JsModule {
       0: CLASS_KW@29..36 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@36..40
 =======
+=======
+        2: (empty)
+>>>>>>> 0a239f12c (updating rast files)
       5: (empty)
       6: L_CURLY@27..28 "{" [] []
       7: JS_CLASS_MEMBER_LIST@28..28
@@ -188,16 +192,14 @@ JsModule {
 >>>>>>> 92840060b (update rast files with the optional abstract for classes)
       2: (empty)
       3: (empty)
-      4: JS_EXTENDS_CLAUSE@57..67
+      4: JS_EXTENDS_CLAUSE@57..65
         0: EXTENDS_KW@57..65 "extends" [] [Whitespace(" ")]
-        1: JS_OBJECT_EXPRESSION@65..67
-          0: L_CURLY@65..66 "{" [] []
-          1: JS_OBJECT_MEMBER_LIST@66..66
-          2: R_CURLY@66..67 "}" [] []
+        1: (empty)
+        2: (empty)
       5: (empty)
-      6: (empty)
-      7: JS_CLASS_MEMBER_LIST@67..67
-      8: (empty)
+      6: L_CURLY@65..66 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@66..66
+      8: R_CURLY@66..67 "}" [] []
   3: EOF@67..68 "" [Newline("\n")] []
 --
 error[SyntaxError]: class declarations must have a name

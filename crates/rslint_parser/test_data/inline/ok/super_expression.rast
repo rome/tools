@@ -158,6 +158,7 @@ JsModule {
         1: JS_IDENTIFIER_EXPRESSION@19..21
           0: JS_REFERENCE_IDENTIFIER@19..21
             0: IDENT@19..21 "B" [] [Whitespace(" ")]
+        2: (empty)
       5: (empty)
       6: L_CURLY@21..22 "{" [] []
       7: JS_CLASS_MEMBER_LIST@22..108

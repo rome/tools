@@ -84,7 +84,7 @@ JsModule {
       0: SEMICOLON@38..39 ";" [] []
   3: EOF@39..40 "" [Newline("\n")] []
 --
-error[SyntaxError]: member with private name cannot be abstract
+error[SyntaxError]: members with private name cannot be abstract
   ┌─ typescript_abstract_classes_invalid_abstract_private_member.ts:1:20
   │
 1 │ abstract class A { abstract #name(); };

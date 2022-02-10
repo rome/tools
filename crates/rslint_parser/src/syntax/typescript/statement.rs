@@ -1,6 +1,6 @@
 use crate::parser::{expected_token, RecoveryResult};
 use crate::syntax::binding::{is_nth_at_identifier_binding, parse_binding};
-use crate::syntax::class::parse_initializer_clause;
+use crate::syntax::class::{parse_initializer_clause, ClassMemberModifiers};
 use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
 
 use super::ts_parse_error::expected_ts_enum_member;
@@ -54,7 +54,8 @@ fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
                 .err_builder("An `enum` member cannot be private")
                 .primary(p.cur_tok().range(), "");
             p.error(err);
-            syntax::class::parse_private_class_member_name(p).map(|mut x| {
+            let modifiers = ClassMemberModifiers::default();
+            syntax::class::parse_private_class_member_name(p, &modifiers).map(|mut x| {
                 x.change_to_unknown(p);
                 x
             })
