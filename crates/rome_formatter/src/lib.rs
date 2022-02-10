@@ -479,12 +479,25 @@ pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, ap
 
 #[cfg(test)]
 mod tests {
-    use crate::IndentStyle;
 
     use super::{format_range, FormatOptions};
-
+    use crate::{format, IndentStyle};
     use rome_rowan::{TextRange, TextSize};
-    use rslint_parser::parse_script;
+    use rslint_parser::{parse, parse_script, Syntax};
+
+    #[test]
+    fn poc() {
+        let src = r#"some.else.foofof.eeee.then1().then2().then2().then3().then2().then3().then2().then3().then2().then3()
+"#;
+        let syntax = Syntax::default().typescript();
+        let tree = parse(src, 0, syntax);
+        let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
+        assert_eq!(
+            result.as_code(),
+            r#"some.then2().then3();
+"#
+        );
+    }
 
     #[test]
     fn test_range_formatting() {

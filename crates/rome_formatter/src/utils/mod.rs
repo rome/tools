@@ -1,8 +1,10 @@
+mod call_expression;
 use crate::formatter_traits::FormatOptionalTokenAndNode;
 use crate::{
     empty_element, format_elements, hard_line_break, space_token, FormatElement, FormatResult,
     Formatter,
 };
+pub use call_expression::format_call_expression;
 use rslint_parser::ast::JsInitializerClause;
 use rslint_parser::{SyntaxNode, SyntaxNodeExt, SyntaxToken};
 

@@ -1,17 +1,10 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-
+use crate::utils::format_call_expression;
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::JsCallExpression;
+use rslint_parser::AstNode;
 
 impl ToFormatElement for JsCallExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = self.callee().format(formatter)?;
-        let option = self
-            .optional_chain_token_token()
-            .format_or_empty(formatter)?;
-        let arguments = self.arguments().format(formatter)?;
-
-        Ok(format_elements![name, option, arguments])
+        format_call_expression(self.syntax(), formatter)
     }
 }

@@ -256,7 +256,7 @@ impl FormatTokenAndNode for SyntaxToken {
     {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()));
+                assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()), "You tried to print a '{:?}' twice, and this is not valid.", self);
             }
         }
 
