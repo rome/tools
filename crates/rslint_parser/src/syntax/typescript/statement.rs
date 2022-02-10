@@ -168,9 +168,7 @@ pub(crate) fn is_nth_at_ts_enum_statement(p: &Parser, n: usize) -> bool {
 // enum B { a, b, c }
 // const enum C { A = 1, B = A * 2, ["A"] = 3, }
 pub(crate) fn parse_ts_enum_statement(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_ts_enum_statement(p)
-        && !(is_at_contextual_keyword(p, "declare") && is_nth_at_ts_enum_statement(p, 1))
-    {
+    if !is_at_ts_enum_statement(p) && !is_at_contextual_keyword(p, "declare") {
         return Absent;
     }
 
@@ -206,9 +204,7 @@ pub(crate) fn parse_ts_enum_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 pub(crate) fn parse_ts_type_alias_statement(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_contextual_keyword(p, "type")
-        && !(is_at_contextual_keyword(p, "declare") && is_nth_at_contextual_keyword(p, 1, "type"))
-    {
+    if !is_at_contextual_keyword(p, "type") && !is_at_contextual_keyword(p, "declare") {
         return Absent;
     }
 
@@ -263,6 +259,11 @@ pub(crate) fn parse_ts_declare_statement(
             // declare type B = string | number & { a: string, b: number }
             parse_ts_type_alias_statement(p)
         }
+        // test ts ts_ambient_interface
+        // declare interface A { b: string, c: number }
+        T![ident] if is_nth_at_contextual_keyword(p, 1, "interface") => {
+            parse_ts_interface_statement(p)
+        }
         // test ts ts_ambient_let_variable_statement
         // declare let a, b, c, d;
         T![ident] if is_nth_at_contextual_keyword(p, 1, "let") => {
@@ -279,7 +280,14 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
         return false;
     }
 
-    if matches!(p.nth(1), T![function] | T![const] | T![var]) {
+    if matches!(p.nth(1), T![function] | T![const] | T![var] | T![enum]) {
+        return true;
+    }
+
+    if is_nth_at_contextual_keyword(p, 1, "let")
+        | is_nth_at_contextual_keyword(p, 1, "type")
+        | is_nth_at_contextual_keyword(p, 1, "interface")
+    {
         return true;
     }
 
@@ -287,14 +295,6 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
         && !p.has_linebreak_before_n(2)
         && p.nth_at(2, T![function])
     {
-        return true;
-    }
-
-    if is_nth_at_contextual_keyword(p, 1, "let") {
-        return true;
-    }
-
-    if is_nth_at_contextual_keyword(p, 1, "type") {
         return true;
     }
 
@@ -373,11 +373,12 @@ pub(crate) fn is_at_ts_interface_statement(p: &Parser) -> bool {
 // interface A {}
 // interface B { prop: string, method(): string, [index: number]: string, new(): B }
 pub(crate) fn parse_ts_interface_statement(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_ts_interface_statement(p) {
+    if !is_at_ts_interface_statement(p) && !is_at_contextual_keyword(p, "declare") {
         return Absent;
     }
 
     let m = p.start();
+    eat_contextual_keyword(p, "declare", T![declare]);
     expect_contextual_keyword(p, "interface", T![interface]);
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_parameters(p).ok();

@@ -1657,6 +1657,7 @@ TsDefaultTypeClause =
 TsObjectType = '{' members: TsTypeMemberList '}'
 
 TsInterfaceStatement =
+	'declare'?
 	'interface'
 	id: TsIdentifierBinding
 	type_parameters: TsTypeParameters?

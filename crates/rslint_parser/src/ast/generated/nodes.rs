@@ -3889,22 +3889,23 @@ impl TsInterfaceStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn interface_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
     pub fn id(&self) -> SyntaxResult<TsIdentifierBinding> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 2usize)
+        support::node(&self.syntax, 3usize)
     }
-    pub fn extends_clause(&self) -> Option<TsExtendsClause> { support::node(&self.syntax, 3usize) }
+    pub fn extends_clause(&self) -> Option<TsExtendsClause> { support::node(&self.syntax, 4usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 5usize)
     }
-    pub fn members(&self) -> TsTypeMemberList { support::list(&self.syntax, 5usize) }
+    pub fn members(&self) -> TsTypeMemberList { support::list(&self.syntax, 6usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 7usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -11021,6 +11022,10 @@ impl AstNode for TsInterfaceStatement {
 impl std::fmt::Debug for TsInterfaceStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsInterfaceStatement")
+            .field(
+                "declare_token",
+                &support::DebugOptionalElement(self.declare_token()),
+            )
             .field(
                 "interface_token",
                 &support::DebugSyntaxResult(self.interface_token()),
