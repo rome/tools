@@ -716,16 +716,20 @@ fn parse_class_member_impl(
 //     abstract get my_name() { return this.name; }
 //     abstract set my_name(name) { this.name = name; }
 // }
-fn check_body(body: ParsedSyntax, p: &mut Parser, modifiers: ClassMemberModifiers) {
+fn check_body(
+    body: ParsedSyntax,
+    p: &mut Parser,
+    modifiers: ClassMemberModifiers,
+) -> Option<CompletedMarker> {
     let is_abstract = modifiers.has(ModifierKind::Abstract);
-    let body = if !is_abstract {
+    if !is_abstract {
         body.or_add_diagnostic(p, js_parse_error::expected_class_method_body)
     } else {
         body.add_diagnostic_if_present(
             p,
             crate::syntax::typescript::ts_parse_error::unexpected_abstract_member_with_body,
         )
-    };
+    }
 }
 
 fn is_at_static_initialization_block_class_member(p: &Parser) -> bool {

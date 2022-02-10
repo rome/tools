@@ -1,9 +1,8 @@
 use crate::{
-    parser::{expected_any, expected_token, ToDiagnostic},
+    parser::{expected_any, ToDiagnostic},
     Parser,
 };
 use rslint_errors::Diagnostic;
-use rslint_lexer::T;
 use std::ops::Range;
 
 pub(crate) fn expected_ts_enum_member(p: &Parser, range: Range<usize>) -> Diagnostic {

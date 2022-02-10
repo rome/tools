@@ -38,8 +38,6 @@ pub(crate) fn is_at_ts_abstract_class_statement(
 // test_err ts typescript_abstract_classes_invalid_abstract_constructor
 // abstract class A { abstract constructor();};
 
-
-
 pub(crate) fn parse_ts_abstract_class_statement(
     p: &mut Parser,
     _ctx: StatementContext,
