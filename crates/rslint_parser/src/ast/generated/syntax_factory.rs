@@ -5804,10 +5804,17 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_CONSTRUCTOR_TYPE, children)
             }
-            TS_DECLARE_FUNCTION => {
+            TS_DECLARE_FUNCTION_STATEMENT => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<7usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![async] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T![function] {
                         slots.mark_present();
@@ -5852,11 +5859,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_DECLARE_FUNCTION.to_unknown(),
+                        TS_DECLARE_FUNCTION_STATEMENT.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_DECLARE_FUNCTION, children)
+                slots.into_node(TS_DECLARE_FUNCTION_STATEMENT, children)
             }
             TS_DECLARE_STATEMENT => {
                 let mut elements = (&children).into_iter();

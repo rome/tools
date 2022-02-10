@@ -4,7 +4,8 @@ JsModule {
     items: JsModuleItemList [
         TsDeclareStatement {
             declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
-            declaration: TsDeclareFunction {
+            declaration: TsDeclareFunctionStatement {
+                async_token: missing (optional),
                 function_token: FUNCTION_KW@8..17 "function" [] [Whitespace(" ")],
                 id: JsIdentifierBinding {
                     name_token: IDENT@17..21 "test" [] [],
@@ -91,7 +92,8 @@ JsModule {
         },
         TsDeclareStatement {
             declare_token: DECLARE_KW@46..55 "declare" [Newline("\n")] [Whitespace(" ")],
-            declaration: TsDeclareFunction {
+            declaration: TsDeclareFunctionStatement {
+                async_token: missing (optional),
                 function_token: FUNCTION_KW@55..64 "function" [] [Whitespace(" ")],
                 id: JsIdentifierBinding {
                     name_token: IDENT@64..69 "test2" [] [],
@@ -185,11 +187,12 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..134
     0: TS_DECLARE_STATEMENT@0..46
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
-      1: TS_DECLARE_FUNCTION@8..46
-        0: FUNCTION_KW@8..17 "function" [] [Whitespace(" ")]
-        1: JS_IDENTIFIER_BINDING@17..21
+      1: TS_DECLARE_FUNCTION_STATEMENT@8..46
+        0: (empty)
+        1: FUNCTION_KW@8..17 "function" [] [Whitespace(" ")]
+        2: JS_IDENTIFIER_BINDING@17..21
           0: IDENT@17..21 "test" [] []
-        2: TS_TYPE_PARAMETERS@21..30
+        3: TS_TYPE_PARAMETERS@21..30
           0: L_ANGLE@21..22 "<" [] []
           1: TS_TYPE_PARAMETER_LIST@22..29
             0: TS_TYPE_PARAMETER@22..23
@@ -210,7 +213,7 @@ JsModule {
               1: (empty)
               2: (empty)
           2: R_ANGLE@29..30 ">" [] []
-        3: JS_PARAMETERS@30..42
+        4: JS_PARAMETERS@30..42
           0: L_PAREN@30..31 "(" [] []
           1: JS_PARAMETER_LIST@31..41
             0: JS_FORMAL_PARAMETER@31..35
@@ -237,21 +240,22 @@ JsModule {
                   1: (empty)
               3: (empty)
           2: R_PAREN@41..42 ")" [] []
-        4: TS_RETURN_TYPE_ANNOTATION@42..45
+        5: TS_RETURN_TYPE_ANNOTATION@42..45
           0: COLON@42..44 ":" [] [Whitespace(" ")]
           1: TS_REFERENCE_TYPE@44..45
             0: JS_REFERENCE_IDENTIFIER@44..45
               0: IDENT@44..45 "R" [] []
             1: (empty)
-        5: SEMICOLON@45..46 ";" [] []
+        6: SEMICOLON@45..46 ";" [] []
     1: TS_DECLARE_STATEMENT@46..94
       0: DECLARE_KW@46..55 "declare" [Newline("\n")] [Whitespace(" ")]
-      1: TS_DECLARE_FUNCTION@55..94
-        0: FUNCTION_KW@55..64 "function" [] [Whitespace(" ")]
-        1: JS_IDENTIFIER_BINDING@64..69
+      1: TS_DECLARE_FUNCTION_STATEMENT@55..94
+        0: (empty)
+        1: FUNCTION_KW@55..64 "function" [] [Whitespace(" ")]
+        2: JS_IDENTIFIER_BINDING@64..69
           0: IDENT@64..69 "test2" [] []
-        2: (empty)
-        3: JS_PARAMETERS@69..94
+        3: (empty)
+        4: JS_PARAMETERS@69..94
           0: L_PAREN@69..70 "(" [] []
           1: JS_PARAMETER_LIST@70..93
             0: JS_FORMAL_PARAMETER@70..93
@@ -282,8 +286,8 @@ JsModule {
                   2: R_CURLY@92..93 "}" [] []
               3: (empty)
           2: R_PAREN@93..94 ")" [] []
-        4: (empty)
         5: (empty)
+        6: (empty)
     2: JS_EXPRESSION_STATEMENT@94..102
       0: JS_IDENTIFIER_EXPRESSION@94..102
         0: JS_REFERENCE_IDENTIFIER@94..102

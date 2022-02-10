@@ -749,8 +749,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsConstructorType::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_DECLARE_FUNCTION => {
-                    let $pattern = unsafe { $crate::ast::TsDeclareFunction::new_unchecked(node) };
+                $crate::JsSyntaxKind::TS_DECLARE_FUNCTION_STATEMENT => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsDeclareFunctionStatement::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_DECLARE_STATEMENT => {

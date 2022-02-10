@@ -229,7 +229,7 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
 
     match p.cur() {
         T![function] => {
-            parse_ts_declare_function(p);
+            parse_ts_declare_function_statement(p);
         }
         T![const] | T![enum] => {
             // test ts ts_ambient_enum_statement
@@ -238,6 +238,9 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
             parse_ts_enum_statement(p).expect(
                 "Expected an enum syntax because the parser is at a `const` or `enum` keyword",
             );
+        }
+        T![ident] if is_at_contextual_keyword(p, "async") => {
+            parse_ts_declare_function_statement(p);
         }
         T![ident] if is_at_contextual_keyword(p, "type") => {
             // test ts ts_declare_type_alias
@@ -264,6 +267,13 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
         return true;
     }
 
+    if is_nth_at_contextual_keyword(p, 1, "async")
+        && !p.has_linebreak_before_n(2)
+        && p.nth_at(2, T![function])
+    {
+        return true;
+    }
+
     if is_nth_at_contextual_keyword(p, 1, "type") {
         return true;
     }
@@ -283,9 +293,21 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
 //
 // test_err ts ts_declare_function_with_body
 // declare function test<A>(a: A): string { return "ambient function with a body"; }
-fn parse_ts_declare_function(p: &mut Parser) -> CompletedMarker {
+fn parse_ts_declare_function_statement(p: &mut Parser) -> CompletedMarker {
     let m = p.start();
     let start_range = p.cur_tok().start();
+
+    let is_async = is_at_contextual_keyword(p, "async");
+    // test_err ts ts_declare_async_function
+    // declare async function test();
+    if is_async {
+        p.error(
+            p.err_builder("'async' modifier cannot be used in an ambient context.")
+                .primary(p.cur_tok().range(), ""),
+        );
+        p.bump_remap(T![async]);
+    }
+
     p.expect(T![function]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
     parse_ts_type_parameters(p).ok();
@@ -301,7 +323,12 @@ fn parse_ts_declare_function(p: &mut Parser) -> CompletedMarker {
     }
 
     semi(p, start_range..p.cur_tok().start());
-    m.complete(p, TS_DECLARE_FUNCTION)
+
+    if is_async {
+        m.complete(p, JS_UNKNOWN)
+    } else {
+        m.complete(p, TS_DECLARE_FUNCTION_STATEMENT)
+    }
 }
 
 pub(crate) fn is_at_ts_interface_statement(p: &Parser) -> bool {
