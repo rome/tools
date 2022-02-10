@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 163
 expression: named_from_clause.js
 
 ---
@@ -21,11 +21,11 @@ export {
 Indent style: Tab
 Line width: 80
 -----
-export { a, as c b } from "fancy" assert { type: "json" };
+export { a, b as c } from "fancy" assert { type: "json" };
 
 export {
 	lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem,
-	as ipsum_ipsum_ipsum_ipsum_ipsum_ipsum_ lorem_lorem_lorem_lorem_lorem_,
+	lorem_lorem_lorem_lorem_lorem_ as ipsum_ipsum_ipsum_ipsum_ipsum_ipsum_,
 } from "fancy" assert {
 	type: "json",
 	"type2": "json",
