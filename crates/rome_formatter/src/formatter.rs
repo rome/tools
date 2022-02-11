@@ -94,7 +94,8 @@ impl Formatter {
             }
         }
         let open_token_trailing_trivia = self.print_trailing_trivia(open_token);
-        let close_token_leading_trivia = self.print_leading_trivia(close_token);
+        let close_token_leading_trivia =
+            self.print_leading_trivia(close_token, TriviaPrintMode::Trim);
 
         let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
             format_elements![open_token_trailing_trivia, soft_line_break_or_space()]
@@ -107,9 +108,9 @@ impl Formatter {
             empty_element()
         };
         Ok(format_elements![
-            self.print_leading_trivia(open_token),
+            self.print_leading_trivia(open_token, TriviaPrintMode::Full),
             Token::from(open_token),
-            content(open_token_trailing_trivia, close_token_leading_trivia,)?,
+            content(open_token_trailing_trivia, close_token_leading_trivia)?,
             Token::from(close_token),
             self.print_trailing_trivia(close_token),
         ])
@@ -145,7 +146,7 @@ impl Formatter {
         }
 
         Ok(format_elements![
-            self.print_leading_trivia(token),
+            self.print_leading_trivia(token, TriviaPrintMode::Full),
             content,
             self.print_trailing_trivia(token),
         ])
@@ -245,7 +246,11 @@ impl Formatter {
         join_elements_hard_line(formatted_list)
     }
 
-    pub(super) fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {
+    pub(super) fn print_leading_trivia(
+        &self,
+        token: &SyntaxToken,
+        mut trim_mode: TriviaPrintMode,
+    ) -> FormatElement {
         let mut line_count = 0;
         let mut elements = Vec::new();
 
@@ -271,7 +276,8 @@ impl Formatter {
                 elements.push(format_elements![comment, line_break]);
 
                 line_count = 0;
-            } else if piece.as_newline().is_some() {
+                trim_mode = TriviaPrintMode::Full;
+            } else if piece.as_newline().is_some() && trim_mode == TriviaPrintMode::Full {
                 line_count += 1;
             }
         }
@@ -339,6 +345,14 @@ impl Formatter {
             }
         }))
     }
+}
+
+/// Determines if the whitespace separating comment trivias
+/// from their associated tokens should be printed or trimmed
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+pub(super) enum TriviaPrintMode {
+    Full,
+    Trim,
 }
 
 /// Snapshot of the formatter state  used to handle backtracking if

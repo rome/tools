@@ -1,3 +1,4 @@
+use crate::formatter::TriviaPrintMode;
 use crate::Token;
 use crate::{
     empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -260,7 +261,7 @@ impl FormatTokenAndNode for SyntaxToken {
         }
 
         with(format_elements![
-            formatter.print_leading_trivia(self),
+            formatter.print_leading_trivia(self, TriviaPrintMode::Full),
             Token::from(self),
             formatter.print_trailing_trivia(self),
         ])
