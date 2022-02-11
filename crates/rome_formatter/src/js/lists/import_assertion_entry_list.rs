@@ -1,7 +1,14 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::JsImportAssertionEntryList, AstNode};
+use crate::{
+    join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
+};
+use rslint_parser::ast::JsImportAssertionEntryList;
+
 impl ToFormatElement for JsImportAssertionEntryList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        Ok(join_elements(
+            soft_line_break_or_space(),
+            formatter.format_separated(self.clone(), || token(","))?,
+        ))
     }
 }

@@ -22,8 +22,8 @@ function ugly() {
 function ugly() {
   const dictWithSeveralEntries = {
     key:          "value",
-    anotherKey:   "another value",
-    firstNumber:  1,
+    anotherKey: "another value",
+    firstNumber: 1,
     secondNumber: 2
   };
 }
