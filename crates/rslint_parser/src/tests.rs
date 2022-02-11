@@ -112,7 +112,7 @@ fn run_and_expect_no_errors(path: &str, _: &str, _: &str, _: &str) {
 #[cfg(test)]
 fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
-    let text = std::fs::read_to_string(dbg!(&path)).unwrap();
+    let text = std::fs::read_to_string(&path).unwrap();
 
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
     assert_errors_are_present(&parse, &path);
