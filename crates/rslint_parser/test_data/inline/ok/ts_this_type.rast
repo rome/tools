@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
@@ -33,7 +33,7 @@ JsModule {
                         l_curly_token: L_CURLY@23..24 "{" [] [],
                         directives: JsDirectiveList [],
                         statements: JsStatementList [
-                            TsTypeAliasStatement {
+                            TsTypeAliasDeclaration {
                                 declare_token: missing (optional),
                                 type_token: TYPE_KW@24..38 "type" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")],
                                 binding_identifier: TsIdentifierBinding {
@@ -114,7 +114,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..135
-    0: JS_CLASS_STATEMENT@0..135
+    0: JS_CLASS_DECLARATION@0..135
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
@@ -142,7 +142,7 @@ JsModule {
             0: L_CURLY@23..24 "{" [] []
             1: JS_DIRECTIVE_LIST@24..24
             2: JS_STATEMENT_LIST@24..47
-              0: TS_TYPE_ALIAS_STATEMENT@24..47
+              0: TS_TYPE_ALIAS_DECLARATION@24..47
                 0: (empty)
                 1: TYPE_KW@24..38 "type" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")]
                 2: TS_IDENTIFIER_BINDING@38..40

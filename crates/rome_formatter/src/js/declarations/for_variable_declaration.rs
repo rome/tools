@@ -11,7 +11,7 @@ impl ToFormatElement for JsForVariableDeclaration {
         Ok(format_elements![
             self.kind_token().format(formatter)?,
             space_token(),
-            self.declaration().format(formatter)?,
+            self.declarator().format(formatter)?,
         ])
     }
 }

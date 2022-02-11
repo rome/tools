@@ -53,7 +53,10 @@ use rslint_syntax::{JsSyntaxKind, T};
 // test ts ts_function_statement
 // function test(a: string, b?: number, c="default") {}
 // function test2<A, B extends A, C = A>(a: A, b: B, c: C) {}
-pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+pub(super) fn parse_function_declaration(
+    p: &mut Parser,
+    context: StatementContext,
+) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
     }
@@ -62,8 +65,8 @@ pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext
     let mut function = parse_function(
         p,
         m,
-        FunctionKind::Statement {
-            declaration: context.is_single_statement(),
+        FunctionKind::Declaration {
+            single_statement_context: context.is_single_statement(),
         },
     );
 
@@ -126,7 +129,10 @@ pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax
 
 #[derive(PartialEq, Eq, Debug, Copy, Clone)]
 enum FunctionKind {
-    Statement { declaration: bool },
+    Declaration {
+        // https://tc39.es/ecma262/multipage/additional-ecmascript-features-for-web-browsers.html#sec-functiondeclarations-in-ifstatement-statement-clauses
+        single_statement_context: bool,
+    },
     Expression,
     Export,
     ExportDefault,
@@ -137,15 +143,24 @@ impl FunctionKind {
         matches!(self, FunctionKind::Expression | FunctionKind::ExportDefault)
     }
 
-    fn is_statement(&self) -> bool {
-        matches!(self, FunctionKind::Statement { .. })
+    fn is_declaration(&self) -> bool {
+        matches!(self, FunctionKind::Declaration { .. })
+    }
+
+    fn is_in_single_statement_context(&self) -> bool {
+        matches!(
+            self,
+            FunctionKind::Declaration {
+                single_statement_context: true
+            }
+        )
     }
 }
 
 impl From<FunctionKind> for JsSyntaxKind {
     fn from(kind: FunctionKind) -> Self {
         match kind {
-            FunctionKind::Statement { .. } => JS_FUNCTION_STATEMENT,
+            FunctionKind::Declaration { .. } => JS_FUNCTION_DECLARATION,
             FunctionKind::Expression => JS_FUNCTION_EXPRESSION,
             FunctionKind::Export => JS_EXPORT_FUNCTION_CLAUSE,
             FunctionKind::ExportDefault => JS_EXPORT_DEFAULT_FUNCTION_CLAUSE,
@@ -193,7 +208,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         })
         .ok();
 
-    let parameter_context = if kind.is_statement() && TypeScript.is_supported(p) {
+    let parameter_context = if kind.is_declaration() && TypeScript.is_supported(p) {
         // It isn't known at this point if this is a function overload definition (body is missing)
         // or a regular function implementation.
         // Let's go with the laxer of the two. Ideally, these verifications should be part of
@@ -225,7 +240,8 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     if body.is_absent()
         && TypeScript.is_supported(p)
         && is_semi(p, 0)
-        && matches!(kind, FunctionKind::Statement { declaration: false })
+        && !kind.is_in_single_statement_context()
+        && kind.is_declaration()
     {
         p.eat(T![;]);
 
@@ -248,9 +264,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         // test_err async_or_generator_in_single_statement_context
         // if (true) async function t() {}
         // if (true) function* t() {}
-        if matches!(kind, FunctionKind::Statement { declaration: true })
-            && (in_async || generator_range.is_some())
-        {
+        if kind.is_in_single_statement_context() && (in_async || generator_range.is_some()) {
             p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block").primary(function.range(p), ""));
             function.change_to_unknown(p);
         }

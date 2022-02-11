@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: missing (optional),
             interface_token: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -14,7 +14,7 @@ JsModule {
             members: TsTypeMemberList [],
             r_curly_token: R_CURLY@13..14 "}" [] [],
         },
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: missing (optional),
             interface_token: INTERFACE_KW@14..25 "interface" [Newline("\n")] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -110,7 +110,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..96
-    0: TS_INTERFACE_STATEMENT@0..14
+    0: TS_INTERFACE_DECLARATION@0..14
       0: (empty)
       1: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@10..12
@@ -120,7 +120,7 @@ JsModule {
       5: L_CURLY@12..13 "{" [] []
       6: TS_TYPE_MEMBER_LIST@13..13
       7: R_CURLY@13..14 "}" [] []
-    1: TS_INTERFACE_STATEMENT@14..96
+    1: TS_INTERFACE_DECLARATION@14..96
       0: (empty)
       1: INTERFACE_KW@14..25 "interface" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@25..27

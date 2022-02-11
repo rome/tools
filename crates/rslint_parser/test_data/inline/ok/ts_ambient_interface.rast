@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
             interface_token: INTERFACE_KW@8..18 "interface" [] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -51,7 +51,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..44
-    0: TS_INTERFACE_STATEMENT@0..44
+    0: TS_INTERFACE_DECLARATION@0..44
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
       1: INTERFACE_KW@8..18 "interface" [] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@18..20

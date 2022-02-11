@@ -19,4 +19,4 @@ mod parameter_list;
 mod statement_list;
 mod switch_case_list;
 mod template_element_list;
-mod variable_declaration_list;
+mod variable_declarator_list;

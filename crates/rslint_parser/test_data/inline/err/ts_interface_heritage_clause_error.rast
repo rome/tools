@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: missing (optional),
             interface_token: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -69,7 +69,7 @@ JsModule {
                 R_CURLY@76..77 "}" [] [],
             ],
         },
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: missing (optional),
             interface_token: INTERFACE_KW@77..88 "interface" [Newline("\n")] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -84,7 +84,7 @@ JsModule {
             members: TsTypeMemberList [],
             r_curly_token: R_CURLY@99..100 "}" [] [],
         },
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: missing (optional),
             interface_token: INTERFACE_KW@100..111 "interface" [Newline("\n")] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -116,7 +116,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..126
-    0: TS_INTERFACE_STATEMENT@0..14
+    0: TS_INTERFACE_DECLARATION@0..14
       0: (empty)
       1: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@10..12
@@ -161,7 +161,7 @@ JsModule {
       4: L_CURLY@75..76 "{" [] []
       5: TS_TYPE_MEMBER_LIST@76..76
       6: R_CURLY@76..77 "}" [] []
-    3: TS_INTERFACE_STATEMENT@77..100
+    3: TS_INTERFACE_DECLARATION@77..100
       0: (empty)
       1: INTERFACE_KW@77..88 "interface" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@88..90
@@ -173,7 +173,7 @@ JsModule {
       5: L_CURLY@98..99 "{" [] []
       6: TS_TYPE_MEMBER_LIST@99..99
       7: R_CURLY@99..100 "}" [] []
-    4: TS_INTERFACE_STATEMENT@100..126
+    4: TS_INTERFACE_DECLARATION@100..126
       0: (empty)
       1: INTERFACE_KW@100..111 "interface" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@111..113

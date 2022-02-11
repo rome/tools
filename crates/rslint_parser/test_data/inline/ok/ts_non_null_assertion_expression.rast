@@ -4,10 +4,10 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
@@ -48,7 +48,7 @@ JsModule {
             },
             semicolon_token: SEMICOLON@21..22 ";" [] [],
         },
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@22..32 "function" [Newline("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -148,10 +148,10 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..67
     0: JS_VARIABLE_STATEMENT@0..18
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@0..17
+      1: JS_VARIABLE_DECLARATION@0..17
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@4..17
-          0: JS_VARIABLE_DECLARATION@4..17
+        1: JS_VARIABLE_DECLARATOR_LIST@4..17
+          0: JS_VARIABLE_DECLARATOR@4..17
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
@@ -177,7 +177,7 @@ JsModule {
             0: IDENT@18..20 "a" [Newline("\n")] []
         1: BANG@20..21 "!" [] []
       1: SEMICOLON@21..22 ";" [] []
-    2: JS_FUNCTION_STATEMENT@22..41
+    2: JS_FUNCTION_DECLARATION@22..41
       0: (empty)
       1: FUNCTION_KW@22..32 "function" [Newline("\n")] [Whitespace(" ")]
       2: (empty)

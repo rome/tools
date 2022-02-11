@@ -390,6 +390,7 @@ impl NodeLanguage {
 enum NodeConcept {
     Expression,
     Statement,
+    Declaration,
     Object,
     Class,
     Assignment,
@@ -407,6 +408,7 @@ impl NodeConcept {
         match self {
             NodeConcept::Expression => "expressions",
             NodeConcept::Statement => "statements",
+            NodeConcept::Declaration => "declarations",
             NodeConcept::Object => "objects",
             NodeConcept::Class => "classes",
             NodeConcept::Assignment => "assignments",
@@ -426,6 +428,7 @@ impl NodeConcept {
 /// Nodes are classified within the following concepts:
 /// - expressions
 /// - statements
+/// - declarations
 /// - objects
 /// - classes
 /// - assignments
@@ -463,6 +466,7 @@ fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
         }
 
         _ if name.ends_with("Statement") => NodeConcept::Statement,
+        _ if name.ends_with("Declaration") => NodeConcept::Declaration,
 
         _ if name.ends_with("Expression")
             || name.ends_with("Argument")

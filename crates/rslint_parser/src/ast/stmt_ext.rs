@@ -9,7 +9,7 @@ pub enum JsVariableKind {
     Var,
 }
 
-impl JsVariableDeclarations {
+impl JsVariableDeclaration {
     /// Whether the declaration is a const declaration
     pub fn is_const(&self) -> bool {
         self.variable_kind() == Ok(JsVariableKind::Const)
@@ -57,7 +57,7 @@ mod tests {
         let root = parse_script("var a = 5;", 0).syntax();
         let var_decl = root
             .descendants()
-            .find_map(ast::JsVariableDeclarations::cast);
+            .find_map(ast::JsVariableDeclaration::cast);
 
         assert!(var_decl.unwrap().is_var());
     }

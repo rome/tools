@@ -4,10 +4,10 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
@@ -42,10 +42,10 @@ JsModule {
         },
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@21..26 "let" [Newline("\n")] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@26..28 "b" [] [Whitespace(" ")],
                         },
@@ -67,10 +67,10 @@ JsModule {
         },
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@33..38 "let" [Newline("\n")] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@38..40 "c" [] [Whitespace(" ")],
                         },
@@ -102,10 +102,10 @@ JsModule {
         },
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@51..56 "let" [Newline("\n")] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@56..58 "d" [] [Whitespace(" ")],
                         },
@@ -131,10 +131,10 @@ JsModule {
         },
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@66..71 "let" [Newline("\n")] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@71..73 "e" [] [Whitespace(" ")],
                         },
@@ -184,10 +184,10 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..96
     0: JS_VARIABLE_STATEMENT@0..21
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@0..20
+      1: JS_VARIABLE_DECLARATION@0..20
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@4..20
-          0: JS_VARIABLE_DECLARATION@4..20
+        1: JS_VARIABLE_DECLARATOR_LIST@4..20
+          0: JS_VARIABLE_DECLARATOR@4..20
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
@@ -210,10 +210,10 @@ JsModule {
       2: SEMICOLON@20..21 ";" [] []
     1: JS_VARIABLE_STATEMENT@21..33
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@21..32
+      1: JS_VARIABLE_DECLARATION@21..32
         0: LET_KW@21..26 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@26..32
-          0: JS_VARIABLE_DECLARATION@26..32
+        1: JS_VARIABLE_DECLARATOR_LIST@26..32
+          0: JS_VARIABLE_DECLARATOR@26..32
             0: JS_IDENTIFIER_BINDING@26..28
               0: IDENT@26..28 "b" [] [Whitespace(" ")]
             1: (empty)
@@ -228,10 +228,10 @@ JsModule {
       2: SEMICOLON@32..33 ";" [] []
     2: JS_VARIABLE_STATEMENT@33..51
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@33..50
+      1: JS_VARIABLE_DECLARATION@33..50
         0: LET_KW@33..38 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@38..50
-          0: JS_VARIABLE_DECLARATION@38..50
+        1: JS_VARIABLE_DECLARATOR_LIST@38..50
+          0: JS_VARIABLE_DECLARATOR@38..50
             0: JS_IDENTIFIER_BINDING@38..40
               0: IDENT@38..40 "c" [] [Whitespace(" ")]
             1: (empty)
@@ -252,10 +252,10 @@ JsModule {
       2: SEMICOLON@50..51 ";" [] []
     3: JS_VARIABLE_STATEMENT@51..66
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@51..65
+      1: JS_VARIABLE_DECLARATION@51..65
         0: LET_KW@51..56 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@56..65
-          0: JS_VARIABLE_DECLARATION@56..65
+        1: JS_VARIABLE_DECLARATOR_LIST@56..65
+          0: JS_VARIABLE_DECLARATOR@56..65
             0: JS_IDENTIFIER_BINDING@56..58
               0: IDENT@56..58 "d" [] [Whitespace(" ")]
             1: (empty)
@@ -272,10 +272,10 @@ JsModule {
       2: SEMICOLON@65..66 ";" [] []
     4: JS_VARIABLE_STATEMENT@66..96
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@66..95
+      1: JS_VARIABLE_DECLARATION@66..95
         0: LET_KW@66..71 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@71..95
-          0: JS_VARIABLE_DECLARATION@71..95
+        1: JS_VARIABLE_DECLARATOR_LIST@71..95
+          0: JS_VARIABLE_DECLARATOR@71..95
             0: JS_IDENTIFIER_BINDING@71..73
               0: IDENT@71..73 "e" [] [Whitespace(" ")]
             1: (empty)

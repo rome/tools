@@ -4,10 +4,10 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..5 "a" [] [],
                         },
@@ -25,7 +25,7 @@ JsModule {
                         },
                     },
                     COMMA@22..24 "," [] [Whitespace(" ")],
-                    JsVariableDeclaration {
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@24..25 "b" [] [],
                         },
@@ -54,10 +54,10 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..35
     0: JS_VARIABLE_STATEMENT@0..35
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@0..34
+      1: JS_VARIABLE_DECLARATION@0..34
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@4..34
-          0: JS_VARIABLE_DECLARATION@4..22
+        1: JS_VARIABLE_DECLARATOR_LIST@4..34
+          0: JS_VARIABLE_DECLARATOR@4..22
             0: JS_IDENTIFIER_BINDING@4..5
               0: IDENT@4..5 "a" [] []
             1: TS_TYPE_ANNOTATION@5..14
@@ -69,7 +69,7 @@ JsModule {
               1: JS_STRING_LITERAL_EXPRESSION@16..22
                 0: JS_STRING_LITERAL@16..22 "\"test\"" [] []
           1: COMMA@22..24 "," [] [Whitespace(" ")]
-          2: JS_VARIABLE_DECLARATION@24..34
+          2: JS_VARIABLE_DECLARATOR@24..34
             0: JS_IDENTIFIER_BINDING@24..25
               0: IDENT@24..25 "b" [] []
             1: TS_DEFINITE_VARIABLE_ANNOTATION@25..34

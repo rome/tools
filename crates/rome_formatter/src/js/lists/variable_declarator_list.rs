@@ -1,6 +1,6 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::JsVariableDeclarationList, AstNode};
-impl ToFormatElement for JsVariableDeclarationList {
+use rslint_parser::{ast::JsVariableDeclaratorList, AstNode};
+impl ToFormatElement for JsVariableDeclaratorList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(formatter.format_verbatim(self.syntax()))
     }

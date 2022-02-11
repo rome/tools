@@ -7,7 +7,7 @@ JsScript {
             l_paren_token: L_PAREN@14..15 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: LET_KW@15..19 "let" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@19..21 "i" [] [Whitespace(" ")],
                     },
@@ -38,7 +38,7 @@ JsScript {
             l_paren_token: L_PAREN@39..40 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: CONST_KW@40..46 "const" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@46..48 "i" [] [Whitespace(" ")],
                     },
@@ -70,7 +70,7 @@ JsScript {
             l_paren_token: L_PAREN@66..67 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: VAR_KW@67..71 "var" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@71..73 "i" [] [Whitespace(" ")],
                     },
@@ -102,7 +102,7 @@ JsScript {
             l_paren_token: L_PAREN@91..92 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: LET_KW@92..96 "let" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@96..98 "i" [] [Whitespace(" ")],
                     },
@@ -134,7 +134,7 @@ JsScript {
             l_paren_token: L_PAREN@116..117 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: CONST_KW@117..123 "const" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@123..125 "i" [] [Whitespace(" ")],
                     },
@@ -173,7 +173,7 @@ JsScript {
       1: L_PAREN@14..15 "(" [] []
       2: JS_FOR_VARIABLE_DECLARATION@15..25
         0: LET_KW@15..19 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@19..25
+        1: JS_VARIABLE_DECLARATOR@19..25
           0: JS_IDENTIFIER_BINDING@19..21
             0: IDENT@19..21 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -196,7 +196,7 @@ JsScript {
       1: L_PAREN@39..40 "(" [] []
       2: JS_FOR_VARIABLE_DECLARATION@40..52
         0: CONST_KW@40..46 "const" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@46..52
+        1: JS_VARIABLE_DECLARATOR@46..52
           0: JS_IDENTIFIER_BINDING@46..48
             0: IDENT@46..48 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -220,7 +220,7 @@ JsScript {
       2: L_PAREN@66..67 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@67..77
         0: VAR_KW@67..71 "var" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@71..77
+        1: JS_VARIABLE_DECLARATOR@71..77
           0: JS_IDENTIFIER_BINDING@71..73
             0: IDENT@71..73 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -244,7 +244,7 @@ JsScript {
       2: L_PAREN@91..92 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@92..102
         0: LET_KW@92..96 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@96..102
+        1: JS_VARIABLE_DECLARATOR@96..102
           0: JS_IDENTIFIER_BINDING@96..98
             0: IDENT@96..98 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -268,7 +268,7 @@ JsScript {
       2: L_PAREN@116..117 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@117..129
         0: CONST_KW@117..123 "const" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@123..129
+        1: JS_VARIABLE_DECLARATOR@123..129
           0: JS_IDENTIFIER_BINDING@123..125
             0: IDENT@123..125 "i" [] [Whitespace(" ")]
           1: (empty)

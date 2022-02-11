@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
@@ -34,7 +34,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@26..27 "}" [] [],
         },
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@34..36 "B" [] [Whitespace(" ")],
@@ -75,7 +75,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..62
-    0: JS_CLASS_STATEMENT@0..27
+    0: JS_CLASS_DECLARATION@0..27
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
@@ -98,7 +98,7 @@ JsModule {
             2: JS_STATEMENT_LIST@24..24
             3: R_CURLY@24..26 "}" [] [Whitespace(" ")]
       7: R_CURLY@26..27 "}" [] []
-    1: JS_CLASS_STATEMENT@27..62
+    1: JS_CLASS_DECLARATION@27..62
       0: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@34..36
         0: IDENT@34..36 "B" [] [Whitespace(" ")]

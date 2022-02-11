@@ -13,7 +13,6 @@ use drop_bomb::DebugDropBomb;
 use rslint_errors::Diagnostic;
 use rslint_lexer::Token;
 use rslint_syntax::JsSyntaxKind::EOF;
-use std::borrow::BorrowMut;
 use std::ops::Range;
 
 pub use parse_error::*;
@@ -400,22 +399,6 @@ impl<'t> Parser<'t> {
         self.error(err);
     }
 
-    pub fn err_if_not_ts(
-        &mut self,
-        mut marker: impl BorrowMut<CompletedMarker>,
-        err: &str,
-        unknown_syntax_kind: JsSyntaxKind,
-    ) {
-        if self.typescript() {
-            return;
-        }
-        let borrow = marker.borrow_mut();
-        borrow.change_kind(self, unknown_syntax_kind);
-        let err = self.err_builder(err).primary(borrow.range(self), "");
-
-        self.error(err);
-    }
-
     /// Try running a parser function and backtrack if any errors occured
     pub fn try_parse<F>(&mut self, func: F) -> Option<CompletedMarker>
     where
@@ -670,11 +653,6 @@ impl CompletedMarker {
 
     pub fn kind(&self) -> JsSyntaxKind {
         self.kind
-    }
-
-    pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
-        let unknown = self.kind.to_unknown();
-        p.err_if_not_ts(self, err, unknown);
     }
 }
 

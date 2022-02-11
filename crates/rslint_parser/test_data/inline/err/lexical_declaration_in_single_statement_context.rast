@@ -11,10 +11,10 @@ JsModule {
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
             consequent: JsUnknownStatement {
                 items: [
-                    JsVariableDeclarations {
+                    JsVariableDeclaration {
                         kind: LET_KW@10..14 "let" [] [Whitespace(" ")],
-                        items: JsVariableDeclarationList [
-                            JsVariableDeclaration {
+                        declarators: JsVariableDeclaratorList [
+                            JsVariableDeclarator {
                                 id: JsIdentifierBinding {
                                     name_token: IDENT@14..15 "a" [] [],
                                 },
@@ -37,10 +37,10 @@ JsModule {
             r_paren_token: R_PAREN@28..30 ")" [] [Whitespace(" ")],
             body: JsUnknownStatement {
                 items: [
-                    JsVariableDeclarations {
+                    JsVariableDeclaration {
                         kind: CONST_KW@30..36 "const" [] [Whitespace(" ")],
-                        items: JsVariableDeclarationList [
-                            JsVariableDeclaration {
+                        declarators: JsVariableDeclaratorList [
+                            JsVariableDeclarator {
                                 id: JsIdentifierBinding {
                                     name_token: IDENT@36..38 "b" [] [Whitespace(" ")],
                                 },
@@ -73,10 +73,10 @@ JsModule {
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
       4: JS_UNKNOWN_STATEMENT@10..16
-        0: JS_VARIABLE_DECLARATIONS@10..15
+        0: JS_VARIABLE_DECLARATION@10..15
           0: LET_KW@10..14 "let" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATION_LIST@14..15
-            0: JS_VARIABLE_DECLARATION@14..15
+          1: JS_VARIABLE_DECLARATOR_LIST@14..15
+            0: JS_VARIABLE_DECLARATOR@14..15
               0: JS_IDENTIFIER_BINDING@14..15
                 0: IDENT@14..15 "a" [] []
               1: (empty)
@@ -90,10 +90,10 @@ JsModule {
         0: TRUE_KW@24..28 "true" [] []
       3: R_PAREN@28..30 ")" [] [Whitespace(" ")]
       4: JS_UNKNOWN_STATEMENT@30..42
-        0: JS_VARIABLE_DECLARATIONS@30..41
+        0: JS_VARIABLE_DECLARATION@30..41
           0: CONST_KW@30..36 "const" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATION_LIST@36..41
-            0: JS_VARIABLE_DECLARATION@36..41
+          1: JS_VARIABLE_DECLARATOR_LIST@36..41
+            0: JS_VARIABLE_DECLARATOR@36..41
               0: JS_IDENTIFIER_BINDING@36..38
                 0: IDENT@36..38 "b" [] [Whitespace(" ")]
               1: (empty)

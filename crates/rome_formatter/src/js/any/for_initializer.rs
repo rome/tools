@@ -5,7 +5,7 @@ use rslint_parser::ast::JsAnyForInitializer;
 impl ToFormatElement for JsAnyForInitializer {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            Self::JsVariableDeclarations(node) => node.to_format_element(formatter),
+            Self::JsVariableDeclaration(node) => node.to_format_element(formatter),
             Self::JsAnyExpression(node) => node.to_format_element(formatter),
         }
     }

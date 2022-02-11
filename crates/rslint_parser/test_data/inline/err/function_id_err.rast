@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..8 "function" [] [],
             star_token: STAR@8..10 "*" [] [Whitespace(" ")],
@@ -20,7 +20,7 @@ JsModule {
                 l_curly_token: L_CURLY@17..18 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
-                    JsFunctionStatement {
+                    JsFunctionDeclaration {
                         async_token: missing (optional),
                         function_token: FUNCTION_KW@18..30 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                         star_token: missing (optional),
@@ -64,7 +64,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..46
-    0: JS_FUNCTION_STATEMENT@0..46
+    0: JS_FUNCTION_DECLARATION@0..46
       0: (empty)
       1: FUNCTION_KW@0..8 "function" [] []
       2: STAR@8..10 "*" [] [Whitespace(" ")]
@@ -80,7 +80,7 @@ JsModule {
         0: L_CURLY@17..18 "{" [] []
         1: JS_DIRECTIVE_LIST@18..18
         2: JS_STATEMENT_LIST@18..44
-          0: JS_FUNCTION_STATEMENT@18..44
+          0: JS_FUNCTION_DECLARATION@18..44
             0: (empty)
             1: FUNCTION_KW@18..30 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             2: (empty)

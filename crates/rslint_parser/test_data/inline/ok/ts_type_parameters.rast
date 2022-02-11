@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -134,7 +134,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..95
-    0: TS_TYPE_ALIAS_STATEMENT@0..95
+    0: TS_TYPE_ALIAS_DECLARATION@0..95
       0: (empty)
       1: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@5..6

@@ -5,10 +5,10 @@ JsModule {
         JsForStatement {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@4..5 "(" [] [],
-            initializer: JsVariableDeclarations {
+            initializer: JsVariableDeclaration {
                 kind: LET_KW@5..9 "let" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@9..11 "i" [] [Whitespace(" ")],
                         },
@@ -238,10 +238,10 @@ JsModule {
     0: JS_FOR_STATEMENT@0..248
       0: FOR_KW@0..4 "for" [] [Whitespace(" ")]
       1: L_PAREN@4..5 "(" [] []
-      2: JS_VARIABLE_DECLARATIONS@5..15
+      2: JS_VARIABLE_DECLARATION@5..15
         0: LET_KW@5..9 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@9..15
-          0: JS_VARIABLE_DECLARATION@9..15
+        1: JS_VARIABLE_DECLARATOR_LIST@9..15
+          0: JS_VARIABLE_DECLARATOR@9..15
             0: JS_IDENTIFIER_BINDING@9..11
               0: IDENT@9..11 "i" [] [Whitespace(" ")]
             1: (empty)

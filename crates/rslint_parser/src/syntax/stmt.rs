@@ -12,12 +12,12 @@ use crate::state::{
     LabelledItem, StrictMode as StrictModeState, WithLabel,
 };
 use crate::syntax::assignment::expression_to_assignment_pattern;
-use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
+use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
 use crate::syntax::expr::{
     is_at_expression, is_at_identifier, parse_assignment_expression_or_higher,
     parse_expression_or_recover_to_next_statement, parse_identifier, ExpressionContext,
 };
-use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
+use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement, ts_only_syntax_error};
 use crate::syntax::module::{parse_export, parse_import};
@@ -189,7 +189,13 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![if] => parse_if_statement(p),
         T![with] => parse_with_statement(p),
         T![while] => parse_while_statement(p),
-        T![const] | T![enum] if is_at_ts_enum_statement(p) => parse_ts_enum_statement(p),
+        T![const] | T![enum] if is_at_ts_enum_declaration(p) => {
+            // test_err enum_in_js
+            // enum A {}
+            TypeScript.parse_exclusive_syntax(p, parse_ts_enum_declaration, |p, declaration| {
+                ts_only_syntax_error(p, "'enum's", declaration.range(p).as_range())
+            })
+        }
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
         T![for] => parse_for_statement(p),
@@ -201,10 +207,10 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![continue] => parse_continue_statement(p),
         T![throw] => parse_throw_statement(p),
         T![debugger] => parse_debugger_statement(p),
-        T![function] => parse_function_statement(p, context),
-        T![class] => parse_class_statement(p, context),
+        T![function] => parse_function_declaration(p, context),
+        T![class] => parse_class_declaration(p, context),
         T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
-            parse_function_statement(p, context)
+            parse_function_declaration(p, context)
         }
         T![ident] if is_nth_at_let_variable_statement(p, 0) => {
             // test_err let_newline_in_async_function
@@ -232,10 +238,10 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         }
 
         T![ident] if is_at_contextual_keyword(p, "type") && p.typescript() => {
-            parse_ts_type_alias_statement(p)
+            parse_ts_type_alias_declaration(p)
         }
-        T![ident] if is_at_ts_interface_statement(p) => {
-            TypeScript.parse_exclusive_syntax(p, parse_ts_interface_statement, |p, interface| {
+        T![ident] if is_at_ts_interface_declaration(p) => {
+            TypeScript.parse_exclusive_syntax(p, parse_ts_interface_declaration, |p, interface| {
                 ts_only_syntax_error(p, "interface", interface.range(p).as_range())
             })
         }
@@ -329,7 +335,7 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 		};
 
         match body.or_add_diagnostic(p, expected_statement) {
-            Some(mut body) if context.is_single_statement() && body.kind() == JS_FUNCTION_STATEMENT => {
+            Some(mut body) if context.is_single_statement() && body.kind() == JS_FUNCTION_DECLARATION => {
                 // test_err labelled_function_decl_in_single_statement_context
                 // if (true) label1: label2: function a() {}
                 p.error(p.err_builder("Labelled function declarations are only allowed at top-level or inside a block").primary(body.range(p), "Wrap the labelled statement in a block statement"));
@@ -938,7 +944,7 @@ pub(crate) fn parse_variable_statement(p: &mut Parser, context: StatementContext
     let start = p.cur_tok().start();
     let is_var = p.at(T![var]);
 
-    if parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement { declare })
+    if parse_variable_declaration(p, VariableDeclarationParent::VariableStatement { declare })
         .is_absent()
     {
         if declare {
@@ -973,13 +979,13 @@ pub(crate) fn parse_variable_statement(p: &mut Parser, context: StatementContext
     Present(statement)
 }
 
-pub(super) fn parse_variable_declaration_list(
+pub(super) fn parse_variable_declaration(
     p: &mut Parser,
     declaration_context: VariableDeclarationParent,
 ) -> ParsedSyntax {
     let m = p.start();
-    if parse_variable_declarations(p, declaration_context).is_some() {
-        Present(m.complete(p, JS_VARIABLE_DECLARATIONS))
+    if parse_variable_declaration_impl(p, declaration_context).is_some() {
+        Present(m.complete(p, JS_VARIABLE_DECLARATION))
     } else {
         m.abandon(p);
         Absent
@@ -1009,16 +1015,17 @@ impl VariableDeclarationParent {
     }
 }
 
-/// Parses a list of JS_VARIABLE_DECLARATION_LIST
+/// Parses a variable declaration that consist of a variable kind (`let`, `const` or `var` and a list
+/// of variable declarators).
 /// Returns a tuple where
 /// * the first element is the marker to the not yet completed list
 /// * the second element is the range of all variable declarations except the first one. Is [None] if
 ///   there's only one declaration.
-fn parse_variable_declarations(
+fn parse_variable_declaration_impl(
     p: &mut Parser,
     declaration_parent: VariableDeclarationParent,
 ) -> Option<(CompletedMarker, Option<Range<usize>>)> {
-    let mut context = VariableDeclarationContext::new(declaration_parent);
+    let mut context = VariableDeclaratorContext::new(declaration_parent);
 
     match p.cur() {
         T![var] => p.bump_any(),
@@ -1037,41 +1044,41 @@ fn parse_variable_declarations(
         }
     }
 
-    let mut parse_declarations = ParseVariableDeclarations {
-        declaration_context: context,
-        remaining_declaration_range: None,
+    let mut variable_declarator_list = VariableDeclaratorList {
+        declarator_context: context,
+        remaining_declarator_range: None,
     };
 
     debug_assert!(p.state.name_map.is_empty());
-    let list = parse_declarations.parse_list(p);
+    let list = variable_declarator_list.parse_list(p);
 
     p.state.name_map.clear();
-    Some((list, parse_declarations.remaining_declaration_range))
+    Some((list, variable_declarator_list.remaining_declarator_range))
 }
 
-struct ParseVariableDeclarations {
-    declaration_context: VariableDeclarationContext,
-    // Range of the declarations succeeding the first declaration
-    // None until this hits the second declaration
-    remaining_declaration_range: Option<Range<usize>>,
+struct VariableDeclaratorList {
+    declarator_context: VariableDeclaratorContext,
+    // Range of the declarators succeeding the first declarator
+    // None until this hits the second declarator
+    remaining_declarator_range: Option<Range<usize>>,
 }
 
-impl ParseSeparatedList for ParseVariableDeclarations {
+impl ParseSeparatedList for VariableDeclaratorList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_variable_declaration(p, &self.declaration_context).map(|declaration| {
-            if self.declaration_context.is_first {
-                self.declaration_context.is_first = false;
-            } else if let Some(range) = self.remaining_declaration_range.as_mut() {
-                range.end = declaration.range(p).as_range().end;
+        parse_variable_declarator(p, &self.declarator_context).map(|declarator| {
+            if self.declarator_context.is_first {
+                self.declarator_context.is_first = false;
+            } else if let Some(range) = self.remaining_declarator_range.as_mut() {
+                range.end = declarator.range(p).as_range().end;
             } else {
-                self.remaining_declaration_range = Some(declaration.range(p).as_range());
+                self.remaining_declarator_range = Some(declarator.range(p).as_range());
             }
-            declaration
+            declarator
         })
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
-        if self.declaration_context.is_first {
+        if self.declarator_context.is_first {
             false
         } else {
             !p.at(T![,])
@@ -1088,7 +1095,7 @@ impl ParseSeparatedList for ParseVariableDeclarations {
     }
 
     fn list_kind() -> JsSyntaxKind {
-        JS_VARIABLE_DECLARATION_LIST
+        JS_VARIABLE_DECLARATOR_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -1096,7 +1103,7 @@ impl ParseSeparatedList for ParseVariableDeclarations {
     }
 }
 
-struct VariableDeclarationContext {
+struct VariableDeclaratorContext {
     /// The range of the `const` keyword if this is `const` variable declaration.
     is_const: Option<Range<usize>>,
     /// `true` if this is a let variable declaration
@@ -1107,7 +1114,7 @@ struct VariableDeclarationContext {
     parent: VariableDeclarationParent,
 }
 
-impl VariableDeclarationContext {
+impl VariableDeclaratorContext {
     fn new(parent: VariableDeclarationParent) -> Self {
         Self {
             parent,
@@ -1136,10 +1143,7 @@ impl VariableDeclarationContext {
 // };
 //
 // A single declarator, either `ident` or `ident = assign_expr`
-fn parse_variable_declaration(
-    p: &mut Parser,
-    context: &VariableDeclarationContext,
-) -> ParsedSyntax {
+fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext) -> ParsedSyntax {
     p.state.duplicate_binding_parent = context.duplicate_binding_parent_name();
     let id = parse_binding_pattern(p, ExpressionContext::default());
     p.state.duplicate_binding_parent = None;
@@ -1267,7 +1271,7 @@ fn parse_variable_declaration(
             p.error(err);
         }
 
-        m.complete(p, JS_VARIABLE_DECLARATION)
+        m.complete(p, JS_VARIABLE_DECLARATOR)
     })
 }
 
@@ -1360,7 +1364,7 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
         let m = p.start();
 
         let (declarations, additional_declarations) =
-            parse_variable_declarations(p, VariableDeclarationParent::For).unwrap();
+            parse_variable_declaration_impl(p, VariableDeclarationParent::For).unwrap();
 
         let is_in = p.at(T![in]);
         let is_of = p.cur_src() == "of";
@@ -1384,7 +1388,7 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
 
             parse_for_of_or_in_head(p)
         } else {
-            m.complete(p, JS_VARIABLE_DECLARATIONS);
+            m.complete(p, JS_VARIABLE_DECLARATION);
             parse_normal_for_head(p);
             JS_FOR_STATEMENT
         }

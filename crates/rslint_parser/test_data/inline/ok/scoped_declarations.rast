@@ -4,10 +4,10 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
@@ -36,10 +36,10 @@ JsModule {
                                             statements: JsStatementList [
                                                 JsVariableStatement {
                                                     declare_token: missing (optional),
-                                                    declarations: JsVariableDeclarations {
+                                                    declaration: JsVariableDeclaration {
                                                         kind: LET_KW@20..29 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
-                                                        items: JsVariableDeclarationList [
-                                                            JsVariableDeclaration {
+                                                        declarators: JsVariableDeclaratorList [
+                                                            JsVariableDeclarator {
                                                                 id: JsIdentifierBinding {
                                                                     name_token: IDENT@29..31 "a" [] [Whitespace(" ")],
                                                                 },
@@ -78,10 +78,10 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..48
     0: JS_VARIABLE_STATEMENT@0..48
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@0..47
+      1: JS_VARIABLE_DECLARATION@0..47
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@4..47
-          0: JS_VARIABLE_DECLARATION@4..47
+        1: JS_VARIABLE_DECLARATOR_LIST@4..47
+          0: JS_VARIABLE_DECLARATOR@4..47
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
@@ -107,10 +107,10 @@ JsModule {
                       2: JS_STATEMENT_LIST@20..41
                         0: JS_VARIABLE_STATEMENT@20..41
                           0: (empty)
-                          1: JS_VARIABLE_DECLARATIONS@20..40
+                          1: JS_VARIABLE_DECLARATION@20..40
                             0: LET_KW@20..29 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-                            1: JS_VARIABLE_DECLARATION_LIST@29..40
-                              0: JS_VARIABLE_DECLARATION@29..40
+                            1: JS_VARIABLE_DECLARATOR_LIST@29..40
+                              0: JS_VARIABLE_DECLARATOR@29..40
                                 0: JS_IDENTIFIER_BINDING@29..31
                                   0: IDENT@29..31 "a" [] [Whitespace(" ")]
                                 1: (empty)

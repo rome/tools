@@ -2,7 +2,7 @@ JsScript {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     statements: JsStatementList [
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: ASYNC_KW@0..16 "async" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
             function_token: FUNCTION_KW@16..25 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
@@ -56,7 +56,7 @@ JsScript {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..48
-    0: JS_FUNCTION_STATEMENT@0..34
+    0: JS_FUNCTION_DECLARATION@0..34
       0: ASYNC_KW@0..16 "async" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@16..25 "function" [] [Whitespace(" ")]
       2: (empty)

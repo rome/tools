@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
             type_parameters: missing (optional),
@@ -41,7 +41,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..30
-    0: JS_CLASS_STATEMENT@0..8
+    0: JS_CLASS_DECLARATION@0..8
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: (empty)
       2: (empty)

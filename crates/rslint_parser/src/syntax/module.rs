@@ -17,7 +17,7 @@ use crate::syntax::js_parse_error::{
     expected_named_import, expected_named_import_specifier, expected_statement,
 };
 use crate::syntax::stmt::{
-    is_at_variable_declarations, parse_statement, parse_variable_declaration_list, semi,
+    is_at_variable_declarations, parse_statement, parse_variable_declaration, semi,
     StatementContext, VariableDeclarationParent, STMT_RECOVERY_SET,
 };
 use crate::syntax::util::expect_contextual_keyword;
@@ -518,7 +518,7 @@ fn parse_export_variable_clause(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     let start = p.cur_tok().range().start;
-    parse_variable_declaration_list(p, VariableDeclarationParent::Export)
+    parse_variable_declaration(p, VariableDeclarationParent::Export)
         .or_add_diagnostic(p, js_parse_error::expected_variable);
 
     semi(p, start..p.cur_tok().range().end);

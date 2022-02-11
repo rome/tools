@@ -7,10 +7,10 @@ JsScript {
             colon_token: COLON@11..13 ":" [] [Whitespace(" ")],
             body: JsUnknownStatement {
                 items: [
-                    JsVariableDeclarations {
+                    JsVariableDeclaration {
                         kind: LET_KW@13..16 "let" [] [],
-                        items: JsVariableDeclarationList [
-                            JsVariableDeclaration {
+                        declarators: JsVariableDeclaratorList [
+                            JsVariableDeclarator {
                                 id: JsArrayBindingPattern {
                                     l_brack_token: L_BRACK@16..18 "[" [Newline("\n")] [],
                                     elements: JsArrayBindingPatternElementList [
@@ -46,10 +46,10 @@ JsScript {
       0: IDENT@0..11 "L" [Comments("// SCRIPT"), Newline("\n")] []
       1: COLON@11..13 ":" [] [Whitespace(" ")]
       2: JS_UNKNOWN_STATEMENT@13..25
-        0: JS_VARIABLE_DECLARATIONS@13..24
+        0: JS_VARIABLE_DECLARATION@13..24
           0: LET_KW@13..16 "let" [] []
-          1: JS_VARIABLE_DECLARATION_LIST@16..24
-            0: JS_VARIABLE_DECLARATION@16..24
+          1: JS_VARIABLE_DECLARATOR_LIST@16..24
+            0: JS_VARIABLE_DECLARATOR@16..24
               0: JS_ARRAY_BINDING_PATTERN@16..21
                 0: L_BRACK@16..18 "[" [Newline("\n")] []
                 1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@18..19

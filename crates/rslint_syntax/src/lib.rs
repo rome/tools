@@ -55,7 +55,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_EXPORT
             | JS_FOR_STATEMENT
             | JS_BREAK_STATEMENT
-            | JS_CLASS_STATEMENT
+            | JS_CLASS_DECLARATION
             | JS_CONTINUE_STATEMENT
             | JS_DEBUGGER_STATEMENT
             | JS_DO_WHILE_STATEMENT
@@ -63,7 +63,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_EXPRESSION_STATEMENT
             | JS_FOR_IN_STATEMENT
             | JS_FOR_OF_STATEMENT
-            | JS_FUNCTION_STATEMENT
+            | JS_FUNCTION_DECLARATION
             | JS_IF_STATEMENT
             | JS_IMPORT
             | JS_LABELED_STATEMENT
@@ -75,9 +75,9 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_VARIABLE_STATEMENT
             | JS_WHILE_STATEMENT
             | JS_WITH_STATEMENT
-            | TS_TYPE_ALIAS_STATEMENT
-            | TS_ENUM_STATEMENT
-            | TS_INTERFACE_STATEMENT
+            | TS_TYPE_ALIAS_DECLARATION
+            | TS_ENUM_DECLARATION
+            | TS_INTERFACE_DECLARATION
             | TS_DECLARE_FUNCTION_STATEMENT
             | JS_UNKNOWN_STATEMENT => JS_UNKNOWN_STATEMENT,
 

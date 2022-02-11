@@ -11,7 +11,7 @@ pub fn create() -> Analyzer {
 }
 
 fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
-    ctx.query_nodes::<ast::JsVariableDeclarations>()
+    ctx.query_nodes::<ast::JsVariableDeclaration>()
         .filter(|n| n.is_var())
         .map(|n| ctx.error(n.range(), "Do not use var").into_signal())
         .collect()

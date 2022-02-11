@@ -6,14 +6,14 @@ use crate::{
     ToFormatElement,
 };
 
-use rslint_parser::{ast::JsVariableDeclarations, AstSeparatedList};
+use rslint_parser::{ast::JsVariableDeclaration, AstSeparatedList};
 
-impl ToFormatElement for JsVariableDeclarations {
+impl ToFormatElement for JsVariableDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let items = self.items();
-        let last_index = items.len().saturating_sub(1);
+        let declarators = self.declarators();
+        let last_index = declarators.len().saturating_sub(1);
 
-        let items = items
+        let declarators = declarators
             .elements()
             .enumerate()
             .map(|(index, element)| {
@@ -40,7 +40,7 @@ impl ToFormatElement for JsVariableDeclarations {
             })
             .collect::<FormatResult<Vec<_>>>()?;
 
-        let mut items = items.into_iter();
+        let mut items = declarators.into_iter();
 
         let leading_element = items.next();
         let trailing_elements = join_elements(soft_line_break_or_space(), items);
