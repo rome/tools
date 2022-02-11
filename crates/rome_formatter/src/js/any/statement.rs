@@ -35,4 +35,3 @@ impl ToFormatElement for JsAnyStatement {
         }
     }
 }
-

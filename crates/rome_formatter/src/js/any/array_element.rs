@@ -11,4 +11,3 @@ impl ToFormatElement for JsAnyArrayElement {
         }
     }
 }
-

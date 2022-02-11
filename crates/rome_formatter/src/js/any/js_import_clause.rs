@@ -12,4 +12,3 @@ impl ToFormatElement for AnyJsImportClause {
         }
     }
 }
-

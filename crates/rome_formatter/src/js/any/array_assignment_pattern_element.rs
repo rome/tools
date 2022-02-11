@@ -13,4 +13,3 @@ impl ToFormatElement for JsAnyArrayAssignmentPatternElement {
         }
     }
 }
-

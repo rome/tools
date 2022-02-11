@@ -15,4 +15,3 @@ impl ToFormatElement for JsAnyObjectBindingPatternMember {
         }
     }
 }
-

@@ -14,4 +14,3 @@ impl ToFormatElement for JsAnyDeclaration {
         }
     }
 }
-

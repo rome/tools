@@ -10,4 +10,3 @@ impl ToFormatElement for JsAnyFunctionBody {
         }
     }
 }
-

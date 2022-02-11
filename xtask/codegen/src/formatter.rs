@@ -282,7 +282,7 @@ pub fn generate_formatter() {
         let dir = path.parent().unwrap();
         create_dir_all(dir).unwrap();
 
-        let mut tokens = match index.entries.remove(&name) {
+        let tokens = match index.entries.remove(&name) {
             Some(entry) if !allow_overwrite => {
                 let use_items = entry.use_items;
                 let impl_item = entry.impl_item;
@@ -353,7 +353,6 @@ pub fn generate_formatter() {
             }
         };
 
-        tokens.push('\n');
         let mut file = File::create(&path).unwrap();
         file.write_all(tokens.as_bytes()).unwrap();
     }

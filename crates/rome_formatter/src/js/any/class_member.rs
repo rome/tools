@@ -16,4 +16,3 @@ impl ToFormatElement for JsAnyClassMember {
         }
     }
 }
-

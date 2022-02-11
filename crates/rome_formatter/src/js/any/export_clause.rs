@@ -17,4 +17,3 @@ impl ToFormatElement for JsAnyExportClause {
         }
     }
 }
-
