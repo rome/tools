@@ -102,19 +102,6 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
     Present(parse_function(p, m, FunctionKind::Expression))
 }
 
-// test export_function_clause
-// export function test(a, b) {}
-// export function* test2(a, b) {}
-// export async function test3(a, b, ) {}
-pub(super) fn parse_export_function_clause(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_function(p) {
-        return Absent;
-    }
-
-    let m = p.start();
-    Present(parse_function(p, m, FunctionKind::Export))
-}
-
 // test export_default_function_clause
 // export default function test(a, b) {}
 pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax {
@@ -134,7 +121,6 @@ enum FunctionKind {
         single_statement_context: bool,
     },
     Expression,
-    Export,
     ExportDefault,
 }
 
@@ -162,7 +148,6 @@ impl From<FunctionKind> for JsSyntaxKind {
         match kind {
             FunctionKind::Declaration { .. } => JS_FUNCTION_DECLARATION,
             FunctionKind::Expression => JS_FUNCTION_EXPRESSION,
-            FunctionKind::Export => JS_EXPORT_FUNCTION_CLAUSE,
             FunctionKind::ExportDefault => JS_EXPORT_DEFAULT_FUNCTION_CLAUSE,
         }
     }
@@ -255,7 +240,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
             );
         }
 
-        m.complete(p, TS_DECLARE_FUNCTION_STATEMENT)
+        m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
     } else {
         body.or_add_diagnostic(p, js_parse_error::expected_function_body);
 

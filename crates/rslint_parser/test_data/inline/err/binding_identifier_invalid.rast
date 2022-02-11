@@ -18,7 +18,6 @@ JsModule {
                     directives: JsDirectiveList [],
                     statements: JsStatementList [
                         JsVariableStatement {
-                            declare_token: missing (optional),
                             declaration: JsVariableDeclaration {
                                 kind: LET_KW@14..18 "let" [] [Whitespace(" ")],
                                 declarators: JsVariableDeclaratorList [
@@ -65,7 +64,6 @@ JsModule {
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsVariableStatement {
-                        declare_token: missing (optional),
                         declaration: JsVariableDeclaration {
                             kind: LET_KW@48..56 "let" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
                             declarators: JsVariableDeclaratorList [
@@ -92,7 +90,6 @@ JsModule {
             },
         },
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@68..73 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -115,7 +112,6 @@ JsModule {
             semicolon_token: SEMICOLON@81..82 ";" [] [],
         },
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@82..87 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -138,7 +134,6 @@ JsModule {
             semicolon_token: SEMICOLON@94..95 ";" [] [],
         },
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: CONST_KW@95..102 "const" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -161,7 +156,6 @@ JsModule {
             semicolon_token: SEMICOLON@109..110 ";" [] [],
         },
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@110..115 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -209,8 +203,7 @@ JsModule {
           1: JS_DIRECTIVE_LIST@14..14
           2: JS_STATEMENT_LIST@14..29
             0: JS_VARIABLE_STATEMENT@14..29
-              0: (empty)
-              1: JS_VARIABLE_DECLARATION@14..27
+              0: JS_VARIABLE_DECLARATION@14..27
                 0: LET_KW@14..18 "let" [] [Whitespace(" ")]
                 1: JS_VARIABLE_DECLARATOR_LIST@18..27
                   0: JS_VARIABLE_DECLARATOR@18..27
@@ -221,7 +214,7 @@ JsModule {
                       0: EQ@24..26 "=" [] [Whitespace(" ")]
                       1: JS_NUMBER_LITERAL_EXPRESSION@26..27
                         0: JS_NUMBER_LITERAL@26..27 "5" [] []
-              2: SEMICOLON@27..29 ";" [] [Whitespace(" ")]
+              1: SEMICOLON@27..29 ";" [] [Whitespace(" ")]
           3: R_CURLY@29..30 "}" [] []
       1: (empty)
     1: JS_FUNCTION_DECLARATION@30..68
@@ -241,8 +234,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@48..48
         2: JS_STATEMENT_LIST@48..66
           0: JS_VARIABLE_STATEMENT@48..66
-            0: (empty)
-            1: JS_VARIABLE_DECLARATION@48..65
+            0: JS_VARIABLE_DECLARATION@48..65
               0: LET_KW@48..56 "let" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
               1: JS_VARIABLE_DECLARATOR_LIST@56..65
                 0: JS_VARIABLE_DECLARATOR@56..65
@@ -253,11 +245,10 @@ JsModule {
                     0: EQ@62..64 "=" [] [Whitespace(" ")]
                     1: JS_NUMBER_LITERAL_EXPRESSION@64..65
                       0: JS_NUMBER_LITERAL@64..65 "5" [] []
-            2: SEMICOLON@65..66 ";" [] []
+            1: SEMICOLON@65..66 ";" [] []
         3: R_CURLY@66..68 "}" [Newline("\n")] []
     2: JS_VARIABLE_STATEMENT@68..82
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@68..81
+      0: JS_VARIABLE_DECLARATION@68..81
         0: LET_KW@68..73 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@73..81
           0: JS_VARIABLE_DECLARATOR@73..81
@@ -268,10 +259,9 @@ JsModule {
               0: EQ@78..80 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@80..81
                 0: JS_NUMBER_LITERAL@80..81 "5" [] []
-      2: SEMICOLON@81..82 ";" [] []
+      1: SEMICOLON@81..82 ";" [] []
     3: JS_VARIABLE_STATEMENT@82..95
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@82..94
+      0: JS_VARIABLE_DECLARATION@82..94
         0: LET_KW@82..87 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@87..94
           0: JS_VARIABLE_DECLARATOR@87..94
@@ -282,10 +272,9 @@ JsModule {
               0: EQ@91..93 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@93..94
                 0: JS_NUMBER_LITERAL@93..94 "5" [] []
-      2: SEMICOLON@94..95 ";" [] []
+      1: SEMICOLON@94..95 ";" [] []
     4: JS_VARIABLE_STATEMENT@95..110
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@95..109
+      0: JS_VARIABLE_DECLARATION@95..109
         0: CONST_KW@95..102 "const" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@102..109
           0: JS_VARIABLE_DECLARATOR@102..109
@@ -296,10 +285,9 @@ JsModule {
               0: EQ@106..108 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@108..109
                 0: JS_NUMBER_LITERAL@108..109 "5" [] []
-      2: SEMICOLON@109..110 ";" [] []
+      1: SEMICOLON@109..110 ";" [] []
     5: JS_VARIABLE_STATEMENT@110..120
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@110..119
+      0: JS_VARIABLE_DECLARATION@110..119
         0: LET_KW@110..115 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@115..119
           0: JS_VARIABLE_DECLARATOR@115..116
@@ -313,7 +301,7 @@ JsModule {
               0: IDENT@118..119 "a" [] []
             1: (empty)
             2: (empty)
-      2: SEMICOLON@119..120 ";" [] []
+      1: SEMICOLON@119..120 ";" [] []
   3: EOF@120..121 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of `await` as an identifier in an async context

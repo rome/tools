@@ -211,10 +211,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::JsExportAsClause::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JS_EXPORT_CLASS_CLAUSE => {
-                    let $pattern = unsafe { $crate::ast::JsExportClassClause::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::JS_EXPORT_DEFAULT_CLASS_CLAUSE => {
                     let $pattern =
                         unsafe { $crate::ast::JsExportDefaultClassClause::new_unchecked(node) };
@@ -233,11 +229,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JS_EXPORT_FROM_CLAUSE => {
                     let $pattern = unsafe { $crate::ast::JsExportFromClause::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::JS_EXPORT_FUNCTION_CLAUSE => {
-                    let $pattern =
-                        unsafe { $crate::ast::JsExportFunctionClause::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_EXPORT_NAMED_CLAUSE => {
@@ -263,11 +254,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 $crate::JsSyntaxKind::JS_EXPORT_NAMED_SPECIFIER => {
                     let $pattern =
                         unsafe { $crate::ast::JsExportNamedSpecifier::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::JS_EXPORT_VARIABLE_CLAUSE => {
-                    let $pattern =
-                        unsafe { $crate::ast::JsExportVariableClause::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_EXPRESSION_SNIPPED => {
@@ -674,6 +660,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::JsVariableDeclaration::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE => {
+                    let $pattern =
+                        unsafe { $crate::ast::JsVariableDeclarationClause::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JS_VARIABLE_DECLARATOR => {
                     let $pattern =
                         unsafe { $crate::ast::JsVariableDeclarator::new_unchecked(node) };
@@ -750,9 +741,13 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsConstructorType::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_DECLARE_FUNCTION_STATEMENT => {
+                $crate::JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION => {
                     let $pattern =
-                        unsafe { $crate::ast::TsDeclareFunctionStatement::new_unchecked(node) };
+                        unsafe { $crate::ast::TsDeclareFunctionDeclaration::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_DECLARE_STATEMENT => {
+                    let $pattern = unsafe { $crate::ast::TsDeclareStatement::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_DEFAULT_TYPE_CLAUSE => {

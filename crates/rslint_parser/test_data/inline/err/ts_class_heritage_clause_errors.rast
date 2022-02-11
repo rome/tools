@@ -15,7 +15,6 @@ JsModule {
             r_curly_token: R_CURLY@9..10 "}" [] [],
         },
         TsInterfaceDeclaration {
-            declare_token: missing (optional),
             interface_token: INTERFACE_KW@10..21 "interface" [Newline("\n")] [Whitespace(" ")],
             id: TsIdentifierBinding {
                 name_token: IDENT@21..25 "Int" [] [Whitespace(" ")],
@@ -162,15 +161,14 @@ JsModule {
       6: JS_CLASS_MEMBER_LIST@9..9
       7: R_CURLY@9..10 "}" [] []
     1: TS_INTERFACE_DECLARATION@10..27
-      0: (empty)
-      1: INTERFACE_KW@10..21 "interface" [Newline("\n")] [Whitespace(" ")]
-      2: TS_IDENTIFIER_BINDING@21..25
+      0: INTERFACE_KW@10..21 "interface" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@21..25
         0: IDENT@21..25 "Int" [] [Whitespace(" ")]
+      2: (empty)
       3: (empty)
-      4: (empty)
-      5: L_CURLY@25..26 "{" [] []
-      6: TS_TYPE_MEMBER_LIST@26..26
-      7: R_CURLY@26..27 "}" [] []
+      4: L_CURLY@25..26 "{" [] []
+      5: TS_TYPE_MEMBER_LIST@26..26
+      6: R_CURLY@26..27 "}" [] []
     2: JS_UNKNOWN_STATEMENT@27..63
       0: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@34..36

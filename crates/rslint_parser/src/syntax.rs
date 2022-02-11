@@ -8,6 +8,7 @@
 //! Functions emit markers, see `CompletedMarker` and `Marker` docs for more info.
 
 mod assignment;
+mod auxiliary;
 mod binding;
 mod class;
 pub mod expr;

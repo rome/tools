@@ -3,7 +3,6 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         TsEnumDeclaration {
-            declare_token: missing (optional),
             const_token: missing (optional),
             enum_token: ENUM_KW@0..4 "enum" [] [],
             id: missing (required),
@@ -15,7 +14,6 @@ JsModule {
             semicolon_token: SEMICOLON@4..5 ";" [] [],
         },
         TsEnumDeclaration {
-            declare_token: missing (optional),
             const_token: missing (optional),
             enum_token: ENUM_KW@5..11 "enum" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -38,23 +36,21 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..13
     0: TS_ENUM_DECLARATION@0..4
       0: (empty)
-      1: (empty)
-      2: ENUM_KW@0..4 "enum" [] []
+      1: ENUM_KW@0..4 "enum" [] []
+      2: (empty)
       3: (empty)
-      4: (empty)
-      5: TS_ENUM_MEMBER_LIST@4..4
-      6: (empty)
+      4: TS_ENUM_MEMBER_LIST@4..4
+      5: (empty)
     1: JS_EMPTY_STATEMENT@4..5
       0: SEMICOLON@4..5 ";" [] []
     2: TS_ENUM_DECLARATION@5..12
       0: (empty)
-      1: (empty)
-      2: ENUM_KW@5..11 "enum" [Newline("\n")] [Whitespace(" ")]
-      3: JS_IDENTIFIER_BINDING@11..12
+      1: ENUM_KW@5..11 "enum" [Newline("\n")] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@11..12
         0: IDENT@11..12 "A" [] []
-      4: (empty)
-      5: TS_ENUM_MEMBER_LIST@12..12
-      6: (empty)
+      3: (empty)
+      4: TS_ENUM_MEMBER_LIST@12..12
+      5: (empty)
     3: JS_EMPTY_STATEMENT@12..13
       0: SEMICOLON@12..13 ";" [] []
   3: EOF@13..14 "" [Newline("\n")] []

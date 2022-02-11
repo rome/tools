@@ -47,7 +47,6 @@ JsModule {
                                 directives: JsDirectiveList [],
                                 statements: JsStatementList [
                                     JsVariableStatement {
-                                        declare_token: missing (optional),
                                         declaration: JsVariableDeclaration {
                                             kind: LET_KW@27..36 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                             declarators: JsVariableDeclaratorList [
@@ -126,8 +125,7 @@ JsModule {
                 1: JS_DIRECTIVE_LIST@27..27
                 2: JS_STATEMENT_LIST@27..39
                   0: JS_VARIABLE_STATEMENT@27..39
-                    0: (empty)
-                    1: JS_VARIABLE_DECLARATION@27..38
+                    0: JS_VARIABLE_DECLARATION@27..38
                       0: LET_KW@27..36 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
                       1: JS_VARIABLE_DECLARATOR_LIST@36..38
                         0: JS_VARIABLE_DECLARATOR@36..38
@@ -137,7 +135,7 @@ JsModule {
                           2: JS_INITIALIZER_CLAUSE@37..38
                             0: EQ@37..38 "=" [] []
                             1: (empty)
-                    2: SEMICOLON@38..39 ";" [] []
+                    1: SEMICOLON@38..39 ";" [] []
                 3: R_CURLY@39..43 "}" [Newline("\n"), Whitespace("  ")] []
           8: SEMICOLON@43..44 ";" [] []
       7: R_CURLY@44..46 "}" [Newline("\n")] []

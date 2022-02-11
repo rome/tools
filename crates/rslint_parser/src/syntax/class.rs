@@ -82,18 +82,6 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
     Present(class)
 }
 
-// test export_class_clause
-// export class A {}
-// export class A extends B {}
-pub(super) fn parse_export_class_clause(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![class]) {
-        return Absent;
-    }
-
-    let m = p.start();
-    Present(parse_class(p, m, ClassKind::Export))
-}
-
 // test export_default_class_clause
 // export default class {}
 pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
@@ -111,7 +99,6 @@ pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
 enum ClassKind {
     Declaration,
     Expression,
-    Export,
     ExportDefault,
 }
 
@@ -126,7 +113,6 @@ impl From<ClassKind> for JsSyntaxKind {
         match kind {
             ClassKind::Declaration => JS_CLASS_DECLARATION,
             ClassKind::Expression => JS_CLASS_EXPRESSION,
-            ClassKind::Export => JS_EXPORT_CLASS_CLAUSE,
             ClassKind::ExportDefault => JS_EXPORT_DEFAULT_CLASS_CLAUSE,
         }
     }

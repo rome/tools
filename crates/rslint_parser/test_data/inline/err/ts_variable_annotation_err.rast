@@ -3,7 +3,6 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -30,8 +29,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..7
     0: JS_VARIABLE_STATEMENT@0..7
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@0..6
+      0: JS_VARIABLE_DECLARATION@0..6
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@4..6
           0: JS_VARIABLE_DECLARATOR@4..6
@@ -41,7 +39,7 @@ JsModule {
               0: BANG@5..6 "!" [] []
               1: (empty)
             2: (empty)
-      2: SEMICOLON@6..7 ";" [] []
+      1: SEMICOLON@6..7 ";" [] []
   3: EOF@7..8 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `:` but instead found `;`

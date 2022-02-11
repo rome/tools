@@ -93,10 +93,6 @@ pub(crate) fn expected_identifier(p: &Parser, range: Range<usize>) -> Diagnostic
     expected_node("identifier", range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_variable(p: &Parser, range: Range<usize>) -> Diagnostic {
-    expected_any(&["let", "const", "var"], range).to_diagnostic(p)
-}
-
 pub(crate) fn expected_statement(p: &Parser, range: Range<usize>) -> Diagnostic {
     expected_node("statement", range).to_diagnostic(p)
 }
