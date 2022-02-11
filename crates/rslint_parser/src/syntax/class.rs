@@ -36,6 +36,8 @@ use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
 
+use super::typescript::ts_parse_error;
+
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![class]) {
@@ -447,15 +449,6 @@ fn parse_class_member_impl(
             parse_class_member_name(p, &modifiers).unwrap();
             parse_constructor_class_member_body(p, member_marker, modifiers)
         } else {
-            // test_err ts typescript_abstract_classes_invalid_abstract_async_member
-            // abstract class B { abstract async a(); }
-            if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
-                let err = p
-                    .err_builder("async members cannot be abstract")
-                    .primary(abstract_range, "");
-                p.error(err);
-            }
-
             parse_method_class_member(p, member_marker, modifiers, flags)
         });
     }
@@ -949,6 +942,16 @@ fn parse_method_class_member(
     modifiers: ClassMemberModifiers,
     flags: SignatureFlags,
 ) -> CompletedMarker {
+    let abstract_range = modifiers.get_range(ModifierKind::Abstract);
+    let is_async = flags.contains(SignatureFlags::ASYNC).then(|| true);
+
+    // test_err ts typescript_abstract_classes_invalid_abstract_async_member
+    // abstract class B { abstract async a(); }
+    if let Some((abstract_range, _)) = abstract_range.zip(is_async) {
+        let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range.clone());
+        p.error(err);
+    }
+
     parse_class_member_name(p, &modifiers)
         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
     parse_method_class_member_body(p, m, modifiers, flags)
