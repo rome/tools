@@ -80,7 +80,7 @@ JsDirectiveList = JsDirective*
 JsAnyStatement =
 	JsBlockStatement
 	| JsBreakStatement
-	| JsClassStatement
+	| JsClassDeclaration
 	| JsContinueStatement
 	| JsDebuggerStatement
 	| JsDoWhileStatement
@@ -100,10 +100,10 @@ JsAnyStatement =
 	| JsVariableStatement
 	| JsWhileStatement
 	| JsWithStatement
-	| JsFunctionStatement
-	| TsEnumStatement
-  | TsTypeAliasStatement
-  | TsInterfaceStatement
+	| JsFunctionDeclaration
+	| TsEnumDeclaration
+  | TsTypeAliasDeclaration
+  | TsInterfaceDeclaration
   | TsDeclareFunctionStatement
 
 
@@ -156,7 +156,7 @@ JsForStatement =
 	')'
 	body: JsAnyStatement
 
-JsAnyForInitializer = JsVariableDeclarations | JsAnyExpression
+JsAnyForInitializer = JsVariableDeclaration | JsAnyExpression
 
 // for..in statement
 JsForInStatement =
@@ -185,7 +185,7 @@ JsAnyForInOrOfInitializer =
 
 JsForVariableDeclaration =
 	kind_token: ('var' | 'let' | 'const')
-	declaration: JsVariableDeclaration
+	declarator: JsVariableDeclarator
 
 JsBreakStatement =
     'break'
@@ -559,7 +559,7 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 // CLASSES
 ///////////////
 
-JsClassStatement =
+JsClassDeclaration =
 	'class'
 	id: JsAnyBinding
 	type_parameters: TsTypeParameters?
@@ -583,7 +583,7 @@ JsClassExpression =
 JsClassMemberList = JsAnyClassMember*
 
 JsAnyClass =
-	JsClassStatement
+	JsClassDeclaration
 	| JsClassExpression
 	| JsExportClassClause
 	| JsExportDefaultClassClause
@@ -962,7 +962,15 @@ JsRegexLiteralExpression = value: 'js_regex_literal'
 // DECLARATIONS
 ///////////////
 
-JsFunctionStatement =
+JsAnyDeclaration =
+	JsClassDeclaration
+	| JsFunctionDeclaration
+	| TsEnumDeclaration
+	| TsTypeAliasDeclaration
+	| TsInterfaceDeclaration
+	| JsVariableDeclaration
+
+JsFunctionDeclaration =
 	'async'?
 	'function'
 	'*'?
@@ -983,20 +991,20 @@ TsReturnTypeAnnotation =
 // let a, b = c;
 JsVariableStatement =
 	'declare'?
-	declarations: JsVariableDeclarations ';'?
+	declaration: JsVariableDeclaration ';'?
 
 // Declaration of multiple variables
 // let a, b = c;
 // ^^^^^^^^
-JsVariableDeclarations =
+JsVariableDeclaration =
     kind: ('var' | 'const' | 'let')
-    items: JsVariableDeclarationList
+    declarators: JsVariableDeclaratorList
 
-JsVariableDeclarationList = (JsVariableDeclaration (',' JsVariableDeclaration)*)
+JsVariableDeclaratorList = (JsVariableDeclarator (',' JsVariableDeclarator)*)
 
 // let b = c;
 //     ^^^^^
-JsVariableDeclaration =
+JsVariableDeclarator =
     id: JsAnyBindingPattern
     variable_annotation: TsAnyVariableAnnotation?
     initializer: JsInitializerClause?
@@ -1196,7 +1204,7 @@ JsAnyExportClause =
 // export let a, b, c;
 //        ^^^^^^^^^^^
 JsExportVariableClause =
-	declarations: JsVariableDeclarations
+	declaration: JsVariableDeclaration
 	';'?
 
 // export function a() {}
@@ -1356,7 +1364,7 @@ JsAnyName =
 
 JsAnyFunction =
 	JsFunctionExpression
-	| JsFunctionStatement
+	| JsFunctionDeclaration
 	| JsArrowFunctionExpression
 	| JsExportFunctionClause
 	| JsExportDefaultFunctionClause
@@ -1511,7 +1519,7 @@ TsReferenceType =
 	name: TsAnyName
 	type_arguments: TsTypeArguments?
 
-TsTypeAliasStatement =
+TsTypeAliasDeclaration =
 	'declare'?
 	'type'
 	binding_identifier: TsIdentifierBinding
@@ -1524,7 +1532,7 @@ TsTypeAliasStatement =
 TsIdentifierBinding = name: 'ident'
 
 // typescript enum
-TsEnumStatement =
+TsEnumDeclaration =
 	'declare'?
 	'const'?
 	'enum'
@@ -1656,7 +1664,7 @@ TsDefaultTypeClause =
 // { a: string }
 TsObjectType = '{' members: TsTypeMemberList '}'
 
-TsInterfaceStatement =
+TsInterfaceDeclaration =
 	'declare'?
 	'interface'
 	id: TsIdentifierBinding

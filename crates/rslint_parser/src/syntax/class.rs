@@ -61,13 +61,13 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
-pub(super) fn parse_class_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     if !p.at(T![class]) {
         return Absent;
     }
 
     let m = p.start();
-    let mut class = parse_class(p, m, ClassKind::Statement);
+    let mut class = parse_class(p, m, ClassKind::Declaration);
 
     if !class.kind().is_unknown() && context.is_single_statement() {
         // test_err class_in_single_statement_context
@@ -109,7 +109,7 @@ pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 enum ClassKind {
-    Statement,
+    Declaration,
     Expression,
     Export,
     ExportDefault,
@@ -124,7 +124,7 @@ impl ClassKind {
 impl From<ClassKind> for JsSyntaxKind {
     fn from(kind: ClassKind) -> Self {
         match kind {
-            ClassKind::Statement => JS_CLASS_STATEMENT,
+            ClassKind::Declaration => JS_CLASS_DECLARATION,
             ClassKind::Expression => JS_CLASS_EXPRESSION,
             ClassKind::Export => JS_EXPORT_CLASS_CLAUSE,
             ClassKind::ExportDefault => JS_EXPORT_DEFAULT_CLASS_CLAUSE,

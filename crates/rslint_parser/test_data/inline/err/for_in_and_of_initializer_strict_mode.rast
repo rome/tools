@@ -7,7 +7,7 @@ JsModule {
             l_paren_token: L_PAREN@4..5 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: VAR_KW@5..9 "var" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@9..11 "i" [] [Whitespace(" ")],
                     },
@@ -38,7 +38,7 @@ JsModule {
             l_paren_token: L_PAREN@29..30 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: LET_KW@30..34 "let" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@34..36 "i" [] [Whitespace(" ")],
                     },
@@ -69,7 +69,7 @@ JsModule {
             l_paren_token: L_PAREN@54..55 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: CONST_KW@55..61 "const" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@61..63 "i" [] [Whitespace(" ")],
                     },
@@ -101,7 +101,7 @@ JsModule {
             l_paren_token: L_PAREN@81..82 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: VAR_KW@82..86 "var" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@86..88 "i" [] [Whitespace(" ")],
                     },
@@ -133,7 +133,7 @@ JsModule {
             l_paren_token: L_PAREN@106..107 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: LET_KW@107..111 "let" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@111..113 "i" [] [Whitespace(" ")],
                     },
@@ -165,7 +165,7 @@ JsModule {
             l_paren_token: L_PAREN@131..132 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: CONST_KW@132..138 "const" [] [Whitespace(" ")],
-                declaration: JsVariableDeclaration {
+                declarator: JsVariableDeclarator {
                     id: JsIdentifierBinding {
                         name_token: IDENT@138..140 "i" [] [Whitespace(" ")],
                     },
@@ -204,7 +204,7 @@ JsModule {
       1: L_PAREN@4..5 "(" [] []
       2: JS_FOR_VARIABLE_DECLARATION@5..15
         0: VAR_KW@5..9 "var" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@9..15
+        1: JS_VARIABLE_DECLARATOR@9..15
           0: JS_IDENTIFIER_BINDING@9..11
             0: IDENT@9..11 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -227,7 +227,7 @@ JsModule {
       1: L_PAREN@29..30 "(" [] []
       2: JS_FOR_VARIABLE_DECLARATION@30..40
         0: LET_KW@30..34 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@34..40
+        1: JS_VARIABLE_DECLARATOR@34..40
           0: JS_IDENTIFIER_BINDING@34..36
             0: IDENT@34..36 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -250,7 +250,7 @@ JsModule {
       1: L_PAREN@54..55 "(" [] []
       2: JS_FOR_VARIABLE_DECLARATION@55..67
         0: CONST_KW@55..61 "const" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@61..67
+        1: JS_VARIABLE_DECLARATOR@61..67
           0: JS_IDENTIFIER_BINDING@61..63
             0: IDENT@61..63 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -274,7 +274,7 @@ JsModule {
       2: L_PAREN@81..82 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@82..92
         0: VAR_KW@82..86 "var" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@86..92
+        1: JS_VARIABLE_DECLARATOR@86..92
           0: JS_IDENTIFIER_BINDING@86..88
             0: IDENT@86..88 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -298,7 +298,7 @@ JsModule {
       2: L_PAREN@106..107 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@107..117
         0: LET_KW@107..111 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@111..117
+        1: JS_VARIABLE_DECLARATOR@111..117
           0: JS_IDENTIFIER_BINDING@111..113
             0: IDENT@111..113 "i" [] [Whitespace(" ")]
           1: (empty)
@@ -322,7 +322,7 @@ JsModule {
       2: L_PAREN@131..132 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@132..144
         0: CONST_KW@132..138 "const" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION@138..144
+        1: JS_VARIABLE_DECLARATOR@138..144
           0: JS_IDENTIFIER_BINDING@138..140
             0: IDENT@138..140 "i" [] [Whitespace(" ")]
           1: (empty)

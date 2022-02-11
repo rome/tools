@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -40,7 +40,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@29..35 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -73,7 +73,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@51..110 "type" [Newline("\n"), Comments("// members that look  ..."), Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -112,7 +112,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@124..130 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -142,7 +142,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@149..155 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -175,7 +175,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..166
-    0: TS_TYPE_ALIAS_STATEMENT@0..29
+    0: TS_TYPE_ALIAS_DECLARATION@0..29
       0: (empty)
       1: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@5..7
@@ -203,7 +203,7 @@ JsModule {
             5: (empty)
         2: R_CURLY@28..29 "}" [] []
       6: (empty)
-    1: TS_TYPE_ALIAS_STATEMENT@29..51
+    1: TS_TYPE_ALIAS_DECLARATION@29..51
       0: (empty)
       1: TYPE_KW@29..35 "type" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@35..37
@@ -228,7 +228,7 @@ JsModule {
             5: (empty)
         2: R_CURLY@50..51 "}" [] []
       6: (empty)
-    2: TS_TYPE_ALIAS_STATEMENT@51..124
+    2: TS_TYPE_ALIAS_DECLARATION@51..124
       0: (empty)
       1: TYPE_KW@51..110 "type" [Newline("\n"), Comments("// members that look  ..."), Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@110..112
@@ -257,7 +257,7 @@ JsModule {
             5: (empty)
         2: R_CURLY@123..124 "}" [] []
       6: (empty)
-    3: TS_TYPE_ALIAS_STATEMENT@124..149
+    3: TS_TYPE_ALIAS_DECLARATION@124..149
       0: (empty)
       1: TYPE_KW@124..130 "type" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@130..132
@@ -279,7 +279,7 @@ JsModule {
             4: (empty)
         2: R_CURLY@148..149 "}" [] []
       6: (empty)
-    4: TS_TYPE_ALIAS_STATEMENT@149..166
+    4: TS_TYPE_ALIAS_DECLARATION@149..166
       0: (empty)
       1: TYPE_KW@149..155 "type" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@155..157

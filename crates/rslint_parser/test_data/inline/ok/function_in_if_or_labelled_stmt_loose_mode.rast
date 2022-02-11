@@ -5,7 +5,7 @@ JsScript {
         JsLabeledStatement {
             label_token: IDENT@0..16 "label1" [Comments("// SCRIPT"), Newline("\n")] [],
             colon_token: COLON@16..18 ":" [] [Whitespace(" ")],
-            body: JsFunctionStatement {
+            body: JsFunctionDeclaration {
                 async_token: missing (optional),
                 function_token: FUNCTION_KW@18..27 "function" [] [Whitespace(" ")],
                 star_token: missing (optional),
@@ -34,7 +34,7 @@ JsScript {
                 value_token: TRUE_KW@38..42 "true" [] [],
             },
             r_paren_token: R_PAREN@42..44 ")" [] [Whitespace(" ")],
-            consequent: JsFunctionStatement {
+            consequent: JsFunctionDeclaration {
                 async_token: missing (optional),
                 function_token: FUNCTION_KW@44..53 "function" [] [Whitespace(" ")],
                 star_token: missing (optional),
@@ -57,7 +57,7 @@ JsScript {
             },
             else_clause: JsElseClause {
                 else_token: ELSE_KW@60..65 "else" [] [Whitespace(" ")],
-                alternate: JsFunctionStatement {
+                alternate: JsFunctionDeclaration {
                     async_token: missing (optional),
                     function_token: FUNCTION_KW@65..74 "function" [] [Whitespace(" ")],
                     star_token: missing (optional),
@@ -87,7 +87,7 @@ JsScript {
                 value_token: TRUE_KW@85..89 "true" [] [],
             },
             r_paren_token: R_PAREN@89..91 ")" [] [Whitespace(" ")],
-            consequent: JsFunctionStatement {
+            consequent: JsFunctionDeclaration {
                 async_token: missing (optional),
                 function_token: FUNCTION_KW@91..100 "function" [] [Whitespace(" ")],
                 star_token: missing (optional),
@@ -125,7 +125,7 @@ JsScript {
             },
             else_clause: JsElseClause {
                 else_token: ELSE_KW@125..130 "else" [] [Whitespace(" ")],
-                alternate: JsFunctionStatement {
+                alternate: JsFunctionDeclaration {
                     async_token: missing (optional),
                     function_token: FUNCTION_KW@130..139 "function" [] [Whitespace(" ")],
                     star_token: missing (optional),
@@ -159,7 +159,7 @@ JsScript {
     0: JS_LABELED_STATEMENT@0..33
       0: IDENT@0..16 "label1" [Comments("// SCRIPT"), Newline("\n")] []
       1: COLON@16..18 ":" [] [Whitespace(" ")]
-      2: JS_FUNCTION_STATEMENT@18..33
+      2: JS_FUNCTION_DECLARATION@18..33
         0: (empty)
         1: FUNCTION_KW@18..27 "function" [] [Whitespace(" ")]
         2: (empty)
@@ -182,7 +182,7 @@ JsScript {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@38..42
         0: TRUE_KW@38..42 "true" [] []
       3: R_PAREN@42..44 ")" [] [Whitespace(" ")]
-      4: JS_FUNCTION_STATEMENT@44..60
+      4: JS_FUNCTION_DECLARATION@44..60
         0: (empty)
         1: FUNCTION_KW@44..53 "function" [] [Whitespace(" ")]
         2: (empty)
@@ -201,7 +201,7 @@ JsScript {
           3: R_CURLY@58..60 "}" [] [Whitespace(" ")]
       5: JS_ELSE_CLAUSE@60..80
         0: ELSE_KW@60..65 "else" [] [Whitespace(" ")]
-        1: JS_FUNCTION_STATEMENT@65..80
+        1: JS_FUNCTION_DECLARATION@65..80
           0: (empty)
           1: FUNCTION_KW@65..74 "function" [] [Whitespace(" ")]
           2: (empty)
@@ -224,7 +224,7 @@ JsScript {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@85..89
         0: TRUE_KW@85..89 "true" [] []
       3: R_PAREN@89..91 ")" [] [Whitespace(" ")]
-      4: JS_FUNCTION_STATEMENT@91..106
+      4: JS_FUNCTION_DECLARATION@91..106
         0: (empty)
         1: FUNCTION_KW@91..100 "function" [] [Whitespace(" ")]
         2: (empty)
@@ -254,7 +254,7 @@ JsScript {
         1: SEMICOLON@123..125 ";" [] [Whitespace(" ")]
       5: JS_ELSE_CLAUSE@125..145
         0: ELSE_KW@125..130 "else" [] [Whitespace(" ")]
-        1: JS_FUNCTION_STATEMENT@130..145
+        1: JS_FUNCTION_DECLARATION@130..145
           0: (empty)
           1: FUNCTION_KW@130..139 "function" [] [Whitespace(" ")]
           2: (empty)

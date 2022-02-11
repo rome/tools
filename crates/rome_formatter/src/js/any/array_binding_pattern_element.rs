@@ -12,3 +12,4 @@ impl ToFormatElement for JsAnyArrayBindingPatternElement {
         }
     }
 }
+

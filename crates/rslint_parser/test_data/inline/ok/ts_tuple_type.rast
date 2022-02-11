@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -29,7 +29,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -80,7 +80,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@70..76 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -135,7 +135,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@115..121 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -162,7 +162,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@137..143 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -188,7 +188,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAliasStatement {
+        TsTypeAliasDeclaration {
             declare_token: missing (optional),
             type_token: TYPE_KW@160..166 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
@@ -218,7 +218,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..179
-    0: TS_TYPE_ALIAS_STATEMENT@0..30
+    0: TS_TYPE_ALIAS_DECLARATION@0..30
       0: (empty)
       1: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@5..7
@@ -238,7 +238,7 @@ JsModule {
             0: ANY_KW@26..29 "any" [] []
         2: R_BRACK@29..30 "]" [] []
       6: (empty)
-    1: TS_TYPE_ALIAS_STATEMENT@30..70
+    1: TS_TYPE_ALIAS_DECLARATION@30..70
       0: (empty)
       1: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@36..38
@@ -276,7 +276,7 @@ JsModule {
               0: ANY_KW@66..69 "any" [] []
         2: R_BRACK@69..70 "]" [] []
       6: (empty)
-    2: TS_TYPE_ALIAS_STATEMENT@70..115
+    2: TS_TYPE_ALIAS_DECLARATION@70..115
       0: (empty)
       1: TYPE_KW@70..76 "type" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@76..78
@@ -317,7 +317,7 @@ JsModule {
               2: R_BRACK@113..114 "]" [] []
         2: R_BRACK@114..115 "]" [] []
       6: (empty)
-    3: TS_TYPE_ALIAS_STATEMENT@115..137
+    3: TS_TYPE_ALIAS_DECLARATION@115..137
       0: (empty)
       1: TYPE_KW@115..121 "type" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@121..123
@@ -337,7 +337,7 @@ JsModule {
               0: STRING_KW@130..136 "string" [] []
         2: R_BRACK@136..137 "]" [] []
       6: (empty)
-    4: TS_TYPE_ALIAS_STATEMENT@137..160
+    4: TS_TYPE_ALIAS_DECLARATION@137..160
       0: (empty)
       1: TYPE_KW@137..143 "type" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@143..145
@@ -356,7 +356,7 @@ JsModule {
               2: R_BRACK@158..159 "]" [] []
         2: R_BRACK@159..160 "]" [] []
       6: (empty)
-    5: TS_TYPE_ALIAS_STATEMENT@160..179
+    5: TS_TYPE_ALIAS_DECLARATION@160..179
       0: (empty)
       1: TYPE_KW@160..166 "type" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@166..168

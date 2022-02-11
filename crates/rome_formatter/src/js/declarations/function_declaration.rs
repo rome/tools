@@ -1,8 +1,8 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::{JsAnyFunction, JsFunctionStatement};
+use rslint_parser::ast::{JsAnyFunction, JsFunctionDeclaration};
 
-impl ToFormatElement for JsFunctionStatement {
+impl ToFormatElement for JsFunctionDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         JsAnyFunction::from(self.clone()).to_format_element(formatter)
     }

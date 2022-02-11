@@ -1,9 +1,9 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::format_initializer_clause;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::JsVariableDeclaration;
+use rslint_parser::ast::JsVariableDeclarator;
 
-impl ToFormatElement for JsVariableDeclaration {
+impl ToFormatElement for JsVariableDeclarator {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let initializer = format_initializer_clause(formatter, self.initializer())?;
 

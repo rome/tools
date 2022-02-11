@@ -4,10 +4,10 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: VAR_KW@0..4 "var" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
@@ -23,10 +23,10 @@ JsModule {
         },
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: CONST_KW@8..15 "const" [Newline("\n")] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@15..17 "b" [] [Whitespace(" ")],
                         },
@@ -44,10 +44,10 @@ JsModule {
         },
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@21..25 "let" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@25..27 "c" [] [Whitespace(" ")],
                         },
@@ -73,10 +73,10 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..31
     0: JS_VARIABLE_STATEMENT@0..8
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@0..7
+      1: JS_VARIABLE_DECLARATION@0..7
         0: VAR_KW@0..4 "var" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@4..7
-          0: JS_VARIABLE_DECLARATION@4..7
+        1: JS_VARIABLE_DECLARATOR_LIST@4..7
+          0: JS_VARIABLE_DECLARATOR@4..7
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
@@ -86,10 +86,10 @@ JsModule {
       2: SEMICOLON@7..8 ";" [] []
     1: JS_VARIABLE_STATEMENT@8..21
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@8..21
+      1: JS_VARIABLE_DECLARATION@8..21
         0: CONST_KW@8..15 "const" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@15..21
-          0: JS_VARIABLE_DECLARATION@15..21
+        1: JS_VARIABLE_DECLARATOR_LIST@15..21
+          0: JS_VARIABLE_DECLARATOR@15..21
             0: JS_IDENTIFIER_BINDING@15..17
               0: IDENT@15..17 "b" [] [Whitespace(" ")]
             1: (empty)
@@ -100,10 +100,10 @@ JsModule {
       2: (empty)
     2: JS_VARIABLE_STATEMENT@21..31
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@21..30
+      1: JS_VARIABLE_DECLARATION@21..30
         0: LET_KW@21..25 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@25..30
-          0: JS_VARIABLE_DECLARATION@25..30
+        1: JS_VARIABLE_DECLARATOR_LIST@25..30
+          0: JS_VARIABLE_DECLARATOR@25..30
             0: JS_IDENTIFIER_BINDING@25..27
               0: IDENT@25..27 "c" [] [Whitespace(" ")]
             1: (empty)

@@ -86,7 +86,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@53..60 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@60..65 "Test" [] [Whitespace(" ")],
@@ -265,7 +265,7 @@ JsModule {
         2: JS_NAME@50..53
           0: IDENT@50..53 "bar" [] []
       1: (empty)
-    6: JS_CLASS_STATEMENT@53..159
+    6: JS_CLASS_DECLARATION@53..159
       0: CLASS_KW@53..60 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@60..65
         0: IDENT@60..65 "Test" [] [Whitespace(" ")]

@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..16 "TestClass" [] [Whitespace(" ")],
@@ -90,7 +90,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@73..74 "}" [] [],
         },
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@74..81 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@81..91 "TestClass" [] [Whitespace(" ")],
@@ -169,7 +169,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@144..145 "}" [] [],
         },
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@152..162 "TestClass" [] [Whitespace(" ")],
@@ -254,7 +254,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@222..223 "}" [] [],
         },
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@223..230 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@230..240 "TestClass" [] [Whitespace(" ")],
@@ -352,7 +352,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@304..305 "}" [] [],
         },
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@305..312 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@312..322 "TestClass" [] [Whitespace(" ")],
@@ -448,7 +448,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@389..390 "}" [] [],
         },
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@390..397 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@397..407 "TestClass" [] [Whitespace(" ")],
@@ -554,7 +554,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..478
-    0: JS_CLASS_STATEMENT@0..74
+    0: JS_CLASS_DECLARATION@0..74
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..16
         0: IDENT@6..16 "TestClass" [] [Whitespace(" ")]
@@ -620,7 +620,7 @@ JsModule {
                 1: (empty)
             3: R_CURLY@71..73 "}" [] [Whitespace(" ")]
       7: R_CURLY@73..74 "}" [] []
-    1: JS_CLASS_STATEMENT@74..145
+    1: JS_CLASS_DECLARATION@74..145
       0: CLASS_KW@74..81 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@81..91
         0: IDENT@81..91 "TestClass" [] [Whitespace(" ")]
@@ -680,7 +680,7 @@ JsModule {
                 1: (empty)
             3: R_CURLY@142..144 "}" [] [Whitespace(" ")]
       7: R_CURLY@144..145 "}" [] []
-    2: JS_CLASS_STATEMENT@145..223
+    2: JS_CLASS_DECLARATION@145..223
       0: CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@152..162
         0: IDENT@152..162 "TestClass" [] [Whitespace(" ")]
@@ -744,7 +744,7 @@ JsModule {
                 1: (empty)
             3: R_CURLY@220..222 "}" [] [Whitespace(" ")]
       7: R_CURLY@222..223 "}" [] []
-    3: JS_CLASS_STATEMENT@223..305
+    3: JS_CLASS_DECLARATION@223..305
       0: CLASS_KW@223..230 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@230..240
         0: IDENT@230..240 "TestClass" [] [Whitespace(" ")]
@@ -819,7 +819,7 @@ JsModule {
                 1: (empty)
             3: R_CURLY@302..304 "}" [] [Whitespace(" ")]
       7: R_CURLY@304..305 "}" [] []
-    4: JS_CLASS_STATEMENT@305..390
+    4: JS_CLASS_DECLARATION@305..390
       0: CLASS_KW@305..312 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@312..322
         0: IDENT@312..322 "TestClass" [] [Whitespace(" ")]
@@ -892,7 +892,7 @@ JsModule {
                 1: (empty)
             3: R_CURLY@387..389 "}" [] [Whitespace(" ")]
       7: R_CURLY@389..390 "}" [] []
-    5: JS_CLASS_STATEMENT@390..478
+    5: JS_CLASS_DECLARATION@390..478
       0: CLASS_KW@390..397 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@397..407
         0: IDENT@397..407 "TestClass" [] [Whitespace(" ")]

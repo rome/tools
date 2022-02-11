@@ -5,6 +5,7 @@ mod assignments;
 mod auxiliary;
 mod bindings;
 mod classes;
+mod declarations;
 mod expressions;
 mod lists;
 mod module;

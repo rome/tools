@@ -128,12 +128,12 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::JsCatchDeclaration::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JS_CLASS_EXPRESSION => {
-                    let $pattern = unsafe { $crate::ast::JsClassExpression::new_unchecked(node) };
+                $crate::JsSyntaxKind::JS_CLASS_DECLARATION => {
+                    let $pattern = unsafe { $crate::ast::JsClassDeclaration::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JS_CLASS_STATEMENT => {
-                    let $pattern = unsafe { $crate::ast::JsClassStatement::new_unchecked(node) };
+                $crate::JsSyntaxKind::JS_CLASS_EXPRESSION => {
+                    let $pattern = unsafe { $crate::ast::JsClassExpression::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_COMPUTED_MEMBER_ASSIGNMENT => {
@@ -312,13 +312,14 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::JsFunctionBody::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JS_FUNCTION_DECLARATION => {
+                    let $pattern =
+                        unsafe { $crate::ast::JsFunctionDeclaration::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JS_FUNCTION_EXPRESSION => {
                     let $pattern =
                         unsafe { $crate::ast::JsFunctionExpression::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::JS_FUNCTION_STATEMENT => {
-                    let $pattern = unsafe { $crate::ast::JsFunctionStatement::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_GETTER_CLASS_MEMBER => {
@@ -673,9 +674,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::JsVariableDeclaration::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JS_VARIABLE_DECLARATIONS => {
+                $crate::JsSyntaxKind::JS_VARIABLE_DECLARATOR => {
                     let $pattern =
-                        unsafe { $crate::ast::JsVariableDeclarations::new_unchecked(node) };
+                        unsafe { $crate::ast::JsVariableDeclarator::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_VARIABLE_STATEMENT => {
@@ -768,12 +769,12 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::TsDefiniteVariableAnnotation::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_ENUM_MEMBER => {
-                    let $pattern = unsafe { $crate::ast::TsEnumMember::new_unchecked(node) };
+                $crate::JsSyntaxKind::TS_ENUM_DECLARATION => {
+                    let $pattern = unsafe { $crate::ast::TsEnumDeclaration::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_ENUM_STATEMENT => {
-                    let $pattern = unsafe { $crate::ast::TsEnumStatement::new_unchecked(node) };
+                $crate::JsSyntaxKind::TS_ENUM_MEMBER => {
+                    let $pattern = unsafe { $crate::ast::TsEnumMember::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_EXTENDS_CLAUSE => {
@@ -832,9 +833,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsInferType::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_INTERFACE_STATEMENT => {
+                $crate::JsSyntaxKind::TS_INTERFACE_DECLARATION => {
                     let $pattern =
-                        unsafe { $crate::ast::TsInterfaceStatement::new_unchecked(node) };
+                        unsafe { $crate::ast::TsInterfaceDeclaration::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_INTERSECTION_TYPE => {
@@ -995,9 +996,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsTupleType::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_TYPE_ALIAS_STATEMENT => {
+                $crate::JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION => {
                     let $pattern =
-                        unsafe { $crate::ast::TsTypeAliasStatement::new_unchecked(node) };
+                        unsafe { $crate::ast::TsTypeAliasDeclaration::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_TYPE_ANNOTATION => {
@@ -1186,9 +1187,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::JsTemplateElementList::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JS_VARIABLE_DECLARATION_LIST => {
+                $crate::JsSyntaxKind::JS_VARIABLE_DECLARATOR_LIST => {
                     let $pattern =
-                        unsafe { $crate::ast::JsVariableDeclarationList::new_unchecked(node) };
+                        unsafe { $crate::ast::JsVariableDeclaratorList::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_ENUM_MEMBER_LIST => {

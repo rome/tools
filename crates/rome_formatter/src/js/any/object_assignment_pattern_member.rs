@@ -14,3 +14,4 @@ impl ToFormatElement for JsAnyObjectAssignmentPatternMember {
         }
     }
 }
+

@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassStatement {
+        JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
             type_parameters: missing (optional),
@@ -48,10 +48,10 @@ JsModule {
                                 statements: JsStatementList [
                                     JsVariableStatement {
                                         declare_token: missing (optional),
-                                        declarations: JsVariableDeclarations {
+                                        declaration: JsVariableDeclaration {
                                             kind: LET_KW@27..36 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
-                                            items: JsVariableDeclarationList [
-                                                JsVariableDeclaration {
+                                            declarators: JsVariableDeclaratorList [
+                                                JsVariableDeclarator {
                                                     id: JsIdentifierBinding {
                                                         name_token: IDENT@36..37 "a" [] [],
                                                     },
@@ -86,7 +86,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..47
-    0: JS_CLASS_STATEMENT@0..46
+    0: JS_CLASS_DECLARATION@0..46
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: (empty)
       2: (empty)
@@ -127,10 +127,10 @@ JsModule {
                 2: JS_STATEMENT_LIST@27..39
                   0: JS_VARIABLE_STATEMENT@27..39
                     0: (empty)
-                    1: JS_VARIABLE_DECLARATIONS@27..38
+                    1: JS_VARIABLE_DECLARATION@27..38
                       0: LET_KW@27..36 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-                      1: JS_VARIABLE_DECLARATION_LIST@36..38
-                        0: JS_VARIABLE_DECLARATION@36..38
+                      1: JS_VARIABLE_DECLARATOR_LIST@36..38
+                        0: JS_VARIABLE_DECLARATOR@36..38
                           0: JS_IDENTIFIER_BINDING@36..37
                             0: IDENT@36..37 "a" [] []
                           1: (empty)

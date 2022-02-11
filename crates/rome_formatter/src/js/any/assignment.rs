@@ -13,3 +13,4 @@ impl ToFormatElement for JsAnyAssignment {
         }
     }
 }
+

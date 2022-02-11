@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: missing (optional),
             interface_token: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -44,7 +44,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@31..32 "}" [] [],
         },
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: missing (optional),
             interface_token: INTERFACE_KW@32..43 "interface" [Newline("\n")] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -74,7 +74,7 @@ JsModule {
             members: TsTypeMemberList [],
             r_curly_token: R_CURLY@64..65 "}" [] [],
         },
-        TsInterfaceStatement {
+        TsInterfaceDeclaration {
             declare_token: missing (optional),
             interface_token: INTERFACE_KW@65..76 "interface" [Newline("\n")] [Whitespace(" ")],
             id: TsIdentifierBinding {
@@ -119,7 +119,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..101
-    0: TS_INTERFACE_STATEMENT@0..32
+    0: TS_INTERFACE_DECLARATION@0..32
       0: (empty)
       1: INTERFACE_KW@0..10 "interface" [] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@10..11
@@ -149,7 +149,7 @@ JsModule {
               1: (empty)
           4: (empty)
       7: R_CURLY@31..32 "}" [] []
-    1: TS_INTERFACE_STATEMENT@32..65
+    1: TS_INTERFACE_DECLARATION@32..65
       0: (empty)
       1: INTERFACE_KW@32..43 "interface" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@43..45
@@ -170,7 +170,7 @@ JsModule {
       5: L_CURLY@63..64 "{" [] []
       6: TS_TYPE_MEMBER_LIST@64..64
       7: R_CURLY@64..65 "}" [] []
-    2: TS_INTERFACE_STATEMENT@65..101
+    2: TS_INTERFACE_DECLARATION@65..101
       0: (empty)
       1: INTERFACE_KW@65..76 "interface" [Newline("\n")] [Whitespace(" ")]
       2: TS_IDENTIFIER_BINDING@76..78

@@ -11,10 +11,10 @@ JsModule {
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
             consequent: JsVariableStatement {
                 declare_token: missing (optional),
-                declarations: JsVariableDeclarations {
+                declaration: JsVariableDeclaration {
                     kind: VAR_KW@10..14 "var" [] [Whitespace(" ")],
-                    items: JsVariableDeclarationList [
-                        JsVariableDeclaration {
+                    declarators: JsVariableDeclaratorList [
+                        JsVariableDeclarator {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@14..15 "a" [] [],
                             },
@@ -43,10 +43,10 @@ JsModule {
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
       4: JS_VARIABLE_STATEMENT@10..16
         0: (empty)
-        1: JS_VARIABLE_DECLARATIONS@10..15
+        1: JS_VARIABLE_DECLARATION@10..15
           0: VAR_KW@10..14 "var" [] [Whitespace(" ")]
-          1: JS_VARIABLE_DECLARATION_LIST@14..15
-            0: JS_VARIABLE_DECLARATION@14..15
+          1: JS_VARIABLE_DECLARATOR_LIST@14..15
+            0: JS_VARIABLE_DECLARATOR@14..15
               0: JS_IDENTIFIER_BINDING@14..15
                 0: IDENT@14..15 "a" [] []
               1: (empty)

@@ -42,3 +42,4 @@ impl ToFormatElement for TsType {
         }
     }
 }
+

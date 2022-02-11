@@ -4,10 +4,10 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
@@ -40,10 +40,10 @@ JsModule {
         },
         JsVariableStatement {
             declare_token: missing (optional),
-            declarations: JsVariableDeclarations {
+            declaration: JsVariableDeclaration {
                 kind: LET_KW@22..27 "let" [Newline("\n")] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@27..29 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
@@ -91,10 +91,10 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..54
     0: JS_VARIABLE_STATEMENT@0..22
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@0..22
+      1: JS_VARIABLE_DECLARATION@0..22
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@4..22
-          0: JS_VARIABLE_DECLARATION@4..22
+        1: JS_VARIABLE_DECLARATOR_LIST@4..22
+          0: JS_VARIABLE_DECLARATOR@4..22
             0: JS_OBJECT_BINDING_PATTERN@4..18
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@6..16
@@ -116,10 +116,10 @@ JsModule {
       2: (empty)
     1: JS_VARIABLE_STATEMENT@22..54
       0: (empty)
-      1: JS_VARIABLE_DECLARATIONS@22..54
+      1: JS_VARIABLE_DECLARATION@22..54
         0: LET_KW@22..27 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@27..54
-          0: JS_VARIABLE_DECLARATION@27..54
+        1: JS_VARIABLE_DECLARATOR_LIST@27..54
+          0: JS_VARIABLE_DECLARATOR@27..54
             0: JS_OBJECT_BINDING_PATTERN@27..50
               0: L_CURLY@27..29 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@29..48

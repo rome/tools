@@ -12,6 +12,7 @@ mod class;
 mod class_member;
 mod class_member_name;
 mod constructor_parameter;
+mod declaration;
 mod export_clause;
 mod export_named_specifier;
 mod expression;

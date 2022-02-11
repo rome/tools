@@ -2,7 +2,7 @@ JsScript {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     statements: JsStatementList [
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: ASYNC_KW@0..16 "async" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
             function_token: FUNCTION_KW@16..24 "function" [] [],
             star_token: STAR@24..26 "*" [] [Whitespace(" ")],
@@ -20,7 +20,7 @@ JsScript {
                 l_curly_token: L_CURLY@33..34 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
-                    JsClassStatement {
+                    JsClassDeclaration {
                         class_token: CLASS_KW@34..43 "class" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                         id: JsIdentifierBinding {
                             name_token: IDENT@43..45 "A" [] [Whitespace(" ")],
@@ -69,7 +69,7 @@ JsScript {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..70
-    0: JS_FUNCTION_STATEMENT@0..70
+    0: JS_FUNCTION_DECLARATION@0..70
       0: ASYNC_KW@0..16 "async" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@16..24 "function" [] []
       2: STAR@24..26 "*" [] [Whitespace(" ")]
@@ -85,7 +85,7 @@ JsScript {
         0: L_CURLY@33..34 "{" [] []
         1: JS_DIRECTIVE_LIST@34..34
         2: JS_STATEMENT_LIST@34..68
-          0: JS_CLASS_STATEMENT@34..68
+          0: JS_CLASS_DECLARATION@34..68
             0: CLASS_KW@34..43 "class" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             1: JS_IDENTIFIER_BINDING@43..45
               0: IDENT@43..45 "A" [] [Whitespace(" ")]

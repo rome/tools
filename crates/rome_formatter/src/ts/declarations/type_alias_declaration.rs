@@ -2,9 +2,9 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsTypeAliasStatement;
+use rslint_parser::ast::TsTypeAliasDeclaration;
 
-impl ToFormatElement for TsTypeAliasStatement {
+impl ToFormatElement for TsTypeAliasDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let type_token = self.type_token().format(formatter)?;
         let binding_identifier = self.binding_identifier().format(formatter)?;

@@ -7,7 +7,7 @@ impl ToFormatElement for JsAnyStatement {
         match self {
             Self::JsBlockStatement(node) => node.to_format_element(formatter),
             Self::JsBreakStatement(node) => node.to_format_element(formatter),
-            Self::JsClassStatement(node) => node.to_format_element(formatter),
+            Self::JsClassDeclaration(node) => node.to_format_element(formatter),
             Self::JsContinueStatement(node) => node.to_format_element(formatter),
             Self::JsDebuggerStatement(node) => node.to_format_element(formatter),
             Self::JsDoWhileStatement(node) => node.to_format_element(formatter),
@@ -27,11 +27,12 @@ impl ToFormatElement for JsAnyStatement {
             Self::JsVariableStatement(node) => node.to_format_element(formatter),
             Self::JsWhileStatement(node) => node.to_format_element(formatter),
             Self::JsWithStatement(node) => node.to_format_element(formatter),
-            Self::JsFunctionStatement(node) => node.to_format_element(formatter),
-            Self::TsEnumStatement(node) => node.to_format_element(formatter),
-            Self::TsTypeAliasStatement(node) => node.to_format_element(formatter),
-            Self::TsInterfaceStatement(node) => node.to_format_element(formatter),
+            Self::JsFunctionDeclaration(node) => node.to_format_element(formatter),
+            Self::TsEnumDeclaration(node) => node.to_format_element(formatter),
+            Self::TsTypeAliasDeclaration(node) => node.to_format_element(formatter),
+            Self::TsInterfaceDeclaration(node) => node.to_format_element(formatter),
             Self::TsDeclareFunctionStatement(node) => node.to_format_element(formatter),
         }
     }
 }
+

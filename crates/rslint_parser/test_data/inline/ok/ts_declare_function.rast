@@ -152,7 +152,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@102..112 "function" [Newline("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -287,7 +287,7 @@ JsModule {
         0: JS_REFERENCE_IDENTIFIER@94..102
           0: IDENT@94..102 "declare" [Newline("\n")] []
       1: (empty)
-    3: JS_FUNCTION_STATEMENT@102..134
+    3: JS_FUNCTION_DECLARATION@102..134
       0: (empty)
       1: FUNCTION_KW@102..112 "function" [Newline("\n")] [Whitespace(" ")]
       2: (empty)

@@ -282,7 +282,7 @@ pub fn generate_formatter() {
         let dir = path.parent().unwrap();
         create_dir_all(dir).unwrap();
 
-        let tokens = match index.entries.remove(&name) {
+        let mut tokens = match index.entries.remove(&name) {
             Some(entry) if !allow_overwrite => {
                 let use_items = entry.use_items;
                 let impl_item = entry.impl_item;
@@ -353,6 +353,7 @@ pub fn generate_formatter() {
             }
         };
 
+        tokens.push('\n');
         let mut file = File::create(&path).unwrap();
         file.write_all(tokens.as_bytes()).unwrap();
     }
@@ -390,6 +391,7 @@ impl NodeLanguage {
 enum NodeConcept {
     Expression,
     Statement,
+    Declaration,
     Object,
     Class,
     Assignment,
@@ -407,6 +409,7 @@ impl NodeConcept {
         match self {
             NodeConcept::Expression => "expressions",
             NodeConcept::Statement => "statements",
+            NodeConcept::Declaration => "declarations",
             NodeConcept::Object => "objects",
             NodeConcept::Class => "classes",
             NodeConcept::Assignment => "assignments",
@@ -426,6 +429,7 @@ impl NodeConcept {
 /// Nodes are classified within the following concepts:
 /// - expressions
 /// - statements
+/// - declarations
 /// - objects
 /// - classes
 /// - assignments
@@ -463,6 +467,7 @@ fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
         }
 
         _ if name.ends_with("Statement") => NodeConcept::Statement,
+        _ if name.ends_with("Declaration") => NodeConcept::Declaration,
 
         _ if name.ends_with("Expression")
             || name.ends_with("Argument")

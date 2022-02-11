@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsEnumStatement {
+        TsEnumDeclaration {
             declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
             const_token: missing (optional),
             enum_token: ENUM_KW@8..13 "enum" [] [Whitespace(" ")],
@@ -34,7 +34,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@25..26 "}" [] [],
         },
-        TsEnumStatement {
+        TsEnumDeclaration {
             declare_token: DECLARE_KW@26..35 "declare" [Newline("\n")] [Whitespace(" ")],
             const_token: CONST_KW@35..41 "const" [] [Whitespace(" ")],
             enum_token: ENUM_KW@41..46 "enum" [] [Whitespace(" ")],
@@ -74,7 +74,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..59
-    0: TS_ENUM_STATEMENT@0..26
+    0: TS_ENUM_DECLARATION@0..26
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
       1: (empty)
       2: ENUM_KW@8..13 "enum" [] [Whitespace(" ")]
@@ -97,7 +97,7 @@ JsModule {
             0: IDENT@23..25 "Z" [] [Whitespace(" ")]
           1: (empty)
       6: R_CURLY@25..26 "}" [] []
-    1: TS_ENUM_STATEMENT@26..59
+    1: TS_ENUM_DECLARATION@26..59
       0: DECLARE_KW@26..35 "declare" [Newline("\n")] [Whitespace(" ")]
       1: CONST_KW@35..41 "const" [] [Whitespace(" ")]
       2: ENUM_KW@41..46 "enum" [] [Whitespace(" ")]

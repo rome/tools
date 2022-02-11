@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
@@ -29,10 +29,10 @@ JsModule {
                         statements: JsStatementList [
                             JsVariableStatement {
                                 declare_token: missing (optional),
-                                declarations: JsVariableDeclarations {
+                                declaration: JsVariableDeclaration {
                                     kind: VAR_KW@29..38 "var" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
-                                    items: JsVariableDeclarationList [
-                                        JsVariableDeclaration {
+                                    declarators: JsVariableDeclaratorList [
+                                        JsVariableDeclarator {
                                             id: JsIdentifierBinding {
                                                 name_token: IDENT@38..48 "something" [] [Whitespace(" ")],
                                             },
@@ -63,7 +63,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..64
-    0: JS_FUNCTION_STATEMENT@0..64
+    0: JS_FUNCTION_DECLARATION@0..64
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       2: (empty)
@@ -87,10 +87,10 @@ JsModule {
             1: JS_STATEMENT_LIST@29..58
               0: JS_VARIABLE_STATEMENT@29..58
                 0: (empty)
-                1: JS_VARIABLE_DECLARATIONS@29..57
+                1: JS_VARIABLE_DECLARATION@29..57
                   0: VAR_KW@29..38 "var" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-                  1: JS_VARIABLE_DECLARATION_LIST@38..57
-                    0: JS_VARIABLE_DECLARATION@38..57
+                  1: JS_VARIABLE_DECLARATOR_LIST@38..57
+                    0: JS_VARIABLE_DECLARATOR@38..57
                       0: JS_IDENTIFIER_BINDING@38..48
                         0: IDENT@38..48 "something" [] [Whitespace(" ")]
                       1: (empty)

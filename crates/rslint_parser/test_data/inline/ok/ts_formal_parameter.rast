@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
@@ -32,7 +32,7 @@ JsModule {
                 r_curly_token: R_CURLY@15..16 "}" [] [],
             },
         },
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@16..26 "function" [Newline("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -85,7 +85,7 @@ JsModule {
                 r_curly_token: R_CURLY@44..45 "}" [] [],
             },
         },
-        JsFunctionStatement {
+        JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@45..55 "function" [Newline("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -161,7 +161,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..102
-    0: JS_FUNCTION_STATEMENT@0..16
+    0: JS_FUNCTION_DECLARATION@0..16
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       2: (empty)
@@ -184,7 +184,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@15..15
         2: JS_STATEMENT_LIST@15..15
         3: R_CURLY@15..16 "}" [] []
-    1: JS_FUNCTION_STATEMENT@16..45
+    1: JS_FUNCTION_DECLARATION@16..45
       0: (empty)
       1: FUNCTION_KW@16..26 "function" [Newline("\n")] [Whitespace(" ")]
       2: (empty)
@@ -223,7 +223,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@44..44
         2: JS_STATEMENT_LIST@44..44
         3: R_CURLY@44..45 "}" [] []
-    2: JS_FUNCTION_STATEMENT@45..102
+    2: JS_FUNCTION_DECLARATION@45..102
       0: (empty)
       1: FUNCTION_KW@45..55 "function" [Newline("\n")] [Whitespace(" ")]
       2: (empty)

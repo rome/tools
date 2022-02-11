@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsEnumStatement {
+        TsEnumDeclaration {
             declare_token: missing (optional),
             const_token: missing (optional),
             enum_token: ENUM_KW@0..5 "enum" [] [Whitespace(" ")],
@@ -14,7 +14,7 @@ JsModule {
         JsEmptyStatement {
             semicolon_token: SEMICOLON@6..7 ";" [] [],
         },
-        TsEnumStatement {
+        TsEnumDeclaration {
             declare_token: missing (optional),
             const_token: missing (optional),
             enum_token: ENUM_KW@7..13 "enum" [Newline("\n")] [Whitespace(" ")],
@@ -36,7 +36,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..17
-    0: TS_ENUM_STATEMENT@0..6
+    0: TS_ENUM_DECLARATION@0..6
       0: (empty)
       1: (empty)
       2: ENUM_KW@0..5 "enum" [] [Whitespace(" ")]
@@ -46,7 +46,7 @@ JsModule {
       6: (empty)
     1: JS_EMPTY_STATEMENT@6..7
       0: SEMICOLON@6..7 ";" [] []
-    2: TS_ENUM_STATEMENT@7..16
+    2: TS_ENUM_DECLARATION@7..16
       0: (empty)
       1: (empty)
       2: ENUM_KW@7..13 "enum" [Newline("\n")] [Whitespace(" ")]

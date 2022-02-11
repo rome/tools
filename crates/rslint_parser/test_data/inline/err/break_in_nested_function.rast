@@ -12,7 +12,7 @@ JsModule {
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@13..14 "{" [] [],
                 statements: JsStatementList [
-                    JsFunctionStatement {
+                    JsFunctionDeclaration {
                         async_token: missing (optional),
                         function_token: FUNCTION_KW@14..26 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                         star_token: missing (optional),
@@ -61,7 +61,7 @@ JsModule {
       4: JS_BLOCK_STATEMENT@13..53
         0: L_CURLY@13..14 "{" [] []
         1: JS_STATEMENT_LIST@14..51
-          0: JS_FUNCTION_STATEMENT@14..51
+          0: JS_FUNCTION_DECLARATION@14..51
             0: (empty)
             1: FUNCTION_KW@14..26 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             2: (empty)
