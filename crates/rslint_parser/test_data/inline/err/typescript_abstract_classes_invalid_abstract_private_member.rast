@@ -13,25 +13,21 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@17..19 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsMethodClassMember {
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    abstract_token: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")],
-                    async_token: missing (optional),
-                    star_token: missing (optional),
-                    name: JsPrivateClassMemberName {
-                        hash_token: HASH@28..29 "#" [] [],
-                        id_token: IDENT@29..33 "name" [] [],
-                    },
-                    question_mark_token: missing (required),
-                    type_parameters: missing (optional),
-                    parameters: JsParameters {
-                        l_paren_token: L_PAREN@33..34 "(" [] [],
-                        items: JsParameterList [],
-                        r_paren_token: R_PAREN@34..35 ")" [] [],
-                    },
-                    return_type_annotation: missing (optional),
-                    body: missing (required),
+                JsUnknownMember {
+                    items: [
+                        ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")],
+                        JsUnknownMember {
+                            items: [
+                                HASH@28..29 "#" [] [],
+                                IDENT@29..33 "name" [] [],
+                            ],
+                        },
+                        JsParameters {
+                            l_paren_token: L_PAREN@33..34 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@34..35 ")" [] [],
+                        },
+                    ],
                 },
                 JsEmptyClassMember {
                     semicolon_token: SEMICOLON@35..37 ";" [] [Whitespace(" ")],
@@ -60,23 +56,15 @@ JsModule {
       5: (empty)
       6: L_CURLY@17..19 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@19..37
-        0: JS_METHOD_CLASS_MEMBER@19..35
-          0: (empty)
-          1: (empty)
-          2: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")]
-          3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@28..33
+        0: JS_UNKNOWN_MEMBER@19..35
+          0: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")]
+          1: JS_UNKNOWN_MEMBER@28..33
             0: HASH@28..29 "#" [] []
             1: IDENT@29..33 "name" [] []
-          6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@33..35
+          2: JS_PARAMETERS@33..35
             0: L_PAREN@33..34 "(" [] []
             1: JS_PARAMETER_LIST@34..34
             2: R_PAREN@34..35 ")" [] []
-          9: (empty)
-          10: (empty)
         1: JS_EMPTY_CLASS_MEMBER@35..37
           0: SEMICOLON@35..37 ";" [] [Whitespace(" ")]
       8: R_CURLY@37..38 "}" [] []

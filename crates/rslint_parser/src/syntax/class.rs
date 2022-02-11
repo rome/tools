@@ -1206,14 +1206,17 @@ pub(crate) fn parse_private_class_member_name(
 
         // test_err ts typescript_abstract_classes_invalid_abstract_private_member
         // abstract class A { abstract #name(); };
-        if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
+        let member = if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
             let err = p
                 .err_builder("members with private name cannot be abstract")
                 .primary(abstract_range, "");
             p.error(err);
-        }
+            m.complete(p, JS_UNKNOWN_MEMBER)
+        } else {
+            m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME)
+        };
 
-        Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
+        Present(member)
     }
 }
 
