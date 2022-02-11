@@ -227,25 +227,11 @@ error[SyntaxError]: Illegal use of `yield` as an identifier in generator functio
   │                ^^^^^
 
 --
-error[SyntaxError]: `enum` statements must have a name
+error[SyntaxError]: 'enum's are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ identifier_err.js:5:1
   │
 5 │ enum;
-  │ ^^^^
-
---
-error[SyntaxError]: expected `'{'` but instead found `;`
-  ┌─ identifier_err.js:5:5
-  │
-5 │ enum;
-  │     ^ unexpected
-
---
-error[SyntaxError]: `enums` can only be declared in TypeScript files
-  ┌─ identifier_err.js:5:1
-  │
-5 │ enum;
-  │ ^^^^
+  │ ^^^^ TypeScript only syntax
 
 --
 error[SyntaxError]: Illegal use of reserved keyword `implements` as an identifier in strict mode

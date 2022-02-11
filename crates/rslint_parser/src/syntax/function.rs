@@ -241,6 +241,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         && TypeScript.is_supported(p)
         && is_semi(p, 0)
         && !kind.is_in_single_statement_context()
+        && kind.is_declaration()
     {
         p.eat(T![;]);
 

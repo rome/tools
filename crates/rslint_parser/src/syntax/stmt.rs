@@ -189,7 +189,13 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![if] => parse_if_statement(p),
         T![with] => parse_with_statement(p),
         T![while] => parse_while_statement(p),
-        T![const] | T![enum] if is_at_ts_enum_statement(p) => parse_ts_enum_declaration(p),
+        T![const] | T![enum] if is_at_ts_enum_declaration(p) => {
+            // test_err enum_in_js
+            // enum A {}
+            TypeScript.parse_exclusive_syntax(p, parse_ts_enum_declaration, |p, declaration| {
+                ts_only_syntax_error(p, "'enum's", declaration.range(p).as_range())
+            })
+        }
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
         T![for] => parse_for_statement(p),
@@ -234,7 +240,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] if is_at_contextual_keyword(p, "type") && p.typescript() => {
             parse_ts_type_alias_declaration(p)
         }
-        T![ident] if is_at_ts_interface_statement(p) => {
+        T![ident] if is_at_ts_interface_declaration(p) => {
             TypeScript.parse_exclusive_syntax(p, parse_ts_interface_declaration, |p, interface| {
                 ts_only_syntax_error(p, "interface", interface.range(p).as_range())
             })

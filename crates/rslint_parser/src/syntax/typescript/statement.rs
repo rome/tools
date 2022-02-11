@@ -151,11 +151,11 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
     }
 }
 
-pub(crate) fn is_at_ts_enum_statement(p: &Parser) -> bool {
-    is_nth_at_ts_enum_statement(p, 0)
+pub(crate) fn is_at_ts_enum_declaration(p: &Parser) -> bool {
+    is_nth_at_ts_enum_declaration(p, 0)
 }
 
-pub(crate) fn is_nth_at_ts_enum_statement(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_ts_enum_declaration(p: &Parser, n: usize) -> bool {
     match p.nth(n) {
         T![enum] => true,
         T![const] => p.nth_at(n + 1, T![enum]),
@@ -168,7 +168,7 @@ pub(crate) fn is_nth_at_ts_enum_statement(p: &Parser, n: usize) -> bool {
 // enum B { a, b, c }
 // const enum C { A = 1, B = A * 2, ["A"] = 3, }
 pub(crate) fn parse_ts_enum_declaration(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_ts_enum_statement(p) && !is_at_contextual_keyword(p, "declare") {
+    if !is_at_ts_enum_declaration(p) && !is_at_contextual_keyword(p, "declare") {
         return Absent;
     }
 
@@ -191,11 +191,7 @@ pub(crate) fn parse_ts_enum_declaration(p: &mut Parser) -> ParsedSyntax {
     // enum A {;
     p.expect(T!['}']);
 
-    let mut res = m.complete(p, TS_ENUM_DECLARATION);
-    // test_err enum_in_js
-    // enum A {}
-    res.err_if_not_ts(p, "`enums` can only be declared in TypeScript files");
-    Present(res)
+    Present(m.complete(p, TS_ENUM_DECLARATION))
 }
 
 pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
@@ -293,7 +289,7 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
         return true;
     }
 
-    if is_nth_at_ts_enum_statement(p, 1) {
+    if is_nth_at_ts_enum_declaration(p, 1) {
         return true;
     }
 
@@ -356,7 +352,7 @@ fn parse_ts_declare_function_statement(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-pub(crate) fn is_at_ts_interface_statement(p: &Parser) -> bool {
+pub(crate) fn is_at_ts_interface_declaration(p: &Parser) -> bool {
     if !is_at_contextual_keyword(p, "interface") || p.has_linebreak_before_n(1) {
         return false;
     }
@@ -368,7 +364,7 @@ pub(crate) fn is_at_ts_interface_statement(p: &Parser) -> bool {
 // interface A {}
 // interface B { prop: string, method(): string, [index: number]: string, new(): B }
 pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_ts_interface_statement(p) && !is_at_contextual_keyword(p, "declare") {
+    if !is_at_ts_interface_declaration(p) && !is_at_contextual_keyword(p, "declare") {
         return Absent;
     }
 
