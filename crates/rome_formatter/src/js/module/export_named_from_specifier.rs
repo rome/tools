@@ -13,13 +13,15 @@ impl ToFormatElement for JsExportNamedFromSpecifier {
             .format_with_or_empty(formatter, |type_token| {
                 format_elements![type_token, space_token()]
             })?;
+
+        let source_name = self.source_name().format(formatter)?;
+
         let export_as = self
             .export_as()
             .format_with_or_empty(formatter, |export_as| {
-                format_elements![export_as, space_token()]
+                format_elements![space_token(), export_as]
             })?;
-        let source = self.source_name().format(formatter)?;
 
-        Ok(format_elements![type_token, export_as, source])
+        Ok(format_elements![type_token, source_name, export_as])
     }
 }
