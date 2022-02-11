@@ -56,7 +56,7 @@ pub(crate) fn parse_ts_abstract_class_statement(
     // abstract class A {}
     class.err_if_not_ts(
         p,
-        "`abstract classes` can only be declared in TypeScript files",
+        "`abstract` classes can only be declared in TypeScript files",
     );
     Present(class)
 }
