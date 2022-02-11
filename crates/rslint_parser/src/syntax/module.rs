@@ -503,8 +503,6 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
         }
     };
 
-    dbg!(p.cur());
-
     clause.or_add_diagnostic(p, expected_export_clause);
 
     Present(m.complete(p, JS_EXPORT))
