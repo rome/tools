@@ -47,7 +47,7 @@ pub(crate) fn parse_ts_abstract_class_statement(
     }
 
     let m = p.start();
-    p.bump_remap(rslint_lexer::JsSyntaxKind::ABSTRACT_KW);
+    p.bump_remap(T![abstract]);
 
     let mut class =
         crate::syntax::class::parse_class(p, m, crate::syntax::class::ClassKind::Declaration);

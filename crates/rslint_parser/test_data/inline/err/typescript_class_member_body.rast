@@ -291,30 +291,27 @@ JsModule {
                         r_curly_token: R_CURLY@349..350 "}" [] [],
                     },
                 },
-                JsMethodClassMember {
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    abstract_token: ABSTRACT_KW@350..364 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
-                    async_token: missing (optional),
-                    star_token: missing (optional),
-                    name: JsPrivateClassMemberName {
-                        hash_token: HASH@364..365 "#" [] [],
-                        id_token: IDENT@365..377 "private_name" [] [],
-                    },
-                    question_mark_token: missing (required),
-                    type_parameters: missing (optional),
-                    parameters: JsParameters {
-                        l_paren_token: L_PAREN@377..378 "(" [] [],
-                        items: JsParameterList [],
-                        r_paren_token: R_PAREN@378..380 ")" [] [Whitespace(" ")],
-                    },
-                    return_type_annotation: missing (optional),
-                    body: JsFunctionBody {
-                        l_curly_token: L_CURLY@380..382 "{" [] [Whitespace(" ")],
-                        directives: JsDirectiveList [],
-                        statements: JsStatementList [],
-                        r_curly_token: R_CURLY@382..383 "}" [] [],
-                    },
+                JsUnknownMember {
+                    items: [
+                        ABSTRACT_KW@350..364 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        JsUnknownMember {
+                            items: [
+                                HASH@364..365 "#" [] [],
+                                IDENT@365..377 "private_name" [] [],
+                            ],
+                        },
+                        JsParameters {
+                            l_paren_token: L_PAREN@377..378 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@378..380 ")" [] [Whitespace(" ")],
+                        },
+                        JsFunctionBody {
+                            l_curly_token: L_CURLY@380..382 "{" [] [Whitespace(" ")],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@382..383 "}" [] [],
+                        },
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@383..385 "}" [Newline("\n")] [],
@@ -545,23 +542,16 @@ JsModule {
                       0: IDENT@343..347 "name" [] []
                 1: SEMICOLON@347..349 ";" [] [Whitespace(" ")]
             3: R_CURLY@349..350 "}" [] []
-        4: JS_METHOD_CLASS_MEMBER@350..383
-          0: (empty)
-          1: (empty)
-          2: ABSTRACT_KW@350..364 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-          3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@364..377
+        4: JS_UNKNOWN_MEMBER@350..383
+          0: ABSTRACT_KW@350..364 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          1: JS_UNKNOWN_MEMBER@364..377
             0: HASH@364..365 "#" [] []
             1: IDENT@365..377 "private_name" [] []
-          6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@377..380
+          2: JS_PARAMETERS@377..380
             0: L_PAREN@377..378 "(" [] []
             1: JS_PARAMETER_LIST@378..378
             2: R_PAREN@378..380 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@380..383
+          3: JS_FUNCTION_BODY@380..383
             0: L_CURLY@380..382 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@382..382
             2: JS_STATEMENT_LIST@382..382
