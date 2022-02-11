@@ -510,7 +510,7 @@ fn parse_class_member_impl(
             //   static async* static() {}
             //   static * static() {}
             // }
-            Present(parse_method_class_member_body(
+            Present(parse_everything_after_identifier(
                 p,
                 member_marker,
                 modifiers,
@@ -611,8 +611,7 @@ fn parse_class_member_impl(
                         p.expect(T![')']);
                         parse_ts_type_annotation_or_error(p).ok();
 
-                        let body = parse_function_body(p, SignatureFlags::empty());
-                        check_body(body, p, modifiers);
+                        parse_method_class_member_body(p, modifiers, SignatureFlags::empty());
 
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
@@ -640,9 +639,7 @@ fn parse_class_member_impl(
                             ));
                         }
 
-                        let body = parse_function_body(p, SignatureFlags::empty());
-                        check_body(body, p, modifiers);
-
+                        parse_method_class_member_body(p, modifiers, SignatureFlags::empty());
                         member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
                     };
 
@@ -697,31 +694,6 @@ fn parse_class_member_impl(
             member_marker.abandon(p);
             Absent
         }
-    }
-}
-
-// test_err ts typescript_class_member_body
-// class AbstractMembers {
-//     name(): string;
-// }
-// abstract class AbstractMembers {
-//     abstract display(): void { console.log(this.name); }
-//     abstract get my_name() { return this.name; }
-//     abstract set my_name(name) { this.name = name; }
-// }
-fn check_body(
-    body: ParsedSyntax,
-    p: &mut Parser,
-    modifiers: ClassMemberModifiers,
-) -> Option<CompletedMarker> {
-    let is_abstract = modifiers.has(ModifierKind::Abstract);
-    if !is_abstract {
-        body.or_add_diagnostic(p, js_parse_error::expected_class_method_body)
-    } else {
-        body.add_diagnostic_if_present(
-            p,
-            crate::syntax::typescript::ts_parse_error::unexpected_abstract_member_with_body,
-        )
     }
 }
 
@@ -954,7 +926,7 @@ fn parse_method_class_member(
 
     parse_class_member_name(p, &modifiers)
         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
-    parse_method_class_member_body(p, m, modifiers, flags)
+    parse_everything_after_identifier(p, m, modifiers, flags)
 }
 
 // test_err class_member_method_parameters
@@ -969,7 +941,7 @@ fn parse_method_class_member(
 // }
 
 /// Parses the body (everything after the identifier name) of a method class member
-fn parse_method_class_member_body(
+fn parse_everything_after_identifier(
     p: &mut Parser,
     m: Marker,
     modifiers: ClassMemberModifiers,
@@ -1004,10 +976,42 @@ fn parse_method_class_member_body(
         })
         .ok();
 
-    let body = parse_function_body(p, flags);
-    check_body(body, p, modifiers);
+    parse_method_class_member_body(p, modifiers, flags);
 
     m.complete(p, member_kind)
+}
+
+fn parse_method_class_member_body(
+    p: &mut Parser,
+    modifiers: ClassMemberModifiers,
+    flags: SignatureFlags,
+) {
+    let body = parse_function_body(p, flags);
+
+    // test_err ts typescript_class_member_body
+    // class AbstractMembers {
+    //     constructor();
+    //     name(): string;
+    //     get my_name();
+    //     set my_name(name);
+    //     #private_name();
+    // }
+    // abstract class AbstractMembers {
+    //     abstract constructor() { }
+    //     abstract display(): void { console.log(this.name); }
+    //     abstract get my_name() { return this.name; }
+    //     abstract set my_name(name) { this.name = name; }
+    //     abstract #private_name() { }
+    // }
+    let is_abstract = modifiers.has(ModifierKind::Abstract);
+    if !is_abstract {
+        body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+    } else {
+        body.add_diagnostic_if_present(
+            p,
+            crate::syntax::typescript::ts_parse_error::unexpected_abstract_member_with_body,
+        );
+    }
 }
 
 fn parse_constructor_class_member_body(
@@ -1057,8 +1061,7 @@ fn parse_constructor_class_member_body(
         constructor_is_valid = false;
     }
 
-    let body = parse_function_body(p, SignatureFlags::CONSTRUCTOR);
-    check_body(body, p, modifiers);
+    parse_method_class_member_body(p, modifiers, SignatureFlags::CONSTRUCTOR);
 
     // FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
