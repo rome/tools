@@ -1,7 +1,7 @@
-use crate::formatter_traits::FormatTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
-    format_elements, soft_line_break_or_space, FormatElement, FormatResult, Formatter,
+    format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
 
@@ -17,11 +17,15 @@ impl ToFormatElement for JsNamedImportSpecifier {
             local_name,
         } = self.as_fields();
 
+        let type_token = type_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+
         let name = name.format(formatter)?;
         let as_token = as_token.format(formatter)?;
         let local_name = local_name.format(formatter)?;
 
         Ok(format_elements![
+            type_token,
             name,
             soft_line_break_or_space(),
             as_token,

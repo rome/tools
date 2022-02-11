@@ -21,8 +21,18 @@ impl ToFormatElement for JsPropertyClassMember {
             semicolon_token,
         } = self.as_fields();
 
+        let declare_token = declare_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let access_modifier = access_modifier
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
         let static_token = static_token
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let readonly_token = readonly_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let abstract_token = abstract_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+
+        let property_annotation = property_annotation.format_or_empty(formatter)?;
 
         let init =
             value.format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
@@ -30,8 +40,13 @@ impl ToFormatElement for JsPropertyClassMember {
         let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
 
         Ok(format_elements![
+            declare_token,
+            access_modifier,
             static_token,
+            readonly_token,
+            abstract_token,
             name.format(formatter)?,
+            property_annotation,
             init,
             semicolon
         ])

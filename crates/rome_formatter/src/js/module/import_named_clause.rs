@@ -18,6 +18,9 @@ impl ToFormatElement for JsImportNamedClause {
             assertion,
         } = self.as_fields();
 
+        let type_token = type_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+
         let source = source.format(formatter)?;
 
         let default = default_specifier.format_with_or_empty(formatter, |specifier| {
@@ -29,6 +32,7 @@ impl ToFormatElement for JsImportNamedClause {
             format_elements![space_token(), assertion]
         })?;
         Ok(format_elements![
+            type_token,
             default,
             name,
             space_token(),

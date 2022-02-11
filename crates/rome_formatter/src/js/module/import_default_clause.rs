@@ -17,6 +17,8 @@ impl ToFormatElement for JsImportDefaultClause {
             assertion,
         } = self.as_fields();
 
+        let type_token = type_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
         let local_name = local_name.format(formatter)?;
         let from = from_token.format(formatter)?;
         let source = source.format(formatter)?;
@@ -25,6 +27,7 @@ impl ToFormatElement for JsImportDefaultClause {
         })?;
 
         Ok(format_elements![
+            type_token,
             local_name,
             space_token(),
             from,

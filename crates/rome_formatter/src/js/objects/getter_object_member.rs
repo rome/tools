@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -24,6 +24,7 @@ impl ToFormatElement for JsGetterObjectMember {
             name.format(formatter)?,
             l_paren_token.format(formatter)?,
             r_paren_token.format(formatter)?,
+            return_type.format_or_empty(formatter)?,
             space_token(),
             body.format(formatter)?
         ])

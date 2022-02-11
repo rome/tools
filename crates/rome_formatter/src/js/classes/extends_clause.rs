@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -18,7 +18,8 @@ impl ToFormatElement for JsExtendsClause {
         Ok(format_elements![
             extends_token.format(formatter)?,
             space_token(),
-            super_class.format(formatter)?
+            super_class.format(formatter)?,
+            type_arguments.format_or_empty(formatter)?,
         ])
     }
 }

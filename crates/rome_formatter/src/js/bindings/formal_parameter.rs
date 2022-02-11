@@ -18,6 +18,7 @@ impl ToFormatElement for JsFormalParameter {
 
         Ok(format_elements![
             binding.format(formatter)?,
+            question_mark_token.format_or_empty(formatter)?,
             type_annotation,
             initializer
         ])

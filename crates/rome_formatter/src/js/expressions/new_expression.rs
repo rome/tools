@@ -21,9 +21,9 @@ impl ToFormatElement for JsNewExpression {
 
         Ok(format_elements![
             new_token.format(formatter)?,
-            // TODO handle TsTypeArgs
             space_token(),
             callee.format(formatter)?,
+            type_arguments.format_or_empty(formatter)?,
             arguments,
         ])
     }

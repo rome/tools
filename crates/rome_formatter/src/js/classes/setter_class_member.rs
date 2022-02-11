@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -22,6 +22,9 @@ impl ToFormatElement for JsSetterClassMember {
         } = self.as_fields();
 
         Ok(format_elements![
+            access_modifier.format_or_empty(formatter)?,
+            static_token.format_or_empty(formatter)?,
+            abstract_token.format_or_empty(formatter)?,
             set_token.format(formatter)?,
             space_token(),
             name.format(formatter)?,

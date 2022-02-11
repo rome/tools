@@ -16,11 +16,13 @@ impl ToFormatElement for JsTemplate {
         } = self.as_fields();
 
         let tag = tag.format_or_empty(formatter)?;
+        let type_arguments = type_arguments.format_or_empty(formatter)?;
         let l_tick = l_tick_token.format(formatter)?;
         let r_tick = r_tick_token.format(formatter)?;
 
         Ok(format_elements![
             tag,
+            type_arguments,
             l_tick,
             concat_elements(formatter.format_nodes(elements)?),
             r_tick

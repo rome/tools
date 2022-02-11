@@ -173,7 +173,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@164..170 "get" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@170..171 "(" [] [],
@@ -197,7 +197,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@184..187 "get" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@187..188 "(" [] [],
@@ -221,7 +221,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@202..205 "get" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@205..206 "(" [] [],

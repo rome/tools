@@ -1,6 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
-use crate::{format_elements, token, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{
+    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+};
 
 use rslint_parser::ast::JsExportNamedClause;
 use rslint_parser::ast::JsExportNamedClauseFields;
@@ -15,6 +17,9 @@ impl ToFormatElement for JsExportNamedClause {
             semicolon_token,
         } = self.as_fields();
 
+        let type_token = type_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+
         let specifiers = specifiers.format(formatter)?;
 
         let list = formatter.format_delimited_soft_block_spaces(
@@ -25,6 +30,6 @@ impl ToFormatElement for JsExportNamedClause {
 
         let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
 
-        Ok(format_elements![list, semicolon])
+        Ok(format_elements![type_token, list, semicolon])
     }
 }

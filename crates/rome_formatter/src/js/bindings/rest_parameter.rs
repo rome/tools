@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
@@ -16,6 +16,7 @@ impl ToFormatElement for JsRestParameter {
         Ok(format_elements![
             dotdotdot_token.format(formatter)?,
             binding.format(formatter)?,
+            type_annotation.format_or_empty(formatter)?
         ])
     }
 }

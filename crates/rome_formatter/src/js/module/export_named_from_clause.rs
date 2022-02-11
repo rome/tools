@@ -20,6 +20,9 @@ impl ToFormatElement for JsExportNamedFromClause {
             semicolon_token,
         } = self.as_fields();
 
+        let type_token = type_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+
         let specifiers = specifiers.format(formatter)?;
 
         let list = formatter.format_delimited_soft_block_spaces(
@@ -36,6 +39,7 @@ impl ToFormatElement for JsExportNamedFromClause {
         let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
 
         Ok(format_elements![
+            type_token,
             list,
             space_token(),
             from,

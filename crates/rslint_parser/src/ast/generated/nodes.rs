@@ -3011,8 +3011,8 @@ impl JsMethodClassMember {
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+    pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 6usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 7usize)
@@ -3034,7 +3034,7 @@ pub struct JsMethodClassMemberFields {
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
-    pub question_mark_token: SyntaxResult<SyntaxToken>,
+    pub question_mark_token: Option<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -11191,7 +11191,7 @@ impl std::fmt::Debug for JsMethodClassMember {
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "question_mark_token",
-                &support::DebugSyntaxResult(self.question_mark_token()),
+                &support::DebugOptionalElement(self.question_mark_token()),
             )
             .field(
                 "type_parameters",

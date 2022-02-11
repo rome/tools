@@ -27,9 +27,9 @@ impl ToFormatElement for JsMethodObjectMember {
             async_token,
             star_token,
             name.format(formatter)?,
-            // TODO type_params
+            type_parameters.format_or_empty(formatter)?,
             parameters.format(formatter)?,
-            // TODO return_type
+            return_type_annotation.format_or_empty(formatter)?,
             space_token(),
             body.format(formatter)?,
         ])

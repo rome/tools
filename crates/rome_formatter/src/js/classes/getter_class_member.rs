@@ -22,13 +22,18 @@ impl ToFormatElement for JsGetterClassMember {
         } = self.as_fields();
 
         Ok(format_elements![
+            access_modifier
+                .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?,
             static_token
+                .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?,
+            abstract_token
                 .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?,
             get_token.format(formatter)?,
             space_token(),
             name.format(formatter)?,
             l_paren_token.format(formatter)?,
             r_paren_token.format(formatter)?,
+            return_type.format_or_empty(formatter)?,
             space_token(),
             body.format(formatter)?
         ])

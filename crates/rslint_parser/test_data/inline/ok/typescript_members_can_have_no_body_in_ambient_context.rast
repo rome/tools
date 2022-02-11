@@ -24,7 +24,7 @@ JsModule {
                         name: JsLiteralMemberName {
                             value: IDENT@20..29 "name" [Newline("\n"), Whitespace("    ")] [],
                         },
-                        question_mark_token: missing (required),
+                        question_mark_token: missing (optional),
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@29..30 "(" [] [],
@@ -115,7 +115,7 @@ JsModule {
                                     name: JsLiteralMemberName {
                                         value: IDENT@115..129 "name" [Newline("\n"), Whitespace("         ")] [],
                                     },
-                                    question_mark_token: missing (required),
+                                    question_mark_token: missing (optional),
                                     type_parameters: missing (optional),
                                     parameters: JsParameters {
                                         l_paren_token: L_PAREN@129..130 "(" [] [],

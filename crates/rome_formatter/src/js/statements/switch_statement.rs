@@ -33,7 +33,12 @@ impl ToFormatElement for JsSwitchStatement {
             space_token(),
             formatter.format_delimited_block_indent(
                 &l_curly_token?,
-                join_elements_hard_line(cases.into_iter().zip(formatter.format_nodes(cases)?)),
+                join_elements_hard_line(
+                    cases
+                        .clone()
+                        .into_iter()
+                        .zip(formatter.format_nodes(cases)?)
+                ),
                 &r_curly_token?
             )?
         ])

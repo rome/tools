@@ -22,7 +22,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@20..23 "foo" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@23..24 "(" [] [],
@@ -55,7 +55,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@41..44 "foo" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@44..45 "(" [] [],
@@ -79,7 +79,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@64..67 "foo" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@67..68 "(" [] [],
@@ -103,7 +103,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@88..91 "foo" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@91..92 "(" [] [],

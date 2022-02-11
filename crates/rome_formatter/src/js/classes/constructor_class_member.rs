@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -17,6 +17,8 @@ impl ToFormatElement for JsConstructorClassMember {
         } = self.as_fields();
 
         Ok(format_elements![
+            access_modifier
+                .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?,
             name.format(formatter)?,
             parameters.format(formatter)?,
             space_token(),
