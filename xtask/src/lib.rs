@@ -45,16 +45,18 @@ pub fn reformat(text: impl Display) -> Result<String> {
 
 const PREAMBLE: &str = "Generated file, do not edit by hand, see `xtask/codegen`";
 pub fn prepend_generated_preamble(content: impl Display) -> String {
-    format!("//! {}\n\n{}\n", PREAMBLE, content)
+    format!("//! {}\n\n{}", PREAMBLE, content)
 }
 
 pub fn reformat_without_preamble(text: impl Display) -> Result<String> {
     let _e = pushenv("RUSTUP_TOOLCHAIN", "stable");
     ensure_rustfmt()?;
-    run!(
+    let output = run!(
         "rustfmt --config fn_single_line=true";
         <text.to_string().as_bytes()
-    )
+    )?;
+
+    Ok(format!("{}\n", output))
 }
 
 pub fn ensure_rustfmt() -> Result<()> {
