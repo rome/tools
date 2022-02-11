@@ -245,14 +245,10 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         }
         T![ident] if is_at_ts_declare_statement(p) => {
             let declare_range = p.cur_tok().range();
-            TypeScript.parse_exclusive_syntax(
-                p,
-                |p| parse_ts_declare_statement(p),
-                |p, _| {
-                    p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
-                        .primary(declare_range, "")
-                },
-            )
+            TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
+                p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
+                    .primary(declare_range, "")
+            })
         }
         _ => {
             if is_at_identifier(p) && p.nth_at(1, T![:]) {
