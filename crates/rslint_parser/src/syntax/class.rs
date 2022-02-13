@@ -36,7 +36,20 @@ use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
 
+use super::function::LineBreak;
 use super::typescript::ts_parse_error;
+
+pub(crate) fn is_at_ts_abstract_class_statement(
+    p: &Parser,
+    should_check_line_break: LineBreak,
+) -> bool {
+    let tokens = is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![class]);
+    if should_check_line_break == LineBreak::DoCheck {
+        tokens && !p.has_linebreak_before_n(1)
+    } else {
+        tokens
+    }
+}
 
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
@@ -59,16 +72,46 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 // class foo { set {} }
 // class extends {}
 
+// test ts typescript_abstract_classes
+// abstract class A {}
+// abstract class ConcreteMembers {
+//     name: string;
+//     constructor(name: string) { this.name = name; }
+//     display(): void { console.log(this.name); }
+//     public get my_name() { return this.name; }
+//     public set my_name(name) { this.name = name; }
+//     #private_method() { }
+// }
+// abstract class AbstractMembers {
+//     abstract name(): string;
+// }
+
+// test_err ts typescript_abstract_classes_incomplete
+// abstract class {};
+
+// test_err ts typescript_abstract_classes_invalid_abstract_constructor
+// abstract class A { abstract constructor();};
+
+// test_err ts typescript_abstract_classes_invalid_abstract_property
+// abstract class A { abstract name: string; };
+
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
-    if !p.at(T![class]) {
+    let is_at_class = p.at(T![class]);
+    let is_at_abstract_class = is_at_ts_abstract_class_statement(p, LineBreak::DoCheck);
+    if !is_at_class && !is_at_abstract_class {
         return Absent;
     }
 
     let m = p.start();
+
+    if is_at_contextual_keyword(p, "abstract") {
+        p.bump_remap(T![abstract]);
+    }
+
     let mut class = parse_class(p, m, ClassKind::Declaration);
 
     if !class.kind().is_unknown() && context.is_single_statement() {
@@ -672,6 +715,14 @@ fn parse_class_member_impl(
             };
 
             property.map(|mut property| {
+                if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
+                    let err = p
+                        .err_builder("class properties cannot be abstract")
+                        .primary(abstract_range, "");
+                    p.error(err);
+                    property.change_to_unknown(p);
+                }
+
                 if !property.kind().is_unknown() && is_constructor {
                     let err = p
                         .err_builder("class properties may not be called `constructor`")

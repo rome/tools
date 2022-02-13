@@ -1,0 +1,76 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassStatement {
+            abstract_token: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")],
+            class_token: CLASS_KW@9..15 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@15..17 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@17..19 "{" [] [Whitespace(" ")],
+            members: JsClassMemberList [
+                JsUnknownMember {
+                    items: [
+                        ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")],
+                        JsLiteralMemberName {
+                            value: IDENT@28..32 "name" [] [],
+                        },
+                        TsTypeAnnotation {
+                            colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@34..40 "string" [] [],
+                            },
+                        },
+                        SEMICOLON@40..42 ";" [] [Whitespace(" ")],
+                    ],
+                },
+            ],
+            r_curly_token: R_CURLY@42..43 "}" [] [],
+        },
+        JsEmptyStatement {
+            semicolon_token: SEMICOLON@43..44 ";" [] [],
+        },
+    ],
+    eof_token: EOF@44..45 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..45
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..44
+    0: JS_CLASS_STATEMENT@0..43
+      0: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
+      1: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@15..17
+        0: IDENT@15..17 "A" [] [Whitespace(" ")]
+      3: (empty)
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@17..19 "{" [] [Whitespace(" ")]
+      7: JS_CLASS_MEMBER_LIST@19..42
+        0: JS_UNKNOWN_MEMBER@19..42
+          0: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@28..32
+            0: IDENT@28..32 "name" [] []
+          2: TS_TYPE_ANNOTATION@32..40
+            0: COLON@32..34 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@34..40
+              0: STRING_KW@34..40 "string" [] []
+          3: SEMICOLON@40..42 ";" [] [Whitespace(" ")]
+      8: R_CURLY@42..43 "}" [] []
+    1: JS_EMPTY_STATEMENT@43..44
+      0: SEMICOLON@43..44 ";" [] []
+  3: EOF@44..45 "" [Newline("\n")] []
+--
+error[SyntaxError]: class properties cannot be abstract
+  ┌─ typescript_abstract_classes_invalid_abstract_property.ts:1:20
+  │
+1 │ abstract class A { abstract name: string; };
+  │                    ^^^^^^^^
+
+--
+abstract class A { abstract name: string; };

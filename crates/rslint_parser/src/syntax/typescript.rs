@@ -1,6 +1,5 @@
 //! TypeScript specific functions.
 
-mod classes;
 mod statement;
 pub mod ts_parse_error;
 mod types;
@@ -12,7 +11,6 @@ use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
-pub(crate) use self::classes::*;
 pub(crate) use self::statement::*;
 pub(crate) use self::types::*;
 

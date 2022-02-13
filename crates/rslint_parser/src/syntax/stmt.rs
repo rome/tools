@@ -3,6 +3,7 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
 use super::binding::*;
+use super::class::is_at_ts_abstract_class_statement;
 use super::expr::parse_expression;
 use super::typescript::*;
 use crate::parser::{expected_token, ParseNodeList, ParsedSyntax, ParserProgress};
@@ -211,7 +212,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         // class and abstract class
         T![class] => parse_class_declaration(p, context),
         T![ident] if is_at_ts_abstract_class_statement(p, LineBreak::DoCheck) => {
-            let mut abstract_class = parse_ts_abstract_class_statement(p);
+            let mut abstract_class = parse_class_statement(p, context);
 
             // test_err abstract_class_in_js
             // abstract class A {}
