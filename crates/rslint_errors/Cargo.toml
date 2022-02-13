@@ -10,7 +10,7 @@ description = "Pretty error reporting library based on codespan-reporting built 
 rome_rowan = { path = "../rome_rowan", version = "0.0.0" }
 unicode-width = "0.1.9"
 serde = { version = "1.0.133", optional = true, features = ["derive"] }
-lsp-types = { version = "0.91.1", optional = true }
+lsp-types = { version = "0.92.0", optional = true }
 rslint_text_edit = { version = "0.1", path = "../rslint_text_edit" }
 termcolor = "1.1.2"
 colored = "2.0.0"

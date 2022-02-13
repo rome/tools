@@ -1,19 +1,21 @@
 use std::{collections::HashMap, sync::Arc};
 
+use anyhow::anyhow;
 use rslint_parser::{parse_script, AstNode, SyntaxNode, TextRange};
 use tracing::trace;
 
 use crate::{
     analyzers, assists,
+    signals::AnalyzeDiagnostic,
     suppressions::{self, Suppressions},
-    Analysis, AnalyzerContext, AssistContext,
+    Action, Analysis, AnalyzerContext, AssistContext,
 };
 
 pub type FileId = usize;
 
 #[derive(Default)]
 pub struct AnalysisServer {
-    file_map: HashMap<FileId, Arc<String>>,
+    file_map: HashMap<FileId, Arc<str>>,
 }
 
 impl AnalysisServer {
@@ -23,12 +25,15 @@ impl AnalysisServer {
         }
     }
 
-    pub fn set_file_text(&mut self, file_id: FileId, text: impl Into<Arc<String>>) {
+    pub fn set_file_text(&mut self, file_id: FileId, text: impl Into<Arc<str>>) {
         self.file_map.insert(file_id, text.into());
     }
 
-    pub fn get_file_text(&self, file_id: FileId) -> Option<Arc<String>> {
-        self.file_map.get(&file_id).cloned()
+    pub fn get_file_text(&self, file_id: FileId) -> anyhow::Result<Arc<str>> {
+        self.file_map
+            .get(&file_id)
+            .cloned()
+            .ok_or_else(|| anyhow!("File text missing for FileId {}", file_id))
     }
 
     pub fn parse(&self, file_id: FileId) -> SyntaxNode {
@@ -70,6 +75,26 @@ impl AnalysisServer {
         signals.into()
     }
 
+    pub fn diagnostics(&self, file_id: FileId) -> impl Iterator<Item = AnalyzeDiagnostic> {
+        self.analyze(file_id).into_diagnostics()
+    }
+
+    pub fn analyzer_actions(&self, file_id: FileId) -> impl Iterator<Item = Action> {
+        self.analyze(file_id).into_actions()
+    }
+
+    pub fn actions(
+        &self,
+        file_id: FileId,
+        cursor_range: Option<TextRange>,
+    ) -> impl Iterator<Item = Action> {
+        let analyzer_actions = self.analyzer_actions(file_id);
+        let assist_actions = match cursor_range {
+            Some(range) => self.assists(file_id, range).into_actions(),
+            None => Analysis::default().into_actions(),
+        };
+        analyzer_actions.chain(assist_actions)
+    }
     pub fn analyze(&self, file_id: FileId) -> Analysis {
         let suppressions = self.suppressions(file_id);
 

@@ -30,7 +30,7 @@ fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
             }
 
             let message = format!("Do not use the {} operator", op.text_trimmed());
-            let signal = ctx.error(op, message).into_signal();
+            let signal = ctx.error(op.text_trimmed_range(), message).into_signal();
             Some(signal)
         })
         .collect()

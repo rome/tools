@@ -367,12 +367,13 @@ dependencies = [
 
 [[package]]
 name = "dashmap"
-version = "4.0.2"
+version = "5.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e77a43b28d0668df09411cb0bc9a8c2adc40f9a048afe863e05fd43251e8e39c"
+checksum = "c0834a35a3fce649144119e18da2a4d8ed12ef3862f47183fd46f625d072d96c"
 dependencies = [
  "cfg-if",
  "num_cpus",
+ "parking_lot 0.12.0",
 ]
 
 [[package]]
@@ -602,12 +603,9 @@ checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
 
 [[package]]
 name = "heck"
-version = "0.3.3"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d621efb26863f0e9924c6ac577e8275e5e6b77455db64ffa6c65c904e9e132c"
-dependencies = [
- "unicode-segmentation",
-]
+checksum = "2540771e65fc8cb83cd6e8a237f70c319bd5c29f78ed1084ba5d50eeac86f7f9"
 
 [[package]]
 name = "hermit-abi"
@@ -775,10 +773,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "lsp-types"
-version = "0.91.1"
+name = "lsp-text"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2368312c59425dd133cb9a327afee65be0a633a8ce471d248e2202a48f8f68ae"
+checksum = "b3d0c6a7d756249c61c1573b07b43f5223ac384031d1fea43c58b9608c9ee15e"
+dependencies = [
+ "anyhow",
+ "bytes",
+ "lsp-types",
+ "ropey",
+]
+
+[[package]]
+name = "lsp-types"
+version = "0.92.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e8a69d4142d51b208c9fc3cea68b1a7fcef30354e7aa6ccad07250fd8430fc76"
 dependencies = [
  "bitflags",
  "serde",
@@ -790,8 +800,7 @@ dependencies = [
 [[package]]
 name = "lspower"
 version = "1.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cc2242d4cb4071c7b9ae53001c8c658402b55bb8c3669a70d3ce9565f1144b30"
+source = "git+https://github.com/silvanshade/lspower.git#ab68e26b47767256eb780fff7be65ac5c42acf07"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -815,8 +824,7 @@ dependencies = [
 [[package]]
 name = "lspower-macros"
 version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ca1d48da0e4a6100b4afd52fae99f36d47964a209624021280ad9ffdd410e83d"
+source = "git+https://github.com/silvanshade/lspower.git#ab68e26b47767256eb780fff7be65ac5c42acf07"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -1279,9 +1287,12 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "indexmap",
+ "lsp-text",
  "lspower",
+ "parking_lot 0.12.0",
  "rome_analyze",
  "rome_formatter",
+ "ropey",
  "rslint_errors",
  "rslint_parser",
  "serde",
@@ -1308,6 +1319,15 @@ dependencies = [
  "rustc-hash",
  "serde",
  "text-size",
+]
+
+[[package]]
+name = "ropey"
+version = "1.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e6b9aa65bcd9f308d37c7158b4a1afaaa32b8450213e20c9b98e7d5b3cc2fec3"
+dependencies = [
+ "smallvec",
 ]
 
 [[package]]
