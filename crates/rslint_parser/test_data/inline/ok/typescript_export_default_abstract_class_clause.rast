@@ -1,0 +1,37 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsUnknownStatement {
+            items: [
+                EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
+                JsUnknown {
+                    items: [
+                        DEFAULT_KW@7..15 "default" [] [Whitespace(" ")],
+                        ABSTRACT_KW@15..24 "abstract" [] [Whitespace(" ")],
+                        CLASS_KW@24..30 "class" [] [Whitespace(" ")],
+                        L_CURLY@30..31 "{" [] [],
+                        JsClassMemberList [],
+                        R_CURLY@31..32 "}" [] [],
+                    ],
+                },
+            ],
+        },
+    ],
+    eof_token: EOF@32..33 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..33
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..32
+    0: JS_UNKNOWN_STATEMENT@0..32
+      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      1: JS_UNKNOWN@7..32
+        0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
+        1: ABSTRACT_KW@15..24 "abstract" [] [Whitespace(" ")]
+        2: CLASS_KW@24..30 "class" [] [Whitespace(" ")]
+        3: L_CURLY@30..31 "{" [] []
+        4: JS_CLASS_MEMBER_LIST@31..31
+        5: R_CURLY@31..32 "}" [] []
+  3: EOF@32..33 "" [Newline("\n")] []

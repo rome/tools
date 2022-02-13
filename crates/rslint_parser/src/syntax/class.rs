@@ -24,7 +24,7 @@ use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
     parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
 };
-use crate::syntax::util::is_at_contextual_keyword;
+use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
@@ -129,8 +129,15 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
 
 // test export_default_class_clause
 // export default class {}
+
+// test ts typescript_export_default_abstract_class_case
+// export default abstract class {}
 pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![default]) && !p.nth_at(1, T![class]) {
+    let is_at_default_class = p.at(T![default]) && p.nth_at(1, T![class]);
+    let is_at_default_abstract_class = p.at(T![default])
+        && is_nth_at_contextual_keyword(p, 1, "abstract")
+        && p.nth_at(2, T![class]);
+    if !is_at_default_class && !is_at_default_abstract_class {
         return Absent;
     }
 
@@ -164,6 +171,10 @@ impl From<ClassKind> for JsSyntaxKind {
 }
 
 pub(crate) fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
+    if is_at_contextual_keyword(p, "abstract") {
+        p.bump_remap(T![abstract]);
+    }
+
     let class_token_range = p.cur_tok().range();
 
     p.expect(T![class]);
