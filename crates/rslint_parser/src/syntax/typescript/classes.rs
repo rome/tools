@@ -41,10 +41,7 @@ pub(crate) fn is_at_ts_abstract_class_statement(
 // test_err ts typescript_abstract_classes_invalid_abstract_property
 // abstract class A { abstract name: string; };
 
-pub(crate) fn parse_ts_abstract_class_statement(
-    p: &mut Parser,
-    _ctx: StatementContext,
-) -> ParsedSyntax {
+pub(crate) fn parse_ts_abstract_class_statement(p: &mut Parser) -> ParsedSyntax {
     if !is_at_ts_abstract_class_statement(p, LineBreak::DoCheck) {
         return Absent;
     }
