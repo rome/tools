@@ -39,7 +39,7 @@ use std::ops::Range;
 use super::function::LineBreak;
 use super::typescript::ts_parse_error;
 
-pub(crate) fn is_at_ts_abstract_class_statement(
+pub(crate) fn is_at_ts_abstract_class_declaration(
     p: &Parser,
     should_check_line_break: LineBreak,
 ) -> bool {
@@ -101,7 +101,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     let is_at_class = p.at(T![class]);
-    let is_at_abstract_class = is_at_ts_abstract_class_statement(p, LineBreak::DoCheck);
+    let is_at_abstract_class = is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck);
     if !is_at_class && !is_at_abstract_class {
         return Absent;
     }

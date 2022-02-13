@@ -2,12 +2,8 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-<<<<<<< HEAD
         JsClassDeclaration {
-=======
-        JsClassStatement {
             abstract_token: missing (optional),
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
@@ -89,16 +85,10 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..58
-<<<<<<< HEAD
     0: JS_CLASS_DECLARATION@0..58
-      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@6..8
-=======
-    0: JS_CLASS_STATEMENT@0..58
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@6..8
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
       3: (empty)
       4: (empty)

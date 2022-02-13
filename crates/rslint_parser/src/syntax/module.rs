@@ -24,7 +24,7 @@ use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
 use std::ops::Range;
 
-use super::class::is_at_ts_abstract_class_statement;
+use super::class::is_at_ts_abstract_class_declaration;
 
 ///! Implements the parsing logic for ES Module syntax
 

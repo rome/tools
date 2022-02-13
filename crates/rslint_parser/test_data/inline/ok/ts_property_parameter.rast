@@ -2,12 +2,8 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-<<<<<<< HEAD
         JsClassDeclaration {
-=======
-        JsClassStatement {
             abstract_token: missing (optional),
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
@@ -73,12 +69,8 @@ JsModule {
             ],
             r_curly_token: R_CURLY@59..60 "}" [] [],
         },
-<<<<<<< HEAD
         JsClassDeclaration {
-=======
-        JsClassStatement {
             abstract_token: missing (optional),
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@60..67 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@67..69 "B" [] [Whitespace(" ")],
@@ -160,12 +152,8 @@ JsModule {
             ],
             r_curly_token: R_CURLY@159..160 "}" [] [],
         },
-<<<<<<< HEAD
         JsClassDeclaration {
-=======
-        JsClassStatement {
             abstract_token: missing (optional),
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@160..167 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@167..169 "C" [] [Whitespace(" ")],
@@ -255,16 +243,10 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..243
-<<<<<<< HEAD
     0: JS_CLASS_DECLARATION@0..60
-      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@6..8
-=======
-    0: JS_CLASS_STATEMENT@0..60
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@6..8
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
       3: (empty)
       4: (empty)
@@ -310,18 +292,11 @@ JsModule {
             1: JS_DIRECTIVE_LIST@57..57
             2: JS_STATEMENT_LIST@57..57
             3: R_CURLY@57..59 "}" [] [Whitespace(" ")]
-<<<<<<< HEAD
-      7: R_CURLY@59..60 "}" [] []
-    1: JS_CLASS_DECLARATION@60..160
-      0: CLASS_KW@60..67 "class" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@67..69
-=======
       8: R_CURLY@59..60 "}" [] []
-    1: JS_CLASS_STATEMENT@60..160
+    1: JS_CLASS_DECLARATION@60..160
       0: (empty)
       1: CLASS_KW@60..67 "class" [Newline("\n")] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@67..69
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@67..69 "B" [] [Whitespace(" ")]
       3: (empty)
       4: (empty)
@@ -380,18 +355,11 @@ JsModule {
             1: JS_DIRECTIVE_LIST@157..157
             2: JS_STATEMENT_LIST@157..157
             3: R_CURLY@157..159 "}" [] [Whitespace(" ")]
-<<<<<<< HEAD
-      7: R_CURLY@159..160 "}" [] []
-    2: JS_CLASS_DECLARATION@160..243
-      0: CLASS_KW@160..167 "class" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@167..169
-=======
       8: R_CURLY@159..160 "}" [] []
-    2: JS_CLASS_STATEMENT@160..243
+    2: JS_CLASS_DECLARATION@160..243
       0: (empty)
       1: CLASS_KW@160..167 "class" [Newline("\n")] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@167..169
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@167..169 "C" [] [Whitespace(" ")]
       3: (empty)
       4: (empty)

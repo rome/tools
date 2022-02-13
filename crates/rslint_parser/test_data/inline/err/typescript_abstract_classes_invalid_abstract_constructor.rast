@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassStatement {
+        JsClassDeclaration {
             abstract_token: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")],
             class_token: CLASS_KW@9..15 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -43,7 +43,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..44
-    0: JS_CLASS_STATEMENT@0..43
+    0: JS_CLASS_DECLARATION@0..43
       0: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
       1: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@15..17

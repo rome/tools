@@ -20,12 +20,8 @@ JsScript {
                 l_curly_token: L_CURLY@33..34 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
-<<<<<<< HEAD
                     JsClassDeclaration {
-=======
-                    JsClassStatement {
                         abstract_token: missing (optional),
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
                         class_token: CLASS_KW@34..43 "class" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                         id: JsIdentifierBinding {
                             name_token: IDENT@43..45 "A" [] [Whitespace(" ")],
@@ -86,16 +82,10 @@ JsScript {
         0: L_CURLY@33..34 "{" [] []
         1: JS_DIRECTIVE_LIST@34..34
         2: JS_STATEMENT_LIST@34..68
-<<<<<<< HEAD
           0: JS_CLASS_DECLARATION@34..68
-            0: CLASS_KW@34..43 "class" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-            1: JS_IDENTIFIER_BINDING@43..45
-=======
-          0: JS_CLASS_STATEMENT@34..68
             0: (empty)
             1: CLASS_KW@34..43 "class" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             2: JS_IDENTIFIER_BINDING@43..45
->>>>>>> 92840060b (update rast files with the optional abstract for classes)
               0: IDENT@43..45 "A" [] [Whitespace(" ")]
             3: (empty)
             4: (empty)

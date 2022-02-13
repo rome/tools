@@ -69,10 +69,6 @@ JsModule {
   3: EOF@61..62 "" [Newline("\n")] []
 --
 error[SyntaxError]: `abstract` classes can only be declared in TypeScript files
-  ┌─ export_abstract_class_in_js.js:1:8
-  │
-1 │ export abstract class A {}
-  │        ^^^^^^^^^^^^^^^^^^^
 
 --
 export abstract class A {}
