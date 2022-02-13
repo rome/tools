@@ -38,6 +38,9 @@ pub(crate) fn is_at_ts_abstract_class_statement(
 // test_err ts typescript_abstract_classes_invalid_abstract_constructor
 // abstract class A { abstract constructor();};
 
+// test_err ts typescript_abstract_classes_invalid_abstract_property
+// abstract class A { abstract name: string; };
+
 pub(crate) fn parse_ts_abstract_class_statement(
     p: &mut Parser,
     _ctx: StatementContext,
@@ -50,13 +53,6 @@ pub(crate) fn parse_ts_abstract_class_statement(
     p.bump_remap(T![abstract]);
 
     let mut class =
-        crate::syntax::class::parse_class(p, m, crate::syntax::class::ClassKind::Declaration);
-
-    // test_err abstract_class_in_js
-    // abstract class A {}
-    class.err_if_not_ts(
-        p,
-        "`abstract` classes can only be declared in TypeScript files",
-    );
+        crate::syntax::class::parse_class(p, m, crate::syntax::class::ClassKind::Statement);
     Present(class)
 }
