@@ -5,6 +5,7 @@
 use super::binding::*;
 use super::class::is_at_ts_abstract_class_declaration;
 use super::expr::parse_expression;
+use super::module::{parse_export, parse_import};
 use super::typescript::*;
 use crate::parser::{expected_token, ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
@@ -22,7 +23,6 @@ use crate::syntax::expr::{
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement, ts_only_syntax_error};
-use crate::syntax::module::{parse_export, parse_import};
 use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};

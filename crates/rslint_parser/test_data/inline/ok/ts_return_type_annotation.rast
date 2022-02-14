@@ -456,15 +456,7 @@ JsModule {
                           2: (empty)
                       3: R_CURLY@157..159 "}" [] [Whitespace(" ")]
                 2: R_CURLY@159..160 "}" [] []
-<<<<<<< HEAD
-<<<<<<< HEAD
       1: (empty)
-=======
-<<<<<<< HEAD
-=======
->>>>>>> df630bc7c (fix rebase issues)
-      2: (empty)
->>>>>>> a497a11ed (update rast files with the optional abstract for classes)
     4: JS_CLASS_DECLARATION@160..227
       0: (empty)
       1: CLASS_KW@160..167 "class" [Newline("\n")] [Whitespace(" ")]

@@ -16,8 +16,6 @@ use crate::syntax::stmt::{
     parse_statement, parse_variable_declaration, semi, StatementContext, VariableDeclarationParent,
     STMT_RECOVERY_SET,
 };
-use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
-use crate::syntax::util::expect_contextual_keyword;
 use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
@@ -30,6 +28,7 @@ use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
 use std::ops::Range;
 
+use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
 use super::class::is_at_ts_abstract_class_declaration;
 use super::js_parse_error::ts_only_syntax_error;
 use super::util::is_nth_at_contextual_keyword;
