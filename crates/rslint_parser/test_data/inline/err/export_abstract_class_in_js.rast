@@ -68,7 +68,11 @@ JsModule {
         6: R_CURLY@60..61 "}" [] []
   3: EOF@61..62 "" [Newline("\n")] []
 --
-error[SyntaxError]: `abstract` classes can only be declared in TypeScript files
+error[SyntaxError]: abstract classes are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ export_abstract_class_in_js.js:1:8
+  │
+1 │ export abstract class A {}
+  │        ^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
 
 --
 export abstract class A {}

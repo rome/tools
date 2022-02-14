@@ -212,21 +212,15 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         // class and abstract class
         T![class] => parse_class_declaration(p, context),
         T![ident] if is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck) => {
-            let abstract_class = parse_class_declaration(p, context);
-
             // test_err abstract_class_in_js
             // abstract class A {}
-            if !p.typescript() {
-                abstract_class.map(|mut abstract_class| {
-                    p.error(p.err_builder(
-                        "`abstract` classes can only be declared in TypeScript files",
-                    ));
-                    abstract_class.change_to_unknown(p);
-                    abstract_class
-                })
-            } else {
-                abstract_class
-            }
+            TypeScript.parse_exclusive_syntax(
+                p,
+                |p| parse_class_declaration(p, context),
+                |p, abstract_class| {
+                    ts_only_syntax_error(p, "abstract classes", abstract_class.range(p).as_range())
+                },
+            )
         }
         T![ident] | T![await] | T![yield] | T![enum] if p.nth_at(1, T![:]) => {
             parse_labeled_statement(p, context)

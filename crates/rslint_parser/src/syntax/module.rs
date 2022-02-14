@@ -1,5 +1,4 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
-use crate::syntax::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_export_default_class_case;
 use crate::syntax::expr::{
@@ -13,18 +12,26 @@ use crate::syntax::js_parse_error::{
     expected_literal_export_name, expected_local_name_for_default_import, expected_module_source,
     expected_named_import, expected_named_import_specifier, expected_statement,
 };
+use crate::syntax::stmt::{
+    parse_statement, parse_variable_declaration, semi, StatementContext, VariableDeclarationParent,
+    STMT_RECOVERY_SET,
+};
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
+use crate::syntax::util::expect_contextual_keyword;
 use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
+use crate::JsSyntaxFeature::TypeScript;
 use crate::{
     Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
-    Present,
+    Present, SyntaxFeature,
 };
+use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
 use std::ops::Range;
 
 use super::class::is_at_ts_abstract_class_declaration;
+use super::js_parse_error::ts_only_syntax_error;
 use super::util::is_nth_at_contextual_keyword;
 
 ///! Implements the parsing logic for ES Module syntax
