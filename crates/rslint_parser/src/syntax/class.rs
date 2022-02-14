@@ -107,11 +107,6 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
     }
 
     let m = p.start();
-
-    if is_at_contextual_keyword(p, "abstract") {
-        p.bump_remap(T![abstract]);
-    }
-
     let mut class = parse_class(p, m, ClassKind::Declaration);
 
     if !class.kind().is_unknown() && context.is_single_statement() {
