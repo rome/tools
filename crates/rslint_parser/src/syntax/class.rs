@@ -166,12 +166,9 @@ impl From<ClassKind> for JsSyntaxKind {
 }
 
 pub(crate) fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
-    if is_at_contextual_keyword(p, "abstract") {
-        p.bump_remap(T![abstract]);
-    }
+    eat_contextual_keyword(p, "abstract", T![abstract]);
 
     let class_token_range = p.cur_tok().range();
-
     p.expect(T![class]);
 
     let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_tok().range())));
