@@ -6,7 +6,6 @@ use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
 use super::ts_parse_error::expected_ts_enum_member;
 use crate::state::EnterAmbientContext;
 use crate::syntax::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
-use crate::syntax::function::parse_ambient_function;
 use crate::syntax::js_parse_error::{expected_identifier, expected_ts_type};
 use crate::syntax::module::{parse_module_item_list, parse_module_source, ModuleItemListParent};
 use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
