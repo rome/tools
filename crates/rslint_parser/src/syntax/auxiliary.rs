@@ -6,8 +6,7 @@ use crate::syntax::stmt::{
 };
 use crate::syntax::typescript::{
     is_nth_at_any_ts_namespace_declaration, parse_any_ts_namespace_declaration_clause,
-    parse_ts_declare_function_declaration, parse_ts_enum_declaration,
-    parse_ts_interface_declaration, parse_ts_type_alias_declaration,
+    parse_ts_enum_declaration, parse_ts_interface_declaration, parse_ts_type_alias_declaration,
 };
 use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
 use crate::{Absent, ParsedSyntax, Parser};
@@ -23,16 +22,14 @@ use rslint_syntax::T;
 // export let a = ;
 // export const b;
 // export let d, c;
-pub(crate) fn parse_variable_declaration_clause(p: &mut Parser, ambient: bool) -> ParsedSyntax {
+pub(crate) fn parse_variable_declaration_clause(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_tok().start();
 
-    parse_variable_declaration(p, VariableDeclarationParent::Clause { ambient }).map(
-        |declaration| {
-            let m = declaration.precede(p);
-            semi(p, start..p.cur_tok().end());
-            m.complete(p, JS_VARIABLE_DECLARATION_CLAUSE)
-        },
-    )
+    parse_variable_declaration(p, VariableDeclarationParent::Clause).map(|declaration| {
+        let m = declaration.precede(p);
+        semi(p, start..p.cur_tok().end());
+        m.complete(p, JS_VARIABLE_DECLARATION_CLAUSE)
+    })
 }
 
 pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
@@ -63,19 +60,9 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
     false
 }
 
-pub(crate) fn parse_declaration_clause(
-    p: &mut Parser,
-    ambient: bool,
-    stmt_start_pos: usize,
-) -> ParsedSyntax {
+pub(crate) fn parse_declaration_clause(p: &mut Parser, stmt_start_pos: usize) -> ParsedSyntax {
     match p.cur() {
-        T![function] => {
-            if ambient {
-                parse_ts_declare_function_declaration(p)
-            } else {
-                parse_function_declaration(p, StatementContext::StatementList)
-            }
-        }
+        T![function] => parse_function_declaration(p, StatementContext::StatementList),
         T![class] => parse_class_declaration(p, StatementContext::StatementList),
         T![const] => {
             if p.nth_at(1, T![enum]) {
@@ -83,12 +70,12 @@ pub(crate) fn parse_declaration_clause(
             } else {
                 // test ts ts_ambient_const_variable_statement
                 // declare const a, b, c, d = "test";
-                parse_variable_declaration_clause(p, ambient)
+                parse_variable_declaration_clause(p)
             }
         }
         // test ts ts_ambient_var_statement
         // declare var a, b, c;
-        T![var] => parse_variable_declaration_clause(p, ambient),
+        T![var] => parse_variable_declaration_clause(p),
         T![enum] => {
             // test ts ts_ambient_enum_statement
             // declare enum A { X, Y, Z }
@@ -97,11 +84,7 @@ pub(crate) fn parse_declaration_clause(
         }
         T![ident] => {
             if is_at_contextual_keyword(p, "async") {
-                if ambient {
-                    parse_ts_declare_function_declaration(p)
-                } else {
-                    parse_function_declaration(p, StatementContext::StatementList)
-                }
+                parse_function_declaration(p, StatementContext::StatementList)
             } else if is_at_contextual_keyword(p, "type") {
                 // test ts ts_declare_type_alias
                 // declare type A = string;
@@ -114,7 +97,7 @@ pub(crate) fn parse_declaration_clause(
             } else if is_at_contextual_keyword(p, "let") {
                 // test ts ts_ambient_let_variable_statement
                 // declare let a, b, c, d;
-                parse_variable_declaration_clause(p, ambient)
+                parse_variable_declaration_clause(p)
             } else if is_at_contextual_keyword(p, "namespace")
                 || is_at_contextual_keyword(p, "global")
                 || is_at_contextual_keyword(p, "module")

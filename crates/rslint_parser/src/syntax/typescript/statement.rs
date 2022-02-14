@@ -4,17 +4,15 @@ use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
 
 use super::ts_parse_error::expected_ts_enum_member;
-use crate::state::SignatureFlags;
+use crate::state::EnterAmbientContext;
 use crate::syntax::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
-use crate::syntax::function::{parse_function_body, parse_parameter_list, ParameterContext};
-use crate::syntax::js_parse_error::{
-    expected_binding, expected_identifier, expected_parameters, expected_ts_type,
-};
+use crate::syntax::function::parse_ambient_function;
+use crate::syntax::js_parse_error::{expected_identifier, expected_ts_type};
 use crate::syntax::module::{parse_module_item_list, parse_module_source, ModuleItemListParent};
 use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::{
-    expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause,
-    parse_ts_return_type_annotation, parse_ts_type, parse_ts_type_parameters, TypeMembers,
+    expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_type,
+    parse_ts_type_parameters, TypeMembers,
 };
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
@@ -213,6 +211,8 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_TYPE_ALIAS_DECLARATION))
 }
 
+// test ts ts_declare_const_initializer
+// declare module test { const X; }
 pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
     if !is_at_ts_declare_statement(p) {
         return Absent;
@@ -222,8 +222,10 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     expect_contextual_keyword(p, "declare", T![declare]);
 
-    parse_declaration_clause(p, true, stmt_start_pos)
-        .expect("Expected a declaration as guaranteed by is_at_ts_declare_statement");
+    p.with_state(EnterAmbientContext, |p| {
+        parse_declaration_clause(p, stmt_start_pos)
+            .expect("Expected a declaration as guaranteed by is_at_ts_declare_statement")
+    });
 
     Present(m.complete(p, TS_DECLARE_STATEMENT))
 }
@@ -235,57 +237,6 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
     }
 
     is_nth_at_declaration_clause(p, 1)
-}
-
-// test ts ts_declare_function
-// declare function test<A, B, R>(a: A, b: B): R;
-// declare function test2({ a }?: { a: "string" })
-// declare
-// function not_a_declaration() {}
-//
-// test_err ts ts_declare_function_with_body
-// declare function test<A>(a: A): string { return "ambient function with a body"; }
-pub(crate) fn parse_ts_declare_function_declaration(p: &mut Parser) -> ParsedSyntax {
-    let is_async = is_at_contextual_keyword(p, "async");
-
-    if !is_async && !p.at(T![function]) {
-        return Absent;
-    }
-
-    let m = p.start();
-    let stmt_start = p.cur_tok().start();
-
-    // test_err ts ts_declare_async_function
-    // declare async function test();
-    if is_async {
-        p.error(
-            p.err_builder("'async' modifier cannot be used in an ambient context.")
-                .primary(p.cur_tok().range(), ""),
-        );
-        p.bump_remap(T![async]);
-    }
-
-    p.expect(T![function]);
-    parse_binding(p).or_add_diagnostic(p, expected_binding);
-    parse_ts_type_parameters(p).ok();
-    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
-        .or_add_diagnostic(p, expected_parameters);
-    parse_ts_return_type_annotation(p).ok();
-
-    if let Present(body) = parse_function_body(p, SignatureFlags::empty()) {
-        p.error(
-            p.err_builder("A 'declare' function cannot have a function body")
-                .primary(body.range(p), "remove this body"),
-        );
-    }
-
-    semi(p, stmt_start..p.cur_tok().start());
-
-    Present(if is_async {
-        m.complete(p, JS_UNKNOWN_STATEMENT)
-    } else {
-        m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
-    })
 }
 
 #[inline]

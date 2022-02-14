@@ -1000,13 +1000,7 @@ pub(super) enum VariableDeclarationParent {
     VariableStatement,
 
     /// Declaration as part of another statement, like `export let ...` or `declare let a`
-    Clause { ambient: bool },
-}
-
-impl VariableDeclarationParent {
-    fn is_ambient(&self) -> bool {
-        matches!(self, VariableDeclarationParent::Clause { ambient: true })
-    }
+    Clause,
 }
 
 /// Parses a variable declaration that consist of a variable kind (`let`, `const` or `var` and a list
@@ -1243,7 +1237,7 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
                 }
             }
         } else if initializer.is_none()
-            && !context.parent.is_ambient()
+            && !p.state.in_ambient_context()
             && matches!(
                 id.kind(),
                 JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
@@ -1257,7 +1251,7 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
                 );
 
             p.error(err);
-        } else if initializer.is_none() && context.is_const.is_some() && !context.parent.is_ambient() {
+        } else if initializer.is_none() && context.is_const.is_some() && !p.state.in_ambient_context() {
             let err = p
                 .err_builder("Const var declarations must have an initialized value")
                 .primary(id.range(p), "this variable needs to be initialized");
