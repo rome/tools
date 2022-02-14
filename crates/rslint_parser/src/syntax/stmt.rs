@@ -52,9 +52,6 @@ pub const STMT_RECOVERY_SET: TokenSet = token_set![
     T![;]
 ];
 
-const FOLLOWS_LET: TokenSet =
-    token_set![T!['{'], T!['['], T![ident], T![yield], T![await], T![enum]];
-
 /// Consume an explicit semicolon, or try to automatically insert one,
 /// or add an error to the parser if there was none and it could not be inserted
 // test semicolons
@@ -210,36 +207,34 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] | T![await] | T![yield] | T![enum] if p.nth_at(1, T![:]) => {
             parse_labeled_statement(p, context)
         }
-        // contextual keywords or an identifier expression statements
-        T![ident] => {
-            if is_at_async_function(p, LineBreak::DoCheck) {
+        T![ident] if is_nth_at_let_variable_statement(p, 0) => {
+            // test_err let_newline_in_async_function
+            // async function f() {
+            //   let
+            //   await 0;
+            // }
+
+            // test let_asi_rule
+            // // SCRIPT
+            // let // NO ASI
+            // x = 1;
+            // for await (var x of []) let // ASI
+            // x = 1;
+
+            // test_err let_array_with_new_line
+            // // SCRIPT
+            // L: let
+            // [a] = 0;
+            if p.nth_at(1, T!['[']) || context.is_statement_list() || !p.has_linebreak_before_n(1) {
+                parse_variable_statement(p, context)
+            } else {
+                parse_expression_statement(p)
+            }
+        }
+        // contextual keywords that expect to be followed by another token on the same line
+        T![ident] if !p.has_linebreak_before_n(1) => {
+            if is_at_async_function(p, LineBreak::DoNotCheck) {
                 parse_function_declaration(p, context)
-            } else if is_nth_at_let_variable_statement(p, 0) {
-                // test_err let_newline_in_async_function
-                // async function f() {
-                //   let
-                //   await 0;
-                // }
-
-                // test let_asi_rule
-                // // SCRIPT
-                // let // NO ASI
-                // x = 1;
-                // for await (var x of []) let // ASI
-                // x = 1;
-
-                // test_err let_array_with_new_line
-                // // SCRIPT
-                // L: let
-                // [a] = 0;
-                if p.nth_at(1, T!['['])
-                    || context.is_statement_list()
-                    || !p.has_linebreak_before_n(1)
-                {
-                    parse_variable_statement(p, context)
-                } else {
-                    parse_expression_statement(p)
-                }
             } else if is_at_contextual_keyword(p, "type") && p.typescript() {
                 parse_ts_type_alias_declaration(p)
             } else if is_at_ts_interface_declaration(p) {
@@ -918,17 +913,17 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 pub(crate) fn is_nth_at_variable_declarations(p: &Parser, n: usize) -> bool {
     match p.nth(n) {
         T![var] | T![const] => true,
-        T![ident]
-            if is_nth_at_contextual_keyword(p, n, "let") && FOLLOWS_LET.contains(p.nth(n + 1)) =>
-        {
-            true
-        }
+        T![ident] if is_nth_at_let_variable_statement(p, n) => true,
         _ => false,
     }
 }
 
 pub(crate) fn is_nth_at_let_variable_statement(p: &Parser, n: usize) -> bool {
-    is_nth_at_contextual_keyword(p, n, "let") && FOLLOWS_LET.contains(p.nth(n + 1))
+    is_nth_at_contextual_keyword(p, n, "let")
+        && matches!(
+            p.nth(n + 1),
+            T!['{'] | T!['['] | T![ident] | T![yield] | T![await] | T![enum]
+        )
 }
 
 /// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
@@ -1358,8 +1353,7 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
 
     // `for (let...` | `for (const...` | `for (var...`
 
-    if p.at(T![const]) || p.at(T![var]) || (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)))
-    {
+    if p.at(T![const]) || p.at(T![var]) || is_nth_at_let_variable_statement(p, 0) {
         let m = p.start();
 
         let (declarations, additional_declarations) =

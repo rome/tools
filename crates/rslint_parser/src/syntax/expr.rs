@@ -34,59 +34,6 @@ use rslint_errors::Span;
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
-pub const ASSIGN_TOKENS: TokenSet = token_set![
-    T![=],
-    T![+=],
-    T![-=],
-    T![*=],
-    T![/=],
-    T![%=],
-    T![<<=],
-    T![>>=],
-    T![>>>=],
-    T![&=],
-    T![|=],
-    T![^=],
-    T![&&=],
-    T![||=],
-    T![??=],
-    T![**=],
-];
-
-const STARTS_EXPR: TokenSet = token_set![
-    T![!],
-    T!['('],
-    T!['['],
-    T!['{'],
-    T![++],
-    T![--],
-    T![~],
-    T![+],
-    T![-],
-    T![throw],
-    T![new],
-    T![typeof],
-    T![void],
-    T![delete],
-    T![ident],
-    T![...],
-    T![this],
-    T![yield],
-    T![await],
-    T![function],
-    T![class],
-    T![import],
-    T![super],
-    T![#],
-    BACKTICK,
-    TRUE_KW,
-    FALSE_KW,
-    JS_NUMBER_LITERAL,
-    JS_STRING_LITERAL,
-    NULL_KW,
-    JS_REGEX_LITERAL
-];
-
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub(crate) struct ExpressionContext(ExpressionContextFlags);
 
@@ -342,7 +289,7 @@ fn parse_assign_expr_recursive(
     checkpoint: Checkpoint,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    if p.at_ts(ASSIGN_TOKENS) {
+    if is_assign_token(p.cur()) {
         let target = expression_to_assignment_pattern(p, target, checkpoint);
         let m = target.precede(p);
         p.bump_any(); // operator
@@ -352,6 +299,28 @@ fn parse_assign_expr_recursive(
     } else {
         Present(target)
     }
+}
+
+fn is_assign_token(kind: JsSyntaxKind) -> bool {
+    matches!(
+        kind,
+        T![=]
+            | T![+=]
+            | T![-=]
+            | T![*=]
+            | T![/=]
+            | T![%=]
+            | T![<<=]
+            | T![>>=]
+            | T![>>>=]
+            | T![&=]
+            | T![|=]
+            | T![^=]
+            | T![&&=]
+            | T![||=]
+            | T![??=]
+            | T![**=]
+    )
 }
 
 // test yield_expr
@@ -366,7 +335,7 @@ fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> Complet
     let m = p.start();
     p.expect(T![yield]);
 
-    if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
+    if !is_semi(p, 0) && (p.at(T![*]) || is_at_expression(p)) {
         let argument = p.start();
         p.eat(T![*]);
         parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true)).ok();
@@ -1179,9 +1148,42 @@ pub(crate) fn is_at_expression(p: &Parser) -> bool {
 }
 
 pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
-    STARTS_EXPR.contains(p.nth(n))
-        || p.nth_at(n, T![<])
-        || (p.nth_at(n, T![enum]) && !p.has_linebreak_before_n(n))
+    match p.nth(n) {
+        T![!]
+        | T!['(']
+        | T!['[']
+        | T!['{']
+        | T![++]
+        | T![--]
+        | T![~]
+        | T![+]
+        | T![-]
+        | T![throw]
+        | T![new]
+        | T![typeof]
+        | T![void]
+        | T![delete]
+        | T![ident]
+        | T![...]
+        | T![this]
+        | T![yield]
+        | T![await]
+        | T![function]
+        | T![class]
+        | T![import]
+        | T![super]
+        | T![#]
+        | T![<]
+        | BACKTICK
+        | TRUE_KW
+        | FALSE_KW
+        | JS_NUMBER_LITERAL
+        | JS_STRING_LITERAL
+        | NULL_KW
+        | JS_REGEX_LITERAL => true,
+        T![enum] if !p.has_linebreak_before_n(n + 1) => true,
+        _ => false,
+    }
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.

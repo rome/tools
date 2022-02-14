@@ -228,6 +228,7 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_DECLARE_STATEMENT))
 }
 
+#[inline]
 pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
     if !is_at_contextual_keyword(p, "declare") || p.has_linebreak_before_n(1) {
         return false;
@@ -287,6 +288,7 @@ pub(crate) fn parse_ts_declare_function_declaration(p: &mut Parser) -> ParsedSyn
     })
 }
 
+#[inline]
 pub(crate) fn is_at_ts_interface_declaration(p: &Parser) -> bool {
     if !is_at_contextual_keyword(p, "interface") || p.has_linebreak_before_n(1) {
         return false;
