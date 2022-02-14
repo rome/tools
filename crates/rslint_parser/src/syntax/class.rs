@@ -658,7 +658,7 @@ fn parse_class_member_impl(
                         p.expect(T![')']);
                         parse_ts_type_annotation_or_error(p).ok();
 
-                        parse_method_class_member_body(p, modifiers, SignatureFlags::empty());
+                        parse_method_body(p, modifiers, SignatureFlags::empty());
 
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
@@ -686,7 +686,7 @@ fn parse_class_member_impl(
                             ));
                         }
 
-                        parse_method_class_member_body(p, modifiers, SignatureFlags::empty());
+                        parse_method_body(p, modifiers, SignatureFlags::empty());
                         member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
                     };
 
@@ -969,16 +969,6 @@ fn parse_method_class_member(
     modifiers: ClassMemberModifiers,
     flags: SignatureFlags,
 ) -> CompletedMarker {
-    let abstract_range = modifiers.get_range(ModifierKind::Abstract);
-    let is_async = flags.contains(SignatureFlags::ASYNC).then(|| true);
-
-    // test_err ts typescript_abstract_classes_invalid_abstract_async_member
-    // abstract class B { abstract async a(); }
-    if let Some((abstract_range, _)) = abstract_range.zip(is_async) {
-        let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range.clone());
-        p.error(err);
-    }
-
     parse_class_member_name(p, &modifiers)
         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
     parse_everything_after_identifier(p, m, modifiers, flags)
@@ -1031,16 +1021,28 @@ fn parse_everything_after_identifier(
         })
         .ok();
 
-    parse_method_class_member_body(p, modifiers, flags);
+    let abstract_range = modifiers.get_range(ModifierKind::Abstract).cloned();
+    let is_async = flags.contains(SignatureFlags::ASYNC).then(|| true);
 
-    m.complete(p, member_kind)
+    parse_method_body(p, modifiers, flags);
+
+    let mut member = m.complete(p, member_kind);
+
+    // test_err ts typescript_abstract_classes_invalid_abstract_async_member
+    // abstract class B { abstract async a(); }
+    let member = if let Some((abstract_range, _)) = abstract_range.zip(is_async) {
+        let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range.clone());
+        p.error(err);
+        member.change_to_unknown(p);
+        member
+    } else {
+        member
+    };
+
+    member
 }
 
-fn parse_method_class_member_body(
-    p: &mut Parser,
-    modifiers: ClassMemberModifiers,
-    flags: SignatureFlags,
-) {
+fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: SignatureFlags) {
     let body = parse_function_body(p, flags);
 
     // test_err ts typescript_class_member_body
@@ -1116,7 +1118,7 @@ fn parse_constructor_class_member_body(
         constructor_is_valid = false;
     }
 
-    parse_method_class_member_body(p, modifiers, SignatureFlags::CONSTRUCTOR);
+    parse_method_body(p, modifiers, SignatureFlags::CONSTRUCTOR);
 
     // FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
