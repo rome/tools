@@ -483,6 +483,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
+    let stmt_start = p.cur_tok().start();
     let m = p.start();
     p.bump(T![export]);
 
@@ -499,7 +500,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
         // test ts ts_export_enum_declaration
         // export enum A { X, Y }
         // export const enum B { X, Y }
-        parse_declaration_clause(p, false)
+        parse_declaration_clause(p, false, stmt_start)
     } else {
         match p.cur() {
             T!['{'] => {

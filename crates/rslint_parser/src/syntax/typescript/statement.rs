@@ -218,10 +218,11 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
+    let stmt_start_pos = p.cur_tok().start();
     let m = p.start();
     expect_contextual_keyword(p, "declare", T![declare]);
 
-    parse_declaration_clause(p, true)
+    parse_declaration_clause(p, true, stmt_start_pos)
         .expect("Expected a declaration as guaranteed by is_at_ts_declare_statement");
 
     Present(m.complete(p, TS_DECLARE_STATEMENT))
@@ -403,25 +404,34 @@ pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &Parser, n: usize) -> bo
     false
 }
 
-pub(crate) fn parse_any_ts_namespace_declaration(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_any_ts_namespace_declaration_clause(
+    p: &mut Parser,
+    stmt_start_pos: usize,
+) -> ParsedSyntax {
     if is_at_contextual_keyword(p, "global") {
         parse_ts_global_declaration(p)
     } else if is_at_contextual_keyword(p, "namespace") || is_at_contextual_keyword(p, "module") {
-        parse_ts_namespace_or_module_declaration(p)
+        parse_ts_namespace_or_module_declaration_clause(p, stmt_start_pos)
     } else {
         Absent
     }
+}
+
+pub(crate) fn parse_any_ts_namespace_declaration_statement(p: &mut Parser) -> ParsedSyntax {
+    parse_any_ts_namespace_declaration_clause(p, p.cur_tok().start())
 }
 
 // test ts ts_namespace_declaration
 // declare namespace a {}
 // declare namespace a.b.c.d {}
 // declare namespace a.b { function test(): string }
+// namespace X { }
 //
 // test ts ts_module_declaration
 // declare module a {}
 // declare module a.b.c.d {}
 // declare module a.b { function test(): string }
+// module X {}
 //
 // test ts ts_external_module_declaration
 // declare module "a";
@@ -430,12 +440,14 @@ pub(crate) fn parse_any_ts_namespace_declaration(p: &mut Parser) -> ParsedSyntax
 // test_err ts ts_module_err
 // declare module a; // missing body
 // declare module "a" declare module "b"; // missing semi
-fn parse_ts_namespace_or_module_declaration(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_namespace_or_module_declaration_clause(
+    p: &mut Parser,
+    stmt_start_pos: usize,
+) -> ParsedSyntax {
     if !is_at_contextual_keyword(p, "namespace") && !is_at_contextual_keyword(p, "module") {
         return Absent;
     }
 
-    let start_pos = p.cur_tok().start();
     let m = p.start();
 
     if !eat_contextual_keyword(p, "namespace", T![namespace]) {
@@ -448,7 +460,7 @@ fn parse_ts_namespace_or_module_declaration(p: &mut Parser) -> ParsedSyntax {
 
             if body.is_absent() {
                 let body = p.start();
-                semi(p, start_pos..p.cur_tok().end());
+                semi(p, stmt_start_pos..p.cur_tok().end());
                 body.complete(p, TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY);
             }
 

@@ -207,72 +207,75 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![debugger] => parse_debugger_statement(p),
         T![function] => parse_function_declaration(p, context),
         T![class] => parse_class_declaration(p, context),
-        T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
-            parse_function_declaration(p, context)
-        }
-        T![ident] if is_at_any_ts_namespace_declaration(p) => {
-            let name = p.cur_tok().range();
-            TypeScript.parse_exclusive_syntax(
-                p,
-                parse_any_ts_namespace_declaration,
-                |p, declaration| {
-                    ts_only_syntax_error(
-                        p,
-                        p.source(name.as_text_range()),
-                        declaration.range(p).as_range(),
-                    )
-                },
-            )
-        }
-        T![ident] if is_nth_at_let_variable_statement(p, 0) => {
-            // test_err let_newline_in_async_function
-            // async function f() {
-            //   let
-            //   await 0;
-            // }
+        // contextual keywords, labelled statements, and identifier expression statements
+        T![ident] => {
+            if is_at_async_function(p, LineBreak::DoCheck) {
+                parse_function_declaration(p, context)
+            } else if is_at_any_ts_namespace_declaration(p) {
+                let name = p.cur_tok().range();
+                TypeScript.parse_exclusive_syntax(
+                    p,
+                    parse_any_ts_namespace_declaration_statement,
+                    |p, declaration| {
+                        ts_only_syntax_error(
+                            p,
+                            p.source(name.as_text_range()),
+                            declaration.range(p).as_range(),
+                        )
+                    },
+                )
+            } else if is_nth_at_let_variable_statement(p, 0) {
+                // test_err let_newline_in_async_function
+                // async function f() {
+                //   let
+                //   await 0;
+                // }
 
-            // test let_asi_rule
-            // // SCRIPT
-            // let // NO ASI
-            // x = 1;
-            // for await (var x of []) let // ASI
-            // x = 1;
+                // test let_asi_rule
+                // // SCRIPT
+                // let // NO ASI
+                // x = 1;
+                // for await (var x of []) let // ASI
+                // x = 1;
 
-            // test_err let_array_with_new_line
-            // // SCRIPT
-            // L: let
-            // [a] = 0;
-            if p.nth_at(1, T!['[']) || context.is_statement_list() || !p.has_linebreak_before_n(1) {
-                parse_variable_statement(p, context)
-            } else {
-                parse_expression_statement(p)
+                // test_err let_array_with_new_line
+                // // SCRIPT
+                // L: let
+                // [a] = 0;
+                if p.nth_at(1, T!['['])
+                    || context.is_statement_list()
+                    || !p.has_linebreak_before_n(1)
+                {
+                    parse_variable_statement(p, context)
+                } else {
+                    parse_expression_statement(p)
+                }
+            } else if is_at_contextual_keyword(p, "type") && p.typescript() {
+                parse_ts_type_alias_declaration(p)
+            } else if is_at_ts_interface_declaration(p) {
+                TypeScript.parse_exclusive_syntax(
+                    p,
+                    parse_ts_interface_declaration,
+                    |p, interface| {
+                        ts_only_syntax_error(p, "interface", interface.range(p).as_range())
+                    },
+                )
+            } else if is_at_ts_declare_statement(p) {
+                let declare_range = p.cur_tok().range();
+                TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
+                    p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
+                        .primary(declare_range, "")
+                })
             }
-        }
-
-        T![ident] if is_at_contextual_keyword(p, "type") && p.typescript() => {
-            parse_ts_type_alias_declaration(p)
-        }
-        T![ident] if is_at_ts_interface_declaration(p) => {
-            TypeScript.parse_exclusive_syntax(p, parse_ts_interface_declaration, |p, interface| {
-                ts_only_syntax_error(p, "interface", interface.range(p).as_range())
-            })
-        }
-        T![ident] if is_at_ts_declare_statement(p) => {
-            let declare_range = p.cur_tok().range();
-            TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
-                p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
-                    .primary(declare_range, "")
-            })
-        }
-        _ => {
-            if is_at_identifier(p) && p.nth_at(1, T![:]) {
+            // Labelled Statement
+            else if p.nth_at(1, T![:]) {
                 parse_labeled_statement(p, context)
-            } else if is_at_expression(p) {
-                parse_expression_statement(p)
             } else {
-                Absent
+                parse_expression_statement(p)
             }
         }
+        _ if is_at_expression(p) => parse_expression_statement(p),
+        _ => Absent,
     }
 }
 

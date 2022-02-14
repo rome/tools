@@ -85,10 +85,10 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   ┌─ ts_module_err.ts:2:20
   │
 2 │ declare module "a" declare module "b"; // missing semi
-  │         -----------^^^^^^^
-  │         │          │
-  │         │          An explicit or implicit semicolon is expected here...
-  │         ...Which is required to end this statement
+  │ -------------------^^^^^^^
+  │ │                  │
+  │ │                  An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
 
 --
 declare module a; // missing body

@@ -5,7 +5,7 @@ use crate::syntax::stmt::{
     VariableDeclarationParent,
 };
 use crate::syntax::typescript::{
-    is_nth_at_any_ts_namespace_declaration, parse_any_ts_namespace_declaration,
+    is_nth_at_any_ts_namespace_declaration, parse_any_ts_namespace_declaration_clause,
     parse_ts_declare_function_declaration, parse_ts_enum_declaration,
     parse_ts_interface_declaration, parse_ts_type_alias_declaration,
 };
@@ -63,7 +63,11 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
     false
 }
 
-pub(crate) fn parse_declaration_clause(p: &mut Parser, ambient: bool) -> ParsedSyntax {
+pub(crate) fn parse_declaration_clause(
+    p: &mut Parser,
+    ambient: bool,
+    stmt_start_pos: usize,
+) -> ParsedSyntax {
     match p.cur() {
         T![function] => {
             if ambient {
@@ -115,7 +119,7 @@ pub(crate) fn parse_declaration_clause(p: &mut Parser, ambient: bool) -> ParsedS
                 || is_at_contextual_keyword(p, "global")
                 || is_at_contextual_keyword(p, "module")
             {
-                parse_any_ts_namespace_declaration(p)
+                parse_any_ts_namespace_declaration_clause(p, stmt_start_pos)
             } else {
                 Absent
             }
