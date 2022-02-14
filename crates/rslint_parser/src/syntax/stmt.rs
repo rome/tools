@@ -210,6 +210,20 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
             parse_function_declaration(p, context)
         }
+        T![ident] if is_at_any_ts_namespace_declaration(p) => {
+            let name = p.cur_tok().range();
+            TypeScript.parse_exclusive_syntax(
+                p,
+                parse_any_ts_namespace_declaration,
+                |p, declaration| {
+                    ts_only_syntax_error(
+                        p,
+                        p.source(name.as_text_range()),
+                        declaration.range(p).as_range(),
+                    )
+                },
+            )
+        }
         T![ident] if is_nth_at_let_variable_statement(p, 0) => {
             // test_err let_newline_in_async_function
             // async function f() {

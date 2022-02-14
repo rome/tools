@@ -3496,6 +3496,22 @@ impl TsDefiniteVariableAnnotation {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsEmptyExternalModuleDeclarationBody {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsEmptyExternalModuleDeclarationBody {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsEnumDeclaration {
     pub(crate) syntax: SyntaxNode,
 }
@@ -3553,6 +3569,28 @@ impl TsExtendsClause {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsExternalModuleDeclaration {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsExternalModuleDeclaration {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn module_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn source(&self) -> SyntaxResult<JsModuleSource> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn body(&self) -> Option<TsAnyExternalModuleDeclarationBody> {
+        support::node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
@@ -3632,6 +3670,25 @@ impl TsGetterSignatureTypeMember {
         support::node(&self.syntax, 4usize)
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsGlobalDeclaration {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsGlobalDeclaration {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn global_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn body(&self) -> SyntaxResult<TsModuleBlock> {
+        support::required_node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIdentifierBinding {
@@ -4002,6 +4059,48 @@ impl TsMethodSignatureTypeMember {
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsModuleBlock {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsModuleBlock {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn items(&self) -> JsModuleItemList { support::list(&self.syntax, 1usize) }
+    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsModuleDeclaration {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsModuleDeclaration {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn module_or_namespace(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn name(&self) -> SyntaxResult<TsAnyModuleName> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn body(&self) -> SyntaxResult<TsModuleBlock> {
+        support::required_node(&self.syntax, 2usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNameWithTypeArguments {
     pub(crate) syntax: SyntaxNode,
 }
@@ -4254,6 +4353,26 @@ impl TsPropertySignatureTypeMember {
         support::node(&self.syntax, 3usize)
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsQualifiedModuleName {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsQualifiedModuleName {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn left(&self) -> SyntaxResult<TsAnyModuleName> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn right(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsQualifiedName {
@@ -4904,7 +5023,10 @@ pub enum JsAnyDeclaration {
     JsVariableDeclaration(JsVariableDeclaration),
     TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration),
     TsEnumDeclaration(TsEnumDeclaration),
+    TsExternalModuleDeclaration(TsExternalModuleDeclaration),
+    TsGlobalDeclaration(TsGlobalDeclaration),
     TsInterfaceDeclaration(TsInterfaceDeclaration),
+    TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4914,7 +5036,10 @@ pub enum JsAnyDeclarationClause {
     JsVariableDeclarationClause(JsVariableDeclarationClause),
     TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration),
     TsEnumDeclaration(TsEnumDeclaration),
+    TsExternalModuleDeclaration(TsExternalModuleDeclaration),
+    TsGlobalDeclaration(TsGlobalDeclaration),
     TsInterfaceDeclaration(TsInterfaceDeclaration),
+    TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5114,7 +5239,10 @@ pub enum JsAnyStatement {
     TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration),
     TsDeclareStatement(TsDeclareStatement),
     TsEnumDeclaration(TsEnumDeclaration),
+    TsExternalModuleDeclaration(TsExternalModuleDeclaration),
+    TsGlobalDeclaration(TsGlobalDeclaration),
     TsInterfaceDeclaration(TsInterfaceDeclaration),
+    TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5126,6 +5254,16 @@ pub enum JsAnySwitchClause {
 pub enum JsAnyTemplateElement {
     JsTemplateChunkElement(JsTemplateChunkElement),
     JsTemplateElement(JsTemplateElement),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyExternalModuleDeclarationBody {
+    TsEmptyExternalModuleDeclarationBody(TsEmptyExternalModuleDeclarationBody),
+    TsModuleBlock(TsModuleBlock),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyModuleName {
+    TsIdentifierBinding(TsIdentifierBinding),
+    TsQualifiedModuleName(TsQualifiedModuleName),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyName {
@@ -10380,6 +10518,33 @@ impl From<TsDefiniteVariableAnnotation> for SyntaxNode {
 impl From<TsDefiniteVariableAnnotation> for SyntaxElement {
     fn from(n: TsDefiniteVariableAnnotation) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsEmptyExternalModuleDeclarationBody {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsEmptyExternalModuleDeclarationBody {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsEmptyExternalModuleDeclarationBody")
+            .field(
+                "semicolon_token",
+                &support::DebugSyntaxResult(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsEmptyExternalModuleDeclarationBody> for SyntaxNode {
+    fn from(n: TsEmptyExternalModuleDeclarationBody) -> SyntaxNode { n.syntax }
+}
+impl From<TsEmptyExternalModuleDeclarationBody> for SyntaxElement {
+    fn from(n: TsEmptyExternalModuleDeclarationBody) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsEnumDeclaration {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -10473,6 +10638,35 @@ impl From<TsExtendsClause> for SyntaxNode {
 }
 impl From<TsExtendsClause> for SyntaxElement {
     fn from(n: TsExtendsClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsExternalModuleDeclaration {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_DECLARATION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsExternalModuleDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsExternalModuleDeclaration")
+            .field(
+                "module_token",
+                &support::DebugSyntaxResult(self.module_token()),
+            )
+            .field("source", &support::DebugSyntaxResult(self.source()))
+            .field("body", &support::DebugOptionalElement(self.body()))
+            .finish()
+    }
+}
+impl From<TsExternalModuleDeclaration> for SyntaxNode {
+    fn from(n: TsExternalModuleDeclaration) -> SyntaxNode { n.syntax }
+}
+impl From<TsExternalModuleDeclaration> for SyntaxElement {
+    fn from(n: TsExternalModuleDeclaration) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsExternalModuleRef {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_REF }
@@ -10589,6 +10783,34 @@ impl From<TsGetterSignatureTypeMember> for SyntaxNode {
 }
 impl From<TsGetterSignatureTypeMember> for SyntaxElement {
     fn from(n: TsGetterSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsGlobalDeclaration {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_GLOBAL_DECLARATION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsGlobalDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsGlobalDeclaration")
+            .field(
+                "global_token",
+                &support::DebugSyntaxResult(self.global_token()),
+            )
+            .field("body", &support::DebugSyntaxResult(self.body()))
+            .finish()
+    }
+}
+impl From<TsGlobalDeclaration> for SyntaxNode {
+    fn from(n: TsGlobalDeclaration) -> SyntaxNode { n.syntax }
+}
+impl From<TsGlobalDeclaration> for SyntaxElement {
+    fn from(n: TsGlobalDeclaration) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsIdentifierBinding {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IDENTIFIER_BINDING }
@@ -11160,6 +11382,67 @@ impl From<TsMethodSignatureTypeMember> for SyntaxNode {
 impl From<TsMethodSignatureTypeMember> for SyntaxElement {
     fn from(n: TsMethodSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsModuleBlock {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MODULE_BLOCK }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsModuleBlock {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsModuleBlock")
+            .field(
+                "l_curly_token",
+                &support::DebugSyntaxResult(self.l_curly_token()),
+            )
+            .field("items", &self.items())
+            .field(
+                "r_curly_token",
+                &support::DebugSyntaxResult(self.r_curly_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsModuleBlock> for SyntaxNode {
+    fn from(n: TsModuleBlock) -> SyntaxNode { n.syntax }
+}
+impl From<TsModuleBlock> for SyntaxElement {
+    fn from(n: TsModuleBlock) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsModuleDeclaration {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MODULE_DECLARATION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsModuleDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsModuleDeclaration")
+            .field(
+                "module_or_namespace",
+                &support::DebugSyntaxResult(self.module_or_namespace()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field("body", &support::DebugSyntaxResult(self.body()))
+            .finish()
+    }
+}
+impl From<TsModuleDeclaration> for SyntaxNode {
+    fn from(n: TsModuleDeclaration) -> SyntaxNode { n.syntax }
+}
+impl From<TsModuleDeclaration> for SyntaxElement {
+    fn from(n: TsModuleDeclaration) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsNameWithTypeArguments {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NAME_WITH_TYPE_ARGUMENTS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -11582,6 +11865,32 @@ impl From<TsPropertySignatureTypeMember> for SyntaxNode {
 }
 impl From<TsPropertySignatureTypeMember> for SyntaxElement {
     fn from(n: TsPropertySignatureTypeMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsQualifiedModuleName {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_QUALIFIED_MODULE_NAME }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsQualifiedModuleName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsQualifiedModuleName")
+            .field("left", &support::DebugSyntaxResult(self.left()))
+            .field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
+            .field("right", &support::DebugSyntaxResult(self.right()))
+            .finish()
+    }
+}
+impl From<TsQualifiedModuleName> for SyntaxNode {
+    fn from(n: TsQualifiedModuleName) -> SyntaxNode { n.syntax }
+}
+impl From<TsQualifiedModuleName> for SyntaxElement {
+    fn from(n: TsQualifiedModuleName) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsQualifiedName {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_QUALIFIED_NAME }
@@ -13432,9 +13741,24 @@ impl From<TsEnumDeclaration> for JsAnyDeclaration {
         JsAnyDeclaration::TsEnumDeclaration(node)
     }
 }
+impl From<TsExternalModuleDeclaration> for JsAnyDeclaration {
+    fn from(node: TsExternalModuleDeclaration) -> JsAnyDeclaration {
+        JsAnyDeclaration::TsExternalModuleDeclaration(node)
+    }
+}
+impl From<TsGlobalDeclaration> for JsAnyDeclaration {
+    fn from(node: TsGlobalDeclaration) -> JsAnyDeclaration {
+        JsAnyDeclaration::TsGlobalDeclaration(node)
+    }
+}
 impl From<TsInterfaceDeclaration> for JsAnyDeclaration {
     fn from(node: TsInterfaceDeclaration) -> JsAnyDeclaration {
         JsAnyDeclaration::TsInterfaceDeclaration(node)
+    }
+}
+impl From<TsModuleDeclaration> for JsAnyDeclaration {
+    fn from(node: TsModuleDeclaration) -> JsAnyDeclaration {
+        JsAnyDeclaration::TsModuleDeclaration(node)
     }
 }
 impl From<TsTypeAliasDeclaration> for JsAnyDeclaration {
@@ -13451,7 +13775,10 @@ impl AstNode for JsAnyDeclaration {
                 | JS_VARIABLE_DECLARATION
                 | TS_DECLARE_FUNCTION_DECLARATION
                 | TS_ENUM_DECLARATION
+                | TS_EXTERNAL_MODULE_DECLARATION
+                | TS_GLOBAL_DECLARATION
                 | TS_INTERFACE_DECLARATION
+                | TS_MODULE_DECLARATION
                 | TS_TYPE_ALIAS_DECLARATION
         )
     }
@@ -13474,8 +13801,19 @@ impl AstNode for JsAnyDeclaration {
             TS_ENUM_DECLARATION => {
                 JsAnyDeclaration::TsEnumDeclaration(TsEnumDeclaration { syntax })
             }
+            TS_EXTERNAL_MODULE_DECLARATION => {
+                JsAnyDeclaration::TsExternalModuleDeclaration(TsExternalModuleDeclaration {
+                    syntax,
+                })
+            }
+            TS_GLOBAL_DECLARATION => {
+                JsAnyDeclaration::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
+            }
             TS_INTERFACE_DECLARATION => {
                 JsAnyDeclaration::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
+            }
+            TS_MODULE_DECLARATION => {
+                JsAnyDeclaration::TsModuleDeclaration(TsModuleDeclaration { syntax })
             }
             TS_TYPE_ALIAS_DECLARATION => {
                 JsAnyDeclaration::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
@@ -13491,7 +13829,10 @@ impl AstNode for JsAnyDeclaration {
             JsAnyDeclaration::JsVariableDeclaration(it) => &it.syntax,
             JsAnyDeclaration::TsDeclareFunctionDeclaration(it) => &it.syntax,
             JsAnyDeclaration::TsEnumDeclaration(it) => &it.syntax,
+            JsAnyDeclaration::TsExternalModuleDeclaration(it) => &it.syntax,
+            JsAnyDeclaration::TsGlobalDeclaration(it) => &it.syntax,
             JsAnyDeclaration::TsInterfaceDeclaration(it) => &it.syntax,
+            JsAnyDeclaration::TsModuleDeclaration(it) => &it.syntax,
             JsAnyDeclaration::TsTypeAliasDeclaration(it) => &it.syntax,
         }
     }
@@ -13504,7 +13845,10 @@ impl std::fmt::Debug for JsAnyDeclaration {
             JsAnyDeclaration::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyDeclaration::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyDeclaration::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyDeclaration::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyDeclaration::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyDeclaration::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyDeclaration::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyDeclaration::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -13517,7 +13861,10 @@ impl From<JsAnyDeclaration> for SyntaxNode {
             JsAnyDeclaration::JsVariableDeclaration(it) => it.into(),
             JsAnyDeclaration::TsDeclareFunctionDeclaration(it) => it.into(),
             JsAnyDeclaration::TsEnumDeclaration(it) => it.into(),
+            JsAnyDeclaration::TsExternalModuleDeclaration(it) => it.into(),
+            JsAnyDeclaration::TsGlobalDeclaration(it) => it.into(),
             JsAnyDeclaration::TsInterfaceDeclaration(it) => it.into(),
+            JsAnyDeclaration::TsModuleDeclaration(it) => it.into(),
             JsAnyDeclaration::TsTypeAliasDeclaration(it) => it.into(),
         }
     }
@@ -13553,9 +13900,24 @@ impl From<TsEnumDeclaration> for JsAnyDeclarationClause {
         JsAnyDeclarationClause::TsEnumDeclaration(node)
     }
 }
+impl From<TsExternalModuleDeclaration> for JsAnyDeclarationClause {
+    fn from(node: TsExternalModuleDeclaration) -> JsAnyDeclarationClause {
+        JsAnyDeclarationClause::TsExternalModuleDeclaration(node)
+    }
+}
+impl From<TsGlobalDeclaration> for JsAnyDeclarationClause {
+    fn from(node: TsGlobalDeclaration) -> JsAnyDeclarationClause {
+        JsAnyDeclarationClause::TsGlobalDeclaration(node)
+    }
+}
 impl From<TsInterfaceDeclaration> for JsAnyDeclarationClause {
     fn from(node: TsInterfaceDeclaration) -> JsAnyDeclarationClause {
         JsAnyDeclarationClause::TsInterfaceDeclaration(node)
+    }
+}
+impl From<TsModuleDeclaration> for JsAnyDeclarationClause {
+    fn from(node: TsModuleDeclaration) -> JsAnyDeclarationClause {
+        JsAnyDeclarationClause::TsModuleDeclaration(node)
     }
 }
 impl From<TsTypeAliasDeclaration> for JsAnyDeclarationClause {
@@ -13572,7 +13934,10 @@ impl AstNode for JsAnyDeclarationClause {
                 | JS_VARIABLE_DECLARATION_CLAUSE
                 | TS_DECLARE_FUNCTION_DECLARATION
                 | TS_ENUM_DECLARATION
+                | TS_EXTERNAL_MODULE_DECLARATION
+                | TS_GLOBAL_DECLARATION
                 | TS_INTERFACE_DECLARATION
+                | TS_MODULE_DECLARATION
                 | TS_TYPE_ALIAS_DECLARATION
         )
     }
@@ -13597,8 +13962,19 @@ impl AstNode for JsAnyDeclarationClause {
             TS_ENUM_DECLARATION => {
                 JsAnyDeclarationClause::TsEnumDeclaration(TsEnumDeclaration { syntax })
             }
+            TS_EXTERNAL_MODULE_DECLARATION => {
+                JsAnyDeclarationClause::TsExternalModuleDeclaration(TsExternalModuleDeclaration {
+                    syntax,
+                })
+            }
+            TS_GLOBAL_DECLARATION => {
+                JsAnyDeclarationClause::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
+            }
             TS_INTERFACE_DECLARATION => {
                 JsAnyDeclarationClause::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
+            }
+            TS_MODULE_DECLARATION => {
+                JsAnyDeclarationClause::TsModuleDeclaration(TsModuleDeclaration { syntax })
             }
             TS_TYPE_ALIAS_DECLARATION => {
                 JsAnyDeclarationClause::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
@@ -13614,7 +13990,10 @@ impl AstNode for JsAnyDeclarationClause {
             JsAnyDeclarationClause::JsVariableDeclarationClause(it) => &it.syntax,
             JsAnyDeclarationClause::TsDeclareFunctionDeclaration(it) => &it.syntax,
             JsAnyDeclarationClause::TsEnumDeclaration(it) => &it.syntax,
+            JsAnyDeclarationClause::TsExternalModuleDeclaration(it) => &it.syntax,
+            JsAnyDeclarationClause::TsGlobalDeclaration(it) => &it.syntax,
             JsAnyDeclarationClause::TsInterfaceDeclaration(it) => &it.syntax,
+            JsAnyDeclarationClause::TsModuleDeclaration(it) => &it.syntax,
             JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => &it.syntax,
         }
     }
@@ -13627,7 +14006,10 @@ impl std::fmt::Debug for JsAnyDeclarationClause {
             JsAnyDeclarationClause::JsVariableDeclarationClause(it) => std::fmt::Debug::fmt(it, f),
             JsAnyDeclarationClause::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyDeclarationClause::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyDeclarationClause::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyDeclarationClause::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyDeclarationClause::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyDeclarationClause::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -13640,7 +14022,10 @@ impl From<JsAnyDeclarationClause> for SyntaxNode {
             JsAnyDeclarationClause::JsVariableDeclarationClause(it) => it.into(),
             JsAnyDeclarationClause::TsDeclareFunctionDeclaration(it) => it.into(),
             JsAnyDeclarationClause::TsEnumDeclaration(it) => it.into(),
+            JsAnyDeclarationClause::TsExternalModuleDeclaration(it) => it.into(),
+            JsAnyDeclarationClause::TsGlobalDeclaration(it) => it.into(),
             JsAnyDeclarationClause::TsInterfaceDeclaration(it) => it.into(),
+            JsAnyDeclarationClause::TsModuleDeclaration(it) => it.into(),
             JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => it.into(),
         }
     }
@@ -15677,9 +16062,24 @@ impl From<TsDeclareStatement> for JsAnyStatement {
 impl From<TsEnumDeclaration> for JsAnyStatement {
     fn from(node: TsEnumDeclaration) -> JsAnyStatement { JsAnyStatement::TsEnumDeclaration(node) }
 }
+impl From<TsExternalModuleDeclaration> for JsAnyStatement {
+    fn from(node: TsExternalModuleDeclaration) -> JsAnyStatement {
+        JsAnyStatement::TsExternalModuleDeclaration(node)
+    }
+}
+impl From<TsGlobalDeclaration> for JsAnyStatement {
+    fn from(node: TsGlobalDeclaration) -> JsAnyStatement {
+        JsAnyStatement::TsGlobalDeclaration(node)
+    }
+}
 impl From<TsInterfaceDeclaration> for JsAnyStatement {
     fn from(node: TsInterfaceDeclaration) -> JsAnyStatement {
         JsAnyStatement::TsInterfaceDeclaration(node)
+    }
+}
+impl From<TsModuleDeclaration> for JsAnyStatement {
+    fn from(node: TsModuleDeclaration) -> JsAnyStatement {
+        JsAnyStatement::TsModuleDeclaration(node)
     }
 }
 impl From<TsTypeAliasDeclaration> for JsAnyStatement {
@@ -15717,7 +16117,10 @@ impl AstNode for JsAnyStatement {
                 | TS_DECLARE_FUNCTION_DECLARATION
                 | TS_DECLARE_STATEMENT
                 | TS_ENUM_DECLARATION
+                | TS_EXTERNAL_MODULE_DECLARATION
+                | TS_GLOBAL_DECLARATION
                 | TS_INTERFACE_DECLARATION
+                | TS_MODULE_DECLARATION
                 | TS_TYPE_ALIAS_DECLARATION
         )
     }
@@ -15775,8 +16178,17 @@ impl AstNode for JsAnyStatement {
                 JsAnyStatement::TsDeclareStatement(TsDeclareStatement { syntax })
             }
             TS_ENUM_DECLARATION => JsAnyStatement::TsEnumDeclaration(TsEnumDeclaration { syntax }),
+            TS_EXTERNAL_MODULE_DECLARATION => {
+                JsAnyStatement::TsExternalModuleDeclaration(TsExternalModuleDeclaration { syntax })
+            }
+            TS_GLOBAL_DECLARATION => {
+                JsAnyStatement::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
+            }
             TS_INTERFACE_DECLARATION => {
                 JsAnyStatement::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
+            }
+            TS_MODULE_DECLARATION => {
+                JsAnyStatement::TsModuleDeclaration(TsModuleDeclaration { syntax })
             }
             TS_TYPE_ALIAS_DECLARATION => {
                 JsAnyStatement::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
@@ -15813,7 +16225,10 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::TsDeclareFunctionDeclaration(it) => &it.syntax,
             JsAnyStatement::TsDeclareStatement(it) => &it.syntax,
             JsAnyStatement::TsEnumDeclaration(it) => &it.syntax,
+            JsAnyStatement::TsExternalModuleDeclaration(it) => &it.syntax,
+            JsAnyStatement::TsGlobalDeclaration(it) => &it.syntax,
             JsAnyStatement::TsInterfaceDeclaration(it) => &it.syntax,
+            JsAnyStatement::TsModuleDeclaration(it) => &it.syntax,
             JsAnyStatement::TsTypeAliasDeclaration(it) => &it.syntax,
         }
     }
@@ -15847,7 +16262,10 @@ impl std::fmt::Debug for JsAnyStatement {
             JsAnyStatement::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsDeclareStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -15881,7 +16299,10 @@ impl From<JsAnyStatement> for SyntaxNode {
             JsAnyStatement::TsDeclareFunctionDeclaration(it) => it.into(),
             JsAnyStatement::TsDeclareStatement(it) => it.into(),
             JsAnyStatement::TsEnumDeclaration(it) => it.into(),
+            JsAnyStatement::TsExternalModuleDeclaration(it) => it.into(),
+            JsAnyStatement::TsGlobalDeclaration(it) => it.into(),
             JsAnyStatement::TsInterfaceDeclaration(it) => it.into(),
+            JsAnyStatement::TsModuleDeclaration(it) => it.into(),
             JsAnyStatement::TsTypeAliasDeclaration(it) => it.into(),
         }
     }
@@ -15988,6 +16409,127 @@ impl From<JsAnyTemplateElement> for SyntaxNode {
 }
 impl From<JsAnyTemplateElement> for SyntaxElement {
     fn from(n: JsAnyTemplateElement) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<TsEmptyExternalModuleDeclarationBody> for TsAnyExternalModuleDeclarationBody {
+    fn from(node: TsEmptyExternalModuleDeclarationBody) -> TsAnyExternalModuleDeclarationBody {
+        TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node)
+    }
+}
+impl From<TsModuleBlock> for TsAnyExternalModuleDeclarationBody {
+    fn from(node: TsModuleBlock) -> TsAnyExternalModuleDeclarationBody {
+        TsAnyExternalModuleDeclarationBody::TsModuleBlock(node)
+    }
+}
+impl AstNode for TsAnyExternalModuleDeclarationBody {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY | TS_MODULE_BLOCK
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY => {
+                TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(
+                    TsEmptyExternalModuleDeclarationBody { syntax },
+                )
+            }
+            TS_MODULE_BLOCK => {
+                TsAnyExternalModuleDeclarationBody::TsModuleBlock(TsModuleBlock { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
+                &it.syntax
+            }
+            TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyExternalModuleDeclarationBody {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyExternalModuleDeclarationBody> for SyntaxNode {
+    fn from(n: TsAnyExternalModuleDeclarationBody) -> SyntaxNode {
+        match n {
+            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
+                it.into()
+            }
+            TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyExternalModuleDeclarationBody> for SyntaxElement {
+    fn from(n: TsAnyExternalModuleDeclarationBody) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<TsIdentifierBinding> for TsAnyModuleName {
+    fn from(node: TsIdentifierBinding) -> TsAnyModuleName {
+        TsAnyModuleName::TsIdentifierBinding(node)
+    }
+}
+impl From<TsQualifiedModuleName> for TsAnyModuleName {
+    fn from(node: TsQualifiedModuleName) -> TsAnyModuleName {
+        TsAnyModuleName::TsQualifiedModuleName(node)
+    }
+}
+impl AstNode for TsAnyModuleName {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, TS_IDENTIFIER_BINDING | TS_QUALIFIED_MODULE_NAME)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_IDENTIFIER_BINDING => {
+                TsAnyModuleName::TsIdentifierBinding(TsIdentifierBinding { syntax })
+            }
+            TS_QUALIFIED_MODULE_NAME => {
+                TsAnyModuleName::TsQualifiedModuleName(TsQualifiedModuleName { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyModuleName::TsIdentifierBinding(it) => &it.syntax,
+            TsAnyModuleName::TsQualifiedModuleName(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyModuleName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyModuleName::TsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyModuleName::TsQualifiedModuleName(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyModuleName> for SyntaxNode {
+    fn from(n: TsAnyModuleName) -> SyntaxNode {
+        match n {
+            TsAnyModuleName::TsIdentifierBinding(it) => it.into(),
+            TsAnyModuleName::TsQualifiedModuleName(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyModuleName> for SyntaxElement {
+    fn from(n: TsAnyModuleName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -17163,6 +17705,16 @@ impl std::fmt::Display for JsAnyTemplateElement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAnyExternalModuleDeclarationBody {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAnyModuleName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAnyName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -18028,6 +18580,11 @@ impl std::fmt::Display for TsDefiniteVariableAnnotation {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsEmptyExternalModuleDeclarationBody {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsEnumDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -18043,6 +18600,11 @@ impl std::fmt::Display for TsExtendsClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsExternalModuleDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsExternalModuleRef {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -18054,6 +18616,11 @@ impl std::fmt::Display for TsFunctionType {
     }
 }
 impl std::fmt::Display for TsGetterSignatureTypeMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsGlobalDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -18138,6 +18705,16 @@ impl std::fmt::Display for TsMethodSignatureTypeMember {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsModuleBlock {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsModuleDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsNameWithTypeArguments {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -18204,6 +18781,11 @@ impl std::fmt::Display for TsPropertyParameter {
     }
 }
 impl std::fmt::Display for TsPropertySignatureTypeMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsQualifiedModuleName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -20710,6 +21292,10 @@ impl Debug for DebugSyntaxElement {
                     &TsDefiniteVariableAnnotation::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY => std::fmt::Debug::fmt(
+                    &TsEmptyExternalModuleDeclarationBody::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_ENUM_DECLARATION => {
                     std::fmt::Debug::fmt(&TsEnumDeclaration::cast(node.clone()).unwrap(), f)
                 }
@@ -20722,6 +21308,10 @@ impl Debug for DebugSyntaxElement {
                 TS_EXTENDS_CLAUSE => {
                     std::fmt::Debug::fmt(&TsExtendsClause::cast(node.clone()).unwrap(), f)
                 }
+                TS_EXTERNAL_MODULE_DECLARATION => std::fmt::Debug::fmt(
+                    &TsExternalModuleDeclaration::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_EXTERNAL_MODULE_REF => {
                     std::fmt::Debug::fmt(&TsExternalModuleRef::cast(node.clone()).unwrap(), f)
                 }
@@ -20732,6 +21322,9 @@ impl Debug for DebugSyntaxElement {
                     &TsGetterSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_GLOBAL_DECLARATION => {
+                    std::fmt::Debug::fmt(&TsGlobalDeclaration::cast(node.clone()).unwrap(), f)
+                }
                 TS_IDENTIFIER_BINDING => {
                     std::fmt::Debug::fmt(&TsIdentifierBinding::cast(node.clone()).unwrap(), f)
                 }
@@ -20786,6 +21379,12 @@ impl Debug for DebugSyntaxElement {
                     &TsMethodSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_MODULE_BLOCK => {
+                    std::fmt::Debug::fmt(&TsModuleBlock::cast(node.clone()).unwrap(), f)
+                }
+                TS_MODULE_DECLARATION => {
+                    std::fmt::Debug::fmt(&TsModuleDeclaration::cast(node.clone()).unwrap(), f)
+                }
                 TS_NAME_WITH_TYPE_ARGUMENTS => {
                     std::fmt::Debug::fmt(&TsNameWithTypeArguments::cast(node.clone()).unwrap(), f)
                 }
@@ -20830,6 +21429,9 @@ impl Debug for DebugSyntaxElement {
                     &TsPropertySignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_QUALIFIED_MODULE_NAME => {
+                    std::fmt::Debug::fmt(&TsQualifiedModuleName::cast(node.clone()).unwrap(), f)
+                }
                 TS_QUALIFIED_NAME => {
                     std::fmt::Debug::fmt(&TsQualifiedName::cast(node.clone()).unwrap(), f)
                 }

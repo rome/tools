@@ -80,6 +80,9 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | TS_INTERFACE_DECLARATION
             | TS_DECLARE_STATEMENT
             | TS_DECLARE_FUNCTION_DECLARATION
+            | TS_MODULE_DECLARATION
+            | TS_GLOBAL_DECLARATION
+            | TS_EXTERNAL_MODULE_DECLARATION
             | JS_UNKNOWN_STATEMENT => JS_UNKNOWN_STATEMENT,
 
             IMPORT_META

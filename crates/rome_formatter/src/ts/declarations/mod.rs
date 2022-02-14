@@ -2,5 +2,8 @@
 
 mod declare_function_declaration;
 mod enum_declaration;
+mod external_module_declaration;
+mod global_declaration;
 mod interface_declaration;
+mod module_declaration;
 mod type_alias_declaration;

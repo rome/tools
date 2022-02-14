@@ -5,6 +5,7 @@ use crate::syntax::stmt::{
     VariableDeclarationParent,
 };
 use crate::syntax::typescript::{
+    is_nth_at_any_ts_namespace_declaration, parse_any_ts_namespace_declaration,
     parse_ts_declare_function_declaration, parse_ts_enum_declaration,
     parse_ts_interface_declaration, parse_ts_type_alias_declaration,
 };
@@ -55,6 +56,10 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
         return true;
     }
 
+    if is_nth_at_any_ts_namespace_declaration(p, n) {
+        return true;
+    }
+
     false
 }
 
@@ -86,26 +91,34 @@ pub(crate) fn parse_declaration_clause(p: &mut Parser, ambient: bool) -> ParsedS
             // declare const enum B { X, Y, Z }
             parse_ts_enum_declaration(p)
         }
-        T![ident] if is_at_contextual_keyword(p, "async") => {
-            if ambient {
-                parse_ts_declare_function_declaration(p)
+        T![ident] => {
+            if is_at_contextual_keyword(p, "async") {
+                if ambient {
+                    parse_ts_declare_function_declaration(p)
+                } else {
+                    parse_function_declaration(p, StatementContext::StatementList)
+                }
+            } else if is_at_contextual_keyword(p, "type") {
+                // test ts ts_declare_type_alias
+                // declare type A = string;
+                // declare type B = string | number & { a: string, b: number }
+                parse_ts_type_alias_declaration(p)
+            } else if is_at_contextual_keyword(p, "interface") {
+                // test ts ts_ambient_interface
+                // declare interface A { b: string, c: number }
+                parse_ts_interface_declaration(p)
+            } else if is_at_contextual_keyword(p, "let") {
+                // test ts ts_ambient_let_variable_statement
+                // declare let a, b, c, d;
+                parse_variable_declaration_clause(p, ambient)
+            } else if is_at_contextual_keyword(p, "namespace")
+                || is_at_contextual_keyword(p, "global")
+                || is_at_contextual_keyword(p, "module")
+            {
+                parse_any_ts_namespace_declaration(p)
             } else {
-                parse_function_declaration(p, StatementContext::StatementList)
+                Absent
             }
-        }
-        T![ident] if is_at_contextual_keyword(p, "type") => {
-            // test ts ts_declare_type_alias
-            // declare type A = string;
-            // declare type B = string | number & { a: string, b: number }
-            parse_ts_type_alias_declaration(p)
-        }
-        // test ts ts_ambient_interface
-        // declare interface A { b: string, c: number }
-        T![ident] if is_at_contextual_keyword(p, "interface") => parse_ts_interface_declaration(p),
-        // test ts ts_ambient_let_variable_statement
-        // declare let a, b, c, d;
-        T![ident] if is_at_contextual_keyword(p, "let") => {
-            parse_variable_declaration_clause(p, ambient)
         }
         _ => Absent,
     }

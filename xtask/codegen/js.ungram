@@ -106,6 +106,9 @@ JsAnyStatement =
   | TsInterfaceDeclaration
   | TsDeclareFunctionDeclaration
   | TsDeclareStatement
+  | TsModuleDeclaration
+	| TsExternalModuleDeclaration
+	| TsGlobalDeclaration
 
 
 JsBlockStatement =
@@ -975,6 +978,9 @@ JsAnyDeclaration =
 	| TsTypeAliasDeclaration
 	| TsInterfaceDeclaration
 	| TsDeclareFunctionDeclaration
+	| TsModuleDeclaration
+	| TsExternalModuleDeclaration
+	| TsGlobalDeclaration
 
 // Used when declarations appear in a non-statement position.
 // export let a, b;
@@ -989,6 +995,9 @@ JsAnyDeclarationClause =
 	| TsTypeAliasDeclaration
 	| TsInterfaceDeclaration
 	| TsDeclareFunctionDeclaration
+	| TsModuleDeclaration
+	| TsExternalModuleDeclaration
+	| TsGlobalDeclaration
 
 JsVariableDeclarationClause =
 	declaration: JsVariableDeclaration
@@ -1551,6 +1560,50 @@ TsDeclareFunctionDeclaration =
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	';'?
+
+
+TsModuleDeclaration =
+	module_or_namespace: ('module' | 'namespace')
+	name: TsAnyModuleName
+	body: TsModuleBlock
+
+// declare global {}
+// d.ts: global {}
+TsGlobalDeclaration =
+	'global'
+	body: TsModuleBlock
+
+TsModuleBlock =
+	'{'
+	items: JsModuleItemList
+	'}'
+
+TsAnyModuleName =
+	TsIdentifierBinding
+	| TsQualifiedModuleName
+
+// declare module a.b.c {}
+//                ^^^^^
+TsQualifiedModuleName =
+	left: TsAnyModuleName
+	'.'
+	right: JsName
+
+// Can appear on statement level if inside of an ambient context
+// declare module "jest";
+//         ^^^^^^^^^^^^^^
+// declare module "jest" { ... }
+//         ^^^^^^^^^^^^^^^^^^^^^
+TsExternalModuleDeclaration =
+	'module'
+	source: JsModuleSource
+	body: TsAnyExternalModuleDeclarationBody?
+
+TsAnyExternalModuleDeclarationBody =
+	TsEmptyExternalModuleDeclarationBody
+	| TsModuleBlock
+
+TsEmptyExternalModuleDeclarationBody = ';'
 
 // | a | b
 TsUnionType =

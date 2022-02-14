@@ -32,16 +32,35 @@ use std::ops::Range;
 // c();
 // import { c } from "c";
 pub(crate) fn parse_module_body(p: &mut Parser, m: Marker) -> CompletedMarker {
-    parse_module_items(p);
+    parse_module_item_list(p, ModuleItemListParent::Module);
 
     m.complete(p, JS_MODULE)
 }
 
-fn parse_module_items(p: &mut Parser) {
+pub(crate) enum ModuleItemListParent {
+    Module,
+    Block,
+}
+
+impl ModuleItemListParent {
+    #[inline]
+    fn is_at_list_end(&self, p: &Parser) -> bool {
+        if p.at(EOF) {
+            return true;
+        }
+
+        match self {
+            ModuleItemListParent::Block => p.at(T!['}']),
+            _ => false,
+        }
+    }
+}
+
+pub(crate) fn parse_module_item_list(p: &mut Parser, parent: ModuleItemListParent) {
     let list_marker = p.start();
     let mut progress = ParserProgress::default();
 
-    while !p.at(EOF) {
+    while !parent.is_at_list_end(p) {
         progress.assert_progressing(p);
 
         let module_item = parse_module_item(p);
@@ -817,7 +836,7 @@ fn parse_literal_export_name(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-fn parse_module_source(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_module_source(p: &mut Parser) -> ParsedSyntax {
     if !p.at(JS_STRING_LITERAL) {
         Absent
     } else {
