@@ -54,8 +54,7 @@ fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
                 .err_builder("An `enum` member cannot be private")
                 .primary(p.cur_tok().range(), "");
             p.error(err);
-            let modifiers = ClassMemberModifiers::default();
-            syntax::class::parse_private_class_member_name(p, &modifiers).map(|mut x| {
+            syntax::class::parse_private_class_member_name(p).map(|mut x| {
                 x.change_to_unknown(p);
                 x
             })

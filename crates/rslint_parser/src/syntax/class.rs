@@ -1227,13 +1227,17 @@ fn is_at_class_member_name(p: &Parser, offset: usize) -> bool {
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
 fn parse_class_member_name(p: &mut Parser, modifiers: &ClassMemberModifiers) -> ParsedSyntax {
     match p.cur() {
-        T![#] => parse_private_class_member_name(p, modifiers),
+        T![#] => parse_private_class_member_name_with_modifiers(p, modifiers),
         T!['['] => parse_computed_member_name(p),
         _ => parse_literal_member_name(p),
     }
 }
 
-pub(crate) fn parse_private_class_member_name(
+pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
+    parse_private_class_member_name_with_modifiers(p, &ClassMemberModifiers::default())
+}
+
+pub(crate) fn parse_private_class_member_name_with_modifiers(
     p: &mut Parser,
     modifiers: &ClassMemberModifiers,
 ) -> ParsedSyntax {
