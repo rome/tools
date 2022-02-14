@@ -207,7 +207,10 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![debugger] => parse_debugger_statement(p),
         T![function] => parse_function_declaration(p, context),
         T![class] => parse_class_declaration(p, context),
-        // contextual keywords, labelled statements, and identifier expression statements
+        T![ident] | T![await] | T![yield] | T![enum] if p.nth_at(1, T![:]) => {
+            parse_labeled_statement(p, context)
+        }
+        // contextual keywords or an identifier expression statements
         T![ident] => {
             if is_at_async_function(p, LineBreak::DoCheck) {
                 parse_function_declaration(p, context)
@@ -266,10 +269,6 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
                     p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
                         .primary(declare_range, "")
                 })
-            }
-            // Labelled Statement
-            else if p.nth_at(1, T![:]) {
-                parse_labeled_statement(p, context)
             } else {
                 parse_expression_statement(p)
             }
