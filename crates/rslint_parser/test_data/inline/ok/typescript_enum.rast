@@ -3,7 +3,6 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         TsEnumDeclaration {
-            declare_token: missing (optional),
             const_token: missing (optional),
             enum_token: ENUM_KW@0..5 "enum" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -14,7 +13,6 @@ JsModule {
             r_curly_token: R_CURLY@8..9 "}" [] [],
         },
         TsEnumDeclaration {
-            declare_token: missing (optional),
             const_token: missing (optional),
             enum_token: ENUM_KW@9..15 "enum" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -46,7 +44,6 @@ JsModule {
             r_curly_token: R_CURLY@27..28 "}" [] [],
         },
         TsEnumDeclaration {
-            declare_token: missing (optional),
             const_token: CONST_KW@28..35 "const" [Newline("\n")] [Whitespace(" ")],
             enum_token: ENUM_KW@35..40 "enum" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -115,21 +112,19 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..74
     0: TS_ENUM_DECLARATION@0..9
       0: (empty)
-      1: (empty)
-      2: ENUM_KW@0..5 "enum" [] [Whitespace(" ")]
-      3: JS_IDENTIFIER_BINDING@5..7
+      1: ENUM_KW@0..5 "enum" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@5..7
         0: IDENT@5..7 "A" [] [Whitespace(" ")]
-      4: L_CURLY@7..8 "{" [] []
-      5: TS_ENUM_MEMBER_LIST@8..8
-      6: R_CURLY@8..9 "}" [] []
+      3: L_CURLY@7..8 "{" [] []
+      4: TS_ENUM_MEMBER_LIST@8..8
+      5: R_CURLY@8..9 "}" [] []
     1: TS_ENUM_DECLARATION@9..28
       0: (empty)
-      1: (empty)
-      2: ENUM_KW@9..15 "enum" [Newline("\n")] [Whitespace(" ")]
-      3: JS_IDENTIFIER_BINDING@15..17
+      1: ENUM_KW@9..15 "enum" [Newline("\n")] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@15..17
         0: IDENT@15..17 "B" [] [Whitespace(" ")]
-      4: L_CURLY@17..19 "{" [] [Whitespace(" ")]
-      5: TS_ENUM_MEMBER_LIST@19..27
+      3: L_CURLY@17..19 "{" [] [Whitespace(" ")]
+      4: TS_ENUM_MEMBER_LIST@19..27
         0: TS_ENUM_MEMBER@19..20
           0: JS_LITERAL_MEMBER_NAME@19..20
             0: IDENT@19..20 "a" [] []
@@ -144,15 +139,14 @@ JsModule {
           0: JS_LITERAL_MEMBER_NAME@25..27
             0: IDENT@25..27 "c" [] [Whitespace(" ")]
           1: (empty)
-      6: R_CURLY@27..28 "}" [] []
+      5: R_CURLY@27..28 "}" [] []
     2: TS_ENUM_DECLARATION@28..74
-      0: (empty)
-      1: CONST_KW@28..35 "const" [Newline("\n")] [Whitespace(" ")]
-      2: ENUM_KW@35..40 "enum" [] [Whitespace(" ")]
-      3: JS_IDENTIFIER_BINDING@40..42
+      0: CONST_KW@28..35 "const" [Newline("\n")] [Whitespace(" ")]
+      1: ENUM_KW@35..40 "enum" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@40..42
         0: IDENT@40..42 "C" [] [Whitespace(" ")]
-      4: L_CURLY@42..44 "{" [] [Whitespace(" ")]
-      5: TS_ENUM_MEMBER_LIST@44..73
+      3: L_CURLY@42..44 "{" [] [Whitespace(" ")]
+      4: TS_ENUM_MEMBER_LIST@44..73
         0: TS_ENUM_MEMBER@44..49
           0: JS_LITERAL_MEMBER_NAME@44..46
             0: IDENT@44..46 "A" [] [Whitespace(" ")]
@@ -185,5 +179,5 @@ JsModule {
             1: JS_NUMBER_LITERAL_EXPRESSION@70..71
               0: JS_NUMBER_LITERAL@70..71 "3" [] []
         5: COMMA@71..73 "," [] [Whitespace(" ")]
-      6: R_CURLY@73..74 "}" [] []
+      5: R_CURLY@73..74 "}" [] []
   3: EOF@74..75 "" [Newline("\n")] []

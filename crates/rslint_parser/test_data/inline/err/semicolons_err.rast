@@ -3,7 +3,6 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -43,8 +42,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..23
     0: JS_VARIABLE_STATEMENT@0..14
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@0..14
+      0: JS_VARIABLE_DECLARATION@0..14
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@4..14
           0: JS_VARIABLE_DECLARATOR@4..14
@@ -56,7 +54,7 @@ JsModule {
               1: JS_IDENTIFIER_EXPRESSION@10..14
                 0: JS_REFERENCE_IDENTIFIER@10..14
                   0: IDENT@10..14 "bar" [] [Whitespace(" ")]
-      2: (empty)
+      1: (empty)
     1: JS_THROW_STATEMENT@14..23
       0: THROW_KW@14..20 "throw" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_EXPRESSION@20..23

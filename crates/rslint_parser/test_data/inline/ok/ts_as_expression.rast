@@ -3,7 +3,6 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -29,7 +28,6 @@ JsModule {
             semicolon_token: SEMICOLON@21..22 ";" [] [],
         },
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@22..27 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -58,7 +56,6 @@ JsModule {
             semicolon_token: SEMICOLON@42..43 ";" [] [],
         },
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@43..48 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -90,7 +87,6 @@ JsModule {
             semicolon_token: SEMICOLON@62..63 ";" [] [],
         },
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@63..68 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -121,7 +117,6 @@ JsModule {
             semicolon_token: SEMICOLON@95..96 ";" [] [],
         },
         JsVariableStatement {
-            declare_token: missing (optional),
             declaration: JsVariableDeclaration {
                 kind: LET_KW@96..101 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
@@ -177,8 +172,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..155
     0: JS_VARIABLE_STATEMENT@0..22
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@0..21
+      0: JS_VARIABLE_DECLARATION@0..21
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@4..21
           0: JS_VARIABLE_DECLARATOR@4..21
@@ -192,10 +186,9 @@ JsModule {
               0: EQ@11..13 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@13..21
                 0: JS_STRING_LITERAL@13..21 "\"string\"" [] []
-      2: SEMICOLON@21..22 ";" [] []
+      1: SEMICOLON@21..22 ";" [] []
     1: JS_VARIABLE_STATEMENT@22..43
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@22..42
+      0: JS_VARIABLE_DECLARATION@22..42
         0: LET_KW@22..27 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@27..42
           0: JS_VARIABLE_DECLARATOR@27..42
@@ -211,10 +204,9 @@ JsModule {
                 1: AS_KW@33..36 "as" [] [Whitespace(" ")]
                 2: TS_STRING_TYPE@36..42
                   0: STRING_KW@36..42 "string" [] []
-      2: SEMICOLON@42..43 ";" [] []
+      1: SEMICOLON@42..43 ";" [] []
     2: JS_VARIABLE_STATEMENT@43..63
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@43..62
+      0: JS_VARIABLE_DECLARATION@43..62
         0: LET_KW@43..48 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@48..62
           0: JS_VARIABLE_DECLARATOR@48..62
@@ -232,10 +224,9 @@ JsModule {
                   0: JS_REFERENCE_IDENTIFIER@57..62
                     0: IDENT@57..62 "const" [] []
                   1: (empty)
-      2: SEMICOLON@62..63 ";" [] []
+      1: SEMICOLON@62..63 ";" [] []
     3: JS_VARIABLE_STATEMENT@63..92
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@63..92
+      0: JS_VARIABLE_DECLARATION@63..92
         0: LET_KW@63..68 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@68..92
           0: JS_VARIABLE_DECLARATOR@68..92
@@ -247,15 +238,14 @@ JsModule {
               1: JS_IDENTIFIER_EXPRESSION@91..92
                 0: JS_REFERENCE_IDENTIFIER@91..92
                   0: IDENT@91..92 "x" [] []
-      2: (empty)
+      1: (empty)
     4: JS_EXPRESSION_STATEMENT@92..96
       0: JS_IDENTIFIER_EXPRESSION@92..95
         0: JS_REFERENCE_IDENTIFIER@92..95
           0: IDENT@92..95 "as" [Newline("\n")] []
       1: SEMICOLON@95..96 ";" [] []
     5: JS_VARIABLE_STATEMENT@96..155
-      0: (empty)
-      1: JS_VARIABLE_DECLARATION@96..154
+      0: JS_VARIABLE_DECLARATION@96..154
         0: LET_KW@96..101 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@101..154
           0: JS_VARIABLE_DECLARATOR@101..154
@@ -284,5 +274,5 @@ JsModule {
                 1: AS_KW@145..148 "as" [] [Whitespace(" ")]
                 2: TS_NUMBER_TYPE@148..154
                   0: NUMBER_KW@148..154 "number" [] []
-      2: SEMICOLON@154..155 ";" [] []
+      1: SEMICOLON@154..155 ";" [] []
   3: EOF@155..156 "" [Newline("\n")] []

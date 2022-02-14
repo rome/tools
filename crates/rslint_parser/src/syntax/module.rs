@@ -1,26 +1,20 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
+use crate::syntax::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
 use crate::syntax::binding::parse_binding;
-use crate::syntax::class::{parse_export_class_clause, parse_export_default_class_case};
+use crate::syntax::class::parse_export_default_class_case;
 use crate::syntax::expr::{
     is_nth_at_expression, is_nth_at_reference_identifier, parse_assignment_expression_or_higher,
     parse_reference_identifier, ExpressionContext,
 };
-use crate::syntax::function::{
-    is_at_async_function, parse_export_default_function_case, parse_export_function_clause,
-    LineBreak,
-};
-use crate::syntax::js_parse_error;
+use crate::syntax::function::parse_export_default_function_case;
 use crate::syntax::js_parse_error::{
     duplicate_assertion_keys_error, expected_binding, expected_export_clause,
     expected_export_name_specifier, expected_expression, expected_identifier,
     expected_literal_export_name, expected_local_name_for_default_import, expected_module_source,
     expected_named_import, expected_named_import_specifier, expected_statement,
 };
-use crate::syntax::stmt::{
-    is_at_variable_declarations, parse_statement, parse_variable_declaration, semi,
-    StatementContext, VariableDeclarationParent, STMT_RECOVERY_SET,
-};
-use crate::syntax::util::expect_contextual_keyword;
+use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
+use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{
     Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
     Present,
@@ -473,57 +467,45 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.bump(T![export]);
 
-    let clause = match p.cur() {
-        T![class] => parse_export_class_clause(p),
-        T![function] => parse_export_function_clause(p),
-        T!['{'] => {
-            let checkpoint = p.checkpoint();
-            match parse_export_named_clause(p) {
-                Present(_) if p.at(T![ident]) && p.cur_src() == "from" => {
-                    p.rewind(checkpoint);
-                    parse_export_named_from_clause(p)
+    let clause = if is_nth_at_declaration_clause(p, 0) {
+        // test export_class_clause
+        // export class A {}
+        // export class A extends B {}
+
+        // test export_function_clause
+        // export function test(a, b) {}
+        // export function* test2(a, b) {}
+        // export async function test3(a, b, ) {}
+
+        // test ts ts_export_enum_declaration
+        // export enum A { X, Y }
+        // export const enum B { X, Y }
+        parse_declaration_clause(p, false)
+    } else {
+        match p.cur() {
+            T!['{'] => {
+                let checkpoint = p.checkpoint();
+                match parse_export_named_clause(p) {
+                    Present(_) if p.at(T![ident]) && p.cur_src() == "from" => {
+                        p.rewind(checkpoint);
+                        parse_export_named_from_clause(p)
+                    }
+                    t => t,
                 }
-                t => t,
             }
+            T![default] => parse_export_default_clause(p),
+            T![*] => parse_export_from_clause(p),
+            T![ident] if is_at_contextual_keyword(p, "from") => parse_export_from_clause(p),
+            // test ts ts_export_interface_declaration
+            // export interface A {}
+            _ if p.nth_at(1, T![ident]) && p.nth_src(1) == "from" => parse_export_from_clause(p),
+            _ => Absent,
         }
-        T![default] => parse_export_default_clause(p),
-        T![ident] if is_at_async_function(p, LineBreak::DoNotCheck) => {
-            parse_export_function_clause(p)
-        }
-        T![*] => parse_export_from_clause(p),
-        T![ident] if p.cur_src() == "from" => parse_export_from_clause(p),
-        _ if p.nth_at(1, T![ident]) && p.nth_src(1) == "from" => parse_export_from_clause(p),
-        _ if is_at_variable_declarations(p) => parse_export_variable_clause(p),
-        _ => Absent,
     };
 
     clause.or_add_diagnostic(p, expected_export_clause);
 
     Present(m.complete(p, JS_EXPORT))
-}
-
-// test export_variable_clause
-// export let a;
-// export const b = 3;
-// export var c, d, e = 3;
-//
-// test_err export_variable_clause_error
-// export let a = ;
-// export const b;
-// export let d, c;
-fn parse_export_variable_clause(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_variable_declarations(p) {
-        return Absent;
-    }
-
-    let m = p.start();
-    let start = p.cur_tok().range().start;
-    parse_variable_declaration(p, VariableDeclarationParent::Export)
-        .or_add_diagnostic(p, js_parse_error::expected_variable);
-
-    semi(p, start..p.cur_tok().range().end);
-
-    Present(m.complete(p, JS_EXPORT_VARIABLE_CLAUSE))
 }
 
 // test export_named_clause

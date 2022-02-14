@@ -104,7 +104,8 @@ JsAnyStatement =
 	| TsEnumDeclaration
   | TsTypeAliasDeclaration
   | TsInterfaceDeclaration
-  | TsDeclareFunctionStatement
+  | TsDeclareFunctionDeclaration
+  | TsDeclareStatement
 
 
 JsBlockStatement =
@@ -260,6 +261,11 @@ JsFinallyClause =
 // debugger statement
 JsDebuggerStatement =
 	'debugger' ';'?
+
+// declare function test();
+TsDeclareStatement =
+	'declare'
+	declaration: JsAnyDeclarationClause
 
 
 ///////////////
@@ -585,7 +591,6 @@ JsClassMemberList = JsAnyClassMember*
 JsAnyClass =
 	JsClassDeclaration
 	| JsClassExpression
-	| JsExportClassClause
 	| JsExportDefaultClassClause
 
 // class Test extends A {}
@@ -965,10 +970,30 @@ JsRegexLiteralExpression = value: 'js_regex_literal'
 JsAnyDeclaration =
 	JsClassDeclaration
 	| JsFunctionDeclaration
+	| JsVariableDeclaration
 	| TsEnumDeclaration
 	| TsTypeAliasDeclaration
 	| TsInterfaceDeclaration
-	| JsVariableDeclaration
+	| TsDeclareFunctionDeclaration
+
+// Used when declarations appear in a non-statement position.
+// export let a, b;
+//        ^^^^^^^^^
+// declare let a, b;
+//         ^^^^^^^^^
+JsAnyDeclarationClause =
+	JsClassDeclaration
+	| JsFunctionDeclaration
+	| JsVariableDeclarationClause
+	| TsEnumDeclaration
+	| TsTypeAliasDeclaration
+	| TsInterfaceDeclaration
+	| TsDeclareFunctionDeclaration
+
+JsVariableDeclarationClause =
+	declaration: JsVariableDeclaration
+	';'?
+
 
 JsFunctionDeclaration =
 	'async'?
@@ -990,8 +1015,8 @@ TsReturnTypeAnnotation =
 
 // let a, b = c;
 JsVariableStatement =
-	'declare'?
-	declaration: JsVariableDeclaration ';'?
+	declaration: JsVariableDeclaration
+	 ';'?
 
 // Declaration of multiple variables
 // let a, b = c;
@@ -1029,10 +1054,10 @@ JsAnyModuleItem =
 JsModuleItemList = JsAnyModuleItem*
 
 JsImport = 'import'
-	import_clause: AnyJsImportClause
+	import_clause: JsAnyImportClause
 	';'?
 
-AnyJsImportClause =
+JsAnyImportClause =
     JsImportBareClause
     | JsImportNamedClause
     | JsImportDefaultClause
@@ -1191,45 +1216,14 @@ JsExport =
 // export = b;
 // export import a = b;
 JsAnyExportClause =
-	JsExportFunctionClause
-	| JsExportDefaultFunctionClause
-	| JsExportClassClause
+	JsExportDefaultFunctionClause
 	| JsExportDefaultClassClause
-	| JsExportVariableClause
 	| JsExportDefaultExpressionClause
 	| JsExportNamedClause
 	| JsExportFromClause
 	| JsExportNamedFromClause
+	| JsAnyDeclarationClause
 
-// export let a, b, c;
-//        ^^^^^^^^^^^
-JsExportVariableClause =
-	declaration: JsVariableDeclaration
-	';'?
-
-// export function a() {}
-//        ^^^^^^^^^^^^^^^
-JsExportFunctionClause =
-	'async'?
-	'function'
-	'*'?
-	id: JsAnyBinding
-	type_parameters: TsTypeParameters?
-	parameters: JsParameters
-	return_type_annotation: TsReturnTypeAnnotation?
-	body: JsFunctionBody
-
-// export class A {}
-//        ^^^^^^^^^^
-JsExportClassClause =
-	'class'
-	id: JsAnyBinding
-	type_parameters: TsTypeParameters?
-	extends_clause: JsExtendsClause?
-	implements_clause: TsImplementsClause?
-	'{'
-	members: JsClassMemberList
-	'}'
 
 // export default a;
 //        ^^^^^^^^^^
@@ -1366,7 +1360,6 @@ JsAnyFunction =
 	JsFunctionExpression
 	| JsFunctionDeclaration
 	| JsArrowFunctionExpression
-	| JsExportFunctionClause
 	| JsExportDefaultFunctionClause
 
 
@@ -1520,7 +1513,6 @@ TsReferenceType =
 	type_arguments: TsTypeArguments?
 
 TsTypeAliasDeclaration =
-	'declare'?
 	'type'
 	binding_identifier: TsIdentifierBinding
 	type_parameters: TsTypeParameters?
@@ -1533,7 +1525,6 @@ TsIdentifierBinding = name: 'ident'
 
 // typescript enum
 TsEnumDeclaration =
-	'declare'?
 	'const'?
 	'enum'
 	id: JsAnyBinding
@@ -1546,12 +1537,13 @@ TsEnumMember =
 	initializer: JsInitializerClause?
 
 
+// declaration of a function without a body
+//
 // declare function test();
 //         ^^^^^^^^^^^^^^^^
 // function test();
 // ^^^^^^^^^^^^^^^^
-TsDeclareFunctionStatement =
-	'declare'?
+TsDeclareFunctionDeclaration =
 	'async'?
 	'function'
 	id: JsAnyBinding
@@ -1665,7 +1657,6 @@ TsDefaultTypeClause =
 TsObjectType = '{' members: TsTypeMemberList '}'
 
 TsInterfaceDeclaration =
-	'declare'?
 	'interface'
 	id: TsIdentifierBinding
 	type_parameters: TsTypeParameters?

@@ -3,7 +3,6 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         TsEnumDeclaration {
-            declare_token: missing (optional),
             const_token: missing (optional),
             enum_token: ENUM_KW@0..5 "enum" [] [Whitespace(" ")],
             id: missing (required),
@@ -33,7 +32,6 @@ JsModule {
             r_curly_token: R_CURLY@11..12 "}" [] [],
         },
         TsEnumDeclaration {
-            declare_token: missing (optional),
             const_token: missing (optional),
             enum_token: ENUM_KW@12..18 "enum" [Newline("\n")] [Whitespace(" ")],
             id: JsUnknownBinding {
@@ -76,11 +74,10 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..27
     0: TS_ENUM_DECLARATION@0..12
       0: (empty)
-      1: (empty)
-      2: ENUM_KW@0..5 "enum" [] [Whitespace(" ")]
-      3: (empty)
-      4: L_CURLY@5..6 "{" [] []
-      5: TS_ENUM_MEMBER_LIST@6..11
+      1: ENUM_KW@0..5 "enum" [] [Whitespace(" ")]
+      2: (empty)
+      3: L_CURLY@5..6 "{" [] []
+      4: TS_ENUM_MEMBER_LIST@6..11
         0: TS_ENUM_MEMBER@6..7
           0: JS_LITERAL_MEMBER_NAME@6..7
             0: IDENT@6..7 "A" [] []
@@ -95,15 +92,14 @@ JsModule {
           0: JS_LITERAL_MEMBER_NAME@10..11
             0: IDENT@10..11 "C" [] []
           1: (empty)
-      6: R_CURLY@11..12 "}" [] []
+      5: R_CURLY@11..12 "}" [] []
     1: TS_ENUM_DECLARATION@12..27
       0: (empty)
-      1: (empty)
-      2: ENUM_KW@12..18 "enum" [Newline("\n")] [Whitespace(" ")]
-      3: JS_UNKNOWN_BINDING@18..20
+      1: ENUM_KW@12..18 "enum" [Newline("\n")] [Whitespace(" ")]
+      2: JS_UNKNOWN_BINDING@18..20
         0: JS_NUMBER_LITERAL@18..20 "1" [] [Whitespace(" ")]
-      4: L_CURLY@20..21 "{" [] []
-      5: TS_ENUM_MEMBER_LIST@21..26
+      3: L_CURLY@20..21 "{" [] []
+      4: TS_ENUM_MEMBER_LIST@21..26
         0: TS_ENUM_MEMBER@21..22
           0: JS_LITERAL_MEMBER_NAME@21..22
             0: IDENT@21..22 "A" [] []
@@ -118,7 +114,7 @@ JsModule {
           0: JS_LITERAL_MEMBER_NAME@25..26
             0: IDENT@25..26 "C" [] []
           1: (empty)
-      6: R_CURLY@26..27 "}" [] []
+      5: R_CURLY@26..27 "}" [] []
   3: EOF@27..28 "" [Newline("\n")] []
 --
 error[SyntaxError]: `enum` statements must have a name

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: trailing.js
 
 ---
@@ -21,9 +21,7 @@ export type Result<T, V> = | { kind: "not-test-editor1" } | { kind: "not-test-ed
 
 # Output
 ```js
-export
-type;
-Result<T, V> = | { kind: "not-test-editor1" } | { kind: "not-test-editor2" };
+export type Result<T, V>= | { kind: "not-test-editor1" } | { kind: "not-test-editor2" };
 
 // Note: there are trailing whitespace in this file
 `
@@ -33,32 +31,6 @@ Result<T, V> = | { kind: "not-test-editor1" } | { kind: "not-test-editor2" };
     
     
 `;
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'type'
-  ┌─ trailing.js:1:8
-  │
-1 │ export type Result<T, V> = | { kind: "not-test-editor1" } | { kind: "not-test-editor2" };
-  │        ^^^^ Expected a class, a function, or a variable declaration here
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ trailing.js:1:13
-  │
-1 │ export type Result<T, V> = | { kind: "not-test-editor1" } | { kind: "not-test-editor2" };
-  │        -----^^^^^^
-  │        │    │
-  │        │    An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
-
-error[SyntaxError]: Invalid assignment to `V>`
-  ┌─ trailing.js:1:23
-  │
-1 │ export type Result<T, V> = | { kind: "not-test-editor1" } | { kind: "not-test-editor2" };
-  │                       ^^ This expression cannot be assigned to
-
 
 ```
 
