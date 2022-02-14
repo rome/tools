@@ -894,23 +894,24 @@ impl JsExportDefaultClassClause {
     pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 2usize) }
+    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 3usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 4usize)
     }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 4usize) }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 5usize) }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
-        support::node(&self.syntax, 5usize)
+        support::node(&self.syntax, 6usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 7usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 7usize) }
+    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 8usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 8usize)
+        support::required_token(&self.syntax, 9usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -6693,6 +6694,10 @@ impl std::fmt::Debug for JsExportDefaultClassClause {
             .field(
                 "default_token",
                 &support::DebugSyntaxResult(self.default_token()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugOptionalElement(self.abstract_token()),
             )
             .field(
                 "class_token",

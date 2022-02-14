@@ -1250,6 +1250,7 @@ JsExportDefaultExpressionClause =
 //        ^^^^^^^^^^^^^^^^
 JsExportDefaultClassClause =
 	'default'
+	'abstract'?
 	'class'
 	id: JsAnyBinding?
 	type_parameters: TsTypeParameters?
