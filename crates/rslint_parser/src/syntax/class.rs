@@ -1030,16 +1030,14 @@ fn parse_everything_after_identifier(
 
     // test_err ts typescript_abstract_classes_invalid_abstract_async_member
     // abstract class B { abstract async a(); }
-    let member = if let Some((abstract_range, _)) = abstract_range.zip(is_async) {
-        let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range.clone());
+    if let Some((abstract_range, _)) = abstract_range.zip(is_async) {
+        let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range);
         p.error(err);
         member.change_to_unknown(p);
         member
     } else {
         member
-    };
-
-    member
+    }
 }
 
 fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: SignatureFlags) {
