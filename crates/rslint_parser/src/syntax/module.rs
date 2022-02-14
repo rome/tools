@@ -25,6 +25,7 @@ use std::collections::HashMap;
 use std::ops::Range;
 
 use super::class::is_at_ts_abstract_class_declaration;
+use super::util::is_nth_at_contextual_keyword;
 
 ///! Implements the parsing logic for ES Module syntax
 
@@ -750,11 +751,11 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
 
     let clause = match p.nth(1) {
         T![class] => parse_export_default_class_case(p),
-        T![ident] if p.nth_src(1) == "abstract" && p.nth_at(2, T![class]) => {
+        T![ident] if is_nth_at_contextual_keyword(p, 1, "abstract") && p.nth_at(2, T![class]) => {
             parse_export_default_class_case(p)
         }
         T![function] => parse_export_default_function_case(p),
-        T![ident] if p.nth_src(1) == "async" && p.nth_at(2, T![function]) => {
+        T![ident] if is_nth_at_contextual_keyword(p, 1, "async") && p.nth_at(2, T![function]) => {
             parse_export_default_function_case(p)
         }
         _ => parse_export_default_expression_clause(p),
