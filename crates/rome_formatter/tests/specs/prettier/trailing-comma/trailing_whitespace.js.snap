@@ -55,8 +55,7 @@ this.getAttribute(function(s) /*string*/ {
 # Output
 ```js
 let example = [
-  "FOO",
-  "BAR",
+  "FOO", "BAR",
   // Comment
 ];
 

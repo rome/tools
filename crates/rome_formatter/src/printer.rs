@@ -2,8 +2,12 @@ use std::iter::once;
 
 use rome_rowan::TextSize;
 
-use crate::format_element::{ConditionalGroupContent, Group, GroupPrintMode, LineMode};
-use crate::{FormatElement, FormatOptions, Formatted, IndentStyle, SourceMarker};
+use crate::format_element::{ConditionalGroupContent, Group, GroupPrintMode, LineMode, List};
+use crate::intersperse::Intersperse;
+use crate::{
+    hard_line_break, space_token, FormatElement, FormatOptions, Formatted, IndentStyle,
+    SourceMarker,
+};
 
 /// Options that affect how the [Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -115,7 +119,11 @@ impl<'a> Printer<'a> {
         queue.enqueue(PrintElementCall::new(element, PrintElementArgs { indent }));
 
         while let Some(print_element_call) = queue.dequeue() {
-            queue.extend(self.print_element(print_element_call.element, print_element_call.args));
+            self.print_element(
+                &mut queue,
+                print_element_call.element,
+                print_element_call.args,
+            );
 
             if queue.is_empty() && !self.state.line_suffixes.is_empty() {
                 queue.extend(self.state.line_suffixes.drain(..));
@@ -125,20 +133,20 @@ impl<'a> Printer<'a> {
         Formatted::new(self.state.buffer, None, self.state.source_markers)
     }
 
-    /// Prints a single element and returns the elements to queue (that should be printed next).
+    /// Prints a single element and push the following elements to queue
     fn print_element(
         &mut self,
+        queue: &mut ElementCallQueue<'a>,
         element: &'a FormatElement,
         args: PrintElementArgs,
-    ) -> Vec<PrintElementCall<'a>> {
+    ) {
         match element {
             FormatElement::Space => {
                 if self.state.line_width > 0 {
                     self.state.pending_space = true;
                 }
-                vec![]
             }
-            FormatElement::Empty => vec![],
+            FormatElement::Empty => {}
             FormatElement::Token(token) => {
                 // Print pending indention
                 if self.state.pending_indent > 0 {
@@ -165,52 +173,50 @@ impl<'a> Printer<'a> {
                 }
 
                 self.print_str(token);
-                vec![]
             }
 
             FormatElement::Group(Group { content }) => {
-                match self.try_print_flat(element, args.clone()) {
-                    Err(_) => {
-                        // Flat printing didn't work, print with line breaks
-                        vec![PrintElementCall::new(content.as_ref(), args)]
-                    }
-                    Ok(_) => vec![],
+                if self.try_print_flat(queue, element, args.clone()).is_err() {
+                    // Flat printing didn't work, print with line breaks
+                    queue.enqueue(PrintElementCall::new(content.as_ref(), args));
                 }
             }
 
-            FormatElement::List(list) => list
-                .iter()
-                .map(|t| PrintElementCall::new(t, args.clone()))
-                .collect(),
+            FormatElement::Fill(list) => {
+                self.print_fill(queue, list, args);
+            }
+
+            FormatElement::List(list) => {
+                queue.extend(list.iter().map(|t| PrintElementCall::new(t, args.clone())));
+            }
 
             FormatElement::Indent(indent) => {
-                vec![PrintElementCall::new(
+                queue.enqueue(PrintElementCall::new(
                     &indent.content,
                     args.with_incremented_indent(),
-                )]
+                ));
             }
 
             FormatElement::ConditionalGroupContent(ConditionalGroupContent {
                 mode: GroupPrintMode::Multiline,
                 content,
             }) => {
-                vec![PrintElementCall::new(content, args)]
+                queue.enqueue(PrintElementCall::new(content, args));
             }
 
             FormatElement::ConditionalGroupContent(ConditionalGroupContent {
                 mode: GroupPrintMode::Flat,
                 ..
-            }) => {
-                vec![]
-            }
+            }) => {}
 
             FormatElement::Line(line) => {
                 if !self.state.line_suffixes.is_empty() {
-                    self.state
-                        .line_suffixes
-                        .drain(..)
-                        .chain(once(PrintElementCall::new(element, args)))
-                        .collect()
+                    queue.extend(
+                        self.state
+                            .line_suffixes
+                            .drain(..)
+                            .chain(once(PrintElementCall::new(element, args))),
+                    );
                 } else {
                     // Only print a newline if the current line isn't already empty
                     if self.state.line_width > 0 {
@@ -224,7 +230,6 @@ impl<'a> Printer<'a> {
 
                     self.state.pending_space = false;
                     self.state.pending_indent = args.indent;
-                    vec![]
                 }
             }
 
@@ -232,7 +237,6 @@ impl<'a> Printer<'a> {
                 self.state
                     .line_suffixes
                     .push(PrintElementCall::new(&**suffix, args));
-                vec![]
             }
         }
     }
@@ -242,22 +246,27 @@ impl<'a> Printer<'a> {
     /// or printing the group exceeds the configured maximal print width.
     fn try_print_flat(
         &mut self,
+        queue: &mut ElementCallQueue<'a>,
         element: &'a FormatElement,
         args: PrintElementArgs,
     ) -> Result<(), LineBreakRequiredError> {
         let snapshot = self.state.snapshot();
+        let min_queue_length = queue.0.len();
 
-        let mut queue = ElementCallQueue::new();
         queue.enqueue(PrintElementCall::new(element, args));
 
         while let Some(call) = queue.dequeue() {
-            match self.try_print_flat_element(call.element, call.args) {
-                Ok(to_queue) => queue.extend(to_queue),
-                Err(err) => {
-                    self.state.restore(snapshot);
-                    return Err(err);
-                }
+            if let Err(err) = self.try_print_flat_element(queue, call.element, call.args) {
+                self.state.restore(snapshot);
+                queue.0.truncate(min_queue_length);
+                return Err(err);
             }
+
+            if queue.0.len() == min_queue_length {
+                break;
+            }
+
+            debug_assert!(queue.0.len() > min_queue_length);
         }
 
         Ok(())
@@ -265,15 +274,16 @@ impl<'a> Printer<'a> {
 
     fn try_print_flat_element(
         &mut self,
+        queue: &mut ElementCallQueue<'a>,
         element: &'a FormatElement,
         args: PrintElementArgs,
-    ) -> Result<Vec<PrintElementCall<'a>>, LineBreakRequiredError> {
-        let next_calls = match element {
+    ) -> Result<(), LineBreakRequiredError> {
+        match element {
             FormatElement::Token(_) => {
                 let current_line = self.state.generated_line;
 
                 // Delegate to generic string printing
-                let calls = self.print_element(element, args);
+                self.print_element(queue, element, args);
 
                 // If the line is too long, break the group
                 if self.state.line_width > self.options.print_width as usize {
@@ -284,8 +294,6 @@ impl<'a> Printer<'a> {
                 if current_line != self.state.generated_line {
                     return Err(LineBreakRequiredError);
                 }
-
-                calls
             }
             FormatElement::Line(line) => {
                 match line.mode {
@@ -293,38 +301,107 @@ impl<'a> Printer<'a> {
                         if self.state.line_width > 0 {
                             self.state.pending_space = true;
                         }
-                        vec![]
                     }
                     // We want a flat structure, so omit soft line wraps
-                    LineMode::Soft => vec![],
+                    LineMode::Soft => {}
                     LineMode::Hard | LineMode::Empty => return Err(LineBreakRequiredError),
                 }
             }
 
             FormatElement::Group(group) => {
-                vec![PrintElementCall::new(group.content.as_ref(), args)]
+                queue.enqueue(PrintElementCall::new(group.content.as_ref(), args))
+            }
+
+            // Fill elements are printed as space-separated lists in flat mode
+            FormatElement::Fill(list) => {
+                // Intersperse the list of elements with spaces before pushing
+                // them to the queue, however elements in the queue are stored
+                // as references so the space element must be allocated in a
+                // static so its reference is bound to the static lifetime
+                static SPACE: FormatElement = space_token();
+                queue.0.extend(
+                    Intersperse::new(list.iter().rev(), &SPACE)
+                        .map(|t| PrintElementCall::new(t, args.clone())),
+                );
             }
 
             FormatElement::ConditionalGroupContent(ConditionalGroupContent {
                 mode: GroupPrintMode::Flat,
                 content,
-            }) => vec![PrintElementCall::new(content, args)],
+            }) => queue.enqueue(PrintElementCall::new(content, args)),
 
             // Omit if there's no flat_contents
             FormatElement::ConditionalGroupContent(ConditionalGroupContent {
                 mode: GroupPrintMode::Multiline,
                 ..
-            }) => vec![],
+            }) => {}
 
             FormatElement::LineSuffix { .. } => return Err(LineBreakRequiredError),
 
             FormatElement::Empty
             | FormatElement::Space
             | FormatElement::Indent { .. }
-            | FormatElement::List { .. } => self.print_element(element, args),
-        };
+            | FormatElement::List { .. } => self.print_element(queue, element, args),
+        }
 
-        Ok(next_calls)
+        Ok(())
+    }
+
+    /// Print a list in fill mode
+    ///
+    /// Prints the elements of the list separated by spaces, but backtrack if
+    /// they go over the print width and insert a line break before resuming
+    /// printing
+    fn print_fill(
+        &mut self,
+        queue: &mut ElementCallQueue<'a>,
+        content: &'a List,
+        args: PrintElementArgs,
+    ) {
+        let mut snapshot = None;
+
+        for item in content.iter() {
+            if snapshot.is_some() {
+                self.state.pending_space = true;
+            }
+
+            self.print_all(queue, item, args.clone());
+
+            if self.state.line_width > self.options.print_width.into() {
+                if let Some(snapshot) = snapshot.take() {
+                    self.state.restore(snapshot);
+
+                    static LINE: FormatElement = hard_line_break();
+                    self.print_all(queue, &LINE, args.clone());
+
+                    self.print_all(queue, item, args.clone());
+                }
+            }
+
+            snapshot = Some(self.state.snapshot());
+        }
+    }
+
+    /// Fully print an element (print the element itself and all its descendants)
+    fn print_all(
+        &mut self,
+        queue: &mut ElementCallQueue<'a>,
+        element: &'a FormatElement,
+        args: PrintElementArgs,
+    ) {
+        let min_queue_length = queue.0.len();
+
+        queue.enqueue(PrintElementCall::new(element, args));
+
+        while let Some(call) = queue.dequeue() {
+            self.print_element(queue, call.element, call.args);
+
+            if queue.0.len() == min_queue_length {
+                return;
+            }
+
+            debug_assert!(queue.0.len() > min_queue_length);
+        }
     }
 
     fn print_str(&mut self, content: &str) {
