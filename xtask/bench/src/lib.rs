@@ -1,7 +1,7 @@
 mod features;
 mod utils;
 
-use rslint_parser::{parse, Syntax};
+use rslint_parser::parse;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use std::time::Duration;
@@ -87,6 +87,12 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
             Ok((id, code)) => {
                 let code = code.as_str();
 
+                let syntax = if id.ends_with(".ts") {
+                    rslint_parser::Syntax::default().typescript()
+                } else {
+                    rslint_parser::Syntax::default()
+                };
+
                 // Do all steps with criterion now
                 if criterion {
                     let mut criterion = criterion::Criterion::default()
@@ -97,12 +103,12 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     }
                     let mut group = criterion.benchmark_group(feature.to_string());
                     group.throughput(criterion::Throughput::Bytes(code.len() as u64));
+
                     group.bench_function(&id, |b| match feature {
                         FeatureToBenchmark::Parser => b.iter(|| {
-                            criterion::black_box(run_parse(code));
+                            criterion::black_box(run_parse(code, syntax));
                         }),
                         FeatureToBenchmark::Formatter => {
-                            let syntax = Syntax::default().module();
                             let root = parse(code, 0, syntax).syntax();
                             b.iter(|| {
                                 criterion::black_box(run_format(&root));
@@ -114,10 +120,9 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     //warmup
                     match feature {
                         FeatureToBenchmark::Parser => {
-                            run_parse(code);
+                            run_parse(code, syntax);
                         }
                         FeatureToBenchmark::Formatter => {
-                            let syntax = Syntax::default().module();
                             let root = parse(code, 0, syntax).syntax();
                             run_format(&root);
                         }
@@ -125,9 +130,8 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                 }
 
                 let result = match feature {
-                    FeatureToBenchmark::Parser => benchmark_parse_lib(&id, code),
+                    FeatureToBenchmark::Parser => benchmark_parse_lib(&id, code, syntax),
                     FeatureToBenchmark::Formatter => {
-                        let syntax = Syntax::default().module();
                         let root = parse(code, 0, syntax).syntax();
                         benchmark_format_lib(&id, &root)
                     }

@@ -787,6 +787,10 @@ JsComputedMemberAssignment =
 	member: JsAnyExpression
 	']'
 
+TsNonNullAssertionAssignment =
+	assignment: JsAnyAssignment
+	'!'
+
 JsAnyAssignmentPattern =
 	JsAnyAssignment
 	| JsArrayAssignmentPattern

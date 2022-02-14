@@ -4154,6 +4154,25 @@ impl TsNeverType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsNonNullAssertionAssignment {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsNonNullAssertionAssignment {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNonNullAssertionExpression {
     pub(crate) syntax: SyntaxNode,
 }
@@ -11535,6 +11554,31 @@ impl From<TsNeverType> for SyntaxNode {
 impl From<TsNeverType> for SyntaxElement {
     fn from(n: TsNeverType) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsNonNullAssertionAssignment {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NON_NULL_ASSERTION_ASSIGNMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsNonNullAssertionAssignment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsNonNullAssertionAssignment")
+            .field("assignment", &support::DebugSyntaxResult(self.assignment()))
+            .field("excl_token", &support::DebugSyntaxResult(self.excl_token()))
+            .finish()
+    }
+}
+impl From<TsNonNullAssertionAssignment> for SyntaxNode {
+    fn from(n: TsNonNullAssertionAssignment) -> SyntaxNode { n.syntax }
+}
+impl From<TsNonNullAssertionAssignment> for SyntaxElement {
+    fn from(n: TsNonNullAssertionAssignment) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsNonNullAssertionExpression {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NON_NULL_ASSERTION_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -18730,6 +18774,11 @@ impl std::fmt::Display for TsNeverType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsNonNullAssertionAssignment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsNonNullAssertionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -21392,6 +21441,10 @@ impl Debug for DebugSyntaxElement {
                     std::fmt::Debug::fmt(&TsNamedTupleTypeElement::cast(node.clone()).unwrap(), f)
                 }
                 TS_NEVER_TYPE => std::fmt::Debug::fmt(&TsNeverType::cast(node.clone()).unwrap(), f),
+                TS_NON_NULL_ASSERTION_ASSIGNMENT => std::fmt::Debug::fmt(
+                    &TsNonNullAssertionAssignment::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_NON_NULL_ASSERTION_EXPRESSION => std::fmt::Debug::fmt(
                     &TsNonNullAssertionExpression::cast(node.clone()).unwrap(),
                     f,

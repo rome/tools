@@ -31,6 +31,12 @@ use crate::{JsSyntaxKind::*, *};
 // a?.["b"] = b;
 // (a +) = b;
 
+// test ts ts_non_null_assignment
+// let a;
+// a! &= 2;
+// let b = { a: null };
+// b.a! &= 5
+
 /// Converts the passed in lhs expression to an assignment pattern
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
 pub(crate) fn expression_to_assignment_pattern(
@@ -314,6 +320,7 @@ fn try_expression_to_assignment(
             | JS_STATIC_MEMBER_EXPRESSION
             | JS_COMPUTED_MEMBER_EXPRESSION
             | JS_IDENTIFIER_EXPRESSION
+            | TS_NON_NULL_ASSERTION_EXPRESSION
     ) {
         return Err(checkpoint);
     }
@@ -378,6 +385,7 @@ impl RewriteParseEvents for ReparseAssignment {
                 JS_COMPUTED_MEMBER_ASSIGNMENT
             }
             JS_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT,
+            TS_NON_NULL_ASSERTION_EXPRESSION => TS_NON_NULL_ASSERTION_ASSIGNMENT,
             JS_REFERENCE_IDENTIFIER => {
                 self.parents.push((kind, None)); // Omit reference identifiers
                 return;

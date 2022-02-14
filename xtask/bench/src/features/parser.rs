@@ -1,6 +1,7 @@
 use crate::BenchmarkSummary;
 use itertools::Itertools;
-use rslint_errors::Diagnostic;
+use rslint_errors::file::SimpleFile;
+use rslint_errors::{Diagnostic, Emitter, Severity};
 use rslint_parser::ast::JsAnyRoot;
 use rslint_parser::{Parse, Syntax};
 use std::fmt::{Display, Formatter};
@@ -10,6 +11,7 @@ use std::time::Duration;
 #[derive(Debug, Clone)]
 pub struct ParseMeasurement {
     id: String,
+    code: String,
     tokenization: Duration,
     parsing: Duration,
     tree_sink: Duration,
@@ -47,7 +49,7 @@ fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
 
     current
 }
-pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkSummary {
+pub fn benchmark_parse_lib(id: &str, code: &str, syntax: Syntax) -> BenchmarkSummary {
     #[cfg(feature = "dhat-on")]
     println!("Start");
     #[cfg(feature = "dhat-on")]
@@ -65,8 +67,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkSummary {
 
     let parser_timer = timing::start();
     let (events, parsing_diags, tokens) = {
-        let mut parser =
-            rslint_parser::Parser::new(tok_source, 0, rslint_parser::Syntax::default().script());
+        let mut parser = rslint_parser::Parser::new(tok_source, 0, syntax);
         rslint_parser::syntax::program::parse(&mut parser);
         let (events, parsing_diags) = parser.finish();
         (events, parsing_diags, tokens)
@@ -90,8 +91,10 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkSummary {
     print_diff(stats, dhat::get_stats().unwrap());
 
     diagnostics.extend(sink_diags);
+
     BenchmarkSummary::Parser(ParseMeasurement {
         id: id.to_string(),
+        code: code.to_string(),
         tokenization: tokenization_duration,
         parsing: parse_duration,
         tree_sink: tree_sink_duration,
@@ -99,8 +102,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkSummary {
     })
 }
 
-pub fn run_parse(code: &str) -> Parse<JsAnyRoot> {
-    let syntax = Syntax::default().module();
+pub fn run_parse(code: &str, syntax: Syntax) -> Parse<JsAnyRoot> {
     rslint_parser::parse(code, 0, syntax)
 }
 
@@ -130,9 +132,21 @@ impl Display for ParseMeasurement {
         let _ = writeln!(f, "\tTotal:        {:>10?}", self.total());
 
         let _ = writeln!(f, "\tDiagnostics");
+
         let diagnostics = &self.diagnostics.iter().group_by(|x| x.severity);
         for (severity, items) in diagnostics {
             let _ = writeln!(f, "\t\t{:?}: {}", severity, items.count());
+        }
+
+        let file = SimpleFile::new(self.id.to_string(), self.code.clone());
+        let mut emitter = Emitter::new(&file);
+
+        for diagnostic in self
+            .diagnostics
+            .iter()
+            .filter(|diag| diag.severity == Severity::Error)
+        {
+            emitter.emit_stderr(diagnostic, true).unwrap();
         }
 
         Ok(())

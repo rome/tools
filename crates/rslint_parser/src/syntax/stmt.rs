@@ -14,8 +14,9 @@ use crate::state::{
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
 use crate::syntax::expr::{
-    is_at_expression, is_at_identifier, parse_assignment_expression_or_higher,
-    parse_expression_or_recover_to_next_statement, parse_identifier, ExpressionContext,
+    is_at_expression, is_at_identifier, is_nth_at_identifier,
+    parse_assignment_expression_or_higher, parse_expression_or_recover_to_next_statement,
+    parse_identifier, ExpressionContext,
 };
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
@@ -235,8 +236,17 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] if !p.has_linebreak_before_n(1) => {
             if is_at_async_function(p, LineBreak::DoNotCheck) {
                 parse_function_declaration(p, context)
-            } else if is_at_contextual_keyword(p, "type") && p.typescript() {
-                parse_ts_type_alias_declaration(p)
+            } else if is_at_contextual_keyword(p, "type") && is_nth_at_identifier(p, 1) {
+                // test ts ts_type_variable
+                // let type;
+                // type = getFlowTypeInConstructor(symbol, getDeclaringConstructor(symbol)!);
+                TypeScript.parse_exclusive_syntax(
+                    p,
+                    parse_ts_type_alias_declaration,
+                    |p, type_alias| {
+                        ts_only_syntax_error(p, "type alias", type_alias.range(p).as_range())
+                    },
+                )
             } else if is_at_ts_interface_declaration(p) {
                 TypeScript.parse_exclusive_syntax(
                     p,
