@@ -38,6 +38,7 @@ use std::ops::Range;
 
 use super::function::LineBreak;
 use super::typescript::ts_parse_error;
+use super::util::eat_contextual_keyword;
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
     p: &Parser,
@@ -492,7 +493,7 @@ fn parse_class_member_impl(
                 .primary(async_range, "");
 
             p.error(err);
-            parse_class_member_name_with_modifiers(p, &modifiers).unwrap();
+            parse_class_member_name(p, &modifiers).unwrap();
             parse_constructor_class_member_body(p, member_marker, modifiers)
         } else {
             parse_method_class_member(p, member_marker, modifiers, flags)
@@ -500,7 +501,7 @@ fn parse_class_member_impl(
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);
-    let member_name = parse_class_member_name_with_modifiers(p, &modifiers)
+    let member_name = parse_class_member_name(p, &modifiers)
         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
     if is_at_method_class_member(p, 0) {
@@ -640,7 +641,7 @@ fn parse_class_member_impl(
                     }
 
                     // So we've seen a get that now must be followed by a getter/setter name
-                    parse_class_member_name_with_modifiers(p, &modifiers)
+                    parse_class_member_name(p, &modifiers)
                         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
                     // test_err ts ts_getter_setter_type_parameters
@@ -978,7 +979,7 @@ fn parse_method_class_member(
         p.error(err);
     }
 
-    parse_class_member_name_with_modifiers(p, &modifiers)
+    parse_class_member_name(p, &modifiers)
         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
     parse_everything_after_identifier(p, m, modifiers, flags)
 }
@@ -1222,18 +1223,7 @@ fn is_at_class_member_name(p: &Parser, offset: usize) -> bool {
 }
 
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
-fn parse_class_member_name(p: &mut Parser) -> ParsedSyntax {
-    match p.cur() {
-        T![#] => parse_private_class_member_name(p, &ClassMemberModifiers::default()),
-        T!['['] => parse_computed_member_name(p),
-        _ => parse_literal_member_name(p),
-    }
-}
-
-fn parse_class_member_name_with_modifiers(
-    p: &mut Parser,
-    modifiers: &ClassMemberModifiers,
-) -> ParsedSyntax {
+fn parse_class_member_name(p: &mut Parser, modifiers: &ClassMemberModifiers) -> ParsedSyntax {
     match p.cur() {
         T![#] => parse_private_class_member_name(p, modifiers),
         T!['['] => parse_computed_member_name(p),
