@@ -1,0 +1,293 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassDeclaration {
+            abstract_token: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")],
+            class_token: CLASS_KW@9..15 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@15..31 "AbstractMembers" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@31..32 "{" [] [],
+            members: JsClassMemberList [
+                JsUnknownMember {
+                    items: [
+                        ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        JsLiteralMemberName {
+                            value: IDENT@46..57 "constructor" [] [],
+                        },
+                        JsConstructorParameters {
+                            l_paren_token: L_PAREN@57..58 "(" [] [],
+                            parameters: JsConstructorParameterList [],
+                            r_paren_token: R_PAREN@58..60 ")" [] [Whitespace(" ")],
+                        },
+                        JsFunctionBody {
+                            l_curly_token: L_CURLY@60..62 "{" [] [Whitespace(" ")],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@62..63 "}" [] [],
+                        },
+                    ],
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: ABSTRACT_KW@63..77 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@77..84 "display" [] [],
+                    },
+                    question_mark_token: missing (required),
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@84..85 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@85..86 ")" [] [],
+                    },
+                    return_type_annotation: TsReturnTypeAnnotation {
+                        colon_token: COLON@86..88 ":" [] [Whitespace(" ")],
+                        ty: TsVoidType {
+                            void_token: VOID_KW@88..93 "void" [] [Whitespace(" ")],
+                        },
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@93..95 "{" [] [Whitespace(" ")],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@95..96 "}" [] [],
+                    },
+                },
+                JsGetterClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: ABSTRACT_KW@96..110 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                    get_token: GET_KW@110..114 "get" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@114..121 "my_name" [] [],
+                    },
+                    l_paren_token: L_PAREN@121..122 "(" [] [],
+                    r_paren_token: R_PAREN@122..124 ")" [] [Whitespace(" ")],
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@124..126 "{" [] [Whitespace(" ")],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@126..127 "}" [] [],
+                    },
+                },
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: ABSTRACT_KW@127..141 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                    set_token: SET_KW@141..145 "set" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@145..152 "my_name" [] [],
+                    },
+                    l_paren_token: L_PAREN@152..153 "(" [] [],
+                    parameter: JsFormalParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@153..157 "name" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@157..159 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@159..161 "{" [] [Whitespace(" ")],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@161..162 "}" [] [],
+                    },
+                },
+                JsUnknownMember {
+                    items: [
+                        ABSTRACT_KW@162..176 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        JsUnknownMember {
+                            items: [
+                                HASH@176..177 "#" [] [],
+                                IDENT@177..189 "private_name" [] [],
+                            ],
+                        },
+                        JsParameters {
+                            l_paren_token: L_PAREN@189..190 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@190..192 ")" [] [Whitespace(" ")],
+                        },
+                        JsFunctionBody {
+                            l_curly_token: L_CURLY@192..194 "{" [] [Whitespace(" ")],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@194..195 "}" [] [],
+                        },
+                    ],
+                },
+            ],
+            r_curly_token: R_CURLY@195..197 "}" [Newline("\n")] [],
+        },
+    ],
+    eof_token: EOF@197..198 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..198
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..197
+    0: JS_CLASS_DECLARATION@0..197
+      0: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
+      1: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@15..31
+        0: IDENT@15..31 "AbstractMembers" [] [Whitespace(" ")]
+      3: (empty)
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@31..32 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@32..195
+        0: JS_UNKNOWN_MEMBER@32..63
+          0: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@46..57
+            0: IDENT@46..57 "constructor" [] []
+          2: JS_CONSTRUCTOR_PARAMETERS@57..60
+            0: L_PAREN@57..58 "(" [] []
+            1: JS_CONSTRUCTOR_PARAMETER_LIST@58..58
+            2: R_PAREN@58..60 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@60..63
+            0: L_CURLY@60..62 "{" [] [Whitespace(" ")]
+            1: JS_DIRECTIVE_LIST@62..62
+            2: JS_STATEMENT_LIST@62..62
+            3: R_CURLY@62..63 "}" [] []
+        1: JS_METHOD_CLASS_MEMBER@63..96
+          0: (empty)
+          1: (empty)
+          2: ABSTRACT_KW@63..77 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          3: (empty)
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@77..84
+            0: IDENT@77..84 "display" [] []
+          6: (empty)
+          7: (empty)
+          8: JS_PARAMETERS@84..86
+            0: L_PAREN@84..85 "(" [] []
+            1: JS_PARAMETER_LIST@85..85
+            2: R_PAREN@85..86 ")" [] []
+          9: TS_RETURN_TYPE_ANNOTATION@86..93
+            0: COLON@86..88 ":" [] [Whitespace(" ")]
+            1: TS_VOID_TYPE@88..93
+              0: VOID_KW@88..93 "void" [] [Whitespace(" ")]
+          10: JS_FUNCTION_BODY@93..96
+            0: L_CURLY@93..95 "{" [] [Whitespace(" ")]
+            1: JS_DIRECTIVE_LIST@95..95
+            2: JS_STATEMENT_LIST@95..95
+            3: R_CURLY@95..96 "}" [] []
+        2: JS_GETTER_CLASS_MEMBER@96..127
+          0: (empty)
+          1: (empty)
+          2: ABSTRACT_KW@96..110 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          3: GET_KW@110..114 "get" [] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@114..121
+            0: IDENT@114..121 "my_name" [] []
+          5: L_PAREN@121..122 "(" [] []
+          6: R_PAREN@122..124 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@124..127
+            0: L_CURLY@124..126 "{" [] [Whitespace(" ")]
+            1: JS_DIRECTIVE_LIST@126..126
+            2: JS_STATEMENT_LIST@126..126
+            3: R_CURLY@126..127 "}" [] []
+        3: JS_SETTER_CLASS_MEMBER@127..162
+          0: (empty)
+          1: (empty)
+          2: ABSTRACT_KW@127..141 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          3: SET_KW@141..145 "set" [] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@145..152
+            0: IDENT@145..152 "my_name" [] []
+          5: L_PAREN@152..153 "(" [] []
+          6: JS_FORMAL_PARAMETER@153..157
+            0: JS_IDENTIFIER_BINDING@153..157
+              0: IDENT@153..157 "name" [] []
+            1: (empty)
+            2: (empty)
+            3: (empty)
+          7: R_PAREN@157..159 ")" [] [Whitespace(" ")]
+          8: JS_FUNCTION_BODY@159..162
+            0: L_CURLY@159..161 "{" [] [Whitespace(" ")]
+            1: JS_DIRECTIVE_LIST@161..161
+            2: JS_STATEMENT_LIST@161..161
+            3: R_CURLY@161..162 "}" [] []
+        4: JS_UNKNOWN_MEMBER@162..195
+          0: ABSTRACT_KW@162..176 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          1: JS_UNKNOWN_MEMBER@176..189
+            0: HASH@176..177 "#" [] []
+            1: IDENT@177..189 "private_name" [] []
+          2: JS_PARAMETERS@189..192
+            0: L_PAREN@189..190 "(" [] []
+            1: JS_PARAMETER_LIST@190..190
+            2: R_PAREN@190..192 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@192..195
+            0: L_CURLY@192..194 "{" [] [Whitespace(" ")]
+            1: JS_DIRECTIVE_LIST@194..194
+            2: JS_STATEMENT_LIST@194..194
+            3: R_CURLY@194..195 "}" [] []
+      8: R_CURLY@195..197 "}" [Newline("\n")] []
+  3: EOF@197..198 "" [Newline("\n")] []
+--
+error[SyntaxError]: constructors cannot be `abstract`
+  ┌─ typescript_abstract_class_member_should_not_have_body.ts:2:5
+  │
+2 │     abstract constructor() { }
+  │     ^^^^^^^^
+
+--
+error[SyntaxError]: abstract members should not have a body
+  ┌─ typescript_abstract_class_member_should_not_have_body.ts:2:28
+  │
+2 │     abstract constructor() { }
+  │                            ^^^
+
+--
+error[SyntaxError]: abstract members should not have a body
+  ┌─ typescript_abstract_class_member_should_not_have_body.ts:3:30
+  │
+3 │     abstract display(): void { }
+  │                              ^^^
+
+--
+error[SyntaxError]: abstract members should not have a body
+  ┌─ typescript_abstract_class_member_should_not_have_body.ts:4:28
+  │
+4 │     abstract get my_name() { }
+  │                            ^^^
+
+--
+error[SyntaxError]: abstract members should not have a body
+  ┌─ typescript_abstract_class_member_should_not_have_body.ts:5:32
+  │
+5 │     abstract set my_name(name) { }
+  │                                ^^^
+
+--
+error[SyntaxError]: members with private name cannot be abstract
+  ┌─ typescript_abstract_class_member_should_not_have_body.ts:6:5
+  │
+6 │     abstract #private_name() { }
+  │     ^^^^^^^^
+
+--
+error[SyntaxError]: abstract members should not have a body
+  ┌─ typescript_abstract_class_member_should_not_have_body.ts:6:30
+  │
+6 │     abstract #private_name() { }
+  │                              ^^^
+
+--
+abstract class AbstractMembers {
+    abstract constructor() { }
+    abstract display(): void { }
+    abstract get my_name() { }
+    abstract set my_name(name) { }
+    abstract #private_name() { }
+}
