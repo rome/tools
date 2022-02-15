@@ -788,6 +788,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::TsExportAssignmentClause::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_EXPORT_DECLARE_CLAUSE => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsExportDeclareClause::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_EXTENDS_CLAUSE => {
                     let $pattern = unsafe { $crate::ast::TsExtendsClause::new_unchecked(node) };
                     $body

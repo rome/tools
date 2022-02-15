@@ -1239,6 +1239,7 @@ JsAnyExportClause =
 	| JsAnyDeclarationClause
 	| TsExportAsNamespaceClause
 	| TsExportAssignmentClause
+	| TsExportDeclareClause
 
 
 // export default a;
@@ -1362,6 +1363,12 @@ TsExportAssignmentClause =
 	'='
 	name: TsAnyName
 	';'?
+
+// export declare class A {}
+//        ^^^^^^^^^^^^^^^^^^
+TsExportDeclareClause =
+	'declare'
+	declaration: JsAnyDeclarationClause
 
 ///////////////
 // AUXILIARY

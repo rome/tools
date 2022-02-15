@@ -14,6 +14,7 @@ impl ToFormatElement for JsAnyExportClause {
             Self::JsAnyDeclarationClause(node) => node.to_format_element(formatter),
             Self::TsExportAsNamespaceClause(node) => node.to_format_element(formatter),
             Self::TsExportAssignmentClause(node) => node.to_format_element(formatter),
+            Self::TsExportDeclareClause(node) => node.to_format_element(formatter),
         }
     }
 }

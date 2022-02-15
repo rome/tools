@@ -356,6 +356,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JS_EXPORT_AS_CLAUSE",
         "TS_EXPORT_AS_NAMESPACE_CLAUSE",
         "TS_EXPORT_ASSIGNMENT_CLAUSE",
+        "TS_EXPORT_DECLARE_CLAUSE",
         "JS_LITERAL_EXPORT_NAME",
         "JS_AWAIT_EXPRESSION",
         // TypeScript

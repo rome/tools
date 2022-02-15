@@ -188,6 +188,21 @@ pub(crate) fn expected_property_or_signature(p: &Parser, range: Range<usize>) ->
     expected_any(&["property", "signature"], range).to_diagnostic(p)
 }
 
+pub(crate) fn expected_declaration(p: &Parser, range: Range<usize>) -> Diagnostic {
+    expected_any(
+        &[
+            "function",
+            "class",
+            "variable declaration",
+            "interface",
+            "enum",
+            "type alias",
+        ],
+        range,
+    )
+    .to_diagnostic(p)
+}
+
 pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: impl Span) -> Diagnostic {
     p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax))
 		.primary(range, "TypeScript only syntax")

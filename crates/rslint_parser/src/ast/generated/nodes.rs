@@ -3597,6 +3597,25 @@ impl TsExportAssignmentClause {
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsExportDeclareClause {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsExportDeclareClause {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn declaration(&self) -> SyntaxResult<JsAnyDeclarationClause> {
+        support::required_node(&self.syntax, 1usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExtendsClause {
     pub(crate) syntax: SyntaxNode,
 }
@@ -5115,6 +5134,7 @@ pub enum JsAnyExportClause {
     JsExportNamedFromClause(JsExportNamedFromClause),
     TsExportAsNamespaceClause(TsExportAsNamespaceClause),
     TsExportAssignmentClause(TsExportAssignmentClause),
+    TsExportDeclareClause(TsExportDeclareClause),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExportNamedSpecifier {
@@ -10753,6 +10773,37 @@ impl From<TsExportAssignmentClause> for SyntaxNode {
 impl From<TsExportAssignmentClause> for SyntaxElement {
     fn from(n: TsExportAssignmentClause) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsExportDeclareClause {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXPORT_DECLARE_CLAUSE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsExportDeclareClause {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsExportDeclareClause")
+            .field(
+                "declare_token",
+                &support::DebugSyntaxResult(self.declare_token()),
+            )
+            .field(
+                "declaration",
+                &support::DebugSyntaxResult(self.declaration()),
+            )
+            .finish()
+    }
+}
+impl From<TsExportDeclareClause> for SyntaxNode {
+    fn from(n: TsExportDeclareClause) -> SyntaxNode { n.syntax }
+}
+impl From<TsExportDeclareClause> for SyntaxElement {
+    fn from(n: TsExportDeclareClause) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsExtendsClause {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTENDS_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -14243,6 +14294,11 @@ impl From<TsExportAssignmentClause> for JsAnyExportClause {
         JsAnyExportClause::TsExportAssignmentClause(node)
     }
 }
+impl From<TsExportDeclareClause> for JsAnyExportClause {
+    fn from(node: TsExportDeclareClause) -> JsAnyExportClause {
+        JsAnyExportClause::TsExportDeclareClause(node)
+    }
+}
 impl AstNode for JsAnyExportClause {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         match kind {
@@ -14253,7 +14309,8 @@ impl AstNode for JsAnyExportClause {
             | JS_EXPORT_NAMED_CLAUSE
             | JS_EXPORT_NAMED_FROM_CLAUSE
             | TS_EXPORT_AS_NAMESPACE_CLAUSE
-            | TS_EXPORT_ASSIGNMENT_CLAUSE => true,
+            | TS_EXPORT_ASSIGNMENT_CLAUSE
+            | TS_EXPORT_DECLARE_CLAUSE => true,
             k if JsAnyDeclarationClause::can_cast(k) => true,
             _ => false,
         }
@@ -14288,6 +14345,9 @@ impl AstNode for JsAnyExportClause {
             TS_EXPORT_ASSIGNMENT_CLAUSE => {
                 JsAnyExportClause::TsExportAssignmentClause(TsExportAssignmentClause { syntax })
             }
+            TS_EXPORT_DECLARE_CLAUSE => {
+                JsAnyExportClause::TsExportDeclareClause(TsExportDeclareClause { syntax })
+            }
             _ => {
                 if let Some(js_any_declaration_clause) = JsAnyDeclarationClause::cast(syntax) {
                     return Some(JsAnyExportClause::JsAnyDeclarationClause(
@@ -14309,6 +14369,7 @@ impl AstNode for JsAnyExportClause {
             JsAnyExportClause::JsExportNamedFromClause(it) => &it.syntax,
             JsAnyExportClause::TsExportAsNamespaceClause(it) => &it.syntax,
             JsAnyExportClause::TsExportAssignmentClause(it) => &it.syntax,
+            JsAnyExportClause::TsExportDeclareClause(it) => &it.syntax,
             JsAnyExportClause::JsAnyDeclarationClause(it) => it.syntax(),
         }
     }
@@ -14325,6 +14386,7 @@ impl std::fmt::Debug for JsAnyExportClause {
             JsAnyExportClause::JsExportNamedFromClause(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExportClause::TsExportAsNamespaceClause(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExportClause::TsExportAssignmentClause(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExportClause::TsExportDeclareClause(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -14340,6 +14402,7 @@ impl From<JsAnyExportClause> for SyntaxNode {
             JsAnyExportClause::JsExportNamedFromClause(it) => it.into(),
             JsAnyExportClause::TsExportAsNamespaceClause(it) => it.into(),
             JsAnyExportClause::TsExportAssignmentClause(it) => it.into(),
+            JsAnyExportClause::TsExportDeclareClause(it) => it.into(),
         }
     }
 }
@@ -18796,6 +18859,11 @@ impl std::fmt::Display for TsExportAssignmentClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsExportDeclareClause {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsExtendsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -21516,6 +21584,9 @@ impl Debug for DebugSyntaxElement {
                 }
                 TS_EXPORT_ASSIGNMENT_CLAUSE => {
                     std::fmt::Debug::fmt(&TsExportAssignmentClause::cast(node.clone()).unwrap(), f)
+                }
+                TS_EXPORT_DECLARE_CLAUSE => {
+                    std::fmt::Debug::fmt(&TsExportDeclareClause::cast(node.clone()).unwrap(), f)
                 }
                 TS_EXTENDS_CLAUSE => {
                     std::fmt::Debug::fmt(&TsExtendsClause::cast(node.clone()).unwrap(), f)

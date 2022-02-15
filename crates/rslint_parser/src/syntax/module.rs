@@ -1,4 +1,5 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
+use crate::state::EnterAmbientContext;
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_export_default_class_case;
 use crate::syntax::expr::{
@@ -7,7 +8,7 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::parse_export_default_function_case;
 use crate::syntax::js_parse_error::{
-    duplicate_assertion_keys_error, expected_binding, expected_export_clause,
+    duplicate_assertion_keys_error, expected_binding, expected_declaration, expected_export_clause,
     expected_export_name_specifier, expected_expression, expected_identifier,
     expected_literal_export_name, expected_local_name_for_default_import, expected_module_source,
     expected_named_import, expected_named_import_specifier, expected_statement,
@@ -521,6 +522,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
 
         // test ts ts_export_interface_declaration
         // export interface A {}
+
         parse_declaration_clause(p, stmt_start)
     } else {
         match p.cur() {
@@ -541,6 +543,13 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
                     p,
                     parse_ts_export_namespace_clause,
                     |p, clause| ts_only_syntax_error(p, "'export as namespace'", clause.range(p)),
+                )
+            }
+            T![ident] if is_at_contextual_keyword(p, "declare") && !p.has_linebreak_before_n(1) => {
+                TypeScript.parse_exclusive_syntax(
+                    p,
+                    |p| parse_ts_export_declare_clause(p, stmt_start),
+                    |p, clause| ts_only_syntax_error(p, "'export declare'", clause.range(p)),
                 )
             }
             _ if is_nth_at_contextual_keyword(p, 1, "from") => parse_export_from_clause(p),
@@ -1036,6 +1045,27 @@ fn parse_ts_export_assignment_clause(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
     semi(p, start_pos..p.cur_tok().end());
     Present(m.complete(p, TS_EXPORT_ASSIGNMENT_CLAUSE))
+}
+
+// test ts ts_export_declare
+// export declare const a: string;
+// export declare interface A {}
+// export declare enum B {}
+// export declare type C = string;
+// export declare class D {}
+// export declare function e()
+fn parse_ts_export_declare_clause(p: &mut Parser, stmt_start: usize) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "declare") {
+        return Absent;
+    }
+
+    let m = p.start();
+    expect_contextual_keyword(p, "declare", T![declare]);
+    p.with_state(EnterAmbientContext, |p| {
+        parse_declaration_clause(p, stmt_start).or_add_diagnostic(p, expected_declaration)
+    });
+
+    Present(m.complete(p, TS_EXPORT_DECLARE_CLAUSE))
 }
 
 fn is_nth_at_literal_export_name(p: &Parser, n: usize) -> bool {
