@@ -5,6 +5,7 @@ JsModule {
         JsExport {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
+                type_token: missing (optional),
                 l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
                 specifiers: JsExportNamedSpecifierList [
                     JsExportNamedSpecifier {
@@ -31,23 +32,24 @@ JsModule {
     0: JS_EXPORT@0..15
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       1: JS_EXPORT_NAMED_CLAUSE@7..15
-        0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
-        1: JS_EXPORT_NAMED_SPECIFIER_LIST@9..14
+        0: (empty)
+        1: L_CURLY@7..9 "{" [] [Whitespace(" ")]
+        2: JS_EXPORT_NAMED_SPECIFIER_LIST@9..14
           0: JS_EXPORT_NAMED_SPECIFIER@9..14
             0: (empty)
             1: (empty)
             2: AS_KW@9..12 "as" [] [Whitespace(" ")]
             3: JS_LITERAL_EXPORT_NAME@12..14
               0: IDENT@12..14 "c" [] [Whitespace(" ")]
-        2: R_CURLY@14..15 "}" [] []
-        3: (empty)
+        3: R_CURLY@14..15 "}" [] []
+        4: (empty)
   3: EOF@15..16 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a string literal, or an identifier but instead found 'as'
+error[SyntaxError]: expected an identifier but instead found ''
   ┌─ export_as_identifier_err.js:1:10
   │
 1 │ export { as c }
-  │          ^^ Expected a string literal, or an identifier here
+  │          ^ Expected an identifier here
 
 --
 export { as c }

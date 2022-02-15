@@ -1,0 +1,42 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExport {
+            export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
+            export_clause: TsTypeAliasDeclaration {
+                type_token: TYPE_KW@7..11 "type" [] [],
+                binding_identifier: missing (required),
+                type_parameters: missing (optional),
+                eq_token: missing (required),
+                ty: missing (required),
+                semicolon_token: missing (optional),
+            },
+        },
+    ],
+    eof_token: EOF@11..12 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..12
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..11
+    0: JS_EXPORT@0..11
+      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      1: TS_TYPE_ALIAS_DECLARATION@7..11
+        0: TYPE_KW@7..11 "type" [] []
+        1: (empty)
+        2: (empty)
+        3: (empty)
+        4: (empty)
+        5: (empty)
+  3: EOF@11..12 "" [Newline("\n")] []
+--
+error[SyntaxError]: expected an identifier but instead found ''
+  ┌─ ts_export_type.ts:2:1
+  │
+2 │ 
+  │ ^ Expected an identifier here
+
+--
+export type

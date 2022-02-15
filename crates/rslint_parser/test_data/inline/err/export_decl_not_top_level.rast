@@ -9,6 +9,7 @@ JsModule {
                     items: [
                         EXPORT_KW@1..10 "export" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                         JsExportNamedFromClause {
+                            type_token: missing (optional),
                             l_curly_token: L_CURLY@10..12 "{" [] [Whitespace(" ")],
                             specifiers: JsExportNamedFromSpecifierList [
                                 JsExportNamedFromSpecifier {
@@ -46,19 +47,20 @@ JsModule {
         0: JS_UNKNOWN_STATEMENT@1..31
           0: EXPORT_KW@1..10 "export" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           1: JS_EXPORT_NAMED_FROM_CLAUSE@10..31
-            0: L_CURLY@10..12 "{" [] [Whitespace(" ")]
-            1: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@12..17
+            0: (empty)
+            1: L_CURLY@10..12 "{" [] [Whitespace(" ")]
+            2: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@12..17
               0: JS_EXPORT_NAMED_FROM_SPECIFIER@12..17
                 0: (empty)
                 1: JS_LITERAL_EXPORT_NAME@12..17
                   0: IDENT@12..17 "pain" [] [Whitespace(" ")]
                 2: (empty)
-            2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
-            3: FROM_KW@19..24 "from" [] [Whitespace(" ")]
-            4: JS_MODULE_SOURCE@24..30
+            3: R_CURLY@17..19 "}" [] [Whitespace(" ")]
+            4: FROM_KW@19..24 "from" [] [Whitespace(" ")]
+            5: JS_MODULE_SOURCE@24..30
               0: JS_STRING_LITERAL@24..30 "\"life\"" [] []
-            5: (empty)
-            6: SEMICOLON@30..31 ";" [] []
+            6: (empty)
+            7: SEMICOLON@30..31 ";" [] []
       2: R_CURLY@31..33 "}" [Newline("\n")] []
   3: EOF@33..34 "" [Newline("\n")] []
 --
