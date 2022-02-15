@@ -120,9 +120,9 @@ pub fn format_call_expression(
     flatten_call_expression(&mut flattened_expression, syntax_node.to_owned(), formatter)?;
 
     let (first_group, rest_of_flatten_items) = compute_first_group(&flattened_expression)?;
-    let rest_of_groups = compute_groups(&rest_of_flatten_items)?;
+    let rest_of_groups = compute_groups(rest_of_flatten_items)?;
 
-    Ok(format_groups(&first_group, rest_of_groups))
+    Ok(format_groups(first_group, rest_of_groups))
 }
 
 /// Computes the first group by keeping track of the index where to split the given flatten_items
