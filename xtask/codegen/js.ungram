@@ -1237,6 +1237,8 @@ JsAnyExportClause =
 	| JsExportFromClause
 	| JsExportNamedFromClause
 	| JsAnyDeclarationClause
+	| TsExportAsNamespaceClause
+	| TsExportAssignmentClause
 
 
 // export default a;
@@ -1276,10 +1278,11 @@ JsExportDefaultFunctionClause =
 // export { myFunction as default };
 // export { myFunction, myVariable };
 JsExportNamedClause =
-    '{'
-    specifiers: JsExportNamedSpecifierList
-    '}'
-    ';'?
+	'type'?
+	'{'
+	specifiers: JsExportNamedSpecifierList
+	'}'
+	';'?
 
 JsExportNamedSpecifierList = (JsAnyExportNamedSpecifier (',' JsAnyExportNamedSpecifier)* ','?)
 
@@ -1316,13 +1319,14 @@ JsExportFromClause =
 // export { type default as C } from "a";
 // export { type default } from "a";
 JsExportNamedFromClause =
-    '{'
-    specifiers: JsExportNamedFromSpecifierList
-    '}'
-    'from'
-    source: JsModuleSource
-    assertion: JsImportAssertion?
-    ';'?
+	'type'?
+	'{'
+	specifiers: JsExportNamedFromSpecifierList
+	'}'
+	'from'
+	source: JsModuleSource
+	assertion: JsImportAssertion?
+	';'?
 
 JsExportNamedFromSpecifierList = (JsExportNamedFromSpecifier (',' JsExportNamedFromSpecifier)* ','?)
 
@@ -1341,6 +1345,23 @@ JsExportNamedFromSpecifier =
 JsExportAsClause =
     'as'
     exported_name: JsLiteralExportName
+
+// export as namespace mathLib
+//        ^^^^^^^^^^^^^^^^^^^^
+TsExportAsNamespaceClause =
+	'as'
+	'namespace'
+	name: JsName
+	';'?
+
+// export = a
+//        ^^^
+// export = a.b.c;
+//        ^^^^^^^^
+TsExportAssignmentClause =
+	'='
+	name: TsAnyName
+	';'?
 
 ///////////////
 // AUXILIARY

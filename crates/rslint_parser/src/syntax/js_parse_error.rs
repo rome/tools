@@ -1,6 +1,6 @@
 use crate::parser::{expected_any, expected_node, ToDiagnostic};
 use crate::{CompletedMarker, Parser};
-use rslint_errors::Diagnostic;
+use rslint_errors::{Diagnostic, Span};
 use std::ops::Range;
 
 ///! Provides factory function to create common diagnostics for the JavaScript syntax
@@ -188,7 +188,7 @@ pub(crate) fn expected_property_or_signature(p: &Parser, range: Range<usize>) ->
     expected_any(&["property", "signature"], range).to_diagnostic(p)
 }
 
-pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: Range<usize>) -> Diagnostic {
+pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: impl Span) -> Diagnostic {
     p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax))
 		.primary(range, "TypeScript only syntax")
 }

@@ -3,7 +3,7 @@ use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_export_default_class_case;
 use crate::syntax::expr::{
     is_nth_at_expression, is_nth_at_reference_identifier, parse_assignment_expression_or_higher,
-    parse_reference_identifier, ExpressionContext,
+    parse_name, parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::parse_export_default_function_case;
 use crate::syntax::js_parse_error::{
@@ -11,12 +11,18 @@ use crate::syntax::js_parse_error::{
     expected_export_name_specifier, expected_expression, expected_identifier,
     expected_literal_export_name, expected_local_name_for_default_import, expected_module_source,
     expected_named_import, expected_named_import_specifier, expected_statement,
+    ts_only_syntax_error,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
-use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
+use crate::syntax::typescript::parse_ts_name;
+use crate::syntax::util::{
+    eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
+    is_nth_at_contextual_keyword,
+};
+use crate::JsSyntaxFeature::TypeScript;
 use crate::{
     Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
-    Present,
+    Present, SyntaxFeature,
 };
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
@@ -24,7 +30,6 @@ use std::collections::HashMap;
 use std::ops::Range;
 
 use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
-use super::util::is_nth_at_contextual_keyword;
 
 ///! Implements the parsing logic for ES Module syntax
 
@@ -480,6 +485,15 @@ fn parse_import_assertion_entry(
 
 // test_err export_err
 // export
+//
+// test_err ts_export_syntax_in_js
+// let a, b, c;
+// export type { a };
+// export { type b };
+// export { type c as cc };
+// export type { d } from "./d";
+// export { type e } from "./e";
+// export { type e as ee } from "./e";
 pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![export]) {
         return Absent;
@@ -489,7 +503,9 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.bump(T![export]);
 
-    let clause = if is_nth_at_declaration_clause(p, 0) {
+    let clause = if is_at_contextual_keyword(p, "type") && p.nth_at(1, T!['{']) {
+        parse_export_named_or_named_from_clause(p)
+    } else if is_nth_at_declaration_clause(p, 0) {
         // test export_class_clause
         // export class A {}
         // export class A extends B {}
@@ -502,25 +518,32 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
         // test ts ts_export_enum_declaration
         // export enum A { X, Y }
         // export const enum B { X, Y }
+
+        // test ts ts_export_interface_declaration
+        // export interface A {}
         parse_declaration_clause(p, stmt_start)
     } else {
         match p.cur() {
-            T!['{'] => {
-                let checkpoint = p.checkpoint();
-                match parse_export_named_clause(p) {
-                    Present(_) if p.at(T![ident]) && p.cur_src() == "from" => {
-                        p.rewind(checkpoint);
-                        parse_export_named_from_clause(p)
-                    }
-                    t => t,
-                }
-            }
+            T!['{'] => parse_export_named_or_named_from_clause(p),
             T![default] => parse_export_default_clause(p),
             T![*] => parse_export_from_clause(p),
+            T![=] => TypeScript.parse_exclusive_syntax(
+                p,
+                parse_ts_export_assignment_clause,
+                |p, clause| ts_only_syntax_error(p, "'export ='", clause.range(p)),
+            ),
             T![ident] if is_at_contextual_keyword(p, "from") => parse_export_from_clause(p),
-            // test ts ts_export_interface_declaration
-            // export interface A {}
-            _ if p.nth_at(1, T![ident]) && p.nth_src(1) == "from" => parse_export_from_clause(p),
+            T![ident]
+                if is_at_contextual_keyword(p, "as")
+                    && is_nth_at_contextual_keyword(p, 1, "namespace") =>
+            {
+                TypeScript.parse_exclusive_syntax(
+                    p,
+                    parse_ts_export_namespace_clause,
+                    |p, clause| ts_only_syntax_error(p, "'export as namespace'", clause.range(p)),
+                )
+            }
+            _ if is_nth_at_contextual_keyword(p, 1, "from") => parse_export_from_clause(p),
             _ => Absent,
         }
     };
@@ -528,6 +551,17 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
     clause.or_add_diagnostic(p, expected_export_clause);
 
     Present(m.complete(p, JS_EXPORT))
+}
+
+fn parse_export_named_or_named_from_clause(p: &mut Parser) -> ParsedSyntax {
+    let checkpoint = p.checkpoint();
+    match parse_export_named_clause(p) {
+        Present(_) if is_at_contextual_keyword(p, "from") => {
+            p.rewind(checkpoint);
+            parse_export_named_from_clause(p)
+        }
+        t => t,
+    }
 }
 
 // test export_named_clause
@@ -541,28 +575,44 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
 // export { as b };
 // export { a as 5 };
 // export { a b c };
+//
+// test ts ts_export_type_named
+// type A = string;
+// export type { A };
+//
+// test_err ts ts_export_type
+// export type
 fn parse_export_named_clause(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T!['{']) {
+    if !p.at(T!['{']) && !is_at_contextual_keyword(p, "type") {
         return Absent;
     }
 
     let start = p.cur_tok().range().start;
     let m = p.start();
 
+    let has_type = eat_contextual_keyword(p, "type", T![type]);
     p.bump(T!['{']);
     ExportNamedSpecifierList.parse_list(p);
     p.expect(T!['}']);
 
     semi(p, start..p.cur_tok().range().start);
 
-    Present(m.complete(p, JS_EXPORT_NAMED_CLAUSE))
+    let clause = m.complete(p, JS_EXPORT_NAMED_CLAUSE);
+
+    if has_type {
+        TypeScript.exclusive_syntax(p, clause, |p, clause| {
+            ts_only_syntax_error(p, "'export type' declarations", clause.range(p))
+        })
+    } else {
+        Present(clause)
+    }
 }
 
 struct ExportNamedSpecifierList;
 
 impl ParseSeparatedList for ExportNamedSpecifierList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_export_named_specifier(p).or_else(|| parse_export_named_shorthand_specifier(p))
+        parse_any_export_named_specifier(p)
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -594,36 +644,127 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
     }
 }
 
-fn parse_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
+fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
+    if !is_nth_at_reference_identifier(p, 0) {
+        return Absent;
+    }
+
     let m = p.start();
+
+    let metadata = specifier_metadata(p);
+
+    // test ts ts_export_named_type_specifier
+    // export { type }
+    // export { type type }
+    // export { type as somethingElse }
+    if metadata.is_type {
+        expect_contextual_keyword(p, "type", T![type]);
+    }
+
+    // test_err export_as_identifier_err
+    // export { as c }
+
+    if metadata.is_local_name_missing {
+        p.error(expected_identifier(
+            p,
+            p.cur_tok().start()..p.cur_tok().start(),
+        ));
+    } else {
+        parse_reference_identifier(p).or_add_diagnostic(p, expected_identifier);
+    }
 
     // test export_as_identifier
     // export { as };
     // export { as as as }
     //
-    // test_err export_as_identifier_err
-    // export { as c }
-    if is_nth_at_reference_identifier(p, 0) && p.nth_src(1) == "as" {
-        parse_reference_identifier(p).or_add_diagnostic(p, expected_identifier);
-    } else if p.cur_src() == "as" && is_nth_at_literal_export_name(p, 1) {
-        p.error(expected_literal_export_name(p, p.cur_tok().range()));
+    let specifier = if metadata.has_alias {
+        expect_contextual_keyword(p, "as", T![as]);
+        parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
+
+        m.complete(p, JS_EXPORT_NAMED_SPECIFIER)
     } else {
-        m.abandon(p);
-        return Absent;
+        m.complete(p, JS_EXPORT_NAMED_SHORTHAND_SPECIFIER)
+    };
+
+    if metadata.is_type {
+        TypeScript.exclusive_syntax(p, specifier, |p, specifier| {
+            ts_only_syntax_error(p, "export { type }'", specifier.range(p))
+        })
+    } else {
+        Present(specifier)
     }
-
-    expect_contextual_keyword(p, "as", T![as]);
-    parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
-
-    Present(m.complete(p, JS_EXPORT_NAMED_SPECIFIER))
 }
 
-fn parse_export_named_shorthand_specifier(p: &mut Parser) -> ParsedSyntax {
-    parse_reference_identifier(p).map(|identifier| {
-        identifier
-            .precede(p)
-            .complete(p, JS_EXPORT_NAMED_SHORTHAND_SPECIFIER)
-    })
+#[derive(Default, Debug)]
+struct SpecifierMetadata {
+    // Is this a type export (`export { type test }`) or a regular value export (`export { test }`)
+    is_type: bool,
+    // Is this an aliased export (`export { t as test }`) or not
+    has_alias: bool,
+    // For error recovery in case the local name is missing: `export { as test }`
+    is_local_name_missing: bool,
+}
+
+// test ts ts_export_type_specifier
+// let as;
+// let type;
+// let a;
+// export { type };
+// export { type as as };
+// export { as as as };
+// export { type as as as }
+// export { type type };
+// export { type as };
+// export { type a as aa };
+fn specifier_metadata(p: &Parser) -> SpecifierMetadata {
+    let mut metadata = SpecifierMetadata::default();
+
+    // This may be a typed export, but it could also be the name of the export:
+    // ```ts
+    // { type}              // name: `type`
+    // { type type }        // name: `type`    type-export: `true`
+    // { type as }          // name: `as`      type-export: `true`
+    // { type as as }       // name: `type`    type-export: `false` (aliased to `as`)
+    // { type as as as }    // name: `as`      type-export: `true`, aliased to `as`
+    // ```
+    if is_at_contextual_keyword(p, "type") && is_nth_at_reference_identifier(p, 1) {
+        // `{ type identifier }`
+
+        if is_nth_at_contextual_keyword(p, 1, "as") {
+            // `{ type as ... }`
+
+            if is_nth_at_contextual_keyword(p, 2, "as") {
+                metadata.has_alias = true;
+                // `{ type as as }`: Type can either be an identifier or the type keyword
+
+                if is_nth_at_literal_export_name(p, 3) {
+                    // `{ type as as x }` or `{ type as as "x"}`
+                    metadata.is_type = true;
+                }
+            } else if is_nth_at_literal_export_name(p, 2) {
+                // `{ type as x }` or `{ type as "x" }`
+                metadata.has_alias = true;
+            } else {
+                // `{ type as }`
+                metadata.is_type = true;
+            }
+        } else {
+            // `{ type x }` or `{ type "x" }` or `{ type x as }`
+            metadata.is_type = true;
+            metadata.has_alias = is_nth_at_contextual_keyword(p, 2, "as");
+        }
+    } else if is_at_contextual_keyword(p, "as") && is_nth_at_literal_export_name(p, 1) {
+        metadata.has_alias = true;
+
+        // error recovery case in case someone typed "as x" but forgot the local name.
+        // `{ as x }`
+        metadata.is_local_name_missing = !is_nth_at_contextual_keyword(p, 1, "as");
+    } else if is_nth_at_contextual_keyword(p, 1, "as") {
+        // `{ x as ... }`
+        metadata.has_alias = true;
+    }
+
+    metadata
 }
 
 // test export_from_clause
@@ -639,8 +780,8 @@ fn parse_export_named_shorthand_specifier(p: &mut Parser) -> ParsedSyntax {
 // export from "test";
 fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![*])
-        && !(p.at(T![ident]) && p.cur_src() == "from")
-        && !(p.nth_at(1, T![ident]) && p.nth_src(1) == "from")
+        && !is_at_contextual_keyword(p, "from")
+        && !is_nth_at_contextual_keyword(p, 1, "from")
     {
         return Absent;
     }
@@ -671,13 +812,18 @@ fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
 // export { a as 5 } from "mod";
 // export { a b c } from "mod";
 // export { 5 as b } from "mod";
+//
+// test ts ts_export_type_named_from
+// export type { A } from "a";
 fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T!['{']) {
+    if !p.at(T!['{']) && !is_at_contextual_keyword(p, "type") {
         return Absent;
     }
 
     let start = p.cur_tok().range().start;
     let m = p.start();
+
+    let has_type = eat_contextual_keyword(p, "type", T![type]);
 
     p.bump(T!['{']);
     ExportNamedFromSpecifierList.parse_list(p);
@@ -690,7 +836,15 @@ fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
 
     semi(p, start..p.cur_tok().range().start);
 
-    Present(m.complete(p, JS_EXPORT_NAMED_FROM_CLAUSE))
+    let clause = m.complete(p, JS_EXPORT_NAMED_FROM_CLAUSE);
+
+    if has_type {
+        TypeScript.exclusive_syntax(p, clause, |p, clause| {
+            ts_only_syntax_error(p, "'export type' declarations", clause.range(p))
+        })
+    } else {
+        Present(clause)
+    }
 }
 
 struct ExportNamedFromSpecifierList;
@@ -729,18 +883,46 @@ impl ParseSeparatedList for ExportNamedFromSpecifierList {
     }
 }
 
+// test ts ts_export_named_from_specifier_with_type
+// export { type A } from "a"
+// export { type } from "./type";
 fn parse_export_named_from_specifier(p: &mut Parser) -> ParsedSyntax {
-    let name = parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
+    if !is_nth_at_literal_export_name(p, 0)
+        && !is_at_contextual_keyword(p, "type")
+        && !is_at_contextual_keyword(p, "as")
+    {
+        return Absent;
+    }
 
-    let as_clause = parse_export_as_clause(p);
+    let m = p.start();
+    let metadata = specifier_metadata(p);
 
-    let m = match (name, as_clause) {
-        (Some(name), _) => name.precede(p),
-        (_, Present(as_clause)) => as_clause.precede(p),
-        _ => return Absent,
-    };
+    if metadata.is_type {
+        expect_contextual_keyword(p, "type", T![type]);
+    }
 
-    Present(m.complete(p, JS_EXPORT_NAMED_FROM_SPECIFIER))
+    if metadata.is_local_name_missing {
+        p.error(expected_literal_export_name(
+            p,
+            p.cur_tok().start()..p.cur_tok().start(),
+        ));
+    } else {
+        parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
+    }
+
+    if metadata.has_alias {
+        parse_export_as_clause(p).ok();
+    }
+
+    let specifier = Present(m.complete(p, JS_EXPORT_NAMED_FROM_SPECIFIER));
+
+    if metadata.is_type {
+        TypeScript.exclusive_syntax(p, specifier, |p, specifier| {
+            ts_only_syntax_error(p, "export { type }'", specifier.range(p))
+        })
+    } else {
+        specifier
+    }
 }
 
 fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
@@ -816,6 +998,44 @@ fn parse_export_as_clause(p: &mut Parser) -> ParsedSyntax {
     parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
 
     Present(m.complete(p, JS_EXPORT_AS_CLAUSE))
+}
+
+// test ts ts_export_namespace_clause
+// export function isPrime(x: number): boolean;
+// export as namespace mathLib;
+fn parse_ts_export_namespace_clause(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "as") && !is_nth_at_contextual_keyword(p, 1, "namespace") {
+        return Absent;
+    }
+
+    let m = p.start();
+    let start_pos = p.cur_tok().start();
+    expect_contextual_keyword(p, "as", T![as]);
+    expect_contextual_keyword(p, "namespace", T![namespace]);
+    parse_name(p).or_add_diagnostic(p, expected_identifier);
+    semi(p, start_pos..p.cur_tok().end());
+
+    Present(m.complete(p, TS_EXPORT_AS_NAMESPACE_CLAUSE))
+}
+
+// test ts ts_export_assignment_identifier
+// declare const a: { b: string }
+// export = a;
+//
+// test ts ts_export_assignment_qualified_name
+// declare const a: { b: string }
+// export = a.b;
+fn parse_ts_export_assignment_clause(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![=]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    let start_pos = p.cur_tok().start();
+    p.bump(T![=]);
+    parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+    semi(p, start_pos..p.cur_tok().end());
+    Present(m.complete(p, TS_EXPORT_ASSIGNMENT_CLAUSE))
 }
 
 fn is_nth_at_literal_export_name(p: &Parser, n: usize) -> bool {

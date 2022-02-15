@@ -778,6 +778,16 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsEnumMember::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_EXPORT_AS_NAMESPACE_CLAUSE => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsExportAsNamespaceClause::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_EXPORT_ASSIGNMENT_CLAUSE => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsExportAssignmentClause::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_EXTENDS_CLAUSE => {
                     let $pattern = unsafe { $crate::ast::TsExtendsClause::new_unchecked(node) };
                     $body
