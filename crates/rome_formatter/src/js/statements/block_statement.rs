@@ -1,8 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{
-    block_indent, format_elements, hard_line_break, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 use rslint_parser::ast::JsBlockStatement;
@@ -20,15 +19,9 @@ impl ToFormatElement for JsBlockStatement {
                 self.r_curly_token().format(formatter)?
             ])
         } else {
-            formatter.format_delimited(
+            formatter.format_delimited_block_indent(
                 &self.l_curly_token()?,
-                |open_token_trailing, close_token_leading| {
-                    Ok(block_indent(format_elements![
-                        open_token_trailing,
-                        stmts,
-                        close_token_leading
-                    ]))
-                },
+                stmts,
                 &self.r_curly_token()?,
             )
         }

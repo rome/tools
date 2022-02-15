@@ -1,8 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
-    format_elements, group_elements, soft_block_indent, space_token, FormatElement, FormatResult,
-    Formatter, ToFormatElement,
+    format_elements, group_elements, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
 use rslint_parser::ast::JsIfStatement;
@@ -19,17 +19,11 @@ impl ToFormatElement for JsIfStatement {
             group_elements(format_elements![
                 self.if_token().format(formatter)?,
                 space_token(),
-                group_elements(formatter.format_delimited(
+                formatter.format_delimited_soft_block_indent(
                     &self.l_paren_token()?,
-                    |open_token_trailing, close_token_leading| Ok(soft_block_indent(
-                        format_elements![
-                            open_token_trailing,
-                            self.test().format(formatter)?,
-                            close_token_leading
-                        ]
-                    )),
+                    self.test().format(formatter)?,
                     &self.r_paren_token()?,
-                )?),
+                )?,
                 space_token(),
             ]),
             self.consequent().format(formatter)?,

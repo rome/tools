@@ -3,8 +3,8 @@ use rslint_parser::ast::JsForInStatement;
 use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{
-    format_elements, group_elements, soft_block_indent, soft_line_break_or_space, space_token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
 impl ToFormatElement for JsForInStatement {
@@ -18,19 +18,15 @@ impl ToFormatElement for JsForInStatement {
         Ok(format_elements![
             for_token,
             space_token(),
-            formatter.format_delimited(
+            formatter.format_delimited_soft_block_indent(
                 &self.l_paren_token()?,
-                |open_token_trailing, close_token_leading| Ok(group_elements(soft_block_indent(
-                    format_elements![
-                        open_token_trailing,
-                        initializer,
-                        soft_line_break_or_space(),
-                        in_token,
-                        soft_line_break_or_space(),
-                        expression,
-                        close_token_leading,
-                    ]
-                ))),
+                format_elements![
+                    initializer,
+                    soft_line_break_or_space(),
+                    in_token,
+                    soft_line_break_or_space(),
+                    expression,
+                ],
                 &self.r_paren_token()?
             )?,
             space_token(),

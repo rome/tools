@@ -5,11 +5,12 @@ use std::collections::HashSet;
 
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    concat_elements, empty_element, empty_line,
+    block_indent, concat_elements, empty_element, empty_line,
     format_element::{normalize_newlines, Token, LINE_TERMINATORS},
-    format_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line,
-    join_elements_hard_line, line_suffix, soft_line_break_or_space, space_token, FormatElement,
-    FormatOptions, FormatResult, ToFormatElement,
+    format_elements, group_elements, hard_line_break, if_group_breaks,
+    if_group_fits_on_single_line, indent, join_elements_hard_line, line_suffix, soft_block_indent,
+    soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult,
+    ToFormatElement,
 };
 use rome_rowan::SyntaxElement;
 #[cfg(debug_assertions)]
@@ -79,10 +80,10 @@ impl Formatter {
     ///
     /// Calling this method is required to correctly handle the comments attached
     /// to the opening and closing tokens and insert them inside the group block
-    pub(crate) fn format_delimited(
+    fn format_delimited(
         &self,
         open_token: &SyntaxToken,
-        content: impl FnOnce(FormatElement, FormatElement) -> FormatResult<FormatElement>,
+        content: impl FnOnce(FormatElement, FormatElement) -> FormatElement,
         close_token: &SyntaxToken,
     ) -> FormatResult<FormatElement> {
         cfg_if::cfg_if! {
@@ -109,11 +110,77 @@ impl Formatter {
         };
         Ok(format_elements![
             self.print_leading_trivia(open_token, TriviaPrintMode::Full),
-            Token::from(open_token),
-            content(open_token_trailing_trivia, close_token_leading_trivia)?,
-            Token::from(close_token),
+            group_elements(format_elements![
+                Token::from(open_token),
+                content(open_token_trailing_trivia, close_token_leading_trivia),
+                Token::from(close_token),
+            ]),
             self.print_trailing_trivia(close_token),
         ])
+    }
+
+    /// Formats a group delimited by an opening and closing token, placing the
+    /// content in a block_indent group
+    pub(crate) fn format_delimited_block_indent(
+        &self,
+        open_token: &SyntaxToken,
+        content: FormatElement,
+        close_token: &SyntaxToken,
+    ) -> FormatResult<FormatElement> {
+        self.format_delimited(
+            open_token,
+            move |trailing_trivia, leading_trivia| {
+                block_indent(format_elements![trailing_trivia, content, leading_trivia])
+            },
+            close_token,
+        )
+    }
+
+    /// Formats a group delimited by an opening and closing token, placing the
+    /// content in a soft_block_indent group
+    pub(crate) fn format_delimited_soft_block_indent(
+        &self,
+        open_token: &SyntaxToken,
+        content: FormatElement,
+        close_token: &SyntaxToken,
+    ) -> FormatResult<FormatElement> {
+        self.format_delimited(
+            open_token,
+            move |trailing_trivia, leading_trivia| {
+                soft_block_indent(format_elements![trailing_trivia, content, leading_trivia])
+            },
+            close_token,
+        )
+    }
+
+    /// Formats a group delimited by an opening and closing token, placing the
+    /// content in an indent group with soft_line_break_or_space tokens at the
+    /// start and end
+    pub(crate) fn format_delimited_soft_block_spaces(
+        &self,
+        open_token: &SyntaxToken,
+        content: FormatElement,
+        close_token: &SyntaxToken,
+    ) -> FormatResult<FormatElement> {
+        self.format_delimited(
+            open_token,
+            move |trailing_trivia, leading_trivia| {
+                if trailing_trivia.is_empty() && content.is_empty() && leading_trivia.is_empty() {
+                    empty_element()
+                } else {
+                    format_elements![
+                        indent(format_elements![
+                            soft_line_break_or_space(),
+                            trailing_trivia,
+                            content,
+                            leading_trivia,
+                        ]),
+                        soft_line_break_or_space(),
+                    ]
+                }
+            },
+            close_token,
+        )
     }
 
     /// Helper function that returns what should be printed before the node that work on

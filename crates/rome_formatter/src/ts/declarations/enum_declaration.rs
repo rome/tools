@@ -1,7 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    format_elements, group_elements, join_elements, soft_block_indent, soft_line_break_or_space,
-    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, join_elements, soft_line_break_or_space, space_token, token, FormatElement,
+    FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::TsEnumDeclaration;
 
@@ -20,21 +20,11 @@ impl ToFormatElement for TsEnumDeclaration {
             .format_with(formatter, |id| format_elements![id, space_token()])?;
 
         let members = formatter.format_separated(self.members(), || token(","))?;
-        let list = group_elements(formatter.format_delimited(
+        let list = formatter.format_delimited_soft_block_spaces(
             &self.l_curly_token()?,
-            |open_token_trailing, close_token_leading| {
-                Ok(format_elements![
-                    soft_line_break_or_space(),
-                    soft_block_indent(format_elements![
-                        open_token_trailing,
-                        join_elements(soft_line_break_or_space(), members),
-                        close_token_leading,
-                    ]),
-                    soft_line_break_or_space(),
-                ])
-            },
+            join_elements(soft_line_break_or_space(), members),
             &self.r_curly_token()?,
-        )?);
+        )?;
 
         Ok(format_elements![const_token, enum_token, id, list])
     }
