@@ -163,15 +163,8 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
     // import type * as foo2 from "./mod";
     // import type { foo3 } from "mod";
     let is_typed = is_at_contextual_keyword(p, "type")
-        && match p.nth(1) {
-            T![*] | T!['{'] => true,
-            _ if is_nth_at_identifier_binding(p, 1)
-                && !is_nth_at_contextual_keyword(p, 1, "from") =>
-            {
-                true
-            }
-            _ => false,
-        };
+        && (matches!(p.nth(1), T![*] | T!['{'])
+            || (is_nth_at_identifier_binding(p, 1) && !is_nth_at_contextual_keyword(p, 1, "from")));
 
     if is_typed {
         expect_contextual_keyword(p, "type", T![type]);
