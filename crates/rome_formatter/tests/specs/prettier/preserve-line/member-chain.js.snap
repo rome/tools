@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: member-chain.js
 
 ---
@@ -83,10 +83,9 @@ foo.bar.baz.doSomething("Hello World")// Hello world
 );
 
 (somethingGood ? thisIsIt : maybeNot)// Hello world
-.doSomething("Hello World").doAnotherThing(
-  "Foo",
-  { foo: bar },
-).run(() => console.log("Bar")); // Run this // Do this
+.doSomething("Hello World").doAnotherThing("Foo", { foo: bar }).run( // Run this
+  () => console.log("Bar"),
+); // Do this
 
 helloWorld.text().then((t) => t);
 

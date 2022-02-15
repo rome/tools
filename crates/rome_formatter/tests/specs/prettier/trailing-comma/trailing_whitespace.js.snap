@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: trailing_whitespace.js
 
 ---
@@ -98,7 +98,7 @@ this.getAttribute(
   },
 );
 this.getAttribute(
-  function (s) /*string*/ {
+  function (s) { /*string*/
     console.log();
   },
 );

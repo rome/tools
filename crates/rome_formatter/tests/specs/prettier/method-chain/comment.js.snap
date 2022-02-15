@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: comment.js
 
 ---
@@ -73,13 +73,9 @@ function f() {
 _.a(a)/* very very very very very very very long such that it is longer than 80 columns */
 .a();
 
-_.a(
-  a,
-).a(); /* very very very very very very very long such that it is longer than 80 columns */
+_.a(a).a(); /* very very very very very very very long such that it is longer than 80 columns */
 
-_.a(
-  a,
-).a(); /* very very very very very very very long such that it is longer than 80 columns */
+_.a(a).a(); /* very very very very very very very long such that it is longer than 80 columns */
 
 Something// $FlowFixMe(>=0.41.0)
 .getInstance(this.props.dao).getters();
@@ -101,11 +97,7 @@ const configModel = this.baseConfigurationService.getCache().consolidated.merge(
   this.cachedWorkspaceConfig,
 );
 
-this.doWriteConfiguration(
-  target,
-  value,
-  options,
-).then( // queue up writes to prevent race conditions
+this.doWriteConfiguration(target, value, options).then( // queue up writes to prevent race conditions
   () => null,
   (error) => {
     return options.donotNotifyError ? TPromise.wrapError(error) : this.onError(
