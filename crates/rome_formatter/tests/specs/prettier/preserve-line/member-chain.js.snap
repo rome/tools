@@ -70,17 +70,30 @@ const sel = this.connections
 
 # Output
 ```js
-fooBar.doSomething("Hello World").doAnotherThing("Foo", { foo: bar })// App configuration.
-.doOneMoreThing(config).run(() => console.log("Bar"));
+fooBar
+  .doSomething("Hello World")
+  .doAnotherThing("Foo", { foo: bar })
+  // App configuration.
+  .doOneMoreThing(config)
+  .run(() => console.log("Bar"))
+;
 
-bigDeal.doSomething("Hello World")// Hello world
-.doAnotherThing("Foo", { foo: bar })// App configuration.
-.doOneMoreThing(config).run(() => console.log("Bar"));
+bigDeal
+  .doSomething("Hello World")
+  // Hello world
+  .doAnotherThing("Foo", { foo: bar })
+  // App configuration.
+  .doOneMoreThing(config)
+  .run(() => console.log("Bar"))
+;
 
-foo.bar.baz.doSomething("Hello World")// Hello world
-.foo.bar.doAnotherThing("Foo", { foo: bar }).doOneMoreThing(config).bar.run(
-  () => console.log("Bar"),
-);
+foo
+  .bar.baz.doSomething("Hello World")
+  // Hello world
+  .foo.bar.doAnotherThing("Foo", { foo: bar })
+  .doOneMoreThing(config)
+  .bar.run(() => console.log("Bar"))
+;
 
 (somethingGood ? thisIsIt : maybeNot)// Hello world
 .doSomething("Hello World").doAnotherThing("Foo", { foo: bar }).run( // Run this

@@ -119,15 +119,13 @@ pub fn format_call_expression(
 
     flatten_call_expression(&mut flattened_expression, syntax_node.to_owned(), formatter)?;
 
-    let iter = flattened_expression.iter();
-
     let (first_group, current_index) = compute_first_group(&flattened_expression)?;
     let rest_of_groups = compute_groups(&flattened_expression, current_index)?;
 
     Ok(format_groups(&first_group, rest_of_groups))
 }
 
-/// Computes the first group of the
+/// Computes the first group
 fn compute_first_group(flatten_items: &[FlattenItem]) -> FormatResult<(Vec<FlattenItem>, usize)> {
     let mut group = vec![];
     let mut current_index = 0;
@@ -175,6 +173,7 @@ fn compute_first_group(flatten_items: &[FlattenItem]) -> FormatResult<(Vec<Flatt
     Ok((group, current_index))
 }
 
+/// computes groups coming after the first group
 fn compute_groups(flatten_items: &[FlattenItem], current_index: usize) -> FormatResult<Groups> {
     let filtered_items = flatten_items
         .iter()
@@ -293,17 +292,22 @@ impl Display for FlattenItem {
 }
 
 #[derive(Default, Clone)]
+/// Handles creation of groups while scanning the flatten items
 struct Groups {
+    /// keeps track of the groups created
     groups: Vec<Vec<FlattenItem>>,
+    /// keeps track of the current group that is being created/updated
     current_group: Vec<FlattenItem>,
 }
 
 impl Groups {
+    /// starts a new group
     pub fn start_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
         debug_assert!(self.current_group.is_empty());
         self.current_group.push(flatten_item.into());
     }
 
+    /// continues of starts a new group
     pub fn start_or_continue_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
         if self.current_group.len() > 0 {
             self.continue_group(flatten_item);
@@ -312,11 +316,13 @@ impl Groups {
         }
     }
 
+    /// adds the passed element to the current group
     pub fn continue_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
         debug_assert!(!self.current_group.is_empty());
         self.current_group.push(flatten_item.into());
     }
 
+    /// clears the current group, and adds a new group to the groups
     pub fn close_group(&mut self) {
         if !self.current_group.is_empty() {
             let mut elements = vec![];
@@ -328,13 +334,10 @@ impl Groups {
         }
     }
 
-    pub fn cutoff(&self) -> u8 {
+    /// It tells if the groups should be break on multiple lines
+    pub fn groups_should_break(&self) -> bool {
         // TODO: this should have more checks
-        3
-    }
-
-    pub fn len(&self) -> usize {
-        self.groups.len()
+        self.groups.len() > 3
     }
 
     fn get_formatted_groups(&self) -> Vec<FormatElement> {
@@ -350,35 +353,37 @@ impl Groups {
             .collect()
     }
 
+    /// Concatenate groups, without fancy formatting
     pub fn get_formatted_concat_groups(&self) -> FormatElement {
         let formatted_groups = self.get_formatted_groups();
         concat_elements(formatted_groups)
     }
 
+    /// Format groups on multiple lines
     pub fn get_formatted_joined_groups(&self) -> FormatElement {
         let formatted_groups = self.get_formatted_groups();
         join_elements(soft_line_break(), formatted_groups)
     }
 }
 
+/// Formats together the first group and the rest of groups
 fn format_groups(first_group: &[FlattenItem], groups: Groups) -> FormatElement {
     let first_formatted_group: Vec<FormatElement> = first_group
         .iter()
         .map(|flatten_item| flatten_item.clone().to_format_element())
         .collect();
-    if groups.len() <= groups.cutoff() as usize {
-        format_elements![
-            concat_elements(first_formatted_group),
-            groups.get_formatted_concat_groups()
-        ]
+
+    let formatted_groups = if groups.groups_should_break() {
+        block_indent(groups.get_formatted_joined_groups())
     } else {
-        format_elements![
-            concat_elements(first_formatted_group),
-            block_indent(groups.get_formatted_joined_groups()),
-        ]
-    }
+        groups.get_formatted_concat_groups()
+    };
+
+    format_elements![concat_elements(first_formatted_group), formatted_groups]
 }
 
+/// This function tries to flatten the AST. It stores nodes and its formatted version
+/// inside an vector of [FlattenItem]. The first element of the vector is the last one.
 fn flatten_call_expression(
     queue: &mut Vec<FlattenItem>,
     node: SyntaxNode,

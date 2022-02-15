@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: expand.js
 
 ---
@@ -61,14 +61,18 @@ const promises = [
 ];
 
 const promises2 = [
-  promise.resolve().veryLongFunctionCall().veryLongFunctionCall().then(
-    console.log,
-  ).catch(
-    (err) => {
-      console.log(err);
-      return null;
-    },
-  ),
+  promise
+    .resolve()
+    .veryLongFunctionCall()
+    .veryLongFunctionCall()
+    .then(console.log)
+    .catch(
+      (err) => {
+        console.log(err);
+        return null;
+      },
+    )
+  ,
   redis.fetch(),
   other.fetch(),
 ];
