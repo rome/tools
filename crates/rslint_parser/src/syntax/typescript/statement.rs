@@ -1,17 +1,21 @@
 use crate::parser::{expected_token, RecoveryResult};
-use crate::syntax::binding::{is_nth_at_identifier_binding, parse_binding};
+use crate::syntax::binding::{
+    is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
+};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
 
 use super::ts_parse_error::expected_ts_enum_member;
 use crate::state::EnterAmbientContext;
 use crate::syntax::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
-use crate::syntax::js_parse_error::{expected_identifier, expected_ts_type};
+use crate::syntax::js_parse_error::{
+    expected_identifier, expected_module_source, expected_ts_type,
+};
 use crate::syntax::module::{parse_module_item_list, parse_module_source, ModuleItemListParent};
 use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::{
-    expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_type,
-    parse_ts_type_parameters, TypeMembers,
+    expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_name,
+    parse_ts_type, parse_ts_type_parameters, TypeMembers,
 };
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
@@ -472,4 +476,46 @@ fn parse_ts_global_declaration(p: &mut Parser) -> ParsedSyntax {
     expect_contextual_keyword(p, "global", T![global]);
     parse_ts_module_block(p).or_add_diagnostic(p, |_, _| expected_token(T!['{']));
     Present(m.complete(p, TS_GLOBAL_DECLARATION))
+}
+
+// test ts ts_import_equals_declaration
+// import x = require("./test");
+// namespace a.b {}
+// import y = a;
+// import z = a.b;
+// export import n = a;
+
+/// Parses everything after the `import` of an import equals declaration
+pub(crate) fn parse_ts_import_equals_declaration_rest(
+    p: &mut Parser,
+    m: Marker,
+    stmt_start_pos: usize,
+) -> CompletedMarker {
+    parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+
+    p.expect(T![=]);
+
+    if is_at_contextual_keyword(p, "require") {
+        parse_ts_external_module_reference(p)
+            .expect("Expect module reference to return Present because parser is at require token");
+    } else {
+        parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+    }
+
+    semi(p, stmt_start_pos..p.cur_tok().end());
+    m.complete(p, TS_IMPORT_EQUALS_DECLARATION)
+}
+
+fn parse_ts_external_module_reference(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "require") {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump_remap(T![require]);
+    p.expect(T!['(']);
+    parse_module_source(p).or_add_diagnostic(p, expected_module_source);
+    p.expect(T![')']);
+
+    Present(m.complete(p, TS_EXTERNAL_MODULE_REFERENCE))
 }

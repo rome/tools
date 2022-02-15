@@ -1,5 +1,6 @@
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
+use crate::syntax::module::parse_import_or_import_equals_declaration;
 use crate::syntax::stmt::{
     is_nth_at_variable_declarations, parse_variable_declaration, semi, StatementContext,
     VariableDeclarationParent,
@@ -33,7 +34,10 @@ pub(crate) fn parse_variable_declaration_clause(p: &mut Parser) -> ParsedSyntax 
 }
 
 pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
-    if matches!(p.nth(n), T![function] | T![const] | T![enum] | T![class]) {
+    if matches!(
+        p.nth(n),
+        T![function] | T![const] | T![enum] | T![class] | T![import]
+    ) {
         return true;
     }
 
@@ -92,6 +96,7 @@ pub(crate) fn parse_declaration_clause(p: &mut Parser, stmt_start_pos: usize) ->
             // declare const enum B { X, Y, Z }
             parse_ts_enum_declaration(p)
         }
+        T![import] => parse_import_or_import_equals_declaration(p),
         T![ident] => {
             if is_at_contextual_keyword(p, "async") {
                 parse_function_declaration(p, StatementContext::StatementList)

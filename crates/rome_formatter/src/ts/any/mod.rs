@@ -2,7 +2,7 @@
 
 mod external_module_declaration_body;
 mod module_name;
-mod module_ref;
+mod module_reference;
 mod name;
 mod property_annotation;
 mod property_parameter;

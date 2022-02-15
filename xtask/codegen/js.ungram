@@ -109,6 +109,7 @@ JsAnyStatement =
 	| TsModuleDeclaration
 	| TsExternalModuleDeclaration
 	| TsGlobalDeclaration
+	| TsImportEqualsDeclaration
 
 
 JsBlockStatement =
@@ -986,6 +987,7 @@ JsAnyDeclaration =
 	| TsModuleDeclaration
 	| TsExternalModuleDeclaration
 	| TsGlobalDeclaration
+	| TsImportEqualsDeclaration
 
 // Used when declarations appear in a non-statement position.
 // export let a, b;
@@ -1003,6 +1005,7 @@ JsAnyDeclarationClause =
 	| TsModuleDeclaration
 	| TsExternalModuleDeclaration
 	| TsGlobalDeclaration
+	| TsImportEqualsDeclaration
 
 JsVariableDeclarationClause =
 	declaration: JsVariableDeclaration
@@ -1067,7 +1070,8 @@ JsAnyModuleItem =
 	| JsImport
 JsModuleItemList = JsAnyModuleItem*
 
-JsImport = 'import'
+JsImport =
+	'import'
 	import_clause: JsAnyImportClause
 	';'?
 
@@ -1076,8 +1080,6 @@ JsAnyImportClause =
     | JsImportNamedClause
     | JsImportDefaultClause
     | JsImportNamespaceClause
-//    | TsImportRequireClause
-//    | TsImportAliasClause
 
 // import "abcd"
 // import "abcd" assert ...
@@ -1482,17 +1484,6 @@ JsFunctionBody =
 // Typescript definitions
 //
 
-TsImportEqualsDecl =
-	('import' | 'export') 'ident' '=' module:TsModuleRef ';'?
-
-
-TsModuleRef =
-	TsExternalModuleRef |
-	TsAnyName
-
-
-TsExternalModuleRef = 'require' '(' module: 'js_string_literal' ')'
-
 TsType =
 	// Predefined types
 	TsAnyType
@@ -1574,10 +1565,29 @@ TsEnumDeclaration =
 	'{'
 	members: TsEnumMemberList
 	'}'
+
 TsEnumMemberList = (TsEnumMember (',' TsEnumMember)* ','?)
+
 TsEnumMember =
 	name: JsAnyObjectMemberName
 	initializer: JsInitializerClause?
+
+TsImportEqualsDeclaration =
+	'import'
+	id: JsAnyBinding
+	'='
+	module_reference: TsAnyModuleReference
+	';'?
+
+TsAnyModuleReference =
+	TsAnyName
+	| TsExternalModuleReference
+
+TsExternalModuleReference =
+	'require'
+	'('
+	source: JsModuleSource
+	')'
 
 
 // declaration of a function without a body

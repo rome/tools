@@ -1515,10 +1515,12 @@ pub(crate) fn is_at_identifier(p: &Parser) -> bool {
     is_nth_at_identifier(p, 0)
 }
 
+#[inline]
 pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
     matches!(p.nth(n), T![ident] | T![await] | T![yield] | T![enum])
 }
 
+#[inline]
 pub(crate) fn is_nth_at_identifier_or_keyword(p: &Parser, n: usize) -> bool {
     p.nth(n).is_keyword() || is_nth_at_identifier(p, n)
 }

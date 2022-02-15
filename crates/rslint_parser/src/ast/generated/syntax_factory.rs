@@ -6118,7 +6118,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_EXTERNAL_MODULE_DECLARATION, children)
             }
-            TS_EXTERNAL_MODULE_REF => {
+            TS_EXTERNAL_MODULE_REFERENCE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -6137,7 +6137,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if element.kind() == JS_STRING_LITERAL {
+                    if JsModuleSource::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6152,11 +6152,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_EXTERNAL_MODULE_REF.to_unknown(),
+                        TS_EXTERNAL_MODULE_REFERENCE.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_EXTERNAL_MODULE_REF, children)
+                slots.into_node(TS_EXTERNAL_MODULE_REFERENCE, children)
             }
             TS_FUNCTION_TYPE => {
                 let mut elements = (&children).into_iter();
@@ -6323,9 +6323,9 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_IMPLEMENTS_CLAUSE, children)
             }
-            TS_IMPORT_EQUALS_DECL => {
+            TS_IMPORT_EQUALS_DECLARATION => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if element.kind() == T![import] {
@@ -6335,14 +6335,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if element.kind() == T![export] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == IDENT {
+                    if JsAnyBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6356,7 +6349,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsModuleRef::can_cast(element.kind()) {
+                    if TsAnyModuleReference::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6371,11 +6364,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_IMPORT_EQUALS_DECL.to_unknown(),
+                        TS_IMPORT_EQUALS_DECLARATION.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_IMPORT_EQUALS_DECL, children)
+                slots.into_node(TS_IMPORT_EQUALS_DECLARATION, children)
             }
             TS_IMPORT_TYPE => {
                 let mut elements = (&children).into_iter();
