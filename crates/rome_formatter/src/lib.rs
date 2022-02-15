@@ -487,7 +487,7 @@ mod tests {
 
     #[test]
     fn poc() {
-        let src = r#"some.else.foofof.eeee.then1().then2().then2().then3().then2().then3().then2().then3().then2().then3()
+        let src = r#"some.then2().then3();
 "#;
         let syntax = Syntax::default().typescript();
         let tree = parse(src, 0, syntax);

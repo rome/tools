@@ -155,7 +155,6 @@ fn compute_first_group(flatten_items: &[FlattenItem]) -> FormatResult<(Vec<Flatt
     if !flatten_items[0].is_call_expression() {
         for (index, item) in second_iter.enumerate() {
             if index > current_index {
-                dbg!(format!("{}", &item));
                 if let FlattenItem::StaticMember(_, _) = item {
                     let next_flatten_item = &flatten_items[index + 1];
                     if matches!(next_flatten_item, FlattenItem::StaticMember(_, _)) {
@@ -266,7 +265,7 @@ impl FlattenItem {
     }
 
     /// It returns a [rome_formatter::FormatElement] of the current flatten item
-    pub fn to_format_element(self) -> FormatElement {
+    pub fn get_format_element(self) -> FormatElement {
         match self {
             FlattenItem::StaticMember(_, formatted) => concat_elements(formatted),
             FlattenItem::CallExpression(_, formatted) => concat_elements(formatted),
@@ -309,10 +308,10 @@ impl Groups {
 
     /// continues of starts a new group
     pub fn start_or_continue_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
-        if self.current_group.len() > 0 {
-            self.continue_group(flatten_item);
-        } else {
+        if self.current_group.is_empty() {
             self.start_group(flatten_item);
+        } else {
+            self.continue_group(flatten_item);
         }
     }
 
@@ -346,8 +345,8 @@ impl Groups {
             .map(|group| {
                 concat_elements(
                     group
-                        .into_iter()
-                        .map(|flatten_item| flatten_item.clone().to_format_element()),
+                        .iter()
+                        .map(|flatten_item| flatten_item.clone().get_format_element()),
                 )
             })
             .collect()
@@ -370,7 +369,7 @@ impl Groups {
 fn format_groups(first_group: &[FlattenItem], groups: Groups) -> FormatElement {
     let first_formatted_group: Vec<FormatElement> = first_group
         .iter()
-        .map(|flatten_item| flatten_item.clone().to_format_element())
+        .map(|flatten_item| flatten_item.clone().get_format_element())
         .collect();
 
     let formatted_groups = if groups.groups_should_break() {
@@ -391,7 +390,7 @@ fn flatten_call_expression(
 ) -> FormatResult<()> {
     match node.kind() {
         JsSyntaxKind::JS_CALL_EXPRESSION => {
-            let call_expression = JsCallExpression::cast(node.to_owned()).unwrap();
+            let call_expression = JsCallExpression::cast(node).unwrap();
             let callee = call_expression.callee()?;
             flatten_call_expression(queue, callee.syntax().to_owned(), formatter)?;
             let formatted = vec![
@@ -407,7 +406,7 @@ fn flatten_call_expression(
             queue.push(FlattenItem::CallExpression(call_expression, formatted));
         }
         JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
-            let static_member = JsStaticMemberExpression::cast(node.to_owned()).unwrap();
+            let static_member = JsStaticMemberExpression::cast(node).unwrap();
             let object = static_member.object()?;
             flatten_call_expression(queue, object.syntax().to_owned(), formatter)?;
             let formatted = vec![
@@ -418,7 +417,7 @@ fn flatten_call_expression(
         }
 
         JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
-            let computed_expression = JsComputedMemberExpression::cast(node.to_owned()).unwrap();
+            let computed_expression = JsComputedMemberExpression::cast(node).unwrap();
             let object = computed_expression.object()?;
             flatten_call_expression(queue, object.syntax().to_owned(), formatter)?;
             let formatted = vec![
