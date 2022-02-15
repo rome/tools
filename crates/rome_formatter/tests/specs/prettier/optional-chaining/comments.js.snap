@@ -79,8 +79,8 @@ bigDeal
   ?.run(() => console.log("Bar"))
 ;
 
-foo
-  .bar.baz?.doSomething("Hello World")
+foo.bar.baz
+  ?.doSomething("Hello World")
   // Hello world
   .foo.bar.doAnotherThing("Foo", { foo: bar })
   .doOneMoreThing(config)
