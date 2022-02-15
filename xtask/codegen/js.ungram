@@ -569,6 +569,7 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 ///////////////
 
 JsClassDeclaration =
+	'abstract'?
 	'class'
 	id: JsAnyBinding
 	type_parameters: TsTypeParameters?
@@ -1249,6 +1250,7 @@ JsExportDefaultExpressionClause =
 //        ^^^^^^^^^^^^^^^^
 JsExportDefaultClassClause =
 	'default'
+	'abstract'?
 	'class'
 	id: JsAnyBinding?
 	type_parameters: TsTypeParameters?

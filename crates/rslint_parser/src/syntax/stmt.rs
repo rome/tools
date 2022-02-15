@@ -3,7 +3,9 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
 use super::binding::*;
+use super::class::is_at_ts_abstract_class_declaration;
 use super::expr::parse_expression;
+use super::module::{parse_export, parse_import};
 use super::typescript::*;
 use crate::parser::{expected_token, ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
@@ -21,7 +23,6 @@ use crate::syntax::expr::{
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement, ts_only_syntax_error};
-use crate::syntax::module::{parse_export, parse_import};
 use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
@@ -203,8 +204,24 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![continue] => parse_continue_statement(p),
         T![throw] => parse_throw_statement(p),
         T![debugger] => parse_debugger_statement(p),
+        // function and async function
         T![function] => parse_function_declaration(p, context),
+        T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
+            parse_function_declaration(p, context)
+        }
+        // class and abstract class
         T![class] => parse_class_declaration(p, context),
+        T![ident] if is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck) => {
+            // test_err abstract_class_in_js
+            // abstract class A {}
+            TypeScript.parse_exclusive_syntax(
+                p,
+                |p| parse_class_declaration(p, context),
+                |p, abstract_class| {
+                    ts_only_syntax_error(p, "abstract classes", abstract_class.range(p).as_range())
+                },
+            )
+        }
         T![ident] | T![await] | T![yield] | T![enum] if p.nth_at(1, T![:]) => {
             parse_labeled_statement(p, context)
         }

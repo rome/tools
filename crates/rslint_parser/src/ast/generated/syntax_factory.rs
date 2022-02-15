@@ -754,8 +754,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_CLASS_DECLARATION => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<8usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<9usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![abstract] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T![class] {
                         slots.mark_present();
@@ -1451,10 +1458,17 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_EXPORT_DEFAULT_CLASS_CLAUSE => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<9usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<10usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if element.kind() == T![default] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![abstract] {
                         slots.mark_present();
                         current_element = elements.next();
                     }

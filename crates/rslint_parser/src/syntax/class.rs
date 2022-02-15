@@ -24,7 +24,7 @@ use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
     parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
 };
-use crate::syntax::util::is_at_contextual_keyword;
+use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
@@ -35,6 +35,22 @@ use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
+
+use super::function::LineBreak;
+use super::typescript::ts_parse_error;
+use super::util::eat_contextual_keyword;
+
+pub(crate) fn is_at_ts_abstract_class_declaration(
+    p: &Parser,
+    should_check_line_break: LineBreak,
+) -> bool {
+    let tokens = is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![class]);
+    if should_check_line_break == LineBreak::DoCheck {
+        tokens && !p.has_linebreak_before_n(1)
+    } else {
+        tokens
+    }
+}
 
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
@@ -57,12 +73,37 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 // class foo { set {} }
 // class extends {}
 
+// test ts typescript_abstract_classes
+// abstract class A {}
+// abstract class ConcreteMembers {
+//     name: string;
+//     constructor(name: string) { this.name = name; }
+//     display(): void { console.log(this.name); }
+//     public get my_name() { return this.name; }
+//     public set my_name(name) { this.name = name; }
+//     #private_method() { }
+// }
+// abstract class AbstractMembers {
+//     abstract name(): string;
+// }
+
+// test_err ts typescript_abstract_classes_incomplete
+// abstract class {};
+
+// test_err ts typescript_abstract_classes_invalid_abstract_constructor
+// abstract class A { abstract constructor();};
+
+// test_err ts typescript_abstract_classes_invalid_abstract_property
+// abstract class A { abstract name: string; };
+
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
-    if !p.at(T![class]) {
+    let is_at_class = p.at(T![class]);
+    let is_at_abstract_class = is_at_contextual_keyword(p, "abstract");
+    if !is_at_class && !is_at_abstract_class {
         return Absent;
     }
 
@@ -84,8 +125,15 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
 
 // test export_default_class_clause
 // export default class {}
+
+// test ts typescript_export_default_abstract_class_case
+// export default abstract class {}
 pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![default]) && !p.nth_at(1, T![class]) {
+    let is_at_default_class = p.at(T![default]) && p.nth_at(1, T![class]);
+    let is_at_default_abstract_class = p.at(T![default])
+        && is_nth_at_contextual_keyword(p, 1, "abstract")
+        && p.nth_at(2, T![class]);
+    if !is_at_default_class && !is_at_default_abstract_class {
         return Absent;
     }
 
@@ -119,8 +167,9 @@ impl From<ClassKind> for JsSyntaxKind {
 }
 
 fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
-    let class_token_range = p.cur_tok().range();
+    eat_contextual_keyword(p, "abstract", T![abstract]);
 
+    let class_token_range = p.cur_tok().range();
     p.expect(T![class]);
 
     let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_tok().range())));
@@ -444,7 +493,7 @@ fn parse_class_member_impl(
                 .primary(async_range, "");
 
             p.error(err);
-            parse_class_member_name(p).unwrap();
+            parse_class_member_name(p, &modifiers).unwrap();
             parse_constructor_class_member_body(p, member_marker, modifiers)
         } else {
             parse_method_class_member(p, member_marker, modifiers, flags)
@@ -452,8 +501,8 @@ fn parse_class_member_impl(
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);
-    let member_name =
-        parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
+    let member_name = parse_class_member_name(p, &modifiers)
+        .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
     if is_at_method_class_member(p, 0) {
         // test class_static_constructor_method
@@ -508,7 +557,7 @@ fn parse_class_member_impl(
             //   static async* static() {}
             //   static * static() {}
             // }
-            Present(parse_method_class_member_body(
+            Present(parse_method_class_member_rest(
                 p,
                 member_marker,
                 modifiers,
@@ -592,7 +641,7 @@ fn parse_class_member_impl(
                     }
 
                     // So we've seen a get that now must be followed by a getter/setter name
-                    parse_class_member_name(p)
+                    parse_class_member_name(p, &modifiers)
                         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
                     // test_err ts ts_getter_setter_type_parameters
@@ -608,8 +657,8 @@ fn parse_class_member_impl(
                         p.expect(T!['(']);
                         p.expect(T![')']);
                         parse_ts_type_annotation_or_error(p).ok();
-                        parse_function_body(p, SignatureFlags::empty())
-                            .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+
+                        parse_method_body(p, modifiers, SignatureFlags::empty());
 
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
@@ -637,9 +686,7 @@ fn parse_class_member_impl(
                             ));
                         }
 
-                        parse_function_body(p, SignatureFlags::empty())
-                            .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-
+                        parse_method_body(p, modifiers, SignatureFlags::empty());
                         member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
                     };
 
@@ -672,6 +719,14 @@ fn parse_class_member_impl(
             };
 
             property.map(|mut property| {
+                if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
+                    let err = p
+                        .err_builder("class properties cannot be abstract")
+                        .primary(abstract_range, "");
+                    p.error(err);
+                    property.change_to_unknown(p);
+                }
+
                 if !property.kind().is_unknown() && is_constructor {
                     let err = p
                         .err_builder("class properties may not be called `constructor`")
@@ -914,8 +969,9 @@ fn parse_method_class_member(
     modifiers: ClassMemberModifiers,
     flags: SignatureFlags,
 ) -> CompletedMarker {
-    parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
-    parse_method_class_member_body(p, m, modifiers, flags)
+    parse_class_member_name(p, &modifiers)
+        .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
+    parse_method_class_member_rest(p, m, modifiers, flags)
 }
 
 // test_err class_member_method_parameters
@@ -930,7 +986,8 @@ fn parse_method_class_member(
 // }
 
 /// Parses the body (everything after the identifier name) of a method class member
-fn parse_method_class_member_body(
+/// that includes: parameters and its types, return type and method body
+fn parse_method_class_member_rest(
     p: &mut Parser,
     m: Marker,
     modifiers: ClassMemberModifiers,
@@ -965,9 +1022,51 @@ fn parse_method_class_member_body(
         })
         .ok();
 
-    parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+    let abstract_range = modifiers.get_range(ModifierKind::Abstract).cloned();
+    let is_async = flags.contains(SignatureFlags::ASYNC).then(|| true);
 
-    m.complete(p, member_kind)
+    parse_method_body(p, modifiers, flags);
+
+    let mut member = m.complete(p, member_kind);
+
+    // test_err ts typescript_abstract_classes_invalid_abstract_async_member
+    // abstract class B { abstract async a(); }
+    if let Some((abstract_range, _)) = abstract_range.zip(is_async) {
+        let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range);
+        p.error(err);
+        member.change_to_unknown(p);
+    }
+
+    member
+}
+
+fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: SignatureFlags) {
+    let body = parse_function_body(p, flags);
+
+    // test_err ts typescript_class_member_body
+    // class AbstractMembers {
+    //     constructor();
+    //     name(): string;
+    //     get my_name();
+    //     set my_name(name);
+    //     #private_name();
+    // }
+    // abstract class AbstractMembers {
+    //     abstract constructor() { }
+    //     abstract display(): void { console.log(this.name); }
+    //     abstract get my_name() { return this.name; }
+    //     abstract set my_name(name) { this.name = name; }
+    //     abstract #private_name() { }
+    // }
+    let is_abstract = modifiers.has(ModifierKind::Abstract);
+    if !is_abstract {
+        body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+    } else {
+        body.add_diagnostic_if_present(
+            p,
+            crate::syntax::typescript::ts_parse_error::unexpected_abstract_member_with_body,
+        );
+    }
 }
 
 fn parse_constructor_class_member_body(
@@ -1017,8 +1116,7 @@ fn parse_constructor_class_member_body(
         constructor_is_valid = false;
     }
 
-    parse_function_body(p, SignatureFlags::CONSTRUCTOR)
-        .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+    parse_method_body(p, modifiers, SignatureFlags::CONSTRUCTOR);
 
     // FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
@@ -1125,15 +1223,22 @@ fn is_at_class_member_name(p: &Parser, offset: usize) -> bool {
 }
 
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
-fn parse_class_member_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_class_member_name(p: &mut Parser, modifiers: &ClassMemberModifiers) -> ParsedSyntax {
     match p.cur() {
-        T![#] => parse_private_class_member_name(p),
+        T![#] => parse_private_class_member_name_with_modifiers(p, modifiers),
         T!['['] => parse_computed_member_name(p),
         _ => parse_literal_member_name(p),
     }
 }
 
 pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
+    parse_private_class_member_name_with_modifiers(p, &ClassMemberModifiers::default())
+}
+
+fn parse_private_class_member_name_with_modifiers(
+    p: &mut Parser,
+    modifiers: &ClassMemberModifiers,
+) -> ParsedSyntax {
     if !p.at(T![#]) {
         return Absent;
     }
@@ -1157,7 +1262,20 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
         Present(m.complete(p, JS_UNKNOWN))
     } else {
         p.expect(T![ident]);
-        Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
+
+        // test_err ts typescript_abstract_classes_invalid_abstract_private_member
+        // abstract class A { abstract #name(); };
+        let member = if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
+            let err = p
+                .err_builder("members with private name cannot be abstract")
+                .primary(abstract_range, "");
+            p.error(err);
+            m.complete(p, JS_UNKNOWN_MEMBER)
+        } else {
+            m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME)
+        };
+
+        Present(member)
     }
 }
 

@@ -1,11 +1,11 @@
 //! Top level functions for parsing a script or module, also includes module specific items.
 
 use super::expr::parse_name;
+use super::module::parse_module_body;
 use super::stmt::{parse_statements, semi};
 use super::typescript::*;
 use crate::state::{ChangeParserState, EnableStrictMode};
 use crate::syntax::js_parse_error;
-use crate::syntax::module::parse_module_body;
 use crate::syntax::stmt::directives;
 use crate::{JsSyntaxKind::*, *};
 
