@@ -1235,7 +1235,7 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
     parse_private_class_member_name_with_modifiers(p, &ClassMemberModifiers::default())
 }
 
-pub(crate) fn parse_private_class_member_name_with_modifiers(
+fn parse_private_class_member_name_with_modifiers(
     p: &mut Parser,
     modifiers: &ClassMemberModifiers,
 ) -> ParsedSyntax {
@@ -1467,7 +1467,7 @@ struct Modifier {
 /// for all modifiers. These missing markers can later be undone if they are not needed for a specific
 /// member type (for example, `declare` is only allowed on properties).
 #[derive(Debug, Default)]
-pub(crate) struct ClassMemberModifiers {
+struct ClassMemberModifiers {
     // replace length with std::mem::variant_count() when it becomes stable
     modifiers: [Option<Range<usize>>; ModifierKind::__LAST as usize],
 }
