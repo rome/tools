@@ -1035,10 +1035,9 @@ fn parse_method_class_member_rest(
         let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range);
         p.error(err);
         member.change_to_unknown(p);
-        member
-    } else {
-        member
     }
+
+    member
 }
 
 fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: SignatureFlags) {
