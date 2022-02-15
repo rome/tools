@@ -8,3 +8,4 @@ https://cdn.jsdelivr.net/npm/d3@7.1.1/dist/d3.min.js
 https://cdn.jsdelivr.net/npm/pixi.js@6.2.0/dist/browser/pixi.min.js
 https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js
 https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-chtml-full.js
+https://raw.githubusercontent.com/microsoft/TypeScript/main/src/compiler/checker.ts

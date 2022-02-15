@@ -900,6 +900,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsNeverType::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_NON_NULL_ASSERTION_ASSIGNMENT => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsNonNullAssertionAssignment::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => {
                     let $pattern =
                         unsafe { $crate::ast::TsNonNullAssertionExpression::new_unchecked(node) };
