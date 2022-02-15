@@ -7,10 +7,11 @@ use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
     expected_binding, expected_parameter, expected_parameters, ts_only_syntax_error,
 };
-use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
+use crate::syntax::stmt::{is_semi, parse_block_impl, semi, StatementContext};
 use crate::syntax::typescript::{
     parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
 };
+use crate::syntax::util::is_at_contextual_keyword;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, Parser, SyntaxFeature};
@@ -62,13 +63,17 @@ pub(super) fn parse_function_declaration(
     }
 
     let m = p.start();
-    let mut function = parse_function(
-        p,
-        m,
-        FunctionKind::Declaration {
-            single_statement_context: context.is_single_statement(),
-        },
-    );
+    let mut function = if p.state.in_ambient_context() {
+        parse_ambient_function(p, m)
+    } else {
+        parse_function(
+            p,
+            m,
+            FunctionKind::Declaration {
+                single_statement_context: context.is_single_statement(),
+            },
+        )
+    };
 
     if context != StatementContext::StatementList && !function.kind().is_unknown() {
         if JsSyntaxFeature::StrictMode.is_supported(p) {
@@ -111,7 +116,12 @@ pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax
 
     let m = p.start();
     p.bump(T![default]);
-    Present(parse_function(p, m, FunctionKind::ExportDefault))
+
+    Present(if p.state.in_ambient_context() {
+        parse_ambient_function(p, m)
+    } else {
+        parse_function(p, m, FunctionKind::ExportDefault)
+    })
 }
 
 #[derive(PartialEq, Eq, Debug, Copy, Clone)]
@@ -129,8 +139,8 @@ impl FunctionKind {
         matches!(self, FunctionKind::Expression | FunctionKind::ExportDefault)
     }
 
-    fn is_declaration(&self) -> bool {
-        matches!(self, FunctionKind::Declaration { .. })
+    fn is_expression(&self) -> bool {
+        matches!(self, FunctionKind::Expression)
     }
 
     fn is_in_single_statement_context(&self) -> bool {
@@ -193,7 +203,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         })
         .ok();
 
-    let parameter_context = if kind.is_declaration() && TypeScript.is_supported(p) {
+    let parameter_context = if !kind.is_expression() && TypeScript.is_supported(p) {
         // It isn't known at this point if this is a function overload definition (body is missing)
         // or a regular function implementation.
         // Let's go with the laxer of the two. Ideally, these verifications should be part of
@@ -226,7 +236,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         && TypeScript.is_supported(p)
         && is_semi(p, 0)
         && !kind.is_in_single_statement_context()
-        && kind.is_declaration()
+        && !kind.is_expression()
     {
         p.eat(T![;]);
 
@@ -304,6 +314,56 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
             // }
             parse_binding(p)
         }
+    }
+}
+
+// test ts ts_declare_function
+// declare function test<A, B, R>(a: A, b: B): R;
+// declare function test2({ a }?: { a: "string" })
+// declare
+// function not_a_declaration() {}
+//
+// test_err ts ts_declare_function_with_body
+// declare function test<A>(a: A): string { return "ambient function with a body"; }
+//
+// test ts ts_ambient_function
+// declare module a {
+//   function test(): string;
+// }
+pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMarker {
+    let stmt_start = p.cur_tok().start();
+
+    // test_err ts ts_declare_async_function
+    // declare async function test();
+    let is_async = is_at_contextual_keyword(p, "async");
+    if is_async {
+        p.error(
+            p.err_builder("'async' modifier cannot be used in an ambient context.")
+                .primary(p.cur_tok().range(), ""),
+        );
+        p.bump_remap(T![async]);
+    }
+
+    p.expect(T![function]);
+    parse_binding(p).or_add_diagnostic(p, expected_binding);
+    parse_ts_type_parameters(p).ok();
+    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
+        .or_add_diagnostic(p, expected_parameters);
+    parse_ts_return_type_annotation(p).ok();
+
+    if let Present(body) = parse_function_body(p, SignatureFlags::empty()) {
+        p.error(
+            p.err_builder("A 'declare' function cannot have a function body")
+                .primary(body.range(p), "remove this body"),
+        );
+    }
+
+    semi(p, stmt_start..p.cur_tok().start());
+
+    if is_async {
+        m.complete(p, JS_UNKNOWN_STATEMENT)
+    } else {
+        m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
     }
 }
 

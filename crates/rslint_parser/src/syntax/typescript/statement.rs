@@ -1,21 +1,22 @@
-use crate::parser::RecoveryResult;
+use crate::parser::{expected_token, RecoveryResult};
 use crate::syntax::binding::{is_nth_at_identifier_binding, parse_binding};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::ExpressionContext;
+use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
 
 use super::ts_parse_error::expected_ts_enum_member;
-use crate::state::SignatureFlags;
+use crate::state::EnterAmbientContext;
 use crate::syntax::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
-use crate::syntax::function::{parse_function_body, parse_parameter_list, ParameterContext};
-use crate::syntax::js_parse_error::{
-    expected_binding, expected_identifier, expected_parameters, expected_ts_type,
-};
+use crate::syntax::js_parse_error::{expected_identifier, expected_ts_type};
+use crate::syntax::module::{parse_module_item_list, parse_module_source, ModuleItemListParent};
 use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::{
-    expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause,
-    parse_ts_return_type_annotation, parse_ts_type, parse_ts_type_parameters, TypeMembers,
+    expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_type,
+    parse_ts_type_parameters, TypeMembers,
 };
-use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
+use crate::syntax::util::{
+    eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
+    is_nth_at_contextual_keyword,
+};
 use crate::{JsSyntaxKind::*, *};
 
 fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
@@ -209,20 +210,26 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_TYPE_ALIAS_DECLARATION))
 }
 
+// test ts ts_declare_const_initializer
+// declare module test { const X; }
 pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
     if !is_at_ts_declare_statement(p) {
         return Absent;
     }
 
+    let stmt_start_pos = p.cur_tok().start();
     let m = p.start();
     expect_contextual_keyword(p, "declare", T![declare]);
 
-    parse_declaration_clause(p, true)
-        .expect("Expected a declaration as guaranteed by is_at_ts_declare_statement");
+    p.with_state(EnterAmbientContext, |p| {
+        parse_declaration_clause(p, stmt_start_pos)
+            .expect("Expected a declaration as guaranteed by is_at_ts_declare_statement")
+    });
 
     Present(m.complete(p, TS_DECLARE_STATEMENT))
 }
 
+#[inline]
 pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
     if !is_at_contextual_keyword(p, "declare") || p.has_linebreak_before_n(1) {
         return false;
@@ -231,57 +238,7 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
     is_nth_at_declaration_clause(p, 1)
 }
 
-// test ts ts_declare_function
-// declare function test<A, B, R>(a: A, b: B): R;
-// declare function test2({ a }?: { a: "string" })
-// declare
-// function not_a_declaration() {}
-//
-// test_err ts ts_declare_function_with_body
-// declare function test<A>(a: A): string { return "ambient function with a body"; }
-pub(crate) fn parse_ts_declare_function_declaration(p: &mut Parser) -> ParsedSyntax {
-    let is_async = is_at_contextual_keyword(p, "async");
-
-    if !is_async && !p.at(T![function]) {
-        return Absent;
-    }
-
-    let m = p.start();
-    let stmt_start = p.cur_tok().start();
-
-    // test_err ts ts_declare_async_function
-    // declare async function test();
-    if is_async {
-        p.error(
-            p.err_builder("'async' modifier cannot be used in an ambient context.")
-                .primary(p.cur_tok().range(), ""),
-        );
-        p.bump_remap(T![async]);
-    }
-
-    p.expect(T![function]);
-    parse_binding(p).or_add_diagnostic(p, expected_binding);
-    parse_ts_type_parameters(p).ok();
-    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
-        .or_add_diagnostic(p, expected_parameters);
-    parse_ts_return_type_annotation(p).ok();
-
-    if let Present(body) = parse_function_body(p, SignatureFlags::empty()) {
-        p.error(
-            p.err_builder("A 'declare' function cannot have a function body")
-                .primary(body.range(p), "remove this body"),
-        );
-    }
-
-    semi(p, stmt_start..p.cur_tok().start());
-
-    Present(if is_async {
-        m.complete(p, JS_UNKNOWN_STATEMENT)
-    } else {
-        m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
-    })
-}
-
+#[inline]
 pub(crate) fn is_at_ts_interface_declaration(p: &Parser) -> bool {
     if !is_at_contextual_keyword(p, "interface") || p.has_linebreak_before_n(1) {
         return false;
@@ -361,4 +318,158 @@ fn parse_ts_extends_clause(p: &mut Parser) -> ParsedSyntax {
     p.bump(T![extends]);
     expect_ts_type_list(p, "extends");
     Present(m.complete(p, TS_EXTENDS_CLAUSE))
+}
+
+#[inline]
+pub(crate) fn is_at_any_ts_namespace_declaration(p: &Parser) -> bool {
+    if p.has_linebreak_before_n(1) {
+        return false;
+    }
+
+    if is_at_contextual_keyword(p, "namespace") || is_at_contextual_keyword(p, "module") {
+        return is_nth_at_identifier(p, 1) || p.nth_at(1, JS_STRING_LITERAL);
+    }
+
+    if is_at_contextual_keyword(p, "global") {
+        return p.nth_at(1, T!['{']);
+    }
+
+    false
+}
+
+#[inline]
+pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &Parser, n: usize) -> bool {
+    if p.has_linebreak_before_n(n + 1) {
+        return false;
+    }
+
+    if is_nth_at_contextual_keyword(p, n, "namespace")
+        || is_nth_at_contextual_keyword(p, n, "module")
+    {
+        return is_nth_at_identifier(p, n + 1) || p.nth_at(n + 1, JS_STRING_LITERAL);
+    }
+
+    if is_nth_at_contextual_keyword(p, n, "global") {
+        return p.nth_at(n + 1, T!['{']);
+    }
+
+    false
+}
+
+pub(crate) fn parse_any_ts_namespace_declaration_clause(
+    p: &mut Parser,
+    stmt_start_pos: usize,
+) -> ParsedSyntax {
+    if is_at_contextual_keyword(p, "global") {
+        parse_ts_global_declaration(p)
+    } else if is_at_contextual_keyword(p, "namespace") || is_at_contextual_keyword(p, "module") {
+        parse_ts_namespace_or_module_declaration_clause(p, stmt_start_pos)
+    } else {
+        Absent
+    }
+}
+
+pub(crate) fn parse_any_ts_namespace_declaration_statement(p: &mut Parser) -> ParsedSyntax {
+    parse_any_ts_namespace_declaration_clause(p, p.cur_tok().start())
+}
+
+// test ts ts_namespace_declaration
+// declare namespace a {}
+// declare namespace a.b.c.d {}
+// declare namespace a.b { function test(): string }
+// namespace X { }
+//
+// test ts ts_module_declaration
+// declare module a {}
+// declare module a.b.c.d {}
+// declare module a.b { function test(): string }
+// module X {}
+//
+// test ts ts_external_module_declaration
+// declare module "a";
+// declare module "./import" {}
+//
+// test_err ts ts_module_err
+// declare module a; // missing body
+// declare module "a" declare module "b"; // missing semi
+fn parse_ts_namespace_or_module_declaration_clause(
+    p: &mut Parser,
+    stmt_start_pos: usize,
+) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "namespace") && !is_at_contextual_keyword(p, "module") {
+        return Absent;
+    }
+
+    let m = p.start();
+
+    if !eat_contextual_keyword(p, "namespace", T![namespace]) {
+        expect_contextual_keyword(p, "module", T![module]);
+
+        if p.at(JS_STRING_LITERAL) {
+            parse_module_source(p).expect("expected module source to be present because parser is positioned at a string literal");
+
+            let body = parse_ts_module_block(p);
+
+            if body.is_absent() {
+                let body = p.start();
+                semi(p, stmt_start_pos..p.cur_tok().end());
+                body.complete(p, TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY);
+            }
+
+            return Present(m.complete(p, TS_EXTERNAL_MODULE_DECLARATION));
+        }
+    }
+
+    parse_ts_module_name(p).or_add_diagnostic(p, expected_identifier);
+
+    parse_ts_module_block(p).or_add_diagnostic(p, |_, _| expected_token(T!['{']));
+    Present(m.complete(p, TS_MODULE_DECLARATION))
+}
+
+fn parse_ts_module_name(p: &mut Parser) -> ParsedSyntax {
+    let mut left = parse_ts_identifier_binding(p);
+
+    while p.at(T![.]) {
+        let m = left.precede_or_add_diagnostic(p, expected_identifier);
+        p.bump(T![.]);
+        parse_name(p).or_add_diagnostic(p, expected_identifier);
+        left = Present(m.complete(p, TS_QUALIFIED_MODULE_NAME));
+    }
+
+    left
+}
+
+fn parse_ts_module_block(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T!['{']) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T!['{']);
+    parse_module_item_list(p, ModuleItemListParent::Block);
+    p.expect(T!['}']);
+
+    Present(m.complete(p, TS_MODULE_BLOCK))
+}
+
+// test ts ts_global_declaration
+// declare module "./test" {
+//  global {
+//      let VERSION: string;
+//  }
+// }
+//
+// test ts ts_global_variable
+// let global;
+// global // not a global declaration
+// console.log("a");
+fn parse_ts_global_declaration(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "global") {
+        return Absent;
+    }
+
+    let m = p.start();
+    expect_contextual_keyword(p, "global", T![global]);
+    parse_ts_module_block(p).or_add_diagnostic(p, |_, _| expected_token(T!['{']));
+    Present(m.complete(p, TS_GLOBAL_DECLARATION))
 }

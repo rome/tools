@@ -1,0 +1,86 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsDeclareStatement {
+            declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
+            declaration: TsExternalModuleDeclaration {
+                module_token: MODULE_KW@8..15 "module" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@15..24 "\"./test\"" [] [Whitespace(" ")],
+                },
+                body: TsModuleBlock {
+                    l_curly_token: L_CURLY@24..25 "{" [] [],
+                    items: JsModuleItemList [
+                        TsGlobalDeclaration {
+                            global_token: GLOBAL_KW@25..34 "global" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
+                            body: TsModuleBlock {
+                                l_curly_token: L_CURLY@34..35 "{" [] [],
+                                items: JsModuleItemList [
+                                    JsVariableStatement {
+                                        declaration: JsVariableDeclaration {
+                                            kind: LET_KW@35..45 "let" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")],
+                                            declarators: JsVariableDeclaratorList [
+                                                JsVariableDeclarator {
+                                                    id: JsIdentifierBinding {
+                                                        name_token: IDENT@45..52 "VERSION" [] [],
+                                                    },
+                                                    variable_annotation: TsTypeAnnotation {
+                                                        colon_token: COLON@52..54 ":" [] [Whitespace(" ")],
+                                                        ty: TsStringType {
+                                                            string_token: STRING_KW@54..60 "string" [] [],
+                                                        },
+                                                    },
+                                                    initializer: missing (optional),
+                                                },
+                                            ],
+                                        },
+                                        semicolon_token: SEMICOLON@60..61 ";" [] [],
+                                    },
+                                ],
+                                r_curly_token: R_CURLY@61..64 "}" [Newline("\n"), Whitespace(" ")] [],
+                            },
+                        },
+                    ],
+                    r_curly_token: R_CURLY@64..66 "}" [Newline("\n")] [],
+                },
+            },
+        },
+    ],
+    eof_token: EOF@66..67 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..67
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..66
+    0: TS_DECLARE_STATEMENT@0..66
+      0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
+      1: TS_EXTERNAL_MODULE_DECLARATION@8..66
+        0: MODULE_KW@8..15 "module" [] [Whitespace(" ")]
+        1: JS_MODULE_SOURCE@15..24
+          0: JS_STRING_LITERAL@15..24 "\"./test\"" [] [Whitespace(" ")]
+        2: TS_MODULE_BLOCK@24..66
+          0: L_CURLY@24..25 "{" [] []
+          1: JS_MODULE_ITEM_LIST@25..64
+            0: TS_GLOBAL_DECLARATION@25..64
+              0: GLOBAL_KW@25..34 "global" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
+              1: TS_MODULE_BLOCK@34..64
+                0: L_CURLY@34..35 "{" [] []
+                1: JS_MODULE_ITEM_LIST@35..61
+                  0: JS_VARIABLE_STATEMENT@35..61
+                    0: JS_VARIABLE_DECLARATION@35..60
+                      0: LET_KW@35..45 "let" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
+                      1: JS_VARIABLE_DECLARATOR_LIST@45..60
+                        0: JS_VARIABLE_DECLARATOR@45..60
+                          0: JS_IDENTIFIER_BINDING@45..52
+                            0: IDENT@45..52 "VERSION" [] []
+                          1: TS_TYPE_ANNOTATION@52..60
+                            0: COLON@52..54 ":" [] [Whitespace(" ")]
+                            1: TS_STRING_TYPE@54..60
+                              0: STRING_KW@54..60 "string" [] []
+                          2: (empty)
+                    1: SEMICOLON@60..61 ";" [] []
+                2: R_CURLY@61..64 "}" [Newline("\n"), Whitespace(" ")] []
+          2: R_CURLY@64..66 "}" [Newline("\n")] []
+  3: EOF@66..67 "" [Newline("\n")] []

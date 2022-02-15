@@ -33,6 +33,9 @@ impl ToFormatElement for JsAnyStatement {
             Self::TsInterfaceDeclaration(node) => node.to_format_element(formatter),
             Self::TsDeclareFunctionDeclaration(node) => node.to_format_element(formatter),
             Self::TsDeclareStatement(node) => node.to_format_element(formatter),
+            Self::TsModuleDeclaration(node) => node.to_format_element(formatter),
+            Self::TsExternalModuleDeclaration(node) => node.to_format_element(formatter),
+            Self::TsGlobalDeclaration(node) => node.to_format_element(formatter),
         }
     }
 }

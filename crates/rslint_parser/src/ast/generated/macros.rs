@@ -764,6 +764,12 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::TsDefiniteVariableAnnotation::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY => {
+                    let $pattern = unsafe {
+                        $crate::ast::TsEmptyExternalModuleDeclarationBody::new_unchecked(node)
+                    };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_ENUM_DECLARATION => {
                     let $pattern = unsafe { $crate::ast::TsEnumDeclaration::new_unchecked(node) };
                     $body
@@ -774,6 +780,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::TS_EXTENDS_CLAUSE => {
                     let $pattern = unsafe { $crate::ast::TsExtendsClause::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_EXTERNAL_MODULE_DECLARATION => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsExternalModuleDeclaration::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_EXTERNAL_MODULE_REF => {
@@ -787,6 +798,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 $crate::JsSyntaxKind::TS_GETTER_SIGNATURE_TYPE_MEMBER => {
                     let $pattern =
                         unsafe { $crate::ast::TsGetterSignatureTypeMember::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_GLOBAL_DECLARATION => {
+                    let $pattern = unsafe { $crate::ast::TsGlobalDeclaration::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_IDENTIFIER_BINDING => {
@@ -863,6 +878,14 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::TsMethodSignatureTypeMember::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_MODULE_BLOCK => {
+                    let $pattern = unsafe { $crate::ast::TsModuleBlock::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_MODULE_DECLARATION => {
+                    let $pattern = unsafe { $crate::ast::TsModuleDeclaration::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_NAME_WITH_TYPE_ARGUMENTS => {
                     let $pattern =
                         unsafe { $crate::ast::TsNameWithTypeArguments::new_unchecked(node) };
@@ -923,6 +946,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 $crate::JsSyntaxKind::TS_PROPERTY_SIGNATURE_TYPE_MEMBER => {
                     let $pattern =
                         unsafe { $crate::ast::TsPropertySignatureTypeMember::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_QUALIFIED_MODULE_NAME => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsQualifiedModuleName::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_QUALIFIED_NAME => {

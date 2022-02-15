@@ -12,6 +12,9 @@ impl ToFormatElement for JsAnyDeclarationClause {
             Self::TsTypeAliasDeclaration(node) => node.to_format_element(formatter),
             Self::TsInterfaceDeclaration(node) => node.to_format_element(formatter),
             Self::TsDeclareFunctionDeclaration(node) => node.to_format_element(formatter),
+            Self::TsModuleDeclaration(node) => node.to_format_element(formatter),
+            Self::TsExternalModuleDeclaration(node) => node.to_format_element(formatter),
+            Self::TsGlobalDeclaration(node) => node.to_format_element(formatter),
         }
     }
 }

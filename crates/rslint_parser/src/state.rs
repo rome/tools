@@ -87,6 +87,11 @@ impl ParserState {
         self.parsing_context.contains(ParsingContextFlags::IN_ASYNC)
     }
 
+    pub fn in_ambient_context(&self) -> bool {
+        self.parsing_context
+            .contains(ParsingContextFlags::AMBIENT_CONTEXT)
+    }
+
     pub fn in_constructor(&self) -> bool {
         self.parsing_context
             .contains(ParsingContextFlags::IN_CONSTRUCTOR)
@@ -339,28 +344,31 @@ bitflags! {
     ///   snapshots each individual boolean field to allow restoring the previous state. With bitflags, all that
     ///   is needed is to copy away the flags field and restore it after.
     #[derive(Default)]
-    struct ParsingContextFlags: u8 {
+    pub(crate) struct ParsingContextFlags: u8 {
         /// Whether the parser is in a generator function like `function* a() {}`
         /// Matches the `Yield` parameter in the ECMA spec
         const IN_GENERATOR = 1 << 0;
         /// Whether the parser is inside a function
-        const IN_FUNCTION = 1 << 2;
+        const IN_FUNCTION = 1 << 1;
         /// Whatever the parser is inside a constructor
-        const IN_CONSTRUCTOR = 1 << 3;
+        const IN_CONSTRUCTOR = 1 << 2;
 
         /// Is async allowed in this context. Either because it's an async function or top level await is supported.
         /// Equivalent to the `Async` generator in the ECMA spec
-        const IN_ASYNC = 1 << 4;
+        const IN_ASYNC = 1 << 3;
 
         /// Whether the parser is parsing a top-level statement (not inside a class, function, parameter) or not
-        const TOP_LEVEL = 1 << 5;
+        const TOP_LEVEL = 1 << 4;
 
         /// Whether the parser is in an iteration or switch statement and
         /// `break` is allowed.
-        const BREAK_ALLOWED = 1 << 6;
+        const BREAK_ALLOWED = 1 << 5;
 
         /// Whether the parser is in an iteration statement and `continue` is allowed.
-        const CONTINUE_ALLOWED = 1 << 7;
+        const CONTINUE_ALLOWED = 1 << 6;
+
+        /// Whatever the parser is in a TypeScript ambient context
+        const AMBIENT_CONTEXT = 1 << 7;
 
         const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
@@ -375,24 +383,32 @@ bitflags! {
 #[derive(Debug, Default, Copy, Clone)]
 pub(crate) struct ParsingContextFlagsSnapshot(ParsingContextFlags);
 
+pub(crate) trait ChangeParserStateFlags {
+    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags;
+}
+
+impl<T: ChangeParserStateFlags> ChangeParserState for T {
+    type Snapshot = ParsingContextFlagsSnapshot;
+
+    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        let new_flags = self.compute_new_flags(state.parsing_context);
+        ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, new_flags))
+    }
+
+    fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        state.parsing_context = value.0
+    }
+}
+
 /// Enters the parsing of function/method parameters
 pub(crate) struct EnterParameters(
     /// Whether async and yield are reserved keywords
     pub(crate) SignatureFlags,
 );
 
-impl ChangeParserState for EnterParameters {
-    type Snapshot = ParsingContextFlagsSnapshot;
-
-    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        let flags = (state.parsing_context - ParsingContextFlags::PARAMETER_RESET_MASK)
-            | ParsingContextFlags::from(self.0);
-
-        ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, flags))
-    }
-
-    fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.parsing_context = value.0;
+impl ChangeParserStateFlags for EnterParameters {
+    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags {
+        (existing - ParsingContextFlags::PARAMETER_RESET_MASK) | ParsingContextFlags::from(self.0)
     }
 }
 
@@ -407,21 +423,15 @@ pub(crate) enum BreakableKind {
 
 pub(crate) struct EnterBreakable(pub(crate) BreakableKind);
 
-impl ChangeParserState for EnterBreakable {
-    type Snapshot = ParsingContextFlagsSnapshot;
-
-    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        let mut flags = state.parsing_context | ParsingContextFlags::BREAK_ALLOWED;
+impl ChangeParserStateFlags for EnterBreakable {
+    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags {
+        let mut flags = existing | ParsingContextFlags::BREAK_ALLOWED;
 
         if self.0 == BreakableKind::Iteration {
             flags |= ParsingContextFlags::CONTINUE_ALLOWED;
         }
 
-        ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, flags))
-    }
-
-    fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.parsing_context = value.0;
+        flags
     }
 }
 
@@ -459,19 +469,12 @@ impl ChangeParserState for EnterFunction {
 
 pub(crate) struct EnterClassPropertyInitializer;
 
-impl ChangeParserState for EnterClassPropertyInitializer {
-    type Snapshot = ParsingContextFlagsSnapshot;
-
-    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        let flags = state.parsing_context
+impl ChangeParserStateFlags for EnterClassPropertyInitializer {
+    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags {
+        existing
             - ParsingContextFlags::TOP_LEVEL
             - ParsingContextFlags::IN_ASYNC
-            - ParsingContextFlags::IN_GENERATOR;
-        ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, flags))
-    }
-
-    fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.parsing_context = value.0;
+            - ParsingContextFlags::IN_GENERATOR
     }
 }
 
@@ -544,17 +547,16 @@ impl ChangeParserState for WithLabel {
 /// Sets the state changes needed when parsing a TS type declaration (async and await are not reserved identifiers)
 pub(crate) struct EnterType;
 
-impl ChangeParserState for EnterType {
-    type Snapshot = ParsingContextFlagsSnapshot;
-
-    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        let new_flags = state.parsing_context
-            - ParsingContextFlags::IN_ASYNC
-            - ParsingContextFlags::IN_GENERATOR;
-        ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, new_flags))
+impl ChangeParserStateFlags for EnterType {
+    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags {
+        existing - ParsingContextFlags::IN_ASYNC - ParsingContextFlags::IN_GENERATOR
     }
+}
 
-    fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.parsing_context = value.0;
+pub(crate) struct EnterAmbientContext;
+
+impl ChangeParserStateFlags for EnterAmbientContext {
+    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags {
+        existing | ParsingContextFlags::AMBIENT_CONTEXT
     }
 }
