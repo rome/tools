@@ -1,7 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    block_indent, concat_elements, format_elements, join_elements, soft_line_break, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    concat_elements, format_elements, hard_line_break, indent, join_elements, soft_line_break,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
     JsCallExpression, JsComputedMemberExpression, JsImportCallExpression, JsStaticMemberExpression,
@@ -119,33 +119,27 @@ pub fn format_call_expression(
 
     flatten_call_expression(&mut flattened_expression, syntax_node.to_owned(), formatter)?;
 
-    let (first_group, current_index) = compute_first_group(&flattened_expression)?;
-    let rest_of_groups = compute_groups(&flattened_expression, current_index)?;
+    let (first_group, rest_of_flatten_items) = compute_first_group(&flattened_expression)?;
+    let rest_of_groups = compute_groups(&rest_of_flatten_items)?;
 
     Ok(format_groups(&first_group, rest_of_groups))
 }
 
-/// Computes the first group
-fn compute_first_group(flatten_items: &[FlattenItem]) -> FormatResult<(Vec<FlattenItem>, usize)> {
-    let mut group = vec![];
+/// Computes the first group by keeping track of the index where to split the given flatten_items
+fn compute_first_group(
+    flatten_items: &[FlattenItem],
+) -> FormatResult<(&[FlattenItem], &[FlattenItem])> {
     let mut current_index = 0;
     let first_iter = flatten_items.iter();
     let second_iter = flatten_items.iter();
     for (index, item) in first_iter.enumerate() {
+        // the first element will always be part of the first group
         if index == 0 {
             current_index = index;
-
-            group.push(item.into());
         } else {
             match item {
-                FlattenItem::CallExpression(_, _) => {
+                FlattenItem::CallExpression(_, _) | FlattenItem::ComputedExpression(_, _) => {
                     current_index = index;
-                    group.push(item.into());
-                }
-
-                FlattenItem::ComputedExpression(_, _) => {
-                    current_index = index;
-                    group.push(item.into());
                 }
 
                 _ => break,
@@ -153,14 +147,15 @@ fn compute_first_group(flatten_items: &[FlattenItem]) -> FormatResult<(Vec<Flatt
         }
     }
     if !flatten_items[0].is_call_expression() {
+        // here we want to check cases like: something.else.execute()
+        //                                   ^^^^^^^^^^^^^^
+        // Consecutive member expressions will be part of the same group
         for (index, item) in second_iter.enumerate() {
             if index > current_index {
                 if let FlattenItem::StaticMember(_, _) = item {
                     let next_flatten_item = &flatten_items[index + 1];
                     if matches!(next_flatten_item, FlattenItem::StaticMember(_, _)) {
                         current_index = index;
-
-                        group.push(item.into())
                     }
                 } else {
                     break;
@@ -169,44 +164,38 @@ fn compute_first_group(flatten_items: &[FlattenItem]) -> FormatResult<(Vec<Flatt
         }
     }
 
-    Ok((group, current_index))
+    Ok(flatten_items.split_at(current_index + 1))
 }
 
 /// computes groups coming after the first group
-fn compute_groups(flatten_items: &[FlattenItem], current_index: usize) -> FormatResult<Groups> {
-    let filtered_items = flatten_items
-        .iter()
-        .enumerate()
-        .filter_map(|(index, item)| {
-            if index > current_index {
-                Some(item)
-            } else {
-                None
-            }
-        });
+fn compute_groups(flatten_items: &[FlattenItem]) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
     let mut groups = Groups::default();
-    for item in filtered_items {
+    for item in flatten_items {
         match item {
             FlattenItem::StaticMember(_, _) => {
+                // if we have seen a JsCallExpression, we want to close the group.
+                // The resultant group will be something like: [ . , then, () ];
+                // `.` and `then` belong to the previous StaticMemberExpression,
+                // and `()` belong to the call expression we just encountered
                 if has_seen_call_expression {
                     groups.close_group();
-                    groups.start_or_continue_group(item);
+                    groups.start_or_continue_group(item.clone());
                     has_seen_call_expression = false;
                 } else {
-                    groups.start_or_continue_group(item);
+                    groups.start_or_continue_group(item.clone());
                 }
             }
             FlattenItem::CallExpression(_, _) => {
-                groups.start_or_continue_group(item);
+                groups.start_or_continue_group(item.clone());
                 if item.is_loose_call_expression() {
                     has_seen_call_expression = true;
                 }
             }
             FlattenItem::ComputedExpression(_, _) => {
-                groups.start_or_continue_group(item);
+                groups.start_or_continue_group(item.clone());
             }
-            FlattenItem::Node(_, _) => groups.continue_group(item),
+            FlattenItem::Node(_, _) => groups.continue_group(item.clone()),
         }
     }
     // closing possible loose groups
@@ -229,25 +218,6 @@ pub(crate) enum FlattenItem {
     Node(SyntaxNode, FormatElement),
 }
 
-impl From<&FlattenItem> for FlattenItem {
-    fn from(item: &FlattenItem) -> Self {
-        match item {
-            FlattenItem::StaticMember(node, formatted) => {
-                FlattenItem::StaticMember(node.clone(), formatted.clone())
-            }
-            FlattenItem::CallExpression(node, formatted) => {
-                FlattenItem::CallExpression(node.clone(), formatted.clone())
-            }
-            FlattenItem::ComputedExpression(node, formatted) => {
-                FlattenItem::ComputedExpression(node.clone(), formatted.clone())
-            }
-            FlattenItem::Node(node, formatted) => {
-                FlattenItem::Node(node.clone(), formatted.clone())
-            }
-        }
-    }
-}
-
 impl FlattenItem {
     /// checks if the current node is a [rslint_parser::ast::JsCallExpression] or a [rslint_parser::ast::JsImportExpression]
     pub fn is_loose_call_expression(&self) -> bool {
@@ -263,16 +233,6 @@ impl FlattenItem {
     pub fn is_call_expression(&self) -> bool {
         matches!(&self, FlattenItem::CallExpression(_, _))
     }
-
-    /// It returns a [rome_formatter::FormatElement] of the current flatten item
-    pub fn get_format_element(self) -> FormatElement {
-        match self {
-            FlattenItem::StaticMember(_, formatted) => concat_elements(formatted),
-            FlattenItem::CallExpression(_, formatted) => concat_elements(formatted),
-            FlattenItem::ComputedExpression(_, formatted) => concat_elements(formatted),
-            FlattenItem::Node(_, formatted) => formatted,
-        }
-    }
 }
 
 impl Display for FlattenItem {
@@ -286,6 +246,17 @@ impl Display for FlattenItem {
                 writeln!(f, "ComputedExpression: {:?}", formatted)
             }
             FlattenItem::Node(_, formatted) => writeln!(f, "{:?}", formatted),
+        }
+    }
+}
+
+impl From<FlattenItem> for FormatElement {
+    fn from(flatten_item: FlattenItem) -> Self {
+        match flatten_item {
+            FlattenItem::StaticMember(_, formatted) => concat_elements(formatted),
+            FlattenItem::CallExpression(_, formatted) => concat_elements(formatted),
+            FlattenItem::ComputedExpression(_, formatted) => concat_elements(formatted),
+            FlattenItem::Node(_, formatted) => formatted,
         }
     }
 }
@@ -325,9 +296,7 @@ impl Groups {
     pub fn close_group(&mut self) {
         if !self.current_group.is_empty() {
             let mut elements = vec![];
-            for element in &self.current_group {
-                elements.push(element.clone())
-            }
+            std::mem::swap(&mut elements, &mut self.current_group);
             self.groups.push(elements);
             self.current_group.clear();
         }
@@ -343,11 +312,7 @@ impl Groups {
         self.groups
             .iter()
             .map(|group| {
-                concat_elements(
-                    group
-                        .iter()
-                        .map(|flatten_item| flatten_item.clone().get_format_element()),
-                )
+                concat_elements(group.iter().map(|flatten_item| flatten_item.clone().into()))
             })
             .collect()
     }
@@ -369,11 +334,14 @@ impl Groups {
 fn format_groups(first_group: &[FlattenItem], groups: Groups) -> FormatElement {
     let first_formatted_group: Vec<FormatElement> = first_group
         .iter()
-        .map(|flatten_item| flatten_item.clone().get_format_element())
+        .map(|flatten_item| flatten_item.clone().into())
         .collect();
 
     let formatted_groups = if groups.groups_should_break() {
-        block_indent(groups.get_formatted_joined_groups())
+        indent(format_elements![
+            hard_line_break(),
+            groups.get_formatted_joined_groups()
+        ])
     } else {
         groups.get_formatted_concat_groups()
     };

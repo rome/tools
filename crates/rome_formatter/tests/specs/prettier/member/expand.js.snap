@@ -71,8 +71,7 @@ const promises2 = [
         console.log(err);
         return null;
       },
-    )
-  ,
+    ),
   redis.fetch(),
   other.fetch(),
 ];

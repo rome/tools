@@ -120,8 +120,7 @@ Observable
   .merge(Observable.never())
   // Get the errors.
   .takeUntil(throwOnError ? errors.flatMap(Observable.throw) : errors)
-  .takeUntil(exit)
-;
+  .takeUntil(exit);
 
 // Comments disappear inside of JSX
 <div>

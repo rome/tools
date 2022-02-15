@@ -35,8 +35,7 @@ domain
   .val("title", "string")
   .val("color", "Color")
   .val("foo", "Foo")
-  .val("bar", "Bar")
-;
+  .val("bar", "Bar");
 domain.concept("Widget").val("title", "string").val("color", "Color");
 domain.concept(CONCEPT_NAME).val("title").vals();
 
