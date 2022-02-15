@@ -141,18 +141,6 @@ pub(crate) fn expected_named_import_specifier(p: &Parser, range: Range<usize>) -
     expected_node("identifier", range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_local_name_for_default_import(
-    p: &Parser,
-    range: Range<usize>,
-) -> Diagnostic {
-    p.err_builder("`default` imports must be aliased")
-        .primary(p.cur_tok().range(), "`default` used here")
-        .secondary(
-            range.end..range.end,
-            "add the `as` keyword followed by an identifier name here",
-        )
-}
-
 pub(crate) fn duplicate_assertion_keys_error(
     p: &Parser,
     key: &str,

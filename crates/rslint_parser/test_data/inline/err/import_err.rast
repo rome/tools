@@ -155,13 +155,13 @@ JsModule {
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@120..122 "{" [] [Whitespace(" ")],
                     specifiers: JsNamedImportSpecifierList [
-                        JsShorthandNamedImportSpecifier {
+                        JsNamedImportSpecifier {
                             type_token: missing (optional),
-                            local_name: JsUnknownBinding {
-                                items: [
-                                    DEFAULT_KW@122..130 "default" [] [Whitespace(" ")],
-                                ],
+                            name: JsLiteralExportName {
+                                value: IDENT@122..130 "default" [] [Whitespace(" ")],
                             },
+                            as_token: missing (required),
+                            local_name: missing (required),
                         },
                     ],
                     r_curly_token: R_CURLY@130..132 "}" [] [Whitespace(" ")],
@@ -390,10 +390,12 @@ JsModule {
         2: JS_NAMED_IMPORT_SPECIFIERS@120..132
           0: L_CURLY@120..122 "{" [] [Whitespace(" ")]
           1: JS_NAMED_IMPORT_SPECIFIER_LIST@122..130
-            0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@122..130
+            0: JS_NAMED_IMPORT_SPECIFIER@122..130
               0: (empty)
-              1: JS_UNKNOWN_BINDING@122..130
-                0: DEFAULT_KW@122..130 "default" [] [Whitespace(" ")]
+              1: JS_LITERAL_EXPORT_NAME@122..130
+                0: IDENT@122..130 "default" [] [Whitespace(" ")]
+              2: (empty)
+              3: (empty)
           2: R_CURLY@130..132 "}" [] [Whitespace(" ")]
         3: FROM_KW@132..137 "from" [] [Whitespace(" ")]
         4: JS_MODULE_SOURCE@137..140
@@ -511,13 +513,11 @@ error[SyntaxError]: expected `,` but instead found `+`
   │             ^ unexpected
 
 --
-error[SyntaxError]: `default` imports must be aliased
-  ┌─ import_err.js:6:10
+error[SyntaxError]: expected `as` but instead found `}`
+  ┌─ import_err.js:6:18
   │
 6 │ import { default } from "c";
-  │          ^^^^^^^- add the `as` keyword followed by an identifier name here
-  │          │       
-  │          `default` used here
+  │                  ^ unexpected
 
 --
 error[SyntaxError]: expected `as` but instead found `}`

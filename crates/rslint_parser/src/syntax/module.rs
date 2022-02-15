@@ -5,17 +5,15 @@ use crate::syntax::binding::{
 };
 use crate::syntax::class::parse_export_default_class_case;
 use crate::syntax::expr::{
-    is_nth_at_expression, is_nth_at_identifier, is_nth_at_reference_identifier,
-    parse_assignment_expression_or_higher, parse_name, parse_reference_identifier,
-    ExpressionContext,
+    is_nth_at_expression, is_nth_at_reference_identifier, parse_assignment_expression_or_higher,
+    parse_name, parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::parse_export_default_function_case;
 use crate::syntax::js_parse_error::{
     duplicate_assertion_keys_error, expected_binding, expected_declaration, expected_export_clause,
     expected_export_name_specifier, expected_expression, expected_identifier,
-    expected_literal_export_name, expected_local_name_for_default_import, expected_module_source,
-    expected_named_import, expected_named_import_specifier, expected_statement,
-    ts_only_syntax_error,
+    expected_literal_export_name, expected_module_source, expected_named_import,
+    expected_named_import_specifier, expected_statement, ts_only_syntax_error,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
 use crate::syntax::typescript::{parse_ts_import_equals_declaration_rest, parse_ts_name};
@@ -164,8 +162,8 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
     // import type foo from "./mod";
     // import type * as foo2 from "./mod";
     // import type { foo3 } from "mod";
-    let is_typed = if is_at_contextual_keyword(p, "type") {
-        let is_type_import = match p.nth(1) {
+    let is_typed = is_at_contextual_keyword(p, "type")
+        && match p.nth(1) {
             T![*] | T!['{'] => true,
             _ if is_nth_at_identifier_binding(p, 1)
                 && !is_nth_at_contextual_keyword(p, 1, "from") =>
@@ -175,15 +173,9 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
             _ => false,
         };
 
-        if is_type_import {
-            expect_contextual_keyword(p, "type", T![type]);
-            true
-        } else {
-            false
-        }
-    } else {
-        false
-    };
+    if is_typed {
+        expect_contextual_keyword(p, "type", T![type]);
+    }
 
     let clause = match p.cur() {
         T![*] => parse_import_namespace_clause_rest(p, m),
@@ -369,7 +361,7 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
 
-    if p.at(JS_STRING_LITERAL) {
+    if p.at(JS_STRING_LITERAL) || p.cur().is_keyword() {
         // import { "name" ... } must be a named export because of the string literal
         parse_literal_export_name(p).unwrap();
         expect_contextual_keyword(p, "as", T![as]);
@@ -407,17 +399,6 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
         expect_contextual_keyword(p, "as", T![as]);
         parse_binding(p).or_add_diagnostic(p, expected_binding);
         m.complete(p, JS_NAMED_IMPORT_SPECIFIER)
-    } else if p.at(T![default]) {
-        // import { default } from "test"
-        p.error(expected_local_name_for_default_import(
-            p,
-            p.cur_tok().range(),
-        ));
-
-        let binding = p.start();
-        p.bump_any();
-        binding.complete(p, JS_UNKNOWN_BINDING);
-        m.complete(p, JS_SHORTHAND_NAMED_IMPORT_SPECIFIER)
     } else {
         // test import_as_identifier
         // import { as } from "test";
