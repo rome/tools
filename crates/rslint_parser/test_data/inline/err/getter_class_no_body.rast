@@ -6,7 +6,7 @@ JsModule {
             abstract_token: missing (optional),
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
-                name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
+                name_token: IDENT@6..14 "Getters" [] [Whitespace(" ")],
             },
             type_parameters: missing (optional),
             extends_clause: missing (optional),
@@ -41,7 +41,7 @@ JsModule {
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@6..14
-        0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
+        0: IDENT@6..14 "Getters" [] [Whitespace(" ")]
       3: (empty)
       4: (empty)
       5: (empty)
@@ -68,5 +68,5 @@ error[SyntaxError]: expected a class method body but instead found ''
   │ ^ Expected a class method body here
 
 --
-class Setters {
+class Getters {
   get foo()

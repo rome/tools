@@ -1,2 +1,2 @@
-class Setters {
+class Getters {
   get foo()

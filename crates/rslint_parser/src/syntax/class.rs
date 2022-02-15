@@ -37,7 +37,7 @@ use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
 
 use super::function::LineBreak;
-use super::typescript::ts_parse_error;
+use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
 use super::util::eat_contextual_keyword;
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
@@ -595,10 +595,7 @@ fn parse_class_member_impl(
                     //  get {}
                     // }
                     //
-                    // test_err getter_class_no_body
-                    // class Setters {
-                    //   get foo()
-                    //
+
                     // test setter_class_member
                     // class Setters {
                     //   set foo(a) {}
@@ -619,10 +616,6 @@ fn parse_class_member_impl(
                     // class Setters {
                     //   set foo() {}
                     // }
-                    //
-                    // test_err setter_class_no_body
-                    // class Setters {
-                    //   set foo(a)
 
                     // The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
                     // out that the 'get' or 'set' isn't a member name in this context but instead are the
@@ -630,7 +623,7 @@ fn parse_class_member_impl(
                     // extract the 'get'/'set' ident token and change its kind to 'get'/'set'
                     match p.events[(member_name.start_pos as usize) + 1] {
                         Event::Token { ref mut kind, .. } => {
-                            *kind = if is_getter { T![get] } else { T![set] }
+                            *kind = if is_getter { T![get] } else { T![set] };
                         }
                         _ => unreachable!(),
                     };
@@ -658,7 +651,7 @@ fn parse_class_member_impl(
                         p.expect(T![')']);
                         parse_ts_type_annotation_or_error(p).ok();
 
-                        parse_method_body(p, modifiers, SignatureFlags::empty());
+                        parse_method_body(p, modifiers, SignatureFlags::GETTER);
 
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
@@ -686,7 +679,7 @@ fn parse_class_member_impl(
                             ));
                         }
 
-                        parse_method_body(p, modifiers, SignatureFlags::empty());
+                        parse_method_body(p, modifiers, SignatureFlags::SETTER);
                         member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
                     };
 
@@ -1053,29 +1046,26 @@ fn parse_method_class_member_rest(
 fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: SignatureFlags) {
     let body = parse_function_body(p, flags);
 
-    // test_err ts typescript_class_member_body
-    // class AbstractMembers {
-    //     constructor();
-    //     name(): string;
-    //     get my_name();
-    //     set my_name(name);
-    //     #private_name();
-    // }
+    // test_err ts typescript_abstract_class_member_should_not_have_body
     // abstract class AbstractMembers {
     //     abstract constructor() { }
-    //     abstract display(): void { console.log(this.name); }
-    //     abstract get my_name() { return this.name; }
-    //     abstract set my_name(name) { this.name = name; }
+    //     abstract display(): void { }
+    //     abstract get my_name() { }
+    //     abstract set my_name(name) { }
     //     abstract #private_name() { }
     // }
-    let is_abstract = modifiers.has(ModifierKind::Abstract);
-    if !is_abstract {
+    if modifiers.has(ModifierKind::Abstract) {
+        body.add_diagnostic_if_present(p, unexpected_abstract_member_with_body);
+    }
+    // test_err getter_class_no_body
+    // class Getters {
+    //   get foo()
+
+    // test_err setter_class_no_body
+    // class Setters {
+    //   set foo(a)
+    else if flags.contains(SignatureFlags::GETTER) || flags.contains(SignatureFlags::SETTER) {
         body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-    } else {
-        body.add_diagnostic_if_present(
-            p,
-            crate::syntax::typescript::ts_parse_error::unexpected_abstract_member_with_body,
-        );
     }
 }
 
