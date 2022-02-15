@@ -102,7 +102,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     let is_at_class = p.at(T![class]);
-    let is_at_abstract_class = is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck);
+    let is_at_abstract_class = is_at_contextual_keyword(p, "abstract");
     if !is_at_class && !is_at_abstract_class {
         return Absent;
     }
