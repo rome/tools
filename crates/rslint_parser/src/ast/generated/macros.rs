@@ -802,8 +802,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::TsExternalModuleDeclaration::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_EXTERNAL_MODULE_REF => {
-                    let $pattern = unsafe { $crate::ast::TsExternalModuleRef::new_unchecked(node) };
+                $crate::JsSyntaxKind::TS_EXTERNAL_MODULE_REFERENCE => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsExternalModuleReference::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_FUNCTION_TYPE => {
@@ -827,8 +828,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsImplementsClause::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_IMPORT_EQUALS_DECL => {
-                    let $pattern = unsafe { $crate::ast::TsImportEqualsDecl::new_unchecked(node) };
+                $crate::JsSyntaxKind::TS_IMPORT_EQUALS_DECLARATION => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsImportEqualsDeclaration::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_IMPORT_TYPE => {

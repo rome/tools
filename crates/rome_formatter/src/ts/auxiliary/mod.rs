@@ -7,6 +7,7 @@ mod definite_property_annotation;
 mod definite_variable_annotation;
 mod empty_external_module_declaration_body;
 mod enum_member;
+mod external_module_reference;
 mod getter_signature_type_member;
 mod implements_clause;
 mod index_signature_type_member;

@@ -1,6 +1,6 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
 use crate::state::EnterAmbientContext;
-use crate::syntax::binding::parse_binding;
+use crate::syntax::binding::{is_at_identifier_binding, parse_binding};
 use crate::syntax::class::parse_export_default_class_case;
 use crate::syntax::expr::{
     is_nth_at_expression, is_nth_at_reference_identifier, parse_assignment_expression_or_higher,
@@ -15,7 +15,7 @@ use crate::syntax::js_parse_error::{
     ts_only_syntax_error,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
-use crate::syntax::typescript::parse_ts_name;
+use crate::syntax::typescript::{parse_ts_import_equals_declaration_rest, parse_ts_name};
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
     is_nth_at_contextual_keyword,
@@ -89,51 +89,61 @@ pub(crate) fn parse_module_item_list(p: &mut Parser, parent: ModuleItemListParen
 
 fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
     match p.cur() {
-        T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => parse_import(p),
+        T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
+            parse_import_or_import_equals_declaration(p)
+        }
         T![export] => parse_export(p),
         _ => parse_statement(p, StatementContext::StatementList),
     }
 }
 
-// test_err import_err
-// import;
-// import *;
-// import * as c, { a, b } from "c";
-// import { aa + bb, dd } from "c";
-// import { ab, ac } from "c";
-// import { default } from "c";
-// import { "a" } from "c";
-// import { as x } from "c";
-// import 4 from "c";
-// import y from 4;
-pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![import]) {
         return Absent;
     }
 
     let start = p.cur_tok().start();
     let import = p.start();
-    p.bump_any();
+    p.bump(T![import]);
 
     debug_assert!(p.state.name_map.is_empty());
     p.state.duplicate_binding_parent = Some("import");
 
-    parse_import_clause(p).or_add_diagnostic(p, |p, range| {
-        expected_any(
-            &["default import", "namespace import", "named import"],
-            range,
-        )
-        .to_diagnostic(p)
-    });
+    let statement = if is_at_identifier_binding(p) && p.nth_at(1, T![=]) {
+        let import_equals = parse_ts_import_equals_declaration_rest(p, import, start);
+        TypeScript.exclusive_syntax(p, import_equals, |p, decl| {
+            ts_only_syntax_error(p, "'import =' declarations", decl.range(p))
+        })
+    } else {
+        // test_err import_err
+        // import;
+        // import *;
+        // import * as c, { a, b } from "c";
+        // import { aa + bb, dd } from "c";
+        // import { ab, ac } from "c";
+        // import { default } from "c";
+        // import { "a" } from "c";
+        // import { as x } from "c";
+        // import 4 from "c";
+        // import y from 4;
+        parse_import_clause(p).or_add_diagnostic(p, |p, range| {
+            expected_any(
+                &["default import", "namespace import", "named import"],
+                range,
+            )
+            .to_diagnostic(p)
+        });
+
+        let end = p.cur_tok().start();
+
+        semi(p, start..end);
+        Present(import.complete(p, JS_IMPORT))
+    };
 
     p.state.duplicate_binding_parent = None;
     p.state.name_map.clear();
 
-    let end = p.cur_tok().start();
-
-    semi(p, start..end);
-
-    Present(import.complete(p, JS_IMPORT))
+    statement
 }
 
 // test import_default_clause

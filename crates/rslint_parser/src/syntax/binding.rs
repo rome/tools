@@ -22,14 +22,17 @@ pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) 
     }
 }
 
+#[inline]
 pub(crate) fn is_at_identifier_binding(p: &Parser) -> bool {
     is_nth_at_identifier_binding(p, 0)
 }
 
+#[inline]
 pub(crate) fn is_nth_at_identifier_binding(p: &Parser, n: usize) -> bool {
     is_nth_at_identifier(p, n)
 }
 
+#[inline]
 pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
     parse_identifier_binding(p)
 }

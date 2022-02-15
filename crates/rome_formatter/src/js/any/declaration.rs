@@ -15,6 +15,7 @@ impl ToFormatElement for JsAnyDeclaration {
             Self::TsModuleDeclaration(node) => node.to_format_element(formatter),
             Self::TsExternalModuleDeclaration(node) => node.to_format_element(formatter),
             Self::TsGlobalDeclaration(node) => node.to_format_element(formatter),
+            Self::TsImportEqualsDeclaration(node) => node.to_format_element(formatter),
         }
     }
 }
