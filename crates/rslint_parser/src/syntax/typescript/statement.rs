@@ -1,6 +1,6 @@
 use crate::parser::{expected_token, RecoveryResult};
 use crate::syntax::binding::{is_nth_at_identifier_binding, parse_binding};
-use crate::syntax::class::{parse_initializer_clause, ClassMemberModifiers};
+use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
 
 use super::ts_parse_error::expected_ts_enum_member;

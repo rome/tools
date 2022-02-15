@@ -557,7 +557,7 @@ fn parse_class_member_impl(
             //   static async* static() {}
             //   static * static() {}
             // }
-            Present(parse_everything_after_identifier(
+            Present(parse_method_class_member_rest(
                 p,
                 member_marker,
                 modifiers,
@@ -971,7 +971,7 @@ fn parse_method_class_member(
 ) -> CompletedMarker {
     parse_class_member_name(p, &modifiers)
         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
-    parse_everything_after_identifier(p, m, modifiers, flags)
+    parse_method_class_member_rest(p, m, modifiers, flags)
 }
 
 // test_err class_member_method_parameters
@@ -986,7 +986,8 @@ fn parse_method_class_member(
 // }
 
 /// Parses the body (everything after the identifier name) of a method class member
-fn parse_everything_after_identifier(
+/// that includes: parameters and its types, return type and method body
+fn parse_method_class_member_rest(
     p: &mut Parser,
     m: Marker,
     modifiers: ClassMemberModifiers,
