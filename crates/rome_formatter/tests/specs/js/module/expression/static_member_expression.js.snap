@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 163
 expression: static_member_expression.js
 
 ---
@@ -11,6 +11,10 @@ a.#b
 a?.#b
 a?.b.#c
 a?.#b.c().d
+
+lorem.ipsum();
+lorem.ipsum().looooooooooooooooooooooooooong().looooooooooooooooooooooooooong().looooooooooooooooooooooooooong();
+lorem()[0]().ipsum().looooooooooooooooooooooooooong().looooooooooooooooooooooooooong().looooooooooooooooooooooooooong();
 
 =============================
 # Outputs
@@ -25,4 +29,18 @@ a.#b;
 a?.#b;
 a?.b.#c;
 a?.#b.c().d;
+
+lorem.ipsum();
+lorem
+	.ipsum()
+	.looooooooooooooooooooooooooong()
+	.looooooooooooooooooooooooooong()
+	.looooooooooooooooooooooooooong()
+;
+lorem()[0]()
+	.ipsum()
+	.looooooooooooooooooooooooooong()
+	.looooooooooooooooooooooooooong()
+	.looooooooooooooooooooooooooong()
+;
 
