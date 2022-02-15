@@ -1023,6 +1023,7 @@ fn parse_method_class_member_rest(
         .ok();
 
     let abstract_range = modifiers.get_range(ModifierKind::Abstract).cloned();
+    let static_range = modifiers.get_range(ModifierKind::Static).cloned();
     let is_async = flags.contains(SignatureFlags::ASYNC).then(|| true);
 
     parse_method_body(p, modifiers, flags);
@@ -1031,8 +1032,17 @@ fn parse_method_class_member_rest(
 
     // test_err ts typescript_abstract_classes_invalid_abstract_async_member
     // abstract class B { abstract async a(); }
-    if let Some((abstract_range, _)) = abstract_range.zip(is_async) {
-        let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range);
+    if let Some((abstract_range, _)) = abstract_range.as_ref().zip(is_async) {
+        let err = ts_parse_error::abstract_member_cannot_be_async(p, abstract_range.clone());
+        p.error(err);
+        member.change_to_unknown(p);
+    }
+
+    // test_err ts typescript_abstract_classes_invalid_static_abstract_member
+    // abstract class A { abstract static fn1(); }
+    // abstract class B { static abstract fn1(); }
+    if let Some((abstract_range, _)) = abstract_range.zip(static_range) {
+        let err = ts_parse_error::abstract_member_cannot_be_static(p, abstract_range);
         p.error(err);
         member.change_to_unknown(p);
     }

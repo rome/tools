@@ -18,3 +18,8 @@ pub(crate) fn abstract_member_cannot_be_async(p: &Parser, range: Range<usize>) -
     p.err_builder("async members cannot be abstract")
         .primary(range, "")
 }
+
+pub(crate) fn abstract_member_cannot_be_static(p: &Parser, range: Range<usize>) -> Diagnostic {
+    p.err_builder("static members cannot be abstract")
+        .primary(range, "")
+}
