@@ -970,9 +970,6 @@ fn parse_method_class_member(
 // test_err class_member_method_parameters
 // class B { foo(a {} }
 
-// test_err class_member_method_body
-// class B { foo(a)
-
 // test ts ts_method_class_member
 // class Test {
 //   test<A, B extends A, R>(a: A, b: B): R {}
