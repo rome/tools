@@ -1,7 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    block_indent, format_elements, hard_line_break, indent, space_token, token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    block_indent, format_elements, space_token, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rslint_parser::ast::TsMappedType;
 
@@ -30,9 +30,11 @@ impl ToFormatElement for TsMappedType {
                     readonly,
                     l_square,
                     property_name,
+                    space_token(),
                     in_token,
                     space_token(),
                     keys,
+                    space_token(),
                     as_clause,
                     r_square,
                     optional_modifier,

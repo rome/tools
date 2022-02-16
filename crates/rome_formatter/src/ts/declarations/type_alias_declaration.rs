@@ -17,6 +17,7 @@ impl ToFormatElement for TsTypeAliasDeclaration {
             space_token(),
             binding_identifier,
             type_parameters,
+            space_token(),
             equal_token,
             space_token(),
             ty,

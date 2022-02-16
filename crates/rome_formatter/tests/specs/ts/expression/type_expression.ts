@@ -30,6 +30,18 @@ type Z = {
     b: symbol
 }
 
-type OptionsFlags<Type> = {
-  [Property in keyof Type as string]?: boolean;
+type OptionsFlags
+    <Type> =
+    {
+  [Property
+        in
+        keyof
+            Type
+        as              string]?: boolean;
 };
+
+type OptionsFlag
+    <A
+        extends OptionsFlags<any>
+        = any>
+    = string;
