@@ -481,23 +481,9 @@ pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, ap
 mod tests {
 
     use super::{format_range, FormatOptions};
-    use crate::{format, IndentStyle};
+    use crate::IndentStyle;
     use rome_rowan::{TextRange, TextSize};
-    use rslint_parser::{parse, parse_script, Syntax};
-
-    #[test]
-    fn poc() {
-        let src = r#"some.then2().then3();
-"#;
-        let syntax = Syntax::default().typescript();
-        let tree = parse(src, 0, syntax);
-        let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
-        assert_eq!(
-            result.as_code(),
-            r#"some.then2().then3();
-"#
-        );
-    }
+    use rslint_parser::parse_script;
 
     #[test]
     fn test_range_formatting() {
@@ -589,7 +575,8 @@ mod test {
     use rslint_parser::{parse, Syntax};
 
     #[test]
-    fn poc() {
+    // use this test check if your snippet prints as you wish, without using a snapshot
+    fn quick_test() {
         let src = r#"let g = [[], [0, 1], [0, 1]      ];
 "#;
         let syntax = Syntax::default().typescript();

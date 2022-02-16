@@ -7,7 +7,7 @@ use rslint_parser::ast::{
     JsCallExpression, JsComputedMemberExpression, JsImportCallExpression, JsStaticMemberExpression,
 };
 use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode};
-use std::fmt::Display;
+use std::fmt::Debug;
 
 /// Utility function that applies some heuristic to format chain member expressions and call expressions
 ///
@@ -81,19 +81,23 @@ use std::fmt::Display;
 /// ```block
 /// [ Identifier, JsCallExpression, JsStaticMember, JsCallExpression ]
 /// ```
+///
 /// ### Grouping
 ///
 /// After the flattening, we start the grouping. We want to group nodes in a way that will help us
-/// to apply a fancy formatting.
+/// to apply a deterministic formatting.
+/// - first group will be the identifier
+/// - the rest of the groups will be  will start StaticMemberExpression followed by the rest of the nodes,
+/// right before the end of the next StaticMemberExpression
 ///
-/// The first group is particular, because it holds the reference, in a sense it has its own heuristic.
+/// The first group is special, because it holds the reference; it has its own heuristic.
 /// Inside the first group we store the first element of the flattened array, then:
 ///
 /// 1. as many as [rslint_parser::ast::JsCallExpression] we can find, this cover cases like
 /// `something()()().then()`;
 /// 2. as many as [rslint_parser::ast::JsComputedMemberExpression] we can find, this cover cases like
 /// `something()()[1][3].then()`;
-/// 3. as many as consecutive [rslint_parser::ast::JsStaticMemberExpression], this cover cases like
+/// 3. as many as consecutive [rslint_parser::ast::JsStaticMemberExpression] or [rslint_parser::ast::JsComputedExpression], this cover cases like
 /// `this.items[0].then()`
 ///   
 /// The rest of the groups are essentially a sequence of `[StaticMemberExpression , CallExpression]`.
@@ -104,9 +108,9 @@ use std::fmt::Display;
 /// ```block
 /// [
 ///     [ReferenceIdentifier, CallExpression], // with possible computed expressions in the middle
-///     [MemberExpression, MemberExpression, CallExpression],
-///     [MemberExpression, CallExpression],
-///     [MemberExpression],
+///     [StaticMemberExpression, StaticMemberExpression, CallExpression],
+///     [StaticMemberExpression, CallExpression],
+///     [StaticMemberExpression],
 /// ]
 /// ```
 ///
@@ -120,7 +124,7 @@ pub fn format_call_expression(
     flatten_call_expression(&mut flattened_expression, syntax_node.to_owned(), formatter)?;
 
     let (first_group, rest_of_flatten_items) = compute_first_group(&flattened_expression)?;
-    let rest_of_groups = compute_groups(rest_of_flatten_items)?;
+    let rest_of_groups = compute_groups(rest_of_flatten_items.to_owned())?;
 
     Ok(format_groups(first_group, rest_of_groups))
 }
@@ -130,37 +134,34 @@ fn compute_first_group(
     flatten_items: &[FlattenItem],
 ) -> FormatResult<(&[FlattenItem], &[FlattenItem])> {
     let mut current_index = 0;
-    let first_iter = flatten_items.iter();
-    let second_iter = flatten_items.iter();
-    for (index, item) in first_iter.enumerate() {
-        // the first element will always be part of the first group
-        if index == 0 {
-            current_index = index;
-        } else {
-            match item {
-                FlattenItem::CallExpression(_, _) | FlattenItem::ComputedExpression(_, _) => {
-                    current_index = index;
-                }
 
-                _ => break,
+    // the first element will always be part of the first group, so we skip it
+    for (index, item) in flatten_items.iter().enumerate().skip(1) {
+        // This where we apply the first two points explained in the description of the main public function.
+        // We want to keep iterating over the items until we have call expressions or computed expressions:
+        // - `something()()()()`
+        // - `something[1][2][4]`
+        // - `something[1]()[3]()`
+        // - `something()[2].something.else[0]`
+        match item {
+            FlattenItem::CallExpression(_, _) | FlattenItem::ComputedExpression(_, _) => {
+                current_index = index;
             }
-        }
-    }
-    if !flatten_items[0].is_call_expression() {
-        // here we want to check cases like: something.else.execute()
-        //                                   ^^^^^^^^^^^^^^
-        // Consecutive member expressions will be part of the same group
-        for (index, item) in second_iter.enumerate() {
-            if index > current_index {
-                if let FlattenItem::StaticMember(_, _) = item {
+
+            FlattenItem::StaticMember(_, _) => {
+                if !flatten_items[0].is_call_expression() {
                     let next_flatten_item = &flatten_items[index + 1];
-                    if matches!(next_flatten_item, FlattenItem::StaticMember(_, _)) {
+                    if matches!(
+                        next_flatten_item,
+                        FlattenItem::StaticMember(_, _) | FlattenItem::ComputedExpression(_, _)
+                    ) {
                         current_index = index;
+                    } else {
+                        break;
                     }
-                } else {
-                    break;
                 }
             }
+            _ => break,
         }
     }
 
@@ -168,10 +169,10 @@ fn compute_first_group(
 }
 
 /// computes groups coming after the first group
-fn compute_groups(flatten_items: &[FlattenItem]) -> FormatResult<Groups> {
+fn compute_groups(flatten_items: Vec<FlattenItem>) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
     let mut groups = Groups::default();
-    for item in flatten_items {
+    for item in flatten_items.into_iter() {
         match item {
             FlattenItem::StaticMember(_, _) => {
                 // if we have seen a JsCallExpression, we want to close the group.
@@ -180,22 +181,23 @@ fn compute_groups(flatten_items: &[FlattenItem]) -> FormatResult<Groups> {
                 // and `()` belong to the call expression we just encountered
                 if has_seen_call_expression {
                     groups.close_group();
-                    groups.start_or_continue_group(item.clone());
+                    groups.start_or_continue_group(item);
                     has_seen_call_expression = false;
                 } else {
-                    groups.start_or_continue_group(item.clone());
+                    groups.start_or_continue_group(item);
                 }
             }
             FlattenItem::CallExpression(_, _) => {
-                groups.start_or_continue_group(item.clone());
-                if item.is_loose_call_expression() {
+                let is_loose_call_expression = item.is_loose_call_expression();
+                groups.start_or_continue_group(item);
+                if is_loose_call_expression {
                     has_seen_call_expression = true;
                 }
             }
             FlattenItem::ComputedExpression(_, _) => {
-                groups.start_or_continue_group(item.clone());
+                groups.start_or_continue_group(item);
             }
-            FlattenItem::Node(_, _) => groups.continue_group(item.clone()),
+            FlattenItem::Node(_, _) => groups.continue_group(item),
         }
     }
     // closing possible loose groups
@@ -204,7 +206,7 @@ fn compute_groups(flatten_items: &[FlattenItem]) -> FormatResult<Groups> {
     Ok(groups)
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 /// Data structure that holds the node with its formatted version
 pub(crate) enum FlattenItem {
     /// Holds onto a [rslint_parser::ast::JsStaticMemberExpression]
@@ -221,12 +223,11 @@ pub(crate) enum FlattenItem {
 impl FlattenItem {
     /// checks if the current node is a [rslint_parser::ast::JsCallExpression] or a [rslint_parser::ast::JsImportExpression]
     pub fn is_loose_call_expression(&self) -> bool {
-        matches!(&self, FlattenItem::CallExpression(_, _))
-            || if let FlattenItem::Node(node, _) = &self {
-                JsImportCallExpression::can_cast(node.kind())
-            } else {
-                false
-            }
+        match self {
+            FlattenItem::CallExpression(_, _) => true,
+            FlattenItem::Node(node, _) => JsImportCallExpression::can_cast(node.kind()),
+            _ => false,
+        }
     }
 
     /// It strictly checks if the current item is a [rslint_parser::ast::JsCallExpression]
@@ -235,7 +236,7 @@ impl FlattenItem {
     }
 }
 
-impl Display for FlattenItem {
+impl Debug for FlattenItem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             FlattenItem::StaticMember(_, formatted) => writeln!(f, "StaticMember: {:?}", formatted),
@@ -298,7 +299,6 @@ impl Groups {
             let mut elements = vec![];
             std::mem::swap(&mut elements, &mut self.current_group);
             self.groups.push(elements);
-            self.current_group.clear();
         }
     }
 
@@ -308,23 +308,21 @@ impl Groups {
         self.groups.len() > 3
     }
 
-    fn get_formatted_groups(&self) -> Vec<FormatElement> {
+    fn get_formatted_groups(self) -> Vec<FormatElement> {
         self.groups
-            .iter()
-            .map(|group| {
-                concat_elements(group.iter().map(|flatten_item| flatten_item.clone().into()))
-            })
+            .into_iter()
+            .map(|group| concat_elements(group.into_iter().map(|flatten_item| flatten_item.into())))
             .collect()
     }
 
     /// Concatenate groups, without fancy formatting
-    pub fn get_formatted_concat_groups(&self) -> FormatElement {
+    pub fn get_formatted_concat_groups(self) -> FormatElement {
         let formatted_groups = self.get_formatted_groups();
         concat_elements(formatted_groups)
     }
 
     /// Format groups on multiple lines
-    pub fn get_formatted_joined_groups(&self) -> FormatElement {
+    pub fn get_formatted_joined_groups(self) -> FormatElement {
         let formatted_groups = self.get_formatted_groups();
         join_elements(soft_line_break(), formatted_groups)
     }
