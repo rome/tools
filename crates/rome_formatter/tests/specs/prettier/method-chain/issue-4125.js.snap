@@ -233,9 +233,7 @@ const date = moment.utc(userInput).hour(0).minute(0).second(0);
 
 fetchUser(id).then(fetchAccountForUser).catch(handleFetchError);
 
-fetchUser(
-  id,
-).then(fetchAccountForUser).catch(handleFetchError); //
+fetchUser(id).then(fetchAccountForUser).catch(handleFetchError); //
 
 // examples from https://github.com/prettier/prettier/issues/3107
 
@@ -260,9 +258,9 @@ action$.ofType(ActionTypes.SEARCHED_USERS).map((action) => action.payload.query)
   (q) => !!q,
 ).switchMap(
   (q) =>
-    Observable.timer(
-      800,
-    ).takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS)).mergeMap( // debounce
+    Observable.timer(800).takeUntil( // debounce
+      action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS),
+    ).mergeMap(
       () =>
         Observable.merge(
           Observable.of(replace(`?q=${q}`)),

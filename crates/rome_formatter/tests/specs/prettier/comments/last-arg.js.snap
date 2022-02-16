@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: last-arg.js
 
 ---
@@ -59,12 +59,7 @@ class Foo {
 
   d(lol /*string*/ , lol2 /*string*/ , lol3 /*string*/ , lol4 /*string*/ ) {}
 
-  d(
-    lol, /*string*/
-    lol2, /*string*/
-    lol3, /*string*/
-    lol4, /*string*/
-  ) {} /*string*/
+  d(lol /*string*/ , lol2 /*string*/ , lol3 /*string*/ , lol4 /*string*/ ) {} /*string*/
 
   // prettier-ignore
   c(lol /*string*/ ) {}

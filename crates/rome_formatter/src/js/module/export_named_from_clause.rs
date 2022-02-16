@@ -1,8 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
-    empty_element, format_elements, group_elements, if_group_fits_on_single_line,
-    soft_block_indent, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 use rslint_parser::ast::JsExportNamedFromClause;
@@ -11,23 +10,11 @@ impl ToFormatElement for JsExportNamedFromClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let specifiers = self.specifiers().format(formatter)?;
 
-        let list = group_elements(formatter.format_delimited(
+        let list = formatter.format_delimited_soft_block_spaces(
             &self.l_curly_token()?,
-            |leading, trailing| {
-                let space = if leading.is_empty() && specifiers.is_empty() && trailing.is_empty() {
-                    empty_element()
-                } else {
-                    if_group_fits_on_single_line(space_token())
-                };
-
-                Ok(format_elements!(
-                    space.clone(),
-                    soft_block_indent(format_elements![leading, specifiers, trailing]),
-                    space,
-                ))
-            },
+            specifiers,
             &self.r_curly_token()?,
-        )?);
+        )?;
 
         let from = self.from_token().format(formatter)?;
         let source = self.source().format(formatter)?;

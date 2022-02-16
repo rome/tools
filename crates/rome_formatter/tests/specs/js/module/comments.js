@@ -45,3 +45,12 @@ statement(); /* block comment */
 statement();
 
 statement(); // inline
+
+// leading
+[1, 2, 3];
+  
+[1, 2, 3] // trailing
+
+function name() /* comment */ {}
+
+function name(very, long, list, of_parameters, to, insert, a_break, in_the, parameters, group) /* comment */ {}

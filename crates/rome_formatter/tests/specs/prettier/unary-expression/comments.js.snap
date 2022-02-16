@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: comments.js
 
 ---
@@ -324,36 +324,22 @@ x || y);
 !(x || y); // foo
 
 ![1, 2, 3];
-!([1, 2, 3] /* foo */ );
+!([1, 2, 3]); /* foo */
 !([1, 2, 3]); /* foo */
 !(/* foo */
-[
-  1,
-  2,
-  3,
-]);
+[1, 2, 3]);
 !([1, 2, 3]/* foo */
 );
-!([
-  1,
-  2,
-  3,
-]); // foo
+!([1, 2, 3]); // foo
 
 !{ a: 1, b: 2 };
-!({ a: 1, b: 2 } /* foo */ );
+!({ a: 1, b: 2 }); /* foo */
 !({ a: 1, b: 2 }); /* foo */
 !(/* foo */
-{
-  a: 1,
-  b: 2,
-});
+{ a: 1, b: 2 });
 !({ a: 1, b: 2 }/* foo */
 );
-!({
-  a: 1,
-  b: 2,
-}); // foo
+!({ a: 1, b: 2 }); // foo
 
 !function () {
   return x;
@@ -426,7 +412,7 @@ x ? y : z);
 !(x ? y : z); // foo
 
 !x();
-!(x() /* foo */ );
+!(x()); /* foo */
 !(x()); /* foo */
 !(/* foo */
 x());
@@ -435,7 +421,7 @@ x());
 !(x()); // foo
 
 !new x();
-!(new x() /* foo */ );
+!(new x()); /* foo */
 !(new x()); /* foo */
 !(/* foo */
 new x());

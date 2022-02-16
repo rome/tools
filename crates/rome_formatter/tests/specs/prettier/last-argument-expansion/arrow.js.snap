@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: arrow.js
 
 ---
@@ -31,9 +31,9 @@ export default function searchUsers(action$) {
     (action) => action.payload.query,
   ).filter((q) => !!q).switchMap(
     (q) =>
-      Observable.timer(
-        800,
-      ).takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS)).mergeMap( // debounce
+      Observable.timer(800).takeUntil( // debounce
+        action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS),
+      ).mergeMap(
         () =>
           Observable.merge(
             Observable.of(replace(`?q=${q}`)),

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: function-declaration.js
 
 ---
@@ -82,24 +82,24 @@ KEYPAD_NUMBERS.map(num => ( // Buttons 0-9
 
 function f1() {} /* f */
 function f2( /* args */ ) {}
-function f3() /* returns */ {}
-function f4( /* args */ ) /* returns */ {} /* f */
+function f3() {} /* returns */
+function f4( /* args */ ) {} /* f */ /* returns */
 
 function f5( /* a */ a) {} /* f */
 function f6(a /* a */ ) {} /* f */
-function f7( /* a */ a) /* returns */ {} /* f */
+function f7( /* a */ a) {} /* f */ /* returns */
 
 const obj = {
   f1() {}, /* f */
   f2( /* args */ ) {},
-  f3() /* returns */ {},
-  f4( /* args */ ) /* returns */ {}, /* f */
+  f3() {}, /* returns */
+  f4( /* args */ ) {}, /* f */ /* returns */
 };
 
 (function f() {})(); /* f */
 (function f( /* args */ ) {})();
-(function f() /* returns */ {})();
-(function f( /* args */ ) /* returns */ {})(); /* f */
+(function f() {})(); /* returns */
+(function f( /* args */ ) {})(); /* f */ /* returns */
 
 class C1 {
   f() {} /* f */
@@ -108,10 +108,10 @@ class C2 {
   f( /* args */ ) {}
 }
 class C3 {
-  f() /* returns */ {}
+  f() {} /* returns */
 }
 class C4 {
-  f( /* args */ ) /* returns */ {} /* f */
+  f( /* args */ ) {} /* f */ /* returns */
 }
 
 function foo1() // this is a function
