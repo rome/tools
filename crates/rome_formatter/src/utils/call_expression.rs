@@ -134,6 +134,7 @@ fn compute_first_group(
     flatten_items: &[FlattenItem],
 ) -> FormatResult<(&[FlattenItem], &[FlattenItem])> {
     let mut current_index = 0;
+    dbg!(&flatten_items);
 
     // the first element will always be part of the first group, so we skip it
     for (index, item) in flatten_items.iter().enumerate().skip(1) {
@@ -149,16 +150,43 @@ fn compute_first_group(
             }
 
             FlattenItem::StaticMember(_, _) => {
-                if !flatten_items[0].is_call_expression() {
-                    let next_flatten_item = &flatten_items[index + 1];
-                    if matches!(
-                        next_flatten_item,
-                        FlattenItem::StaticMember(_, _) | FlattenItem::ComputedExpression(_, _)
-                    ) {
-                        current_index = index;
-                    } else {
-                        break;
-                    }
+                // SAFETY: The check `flatten_items[index + 1]` will never panic at runtime because
+                // 1. The array will always have at least two items
+                // 2. The last element of the array is always a CallExpression
+                //
+                // Something like `a()` produces these flatten times:
+                // ```
+                // [
+                //      Token("a", 0..1),
+                //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 2..7)])],
+                // ]
+                // ```
+                //
+                // Hence, it will never enter the branch of this `match`.
+                //
+                // When we have something like `a.b.c()`, the flatten items produced are:
+                //
+                // ```
+                // [
+                //      Token("a", 0..1),
+                //      StaticMember: [Token(".", 1..2), Token("b", 2..3)],
+                //      StaticMember: [Token(".", 3..4), Token("c", 4..5)],
+                //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 6..7)])],
+                // ]
+                // ```
+                //
+                // The loop will match against `StaticMember: [Token(".", 3..4), Token("c", 4..5)],`
+                // and the next one is a call expression... the `matches!` fails and the loop is stopped.
+                //
+                // The last element of the array is always a `CallExpression`, which allows us to avoid the overflow of the array.
+                let next_flatten_item = &flatten_items[index + 1];
+                if matches!(
+                    next_flatten_item,
+                    FlattenItem::StaticMember(_, _) | FlattenItem::ComputedExpression(_, _)
+                ) {
+                    current_index = index;
+                } else {
+                    break;
                 }
             }
             _ => break,
@@ -172,7 +200,7 @@ fn compute_first_group(
 fn compute_groups(flatten_items: Vec<FlattenItem>) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
     let mut groups = Groups::default();
-    for item in flatten_items.into_iter() {
+    for item in flatten_items {
         match item {
             FlattenItem::StaticMember(_, _) => {
                 // if we have seen a JsCallExpression, we want to close the group.
@@ -239,14 +267,14 @@ impl FlattenItem {
 impl Debug for FlattenItem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            FlattenItem::StaticMember(_, formatted) => writeln!(f, "StaticMember: {:?}", formatted),
+            FlattenItem::StaticMember(_, formatted) => write!(f, "StaticMember: {:?}", formatted),
             FlattenItem::CallExpression(_, formatted) => {
-                writeln!(f, "CallExpression: {:?}", formatted)
+                write!(f, "CallExpression: {:?}", formatted)
             }
             FlattenItem::ComputedExpression(_, formatted) => {
-                writeln!(f, "ComputedExpression: {:?}", formatted)
+                write!(f, "ComputedExpression: {:?}", formatted)
             }
-            FlattenItem::Node(_, formatted) => writeln!(f, "{:?}", formatted),
+            FlattenItem::Node(_, formatted) => write!(f, "{:?}", formatted),
         }
     }
 }
