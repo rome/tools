@@ -308,7 +308,7 @@ impl Groups {
         self.groups.len() > 3
     }
 
-    fn get_formatted_groups(self) -> Vec<FormatElement> {
+    fn into_formatted_groups(self) -> Vec<FormatElement> {
         self.groups
             .into_iter()
             .map(|group| concat_elements(group.into_iter().map(|flatten_item| flatten_item.into())))
@@ -316,14 +316,14 @@ impl Groups {
     }
 
     /// Concatenate groups, without fancy formatting
-    pub fn get_formatted_concat_groups(self) -> FormatElement {
-        let formatted_groups = self.get_formatted_groups();
+    pub fn into_concatenated_groups(self) -> FormatElement {
+        let formatted_groups = self.into_formatted_groups();
         concat_elements(formatted_groups)
     }
 
     /// Format groups on multiple lines
-    pub fn get_formatted_joined_groups(self) -> FormatElement {
-        let formatted_groups = self.get_formatted_groups();
+    pub fn into_joined_groups(self) -> FormatElement {
+        let formatted_groups = self.into_formatted_groups();
         join_elements(soft_line_break(), formatted_groups)
     }
 }
@@ -338,10 +338,10 @@ fn format_groups(first_group: &[FlattenItem], groups: Groups) -> FormatElement {
     let formatted_groups = if groups.groups_should_break() {
         indent(format_elements![
             hard_line_break(),
-            groups.get_formatted_joined_groups()
+            groups.into_joined_groups()
         ])
     } else {
-        groups.get_formatted_concat_groups()
+        groups.into_concatenated_groups()
     };
 
     format_elements![concat_elements(first_formatted_group), formatted_groups]
