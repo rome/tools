@@ -5,6 +5,7 @@ use rslint_parser::{AstNode, SyntaxNode};
 use crate::format_elements;
 use crate::intersperse::{Intersperse, IntersperseFn};
 use std::borrow::Cow;
+use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
 
 type Content = Box<FormatElement>;
@@ -774,7 +775,7 @@ where
 /// Language agnostic IR for formatting source code.
 ///
 /// Use the helper functions like [space], [soft_line_break] etc. defined in this file to create elements.
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Clone, Eq, PartialEq)]
 pub enum FormatElement {
     Empty,
 
@@ -807,10 +808,37 @@ pub enum FormatElement {
     LineSuffix(Box<FormatElement>),
 }
 
+impl Debug for FormatElement {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        match self {
+            FormatElement::Empty => write!(fmt, "Empty"),
+            FormatElement::Space => write!(fmt, "Space"),
+            FormatElement::Line(content) => content.fmt(fmt),
+            FormatElement::Indent(content) => content.fmt(fmt),
+            FormatElement::Group(content) => content.fmt(fmt),
+            FormatElement::ConditionalGroupContent(content) => content.fmt(fmt),
+            FormatElement::List(content) => {
+                write!(fmt, "List ")?;
+                content.fmt(fmt)
+            }
+            FormatElement::Token(content) => content.fmt(fmt),
+            FormatElement::LineSuffix(content) => {
+                fmt.debug_tuple("LineSuffix").field(content).finish()
+            }
+        }
+    }
+}
+
 /// Inserts a new line
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Clone, Eq, PartialEq)]
 pub struct Line {
     pub mode: LineMode,
+}
+
+impl Debug for Line {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        write!(fmt, "Line({:?})", self.mode)
+    }
 }
 
 impl Line {
@@ -832,9 +860,15 @@ pub enum LineMode {
 }
 
 /// Increases the indention by one; see [indented_with_soft_break] and [indented_with_hard_break].
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Clone, Eq, PartialEq)]
 pub struct Indent {
     pub(crate) content: Content,
+}
+
+impl Debug for Indent {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        fmt.debug_tuple("Indent").field(&self.content).finish()
+    }
 }
 
 impl Indent {
@@ -846,9 +880,15 @@ impl Indent {
 }
 
 /// A token used to gather a list of elements; see [concat_elements] and [join_elements].
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Clone, Eq, PartialEq)]
 pub struct List {
     content: Vec<FormatElement>,
+}
+
+impl Debug for List {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        fmt.debug_list().entries(&self.content).finish()
+    }
 }
 
 impl List {
@@ -869,9 +909,15 @@ impl Deref for List {
 ///
 /// The printer first tries to print all tokens in the group onto a single line (ignoring soft line wraps)
 /// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Group {
     pub(crate) content: Content,
+}
+
+impl Debug for Group {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        fmt.debug_tuple("Group").field(&self.content).finish()
+    }
 }
 
 impl Group {
@@ -908,13 +954,24 @@ impl ConditionalGroupContent {
 }
 
 /// See [token] for documentation
-#[derive(Debug, Eq, Clone)]
+#[derive(Eq, Clone)]
 pub enum Token {
     /// Token constructed by the formatter from a static string
     Static { text: &'static str },
     /// Token constructed from the input source as a dynamics
     /// string and a range of the input source
     Dynamic { text: String, source: TextRange },
+}
+
+impl Debug for Token {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        // This does not use debug_tuple so the tokens are
+        // written on a single line even when pretty-printing
+        match self {
+            Token::Static { text } => write!(fmt, "Token({:?})", text),
+            Token::Dynamic { text, source } => write!(fmt, "Token({:?}, {:?})", text, source),
+        }
+    }
 }
 
 impl Token {
