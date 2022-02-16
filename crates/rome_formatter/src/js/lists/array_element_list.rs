@@ -5,16 +5,18 @@ use crate::{
     format_element::join_elements_soft_line,
     format_elements,
     formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
-    if_group_breaks, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    if_group_breaks, token,
+    utils::has_formatter_trivia,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::{
     ast::{JsAnyArrayElement, JsAnyExpression, JsArrayElementList},
-    AstNode, AstSeparatedList, SyntaxNode, SyntaxNodeExt,
+    AstNode, AstSeparatedList,
 };
 
 impl ToFormatElement for JsArrayElementList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        if !has_trivia(self.syntax()) && can_print_fill(self) {
+        if !has_formatter_trivia(self.syntax()) && can_print_fill(self) {
             return Ok(fill(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
                 formatter.format_separated(self.clone(), || token(","))?,
@@ -50,42 +52,6 @@ impl ToFormatElement for JsArrayElementList {
 
         Ok(join_elements_soft_line(results))
     }
-}
-
-/// Returns true if this node has comments or empty lines (2 consecutive
-/// newlines only separated by whitespace)
-fn has_trivia(node: &SyntaxNode) -> bool {
-    let mut line_count = 0;
-
-    for token in node.tokens() {
-        for trivia in token.leading_trivia().pieces() {
-            if trivia.as_comments().is_some() {
-                return true;
-            } else if trivia.as_newline().is_some() {
-                line_count += 1;
-                if line_count >= 2 {
-                    return true;
-                }
-            }
-        }
-
-        // This is where the token would be,
-        // reset the consecutive newline counter
-        line_count = 0;
-
-        for trivia in token.trailing_trivia().pieces() {
-            if trivia.as_comments().is_some() {
-                return true;
-            } else if trivia.as_newline().is_some() {
-                line_count += 1;
-                if line_count >= 2 {
-                    return true;
-                }
-            }
-        }
-    }
-
-    false
 }
 
 /// Returns true if the provided JsArrayElementList could

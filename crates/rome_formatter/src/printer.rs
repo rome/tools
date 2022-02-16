@@ -347,7 +347,7 @@ impl<'a> Printer<'a> {
         Ok(())
     }
 
-    /// Print a list in fill mode
+    /// Print a list in fill mode.
     ///
     /// Prints the elements of the list separated by spaces, but backtrack if
     /// they go over the print width and insert a line break before resuming
@@ -383,6 +383,9 @@ impl<'a> Printer<'a> {
     }
 
     /// Fully print an element (print the element itself and all its descendants)
+    ///
+    /// Unlike [print_element], this function ensures the entire element has
+    /// been printed when it returns and the queue is back to its original state
     fn print_all(
         &mut self,
         queue: &mut ElementCallQueue<'a>,
