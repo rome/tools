@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: ignore.js
 
 ---
@@ -80,6 +80,7 @@ function a() {
   const identity = Matrix.create(1, 0, 0, 0, 1, 0, 0, 0, 0);
 
   // Let's make sure that this comment doesn't interfere
+
   // prettier-ignore
   const commentsWithPrettierIgnore = { "ewww": "gross-formatting" };
 

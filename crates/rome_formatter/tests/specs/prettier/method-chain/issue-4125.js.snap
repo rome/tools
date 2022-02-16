@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: issue-4125.js
 
 ---
@@ -161,6 +161,7 @@ var l = base
 # Output
 ```js
 // examples from https://github.com/prettier/prettier/issues/4125
+
 const sha256 = (data) => crypto.createHash("sha256").update(data).digest("hex");
 
 req.checkBody("id").isInt().optional();
@@ -182,6 +183,7 @@ const sha256_2 = (data) =>
   crypto.createHash("sha256").update(data).digest("hex"); // breakme
 
 // examples from https://github.com/prettier/prettier/pull/4765
+
 if ($(el).attr("href").includes("/wiki/")) {
 }
 
@@ -199,6 +201,7 @@ function palindrome(a, b) {
 }
 
 // examples from https://github.com/prettier/prettier/issues/1565
+
 d3.select("body").selectAll("p").data([1, 2, 3]).enter().style("color", "white");
 
 Object.keys(props).filter((key) => key in own === false).reduce(
@@ -235,6 +238,7 @@ fetchUser(
 ).then(fetchAccountForUser).catch(handleFetchError); //
 
 // examples from https://github.com/prettier/prettier/issues/3107
+
 function HelloWorld() {
   window.FooClient.setVars(
     { locale: getFooLocale({ page }), authorizationToken: data.token },

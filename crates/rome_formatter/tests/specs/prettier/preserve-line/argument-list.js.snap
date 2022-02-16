@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: argument-list.js
 
 ---
@@ -219,8 +219,10 @@ function foo(
 ```js
 longArgNamesWithComments(
   // Hello World
+
   longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong1,
   // Hello World
+
   longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong2,
   /* Hello World */
   longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong3,
@@ -230,6 +232,7 @@ shortArgNames(short, short2, short3);
 
 comments(
   // Comment
+
   /* Some comments */
   short,
   /* Another comment */
@@ -238,8 +241,10 @@ comments(
   /* Another comment */
 
   // Long Long Long Long Long Comment
+
   /* Long Long Long Long Long Comment */
   // Long Long Long Long Long Comment
+
   short3,
   // More comments
 );
@@ -256,6 +261,7 @@ moreArgTypes(
   { name: "Hello World", age: 29 },
   doSomething(
     // Hello world
+
     // Hello world again
     {
       name: "Hello World",
@@ -300,6 +306,7 @@ foo(
 doSomething.apply(
   null,
   // Comment
+
   [
     "Hello world 1",
     "Hello world 2",

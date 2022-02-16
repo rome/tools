@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: eval.js
 
 ---
@@ -36,6 +36,7 @@ eval.foo?.(foo);
 # Output
 ```js
 // https://github.com/babel/babel/pull/11850
+
 let foo;
 
 /* indirect eval calls */

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: no-semi.js
 
 ---
@@ -92,6 +92,7 @@ aReallyLongLine012345678901234567890123456789012345678901234567890123456789 *
 # Output
 ```js
 // with preexisting semi
+
 x;
 [1, 2, 3].forEach(fn);
 x;
@@ -120,19 +121,23 @@ x;
 (x, y) => x;
 
 // doesn't have to be preceded by a semicolon
+
 class X {}
 [1, 2, 3].forEach(fn);
 
 // don't semicolon if it doesn't start statement
+
 if (true) (() => {})();
 
 // check indentation
+
 if (true) {
   x;
   (() => {})();
 }
 
 // check statement clauses
+
 do break; while (false);
 if (true) do break; while (false);
 
@@ -143,6 +148,7 @@ for (x of y)
 debugger;
 
 // check that it doesn't break non-ASI
+
 1 - 1;
 
 1 + 1;

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: object-rest-spread.js
 
 ---
@@ -21,6 +21,7 @@ console.log(n); // { x: 1, y: 2, a: 3, b: 4 }
 # Output
 ```js
 // https://babeljs.io/docs/en/babel-plugin-transform-object-rest-spread
+
 let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
 console.log(x); // 1
 console.log(y); // 2

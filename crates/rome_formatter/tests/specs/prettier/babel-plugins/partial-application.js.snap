@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: partial-application.js
 
 ---
@@ -33,6 +33,7 @@ super.f(?)        // partial application allowed for call on |SuperProperty|
 # Output
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-partial-application
+
 function add(x, y) {
   return x + y;
 }

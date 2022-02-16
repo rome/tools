@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: ignore-2.js
 
 ---
@@ -31,6 +31,7 @@ a = <div {...{}/* prettier-ignore */}/>
 # Output
 ```js
 // #8736
+
 function HelloWorld() {
   return (
     <div

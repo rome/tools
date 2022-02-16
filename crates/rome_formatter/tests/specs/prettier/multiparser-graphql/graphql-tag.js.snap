@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: graphql-tag.js
 
 ---
@@ -182,6 +182,7 @@ const query = gql`
 `;
 
 // With interpolations:
+
 gql`
 query User {
   user(id:5){
@@ -194,6 +195,7 @@ ${USER_DETAILS_FRAGMENT}${FRIENDS_FRAGMENT}
 `;
 
 // Skip if non-toplevel interpolation:
+
 gql`
 query User {
   user(id:${id}){ name }
@@ -201,6 +203,7 @@ query User {
 `;
 
 // Skip if top-level interpolation within comment:
+
 gql`
 query User {
   user(id:5){ name }
@@ -209,14 +212,17 @@ query User {
 `;
 
 // Comment on last line:
+
 gql`
 query User {
   user(id:5){ name }
 }
 # comment`;
 // ` <-- editor syntax highlighting workaround
+
 // Preserve up to one blank line between things and enforce linebreak between
 // interpolations:
+
 gql`
 # comment
 ${one}${two}  ${three}
@@ -241,23 +247,30 @@ ${eight}
 `;
 
 // Interpolation directly before and after query:
+
 gql`${one} query Test { test }${two}`;
 
 // Only interpolation:
+
 gql`${test}`;
 
 // Only comment:
+
 gql`# comment`;
 // ` <-- editor syntax highlighting workaround
+
 // Only whitespace:
+
 gql`   `;
 
 // Empty:
+
 gql``;
 
 // Comments after other things:
 // Currently, comments after interpolations are moved to the next line.
 // We might want to keep them on the next line in the future.
+
 gql`
   ${test} # comment
 
@@ -274,6 +287,7 @@ gql`
 `;
 
 // Larger mixed test:
+
 gql`
 
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: pipe-function-calls-with-comments.js
 
 ---
@@ -61,6 +61,7 @@ expression: pipe-function-calls-with-comments.js
 # Output
 ```js
 // input with some comments added to avoid reformatting
+
 (() => {
   pipe(
     // add a descriptive comment here
