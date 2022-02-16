@@ -346,6 +346,12 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 // import { type as as } from "./mod";
 // import { type as as as } from "./mod"
 // import { type "test-abcd" as test } from "./mod";
+//
+// test_err ts ts_named_import_specifier_error
+// import { default } from "./mod";
+// import { type default } from "./mod";
+// import { "literal-name" } from "./mod";
+// import { type "literal-name" } from "./mod";
 fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
     if !is_nth_at_literal_export_name(p, 0) {
         // covers `type` and `as` too
@@ -354,17 +360,6 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
 
-    if p.at(JS_STRING_LITERAL) || p.cur().is_keyword() {
-        // import { "name" ... } must be a named export because of the string literal
-        parse_literal_export_name(p).unwrap();
-        expect_contextual_keyword(p, "as", T![as]);
-        parse_binding(p).or_add_diagnostic(p, expected_binding);
-        return Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER));
-    }
-
-    // It can either be a shorthand specifier or a named specifier from here onwards.
-    // Use the specifier metadata helper to determine if it is a `type` (`import { type a }`) import
-    // and if it is a named import (`import { a as b }`).
     let metadata = specifier_metadata(
         p,
         is_nth_at_literal_export_name,
@@ -375,7 +370,7 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
         expect_contextual_keyword(p, "type", T![type]);
     }
 
-    let specifier = if metadata.has_alias {
+    let specifier = if metadata.has_alias || p.at(JS_STRING_LITERAL) || p.cur().is_keyword() {
         if metadata.is_local_name_missing {
             // test_err import_as_identifier_err
             // import { as c } from "test";
