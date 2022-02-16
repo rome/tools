@@ -849,6 +849,10 @@ impl Debug for FormatElement {
                 write!(fmt, "List ")?;
                 content.fmt(fmt)
             }
+            FormatElement::Fill(content) => {
+                write!(fmt, "Fill ")?;
+                content.fmt(fmt)
+            }
             FormatElement::Token(content) => content.fmt(fmt),
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
