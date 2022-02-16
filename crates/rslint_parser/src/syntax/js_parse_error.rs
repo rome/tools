@@ -236,3 +236,11 @@ pub(crate) fn ts_set_accessor_return_type_error(
     p.err_builder("A 'set' accessor cannot have a return type annotation.")
         .primary(type_annotation.range(p), "")
 }
+
+pub(crate) fn unexpected_body_inside_ambient_context(
+    p: &Parser,
+    range: Range<usize>,
+) -> Diagnostic {
+    p.err_builder("members inside ambient contexts should not have a body")
+        .primary(range, "")
+}

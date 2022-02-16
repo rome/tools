@@ -37,6 +37,7 @@ use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
 
 use super::function::LineBreak;
+use super::js_parse_error::unexpected_body_inside_ambient_context;
 use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
 use super::util::eat_contextual_keyword;
 
@@ -785,11 +786,9 @@ fn property_declaration_class_member_body(
             let err = p
                 .err_builder("private class properties with `declare` are invalid")
                 .primary(property.range(p), "");
-
             p.error(err);
             property.change_to_unknown(p);
         }
-
         property
     })
 }
@@ -1061,8 +1060,42 @@ fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: Sig
     // test_err setter_class_no_body
     // class Setters {
     //   set foo(a)
-    else if flags.contains(SignatureFlags::GETTER) || flags.contains(SignatureFlags::SETTER) {
-        body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+
+    // test ts typescript_members_can_have_no_body_in_ambient_context
+    // declare class Test {
+    //     name();
+    //     get test(): string;
+    //     set test(v);
+    // }
+    // declare namespace n {
+    //      class Test {
+    //          name();
+    //          get test(): string;
+    //          set test(v);
+    //      }
+    // }
+
+    // test_err ts typescript_members_with_body_in_ambient_context_should_err
+    // declare class Test {
+    //     name() {}
+    //     get test(): string { return ""; }
+    //     set test(v) {}
+    // }
+    // declare namespace n {
+    //      class Test {
+    //          name() {}
+    //          get test(): string { return ""; }
+    //          set test(v) {}
+    //      }
+    // }
+    else {
+        if p.state.in_ambient_context() {
+            body.add_diagnostic_if_present(p, unexpected_body_inside_ambient_context);
+        } else {
+            if flags.contains(SignatureFlags::GETTER) || flags.contains(SignatureFlags::SETTER) {
+                body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+            }
+        }
     }
 }
 
