@@ -38,6 +38,17 @@ impl TestRunOutcome {
     pub fn is_failed(&self) -> bool {
         !matches!(self, TestRunOutcome::Passed(_))
     }
+
+    pub fn panic_message(&self) -> Option<&str> {
+        match self {
+            TestRunOutcome::Panicked(panic) => panic
+                .downcast_ref::<String>()
+                .map(|s| s.as_str())
+                .or_else(|| panic.downcast_ref::<&'static str>().copied()),
+
+            _ => None,
+        }
+    }
 }
 
 impl From<TestRunOutcome> for Outcome {
@@ -92,7 +103,7 @@ impl TestSuiteInstance {
 }
 
 pub(crate) struct TestRunContext<'a> {
-    pub(crate) query: Option<String>,
+    pub(crate) filter: Option<String>,
     pub(crate) reporter: &'a mut dyn TestReporter,
     pub(crate) pool: &'a Pool,
 }
@@ -167,9 +178,9 @@ fn load_tests(suite: &dyn TestSuite, context: &mut TestRunContext) -> TestSuiteI
                 return false;
             }
 
-            if let Some(query) = &context.query {
+            if let Some(filter) = &context.filter {
                 let normalized_path = path.to_string_lossy().replace("\\", "/");
-                let normalized_query = query.replace("\\", "/");
+                let normalized_query = filter.replace("\\", "/");
                 normalized_path.contains(&normalized_query)
             } else {
                 true

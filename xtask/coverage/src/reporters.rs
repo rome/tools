@@ -1,13 +1,17 @@
 use crate::runner::{TestRunOutcome, TestRunResult, TestSuite, TestSuiteInstance};
 use crate::{Summary, TestResults};
 use ascii_table::{AsciiTable, Column};
+use atty::Stream;
 use colored::Colorize;
-use indicatif::{ProgressBar, ProgressDrawTarget};
+use indicatif::ProgressBar;
 use rslint_errors::file::SimpleFile;
+use rslint_errors::termcolor::Buffer;
 use rslint_errors::Emitter;
 use rslint_parser::parse;
 use serde_json::Value;
 use std::collections::HashMap;
+use std::io::Write;
+use std::str::FromStr;
 use std::time::Instant;
 
 pub(crate) trait TestReporter: Send + Sync {
@@ -28,21 +32,26 @@ pub(crate) trait TestReporter: Send + Sync {
     fn run_completed(&mut self) {}
 }
 
-pub(crate) struct CliProgressReporter {
+/// Prints a progress bar showing which tests are executed
+pub(crate) struct DefaultReporter {
     pb: ProgressBar,
-    detailed: bool,
+    start: Instant,
 }
 
-impl Default for CliProgressReporter {
+impl Default for DefaultReporter {
     fn default() -> Self {
         Self {
             pb: ProgressBar::hidden(),
-            detailed: false,
+            start: Instant::now(),
         }
     }
 }
 
-impl TestReporter for CliProgressReporter {
+impl TestReporter for DefaultReporter {
+    fn test_suite_started(&mut self, _suite: &dyn TestSuite) {
+        self.start = Instant::now();
+    }
+
     fn tests_discovered(&mut self, _suite: &dyn TestSuite, count: usize) {
         self.pb.finish_and_clear();
 
@@ -62,168 +71,150 @@ impl TestReporter for CliProgressReporter {
 
     fn test_suite_run_started(&mut self, suite: &TestSuiteInstance) {
         self.pb.finish_and_clear();
+        self.pb.println(format!(
+            "{} {} test files in {:.2}s",
+            "Loaded".bold().bright_green(),
+            suite.len(),
+            self.start.elapsed().as_secs_f32()
+        ));
 
-        self.detailed = suite.len() < 10;
+        let pb = ProgressBar::new(suite.len() as u64)
+            .with_message(format!("{} tests", "Running".bold().cyan()));
 
-        let pb = ProgressBar::hidden();
-        pb.set_length(suite.len() as u64);
-        pb.set_message(format!("{} tests", "Running".bold().cyan()));
         // Redrawing on each test adds a significant overhead, batch some redraws together
         pb.set_draw_delta(10);
-
         self.pb = pb;
+
+        self.start = Instant::now();
     }
 
     fn test_completed(&mut self, result: &TestRunResult) {
-        if self.pb.position() == 0 {
-            self.pb.set_draw_target(ProgressDrawTarget::stderr());
-        }
-
         self.pb.inc(1);
 
-        if self.detailed {
-            print_detailed_test_result(&self.pb, result);
-        }
-
-        let reason = match &result.outcome {
-            TestRunOutcome::Passed(_) => return,
-            TestRunOutcome::IncorrectlyPassed(_) => "incorrectly passed parsing",
-            TestRunOutcome::IncorrectlyErrored { .. } => "incorrectly threw an error",
-            TestRunOutcome::Panicked(_) => "panicked while parsing",
+        let label = match &result.outcome {
+            TestRunOutcome::Passed(_) => "PASS".bold().green(),
+            TestRunOutcome::IncorrectlyPassed(_)
+            | TestRunOutcome::IncorrectlyErrored { .. }
+            | TestRunOutcome::Panicked(_) => "FAIL".bold().red(),
         };
 
-        let msg = format!(
-            "{} '{}' {}",
-            "Test".bold().red(),
-            result.path.display(),
-            reason.bold()
-        );
-        self.pb.println(msg);
+        self.pb.println(format!(
+            "{} {}",
+            label,
+            result.path.display().to_string().blue()
+        ));
     }
 
-    fn test_suite_completed(&mut self, _suite: &TestSuiteInstance, _results: &TestResults) {
+    fn test_suite_completed(&mut self, suite: &TestSuiteInstance, _results: &TestResults) {
         self.pb.finish_and_clear();
+        self.pb.println(format!(
+            "{}: {} {} tests in {:.2}s",
+            suite.name(),
+            "Ran".bold().bright_green(),
+            suite.len(),
+            self.start.elapsed().as_secs_f32()
+        ));
     }
 }
 
-fn print_detailed_test_result(pb: &ProgressBar, result: &TestRunResult) {
-    let test_name = result.path.display().to_string();
+pub enum SummaryDetailLevel {
+    /// Only prints the coverage table
+    Coverage,
+    /// Prints the coverage table as well as all failing tests with their diagnostics
+    Failing,
+    /// Prints all failing tests with their RAST output
+    FailingWithRast,
+}
 
-    match &result.outcome {
-        TestRunOutcome::Panicked(panic) => {
-            let msg = panic
-                .downcast_ref::<String>()
-                .map(|s| s.as_str())
-                .or_else(|| panic.downcast_ref::<&'static str>().copied());
+impl FromStr for SummaryDetailLevel {
+    type Err = String;
 
-            let header = format!(
-                "    This test caused a{} panic inside the parser{}",
-                if msg.is_none() { "n unknown" } else { "" },
-                if msg.is_none() { "" } else { ":\n" }
-            )
-            .bold();
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s {
+            "coverage" => SummaryDetailLevel::Coverage,
+            "failing" => SummaryDetailLevel::Failing,
+            "rast" => SummaryDetailLevel::FailingWithRast,
+            _ => return Err(String::from(
+                "Unknown summary detail level. Valid values are: 'coverage', 'failing, and 'rast'.",
+            )),
+        })
+    }
+}
 
-            let msg = if let Some(msg) = msg {
-                format!(
-                    "{}    {}\n\n    For more information about the panic run the file manually",
-                    header, msg
-                )
-            } else {
-                format!(
-                    "{}\n{} '{}' {}\n",
-                    header,
-                    "Test".bold(),
-                    test_name,
-                    "failed".bold()
-                )
-                .red()
-                .underline()
-                .to_string()
-            };
+impl SummaryDetailLevel {
+    fn is_rast_enabled(&self) -> bool {
+        matches!(self, SummaryDetailLevel::FailingWithRast)
+    }
 
-            pb.println(msg)
-        }
-        TestRunOutcome::IncorrectlyErrored { errors, .. } => {
-            let header = format!("\n{} '{}' {}\n", "Test".bold(), test_name, "failed".bold())
-                .red()
-                .underline()
-                .to_string();
-
-            let sub_header =
-                "    This test threw errors but expected to pass parsing without errors:\n"
-                    .to_string();
-            let file = SimpleFile::new(test_name, result.code.clone());
-            let mut emitter = Emitter::new(&file);
-            let mut buf = rslint_errors::termcolor::Buffer::ansi();
-            for error in errors.iter() {
-                emitter
-                    .emit_with_writer(error, &mut buf)
-                    .expect("failed to emit error");
-            }
-            let errors = String::from_utf8(buf.into_inner()).expect("errors are not utf-8");
-            pb.println(format!("{}{}\n{}", header, sub_header, errors))
-        }
-        TestRunOutcome::IncorrectlyPassed(_) => {
-            let header = format!("\n{} '{}' {}\n", "Test".bold(), test_name, "failed".bold())
-                .red()
-                .underline()
-                .to_string();
-            pb.println(format!(
-                "{}    Expected this test to fail, but instead it passed without errors.",
-                header
-            ))
-        }
-        TestRunOutcome::Passed(_) => {}
+    fn is_coverage_only(&self) -> bool {
+        matches!(self, SummaryDetailLevel::Coverage)
     }
 }
 
 /// Reporter that prints a summary for each phase (tests loaded, test suite completed) to the console output
 pub(crate) struct SummaryReporter {
-    start: Instant,
+    /// Buffer to store the detailed output of tests
+    buffer: Buffer,
+    /// The results of the ran test suites
     results: HashMap<String, Summary>,
+    output_target: OutputTarget,
+    detail_level: SummaryDetailLevel,
 }
 
-impl Default for SummaryReporter {
-    fn default() -> Self {
-        Self {
-            start: Instant::now(),
-            results: HashMap::default(),
+pub(crate) enum OutputTarget {
+    Stdout(std::io::Stdout),
+    Stderr(std::io::Stderr),
+}
+
+impl OutputTarget {
+    pub fn stdout() -> Self {
+        OutputTarget::Stdout(std::io::stdout())
+    }
+
+    pub fn stderr() -> Self {
+        OutputTarget::Stderr(std::io::stderr())
+    }
+}
+
+impl Write for OutputTarget {
+    fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
+        match self {
+            OutputTarget::Stderr(stderr) => stderr.write(buf),
+            OutputTarget::Stdout(stdout) => stdout.write(buf),
+        }
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        match self {
+            OutputTarget::Stderr(stderr) => stderr.flush(),
+            OutputTarget::Stdout(stdout) => stdout.flush(),
         }
     }
 }
 
-impl TestReporter for SummaryReporter {
-    fn test_suite_started(&mut self, _suite: &dyn TestSuite) {
-        self.start = Instant::now()
+impl SummaryReporter {
+    pub fn new(detail_level: SummaryDetailLevel, output_target: OutputTarget) -> Self {
+        let buffer = if atty::is(Stream::Stdout) {
+            Buffer::ansi()
+        } else {
+            // piping to a file
+            Buffer::no_color()
+        };
+
+        Self {
+            results: HashMap::default(),
+            buffer,
+            output_target,
+            detail_level,
+        }
     }
 
-    fn test_suite_run_started(&mut self, suite: &TestSuiteInstance) {
-        println!(
-            "{} {} test files in {:.2}s",
-            "Loaded".bold().bright_green(),
-            suite.len(),
-            self.start.elapsed().as_secs_f32()
-        );
-
-        self.start = Instant::now();
+    fn writeln(&mut self, msg: String) {
+        writeln!(self.buffer, "{}", msg).unwrap();
     }
 
-    fn test_suite_completed(&mut self, suite: &TestSuiteInstance, results: &TestResults) {
-        println!(
-            "\n{}: {} {} tests in {:.2}s\n",
-            suite.name(),
-            "Ran".bold().bright_green(),
-            suite.len(),
-            self.start.elapsed().as_secs_f32()
-        );
-
-        self.results
-            .insert(suite.name().to_string(), results.summary.clone());
-    }
-
-    fn run_completed(&mut self) {
+    fn summary_table(results: HashMap<String, Summary>) -> String {
         let mut table = AsciiTable::default();
-        let results = std::mem::take(&mut self.results);
         let has_multiple_test_suites = results.len() > 1;
 
         if has_multiple_test_suites {
@@ -277,7 +268,80 @@ impl TestReporter for SummaryReporter {
             values
         });
 
-        table.print(rows);
+        table.format(rows)
+    }
+}
+
+impl TestReporter for SummaryReporter {
+    fn test_completed(&mut self, result: &TestRunResult) {
+        if self.detail_level.is_coverage_only() {
+            return;
+        }
+
+        match &result.outcome {
+            TestRunOutcome::Passed(_) => {
+                return;
+            }
+            TestRunOutcome::Panicked(_) => {
+                let panic = result.outcome.panic_message();
+                self.writeln(format!(
+                    "{} {}: {}",
+                    "[PANIC]".bold().red(),
+                    result.path.display(),
+                    panic.unwrap_or("Unknown panic reason")
+                ));
+            }
+            TestRunOutcome::IncorrectlyPassed(_) => {
+                self.writeln(format!(
+                    "{} {}: Incorrectly passed",
+                    "[FAIL]".bold().red(),
+                    result.path.display()
+                ));
+            }
+            TestRunOutcome::IncorrectlyErrored { errors, .. } => {
+                self.writeln(format!(
+                    "{} {}: Incorrectly errored:",
+                    "[FAIL]".bold().red(),
+                    result.path.display()
+                ));
+
+                let file =
+                    SimpleFile::new(result.path.display().to_string(), result.code.to_string());
+                let mut emitter = Emitter::new(&file);
+
+                for error in errors.iter() {
+                    if let Err(err) = emitter.emit_with_writer(error, &mut self.buffer) {
+                        eprintln!("Failed to print diagnostic: {}", err);
+                    }
+                }
+
+                self.writeln("".to_string());
+            }
+        }
+
+        if self.detail_level.is_rast_enabled() {
+            if let Some(syntax) = result.outcome.syntax() {
+                let program = parse(&result.code, 0, *syntax);
+                self.writeln(format!("{:#?}", program.syntax()));
+                self.writeln("".to_string());
+            }
+        }
+    }
+
+    fn test_suite_completed(&mut self, suite: &TestSuiteInstance, results: &TestResults) {
+        self.results
+            .insert(suite.name().to_string(), results.summary.clone());
+    }
+
+    fn run_completed(&mut self) {
+        let results = std::mem::take(&mut self.results);
+        let table = Self::summary_table(results);
+
+        self.output_target
+            .write_all(self.buffer.as_slice())
+            .unwrap();
+
+        writeln!(self.output_target, "{}", table).unwrap();
     }
 }
 
@@ -354,40 +418,6 @@ impl TestReporter for MulticastTestReporter {
     fn run_completed(&mut self) {
         for reporter in &mut self.0 {
             reporter.run_completed();
-        }
-    }
-}
-
-/// Prints the rast output for all (not panicking) tests to the console
-pub(crate) struct RastReporter;
-
-impl TestReporter for RastReporter {
-    fn test_completed(&mut self, result: &TestRunResult) {
-        if let Some(syntax) = result.outcome.syntax() {
-            let program = parse(&result.code, 0, *syntax);
-            println!("{:#?}", program.syntax());
-        }
-    }
-}
-
-/// Prints the diagnostics of all not panicking test to the console
-pub(crate) struct DiagnosticsReporter;
-
-impl TestReporter for DiagnosticsReporter {
-    fn test_completed(&mut self, result: &TestRunResult) {
-        if let Some(syntax) = result.outcome.syntax() {
-            let program = parse(&result.code, 0, *syntax);
-
-            let file = rslint_errors::file::SimpleFile::new(
-                result.path.display().to_string(),
-                result.code.to_string(),
-            );
-
-            let mut emitter = rslint_errors::Emitter::new(&file);
-
-            for diagnostic in program.errors() {
-                emitter.emit_stdout(diagnostic, true).unwrap();
-            }
         }
     }
 }

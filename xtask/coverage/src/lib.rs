@@ -5,9 +5,11 @@ mod runner;
 pub mod test262;
 pub mod typescript;
 
+pub use crate::reporters::SummaryDetailLevel;
+
 use crate::reporters::{
-    CliProgressReporter, DiagnosticsReporter, JsonReporter, MulticastTestReporter, RastReporter,
-    SummaryReporter, TestReporter,
+    DefaultReporter, JsonReporter, MulticastTestReporter, OutputTarget, SummaryReporter,
+    TestReporter,
 };
 use crate::runner::{run_test_suite, TestRunContext, TestSuite};
 use crate::test262::Test262TestSuite;
@@ -112,29 +114,23 @@ impl TestResults {
 
 pub fn run(
     language: Option<&str>,
-    query: Option<&str>,
+    filter: Option<&str>,
     json: bool,
-    show_rast: bool,
-    show_diagnostics: bool,
+    detail_level: SummaryDetailLevel,
 ) {
-    let mut reporters = MulticastTestReporter::new(Box::new(CliProgressReporter::default()));
+    let mut reporters = MulticastTestReporter::new(Box::new(DefaultReporter::default()));
 
-    if json {
+    let output_target = if json {
         reporters.add(Box::new(JsonReporter::default()));
+        OutputTarget::stderr()
     } else {
-        reporters.add(Box::new(SummaryReporter::default()));
-    }
+        OutputTarget::stdout()
+    };
 
-    if show_rast {
-        reporters.add(Box::new(RastReporter));
-    }
-
-    if show_diagnostics {
-        reporters.add(Box::new(DiagnosticsReporter));
-    }
+    reporters.add(Box::new(SummaryReporter::new(detail_level, output_target)));
 
     let mut context = TestRunContext {
-        query: query.map(|s| s.to_string()),
+        filter: filter.map(|s| s.to_string()),
         reporter: &mut reporters,
         pool: &yastl::Pool::new(num_cpus::get()),
     };

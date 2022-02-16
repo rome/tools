@@ -2138,6 +2138,7 @@ name = "xtask_coverage"
 version = "0.0.0"
 dependencies = [
  "ascii_table",
+ "atty",
  "colored",
  "indicatif",
  "num_cpus",

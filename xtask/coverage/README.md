@@ -1,26 +1,46 @@
 # coverage
 
-## `cargo coverage js` / `cargo coverage ts`
-These commands check the parser coverage against [Test262](https://github.com/tc39/test262) or [TypesCript tests](https://github.com/microsoft/TypeScript/tree/main/tests).
 
-If you would like to investigate some specific files,
-run the command with a pathname filter:
+## `cargo coverage`
+Runs the parser against the [Test262](https://github.com/tc39/test262) and [TypesCript tests](https://github.com/microsoft/TypeScript/tree/main/tests)
+test suites to validate its conformance.
+
+You can run all test suites with
 
 ```bash
-cargo coverage js invalid-regexp --show-rast --show-diagnostics
+cargo coverage
 ```
 
-`--show-rast` and `--show-diagnostics` outputs intermediate results.
+...or a specific test suite by specifying the language:
+
+```bash
+cargo coverage --language=js
+```
+
+You can filter the tests by passing an additional `--filter` so that only the tests matching the passed name are executed:
+
+```bash
+cargo coverage --filter=source
+```
+
+The `--detailed` parameter enables a more detailed summary at the end of the test run that includes diagnostic and the `rast` (when using--detailed=rast`)
+for all failing tests. `--detailed` can also be useful if you want to pipe the results to a text file.
+
+
+```bash
+cargo coverage --detailed
+```
+
 
 ## `cargo coverage compare`
-When we want to compare parser changes between our feature branch and the main branch,
-we can run the compare command to get the coverage difference:
+
+Useful to compare the coverage, for example between your feature branch and `main`.
 
 ```bash
 # (commit your code on pr branch, run)
 git checkout main
-cargo coverage js --json > base_results.json
-git checkout -
-cargo coverage js --json > new_results.json
+cargo coverage --json > base_results.json
+git checkout <your branch>
+cargo coverage --json > new_results.json
 cargo coverage compare ./base_results.json ./new_results.json --markdown
 ```
