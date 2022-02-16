@@ -21,7 +21,7 @@ interface C<Foo, Bar, Loreum, Ipsum, ItShouldBeLongEnoughToCoverSomeEdgeCases, B
 Indent style: Tab
 Line width: 80
 -----
-interface A { }
+interface A {}
 interface B extends A /** comment **/  { something: string }
 
 interface C<

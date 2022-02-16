@@ -1,6 +1,5 @@
 use crate::{
-    group_elements, join_elements, soft_line_break, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    join_elements, soft_line_break, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::TsTypeArgumentList;
 impl ToFormatElement for TsTypeArgumentList {

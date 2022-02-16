@@ -1,7 +1,6 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    block_indent, format_elements, space_token, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::TsMappedType;
 
@@ -22,27 +21,23 @@ impl ToFormatElement for TsMappedType {
         let mapped_type = self.mapped_type().format_or_empty(formatter)?;
         let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
 
-        formatter.format_delimited(
+        formatter.format_delimited_block_indent(
             &self.l_curly_token()?,
-            |open_token_trailing, close_token_leading| {
-                Ok(block_indent(format_elements![
-                    open_token_trailing,
-                    readonly,
-                    l_square,
-                    property_name,
-                    space_token(),
-                    in_token,
-                    space_token(),
-                    keys,
-                    space_token(),
-                    as_clause,
-                    r_square,
-                    optional_modifier,
-                    mapped_type,
-                    semicolon,
-                    close_token_leading,
-                ]))
-            },
+            format_elements![
+                readonly,
+                l_square,
+                property_name,
+                space_token(),
+                in_token,
+                space_token(),
+                keys,
+                space_token(),
+                as_clause,
+                r_square,
+                optional_modifier,
+                mapped_type,
+                semicolon,
+            ],
             &self.r_curly_token()?,
         )
     }
