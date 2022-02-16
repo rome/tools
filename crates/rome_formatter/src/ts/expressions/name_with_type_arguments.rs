@@ -1,7 +1,11 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::{ast::TsNameWithTypeArguments, AstNode};
+
 impl ToFormatElement for TsNameWithTypeArguments {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let name = self.name().format(formatter)?;
+        let type_arguments = self.type_arguments().format_or_empty(formatter)?;
+        Ok(format_elements![name, type_arguments])
     }
 }
