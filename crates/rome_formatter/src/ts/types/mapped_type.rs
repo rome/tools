@@ -1,13 +1,12 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    format_elements, hard_line_break, indent, space_token, token, FormatElement, FormatResult,
-    Formatter, ToFormatElement,
+    block_indent, format_elements, hard_line_break, indent, space_token, token, FormatElement,
+    FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::{ast::TsMappedType, AstNode};
+use rslint_parser::ast::TsMappedType;
 
 impl ToFormatElement for TsMappedType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let l_curly = self.l_curly_token().format(formatter)?;
         let readonly = self
             .readonly_modifier()
             .format_with_or_empty(formatter, |readonly| {
@@ -21,20 +20,28 @@ impl ToFormatElement for TsMappedType {
         let r_square = self.r_brack_token().format(formatter)?;
         let optional_modifier = self.optional_modifier().format_or_empty(formatter)?;
         let mapped_type = self.mapped_type().format_or_empty(formatter)?;
-        let r_curly = self.r_curly_token().format(formatter)?;
         let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
 
-        Ok(format_elements![
-            l_curly,
-            indent(format_elements![
-                hard_line_break(),
-                readonly,
-                l_square,
-                property_name,
-                space_token(),
-                in_token,
-            ]),
-            r_curly
-        ])
+        formatter.format_delimited(
+            &self.l_curly_token()?,
+            |open_token_trailing, close_token_leading| {
+                Ok(block_indent(format_elements![
+                    open_token_trailing,
+                    readonly,
+                    l_square,
+                    property_name,
+                    in_token,
+                    space_token(),
+                    keys,
+                    as_clause,
+                    r_square,
+                    optional_modifier,
+                    mapped_type,
+                    semicolon,
+                    close_token_leading,
+                ]))
+            },
+            &self.r_curly_token()?,
+        )
     }
 }

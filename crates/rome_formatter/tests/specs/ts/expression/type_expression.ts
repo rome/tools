@@ -10,6 +10,7 @@ type I = boolean;
 type J = bigint;
 type K = symbol;
 type L = void;
+// @ts-ignore
 type M = this;
 type N = "foo";
 type O = true;
@@ -20,6 +21,7 @@ type R = typeof a;
 type S = 15n;
 type T = -15n;
 type U = 15;
+// @ts-ignore
 type V = infer U;
 type W = { a: string; b: symbol; c: symbol;d: symbol;e: symbol;f: symbol;g: symbol; };
 type X = { a: string; b: symbol; }
@@ -29,7 +31,5 @@ type Z = {
 }
 
 type OptionsFlags<Type> = {
-  [Property in keyof Type]: boolean;
+  [Property in keyof Type as string]?: boolean;
 };
-
-
