@@ -1,11 +1,14 @@
+use lspower::lsp::CodeActionOrCommand;
 use lspower::{jsonrpc, lsp};
 use rome_analyze::{AnalysisServer, FileId};
 use rslint_parser::TextRange;
 
 use crate::line_index::LineIndex;
-use crate::session::into_lsp_error;
-use crate::utils;
+use crate::utils::{self, into_lsp_error};
 
+/// Queries the [`AnalysisServer`] for diagnostics of the file matching [`FileId`]
+///
+/// If the `AnalysisServer` has no matching file, results in error.
 pub(crate) fn diagnostics(
     analysis_server: AnalysisServer,
     file_id: FileId,
@@ -22,20 +25,24 @@ pub(crate) fn diagnostics(
     Ok(diagnostics)
 }
 
+/// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
+///
+/// If the AnalysisServer has no matching file, results in error.
 pub(crate) fn code_actions(
     analysis_server: AnalysisServer,
     file_id: FileId,
     url: lsp::Url,
     cursor_range: TextRange,
-) -> jsonrpc::Result<Vec<lsp::CodeAction>> {
+) -> jsonrpc::Result<Vec<lsp::CodeActionOrCommand>> {
     let text = analysis_server
         .get_file_text(file_id)
         .map_err(into_lsp_error)?;
     let line_index = LineIndex::new(&text);
 
-    let code_actions: Vec<lsp::CodeAction> = analysis_server
+    let code_actions: Vec<_> = analysis_server
         .actions(file_id, Some(cursor_range))
         .map(|a| utils::text_action_to_lsp(&a.into(), &line_index, url.to_owned(), None))
+        .map(CodeActionOrCommand::CodeAction)
         .collect();
 
     Ok(code_actions)

@@ -1,25 +1,24 @@
-use std::{collections::HashMap, error::Error, fmt::Display, sync::Arc};
+use std::{collections::HashMap, error::Error, fmt::Display};
 
 use lspower::jsonrpc::Error as LspError;
 use lspower::lsp;
-use parking_lot::{Mutex, RwLock};
-use rome_analyze::AnalysisServer;
+use parking_lot::RwLock;
+use rome_analyze::{AnalysisServer, FileId};
 
-use crate::{
-    capabilities::server_capabilities, documents::Document, handlers, url_interner::UrlInterner,
-};
+use crate::{documents::Document, handlers, url_interner::UrlInterner};
 
-pub struct Session {
-    pub client: lspower::Client,
-    pub server_capabilities: RwLock<lsp::ServerCapabilities>,
-    pub client_capabilities: RwLock<Option<lsp::ClientCapabilities>>,
-    pub documents: RwLock<HashMap<lsp::Url, Document>>,
-    pub analysis_server: Arc<Mutex<AnalysisServer>>,
+/// Represents the state of an LSP server session.
+pub(crate) struct Session {
+    /// The LSP client for this session.
+    pub(crate) client: lspower::Client,
+    /// The capabilities provided by the client as part of [`lsp::InitializeParams`]
+    pub(crate) client_capabilities: RwLock<Option<lsp::ClientCapabilities>>,
+    documents: RwLock<HashMap<lsp::Url, Document>>,
     url_interner: RwLock<UrlInterner>,
 }
 
 #[derive(Debug)]
-pub enum SessionError {
+pub(crate) enum SessionError {
     DocumentNotFound { url: lsp::Url },
 }
 
@@ -47,30 +46,23 @@ impl From<SessionError> for LspError {
     }
 }
 
-pub fn into_lsp_error(err: impl Display) -> LspError {
-    let mut error = LspError::internal_error();
-    error.data = Some(err.to_string().into());
-    error
-}
-
 impl Session {
-    pub fn new(client: lspower::Client) -> Self {
-        let server_capabilities = RwLock::new(server_capabilities());
+    pub(crate) fn new(client: lspower::Client) -> Self {
         let client_capabilities = RwLock::new(Default::default());
         let documents = Default::default();
-        let analysis_server = Default::default();
         let url_interner = Default::default();
         Self {
             client,
-            server_capabilities,
             client_capabilities,
             documents,
-            analysis_server,
             url_interner,
         }
     }
 
-    pub fn document(&self, url: &lsp::Url) -> Result<Document, SessionError> {
+    /// Get a [`Document`] matching the provided [`lsp::Url`]
+    ///
+    /// If document does not exist, result is [SessionError::DocumentNotFound]
+    pub(crate) fn document(&self, url: &lsp::Url) -> Result<Document, SessionError> {
         self.documents
             .read()
             .get(url)
@@ -80,28 +72,33 @@ impl Session {
             })
     }
 
-    pub fn insert_document(&self, url: lsp::Url, document: Document) {
+    /// Set the [`Document`] for the provided [`lsp::Url`]
+    ///
+    /// Used by [`handlers::text_document] to synchronize documents with the client.
+    pub(crate) fn insert_document(&self, url: lsp::Url, document: Document) {
         self.documents.write().insert(url, document);
     }
 
-    pub fn remove_document(&self, url: &lsp::Url) {
+    /// Remove the [`Document`] matching the provided [`lsp::Url`]
+    pub(crate) fn remove_document(&self, url: &lsp::Url) {
         self.documents.write().remove(url);
     }
 
-    pub fn document_version(&self, url: &lsp::Url) -> Result<i32, SessionError> {
+    /// Get the version for [`Document`] matching the url. Should increase with every edit.
+    pub(crate) fn document_version(&self, url: &lsp::Url) -> Result<i32, SessionError> {
         self.document(url).map(|d| d.version)
     }
 
-    pub fn file_id(&self, url: lsp::Url) -> usize {
+    /// Return the unique [FileId] associated with the url for this [Session].
+    /// This will assign a new FileId if there isn't one for the provided url.
+    pub(crate) fn file_id(&self, url: lsp::Url) -> FileId {
         self.url_interner.write().intern(url)
     }
 
-    #[allow(unused)]
-    pub fn url(&self, file_id: usize) -> lsp::Url {
-        self.url_interner.read().lookup(file_id).to_owned()
-    }
-
-    pub async fn update_diagnostics(&self, url: lsp::Url) -> anyhow::Result<()> {
+    /// Computes diagnostics for the file matching the provided url and publishes
+    /// them to the client. Called from [`handlers::text_document`] when a file's
+    /// contents changes.
+    pub(crate) async fn update_diagnostics(&self, url: lsp::Url) -> anyhow::Result<()> {
         let doc = self.document(&url)?;
 
         let mut analysis_server = AnalysisServer::default();

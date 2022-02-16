@@ -1,4 +1,3 @@
-use lspower::jsonrpc::Error as LspError;
 use lspower::jsonrpc::Result as LspResult;
 use lspower::lsp::*;
 use lspower::{Client, LanguageServer, LspService, Server};
@@ -10,8 +9,8 @@ use crate::capabilities::server_capabilities;
 use crate::handlers;
 use crate::handlers::formatting::{to_format_options, FormatOnTypeParams, FormatRangeParams};
 use crate::line_index::LineIndex;
-use crate::session::into_lsp_error;
 use crate::session::Session;
+use crate::utils;
 
 struct LSPServer {
     client: Client,
@@ -23,21 +22,16 @@ impl LSPServer {
         let session = Arc::new(Session::new(client.clone()));
         Self { client, session }
     }
-
-    pub async fn task<F, R>(&self, f: F) -> LspResult<R>
-    where
-        F: FnOnce() -> R + Send + 'static,
-        R: Send + 'static,
-    {
-        tokio::task::spawn_blocking(f)
-            .await
-            .map_err(|_| LspError::internal_error())
-    }
 }
 
 #[lspower::async_trait]
 impl LanguageServer for LSPServer {
-    async fn initialize(&self, _: InitializeParams) -> LspResult<InitializeResult> {
+    async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
+        self.session
+            .client_capabilities
+            .write()
+            .replace(params.capabilities);
+
         let init = InitializeResult {
             capabilities: server_capabilities(),
             ..Default::default()
@@ -64,15 +58,10 @@ impl LanguageServer for LSPServer {
         let mut analysis_server = AnalysisServer::default();
         analysis_server.set_file_text(doc.file_id, doc.text);
 
-        let actions = self
-            .task(move || {
-                handlers::analysis::code_actions(analysis_server, doc.file_id, url, cursor_range)
-            })
-            .await??
-            .into_iter()
-            .map(CodeActionOrCommand::CodeAction)
-            .collect();
-
+        let task = utils::spawn_blocking_task(move || {
+            handlers::analysis::code_actions(analysis_server, doc.file_id, url, cursor_range)
+        });
+        let actions = task.await?;
         Ok(Some(actions))
     }
 
@@ -83,10 +72,10 @@ impl LanguageServer for LSPServer {
         let url = params.text_document.uri;
         let doc = self.session.document(&url)?;
 
-        let edits = self
-            .task(move || handlers::formatting::format(&doc.text, doc.file_id, &params.options))
-            .await?
-            .map_err(into_lsp_error)?;
+        let task = utils::spawn_blocking_task(move || {
+            handlers::formatting::format(&doc.text, doc.file_id, &params.options)
+        });
+        let edits = task.await?;
         Ok(Some(edits))
     }
 
@@ -97,17 +86,15 @@ impl LanguageServer for LSPServer {
         let url = params.text_document.uri;
         let doc = self.session.document(&url)?;
 
-        let edits = self
-            .task(move || {
-                handlers::formatting::format_range(FormatRangeParams {
-                    text: doc.text.as_ref(),
-                    file_id: doc.file_id,
-                    format_options: to_format_options(&params.options),
-                    range: params.range,
-                })
+        let task = utils::spawn_blocking_task(move || {
+            handlers::formatting::format_range(FormatRangeParams {
+                text: doc.text.as_ref(),
+                file_id: doc.file_id,
+                format_options: to_format_options(&params.options),
+                range: params.range,
             })
-            .await?
-            .map_err(into_lsp_error)?;
+        });
+        let edits = task.await?;
         Ok(Some(edits))
     }
 
@@ -118,17 +105,15 @@ impl LanguageServer for LSPServer {
         let url = params.text_document_position.text_document.uri;
         let doc = self.session.document(&url)?;
 
-        let edits = self
-            .task(move || {
-                handlers::formatting::format_on_type(FormatOnTypeParams {
-                    text: doc.text.as_ref(),
-                    file_id: doc.file_id,
-                    format_options: to_format_options(&params.options),
-                    position: params.text_document_position.position,
-                })
+        let task = utils::spawn_blocking_task(move || {
+            handlers::formatting::format_on_type(FormatOnTypeParams {
+                text: doc.text.as_ref(),
+                file_id: doc.file_id,
+                format_options: to_format_options(&params.options),
+                position: params.text_document_position.position,
             })
-            .await?
-            .map_err(into_lsp_error)?;
+        });
+        let edits = task.await?;
         Ok(Some(edits))
     }
 

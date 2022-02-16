@@ -1,6 +1,9 @@
 use std::collections::HashMap;
+use std::fmt::Display;
 
 use crate::line_index::{LineCol, LineIndex};
+use lspower::jsonrpc::Error as LspError;
+use lspower::jsonrpc::Result as LspResult;
 use lspower::lsp::{self, CodeAction, CodeActionKind, Diagnostic, TextEdit, Url, WorkspaceEdit};
 use rome_analyze::{DiagnosticExt, Indel, TextAction};
 use tracing::trace;
@@ -42,7 +45,7 @@ pub(crate) fn text_edit(line_index: &LineIndex, indel: &Indel) -> TextEdit {
 pub(crate) fn text_action_to_lsp(
     action: &TextAction,
     line_index: &LineIndex,
-    uri: Url,
+    url: Url,
     diagnostics: Option<Vec<Diagnostic>>,
 ) -> CodeAction {
     trace!("Action to LSP");
@@ -53,7 +56,7 @@ pub(crate) fn text_action_to_lsp(
         .collect();
 
     let mut text_edits = HashMap::new();
-    text_edits.insert(uri, edits);
+    text_edits.insert(url, edits);
     let changes = Some(text_edits);
     let edit = WorkspaceEdit {
         changes,
@@ -88,4 +91,26 @@ pub(crate) fn diagnostic_to_lsp(
     let source = Some("rome".into());
     let diagnostic = Diagnostic::new(lsp_range, None, code, source, message, None, None);
     Some(diagnostic)
+}
+
+/// Helper to create a [lspower::jsonrpc::Error] from a message
+pub(crate) fn into_lsp_error(msg: impl Display) -> LspError {
+    let mut error = LspError::internal_error();
+    error.data = Some(msg.to_string().into());
+    error
+}
+
+/// Utility to spawn a task using [tokio::task::spawn_blocking] onto a thread intended
+/// for blocking or compute-heavy tasks. The provided task must return a [Result] and
+/// the result will be flattened to an [LspResult]
+pub(crate) async fn spawn_blocking_task<F, R, E>(f: F) -> LspResult<R>
+where
+    F: FnOnce() -> Result<R, E> + Send + 'static,
+    R: Send + 'static,
+    E: Display + Send + 'static,
+{
+    match tokio::task::spawn_blocking(f).await {
+        Ok(task_result) => task_result.map_err(into_lsp_error),
+        Err(_) => Err(LspError::internal_error()),
+    }
 }

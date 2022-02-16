@@ -60,6 +60,11 @@ impl AnalysisServer {
         tree.covering_element(range).ancestors().find_map(T::cast)
     }
 
+    /// Returns a combined [`Analysis`] from running every [`AssistProvider`] on
+    /// the file matching the provided [`FileId`]. The file contents must have
+    /// been previously set using the [`AnalysisServer::set_file_text`] method.
+    ///
+    /// [`AssistProvider`]: crate::assists::AssistProvider
     pub fn assists(&self, file_id: FileId, cursor_range: TextRange) -> Analysis {
         trace!("Assists range: {:?}", cursor_range);
 
@@ -75,14 +80,30 @@ impl AnalysisServer {
         signals.into()
     }
 
+    /// Returns diagnostics from running every [`Analyzer`] on the file matching the
+    /// provided [`FileId`]. The file contents must have been previously set using
+    /// the [`AnalysisServer::set_file_text`] method.
+    ///
+    /// [`Analyzer`]: crate::Analyzer
     pub fn diagnostics(&self, file_id: FileId) -> impl Iterator<Item = AnalyzeDiagnostic> {
         self.analyze(file_id).into_diagnostics()
     }
 
+    /// Returns actions from running every [`Analyzer`] on the file matching the
+    /// provided [`FileId`]. The file contents must have been previously set using
+    /// the [`AnalysisServer::set_file_text`] method.
+    ///
+    /// [`Analyzer`]: crate::Analyzer
     pub fn analyzer_actions(&self, file_id: FileId) -> impl Iterator<Item = Action> {
         self.analyze(file_id).into_actions()
     }
 
+    /// Returns actions from running every [`Analyzer`] and [`AssistProvider`] on
+    /// the file matching the provided [`FileId`]. The file contents must have been
+    /// previously set using the [`AnalysisServer::set_file_text`] method.
+    ///
+    /// [`Analyzer`]: crate::Analyzer
+    /// [`AssistProvider`]: crate::assists::AssistProvider
     pub fn actions(
         &self,
         file_id: FileId,
@@ -95,6 +116,7 @@ impl AnalysisServer {
         };
         analyzer_actions.chain(assist_actions)
     }
+
     pub fn analyze(&self, file_id: FileId) -> Analysis {
         let suppressions = self.suppressions(file_id);
 
