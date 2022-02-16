@@ -12,11 +12,18 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-export function test() {};
+type OptionsFlags
+    <Type> =
+    {
+  [Property
+        in
+        keyof
+            Type
+        as              string]?: boolean;
+};;
     "#;
 
     let module = parse(src, 0, Syntax::default().typescript());
-
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 

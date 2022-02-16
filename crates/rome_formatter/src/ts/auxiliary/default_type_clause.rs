@@ -1,7 +1,13 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsDefaultTypeClause, AstNode};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::{
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+};
+use rslint_parser::ast::TsDefaultTypeClause;
+
 impl ToFormatElement for TsDefaultTypeClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let equals = self.eq_token().format(formatter)?;
+        let ty = self.ty().format(formatter)?;
+        Ok(format_elements![equals, space_token(), ty])
     }
 }

@@ -1,7 +1,20 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsTypeParameter, AstNode};
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::{
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+};
+use rslint_parser::ast::TsTypeParameter;
+
 impl ToFormatElement for TsTypeParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let name = self.name().format(formatter)?;
+        let constraint = self
+            .constraint()
+            .format_with_or_empty(formatter, |constraint| {
+                format_elements![space_token(), constraint]
+            })?;
+        let default = self.default().format_with_or_empty(formatter, |default| {
+            format_elements![space_token(), default]
+        })?;
+        Ok(format_elements![name, constraint, default])
     }
 }
