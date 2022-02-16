@@ -1,7 +1,7 @@
 use std::convert::Infallible;
 
 use crate::{
-    fill,
+    fill_elements,
     format_element::join_elements_soft_line,
     format_elements,
     formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
@@ -17,7 +17,7 @@ use rslint_parser::{
 impl ToFormatElement for JsArrayElementList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         if !has_formatter_trivia(self.syntax()) && can_print_fill(self) {
-            return Ok(fill(
+            return Ok(fill_elements(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
                 formatter.format_separated(self.clone(), || token(","))?,
             ));

@@ -262,16 +262,16 @@ where
 ///
 /// ```rust
 /// use std::str::from_utf8;
-/// use rome_formatter::{fill, FormatElement, space_token, token, format_element, FormatOptions};
+/// use rome_formatter::{fill_elements, FormatElement, space_token, token, format_element, FormatOptions};
 /// let a = from_utf8(&[b'a'; 30]).unwrap();
 /// let b = from_utf8(&[b'b'; 30]).unwrap();
 /// let c = from_utf8(&[b'c'; 30]).unwrap();
 /// let d = from_utf8(&[b'd'; 30]).unwrap();
-/// let expr = fill([token(a), token(b), token(c), token(d)]);
+/// let expr = fill_elements([token(a), token(b), token(c), token(d)]);
 ///
 /// assert_eq!(format!("{a} {b}\n{c} {d}"), format_element(&expr, FormatOptions::default()).into_code())
 /// ```
-pub fn fill(elements: impl IntoIterator<Item = FormatElement>) -> FormatElement {
+pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> FormatElement {
     let mut list: Vec<_> = elements.into_iter().collect();
     match list.len() {
         0 => empty_element(),
@@ -827,7 +827,7 @@ pub enum FormatElement {
     /// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
     List(List),
 
-    /// Concatenates multiple elements together with spaces or line breaks to fill the print width. See [fill].
+    /// Concatenates multiple elements together with spaces or line breaks to fill the print width. See [fill_elements].
     Fill(List),
 
     /// A token that should be printed as is, see [token] for documentation and examples.
