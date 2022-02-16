@@ -120,7 +120,7 @@ impl Formatter {
     }
 
     /// Formats a group delimited by an opening and closing token, placing the
-    /// content in a block_indent group
+    /// content in a [block_indent] group
     pub(crate) fn format_delimited_block_indent(
         &self,
         open_token: &SyntaxToken,
@@ -137,7 +137,7 @@ impl Formatter {
     }
 
     /// Formats a group delimited by an opening and closing token, placing the
-    /// content in a soft_block_indent group
+    /// content in a [soft_block_indent] group
     pub(crate) fn format_delimited_soft_block_indent(
         &self,
         open_token: &SyntaxToken,
@@ -154,7 +154,7 @@ impl Formatter {
     }
 
     /// Formats a group delimited by an opening and closing token, placing the
-    /// content in an indent group with soft_line_break_or_space tokens at the
+    /// content in an [indent] group with [soft_line_break_or_space] tokens at the
     /// start and end
     pub(crate) fn format_delimited_soft_block_spaces(
         &self,
