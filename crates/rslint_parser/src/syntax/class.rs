@@ -1374,6 +1374,19 @@ fn parse_class_member_modifiers(
                 continue;
             }
 
+            // We already give an error saying that these combinations are not valid
+            let previous_modifier_kind = previous_modifier.as_ref().map(|x| x.kind);
+            match (previous_modifier_kind, current_modifier.kind) {
+                (Some(ModifierKind::Static), ModifierKind::Abstract)
+                | (Some(ModifierKind::Abstract), ModifierKind::Static) => {
+                    valid = false;
+                    modifiers.set_range(current_modifier.clone());
+                    previous_modifier = Some(current_modifier);
+                    continue;
+                }
+                _ => {}
+            }
+
             // Checks the precedence of modifiers. The precedence is defined by the order of the
             // enum variants in [Modifier]
             if let Some(previous_modifier) = &previous_modifier {
