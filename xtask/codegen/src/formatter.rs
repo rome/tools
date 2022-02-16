@@ -1,175 +1,178 @@
-#![allow(deprecated)]
-
 use std::{
-    cell::RefCell,
-    cmp::Ordering,
-    collections::{BTreeMap, BTreeSet},
-    fs::{create_dir_all, read_dir, read_to_string, remove_file, File},
-    io::{self, Write},
+    collections::{BTreeMap, BTreeSet, HashSet, VecDeque},
+    env,
+    fs::{create_dir_all, read_dir, remove_file, File},
+    io::Write,
     path::{Path, PathBuf},
-    rc::Rc,
 };
 
+use git2::{Repository, Status, StatusOptions};
 use proc_macro2::{Ident, Span};
 use quote::quote;
-use syn::{parse_file, spanned::Spanned};
 use xtask::project_root;
 
 use crate::ast::load_ast;
 
-#[deprecated]
-struct FileStore {
-    use_items: Vec<String>,
-    impl_items: BTreeMap<String, String>,
+struct GitRepo {
+    repo: Repository,
+    allow_staged: bool,
+    staged: HashSet<PathBuf>,
+    dirty: HashSet<PathBuf>,
 }
 
-#[deprecated]
-type FileSet = Rc<RefCell<FileStore>>;
+impl GitRepo {
+    fn open() -> Self {
+        let root = project_root();
+        let repo = Repository::discover(&root).expect("failed to open git repo");
 
-#[deprecated]
-#[derive(Default)]
-struct NodeIndex {
-    entries: BTreeMap<String, NodeIndexEntry>,
-    files: BTreeMap<PathBuf, FileSet>,
-}
-
-#[deprecated]
-struct NodeIndexEntry {
-    use_items: Vec<String>,
-    impl_item: String,
-    file: FileSet,
-}
-
-#[deprecated]
-fn load_source(index: &mut NodeIndex, path: &Path) {
-    let code_str = read_to_string(path).unwrap();
-    let code = parse_file(&code_str)
-        .unwrap_or_else(|err| panic!("failed to parse {}: {:?}", path.display(), err));
-
-    let mut use_items: Vec<String> = Vec::new();
-    let mut impl_items: BTreeMap<String, String> = BTreeMap::new();
-
-    for item in code.items {
-        match item {
-            syn::Item::Use(use_item) => {
-                use_items.push(slice_source(&code_str, &use_item));
+        let mut allow_staged = false;
+        let mut allow_dirty = false;
+        for arg in env::args() {
+            match arg.as_str() {
+                "--allow-staged" => {
+                    allow_staged = true;
+                }
+                "--allow-dirty" => {
+                    allow_dirty = true;
+                }
+                _ => {}
             }
+        }
 
-            syn::Item::Impl(impl_item) => {
-                if let Some((_, path, _)) = &impl_item.trait_ {
-                    if let Some(segment) = path.segments.last() {
-                        if segment.ident == "ToFormatElement" {
-                            if let syn::Type::Path(path) = &*impl_item.self_ty {
-                                if let Some(segment) = path.path.segments.last() {
-                                    impl_items.insert(
-                                        segment.ident.to_string(),
-                                        slice_source(&code_str, &impl_item),
-                                    );
-                                }
-                            }
+        let mut repo_opts = StatusOptions::new();
+        repo_opts.include_ignored(false);
+
+        let statuses = repo
+            .statuses(Some(&mut repo_opts))
+            .expect("failed to read repository status");
+
+        let mut staged = HashSet::new();
+        let mut dirty = HashSet::new();
+
+        for status in statuses.iter() {
+            if let Some(path) = status.path() {
+                match status.status() {
+                    Status::CURRENT => (),
+                    Status::INDEX_NEW
+                    | Status::INDEX_MODIFIED
+                    | Status::INDEX_DELETED
+                    | Status::INDEX_RENAMED
+                    | Status::INDEX_TYPECHANGE => {
+                        if !allow_staged {
+                            staged.insert(root.join(path));
                         }
                     }
-                }
+                    _ => {
+                        if !allow_dirty {
+                            dirty.insert(root.join(path));
+                        }
+                    }
+                };
             }
+        }
 
-            _ => {}
+        drop(statuses);
+
+        Self {
+            repo,
+            allow_staged,
+            staged,
+            dirty,
         }
     }
 
-    let file = Rc::new(RefCell::new(FileStore {
-        use_items: use_items.clone(),
-        impl_items: impl_items.clone(),
-    }));
-
-    index.files.insert(path.into(), Rc::clone(&file));
-
-    for (key, impl_item) in impl_items {
-        index.entries.insert(
-            key,
-            NodeIndexEntry {
-                use_items: use_items.clone(),
-                impl_item,
-                file: Rc::clone(&file),
-            },
-        );
-    }
-}
-
-#[deprecated]
-fn slice_source(source: &str, node: &impl Spanned) -> String {
-    let span = node.span();
-    let start = span.start();
-    let end = span.end();
-
-    let mut buffer = String::new();
-    for (line_index, line_content) in source.lines().enumerate() {
-        let line_number = line_index + 1;
-        let (offset, line_content) = match line_number.cmp(&start.line) {
-            Ordering::Less => continue,
-            Ordering::Equal => (start.column, &line_content[start.column..]),
-            Ordering::Greater => (0, line_content),
-        };
-
-        let line_content = match line_number.cmp(&end.line) {
-            Ordering::Less => line_content,
-            Ordering::Equal => &line_content[..end.column - offset],
-            Ordering::Greater => break,
-        };
-
-        buffer.push_str(line_content);
-        buffer.push('\n');
-    }
-
-    buffer
-}
-
-#[deprecated]
-fn traverse_directory(index: &mut NodeIndex, path: &Path) -> io::Result<()> {
-    for entry in read_dir(path)? {
-        let entry = match entry {
-            Ok(entry) => entry,
-            Err(_) => continue,
-        };
-
-        let kind = match entry.file_type() {
-            Ok(kind) => kind,
-            Err(_) => continue,
-        };
-
-        if kind.is_file() {
-            load_source(index, &entry.path());
-            continue;
+    fn check_path(&self, path: &Path) {
+        if self.dirty.contains(path) {
+            panic!("Codegen would overwrite '{}' but it has uncommited changes. Commit the file to git, or pass --allow-dirty to the command to proceed anyway", path.display());
         }
-
-        if kind.is_dir() {
-            traverse_directory(index, &entry.path()).ok();
-            continue;
+        if self.staged.contains(path) {
+            panic!("Codegen would overwrite '{}' but it has uncommited changes. Commit the file to git, or pass --allow-staged to the command to proceed anyway", path.display());
         }
     }
 
-    Ok(())
+    fn stage_paths(&self, paths: &[PathBuf]) {
+        // Do not overwrite a version of the file
+        // that's potentially already staged
+        if self.allow_staged {
+            return;
+        }
+
+        let root = project_root();
+        self.repo
+            .index()
+            .expect("could not open index for git repository")
+            .update_all(
+                paths.iter().map(|path| {
+                    path.strip_prefix(&root).unwrap_or_else(|err| {
+                        panic!(
+                            "path '{}' is not inside of project '{}': {}",
+                            path.display(),
+                            root.display(),
+                            err,
+                        )
+                    })
+                }),
+                None,
+            )
+            .expect("failed to stage updated files");
+    }
 }
 
 struct ModuleIndex {
     root: PathBuf,
     modules: BTreeMap<PathBuf, BTreeSet<String>>,
+    unused_files: HashSet<PathBuf>,
 }
 
 impl ModuleIndex {
     fn new(root: PathBuf) -> Self {
+        let mut unused_files = HashSet::new();
+        let mut queue = VecDeque::new();
+
+        queue.push_back(root.join("js"));
+        queue.push_back(root.join("ts"));
+
+        while let Some(dir) = queue.pop_front() {
+            let iter = read_dir(&dir)
+                .unwrap_or_else(|err| panic!("failed to read '{}': {}", dir.display(), err));
+
+            for entry in iter {
+                let entry = entry.expect("failed to read DirEntry");
+
+                let path = entry.path();
+                let file_type = entry.file_type().unwrap_or_else(|err| {
+                    panic!("failed to read file type of '{}': {}", path.display(), err)
+                });
+
+                if file_type.is_dir() {
+                    queue.push_back(path);
+                    continue;
+                }
+
+                if file_type.is_file() {
+                    unused_files.insert(path);
+                }
+            }
+        }
+
         Self {
             root,
             modules: BTreeMap::default(),
+            unused_files,
         }
     }
 
     /// Add a new module to the index
-    fn insert(&mut self, path: &Path) {
+    fn insert(&mut self, repo: &GitRepo, path: &Path) {
+        self.unused_files.remove(path);
+
         // Walk up from the module file towards the root
         let mut parent = path.parent();
         let mut file_stem = path.file_stem();
 
         while let (Some(path), Some(stem)) = (parent, file_stem) {
+            repo.check_path(&path.join("mod.rs"));
+
             // Insert each module into its parent
             let stem = stem.to_str().unwrap().to_owned();
             self.modules.entry(path.into()).or_default().insert(stem);
@@ -186,7 +189,7 @@ impl ModuleIndex {
 
     /// Create all the mod.rs files needed to import
     /// all the modules in the index up to the root
-    fn print(self) {
+    fn print(mut self, stage: &mut Vec<PathBuf>) {
         for (path, imports) in self.modules {
             let mut content = String::new();
 
@@ -208,6 +211,16 @@ impl ModuleIndex {
             let path = path.join("mod.rs");
             let mut file = File::create(&path).unwrap();
             file.write_all(content.as_bytes()).unwrap();
+            drop(file);
+
+            self.unused_files.remove(&path);
+            stage.push(path);
+        }
+
+        for file in self.unused_files {
+            remove_file(&file)
+                .unwrap_or_else(|err| panic!("failed to delete '{}': {}", file.display(), err));
+            stage.push(file);
         }
     }
 }
@@ -220,15 +233,7 @@ enum NodeKind {
 }
 
 pub fn generate_formatter() {
-    let mut index = NodeIndex::default();
-
-    if true {
-        traverse_directory(
-            &mut index,
-            &project_root().join("crates/rome_formatter/src/old"),
-        )
-        .ok();
-    }
+    let repo = GitRepo::open();
 
     let ast = load_ast();
 
@@ -263,11 +268,13 @@ pub fn generate_formatter() {
             )
         }));
 
+    let mut stage = Vec::new();
+
     // Create a default implementation for theses nodes only if
     // the file doesn't already exist
     for (kind, name) in names {
         let path = name_to_path(&kind, &name);
-        modules.insert(&path);
+        modules.insert(&repo, &path);
 
         // Union nodes except for AnyFunction and AnyClass have a generated
         // implementation, the codegen will always overwrite any existing file
@@ -279,98 +286,79 @@ pub fn generate_formatter() {
             continue;
         }
 
+        repo.check_path(&path);
+
         let dir = path.parent().unwrap();
         create_dir_all(dir).unwrap();
 
-        let tokens = match index.entries.remove(&name) {
-            Some(entry) if !allow_overwrite => {
-                let use_items = entry.use_items;
-                let impl_item = entry.impl_item;
+        let id = Ident::new(&name, Span::call_site());
 
-                entry.file.borrow_mut().impl_items.remove(&name);
+        // Generate a default implementation of ToFormatElement using format_list on
+        // non-separated lists, to_format_element on the wrapped node for unions and
+        // format_verbatim for all the other nodes
+        let tokens = match kind {
+            NodeKind::List { separated: false } => quote! {
+                use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+                use rslint_parser::ast::#id;
 
-                format!("{}\n{}", use_items.join("\n"), impl_item)
+                impl ToFormatElement for #id {
+                    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                        Ok(formatter.format_list(self.clone()))
+                    }
+                }
+            },
+            NodeKind::Node | NodeKind::Unknown | NodeKind::List { separated: true } => {
+                quote! {
+                    use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+                    use rslint_parser::{ast::#id, AstNode};
+
+                    impl ToFormatElement for #id {
+                        fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                            Ok(formatter.format_verbatim(self.syntax()))
+                        }
+                    }
+                }
             }
-            _ => {
-                let id = Ident::new(&name, Span::call_site());
+            NodeKind::Union { variants } => {
+                // For each variant of the union call to_format_element on the wrapped node
+                let match_arms: Vec<_> = variants
+                    .into_iter()
+                    .map(|variant| {
+                        let variant = Ident::new(&variant, Span::call_site());
+                        quote! { Self::#variant(node) => node.to_format_element(formatter), }
+                    })
+                    .collect();
 
-                // Generate a default implementation of ToFormatElement using format_list on
-                // non-separated lists, to_format_element on the wrapped node for unions and
-                // format_verbatim for all the other nodes
-                let tokens = match kind {
-                    NodeKind::List { separated: false } => quote! {
-                        use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-                        use rslint_parser::ast::#id;
+                quote! {
+                    use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+                    use rslint_parser::ast::#id;
 
-                        impl ToFormatElement for #id {
-                            fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-                                Ok(formatter.format_list(self.clone()))
-                            }
-                        }
-                    },
-                    NodeKind::Node | NodeKind::Unknown | NodeKind::List { separated: true } => {
-                        quote! {
-                            use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-                            use rslint_parser::{ast::#id, AstNode};
-
-                            impl ToFormatElement for #id {
-                                fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-                                    Ok(formatter.format_verbatim(self.syntax()))
-                                }
+                    impl ToFormatElement for #id {
+                        fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                            match self {
+                                #( #match_arms )*
                             }
                         }
                     }
-                    NodeKind::Union { variants } => {
-                        // For each variant of the union call to_format_element on the wrapped node
-                        let match_arms: Vec<_> = variants
-                            .into_iter()
-                            .map(|variant| {
-                                let variant = Ident::new(&variant, Span::call_site());
-                                quote! { Self::#variant(node) => node.to_format_element(formatter), }
-                            })
-                            .collect();
-
-                        quote! {
-                            use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-                            use rslint_parser::ast::#id;
-
-                            impl ToFormatElement for #id {
-                                fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-                                    match self {
-                                        #( #match_arms )*
-                                    }
-                                }
-                            }
-                        }
-                    }
-                };
-
-                if allow_overwrite {
-                    xtask::reformat(tokens).unwrap()
-                } else {
-                    xtask::reformat_without_preamble(tokens).unwrap()
                 }
             }
         };
 
+        let tokens = if allow_overwrite {
+            xtask::reformat(tokens).unwrap()
+        } else {
+            xtask::reformat_without_preamble(tokens).unwrap()
+        };
+
         let mut file = File::create(&path).unwrap();
         file.write_all(tokens.as_bytes()).unwrap();
+        drop(file);
+
+        stage.push(path);
     }
 
-    for (path, entry) in index.files {
-        let entry = entry.borrow();
-        if entry.impl_items.is_empty() {
-            remove_file(path).unwrap();
-        } else {
-            let impl_items: Vec<_> = entry.impl_items.values().cloned().collect();
-            let tokens = format!("{}\n{}", entry.use_items.join("\n"), impl_items.join("\n"));
-
-            let mut file = File::create(&path).unwrap();
-            file.write_all(tokens.as_bytes()).unwrap();
-        }
-    }
-
-    modules.print();
+    modules.print(&mut stage);
+    repo.stage_paths(&stage);
 }
 
 enum NodeLanguage {
