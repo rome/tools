@@ -622,6 +622,7 @@ JsAnyClassMemberName =
 	| JsPrivateClassMemberName
 
 JsAnyClassMember =
+	// Concrete Members
 	JsConstructorClassMember
 	| JsStaticInitializationBlockClassMember
 	| JsPropertyClassMember
@@ -631,6 +632,10 @@ JsAnyClassMember =
 	| JsEmptyClassMember
 	| TsIndexSignatureClassMember
 	| JsUnknownMember
+	// Abstract Members
+	| TsAbstractMethodClassMember
+	| TsAbstractGetterClassMember
+	| TsAbstractSetterClassMember
 
 JsStaticInitializationBlockClassMember =
 	'static'
@@ -712,7 +717,6 @@ TsDefinitePropertyAnnotation =
 JsMethodClassMember =
 	access_modifier: ('private' | 'protected' | 'public')?
 	'static'?
-	'abstract'?
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
@@ -721,6 +725,14 @@ JsMethodClassMember =
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
+
+TsAbstractMethodClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'?
+	name: JsAnyClassMemberName
+	type_parameters: TsTypeParameters?
+	parameters: JsParameters
+	return_type_annotation: TsReturnTypeAnnotation?
 
 // class Test { get a() {} }
 //              ^^^^^^^^^^
@@ -733,6 +745,14 @@ JsGetterClassMember =
 	'(' ')'
 	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
+
+TsAbstractGetterClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'?
+	'get'
+	name: JsAnyClassMemberName
+	'(' ')'
+	return_type: TsTypeAnnotation?
 
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
@@ -757,6 +777,16 @@ TsIndexSignatureClassMember =
 	']'
 	type_annotation: TsTypeAnnotation
 	';'?
+
+	
+TsAbstractSetterClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'?
+	'set'
+	name: JsAnyClassMemberName
+	'('
+	parameter: JsAnyFormalParameter
+	')'
 
 JsEmptyClassMember = ';'
 

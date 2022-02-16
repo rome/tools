@@ -13,7 +13,6 @@ impl ToFormatElement for JsMethodClassMember {
         let JsMethodClassMemberFields {
             access_modifier,
             static_token,
-            abstract_token,
             async_token,
             star_token,
             name,
@@ -27,8 +26,6 @@ impl ToFormatElement for JsMethodClassMember {
         let access_modifier = access_modifier
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
         let static_token = static_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let abstract_token = abstract_token
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
         let async_token = async_token
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
@@ -44,7 +41,6 @@ impl ToFormatElement for JsMethodClassMember {
         Ok(hard_group_elements(format_elements![
             access_modifier,
             static_token,
-            abstract_token,
             async_token,
             star_token,
             name,

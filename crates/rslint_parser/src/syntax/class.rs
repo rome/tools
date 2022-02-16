@@ -722,13 +722,21 @@ fn parse_class_member_impl(
                         p.error(ts_accessor_type_parameters_error(p, &type_parameters))
                     }
 
+                    let is_abstract = modifiers.has(ModifierKind::Abstract);
                     let completed = if is_getter {
                         p.expect(T!['(']);
                         p.expect(T![')']);
                         parse_ts_type_annotation_or_error(p).ok();
 
                         parse_getter_or_setter_body(p, modifiers);
-                        member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
+                        member_marker.complete(
+                            p,
+                            if is_abstract {
+                                TS_ABSTRACT_GETTER_CLASS_MEMBER
+                            } else {
+                                JS_GETTER_CLASS_MEMBER
+                            },
+                        )
                     } else {
                         let has_l_paren = p.expect(T!['(']);
                         p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
@@ -755,13 +763,19 @@ fn parse_class_member_impl(
                         }
 
                         parse_getter_or_setter_body(p, modifiers);
-                        member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
+                        member_marker.complete(
+                            p,
+                            if is_abstract {
+                                TS_ABSTRACT_SETTER_CLASS_MEMBER
+                            } else {
+                                JS_SETTER_CLASS_MEMBER
+                            },
+                        )
                     };
 
                     return Present(completed);
                 }
             };
-
             // test property_class_member
             // class foo {
             //   property
@@ -1058,10 +1072,13 @@ fn parse_method_class_member_rest(
 
     // test ts ts_optional_method_class_member
     // class A { test?() {} }
-    let member_kind = if optional_member_token(p).is_ok() {
-        JS_METHOD_CLASS_MEMBER
-    } else {
-        JS_UNKNOWN_MEMBER
+    let member_kind = match (
+        optional_member_token(p),
+        modifiers.has(ModifierKind::Abstract),
+    ) {
+        (Ok(_), true) => TS_ABSTRACT_METHOD_CLASS_MEMBER,
+        (Ok(_), false) => JS_METHOD_CLASS_MEMBER,
+        _ => JS_UNKNOWN_MEMBER,
     };
 
     TypeScript

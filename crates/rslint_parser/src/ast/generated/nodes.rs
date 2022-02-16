@@ -3019,7 +3019,6 @@ impl JsMethodClassMember {
         JsMethodClassMemberFields {
             access_modifier: self.access_modifier(),
             static_token: self.static_token(),
-            abstract_token: self.abstract_token(),
             async_token: self.async_token(),
             star_token: self.star_token(),
             name: self.name(),
@@ -3032,32 +3031,30 @@ impl JsMethodClassMember {
     }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 5usize)
+        support::required_node(&self.syntax, 4usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 6usize)
+        support::token(&self.syntax, 5usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 7usize)
+        support::node(&self.syntax, 6usize)
     }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
-        support::required_node(&self.syntax, 8usize)
+        support::required_node(&self.syntax, 7usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
-        support::node(&self.syntax, 9usize)
+        support::node(&self.syntax, 8usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 10usize)
+        support::required_node(&self.syntax, 9usize)
     }
 }
 pub struct JsMethodClassMemberFields {
     pub access_modifier: Option<SyntaxToken>,
     pub static_token: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -5075,6 +5072,149 @@ pub struct NewTargetFields {
     pub new_token: SyntaxResult<SyntaxToken>,
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub target_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAbstractGetterClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAbstractGetterClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAbstractGetterClassMemberFields {
+        TsAbstractGetterClassMemberFields {
+            access_modifier: self.access_modifier(),
+            abstract_token: self.abstract_token(),
+            get_token: self.get_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            r_paren_token: self.r_paren_token(),
+            return_type: self.return_type(),
+        }
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 4usize)
+    }
+    pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 5usize)
+    }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
+}
+pub struct TsAbstractGetterClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub abstract_token: Option<SyntaxToken>,
+    pub get_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub return_type: Option<TsTypeAnnotation>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAbstractMethodClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAbstractMethodClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAbstractMethodClassMemberFields {
+        TsAbstractMethodClassMemberFields {
+            access_modifier: self.access_modifier(),
+            abstract_token: self.abstract_token(),
+            name: self.name(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+        }
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+        support::required_node(&self.syntax, 2usize)
+    }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 3usize)
+    }
+    pub fn parameters(&self) -> SyntaxResult<JsParameters> {
+        support::required_node(&self.syntax, 4usize)
+    }
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
+        support::node(&self.syntax, 5usize)
+    }
+}
+pub struct TsAbstractMethodClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub abstract_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAbstractSetterClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAbstractSetterClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAbstractSetterClassMemberFields {
+        TsAbstractSetterClassMemberFields {
+            access_modifier: self.access_modifier(),
+            abstract_token: self.abstract_token(),
+            set_token: self.set_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            parameter: self.parameter(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 4usize)
+    }
+    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+        support::required_node(&self.syntax, 5usize)
+    }
+    pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 6usize)
+    }
+}
+pub struct TsAbstractSetterClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub abstract_token: Option<SyntaxToken>,
+    pub set_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAnyType {
@@ -8223,6 +8363,9 @@ pub enum JsAnyClassMember {
     JsSetterClassMember(JsSetterClassMember),
     JsStaticInitializationBlockClassMember(JsStaticInitializationBlockClassMember),
     JsUnknownMember(JsUnknownMember),
+    TsAbstractGetterClassMember(TsAbstractGetterClassMember),
+    TsAbstractMethodClassMember(TsAbstractMethodClassMember),
+    TsAbstractSetterClassMember(TsAbstractSetterClassMember),
     TsIndexSignatureClassMember(TsIndexSignatureClassMember),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -11390,10 +11533,6 @@ impl std::fmt::Debug for JsMethodClassMember {
                 &support::DebugOptionalElement(self.static_token()),
             )
             .field(
-                "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
-            )
-            .field(
                 "async_token",
                 &support::DebugOptionalElement(self.async_token()),
             )
@@ -13313,6 +13452,134 @@ impl From<NewTarget> for SyntaxNode {
 }
 impl From<NewTarget> for SyntaxElement {
     fn from(n: NewTarget) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsAbstractGetterClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ABSTRACT_GETTER_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAbstractGetterClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAbstractGetterClassMember")
+            .field(
+                "access_modifier",
+                &support::DebugOptionalElement(self.access_modifier()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugOptionalElement(self.abstract_token()),
+            )
+            .field("get_token", &support::DebugSyntaxResult(self.get_token()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "l_paren_token",
+                &support::DebugSyntaxResult(self.l_paren_token()),
+            )
+            .field(
+                "r_paren_token",
+                &support::DebugSyntaxResult(self.r_paren_token()),
+            )
+            .field(
+                "return_type",
+                &support::DebugOptionalElement(self.return_type()),
+            )
+            .finish()
+    }
+}
+impl From<TsAbstractGetterClassMember> for SyntaxNode {
+    fn from(n: TsAbstractGetterClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsAbstractGetterClassMember> for SyntaxElement {
+    fn from(n: TsAbstractGetterClassMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsAbstractMethodClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ABSTRACT_METHOD_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAbstractMethodClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAbstractMethodClassMember")
+            .field(
+                "access_modifier",
+                &support::DebugOptionalElement(self.access_modifier()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugOptionalElement(self.abstract_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
+            .field("parameters", &support::DebugSyntaxResult(self.parameters()))
+            .field(
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
+            )
+            .finish()
+    }
+}
+impl From<TsAbstractMethodClassMember> for SyntaxNode {
+    fn from(n: TsAbstractMethodClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsAbstractMethodClassMember> for SyntaxElement {
+    fn from(n: TsAbstractMethodClassMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsAbstractSetterClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ABSTRACT_SETTER_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAbstractSetterClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAbstractSetterClassMember")
+            .field(
+                "access_modifier",
+                &support::DebugOptionalElement(self.access_modifier()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugOptionalElement(self.abstract_token()),
+            )
+            .field("set_token", &support::DebugSyntaxResult(self.set_token()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "l_paren_token",
+                &support::DebugSyntaxResult(self.l_paren_token()),
+            )
+            .field("parameter", &support::DebugSyntaxResult(self.parameter()))
+            .field(
+                "r_paren_token",
+                &support::DebugSyntaxResult(self.r_paren_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsAbstractSetterClassMember> for SyntaxNode {
+    fn from(n: TsAbstractSetterClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsAbstractSetterClassMember> for SyntaxElement {
+    fn from(n: TsAbstractSetterClassMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsAnyType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ANY_TYPE }
@@ -17098,6 +17365,21 @@ impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
 impl From<JsUnknownMember> for JsAnyClassMember {
     fn from(node: JsUnknownMember) -> JsAnyClassMember { JsAnyClassMember::JsUnknownMember(node) }
 }
+impl From<TsAbstractGetterClassMember> for JsAnyClassMember {
+    fn from(node: TsAbstractGetterClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsAbstractGetterClassMember(node)
+    }
+}
+impl From<TsAbstractMethodClassMember> for JsAnyClassMember {
+    fn from(node: TsAbstractMethodClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsAbstractMethodClassMember(node)
+    }
+}
+impl From<TsAbstractSetterClassMember> for JsAnyClassMember {
+    fn from(node: TsAbstractSetterClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsAbstractSetterClassMember(node)
+    }
+}
 impl From<TsIndexSignatureClassMember> for JsAnyClassMember {
     fn from(node: TsIndexSignatureClassMember) -> JsAnyClassMember {
         JsAnyClassMember::TsIndexSignatureClassMember(node)
@@ -17115,6 +17397,9 @@ impl AstNode for JsAnyClassMember {
                 | JS_SETTER_CLASS_MEMBER
                 | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
                 | JS_UNKNOWN_MEMBER
+                | TS_ABSTRACT_GETTER_CLASS_MEMBER
+                | TS_ABSTRACT_METHOD_CLASS_MEMBER
+                | TS_ABSTRACT_SETTER_CLASS_MEMBER
                 | TS_INDEX_SIGNATURE_CLASS_MEMBER
         )
     }
@@ -17144,6 +17429,21 @@ impl AstNode for JsAnyClassMember {
                 )
             }
             JS_UNKNOWN_MEMBER => JsAnyClassMember::JsUnknownMember(JsUnknownMember { syntax }),
+            TS_ABSTRACT_GETTER_CLASS_MEMBER => {
+                JsAnyClassMember::TsAbstractGetterClassMember(TsAbstractGetterClassMember {
+                    syntax,
+                })
+            }
+            TS_ABSTRACT_METHOD_CLASS_MEMBER => {
+                JsAnyClassMember::TsAbstractMethodClassMember(TsAbstractMethodClassMember {
+                    syntax,
+                })
+            }
+            TS_ABSTRACT_SETTER_CLASS_MEMBER => {
+                JsAnyClassMember::TsAbstractSetterClassMember(TsAbstractSetterClassMember {
+                    syntax,
+                })
+            }
             TS_INDEX_SIGNATURE_CLASS_MEMBER => {
                 JsAnyClassMember::TsIndexSignatureClassMember(TsIndexSignatureClassMember {
                     syntax,
@@ -17163,6 +17463,9 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::JsSetterClassMember(it) => &it.syntax,
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
             JsAnyClassMember::JsUnknownMember(it) => &it.syntax,
+            JsAnyClassMember::TsAbstractGetterClassMember(it) => &it.syntax,
+            JsAnyClassMember::TsAbstractMethodClassMember(it) => &it.syntax,
+            JsAnyClassMember::TsAbstractSetterClassMember(it) => &it.syntax,
             JsAnyClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
         }
     }
@@ -17180,6 +17483,9 @@ impl std::fmt::Debug for JsAnyClassMember {
                 std::fmt::Debug::fmt(it, f)
             }
             JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsAbstractGetterClassMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsAbstractMethodClassMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsAbstractSetterClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -17195,6 +17501,9 @@ impl From<JsAnyClassMember> for SyntaxNode {
             JsAnyClassMember::JsSetterClassMember(it) => it.into(),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
             JsAnyClassMember::JsUnknownMember(it) => it.into(),
+            JsAnyClassMember::TsAbstractGetterClassMember(it) => it.into(),
+            JsAnyClassMember::TsAbstractMethodClassMember(it) => it.into(),
+            JsAnyClassMember::TsAbstractSetterClassMember(it) => it.into(),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => it.into(),
         }
     }
@@ -22345,6 +22654,21 @@ impl std::fmt::Display for NewTarget {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAbstractGetterClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAbstractMethodClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAbstractSetterClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAnyType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -25133,6 +25457,18 @@ impl Debug for DebugSyntaxElement {
                     std::fmt::Debug::fmt(&JsYieldExpression::cast(node.clone()).unwrap(), f)
                 }
                 NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
+                TS_ABSTRACT_GETTER_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsAbstractGetterClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
+                TS_ABSTRACT_METHOD_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsAbstractMethodClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
+                TS_ABSTRACT_SETTER_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsAbstractSetterClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_ANY_TYPE => std::fmt::Debug::fmt(&TsAnyType::cast(node.clone()).unwrap(), f),
                 TS_ARRAY_TYPE => std::fmt::Debug::fmt(&TsArrayType::cast(node.clone()).unwrap(), f),
                 TS_AS_ASSIGNMENT => {

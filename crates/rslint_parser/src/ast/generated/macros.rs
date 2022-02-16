@@ -702,6 +702,21 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::NewTarget::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_ABSTRACT_GETTER_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsAbstractGetterClassMember::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_ABSTRACT_METHOD_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsAbstractMethodClassMember::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_ABSTRACT_SETTER_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsAbstractSetterClassMember::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_ANY_TYPE => {
                     let $pattern = unsafe { $crate::ast::TsAnyType::new_unchecked(node) };
                     $body
