@@ -255,6 +255,31 @@ where
     }
 }
 
+/// Concatenates a list of [FormatElement]s with spaces and line breaks to fit
+/// them on as few lines as possible
+///
+/// ## Examples
+///
+/// ```rust
+/// use std::str::from_utf8;
+/// use rome_formatter::{fill_elements, FormatElement, space_token, token, format_element, FormatOptions};
+/// let a = from_utf8(&[b'a'; 30]).unwrap();
+/// let b = from_utf8(&[b'b'; 30]).unwrap();
+/// let c = from_utf8(&[b'c'; 30]).unwrap();
+/// let d = from_utf8(&[b'd'; 30]).unwrap();
+/// let expr = fill_elements([token(a), token(b), token(c), token(d)]);
+///
+/// assert_eq!(format!("{a} {b}\n{c} {d}"), format_element(&expr, FormatOptions::default()).into_code())
+/// ```
+pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> FormatElement {
+    let mut list: Vec<_> = elements.into_iter().collect();
+    match list.len() {
+        0 => empty_element(),
+        1 => list.pop().unwrap(),
+        _ => FormatElement::Fill(List::new(list)),
+    }
+}
+
 /// Joins the elements by placing a given separator between elements.
 ///
 /// ## Examples
@@ -802,10 +827,13 @@ pub enum FormatElement {
     /// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
     List(List),
 
+    /// Concatenates multiple elements together with spaces or line breaks to fill the print width. See [fill_elements].
+    Fill(List),
+
     /// A token that should be printed as is, see [token] for documentation and examples.
     Token(Token),
 
-    LineSuffix(Box<FormatElement>),
+    LineSuffix(Content),
 }
 
 impl Debug for FormatElement {
@@ -819,6 +847,10 @@ impl Debug for FormatElement {
             FormatElement::ConditionalGroupContent(content) => content.fmt(fmt),
             FormatElement::List(content) => {
                 write!(fmt, "List ")?;
+                content.fmt(fmt)
+            }
+            FormatElement::Fill(content) => {
+                write!(fmt, "Fill ")?;
                 content.fmt(fmt)
             }
             FormatElement::Token(content) => content.fmt(fmt),
@@ -894,6 +926,62 @@ impl Debug for List {
 impl List {
     fn new(content: Vec<FormatElement>) -> Self {
         Self { content }
+    }
+
+    fn trim_start(&self) -> Self {
+        let mut content: Vec<_> = self
+            .iter()
+            .skip_while(|e| match e {
+                FormatElement::Empty => true,
+                FormatElement::Space => true,
+                FormatElement::Line(_) => true,
+                FormatElement::Indent(_) => true,
+                FormatElement::Token(t) => {
+                    let s = t.trim_start();
+                    s.is_empty()
+                }
+                _ => false,
+            })
+            .map(Clone::clone)
+            .collect();
+
+        if let Some(FormatElement::Token(s)) = content.get_mut(0) {
+            *s = s.trim_start();
+        }
+
+        Self::new(content)
+    }
+
+    fn trim_end(&self) -> Self {
+        let idx_first_non_empty = self.iter().rev().position(|e| match e {
+            FormatElement::Empty => false,
+            FormatElement::Space => false,
+            FormatElement::Line(_) => false,
+            FormatElement::Indent(_) => false,
+            FormatElement::Token(t) => {
+                let s = t.trim_end();
+                !s.is_empty()
+            }
+            _ => true,
+        });
+
+        match idx_first_non_empty {
+            Some(idx_first_non_empty) => {
+                let idx_first_non_empty = self.len() - idx_first_non_empty;
+                let mut content: Vec<_> = self
+                    .iter()
+                    .take(idx_first_non_empty)
+                    .map(Clone::clone)
+                    .collect();
+
+                if let Some(FormatElement::Token(s)) = content.last_mut() {
+                    *s = s.trim_end();
+                }
+
+                Self::new(content)
+            }
+            None => Self::new(vec![]),
+        }
     }
 }
 
@@ -1118,28 +1206,9 @@ impl FormatElement {
             FormatElement::Line(_) => FormatElement::Empty,
             FormatElement::Indent(i) => i.content.trim_start(),
             FormatElement::Group(g) => g.content.trim_start(),
+            FormatElement::Fill(list) => FormatElement::Fill(list.trim_start()),
             FormatElement::ConditionalGroupContent(g) => g.content.trim_start(),
-            FormatElement::List(list) => {
-                let mut content: Vec<_> = list
-                    .iter()
-                    .skip_while(|e| match e {
-                        FormatElement::Empty => true,
-                        FormatElement::Space => true,
-                        FormatElement::Line(_) => true,
-                        FormatElement::Indent(_) => true,
-                        FormatElement::Token(t) => {
-                            let s = t.trim_start();
-                            s.is_empty()
-                        }
-                        _ => false,
-                    })
-                    .map(Clone::clone)
-                    .collect();
-                if let Some(FormatElement::Token(s)) = content.get_mut(0) {
-                    *s = s.trim_start();
-                }
-                FormatElement::List(List::new(content))
-            }
+            FormatElement::List(list) => FormatElement::List(list.trim_start()),
             FormatElement::Token(s) => FormatElement::Token(s.trim_start()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_start())),
         }
@@ -1156,35 +1225,8 @@ impl FormatElement {
             FormatElement::Indent(i) => i.content.trim_end(),
             FormatElement::Group(g) => g.content.trim_end(),
             FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
-            FormatElement::List(list) => {
-                let idx_first_non_empty = list.iter().rev().position(|e| match e {
-                    FormatElement::Empty => false,
-                    FormatElement::Space => false,
-                    FormatElement::Line(_) => false,
-                    FormatElement::Indent(_) => false,
-                    FormatElement::Token(t) => {
-                        let s = t.trim_end();
-                        !s.is_empty()
-                    }
-                    _ => true,
-                });
-
-                match idx_first_non_empty {
-                    Some(idx_first_non_empty) => {
-                        let idx_first_non_empty = list.len() - idx_first_non_empty;
-                        let mut content: Vec<_> = list
-                            .iter()
-                            .take(idx_first_non_empty)
-                            .map(Clone::clone)
-                            .collect();
-                        if let Some(FormatElement::Token(s)) = content.last_mut() {
-                            *s = s.trim_end();
-                        }
-                        FormatElement::List(List::new(content))
-                    }
-                    None => FormatElement::List(List::new(vec![])),
-                }
-            }
+            FormatElement::Fill(list) => FormatElement::Fill(list.trim_end()),
+            FormatElement::List(list) => FormatElement::List(list.trim_end()),
             FormatElement::Token(s) => FormatElement::Token(s.trim_end()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_end())),
         }

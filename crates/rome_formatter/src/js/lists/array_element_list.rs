@@ -1,16 +1,28 @@
+use std::convert::Infallible;
+
 use crate::{
+    fill_elements,
     format_element::join_elements_soft_line,
     format_elements,
     formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
-    if_group_breaks, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    if_group_breaks, token,
+    utils::has_formatter_trivia,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::{
-    ast::{JsAnyArrayElement, JsArrayElementList},
-    AstSeparatedList,
+    ast::{JsAnyArrayElement, JsAnyExpression, JsArrayElementList},
+    AstNode, AstSeparatedList,
 };
 
 impl ToFormatElement for JsArrayElementList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        if !has_formatter_trivia(self.syntax()) && can_print_fill(self) {
+            return Ok(fill_elements(
+                // Using format_separated is valid in this case as can_print_fill does not allow holes
+                formatter.format_separated(self.clone(), || token(","))?,
+            ));
+        }
+
         // Specifically do not use format_separated as array expressions need
         // separators inserted after empty expressions regardless of the
         // formatting since this makes a semantic difference
@@ -39,5 +51,54 @@ impl ToFormatElement for JsArrayElementList {
             .collect::<FormatResult<Vec<_>>>()?;
 
         Ok(join_elements_soft_line(results))
+    }
+}
+
+/// Returns true if the provided JsArrayElementList could
+/// be "fill-printed" instead of breaking each element on
+/// a different line.
+///
+/// The underlying logic only allows lists of literal expressions
+/// with 10 or less characters, potentially wrapped in a "short"
+/// unary expression (+, -, ~ or !)
+fn can_print_fill(list: &JsArrayElementList) -> bool {
+    use rslint_parser::ast::JsAnyArrayElement::*;
+    use rslint_parser::ast::JsAnyExpression::*;
+    use rslint_parser::ast::JsUnaryOperation::*;
+
+    list.iter().all(|item| match item {
+        Ok(JsAnyExpression(JsUnaryExpression(expr))) => {
+            match expr.operation() {
+                Ok(Plus | Minus | BitwiseNot | LogicalNot) => {}
+                _ => return false,
+            }
+
+            if let Ok(expr) = expr.argument() {
+                is_short_literal(&expr)
+            } else {
+                false
+            }
+        }
+        Ok(JsAnyExpression(expr)) => is_short_literal(&expr),
+        _ => false,
+    })
+}
+
+/// Returns true if the provided expression is a literal with 10 or less characters
+fn is_short_literal(expr: &JsAnyExpression) -> bool {
+    match expr {
+        JsAnyExpression::JsAnyLiteralExpression(lit) => {
+            let token_len = lit
+                .syntax()
+                .text()
+                .try_fold_chunks::<_, _, Infallible>(0, |sum, chunk| {
+                    // Count actual characters instead of byte length
+                    Ok(sum + chunk.chars().count())
+                })
+                .expect("the above fold operation is infallible");
+
+            token_len <= 10
+        }
+        _ => false,
     }
 }
