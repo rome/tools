@@ -8,5 +8,8 @@ abstract class ConcreteMembers {
     #private_method() { }
 }
 abstract class AbstractMembers {
-    abstract name(): string;
+    abstract name: string;
+    abstract display();
+    abstract get my_name();
+    abstract set my_name(val);
 }

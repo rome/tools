@@ -85,7 +85,10 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 //     #private_method() { }
 // }
 // abstract class AbstractMembers {
-//     abstract name(): string;
+//     abstract name: string;
+//     abstract display();
+//     abstract get my_name();
+//     abstract set my_name(val);
 // }
 
 // test_err ts typescript_abstract_classes_incomplete
@@ -93,9 +96,6 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test_err ts typescript_abstract_classes_invalid_abstract_constructor
 // abstract class A { abstract constructor();};
-
-// test_err ts typescript_abstract_classes_invalid_abstract_property
-// abstract class A { abstract name: string; };
 
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
 ///
@@ -713,14 +713,6 @@ fn parse_class_member_impl(
             };
 
             property.map(|mut property| {
-                if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
-                    let err = p
-                        .err_builder("class properties cannot be abstract")
-                        .primary(abstract_range, "");
-                    p.error(err);
-                    property.change_to_unknown(p);
-                }
-
                 if !property.kind().is_unknown() && is_constructor {
                     let err = p
                         .err_builder("class properties may not be called `constructor`")
