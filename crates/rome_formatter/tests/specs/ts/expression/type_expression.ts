@@ -28,4 +28,8 @@ type Z = {
     b: symbol
 }
 
+type OptionsFlags<Type> = {
+  [Property in keyof Type]: boolean;
+};
+
 

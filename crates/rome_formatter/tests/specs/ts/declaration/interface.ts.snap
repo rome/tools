@@ -1,0 +1,37 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 163
+expression: interface.ts
+
+---
+# Input
+interface A {}
+interface B extends A /** comment **/ {
+    something: string
+}
+
+
+interface C<Foo, Bar, Loreum, Ipsum, ItShouldBeLongEnoughToCoverSomeEdgeCases, But, Maybe, Not> extends B {
+    something: string
+}
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+interface A  { }
+interface B  extends A /** comment **/  { something: string }
+
+interface C<
+	Foo,
+	Bar,
+	Loreum,
+	Ipsum,
+	ItShouldBeLongEnoughToCoverSomeEdgeCases,
+	But,
+	Maybe,
+	Not,
+> extends B  { something: string }
+
