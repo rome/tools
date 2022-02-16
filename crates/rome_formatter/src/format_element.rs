@@ -965,9 +965,11 @@ pub enum Token {
 
 impl Debug for Token {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        // This does not use debug_tuple so the tokens are
+        // written on a single line even when pretty-printing
         match self {
-            Token::Static { text } => write!(fmt, "{:?}", text),
-            Token::Dynamic { text, source } => write!(fmt, "{:?} @ {:?}", text, source),
+            Token::Static { text } => write!(fmt, "Token({:?})", text),
+            Token::Dynamic { text, source } => write!(fmt, "Token({:?}, {:?})", text, source),
         }
     }
 }
