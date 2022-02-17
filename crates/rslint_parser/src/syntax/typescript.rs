@@ -37,6 +37,7 @@ fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_type_assertion_expression
 // let x = <const>"hello";
 // let y = <string> x;
+// var d = <Error>({ name: "foo", message: "bar" });
 pub(crate) fn parse_ts_type_assertion_expression(
     p: &mut Parser,
     context: ExpressionContext,

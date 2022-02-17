@@ -395,12 +395,45 @@ pub(super) fn is_at_async_function(p: &Parser, should_check_line_break: LineBrea
     }
 }
 
+/// There are cases where the parser must speculatively parse a syntax. For example,
+/// parsing `<string>(test)` very much looks like an arrow expression *except* that it isn't followed
+/// by a `=>`. This enum tells a parse function if ambiguity should be tolerated or if it should stop if it is not.
+pub(super) enum Ambiguity {
+    /// Ambiguity is allowed. A parse method should continue even if an expected character is missing.
+    Allowed,
+
+    /// Ambiguity isn't allowed. A parse method should stop parsing if an expected character is missing
+    /// and let the caller decide what to do in this case.
+    Disallowed,
+}
+
+impl Ambiguity {
+    fn is_disallowed(&self) -> bool {
+        matches!(self, Ambiguity::Disallowed)
+    }
+}
+
+/// Parses out the arrow function and returns the completed marker.
+///
+/// Returns `Err` if `ambiguity` is [Ambiguity::Disallowed] and the syntax
+/// is ambiguous. For example, the parser speculatively tries to parse `<string>(test)` as an arrow
+/// function because the start very much looks like one, except that the `=>` token is missing
+/// (it's a TypeScript `<string>` cast followed by a parenthesized expression.
 pub(super) fn parse_arrow_function(
     p: &mut Parser,
     m: Marker,
     flags: SignatureFlags,
-) -> CompletedMarker {
+    ambiguity: Ambiguity,
+) -> Result<CompletedMarker, Marker> {
+    if !p.at(T!['(']) && ambiguity.is_disallowed() {
+        return Err(m);
+    }
+
     let parameters = parse_arrow_function_parameters(p, flags);
+
+    if p.tokens.last_tok().map(|t| t.kind) != Some(T![')']) && ambiguity.is_disallowed() {
+        return Err(m);
+    }
 
     if parameters.kind() == Some(JS_PARAMETERS) {
         TypeScript
@@ -411,11 +444,14 @@ pub(super) fn parse_arrow_function(
     }
     parameters.or_add_diagnostic(p, expected_parameters);
 
-    p.expect(T![=>]);
+    if !p.expect(T![=>]) && ambiguity.is_disallowed() {
+        return Err(m);
+    }
 
     parse_arrow_body(p, SignatureFlags::empty())
         .or_add_diagnostic(p, js_parse_error::expected_arrow_body);
-    m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
+
+    Ok(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
 }
 
 pub(super) fn parse_arrow_function_parameters(

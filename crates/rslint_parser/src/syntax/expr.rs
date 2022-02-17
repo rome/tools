@@ -16,7 +16,7 @@ use crate::syntax::assignment::{
 use crate::syntax::class::parse_class_expression;
 use crate::syntax::function::{
     parse_arrow_body, parse_arrow_function, parse_arrow_function_parameters,
-    parse_function_expression,
+    parse_function_expression, Ambiguity,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
@@ -226,9 +226,16 @@ pub(crate) fn parse_assignment_expression_or_higher(
                 return Absent;
             }
 
-            type_parameters.map(|parameters| {
+            type_parameters.and_then(|parameters| {
                 let m = parameters.precede(p);
-                parse_arrow_function(p, m, SignatureFlags::empty())
+                match parse_arrow_function(p, m, SignatureFlags::empty(), Ambiguity::Disallowed) {
+                    Ok(arrow) => Present(arrow),
+                    Err(m) => {
+                        // Safety: Safe to abandon the marker here because it's inside a `try` block
+                        m.abandon(p);
+                        Absent
+                    }
+                }
             })
         });
 
@@ -236,6 +243,7 @@ pub(crate) fn parse_assignment_expression_or_higher(
             return res;
         }
     }
+
     parse_assignment_expression_or_higher_base(p, context)
 }
 
@@ -1087,7 +1095,10 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
     if is_parameters || has_return_type_annotation || (p.at(T![=>]) && !p.has_linebreak_before_n(0))
     {
         p.rewind(checkpoint);
-        return Present(parse_arrow_function(p, m, SignatureFlags::empty()));
+        return Present(
+            parse_arrow_function(p, m, SignatureFlags::empty(), Ambiguity::Allowed)
+                .expect("Expected 'Ok' because calling with Ambiguity::Allow should never fail"),
+        );
     }
 
     // test js_parenthesized_expression
