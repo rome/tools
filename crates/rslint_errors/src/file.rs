@@ -271,5 +271,42 @@ impl Files for SimpleFiles {
 
 /// Computes the byte indicies of every line start.
 pub fn line_starts(source: &str) -> impl '_ + Iterator<Item = usize> {
-    std::iter::once(0).chain(source.match_indices(&['\n', '\r'][..]).map(|(i, _)| i + 1))
+    std::iter::once(0).chain(source.match_indices(&['\n', '\r']).filter_map(|(i, _)| {
+        let bytes = source.as_bytes();
+
+        match bytes[i] {
+            // Filter out the `\r` in `\r\n` to avoid counting the line break twice
+            b'\r' if i + 1 < bytes.len() && bytes[i + 1] == b'\n' => None,
+            _ => Some(i + 1),
+        }
+    }))
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::file::line_starts;
+
+    #[test]
+    fn line_starts_with_carriage_return_line_feed() {
+        let input = "a\r\nb\r\nc";
+        let starts = line_starts(input).collect::<Vec<_>>();
+
+        assert_eq!(vec![0, 3, 6], starts);
+    }
+
+    #[test]
+    fn line_starts_with_carriage_return() {
+        let input = "a\rb\rc";
+        let starts = line_starts(input).collect::<Vec<_>>();
+
+        assert_eq!(vec![0, 2, 4], starts);
+    }
+
+    #[test]
+    fn line_starts_with_line_feed() {
+        let input = "a\nb\nc";
+        let starts = line_starts(input).collect::<Vec<_>>();
+
+        assert_eq!(vec![0, 2, 4], starts);
+    }
 }
