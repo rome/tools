@@ -52,6 +52,10 @@ pub(crate) enum ModuleItemListParent {
 }
 
 impl ModuleItemListParent {
+    fn is_module(&self) -> bool {
+        matches!(self, ModuleItemListParent::Module)
+    }
+
     #[inline]
     fn is_at_list_end(&self, p: &Parser) -> bool {
         if p.at(EOF) {
@@ -69,6 +73,20 @@ pub(crate) fn parse_module_item_list(p: &mut Parser, parent: ModuleItemListParen
     let list_marker = p.start();
     let mut progress = ParserProgress::default();
 
+    let recovery_set = if parent.is_module() {
+        STMT_RECOVERY_SET
+    } else {
+        // test_err ts module_closing_curly
+        // declare module A {
+        //  "name": "troublesome-lib",
+        //  "typings": "lib/index.d.ts",
+        //  "version": "0.0.1"
+        // }
+
+        // don't eat the closing `}` if inside a block
+        STMT_RECOVERY_SET.union(token_set!(T!['}']))
+    };
+
     while !parent.is_at_list_end(p) {
         progress.assert_progressing(p);
 
@@ -76,7 +94,7 @@ pub(crate) fn parse_module_item_list(p: &mut Parser, parent: ModuleItemListParen
 
         let recovered = module_item.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+            &ParseRecovery::new(JS_UNKNOWN_STATEMENT, recovery_set),
             expected_statement,
         );
 
