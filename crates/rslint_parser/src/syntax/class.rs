@@ -37,7 +37,8 @@ use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
 
 use super::function::LineBreak;
-use super::typescript::ts_parse_error;
+use super::js_parse_error::unexpected_body_inside_ambient_context;
+use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
 use super::util::eat_contextual_keyword;
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
@@ -84,7 +85,10 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 //     #private_method() { }
 // }
 // abstract class AbstractMembers {
-//     abstract name(): string;
+//     abstract name: string;
+//     abstract display();
+//     abstract get my_name();
+//     abstract set my_name(val);
 // }
 
 // test_err ts typescript_abstract_classes_incomplete
@@ -92,9 +96,6 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test_err ts typescript_abstract_classes_invalid_abstract_constructor
 // abstract class A { abstract constructor();};
-
-// test_err ts typescript_abstract_classes_invalid_abstract_property
-// abstract class A { abstract name: string; };
 
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
 ///
@@ -595,10 +596,7 @@ fn parse_class_member_impl(
                     //  get {}
                     // }
                     //
-                    // test_err getter_class_no_body
-                    // class Setters {
-                    //   get foo()
-                    //
+
                     // test setter_class_member
                     // class Setters {
                     //   set foo(a) {}
@@ -619,10 +617,6 @@ fn parse_class_member_impl(
                     // class Setters {
                     //   set foo() {}
                     // }
-                    //
-                    // test_err setter_class_no_body
-                    // class Setters {
-                    //   set foo(a)
 
                     // The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
                     // out that the 'get' or 'set' isn't a member name in this context but instead are the
@@ -630,7 +624,7 @@ fn parse_class_member_impl(
                     // extract the 'get'/'set' ident token and change its kind to 'get'/'set'
                     match p.events[(member_name.start_pos as usize) + 1] {
                         Event::Token { ref mut kind, .. } => {
-                            *kind = if is_getter { T![get] } else { T![set] }
+                            *kind = if is_getter { T![get] } else { T![set] };
                         }
                         _ => unreachable!(),
                     };
@@ -658,8 +652,7 @@ fn parse_class_member_impl(
                         p.expect(T![')']);
                         parse_ts_type_annotation_or_error(p).ok();
 
-                        parse_method_body(p, modifiers, SignatureFlags::empty());
-
+                        parse_getter_or_setter_body(p, modifiers);
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
                         let has_l_paren = p.expect(T!['(']);
@@ -686,7 +679,7 @@ fn parse_class_member_impl(
                             ));
                         }
 
-                        parse_method_body(p, modifiers, SignatureFlags::empty());
+                        parse_getter_or_setter_body(p, modifiers);
                         member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
                     };
 
@@ -719,14 +712,6 @@ fn parse_class_member_impl(
             };
 
             property.map(|mut property| {
-                if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
-                    let err = p
-                        .err_builder("class properties cannot be abstract")
-                        .primary(abstract_range, "");
-                    p.error(err);
-                    property.change_to_unknown(p);
-                }
-
                 if !property.kind().is_unknown() && is_constructor {
                     let err = p
                         .err_builder("class properties may not be called `constructor`")
@@ -792,11 +777,9 @@ fn property_declaration_class_member_body(
             let err = p
                 .err_builder("private class properties with `declare` are invalid")
                 .primary(property.range(p), "");
-
             p.error(err);
             property.change_to_unknown(p);
         }
-
         property
     })
 }
@@ -977,9 +960,6 @@ fn parse_method_class_member(
 // test_err class_member_method_parameters
 // class B { foo(a {} }
 
-// test_err class_member_method_body
-// class B { foo(a)
-
 // test ts ts_method_class_member
 // class Test {
 //   test<A, B extends A, R>(a: A, b: B): R {}
@@ -1026,7 +1006,7 @@ fn parse_method_class_member_rest(
     let static_range = modifiers.get_range(ModifierKind::Static).cloned();
     let is_async = flags.contains(SignatureFlags::ASYNC).then(|| true);
 
-    parse_method_body(p, modifiers, flags);
+    let _ = parse_method_body(p, modifiers, flags);
 
     let mut member = m.complete(p, member_kind);
 
@@ -1050,32 +1030,72 @@ fn parse_method_class_member_rest(
     member
 }
 
-fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: SignatureFlags) {
+fn parse_method_body(
+    p: &mut Parser,
+    modifiers: ClassMemberModifiers,
+    flags: SignatureFlags,
+) -> ParsedSyntax {
     let body = parse_function_body(p, flags);
 
-    // test_err ts typescript_class_member_body
-    // class AbstractMembers {
-    //     constructor();
-    //     name(): string;
-    //     get my_name();
-    //     set my_name(name);
-    //     #private_name();
-    // }
+    // test_err ts typescript_abstract_class_member_should_not_have_body
     // abstract class AbstractMembers {
     //     abstract constructor() { }
-    //     abstract display(): void { console.log(this.name); }
-    //     abstract get my_name() { return this.name; }
-    //     abstract set my_name(name) { this.name = name; }
+    //     abstract display(): void { }
+    //     abstract get my_name() { }
+    //     abstract set my_name(name) { }
     //     abstract #private_name() { }
     // }
-    let is_abstract = modifiers.has(ModifierKind::Abstract);
-    if !is_abstract {
-        body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+    if modifiers.has(ModifierKind::Abstract) {
+        body.add_diagnostic_if_present(p, unexpected_abstract_member_with_body)
+            .map_or(Absent, Present)
+    }
+    // test ts typescript_members_can_have_no_body_in_ambient_context
+    // declare class Test {
+    //     name();
+    //     get test(): string;
+    //     set test(v);
+    // }
+    // declare namespace n {
+    //      class Test {
+    //          name();
+    //          get test(): string;
+    //          set test(v);
+    //      }
+    // }
+
+    // test_err ts typescript_members_with_body_in_ambient_context_should_err
+    // declare class Test {
+    //     name() {}
+    //     get test(): string { return ""; }
+    //     set test(v) {}
+    // }
+    // declare namespace n {
+    //      class Test {
+    //          name() {}
+    //          get test(): string { return ""; }
+    //          set test(v) {}
+    //      }
+    // }
+    else if p.state.in_ambient_context() {
+        body.add_diagnostic_if_present(p, unexpected_body_inside_ambient_context)
+            .map_or(Absent, Present)
     } else {
-        body.add_diagnostic_if_present(
-            p,
-            crate::syntax::typescript::ts_parse_error::unexpected_abstract_member_with_body,
-        );
+        body
+    }
+}
+
+// test_err getter_class_no_body
+// class Getters {
+//   get foo()
+
+// test_err setter_class_no_body
+// class Setters {
+//   set foo(a)
+fn parse_getter_or_setter_body(p: &mut Parser, modifiers: ClassMemberModifiers) {
+    let is_abstract = modifiers.has(ModifierKind::Abstract);
+    let body = parse_method_body(p, modifiers, SignatureFlags::empty());
+    if !is_abstract && !p.state.in_ambient_context() {
+        body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
     }
 }
 
@@ -1126,7 +1146,7 @@ fn parse_constructor_class_member_body(
         constructor_is_valid = false;
     }
 
-    parse_method_body(p, modifiers, SignatureFlags::CONSTRUCTOR);
+    let _ = parse_method_body(p, modifiers, SignatureFlags::CONSTRUCTOR);
 
     // FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
