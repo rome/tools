@@ -312,10 +312,6 @@ bitflags! {
         const GENERATOR 	= 1 << 1;
         /// Is the function a constructor (or constructor context)
         const CONSTRUCTOR 	= 1 << 2;
-        /// Is the function a getter
-        const GETTER 	= 1 << 3;
-        /// Is the function a setter
-        const SETTER 	= 1 << 4;
     }
 }
 

@@ -652,8 +652,7 @@ fn parse_class_member_impl(
                         p.expect(T![')']);
                         parse_ts_type_annotation_or_error(p).ok();
 
-                        parse_method_body(p, modifiers, SignatureFlags::GETTER);
-
+                        parse_getter_or_setter_body(p, modifiers);
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
                         let has_l_paren = p.expect(T!['(']);
@@ -680,7 +679,7 @@ fn parse_class_member_impl(
                             ));
                         }
 
-                        parse_method_body(p, modifiers, SignatureFlags::SETTER);
+                        parse_getter_or_setter_body(p, modifiers);
                         member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
                     };
 
@@ -1007,7 +1006,7 @@ fn parse_method_class_member_rest(
     let static_range = modifiers.get_range(ModifierKind::Static).cloned();
     let is_async = flags.contains(SignatureFlags::ASYNC).then(|| true);
 
-    parse_method_body(p, modifiers, flags);
+    let _ = parse_method_body(p, modifiers, flags);
 
     let mut member = m.complete(p, member_kind);
 
@@ -1031,7 +1030,11 @@ fn parse_method_class_member_rest(
     member
 }
 
-fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: SignatureFlags) {
+fn parse_method_body(
+    p: &mut Parser,
+    modifiers: ClassMemberModifiers,
+    flags: SignatureFlags,
+) -> ParsedSyntax {
     let body = parse_function_body(p, flags);
 
     // test_err ts typescript_abstract_class_member_should_not_have_body
@@ -1043,16 +1046,9 @@ fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: Sig
     //     abstract #private_name() { }
     // }
     if modifiers.has(ModifierKind::Abstract) {
-        body.add_diagnostic_if_present(p, unexpected_abstract_member_with_body);
+        body.add_diagnostic_if_present(p, unexpected_abstract_member_with_body)
+            .map_or(Absent, Present)
     }
-    // test_err getter_class_no_body
-    // class Getters {
-    //   get foo()
-
-    // test_err setter_class_no_body
-    // class Setters {
-    //   set foo(a)
-
     // test ts typescript_members_can_have_no_body_in_ambient_context
     // declare class Test {
     //     name();
@@ -1081,8 +1077,23 @@ fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: Sig
     //      }
     // }
     else if p.state.in_ambient_context() {
-        body.add_diagnostic_if_present(p, unexpected_body_inside_ambient_context);
-    } else if flags.contains(SignatureFlags::GETTER) || flags.contains(SignatureFlags::SETTER) {
+        body.add_diagnostic_if_present(p, unexpected_body_inside_ambient_context)
+            .map_or(Absent, Present)
+    } else {
+        body
+    }
+}
+
+// test_err getter_class_no_body
+// class Getters {
+//   get foo()
+
+// test_err setter_class_no_body
+// class Setters {
+//   set foo(a)
+fn parse_getter_or_setter_body(p: &mut Parser, modifiers: ClassMemberModifiers) {
+    let body = parse_method_body(p, modifiers, SignatureFlags::empty());
+    if !p.state.in_ambient_context() {
         body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
     }
 }
@@ -1134,7 +1145,7 @@ fn parse_constructor_class_member_body(
         constructor_is_valid = false;
     }
 
-    parse_method_body(p, modifiers, SignatureFlags::CONSTRUCTOR);
+    let _ = parse_method_body(p, modifiers, SignatureFlags::CONSTRUCTOR);
 
     // FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
