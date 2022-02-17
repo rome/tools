@@ -164,6 +164,13 @@ impl Analysis {
             })
             .flatten()
     }
+
+    pub fn into_diagnostics(self) -> impl Iterator<Item = AnalyzeDiagnostic> {
+        self.signals.into_iter().filter_map(|s| match s {
+            Signal::Diagnostic(d) => Some(d),
+            _ => None,
+        })
+    }
 }
 
 impl From<Vec<Signal>> for Analysis {

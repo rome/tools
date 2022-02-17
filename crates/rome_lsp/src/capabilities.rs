@@ -3,6 +3,9 @@ use lspower::lsp::{
     TextDocumentSyncCapability, TextDocumentSyncKind,
 };
 
+/// The capabilities to send from server as part of [`InitializeResult`]
+///
+/// [`InitializeResult`]: lspower::lsp::InitializeResult
 pub(crate) fn server_capabilities() -> ServerCapabilities {
     ServerCapabilities {
         text_document_sync: Some(TextDocumentSyncCapability::Kind(TextDocumentSyncKind::FULL)),

@@ -1,86 +1,52 @@
-use std::{collections::HashMap, sync::Arc};
+use std::sync::Arc;
 
-use rome_analyze::{FileId, TextAction};
-use tracing::error;
+use anyhow::bail;
+use rome_analyze::FileId;
 
-#[derive(Default)]
-pub(crate) struct DocumentStore {
-    documents: HashMap<FileId, Arc<Document>>,
+/// Internal representation of supported [language identifiers]
+///
+/// [language identifiers]: https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub enum Language {
+    JavaScript,
+    TypeScript,
 }
 
-impl DocumentStore {
-    pub fn get(&self, id: &FileId) -> Option<Arc<Document>> {
-        self.documents.get(id).cloned()
-    }
+impl TryFrom<&str> for Language {
+    type Error = anyhow::Error;
 
-    pub fn set(&mut self, id: FileId, text: impl Into<Arc<String>>, version: i32) {
-        let doc = Arc::new(Document::new(text.into(), version));
-        self.documents.insert(id, doc);
-    }
-
-    pub fn update_text(&mut self, id: FileId, text: impl Into<Arc<String>>, version: i32) {
-        self.documents.entry(id).and_modify(|d| {
-            if d.version > version {
-                error!(
-                    "File Id {:?} has version {:?} but attempted to update with version {:?}",
-                    id, d.version, version
-                );
-            } else {
-                *d = Arc::new(Document::new(text.into(), version));
-            }
-        });
-    }
-
-    pub fn update_actions(
-        &mut self,
-        id: FileId,
-        actions: impl Into<Arc<Vec<TextAction>>>,
-        version: i32,
-    ) {
-        self.documents.entry(id).and_modify(|d| {
-            if d.version > version {
-                error!(
-                    "File Id {:?} has version {:?} but attempted to update with version {:?}",
-                    id, d.version, version
-                );
-            } else {
-                *d = Arc::new(Document::with_actions(
-                    d.text.clone(),
-                    version,
-                    actions.into(),
-                ));
-            }
-        });
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value {
+            "javascript" => Ok(Language::JavaScript),
+            "typescript" => Ok(Language::TypeScript),
+            _ => bail!("Unsupported language: {}", value),
+        }
     }
 }
 
-#[derive(Default)]
-pub(crate) struct Document {
-    pub(crate) text: Arc<String>,
-    pub(crate) version: i32,
-    pub(crate) code_actions: Arc<Vec<TextAction>>,
+/// Represents an open [`textDocument`]. Can be cheaply cloned.
+///
+/// [`textDocument`]: https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocumentItem
+#[derive(Clone)]
+pub struct Document {
+    pub file_id: FileId,
+    pub language_id: Language,
+    pub version: i32,
+    pub text: Arc<str>,
 }
 
 impl Document {
-    fn new(text: impl Into<Arc<String>>, version: i32) -> Self {
-        let text = text.into();
-        Self {
-            text,
-            version,
-            code_actions: Arc::new(Vec::new()),
-        }
-    }
-
-    fn with_actions(
-        text: impl Into<Arc<String>>,
+    pub fn new(
+        file_id: FileId,
+        language_id: Language,
         version: i32,
-        actions: impl Into<Arc<Vec<TextAction>>>,
+        text: impl Into<Arc<str>>,
     ) -> Self {
-        let text = text.into();
         Self {
-            text,
+            file_id,
+            language_id,
             version,
-            code_actions: actions.into(),
+            text: text.into(),
         }
     }
 }

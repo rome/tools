@@ -855,6 +855,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "lsp-types"
+version = "0.92.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e8a69d4142d51b208c9fc3cea68b1a7fcef30354e7aa6ccad07250fd8430fc76"
+dependencies = [
+ "bitflags",
+ "serde",
+ "serde_json",
+ "serde_repr",
+ "url",
+]
+
+[[package]]
 name = "lspower"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -868,7 +881,7 @@ dependencies = [
  "futures",
  "httparse",
  "log",
- "lsp-types",
+ "lsp-types 0.91.1",
  "lspower-macros",
  "serde",
  "serde_json",
@@ -1372,6 +1385,7 @@ dependencies = [
  "anyhow",
  "indexmap",
  "lspower",
+ "parking_lot 0.12.0",
  "rome_analyze",
  "rome_formatter",
  "rslint_errors",
@@ -1407,7 +1421,7 @@ name = "rslint_errors"
 version = "0.2.0"
 dependencies = [
  "colored",
- "lsp-types",
+ "lsp-types 0.92.0",
  "rome_rowan",
  "rslint_text_edit",
  "serde",

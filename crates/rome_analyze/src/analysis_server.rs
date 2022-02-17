@@ -5,15 +5,16 @@ use tracing::trace;
 
 use crate::{
     analyzers, assists,
+    signals::AnalyzeDiagnostic,
     suppressions::{self, Suppressions},
-    Analysis, AnalyzerContext, AssistContext,
+    Action, Analysis, AnalyzerContext, AssistContext,
 };
 
 pub type FileId = usize;
 
 #[derive(Default)]
 pub struct AnalysisServer {
-    file_map: HashMap<FileId, Arc<String>>,
+    file_map: HashMap<FileId, Arc<str>>,
 }
 
 impl AnalysisServer {
@@ -23,11 +24,11 @@ impl AnalysisServer {
         }
     }
 
-    pub fn set_file_text(&mut self, file_id: FileId, text: impl Into<Arc<String>>) {
+    pub fn set_file_text(&mut self, file_id: FileId, text: impl Into<Arc<str>>) {
         self.file_map.insert(file_id, text.into());
     }
 
-    pub fn get_file_text(&self, file_id: FileId) -> Option<Arc<String>> {
+    pub fn get_file_text(&self, file_id: FileId) -> Option<Arc<str>> {
         self.file_map.get(&file_id).cloned()
     }
 
@@ -55,6 +56,11 @@ impl AnalysisServer {
         tree.covering_element(range).ancestors().find_map(T::cast)
     }
 
+    /// Returns a combined [`Analysis`] from running every [`AssistProvider`] on
+    /// the file matching the provided [`FileId`]. The file contents must have
+    /// been previously set using the [`AnalysisServer::set_file_text`] method.
+    ///
+    /// [`AssistProvider`]: crate::assists::AssistProvider
     pub fn assists(&self, file_id: FileId, cursor_range: TextRange) -> Analysis {
         trace!("Assists range: {:?}", cursor_range);
 
@@ -68,6 +74,43 @@ impl AnalysisServer {
             }
         }
         signals.into()
+    }
+
+    /// Returns diagnostics from running every [`Analyzer`] on the file matching the
+    /// provided [`FileId`]. The file contents must have been previously set using
+    /// the [`AnalysisServer::set_file_text`] method.
+    ///
+    /// [`Analyzer`]: crate::Analyzer
+    pub fn diagnostics(&self, file_id: FileId) -> impl Iterator<Item = AnalyzeDiagnostic> {
+        self.analyze(file_id).into_diagnostics()
+    }
+
+    /// Returns actions from running every [`Analyzer`] on the file matching the
+    /// provided [`FileId`]. The file contents must have been previously set using
+    /// the [`AnalysisServer::set_file_text`] method.
+    ///
+    /// [`Analyzer`]: crate::Analyzer
+    pub fn analyzer_actions(&self, file_id: FileId) -> impl Iterator<Item = Action> {
+        self.analyze(file_id).into_actions()
+    }
+
+    /// Returns actions from running every [`Analyzer`] and [`AssistProvider`] on
+    /// the file matching the provided [`FileId`]. The file contents must have been
+    /// previously set using the [`AnalysisServer::set_file_text`] method.
+    ///
+    /// [`Analyzer`]: crate::Analyzer
+    /// [`AssistProvider`]: crate::assists::AssistProvider
+    pub fn actions(
+        &self,
+        file_id: FileId,
+        cursor_range: Option<TextRange>,
+    ) -> impl Iterator<Item = Action> {
+        let analyzer_actions = self.analyzer_actions(file_id);
+        let assist_actions = match cursor_range {
+            Some(range) => self.assists(file_id, range).into_actions(),
+            None => Analysis::default().into_actions(),
+        };
+        analyzer_actions.chain(assist_actions)
     }
 
     pub fn analyze(&self, file_id: FileId) -> Analysis {
