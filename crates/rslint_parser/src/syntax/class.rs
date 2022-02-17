@@ -1092,8 +1092,9 @@ fn parse_method_body(
 // class Setters {
 //   set foo(a)
 fn parse_getter_or_setter_body(p: &mut Parser, modifiers: ClassMemberModifiers) {
+    let is_abstract = modifiers.has(ModifierKind::Abstract);
     let body = parse_method_body(p, modifiers, SignatureFlags::empty());
-    if !p.state.in_ambient_context() {
+    if !is_abstract && !p.state.in_ambient_context() {
         body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
     }
 }
