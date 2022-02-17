@@ -309,6 +309,11 @@ fn eat_class_heritage_clause(p: &mut Parser) {
     }
 }
 
+// test ts ts_extends_generic_type
+// type IHasVisualizationModel = string;
+// class D extends C<IHasVisualizationModel> {
+//     x = "string";
+// }
 fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![extends]) {
         return Absent;

@@ -1206,7 +1206,9 @@ pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     try_parse(p, |p| {
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.tokens.last_tok().map(|t| t.kind) == Some(T![>]) {
+        if p.tokens.last_tok().map(|t| t.kind) == Some(T![>])
+            && matches!(p.cur(), T!['('] | BACKTICK)
+        {
             Present(arguments)
         } else {
             Absent
