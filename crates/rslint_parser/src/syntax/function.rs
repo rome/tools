@@ -395,12 +395,36 @@ pub(super) fn is_at_async_function(p: &Parser, should_check_line_break: LineBrea
     }
 }
 
+pub(super) enum Ambiguity {
+    Allow,
+    Disallow,
+}
+
+impl Ambiguity {
+    fn is_disallow(&self) -> bool {
+        matches!(self, Ambiguity::Disallow)
+    }
+}
+
+/// Parses out the arrow function and returns the completed marker.
+///
+/// Returns `Err` if `ambiguity` is [Ambiguity::Disallow] and the syntax
+/// is ambiguous (e.g. misses the `=>` token).
 pub(super) fn parse_arrow_function(
     p: &mut Parser,
     m: Marker,
     flags: SignatureFlags,
-) -> CompletedMarker {
+    ambiguity: Ambiguity,
+) -> Result<CompletedMarker, Marker> {
+    if !p.at(T!['(']) && ambiguity.is_disallow() {
+        return Err(m);
+    }
+
     let parameters = parse_arrow_function_parameters(p, flags);
+
+    if p.tokens.last_tok().map(|t| t.kind) != Some(T![')']) && ambiguity.is_disallow() {
+        return Err(m);
+    }
 
     if parameters.kind() == Some(JS_PARAMETERS) {
         TypeScript
@@ -411,11 +435,14 @@ pub(super) fn parse_arrow_function(
     }
     parameters.or_add_diagnostic(p, expected_parameters);
 
-    p.expect(T![=>]);
+    if !p.expect(T![=>]) && ambiguity.is_disallow() {
+        return Err(m);
+    }
 
     parse_arrow_body(p, SignatureFlags::empty())
         .or_add_diagnostic(p, js_parse_error::expected_arrow_body);
-    m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
+
+    Ok(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
 }
 
 pub(super) fn parse_arrow_function_parameters(
