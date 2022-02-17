@@ -142,7 +142,7 @@ pub fn format_call_expression(
 /// The first group gathers inside it all those nodes that are not a sequence of something like:
 /// `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
 fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
-    let mut new_group = flatten_items
+    flatten_items
         .iter()
         .enumerate()
         // the first element will always be part of the first group, so we skip it
@@ -205,7 +205,7 @@ fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
         })
         // The first group has always at least one item. If no more items have been skipped,
         // and we arrive here, we can say that the index where want to split the group is 1
-        .unwrap_or(1);
+        .unwrap_or(1)
 }
 
 /// computes groups coming after the first group
