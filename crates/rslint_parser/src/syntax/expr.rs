@@ -228,7 +228,7 @@ pub(crate) fn parse_assignment_expression_or_higher(
 
             type_parameters.and_then(|parameters| {
                 let m = parameters.precede(p);
-                match parse_arrow_function(p, m, SignatureFlags::empty(), Ambiguity::Disallow) {
+                match parse_arrow_function(p, m, SignatureFlags::empty(), Ambiguity::Disallowed) {
                     Ok(arrow) => Present(arrow),
                     Err(m) => {
                         // Safety: Safe to abandon the marker here because it's inside a `try` block
@@ -1096,7 +1096,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
     {
         p.rewind(checkpoint);
         return Present(
-            parse_arrow_function(p, m, SignatureFlags::empty(), Ambiguity::Allow)
+            parse_arrow_function(p, m, SignatureFlags::empty(), Ambiguity::Allowed)
                 .expect("Expected 'Ok' because calling with Ambiguity::Allow should never fail"),
         );
     }
