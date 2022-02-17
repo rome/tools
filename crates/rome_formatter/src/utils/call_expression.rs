@@ -119,85 +119,94 @@ pub fn format_call_expression(
     syntax_node: &SyntaxNode,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
-    let mut flattened_expression = vec![];
+    let mut flattened_items = vec![];
 
-    flatten_call_expression(&mut flattened_expression, syntax_node.to_owned(), formatter)?;
+    flatten_call_expression(&mut flattened_items, syntax_node.to_owned(), formatter)?;
 
-    let (first_group, rest_of_flatten_items) = compute_first_group(&flattened_expression)?;
-    let rest_of_groups = compute_groups(rest_of_flatten_items.to_owned())?;
-
+    // as explained before, the first group is particular, so we calculate it
+    let index_to_split_at = compute_first_group_index(&mut flattened_items);
+    let mut flattened_items = flattened_items.into_iter();
+    // we have the index where we want to take the first group
+    let first_group = concat_elements(
+        (&mut flattened_items)
+            .take(index_to_split_at)
+            .map(FlattenItem::into),
+    );
+    // `flattened_items` now contains only the nodes that should have a sequence of
+    // `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
+    let rest_of_groups = compute_groups(flattened_items)?;
     Ok(format_groups(first_group, rest_of_groups))
 }
 
-/// Computes the first group by keeping track of the index where to split the given flatten_items
-fn compute_first_group(
-    flatten_items: &[FlattenItem],
-) -> FormatResult<(&[FlattenItem], &[FlattenItem])> {
-    let mut current_index = 0;
-    dbg!(&flatten_items);
+/// Retrieves the index where we want to calculate the first group.
+/// The first group gathers inside it all those nodes that are not a sequence of something like:
+/// `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
+fn compute_first_group_index(flatten_items: &mut Vec<FlattenItem>) -> usize {
+    let mut new_group = flatten_items
+        .iter()
+        .enumerate()
+        // the first element will always be part of the first group, so we skip it
+        .skip(1)
+        .skip_while(|(index, item)| match item {
+            // This where we apply the first two points explained in the description of the main public function.
+            // We want to keep iterating over the items until we have call expressions or computed expressions:
+            // - `something()()()()`
+            // - `something[1][2][4]`
+            // - `something[1]()[3]()`
+            // - `something()[2].something.else[0]`
+            FlattenItem::CallExpression(_, _) | FlattenItem::ComputedExpression(_, _) => true,
 
-    // the first element will always be part of the first group, so we skip it
-    for (index, item) in flatten_items.iter().enumerate().skip(1) {
-        // This where we apply the first two points explained in the description of the main public function.
-        // We want to keep iterating over the items until we have call expressions or computed expressions:
-        // - `something()()()()`
-        // - `something[1][2][4]`
-        // - `something[1]()[3]()`
-        // - `something()[2].something.else[0]`
-        match item {
-            FlattenItem::CallExpression(_, _) | FlattenItem::ComputedExpression(_, _) => {
-                current_index = index;
-            }
-
+            // SAFETY: The check `flatten_items[index + 1]` will never panic at runtime because
+            // 1. The array will always have at least two items
+            // 2. The last element of the array is always a CallExpression
+            //
+            // Something like `a()` produces these flatten times:
+            // ```
+            // [
+            //      Token("a", 0..1),
+            //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 2..7)])],
+            // ]
+            // ```
+            //
+            // Hence, it will never enter the branch of this `match`.
+            //
+            // When we have something like `a.b.c()`, the flatten items produced are:
+            //
+            // ```
+            // [
+            //      Token("a", 0..1),
+            //      StaticMember: [Token(".", 1..2), Token("b", 2..3)],
+            //      StaticMember: [Token(".", 3..4), Token("c", 4..5)],
+            //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 6..7)])],
+            // ]
+            // ```
+            //
+            // The loop will match against `StaticMember: [Token(".", 3..4), Token("c", 4..5)],`
+            // and the next one is a call expression... the `matches!` fails and the loop is stopped.
+            //
+            // The last element of the array is always a `CallExpression`, which allows us to avoid the overflow of the array.
             FlattenItem::StaticMember(_, _) => {
-                // SAFETY: The check `flatten_items[index + 1]` will never panic at runtime because
-                // 1. The array will always have at least two items
-                // 2. The last element of the array is always a CallExpression
-                //
-                // Something like `a()` produces these flatten times:
-                // ```
-                // [
-                //      Token("a", 0..1),
-                //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 2..7)])],
-                // ]
-                // ```
-                //
-                // Hence, it will never enter the branch of this `match`.
-                //
-                // When we have something like `a.b.c()`, the flatten items produced are:
-                //
-                // ```
-                // [
-                //      Token("a", 0..1),
-                //      StaticMember: [Token(".", 1..2), Token("b", 2..3)],
-                //      StaticMember: [Token(".", 3..4), Token("c", 4..5)],
-                //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 6..7)])],
-                // ]
-                // ```
-                //
-                // The loop will match against `StaticMember: [Token(".", 3..4), Token("c", 4..5)],`
-                // and the next one is a call expression... the `matches!` fails and the loop is stopped.
-                //
-                // The last element of the array is always a `CallExpression`, which allows us to avoid the overflow of the array.
                 let next_flatten_item = &flatten_items[index + 1];
-                if matches!(
+                matches!(
                     next_flatten_item,
                     FlattenItem::StaticMember(_, _) | FlattenItem::ComputedExpression(_, _)
-                ) {
-                    current_index = index;
-                } else {
-                    break;
-                }
+                )
             }
-            _ => break,
-        }
-    }
+            _ => false,
+        });
 
-    Ok(flatten_items.split_at(current_index + 1))
+    // Now, we skipped all the nodes that belonged to the first group.
+    // We call `.next` to retrieve the index where the "split" should occur and return it.
+    match new_group.next() {
+        Some((index, _)) => index,
+        // The first group has always at least one item. If no more items have been skipped,
+        // and we arrive here, we can say that the index where want to split the group is 1
+        None => 1,
+    }
 }
 
 /// computes groups coming after the first group
-fn compute_groups(flatten_items: Vec<FlattenItem>) -> FormatResult<Groups> {
+fn compute_groups(flatten_items: impl Iterator<Item = FlattenItem>) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
     let mut groups = Groups::default();
     for item in flatten_items {
@@ -234,6 +243,83 @@ fn compute_groups(flatten_items: Vec<FlattenItem>) -> FormatResult<Groups> {
     Ok(groups)
 }
 
+/// Formats together the first group and the rest of groups
+fn format_groups(first_formatted_group: FormatElement, groups: Groups) -> FormatElement {
+    let formatted_groups = if groups.groups_should_break() {
+        indent(format_elements![
+            hard_line_break(),
+            groups.into_joined_groups()
+        ])
+    } else {
+        groups.into_concatenated_groups()
+    };
+
+    format_elements![first_formatted_group, formatted_groups]
+}
+
+/// This function tries to flatten the AST. It stores nodes and its formatted version
+/// inside an vector of [FlattenItem]. The first element of the vector is the last one.
+fn flatten_call_expression(
+    queue: &mut Vec<FlattenItem>,
+    node: SyntaxNode,
+    formatter: &Formatter,
+) -> FormatResult<()> {
+    match node.kind() {
+        JsSyntaxKind::JS_CALL_EXPRESSION => {
+            let call_expression = JsCallExpression::cast(node).unwrap();
+            let callee = call_expression.callee()?;
+            flatten_call_expression(queue, callee.syntax().to_owned(), formatter)?;
+            let formatted = vec![
+                call_expression
+                    .optional_chain_token_token()
+                    .format_or_empty(formatter)?,
+                call_expression
+                    .type_arguments()
+                    .format_or_empty(formatter)?,
+                call_expression.arguments().format(formatter)?,
+            ];
+
+            queue.push(FlattenItem::CallExpression(call_expression, formatted));
+        }
+        JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
+            let static_member = JsStaticMemberExpression::cast(node).unwrap();
+            let object = static_member.object()?;
+            flatten_call_expression(queue, object.syntax().to_owned(), formatter)?;
+            let formatted = vec![
+                static_member.operator().format(formatter)?,
+                static_member.member().format(formatter)?,
+            ];
+            queue.push(FlattenItem::StaticMember(static_member, formatted));
+        }
+
+        JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
+            let computed_expression = JsComputedMemberExpression::cast(node).unwrap();
+            let object = computed_expression.object()?;
+            flatten_call_expression(queue, object.syntax().to_owned(), formatter)?;
+            let formatted = vec![
+                computed_expression
+                    .optional_chain_token()
+                    .format_or_empty(formatter)?,
+                computed_expression.l_brack_token().format(formatter)?,
+                computed_expression.member().format(formatter)?,
+                computed_expression.r_brack_token().format(formatter)?,
+            ];
+
+            queue.push(FlattenItem::ComputedExpression(
+                computed_expression,
+                formatted,
+            ));
+        }
+
+        _ => {
+            let formatted = node.to_format_element(formatter)?;
+            queue.push(FlattenItem::Node(node, formatted));
+        }
+    }
+
+    Ok(())
+}
+
 #[derive(Clone)]
 /// Data structure that holds the node with its formatted version
 pub(crate) enum FlattenItem {
@@ -256,11 +342,6 @@ impl FlattenItem {
             FlattenItem::Node(node, _) => JsImportCallExpression::can_cast(node.kind()),
             _ => false,
         }
-    }
-
-    /// It strictly checks if the current item is a [rslint_parser::ast::JsCallExpression]
-    pub fn is_call_expression(&self) -> bool {
-        matches!(&self, FlattenItem::CallExpression(_, _))
     }
 }
 
@@ -332,7 +413,9 @@ impl Groups {
 
     /// It tells if the groups should be break on multiple lines
     pub fn groups_should_break(&self) -> bool {
-        // TODO: this should have more checks
+        // TODO: #2089 here we should check the length of the group and apply
+        // an heuristic to when break the groups or not (comments also count),
+        // see prettier logic
         self.groups.len() > 3
     }
 
@@ -354,86 +437,4 @@ impl Groups {
         let formatted_groups = self.into_formatted_groups();
         join_elements(soft_line_break(), formatted_groups)
     }
-}
-
-/// Formats together the first group and the rest of groups
-fn format_groups(first_group: &[FlattenItem], groups: Groups) -> FormatElement {
-    let first_formatted_group: Vec<FormatElement> = first_group
-        .iter()
-        .map(|flatten_item| flatten_item.clone().into())
-        .collect();
-
-    let formatted_groups = if groups.groups_should_break() {
-        indent(format_elements![
-            hard_line_break(),
-            groups.into_joined_groups()
-        ])
-    } else {
-        groups.into_concatenated_groups()
-    };
-
-    format_elements![concat_elements(first_formatted_group), formatted_groups]
-}
-
-/// This function tries to flatten the AST. It stores nodes and its formatted version
-/// inside an vector of [FlattenItem]. The first element of the vector is the last one.
-fn flatten_call_expression(
-    queue: &mut Vec<FlattenItem>,
-    node: SyntaxNode,
-    formatter: &Formatter,
-) -> FormatResult<()> {
-    match node.kind() {
-        JsSyntaxKind::JS_CALL_EXPRESSION => {
-            let call_expression = JsCallExpression::cast(node).unwrap();
-            let callee = call_expression.callee()?;
-            flatten_call_expression(queue, callee.syntax().to_owned(), formatter)?;
-            let formatted = vec![
-                call_expression
-                    .optional_chain_token_token()
-                    .format_or_empty(formatter)?,
-                call_expression
-                    .type_arguments()
-                    .format_or_empty(formatter)?,
-                call_expression.arguments().format(formatter)?,
-            ];
-
-            queue.push(FlattenItem::CallExpression(call_expression, formatted));
-        }
-        JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
-            let static_member = JsStaticMemberExpression::cast(node).unwrap();
-            let object = static_member.object()?;
-            flatten_call_expression(queue, object.syntax().to_owned(), formatter)?;
-            let formatted = vec![
-                static_member.operator().format(formatter)?,
-                static_member.member().format(formatter)?,
-            ];
-            queue.push(FlattenItem::StaticMember(static_member, formatted));
-        }
-
-        JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
-            let computed_expression = JsComputedMemberExpression::cast(node).unwrap();
-            let object = computed_expression.object()?;
-            flatten_call_expression(queue, object.syntax().to_owned(), formatter)?;
-            let formatted = vec![
-                computed_expression
-                    .optional_chain_token()
-                    .format_or_empty(formatter)?,
-                computed_expression.l_brack_token().format(formatter)?,
-                computed_expression.member().format(formatter)?,
-                computed_expression.r_brack_token().format(formatter)?,
-            ];
-
-            queue.push(FlattenItem::ComputedExpression(
-                computed_expression,
-                formatted,
-            ));
-        }
-
-        _ => {
-            let formatted = node.to_format_element(formatter)?;
-            queue.push(FlattenItem::Node(node, formatted));
-        }
-    }
-
-    Ok(())
 }
