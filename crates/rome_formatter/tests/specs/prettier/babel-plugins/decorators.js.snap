@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: decorators.js
 
 ---
@@ -99,12 +99,6 @@ error[SyntaxError]: expected a parameter but instead found 'false'
    │
 20 │   @enumerable(false)
    │               ^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a class method body but instead found 'method'
-   ┌─ decorators.js:21:3
-   │
-21 │   method() { }
-   │   ^^^^^^ Expected a class method body here
 
 
 ```
