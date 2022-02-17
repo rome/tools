@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: methods.js
 
 ---
@@ -47,12 +47,6 @@ error[SyntaxError]: expected a parameter but instead found '"hello"'
 3 │   @foo("hello")
   │        ^^^^^^^ Expected a parameter here
 
-error[SyntaxError]: expected a class method body but instead found 'async'
-  ┌─ methods.js:4:3
-  │
-4 │   async plop() {}
-  │   ^^^^^ Expected a class method body here
-
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
   ┌─ methods.js:6:3
   │
@@ -65,12 +59,6 @@ error[SyntaxError]: expected a parameter but instead found '"and a very long str
 6 │   @anotherDecoratorWithALongName("and a very long string as a first argument")
   │                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a parameter here
 
-error[SyntaxError]: expected a class method body but instead found 'async'
-  ┌─ methods.js:7:3
-  │
-7 │   async plip() {}
-  │   ^^^^^ Expected a class method body here
-
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
   ┌─ methods.js:9:3
   │
@@ -82,12 +70,6 @@ error[SyntaxError]: expected a parameter but instead found '"another very long s
   │
 9 │   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
   │                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a class method body but instead found 'async'
-  ┌─ methods.js:9:78
-  │
-9 │   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
-  │                                                                              ^^^^^ Expected a class method body here
 
 
 ```

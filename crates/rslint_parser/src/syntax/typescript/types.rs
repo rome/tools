@@ -178,6 +178,21 @@ fn is_nth_at_ts_type_parameters(p: &Parser, n: usize) -> bool {
 }
 
 pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_type_impl(p, ConditionalType::Allowed)
+}
+
+enum ConditionalType {
+    Allowed,
+    Disallowed,
+}
+
+impl ConditionalType {
+    fn is_allowed(&self) -> bool {
+        matches!(self, ConditionalType::Allowed)
+    }
+}
+
+fn parse_ts_type_impl(p: &mut Parser, conditional_type: ConditionalType) -> ParsedSyntax {
     p.with_state(EnterType, |p| {
         if is_at_constructor_type(p) {
             return parse_ts_constructor_type(p);
@@ -187,24 +202,33 @@ pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
             return parse_ts_function_type(p);
         }
 
-        parse_ts_union_type_or_higher(p).map(|left| {
-            // test ts ts_conditional_type
-            // type A = number;
-            // type B = string extends number ? string : number;
-            // type C = A extends (B extends A ? number : string) ? void : number;
-            if !p.has_linebreak_before_n(0) && p.at(T![extends]) {
-                let m = left.precede(p);
-                p.bump(T![extends]);
-                parse_ts_union_type_or_higher(p).or_add_diagnostic(p, expected_ts_type);
-                p.expect(T![?]);
-                parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-                p.expect(T![:]);
-                parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-                m.complete(p, TS_CONDITIONAL_TYPE)
-            } else {
-                left
-            }
-        })
+        let left = parse_ts_union_type_or_higher(p);
+
+        // test ts ts_conditional_type_call_signature_lhs
+        // type X<V> = V extends (...args: any[]) => any ? (...args: Parameters<V>) => void : Function;
+        if conditional_type.is_allowed() {
+            left.map(|left| {
+                // test ts ts_conditional_type
+                // type A = number;
+                // type B = string extends number ? string : number;
+                // type C = A extends (B extends A ? number : string) ? void : number;
+                if !p.has_linebreak_before_n(0) && p.at(T![extends]) {
+                    let m = left.precede(p);
+                    p.bump(T![extends]);
+                    parse_ts_type_impl(p, ConditionalType::Disallowed)
+                        .or_add_diagnostic(p, expected_ts_type);
+                    p.expect(T![?]);
+                    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+                    p.expect(T![:]);
+                    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+                    m.complete(p, TS_CONDITIONAL_TYPE)
+                } else {
+                    left
+                }
+            })
+        } else {
+            left
+        }
     })
 }
 
@@ -1206,7 +1230,9 @@ pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     try_parse(p, |p| {
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.tokens.last_tok().map(|t| t.kind) == Some(T![>]) {
+        if p.tokens.last_tok().map(|t| t.kind) == Some(T![>])
+            && matches!(p.cur(), T!['('] | BACKTICK)
+        {
             Present(arguments)
         } else {
             Absent

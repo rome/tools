@@ -1,0 +1,434 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsDeclareStatement {
+            declare_token: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
+            declaration: JsClassDeclaration {
+                abstract_token: missing (optional),
+                class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
+                id: JsIdentifierBinding {
+                    name_token: IDENT@14..19 "Test" [] [Whitespace(" ")],
+                },
+                type_parameters: missing (optional),
+                extends_clause: missing (optional),
+                implements_clause: missing (optional),
+                l_curly_token: L_CURLY@19..20 "{" [] [],
+                members: JsClassMemberList [
+                    JsMethodClassMember {
+                        access_modifier: missing (optional),
+                        static_token: missing (optional),
+                        abstract_token: missing (optional),
+                        async_token: missing (optional),
+                        star_token: missing (optional),
+                        name: JsLiteralMemberName {
+                            value: IDENT@20..29 "name" [Newline("\n"), Whitespace("    ")] [],
+                        },
+                        question_mark_token: missing (required),
+                        type_parameters: missing (optional),
+                        parameters: JsParameters {
+                            l_paren_token: L_PAREN@29..30 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@30..32 ")" [] [Whitespace(" ")],
+                        },
+                        return_type_annotation: missing (optional),
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@32..33 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@33..34 "}" [] [],
+                        },
+                    },
+                    JsGetterClassMember {
+                        access_modifier: missing (optional),
+                        static_token: missing (optional),
+                        abstract_token: missing (optional),
+                        get_token: GET_KW@34..43 "get" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        name: JsLiteralMemberName {
+                            value: IDENT@43..47 "test" [] [],
+                        },
+                        l_paren_token: L_PAREN@47..48 "(" [] [],
+                        r_paren_token: R_PAREN@48..49 ")" [] [],
+                        return_type: TsTypeAnnotation {
+                            colon_token: COLON@49..51 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@51..58 "string" [] [Whitespace(" ")],
+                            },
+                        },
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@58..60 "{" [] [Whitespace(" ")],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [
+                                JsReturnStatement {
+                                    return_token: RETURN_KW@60..67 "return" [] [Whitespace(" ")],
+                                    argument: JsStringLiteralExpression {
+                                        value_token: JS_STRING_LITERAL@67..69 "\"\"" [] [],
+                                    },
+                                    semicolon_token: SEMICOLON@69..71 ";" [] [Whitespace(" ")],
+                                },
+                            ],
+                            r_curly_token: R_CURLY@71..72 "}" [] [],
+                        },
+                    },
+                    JsSetterClassMember {
+                        access_modifier: missing (optional),
+                        static_token: missing (optional),
+                        abstract_token: missing (optional),
+                        set_token: SET_KW@72..81 "set" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        name: JsLiteralMemberName {
+                            value: IDENT@81..85 "test" [] [],
+                        },
+                        l_paren_token: L_PAREN@85..86 "(" [] [],
+                        parameter: JsFormalParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@86..87 "v" [] [],
+                            },
+                            question_mark_token: missing (optional),
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
+                        },
+                        r_paren_token: R_PAREN@87..89 ")" [] [Whitespace(" ")],
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@89..90 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@90..91 "}" [] [],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@91..93 "}" [Newline("\n")] [],
+            },
+        },
+        TsDeclareStatement {
+            declare_token: DECLARE_KW@93..102 "declare" [Newline("\n")] [Whitespace(" ")],
+            declaration: TsModuleDeclaration {
+                module_or_namespace: NAMESPACE_KW@102..112 "namespace" [] [Whitespace(" ")],
+                name: TsIdentifierBinding {
+                    name_token: IDENT@112..114 "n" [] [Whitespace(" ")],
+                },
+                body: TsModuleBlock {
+                    l_curly_token: L_CURLY@114..115 "{" [] [],
+                    items: JsModuleItemList [
+                        JsClassDeclaration {
+                            abstract_token: missing (optional),
+                            class_token: CLASS_KW@115..127 "class" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")],
+                            id: JsIdentifierBinding {
+                                name_token: IDENT@127..132 "Test" [] [Whitespace(" ")],
+                            },
+                            type_parameters: missing (optional),
+                            extends_clause: missing (optional),
+                            implements_clause: missing (optional),
+                            l_curly_token: L_CURLY@132..133 "{" [] [],
+                            members: JsClassMemberList [
+                                JsMethodClassMember {
+                                    access_modifier: missing (optional),
+                                    static_token: missing (optional),
+                                    abstract_token: missing (optional),
+                                    async_token: missing (optional),
+                                    star_token: missing (optional),
+                                    name: JsLiteralMemberName {
+                                        value: IDENT@133..147 "name" [Newline("\n"), Whitespace("         ")] [],
+                                    },
+                                    question_mark_token: missing (required),
+                                    type_parameters: missing (optional),
+                                    parameters: JsParameters {
+                                        l_paren_token: L_PAREN@147..148 "(" [] [],
+                                        items: JsParameterList [],
+                                        r_paren_token: R_PAREN@148..150 ")" [] [Whitespace(" ")],
+                                    },
+                                    return_type_annotation: missing (optional),
+                                    body: JsFunctionBody {
+                                        l_curly_token: L_CURLY@150..151 "{" [] [],
+                                        directives: JsDirectiveList [],
+                                        statements: JsStatementList [],
+                                        r_curly_token: R_CURLY@151..152 "}" [] [],
+                                    },
+                                },
+                                JsGetterClassMember {
+                                    access_modifier: missing (optional),
+                                    static_token: missing (optional),
+                                    abstract_token: missing (optional),
+                                    get_token: GET_KW@152..166 "get" [Newline("\n"), Whitespace("         ")] [Whitespace(" ")],
+                                    name: JsLiteralMemberName {
+                                        value: IDENT@166..170 "test" [] [],
+                                    },
+                                    l_paren_token: L_PAREN@170..171 "(" [] [],
+                                    r_paren_token: R_PAREN@171..172 ")" [] [],
+                                    return_type: TsTypeAnnotation {
+                                        colon_token: COLON@172..174 ":" [] [Whitespace(" ")],
+                                        ty: TsStringType {
+                                            string_token: STRING_KW@174..181 "string" [] [Whitespace(" ")],
+                                        },
+                                    },
+                                    body: JsFunctionBody {
+                                        l_curly_token: L_CURLY@181..183 "{" [] [Whitespace(" ")],
+                                        directives: JsDirectiveList [],
+                                        statements: JsStatementList [
+                                            JsReturnStatement {
+                                                return_token: RETURN_KW@183..190 "return" [] [Whitespace(" ")],
+                                                argument: JsStringLiteralExpression {
+                                                    value_token: JS_STRING_LITERAL@190..192 "\"\"" [] [],
+                                                },
+                                                semicolon_token: SEMICOLON@192..194 ";" [] [Whitespace(" ")],
+                                            },
+                                        ],
+                                        r_curly_token: R_CURLY@194..195 "}" [] [],
+                                    },
+                                },
+                                JsSetterClassMember {
+                                    access_modifier: missing (optional),
+                                    static_token: missing (optional),
+                                    abstract_token: missing (optional),
+                                    set_token: SET_KW@195..209 "set" [Newline("\n"), Whitespace("         ")] [Whitespace(" ")],
+                                    name: JsLiteralMemberName {
+                                        value: IDENT@209..213 "test" [] [],
+                                    },
+                                    l_paren_token: L_PAREN@213..214 "(" [] [],
+                                    parameter: JsFormalParameter {
+                                        binding: JsIdentifierBinding {
+                                            name_token: IDENT@214..215 "v" [] [],
+                                        },
+                                        question_mark_token: missing (optional),
+                                        type_annotation: missing (optional),
+                                        initializer: missing (optional),
+                                    },
+                                    r_paren_token: R_PAREN@215..217 ")" [] [Whitespace(" ")],
+                                    body: JsFunctionBody {
+                                        l_curly_token: L_CURLY@217..218 "{" [] [],
+                                        directives: JsDirectiveList [],
+                                        statements: JsStatementList [],
+                                        r_curly_token: R_CURLY@218..219 "}" [] [],
+                                    },
+                                },
+                            ],
+                            r_curly_token: R_CURLY@219..226 "}" [Newline("\n"), Whitespace("     ")] [],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@226..228 "}" [Newline("\n")] [],
+                },
+            },
+        },
+    ],
+    eof_token: EOF@228..229 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..229
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..228
+    0: TS_DECLARE_STATEMENT@0..93
+      0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
+      1: JS_CLASS_DECLARATION@8..93
+        0: (empty)
+        1: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
+        2: JS_IDENTIFIER_BINDING@14..19
+          0: IDENT@14..19 "Test" [] [Whitespace(" ")]
+        3: (empty)
+        4: (empty)
+        5: (empty)
+        6: L_CURLY@19..20 "{" [] []
+        7: JS_CLASS_MEMBER_LIST@20..91
+          0: JS_METHOD_CLASS_MEMBER@20..34
+            0: (empty)
+            1: (empty)
+            2: (empty)
+            3: (empty)
+            4: (empty)
+            5: JS_LITERAL_MEMBER_NAME@20..29
+              0: IDENT@20..29 "name" [Newline("\n"), Whitespace("    ")] []
+            6: (empty)
+            7: (empty)
+            8: JS_PARAMETERS@29..32
+              0: L_PAREN@29..30 "(" [] []
+              1: JS_PARAMETER_LIST@30..30
+              2: R_PAREN@30..32 ")" [] [Whitespace(" ")]
+            9: (empty)
+            10: JS_FUNCTION_BODY@32..34
+              0: L_CURLY@32..33 "{" [] []
+              1: JS_DIRECTIVE_LIST@33..33
+              2: JS_STATEMENT_LIST@33..33
+              3: R_CURLY@33..34 "}" [] []
+          1: JS_GETTER_CLASS_MEMBER@34..72
+            0: (empty)
+            1: (empty)
+            2: (empty)
+            3: GET_KW@34..43 "get" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            4: JS_LITERAL_MEMBER_NAME@43..47
+              0: IDENT@43..47 "test" [] []
+            5: L_PAREN@47..48 "(" [] []
+            6: R_PAREN@48..49 ")" [] []
+            7: TS_TYPE_ANNOTATION@49..58
+              0: COLON@49..51 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@51..58
+                0: STRING_KW@51..58 "string" [] [Whitespace(" ")]
+            8: JS_FUNCTION_BODY@58..72
+              0: L_CURLY@58..60 "{" [] [Whitespace(" ")]
+              1: JS_DIRECTIVE_LIST@60..60
+              2: JS_STATEMENT_LIST@60..71
+                0: JS_RETURN_STATEMENT@60..71
+                  0: RETURN_KW@60..67 "return" [] [Whitespace(" ")]
+                  1: JS_STRING_LITERAL_EXPRESSION@67..69
+                    0: JS_STRING_LITERAL@67..69 "\"\"" [] []
+                  2: SEMICOLON@69..71 ";" [] [Whitespace(" ")]
+              3: R_CURLY@71..72 "}" [] []
+          2: JS_SETTER_CLASS_MEMBER@72..91
+            0: (empty)
+            1: (empty)
+            2: (empty)
+            3: SET_KW@72..81 "set" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            4: JS_LITERAL_MEMBER_NAME@81..85
+              0: IDENT@81..85 "test" [] []
+            5: L_PAREN@85..86 "(" [] []
+            6: JS_FORMAL_PARAMETER@86..87
+              0: JS_IDENTIFIER_BINDING@86..87
+                0: IDENT@86..87 "v" [] []
+              1: (empty)
+              2: (empty)
+              3: (empty)
+            7: R_PAREN@87..89 ")" [] [Whitespace(" ")]
+            8: JS_FUNCTION_BODY@89..91
+              0: L_CURLY@89..90 "{" [] []
+              1: JS_DIRECTIVE_LIST@90..90
+              2: JS_STATEMENT_LIST@90..90
+              3: R_CURLY@90..91 "}" [] []
+        8: R_CURLY@91..93 "}" [Newline("\n")] []
+    1: TS_DECLARE_STATEMENT@93..228
+      0: DECLARE_KW@93..102 "declare" [Newline("\n")] [Whitespace(" ")]
+      1: TS_MODULE_DECLARATION@102..228
+        0: NAMESPACE_KW@102..112 "namespace" [] [Whitespace(" ")]
+        1: TS_IDENTIFIER_BINDING@112..114
+          0: IDENT@112..114 "n" [] [Whitespace(" ")]
+        2: TS_MODULE_BLOCK@114..228
+          0: L_CURLY@114..115 "{" [] []
+          1: JS_MODULE_ITEM_LIST@115..226
+            0: JS_CLASS_DECLARATION@115..226
+              0: (empty)
+              1: CLASS_KW@115..127 "class" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
+              2: JS_IDENTIFIER_BINDING@127..132
+                0: IDENT@127..132 "Test" [] [Whitespace(" ")]
+              3: (empty)
+              4: (empty)
+              5: (empty)
+              6: L_CURLY@132..133 "{" [] []
+              7: JS_CLASS_MEMBER_LIST@133..219
+                0: JS_METHOD_CLASS_MEMBER@133..152
+                  0: (empty)
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+                  4: (empty)
+                  5: JS_LITERAL_MEMBER_NAME@133..147
+                    0: IDENT@133..147 "name" [Newline("\n"), Whitespace("         ")] []
+                  6: (empty)
+                  7: (empty)
+                  8: JS_PARAMETERS@147..150
+                    0: L_PAREN@147..148 "(" [] []
+                    1: JS_PARAMETER_LIST@148..148
+                    2: R_PAREN@148..150 ")" [] [Whitespace(" ")]
+                  9: (empty)
+                  10: JS_FUNCTION_BODY@150..152
+                    0: L_CURLY@150..151 "{" [] []
+                    1: JS_DIRECTIVE_LIST@151..151
+                    2: JS_STATEMENT_LIST@151..151
+                    3: R_CURLY@151..152 "}" [] []
+                1: JS_GETTER_CLASS_MEMBER@152..195
+                  0: (empty)
+                  1: (empty)
+                  2: (empty)
+                  3: GET_KW@152..166 "get" [Newline("\n"), Whitespace("         ")] [Whitespace(" ")]
+                  4: JS_LITERAL_MEMBER_NAME@166..170
+                    0: IDENT@166..170 "test" [] []
+                  5: L_PAREN@170..171 "(" [] []
+                  6: R_PAREN@171..172 ")" [] []
+                  7: TS_TYPE_ANNOTATION@172..181
+                    0: COLON@172..174 ":" [] [Whitespace(" ")]
+                    1: TS_STRING_TYPE@174..181
+                      0: STRING_KW@174..181 "string" [] [Whitespace(" ")]
+                  8: JS_FUNCTION_BODY@181..195
+                    0: L_CURLY@181..183 "{" [] [Whitespace(" ")]
+                    1: JS_DIRECTIVE_LIST@183..183
+                    2: JS_STATEMENT_LIST@183..194
+                      0: JS_RETURN_STATEMENT@183..194
+                        0: RETURN_KW@183..190 "return" [] [Whitespace(" ")]
+                        1: JS_STRING_LITERAL_EXPRESSION@190..192
+                          0: JS_STRING_LITERAL@190..192 "\"\"" [] []
+                        2: SEMICOLON@192..194 ";" [] [Whitespace(" ")]
+                    3: R_CURLY@194..195 "}" [] []
+                2: JS_SETTER_CLASS_MEMBER@195..219
+                  0: (empty)
+                  1: (empty)
+                  2: (empty)
+                  3: SET_KW@195..209 "set" [Newline("\n"), Whitespace("         ")] [Whitespace(" ")]
+                  4: JS_LITERAL_MEMBER_NAME@209..213
+                    0: IDENT@209..213 "test" [] []
+                  5: L_PAREN@213..214 "(" [] []
+                  6: JS_FORMAL_PARAMETER@214..215
+                    0: JS_IDENTIFIER_BINDING@214..215
+                      0: IDENT@214..215 "v" [] []
+                    1: (empty)
+                    2: (empty)
+                    3: (empty)
+                  7: R_PAREN@215..217 ")" [] [Whitespace(" ")]
+                  8: JS_FUNCTION_BODY@217..219
+                    0: L_CURLY@217..218 "{" [] []
+                    1: JS_DIRECTIVE_LIST@218..218
+                    2: JS_STATEMENT_LIST@218..218
+                    3: R_CURLY@218..219 "}" [] []
+              8: R_CURLY@219..226 "}" [Newline("\n"), Whitespace("     ")] []
+          2: R_CURLY@226..228 "}" [Newline("\n")] []
+  3: EOF@228..229 "" [Newline("\n")] []
+--
+error[SyntaxError]: members inside ambient contexts should not have a body
+  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:2:12
+  │
+2 │     name() {}
+  │            ^^
+
+--
+error[SyntaxError]: members inside ambient contexts should not have a body
+  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:3:24
+  │
+3 │     get test(): string { return ""; }
+  │                        ^^^^^^^^^^^^^^
+
+--
+error[SyntaxError]: members inside ambient contexts should not have a body
+  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:4:17
+  │
+4 │     set test(v) {}
+  │                 ^^
+
+--
+error[SyntaxError]: members inside ambient contexts should not have a body
+  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:8:17
+  │
+8 │          name() {}
+  │                 ^^
+
+--
+error[SyntaxError]: members inside ambient contexts should not have a body
+  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:9:29
+  │
+9 │          get test(): string { return ""; }
+  │                             ^^^^^^^^^^^^^^
+
+--
+error[SyntaxError]: members inside ambient contexts should not have a body
+   ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:10:22
+   │
+10 │          set test(v) {}
+   │                      ^^
+
+--
+declare class Test {
+    name() {}
+    get test(): string { return ""; }
+    set test(v) {}
+}
+declare namespace n {
+     class Test {
+         name() {}
+         get test(): string { return ""; }
+         set test(v) {}
+     }
+}

@@ -1361,9 +1361,10 @@ TsExportAsNamespaceClause =
 //        ^^^
 // export = a.b.c;
 //        ^^^^^^^^
+// export = class {}
 TsExportAssignmentClause =
 	'='
-	name: TsAnyName
+	expression: JsAnyExpression
 	';'?
 
 // export declare class A {}
