@@ -1090,7 +1090,7 @@ JsImportBareClause =
 // import foo from "mod"
 // import type foo from "mod"
 JsImportDefaultClause =
-		// 'type'?
+		'type'?
 		local_name: JsAnyBinding
 		'from'
 		source: JsModuleSource
@@ -1099,7 +1099,7 @@ JsImportDefaultClause =
 // import * as foo from "mod";
 // import type * as foo from "mod";
 JsImportNamespaceClause =
-  // 'type'
+  'type'?
 	'*'
 	'as'
 	local_name: JsAnyBinding
@@ -1119,7 +1119,7 @@ JsImportNamespaceClause =
 //        ^^^^^^^^^^^^^^^^^^^^^^^
 // import foo, { type bar } from "mod";
 JsImportNamedClause =
-    // 'type'?
+    'type'?
     default_specifier: JsDefaultImportSpecifier?
     named_import: JsAnyNamedImport
     'from'
@@ -1162,7 +1162,7 @@ JsAnyNamedImportSpecifier =
 // import { type foo as test } from "mod";
 //          ^^^^^^^^^^^^^^^^^
 JsNamedImportSpecifier =
-    // 'type'?
+    'type'?
     name: JsLiteralExportName
     'as'
     local_name: JsAnyBinding
@@ -1170,7 +1170,7 @@ JsNamedImportSpecifier =
 // import { type foo } from "mod";
 //          ^^^^^^^^
 JsShorthandNamedImportSpecifier =
-    // 'type'?
+    'type'?
     local_name: JsAnyBinding
 
 // import a from "mod" assert { type: "json" }

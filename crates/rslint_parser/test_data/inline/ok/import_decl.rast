@@ -5,6 +5,7 @@ JsModule {
         JsImport {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportNamespaceClause {
+                type_token: missing (optional),
                 star_token: STAR@7..9 "*" [] [Whitespace(" ")],
                 as_token: AS_KW@9..12 "as" [] [Whitespace(" ")],
                 local_name: JsIdentifierBinding {
@@ -29,13 +30,14 @@ JsModule {
     0: JS_IMPORT@0..27
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_NAMESPACE_CLAUSE@7..26
-        0: STAR@7..9 "*" [] [Whitespace(" ")]
-        1: AS_KW@9..12 "as" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@12..16
+        0: (empty)
+        1: STAR@7..9 "*" [] [Whitespace(" ")]
+        2: AS_KW@9..12 "as" [] [Whitespace(" ")]
+        3: JS_IDENTIFIER_BINDING@12..16
           0: IDENT@12..16 "foo" [] [Whitespace(" ")]
-        3: FROM_KW@16..21 "from" [] [Whitespace(" ")]
-        4: JS_MODULE_SOURCE@21..26
+        4: FROM_KW@16..21 "from" [] [Whitespace(" ")]
+        5: JS_MODULE_SOURCE@21..26
           0: JS_STRING_LITERAL@21..26 "\"bla\"" [] []
-        5: (empty)
+        6: (empty)
       2: SEMICOLON@26..27 ";" [] []
   3: EOF@27..28 "" [Newline("\n")] []

@@ -1656,16 +1656,17 @@ impl JsImportDefaultClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
-        support::required_node(&self.syntax, 0usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 3usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 3usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportNamedClause {
@@ -1679,19 +1680,20 @@ impl JsImportNamedClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn default_specifier(&self) -> Option<JsDefaultImportSpecifier> {
-        support::node(&self.syntax, 0usize)
+        support::node(&self.syntax, 1usize)
     }
     pub fn named_import(&self) -> SyntaxResult<JsAnyNamedImport> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 4usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportNamespaceClause {
@@ -1705,22 +1707,23 @@ impl JsImportNamespaceClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-    pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+    pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 3usize)
     }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 5usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 6usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsInExpression {
@@ -1990,14 +1993,15 @@ impl JsNamedImportSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsLiteralExportName> {
-        support::required_node(&self.syntax, 0usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 3usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2655,8 +2659,9 @@ impl JsShorthandNamedImportSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
-        support::required_node(&self.syntax, 0usize)
+        support::required_node(&self.syntax, 1usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -7899,6 +7904,10 @@ impl AstNode for JsImportDefaultClause {
 impl std::fmt::Debug for JsImportDefaultClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsImportDefaultClause")
+            .field(
+                "type_token",
+                &support::DebugOptionalElement(self.type_token()),
+            )
             .field("local_name", &support::DebugSyntaxResult(self.local_name()))
             .field("from_token", &support::DebugSyntaxResult(self.from_token()))
             .field("source", &support::DebugSyntaxResult(self.source()))
@@ -7929,6 +7938,10 @@ impl AstNode for JsImportNamedClause {
 impl std::fmt::Debug for JsImportNamedClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsImportNamedClause")
+            .field(
+                "type_token",
+                &support::DebugOptionalElement(self.type_token()),
+            )
             .field(
                 "default_specifier",
                 &support::DebugOptionalElement(self.default_specifier()),
@@ -7966,6 +7979,10 @@ impl AstNode for JsImportNamespaceClause {
 impl std::fmt::Debug for JsImportNamespaceClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsImportNamespaceClause")
+            .field(
+                "type_token",
+                &support::DebugOptionalElement(self.type_token()),
+            )
             .field("star_token", &support::DebugSyntaxResult(self.star_token()))
             .field("as_token", &support::DebugSyntaxResult(self.as_token()))
             .field("local_name", &support::DebugSyntaxResult(self.local_name()))
@@ -8368,6 +8385,10 @@ impl AstNode for JsNamedImportSpecifier {
 impl std::fmt::Debug for JsNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsNamedImportSpecifier")
+            .field(
+                "type_token",
+                &support::DebugOptionalElement(self.type_token()),
+            )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field("as_token", &support::DebugSyntaxResult(self.as_token()))
             .field("local_name", &support::DebugSyntaxResult(self.local_name()))
@@ -9343,6 +9364,10 @@ impl AstNode for JsShorthandNamedImportSpecifier {
 impl std::fmt::Debug for JsShorthandNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsShorthandNamedImportSpecifier")
+            .field(
+                "type_token",
+                &support::DebugOptionalElement(self.type_token()),
+            )
             .field("local_name", &support::DebugSyntaxResult(self.local_name()))
             .finish()
     }

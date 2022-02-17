@@ -1,6 +1,8 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
 use crate::state::EnterAmbientContext;
-use crate::syntax::binding::{is_at_identifier_binding, parse_binding};
+use crate::syntax::binding::{
+    is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
+};
 use crate::syntax::class::parse_export_default_class_case;
 use crate::syntax::expr::{
     is_nth_at_expression, is_nth_at_reference_identifier, parse_assignment_expression_or_higher,
@@ -10,9 +12,8 @@ use crate::syntax::function::parse_export_default_function_case;
 use crate::syntax::js_parse_error::{
     duplicate_assertion_keys_error, expected_binding, expected_declaration, expected_export_clause,
     expected_export_name_specifier, expected_expression, expected_identifier,
-    expected_literal_export_name, expected_local_name_for_default_import, expected_module_source,
-    expected_named_import, expected_named_import_specifier, expected_statement,
-    ts_only_syntax_error,
+    expected_literal_export_name, expected_module_source, expected_named_import,
+    expected_named_import_specifier, expected_statement, ts_only_syntax_error,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
 use crate::syntax::typescript::{parse_ts_import_equals_declaration_rest, parse_ts_name};
@@ -149,36 +150,75 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> Parse
 // test import_default_clause
 // import foo from "test";
 fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
+    if p.at(JS_STRING_LITERAL) {
+        return parse_import_bare_clause(p);
+    }
+
+    let pos = p.token_pos();
+    let m = p.start();
+
+    // test ts ts_import_clause_types
+    // import type from "./mod"; // not a type
+    // import type foo from "./mod";
+    // import type * as foo2 from "./mod";
+    // import type { foo3 } from "mod";
+    let is_typed = is_at_contextual_keyword(p, "type")
+        && (matches!(p.nth(1), T![*] | T!['{'])
+            || (is_nth_at_identifier_binding(p, 1) && !is_nth_at_contextual_keyword(p, 1, "from")));
+
+    if is_typed {
+        expect_contextual_keyword(p, "type", T![type]);
+    }
+
+    let clause = match p.cur() {
+        T![*] => parse_import_namespace_clause_rest(p, m),
+        T!['{'] => parse_import_named_clause_rest(p, m),
+        _ if is_at_identifier_binding(p) => {
+            parse_identifier_binding(p).unwrap();
+            parse_import_default_or_named_clause_rest(p, m)
+        }
+        _ => {
+            // SAFETY: Safe because the parser only eats the "type" keyword if it's followed by
+            // either a *, {, or binding
+            debug_assert_eq!(pos, p.token_pos());
+            m.abandon(p);
+            return Absent;
+        }
+    };
+
+    if is_typed {
+        TypeScript.exclusive_syntax(p, clause, |p, clause| {
+            ts_only_syntax_error(p, "'import type'", clause.range(p))
+        })
+    } else {
+        Present(clause)
+    }
+}
+
+/// Parses the rest of an import named or default clause.
+/// Rest meaning, everything after `type binding`
+fn parse_import_default_or_named_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker {
     match p.cur() {
-        JS_STRING_LITERAL => parse_import_bare_clause(p),
-        T![*] => parse_import_namespace_clause(p),
-        T!['{'] => parse_import_named_clause(p),
-        _ => match parse_binding(p) {
-            Absent => Absent,
-            Present(binding) => {
-                let m = binding.precede(p);
+        T![,] | T!['{'] => {
+            p.expect(T![,]);
 
-                if matches!(p.cur(), T![,] | T!['{']) {
-                    p.expect(T![,]);
+            let default_specifier = m.complete(p, JS_DEFAULT_IMPORT_SPECIFIER);
+            let named_clause = default_specifier.precede(p);
 
-                    let default_specifier = m.complete(p, JS_DEFAULT_IMPORT_SPECIFIER);
-                    let named_clause = default_specifier.precede(p);
+            parse_named_import(p).or_add_diagnostic(p, expected_named_import);
+            expect_contextual_keyword(p, "from", T![from]);
+            parse_module_source(p).or_add_diagnostic(p, expected_module_source);
+            parse_import_assertion(p).ok();
 
-                    parse_named_import(p).or_add_diagnostic(p, expected_named_import);
-                    expect_contextual_keyword(p, "from", T![from]);
-                    parse_module_source(p).or_add_diagnostic(p, expected_module_source);
-                    parse_import_assertion(p).ok();
+            named_clause.complete(p, JS_IMPORT_NAMED_CLAUSE)
+        }
+        _ => {
+            expect_contextual_keyword(p, "from", T![from]);
+            parse_module_source(p).or_add_diagnostic(p, expected_module_source);
+            parse_import_assertion(p).ok();
 
-                    Present(named_clause.complete(p, JS_IMPORT_NAMED_CLAUSE))
-                } else {
-                    expect_contextual_keyword(p, "from", T![from]);
-                    parse_module_source(p).or_add_diagnostic(p, expected_module_source);
-                    parse_import_assertion(p).ok();
-
-                    Present(m.complete(p, JS_IMPORT_DEFAULT_CLAUSE))
-                }
-            }
-        },
+            m.complete(p, JS_IMPORT_DEFAULT_CLAUSE)
+        }
     }
 }
 
@@ -195,21 +235,16 @@ fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax {
 
 // test import_decl
 // import * as foo from "bla";
-fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![*]) {
-        return Absent;
-    }
+fn parse_import_namespace_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker {
+    p.expect(T![*]);
 
-    let m = p.start();
-
-    p.bump_any();
     expect_contextual_keyword(p, "as", T![as]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
     expect_contextual_keyword(p, "from", T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
 
-    Present(m.complete(p, JS_IMPORT_NAMESPACE_CLAUSE))
+    m.complete(p, JS_IMPORT_NAMESPACE_CLAUSE)
 }
 
 // test import_named_clause
@@ -218,20 +253,14 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax {
 // import e, { f } from "b";
 // import g, * as lorem from "c";
 // import { f as x, default as w, "a-b-c" as y } from "b";
-fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T!['{']) {
-        return Absent;
-    }
-
-    let m = p.start();
-
+fn parse_import_named_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker {
     parse_default_import_specifier(p).ok();
     parse_named_import(p).or_add_diagnostic(p, expected_named_import);
     expect_contextual_keyword(p, "from", T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
 
-    Present(m.complete(p, JS_IMPORT_NAMED_CLAUSE))
+    m.complete(p, JS_IMPORT_NAMED_CLAUSE)
 }
 
 fn parse_default_import_specifier(p: &mut Parser) -> ParsedSyntax {
@@ -268,7 +297,7 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump_any();
+    p.bump(T!['{']);
     NamedImportSpecifierList.parse_list(p);
     p.expect(T!['}']);
 
@@ -279,7 +308,7 @@ struct NamedImportSpecifierList;
 
 impl ParseSeparatedList for NamedImportSpecifierList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_named_import_specifier(p).or_else(|| parse_shorthand_named_import_specifier(p))
+        parse_any_named_import_specifier(p)
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -311,51 +340,67 @@ impl ParseSeparatedList for NamedImportSpecifierList {
     }
 }
 
-fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
-    let m = p.start();
-
-    // test import_as_identifier
-    // import { as } from "test";
-    //
-    // test import_as_as_as_identifier
-    // import { as as as } from "test";
-    //
-    // test_err import_as_identifier_err
-    // import { as c } from "test";
-    if is_nth_at_literal_export_name(p, 0) && p.nth_src(1) == "as" {
-        parse_literal_export_name(p).ok();
-    } else if p.cur_src() == "as" && is_nth_at_literal_export_name(p, 1) {
-        p.error(expected_literal_export_name(p, p.cur_tok().range()));
-    } else {
-        m.abandon(p);
+// test ts ts_named_import_specifier_with_type
+// import { type, type as } from "./mod";
+// import { type as other } from "./mod"
+// import { type as as } from "./mod";
+// import { type as as as } from "./mod"
+// import { type "test-abcd" as test } from "./mod";
+//
+// test_err ts ts_named_import_specifier_error
+// import { default } from "./mod";
+// import { type default } from "./mod";
+// import { "literal-name" } from "./mod";
+// import { type "literal-name" } from "./mod";
+fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
+    if !is_nth_at_literal_export_name(p, 0) {
+        // covers `type` and `as` too
         return Absent;
     }
 
-    expect_contextual_keyword(p, "as", T![as]);
-    parse_binding(p).or_add_diagnostic(p, expected_binding);
+    let m = p.start();
 
-    Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER))
-}
+    let metadata = specifier_metadata(
+        p,
+        is_nth_at_literal_export_name,
+        is_nth_at_identifier_binding,
+    );
 
-fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
-    if p.at(T![default]) {
-        p.error(expected_local_name_for_default_import(
-            p,
-            p.cur_tok().range(),
-        ));
-
-        let shorthand = p.start();
-        let binding = p.start();
-        p.bump_any();
-        binding.complete(p, JS_UNKNOWN_BINDING);
-        return Present(shorthand.complete(p, JS_SHORTHAND_NAMED_IMPORT_SPECIFIER));
+    if metadata.is_type {
+        expect_contextual_keyword(p, "type", T![type]);
     }
 
-    parse_binding(p).map(|binding| {
-        binding
-            .precede(p)
-            .complete(p, JS_SHORTHAND_NAMED_IMPORT_SPECIFIER)
-    })
+    let specifier = if metadata.has_alias || p.at(JS_STRING_LITERAL) || p.cur().is_keyword() {
+        if metadata.is_local_name_missing {
+            // test_err import_as_identifier_err
+            // import { as c } from "test";
+            p.error(expected_literal_export_name(
+                p,
+                p.cur_tok().start()..p.cur_tok().start(),
+            ));
+        } else {
+            // test import_as_as_as_identifier
+            // import { as as as } from "test";
+            parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
+        }
+
+        expect_contextual_keyword(p, "as", T![as]);
+        parse_binding(p).or_add_diagnostic(p, expected_binding);
+        m.complete(p, JS_NAMED_IMPORT_SPECIFIER)
+    } else {
+        // test import_as_identifier
+        // import { as } from "test";
+        parse_binding(p).or_add_diagnostic(p, expected_identifier);
+        m.complete(p, JS_SHORTHAND_NAMED_IMPORT_SPECIFIER)
+    };
+
+    if metadata.is_type {
+        TypeScript.exclusive_syntax(p, specifier, |p, specifier| {
+            ts_only_syntax_error(p, "'import { type x ident }'", specifier.range(p))
+        })
+    } else {
+        Present(specifier)
+    }
 }
 
 // test import_assertion
@@ -664,13 +709,18 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
 }
 
 fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
+    // covers `type` and `as` too
     if !is_nth_at_reference_identifier(p, 0) {
         return Absent;
     }
 
     let m = p.start();
 
-    let metadata = specifier_metadata(p);
+    let metadata = specifier_metadata(
+        p,
+        is_nth_at_reference_identifier,
+        is_nth_at_literal_export_name,
+    );
 
     // test ts ts_export_named_type_specifier
     // export { type }
@@ -707,7 +757,7 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
 
     if metadata.is_type {
         TypeScript.exclusive_syntax(p, specifier, |p, specifier| {
-            ts_only_syntax_error(p, "export { type }'", specifier.range(p))
+            ts_only_syntax_error(p, "export { type ident }'", specifier.range(p))
         })
     } else {
         Present(specifier)
@@ -735,10 +785,18 @@ struct SpecifierMetadata {
 // export { type type };
 // export { type as };
 // export { type a as aa };
-fn specifier_metadata(p: &Parser) -> SpecifierMetadata {
+fn specifier_metadata<LocalNamePred, AliasPred>(
+    p: &Parser,
+    is_nth_name: LocalNamePred,
+    is_nth_alias: AliasPred,
+) -> SpecifierMetadata
+where
+    LocalNamePred: Fn(&Parser, usize) -> bool,
+    AliasPred: Fn(&Parser, usize) -> bool,
+{
     let mut metadata = SpecifierMetadata::default();
 
-    // This may be a typed export, but it could also be the name of the export:
+    // This may be a typed import/export, but it could also be the name of the import/export:
     // ```ts
     // { type}              // name: `type`
     // { type type }        // name: `type`    type-export: `true`
@@ -746,7 +804,7 @@ fn specifier_metadata(p: &Parser) -> SpecifierMetadata {
     // { type as as }       // name: `type`    type-export: `false` (aliased to `as`)
     // { type as as as }    // name: `as`      type-export: `true`, aliased to `as`
     // ```
-    if is_at_contextual_keyword(p, "type") && is_nth_at_reference_identifier(p, 1) {
+    if is_at_contextual_keyword(p, "type") {
         // `{ type identifier }`
 
         if is_nth_at_contextual_keyword(p, 1, "as") {
@@ -756,11 +814,11 @@ fn specifier_metadata(p: &Parser) -> SpecifierMetadata {
                 metadata.has_alias = true;
                 // `{ type as as }`: Type can either be an identifier or the type keyword
 
-                if is_nth_at_literal_export_name(p, 3) {
+                if is_nth_alias(p, 3) {
                     // `{ type as as x }` or `{ type as as "x"}`
                     metadata.is_type = true;
                 }
-            } else if is_nth_at_literal_export_name(p, 2) {
+            } else if is_nth_alias(p, 2) {
                 // `{ type as x }` or `{ type as "x" }`
                 metadata.has_alias = true;
             } else {
@@ -769,10 +827,10 @@ fn specifier_metadata(p: &Parser) -> SpecifierMetadata {
             }
         } else {
             // `{ type x }` or `{ type "x" }` or `{ type x as }`
-            metadata.is_type = true;
+            metadata.is_type = is_nth_name(p, 1);
             metadata.has_alias = is_nth_at_contextual_keyword(p, 2, "as");
         }
-    } else if is_at_contextual_keyword(p, "as") && is_nth_at_literal_export_name(p, 1) {
+    } else if is_at_contextual_keyword(p, "as") && is_nth_alias(p, 1) {
         metadata.has_alias = true;
 
         // error recovery case in case someone typed "as x" but forgot the local name.
@@ -906,15 +964,17 @@ impl ParseSeparatedList for ExportNamedFromSpecifierList {
 // export { type A } from "a"
 // export { type } from "./type";
 fn parse_export_named_from_specifier(p: &mut Parser) -> ParsedSyntax {
-    if !is_nth_at_literal_export_name(p, 0)
-        && !is_at_contextual_keyword(p, "type")
-        && !is_at_contextual_keyword(p, "as")
-    {
+    // also covers the contextual keywords `type` and `as`
+    if !is_nth_at_literal_export_name(p, 0) {
         return Absent;
     }
 
     let m = p.start();
-    let metadata = specifier_metadata(p);
+    let metadata = specifier_metadata(
+        p,
+        is_nth_at_reference_identifier,
+        is_nth_at_literal_export_name,
+    );
 
     if metadata.is_type {
         expect_contextual_keyword(p, "type", T![type]);
@@ -937,7 +997,7 @@ fn parse_export_named_from_specifier(p: &mut Parser) -> ParsedSyntax {
 
     if metadata.is_type {
         TypeScript.exclusive_syntax(p, specifier, |p, specifier| {
-            ts_only_syntax_error(p, "export { type }'", specifier.range(p))
+            ts_only_syntax_error(p, "export { type ident }''", specifier.range(p))
         })
     } else {
         specifier

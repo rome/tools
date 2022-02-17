@@ -318,14 +318,14 @@ error[SyntaxError]: 'export type' declarations are a TypeScript only feature. Co
   │        ^^^^^^^^^^^ TypeScript only syntax
 
 --
-error[SyntaxError]: export { type }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: export { type ident }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ ts_export_syntax_in_js.js:3:10
   │
 3 │ export { type b };
   │          ^^^^^^ TypeScript only syntax
 
 --
-error[SyntaxError]: export { type }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: export { type ident }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ ts_export_syntax_in_js.js:4:10
   │
 4 │ export { type c as cc };
@@ -339,14 +339,14 @@ error[SyntaxError]: 'export type' declarations are a TypeScript only feature. Co
   │        ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
 
 --
-error[SyntaxError]: export { type }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: export { type ident }'' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ ts_export_syntax_in_js.js:6:10
   │
 6 │ export { type e } from "./e";
   │          ^^^^^^ TypeScript only syntax
 
 --
-error[SyntaxError]: export { type }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: export { type ident }'' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ ts_export_syntax_in_js.js:7:10
   │
 7 │ export { type e as ee } from "./e";

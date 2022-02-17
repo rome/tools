@@ -9,6 +9,7 @@ JsModule {
                     items: [
                         IMPORT_KW@1..10 "import" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                         JsImportDefaultClause {
+                            type_token: missing (optional),
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@10..14 "foo" [] [Whitespace(" ")],
                             },
@@ -38,12 +39,13 @@ JsModule {
         0: JS_UNKNOWN_STATEMENT@1..25
           0: IMPORT_KW@1..10 "import" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           1: JS_IMPORT_DEFAULT_CLAUSE@10..24
-            0: JS_IDENTIFIER_BINDING@10..14
+            0: (empty)
+            1: JS_IDENTIFIER_BINDING@10..14
               0: IDENT@10..14 "foo" [] [Whitespace(" ")]
-            1: FROM_KW@14..19 "from" [] [Whitespace(" ")]
-            2: JS_MODULE_SOURCE@19..24
+            2: FROM_KW@14..19 "from" [] [Whitespace(" ")]
+            3: JS_MODULE_SOURCE@19..24
               0: JS_STRING_LITERAL@19..24 "\"bar\"" [] []
-            3: (empty)
+            4: (empty)
           2: SEMICOLON@24..25 ";" [] []
       2: R_CURLY@25..27 "}" [Newline("\n")] []
   3: EOF@27..28 "" [Newline("\n")] []

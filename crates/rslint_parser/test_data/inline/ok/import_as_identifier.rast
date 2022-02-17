@@ -5,11 +5,13 @@ JsModule {
         JsImport {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
+                type_token: missing (optional),
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
                     specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
+                            type_token: missing (optional),
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@9..12 "as" [] [Whitespace(" ")],
                             },
@@ -37,16 +39,18 @@ JsModule {
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@7..25
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIERS@7..14
+        1: (empty)
+        2: JS_NAMED_IMPORT_SPECIFIERS@7..14
           0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
           1: JS_NAMED_IMPORT_SPECIFIER_LIST@9..12
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@9..12
-              0: JS_IDENTIFIER_BINDING@9..12
+              0: (empty)
+              1: JS_IDENTIFIER_BINDING@9..12
                 0: IDENT@9..12 "as" [] [Whitespace(" ")]
           2: R_CURLY@12..14 "}" [] [Whitespace(" ")]
-        2: FROM_KW@14..19 "from" [] [Whitespace(" ")]
-        3: JS_MODULE_SOURCE@19..25
+        3: FROM_KW@14..19 "from" [] [Whitespace(" ")]
+        4: JS_MODULE_SOURCE@19..25
           0: JS_STRING_LITERAL@19..25 "\"test\"" [] []
-        4: (empty)
+        5: (empty)
       2: SEMICOLON@25..26 ";" [] []
   3: EOF@26..27 "" [Newline("\n")] []

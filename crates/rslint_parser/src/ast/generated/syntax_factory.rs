@@ -2871,8 +2871,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_IMPORT_DEFAULT_CLAUSE => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![type] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if JsAnyBinding::can_cast(element.kind()) {
                         slots.mark_present();
@@ -2911,8 +2918,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_IMPORT_NAMED_CLAUSE => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![type] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if JsDefaultImportSpecifier::can_cast(element.kind()) {
                         slots.mark_present();
@@ -2958,8 +2972,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_IMPORT_NAMESPACE_CLAUSE => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<7usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![type] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T ! [*] {
                         slots.mark_present();
@@ -3439,8 +3460,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_NAMED_IMPORT_SPECIFIER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![type] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if JsLiteralExportName::can_cast(element.kind()) {
                         slots.mark_present();
@@ -4516,8 +4544,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_SHORTHAND_NAMED_IMPORT_SPECIFIER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![type] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if JsAnyBinding::can_cast(element.kind()) {
                         slots.mark_present();
