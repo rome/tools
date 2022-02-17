@@ -489,10 +489,9 @@ pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, ap
 
 #[cfg(test)]
 mod tests {
-    use crate::IndentStyle;
 
     use super::{format_range, FormatOptions};
-
+    use crate::IndentStyle;
     use rome_rowan::{TextRange, TextSize};
     use rslint_parser::parse_script;
 
@@ -586,7 +585,8 @@ mod test {
     use rslint_parser::{parse, Syntax};
 
     #[test]
-    fn poc() {
+    // use this test check if your snippet prints as you wish, without using a snapshot
+    fn quick_test() {
         let src = r#"let g = [[], [0, 1], [0, 1]      ];
 "#;
         let syntax = Syntax::default().typescript();
