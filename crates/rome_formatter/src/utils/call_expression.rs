@@ -124,7 +124,7 @@ pub fn format_call_expression(
     flatten_call_expression(&mut flattened_items, syntax_node.to_owned(), formatter)?;
 
     // as explained before, the first group is particular, so we calculate it
-    let index_to_split_at = compute_first_group_index(&mut flattened_items);
+    let index_to_split_at = compute_first_group_index(&flattened_items);
     let mut flattened_items = flattened_items.into_iter();
     // we have the index where we want to take the first group
     let first_group = concat_elements(
@@ -141,68 +141,71 @@ pub fn format_call_expression(
 /// Retrieves the index where we want to calculate the first group.
 /// The first group gathers inside it all those nodes that are not a sequence of something like:
 /// `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
-fn compute_first_group_index(flatten_items: &mut Vec<FlattenItem>) -> usize {
+fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
     let mut new_group = flatten_items
         .iter()
         .enumerate()
         // the first element will always be part of the first group, so we skip it
         .skip(1)
-        .skip_while(|(index, item)| match item {
-            // This where we apply the first two points explained in the description of the main public function.
-            // We want to keep iterating over the items until we have call expressions or computed expressions:
-            // - `something()()()()`
-            // - `something[1][2][4]`
-            // - `something[1]()[3]()`
-            // - `something()[2].something.else[0]`
-            FlattenItem::CallExpression(_, _) | FlattenItem::ComputedExpression(_, _) => true,
+        // we now find the index, all items before this index will belong to the first group
+        .find_map(|(index, item)| {
+            let should_skip = match item {
+                // This where we apply the first two points explained in the description of the main public function.
+                // We want to keep iterating over the items until we have call expressions or computed expressions:
+                // - `something()()()()`
+                // - `something[1][2][4]`
+                // - `something[1]()[3]()`
+                // - `something()[2].something.else[0]`
+                FlattenItem::CallExpression(_, _) | FlattenItem::ComputedExpression(_, _) => true,
 
-            // SAFETY: The check `flatten_items[index + 1]` will never panic at runtime because
-            // 1. The array will always have at least two items
-            // 2. The last element of the array is always a CallExpression
-            //
-            // Something like `a()` produces these flatten times:
-            // ```
-            // [
-            //      Token("a", 0..1),
-            //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 2..7)])],
-            // ]
-            // ```
-            //
-            // Hence, it will never enter the branch of this `match`.
-            //
-            // When we have something like `a.b.c()`, the flatten items produced are:
-            //
-            // ```
-            // [
-            //      Token("a", 0..1),
-            //      StaticMember: [Token(".", 1..2), Token("b", 2..3)],
-            //      StaticMember: [Token(".", 3..4), Token("c", 4..5)],
-            //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 6..7)])],
-            // ]
-            // ```
-            //
-            // The loop will match against `StaticMember: [Token(".", 3..4), Token("c", 4..5)],`
-            // and the next one is a call expression... the `matches!` fails and the loop is stopped.
-            //
-            // The last element of the array is always a `CallExpression`, which allows us to avoid the overflow of the array.
-            FlattenItem::StaticMember(_, _) => {
-                let next_flatten_item = &flatten_items[index + 1];
-                matches!(
-                    next_flatten_item,
-                    FlattenItem::StaticMember(_, _) | FlattenItem::ComputedExpression(_, _)
-                )
+                // SAFETY: The check `flatten_items[index + 1]` will never panic at runtime because
+                // 1. The array will always have at least two items
+                // 2. The last element of the array is always a CallExpression
+                //
+                // Something like `a()` produces these flatten times:
+                // ```
+                // [
+                //      Token("a", 0..1),
+                //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 2..7)])],
+                // ]
+                // ```
+                //
+                // Hence, it will never enter the branch of this `match`.
+                //
+                // When we have something like `a.b.c()`, the flatten items produced are:
+                //
+                // ```
+                // [
+                //      Token("a", 0..1),
+                //      StaticMember: [Token(".", 1..2), Token("b", 2..3)],
+                //      StaticMember: [Token(".", 3..4), Token("c", 4..5)],
+                //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 6..7)])],
+                // ]
+                // ```
+                //
+                // The loop will match against `StaticMember: [Token(".", 3..4), Token("c", 4..5)],`
+                // and the next one is a call expression... the `matches!` fails and the loop is stopped.
+                //
+                // The last element of the array is always a `CallExpression`, which allows us to avoid the overflow of the array.
+                FlattenItem::StaticMember(_, _) => {
+                    let next_flatten_item = &flatten_items[index + 1];
+                    matches!(
+                        next_flatten_item,
+                        FlattenItem::StaticMember(_, _) | FlattenItem::ComputedExpression(_, _)
+                    )
+                }
+                _ => false,
+            };
+
+            if should_skip {
+                None
+            } else {
+                Some(index)
             }
-            _ => false,
-        });
-
-    // Now, we skipped all the nodes that belonged to the first group.
-    // We call `.next` to retrieve the index where the "split" should occur and return it.
-    match new_group.next() {
-        Some((index, _)) => index,
+        })
         // The first group has always at least one item. If no more items have been skipped,
         // and we arrive here, we can say that the index where want to split the group is 1
-        None => 1,
-    }
+        .unwrap_or(1);
 }
 
 /// computes groups coming after the first group
