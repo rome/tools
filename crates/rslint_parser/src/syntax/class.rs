@@ -39,6 +39,9 @@ use std::ops::Range;
 use super::function::LineBreak;
 use super::js_parse_error::unexpected_body_inside_ambient_context;
 use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
+use super::typescript::{
+    is_at_ts_index_signature_type_member, parse_ts_index_signature_type_member,
+};
 use super::util::eat_contextual_keyword;
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
@@ -504,6 +507,24 @@ fn parse_class_member_impl(
         } else {
             parse_method_class_member(p, member_marker, modifiers, flags)
         });
+    }
+
+    // Seems like we're at an index member
+    if is_at_ts_index_signature_type_member(p) {
+        // test ts ts_indexer_signature
+        // class A {
+        //     [a: number]: string;
+        // }
+        // class B {
+        //     [index: string]: { prop }
+        // }
+        // interface C {
+        //     [a: number]: string;
+        // }
+        // interface D {
+        //     [index: string]: { prop }
+        // }
+        return parse_ts_index_signature_type_member(p, Some(member_marker));
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);

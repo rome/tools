@@ -710,7 +710,7 @@ impl ParseNodeList for TypeMembers {
 
 fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
     if is_at_ts_index_signature_type_member(p) {
-        return parse_ts_index_signature_type_member(p);
+        return parse_ts_index_signature_type_member(p, None);
     }
 
     match p.cur() {
@@ -873,10 +873,10 @@ fn parse_ts_setter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Must be at `[ident:]` or `readonly [ident:]`
-fn is_at_ts_index_signature_type_member(p: &Parser) -> bool {
+pub(crate) fn is_at_ts_index_signature_type_member(p: &Parser) -> bool {
     let mut offset = 0;
 
-    if p.at(T![ident]) && p.cur_src() == "readonly" {
+    if is_at_contextual_keyword(p, "readonly") {
         offset = 1;
     }
 
@@ -897,14 +897,17 @@ fn is_at_ts_index_signature_type_member(p: &Parser) -> bool {
 // // not an index signature
 // type C = { [a]: string }
 // type D = { readonly [a]: string }
-fn parse_ts_index_signature_type_member(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_index_signature_type_member(
+    p: &mut Parser,
+    m: Option<Marker>,
+) -> ParsedSyntax {
     if !is_at_ts_index_signature_type_member(p) {
         return Absent;
     }
 
-    let m = p.start();
+    let m = m.unwrap_or_else(|| p.start());
 
-    if p.at(T![ident]) && p.cur_src() == "readonly" {
+    if is_at_contextual_keyword(p, "readonly") {
         p.bump_remap(T![readonly]);
     }
 

@@ -12,6 +12,7 @@ impl ToFormatElement for JsAnyClassMember {
             Self::JsGetterClassMember(node) => node.to_format_element(formatter),
             Self::JsSetterClassMember(node) => node.to_format_element(formatter),
             Self::JsEmptyClassMember(node) => node.to_format_element(formatter),
+            Self::TsIndexSignatureTypeMember(_) => todo!(),
             Self::JsUnknownMember(node) => node.to_format_element(formatter),
         }
     }

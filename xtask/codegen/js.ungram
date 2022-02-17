@@ -626,6 +626,7 @@ JsAnyClassMember =
 	| JsGetterClassMember
 	| JsSetterClassMember
 	| JsEmptyClassMember
+	| TsIndexSignatureTypeMember
 	| JsUnknownMember
 
 JsStaticInitializationBlockClassMember =

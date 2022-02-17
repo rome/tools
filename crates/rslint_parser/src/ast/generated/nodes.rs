@@ -8050,6 +8050,7 @@ pub enum JsAnyClassMember {
     JsSetterClassMember(JsSetterClassMember),
     JsStaticInitializationBlockClassMember(JsStaticInitializationBlockClassMember),
     JsUnknownMember(JsUnknownMember),
+    TsIndexSignatureTypeMember(TsIndexSignatureTypeMember),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMemberName {
@@ -16675,6 +16676,11 @@ impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
 impl From<JsUnknownMember> for JsAnyClassMember {
     fn from(node: JsUnknownMember) -> JsAnyClassMember { JsAnyClassMember::JsUnknownMember(node) }
 }
+impl From<TsIndexSignatureTypeMember> for JsAnyClassMember {
+    fn from(node: TsIndexSignatureTypeMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsIndexSignatureTypeMember(node)
+    }
+}
 impl AstNode for JsAnyClassMember {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         matches!(
@@ -16687,6 +16693,7 @@ impl AstNode for JsAnyClassMember {
                 | JS_SETTER_CLASS_MEMBER
                 | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
                 | JS_UNKNOWN_MEMBER
+                | TS_INDEX_SIGNATURE_TYPE_MEMBER
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -16715,6 +16722,9 @@ impl AstNode for JsAnyClassMember {
                 )
             }
             JS_UNKNOWN_MEMBER => JsAnyClassMember::JsUnknownMember(JsUnknownMember { syntax }),
+            TS_INDEX_SIGNATURE_TYPE_MEMBER => {
+                JsAnyClassMember::TsIndexSignatureTypeMember(TsIndexSignatureTypeMember { syntax })
+            }
             _ => return None,
         };
         Some(res)
@@ -16729,6 +16739,7 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::JsSetterClassMember(it) => &it.syntax,
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
             JsAnyClassMember::JsUnknownMember(it) => &it.syntax,
+            JsAnyClassMember::TsIndexSignatureTypeMember(it) => &it.syntax,
         }
     }
 }
@@ -16745,6 +16756,7 @@ impl std::fmt::Debug for JsAnyClassMember {
                 std::fmt::Debug::fmt(it, f)
             }
             JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsIndexSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -16759,6 +16771,7 @@ impl From<JsAnyClassMember> for SyntaxNode {
             JsAnyClassMember::JsSetterClassMember(it) => it.into(),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
             JsAnyClassMember::JsUnknownMember(it) => it.into(),
+            JsAnyClassMember::TsIndexSignatureTypeMember(it) => it.into(),
         }
     }
 }
