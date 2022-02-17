@@ -254,6 +254,16 @@ pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Forma
     Ok(Printer::new(options).print(&element))
 }
 
+/// Outputs formatter IR for a JavaScript (and its super languages) file
+///
+/// It returns a [FormatElement] result. Mostly for debugging purposes.
+pub fn to_format_element(
+    options: FormatOptions,
+    syntax: &SyntaxNode,
+) -> FormatResult<FormatElement> {
+    Formatter::new(options).format_root(syntax)
+}
+
 /// Formats a range within a file, supported by Rome
 ///
 /// This runs a simple heuristic to determine the initial indentation
@@ -495,7 +505,7 @@ while(
     function func() {
     func(     /* comment */
     );
-    
+
     let array =
         [ 1
     , 2];
