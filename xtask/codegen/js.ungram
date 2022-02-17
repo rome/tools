@@ -1880,6 +1880,10 @@ TsMappedTypeReadonlyModifierClause =
 	operator_token: ('+' | '-')
 	'readonly'
 
+// a: import("./test").T<typeof X>
+//    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// a: import("./test")<string>
+//    ^^^^^^^^^^^^^^^^^^^^^^^^^
 TsImportType =
 	'typeof'?
 	'import'
@@ -1887,6 +1891,7 @@ TsImportType =
 	argument: 'js_string_literal'
 	')'
 	qualifier_clause: TsImportTypeQualifier?
+	type_arguments: TsTypeArguments?
 
 TsImportTypeQualifier =
 	'.'
