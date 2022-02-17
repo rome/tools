@@ -4,7 +4,7 @@ use rome_analyze::{AnalysisServer, FileId};
 use rslint_parser::TextRange;
 
 use crate::line_index::LineIndex;
-use crate::utils::{self, into_lsp_error};
+use crate::utils;
 
 /// Queries the [`AnalysisServer`] for diagnostics of the file matching [`FileId`]
 ///
@@ -15,7 +15,7 @@ pub(crate) fn diagnostics(
 ) -> jsonrpc::Result<Vec<lsp::Diagnostic>> {
     let text = analysis_server
         .get_file_text(file_id)
-        .map_err(into_lsp_error)?;
+        .ok_or_else(jsonrpc::Error::internal_error)?;
     let line_index = LineIndex::new(&text);
 
     let diagnostics: Vec<_> = analysis_server
@@ -36,7 +36,7 @@ pub(crate) fn code_actions(
 ) -> jsonrpc::Result<Vec<lsp::CodeActionOrCommand>> {
     let text = analysis_server
         .get_file_text(file_id)
-        .map_err(into_lsp_error)?;
+        .ok_or_else(jsonrpc::Error::internal_error)?;
     let line_index = LineIndex::new(&text);
 
     let code_actions: Vec<_> = analysis_server

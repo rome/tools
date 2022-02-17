@@ -6,7 +6,7 @@ use rome_analyze::FileId;
 /// Internal representation of supported [language identifiers]
 ///
 /// [language identifiers]: https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum Language {
     JavaScript,
     TypeScript,

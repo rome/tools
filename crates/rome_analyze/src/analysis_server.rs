@@ -1,6 +1,5 @@
 use std::{collections::HashMap, sync::Arc};
 
-use anyhow::anyhow;
 use rslint_parser::{parse_script, AstNode, SyntaxNode, TextRange};
 use tracing::trace;
 
@@ -29,11 +28,8 @@ impl AnalysisServer {
         self.file_map.insert(file_id, text.into());
     }
 
-    pub fn get_file_text(&self, file_id: FileId) -> anyhow::Result<Arc<str>> {
-        self.file_map
-            .get(&file_id)
-            .cloned()
-            .ok_or_else(|| anyhow!("File text missing for FileId {}", file_id))
+    pub fn get_file_text(&self, file_id: FileId) -> Option<Arc<str>> {
+        self.file_map.get(&file_id).cloned()
     }
 
     pub fn parse(&self, file_id: FileId) -> SyntaxNode {
