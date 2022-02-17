@@ -1080,14 +1080,10 @@ fn parse_method_body(p: &mut Parser, modifiers: ClassMemberModifiers, flags: Sig
     //          set test(v) {}
     //      }
     // }
-    else {
-        if p.state.in_ambient_context() {
-            body.add_diagnostic_if_present(p, unexpected_body_inside_ambient_context);
-        } else {
-            if flags.contains(SignatureFlags::GETTER) || flags.contains(SignatureFlags::SETTER) {
-                body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-            }
-        }
+    else if p.state.in_ambient_context() {
+        body.add_diagnostic_if_present(p, unexpected_body_inside_ambient_context);
+    } else if flags.contains(SignatureFlags::GETTER) || flags.contains(SignatureFlags::SETTER) {
+        body.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
     }
 }
 
