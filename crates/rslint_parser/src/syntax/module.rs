@@ -16,7 +16,7 @@ use crate::syntax::js_parse_error::{
     expected_named_import_specifier, expected_statement, ts_only_syntax_error,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
-use crate::syntax::typescript::{parse_ts_import_equals_declaration_rest, parse_ts_name};
+use crate::syntax::typescript::parse_ts_import_equals_declaration_rest;
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
     is_nth_at_contextual_keyword,
@@ -1100,6 +1100,9 @@ fn parse_ts_export_namespace_clause(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_export_assignment_identifier
 // declare const a: { b: string }
 // export = a;
+// export = class {}
+// export = function () {}
+// export = 4 + 3 + a;
 //
 // test ts ts_export_assignment_qualified_name
 // declare const a: { b: string }
@@ -1112,7 +1115,8 @@ fn parse_ts_export_assignment_clause(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     let start_pos = p.cur_tok().start();
     p.bump(T![=]);
-    parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+    parse_assignment_expression_or_higher(p, ExpressionContext::default())
+        .or_add_diagnostic(p, expected_expression);
     semi(p, start_pos..p.cur_tok().end());
     Present(m.complete(p, TS_EXPORT_ASSIGNMENT_CLAUSE))
 }

@@ -3598,7 +3598,9 @@ impl TsExportAssignmentClause {
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 1usize) }
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 1usize)
+    }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10782,7 +10784,7 @@ impl std::fmt::Debug for TsExportAssignmentClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsExportAssignmentClause")
             .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
             .field(
                 "semicolon_token",
                 &support::DebugOptionalElement(self.semicolon_token()),
