@@ -339,6 +339,13 @@ error[SyntaxError]: expected `,` but instead found `;`
   │           ^ unexpected
 
 --
+error[SyntaxError]: Line terminator not permitted before arrow.
+  ┌─ paren_or_arrow_expr_invalid_params.js:6:2
+  │
+6 │  => {}
+  │  ^^
+
+--
 (5 + 5) => {}
 (a, ,b) => {}
 (a, b) =>;

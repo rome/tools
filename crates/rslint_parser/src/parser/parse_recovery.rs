@@ -18,6 +18,14 @@ pub enum RecoveryError {
     ///    the array expression triggers another recovery. Handling this as an error ensures that list parsing
     ///    rules break out of the loop the same way as they would at the EOF.
     AlreadyRecovered,
+
+    /// Returned if the parser is speculatively parsing a branch. For example in JavaScript, the syntax
+    /// `(a, b, c) ...` can either be a parenthesized expression or an arrow function, depending on what
+    /// the first token in `...` is. This means, that the parser must try to parse the syntax either as
+    /// parenthesized or arrow function and revert if it turns out it was the other syntax.
+    /// It's important that the parser doesn't perform any error recovery in that case, which is when
+    /// `ParseRecovery` returns `RecoveryDisabled`.
+    RecoveryDisabled,
 }
 
 impl Error for RecoveryError {}
@@ -27,6 +35,7 @@ impl Display for RecoveryError {
         match self {
             RecoveryError::Eof => write!(f, "EOF"),
             RecoveryError::AlreadyRecovered => write!(f, "already recovered"),
+            RecoveryError::RecoveryDisabled => write!(f, "recovery disabled"),
         }
     }
 }
@@ -72,6 +81,10 @@ impl ParseRecovery {
 
         if self.recovered(p) {
             return Err(RecoveryError::AlreadyRecovered);
+        }
+
+        if p.state.speculative_parsing {
+            return Err(RecoveryError::RecoveryDisabled);
         }
 
         let m = p.start();

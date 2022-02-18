@@ -37,6 +37,14 @@ pub(crate) struct ParserState {
     /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
     pub duplicate_binding_parent: Option<&'static str>,
     pub name_map: IndexMap<String, Range<usize>>,
+
+    /// Indicates that the parser is speculatively parsing a syntax. For example, the syntax `(a, b) ...`
+    /// in JavaScript is either a parenthesized expression or an arrow expression if `...` is a `=>`.
+    /// However, the parser must first parse all of `(a, b)` to know if it's one or the other.
+    pub(crate) speculative_parsing: bool,
+
+    /// Stores the token positions of syntax that looks like arrow expressions but turned out to be none.
+    /// Optimization to reduce the back-tracking required when parsing parenthesized and arrow function expressions.
     pub(crate) not_parenthesized_arrow: HashSet<usize>,
 }
 
@@ -67,6 +75,7 @@ impl ParserState {
             name_map: IndexMap::new(),
             duplicate_binding_parent: None,
             not_parenthesized_arrow: Default::default(),
+            speculative_parsing: false,
         };
 
         if syntax.top_level_await {
@@ -98,11 +107,6 @@ impl ParserState {
     pub fn in_constructor(&self) -> bool {
         self.parsing_context
             .contains(ParsingContextFlags::IN_CONSTRUCTOR)
-    }
-
-    pub fn in_speculative_arrow(&self) -> bool {
-        self.parsing_context
-            .contains(ParsingContextFlags::SPECULATIVE_ARROW_PARSING)
     }
 
     pub fn is_top_level(&self) -> bool {
@@ -352,7 +356,7 @@ bitflags! {
     ///   snapshots each individual boolean field to allow restoring the previous state. With bitflags, all that
     ///   is needed is to copy away the flags field and restore it after.
     #[derive(Default)]
-    pub(crate) struct ParsingContextFlags: u16 {
+    pub(crate) struct ParsingContextFlags: u8 {
         /// Whether the parser is in a generator function like `function* a() {}`
         /// Matches the `Yield` parameter in the ECMA spec
         const IN_GENERATOR = 1 << 0;
@@ -377,11 +381,6 @@ bitflags! {
 
         /// Whatever the parser is in a TypeScript ambient context
         const AMBIENT_CONTEXT = 1 << 7;
-
-        /// Is the parser speculatively parsing an arrow expression that may as well turn out to be a
-        /// parenthesized expression? For example: `(a, b)` can be a parenthesized expression or an
-        /// arrow function if later followed by a `=>`.
-        const SPECULATIVE_ARROW_PARSING = 1 << 8;
 
         const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
@@ -488,16 +487,6 @@ impl ChangeParserStateFlags for EnterClassPropertyInitializer {
             - ParsingContextFlags::TOP_LEVEL
             - ParsingContextFlags::IN_ASYNC
             - ParsingContextFlags::IN_GENERATOR
-    }
-}
-
-pub(crate) struct EnterSpeculativeArrowHeader(pub(crate) bool);
-
-impl ChangeParserStateFlags for EnterSpeculativeArrowHeader {
-    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags {
-        let mut new_flags = existing;
-        new_flags.set(ParsingContextFlags::SPECULATIVE_ARROW_PARSING, self.0);
-        new_flags
     }
 }
 

@@ -1,5 +1,5 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
-use crate::state::{EnterFunction, EnterParameters, EnterSpeculativeArrowHeader, SignatureFlags};
+use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_binding_pattern,
 };
@@ -420,51 +420,51 @@ impl Ambiguity {
     }
 }
 
-/// Parses out the arrow function and returns the completed marker.
+pub(crate) fn parse_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
+    parse_parenthesized_arrow_function_expression(p)
+        .or_else(|| parse_arrow_function_with_single_parameter(p))
+}
+
+/// Parses the header of a parenthesized arrow function expression.
+///
+/// The header is everything coming before the body: `async (a) =>`.
 ///
 /// Returns `Err` if `ambiguity` is [Ambiguity::Disallowed] and the syntax
 /// is ambiguous. For example, the parser speculatively tries to parse `<string>(test)` as an arrow
 /// function because the start very much looks like one, except that the `=>` token is missing
-/// (it's a TypeScript `<string>` cast followed by a parenthesized expression.
-fn parse_parenthesized_arrow_function_expression_impl(
+/// (it's a TypeScript `<string>` cast followed by a parenthesized expression).
+fn parse_parenthesized_arrow_function_head(
     p: &mut Parser,
     ambiguity: Ambiguity,
-) -> Result<CompletedMarker, Marker> {
+) -> Result<(Marker, SignatureFlags), Marker> {
     let m = p.start();
+    let is_async = eat_contextual_keyword(p, "async", T![async]);
+    let flags = arrow_function_signature_flags(p, is_async);
 
-    let flags = if eat_contextual_keyword(p, "async", T![async]) {
-        SignatureFlags::ASYNC
-    } else {
-        SignatureFlags::empty()
-    };
+    if p.at(T![<]) {
+        parse_ts_type_parameters(p).ok();
 
-    {
-        let p = &mut *p.with_scoped_state(EnterSpeculativeArrowHeader(ambiguity.is_disallowed()));
-
-        if p.at(T![<]) {
-            parse_ts_type_parameters(p).ok();
-
-            if ambiguity.is_disallowed() && p.tokens.last_tok().map(|t| t.kind) != Some(T![>]) {
-                return Err(m);
-            }
-        }
-
-        if !p.at(T!['(']) && ambiguity.is_disallowed() {
+        if ambiguity.is_disallowed() && p.tokens.last_tok().map(|t| t.kind) != Some(T![>]) {
             return Err(m);
         }
-
-        parse_arrow_function_parameters(p, flags).or_add_diagnostic(p, expected_parameters);
-
-        if p.tokens.last_tok().map(|t| t.kind) != Some(T![')']) && ambiguity.is_disallowed() {
-            return Err(m);
-        }
-
-        TypeScript
-            .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
-                ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
-            })
-            .ok();
     }
+
+    if !p.at(T!['(']) && ambiguity.is_disallowed() {
+        return Err(m);
+    }
+
+    parse_parameter_list(p, ParameterContext::Arrow, flags)
+        .or_add_diagnostic(p, expected_parameters);
+
+    if p.tokens.last_tok().map(|t| t.kind) != Some(T![')']) && ambiguity.is_disallowed() {
+        return Err(m);
+    }
+
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+        })
+        .ok();
 
     if p.has_linebreak_before_n(0) {
         p.error(
@@ -477,37 +477,49 @@ fn parse_parenthesized_arrow_function_expression_impl(
         return Err(m);
     }
 
-    parse_arrow_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
-
-    Ok(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
+    Ok((m, flags))
 }
 
-pub(super) fn parse_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
+fn parse_possible_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
+    let start_pos = p.token_pos();
+
+    // Test if we already tried to parse this position as an arrow function and failed.
+    // If so, bail out immediately.
+    if p.state.not_parenthesized_arrow.contains(&start_pos) {
+        return Absent;
+    }
+
+    match try_parse(p, |p| {
+        parse_parenthesized_arrow_function_head(p, Ambiguity::Disallowed)
+    }) {
+        Ok((m, flags)) => {
+            parse_arrow_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
+
+            Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
+        }
+        Err(m) => {
+            // SAFETY: Abandoning the marker here is safe because `try_parse` rewinds if
+            // the callback returns `Err` (which is the case that this branch is handling).
+            m.abandon(p);
+
+            p.state.not_parenthesized_arrow.insert(start_pos);
+            Absent
+        }
+    }
+}
+
+fn parse_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
     let is_parenthesized = is_parenthesized_arrow_function_expression(p);
 
     match is_parenthesized {
         IsParenthesizedArrowFunctionExpression::True => {
-            Present(parse_parenthesized_arrow_function_expression_impl(p, Ambiguity::Allowed).expect("Expected `Ok` because the parse method shouldn't return `Err` if Ambiguity::Allowed is passed."))
+            let (m, flags) = parse_parenthesized_arrow_function_head(p, Ambiguity::Allowed).expect("'CompletedMarker' because function should never return 'Err' if called with 'Ambiguity::Allowed'.");
+            parse_arrow_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
+            Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
         }
         IsParenthesizedArrowFunctionExpression::Unknown => {
-            let start_pos = p.token_pos();
-            if p.state.not_parenthesized_arrow.contains(&start_pos) {
-                return Absent;
-            }
-
-            try_parse(p, |p| {
-                match parse_parenthesized_arrow_function_expression_impl(p, Ambiguity::Disallowed) {
-                    Ok(arrow) => Present(arrow),
-                    Err(marker) => {
-                        p.state.not_parenthesized_arrow.insert(start_pos);
-                        // Safety: Safe to abandon the marker because this is inside a `try_parse` and
-                        // returning Absent will rewind the parser to before the marker was created.
-                        marker.abandon(p);
-                        Absent
-                    }
-                }
-            })
-        },
+            parse_possible_parenthesized_arrow_function_expression(p)
+        }
         IsParenthesizedArrowFunctionExpression::False => Absent,
     }
 }
@@ -630,7 +642,10 @@ fn is_parenthesized_arrow_function_expression_impl(
     }
 }
 
-fn parse_arrow_function_parameters(p: &mut Parser, mut flags: SignatureFlags) -> ParsedSyntax {
+/// Returns the signature flags for an arrow function
+fn arrow_function_signature_flags(p: &Parser, is_async: bool) -> SignatureFlags {
+    let mut flags = SignatureFlags::empty();
+
     if p.state.in_generator() {
         // Arrow functions inherit whatever yield is a valid identifier name from the parent.
         flags |= SignatureFlags::GENERATOR;
@@ -638,18 +653,11 @@ fn parse_arrow_function_parameters(p: &mut Parser, mut flags: SignatureFlags) ->
 
     // The arrow function is in an async context if the outer function is in an async context or itself is
     // declared async
-    if !flags.contains(SignatureFlags::ASYNC) && p.state.in_async() {
+    if is_async || p.state.in_async() {
         flags |= SignatureFlags::ASYNC;
     }
 
-    if p.at(T!['(']) {
-        parse_parameter_list(p, ParameterContext::Arrow, flags)
-    } else {
-        // test_err async_arrow_expr_await_parameter
-        // let a = async await => {}
-        // async() => { (a = await) => {} };
-        p.with_state(EnterParameters(flags), parse_binding)
-    }
+    flags
 }
 
 // test arrow_expr_single_param
@@ -659,29 +667,32 @@ fn parse_arrow_function_parameters(p: &mut Parser, mut flags: SignatureFlags) ->
 // await => {}
 // baz =>
 // {}
-pub(super) fn parse_arrow_function_with_simple_parameter(p: &mut Parser) -> ParsedSyntax {
-    if !is_arrow_function_with_simple_parameter(p) {
+fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
+    if !is_arrow_function_with_single_parameter(p) {
         return Absent;
     }
 
     let m = p.start();
     let is_async = is_at_contextual_keyword(p, "async") && is_nth_at_identifier_binding(p, 1);
 
-    let flags = if is_async {
+    if is_async {
         expect_contextual_keyword(p, "async", T![async]);
-        SignatureFlags::ASYNC
-    } else {
-        SignatureFlags::empty()
-    };
+    }
 
-    parse_arrow_function_parameters(p, flags).expect("Expected function parameter to be present as guaranteed by is_arrow_function_with_simple_parameter");
+    let flags = arrow_function_signature_flags(p, is_async);
+
+    // test_err async_arrow_expr_await_parameter
+    // let a = async await => {}
+    // async() => { (a = await) => {} };
+    p.with_state(EnterParameters(flags), parse_binding).expect("Expected function parameter to be present as guaranteed by is_arrow_function_with_simple_parameter");
+
     p.bump(T![=>]);
     parse_arrow_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
 
     Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
 }
 
-fn is_arrow_function_with_simple_parameter(p: &Parser) -> bool {
+fn is_arrow_function_with_single_parameter(p: &Parser) -> bool {
     if is_at_contextual_keyword(p, "async") && !p.has_linebreak_before_n(1) {
         is_nth_at_identifier_binding(p, 1) && p.nth_at(2, T![=>]) && !p.has_linebreak_before_n(2)
     } else {
@@ -1032,10 +1043,6 @@ pub(super) fn parse_parameters_list(
                 // a missing parameter,
                 parameter.or_add_diagnostic(p, expected_parameter);
                 continue;
-            }
-
-            if parameter.is_absent() && p.state.in_speculative_arrow() {
-                break;
             }
 
             // test_err formal_params_no_binding_element

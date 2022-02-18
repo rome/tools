@@ -14,8 +14,7 @@ use crate::syntax::assignment::{
 };
 use crate::syntax::class::parse_class_expression;
 use crate::syntax::function::{
-    is_at_async_function, parse_arrow_function_with_simple_parameter, parse_function_expression,
-    parse_parenthesized_arrow_function_expression, LineBreak,
+    is_at_async_function, parse_arrow_function_expression, parse_function_expression, LineBreak,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
@@ -186,8 +185,7 @@ pub(crate) fn parse_assignment_expression_or_higher(
     p: &mut Parser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    let arrow_expression = parse_arrow_function_with_simple_parameter(p)
-        .or_else(|| parse_parenthesized_arrow_function_expression(p));
+    let arrow_expression = parse_arrow_function_expression(p);
 
     if arrow_expression.is_present() {
         return arrow_expression;

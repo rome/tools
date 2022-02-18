@@ -80,10 +80,6 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 
                 let element = self.parse_any_array_element(p, &recovery);
 
-                if element.is_absent() && p.state.in_speculative_arrow() {
-                    break;
-                }
-
                 if element
                     .or_recover(p, &recovery, Self::expected_element_error)
                     .is_err()
@@ -179,10 +175,6 @@ pub(crate) trait ParseObjectPattern {
             .enable_recovery_on_line_break();
 
             let pattern = self.parse_any_property_pattern(p, &recovery_set);
-
-            if pattern.is_absent() && p.state.in_speculative_arrow() {
-                break;
-            }
 
             if pattern
                 .or_recover(p, &recovery_set, Self::expected_property_pattern_error)

@@ -105,14 +105,17 @@ fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-pub(crate) fn try_parse(
+pub(crate) fn try_parse<T, E>(
     p: &mut Parser,
-    func: impl FnOnce(&mut Parser) -> ParsedSyntax,
-) -> ParsedSyntax {
+    func: impl FnOnce(&mut Parser) -> Result<T, E>,
+) -> Result<T, E> {
     let checkpoint = p.checkpoint();
-    let res = func(p);
 
-    if res.is_absent() {
+    let old_value = std::mem::replace(&mut p.state.speculative_parsing, true);
+    let res = func(p);
+    p.state.speculative_parsing = old_value;
+
+    if res.is_err() {
         p.rewind(checkpoint);
     }
 

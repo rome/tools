@@ -111,19 +111,15 @@ impl ParseSeparatedList for TsTypeParameterList {
     }
 
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
-        if parsed_element.is_absent() && p.state.in_speculative_arrow() {
-            Err(RecoveryError::AlreadyRecovered)
-        } else {
-            parsed_element.or_recover(
-                p,
-                &ParseRecovery::new(
-                    JS_UNKNOWN,
-                    token_set![T![>], T![,], T![ident], T![yield], T![await]],
-                )
-                .enable_recovery_on_line_break(),
-                expected_ts_type_parameter,
+        parsed_element.or_recover(
+            p,
+            &ParseRecovery::new(
+                JS_UNKNOWN,
+                token_set![T![>], T![,], T![ident], T![yield], T![await]],
             )
-        }
+            .enable_recovery_on_line_break(),
+            expected_ts_type_parameter,
+        )
     }
 
     fn list_kind() -> JsSyntaxKind {
@@ -1241,11 +1237,12 @@ pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
         if p.tokens.last_tok().map(|t| t.kind) == Some(T![>])
             && matches!(p.cur(), T!['('] | BACKTICK)
         {
-            Present(arguments)
+            Ok(Present(arguments))
         } else {
-            Absent
+            Err(())
         }
     })
+    .unwrap_or(Absent)
 }
 
 pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
