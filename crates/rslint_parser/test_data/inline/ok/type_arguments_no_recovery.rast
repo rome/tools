@@ -58,7 +58,7 @@ JsModule {
                                     value_token: IDENT@42..53 "completions" [] [],
                                 },
                             },
-                            optional_chain_token_token: missing (optional),
+                            optional_chain_token: missing (optional),
                             type_arguments: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@53..54 "(" [] [],
@@ -135,7 +135,7 @@ JsModule {
                                                                                     value_token: IDENT@150..156 "ranges" [] [],
                                                                                 },
                                                                             },
-                                                                            optional_chain_token_token: missing (optional),
+                                                                            optional_chain_token: missing (optional),
                                                                             type_arguments: missing (optional),
                                                                             arguments: JsCallArguments {
                                                                                 l_paren_token: L_PAREN@156..157 "(" [] [],
@@ -188,7 +188,7 @@ JsModule {
                                                                                     value_token: IDENT@214..220 "ranges" [] [],
                                                                                 },
                                                                             },
-                                                                            optional_chain_token_token: missing (optional),
+                                                                            optional_chain_token: missing (optional),
                                                                             type_arguments: missing (optional),
                                                                             arguments: JsCallArguments {
                                                                                 l_paren_token: L_PAREN@220..221 "(" [] [],

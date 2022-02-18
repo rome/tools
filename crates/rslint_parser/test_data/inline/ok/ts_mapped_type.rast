@@ -18,7 +18,7 @@ JsModule {
                 },
                 in_token: IN_KW@17..20 "in" [] [Whitespace(" ")],
                 keys_type: TsUnionType {
-                    leading_separator_token_token: missing (optional),
+                    leading_separator_token: missing (optional),
                     types: TsUnionTypeVariantList [
                         TsStringLiteralType {
                             literal_token: JS_STRING_LITERAL@20..24 "\"a\"" [] [Whitespace(" ")],
@@ -274,7 +274,7 @@ JsModule {
                                         l_angle_token: L_ANGLE@328..329 "<" [] [],
                                         ts_type_argument_list: TsTypeArgumentList [
                                             TsIntersectionType {
-                                                leading_separator_token_token: missing (optional),
+                                                leading_separator_token: missing (optional),
                                                 types: TsIntersectionTypeElementList [
                                                     TsStringType {
                                                         string_token: STRING_KW@329..336 "string" [] [Whitespace(" ")],
