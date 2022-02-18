@@ -14,4 +14,4 @@ proc-macro2 = { version = "1.0.36", features = ["span-locations"] }
 ungrammar = "1.14.9"
 walkdir = "2.3.2"
 ureq = "2.4.0"
-git2 = "0.13.25"
+git2 = { version = "0.13.25", default-features = false }
