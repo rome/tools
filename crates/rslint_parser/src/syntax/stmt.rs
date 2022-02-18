@@ -817,6 +817,19 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
     let list_start = p.start();
     let mut progress = ParserProgress::default();
 
+    // test_err statements_closing_curly
+    // {
+    // "name": "troublesome-lib",
+    // "typings": "lib/index.d.ts",
+    // "version": "0.0.1"
+    // }
+    let recovery_set = if stop_on_r_curly {
+        // Don't eat over the closing '}'
+        STMT_RECOVERY_SET.union(token_set![T!['}']])
+    } else {
+        STMT_RECOVERY_SET
+    };
+
     while !p.at(EOF) {
         progress.assert_progressing(p);
         if stop_on_r_curly && p.at(T!['}']) {
@@ -826,7 +839,7 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
         if parse_statement(p, StatementContext::StatementList)
             .or_recover(
                 p,
-                &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+                &ParseRecovery::new(JS_UNKNOWN_STATEMENT, recovery_set),
                 expected_statement,
             )
             .is_err()

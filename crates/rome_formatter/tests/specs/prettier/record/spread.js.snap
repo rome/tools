@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: spread.js
 
 ---
@@ -23,8 +23,15 @@ const formData = #
 }
 
 const taskNow = #
-{ id: 42, status: "WIP", ...formData }
-const taskLater = #{ ...taskNow, status: "DONE" }
+{
+  id: 42, status;
+  : "WIP", ...formData 
+}
+
+const taskLater = #
+{
+  ...taskNow, status: "DONE" ;
+}
 
 // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
 assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
@@ -54,6 +61,12 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │                        │         An explicit or implicit semicolon is expected here...
   │                        ...Which is required to end this statement
 
+error[SyntaxError]: expected `IDENT` but instead found `{`
+  ┌─ spread.js:3:20
+  │
+3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  │                    ^ unexpected
+
 error[SyntaxError]: expected an expression but instead found '...taskNow, status: "DONE"'
   ┌─ spread.js:3:22
   │
@@ -77,12 +90,6 @@ error[SyntaxError]: expected `,` but instead found `{`
   │
 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
   │                       ^ unexpected
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-  ┌─ spread.js:7:1
-  │
-7 │ 
-  │ ^ the file ends here
 
 
 ```

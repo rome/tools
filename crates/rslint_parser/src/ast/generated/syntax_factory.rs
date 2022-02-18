@@ -6407,7 +6407,7 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             TS_IMPORT_TYPE => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<7usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if element.kind() == T![typeof] {
@@ -6446,6 +6446,13 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if let Some(element) = &current_element {
                     if TsImportTypeQualifier::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if TsTypeArguments::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

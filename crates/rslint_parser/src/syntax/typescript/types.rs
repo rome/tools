@@ -637,6 +637,8 @@ fn parse_ts_mapped_type_optional_modifier_clause(p: &mut Parser) -> ParsedSyntax
 // type A = typeof import("test");
 // type B = import("test");
 // type C = typeof import("test").a.b.c.d.e.f;
+// type D = import("test")<string>;
+// type E = import("test").C<string>;
 fn parse_ts_import_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![typeof]) && !p.at(T![import]) {
         return Absent;
@@ -655,6 +657,8 @@ fn parse_ts_import_type(p: &mut Parser) -> ParsedSyntax {
         parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
         qualifier.complete(p, TS_IMPORT_TYPE_QUALIFIER);
     }
+
+    parse_ts_type_arguments(p).ok();
 
     Present(m.complete(p, TS_IMPORT_TYPE))
 }
