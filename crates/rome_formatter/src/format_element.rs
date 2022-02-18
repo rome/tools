@@ -665,6 +665,34 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
     }
 }
 
+/// Forces all conditional elements ([if_group_breaks] and [if_group_fits_on_single_line])
+/// to behave as if they were contained in a non-breaking [Group]
+///
+/// ```
+/// use rome_formatter::{
+///   group_elements, format_element, format_elements, token, hard_group_elements,
+///   FormatOptions, empty_line, if_group_breaks, if_group_fits_on_single_line
+/// };
+///
+/// let elements = group_elements(hard_group_elements(format_elements![
+///   if_group_breaks(token("not printed")),
+///   empty_line(),
+///   if_group_fits_on_single_line(token("printed")),
+/// ]));
+///
+/// assert_eq!("\nprinted", format_element(&elements, FormatOptions::default()).as_code());
+/// ```
+#[inline]
+pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
+    let content = content.into();
+
+    if content.is_empty() {
+        content
+    } else {
+        FormatElement::HardGroup(Group::new(content))
+    }
+}
+
 /// Adds a conditional content that is emitted only if it isn't inside an enclosing [Group] that
 /// is printed on a single line. The element allows, for example, to insert a trailing comma after the last
 /// array element only if the array doesn't fit on a single line.
@@ -820,6 +848,8 @@ pub enum FormatElement {
     /// See [group] for documentation and examples.
     Group(Group),
 
+    HardGroup(Group),
+
     /// Allows to specify content that gets printed depending on whatever the enclosing group
     /// is printed on a single line or multiple lines. See [if_group_breaks] for examples.
     ConditionalGroupContent(ConditionalGroupContent),
@@ -843,7 +873,14 @@ impl Debug for FormatElement {
             FormatElement::Space => write!(fmt, "Space"),
             FormatElement::Line(content) => content.fmt(fmt),
             FormatElement::Indent(content) => content.fmt(fmt),
-            FormatElement::Group(content) => content.fmt(fmt),
+            FormatElement::Group(content) => {
+                write!(fmt, "Group")?;
+                content.fmt(fmt)
+            }
+            FormatElement::HardGroup(content) => {
+                write!(fmt, "HardGroup")?;
+                content.fmt(fmt)
+            }
             FormatElement::ConditionalGroupContent(content) => content.fmt(fmt),
             FormatElement::List(content) => {
                 write!(fmt, "List ")?;
@@ -1004,7 +1041,7 @@ pub struct Group {
 
 impl Debug for Group {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
-        fmt.debug_tuple("Group").field(&self.content).finish()
+        fmt.debug_tuple("").field(&self.content).finish()
     }
 }
 
@@ -1206,6 +1243,7 @@ impl FormatElement {
             FormatElement::Line(_) => FormatElement::Empty,
             FormatElement::Indent(i) => i.content.trim_start(),
             FormatElement::Group(g) => g.content.trim_start(),
+            FormatElement::HardGroup(g) => g.content.trim_start(),
             FormatElement::Fill(list) => FormatElement::Fill(list.trim_start()),
             FormatElement::ConditionalGroupContent(g) => g.content.trim_start(),
             FormatElement::List(list) => FormatElement::List(list.trim_start()),
@@ -1224,6 +1262,7 @@ impl FormatElement {
             FormatElement::Line(_) => FormatElement::Empty,
             FormatElement::Indent(i) => i.content.trim_end(),
             FormatElement::Group(g) => g.content.trim_end(),
+            FormatElement::HardGroup(g) => g.content.trim_end(),
             FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
             FormatElement::Fill(list) => FormatElement::Fill(list.trim_end()),
             FormatElement::List(list) => FormatElement::List(list.trim_end()),

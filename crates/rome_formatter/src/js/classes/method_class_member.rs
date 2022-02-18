@@ -1,3 +1,4 @@
+use crate::format_element::hard_group_elements;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
@@ -40,7 +41,7 @@ impl ToFormatElement for JsMethodClassMember {
         let return_type_annotation = return_type_annotation.format_or_empty(formatter)?;
         let body = body.format(formatter)?;
 
-        Ok(format_elements![
+        Ok(hard_group_elements(format_elements![
             access_modifier,
             static_token,
             abstract_token,
@@ -53,6 +54,6 @@ impl ToFormatElement for JsMethodClassMember {
             return_type_annotation,
             space_token(),
             body
-        ])
+        ]))
     }
 }

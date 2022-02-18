@@ -1,6 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rslint_parser::ast::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
@@ -26,7 +27,7 @@ impl ToFormatElement for TsInterfaceDeclaration {
             members.format(formatter)?,
             &r_curly_token?,
         )?;
-        Ok(format_elements![
+        Ok(hard_group_elements(format_elements![
             interface,
             space_token(),
             id,
@@ -34,6 +35,6 @@ impl ToFormatElement for TsInterfaceDeclaration {
             space_token(),
             extends,
             members
-        ])
+        ]))
     }
 }

@@ -117,7 +117,7 @@ statement(); // inline
 
 [1, 2, 3]; // trailing
 
-function name() {} /* comment */
+function name() /* comment */ {}
 
 function name(
 	very,
@@ -130,5 +130,5 @@ function name(
 	in_the,
 	parameters,
 	group,
-) {} /* comment */
+) /* comment */ {}
 
