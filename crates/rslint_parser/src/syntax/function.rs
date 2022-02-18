@@ -480,6 +480,8 @@ fn parse_parenthesized_arrow_function_head(
     Ok((m, flags))
 }
 
+// test ts ts_arrow_function_type_parameters
+// let a = <A, B extends A, C = string>(a: A, b: B, c: C) => "hello";
 fn parse_possible_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
     let start_pos = p.token_pos();
 

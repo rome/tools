@@ -12,12 +12,15 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-const get_comment_handlers = (comments, raw) => ({
-
-		onComment: (block, value, start, end) => {
-
-		},
-    });
+type OptionsFlags
+    <Type> =
+    {
+  [Property
+        in
+        keyof
+            Type
+        as              string]?: boolean;
+};;
     "#;
 
     let module = parse(src, 0, Syntax::default().typescript());
