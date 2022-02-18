@@ -1,7 +1,18 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsNonNullAssertionExpression, AstNode};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use rslint_parser::ast::TsNonNullAssertionExpression;
+use rslint_parser::ast::TsNonNullAssertionExpressionFields;
+
 impl ToFormatElement for TsNonNullAssertionExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let TsNonNullAssertionExpressionFields {
+            expression,
+            excl_token,
+        } = self.as_fields();
+
+        Ok(format_elements![
+            expression.format(formatter)?,
+            excl_token.format(formatter)?
+        ])
     }
 }
