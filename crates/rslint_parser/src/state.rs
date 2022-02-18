@@ -38,26 +38,6 @@ pub(crate) struct ParserState {
     pub duplicate_binding_parent: Option<&'static str>,
     pub name_map: IndexMap<String, Range<usize>>,
     pub(crate) not_parenthesized_arrow: HashSet<usize>,
-    pub(crate) ambiguity: Ambiguity,
-}
-
-/// There are cases where the parser must speculatively parse a syntax. For example,
-/// parsing `<string>(test)` very much looks like an arrow expression *except* that it isn't followed
-/// by a `=>`. This enum tells a parse function if ambiguity should be tolerated or if it should stop if it is not.
-#[derive(Debug, Copy, Clone)]
-pub(crate) enum Ambiguity {
-    /// Ambiguity is allowed. A parse method should continue even if an expected character is missing.
-    Allowed,
-
-    /// Ambiguity isn't allowed. A parse method should stop parsing if an expected character is missing
-    /// and let the caller decide what to do in this case.
-    Disallowed,
-}
-
-impl Ambiguity {
-    pub fn is_disallowed(&self) -> bool {
-        matches!(self, Ambiguity::Disallowed)
-    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -87,7 +67,6 @@ impl ParserState {
             name_map: IndexMap::new(),
             duplicate_binding_parent: None,
             not_parenthesized_arrow: Default::default(),
-            ambiguity: Ambiguity::Allowed,
         };
 
         if syntax.top_level_await {
@@ -119,6 +98,11 @@ impl ParserState {
     pub fn in_constructor(&self) -> bool {
         self.parsing_context
             .contains(ParsingContextFlags::IN_CONSTRUCTOR)
+    }
+
+    pub fn in_speculative_arrow(&self) -> bool {
+        self.parsing_context
+            .contains(ParsingContextFlags::SPECULATIVE_ARROW_PARSING)
     }
 
     pub fn is_top_level(&self) -> bool {
@@ -368,7 +352,7 @@ bitflags! {
     ///   snapshots each individual boolean field to allow restoring the previous state. With bitflags, all that
     ///   is needed is to copy away the flags field and restore it after.
     #[derive(Default)]
-    pub(crate) struct ParsingContextFlags: u8 {
+    pub(crate) struct ParsingContextFlags: u16 {
         /// Whether the parser is in a generator function like `function* a() {}`
         /// Matches the `Yield` parameter in the ECMA spec
         const IN_GENERATOR = 1 << 0;
@@ -393,6 +377,11 @@ bitflags! {
 
         /// Whatever the parser is in a TypeScript ambient context
         const AMBIENT_CONTEXT = 1 << 7;
+
+        /// Is the parser speculatively parsing an arrow expression that may as well turn out to be a
+        /// parenthesized expression? For example: `(a, b)` can be a parenthesized expression or an
+        /// arrow function if later followed by a `=>`.
+        const SPECULATIVE_ARROW_PARSING = 1 << 8;
 
         const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
@@ -499,6 +488,16 @@ impl ChangeParserStateFlags for EnterClassPropertyInitializer {
             - ParsingContextFlags::TOP_LEVEL
             - ParsingContextFlags::IN_ASYNC
             - ParsingContextFlags::IN_GENERATOR
+    }
+}
+
+pub(crate) struct EnterSpeculativeArrowHeader(pub(crate) bool);
+
+impl ChangeParserStateFlags for EnterSpeculativeArrowHeader {
+    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags {
+        let mut new_flags = existing;
+        new_flags.set(ParsingContextFlags::SPECULATIVE_ARROW_PARSING, self.0);
+        new_flags
     }
 }
 

@@ -7,7 +7,6 @@ mod types;
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error::{expected_expression, expected_ts_type};
 
-use crate::state::Ambiguity;
 use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
@@ -111,11 +110,7 @@ pub(crate) fn try_parse(
     func: impl FnOnce(&mut Parser) -> ParsedSyntax,
 ) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
-
-    let old_ambiguity = p.state.ambiguity;
-    p.state.ambiguity = Ambiguity::Disallowed;
     let res = func(p);
-    p.state.ambiguity = old_ambiguity;
 
     if res.is_absent() {
         p.rewind(checkpoint);

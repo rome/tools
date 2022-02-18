@@ -1,5 +1,5 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
-use crate::state::{Ambiguity, EnterFunction, EnterParameters, SignatureFlags};
+use crate::state::{EnterFunction, EnterParameters, EnterSpeculativeArrowHeader, SignatureFlags};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_binding_pattern,
 };
@@ -401,6 +401,25 @@ pub(super) fn is_at_async_function(p: &Parser, should_check_line_break: LineBrea
     }
 }
 
+/// There are cases where the parser must speculatively parse a syntax. For example,
+/// parsing `<string>(test)` very much looks like an arrow expression *except* that it isn't followed
+/// by a `=>`. This enum tells a parse function if ambiguity should be tolerated or if it should stop if it is not.
+#[derive(Debug, Copy, Clone)]
+pub(crate) enum Ambiguity {
+    /// Ambiguity is allowed. A parse method should continue even if an expected character is missing.
+    Allowed,
+
+    /// Ambiguity isn't allowed. A parse method should stop parsing if an expected character is missing
+    /// and let the caller decide what to do in this case.
+    Disallowed,
+}
+
+impl Ambiguity {
+    fn is_disallowed(&self) -> bool {
+        matches!(self, Ambiguity::Disallowed)
+    }
+}
+
 /// Parses out the arrow function and returns the completed marker.
 ///
 /// Returns `Err` if `ambiguity` is [Ambiguity::Disallowed] and the syntax
@@ -419,29 +438,33 @@ fn parse_parenthesized_arrow_function_expression_impl(
         SignatureFlags::empty()
     };
 
-    if p.at(T![<]) {
-        parse_ts_type_parameters(p).ok();
+    {
+        let p = &mut *p.with_scoped_state(EnterSpeculativeArrowHeader(ambiguity.is_disallowed()));
 
-        if ambiguity.is_disallowed() && p.tokens.last_tok().map(|t| t.kind) != Some(T![>]) {
+        if p.at(T![<]) {
+            parse_ts_type_parameters(p).ok();
+
+            if ambiguity.is_disallowed() && p.tokens.last_tok().map(|t| t.kind) != Some(T![>]) {
+                return Err(m);
+            }
+        }
+
+        if !p.at(T!['(']) && ambiguity.is_disallowed() {
             return Err(m);
         }
+
+        parse_arrow_function_parameters(p, flags).or_add_diagnostic(p, expected_parameters);
+
+        if p.tokens.last_tok().map(|t| t.kind) != Some(T![')']) && ambiguity.is_disallowed() {
+            return Err(m);
+        }
+
+        TypeScript
+            .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+                ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+            })
+            .ok();
     }
-
-    if !p.at(T!['(']) && ambiguity.is_disallowed() {
-        return Err(m);
-    }
-
-    parse_arrow_function_parameters(p, flags).or_add_diagnostic(p, expected_parameters);
-
-    if p.tokens.last_tok().map(|t| t.kind) != Some(T![')']) && ambiguity.is_disallowed() {
-        return Err(m);
-    }
-
-    TypeScript
-        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
-            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
-        })
-        .ok();
 
     if p.has_linebreak_before_n(0) {
         p.error(
@@ -1009,6 +1032,10 @@ pub(super) fn parse_parameters_list(
                 // a missing parameter,
                 parameter.or_add_diagnostic(p, expected_parameter);
                 continue;
+            }
+
+            if parameter.is_absent() && p.state.in_speculative_arrow() {
+                break;
             }
 
             // test_err formal_params_no_binding_element
