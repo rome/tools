@@ -665,9 +665,20 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
     }
 }
 
-/// Forces all conditional elements ([if_group_breaks] and [if_group_fits_on_single_line])
-/// to behave as if they were contained in a non-breaking [Group]
+/// Creates a group that forces all elements inside it to be printed on a
+/// single line. This behavior can in turn be escaped by introducing an inner
+/// [Group] element that will resume the normal breaking behavior of the printer.
 ///
+/// This is useful for constructs that have a non-breaking head and a breaking
+/// body, such class declarations:
+/// ```js
+///    abstract /* comment */ class Example
+/// // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ non-breaking part
+/// { // <
+/// } // < breaking part
+/// ```
+///
+/// # Example
 /// ```
 /// use rome_formatter::{
 ///   group_elements, format_element, format_elements, token, hard_group_elements,
