@@ -69,10 +69,14 @@ function SomeComponent(props) {
 }
 
 const TestComponent = ({ children, ...props }) => (
-  <div css={`color: white; background: black`}>
-    {children}
-  </div>
-);
+  <div css={`color: white; background: black`
+}>
+{
+  children;
+}
+</div>
+
+)
 
 ```
 
@@ -222,19 +226,23 @@ error[SyntaxError]: Invalid assignment to `<div css`
 23 │   <div css={`color: white; background: black`}>
    │   ^^^^^^^^ This expression cannot be assigned to
 
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`color: white; background: black`'
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`'
    ┌─ css-prop.js:23:13
    │
 23 │   <div css={`color: white; background: black`}>
-   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
+   │             ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ css-prop.js:25:4
+error[SyntaxError]: expected `')'` but instead found `}`
+   ┌─ css-prop.js:23:46
+   │
+23 │   <div css={`color: white; background: black`}>
+   │                                              ^ unexpected
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ css-prop.js:25:3
    │
 25 │   </div>
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+   │   ^ TypeScript only syntax
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ css-prop.js:26:1
