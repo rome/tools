@@ -5,19 +5,32 @@ use crate::{
 };
 
 use rslint_parser::ast::JsGetterClassMember;
+use rslint_parser::ast::JsGetterClassMemberFields;
 
 impl ToFormatElement for JsGetterClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsGetterClassMemberFields {
+            access_modifier,
+            static_token,
+            abstract_token,
+            get_token,
+            name,
+            l_paren_token,
+            r_paren_token,
+            return_type,
+            body,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.static_token()
+            static_token
                 .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?,
-            self.get_token().format(formatter)?,
+            get_token.format(formatter)?,
             space_token(),
-            self.name().format(formatter)?,
-            self.l_paren_token().format(formatter)?,
-            self.r_paren_token().format(formatter)?,
+            name.format(formatter)?,
+            l_paren_token.format(formatter)?,
+            r_paren_token.format(formatter)?,
             space_token(),
-            self.body().format(formatter)?
+            body.format(formatter)?
         ])
     }
 }

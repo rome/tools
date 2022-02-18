@@ -5,19 +5,28 @@ use crate::{
 };
 
 use rslint_parser::ast::JsConditionalExpression;
+use rslint_parser::ast::JsConditionalExpressionFields;
 
 impl ToFormatElement for JsConditionalExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsConditionalExpressionFields {
+            test,
+            question_mark_token,
+            consequent,
+            colon_token,
+            alternate,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.test().format(formatter)?,
+            test.format(formatter)?,
             space_token(),
-            self.question_mark_token().format(formatter)?,
+            question_mark_token.format(formatter)?,
             space_token(),
-            self.consequent().format(formatter)?,
+            consequent.format(formatter)?,
             space_token(),
-            self.colon_token().format(formatter)?,
+            colon_token.format(formatter)?,
             space_token(),
-            self.alternate().format(formatter)?,
+            alternate.format(formatter)?,
         ])
     }
 }

@@ -4,14 +4,22 @@ use crate::{
     FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsModule;
+use rslint_parser::ast::JsModuleFields;
 
 impl ToFormatElement for JsModule {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsModuleFields {
+            interpreter_token,
+            directives,
+            items,
+            eof_token,
+        } = self.as_fields();
+
         Ok(format_elements![
-            format_interpreter(self.interpreter_token(), formatter)?,
-            self.directives().format(formatter)?,
-            formatter.format_list(self.items()),
-            self.eof_token().format(formatter)?,
+            format_interpreter(interpreter_token, formatter)?,
+            directives.format(formatter)?,
+            formatter.format_list(items),
+            eof_token.format(formatter)?,
             hard_line_break()
         ])
     }

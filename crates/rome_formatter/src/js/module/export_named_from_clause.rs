@@ -5,25 +5,35 @@ use crate::{
 };
 
 use rslint_parser::ast::JsExportNamedFromClause;
+use rslint_parser::ast::JsExportNamedFromClauseFields;
 
 impl ToFormatElement for JsExportNamedFromClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let specifiers = self.specifiers().format(formatter)?;
+        let JsExportNamedFromClauseFields {
+            type_token,
+            l_curly_token,
+            specifiers,
+            r_curly_token,
+            from_token,
+            source,
+            assertion,
+            semicolon_token,
+        } = self.as_fields();
+
+        let specifiers = specifiers.format(formatter)?;
 
         let list = formatter.format_delimited_soft_block_spaces(
-            &self.l_curly_token()?,
+            &l_curly_token?,
             specifiers,
-            &self.r_curly_token()?,
+            &r_curly_token?,
         )?;
 
-        let from = self.from_token().format(formatter)?;
-        let source = self.source().format(formatter)?;
-        let assertion = self
-            .assertion()
-            .format_with_or_empty(formatter, |assertion| {
-                format_elements![space_token(), assertion]
-            })?;
-        let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
+        let from = from_token.format(formatter)?;
+        let source = source.format(formatter)?;
+        let assertion = assertion.format_with_or_empty(formatter, |assertion| {
+            format_elements![space_token(), assertion]
+        })?;
+        let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
 
         Ok(format_elements![
             list,

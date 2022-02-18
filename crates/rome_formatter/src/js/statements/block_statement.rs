@@ -6,24 +6,27 @@ use crate::{
 
 use rslint_parser::ast::JsBlockStatement;
 
+use rslint_parser::ast::JsBlockStatementFields;
 use rslint_parser::{AstNode, AstNodeList, JsSyntaxKind};
 
 impl ToFormatElement for JsBlockStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let stmts = formatter.format_list(self.statements());
+        let JsBlockStatementFields {
+            l_curly_token,
+            statements,
+            r_curly_token,
+        } = self.as_fields();
+
+        let stmts = formatter.format_list(statements);
 
         if is_non_collapsable_empty_block(self) {
             Ok(format_elements![
-                self.l_curly_token().format(formatter)?,
+                l_curly_token.format(formatter)?,
                 hard_line_break(),
-                self.r_curly_token().format(formatter)?
+                r_curly_token.format(formatter)?
             ])
         } else {
-            formatter.format_delimited_block_indent(
-                &self.l_curly_token()?,
-                stmts,
-                &self.r_curly_token()?,
-            )
+            formatter.format_delimited_block_indent(&l_curly_token?, stmts, &r_curly_token?)
         }
     }
 }

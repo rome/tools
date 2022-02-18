@@ -5,14 +5,22 @@ use crate::{
 };
 
 use rslint_parser::ast::JsConstructorClassMember;
+use rslint_parser::ast::JsConstructorClassMemberFields;
 
 impl ToFormatElement for JsConstructorClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsConstructorClassMemberFields {
+            access_modifier,
+            name,
+            parameters,
+            body,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.name().format(formatter)?,
-            self.parameters().format(formatter)?,
+            name.format(formatter)?,
+            parameters.format(formatter)?,
             space_token(),
-            self.body().format(formatter)?
+            body.format(formatter)?
         ])
     }
 }

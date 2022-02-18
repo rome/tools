@@ -6,14 +6,21 @@ use crate::{
 };
 
 use rslint_parser::ast::JsAssignmentExpression;
+use rslint_parser::ast::JsAssignmentExpressionFields;
 
 impl ToFormatElement for JsAssignmentExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsAssignmentExpressionFields {
+            left,
+            operator_token,
+            right,
+        } = self.as_fields();
+
         Ok(group_elements(format_elements![
-            self.left().format(formatter)?,
+            left.format(formatter)?,
             space_token(),
-            self.operator_token().format(formatter)?,
-            group_elements(soft_line_indent_or_space(self.right().format(formatter)?)),
+            operator_token.format(formatter)?,
+            group_elements(soft_line_indent_or_space(right.format(formatter)?)),
         ]))
     }
 }

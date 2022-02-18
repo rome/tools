@@ -5,12 +5,19 @@ use crate::{
 };
 
 use rslint_parser::ast::JsPropertyObjectMember;
+use rslint_parser::ast::JsPropertyObjectMemberFields;
 
 impl ToFormatElement for JsPropertyObjectMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let key = self.name().format(formatter)?;
-        let colon = self.colon_token().format(formatter)?;
-        let value = self.value().format(formatter)?;
+        let JsPropertyObjectMemberFields {
+            name,
+            colon_token,
+            value,
+        } = self.as_fields();
+
+        let key = name.format(formatter)?;
+        let colon = colon_token.format(formatter)?;
+        let value = value.format(formatter)?;
         Ok(format_elements![key, colon, space_token(), value])
     }
 }

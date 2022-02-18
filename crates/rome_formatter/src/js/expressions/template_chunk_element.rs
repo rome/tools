@@ -4,12 +4,17 @@ use crate::{
 };
 
 use rslint_parser::ast::JsTemplateChunkElement;
+use rslint_parser::ast::JsTemplateChunkElementFields;
 
 impl ToFormatElement for JsTemplateChunkElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsTemplateChunkElementFields {
+            template_chunk_token,
+        } = self.as_fields();
+
         // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
         // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
-        let chunk = self.template_chunk_token()?;
+        let chunk = template_chunk_token?;
         formatter.format_replaced(
             &chunk,
             FormatElement::from(Token::new_dynamic(

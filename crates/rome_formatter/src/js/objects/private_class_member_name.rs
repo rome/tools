@@ -3,12 +3,18 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
 use rslint_parser::ast::JsPrivateClassMemberName;
+use rslint_parser::ast::JsPrivateClassMemberNameFields;
 
 impl ToFormatElement for JsPrivateClassMemberName {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsPrivateClassMemberNameFields {
+            hash_token,
+            id_token,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.hash_token().format(formatter)?,
-            self.id_token().format(formatter)?,
+            hash_token.format(formatter)?,
+            id_token.format(formatter)?,
         ])
     }
 }

@@ -5,13 +5,20 @@ use crate::{
 };
 
 use rslint_parser::ast::JsExtendsClause;
+use rslint_parser::ast::JsExtendsClauseFields;
 
 impl ToFormatElement for JsExtendsClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsExtendsClauseFields {
+            extends_token,
+            super_class,
+            type_arguments,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.extends_token().format(formatter)?,
+            extends_token.format(formatter)?,
             space_token(),
-            self.super_class().format(formatter)?
+            super_class.format(formatter)?
         ])
     }
 }

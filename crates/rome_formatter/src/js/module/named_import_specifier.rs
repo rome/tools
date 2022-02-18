@@ -6,12 +6,20 @@ use crate::{
 };
 
 use rslint_parser::ast::JsNamedImportSpecifier;
+use rslint_parser::ast::JsNamedImportSpecifierFields;
 
 impl ToFormatElement for JsNamedImportSpecifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = self.name().format(formatter)?;
-        let as_token = self.as_token().format(formatter)?;
-        let local_name = self.local_name().format(formatter)?;
+        let JsNamedImportSpecifierFields {
+            type_token,
+            name,
+            as_token,
+            local_name,
+        } = self.as_fields();
+
+        let name = name.format(formatter)?;
+        let as_token = as_token.format(formatter)?;
+        let local_name = local_name.format(formatter)?;
 
         Ok(format_elements![
             name,
