@@ -5,13 +5,19 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
+use rslint_parser::ast::JsForVariableDeclarationFields;
 
 impl ToFormatElement for JsForVariableDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsForVariableDeclarationFields {
+            kind_token,
+            declarator,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.kind_token().format(formatter)?,
+            kind_token.format(formatter)?,
             space_token(),
-            self.declarator().format(formatter)?,
+            declarator.format(formatter)?,
         ])
     }
 }

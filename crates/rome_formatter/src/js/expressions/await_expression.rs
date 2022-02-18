@@ -5,13 +5,19 @@ use crate::{
 };
 
 use rslint_parser::ast::JsAwaitExpression;
+use rslint_parser::ast::JsAwaitExpressionFields;
 
 impl ToFormatElement for JsAwaitExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsAwaitExpressionFields {
+            await_token,
+            argument,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.await_token().format(formatter)?,
+            await_token.format(formatter)?,
             space_token(),
-            self.argument().format(formatter)?,
+            argument.format(formatter)?,
         ])
     }
 }

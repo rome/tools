@@ -5,18 +5,28 @@ use crate::{
 };
 
 use rslint_parser::ast::JsSetterObjectMember;
+use rslint_parser::ast::JsSetterObjectMemberFields;
 
 impl ToFormatElement for JsSetterObjectMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsSetterObjectMemberFields {
+            set_token,
+            name,
+            l_paren_token,
+            parameter,
+            r_paren_token,
+            body,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.set_token().format(formatter)?,
+            set_token.format(formatter)?,
             space_token(),
-            self.name().format(formatter)?,
-            self.l_paren_token().format(formatter)?,
-            self.parameter().format(formatter)?,
-            self.r_paren_token().format(formatter)?,
+            name.format(formatter)?,
+            l_paren_token.format(formatter)?,
+            parameter.format(formatter)?,
+            r_paren_token.format(formatter)?,
             space_token(),
-            self.body().format(formatter)?,
+            body.format(formatter)?,
         ])
     }
 }

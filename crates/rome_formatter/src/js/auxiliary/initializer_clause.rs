@@ -5,13 +5,19 @@ use crate::{
 };
 
 use rslint_parser::ast::JsInitializerClause;
+use rslint_parser::ast::JsInitializerClauseFields;
 
 impl ToFormatElement for JsInitializerClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsInitializerClauseFields {
+            eq_token,
+            expression,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.eq_token().format(formatter)?,
+            eq_token.format(formatter)?,
             space_token(),
-            self.expression().format(formatter)?
+            expression.format(formatter)?
         ])
     }
 }

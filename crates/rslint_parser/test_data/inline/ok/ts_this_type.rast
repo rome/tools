@@ -22,7 +22,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@9..20 "method" [Newline("\n"), Whitespace("    ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@20..21 "(" [] [],
@@ -59,7 +59,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@53..67 "predicate" [Newline("\n"), Whitespace("    ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@67..68 "(" [] [],

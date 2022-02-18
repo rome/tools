@@ -3,17 +3,26 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
 use rslint_parser::ast::JsComputedMemberExpression;
+use rslint_parser::ast::JsComputedMemberExpressionFields;
 
 impl ToFormatElement for JsComputedMemberExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let optional_chain_token = self.optional_chain_token().format_or_empty(formatter)?;
+        let JsComputedMemberExpressionFields {
+            object,
+            optional_chain_token,
+            l_brack_token,
+            member,
+            r_brack_token,
+        } = self.as_fields();
+
+        let optional_chain_token = optional_chain_token.format_or_empty(formatter)?;
 
         Ok(format_elements![
-            self.object().format(formatter)?,
+            object.format(formatter)?,
             optional_chain_token,
-            self.l_brack_token().format(formatter)?,
-            self.member().format(formatter)?,
-            self.r_brack_token().format(formatter)?,
+            l_brack_token.format(formatter)?,
+            member.format(formatter)?,
+            r_brack_token.format(formatter)?,
         ])
     }
 }

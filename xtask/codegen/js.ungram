@@ -712,7 +712,7 @@ JsMethodClassMember =
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
-	'?'
+	'?'?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?

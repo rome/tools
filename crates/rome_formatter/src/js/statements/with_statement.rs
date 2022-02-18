@@ -5,19 +5,28 @@ use crate::{
 };
 
 use rslint_parser::ast::JsWithStatement;
+use rslint_parser::ast::JsWithStatementFields;
 
 impl ToFormatElement for JsWithStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsWithStatementFields {
+            with_token,
+            l_paren_token,
+            object,
+            r_paren_token,
+            body,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.with_token().format(formatter)?,
+            with_token.format(formatter)?,
             space_token(),
             formatter.format_delimited_soft_block_indent(
-                &self.l_paren_token()?,
-                self.object().format(formatter)?,
-                &self.r_paren_token()?,
+                &l_paren_token?,
+                object.format(formatter)?,
+                &r_paren_token?,
             )?,
             space_token(),
-            self.body().format(formatter)?
+            body.format(formatter)?
         ])
     }
 }

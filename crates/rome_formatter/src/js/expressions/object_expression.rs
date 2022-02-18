@@ -2,23 +2,22 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
 use rslint_parser::ast::JsObjectExpression;
+use rslint_parser::ast::JsObjectExpressionFields;
 
 impl ToFormatElement for JsObjectExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let members = self.members().format(formatter)?;
+        let JsObjectExpressionFields {
+            l_curly_token,
+            members,
+            r_curly_token,
+        } = self.as_fields();
+
+        let members = members.format(formatter)?;
 
         if members.is_empty() {
-            formatter.format_delimited_soft_block_indent(
-                &self.l_curly_token()?,
-                members,
-                &self.r_curly_token()?,
-            )
+            formatter.format_delimited_soft_block_indent(&l_curly_token?, members, &r_curly_token?)
         } else {
-            formatter.format_delimited_soft_block_spaces(
-                &self.l_curly_token()?,
-                members,
-                &self.r_curly_token()?,
-            )
+            formatter.format_delimited_soft_block_spaces(&l_curly_token?, members, &r_curly_token?)
         }
     }
 }

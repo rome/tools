@@ -5,22 +5,33 @@ use crate::{
 };
 
 use rslint_parser::ast::JsDoWhileStatement;
+use rslint_parser::ast::JsDoWhileStatementFields;
 
 impl ToFormatElement for JsDoWhileStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsDoWhileStatementFields {
+            do_token,
+            body,
+            while_token,
+            l_paren_token,
+            test,
+            r_paren_token,
+            semicolon_token,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.do_token().format(formatter)?,
+            do_token.format(formatter)?,
             space_token(),
-            self.body().format(formatter)?,
+            body.format(formatter)?,
             space_token(),
-            self.while_token().format(formatter)?,
+            while_token.format(formatter)?,
             space_token(),
             formatter.format_delimited_soft_block_indent(
-                &self.l_paren_token()?,
-                self.test().format(formatter)?,
-                &self.r_paren_token()?,
+                &l_paren_token?,
+                test.format(formatter)?,
+                &r_paren_token?,
             )?,
-            self.semicolon_token().format_or(formatter, || token(";"))?
+            semicolon_token.format_or(formatter, || token(";"))?
         ])
     }
 }

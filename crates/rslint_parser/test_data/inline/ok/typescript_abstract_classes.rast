@@ -105,7 +105,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@122..134 "display" [Newline("\n"), Whitespace("    ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@134..135 "(" [] [],
@@ -247,7 +247,7 @@ JsModule {
                         hash_token: HASH@268..274 "#" [Newline("\n"), Whitespace("    ")] [],
                         id_token: IDENT@274..288 "private_method" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@288..289 "(" [] [],
@@ -303,7 +303,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@370..377 "display" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@377..378 "(" [] [],

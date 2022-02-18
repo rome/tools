@@ -120,7 +120,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@73..80 "test" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@80..81 "(" [] [],

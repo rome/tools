@@ -5,22 +5,29 @@ use crate::{
 };
 
 use rslint_parser::ast::JsTryFinallyStatement;
+use rslint_parser::ast::JsTryFinallyStatementFields;
 
 impl ToFormatElement for JsTryFinallyStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let formatted_catch_clause = self
-            .catch_clause()
+        let JsTryFinallyStatementFields {
+            try_token,
+            body,
+            catch_clause,
+            finally_clause,
+        } = self.as_fields();
+
+        let formatted_catch_clause = catch_clause
             .format_with_or_empty(formatter, |catch_clause| {
                 format_elements![space_token(), catch_clause]
             })?;
 
         Ok(format_elements![
-            self.try_token().format(formatter)?,
+            try_token.format(formatter)?,
             space_token(),
-            self.body().format(formatter)?,
+            body.format(formatter)?,
             formatted_catch_clause,
             space_token(),
-            self.finally_clause().format(formatter)?
+            finally_clause.format(formatter)?
         ])
     }
 }

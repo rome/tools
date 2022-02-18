@@ -7,18 +7,23 @@ use crate::{
 };
 
 use rslint_parser::ast::JsReturnStatement;
+use rslint_parser::ast::JsReturnStatementFields;
 
 impl ToFormatElement for JsReturnStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let return_token = self.return_token().format(formatter)?;
+        let JsReturnStatementFields {
+            return_token,
+            argument,
+            semicolon_token,
+        } = self.as_fields();
 
-        let argument = self
-            .argument()
-            .format_with_or_empty(formatter, |argument| {
-                format_elements![space_token(), argument]
-            })?;
+        let return_token = return_token.format(formatter)?;
 
-        let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
+        let argument = argument.format_with_or_empty(formatter, |argument| {
+            format_elements![space_token(), argument]
+        })?;
+
+        let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
 
         Ok(format_elements![return_token, argument, semicolon])
     }

@@ -5,14 +5,22 @@ use crate::{
 };
 
 use rslint_parser::ast::JsStaticInitializationBlockClassMember;
+use rslint_parser::ast::JsStaticInitializationBlockClassMemberFields;
 
 impl ToFormatElement for JsStaticInitializationBlockClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let static_token = self.static_token().format(formatter)?;
+        let JsStaticInitializationBlockClassMemberFields {
+            static_token,
+            l_curly_token,
+            statements,
+            r_curly_token,
+        } = self.as_fields();
+
+        let static_token = static_token.format(formatter)?;
         let separated = formatter.format_delimited_block_indent(
-            &self.l_curly_token()?,
-            formatter.format_list(self.statements()),
-            &self.r_curly_token()?,
+            &l_curly_token?,
+            formatter.format_list(statements),
+            &r_curly_token?,
         )?;
         Ok(format_elements![static_token, space_token(), separated])
     }

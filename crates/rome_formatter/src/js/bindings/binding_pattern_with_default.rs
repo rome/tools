@@ -5,15 +5,22 @@ use crate::{
 };
 
 use rslint_parser::ast::JsBindingPatternWithDefault;
+use rslint_parser::ast::JsBindingPatternWithDefaultFields;
 
 impl ToFormatElement for JsBindingPatternWithDefault {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsBindingPatternWithDefaultFields {
+            pattern,
+            eq_token,
+            default,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.pattern().format(formatter)?,
+            pattern.format(formatter)?,
             space_token(),
-            self.eq_token().format(formatter)?,
+            eq_token.format(formatter)?,
             space_token(),
-            self.default().format(formatter)?
+            default.format(formatter)?
         ])
     }
 }

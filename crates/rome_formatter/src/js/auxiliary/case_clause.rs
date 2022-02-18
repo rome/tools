@@ -8,13 +8,21 @@ use crate::{
 };
 
 use rslint_parser::ast::JsCaseClause;
+use rslint_parser::ast::JsCaseClauseFields;
 
 impl ToFormatElement for JsCaseClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let case_word = self.case_token().format(formatter)?;
-        let colon = self.colon_token().format(formatter)?;
-        let test = self.test().format(formatter)?;
-        let cons = formatter.format_list(self.consequent());
+        let JsCaseClauseFields {
+            case_token,
+            test,
+            colon_token,
+            consequent,
+        } = self.as_fields();
+
+        let case_word = case_token.format(formatter)?;
+        let colon = colon_token.format(formatter)?;
+        let test = test.format(formatter)?;
+        let cons = formatter.format_list(consequent);
 
         Ok(format_elements![
             case_word,

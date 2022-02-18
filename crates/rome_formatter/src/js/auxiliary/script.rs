@@ -5,14 +5,22 @@ use crate::{
 };
 
 use rslint_parser::ast::JsScript;
+use rslint_parser::ast::JsScriptFields;
 
 impl ToFormatElement for JsScript {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsScriptFields {
+            interpreter_token,
+            directives,
+            statements,
+            eof_token,
+        } = self.as_fields();
+
         Ok(format_elements![
-            format_interpreter(self.interpreter_token(), formatter)?,
-            self.directives().format(formatter)?,
-            formatter.format_list(self.statements()),
-            self.eof_token().format(formatter)?,
+            format_interpreter(interpreter_token, formatter)?,
+            directives.format(formatter)?,
+            formatter.format_list(statements),
+            eof_token.format(formatter)?,
             hard_line_break()
         ])
     }

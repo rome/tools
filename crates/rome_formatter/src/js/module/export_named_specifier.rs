@@ -5,17 +5,23 @@ use crate::{
 };
 
 use rslint_parser::ast::JsExportNamedSpecifier;
+use rslint_parser::ast::JsExportNamedSpecifierFields;
 
 impl ToFormatElement for JsExportNamedSpecifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let type_token = self
-            .type_token()
-            .format_with_or_empty(formatter, |type_token| {
-                format_elements![type_token, space_token()]
-            })?;
-        let as_token = self.as_token().format(formatter)?;
-        let local_name = self.local_name().format(formatter)?;
-        let exported_name = self.exported_name().format(formatter)?;
+        let JsExportNamedSpecifierFields {
+            type_token,
+            local_name,
+            as_token,
+            exported_name,
+        } = self.as_fields();
+
+        let type_token = type_token.format_with_or_empty(formatter, |type_token| {
+            format_elements![type_token, space_token()]
+        })?;
+        let as_token = as_token.format(formatter)?;
+        let local_name = local_name.format(formatter)?;
+        let exported_name = exported_name.format(formatter)?;
 
         Ok(format_elements![
             type_token,

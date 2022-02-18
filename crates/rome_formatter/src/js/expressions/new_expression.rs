@@ -5,18 +5,25 @@ use crate::{
 };
 
 use rslint_parser::ast::JsNewExpression;
+use rslint_parser::ast::JsNewExpressionFields;
 
 impl ToFormatElement for JsNewExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let arguments = self
-            .arguments()
-            .format_or(formatter, || format_elements![token("("), token(")")])?;
+        let JsNewExpressionFields {
+            new_token,
+            callee,
+            type_arguments,
+            arguments,
+        } = self.as_fields();
+
+        let arguments =
+            arguments.format_or(formatter, || format_elements![token("("), token(")")])?;
 
         Ok(format_elements![
-            self.new_token().format(formatter)?,
-            // TODO handle TsTypeArgs
+            new_token.format(formatter)?,
             space_token(),
-            self.callee().format(formatter)?,
+            callee.format(formatter)?,
+            type_arguments.format_or_empty(formatter)?,
             arguments,
         ])
     }

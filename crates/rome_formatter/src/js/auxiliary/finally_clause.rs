@@ -5,13 +5,19 @@ use crate::{
 };
 
 use rslint_parser::ast::JsFinallyClause;
+use rslint_parser::ast::JsFinallyClauseFields;
 
 impl ToFormatElement for JsFinallyClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsFinallyClauseFields {
+            finally_token,
+            body,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.finally_token().format(formatter)?,
+            finally_token.format(formatter)?,
             space_token(),
-            self.body().format(formatter)?
+            body.format(formatter)?
         ])
     }
 }

@@ -5,22 +5,48 @@ use crate::{
 };
 
 use rslint_parser::ast::JsPropertyClassMember;
+use rslint_parser::ast::JsPropertyClassMemberFields;
 
 impl ToFormatElement for JsPropertyClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let static_token = self
-            .static_token()
+        let JsPropertyClassMemberFields {
+            declare_token,
+            access_modifier,
+            static_token,
+            readonly_token,
+            abstract_token,
+            name,
+            property_annotation,
+            value,
+            semicolon_token,
+        } = self.as_fields();
+
+        let declare_token = declare_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let access_modifier = access_modifier
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let static_token = static_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let readonly_token = readonly_token
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let abstract_token = abstract_token
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
 
-        let init = self
-            .value()
-            .format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
+        let property_annotation = property_annotation.format_or_empty(formatter)?;
 
-        let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
+        let init =
+            value.format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
+
+        let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
 
         Ok(format_elements![
+            declare_token,
+            access_modifier,
             static_token,
-            self.name().format(formatter)?,
+            readonly_token,
+            abstract_token,
+            name.format(formatter)?,
+            property_annotation,
             init,
             semicolon
         ])

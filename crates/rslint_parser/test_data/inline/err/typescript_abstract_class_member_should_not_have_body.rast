@@ -41,7 +41,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@77..84 "display" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@84..85 "(" [] [],

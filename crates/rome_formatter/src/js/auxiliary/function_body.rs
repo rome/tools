@@ -4,16 +4,24 @@ use crate::{
 };
 
 use rslint_parser::ast::JsFunctionBody;
+use rslint_parser::ast::JsFunctionBodyFields;
 
 impl ToFormatElement for JsFunctionBody {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsFunctionBodyFields {
+            l_curly_token,
+            directives,
+            statements,
+            r_curly_token,
+        } = self.as_fields();
+
         formatter.format_delimited_block_indent(
-            &self.l_curly_token()?,
+            &l_curly_token?,
             format_elements![
-                self.directives().format(formatter)?,
-                formatter.format_list(self.statements()),
+                directives.format(formatter)?,
+                formatter.format_list(statements),
             ],
-            &self.r_curly_token()?,
+            &r_curly_token?,
         )
     }
 }

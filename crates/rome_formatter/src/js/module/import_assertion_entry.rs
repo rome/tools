@@ -5,14 +5,21 @@ use crate::{
 };
 
 use rslint_parser::ast::JsImportAssertionEntry;
+use rslint_parser::ast::JsImportAssertionEntryFields;
 
 impl ToFormatElement for JsImportAssertionEntry {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsImportAssertionEntryFields {
+            key,
+            colon_token,
+            value_token,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.key().format(formatter)?,
-            self.colon_token().format(formatter)?,
+            key.format(formatter)?,
+            colon_token.format(formatter)?,
             space_token(),
-            self.value_token().format(formatter)?,
+            value_token.format(formatter)?,
         ])
     }
 }

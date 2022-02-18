@@ -5,25 +5,32 @@ use crate::{
 };
 
 use rslint_parser::ast::JsCatchClause;
+use rslint_parser::ast::JsCatchClauseFields;
 
 impl ToFormatElement for JsCatchClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.declaration().format_with_or(
+        let JsCatchClauseFields {
+            catch_token,
+            declaration,
+            body,
+        } = self.as_fields();
+
+        declaration.format_with_or(
             formatter,
             |declaration| {
                 Ok(format_elements![
-                    self.catch_token().format(formatter)?,
+                    catch_token.format(formatter)?,
                     space_token(),
                     declaration,
                     space_token(),
-                    self.body().format(formatter)?
+                    body.format(formatter)?
                 ])
             },
             || {
                 Ok(format_elements![
-                    self.catch_token().format(formatter)?,
+                    catch_token.format(formatter)?,
                     space_token(),
-                    self.body().format(formatter)?
+                    body.format(formatter)?
                 ])
             },
         )

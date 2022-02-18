@@ -22,7 +22,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@12..19 "test" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: TsTypeParameters {
                         l_angle_token: L_ANGLE@19..20 "<" [] [],
                         items: TsTypeParameterList [

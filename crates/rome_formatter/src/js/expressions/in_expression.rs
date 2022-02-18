@@ -5,15 +5,22 @@ use crate::{
 };
 
 use rslint_parser::ast::JsInExpression;
+use rslint_parser::ast::JsInExpressionFields;
 
 impl ToFormatElement for JsInExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsInExpressionFields {
+            property,
+            in_token,
+            object,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.property().format(formatter)?,
+            property.format(formatter)?,
             space_token(),
-            self.in_token().format(formatter)?,
+            in_token.format(formatter)?,
             space_token(),
-            self.object().format(formatter)?,
+            object.format(formatter)?,
         ])
     }
 }

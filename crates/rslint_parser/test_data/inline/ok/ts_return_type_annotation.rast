@@ -238,7 +238,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@171..175 "test" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@175..176 "(" [] [],

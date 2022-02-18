@@ -8,26 +8,38 @@ use crate::{
 };
 
 use rslint_parser::ast::JsSwitchStatement;
+use rslint_parser::ast::JsSwitchStatementFields;
 
 impl ToFormatElement for JsSwitchStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let JsSwitchStatementFields {
+            switch_token,
+            l_paren_token,
+            discriminant,
+            r_paren_token,
+            l_curly_token,
+            cases,
+            r_curly_token,
+        } = self.as_fields();
+
         Ok(format_elements![
-            self.switch_token().format(formatter)?,
+            switch_token.format(formatter)?,
             space_token(),
             formatter.format_delimited_soft_block_indent(
-                &self.l_paren_token()?,
-                self.discriminant().format(formatter)?,
-                &self.r_paren_token()?,
+                &l_paren_token?,
+                discriminant.format(formatter)?,
+                &r_paren_token?,
             )?,
             space_token(),
             formatter.format_delimited_block_indent(
-                &self.l_curly_token()?,
+                &l_curly_token?,
                 join_elements_hard_line(
-                    self.cases()
+                    cases
+                        .clone()
                         .into_iter()
-                        .zip(formatter.format_nodes(self.cases())?)
+                        .zip(formatter.format_nodes(cases)?)
                 ),
-                &self.r_curly_token()?
+                &r_curly_token?
             )?
         ])
     }

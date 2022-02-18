@@ -22,7 +22,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@12..21 "method" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
@@ -46,7 +46,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@35..46 "asyncMethod" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@46..47 "(" [] [],
@@ -70,7 +70,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@61..81 "asyncGeneratorMethod" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@81..82 "(" [] [],
@@ -94,7 +94,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@91..106 "generatorMethod" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@106..107 "(" [] [],
@@ -118,7 +118,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: JS_STRING_LITERAL@111..119 "\"foo\"" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@119..120 "(" [] [],
@@ -152,7 +152,7 @@ JsModule {
                         },
                         r_brack_token: R_BRACK@141..142 "]" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@142..143 "(" [] [],
@@ -176,7 +176,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: JS_NUMBER_LITERAL@147..151 "5" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@151..152 "(" [] [],
@@ -201,7 +201,7 @@ JsModule {
                         hash_token: HASH@156..160 "#" [Newline("\n"), Whitespace("  ")] [],
                         id_token: IDENT@160..167 "private" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@167..168 "(" [] [],
@@ -239,7 +239,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@201..238 "static" [Newline("\n"), Whitespace("   "), Comments("// Methods called static"), Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@238..239 "(" [] [],
@@ -263,7 +263,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@252..258 "static" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@258..259 "(" [] [],
@@ -287,7 +287,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@268..274 "static" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@274..275 "(" [] [],
@@ -311,7 +311,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@289..295 "static" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@295..296 "(" [] [],
@@ -335,7 +335,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@300..310 "declare" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@310..311 "(" [] [],
@@ -359,7 +359,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@315..321 "get" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@321..322 "(" [] [],
@@ -383,7 +383,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@347..353 "set" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@353..354 "(" [] [],
@@ -421,7 +421,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@406..412 "method" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@412..413 "(" [] [],
@@ -445,7 +445,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@433..444 "asyncMethod" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@444..445 "(" [] [],
@@ -469,7 +469,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@466..486 "asyncGeneratorMethod" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@486..487 "(" [] [],
@@ -493,7 +493,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@503..518 "generatorMethod" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@518..519 "(" [] [],
@@ -517,7 +517,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@533..539 "static" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@539..540 "(" [] [],
@@ -541,7 +541,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@560..566 "static" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@566..567 "(" [] [],
@@ -565,7 +565,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@588..594 "static" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@594..595 "(" [] [],
@@ -589,7 +589,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@611..617 "static" [] [],
                     },
-                    question_mark_token: missing (required),
+                    question_mark_token: missing (optional),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@617..618 "(" [] [],

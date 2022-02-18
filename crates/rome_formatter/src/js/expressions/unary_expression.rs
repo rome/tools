@@ -7,11 +7,14 @@ use crate::{
 
 use rslint_parser::ast::JsUnaryExpression;
 
+use rslint_parser::ast::JsUnaryExpressionFields;
 use rslint_parser::{token_set, T};
 
 impl ToFormatElement for JsUnaryExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let operator = self.operator()?;
+        let JsUnaryExpressionFields { operator, argument } = self.as_fields();
+
+        let operator = operator?;
         let space_or_empty =
             if token_set![T![delete], T![void], T![typeof]].contains(operator.kind()) {
                 space_token()
@@ -19,9 +22,9 @@ impl ToFormatElement for JsUnaryExpression {
                 empty_element()
             };
         Ok(format_elements![
-            self.operator().format(formatter)?,
+            operator.format(formatter)?,
             space_or_empty,
-            self.argument().format(formatter)?,
+            argument.format(formatter)?,
         ])
     }
 }
