@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: issue-3532.js
 
 ---
@@ -84,10 +84,10 @@ const AspectRatioBox = ({
   <div
     className={`height: 0;
   overflow: hidden;
-  padding-top: ${props => 100 / props.aspectRatio}
-%;
+  padding-top: ${props => 100 / props.aspectRatio}%;
   background: white;
-  position: relative;`}
+  position: relative;`
+}
   >
     <div>
 {
@@ -112,27 +112,17 @@ error[SyntaxError]: Invalid assignment to `<div
 31 │ │     className={`height: 0;
    │ └─────────────^ This expression cannot be assigned to
 
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`height: 0;
-  overflow: hidden;
-  padding-top: ${props => 100 / props.aspectRatio'
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`'
    ┌─ issue-3532.js:31:16
-   │  
-31 │       className={`height: 0;
-   │ ┌────────────────^
-32 │ │   overflow: hidden;
-33 │ │   padding-top: ${props => 100 / props.aspectRatio}%;
-   │ └─────────────────────────────────────────────────^ Expected a property, a shorthand property, a getter, a setter, or a method here
+   │
+31 │     className={`height: 0;
+   │                ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
-error[SyntaxError]: expected `')'` but instead found `%;
-  background: white;
-  position: relative;`
-   ┌─ issue-3532.js:33:51
-   │  
-33 │     padding-top: ${props => 100 / props.aspectRatio}%;
-   │ ┌───────────────────────────────────────────────────^
-34 │ │   background: white;
-35 │ │   position: relative;`}
-   │ └─────────────────────^ unexpected
+error[SyntaxError]: expected `')'` but instead found `}`
+   ┌─ issue-3532.js:35:23
+   │
+35 │   position: relative;`}
+   │                       ^ unexpected
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ issue-3532.js:37:20

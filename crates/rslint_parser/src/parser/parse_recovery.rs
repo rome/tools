@@ -18,6 +18,8 @@ pub enum RecoveryError {
     ///    the array expression triggers another recovery. Handling this as an error ensures that list parsing
     ///    rules break out of the loop the same way as they would at the EOF.
     AlreadyRecovered,
+
+    NoRecovery,
 }
 
 impl Error for RecoveryError {}
@@ -27,6 +29,7 @@ impl Display for RecoveryError {
         match self {
             RecoveryError::Eof => write!(f, "EOF"),
             RecoveryError::AlreadyRecovered => write!(f, "already recovered"),
+            RecoveryError::NoRecovery => write!(f, "no recovery"),
         }
     }
 }
@@ -68,6 +71,10 @@ impl ParseRecovery {
     pub fn recover(&self, p: &mut Parser) -> RecoveryResult {
         if p.at(EOF) {
             return Err(RecoveryError::Eof);
+        }
+
+        if p.state.ambiguity.is_disallowed() {
+            return Err(RecoveryError::NoRecovery);
         }
 
         if self.recovered(p) {

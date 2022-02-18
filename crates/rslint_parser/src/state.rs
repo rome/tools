@@ -1,6 +1,7 @@
 use crate::{FileKind, Parser, Syntax};
 use bitflags::bitflags;
 use indexmap::IndexMap;
+use std::collections::HashSet;
 use std::ops::{Deref, DerefMut, Range};
 
 type LabelSet = IndexMap<String, LabelledItem>;
@@ -36,6 +37,27 @@ pub(crate) struct ParserState {
     /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
     pub duplicate_binding_parent: Option<&'static str>,
     pub name_map: IndexMap<String, Range<usize>>,
+    pub(crate) not_parenthesized_arrow: HashSet<usize>,
+    pub(crate) ambiguity: Ambiguity,
+}
+
+/// There are cases where the parser must speculatively parse a syntax. For example,
+/// parsing `<string>(test)` very much looks like an arrow expression *except* that it isn't followed
+/// by a `=>`. This enum tells a parse function if ambiguity should be tolerated or if it should stop if it is not.
+#[derive(Debug, Copy, Clone)]
+pub(crate) enum Ambiguity {
+    /// Ambiguity is allowed. A parse method should continue even if an expected character is missing.
+    Allowed,
+
+    /// Ambiguity isn't allowed. A parse method should stop parsing if an expected character is missing
+    /// and let the caller decide what to do in this case.
+    Disallowed,
+}
+
+impl Ambiguity {
+    pub fn is_disallowed(&self) -> bool {
+        matches!(self, Ambiguity::Disallowed)
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -64,6 +86,8 @@ impl ParserState {
             default_item: None,
             name_map: IndexMap::new(),
             duplicate_binding_parent: None,
+            not_parenthesized_arrow: Default::default(),
+            ambiguity: Ambiguity::Allowed,
         };
 
         if syntax.top_level_await {

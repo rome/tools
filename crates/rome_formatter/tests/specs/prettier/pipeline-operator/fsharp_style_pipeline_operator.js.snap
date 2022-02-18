@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: fsharp_style_pipeline_operator.js
 
 ---
@@ -62,12 +62,12 @@ const f = x |> (f) => f |> f;
 ```js
 promise
   |> await
-  |> x => doubleSay(x, ', ')
+  |> x
+=> doubleSay(x, ', ')
   |> capitalize
   |> x => x + '!'
   |> x => new User.Message(x)
-  |> x
-=> stream.write(x)
+  |> x => stream.write(x)
   |> await
   |> console.log
 
@@ -78,17 +78,20 @@ const result = "hello"
 
 const newScore = person.score
   |> double
-  |> n => add(7, n)
-  |> n => boundScore(0, 100, n);
+  |> n
+=> add(7, n)
+  |> n => boundScore(0, 100, n)
 
 const user = url
   |> api.get
   |> await
-  |> r => r.json()
+  |> r
+=> r.json()
   |> await
-  |> j => j.data.user;
+  |> j => j.data.user
 
-const f = (x) => (x |> (y) => y + 1)
+const f = (x) => (x |> (y)
+=> y + 1)
   |> (z) => z * y
 
 const _f = (x) => x
@@ -103,13 +106,18 @@ const _g = (x) => x
 
 const __g = (x) => x
   |> (
-    y => {
-      return (y + 1 |> (z) => z * y);
-    }
+    y => 
+{
+  
+      return (y + 1 |> (z) 
+  => z * y)
+}
+
   )
 
-const f = x + ((f) => (f |> f));
-const f = x |> (f) => f |> f;
+const f = x + ((f) => (f |> f))
+const f = x |> (f)
+=> f |> f
 
 ```
 
@@ -137,48 +145,12 @@ error[SyntaxError]: Expected an expression for the right hand side of a `|`, but
   │   │ 
   │   This operator requires a right hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-  ┌─ fsharp_style_pipeline_operator.js:4:4
-  │
-4 │   |> capitalize
-  │   -^ But this operator was encountered instead
-  │   │ 
-  │   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-  ┌─ fsharp_style_pipeline_operator.js:5:4
-  │
-5 │   |> x => x + '!'
-  │   -^ But this operator was encountered instead
-  │   │ 
-  │   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-  ┌─ fsharp_style_pipeline_operator.js:6:4
-  │
-6 │   |> x => new User.Message(x)
-  │   -^ But this operator was encountered instead
-  │   │ 
-  │   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-  ┌─ fsharp_style_pipeline_operator.js:7:4
-  │
-7 │   |> x => stream.write(x)
-  │   -^ But this operator was encountered instead
-  │   │ 
-  │   This operator requires a right hand side value
-
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ fsharp_style_pipeline_operator.js:7:8
+  ┌─ fsharp_style_pipeline_operator.js:3:8
   │  
 1 │ ┌ promise
 2 │ │   |> await
 3 │ │   |> x => doubleSay(x, ', ')
-4 │ │   |> capitalize
-5 │ │   |> x => x + '!'
-6 │ │   |> x => new User.Message(x)
-7 │ │   |> x => stream.write(x)
   │ │        ^^ An explicit or implicit semicolon is expected here...
   │ └─────────' ...Which is required to end this statement
 
@@ -222,13 +194,14 @@ error[SyntaxError]: Expected an expression for the right hand side of a `|`, but
    │   │ 
    │   This operator requires a right hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:19:4
-   │
-19 │   |> n => boundScore(0, 100, n);
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ fsharp_style_pipeline_operator.js:18:8
+   │  
+16 │ ┌ const newScore = person.score
+17 │ │   |> double
+18 │ │   |> n => add(7, n)
+   │ │        ^^ An explicit or implicit semicolon is expected here...
+   │ └───────' ...Which is required to end this statement
 
 error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
    ┌─ fsharp_style_pipeline_operator.js:22:4
@@ -260,27 +233,15 @@ error[SyntaxError]: Expected an expression for the right hand side of a `|`, but
    │   │ 
    │   This operator requires a right hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:25:4
-   │
-25 │   |> await
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
-
-error[SyntaxError]: Illegal use of `await` as an identifier inside of a module
-   ┌─ fsharp_style_pipeline_operator.js:25:6
-   │
-25 │   |> await
-   │      ^^^^^
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:26:4
-   │
-26 │   |> j => j.data.user;
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ fsharp_style_pipeline_operator.js:24:8
+   │  
+21 │ ┌ const user = url
+22 │ │   |> api.get
+23 │ │   |> await
+24 │ │   |> r => r.json()
+   │ │        ^^ An explicit or implicit semicolon is expected here...
+   │ └───────' ...Which is required to end this statement
 
 error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
    ┌─ fsharp_style_pipeline_operator.js:28:22
@@ -290,69 +251,11 @@ error[SyntaxError]: Expected an expression for the right hand side of a `|`, but
    │                     │ 
    │                     This operator requires a right hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:29:4
+error[SyntaxError]: expected `')'` but instead found `=>`
+   ┌─ fsharp_style_pipeline_operator.js:28:28
    │
-29 │   |> (z) => z * y
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:32:4
-   │
-32 │   |> (y) => y + 1
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:33:4
-   │
-33 │   |> (z) => z * y
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:36:4
-   │
-36 │   |> (y) => (y + 1 |> (z) => z * y)
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:36:21
-   │
-36 │   |> (y) => (y + 1 |> (z) => z * y)
-   │                    -^ But this operator was encountered instead
-   │                    │ 
-   │                    This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:39:4
-   │
-39 │   |> (y => (y + 1 |> (z) => z * y))
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:39:20
-   │
-39 │   |> (y => (y + 1 |> (z) => z * y))
-   │                   -^ But this operator was encountered instead
-   │                   │ 
-   │                   This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:42:4
-   │
-42 │   |> (
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+28 │ const f = (x) => (x |> (y) => y + 1)
+   │                            ^^ unexpected
 
 error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
    ┌─ fsharp_style_pipeline_operator.js:44:22
@@ -362,13 +265,33 @@ error[SyntaxError]: Expected an expression for the right hand side of a `|`, but
    │                     │ 
    │                     This operator requires a right hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:48:27
+error[SyntaxError]: expected `')'` but instead found `=>`
+   ┌─ fsharp_style_pipeline_operator.js:44:28
    │
-48 │ const f = x + ((f) => (f |> f));
-   │                          -^ But this operator was encountered instead
-   │                          │ 
-   │                          This operator requires a right hand side value
+44 │       return (y + 1 |> (z) => z * y);
+   │                            ^^ unexpected
+
+error[SyntaxError]: Illegal return statement outside of a function
+   ┌─ fsharp_style_pipeline_operator.js:44:7
+   │
+44 │       return (y + 1 |> (z) => z * y);
+   │       ^^^^^^^^^^^^^^^^^^^^
+
+error[SyntaxError]: expected a statement but instead found '=> z * y)'
+   ┌─ fsharp_style_pipeline_operator.js:44:28
+   │
+44 │       return (y + 1 |> (z) => z * y);
+   │                            ^^^^^^^^^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ')
+
+const f = x + ((f) => (f |> f))'
+   ┌─ fsharp_style_pipeline_operator.js:46:3
+   │  
+46 │ ┌   )
+47 │ │ 
+48 │ │ const f = x + ((f) => (f |> f));
+   │ └───────────────────────────────^ Expected a statement here
 
 error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
    ┌─ fsharp_style_pipeline_operator.js:49:14
@@ -378,13 +301,13 @@ error[SyntaxError]: Expected an expression for the right hand side of a `|`, but
    │             │ 
    │             This operator requires a right hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-   ┌─ fsharp_style_pipeline_operator.js:49:26
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ fsharp_style_pipeline_operator.js:49:20
    │
 49 │ const f = x |> (f) => f |> f;
-   │                         -^ But this operator was encountered instead
-   │                         │ 
-   │                         This operator requires a right hand side value
+   │ -------------------^^ An explicit or implicit semicolon is expected here...
+   │ │                   
+   │ ...Which is required to end this statement
 
 
 ```

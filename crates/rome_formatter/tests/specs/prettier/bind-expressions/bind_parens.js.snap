@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: bind_parens.js
 
 ---
@@ -45,17 +45,16 @@ f[a::b()];
 
 # Output
 ```js
-(a || b):;
-:c
-a || (b::c);
+(a || b);
+::c
+a || (b
+::c)
 
 ::obj.prop
-
-(void 0):;
-:func()
-
-(+0):;
-:is(-0)
+(void 0);
+::func()
+(+0);
+::is(-0)
 a:
 :(b.c)
 a:
@@ -102,8 +101,8 @@ a:
 :(b.c::d.e)::f.g
 b.c;
 ::d.e
-(b.c::d)
-.e
+(b.c
+::d).e
 (b::c::d)
 .e
 new (a
@@ -118,53 +117,20 @@ f[a
 
 # Errors
 ```
-error[SyntaxError]: expected `,` but instead found `||`
-  ┌─ bind_parens.js:1:4
-  │
-1 │ (a || b)::c;
-  │    ^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ bind_parens.js:1:7
-  │
-1 │ (a || b)::c;
-  │       ^ unexpected
-
-error[SyntaxError]: return type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ bind_parens.js:1:9
   │
 1 │ (a || b)::c;
-  │         ^ TypeScript only syntax
+  │ --------^
+  │ │       │
+  │ │       An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `=>` but instead found `:`
-  ┌─ bind_parens.js:1:10
-  │
-1 │ (a || b)::c;
-  │          ^ unexpected
-
-error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: expected `')'` but instead found `:`
   ┌─ bind_parens.js:2:8
   │
 2 │ a || (b::c);
-  │        ^ TypeScript only syntax
-
-error[SyntaxError]: expected `,` but instead found `:`
-  ┌─ bind_parens.js:2:9
-  │
-2 │ a || (b::c);
-  │         ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `c`
-  ┌─ bind_parens.js:2:10
-  │
-2 │ a || (b::c);
-  │          ^ unexpected
-
-error[SyntaxError]: expected `=>` but instead found `;`
-  ┌─ bind_parens.js:2:12
-  │
-2 │ a || (b::c);
-  │            ^ unexpected
+  │        ^ unexpected
 
 error[SyntaxError]: expected a statement but instead found '::obj.prop'
   ┌─ bind_parens.js:3:1
@@ -172,41 +138,23 @@ error[SyntaxError]: expected a statement but instead found '::obj.prop'
 3 │ ::obj.prop;
   │ ^^^^^^^^^^ Expected a statement here
 
-error[SyntaxError]: expected a parameter but instead found 'void 0'
-  ┌─ bind_parens.js:4:2
-  │
-4 │ (void 0)::func();
-  │  ^^^^^^ Expected a parameter here
-
-error[SyntaxError]: return type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ bind_parens.js:4:9
   │
 4 │ (void 0)::func();
-  │         ^ TypeScript only syntax
+  │ --------^
+  │ │       │
+  │ │       An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `=>` but instead found `:`
-  ┌─ bind_parens.js:4:10
-  │
-4 │ (void 0)::func();
-  │          ^ unexpected
-
-error[SyntaxError]: expected a parameter but instead found '+0'
-  ┌─ bind_parens.js:5:2
-  │
-5 │ (+0)::is(-0);
-  │  ^^ Expected a parameter here
-
-error[SyntaxError]: return type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ bind_parens.js:5:5
   │
 5 │ (+0)::is(-0);
-  │     ^ TypeScript only syntax
-
-error[SyntaxError]: expected `=>` but instead found `:`
-  ┌─ bind_parens.js:5:6
-  │
-5 │ (+0)::is(-0);
-  │      ^ unexpected
+  │ ----^
+  │ │   │
+  │ │   An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
 
 error[SyntaxError]: expected a statement but instead found ':'
   ┌─ bind_parens.js:6:3
@@ -349,41 +297,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ │  An explicit or implicit semicolon is expected here...
    │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `,` but instead found `.`
-   ┌─ bind_parens.js:29:3
-   │
-29 │ (b.c::d).e;
-   │   ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `c`
-   ┌─ bind_parens.js:29:4
-   │
-29 │ (b.c::d).e;
-   │    ^ unexpected
-
-error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: expected `')'` but instead found `:`
    ┌─ bind_parens.js:29:5
    │
 29 │ (b.c::d).e;
-   │     ^ TypeScript only syntax
-
-error[SyntaxError]: expected `,` but instead found `:`
-   ┌─ bind_parens.js:29:6
-   │
-29 │ (b.c::d).e;
-   │      ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `d`
-   ┌─ bind_parens.js:29:7
-   │
-29 │ (b.c::d).e;
-   │       ^ unexpected
-
-error[SyntaxError]: expected `=>` but instead found `.`
-   ┌─ bind_parens.js:29:9
-   │
-29 │ (b.c::d).e;
-   │         ^ unexpected
+   │     ^ unexpected
 
 error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ bind_parens.js:30:3
