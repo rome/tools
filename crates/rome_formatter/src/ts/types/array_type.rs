@@ -1,6 +1,6 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsArrayType, AstNode};
+use rslint_parser::ast::TsArrayType;
 
 impl ToFormatElement for TsArrayType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
