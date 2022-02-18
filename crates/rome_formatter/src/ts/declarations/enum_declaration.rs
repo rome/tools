@@ -1,3 +1,4 @@
+use crate::formatter::TrailingSeparator;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, join_elements, soft_line_break_or_space, space_token, token, FormatElement,
@@ -19,7 +20,11 @@ impl ToFormatElement for TsEnumDeclaration {
             .id()
             .format_with(formatter, |id| format_elements![id, space_token()])?;
 
-        let members = formatter.format_separated(self.members(), || token(","))?;
+        let members = formatter.format_separated(
+            self.members(),
+            || token(","),
+            TrailingSeparator::Allowed,
+        )?;
         let list = formatter.format_delimited_soft_block_spaces(
             &self.l_curly_token()?,
             join_elements(soft_line_break_or_space(), members),

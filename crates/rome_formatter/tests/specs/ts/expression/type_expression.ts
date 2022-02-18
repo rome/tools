@@ -45,3 +45,23 @@ type OptionsFlag
         extends OptionsFlags<any>
         = any>
     = string;
+
+
+type TupleA
+    = [     string      ]
+
+type TupleB = [   ...string[  ]     ]
+
+type TupleC = [ surname  ?:
+    string[],
+    ...name: string[],  ]
+
+type TupleD = [
+    address: string,
+    address2: string,
+    address3: string,
+    address4: string,
+    address5: string,
+    surname  ?:
+    string[],
+    ...name: string[],  ]

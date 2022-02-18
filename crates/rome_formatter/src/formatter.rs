@@ -29,6 +29,18 @@ pub struct Formatter {
     pub(super) printed_tokens: RefCell<HashSet<SyntaxToken>>,
 }
 
+#[derive(Debug)]
+pub enum TrailingSeparator {
+    Allowed,
+    Disallowed,
+}
+
+impl TrailingSeparator {
+    pub fn is_allowed(&self) -> bool {
+        matches!(self, TrailingSeparator::Allowed)
+    }
+}
+
 impl Formatter {
     /// Creates a new context that uses the given formatter options
     pub fn new(options: FormatOptions) -> Self {
@@ -250,6 +262,7 @@ impl Formatter {
         &self,
         list: L,
         separator_factory: F,
+        trailing_separator: TrailingSeparator,
     ) -> FormatResult<impl Iterator<Item = FormatElement>>
     where
         T: AstNode + ToFormatElement + Clone,
@@ -266,15 +279,23 @@ impl Formatter {
             // input source. Only print the last trailing token if the outer group breaks
             let separator = if let Some(separator) = element.trailing_separator()? {
                 if index == last_index {
-                    // Use format_replaced instead of wrapping the result of format_token
-                    // in order to remove only the token itself when the group doesn't break
-                    // but still print its associated trivias unconditionally
-                    self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))?
+                    if trailing_separator.is_allowed() {
+                        // Use format_replaced instead of wrapping the result of format_token
+                        // in order to remove only the token itself when the group doesn't break
+                        // but still print its associated trivias unconditionally
+                        self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))?
+                    } else {
+                        empty_element()
+                    }
                 } else {
                     FormatTokenAndNode::format(&separator, self)?
                 }
             } else if index == last_index {
-                if_group_breaks(separator_factory())
+                if trailing_separator.is_allowed() {
+                    if_group_breaks(separator_factory())
+                } else {
+                    empty_element()
+                }
             } else {
                 separator_factory()
             };

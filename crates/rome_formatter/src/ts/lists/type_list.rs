@@ -1,14 +1,20 @@
+use crate::formatter::TrailingSeparator;
 use crate::{
-    block_indent, format_elements, group_elements, if_group_breaks, join_elements,
-    soft_block_indent, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
+    join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::{ast::TsTypeList, AstNode};
+use rslint_parser::ast::TsTypeList;
+
 impl ToFormatElement for TsTypeList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(format_elements![group_elements(join_elements(
+        // the grouping will be applied by the parent
+        Ok(join_elements(
             soft_line_break_or_space(),
-            formatter.format_separated(self.clone(), || token(","))?,
-        ))])
+            formatter.format_separated(
+                self.clone(),
+                || token(","),
+                TrailingSeparator::Disallowed,
+            )?,
+        ))
     }
 }

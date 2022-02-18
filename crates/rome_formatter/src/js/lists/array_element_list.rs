@@ -1,5 +1,6 @@
 use std::convert::Infallible;
 
+use crate::formatter::TrailingSeparator;
 use crate::{
     fill_elements,
     format_element::join_elements_soft_line,
@@ -19,7 +20,11 @@ impl ToFormatElement for JsArrayElementList {
         if !has_formatter_trivia(self.syntax()) && can_print_fill(self) {
             return Ok(fill_elements(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
-                formatter.format_separated(self.clone(), || token(","))?,
+                formatter.format_separated(
+                    self.clone(),
+                    || token(","),
+                    TrailingSeparator::Allowed,
+                )?,
             ));
         }
 
