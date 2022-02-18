@@ -50,11 +50,11 @@ interface C<
 
 // @ts-ignore
 interface D
-extends
-	B<string,symbol>,
-	F<string,symbol>,
-	G<string,number,symbol>,
-	H<string,number,symbol>
+	extends
+		B<string,symbol>,
+		F<string,symbol>,
+		G<string,number,symbol>,
+		H<string,number,symbol>
 {
 	something1: string,
 	something2: string,

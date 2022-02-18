@@ -12,12 +12,12 @@ impl ToFormatElement for TsExtendsClause {
         let types = self.types().format(formatter)?;
 
         Ok(format_elements![group_elements(format_elements![
-            if_group_breaks(format_elements![
+            if_group_breaks(soft_block_indent(format_elements![
                 soft_line_break(),
                 extends.clone(),
                 space_token(),
                 soft_block_indent(types.clone())
-            ]),
+            ])),
             if_group_fits_on_single_line(format_elements![extends, space_token(), types]),
         ])])
     }
