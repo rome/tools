@@ -9,7 +9,7 @@ JsModule {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 type_arguments: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@3..4 "(" [] [],

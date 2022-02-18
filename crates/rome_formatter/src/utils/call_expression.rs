@@ -43,9 +43,9 @@ use std::fmt::Debug;
 ///                 .execute() [
 ///                     something
 ///                 ]
-///             ]   
-///         ]   
-///     ]    
+///             ]
+///         ]
+///     ]
 /// ]
 /// ```
 /// So we need to navigate the AST and make sure that `something` is actually
@@ -57,7 +57,7 @@ use std::fmt::Debug;
 /// Our formatter makes sure that we don't format twice the same nodes. Let's say for example that
 /// we find a `something().execute()`, its AST is like this:
 ///
-/// ```block  
+/// ```block
 /// JsCallExpression {
 ///     callee: JsStaticMember {
 ///         object: JsCallExpression {
@@ -71,7 +71,7 @@ use std::fmt::Debug;
 ///
 /// When we track the first [rslint_parser::ast::JsCallExpression], we hold basically all the children,
 /// that applies for the rest of the nodes. If we decided to format all the children of each node,
-/// we will risk to format the last node, the `Reference`, four times.  
+/// we will risk to format the last node, the `Reference`, four times.
 ///
 /// To avoid this, when we encounter particular nodes, we don't format all of its children, but defer
 /// the formatting to the child itself.
@@ -99,7 +99,7 @@ use std::fmt::Debug;
 /// `something()()[1][3].then()`;
 /// 3. as many as consecutive [rslint_parser::ast::JsStaticMemberExpression] or [rslint_parser::ast::JsComputedExpression], this cover cases like
 /// `this.items[0].then()`
-///   
+///
 /// The rest of the groups are essentially a sequence of `[StaticMemberExpression , CallExpression]`.
 /// In order to achieve that, we simply start looping through the rest of the flatten items that we haven't seen.
 ///
@@ -274,7 +274,7 @@ fn flatten_call_expression(
             flatten_call_expression(queue, callee.syntax().to_owned(), formatter)?;
             let formatted = vec![
                 call_expression
-                    .optional_chain_token_token()
+                    .optional_chain_token()
                     .format_or_empty(formatter)?,
                 call_expression
                     .type_arguments()

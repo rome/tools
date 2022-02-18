@@ -49,7 +49,7 @@ JsModule {
                         constraint: TsTypeConstraintClause {
                             extends_token: EXTENDS_KW@31..39 "extends" [] [Whitespace(" ")],
                             ty: TsUnionType {
-                                leading_separator_token_token: missing (optional),
+                                leading_separator_token: missing (optional),
                                 types: TsUnionTypeVariantList [
                                     TsNumberType {
                                         number_token: NUMBER_KW@39..46 "number" [] [Whitespace(" ")],

@@ -55,7 +55,7 @@ JsModule {
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@47..49 ":" [] [Whitespace(" ")],
                             ty: TsUnionType {
-                                leading_separator_token_token: missing (optional),
+                                leading_separator_token: missing (optional),
                                 types: TsUnionTypeVariantList [
                                     TsStringType {
                                         string_token: STRING_KW@49..56 "string" [] [Whitespace(" ")],

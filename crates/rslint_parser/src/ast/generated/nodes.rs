@@ -385,7 +385,7 @@ impl JsCallExpression {
     pub fn callee(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn optional_chain_token_token(&self) -> Option<SyntaxToken> {
+    pub fn optional_chain_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 1usize)
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
@@ -3994,7 +3994,7 @@ impl TsIntersectionType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn leading_separator_token_token(&self) -> Option<SyntaxToken> {
+    pub fn leading_separator_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 0usize)
     }
     pub fn types(&self) -> TsIntersectionTypeElementList { support::list(&self.syntax, 1usize) }
@@ -4981,7 +4981,7 @@ impl TsUnionType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn leading_separator_token_token(&self) -> Option<SyntaxToken> {
+    pub fn leading_separator_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 0usize)
     }
     pub fn types(&self) -> TsUnionTypeVariantList { support::list(&self.syntax, 1usize) }
@@ -5997,8 +5997,8 @@ impl std::fmt::Debug for JsCallExpression {
         f.debug_struct("JsCallExpression")
             .field("callee", &support::DebugSyntaxResult(self.callee()))
             .field(
-                "optional_chain_token_token",
-                &support::DebugOptionalElement(self.optional_chain_token_token()),
+                "optional_chain_token",
+                &support::DebugOptionalElement(self.optional_chain_token()),
             )
             .field(
                 "type_arguments",
@@ -11387,8 +11387,8 @@ impl std::fmt::Debug for TsIntersectionType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsIntersectionType")
             .field(
-                "leading_separator_token_token",
-                &support::DebugOptionalElement(self.leading_separator_token_token()),
+                "leading_separator_token",
+                &support::DebugOptionalElement(self.leading_separator_token()),
             )
             .field("types", &self.types())
             .finish()
@@ -12948,8 +12948,8 @@ impl std::fmt::Debug for TsUnionType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsUnionType")
             .field(
-                "leading_separator_token_token",
-                &support::DebugOptionalElement(self.leading_separator_token_token()),
+                "leading_separator_token",
+                &support::DebugOptionalElement(self.leading_separator_token()),
             )
             .field("types", &self.types())
             .finish()

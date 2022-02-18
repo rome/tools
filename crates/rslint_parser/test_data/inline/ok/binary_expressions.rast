@@ -48,7 +48,7 @@ JsModule {
                             callee: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@26..27 "3" [] [],
                             },
-                            optional_chain_token_token: missing (optional),
+                            optional_chain_token: missing (optional),
                             type_arguments: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@27..29 "(" [Newline("\n")] [],

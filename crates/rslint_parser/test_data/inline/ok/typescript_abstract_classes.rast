@@ -135,7 +135,7 @@ JsModule {
                                             value_token: IDENT@153..156 "log" [] [],
                                         },
                                     },
-                                    optional_chain_token_token: missing (optional),
+                                    optional_chain_token: missing (optional),
                                     type_arguments: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@156..157 "(" [] [],

@@ -348,7 +348,7 @@ JsNewExpression =
 // call expression
 JsCallExpression =
 	callee: JsAnyExpression
-	optional_chain_token: '?.'?
+	optional_chain: '?.'?
 	type_arguments: TsTypeArguments?
 	arguments: JsCallArguments
 
@@ -1652,14 +1652,14 @@ TsEmptyExternalModuleDeclarationBody = ';'
 
 // | a | b
 TsUnionType =
-	leading_separator_token: '|'?
+	leading_separator: '|'?
 	types: TsUnionTypeVariantList
 
 TsUnionTypeVariantList = (TsType ('|' TsType)*)
 
 // & a & b
 TsIntersectionType =
-	leading_separator_token: '&'?
+	leading_separator: '&'?
 	types: TsIntersectionTypeElementList
 
 TsIntersectionTypeElementList = (TsType ('&' TsType)*)
