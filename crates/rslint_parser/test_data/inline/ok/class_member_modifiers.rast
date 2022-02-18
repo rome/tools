@@ -16,7 +16,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -54,7 +53,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: STATIC_KW@34..41 "static" [] [Whitespace(" ")],
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -128,17 +126,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@10..16
+          4: JS_LITERAL_MEMBER_NAME@10..16
             0: IDENT@10..16 "public" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@16..19
+          7: JS_PARAMETERS@16..19
             0: L_PAREN@16..17 "(" [] []
             1: JS_PARAMETER_LIST@17..17
             2: R_PAREN@17..19 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@19..22
+          8: (empty)
+          9: JS_FUNCTION_BODY@19..22
             0: L_CURLY@19..20 "{" [] []
             1: JS_DIRECTIVE_LIST@20..20
             2: JS_STATEMENT_LIST@20..20
@@ -159,17 +156,16 @@ JsModule {
           1: STATIC_KW@34..41 "static" [] [Whitespace(" ")]
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@41..50
+          4: JS_LITERAL_MEMBER_NAME@41..50
             0: IDENT@41..50 "protected" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@50..53
+          7: JS_PARAMETERS@50..53
             0: L_PAREN@50..51 "(" [] []
             1: JS_PARAMETER_LIST@51..51
             2: R_PAREN@51..53 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@53..56
+          8: (empty)
+          9: JS_FUNCTION_BODY@53..56
             0: L_CURLY@53..54 "{" [] []
             1: JS_DIRECTIVE_LIST@54..54
             2: JS_STATEMENT_LIST@54..54

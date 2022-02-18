@@ -216,7 +216,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -249,7 +248,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: ASYNC_KW@183..192 "async" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -282,7 +280,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: STATIC_KW@201..211 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -497,12 +494,11 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@171..177
+          4: JS_LITERAL_MEMBER_NAME@171..177
             0: IDENT@171..177 "set" [Newline("\n"), Whitespace("  ")] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@177..181
+          7: JS_PARAMETERS@177..181
             0: L_PAREN@177..178 "(" [] []
             1: JS_PARAMETER_LIST@178..179
               0: JS_FORMAL_PARAMETER@178..179
@@ -512,8 +508,8 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_PAREN@179..181 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@181..183
+          8: (empty)
+          9: JS_FUNCTION_BODY@181..183
             0: L_CURLY@181..182 "{" [] []
             1: JS_DIRECTIVE_LIST@182..182
             2: JS_STATEMENT_LIST@182..182
@@ -521,14 +517,13 @@ JsModule {
         1: JS_METHOD_CLASS_MEMBER@183..201
           0: (empty)
           1: (empty)
-          2: (empty)
-          3: ASYNC_KW@183..192 "async" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@192..195
+          2: ASYNC_KW@183..192 "async" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@192..195
             0: IDENT@192..195 "set" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@195..199
+          7: JS_PARAMETERS@195..199
             0: L_PAREN@195..196 "(" [] []
             1: JS_PARAMETER_LIST@196..197
               0: JS_FORMAL_PARAMETER@196..197
@@ -538,8 +533,8 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_PAREN@197..199 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@199..201
+          8: (empty)
+          9: JS_FUNCTION_BODY@199..201
             0: L_CURLY@199..200 "{" [] []
             1: JS_DIRECTIVE_LIST@200..200
             2: JS_STATEMENT_LIST@200..200
@@ -549,12 +544,11 @@ JsModule {
           1: STATIC_KW@201..211 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@211..214
+          4: JS_LITERAL_MEMBER_NAME@211..214
             0: IDENT@211..214 "set" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@214..218
+          7: JS_PARAMETERS@214..218
             0: L_PAREN@214..215 "(" [] []
             1: JS_PARAMETER_LIST@215..216
               0: JS_FORMAL_PARAMETER@215..216
@@ -564,8 +558,8 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_PAREN@216..218 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@218..220
+          8: (empty)
+          9: JS_FUNCTION_BODY@218..220
             0: L_CURLY@218..219 "{" [] []
             1: JS_DIRECTIVE_LIST@219..219
             2: JS_STATEMENT_LIST@219..219

@@ -35,7 +35,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -124,7 +123,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -204,7 +202,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -290,7 +287,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -389,7 +385,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -486,7 +481,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -590,17 +584,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@34..40
+          4: JS_LITERAL_MEMBER_NAME@34..40
             0: IDENT@34..40 "method" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@40..43
+          7: JS_PARAMETERS@40..43
             0: L_PAREN@40..41 "(" [] []
             1: JS_PARAMETER_LIST@41..41
             2: R_PAREN@41..43 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@43..73
+          8: (empty)
+          9: JS_FUNCTION_BODY@43..73
             0: L_CURLY@43..45 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@45..45
             2: JS_STATEMENT_LIST@45..71
@@ -657,17 +650,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@109..115
+          4: JS_LITERAL_MEMBER_NAME@109..115
             0: IDENT@109..115 "method" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@115..118
+          7: JS_PARAMETERS@115..118
             0: L_PAREN@115..116 "(" [] []
             1: JS_PARAMETER_LIST@116..116
             2: R_PAREN@116..118 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@118..144
+          8: (empty)
+          9: JS_FUNCTION_BODY@118..144
             0: L_CURLY@118..120 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@120..120
             2: JS_STATEMENT_LIST@120..142
@@ -718,17 +710,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@180..186
+          4: JS_LITERAL_MEMBER_NAME@180..186
             0: IDENT@180..186 "method" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@186..189
+          7: JS_PARAMETERS@186..189
             0: L_PAREN@186..187 "(" [] []
             1: JS_PARAMETER_LIST@187..187
             2: R_PAREN@187..189 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@189..222
+          8: (empty)
+          9: JS_FUNCTION_BODY@189..222
             0: L_CURLY@189..191 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@191..191
             2: JS_STATEMENT_LIST@191..220
@@ -783,17 +774,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@258..264
+          4: JS_LITERAL_MEMBER_NAME@258..264
             0: IDENT@258..264 "method" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@264..267
+          7: JS_PARAMETERS@264..267
             0: L_PAREN@264..265 "(" [] []
             1: JS_PARAMETER_LIST@265..265
             2: R_PAREN@265..267 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@267..304
+          8: (empty)
+          9: JS_FUNCTION_BODY@267..304
             0: L_CURLY@267..269 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@269..269
             2: JS_STATEMENT_LIST@269..302
@@ -859,17 +849,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@340..346
+          4: JS_LITERAL_MEMBER_NAME@340..346
             0: IDENT@340..346 "method" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@346..349
+          7: JS_PARAMETERS@346..349
             0: L_PAREN@346..347 "(" [] []
             1: JS_PARAMETER_LIST@347..347
             2: R_PAREN@347..349 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@349..389
+          8: (empty)
+          9: JS_FUNCTION_BODY@349..389
             0: L_CURLY@349..351 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@351..351
             2: JS_STATEMENT_LIST@351..387
@@ -933,17 +922,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@425..431
+          4: JS_LITERAL_MEMBER_NAME@425..431
             0: IDENT@425..431 "method" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@431..434
+          7: JS_PARAMETERS@431..434
             0: L_PAREN@431..432 "(" [] []
             1: JS_PARAMETER_LIST@432..432
             2: R_PAREN@432..434 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@434..477
+          8: (empty)
+          9: JS_FUNCTION_BODY@434..477
             0: L_CURLY@434..436 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@436..436
             2: JS_STATEMENT_LIST@436..475

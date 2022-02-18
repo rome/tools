@@ -16,7 +16,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -53,7 +52,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -128,17 +126,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@9..20
+          4: JS_LITERAL_MEMBER_NAME@9..20
             0: IDENT@9..20 "method" [Newline("\n"), Whitespace("    ")] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@20..23
+          7: JS_PARAMETERS@20..23
             0: L_PAREN@20..21 "(" [] []
             1: JS_PARAMETER_LIST@21..21
             2: R_PAREN@21..23 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@23..53
+          8: (empty)
+          9: JS_FUNCTION_BODY@23..53
             0: L_CURLY@23..24 "{" [] []
             1: JS_DIRECTIVE_LIST@24..24
             2: JS_STATEMENT_LIST@24..47
@@ -157,16 +154,15 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@53..67
+          4: JS_LITERAL_MEMBER_NAME@53..67
             0: IDENT@53..67 "predicate" [Newline("\n"), Whitespace("    ")] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@67..69
+          7: JS_PARAMETERS@67..69
             0: L_PAREN@67..68 "(" [] []
             1: JS_PARAMETER_LIST@68..68
             2: R_PAREN@68..69 ")" [] []
-          9: TS_RETURN_TYPE_ANNOTATION@69..86
+          8: TS_RETURN_TYPE_ANNOTATION@69..86
             0: COLON@69..71 ":" [] [Whitespace(" ")]
             1: TS_PREDICATE_RETURN_TYPE@71..86
               0: TS_THIS_TYPE@71..76
@@ -174,7 +170,7 @@ JsModule {
               1: IS_KW@76..79 "is" [] [Whitespace(" ")]
               2: TS_STRING_TYPE@79..86
                 0: STRING_KW@79..86 "string" [] [Whitespace(" ")]
-          10: JS_FUNCTION_BODY@86..133
+          9: JS_FUNCTION_BODY@86..133
             0: L_CURLY@86..87 "{" [] []
             1: JS_DIRECTIVE_LIST@87..87
             2: JS_STATEMENT_LIST@87..127

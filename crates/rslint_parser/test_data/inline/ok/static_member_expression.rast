@@ -114,7 +114,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -293,12 +292,11 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@73..80
+          4: JS_LITERAL_MEMBER_NAME@73..80
             0: IDENT@73..80 "test" [Newline("\n"), Whitespace("  ")] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@80..88
+          7: JS_PARAMETERS@80..88
             0: L_PAREN@80..81 "(" [] []
             1: JS_PARAMETER_LIST@81..86
               0: JS_FORMAL_PARAMETER@81..86
@@ -308,8 +306,8 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@88..157
+          8: (empty)
+          9: JS_FUNCTION_BODY@88..157
             0: L_CURLY@88..89 "{" [] []
             1: JS_DIRECTIVE_LIST@89..89
             2: JS_STATEMENT_LIST@89..153
