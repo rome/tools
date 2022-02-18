@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: comments.js
 
 ---
@@ -48,16 +48,18 @@ var x = 100;
 
 @Hello(
 {
-  a: 'a', // Comment is in the wrong place
-  // test
-  b: '2'
-})
-class X {
-
+  a: "a", // test // Comment is in the wrong place
+  b;
+  : '2'
 }
+)
+class X {}
 
 
-@NgModule({
+
+
+@NgModule(
+{
   // Imports.
   imports: [
     // Angular modules.
@@ -67,15 +69,18 @@ class X {
     CoreModule,
     SharedModule,
   ],
-})
+}
+)
 export class AppModule {}
+
+
 
 // A
 @Foo()
 // B
 @Bar()
 // C
-export class Bar{}
+export class Bar {}
 
 ```
 
@@ -97,6 +102,12 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │    ^ An explicit or implicit semicolon is expected here...
   │ └────' ...Which is required to end this statement
 
+error[SyntaxError]: expected a statement but instead found ')'
+  ┌─ comments.js:7:2
+  │
+7 │ })
+  │  ^ Expected a statement here
+
 error[SyntaxError]: expected a statement but instead found '@NgModule('
    ┌─ comments.js:13:1
    │
@@ -115,12 +126,6 @@ error[SyntaxError]: expected a statement but instead found ')'
 23 │ })
    │  ^ Expected a statement here
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
-   ┌─ comments.js:24:1
-   │
-24 │ export class AppModule {}
-   │ ^^^^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
-
 error[SyntaxError]: expected a statement but instead found '@Foo()
 // B
 @Bar()'
@@ -130,18 +135,6 @@ error[SyntaxError]: expected a statement but instead found '@Foo()
 28 │ │ // B
 29 │ │ @Bar()
    │ └──────^ Expected a statement here
-
-error[SyntaxError]: Illegal use of an import declaration not at the top level
-   ┌─ comments.js:31:1
-   │
-31 │ export class Bar{}
-   │ ^^^^^^^^^^^^^^^^^^ move this declaration to the top level
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-   ┌─ comments.js:32:1
-   │
-32 │ 
-   │ ^ the file ends here
 
 
 ```

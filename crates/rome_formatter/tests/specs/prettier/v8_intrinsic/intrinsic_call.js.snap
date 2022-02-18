@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: intrinsic_call.js
 
 ---
@@ -35,18 +35,17 @@ function doSmth()     {
 
 # Output
 ```js
-function doSmth()     {
+function doSmth() {
+  
             %DebugPrint
         (
                 foo )
-  }
+}
 
-    function printFunc  (
-        f
-) {
-    if(%
+function printFunc(f) {
+  if(%
     IsAsmWasmCode(f))              console.log("asm.js");
-        if(
+  if(
 
         % IsWasmCode(
         f))
@@ -54,7 +53,7 @@ function doSmth()     {
                 "wasm"
             );
 
-    console.log
+  console.log
     (%
         GetFunctioName(f)
         );
@@ -66,21 +65,13 @@ function doSmth()     {
 ```
 error[SyntaxError]: expected a statement but instead found '%DebugPrint
         (
-                foo )
-  }'
+                foo )'
   ┌─ intrinsic_call.js:2:13
   │  
 2 │ ┌             %DebugPrint
 3 │ │         (
 4 │ │                 foo )
-5 │ │   }
-  │ └───^ Expected a statement here
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-   ┌─ intrinsic_call.js:25:1
-   │
-25 │ 
-   │ ^ the file ends here
+  │ └─────────────────────^ Expected a statement here
 
 
 ```

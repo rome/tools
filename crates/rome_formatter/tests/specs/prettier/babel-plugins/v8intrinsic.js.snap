@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: v8intrinsic.js
 
 ---
@@ -55,11 +55,12 @@ foo%bar()
 
 new %DebugPrint(null);
 
-function *foo() {
-  yield %StringParseInt("42", 10)
+function* foo() {
+  yield;
+  %StringParseInt("42", 10)
 }
 
-foo%bar()
+foo % bar();
 
 ```
 
@@ -85,12 +86,6 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │   │     │
    │   │     An explicit or implicit semicolon is expected here...
    │   ...Which is required to end this statement
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-   ┌─ v8intrinsic.js:26:1
-   │
-26 │ 
-   │ ^ the file ends here
 
 
 ```
