@@ -1,11 +1,15 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsRestTupleTypeElement;
+use rslint_parser::ast::{TsRestTupleTypeElement, TsRestTupleTypeElementFields};
 
 impl ToFormatElement for TsRestTupleTypeElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let dotdotdot = self.dotdotdot_token().format(formatter)?;
-        let ty = self.ty().format(formatter)?;
+        let TsRestTupleTypeElementFields {
+            dotdotdot_token,
+            ty,
+        } = self.as_fields();
+        let dotdotdot = dotdotdot_token.format(formatter)?;
+        let ty = ty.format(formatter)?;
         Ok(format_elements![dotdotdot, ty])
     }
 }
