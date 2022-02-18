@@ -438,8 +438,11 @@ fn parse_parenthesized_arrow_function_head(
     ambiguity: Ambiguity,
 ) -> Result<(Marker, SignatureFlags), Marker> {
     let m = p.start();
-    let is_async = eat_contextual_keyword(p, "async", T![async]);
-    let flags = arrow_function_signature_flags(p, is_async);
+    let flags = if eat_contextual_keyword(p, "async", T![async]) {
+        SignatureFlags::ASYNC
+    } else {
+        SignatureFlags::empty()
+    };
 
     if p.at(T![<]) {
         parse_ts_type_parameters(p).ok();
@@ -453,8 +456,12 @@ fn parse_parenthesized_arrow_function_head(
         return Err(m);
     }
 
-    parse_parameter_list(p, ParameterContext::Arrow, flags)
-        .or_add_diagnostic(p, expected_parameters);
+    parse_parameter_list(
+        p,
+        ParameterContext::Arrow,
+        arrow_function_parameter_flags(p, flags),
+    )
+    .or_add_diagnostic(p, expected_parameters);
 
     if p.tokens.last_tok().map(|t| t.kind) != Some(T![')']) && ambiguity.is_disallowed() {
         return Err(m);
@@ -644,10 +651,9 @@ fn is_parenthesized_arrow_function_expression_impl(
     }
 }
 
-/// Returns the signature flags for an arrow function
-fn arrow_function_signature_flags(p: &Parser, is_async: bool) -> SignatureFlags {
-    let mut flags = SignatureFlags::empty();
-
+/// Computes the signature flags for parsing the parameters of an arrow expression. These
+/// have different semantics from parsing the body
+fn arrow_function_parameter_flags(p: &Parser, mut flags: SignatureFlags) -> SignatureFlags {
     if p.state.in_generator() {
         // Arrow functions inherit whatever yield is a valid identifier name from the parent.
         flags |= SignatureFlags::GENERATOR;
@@ -655,7 +661,7 @@ fn arrow_function_signature_flags(p: &Parser, is_async: bool) -> SignatureFlags 
 
     // The arrow function is in an async context if the outer function is in an async context or itself is
     // declared async
-    if is_async || p.state.in_async() {
+    if p.state.in_async() {
         flags |= SignatureFlags::ASYNC;
     }
 
@@ -677,16 +683,18 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     let is_async = is_at_contextual_keyword(p, "async") && is_nth_at_identifier_binding(p, 1);
 
-    if is_async {
+    let flags = if is_async {
         expect_contextual_keyword(p, "async", T![async]);
-    }
-
-    let flags = arrow_function_signature_flags(p, is_async);
+        SignatureFlags::ASYNC
+    } else {
+        SignatureFlags::empty()
+    };
 
     // test_err async_arrow_expr_await_parameter
     // let a = async await => {}
     // async() => { (a = await) => {} };
-    p.with_state(EnterParameters(flags), parse_binding).expect("Expected function parameter to be present as guaranteed by is_arrow_function_with_simple_parameter");
+    p.with_state(EnterParameters(arrow_function_parameter_flags(p, flags)), parse_binding)
+        .expect("Expected function parameter to be present as guaranteed by is_arrow_function_with_simple_parameter");
 
     p.bump(T![=>]);
     parse_arrow_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
