@@ -3844,6 +3844,7 @@ impl TsImportType {
     pub fn qualifier_clause(&self) -> Option<TsImportTypeQualifier> {
         support::node(&self.syntax, 5usize)
     }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 6usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImportTypeQualifier {
@@ -11153,6 +11154,10 @@ impl std::fmt::Debug for TsImportType {
             .field(
                 "qualifier_clause",
                 &support::DebugOptionalElement(self.qualifier_clause()),
+            )
+            .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
             )
             .finish()
     }
