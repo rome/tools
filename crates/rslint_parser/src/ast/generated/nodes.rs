@@ -19,6 +19,13 @@ impl ImportMeta {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> ImportMetaFields {
+        ImportMetaFields {
+            import_token: self.import_token(),
+            dot_token: self.dot_token(),
+            meta_token: self.meta_token(),
+        }
+    }
     pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -28,6 +35,11 @@ impl ImportMeta {
     pub fn meta_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct ImportMetaFields {
+    pub import_token: SyntaxResult<SyntaxToken>,
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub meta_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayAssignmentPattern {
@@ -41,6 +53,13 @@ impl JsArrayAssignmentPattern {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsArrayAssignmentPatternFields {
+        JsArrayAssignmentPatternFields {
+            l_brack_token: self.l_brack_token(),
+            elements: self.elements(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -50,6 +69,11 @@ impl JsArrayAssignmentPattern {
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsArrayAssignmentPatternFields {
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub elements: JsArrayAssignmentPatternElementList,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayAssignmentPatternRestElement {
@@ -63,12 +87,22 @@ impl JsArrayAssignmentPatternRestElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsArrayAssignmentPatternRestElementFields {
+        JsArrayAssignmentPatternRestElementFields {
+            dotdotdot_token: self.dotdotdot_token(),
+            pattern: self.pattern(),
+        }
+    }
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn pattern(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsArrayAssignmentPatternRestElementFields {
+    pub dotdotdot_token: SyntaxResult<SyntaxToken>,
+    pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayBindingPattern {
@@ -82,6 +116,13 @@ impl JsArrayBindingPattern {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsArrayBindingPatternFields {
+        JsArrayBindingPatternFields {
+            l_brack_token: self.l_brack_token(),
+            elements: self.elements(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -91,6 +132,11 @@ impl JsArrayBindingPattern {
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsArrayBindingPatternFields {
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub elements: JsArrayBindingPatternElementList,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayBindingPatternRestElement {
@@ -104,12 +150,22 @@ impl JsArrayBindingPatternRestElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsArrayBindingPatternRestElementFields {
+        JsArrayBindingPatternRestElementFields {
+            dotdotdot_token: self.dotdotdot_token(),
+            pattern: self.pattern(),
+        }
+    }
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn pattern(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsArrayBindingPatternRestElementFields {
+    pub dotdotdot_token: SyntaxResult<SyntaxToken>,
+    pub pattern: SyntaxResult<JsAnyBindingPattern>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayExpression {
@@ -123,6 +179,13 @@ impl JsArrayExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsArrayExpressionFields {
+        JsArrayExpressionFields {
+            l_brack_token: self.l_brack_token(),
+            elements: self.elements(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -130,6 +193,11 @@ impl JsArrayExpression {
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsArrayExpressionFields {
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub elements: JsArrayElementList,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayHole {
@@ -143,7 +211,9 @@ impl JsArrayHole {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsArrayHoleFields { JsArrayHoleFields {} }
 }
+pub struct JsArrayHoleFields {}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrowFunctionExpression {
     pub(crate) syntax: SyntaxNode,
@@ -156,6 +226,16 @@ impl JsArrowFunctionExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsArrowFunctionExpressionFields {
+        JsArrowFunctionExpressionFields {
+            async_token: self.async_token(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            fat_arrow_token: self.fat_arrow_token(),
+            body: self.body(),
+        }
+    }
     pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 1usize)
@@ -173,6 +253,14 @@ impl JsArrowFunctionExpression {
         support::required_node(&self.syntax, 5usize)
     }
 }
+pub struct JsArrowFunctionExpressionFields {
+    pub async_token: Option<SyntaxToken>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsAnyArrowFunctionParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub fat_arrow_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsAnyFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsAssignmentExpression {
     pub(crate) syntax: SyntaxNode,
@@ -185,6 +273,13 @@ impl JsAssignmentExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsAssignmentExpressionFields {
+        JsAssignmentExpressionFields {
+            left: self.left(),
+            operator_token: self.operator_token(),
+            right: self.right(),
+        }
+    }
     pub fn left(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -194,6 +289,11 @@ impl JsAssignmentExpression {
     pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsAssignmentExpressionFields {
+    pub left: SyntaxResult<JsAnyAssignmentPattern>,
+    pub operator_token: SyntaxResult<SyntaxToken>,
+    pub right: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsAssignmentWithDefault {
@@ -207,6 +307,13 @@ impl JsAssignmentWithDefault {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsAssignmentWithDefaultFields {
+        JsAssignmentWithDefaultFields {
+            pattern: self.pattern(),
+            eq_token: self.eq_token(),
+            default: self.default(),
+        }
+    }
     pub fn pattern(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -216,6 +323,11 @@ impl JsAssignmentWithDefault {
     pub fn default(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsAssignmentWithDefaultFields {
+    pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
+    pub eq_token: SyntaxResult<SyntaxToken>,
+    pub default: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsAwaitExpression {
@@ -229,12 +341,22 @@ impl JsAwaitExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsAwaitExpressionFields {
+        JsAwaitExpressionFields {
+            await_token: self.await_token(),
+            argument: self.argument(),
+        }
+    }
     pub fn await_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsAwaitExpressionFields {
+    pub await_token: SyntaxResult<SyntaxToken>,
+    pub argument: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBigIntLiteralExpression {
@@ -248,9 +370,17 @@ impl JsBigIntLiteralExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsBigIntLiteralExpressionFields {
+        JsBigIntLiteralExpressionFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsBigIntLiteralExpressionFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBinaryExpression {
@@ -264,6 +394,13 @@ impl JsBinaryExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsBinaryExpressionFields {
+        JsBinaryExpressionFields {
+            left: self.left(),
+            operator: self.operator(),
+            right: self.right(),
+        }
+    }
     pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -273,6 +410,11 @@ impl JsBinaryExpression {
     pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsBinaryExpressionFields {
+    pub left: SyntaxResult<JsAnyExpression>,
+    pub operator: SyntaxResult<SyntaxToken>,
+    pub right: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBindingPatternWithDefault {
@@ -286,6 +428,13 @@ impl JsBindingPatternWithDefault {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsBindingPatternWithDefaultFields {
+        JsBindingPatternWithDefaultFields {
+            pattern: self.pattern(),
+            eq_token: self.eq_token(),
+            default: self.default(),
+        }
+    }
     pub fn pattern(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -295,6 +444,11 @@ impl JsBindingPatternWithDefault {
     pub fn default(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsBindingPatternWithDefaultFields {
+    pub pattern: SyntaxResult<JsAnyBindingPattern>,
+    pub eq_token: SyntaxResult<SyntaxToken>,
+    pub default: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBlockStatement {
@@ -308,6 +462,13 @@ impl JsBlockStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsBlockStatementFields {
+        JsBlockStatementFields {
+            l_curly_token: self.l_curly_token(),
+            statements: self.statements(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -315,6 +476,11 @@ impl JsBlockStatement {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsBlockStatementFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub statements: JsStatementList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBooleanLiteralExpression {
@@ -328,9 +494,17 @@ impl JsBooleanLiteralExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsBooleanLiteralExpressionFields {
+        JsBooleanLiteralExpressionFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsBooleanLiteralExpressionFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBreakStatement {
@@ -344,11 +518,23 @@ impl JsBreakStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsBreakStatementFields {
+        JsBreakStatementFields {
+            break_token: self.break_token(),
+            label_token: self.label_token(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn break_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+}
+pub struct JsBreakStatementFields {
+    pub break_token: SyntaxResult<SyntaxToken>,
+    pub label_token: Option<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsCallArguments {
@@ -362,6 +548,13 @@ impl JsCallArguments {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsCallArgumentsFields {
+        JsCallArgumentsFields {
+            l_paren_token: self.l_paren_token(),
+            args: self.args(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -369,6 +562,11 @@ impl JsCallArguments {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsCallArgumentsFields {
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub args: JsCallArgumentList,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsCallExpression {
@@ -382,16 +580,30 @@ impl JsCallExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsCallExpressionFields {
+        JsCallExpressionFields {
+            callee: self.callee(),
+            optional_chain_token: self.optional_chain_token(),
+            type_arguments: self.type_arguments(),
+            arguments: self.arguments(),
+        }
+    }
     pub fn callee(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn optional_chain_token_token(&self) -> Option<SyntaxToken> {
+    pub fn optional_chain_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 1usize)
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
     pub fn arguments(&self) -> SyntaxResult<JsCallArguments> {
         support::required_node(&self.syntax, 3usize)
     }
+}
+pub struct JsCallExpressionFields {
+    pub callee: SyntaxResult<JsAnyExpression>,
+    pub optional_chain_token: Option<SyntaxToken>,
+    pub type_arguments: Option<TsTypeArguments>,
+    pub arguments: SyntaxResult<JsCallArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsCaseClause {
@@ -405,6 +617,14 @@ impl JsCaseClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsCaseClauseFields {
+        JsCaseClauseFields {
+            case_token: self.case_token(),
+            test: self.test(),
+            colon_token: self.colon_token(),
+            consequent: self.consequent(),
+        }
+    }
     pub fn case_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -415,6 +635,12 @@ impl JsCaseClause {
         support::required_token(&self.syntax, 2usize)
     }
     pub fn consequent(&self) -> JsStatementList { support::list(&self.syntax, 3usize) }
+}
+pub struct JsCaseClauseFields {
+    pub case_token: SyntaxResult<SyntaxToken>,
+    pub test: SyntaxResult<JsAnyExpression>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub consequent: JsStatementList,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsCatchClause {
@@ -428,6 +654,13 @@ impl JsCatchClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsCatchClauseFields {
+        JsCatchClauseFields {
+            catch_token: self.catch_token(),
+            declaration: self.declaration(),
+            body: self.body(),
+        }
+    }
     pub fn catch_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -435,6 +668,11 @@ impl JsCatchClause {
     pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsCatchClauseFields {
+    pub catch_token: SyntaxResult<SyntaxToken>,
+    pub declaration: Option<JsCatchDeclaration>,
+    pub body: SyntaxResult<JsBlockStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsCatchDeclaration {
@@ -448,6 +686,13 @@ impl JsCatchDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsCatchDeclarationFields {
+        JsCatchDeclarationFields {
+            l_paren_token: self.l_paren_token(),
+            binding: self.binding(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -457,6 +702,11 @@ impl JsCatchDeclaration {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsCatchDeclarationFields {
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub binding: SyntaxResult<JsAnyBindingPattern>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsClassDeclaration {
@@ -470,6 +720,19 @@ impl JsClassDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsClassDeclarationFields {
+        JsClassDeclarationFields {
+            abstract_token: self.abstract_token(),
+            class_token: self.class_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            extends_clause: self.extends_clause(),
+            implements_clause: self.implements_clause(),
+            l_curly_token: self.l_curly_token(),
+            members: self.members(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -490,6 +753,17 @@ impl JsClassDeclaration {
         support::required_token(&self.syntax, 8usize)
     }
 }
+pub struct JsClassDeclarationFields {
+    pub abstract_token: Option<SyntaxToken>,
+    pub class_token: SyntaxResult<SyntaxToken>,
+    pub id: SyntaxResult<JsAnyBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub extends_clause: Option<JsExtendsClause>,
+    pub implements_clause: Option<TsImplementsClause>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub members: JsClassMemberList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsClassExpression {
     pub(crate) syntax: SyntaxNode,
@@ -502,6 +776,18 @@ impl JsClassExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsClassExpressionFields {
+        JsClassExpressionFields {
+            class_token: self.class_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            extends_clause: self.extends_clause(),
+            implements_clause: self.implements_clause(),
+            l_curly_token: self.l_curly_token(),
+            members: self.members(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -521,6 +807,16 @@ impl JsClassExpression {
         support::required_token(&self.syntax, 7usize)
     }
 }
+pub struct JsClassExpressionFields {
+    pub class_token: SyntaxResult<SyntaxToken>,
+    pub id: Option<JsAnyBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub extends_clause: Option<JsExtendsClause>,
+    pub implements_clause: Option<TsImplementsClause>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub members: JsClassMemberList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsComputedMemberAssignment {
     pub(crate) syntax: SyntaxNode,
@@ -533,6 +829,14 @@ impl JsComputedMemberAssignment {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsComputedMemberAssignmentFields {
+        JsComputedMemberAssignmentFields {
+            object: self.object(),
+            l_brack_token: self.l_brack_token(),
+            member: self.member(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -546,6 +850,12 @@ impl JsComputedMemberAssignment {
         support::required_token(&self.syntax, 3usize)
     }
 }
+pub struct JsComputedMemberAssignmentFields {
+    pub object: SyntaxResult<JsAnyExpression>,
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub member: SyntaxResult<JsAnyExpression>,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsComputedMemberExpression {
     pub(crate) syntax: SyntaxNode,
@@ -558,6 +868,15 @@ impl JsComputedMemberExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsComputedMemberExpressionFields {
+        JsComputedMemberExpressionFields {
+            object: self.object(),
+            optional_chain_token: self.optional_chain_token(),
+            l_brack_token: self.l_brack_token(),
+            member: self.member(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -574,6 +893,13 @@ impl JsComputedMemberExpression {
         support::required_token(&self.syntax, 4usize)
     }
 }
+pub struct JsComputedMemberExpressionFields {
+    pub object: SyntaxResult<JsAnyExpression>,
+    pub optional_chain_token: Option<SyntaxToken>,
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub member: SyntaxResult<JsAnyExpression>,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsComputedMemberName {
     pub(crate) syntax: SyntaxNode,
@@ -586,6 +912,13 @@ impl JsComputedMemberName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsComputedMemberNameFields {
+        JsComputedMemberNameFields {
+            l_brack_token: self.l_brack_token(),
+            expression: self.expression(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -595,6 +928,11 @@ impl JsComputedMemberName {
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsComputedMemberNameFields {
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsConditionalExpression {
@@ -608,6 +946,15 @@ impl JsConditionalExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsConditionalExpressionFields {
+        JsConditionalExpressionFields {
+            test: self.test(),
+            question_mark_token: self.question_mark_token(),
+            consequent: self.consequent(),
+            colon_token: self.colon_token(),
+            alternate: self.alternate(),
+        }
+    }
     pub fn test(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -624,6 +971,13 @@ impl JsConditionalExpression {
         support::required_node(&self.syntax, 4usize)
     }
 }
+pub struct JsConditionalExpressionFields {
+    pub test: SyntaxResult<JsAnyExpression>,
+    pub question_mark_token: SyntaxResult<SyntaxToken>,
+    pub consequent: SyntaxResult<JsAnyExpression>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub alternate: SyntaxResult<JsAnyExpression>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsConstructorClassMember {
     pub(crate) syntax: SyntaxNode,
@@ -636,6 +990,14 @@ impl JsConstructorClassMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsConstructorClassMemberFields {
+        JsConstructorClassMemberFields {
+            access_modifier: self.access_modifier(),
+            name: self.name(),
+            parameters: self.parameters(),
+            body: self.body(),
+        }
+    }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> {
         support::required_node(&self.syntax, 1usize)
@@ -646,6 +1008,12 @@ impl JsConstructorClassMember {
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 3usize)
     }
+}
+pub struct JsConstructorClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsLiteralMemberName>,
+    pub parameters: SyntaxResult<JsConstructorParameters>,
+    pub body: SyntaxResult<JsFunctionBody>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsConstructorParameters {
@@ -659,6 +1027,13 @@ impl JsConstructorParameters {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsConstructorParametersFields {
+        JsConstructorParametersFields {
+            l_paren_token: self.l_paren_token(),
+            parameters: self.parameters(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -666,6 +1041,11 @@ impl JsConstructorParameters {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsConstructorParametersFields {
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub parameters: JsConstructorParameterList,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsContinueStatement {
@@ -679,11 +1059,23 @@ impl JsContinueStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsContinueStatementFields {
+        JsContinueStatementFields {
+            continue_token: self.continue_token(),
+            label_token: self.label_token(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn continue_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+}
+pub struct JsContinueStatementFields {
+    pub continue_token: SyntaxResult<SyntaxToken>,
+    pub label_token: Option<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDebuggerStatement {
@@ -697,10 +1089,20 @@ impl JsDebuggerStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsDebuggerStatementFields {
+        JsDebuggerStatementFields {
+            debugger_token: self.debugger_token(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn debugger_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+}
+pub struct JsDebuggerStatementFields {
+    pub debugger_token: SyntaxResult<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDefaultClause {
@@ -714,6 +1116,13 @@ impl JsDefaultClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsDefaultClauseFields {
+        JsDefaultClauseFields {
+            default_token: self.default_token(),
+            colon_token: self.colon_token(),
+            consequent: self.consequent(),
+        }
+    }
     pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -721,6 +1130,11 @@ impl JsDefaultClause {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn consequent(&self) -> JsStatementList { support::list(&self.syntax, 2usize) }
+}
+pub struct JsDefaultClauseFields {
+    pub default_token: SyntaxResult<SyntaxToken>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub consequent: JsStatementList,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDefaultImportSpecifier {
@@ -734,12 +1148,22 @@ impl JsDefaultImportSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsDefaultImportSpecifierFields {
+        JsDefaultImportSpecifierFields {
+            local_name: self.local_name(),
+            trailing_comma_token: self.trailing_comma_token(),
+        }
+    }
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn trailing_comma_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct JsDefaultImportSpecifierFields {
+    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub trailing_comma_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDirective {
@@ -753,10 +1177,20 @@ impl JsDirective {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsDirectiveFields {
+        JsDirectiveFields {
+            value_token: self.value_token(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+}
+pub struct JsDirectiveFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDoWhileStatement {
@@ -770,6 +1204,17 @@ impl JsDoWhileStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsDoWhileStatementFields {
+        JsDoWhileStatementFields {
+            do_token: self.do_token(),
+            body: self.body(),
+            while_token: self.while_token(),
+            l_paren_token: self.l_paren_token(),
+            test: self.test(),
+            r_paren_token: self.r_paren_token(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn do_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -790,6 +1235,15 @@ impl JsDoWhileStatement {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
+pub struct JsDoWhileStatementFields {
+    pub do_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsAnyStatement>,
+    pub while_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub test: SyntaxResult<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsElseClause {
     pub(crate) syntax: SyntaxNode,
@@ -802,12 +1256,22 @@ impl JsElseClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsElseClauseFields {
+        JsElseClauseFields {
+            else_token: self.else_token(),
+            alternate: self.alternate(),
+        }
+    }
     pub fn else_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn alternate(&self) -> SyntaxResult<JsAnyStatement> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsElseClauseFields {
+    pub else_token: SyntaxResult<SyntaxToken>,
+    pub alternate: SyntaxResult<JsAnyStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsEmptyClassMember {
@@ -821,9 +1285,17 @@ impl JsEmptyClassMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsEmptyClassMemberFields {
+        JsEmptyClassMemberFields {
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsEmptyClassMemberFields {
+    pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsEmptyStatement {
@@ -837,9 +1309,17 @@ impl JsEmptyStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsEmptyStatementFields {
+        JsEmptyStatementFields {
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsEmptyStatementFields {
+    pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExport {
@@ -853,12 +1333,22 @@ impl JsExport {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportFields {
+        JsExportFields {
+            export_token: self.export_token(),
+            export_clause: self.export_clause(),
+        }
+    }
     pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn export_clause(&self) -> SyntaxResult<JsAnyExportClause> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsExportFields {
+    pub export_token: SyntaxResult<SyntaxToken>,
+    pub export_clause: SyntaxResult<JsAnyExportClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportAsClause {
@@ -872,12 +1362,22 @@ impl JsExportAsClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportAsClauseFields {
+        JsExportAsClauseFields {
+            as_token: self.as_token(),
+            exported_name: self.exported_name(),
+        }
+    }
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn exported_name(&self) -> SyntaxResult<JsLiteralExportName> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsExportAsClauseFields {
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub exported_name: SyntaxResult<JsLiteralExportName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportDefaultClassClause {
@@ -891,6 +1391,20 @@ impl JsExportDefaultClassClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportDefaultClassClauseFields {
+        JsExportDefaultClassClauseFields {
+            default_token: self.default_token(),
+            abstract_token: self.abstract_token(),
+            class_token: self.class_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            extends_clause: self.extends_clause(),
+            implements_clause: self.implements_clause(),
+            l_curly_token: self.l_curly_token(),
+            members: self.members(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -914,6 +1428,18 @@ impl JsExportDefaultClassClause {
         support::required_token(&self.syntax, 9usize)
     }
 }
+pub struct JsExportDefaultClassClauseFields {
+    pub default_token: SyntaxResult<SyntaxToken>,
+    pub abstract_token: Option<SyntaxToken>,
+    pub class_token: SyntaxResult<SyntaxToken>,
+    pub id: Option<JsAnyBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub extends_clause: Option<JsExtendsClause>,
+    pub implements_clause: Option<TsImplementsClause>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub members: JsClassMemberList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportDefaultExpressionClause {
     pub(crate) syntax: SyntaxNode,
@@ -926,6 +1452,13 @@ impl JsExportDefaultExpressionClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportDefaultExpressionClauseFields {
+        JsExportDefaultExpressionClauseFields {
+            default_token: self.default_token(),
+            expression: self.expression(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -933,6 +1466,11 @@ impl JsExportDefaultExpressionClause {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+}
+pub struct JsExportDefaultExpressionClauseFields {
+    pub default_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportDefaultFunctionClause {
@@ -946,6 +1484,19 @@ impl JsExportDefaultFunctionClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportDefaultFunctionClauseFields {
+        JsExportDefaultFunctionClauseFields {
+            default_token: self.default_token(),
+            async_token: self.async_token(),
+            function_token: self.function_token(),
+            star_token: self.star_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            body: self.body(),
+        }
+    }
     pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -968,6 +1519,17 @@ impl JsExportDefaultFunctionClause {
         support::required_node(&self.syntax, 8usize)
     }
 }
+pub struct JsExportDefaultFunctionClauseFields {
+    pub default_token: SyntaxResult<SyntaxToken>,
+    pub async_token: Option<SyntaxToken>,
+    pub function_token: SyntaxResult<SyntaxToken>,
+    pub star_token: Option<SyntaxToken>,
+    pub id: Option<JsAnyBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportFromClause {
     pub(crate) syntax: SyntaxNode,
@@ -980,6 +1542,16 @@ impl JsExportFromClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportFromClauseFields {
+        JsExportFromClauseFields {
+            star_token: self.star_token(),
+            export_as: self.export_as(),
+            from_token: self.from_token(),
+            source: self.source(),
+            assertion: self.assertion(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -993,6 +1565,14 @@ impl JsExportFromClause {
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+pub struct JsExportFromClauseFields {
+    pub star_token: SyntaxResult<SyntaxToken>,
+    pub export_as: Option<JsExportAsClause>,
+    pub from_token: SyntaxResult<SyntaxToken>,
+    pub source: SyntaxResult<JsModuleSource>,
+    pub assertion: Option<JsImportAssertion>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportNamedClause {
     pub(crate) syntax: SyntaxNode,
@@ -1005,6 +1585,15 @@ impl JsExportNamedClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportNamedClauseFields {
+        JsExportNamedClauseFields {
+            type_token: self.type_token(),
+            l_curly_token: self.l_curly_token(),
+            specifiers: self.specifiers(),
+            r_curly_token: self.r_curly_token(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -1014,6 +1603,13 @@ impl JsExportNamedClause {
         support::required_token(&self.syntax, 3usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+}
+pub struct JsExportNamedClauseFields {
+    pub type_token: Option<SyntaxToken>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub specifiers: JsExportNamedSpecifierList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportNamedFromClause {
@@ -1027,6 +1623,18 @@ impl JsExportNamedFromClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportNamedFromClauseFields {
+        JsExportNamedFromClauseFields {
+            type_token: self.type_token(),
+            l_curly_token: self.l_curly_token(),
+            specifiers: self.specifiers(),
+            r_curly_token: self.r_curly_token(),
+            from_token: self.from_token(),
+            source: self.source(),
+            assertion: self.assertion(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -1046,6 +1654,16 @@ impl JsExportNamedFromClause {
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 6usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
+pub struct JsExportNamedFromClauseFields {
+    pub type_token: Option<SyntaxToken>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub specifiers: JsExportNamedFromSpecifierList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+    pub from_token: SyntaxResult<SyntaxToken>,
+    pub source: SyntaxResult<JsModuleSource>,
+    pub assertion: Option<JsImportAssertion>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportNamedFromSpecifier {
     pub(crate) syntax: SyntaxNode,
@@ -1058,11 +1676,23 @@ impl JsExportNamedFromSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportNamedFromSpecifierFields {
+        JsExportNamedFromSpecifierFields {
+            type_token: self.type_token(),
+            source_name: self.source_name(),
+            export_as: self.export_as(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn source_name(&self) -> SyntaxResult<JsLiteralExportName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 2usize) }
+}
+pub struct JsExportNamedFromSpecifierFields {
+    pub type_token: Option<SyntaxToken>,
+    pub source_name: SyntaxResult<JsLiteralExportName>,
+    pub export_as: Option<JsExportAsClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportNamedShorthandSpecifier {
@@ -1076,10 +1706,20 @@ impl JsExportNamedShorthandSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportNamedShorthandSpecifierFields {
+        JsExportNamedShorthandSpecifierFields {
+            type_token: self.type_token(),
+            name: self.name(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsReferenceIdentifier> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsExportNamedShorthandSpecifierFields {
+    pub type_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsReferenceIdentifier>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportNamedSpecifier {
@@ -1093,6 +1733,14 @@ impl JsExportNamedSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExportNamedSpecifierFields {
+        JsExportNamedSpecifierFields {
+            type_token: self.type_token(),
+            local_name: self.local_name(),
+            as_token: self.as_token(),
+            exported_name: self.exported_name(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn local_name(&self) -> SyntaxResult<JsReferenceIdentifier> {
         support::required_node(&self.syntax, 1usize)
@@ -1103,6 +1751,12 @@ impl JsExportNamedSpecifier {
     pub fn exported_name(&self) -> SyntaxResult<JsLiteralExportName> {
         support::required_node(&self.syntax, 3usize)
     }
+}
+pub struct JsExportNamedSpecifierFields {
+    pub type_token: Option<SyntaxToken>,
+    pub local_name: SyntaxResult<JsReferenceIdentifier>,
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub exported_name: SyntaxResult<JsLiteralExportName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExpressionSnipped {
@@ -1116,12 +1770,22 @@ impl JsExpressionSnipped {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExpressionSnippedFields {
+        JsExpressionSnippedFields {
+            expression: self.expression(),
+            eof_token: self.eof_token(),
+        }
+    }
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct JsExpressionSnippedFields {
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub eof_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExpressionStatement {
@@ -1135,10 +1799,20 @@ impl JsExpressionStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExpressionStatementFields {
+        JsExpressionStatementFields {
+            expression: self.expression(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+}
+pub struct JsExpressionStatementFields {
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExtendsClause {
@@ -1152,6 +1826,13 @@ impl JsExtendsClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsExtendsClauseFields {
+        JsExtendsClauseFields {
+            extends_token: self.extends_token(),
+            super_class: self.super_class(),
+            type_arguments: self.type_arguments(),
+        }
+    }
     pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1159,6 +1840,11 @@ impl JsExtendsClause {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
+}
+pub struct JsExtendsClauseFields {
+    pub extends_token: SyntaxResult<SyntaxToken>,
+    pub super_class: SyntaxResult<JsAnyExpression>,
+    pub type_arguments: Option<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsFinallyClause {
@@ -1172,12 +1858,22 @@ impl JsFinallyClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsFinallyClauseFields {
+        JsFinallyClauseFields {
+            finally_token: self.finally_token(),
+            body: self.body(),
+        }
+    }
     pub fn finally_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsFinallyClauseFields {
+    pub finally_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsBlockStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsForInStatement {
@@ -1191,6 +1887,17 @@ impl JsForInStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsForInStatementFields {
+        JsForInStatementFields {
+            for_token: self.for_token(),
+            l_paren_token: self.l_paren_token(),
+            initializer: self.initializer(),
+            in_token: self.in_token(),
+            expression: self.expression(),
+            r_paren_token: self.r_paren_token(),
+            body: self.body(),
+        }
+    }
     pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1213,6 +1920,15 @@ impl JsForInStatement {
         support::required_node(&self.syntax, 6usize)
     }
 }
+pub struct JsForInStatementFields {
+    pub for_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub initializer: SyntaxResult<JsAnyForInOrOfInitializer>,
+    pub in_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsAnyStatement>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsForOfStatement {
     pub(crate) syntax: SyntaxNode,
@@ -1225,6 +1941,18 @@ impl JsForOfStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsForOfStatementFields {
+        JsForOfStatementFields {
+            for_token: self.for_token(),
+            await_token: self.await_token(),
+            l_paren_token: self.l_paren_token(),
+            initializer: self.initializer(),
+            of_token: self.of_token(),
+            expression: self.expression(),
+            r_paren_token: self.r_paren_token(),
+            body: self.body(),
+        }
+    }
     pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1248,6 +1976,16 @@ impl JsForOfStatement {
         support::required_node(&self.syntax, 7usize)
     }
 }
+pub struct JsForOfStatementFields {
+    pub for_token: SyntaxResult<SyntaxToken>,
+    pub await_token: Option<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub initializer: SyntaxResult<JsAnyForInOrOfInitializer>,
+    pub of_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsAnyStatement>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsForStatement {
     pub(crate) syntax: SyntaxNode,
@@ -1260,6 +1998,19 @@ impl JsForStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsForStatementFields {
+        JsForStatementFields {
+            for_token: self.for_token(),
+            l_paren_token: self.l_paren_token(),
+            initializer: self.initializer(),
+            first_semi_token: self.first_semi_token(),
+            test: self.test(),
+            second_semi_token: self.second_semi_token(),
+            update: self.update(),
+            r_paren_token: self.r_paren_token(),
+            body: self.body(),
+        }
+    }
     pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1282,6 +2033,17 @@ impl JsForStatement {
         support::required_node(&self.syntax, 8usize)
     }
 }
+pub struct JsForStatementFields {
+    pub for_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub initializer: Option<JsAnyForInitializer>,
+    pub first_semi_token: SyntaxResult<SyntaxToken>,
+    pub test: Option<JsAnyExpression>,
+    pub second_semi_token: SyntaxResult<SyntaxToken>,
+    pub update: Option<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsAnyStatement>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsForVariableDeclaration {
     pub(crate) syntax: SyntaxNode,
@@ -1294,12 +2056,22 @@ impl JsForVariableDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsForVariableDeclarationFields {
+        JsForVariableDeclarationFields {
+            kind_token: self.kind_token(),
+            declarator: self.declarator(),
+        }
+    }
     pub fn kind_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn declarator(&self) -> SyntaxResult<JsVariableDeclarator> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsForVariableDeclarationFields {
+    pub kind_token: SyntaxResult<SyntaxToken>,
+    pub declarator: SyntaxResult<JsVariableDeclarator>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsFormalParameter {
@@ -1313,6 +2085,14 @@ impl JsFormalParameter {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsFormalParameterFields {
+        JsFormalParameterFields {
+            binding: self.binding(),
+            question_mark_token: self.question_mark_token(),
+            type_annotation: self.type_annotation(),
+            initializer: self.initializer(),
+        }
+    }
     pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -1323,6 +2103,12 @@ impl JsFormalParameter {
         support::node(&self.syntax, 2usize)
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+}
+pub struct JsFormalParameterFields {
+    pub binding: SyntaxResult<JsAnyBindingPattern>,
+    pub question_mark_token: Option<SyntaxToken>,
+    pub type_annotation: Option<TsTypeAnnotation>,
+    pub initializer: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionBody {
@@ -1336,6 +2122,14 @@ impl JsFunctionBody {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsFunctionBodyFields {
+        JsFunctionBodyFields {
+            l_curly_token: self.l_curly_token(),
+            directives: self.directives(),
+            statements: self.statements(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1344,6 +2138,12 @@ impl JsFunctionBody {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
+}
+pub struct JsFunctionBodyFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub directives: JsDirectiveList,
+    pub statements: JsStatementList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionDeclaration {
@@ -1357,6 +2157,18 @@ impl JsFunctionDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsFunctionDeclarationFields {
+        JsFunctionDeclarationFields {
+            async_token: self.async_token(),
+            function_token: self.function_token(),
+            star_token: self.star_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            body: self.body(),
+        }
+    }
     pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -1376,6 +2188,16 @@ impl JsFunctionDeclaration {
         support::required_node(&self.syntax, 7usize)
     }
 }
+pub struct JsFunctionDeclarationFields {
+    pub async_token: Option<SyntaxToken>,
+    pub function_token: SyntaxResult<SyntaxToken>,
+    pub star_token: Option<SyntaxToken>,
+    pub id: SyntaxResult<JsAnyBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionExpression {
     pub(crate) syntax: SyntaxNode,
@@ -1388,6 +2210,18 @@ impl JsFunctionExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsFunctionExpressionFields {
+        JsFunctionExpressionFields {
+            async_token: self.async_token(),
+            function_token: self.function_token(),
+            star_token: self.star_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            body: self.body(),
+        }
+    }
     pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -1407,6 +2241,16 @@ impl JsFunctionExpression {
         support::required_node(&self.syntax, 7usize)
     }
 }
+pub struct JsFunctionExpressionFields {
+    pub async_token: Option<SyntaxToken>,
+    pub function_token: SyntaxResult<SyntaxToken>,
+    pub star_token: Option<SyntaxToken>,
+    pub id: Option<JsAnyBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsGetterClassMember {
     pub(crate) syntax: SyntaxNode,
@@ -1419,6 +2263,19 @@ impl JsGetterClassMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsGetterClassMemberFields {
+        JsGetterClassMemberFields {
+            access_modifier: self.access_modifier(),
+            static_token: self.static_token(),
+            abstract_token: self.abstract_token(),
+            get_token: self.get_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            r_paren_token: self.r_paren_token(),
+            return_type: self.return_type(),
+            body: self.body(),
+        }
+    }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -1439,6 +2296,17 @@ impl JsGetterClassMember {
         support::required_node(&self.syntax, 8usize)
     }
 }
+pub struct JsGetterClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub static_token: Option<SyntaxToken>,
+    pub abstract_token: Option<SyntaxToken>,
+    pub get_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub return_type: Option<TsTypeAnnotation>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsGetterObjectMember {
     pub(crate) syntax: SyntaxNode,
@@ -1451,6 +2319,16 @@ impl JsGetterObjectMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsGetterObjectMemberFields {
+        JsGetterObjectMemberFields {
+            get_token: self.get_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            r_paren_token: self.r_paren_token(),
+            return_type: self.return_type(),
+            body: self.body(),
+        }
+    }
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1468,6 +2346,14 @@ impl JsGetterObjectMember {
         support::required_node(&self.syntax, 5usize)
     }
 }
+pub struct JsGetterObjectMemberFields {
+    pub get_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub return_type: Option<TsTypeAnnotation>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsIdentifierAssignment {
     pub(crate) syntax: SyntaxNode,
@@ -1480,9 +2366,17 @@ impl JsIdentifierAssignment {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsIdentifierAssignmentFields {
+        JsIdentifierAssignmentFields {
+            name_token: self.name_token(),
+        }
+    }
     pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsIdentifierAssignmentFields {
+    pub name_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsIdentifierBinding {
@@ -1496,9 +2390,17 @@ impl JsIdentifierBinding {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsIdentifierBindingFields {
+        JsIdentifierBindingFields {
+            name_token: self.name_token(),
+        }
+    }
     pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsIdentifierBindingFields {
+    pub name_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsIdentifierExpression {
@@ -1512,9 +2414,15 @@ impl JsIdentifierExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsIdentifierExpressionFields {
+        JsIdentifierExpressionFields { name: self.name() }
+    }
     pub fn name(&self) -> SyntaxResult<JsReferenceIdentifier> {
         support::required_node(&self.syntax, 0usize)
     }
+}
+pub struct JsIdentifierExpressionFields {
+    pub name: SyntaxResult<JsReferenceIdentifier>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsIfStatement {
@@ -1528,6 +2436,16 @@ impl JsIfStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsIfStatementFields {
+        JsIfStatementFields {
+            if_token: self.if_token(),
+            l_paren_token: self.l_paren_token(),
+            test: self.test(),
+            r_paren_token: self.r_paren_token(),
+            consequent: self.consequent(),
+            else_clause: self.else_clause(),
+        }
+    }
     pub fn if_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1545,6 +2463,14 @@ impl JsIfStatement {
     }
     pub fn else_clause(&self) -> Option<JsElseClause> { support::node(&self.syntax, 5usize) }
 }
+pub struct JsIfStatementFields {
+    pub if_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub test: SyntaxResult<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub consequent: SyntaxResult<JsAnyStatement>,
+    pub else_clause: Option<JsElseClause>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImport {
     pub(crate) syntax: SyntaxNode,
@@ -1557,6 +2483,13 @@ impl JsImport {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportFields {
+        JsImportFields {
+            import_token: self.import_token(),
+            import_clause: self.import_clause(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1564,6 +2497,11 @@ impl JsImport {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+}
+pub struct JsImportFields {
+    pub import_token: SyntaxResult<SyntaxToken>,
+    pub import_clause: SyntaxResult<JsAnyImportClause>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportAssertion {
@@ -1577,6 +2515,14 @@ impl JsImportAssertion {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportAssertionFields {
+        JsImportAssertionFields {
+            assert_token: self.assert_token(),
+            l_curly_token: self.l_curly_token(),
+            assertions: self.assertions(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn assert_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1587,6 +2533,12 @@ impl JsImportAssertion {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
+}
+pub struct JsImportAssertionFields {
+    pub assert_token: SyntaxResult<SyntaxToken>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub assertions: JsImportAssertionEntryList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportAssertionEntry {
@@ -1600,6 +2552,13 @@ impl JsImportAssertionEntry {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportAssertionEntryFields {
+        JsImportAssertionEntryFields {
+            key: self.key(),
+            colon_token: self.colon_token(),
+            value_token: self.value_token(),
+        }
+    }
     pub fn key(&self) -> SyntaxResult<SyntaxToken> { support::required_token(&self.syntax, 0usize) }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -1607,6 +2566,11 @@ impl JsImportAssertionEntry {
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsImportAssertionEntryFields {
+    pub key: SyntaxResult<SyntaxToken>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportBareClause {
@@ -1620,10 +2584,20 @@ impl JsImportBareClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportBareClauseFields {
+        JsImportBareClauseFields {
+            source: self.source(),
+            assertion: self.assertion(),
+        }
+    }
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 1usize) }
+}
+pub struct JsImportBareClauseFields {
+    pub source: SyntaxResult<JsModuleSource>,
+    pub assertion: Option<JsImportAssertion>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportCallExpression {
@@ -1637,12 +2611,22 @@ impl JsImportCallExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportCallExpressionFields {
+        JsImportCallExpressionFields {
+            import_token: self.import_token(),
+            arguments: self.arguments(),
+        }
+    }
     pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn arguments(&self) -> SyntaxResult<JsCallArguments> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsImportCallExpressionFields {
+    pub import_token: SyntaxResult<SyntaxToken>,
+    pub arguments: SyntaxResult<JsCallArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportDefaultClause {
@@ -1656,6 +2640,15 @@ impl JsImportDefaultClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportDefaultClauseFields {
+        JsImportDefaultClauseFields {
+            type_token: self.type_token(),
+            local_name: self.local_name(),
+            from_token: self.from_token(),
+            source: self.source(),
+            assertion: self.assertion(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
         support::required_node(&self.syntax, 1usize)
@@ -1667,6 +2660,13 @@ impl JsImportDefaultClause {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
+}
+pub struct JsImportDefaultClauseFields {
+    pub type_token: Option<SyntaxToken>,
+    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub from_token: SyntaxResult<SyntaxToken>,
+    pub source: SyntaxResult<JsModuleSource>,
+    pub assertion: Option<JsImportAssertion>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportNamedClause {
@@ -1680,6 +2680,16 @@ impl JsImportNamedClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportNamedClauseFields {
+        JsImportNamedClauseFields {
+            type_token: self.type_token(),
+            default_specifier: self.default_specifier(),
+            named_import: self.named_import(),
+            from_token: self.from_token(),
+            source: self.source(),
+            assertion: self.assertion(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn default_specifier(&self) -> Option<JsDefaultImportSpecifier> {
         support::node(&self.syntax, 1usize)
@@ -1695,6 +2705,14 @@ impl JsImportNamedClause {
     }
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
 }
+pub struct JsImportNamedClauseFields {
+    pub type_token: Option<SyntaxToken>,
+    pub default_specifier: Option<JsDefaultImportSpecifier>,
+    pub named_import: SyntaxResult<JsAnyNamedImport>,
+    pub from_token: SyntaxResult<SyntaxToken>,
+    pub source: SyntaxResult<JsModuleSource>,
+    pub assertion: Option<JsImportAssertion>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportNamespaceClause {
     pub(crate) syntax: SyntaxNode,
@@ -1707,6 +2725,17 @@ impl JsImportNamespaceClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportNamespaceClauseFields {
+        JsImportNamespaceClauseFields {
+            type_token: self.type_token(),
+            star_token: self.star_token(),
+            as_token: self.as_token(),
+            local_name: self.local_name(),
+            from_token: self.from_token(),
+            source: self.source(),
+            assertion: self.assertion(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -1725,6 +2754,15 @@ impl JsImportNamespaceClause {
     }
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 6usize) }
 }
+pub struct JsImportNamespaceClauseFields {
+    pub type_token: Option<SyntaxToken>,
+    pub star_token: SyntaxResult<SyntaxToken>,
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub from_token: SyntaxResult<SyntaxToken>,
+    pub source: SyntaxResult<JsModuleSource>,
+    pub assertion: Option<JsImportAssertion>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsInExpression {
     pub(crate) syntax: SyntaxNode,
@@ -1737,6 +2775,13 @@ impl JsInExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsInExpressionFields {
+        JsInExpressionFields {
+            property: self.property(),
+            in_token: self.in_token(),
+            object: self.object(),
+        }
+    }
     pub fn property(&self) -> SyntaxResult<JsAnyInProperty> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -1746,6 +2791,11 @@ impl JsInExpression {
     pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsInExpressionFields {
+    pub property: SyntaxResult<JsAnyInProperty>,
+    pub in_token: SyntaxResult<SyntaxToken>,
+    pub object: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsInitializerClause {
@@ -1759,12 +2809,22 @@ impl JsInitializerClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsInitializerClauseFields {
+        JsInitializerClauseFields {
+            eq_token: self.eq_token(),
+            expression: self.expression(),
+        }
+    }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsInitializerClauseFields {
+    pub eq_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsInstanceofExpression {
@@ -1778,6 +2838,13 @@ impl JsInstanceofExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsInstanceofExpressionFields {
+        JsInstanceofExpressionFields {
+            left: self.left(),
+            instanceof_token: self.instanceof_token(),
+            right: self.right(),
+        }
+    }
     pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -1787,6 +2854,11 @@ impl JsInstanceofExpression {
     pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsInstanceofExpressionFields {
+    pub left: SyntaxResult<JsAnyExpression>,
+    pub instanceof_token: SyntaxResult<SyntaxToken>,
+    pub right: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsLabeledStatement {
@@ -1800,6 +2872,13 @@ impl JsLabeledStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsLabeledStatementFields {
+        JsLabeledStatementFields {
+            label_token: self.label_token(),
+            colon_token: self.colon_token(),
+            body: self.body(),
+        }
+    }
     pub fn label_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -1809,6 +2888,11 @@ impl JsLabeledStatement {
     pub fn body(&self) -> SyntaxResult<JsAnyStatement> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsLabeledStatementFields {
+    pub label_token: SyntaxResult<SyntaxToken>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsAnyStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsLiteralExportName {
@@ -1822,9 +2906,17 @@ impl JsLiteralExportName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsLiteralExportNameFields {
+        JsLiteralExportNameFields {
+            value: self.value(),
+        }
+    }
     pub fn value(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsLiteralExportNameFields {
+    pub value: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsLiteralMemberName {
@@ -1838,9 +2930,17 @@ impl JsLiteralMemberName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsLiteralMemberNameFields {
+        JsLiteralMemberNameFields {
+            value: self.value(),
+        }
+    }
     pub fn value(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsLiteralMemberNameFields {
+    pub value: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsLogicalExpression {
@@ -1854,6 +2954,13 @@ impl JsLogicalExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsLogicalExpressionFields {
+        JsLogicalExpressionFields {
+            left: self.left(),
+            operator: self.operator(),
+            right: self.right(),
+        }
+    }
     pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -1863,6 +2970,11 @@ impl JsLogicalExpression {
     pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsLogicalExpressionFields {
+    pub left: SyntaxResult<JsAnyExpression>,
+    pub operator: SyntaxResult<SyntaxToken>,
+    pub right: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsMethodClassMember {
@@ -1876,6 +2988,21 @@ impl JsMethodClassMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsMethodClassMemberFields {
+        JsMethodClassMemberFields {
+            access_modifier: self.access_modifier(),
+            static_token: self.static_token(),
+            abstract_token: self.abstract_token(),
+            async_token: self.async_token(),
+            star_token: self.star_token(),
+            name: self.name(),
+            question_mark_token: self.question_mark_token(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            body: self.body(),
+        }
+    }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -1900,6 +3027,19 @@ impl JsMethodClassMember {
         support::required_node(&self.syntax, 10usize)
     }
 }
+pub struct JsMethodClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub static_token: Option<SyntaxToken>,
+    pub abstract_token: Option<SyntaxToken>,
+    pub async_token: Option<SyntaxToken>,
+    pub star_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub question_mark_token: SyntaxResult<SyntaxToken>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsMethodObjectMember {
     pub(crate) syntax: SyntaxNode,
@@ -1912,6 +3052,17 @@ impl JsMethodObjectMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsMethodObjectMemberFields {
+        JsMethodObjectMemberFields {
+            async_token: self.async_token(),
+            star_token: self.star_token(),
+            name: self.name(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            body: self.body(),
+        }
+    }
     pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
@@ -1930,6 +3081,15 @@ impl JsMethodObjectMember {
         support::required_node(&self.syntax, 6usize)
     }
 }
+pub struct JsMethodObjectMemberFields {
+    pub async_token: Option<SyntaxToken>,
+    pub star_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsModule {
     pub(crate) syntax: SyntaxNode,
@@ -1942,12 +3102,26 @@ impl JsModule {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsModuleFields {
+        JsModuleFields {
+            interpreter_token: self.interpreter_token(),
+            directives: self.directives(),
+            items: self.items(),
+            eof_token: self.eof_token(),
+        }
+    }
     pub fn interpreter_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn directives(&self) -> JsDirectiveList { support::list(&self.syntax, 1usize) }
     pub fn items(&self) -> JsModuleItemList { support::list(&self.syntax, 2usize) }
     pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
+}
+pub struct JsModuleFields {
+    pub interpreter_token: Option<SyntaxToken>,
+    pub directives: JsDirectiveList,
+    pub items: JsModuleItemList,
+    pub eof_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsModuleSource {
@@ -1961,9 +3135,17 @@ impl JsModuleSource {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsModuleSourceFields {
+        JsModuleSourceFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsModuleSourceFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsName {
@@ -1977,9 +3159,17 @@ impl JsName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsNameFields {
+        JsNameFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsNameFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNamedImportSpecifier {
@@ -1993,6 +3183,14 @@ impl JsNamedImportSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsNamedImportSpecifierFields {
+        JsNamedImportSpecifierFields {
+            type_token: self.type_token(),
+            name: self.name(),
+            as_token: self.as_token(),
+            local_name: self.local_name(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsLiteralExportName> {
         support::required_node(&self.syntax, 1usize)
@@ -2003,6 +3201,12 @@ impl JsNamedImportSpecifier {
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
         support::required_node(&self.syntax, 3usize)
     }
+}
+pub struct JsNamedImportSpecifierFields {
+    pub type_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsLiteralExportName>,
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub local_name: SyntaxResult<JsAnyBinding>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNamedImportSpecifiers {
@@ -2016,6 +3220,13 @@ impl JsNamedImportSpecifiers {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsNamedImportSpecifiersFields {
+        JsNamedImportSpecifiersFields {
+            l_curly_token: self.l_curly_token(),
+            specifiers: self.specifiers(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2023,6 +3234,11 @@ impl JsNamedImportSpecifiers {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsNamedImportSpecifiersFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub specifiers: JsNamedImportSpecifierList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNamespaceImportSpecifier {
@@ -2036,6 +3252,13 @@ impl JsNamespaceImportSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsNamespaceImportSpecifierFields {
+        JsNamespaceImportSpecifierFields {
+            star_token: self.star_token(),
+            as_token: self.as_token(),
+            local_name: self.local_name(),
+        }
+    }
     pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2045,6 +3268,11 @@ impl JsNamespaceImportSpecifier {
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsNamespaceImportSpecifierFields {
+    pub star_token: SyntaxResult<SyntaxToken>,
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub local_name: SyntaxResult<JsAnyBinding>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNewExpression {
@@ -2058,6 +3286,14 @@ impl JsNewExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsNewExpressionFields {
+        JsNewExpressionFields {
+            new_token: self.new_token(),
+            callee: self.callee(),
+            type_arguments: self.type_arguments(),
+            arguments: self.arguments(),
+        }
+    }
     pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2066,6 +3302,12 @@ impl JsNewExpression {
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
     pub fn arguments(&self) -> Option<JsCallArguments> { support::node(&self.syntax, 3usize) }
+}
+pub struct JsNewExpressionFields {
+    pub new_token: SyntaxResult<SyntaxToken>,
+    pub callee: SyntaxResult<JsAnyExpression>,
+    pub type_arguments: Option<TsTypeArguments>,
+    pub arguments: Option<JsCallArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNullLiteralExpression {
@@ -2079,9 +3321,17 @@ impl JsNullLiteralExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsNullLiteralExpressionFields {
+        JsNullLiteralExpressionFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsNullLiteralExpressionFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNumberLiteralExpression {
@@ -2095,9 +3345,17 @@ impl JsNumberLiteralExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsNumberLiteralExpressionFields {
+        JsNumberLiteralExpressionFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsNumberLiteralExpressionFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectAssignmentPattern {
@@ -2111,6 +3369,13 @@ impl JsObjectAssignmentPattern {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectAssignmentPatternFields {
+        JsObjectAssignmentPatternFields {
+            l_curly_token: self.l_curly_token(),
+            properties: self.properties(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2120,6 +3385,11 @@ impl JsObjectAssignmentPattern {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsObjectAssignmentPatternFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub properties: JsObjectAssignmentPatternPropertyList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectAssignmentPatternProperty {
@@ -2133,6 +3403,14 @@ impl JsObjectAssignmentPatternProperty {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectAssignmentPatternPropertyFields {
+        JsObjectAssignmentPatternPropertyFields {
+            member: self.member(),
+            colon_token: self.colon_token(),
+            pattern: self.pattern(),
+            init: self.init(),
+        }
+    }
     pub fn member(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -2143,6 +3421,12 @@ impl JsObjectAssignmentPatternProperty {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+}
+pub struct JsObjectAssignmentPatternPropertyFields {
+    pub member: SyntaxResult<JsAnyObjectMemberName>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
+    pub init: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectAssignmentPatternRest {
@@ -2156,12 +3440,22 @@ impl JsObjectAssignmentPatternRest {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectAssignmentPatternRestFields {
+        JsObjectAssignmentPatternRestFields {
+            dotdotdot_token: self.dotdotdot_token(),
+            target: self.target(),
+        }
+    }
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn target(&self) -> SyntaxResult<JsAnyAssignment> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsObjectAssignmentPatternRestFields {
+    pub dotdotdot_token: SyntaxResult<SyntaxToken>,
+    pub target: SyntaxResult<JsAnyAssignment>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectAssignmentPatternShorthandProperty {
@@ -2175,10 +3469,20 @@ impl JsObjectAssignmentPatternShorthandProperty {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectAssignmentPatternShorthandPropertyFields {
+        JsObjectAssignmentPatternShorthandPropertyFields {
+            identifier: self.identifier(),
+            init: self.init(),
+        }
+    }
     pub fn identifier(&self) -> SyntaxResult<JsAnyAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
+}
+pub struct JsObjectAssignmentPatternShorthandPropertyFields {
+    pub identifier: SyntaxResult<JsAnyAssignment>,
+    pub init: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectBindingPattern {
@@ -2192,6 +3496,13 @@ impl JsObjectBindingPattern {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectBindingPatternFields {
+        JsObjectBindingPatternFields {
+            l_curly_token: self.l_curly_token(),
+            properties: self.properties(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2201,6 +3512,11 @@ impl JsObjectBindingPattern {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsObjectBindingPatternFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub properties: JsObjectBindingPatternPropertyList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectBindingPatternProperty {
@@ -2214,6 +3530,14 @@ impl JsObjectBindingPatternProperty {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectBindingPatternPropertyFields {
+        JsObjectBindingPatternPropertyFields {
+            member: self.member(),
+            colon_token: self.colon_token(),
+            pattern: self.pattern(),
+            init: self.init(),
+        }
+    }
     pub fn member(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -2224,6 +3548,12 @@ impl JsObjectBindingPatternProperty {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+}
+pub struct JsObjectBindingPatternPropertyFields {
+    pub member: SyntaxResult<JsAnyObjectMemberName>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub pattern: SyntaxResult<JsAnyBindingPattern>,
+    pub init: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectBindingPatternRest {
@@ -2237,12 +3567,22 @@ impl JsObjectBindingPatternRest {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectBindingPatternRestFields {
+        JsObjectBindingPatternRestFields {
+            dotdotdot_token: self.dotdotdot_token(),
+            binding: self.binding(),
+        }
+    }
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn binding(&self) -> SyntaxResult<JsAnyBinding> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsObjectBindingPatternRestFields {
+    pub dotdotdot_token: SyntaxResult<SyntaxToken>,
+    pub binding: SyntaxResult<JsAnyBinding>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectBindingPatternShorthandProperty {
@@ -2256,10 +3596,20 @@ impl JsObjectBindingPatternShorthandProperty {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectBindingPatternShorthandPropertyFields {
+        JsObjectBindingPatternShorthandPropertyFields {
+            identifier: self.identifier(),
+            init: self.init(),
+        }
+    }
     pub fn identifier(&self) -> SyntaxResult<JsAnyBinding> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
+}
+pub struct JsObjectBindingPatternShorthandPropertyFields {
+    pub identifier: SyntaxResult<JsAnyBinding>,
+    pub init: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectExpression {
@@ -2273,6 +3623,13 @@ impl JsObjectExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsObjectExpressionFields {
+        JsObjectExpressionFields {
+            l_curly_token: self.l_curly_token(),
+            members: self.members(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2280,6 +3637,11 @@ impl JsObjectExpression {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsObjectExpressionFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub members: JsObjectMemberList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsParameters {
@@ -2293,6 +3655,13 @@ impl JsParameters {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsParametersFields {
+        JsParametersFields {
+            l_paren_token: self.l_paren_token(),
+            items: self.items(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2300,6 +3669,11 @@ impl JsParameters {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsParametersFields {
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub items: JsParameterList,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsParenthesizedAssignment {
@@ -2313,6 +3687,13 @@ impl JsParenthesizedAssignment {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsParenthesizedAssignmentFields {
+        JsParenthesizedAssignmentFields {
+            l_paren_token: self.l_paren_token(),
+            assignment: self.assignment(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2322,6 +3703,11 @@ impl JsParenthesizedAssignment {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsParenthesizedAssignmentFields {
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub assignment: SyntaxResult<JsAnyAssignment>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsParenthesizedExpression {
@@ -2335,6 +3721,13 @@ impl JsParenthesizedExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsParenthesizedExpressionFields {
+        JsParenthesizedExpressionFields {
+            l_paren_token: self.l_paren_token(),
+            expression: self.expression(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2344,6 +3737,11 @@ impl JsParenthesizedExpression {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsParenthesizedExpressionFields {
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPostUpdateExpression {
@@ -2357,12 +3755,22 @@ impl JsPostUpdateExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsPostUpdateExpressionFields {
+        JsPostUpdateExpressionFields {
+            operand: self.operand(),
+            operator: self.operator(),
+        }
+    }
     pub fn operand(&self) -> SyntaxResult<JsAnyAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct JsPostUpdateExpressionFields {
+    pub operand: SyntaxResult<JsAnyAssignment>,
+    pub operator: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPreUpdateExpression {
@@ -2376,12 +3784,22 @@ impl JsPreUpdateExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsPreUpdateExpressionFields {
+        JsPreUpdateExpressionFields {
+            operator: self.operator(),
+            operand: self.operand(),
+        }
+    }
     pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn operand(&self) -> SyntaxResult<JsAnyAssignment> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsPreUpdateExpressionFields {
+    pub operator: SyntaxResult<SyntaxToken>,
+    pub operand: SyntaxResult<JsAnyAssignment>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPrivateClassMemberName {
@@ -2395,12 +3813,22 @@ impl JsPrivateClassMemberName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsPrivateClassMemberNameFields {
+        JsPrivateClassMemberNameFields {
+            hash_token: self.hash_token(),
+            id_token: self.id_token(),
+        }
+    }
     pub fn hash_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn id_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct JsPrivateClassMemberNameFields {
+    pub hash_token: SyntaxResult<SyntaxToken>,
+    pub id_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPrivateName {
@@ -2414,12 +3842,22 @@ impl JsPrivateName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsPrivateNameFields {
+        JsPrivateNameFields {
+            hash_token: self.hash_token(),
+            value_token: self.value_token(),
+        }
+    }
     pub fn hash_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct JsPrivateNameFields {
+    pub hash_token: SyntaxResult<SyntaxToken>,
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPropertyClassMember {
@@ -2433,6 +3871,19 @@ impl JsPropertyClassMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsPropertyClassMemberFields {
+        JsPropertyClassMemberFields {
+            declare_token: self.declare_token(),
+            access_modifier: self.access_modifier(),
+            static_token: self.static_token(),
+            readonly_token: self.readonly_token(),
+            abstract_token: self.abstract_token(),
+            name: self.name(),
+            property_annotation: self.property_annotation(),
+            value: self.value(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -2447,6 +3898,17 @@ impl JsPropertyClassMember {
     pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 7usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 8usize) }
 }
+pub struct JsPropertyClassMemberFields {
+    pub declare_token: Option<SyntaxToken>,
+    pub access_modifier: Option<SyntaxToken>,
+    pub static_token: Option<SyntaxToken>,
+    pub readonly_token: Option<SyntaxToken>,
+    pub abstract_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub property_annotation: Option<TsAnyPropertyAnnotation>,
+    pub value: Option<JsInitializerClause>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPropertyObjectMember {
     pub(crate) syntax: SyntaxNode,
@@ -2459,6 +3921,13 @@ impl JsPropertyObjectMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsPropertyObjectMemberFields {
+        JsPropertyObjectMemberFields {
+            name: self.name(),
+            colon_token: self.colon_token(),
+            value: self.value(),
+        }
+    }
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -2468,6 +3937,11 @@ impl JsPropertyObjectMember {
     pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsPropertyObjectMemberFields {
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub value: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsReferenceIdentifier {
@@ -2481,9 +3955,17 @@ impl JsReferenceIdentifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsReferenceIdentifierFields {
+        JsReferenceIdentifierFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsReferenceIdentifierFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsRegexLiteralExpression {
@@ -2497,9 +3979,17 @@ impl JsRegexLiteralExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsRegexLiteralExpressionFields {
+        JsRegexLiteralExpressionFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsRegexLiteralExpressionFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsRestParameter {
@@ -2513,6 +4003,13 @@ impl JsRestParameter {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsRestParameterFields {
+        JsRestParameterFields {
+            dotdotdot_token: self.dotdotdot_token(),
+            binding: self.binding(),
+            type_annotation: self.type_annotation(),
+        }
+    }
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2522,6 +4019,11 @@ impl JsRestParameter {
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 2usize)
     }
+}
+pub struct JsRestParameterFields {
+    pub dotdotdot_token: SyntaxResult<SyntaxToken>,
+    pub binding: SyntaxResult<JsAnyBindingPattern>,
+    pub type_annotation: Option<TsTypeAnnotation>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsReturnStatement {
@@ -2535,11 +4037,23 @@ impl JsReturnStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsReturnStatementFields {
+        JsReturnStatementFields {
+            return_token: self.return_token(),
+            argument: self.argument(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn return_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 1usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+}
+pub struct JsReturnStatementFields {
+    pub return_token: SyntaxResult<SyntaxToken>,
+    pub argument: Option<JsAnyExpression>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsScript {
@@ -2553,12 +4067,26 @@ impl JsScript {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsScriptFields {
+        JsScriptFields {
+            interpreter_token: self.interpreter_token(),
+            directives: self.directives(),
+            statements: self.statements(),
+            eof_token: self.eof_token(),
+        }
+    }
     pub fn interpreter_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn directives(&self) -> JsDirectiveList { support::list(&self.syntax, 1usize) }
     pub fn statements(&self) -> JsStatementList { support::list(&self.syntax, 2usize) }
     pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
+}
+pub struct JsScriptFields {
+    pub interpreter_token: Option<SyntaxToken>,
+    pub directives: JsDirectiveList,
+    pub statements: JsStatementList,
+    pub eof_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsSequenceExpression {
@@ -2572,6 +4100,13 @@ impl JsSequenceExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsSequenceExpressionFields {
+        JsSequenceExpressionFields {
+            left: self.left(),
+            comma_token: self.comma_token(),
+            right: self.right(),
+        }
+    }
     pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -2581,6 +4116,11 @@ impl JsSequenceExpression {
     pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsSequenceExpressionFields {
+    pub left: SyntaxResult<JsAnyExpression>,
+    pub comma_token: SyntaxResult<SyntaxToken>,
+    pub right: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsSetterClassMember {
@@ -2594,6 +4134,19 @@ impl JsSetterClassMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsSetterClassMemberFields {
+        JsSetterClassMemberFields {
+            access_modifier: self.access_modifier(),
+            static_token: self.static_token(),
+            abstract_token: self.abstract_token(),
+            set_token: self.set_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            parameter: self.parameter(),
+            r_paren_token: self.r_paren_token(),
+            body: self.body(),
+        }
+    }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -2616,6 +4169,17 @@ impl JsSetterClassMember {
         support::required_node(&self.syntax, 8usize)
     }
 }
+pub struct JsSetterClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub static_token: Option<SyntaxToken>,
+    pub abstract_token: Option<SyntaxToken>,
+    pub set_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsSetterObjectMember {
     pub(crate) syntax: SyntaxNode,
@@ -2628,6 +4192,16 @@ impl JsSetterObjectMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsSetterObjectMemberFields {
+        JsSetterObjectMemberFields {
+            set_token: self.set_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            parameter: self.parameter(),
+            r_paren_token: self.r_paren_token(),
+            body: self.body(),
+        }
+    }
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2647,6 +4221,14 @@ impl JsSetterObjectMember {
         support::required_node(&self.syntax, 5usize)
     }
 }
+pub struct JsSetterObjectMemberFields {
+    pub set_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsFunctionBody>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsShorthandNamedImportSpecifier {
     pub(crate) syntax: SyntaxNode,
@@ -2659,10 +4241,20 @@ impl JsShorthandNamedImportSpecifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsShorthandNamedImportSpecifierFields {
+        JsShorthandNamedImportSpecifierFields {
+            type_token: self.type_token(),
+            local_name: self.local_name(),
+        }
+    }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsShorthandNamedImportSpecifierFields {
+    pub type_token: Option<SyntaxToken>,
+    pub local_name: SyntaxResult<JsAnyBinding>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsShorthandPropertyObjectMember {
@@ -2676,9 +4268,15 @@ impl JsShorthandPropertyObjectMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsShorthandPropertyObjectMemberFields {
+        JsShorthandPropertyObjectMemberFields { name: self.name() }
+    }
     pub fn name(&self) -> SyntaxResult<JsReferenceIdentifier> {
         support::required_node(&self.syntax, 0usize)
     }
+}
+pub struct JsShorthandPropertyObjectMemberFields {
+    pub name: SyntaxResult<JsReferenceIdentifier>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsSpread {
@@ -2692,12 +4290,22 @@ impl JsSpread {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsSpreadFields {
+        JsSpreadFields {
+            dotdotdot_token: self.dotdotdot_token(),
+            argument: self.argument(),
+        }
+    }
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsSpreadFields {
+    pub dotdotdot_token: SyntaxResult<SyntaxToken>,
+    pub argument: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticInitializationBlockClassMember {
@@ -2711,6 +4319,14 @@ impl JsStaticInitializationBlockClassMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsStaticInitializationBlockClassMemberFields {
+        JsStaticInitializationBlockClassMemberFields {
+            static_token: self.static_token(),
+            l_curly_token: self.l_curly_token(),
+            statements: self.statements(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn static_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2721,6 +4337,12 @@ impl JsStaticInitializationBlockClassMember {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
+}
+pub struct JsStaticInitializationBlockClassMemberFields {
+    pub static_token: SyntaxResult<SyntaxToken>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub statements: JsStatementList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticMemberAssignment {
@@ -2734,6 +4356,13 @@ impl JsStaticMemberAssignment {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsStaticMemberAssignmentFields {
+        JsStaticMemberAssignmentFields {
+            object: self.object(),
+            dot_token: self.dot_token(),
+            member: self.member(),
+        }
+    }
     pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -2741,6 +4370,11 @@ impl JsStaticMemberAssignment {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct JsStaticMemberAssignmentFields {
+    pub object: SyntaxResult<JsAnyExpression>,
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub member: SyntaxResult<JsAnyName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticMemberExpression {
@@ -2754,6 +4388,13 @@ impl JsStaticMemberExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsStaticMemberExpressionFields {
+        JsStaticMemberExpressionFields {
+            object: self.object(),
+            operator: self.operator(),
+            member: self.member(),
+        }
+    }
     pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -2761,6 +4402,11 @@ impl JsStaticMemberExpression {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct JsStaticMemberExpressionFields {
+    pub object: SyntaxResult<JsAnyExpression>,
+    pub operator: SyntaxResult<SyntaxToken>,
+    pub member: SyntaxResult<JsAnyName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteralExpression {
@@ -2774,9 +4420,17 @@ impl JsStringLiteralExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsStringLiteralExpressionFields {
+        JsStringLiteralExpressionFields {
+            value_token: self.value_token(),
+        }
+    }
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsStringLiteralExpressionFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsSuperExpression {
@@ -2790,9 +4444,17 @@ impl JsSuperExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsSuperExpressionFields {
+        JsSuperExpressionFields {
+            super_token: self.super_token(),
+        }
+    }
     pub fn super_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsSuperExpressionFields {
+    pub super_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsSwitchStatement {
@@ -2806,6 +4468,17 @@ impl JsSwitchStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsSwitchStatementFields {
+        JsSwitchStatementFields {
+            switch_token: self.switch_token(),
+            l_paren_token: self.l_paren_token(),
+            discriminant: self.discriminant(),
+            r_paren_token: self.r_paren_token(),
+            l_curly_token: self.l_curly_token(),
+            cases: self.cases(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn switch_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2826,6 +4499,15 @@ impl JsSwitchStatement {
         support::required_token(&self.syntax, 6usize)
     }
 }
+pub struct JsSwitchStatementFields {
+    pub switch_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub discriminant: SyntaxResult<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub cases: JsSwitchCaseList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsTemplate {
     pub(crate) syntax: SyntaxNode,
@@ -2838,6 +4520,15 @@ impl JsTemplate {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsTemplateFields {
+        JsTemplateFields {
+            tag: self.tag(),
+            type_arguments: self.type_arguments(),
+            l_tick_token: self.l_tick_token(),
+            elements: self.elements(),
+            r_tick_token: self.r_tick_token(),
+        }
+    }
     pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 0usize) }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
     pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -2847,6 +4538,13 @@ impl JsTemplate {
     pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
+}
+pub struct JsTemplateFields {
+    pub tag: Option<JsAnyExpression>,
+    pub type_arguments: Option<TsTypeArguments>,
+    pub l_tick_token: SyntaxResult<SyntaxToken>,
+    pub elements: JsTemplateElementList,
+    pub r_tick_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsTemplateChunkElement {
@@ -2860,9 +4558,17 @@ impl JsTemplateChunkElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsTemplateChunkElementFields {
+        JsTemplateChunkElementFields {
+            template_chunk_token: self.template_chunk_token(),
+        }
+    }
     pub fn template_chunk_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsTemplateChunkElementFields {
+    pub template_chunk_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsTemplateElement {
@@ -2876,6 +4582,13 @@ impl JsTemplateElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsTemplateElementFields {
+        JsTemplateElementFields {
+            dollar_curly_token: self.dollar_curly_token(),
+            expression: self.expression(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn dollar_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2885,6 +4598,11 @@ impl JsTemplateElement {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct JsTemplateElementFields {
+    pub dollar_curly_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsThisExpression {
@@ -2898,9 +4616,17 @@ impl JsThisExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsThisExpressionFields {
+        JsThisExpressionFields {
+            this_token: self.this_token(),
+        }
+    }
     pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct JsThisExpressionFields {
+    pub this_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsThrowStatement {
@@ -2914,6 +4640,13 @@ impl JsThrowStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsThrowStatementFields {
+        JsThrowStatementFields {
+            throw_token: self.throw_token(),
+            argument: self.argument(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn throw_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2921,6 +4654,11 @@ impl JsThrowStatement {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+}
+pub struct JsThrowStatementFields {
+    pub throw_token: SyntaxResult<SyntaxToken>,
+    pub argument: SyntaxResult<JsAnyExpression>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsTryFinallyStatement {
@@ -2934,6 +4672,14 @@ impl JsTryFinallyStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsTryFinallyStatementFields {
+        JsTryFinallyStatementFields {
+            try_token: self.try_token(),
+            body: self.body(),
+            catch_clause: self.catch_clause(),
+            finally_clause: self.finally_clause(),
+        }
+    }
     pub fn try_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2944,6 +4690,12 @@ impl JsTryFinallyStatement {
     pub fn finally_clause(&self) -> SyntaxResult<JsFinallyClause> {
         support::required_node(&self.syntax, 3usize)
     }
+}
+pub struct JsTryFinallyStatementFields {
+    pub try_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsBlockStatement>,
+    pub catch_clause: Option<JsCatchClause>,
+    pub finally_clause: SyntaxResult<JsFinallyClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsTryStatement {
@@ -2957,6 +4709,13 @@ impl JsTryStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsTryStatementFields {
+        JsTryStatementFields {
+            try_token: self.try_token(),
+            body: self.body(),
+            catch_clause: self.catch_clause(),
+        }
+    }
     pub fn try_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -2966,6 +4725,11 @@ impl JsTryStatement {
     pub fn catch_clause(&self) -> SyntaxResult<JsCatchClause> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct JsTryStatementFields {
+    pub try_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsBlockStatement>,
+    pub catch_clause: SyntaxResult<JsCatchClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnaryExpression {
@@ -2979,12 +4743,22 @@ impl JsUnaryExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsUnaryExpressionFields {
+        JsUnaryExpressionFields {
+            operator: self.operator(),
+            argument: self.argument(),
+        }
+    }
     pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsUnaryExpressionFields {
+    pub operator: SyntaxResult<SyntaxToken>,
+    pub argument: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclaration {
@@ -2998,10 +4772,20 @@ impl JsVariableDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsVariableDeclarationFields {
+        JsVariableDeclarationFields {
+            kind: self.kind(),
+            declarators: self.declarators(),
+        }
+    }
     pub fn kind(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn declarators(&self) -> JsVariableDeclaratorList { support::list(&self.syntax, 1usize) }
+}
+pub struct JsVariableDeclarationFields {
+    pub kind: SyntaxResult<SyntaxToken>,
+    pub declarators: JsVariableDeclaratorList,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarationClause {
@@ -3015,10 +4799,20 @@ impl JsVariableDeclarationClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsVariableDeclarationClauseFields {
+        JsVariableDeclarationClauseFields {
+            declaration: self.declaration(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn declaration(&self) -> SyntaxResult<JsVariableDeclaration> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+}
+pub struct JsVariableDeclarationClauseFields {
+    pub declaration: SyntaxResult<JsVariableDeclaration>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarator {
@@ -3032,6 +4826,13 @@ impl JsVariableDeclarator {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsVariableDeclaratorFields {
+        JsVariableDeclaratorFields {
+            id: self.id(),
+            variable_annotation: self.variable_annotation(),
+            initializer: self.initializer(),
+        }
+    }
     pub fn id(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -3039,6 +4840,11 @@ impl JsVariableDeclarator {
         support::node(&self.syntax, 1usize)
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 2usize) }
+}
+pub struct JsVariableDeclaratorFields {
+    pub id: SyntaxResult<JsAnyBindingPattern>,
+    pub variable_annotation: Option<TsAnyVariableAnnotation>,
+    pub initializer: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableStatement {
@@ -3052,10 +4858,20 @@ impl JsVariableStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsVariableStatementFields {
+        JsVariableStatementFields {
+            declaration: self.declaration(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn declaration(&self) -> SyntaxResult<JsVariableDeclaration> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+}
+pub struct JsVariableStatementFields {
+    pub declaration: SyntaxResult<JsVariableDeclaration>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsWhileStatement {
@@ -3069,6 +4885,15 @@ impl JsWhileStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsWhileStatementFields {
+        JsWhileStatementFields {
+            while_token: self.while_token(),
+            l_paren_token: self.l_paren_token(),
+            test: self.test(),
+            r_paren_token: self.r_paren_token(),
+            body: self.body(),
+        }
+    }
     pub fn while_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3085,6 +4910,13 @@ impl JsWhileStatement {
         support::required_node(&self.syntax, 4usize)
     }
 }
+pub struct JsWhileStatementFields {
+    pub while_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub test: SyntaxResult<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsAnyStatement>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsWithStatement {
     pub(crate) syntax: SyntaxNode,
@@ -3097,6 +4929,15 @@ impl JsWithStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsWithStatementFields {
+        JsWithStatementFields {
+            with_token: self.with_token(),
+            l_paren_token: self.l_paren_token(),
+            object: self.object(),
+            r_paren_token: self.r_paren_token(),
+            body: self.body(),
+        }
+    }
     pub fn with_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3113,6 +4954,13 @@ impl JsWithStatement {
         support::required_node(&self.syntax, 4usize)
     }
 }
+pub struct JsWithStatementFields {
+    pub with_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub object: SyntaxResult<JsAnyExpression>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<JsAnyStatement>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsYieldArgument {
     pub(crate) syntax: SyntaxNode,
@@ -3125,10 +4973,20 @@ impl JsYieldArgument {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsYieldArgumentFields {
+        JsYieldArgumentFields {
+            star_token: self.star_token(),
+            expression: self.expression(),
+        }
+    }
     pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct JsYieldArgumentFields {
+    pub star_token: Option<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsYieldExpression {
@@ -3142,10 +5000,20 @@ impl JsYieldExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsYieldExpressionFields {
+        JsYieldExpressionFields {
+            yield_token: self.yield_token(),
+            argument: self.argument(),
+        }
+    }
     pub fn yield_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn argument(&self) -> Option<JsYieldArgument> { support::node(&self.syntax, 1usize) }
+}
+pub struct JsYieldExpressionFields {
+    pub yield_token: SyntaxResult<SyntaxToken>,
+    pub argument: Option<JsYieldArgument>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -3159,6 +5027,13 @@ impl NewTarget {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> NewTargetFields {
+        NewTargetFields {
+            new_token: self.new_token(),
+            dot_token: self.dot_token(),
+            target_token: self.target_token(),
+        }
+    }
     pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3168,6 +5043,11 @@ impl NewTarget {
     pub fn target_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct NewTargetFields {
+    pub new_token: SyntaxResult<SyntaxToken>,
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub target_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAnyType {
@@ -3181,9 +5061,17 @@ impl TsAnyType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAnyTypeFields {
+        TsAnyTypeFields {
+            any_token: self.any_token(),
+        }
+    }
     pub fn any_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsAnyTypeFields {
+    pub any_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsArrayType {
@@ -3197,6 +5085,13 @@ impl TsArrayType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsArrayTypeFields {
+        TsArrayTypeFields {
+            element_type: self.element_type(),
+            l_brack_token: self.l_brack_token(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn element_type(&self) -> SyntaxResult<TsType> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -3206,6 +5101,11 @@ impl TsArrayType {
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsArrayTypeFields {
+    pub element_type: SyntaxResult<TsType>,
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAsExpression {
@@ -3219,6 +5119,13 @@ impl TsAsExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAsExpressionFields {
+        TsAsExpressionFields {
+            expression: self.expression(),
+            as_token: self.as_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -3226,6 +5133,11 @@ impl TsAsExpression {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct TsAsExpressionFields {
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsBigIntLiteralType {
@@ -3239,10 +5151,20 @@ impl TsBigIntLiteralType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsBigIntLiteralTypeFields {
+        TsBigIntLiteralTypeFields {
+            minus_token: self.minus_token(),
+            literal_token: self.literal_token(),
+        }
+    }
     pub fn minus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn literal_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct TsBigIntLiteralTypeFields {
+    pub minus_token: Option<SyntaxToken>,
+    pub literal_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsBigintType {
@@ -3256,9 +5178,17 @@ impl TsBigintType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsBigintTypeFields {
+        TsBigintTypeFields {
+            bigint_token: self.bigint_token(),
+        }
+    }
     pub fn bigint_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsBigintTypeFields {
+    pub bigint_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsBooleanLiteralType {
@@ -3272,9 +5202,17 @@ impl TsBooleanLiteralType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsBooleanLiteralTypeFields {
+        TsBooleanLiteralTypeFields {
+            literal: self.literal(),
+        }
+    }
     pub fn literal(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsBooleanLiteralTypeFields {
+    pub literal: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsBooleanType {
@@ -3288,9 +5226,17 @@ impl TsBooleanType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsBooleanTypeFields {
+        TsBooleanTypeFields {
+            boolean_token: self.boolean_token(),
+        }
+    }
     pub fn boolean_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsBooleanTypeFields {
+    pub boolean_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsCallSignatureTypeMember {
@@ -3304,6 +5250,14 @@ impl TsCallSignatureTypeMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsCallSignatureTypeMemberFields {
+        TsCallSignatureTypeMemberFields {
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            separator_token: self.separator_token(),
+        }
+    }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 0usize)
     }
@@ -3314,6 +5268,12 @@ impl TsCallSignatureTypeMember {
         support::node(&self.syntax, 2usize)
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+}
+pub struct TsCallSignatureTypeMemberFields {
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub separator_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConditionalType {
@@ -3327,6 +5287,17 @@ impl TsConditionalType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsConditionalTypeFields {
+        TsConditionalTypeFields {
+            check_type: self.check_type(),
+            extends_token: self.extends_token(),
+            extends_type: self.extends_type(),
+            question_mark_token: self.question_mark_token(),
+            true_type: self.true_type(),
+            colon_token: self.colon_token(),
+            false_type: self.false_type(),
+        }
+    }
     pub fn check_type(&self) -> SyntaxResult<TsType> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -3347,6 +5318,15 @@ impl TsConditionalType {
         support::required_node(&self.syntax, 6usize)
     }
 }
+pub struct TsConditionalTypeFields {
+    pub check_type: SyntaxResult<TsType>,
+    pub extends_token: SyntaxResult<SyntaxToken>,
+    pub extends_type: SyntaxResult<TsType>,
+    pub question_mark_token: SyntaxResult<SyntaxToken>,
+    pub true_type: SyntaxResult<TsType>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub false_type: SyntaxResult<TsType>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
@@ -3359,6 +5339,15 @@ impl TsConstructSignatureTypeMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsConstructSignatureTypeMemberFields {
+        TsConstructSignatureTypeMemberFields {
+            new_token: self.new_token(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            type_annotation: self.type_annotation(),
+            separator_token: self.separator_token(),
+        }
+    }
     pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3373,6 +5362,13 @@ impl TsConstructSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
+pub struct TsConstructSignatureTypeMemberFields {
+    pub new_token: SyntaxResult<SyntaxToken>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub type_annotation: Option<TsTypeAnnotation>,
+    pub separator_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorType {
     pub(crate) syntax: SyntaxNode,
@@ -3385,6 +5381,16 @@ impl TsConstructorType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsConstructorTypeFields {
+        TsConstructorTypeFields {
+            abstract_token: self.abstract_token(),
+            new_token: self.new_token(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            fat_arrow_token: self.fat_arrow_token(),
+            return_type: self.return_type(),
+        }
+    }
     pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -3402,6 +5408,14 @@ impl TsConstructorType {
         support::required_node(&self.syntax, 5usize)
     }
 }
+pub struct TsConstructorTypeFields {
+    pub abstract_token: Option<SyntaxToken>,
+    pub new_token: SyntaxResult<SyntaxToken>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub fat_arrow_token: SyntaxResult<SyntaxToken>,
+    pub return_type: SyntaxResult<TsType>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDeclareFunctionDeclaration {
     pub(crate) syntax: SyntaxNode,
@@ -3414,6 +5428,17 @@ impl TsDeclareFunctionDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDeclareFunctionDeclarationFields {
+        TsDeclareFunctionDeclarationFields {
+            async_token: self.async_token(),
+            function_token: self.function_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -3430,6 +5455,15 @@ impl TsDeclareFunctionDeclaration {
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
+pub struct TsDeclareFunctionDeclarationFields {
+    pub async_token: Option<SyntaxToken>,
+    pub function_token: SyntaxResult<SyntaxToken>,
+    pub id: SyntaxResult<JsAnyBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDeclareStatement {
     pub(crate) syntax: SyntaxNode,
@@ -3442,12 +5476,22 @@ impl TsDeclareStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDeclareStatementFields {
+        TsDeclareStatementFields {
+            declare_token: self.declare_token(),
+            declaration: self.declaration(),
+        }
+    }
     pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn declaration(&self) -> SyntaxResult<JsAnyDeclarationClause> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsDeclareStatementFields {
+    pub declare_token: SyntaxResult<SyntaxToken>,
+    pub declaration: SyntaxResult<JsAnyDeclarationClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDefaultTypeClause {
@@ -3461,10 +5505,20 @@ impl TsDefaultTypeClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDefaultTypeClauseFields {
+        TsDefaultTypeClauseFields {
+            eq_token: self.eq_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsDefaultTypeClauseFields {
+    pub eq_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDefinitePropertyAnnotation {
@@ -3478,12 +5532,22 @@ impl TsDefinitePropertyAnnotation {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDefinitePropertyAnnotationFields {
+        TsDefinitePropertyAnnotationFields {
+            excl_token: self.excl_token(),
+            type_annotation: self.type_annotation(),
+        }
+    }
     pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsDefinitePropertyAnnotationFields {
+    pub excl_token: SyntaxResult<SyntaxToken>,
+    pub type_annotation: SyntaxResult<TsTypeAnnotation>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDefiniteVariableAnnotation {
@@ -3497,12 +5561,22 @@ impl TsDefiniteVariableAnnotation {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDefiniteVariableAnnotationFields {
+        TsDefiniteVariableAnnotationFields {
+            excl_token: self.excl_token(),
+            type_annotation: self.type_annotation(),
+        }
+    }
     pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsDefiniteVariableAnnotationFields {
+    pub excl_token: SyntaxResult<SyntaxToken>,
+    pub type_annotation: SyntaxResult<TsTypeAnnotation>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsEmptyExternalModuleDeclarationBody {
@@ -3516,9 +5590,17 @@ impl TsEmptyExternalModuleDeclarationBody {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsEmptyExternalModuleDeclarationBodyFields {
+        TsEmptyExternalModuleDeclarationBodyFields {
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsEmptyExternalModuleDeclarationBodyFields {
+    pub semicolon_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsEnumDeclaration {
@@ -3532,6 +5614,16 @@ impl TsEnumDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsEnumDeclarationFields {
+        TsEnumDeclarationFields {
+            const_token: self.const_token(),
+            enum_token: self.enum_token(),
+            id: self.id(),
+            l_curly_token: self.l_curly_token(),
+            members: self.members(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -3545,6 +5637,14 @@ impl TsEnumDeclaration {
         support::required_token(&self.syntax, 5usize)
     }
 }
+pub struct TsEnumDeclarationFields {
+    pub const_token: Option<SyntaxToken>,
+    pub enum_token: SyntaxResult<SyntaxToken>,
+    pub id: SyntaxResult<JsAnyBinding>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub members: TsEnumMemberList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsEnumMember {
     pub(crate) syntax: SyntaxNode,
@@ -3557,10 +5657,20 @@ impl TsEnumMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsEnumMemberFields {
+        TsEnumMemberFields {
+            name: self.name(),
+            initializer: self.initializer(),
+        }
+    }
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
+}
+pub struct TsEnumMemberFields {
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub initializer: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExportAsNamespaceClause {
@@ -3574,6 +5684,14 @@ impl TsExportAsNamespaceClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsExportAsNamespaceClauseFields {
+        TsExportAsNamespaceClauseFields {
+            as_token: self.as_token(),
+            namespace_token: self.namespace_token(),
+            name: self.name(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3582,6 +5700,12 @@ impl TsExportAsNamespaceClause {
     }
     pub fn name(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+}
+pub struct TsExportAsNamespaceClauseFields {
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub namespace_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsName>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExportAssignmentClause {
@@ -3595,6 +5719,13 @@ impl TsExportAssignmentClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsExportAssignmentClauseFields {
+        TsExportAssignmentClauseFields {
+            eq_token: self.eq_token(),
+            expression: self.expression(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3602,6 +5733,11 @@ impl TsExportAssignmentClause {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+}
+pub struct TsExportAssignmentClauseFields {
+    pub eq_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExportDeclareClause {
@@ -3615,12 +5751,22 @@ impl TsExportDeclareClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsExportDeclareClauseFields {
+        TsExportDeclareClauseFields {
+            declare_token: self.declare_token(),
+            declaration: self.declaration(),
+        }
+    }
     pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn declaration(&self) -> SyntaxResult<JsAnyDeclarationClause> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsExportDeclareClauseFields {
+    pub declare_token: SyntaxResult<SyntaxToken>,
+    pub declaration: SyntaxResult<JsAnyDeclarationClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExtendsClause {
@@ -3634,10 +5780,20 @@ impl TsExtendsClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsExtendsClauseFields {
+        TsExtendsClauseFields {
+            extends_token: self.extends_token(),
+            types: self.types(),
+        }
+    }
     pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
+}
+pub struct TsExtendsClauseFields {
+    pub extends_token: SyntaxResult<SyntaxToken>,
+    pub types: TsTypeList,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleDeclaration {
@@ -3651,6 +5807,13 @@ impl TsExternalModuleDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsExternalModuleDeclarationFields {
+        TsExternalModuleDeclarationFields {
+            module_token: self.module_token(),
+            source: self.source(),
+            body: self.body(),
+        }
+    }
     pub fn module_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3660,6 +5823,11 @@ impl TsExternalModuleDeclaration {
     pub fn body(&self) -> Option<TsAnyExternalModuleDeclarationBody> {
         support::node(&self.syntax, 2usize)
     }
+}
+pub struct TsExternalModuleDeclarationFields {
+    pub module_token: SyntaxResult<SyntaxToken>,
+    pub source: SyntaxResult<JsModuleSource>,
+    pub body: Option<TsAnyExternalModuleDeclarationBody>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleReference {
@@ -3673,6 +5841,14 @@ impl TsExternalModuleReference {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsExternalModuleReferenceFields {
+        TsExternalModuleReferenceFields {
+            require_token: self.require_token(),
+            l_paren_token: self.l_paren_token(),
+            source: self.source(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
     pub fn require_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3686,6 +5862,12 @@ impl TsExternalModuleReference {
         support::required_token(&self.syntax, 3usize)
     }
 }
+pub struct TsExternalModuleReferenceFields {
+    pub require_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub source: SyntaxResult<JsModuleSource>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsFunctionType {
     pub(crate) syntax: SyntaxNode,
@@ -3698,6 +5880,14 @@ impl TsFunctionType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsFunctionTypeFields {
+        TsFunctionTypeFields {
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            fat_arrow_token: self.fat_arrow_token(),
+            return_type: self.return_type(),
+        }
+    }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 0usize)
     }
@@ -3711,6 +5901,12 @@ impl TsFunctionType {
         support::required_node(&self.syntax, 3usize)
     }
 }
+pub struct TsFunctionTypeFields {
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub fat_arrow_token: SyntaxResult<SyntaxToken>,
+    pub return_type: SyntaxResult<TsAnyReturnType>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsGetterSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
@@ -3723,6 +5919,16 @@ impl TsGetterSignatureTypeMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsGetterSignatureTypeMemberFields {
+        TsGetterSignatureTypeMemberFields {
+            get_token: self.get_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            r_paren_token: self.r_paren_token(),
+            type_annotation: self.type_annotation(),
+            separator_token: self.separator_token(),
+        }
+    }
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3740,6 +5946,14 @@ impl TsGetterSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+pub struct TsGetterSignatureTypeMemberFields {
+    pub get_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub type_annotation: Option<TsTypeAnnotation>,
+    pub separator_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsGlobalDeclaration {
     pub(crate) syntax: SyntaxNode,
@@ -3752,12 +5966,22 @@ impl TsGlobalDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsGlobalDeclarationFields {
+        TsGlobalDeclarationFields {
+            global_token: self.global_token(),
+            body: self.body(),
+        }
+    }
     pub fn global_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn body(&self) -> SyntaxResult<TsModuleBlock> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsGlobalDeclarationFields {
+    pub global_token: SyntaxResult<SyntaxToken>,
+    pub body: SyntaxResult<TsModuleBlock>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIdentifierBinding {
@@ -3771,9 +5995,17 @@ impl TsIdentifierBinding {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsIdentifierBindingFields {
+        TsIdentifierBindingFields {
+            name_token: self.name_token(),
+        }
+    }
     pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsIdentifierBindingFields {
+    pub name_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImplementsClause {
@@ -3787,10 +6019,20 @@ impl TsImplementsClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsImplementsClauseFields {
+        TsImplementsClauseFields {
+            implements_token: self.implements_token(),
+            types: self.types(),
+        }
+    }
     pub fn implements_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
+}
+pub struct TsImplementsClauseFields {
+    pub implements_token: SyntaxResult<SyntaxToken>,
+    pub types: TsTypeList,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImportEqualsDeclaration {
@@ -3804,6 +6046,15 @@ impl TsImportEqualsDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsImportEqualsDeclarationFields {
+        TsImportEqualsDeclarationFields {
+            import_token: self.import_token(),
+            id: self.id(),
+            eq_token: self.eq_token(),
+            module_reference: self.module_reference(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3815,6 +6066,13 @@ impl TsImportEqualsDeclaration {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+}
+pub struct TsImportEqualsDeclarationFields {
+    pub import_token: SyntaxResult<SyntaxToken>,
+    pub id: SyntaxResult<JsAnyBinding>,
+    pub eq_token: SyntaxResult<SyntaxToken>,
+    pub module_reference: SyntaxResult<TsAnyModuleReference>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImportType {
@@ -3828,6 +6086,17 @@ impl TsImportType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsImportTypeFields {
+        TsImportTypeFields {
+            typeof_token: self.typeof_token(),
+            import_token: self.import_token(),
+            l_paren_token: self.l_paren_token(),
+            argument_token: self.argument_token(),
+            r_paren_token: self.r_paren_token(),
+            qualifier_clause: self.qualifier_clause(),
+            type_arguments: self.type_arguments(),
+        }
+    }
     pub fn typeof_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -3846,6 +6115,15 @@ impl TsImportType {
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 6usize) }
 }
+pub struct TsImportTypeFields {
+    pub typeof_token: Option<SyntaxToken>,
+    pub import_token: SyntaxResult<SyntaxToken>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub argument_token: SyntaxResult<SyntaxToken>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub qualifier_clause: Option<TsImportTypeQualifier>,
+    pub type_arguments: Option<TsTypeArguments>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImportTypeQualifier {
     pub(crate) syntax: SyntaxNode,
@@ -3858,10 +6136,20 @@ impl TsImportTypeQualifier {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsImportTypeQualifierFields {
+        TsImportTypeQualifierFields {
+            dot_token: self.dot_token(),
+            right: self.right(),
+        }
+    }
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn right(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsImportTypeQualifierFields {
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub right: SyntaxResult<TsAnyName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureParameter {
@@ -3875,12 +6163,22 @@ impl TsIndexSignatureParameter {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsIndexSignatureParameterFields {
+        TsIndexSignatureParameterFields {
+            binding: self.binding(),
+            type_annotation: self.type_annotation(),
+        }
+    }
     pub fn binding(&self) -> SyntaxResult<JsIdentifierBinding> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsIndexSignatureParameterFields {
+    pub binding: SyntaxResult<JsIdentifierBinding>,
+    pub type_annotation: SyntaxResult<TsTypeAnnotation>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureTypeMember {
@@ -3894,6 +6192,16 @@ impl TsIndexSignatureTypeMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsIndexSignatureTypeMemberFields {
+        TsIndexSignatureTypeMemberFields {
+            readonly_token: self.readonly_token(),
+            l_brack_token: self.l_brack_token(),
+            parameter: self.parameter(),
+            r_brack_token: self.r_brack_token(),
+            type_annotation: self.type_annotation(),
+            separator_token: self.separator_token(),
+        }
+    }
     pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -3909,6 +6217,14 @@ impl TsIndexSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+pub struct TsIndexSignatureTypeMemberFields {
+    pub readonly_token: Option<SyntaxToken>,
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub parameter: SyntaxResult<TsIndexSignatureParameter>,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
+    pub type_annotation: SyntaxResult<TsTypeAnnotation>,
+    pub separator_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexedAccessType {
     pub(crate) syntax: SyntaxNode,
@@ -3921,6 +6237,14 @@ impl TsIndexedAccessType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsIndexedAccessTypeFields {
+        TsIndexedAccessTypeFields {
+            object_type: self.object_type(),
+            l_brack_token: self.l_brack_token(),
+            index_type: self.index_type(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn object_type(&self) -> SyntaxResult<TsType> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -3934,6 +6258,12 @@ impl TsIndexedAccessType {
         support::required_token(&self.syntax, 3usize)
     }
 }
+pub struct TsIndexedAccessTypeFields {
+    pub object_type: SyntaxResult<TsType>,
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub index_type: SyntaxResult<TsType>,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsInferType {
     pub(crate) syntax: SyntaxNode,
@@ -3946,12 +6276,22 @@ impl TsInferType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsInferTypeFields {
+        TsInferTypeFields {
+            infer_token: self.infer_token(),
+            type_parameter: self.type_parameter(),
+        }
+    }
     pub fn infer_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn type_parameter(&self) -> SyntaxResult<TsTypeParameterName> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsInferTypeFields {
+    pub infer_token: SyntaxResult<SyntaxToken>,
+    pub type_parameter: SyntaxResult<TsTypeParameterName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsInterfaceDeclaration {
@@ -3965,6 +6305,17 @@ impl TsInterfaceDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsInterfaceDeclarationFields {
+        TsInterfaceDeclarationFields {
+            interface_token: self.interface_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            extends_clause: self.extends_clause(),
+            l_curly_token: self.l_curly_token(),
+            members: self.members(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn interface_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3983,6 +6334,15 @@ impl TsInterfaceDeclaration {
         support::required_token(&self.syntax, 6usize)
     }
 }
+pub struct TsInterfaceDeclarationFields {
+    pub interface_token: SyntaxResult<SyntaxToken>,
+    pub id: SyntaxResult<TsIdentifierBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub extends_clause: Option<TsExtendsClause>,
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub members: TsTypeMemberList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIntersectionType {
     pub(crate) syntax: SyntaxNode,
@@ -3995,10 +6355,20 @@ impl TsIntersectionType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn leading_separator_token_token(&self) -> Option<SyntaxToken> {
+    pub fn as_fields(&self) -> TsIntersectionTypeFields {
+        TsIntersectionTypeFields {
+            leading_separator_token: self.leading_separator_token(),
+            types: self.types(),
+        }
+    }
+    pub fn leading_separator_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 0usize)
     }
     pub fn types(&self) -> TsIntersectionTypeElementList { support::list(&self.syntax, 1usize) }
+}
+pub struct TsIntersectionTypeFields {
+    pub leading_separator_token: Option<SyntaxToken>,
+    pub types: TsIntersectionTypeElementList,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedType {
@@ -4012,6 +6382,22 @@ impl TsMappedType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsMappedTypeFields {
+        TsMappedTypeFields {
+            l_curly_token: self.l_curly_token(),
+            readonly_modifier: self.readonly_modifier(),
+            l_brack_token: self.l_brack_token(),
+            property_name: self.property_name(),
+            in_token: self.in_token(),
+            keys_type: self.keys_type(),
+            as_clause: self.as_clause(),
+            r_brack_token: self.r_brack_token(),
+            optional_modifier: self.optional_modifier(),
+            mapped_type: self.mapped_type(),
+            semicolon_token: self.semicolon_token(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4041,6 +6427,20 @@ impl TsMappedType {
         support::required_token(&self.syntax, 11usize)
     }
 }
+pub struct TsMappedTypeFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub readonly_modifier: Option<TsMappedTypeReadonlyModifierClause>,
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub property_name: SyntaxResult<TsTypeParameterName>,
+    pub in_token: SyntaxResult<SyntaxToken>,
+    pub keys_type: SyntaxResult<TsType>,
+    pub as_clause: Option<TsMappedTypeAsClause>,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
+    pub optional_modifier: Option<TsMappedTypeOptionalModifierClause>,
+    pub mapped_type: Option<TsTypeAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedTypeAsClause {
     pub(crate) syntax: SyntaxNode,
@@ -4053,10 +6453,20 @@ impl TsMappedTypeAsClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsMappedTypeAsClauseFields {
+        TsMappedTypeAsClauseFields {
+            as_token: self.as_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsMappedTypeAsClauseFields {
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedTypeOptionalModifierClause {
@@ -4070,12 +6480,22 @@ impl TsMappedTypeOptionalModifierClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsMappedTypeOptionalModifierClauseFields {
+        TsMappedTypeOptionalModifierClauseFields {
+            operator_token: self.operator_token(),
+            question_mark_token: self.question_mark_token(),
+        }
+    }
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct TsMappedTypeOptionalModifierClauseFields {
+    pub operator_token: SyntaxResult<SyntaxToken>,
+    pub question_mark_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedTypeReadonlyModifierClause {
@@ -4089,12 +6509,22 @@ impl TsMappedTypeReadonlyModifierClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsMappedTypeReadonlyModifierClauseFields {
+        TsMappedTypeReadonlyModifierClauseFields {
+            operator_token: self.operator_token(),
+            readonly_token: self.readonly_token(),
+        }
+    }
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct TsMappedTypeReadonlyModifierClauseFields {
+    pub operator_token: SyntaxResult<SyntaxToken>,
+    pub readonly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMethodSignatureTypeMember {
@@ -4108,6 +6538,16 @@ impl TsMethodSignatureTypeMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsMethodSignatureTypeMemberFields {
+        TsMethodSignatureTypeMemberFields {
+            name: self.name(),
+            optional_token: self.optional_token(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            separator_token: self.separator_token(),
+        }
+    }
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -4123,6 +6563,14 @@ impl TsMethodSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+pub struct TsMethodSignatureTypeMemberFields {
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub optional_token: Option<SyntaxToken>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub separator_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsModuleBlock {
     pub(crate) syntax: SyntaxNode,
@@ -4135,6 +6583,13 @@ impl TsModuleBlock {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsModuleBlockFields {
+        TsModuleBlockFields {
+            l_curly_token: self.l_curly_token(),
+            items: self.items(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4142,6 +6597,11 @@ impl TsModuleBlock {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsModuleBlockFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub items: JsModuleItemList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsModuleDeclaration {
@@ -4155,6 +6615,13 @@ impl TsModuleDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsModuleDeclarationFields {
+        TsModuleDeclarationFields {
+            module_or_namespace: self.module_or_namespace(),
+            name: self.name(),
+            body: self.body(),
+        }
+    }
     pub fn module_or_namespace(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4164,6 +6631,11 @@ impl TsModuleDeclaration {
     pub fn body(&self) -> SyntaxResult<TsModuleBlock> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct TsModuleDeclarationFields {
+    pub module_or_namespace: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<TsAnyModuleName>,
+    pub body: SyntaxResult<TsModuleBlock>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNameWithTypeArguments {
@@ -4177,8 +6649,18 @@ impl TsNameWithTypeArguments {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNameWithTypeArgumentsFields {
+        TsNameWithTypeArgumentsFields {
+            name: self.name(),
+            type_arguments: self.type_arguments(),
+        }
+    }
     pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
+}
+pub struct TsNameWithTypeArgumentsFields {
+    pub name: SyntaxResult<TsAnyName>,
+    pub type_arguments: Option<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNamedTupleTypeElement {
@@ -4192,6 +6674,15 @@ impl TsNamedTupleTypeElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNamedTupleTypeElementFields {
+        TsNamedTupleTypeElementFields {
+            dotdotdot_token: self.dotdotdot_token(),
+            name: self.name(),
+            question_mark_token: self.question_mark_token(),
+            colon_token: self.colon_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn dotdotdot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 1usize) }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
@@ -4201,6 +6692,13 @@ impl TsNamedTupleTypeElement {
         support::required_token(&self.syntax, 3usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
+}
+pub struct TsNamedTupleTypeElementFields {
+    pub dotdotdot_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsName>,
+    pub question_mark_token: Option<SyntaxToken>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNeverType {
@@ -4214,9 +6712,17 @@ impl TsNeverType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNeverTypeFields {
+        TsNeverTypeFields {
+            never_token: self.never_token(),
+        }
+    }
     pub fn never_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsNeverTypeFields {
+    pub never_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNonNullAssertionAssignment {
@@ -4230,12 +6736,22 @@ impl TsNonNullAssertionAssignment {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNonNullAssertionAssignmentFields {
+        TsNonNullAssertionAssignmentFields {
+            assignment: self.assignment(),
+            excl_token: self.excl_token(),
+        }
+    }
     pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct TsNonNullAssertionAssignmentFields {
+    pub assignment: SyntaxResult<JsAnyAssignment>,
+    pub excl_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNonNullAssertionExpression {
@@ -4249,12 +6765,22 @@ impl TsNonNullAssertionExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNonNullAssertionExpressionFields {
+        TsNonNullAssertionExpressionFields {
+            expression: self.expression(),
+            excl_token: self.excl_token(),
+        }
+    }
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct TsNonNullAssertionExpressionFields {
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub excl_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNonPrimitiveType {
@@ -4268,9 +6794,17 @@ impl TsNonPrimitiveType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNonPrimitiveTypeFields {
+        TsNonPrimitiveTypeFields {
+            object_token: self.object_token(),
+        }
+    }
     pub fn object_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsNonPrimitiveTypeFields {
+    pub object_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNullLiteralType {
@@ -4284,9 +6818,17 @@ impl TsNullLiteralType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNullLiteralTypeFields {
+        TsNullLiteralTypeFields {
+            literal_token: self.literal_token(),
+        }
+    }
     pub fn literal_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsNullLiteralTypeFields {
+    pub literal_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNumberLiteralType {
@@ -4300,10 +6842,20 @@ impl TsNumberLiteralType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNumberLiteralTypeFields {
+        TsNumberLiteralTypeFields {
+            minus_token: self.minus_token(),
+            literal_token: self.literal_token(),
+        }
+    }
     pub fn minus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn literal_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct TsNumberLiteralTypeFields {
+    pub minus_token: Option<SyntaxToken>,
+    pub literal_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNumberType {
@@ -4317,9 +6869,17 @@ impl TsNumberType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsNumberTypeFields {
+        TsNumberTypeFields {
+            number_token: self.number_token(),
+        }
+    }
     pub fn number_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsNumberTypeFields {
+    pub number_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsObjectType {
@@ -4333,6 +6893,13 @@ impl TsObjectType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsObjectTypeFields {
+        TsObjectTypeFields {
+            l_curly_token: self.l_curly_token(),
+            members: self.members(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4340,6 +6907,11 @@ impl TsObjectType {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsObjectTypeFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub members: TsTypeMemberList,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsOptionalPropertyAnnotation {
@@ -4353,12 +6925,22 @@ impl TsOptionalPropertyAnnotation {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsOptionalPropertyAnnotationFields {
+        TsOptionalPropertyAnnotationFields {
+            question_mark_token: self.question_mark_token(),
+            type_annotation: self.type_annotation(),
+        }
+    }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 1usize)
     }
+}
+pub struct TsOptionalPropertyAnnotationFields {
+    pub question_mark_token: SyntaxResult<SyntaxToken>,
+    pub type_annotation: Option<TsTypeAnnotation>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsOptionalTupleTypeElement {
@@ -4372,10 +6954,20 @@ impl TsOptionalTupleTypeElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsOptionalTupleTypeElementFields {
+        TsOptionalTupleTypeElementFields {
+            ty: self.ty(),
+            question_mark_token: self.question_mark_token(),
+        }
+    }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 0usize) }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
+}
+pub struct TsOptionalTupleTypeElementFields {
+    pub ty: SyntaxResult<TsType>,
+    pub question_mark_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsParenthesizedType {
@@ -4389,6 +6981,13 @@ impl TsParenthesizedType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsParenthesizedTypeFields {
+        TsParenthesizedTypeFields {
+            l_paren_token: self.l_paren_token(),
+            ty: self.ty(),
+            r_paren_token: self.r_paren_token(),
+        }
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4396,6 +6995,11 @@ impl TsParenthesizedType {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsParenthesizedTypeFields {
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertyParameter {
@@ -4409,12 +7013,22 @@ impl TsPropertyParameter {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsPropertyParameterFields {
+        TsPropertyParameterFields {
+            accessibility: self.accessibility(),
+            formal_parameter: self.formal_parameter(),
+        }
+    }
     pub fn accessibility(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsPropertyParameterFields {
+    pub accessibility: SyntaxResult<SyntaxToken>,
+    pub formal_parameter: SyntaxResult<JsAnyFormalParameter>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertySignatureTypeMember {
@@ -4428,6 +7042,15 @@ impl TsPropertySignatureTypeMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsPropertySignatureTypeMemberFields {
+        TsPropertySignatureTypeMemberFields {
+            readonly_token: self.readonly_token(),
+            name: self.name(),
+            optional_token: self.optional_token(),
+            type_annotation: self.type_annotation(),
+            separator_token: self.separator_token(),
+        }
+    }
     pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 1usize)
@@ -4437,6 +7060,13 @@ impl TsPropertySignatureTypeMember {
         support::node(&self.syntax, 3usize)
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+}
+pub struct TsPropertySignatureTypeMemberFields {
+    pub readonly_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub optional_token: Option<SyntaxToken>,
+    pub type_annotation: Option<TsTypeAnnotation>,
+    pub separator_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsQualifiedModuleName {
@@ -4450,6 +7080,13 @@ impl TsQualifiedModuleName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsQualifiedModuleNameFields {
+        TsQualifiedModuleNameFields {
+            left: self.left(),
+            dot_token: self.dot_token(),
+            right: self.right(),
+        }
+    }
     pub fn left(&self) -> SyntaxResult<TsAnyModuleName> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -4457,6 +7094,11 @@ impl TsQualifiedModuleName {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn right(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct TsQualifiedModuleNameFields {
+    pub left: SyntaxResult<TsAnyModuleName>,
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub right: SyntaxResult<JsName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsQualifiedName {
@@ -4470,11 +7112,23 @@ impl TsQualifiedName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsQualifiedNameFields {
+        TsQualifiedNameFields {
+            left: self.left(),
+            dot_token: self.dot_token(),
+            right: self.right(),
+        }
+    }
     pub fn left(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn right(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct TsQualifiedNameFields {
+    pub left: SyntaxResult<TsAnyName>,
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub right: SyntaxResult<JsName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsReadonlyPropertyParameter {
@@ -4488,6 +7142,13 @@ impl TsReadonlyPropertyParameter {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsReadonlyPropertyParameterFields {
+        TsReadonlyPropertyParameterFields {
+            accessibility: self.accessibility(),
+            readonly_token: self.readonly_token(),
+            formal_parameter: self.formal_parameter(),
+        }
+    }
     pub fn accessibility(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
@@ -4495,6 +7156,11 @@ impl TsReadonlyPropertyParameter {
     pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
         support::required_node(&self.syntax, 2usize)
     }
+}
+pub struct TsReadonlyPropertyParameterFields {
+    pub accessibility: Option<SyntaxToken>,
+    pub readonly_token: SyntaxResult<SyntaxToken>,
+    pub formal_parameter: SyntaxResult<JsAnyFormalParameter>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsReferenceType {
@@ -4508,8 +7174,18 @@ impl TsReferenceType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsReferenceTypeFields {
+        TsReferenceTypeFields {
+            name: self.name(),
+            type_arguments: self.type_arguments(),
+        }
+    }
     pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
+}
+pub struct TsReferenceTypeFields {
+    pub name: SyntaxResult<TsAnyName>,
+    pub type_arguments: Option<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsRestTupleTypeElement {
@@ -4523,10 +7199,20 @@ impl TsRestTupleTypeElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsRestTupleTypeElementFields {
+        TsRestTupleTypeElementFields {
+            dotdotdot_token: self.dotdotdot_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsRestTupleTypeElementFields {
+    pub dotdotdot_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsReturnTypeAnnotation {
@@ -4540,12 +7226,22 @@ impl TsReturnTypeAnnotation {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsReturnTypeAnnotationFields {
+        TsReturnTypeAnnotationFields {
+            colon_token: self.colon_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsAnyReturnType> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsReturnTypeAnnotationFields {
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsAnyReturnType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSetterSignatureTypeMember {
@@ -4559,6 +7255,16 @@ impl TsSetterSignatureTypeMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsSetterSignatureTypeMemberFields {
+        TsSetterSignatureTypeMemberFields {
+            set_token: self.set_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            parameter: self.parameter(),
+            r_paren_token: self.r_paren_token(),
+            separator_token: self.separator_token(),
+        }
+    }
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4576,6 +7282,14 @@ impl TsSetterSignatureTypeMember {
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+pub struct TsSetterSignatureTypeMemberFields {
+    pub set_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub separator_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsStringLiteralType {
     pub(crate) syntax: SyntaxNode,
@@ -4588,9 +7302,17 @@ impl TsStringLiteralType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsStringLiteralTypeFields {
+        TsStringLiteralTypeFields {
+            literal_token: self.literal_token(),
+        }
+    }
     pub fn literal_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsStringLiteralTypeFields {
+    pub literal_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsStringType {
@@ -4604,9 +7326,17 @@ impl TsStringType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsStringTypeFields {
+        TsStringTypeFields {
+            string_token: self.string_token(),
+        }
+    }
     pub fn string_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsStringTypeFields {
+    pub string_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSymbolType {
@@ -4620,9 +7350,17 @@ impl TsSymbolType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsSymbolTypeFields {
+        TsSymbolTypeFields {
+            symbol_token: self.symbol_token(),
+        }
+    }
     pub fn symbol_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsSymbolTypeFields {
+    pub symbol_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplateChunkElement {
@@ -4636,9 +7374,17 @@ impl TsTemplateChunkElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTemplateChunkElementFields {
+        TsTemplateChunkElementFields {
+            template_chunk_token: self.template_chunk_token(),
+        }
+    }
     pub fn template_chunk_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsTemplateChunkElementFields {
+    pub template_chunk_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplateElement {
@@ -4652,6 +7398,13 @@ impl TsTemplateElement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTemplateElementFields {
+        TsTemplateElementFields {
+            dollar_curly_token: self.dollar_curly_token(),
+            ty: self.ty(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
     pub fn dollar_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4659,6 +7412,11 @@ impl TsTemplateElement {
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsTemplateElementFields {
+    pub dollar_curly_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplateLiteralType {
@@ -4672,6 +7430,13 @@ impl TsTemplateLiteralType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTemplateLiteralTypeFields {
+        TsTemplateLiteralTypeFields {
+            l_tick_token: self.l_tick_token(),
+            elements: self.elements(),
+            r_tick_token: self.r_tick_token(),
+        }
+    }
     pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4679,6 +7444,11 @@ impl TsTemplateLiteralType {
     pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsTemplateLiteralTypeFields {
+    pub l_tick_token: SyntaxResult<SyntaxToken>,
+    pub elements: TsTemplateElementList,
+    pub r_tick_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsThisParameter {
@@ -4692,12 +7462,22 @@ impl TsThisParameter {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsThisParameterFields {
+        TsThisParameterFields {
+            this_token: self.this_token(),
+            type_annotation: self.type_annotation(),
+        }
+    }
     pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 1usize)
     }
+}
+pub struct TsThisParameterFields {
+    pub this_token: SyntaxResult<SyntaxToken>,
+    pub type_annotation: Option<TsTypeAnnotation>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsThisType {
@@ -4711,9 +7491,17 @@ impl TsThisType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsThisTypeFields {
+        TsThisTypeFields {
+            this_token: self.this_token(),
+        }
+    }
     pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsThisTypeFields {
+    pub this_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTupleType {
@@ -4727,6 +7515,13 @@ impl TsTupleType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTupleTypeFields {
+        TsTupleTypeFields {
+            l_brack_token: self.l_brack_token(),
+            elements: self.elements(),
+            r_brack_token: self.r_brack_token(),
+        }
+    }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4734,6 +7529,11 @@ impl TsTupleType {
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsTupleTypeFields {
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub elements: TsTupleTypeElementList,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAliasDeclaration {
@@ -4747,6 +7547,16 @@ impl TsTypeAliasDeclaration {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeAliasDeclarationFields {
+        TsTypeAliasDeclarationFields {
+            type_token: self.type_token(),
+            binding_identifier: self.binding_identifier(),
+            type_parameters: self.type_parameters(),
+            eq_token: self.eq_token(),
+            ty: self.ty(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
     pub fn type_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4762,6 +7572,14 @@ impl TsTypeAliasDeclaration {
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
+pub struct TsTypeAliasDeclarationFields {
+    pub type_token: SyntaxResult<SyntaxToken>,
+    pub binding_identifier: SyntaxResult<TsIdentifierBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub eq_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAnnotation {
     pub(crate) syntax: SyntaxNode,
@@ -4774,10 +7592,20 @@ impl TsTypeAnnotation {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeAnnotationFields {
+        TsTypeAnnotationFields {
+            colon_token: self.colon_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsTypeAnnotationFields {
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeArguments {
@@ -4791,6 +7619,13 @@ impl TsTypeArguments {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeArgumentsFields {
+        TsTypeArgumentsFields {
+            l_angle_token: self.l_angle_token(),
+            ts_type_argument_list: self.ts_type_argument_list(),
+            r_angle_token: self.r_angle_token(),
+        }
+    }
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4800,6 +7635,11 @@ impl TsTypeArguments {
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsTypeArgumentsFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
+    pub ts_type_argument_list: TsTypeArgumentList,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAssertionExpression {
@@ -4813,6 +7653,14 @@ impl TsTypeAssertionExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeAssertionExpressionFields {
+        TsTypeAssertionExpressionFields {
+            l_angle_token: self.l_angle_token(),
+            ty: self.ty(),
+            r_angle_token: self.r_angle_token(),
+            expression: self.expression(),
+        }
+    }
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4823,6 +7671,12 @@ impl TsTypeAssertionExpression {
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 3usize)
     }
+}
+pub struct TsTypeAssertionExpressionFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeConstraintClause {
@@ -4836,10 +7690,20 @@ impl TsTypeConstraintClause {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeConstraintClauseFields {
+        TsTypeConstraintClauseFields {
+            extends_token: self.extends_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsTypeConstraintClauseFields {
+    pub extends_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeOperatorType {
@@ -4853,10 +7717,20 @@ impl TsTypeOperatorType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeOperatorTypeFields {
+        TsTypeOperatorTypeFields {
+            operator_token: self.operator_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsTypeOperatorTypeFields {
+    pub operator_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParameter {
@@ -4870,6 +7744,13 @@ impl TsTypeParameter {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeParameterFields {
+        TsTypeParameterFields {
+            name: self.name(),
+            constraint: self.constraint(),
+            default: self.default(),
+        }
+    }
     pub fn name(&self) -> SyntaxResult<TsTypeParameterName> {
         support::required_node(&self.syntax, 0usize)
     }
@@ -4877,6 +7758,11 @@ impl TsTypeParameter {
         support::node(&self.syntax, 1usize)
     }
     pub fn default(&self) -> Option<TsDefaultTypeClause> { support::node(&self.syntax, 2usize) }
+}
+pub struct TsTypeParameterFields {
+    pub name: SyntaxResult<TsTypeParameterName>,
+    pub constraint: Option<TsTypeConstraintClause>,
+    pub default: Option<TsDefaultTypeClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParameterName {
@@ -4890,9 +7776,17 @@ impl TsTypeParameterName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeParameterNameFields {
+        TsTypeParameterNameFields {
+            ident_token: self.ident_token(),
+        }
+    }
     pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsTypeParameterNameFields {
+    pub ident_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParameters {
@@ -4906,6 +7800,13 @@ impl TsTypeParameters {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeParametersFields {
+        TsTypeParametersFields {
+            l_angle_token: self.l_angle_token(),
+            items: self.items(),
+            r_angle_token: self.r_angle_token(),
+        }
+    }
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -4913,6 +7814,11 @@ impl TsTypeParameters {
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
+}
+pub struct TsTypeParametersFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
+    pub items: TsTypeParameterList,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypePredicate {
@@ -4926,6 +7832,14 @@ impl TsTypePredicate {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypePredicateFields {
+        TsTypePredicateFields {
+            asserts_token: self.asserts_token(),
+            parameter_name: self.parameter_name(),
+            is_token: self.is_token(),
+            ty: self.ty(),
+        }
+    }
     pub fn asserts_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn parameter_name(&self) -> SyntaxResult<TsAnyTypePredicateParameterName> {
         support::required_node(&self.syntax, 1usize)
@@ -4934,6 +7848,12 @@ impl TsTypePredicate {
         support::required_token(&self.syntax, 2usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 3usize) }
+}
+pub struct TsTypePredicateFields {
+    pub asserts_token: Option<SyntaxToken>,
+    pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
+    pub is_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeofType {
@@ -4947,12 +7867,22 @@ impl TsTypeofType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeofTypeFields {
+        TsTypeofTypeFields {
+            typeof_token: self.typeof_token(),
+            expression_name: self.expression_name(),
+        }
+    }
     pub fn typeof_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn expression_name(&self) -> SyntaxResult<TsAnyName> {
         support::required_node(&self.syntax, 1usize)
     }
+}
+pub struct TsTypeofTypeFields {
+    pub typeof_token: SyntaxResult<SyntaxToken>,
+    pub expression_name: SyntaxResult<TsAnyName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsUndefinedType {
@@ -4966,9 +7896,17 @@ impl TsUndefinedType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsUndefinedTypeFields {
+        TsUndefinedTypeFields {
+            undefined_token: self.undefined_token(),
+        }
+    }
     pub fn undefined_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsUndefinedTypeFields {
+    pub undefined_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsUnionType {
@@ -4982,10 +7920,20 @@ impl TsUnionType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn leading_separator_token_token(&self) -> Option<SyntaxToken> {
+    pub fn as_fields(&self) -> TsUnionTypeFields {
+        TsUnionTypeFields {
+            leading_separator_token: self.leading_separator_token(),
+            types: self.types(),
+        }
+    }
+    pub fn leading_separator_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 0usize)
     }
     pub fn types(&self) -> TsUnionTypeVariantList { support::list(&self.syntax, 1usize) }
+}
+pub struct TsUnionTypeFields {
+    pub leading_separator_token: Option<SyntaxToken>,
+    pub types: TsUnionTypeVariantList,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsUnknownType {
@@ -4999,9 +7947,17 @@ impl TsUnknownType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsUnknownTypeFields {
+        TsUnknownTypeFields {
+            unknown_token: self.unknown_token(),
+        }
+    }
     pub fn unknown_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsUnknownTypeFields {
+    pub unknown_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsVoidType {
@@ -5015,9 +7971,17 @@ impl TsVoidType {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsVoidTypeFields {
+        TsVoidTypeFields {
+            void_token: self.void_token(),
+        }
+    }
     pub fn void_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
+}
+pub struct TsVoidTypeFields {
+    pub void_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayAssignmentPatternElement {
@@ -5998,8 +8962,8 @@ impl std::fmt::Debug for JsCallExpression {
         f.debug_struct("JsCallExpression")
             .field("callee", &support::DebugSyntaxResult(self.callee()))
             .field(
-                "optional_chain_token_token",
-                &support::DebugOptionalElement(self.optional_chain_token_token()),
+                "optional_chain_token",
+                &support::DebugOptionalElement(self.optional_chain_token()),
             )
             .field(
                 "type_arguments",
@@ -11392,8 +14356,8 @@ impl std::fmt::Debug for TsIntersectionType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsIntersectionType")
             .field(
-                "leading_separator_token_token",
-                &support::DebugOptionalElement(self.leading_separator_token_token()),
+                "leading_separator_token",
+                &support::DebugOptionalElement(self.leading_separator_token()),
             )
             .field("types", &self.types())
             .finish()
@@ -12953,8 +15917,8 @@ impl std::fmt::Debug for TsUnionType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsUnionType")
             .field(
-                "leading_separator_token_token",
-                &support::DebugOptionalElement(self.leading_separator_token_token()),
+                "leading_separator_token",
+                &support::DebugOptionalElement(self.leading_separator_token()),
             )
             .field("types", &self.types())
             .finish()

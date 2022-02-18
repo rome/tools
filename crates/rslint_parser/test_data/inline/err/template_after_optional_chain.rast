@@ -83,7 +83,7 @@ JsModule {
                                 value_token: IDENT@54..58 "func" [] [],
                             },
                         },
-                        optional_chain_token_token: QUESTIONDOT@58..60 "?." [] [],
+                        optional_chain_token: QUESTIONDOT@58..60 "?." [] [],
                         type_arguments: missing (optional),
                         arguments: JsCallArguments {
                             l_paren_token: L_PAREN@60..61 "(" [] [],

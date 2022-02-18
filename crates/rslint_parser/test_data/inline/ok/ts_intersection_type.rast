@@ -10,7 +10,7 @@ JsModule {
             type_parameters: missing (optional),
             eq_token: EQ@7..9 "=" [] [Whitespace(" ")],
             ty: TsIntersectionType {
-                leading_separator_token_token: missing (optional),
+                leading_separator_token: missing (optional),
                 types: TsIntersectionTypeElementList [
                     TsStringType {
                         string_token: STRING_KW@9..16 "string" [] [Whitespace(" ")],
@@ -31,7 +31,7 @@ JsModule {
             type_parameters: missing (optional),
             eq_token: EQ@33..35 "=" [] [Whitespace(" ")],
             ty: TsIntersectionType {
-                leading_separator_token_token: AMP@35..37 "&" [] [Whitespace(" ")],
+                leading_separator_token: AMP@35..37 "&" [] [Whitespace(" ")],
                 types: TsIntersectionTypeElementList [
                     TsReferenceType {
                         name: JsReferenceIdentifier {

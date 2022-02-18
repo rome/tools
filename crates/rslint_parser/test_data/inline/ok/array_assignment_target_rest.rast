@@ -117,7 +117,7 @@ JsModule {
                                                 value_token: IDENT@69..73 "call" [] [],
                                             },
                                         },
-                                        optional_chain_token_token: missing (optional),
+                                        optional_chain_token: missing (optional),
                                         type_arguments: missing (optional),
                                         arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@73..74 "(" [] [],
@@ -164,7 +164,7 @@ JsModule {
                                                 value_token: IDENT@95..105 "expression" [] [],
                                             },
                                         },
-                                        optional_chain_token_token: missing (optional),
+                                        optional_chain_token: missing (optional),
                                         type_arguments: missing (optional),
                                         arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@105..106 "(" [] [],

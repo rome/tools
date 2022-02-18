@@ -27,14 +27,14 @@ JsModule {
                 type_parameters: missing (optional),
                 eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
                 ty: TsUnionType {
-                    leading_separator_token_token: missing (optional),
+                    leading_separator_token: missing (optional),
                     types: TsUnionTypeVariantList [
                         TsStringType {
                             string_token: STRING_KW@42..49 "string" [] [Whitespace(" ")],
                         },
                         PIPE@49..51 "|" [] [Whitespace(" ")],
                         TsIntersectionType {
-                            leading_separator_token_token: missing (optional),
+                            leading_separator_token: missing (optional),
                             types: TsIntersectionTypeElementList [
                                 TsNumberType {
                                     number_token: NUMBER_KW@51..58 "number" [] [Whitespace(" ")],

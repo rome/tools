@@ -49,7 +49,7 @@ JsModule {
                                             SUPER_KW@33..43 "super" [Newline("\n"), Whitespace("    ")] [],
                                         ],
                                     },
-                                    optional_chain_token_token: missing (optional),
+                                    optional_chain_token: missing (optional),
                                     type_arguments: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@43..44 "(" [] [],
@@ -72,7 +72,7 @@ JsModule {
                                             value_token: IDENT@58..62 "test" [] [],
                                         },
                                     },
-                                    optional_chain_token_token: missing (optional),
+                                    optional_chain_token: missing (optional),
                                     type_arguments: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@62..63 "(" [] [],
@@ -96,7 +96,7 @@ JsModule {
                         SUPER_KW@71..77 "super" [Newline("\n")] [],
                     ],
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 type_arguments: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@77..78 "(" [] [],

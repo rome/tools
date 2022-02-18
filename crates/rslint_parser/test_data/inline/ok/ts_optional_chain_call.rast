@@ -45,7 +45,7 @@ JsModule {
                     },
                     r_paren_token: R_PAREN@15..16 ")" [] [],
                 },
-                optional_chain_token_token: QUESTIONDOT@16..18 "?." [] [],
+                optional_chain_token: QUESTIONDOT@16..18 "?." [] [],
                 type_arguments: TsTypeArguments {
                     l_angle_token: L_ANGLE@18..19 "<" [] [],
                     ts_type_argument_list: TsTypeArgumentList [
