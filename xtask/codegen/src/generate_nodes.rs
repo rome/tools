@@ -104,6 +104,49 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
             let string_name = name.to_string();
 
+            let slots_name = format_ident!("{}Fields", node.name);
+
+            let (slot_fields, slot_constructors): (Vec<_>, Vec<_>) = node
+                .fields
+                .iter()
+                .map(|field| match field {
+                    Field::Token { name, kind, .. } => {
+                        let many = matches!(kind, TokenKind::Many(_));
+
+                        let method_name = if many {
+                            format_ident!("{}", name)
+                        } else {
+                            field.method_name()
+                        };
+
+                        let is_optional = field.is_optional();
+
+                        let field = if is_optional {
+                            quote! { #method_name: Option<SyntaxToken> }
+                        } else {
+                            quote! { #method_name: SyntaxResult<SyntaxToken> }
+                        };
+
+                        (field, quote! { #method_name: self.#method_name() })
+                    }
+                    Field::Node { ty, optional, .. } => {
+                        let is_list = ast.is_list(ty);
+                        let ty = format_ident!("{}", &ty);
+
+                        let method_name = field.method_name();
+                        let field = if is_list {
+                            quote! { #method_name: #ty }
+                        } else if *optional {
+                            quote! { #method_name: Option<#ty> }
+                        } else {
+                            quote! { #method_name: SyntaxResult<#ty> }
+                        };
+
+                        (field, quote! { #method_name: self.#method_name() })
+                    }
+                })
+                .unzip();
+
             (
                 quote! {
                     // TODO: review documentation
@@ -124,9 +167,18 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                             Self { syntax }
                         }
 
+                        pub fn as_fields(&self) -> #slots_name {
+                            #slots_name {
+                                #( #slot_constructors, )*
+                            }
+                        }
+
                         #(#methods)*
                     }
 
+                    pub struct #slots_name {
+                        #( pub #slot_fields, )*
+                    }
                 },
                 quote! {
                     impl AstNode for #name {
