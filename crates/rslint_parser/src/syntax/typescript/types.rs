@@ -710,7 +710,8 @@ impl ParseNodeList for TypeMembers {
 
 fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
     if is_at_ts_index_signature_type_member(p) {
-        return parse_ts_index_signature_type_member(p, None);
+        let m = p.start();
+        return Present(expect_ts_index_signature_type_member(p, m));
     }
 
     match p.cur() {
@@ -897,16 +898,7 @@ pub(crate) fn is_at_ts_index_signature_type_member(p: &Parser) -> bool {
 // // not an index signature
 // type C = { [a]: string }
 // type D = { readonly [a]: string }
-pub(crate) fn parse_ts_index_signature_type_member(
-    p: &mut Parser,
-    m: Option<Marker>,
-) -> ParsedSyntax {
-    if !is_at_ts_index_signature_type_member(p) {
-        return Absent;
-    }
-
-    let m = m.unwrap_or_else(|| p.start());
-
+pub(crate) fn expect_ts_index_signature_type_member(p: &mut Parser, m: Marker) -> CompletedMarker {
     if is_at_contextual_keyword(p, "readonly") {
         p.bump_remap(T![readonly]);
     }
@@ -926,7 +918,7 @@ pub(crate) fn parse_ts_index_signature_type_member(
     });
     parse_ts_type_member_semi(p);
 
-    Present(m.complete(p, TS_INDEX_SIGNATURE_TYPE_MEMBER))
+    m.complete(p, TS_INDEX_SIGNATURE_TYPE_MEMBER)
 }
 
 // test ts ts_tuple_type
