@@ -40,7 +40,7 @@ use super::function::LineBreak;
 use super::js_parse_error::unexpected_body_inside_ambient_context;
 use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
 use super::typescript::{
-    expect_ts_index_signature_type_member, is_at_ts_index_signature_type_member,
+    expect_ts_index_signature_member, is_at_ts_index_signature_member, MembersSeparator,
 };
 use super::util::eat_contextual_keyword;
 
@@ -510,7 +510,7 @@ fn parse_class_member_impl(
     }
 
     // Seems like we're at an index member
-    if is_at_ts_index_signature_type_member(p) {
+    if is_at_ts_index_signature_member(p) {
         // test ts ts_indexer_signature
         // class A {
         //     [a: number]: string;
@@ -524,7 +524,12 @@ fn parse_class_member_impl(
         // interface D {
         //     [index: string]: { prop }
         // }
-        return Present(expect_ts_index_signature_type_member(p, member_marker));
+        return Present(expect_ts_index_signature_member(
+            p,
+            member_marker,
+            TS_INDEX_SIGNATURE_CLASS_MEMBER,
+            MembersSeparator::SEMICOLON,
+        ));
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);

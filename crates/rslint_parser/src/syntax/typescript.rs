@@ -4,6 +4,7 @@ mod statement;
 pub mod ts_parse_error;
 mod types;
 
+use crate::parser::{expected_token, expected_token_any};
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error::{expected_expression, expected_ts_type};
 
@@ -13,6 +14,11 @@ use rome_rowan::SyntaxKind;
 
 pub(crate) use self::statement::*;
 pub(crate) use self::types::*;
+
+use super::binding::parse_identifier_binding;
+use super::expr::is_nth_at_identifier;
+use super::js_parse_error::expected_identifier;
+use super::stmt::optional_semi;
 
 fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
     parse_identifier(p, TS_IDENTIFIER_BINDING).map(|mut ident| {
@@ -120,4 +126,91 @@ pub(crate) fn try_parse<T, E>(
     }
 
     res
+}
+
+/// Must be at `[ident:]` or `readonly [ident:]`
+pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
+    let mut offset = 0;
+
+    if is_at_contextual_keyword(p, "readonly") {
+        offset = 1;
+    }
+
+    if !p.nth_at(offset, T!['[']) {
+        return false;
+    }
+
+    if !is_nth_at_identifier(p, offset + 1) {
+        return false;
+    }
+
+    p.nth_at(offset + 2, T![:])
+}
+
+bitflags::bitflags! {
+    /// Flags describing possible members separators
+    pub(crate) struct MembersSeparator: u8 {
+        /// Members can be separated by ','
+        const COMMA 		= 1 << 0;
+        /// Members can be separated by ';'
+        const SEMICOLON 	= 1 << 1;
+    }
+}
+
+pub(crate) fn expect_ts_index_signature_member(
+    p: &mut Parser,
+    m: Marker,
+    kind: JsSyntaxKind,
+    possible_separators: MembersSeparator,
+) -> CompletedMarker {
+    if is_at_contextual_keyword(p, "readonly") {
+        p.bump_remap(T![readonly]);
+    }
+
+    p.bump(T!['[']);
+
+    let parameter = p.start();
+    parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_type_annotation(p).unwrap(); // It's a computed member name if the type annotation is missing
+    parameter.complete(p, TS_INDEX_SIGNATURE_PARAMETER);
+
+    p.expect(T![']']);
+
+    parse_ts_type_annotation(p).or_add_diagnostic(p, |p, range| {
+        p.err_builder("An index signature must have a type annotation")
+            .primary(range, "")
+    });
+
+    eat_members_separator(p, possible_separators);
+
+    m.complete(p, kind)
+}
+
+fn eat_members_separator(p: &mut Parser, possible_separators: MembersSeparator) {
+    let separator_eaten = possible_separators.contains(MembersSeparator::COMMA) && p.eat(T![,]);
+    let separator_eaten = separator_eaten
+        || (possible_separators.contains(MembersSeparator::SEMICOLON) && optional_semi(p));
+
+    if !separator_eaten {
+        let qty = possible_separators.bits().count_ones();
+
+        if qty > 1 {
+            let mut tokens = vec![];
+            if possible_separators.contains(MembersSeparator::COMMA) {
+                tokens.push(T![,]);
+            }
+            if possible_separators.contains(MembersSeparator::SEMICOLON) {
+                tokens.push(T![;]);
+            }
+
+            p.error(expected_token_any(&tokens));
+        } else {
+            let token = if possible_separators.contains(MembersSeparator::COMMA) {
+                T![,]
+            } else {
+                T![;]
+            };
+            p.error(expected_token(token));
+        }
+    }
 }

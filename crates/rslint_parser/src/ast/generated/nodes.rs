@@ -6152,6 +6152,33 @@ pub struct TsImportTypeQualifierFields {
     pub right: SyntaxResult<TsAnyName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsIndexSignatureClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsIndexSignatureClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn parameter(&self) -> SyntaxResult<TsIndexSignatureParameter> {
+        support::required_node(&self.syntax, 2usize)
+    }
+    pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 3usize)
+    }
+    pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
+        support::required_node(&self.syntax, 4usize)
+    }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureParameter {
     pub(crate) syntax: SyntaxNode,
 }
@@ -8050,7 +8077,7 @@ pub enum JsAnyClassMember {
     JsSetterClassMember(JsSetterClassMember),
     JsStaticInitializationBlockClassMember(JsStaticInitializationBlockClassMember),
     JsUnknownMember(JsUnknownMember),
-    TsIndexSignatureTypeMember(TsIndexSignatureTypeMember),
+    TsIndexSignatureClassMember(TsIndexSignatureClassMember),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMemberName {
@@ -14158,6 +14185,50 @@ impl From<TsImportTypeQualifier> for SyntaxNode {
 impl From<TsImportTypeQualifier> for SyntaxElement {
     fn from(n: TsImportTypeQualifier) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsIndexSignatureClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsIndexSignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsIndexSignatureClassMember")
+            .field(
+                "readonly_token",
+                &support::DebugOptionalElement(self.readonly_token()),
+            )
+            .field(
+                "l_brack_token",
+                &support::DebugSyntaxResult(self.l_brack_token()),
+            )
+            .field("parameter", &support::DebugSyntaxResult(self.parameter()))
+            .field(
+                "r_brack_token",
+                &support::DebugSyntaxResult(self.r_brack_token()),
+            )
+            .field(
+                "type_annotation",
+                &support::DebugSyntaxResult(self.type_annotation()),
+            )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsIndexSignatureClassMember> for SyntaxNode {
+    fn from(n: TsIndexSignatureClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsIndexSignatureClassMember> for SyntaxElement {
+    fn from(n: TsIndexSignatureClassMember) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsIndexSignatureParameter {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -16676,9 +16747,9 @@ impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
 impl From<JsUnknownMember> for JsAnyClassMember {
     fn from(node: JsUnknownMember) -> JsAnyClassMember { JsAnyClassMember::JsUnknownMember(node) }
 }
-impl From<TsIndexSignatureTypeMember> for JsAnyClassMember {
-    fn from(node: TsIndexSignatureTypeMember) -> JsAnyClassMember {
-        JsAnyClassMember::TsIndexSignatureTypeMember(node)
+impl From<TsIndexSignatureClassMember> for JsAnyClassMember {
+    fn from(node: TsIndexSignatureClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsIndexSignatureClassMember(node)
     }
 }
 impl AstNode for JsAnyClassMember {
@@ -16693,7 +16764,7 @@ impl AstNode for JsAnyClassMember {
                 | JS_SETTER_CLASS_MEMBER
                 | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
                 | JS_UNKNOWN_MEMBER
-                | TS_INDEX_SIGNATURE_TYPE_MEMBER
+                | TS_INDEX_SIGNATURE_CLASS_MEMBER
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -16722,8 +16793,10 @@ impl AstNode for JsAnyClassMember {
                 )
             }
             JS_UNKNOWN_MEMBER => JsAnyClassMember::JsUnknownMember(JsUnknownMember { syntax }),
-            TS_INDEX_SIGNATURE_TYPE_MEMBER => {
-                JsAnyClassMember::TsIndexSignatureTypeMember(TsIndexSignatureTypeMember { syntax })
+            TS_INDEX_SIGNATURE_CLASS_MEMBER => {
+                JsAnyClassMember::TsIndexSignatureClassMember(TsIndexSignatureClassMember {
+                    syntax,
+                })
             }
             _ => return None,
         };
@@ -16739,7 +16812,7 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::JsSetterClassMember(it) => &it.syntax,
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
             JsAnyClassMember::JsUnknownMember(it) => &it.syntax,
-            JsAnyClassMember::TsIndexSignatureTypeMember(it) => &it.syntax,
+            JsAnyClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
         }
     }
 }
@@ -16756,7 +16829,7 @@ impl std::fmt::Debug for JsAnyClassMember {
                 std::fmt::Debug::fmt(it, f)
             }
             JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::TsIndexSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -16771,7 +16844,7 @@ impl From<JsAnyClassMember> for SyntaxNode {
             JsAnyClassMember::JsSetterClassMember(it) => it.into(),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
             JsAnyClassMember::JsUnknownMember(it) => it.into(),
-            JsAnyClassMember::TsIndexSignatureTypeMember(it) => it.into(),
+            JsAnyClassMember::TsIndexSignatureClassMember(it) => it.into(),
         }
     }
 }
@@ -21961,6 +22034,11 @@ impl std::fmt::Display for TsImportTypeQualifier {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsIndexSignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsIndexSignatureParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -24665,6 +24743,10 @@ impl Debug for DebugSyntaxElement {
                 TS_IMPORT_TYPE_QUALIFIER => {
                     std::fmt::Debug::fmt(&TsImportTypeQualifier::cast(node.clone()).unwrap(), f)
                 }
+                TS_INDEX_SIGNATURE_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsIndexSignatureClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_INDEX_SIGNATURE_PARAMETER => {
                     std::fmt::Debug::fmt(&TsIndexSignatureParameter::cast(node.clone()).unwrap(), f)
                 }
