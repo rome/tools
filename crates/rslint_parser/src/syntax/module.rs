@@ -29,6 +29,7 @@ use crate::{
     Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
     Present, SyntaxFeature,
 };
+use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
@@ -1099,9 +1100,13 @@ fn parse_export_default_declaration_clause(
         ExportDefaultDeclarationKind::Function => parse_function_export_default_declaration(p),
         ExportDefaultDeclarationKind::Class => parse_class_export_default_declaration(p),
 
-        // test ts_export_default_interface
+        // test ts ts_export_default_interface
         // export default interface A { }
-        ExportDefaultDeclarationKind::Interface => parse_ts_interface_declaration(p),
+        ExportDefaultDeclarationKind::Interface => {
+            TypeScript.parse_exclusive_syntax(p, parse_ts_interface_declaration, |p, interface| {
+                ts_only_syntax_error(p, "interface", interface.range(p).as_range())
+            })
+        }
         ExportDefaultDeclarationKind::Enum => {
             // test_err ts ts_export_default_enum
             // export default enum A { X, Y, Z }
@@ -1115,15 +1120,19 @@ fn parse_export_default_declaration_clause(
         }
     };
 
-    declaration.or_add_diagnostic(p, |_, range| {
-        expected_any(
-            &[
-                "class declaration",
-                "function declaration",
-                "interface declaration",
-            ],
-            range,
-        )
+    declaration.or_add_diagnostic(p, |p, range| {
+        if TypeScript.is_supported(p) {
+            expected_any(
+                &[
+                    "class declaration",
+                    "function declaration",
+                    "interface declaration",
+                ],
+                range,
+            )
+        } else {
+            expected_any(&["class declaration", "function declaration"], range)
+        }
     });
 
     Present(m.complete(p, JS_EXPORT_DEFAULT_DECLARATION_CLAUSE))

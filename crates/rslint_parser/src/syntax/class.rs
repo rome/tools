@@ -102,9 +102,9 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
-    let is_at_class = p.at(T![class]);
-    let is_at_abstract_class = is_at_contextual_keyword(p, "abstract");
-    if !is_at_class && !is_at_abstract_class {
+    let is_abstract_class = is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![class]);
+
+    if !p.at(T![class]) && !is_abstract_class {
         return Absent;
     }
 
@@ -130,9 +130,9 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
 // test ts typescript_export_default_abstract_class_case
 // export default abstract class {}
 pub(super) fn parse_class_export_default_declaration(p: &mut Parser) -> ParsedSyntax {
-    let is_at_class = p.at(T![class]);
-    let is_at_abstract_class = is_at_contextual_keyword(p, "abstract");
-    if !is_at_class && !is_at_abstract_class {
+    let is_abstract_class = is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![class]);
+
+    if !p.at(T![class]) && !is_abstract_class {
         return Absent;
     }
 
