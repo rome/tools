@@ -38,12 +38,20 @@ pub(crate) struct ParserState {
     pub duplicate_binding_parent: Option<&'static str>,
     pub name_map: IndexMap<String, Range<usize>>,
 
-    /// Indicates that the parser is speculatively parsing a syntax. For example, the syntax `(a, b) ...`
+    /// Indicates that the parser is speculatively parsing a syntax. Speculative parsing means that the
+    /// parser tries to parse a syntax as one kind and determines at the end if the assumption was right
+    /// by testing if the parser is at a specific token (or has no errors). For this approach to work,
+    /// the parser isn't allowed to skip any tokens while doing error recovery because it may then successfully
+    /// skip over all invalid tokens, so that it appears as if it was able to parse the syntax correctly.
+    ///
+    /// Speculative parsing is useful if a syntax is ambiguous and no amount of lookahead (except parsing the whole syntax)
+    /// is sufficient to determine what syntax it is. For example, the syntax `(a, b) ...`
     /// in JavaScript is either a parenthesized expression or an arrow expression if `...` is a `=>`.
-    /// However, the parser must first parse all of `(a, b)` to know if it's one or the other.
+    /// The challenge is, that it isn't possible to tell which of the two kinds it is until the parser
+    /// processed all of `(a, b)`.
     pub(crate) speculative_parsing: bool,
 
-    /// Stores the token positions of syntax that looks like arrow expressions but turned out to be none.
+    /// Stores the token positions of all syntax that looks like an arrow expressions but aren't one.
     /// Optimization to reduce the back-tracking required when parsing parenthesized and arrow function expressions.
     pub(crate) not_parenthesized_arrow: HashSet<usize>,
 }

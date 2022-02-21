@@ -425,15 +425,23 @@ pub(crate) fn parse_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
         .or_else(|| parse_arrow_function_with_single_parameter(p))
 }
 
-/// Parses the header of a parenthesized arrow function expression.
+/// Tries to parse the header of a parenthesized arrow function expression.
 ///
-/// The header is everything coming before the body: `async (a) =>`.
+/// The header is everything coming before the (or everything up and including the `=>` token):
+/// `async (a) =>`.
+///
+/// Returns the [Marker] for the parsed arrow function header that must be completed by the caller.
+///
+/// ## Errors
 ///
 /// Returns `Err` if `ambiguity` is [Ambiguity::Disallowed] and the syntax
-/// is ambiguous. For example, the parser speculatively tries to parse `<string>(test)` as an arrow
+/// is ambiguous. The `Err` contains the [Marker] of the syntax parsed to this point. It's up
+/// to the caller to abandon or complete the returned marker.
+///
+/// For example, the parser speculatively tries to parse `<string>(test)` as an arrow
 /// function because the start very much looks like one, except that the `=>` token is missing
 /// (it's a TypeScript `<string>` cast followed by a parenthesized expression).
-fn parse_parenthesized_arrow_function_head(
+fn try_parse_parenthesized_arrow_function_head(
     p: &mut Parser,
     ambiguity: Ambiguity,
 ) -> Result<(Marker, SignatureFlags), Marker> {
@@ -500,7 +508,7 @@ fn parse_possible_parenthesized_arrow_function_expression(p: &mut Parser) -> Par
     }
 
     match try_parse(p, |p| {
-        parse_parenthesized_arrow_function_head(p, Ambiguity::Disallowed)
+        try_parse_parenthesized_arrow_function_head(p, Ambiguity::Disallowed)
     }) {
         Ok((m, flags)) => {
             parse_arrow_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
@@ -523,7 +531,7 @@ fn parse_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax
 
     match is_parenthesized {
         IsParenthesizedArrowFunctionExpression::True => {
-            let (m, flags) = parse_parenthesized_arrow_function_head(p, Ambiguity::Allowed).expect("'CompletedMarker' because function should never return 'Err' if called with 'Ambiguity::Allowed'.");
+            let (m, flags) = try_parse_parenthesized_arrow_function_head(p, Ambiguity::Allowed).expect("'CompletedMarker' because function should never return 'Err' if called with 'Ambiguity::Allowed'.");
             parse_arrow_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
             Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
         }
@@ -648,7 +656,7 @@ fn is_parenthesized_arrow_function_expression_impl(
                 IsParenthesizedArrowFunctionExpression::False
             }
         }
-        _ => unreachable!(),
+        _ => IsParenthesizedArrowFunctionExpression::False,
     }
 }
 
