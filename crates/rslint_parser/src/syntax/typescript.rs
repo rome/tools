@@ -187,7 +187,7 @@ pub(crate) fn expect_ts_index_signature_member(
             .primary(range, "")
     });
 
-    eat_members_separator(p, parent.clone());
+    eat_members_separator(p, parent);
 
     m.complete(
         p,
