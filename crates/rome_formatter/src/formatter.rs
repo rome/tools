@@ -430,9 +430,6 @@ impl Formatter {
         concat_elements(node.children_with_tokens().map(|child| {
             match child {
                 SyntaxElement::Node(child_node) => {
-                    // TODO: Add source map markers before/after node as well as any additional elements that
-                    // need to be tracked for every node.
-
                     // Here we call `format_unknown` because we don't want to track it as [FormatElement::Verbatim]
                     // all the possible children. The first node to call `format_verbatim` should be node to be tracked
                     self.format_unknown(&child_node)
