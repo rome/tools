@@ -511,17 +511,11 @@ fn parse_class_member_impl(
 
     // Seems like we're at an index member
     if is_at_ts_index_signature_member(p) {
-        // test ts ts_indexer_signature
+        // test ts ts_index_signature_class_member
         // class A {
         //     [a: number]: string;
         // }
         // class B {
-        //     [index: string]: { prop }
-        // }
-        // interface C {
-        //     [a: number]: string;
-        // }
-        // interface D {
         //     [index: string]: { prop }
         // }
         return Present(expect_ts_index_signature_member(

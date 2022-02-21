@@ -254,6 +254,14 @@ pub(crate) fn is_at_ts_interface_declaration(p: &Parser) -> bool {
 // test ts ts_interface
 // interface A {}
 // interface B { prop: string, method(): string, [index: number]: string, new(): B }
+
+// test ts ts_index_signature_interface_member
+// interface C {
+//     [a: number]: string;
+// }
+// interface D {
+//     [index: string]: { prop }
+// }
 pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
     if !is_at_ts_interface_declaration(p) {
         return Absent;
