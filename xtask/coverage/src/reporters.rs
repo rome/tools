@@ -310,7 +310,7 @@ impl TestReporter for SummaryReporter {
                 }
 
                 if self.detail_level.is_all_diagnostics() {
-                    let errors = parse(&result.code, 0, syntax.clone()).ok().err();
+                    let errors = parse(&result.code, 0, *syntax).ok().err();
 
                     if let Some(errors) = errors {
                         self.write_errors(&errors, result);
@@ -340,7 +340,7 @@ impl TestReporter for SummaryReporter {
                     result.path.display()
                 ));
 
-                self.write_errors(&errors, result);
+                self.write_errors(errors, result);
             }
         }
 
