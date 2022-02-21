@@ -10,9 +10,15 @@ use rslint_parser::ast::JsAnyClass;
 
 impl ToFormatElement for JsAnyClass {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let abstract_token = self
+            .abstract_token()
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+
         let id = self
             .id()
             .format_with_or_empty(formatter, |id| format_elements![space_token(), id])?;
+
+        let type_parameters = self.type_parameters().format_or_empty(formatter)?;
 
         let extends = self
             .extends_clause()
@@ -20,10 +26,19 @@ impl ToFormatElement for JsAnyClass {
                 format_elements![space_token(), extends_clause]
             })?;
 
+        let implements_clause = self
+            .implements_clause()
+            .format_with_or_empty(formatter, |implements_clause| {
+                format_elements![space_token(), implements_clause]
+            })?;
+
         Ok(hard_group_elements(format_elements![
+            abstract_token,
             self.class_token().format(formatter)?,
             id,
+            type_parameters,
             extends,
+            implements_clause,
             space_token(),
             formatter.format_delimited_block_indent(
                 &self.l_curly_token()?,

@@ -32,12 +32,16 @@ impl ToFormatElement for JsAnyFunction {
             )?,
         });
 
+        tokens.push(self.type_parameters().format_or_empty(formatter)?);
+
         tokens.push(match self.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
                 format_elements![token("("), binding.format(formatter)?, token(")")]
             }
             JsAnyArrowFunctionParameters::JsParameters(params) => params.format(formatter)?,
         });
+
+        tokens.push(self.return_type_annotation().format_or_empty(formatter)?);
 
         tokens.push(space_token());
 

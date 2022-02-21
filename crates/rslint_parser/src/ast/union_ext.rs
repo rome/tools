@@ -7,6 +7,14 @@ use crate::ast::{
 use crate::{SyntaxResult, SyntaxToken};
 
 impl JsAnyClass {
+    pub fn abstract_token(&self) -> Option<SyntaxToken> {
+        match self {
+            JsAnyClass::JsClassDeclaration(declaration) => declaration.abstract_token(),
+            JsAnyClass::JsClassExpression(_) => None,
+            JsAnyClass::JsClassExportDefaultDeclaration(clause) => clause.abstract_token(),
+        }
+    }
+
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.class_token(),
@@ -20,6 +28,14 @@ impl JsAnyClass {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.id().map(Some),
             JsAnyClass::JsClassExpression(expression) => Ok(expression.id()),
             JsAnyClass::JsClassExportDefaultDeclaration(declaration) => Ok(declaration.id()),
+        }
+    }
+
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        match self {
+            JsAnyClass::JsClassDeclaration(declaration) => declaration.type_parameters(),
+            JsAnyClass::JsClassExpression(expression) => expression.type_parameters(),
+            JsAnyClass::JsClassExportDefaultDeclaration(clause) => clause.type_parameters(),
         }
     }
 

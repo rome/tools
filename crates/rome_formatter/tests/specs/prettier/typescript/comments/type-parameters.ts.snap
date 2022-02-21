@@ -1,0 +1,73 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: type-parameters.ts
+
+---
+# Input
+```js
+functionName<A /* A comment */>();
+const a: T</* comment */> = 1;
+functionName</* comment */>();
+function foo</* comment */>() {}
+interface Foo {
+ </* comment */>(arg): any;
+}
+type T = </* comment */>(arg) => any;
+
+functionName<
+  A // comment
+>();
+const a: T<
+  // comment
+> = 1;
+functionName<
+  // comment
+>();
+function foo<
+  // comment
+>() {}
+interface Foo {
+ <
+  A// comment
+ >(arg): any;
+}
+type T = <
+  // comment
+>(arg) => any;
+
+```
+
+# Output
+```js
+functionName<A /* A comment */ >();
+const a: T< /* comment */ > = 1;
+functionName< /* comment */ >();
+function foo< /* comment */ >() {}
+interface Foo { < /* comment */ >(arg): any }
+type T = </* comment */>(arg) => any;
+
+functionName<
+  A, // comment
+>();
+const a: T<
+  // comment
+> = 1;
+functionName<
+  // comment
+>();
+function foo<
+  // comment
+>() {}
+interface Foo {
+  <
+    A, // comment
+  >(arg): any,
+}
+type T = <
+  // comment
+>(arg) => any;
+
+```
+
+
