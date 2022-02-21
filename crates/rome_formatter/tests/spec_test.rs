@@ -1,5 +1,5 @@
 use rome_core::App;
-use rome_formatter::{format, FormatOptions, IndentStyle};
+use rome_formatter::{format, FormatOptions, Formatted, IndentStyle};
 use rome_path::RomePath;
 use rslint_parser::{parse, Syntax};
 use serde::{Deserialize, Serialize};
@@ -56,8 +56,18 @@ struct SnapshotContent {
 }
 
 impl SnapshotContent {
-    pub fn add_output(&mut self, content: impl Into<String>, options: FormatOptions) {
-        self.output.push((content.into(), options))
+    pub fn add_output(&mut self, formatted: Formatted, options: FormatOptions) {
+        let mut output: String = formatted.as_code().into();
+        if !formatted.verbatim().is_empty() {
+            output.push_str("\n\n");
+            output.push_str("## Unimplemented nodes/tokens");
+            output.push_str("\n\n");
+            for (text, range) in formatted.verbatim() {
+                let string = format!("{:?} => {:?}\n", text, range);
+                output.push_str(string.as_str());
+            }
+        }
+        self.output.push((output, options));
     }
 
     pub fn set_input(&mut self, content: impl Into<String>) {
@@ -137,7 +147,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         // we ignore the error for now
         let result = formatted_result.unwrap();
 
-        snapshot_content.add_output(result.as_code(), FormatOptions::default());
+        snapshot_content.add_output(result, FormatOptions::default());
 
         let test_directory = PathBuf::from(test_directory);
         let options_path = test_directory.join("options.json");
@@ -151,7 +161,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                 for test_case in options.cases {
                     let format_options: FormatOptions = test_case.into();
                     let formatted_result = format(format_options, &root).unwrap();
-                    snapshot_content.add_output(formatted_result.as_code(), format_options);
+                    snapshot_content.add_output(formatted_result, format_options);
                 }
             }
         }

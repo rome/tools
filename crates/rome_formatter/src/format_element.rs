@@ -875,6 +875,25 @@ pub enum FormatElement {
     Token(Token),
 
     LineSuffix(Content),
+
+    Verbatim(Verbatim),
+}
+
+#[derive(Clone, Eq, PartialEq)]
+pub struct Verbatim {
+    pub range: TextRange,
+    pub text: String,
+    pub element: Box<FormatElement>,
+}
+
+impl Verbatim {
+    pub fn new(element: FormatElement, text: String, range: TextRange) -> Self {
+        Self {
+            element: Box::new(element),
+            range,
+            text,
+        }
+    }
 }
 
 impl Debug for FormatElement {
@@ -905,6 +924,7 @@ impl Debug for FormatElement {
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
+            FormatElement::Verbatim(verbatim) => verbatim.element.fmt(fmt),
         }
     }
 }
@@ -1260,6 +1280,7 @@ impl FormatElement {
             FormatElement::List(list) => FormatElement::List(list.trim_start()),
             FormatElement::Token(s) => FormatElement::Token(s.trim_start()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_start())),
+            FormatElement::Verbatim(v) => v.element.trim_start(),
         }
     }
 
@@ -1279,6 +1300,7 @@ impl FormatElement {
             FormatElement::List(list) => FormatElement::List(list.trim_end()),
             FormatElement::Token(s) => FormatElement::Token(s.trim_end()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_end())),
+            FormatElement::Verbatim(v) => v.element.trim_end(),
         }
     }
 }

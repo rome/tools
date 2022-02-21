@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 163
+assertion_line: 173
 expression: interface.ts
 
 ---
@@ -64,4 +64,10 @@ interface D
 }
 // @ts-ignore
 interface D extends B<string,symbol>, F<string,symbol> {}
+
+
+## Unimplemented nodes/tokens
+
+"extends A /** comment **/ " => 27..53
+"extends B " => 177..187
 

@@ -6,6 +6,6 @@ use rslint_parser::AstNode;
 
 impl ToFormatElement for JsUnknownExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        Ok(formatter.format_unknown(self.syntax()))
     }
 }

@@ -203,14 +203,21 @@ pub struct Formatted {
     code: String,
     range: Option<TextRange>,
     sourcemap: Vec<SourceMarker>,
+    verbatim_source: Vec<(String, TextRange)>,
 }
 
 impl Formatted {
-    fn new(code: String, range: Option<TextRange>, sourcemap: Vec<SourceMarker>) -> Self {
+    fn new(
+        code: String,
+        range: Option<TextRange>,
+        sourcemap: Vec<SourceMarker>,
+        verbatim_source: Vec<(String, TextRange)>,
+    ) -> Self {
         Self {
             code,
             range,
             sourcemap,
+            verbatim_source,
         }
     }
 
@@ -220,6 +227,7 @@ impl Formatted {
             code: String::new(),
             range: None,
             sourcemap: Vec::new(),
+            verbatim_source: Vec::new(),
         }
     }
 
@@ -243,6 +251,10 @@ impl Formatted {
     /// Access the resulting code, consuming the result
     pub fn into_code(self) -> String {
         self.code
+    }
+
+    pub fn verbatim(&self) -> &[(String, TextRange)] {
+        &self.verbatim_source
     }
 }
 
@@ -394,6 +406,7 @@ pub fn format_range(
         code.into(),
         Some(input_range),
         formatted.sourcemap,
+        formatted.verbatim_source,
     ))
 }
 
@@ -463,6 +476,7 @@ pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Fo
         formatted.code,
         Some(root.text_range()),
         formatted.sourcemap,
+        formatted.verbatim_source,
     ))
 }
 
