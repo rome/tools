@@ -605,7 +605,6 @@ mod test {
 "#;
         let syntax = Syntax::default().typescript();
         let tree = parse(src, 0, syntax);
-        dbg!(&tree.syntax());
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
             result.as_code(),
