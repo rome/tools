@@ -106,7 +106,7 @@ true; else // comment // comment
 
 if (10) { /* comment */ // comment
   true;
-} else if (11) /* comment */ true; else if (12) true; else if (13) true; else { // comment /* comment */ // comment /* comment */ /* comment */ // comment /* comment */
+} else if (11) /* comment */ true; else if (12) true; else if (13) true; else /* comment */ { // comment /* comment */ // comment /* comment */ /* comment */ // comment
   true;
 }
 

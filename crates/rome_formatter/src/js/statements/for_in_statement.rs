@@ -2,6 +2,7 @@ use rslint_parser::ast::JsForInStatement;
 
 use crate::formatter_traits::FormatTokenAndNode;
 
+use crate::utils::format_head_body_statement;
 use crate::{
     format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
@@ -24,24 +25,26 @@ impl ToFormatElement for JsForInStatement {
         let initializer = initializer.format(formatter)?;
         let in_token = in_token.format(formatter)?;
         let expression = expression.format(formatter)?;
-        let body = body.format(formatter)?;
 
-        Ok(format_elements![
-            for_token,
-            space_token(),
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                format_elements![
-                    initializer,
-                    soft_line_break_or_space(),
-                    in_token,
-                    soft_line_break_or_space(),
-                    expression,
-                ],
-                &r_paren_token?
-            )?,
-            space_token(),
-            body
-        ])
+        format_head_body_statement(
+            formatter,
+            format_elements![
+                for_token,
+                space_token(),
+                formatter.format_delimited_soft_block_indent(
+                    &l_paren_token?,
+                    format_elements![
+                        initializer,
+                        soft_line_break_or_space(),
+                        in_token,
+                        soft_line_break_or_space(),
+                        expression,
+                    ],
+                    &r_paren_token?
+                )?,
+                space_token(),
+            ],
+            body?,
+        )
     }
 }

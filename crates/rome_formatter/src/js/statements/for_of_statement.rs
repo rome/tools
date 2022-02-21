@@ -2,6 +2,7 @@ use rslint_parser::ast::JsForOfStatement;
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
+use crate::utils::format_head_body_statement;
 use crate::{
     format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
@@ -27,25 +28,27 @@ impl ToFormatElement for JsForOfStatement {
         let initializer = initializer.format(formatter)?;
         let of_token = of_token.format(formatter)?;
         let expression = expression.format(formatter)?;
-        let body = body.format(formatter)?;
 
-        Ok(format_elements![
-            for_token,
-            space_token(),
-            await_token,
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                format_elements![
-                    initializer,
-                    soft_line_break_or_space(),
-                    of_token,
-                    soft_line_break_or_space(),
-                    expression,
-                ],
-                &r_paren_token?
-            )?,
-            space_token(),
-            body
-        ])
+        format_head_body_statement(
+            formatter,
+            format_elements![
+                for_token,
+                space_token(),
+                await_token,
+                formatter.format_delimited_soft_block_indent(
+                    &l_paren_token?,
+                    format_elements![
+                        initializer,
+                        soft_line_break_or_space(),
+                        of_token,
+                        soft_line_break_or_space(),
+                        expression,
+                    ],
+                    &r_paren_token?
+                )?,
+                space_token(),
+            ],
+            body?,
+        )
     }
 }

@@ -1,5 +1,6 @@
 use crate::formatter_traits::FormatTokenAndNode;
 
+use crate::utils::format_head_body_statement;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -17,16 +18,19 @@ impl ToFormatElement for JsWithStatement {
             body,
         } = self.as_fields();
 
-        Ok(format_elements![
-            with_token.format(formatter)?,
-            space_token(),
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                object.format(formatter)?,
-                &r_paren_token?,
-            )?,
-            space_token(),
-            body.format(formatter)?
-        ])
+        format_head_body_statement(
+            formatter,
+            format_elements![
+                with_token.format(formatter)?,
+                space_token(),
+                formatter.format_delimited_soft_block_indent(
+                    &l_paren_token?,
+                    object.format(formatter)?,
+                    &r_paren_token?,
+                )?,
+                space_token(),
+            ],
+            body?,
+        )
     }
 }

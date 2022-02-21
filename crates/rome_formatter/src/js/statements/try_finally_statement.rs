@@ -1,7 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
 use rslint_parser::ast::JsTryFinallyStatement;
@@ -21,13 +22,13 @@ impl ToFormatElement for JsTryFinallyStatement {
                 format_elements![space_token(), catch_clause]
             })?;
 
-        Ok(format_elements![
+        Ok(hard_group_elements(format_elements![
             try_token.format(formatter)?,
             space_token(),
             body.format(formatter)?,
             formatted_catch_clause,
             space_token(),
             finally_clause.format(formatter)?
-        ])
+        ]))
     }
 }

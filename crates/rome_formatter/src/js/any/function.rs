@@ -1,4 +1,4 @@
-use crate::format_element::soft_line_indent_or_space;
+use crate::format_element::{hard_group_elements, soft_line_indent_or_space};
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
@@ -96,6 +96,6 @@ impl ToFormatElement for JsAnyFunction {
 
         tokens.push(group_elements(concat_elements(body_group)));
 
-        Ok(concat_elements(tokens))
+        Ok(hard_group_elements(concat_elements(tokens)))
     }
 }
