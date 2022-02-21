@@ -41,6 +41,10 @@ impl SingleTokenParseRecovery {
             p.error(error);
         }
 
+        if p.state.speculative_parsing {
+            return;
+        }
+
         if !self.parsing_is_recoverable(p) {
             let m = p.start();
             p.bump_any();

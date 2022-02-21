@@ -39,9 +39,10 @@ const a3 = {
 ({})``;
 a = () => ({}).x;
 ({} && a, b);
-({}::b, 0);
-({}::b()``[''].c++ && 0 ? 0 : 0, 0
-)
+({}
+::b, 0)
+({}
+::b()``[''].c++ && 0 ? 0 : 0, 0)
 ({}(), 0);
 ({} = 0);
 (({} = 0), 1);
@@ -60,74 +61,17 @@ const a3 = {
 
 # Errors
 ```
-error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: expected `')'` but instead found `:`
   ┌─ expression.js:5:4
   │
 5 │ ({}::b, 0);
-  │    ^ TypeScript only syntax
+  │    ^ unexpected
 
-error[SyntaxError]: expected `,` but instead found `:`
-  ┌─ expression.js:5:5
-  │
-5 │ ({}::b, 0);
-  │     ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ expression.js:5:6
-  │
-5 │ ({}::b, 0);
-  │      ^ unexpected
-
-error[SyntaxError]: expected a parameter but instead found '0'
-  ┌─ expression.js:5:9
-  │
-5 │ ({}::b, 0);
-  │         ^ Expected a parameter here
-
-error[SyntaxError]: expected `=>` but instead found `;`
-  ┌─ expression.js:5:11
-  │
-5 │ ({}::b, 0);
-  │           ^ unexpected
-
-error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: expected `')'` but instead found `:`
   ┌─ expression.js:6:4
   │
 6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
-  │    ^ TypeScript only syntax
-
-error[SyntaxError]: expected `,` but instead found `:`
-  ┌─ expression.js:6:5
-  │
-6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
-  │     ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ expression.js:6:6
-  │
-6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
-  │      ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `(`
-  ┌─ expression.js:6:7
-  │
-6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
-  │       ^ unexpected
-
-error[SyntaxError]: expected `=>` but instead found ```
-  ┌─ expression.js:6:9
-  │
-6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
-  │         ^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ expression.js:6:35
-  │
-6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
-  │ ----------------------------------^
-  │ │                                 │
-  │ │                                 An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+  │    ^ unexpected
 
 
 ```

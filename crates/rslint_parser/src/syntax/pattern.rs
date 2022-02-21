@@ -78,13 +78,12 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
                 )
                 .enable_recovery_on_line_break();
 
-                let element = self.parse_any_array_element(p, &recovery).or_recover(
-                    p,
-                    &recovery,
-                    Self::expected_element_error,
-                );
+                let element = self.parse_any_array_element(p, &recovery);
 
-                if element.is_err() {
+                if element
+                    .or_recover(p, &recovery, Self::expected_element_error)
+                    .is_err()
+                {
                     // Failed to recover
                     break;
                 }
@@ -175,11 +174,12 @@ pub(crate) trait ParseObjectPattern {
             )
             .enable_recovery_on_line_break();
 
-            let recover_result = self
-                .parse_any_property_pattern(p, &recovery_set)
-                .or_recover(p, &recovery_set, Self::expected_property_pattern_error);
+            let pattern = self.parse_any_property_pattern(p, &recovery_set);
 
-            if recover_result.is_err() {
+            if pattern
+                .or_recover(p, &recovery_set, Self::expected_property_pattern_error)
+                .is_err()
+            {
                 break;
             }
 

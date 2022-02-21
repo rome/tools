@@ -7,7 +7,7 @@ use indicatif::ProgressBar;
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::Emitter;
-use rslint_parser::parse;
+use rslint_parser::{parse, ParserError};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Write;
@@ -122,6 +122,9 @@ pub enum SummaryDetailLevel {
     Coverage,
     /// Prints the coverage table as well as all failing tests with their diagnostics
     Failing,
+    /// Prints the diagnostics of failing tests as well as of tests that are supposed to fail and correct
+    /// emitted diagnostics
+    AllDiagnostics,
     /// Prints all failing tests with their RAST output
     FailingWithRast,
 }
@@ -134,6 +137,7 @@ impl FromStr for SummaryDetailLevel {
             "coverage" => SummaryDetailLevel::Coverage,
             "failing" => SummaryDetailLevel::Failing,
             "rast" => SummaryDetailLevel::FailingWithRast,
+            "diagnostics" => SummaryDetailLevel::AllDiagnostics,
             _ => return Err(String::from(
                 "Unknown summary detail level. Valid values are: 'coverage', 'failing, and 'rast'.",
             )),
@@ -148,6 +152,10 @@ impl SummaryDetailLevel {
 
     fn is_coverage_only(&self) -> bool {
         matches!(self, SummaryDetailLevel::Coverage)
+    }
+
+    fn is_all_diagnostics(&self) -> bool {
+        matches!(self, SummaryDetailLevel::AllDiagnostics)
     }
 }
 
@@ -270,6 +278,19 @@ impl SummaryReporter {
 
         table.format(rows)
     }
+
+    fn write_errors(&mut self, errors: &[ParserError], result: &TestRunResult) {
+        let file = SimpleFile::new(result.path.display().to_string(), result.code.to_string());
+        let mut emitter = Emitter::new(&file);
+
+        for error in errors {
+            if let Err(err) = emitter.emit_with_writer(error, &mut self.buffer) {
+                eprintln!("Failed to print diagnostic: {}", err);
+            }
+        }
+
+        self.writeln("".to_string());
+    }
 }
 
 impl TestReporter for SummaryReporter {
@@ -279,8 +300,22 @@ impl TestReporter for SummaryReporter {
         }
 
         match &result.outcome {
-            TestRunOutcome::Passed(_) => {
-                return;
+            TestRunOutcome::Passed(syntax) => {
+                if self.detail_level.is_all_diagnostics() || self.detail_level.is_rast_enabled() {
+                    self.writeln(format!(
+                        "{} {}",
+                        "[PASS]".bold().green(),
+                        result.path.display()
+                    ));
+                }
+
+                if self.detail_level.is_all_diagnostics() {
+                    let errors = parse(&result.code, 0, *syntax).ok().err();
+
+                    if let Some(errors) = errors {
+                        self.write_errors(&errors, result);
+                    }
+                }
             }
             TestRunOutcome::Panicked(_) => {
                 let panic = result.outcome.panic_message();
@@ -305,17 +340,7 @@ impl TestReporter for SummaryReporter {
                     result.path.display()
                 ));
 
-                let file =
-                    SimpleFile::new(result.path.display().to_string(), result.code.to_string());
-                let mut emitter = Emitter::new(&file);
-
-                for error in errors.iter() {
-                    if let Err(err) = emitter.emit_with_writer(error, &mut self.buffer) {
-                        eprintln!("Failed to print diagnostic: {}", err);
-                    }
-                }
-
-                self.writeln("".to_string());
+                self.write_errors(errors, result);
             }
         }
 

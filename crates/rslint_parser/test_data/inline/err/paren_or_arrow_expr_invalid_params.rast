@@ -3,32 +3,30 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsArrowFunctionExpression {
-                async_token: missing (optional),
-                type_parameters: missing (optional),
-                parameters: JsParameters {
-                    l_paren_token: L_PAREN@0..1 "(" [] [],
-                    items: JsParameterList [
-                        JsUnknownParameter {
-                            items: [
-                                JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")],
-                                PLUS@3..5 "+" [] [Whitespace(" ")],
-                                JS_NUMBER_LITERAL@5..6 "5" [] [],
-                            ],
-                        },
-                    ],
-                    r_paren_token: R_PAREN@6..8 ")" [] [Whitespace(" ")],
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@0..1 "(" [] [],
+                expression: JsBinaryExpression {
+                    left: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")],
+                    },
+                    operator: PLUS@3..5 "+" [] [Whitespace(" ")],
+                    right: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@5..6 "5" [] [],
+                    },
                 },
-                return_type_annotation: missing (optional),
-                fat_arrow_token: FAT_ARROW@8..11 "=>" [] [Whitespace(" ")],
-                body: JsFunctionBody {
-                    l_curly_token: L_CURLY@11..12 "{" [] [],
-                    directives: JsDirectiveList [],
-                    statements: JsStatementList [],
-                    r_curly_token: R_CURLY@12..13 "}" [] [],
-                },
+                r_paren_token: R_PAREN@6..8 ")" [] [Whitespace(" ")],
             },
             semicolon_token: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                FAT_ARROW@8..11 "=>" [] [Whitespace(" ")],
+            ],
+        },
+        JsBlockStatement {
+            l_curly_token: L_CURLY@11..12 "{" [] [],
+            statements: JsStatementList [],
+            r_curly_token: R_CURLY@12..13 "}" [] [],
         },
         JsExpressionStatement {
             expression: JsArrowFunctionExpression {
@@ -135,34 +133,42 @@ JsModule {
             semicolon_token: SEMICOLON@49..50 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@50..52 "(" [Newline("\n")] [],
-                expression: JsSequenceExpression {
-                    left: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@52..53 "a" [] [],
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@50..52 "(" [Newline("\n")] [],
+                    items: JsParameterList [
+                        JsFormalParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@52..53 "a" [] [],
+                            },
+                            question_mark_token: missing (optional),
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
-                    },
-                    comma_token: COMMA@53..55 "," [] [Whitespace(" ")],
-                    right: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@55..56 "b" [] [],
+                        COMMA@53..55 "," [] [Whitespace(" ")],
+                        JsFormalParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@55..56 "b" [] [],
+                            },
+                            question_mark_token: missing (optional),
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
-                    },
+                    ],
+                    r_paren_token: R_PAREN@56..57 ")" [] [],
                 },
-                r_paren_token: R_PAREN@56..57 ")" [] [],
+                return_type_annotation: missing (optional),
+                fat_arrow_token: FAT_ARROW@57..62 "=>" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@62..63 "{" [] [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
+                    r_curly_token: R_CURLY@63..64 "}" [] [],
+                },
             },
             semicolon_token: missing (optional),
-        },
-        JsUnknownStatement {
-            items: [
-                FAT_ARROW@57..62 "=>" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
-            ],
-        },
-        JsBlockStatement {
-            l_curly_token: L_CURLY@62..63 "{" [] [],
-            statements: JsStatementList [],
-            r_curly_token: R_CURLY@63..64 "}" [] [],
         },
     ],
     eof_token: EOF@64..65 "" [Newline("\n")] [],
@@ -172,27 +178,24 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..64
-    0: JS_EXPRESSION_STATEMENT@0..13
-      0: JS_ARROW_FUNCTION_EXPRESSION@0..13
-        0: (empty)
-        1: (empty)
-        2: JS_PARAMETERS@0..8
-          0: L_PAREN@0..1 "(" [] []
-          1: JS_PARAMETER_LIST@1..6
-            0: JS_UNKNOWN_PARAMETER@1..6
-              0: JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")]
-              1: PLUS@3..5 "+" [] [Whitespace(" ")]
-              2: JS_NUMBER_LITERAL@5..6 "5" [] []
-          2: R_PAREN@6..8 ")" [] [Whitespace(" ")]
-        3: (empty)
-        4: FAT_ARROW@8..11 "=>" [] [Whitespace(" ")]
-        5: JS_FUNCTION_BODY@11..13
-          0: L_CURLY@11..12 "{" [] []
-          1: JS_DIRECTIVE_LIST@12..12
-          2: JS_STATEMENT_LIST@12..12
-          3: R_CURLY@12..13 "}" [] []
+    0: JS_EXPRESSION_STATEMENT@0..8
+      0: JS_PARENTHESIZED_EXPRESSION@0..8
+        0: L_PAREN@0..1 "(" [] []
+        1: JS_BINARY_EXPRESSION@1..6
+          0: JS_NUMBER_LITERAL_EXPRESSION@1..3
+            0: JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")]
+          1: PLUS@3..5 "+" [] [Whitespace(" ")]
+          2: JS_NUMBER_LITERAL_EXPRESSION@5..6
+            0: JS_NUMBER_LITERAL@5..6 "5" [] []
+        2: R_PAREN@6..8 ")" [] [Whitespace(" ")]
       1: (empty)
-    1: JS_EXPRESSION_STATEMENT@13..27
+    1: JS_UNKNOWN_STATEMENT@8..11
+      0: FAT_ARROW@8..11 "=>" [] [Whitespace(" ")]
+    2: JS_BLOCK_STATEMENT@11..13
+      0: L_CURLY@11..12 "{" [] []
+      1: JS_STATEMENT_LIST@12..12
+      2: R_CURLY@12..13 "}" [] []
+    3: JS_EXPRESSION_STATEMENT@13..27
       0: JS_ARROW_FUNCTION_EXPRESSION@13..27
         0: (empty)
         1: (empty)
@@ -223,7 +226,7 @@ JsModule {
           2: JS_STATEMENT_LIST@26..26
           3: R_CURLY@26..27 "}" [] []
       1: (empty)
-    2: JS_EXPRESSION_STATEMENT@27..38
+    4: JS_EXPRESSION_STATEMENT@27..38
       0: JS_ARROW_FUNCTION_EXPRESSION@27..37
         0: (empty)
         1: (empty)
@@ -248,7 +251,7 @@ JsModule {
         4: FAT_ARROW@35..37 "=>" [] []
         5: (empty)
       1: SEMICOLON@37..38 ";" [] []
-    3: JS_EXPRESSION_STATEMENT@38..50
+    5: JS_EXPRESSION_STATEMENT@38..50
       0: JS_ARROW_FUNCTION_EXPRESSION@38..49
         0: (empty)
         1: (empty)
@@ -267,32 +270,45 @@ JsModule {
         4: (empty)
         5: (empty)
       1: SEMICOLON@49..50 ";" [] []
-    4: JS_EXPRESSION_STATEMENT@50..57
-      0: JS_PARENTHESIZED_EXPRESSION@50..57
-        0: L_PAREN@50..52 "(" [Newline("\n")] []
-        1: JS_SEQUENCE_EXPRESSION@52..56
-          0: JS_IDENTIFIER_EXPRESSION@52..53
-            0: JS_REFERENCE_IDENTIFIER@52..53
-              0: IDENT@52..53 "a" [] []
-          1: COMMA@53..55 "," [] [Whitespace(" ")]
-          2: JS_IDENTIFIER_EXPRESSION@55..56
-            0: JS_REFERENCE_IDENTIFIER@55..56
-              0: IDENT@55..56 "b" [] []
-        2: R_PAREN@56..57 ")" [] []
+    6: JS_EXPRESSION_STATEMENT@50..64
+      0: JS_ARROW_FUNCTION_EXPRESSION@50..64
+        0: (empty)
+        1: (empty)
+        2: JS_PARAMETERS@50..57
+          0: L_PAREN@50..52 "(" [Newline("\n")] []
+          1: JS_PARAMETER_LIST@52..56
+            0: JS_FORMAL_PARAMETER@52..53
+              0: JS_IDENTIFIER_BINDING@52..53
+                0: IDENT@52..53 "a" [] []
+              1: (empty)
+              2: (empty)
+              3: (empty)
+            1: COMMA@53..55 "," [] [Whitespace(" ")]
+            2: JS_FORMAL_PARAMETER@55..56
+              0: JS_IDENTIFIER_BINDING@55..56
+                0: IDENT@55..56 "b" [] []
+              1: (empty)
+              2: (empty)
+              3: (empty)
+          2: R_PAREN@56..57 ")" [] []
+        3: (empty)
+        4: FAT_ARROW@57..62 "=>" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
+        5: JS_FUNCTION_BODY@62..64
+          0: L_CURLY@62..63 "{" [] []
+          1: JS_DIRECTIVE_LIST@63..63
+          2: JS_STATEMENT_LIST@63..63
+          3: R_CURLY@63..64 "}" [] []
       1: (empty)
-    5: JS_UNKNOWN_STATEMENT@57..62
-      0: FAT_ARROW@57..62 "=>" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
-    6: JS_BLOCK_STATEMENT@62..64
-      0: L_CURLY@62..63 "{" [] []
-      1: JS_STATEMENT_LIST@63..63
-      2: R_CURLY@63..64 "}" [] []
   3: EOF@64..65 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a parameter but instead found '5 + 5'
-  ┌─ paren_or_arrow_expr_invalid_params.js:1:2
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ paren_or_arrow_expr_invalid_params.js:1:9
   │
 1 │ (5 + 5) => {}
-  │  ^^^^^ Expected a parameter here
+  │ --------^^
+  │ │       │
+  │ │       An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
 
 --
 error[SyntaxError]: expected a parameter but instead found ','
@@ -323,11 +339,11 @@ error[SyntaxError]: expected `,` but instead found `;`
   │           ^ unexpected
 
 --
-error[SyntaxError]: expected a statement but instead found '=>'
+error[SyntaxError]: Line terminator not permitted before arrow.
   ┌─ paren_or_arrow_expr_invalid_params.js:6:2
   │
 6 │  => {}
-  │  ^^ Expected a statement here
+  │  ^^
 
 --
 (5 + 5) => {}

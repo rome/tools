@@ -399,23 +399,6 @@ impl<'t> Parser<'t> {
         self.error(err);
     }
 
-    /// Try running a parser function and backtrack if any errors occured
-    pub fn try_parse<F>(&mut self, func: F) -> Option<CompletedMarker>
-    where
-        F: FnOnce(&mut Parser) -> Option<CompletedMarker>,
-    {
-        let checkpoint = self.checkpoint();
-        let res = func(self);
-        if checkpoint.errors_pos != self.errors.len() {
-            self.rewind(checkpoint);
-            return None;
-        }
-        if res.is_none() {
-            self.rewind(checkpoint);
-        }
-        res
-    }
-
     pub fn span_text(&self, span: impl rslint_errors::Span) -> &str {
         &self.tokens.source()[span.as_range()]
     }

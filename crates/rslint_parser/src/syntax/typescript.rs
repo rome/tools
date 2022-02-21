@@ -82,6 +82,9 @@ fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
     while p.at(T![,]) {
         let comma_range = p.cur_tok().range();
         p.bump(T![,]);
+        // test_err ts ts_extends_trailing_comma
+        // interface A {}
+        // interface B extends A, {}
         if parse_ts_name_with_type_arguments(p).is_absent() {
             p.error(
                 p.err_builder("Trailing comma not allowed.")
@@ -102,15 +105,17 @@ fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-pub(crate) fn try_parse(
+pub(crate) fn try_parse<T, E>(
     p: &mut Parser,
-    func: impl FnOnce(&mut Parser) -> ParsedSyntax,
-) -> ParsedSyntax {
+    func: impl FnOnce(&mut Parser) -> Result<T, E>,
+) -> Result<T, E> {
     let checkpoint = p.checkpoint();
 
+    let old_value = std::mem::replace(&mut p.state.speculative_parsing, true);
     let res = func(p);
+    p.state.speculative_parsing = old_value;
 
-    if res.is_absent() {
+    if res.is_err() {
         p.rewind(checkpoint);
     }
 

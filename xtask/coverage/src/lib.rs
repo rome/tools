@@ -132,7 +132,7 @@ pub fn run(
     let mut context = TestRunContext {
         filter: filter.map(|s| s.to_string()),
         reporter: &mut reporters,
-        pool: &yastl::Pool::new(num_cpus::get()),
+        pool: &yastl::Pool::new(num_cpus::get().max(2)),
     };
 
     let mut ran_any_tests = false;

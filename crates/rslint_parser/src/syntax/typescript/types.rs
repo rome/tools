@@ -1237,11 +1237,12 @@ pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
         if p.tokens.last_tok().map(|t| t.kind) == Some(T![>])
             && matches!(p.cur(), T!['('] | BACKTICK)
         {
-            Present(arguments)
+            Ok(Present(arguments))
         } else {
-            Absent
+            Err(())
         }
     })
+    .unwrap_or(Absent)
 }
 
 pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
