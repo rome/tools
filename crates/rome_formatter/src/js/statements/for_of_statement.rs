@@ -1,10 +1,11 @@
-use rslint_parser::ast::{JsAnyStatement, JsForOfStatement};
+use rslint_parser::ast::JsForOfStatement;
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
+use crate::utils::format_head_body_statement;
 use crate::{
-    format_elements, hard_group_elements, soft_line_break_or_space, space_token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rslint_parser::ast::JsForOfStatementFields;
 
@@ -28,35 +29,26 @@ impl ToFormatElement for JsForOfStatement {
         let of_token = of_token.format(formatter)?;
         let expression = expression.format(formatter)?;
 
-        let head = format_elements![
-            for_token,
-            space_token(),
-            await_token,
-            formatter.format_delimited_soft_block_indent(
-                &l_paren_token?,
-                format_elements![
-                    initializer,
-                    soft_line_break_or_space(),
-                    of_token,
-                    soft_line_break_or_space(),
-                    expression,
-                ],
-                &r_paren_token?
-            )?,
-            space_token(),
-        ];
-
-        let body = body?;
-        if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-            Ok(hard_group_elements(format_elements![
-                head,
-                body.format(formatter)?
-            ]))
-        } else {
-            Ok(format_elements![
-                hard_group_elements(head),
-                body.format(formatter)?
-            ])
-        }
+        format_head_body_statement(
+            formatter,
+            format_elements![
+                for_token,
+                space_token(),
+                await_token,
+                formatter.format_delimited_soft_block_indent(
+                    &l_paren_token?,
+                    format_elements![
+                        initializer,
+                        soft_line_break_or_space(),
+                        of_token,
+                        soft_line_break_or_space(),
+                        expression,
+                    ],
+                    &r_paren_token?
+                )?,
+                space_token(),
+            ],
+            body?,
+        )
     }
 }
