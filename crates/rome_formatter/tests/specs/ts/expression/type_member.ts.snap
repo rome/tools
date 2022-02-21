@@ -150,12 +150,3 @@ type J = { get something(): LoooooooooooooongTypeReturneeeeeeeeed };
 
 type K = { set something(something_with_long_name: string) };
 
-
-## Unimplemented nodes/tokens
-
-": number" => 1021..1029
-": number" => 1035..1043
-": number" => 1049..1057
-": string" => 1065..1073
-": G" => 1166..1169
-

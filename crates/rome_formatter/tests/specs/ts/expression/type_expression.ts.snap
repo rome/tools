@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 163
+assertion_line: 173
 expression: type_expression.ts
 
 ---
@@ -137,4 +137,9 @@ type TupleD = [
 	surname?: [string],
 	...name: [string],
 ];
+
+
+## Unimplemented nodes/tokens
+
+"?" => 686..687
 

@@ -420,8 +420,8 @@ impl Formatter {
         FormatElement::Verbatim(Verbatim::new(verbatim, node.to_string(), node.text_range()))
     }
 
-    /// Formats unknown nodes. The different between `format_verbatim` is that unknown nodes (and its children/tokens)
-    /// are not tracked by the printer.
+    /// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
+    /// doesn't track nodes/tokens.
     pub fn format_unknown(&self, node: &SyntaxNode) -> FormatElement {
         self.format_verbatim_node_or_token(node)
     }
