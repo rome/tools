@@ -12,18 +12,14 @@ use std::{
 
 use rome_formatter::{FormatOptions, IndentStyle};
 use rslint_errors::{file::SimpleFiles, termcolor, Emitter};
-use rslint_parser::parse_module;
+use rslint_parser::{parse, Syntax};
 
 static REPORTER: DiffReport = DiffReport::new();
 
-tests_macros::gen_tests! {"tests/specs/prettier/**/*.js", crate::test_snapshot, "script"}
+tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts}", crate::test_snapshot, "script"}
 
 fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
-    if input.contains("typescript")
-        || input.contains("jsx")
-        || input.contains("flow")
-        || input.contains("prepare_tests")
-    {
+    if input.contains("jsx") || input.contains("flow") || input.contains("prepare_tests") {
         return;
     }
 
@@ -33,7 +29,13 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
 
     let (_, range_start_index, range_end_index) = strip_placeholders(&mut input_code);
 
-    let parsed = parse_module(&input_code, 0);
+    let syntax = if input.contains(".ts") {
+        Syntax::default().typescript()
+    } else {
+        Syntax::default().module()
+    };
+
+    let parsed = parse(&input_code, 0, syntax);
     let syntax = parsed.syntax();
 
     let options = FormatOptions::new(IndentStyle::Space(2));

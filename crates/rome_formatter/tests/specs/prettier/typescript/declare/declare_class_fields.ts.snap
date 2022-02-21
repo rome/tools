@@ -1,0 +1,37 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: declare_class_fields.ts
+
+---
+# Input
+```js
+class B {p: number;}
+class C extends B {declare p: 256 | 1000;}
+class D {
+  declare field = "field";
+}
+declare class D {
+  field = "field";
+}
+
+```
+
+# Output
+```js
+class B {
+  p: number;
+}
+class C extends B {
+  declare p: 256 | 1000;
+}
+class D {
+  declare field = "field";
+}
+declare class D {
+  field = "field";
+}
+
+```
+
+

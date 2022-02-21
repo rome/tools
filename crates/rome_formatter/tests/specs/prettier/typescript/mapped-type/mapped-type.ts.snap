@@ -1,0 +1,27 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: mapped-type.ts
+
+---
+# Input
+```js
+type Keys = 'option1' | 'option2';
+type A = { [K in Keys] };
+type B = { [K in Keys]+? };
+
+```
+
+# Output
+```js
+type Keys = 'option1' | 'option2';
+type A = {
+  [K in Keys ];
+};
+type B = {
+  [K in Keys ]+? ;
+};
+
+```
+
+

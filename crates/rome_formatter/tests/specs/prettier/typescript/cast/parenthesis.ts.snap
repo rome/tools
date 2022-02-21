@@ -1,0 +1,44 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: parenthesis.ts
+
+---
+# Input
+```js
+<DocumentHighlightKind>(a ? b : c);
+<any>(() => {});
+
+<x>a || {};
+<x>a && [];
+true || <x>a;
+<x>a + <x>b;
+(<x>a) = 1;
+
+```
+
+# Output
+```js
+<DocumentHighlightKind>(a ? b : c);
+<any>(() => {});
+
+<x>a || {};
+<x>a && [];
+true || <x>a;
+<x>a + <x>b;
+(<x>a) = 1;
+
+```
+
+# Errors
+```
+error[SyntaxError]: Invalid assignment to `<x>a`
+  ┌─ parenthesis.ts:8:2
+  │
+8 │ (<x>a) = 1;
+  │  ^^^^ This expression cannot be assigned to
+
+
+```
+
+

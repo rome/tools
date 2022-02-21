@@ -1,0 +1,81 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: classAbstractMixedWithModifiers.ts
+
+---
+# Input
+```js
+abstract class A {
+    abstract foo_a();
+    
+    public abstract foo_b();
+    protected abstract foo_c();
+    private abstract foo_d();
+    
+    abstract public foo_bb();
+    abstract protected foo_cc();
+    abstract private foo_dd();
+    
+    abstract static foo_d();
+    
+    static abstract foo_e();
+}
+```
+
+# Output
+```js
+abstract class A {
+    abstract foo_a();
+    
+    public abstract foo_b();
+    protected abstract foo_c();
+    private abstract foo_d();
+    
+    abstract public foo_bb();
+    abstract protected foo_cc();
+    abstract private foo_dd();
+    
+    abstract static foo_d();
+    
+    static abstract foo_e();
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: `public` modifier must precede `abstract`.
+  ┌─ classAbstractMixedWithModifiers.ts:8:14
+  │
+8 │     abstract public foo_bb();
+  │     -------- ^^^^^^
+
+error[SyntaxError]: `protected` modifier must precede `abstract`.
+  ┌─ classAbstractMixedWithModifiers.ts:9:14
+  │
+9 │     abstract protected foo_cc();
+  │     -------- ^^^^^^^^^
+
+error[SyntaxError]: `private` modifier must precede `abstract`.
+   ┌─ classAbstractMixedWithModifiers.ts:10:14
+   │
+10 │     abstract private foo_dd();
+   │     -------- ^^^^^^^
+
+error[SyntaxError]: static members cannot be abstract
+   ┌─ classAbstractMixedWithModifiers.ts:12:5
+   │
+12 │     abstract static foo_d();
+   │     ^^^^^^^^
+
+error[SyntaxError]: static members cannot be abstract
+   ┌─ classAbstractMixedWithModifiers.ts:14:12
+   │
+14 │     static abstract foo_e();
+   │            ^^^^^^^^
+
+
+```
+
+

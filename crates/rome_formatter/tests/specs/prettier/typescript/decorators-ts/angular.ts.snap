@@ -1,0 +1,73 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: angular.ts
+
+---
+# Input
+```js
+@Component({
+  selector: 'toh-hero-button',
+  template: `<button>{{label}}</button>`
+})
+export class HeroButtonComponent {
+  @Output() change = new EventEmitter<any>();
+  @Input() label: string;
+}
+
+```
+
+# Output
+```js
+@Component(
+{
+  selector: "toh-hero-button", template;
+  : `<button>{{label}}</button>`
+}
+)
+export class HeroButtonComponent {
+  @Output() change = new EventEmitter<any>();
+  @Input() label: string;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '@Component('
+  ┌─ angular.ts:1:1
+  │
+1 │ @Component({
+  │ ^^^^^^^^^^^ Expected a statement here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ angular.ts:3:11
+  │  
+2 │     selector: 'toh-hero-button',
+  │ ┌─────────────'
+3 │ │   template: `<button>{{label}}</button>`
+  │ │           ^ An explicit or implicit semicolon is expected here...
+  │ └───────────' ...Which is required to end this statement
+
+error[SyntaxError]: expected a statement but instead found ')'
+  ┌─ angular.ts:4:2
+  │
+4 │ })
+  │  ^ Expected a statement here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+  ┌─ angular.ts:6:3
+  │
+6 │   @Output() change = new EventEmitter<any>();
+  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+  ┌─ angular.ts:7:3
+  │
+7 │   @Input() label: string;
+  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+
+```
+
+

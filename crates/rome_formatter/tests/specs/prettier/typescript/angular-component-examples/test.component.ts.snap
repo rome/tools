@@ -1,0 +1,79 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: test.component.ts
+
+---
+# Input
+```js
+@Component({
+       selector: 'app-test',
+  template: `<ul>   <li>test</li>
+  </ul>
+  `,
+  styles: [   `
+  
+ :host {
+   color: red;
+ } 
+ div { background: blue
+ }
+`
+
+]
+})
+class     TestComponent {}
+
+```
+
+# Output
+```js
+@Component(
+{
+  selector: "app-test", template;
+  : `<ul>   <li>test</li>
+  </ul>
+  `,
+  styles: [   `
+  
+ :host {
+   color: red;
+ } 
+ div { background: blue
+ }
+`
+
+]
+}
+)
+class TestComponent {}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '@Component('
+  ┌─ test.component.ts:1:1
+  │
+1 │ @Component({
+  │ ^^^^^^^^^^^ Expected a statement here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ test.component.ts:3:11
+  │  
+2 │          selector: 'app-test',
+  │ ┌──────────────────'
+3 │ │   template: `<ul>   <li>test</li>
+  │ │           ^ An explicit or implicit semicolon is expected here...
+  │ └───────────' ...Which is required to end this statement
+
+error[SyntaxError]: expected a statement but instead found ')'
+   ┌─ test.component.ts:16:2
+   │
+16 │ })
+   │  ^ Expected a statement here
+
+
+```
+
+

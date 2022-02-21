@@ -1,0 +1,80 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: override-modifier.ts
+
+---
+# Input
+```js
+class MyClass extends BaseClass {
+  override show() {}
+  public override show() {}
+  override size = 5;
+  override readonly size = 5;
+  abstract override foo: string;
+  static override foo: string;
+}
+
+```
+
+# Output
+```js
+class MyClass extends BaseClass {
+  override;
+  show() {}
+  public override;
+  show() {}
+  override;
+  size = 5;
+  override;
+  readonly size = 5;
+  abstract override;
+  foo: string;
+  static override;
+  foo: string;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a semicolon for a class property, but found none
+  ┌─ override-modifier.ts:2:3
+  │
+2 │   override show() {}
+  │   ^^^^^^^^^
+
+error[SyntaxError]: expected a semicolon for a class property, but found none
+  ┌─ override-modifier.ts:3:3
+  │
+3 │   public override show() {}
+  │   ^^^^^^^^^^^^^^^^
+
+error[SyntaxError]: expected a semicolon for a class property, but found none
+  ┌─ override-modifier.ts:4:3
+  │
+4 │   override size = 5;
+  │   ^^^^^^^^^
+
+error[SyntaxError]: expected a semicolon for a class property, but found none
+  ┌─ override-modifier.ts:5:3
+  │
+5 │   override readonly size = 5;
+  │   ^^^^^^^^^
+
+error[SyntaxError]: expected a semicolon for a class property, but found none
+  ┌─ override-modifier.ts:6:3
+  │
+6 │   abstract override foo: string;
+  │   ^^^^^^^^^^^^^^^^^^
+
+error[SyntaxError]: expected a semicolon for a class property, but found none
+  ┌─ override-modifier.ts:7:3
+  │
+7 │   static override foo: string;
+  │   ^^^^^^^^^^^^^^^^
+
+
+```
+
+

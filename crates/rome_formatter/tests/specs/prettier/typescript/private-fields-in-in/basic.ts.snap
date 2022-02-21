@@ -1,0 +1,54 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: basic.ts
+
+---
+# Input
+```js
+class Person {
+  #name: string;
+  constructor(name: string) {
+    this.#name = name;
+  }
+  
+  equals(other: unknown) {
+    return (
+      other &&
+      typeof other === "object" &&
+      #name in other && // <- this is new!
+      this.#name === other.#name
+    );
+  }
+}
+
+```
+
+# Output
+```js
+class Person {
+  #name: string;
+  constructor(name: string) {
+    this.#name = name;
+  }
+
+  equals(other: unknown) {
+    return (other && typeof other === "object" && 
+      #name  in other && this.#name === other.#name); // <- this is new!
+  }
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+   ┌─ basic.ts:11:7
+   │
+11 │       #name in other && // <- this is new!
+   │       ^^^^^
+
+
+```
+
+

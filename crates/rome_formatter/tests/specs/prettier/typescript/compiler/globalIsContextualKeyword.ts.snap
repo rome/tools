@@ -1,0 +1,47 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: globalIsContextualKeyword.ts
+
+---
+# Input
+```js
+function a() {
+    let global = 1;
+}
+function b() {
+    class global {}
+}
+
+namespace global {
+}
+
+function foo(global: number) {
+}
+
+let obj = {
+    global: "123"
+}
+```
+
+# Output
+```js
+function a() {
+  let global = 1;
+}
+function b() {
+  class global {}
+}
+
+
+
+namespace global {
+}
+
+function foo(global: number) {}
+
+let obj = { global: "123" };
+
+```
+
+

@@ -1,0 +1,47 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: type-annotation.ts
+
+---
+# Input
+```js
+try {} catch (e: any)
+{}
+
+try {}
+catch (e: unknown) {}
+
+```
+
+# Output
+```js
+try {} catch (e
+: any)
+{}
+
+try {}
+catch (e
+: unknown) 
+{}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `')'` but instead found `:`
+  ┌─ type-annotation.ts:1:16
+  │
+1 │ try {} catch (e: any)
+  │                ^ unexpected
+
+error[SyntaxError]: expected `')'` but instead found `:`
+  ┌─ type-annotation.ts:5:9
+  │
+5 │ catch (e: unknown) {}
+  │         ^ unexpected
+
+
+```
+
+
