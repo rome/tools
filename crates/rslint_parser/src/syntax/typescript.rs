@@ -4,7 +4,7 @@ mod statement;
 pub mod ts_parse_error;
 mod types;
 
-use crate::parser::{expected_token, expected_token_any};
+use crate::parser::expected_token_any;
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error::{expected_expression, expected_ts_type};
 
@@ -148,21 +148,15 @@ pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
     p.nth_at(offset + 2, T![:])
 }
 
-bitflags::bitflags! {
-    /// Flags describing possible members separators
-    pub(crate) struct MembersSeparator: u8 {
-        /// Members can be separated by ','
-        const COMMA 		= 1 << 0;
-        /// Members can be separated by ';'
-        const SEMICOLON 	= 1 << 1;
-    }
+pub(crate) enum MemberParent {
+    Class,
+    Type,
 }
 
 pub(crate) fn expect_ts_index_signature_member(
     p: &mut Parser,
     m: Marker,
-    kind: JsSyntaxKind,
-    possible_separators: MembersSeparator,
+    kind: MemberParent,
 ) -> CompletedMarker {
     while is_nth_at_modifier(p, 0) {
         if is_at_contextual_keyword(p, "readonly") {
@@ -192,36 +186,41 @@ pub(crate) fn expect_ts_index_signature_member(
             .primary(range, "")
     });
 
-    eat_members_separator(p, possible_separators);
+    let separators = match kind {
+        MemberParent::Class => (true, true),
+        MemberParent::Type => (true, true),
+    };
+    eat_members_separator(p, separators);
 
-    m.complete(p, kind)
+    m.complete(
+        p,
+        match kind {
+            MemberParent::Class => TS_INDEX_SIGNATURE_CLASS_MEMBER,
+            MemberParent::Type => TS_INDEX_SIGNATURE_TYPE_MEMBER,
+        },
+    )
 }
 
-fn eat_members_separator(p: &mut Parser, possible_separators: MembersSeparator) {
-    let separator_eaten = possible_separators.contains(MembersSeparator::COMMA) && p.eat(T![,]);
-    let separator_eaten = separator_eaten
-        || (possible_separators.contains(MembersSeparator::SEMICOLON) && optional_semi(p));
+fn eat_members_separator(p: &mut Parser, (comma, semi_colon): (bool, bool)) {
+    let separator_eaten = comma && p.eat(T![,]);
+    let separator_eaten = separator_eaten || (semi_colon && optional_semi(p));
 
     if !separator_eaten {
-        let qty = possible_separators.bits().count_ones();
-
-        if qty > 1 {
+        if semi_colon {
+            let err = p.err_builder("';' expected'").primary(
+                p.cur_tok().range(),
+                "An explicit or implicit semicolon is expected here...",
+            );
+            p.error(err);
+        } else {
             let mut tokens = vec![];
-            if possible_separators.contains(MembersSeparator::COMMA) {
+            if comma {
                 tokens.push(T![,]);
             }
-            if possible_separators.contains(MembersSeparator::SEMICOLON) {
+            if semi_colon {
                 tokens.push(T![;]);
             }
-
             p.error(expected_token_any(&tokens));
-        } else {
-            let token = if possible_separators.contains(MembersSeparator::COMMA) {
-                T![,]
-            } else {
-                T![;]
-            };
-            p.error(expected_token(token));
         }
     }
 }

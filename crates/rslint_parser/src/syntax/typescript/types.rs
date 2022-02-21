@@ -27,7 +27,7 @@ use crate::{Absent, ParsedSyntax, Parser};
 use crate::{JsSyntaxKind::*, *};
 use rslint_syntax::T;
 
-use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MembersSeparator};
+use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
 
 pub(crate) fn is_reserved_type_name(name: &str) -> bool {
     matches!(
@@ -718,12 +718,7 @@ fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
     // type D = { readonly [a]: string }
     if is_at_ts_index_signature_member(p) {
         let m = p.start();
-        return Present(expect_ts_index_signature_member(
-            p,
-            m,
-            TS_INDEX_SIGNATURE_TYPE_MEMBER,
-            MembersSeparator::COMMA | MembersSeparator::SEMICOLON,
-        ));
+        return Present(expect_ts_index_signature_member(p, m, MemberParent::Type));
     }
 
     match p.cur() {

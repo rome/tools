@@ -40,7 +40,7 @@ use super::function::LineBreak;
 use super::js_parse_error::unexpected_body_inside_ambient_context;
 use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
 use super::typescript::{
-    expect_ts_index_signature_member, is_at_ts_index_signature_member, MembersSeparator,
+    expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent,
 };
 use super::util::eat_contextual_keyword;
 
@@ -534,8 +534,7 @@ fn parse_class_member_impl(
         let member = Present(expect_ts_index_signature_member(
             p,
             member_marker,
-            TS_INDEX_SIGNATURE_CLASS_MEMBER,
-            MembersSeparator::SEMICOLON,
+            MemberParent::Class,
         ));
 
         // test_err index_signature_class_member_in_js
