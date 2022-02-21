@@ -13,9 +13,11 @@ use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
 pub(crate) use self::statement::*;
+use self::ts_parse_error::ts_member_cannot_be;
 pub(crate) use self::types::*;
 
 use super::binding::parse_identifier_binding;
+use super::class::is_nth_at_modifier;
 use super::expr::is_nth_at_identifier;
 use super::js_parse_error::expected_identifier;
 use super::stmt::optional_semi;
@@ -132,8 +134,8 @@ pub(crate) fn try_parse<T, E>(
 pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
     let mut offset = 0;
 
-    if is_at_contextual_keyword(p, "readonly") {
-        offset = 1;
+    while is_nth_at_modifier(p, offset) {
+        offset += 1;
     }
 
     if !p.nth_at(offset, T!['[']) {
@@ -163,8 +165,18 @@ pub(crate) fn expect_ts_index_signature_member(
     kind: JsSyntaxKind,
     possible_separators: MembersSeparator,
 ) -> CompletedMarker {
-    if is_at_contextual_keyword(p, "readonly") {
-        p.bump_remap(T![readonly]);
+    while is_nth_at_modifier(p, 0) {
+        if is_at_contextual_keyword(p, "readonly") {
+            p.bump_remap(T![readonly]);
+        } else {
+            p.error(ts_member_cannot_be(
+                p,
+                p.cur_tok().range(),
+                "index signature",
+                p.cur_src(),
+            ));
+            p.bump_any();
+        }
     }
 
     p.bump(T!['[']);

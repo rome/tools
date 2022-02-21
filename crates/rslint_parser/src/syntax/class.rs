@@ -1223,7 +1223,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
     // test_err class_constructor_parameter
     // class B { constructor(protected b) {} }
 
-    if is_at_modifier(p) {
+    if is_nth_at_modifier(p, 0) {
         // test ts ts_property_parameter
         // class A { constructor(private x, protected y, public z) {} }
         // class B { constructor(readonly w, private readonly x, protected readonly y, public readonly z) {} }
@@ -1363,24 +1363,25 @@ fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
     p.nth_at(offset, T!['(']) || p.nth_at(offset, T![<])
 }
 
-fn is_at_modifier(p: &Parser) -> bool {
+pub(crate) fn is_nth_at_modifier(p: &Parser, n: usize) -> bool {
     // Test if this modifier is followed by another modifier, member name or any other token that
     // starts a new member. If that's the case, then this is fairly likely a modifier. If not, then
     // this is probably not a modifier, but the name of the member. For example, all these are valid
     // members: `static() {}, private() {}, protected() {}`... but are modifiers if followed by another modifier or a name:
     // `static x() {} private static() {}`...
+    let src = p.nth_src(n);
     if !matches!(
-        p.cur_src(),
+        src,
         "public" | "private" | "protected" | "static" | "abstract" | "readonly" | "declare"
     ) {
         return false;
     }
 
-    if p.has_linebreak_before_n(1) {
+    if p.has_linebreak_before_n(n + 1) {
         return false;
     }
 
-    matches!(p.nth(1), T![*] | T!['{'] | T!['[']) | is_at_class_member_name(p, 1)
+    matches!(p.nth(n + 1), T![*] | T!['{'] | T!['[']) | is_at_class_member_name(p, 1)
 }
 
 // test static_generator_constructor_method
@@ -1500,7 +1501,7 @@ fn parse_class_member_modifiers(
 // test_err class_member_modifier
 // class A { abstract foo; }
 fn parse_modifier(p: &mut Parser) -> Option<Modifier> {
-    if !is_at_modifier(p) {
+    if !is_nth_at_modifier(p, 0) {
         // all modifiers can also be valid member names. That's why we shouldn't parse a modifier
         // if it isn't followed by a valid member name or another modifier
         return None;

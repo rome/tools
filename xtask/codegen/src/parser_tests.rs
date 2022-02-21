@@ -88,7 +88,7 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
     )?;
 
     if some_file_was_updated {
-        filetime::set_file_mtime(
+        let _ = filetime::set_file_mtime(
             "crates/rslint_parser/src/tests.rs",
             filetime::FileTime::now(),
         );

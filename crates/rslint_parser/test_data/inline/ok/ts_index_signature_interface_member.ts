@@ -1,6 +1,9 @@
-interface C {
+interface A {
     [a: number]: string;
 }
-interface D {
+interface B {
     [index: string]: { prop }
+}
+interface C {
+    readonly [a: number]: string;
 }

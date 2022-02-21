@@ -256,11 +256,19 @@ pub(crate) fn is_at_ts_interface_declaration(p: &Parser) -> bool {
 // interface B { prop: string, method(): string, [index: number]: string, new(): B }
 
 // test ts ts_index_signature_interface_member
-// interface C {
+// interface A {
 //     [a: number]: string;
 // }
-// interface D {
+// interface B {
 //     [index: string]: { prop }
+// }
+// interface C {
+//     readonly [a: number]: string;
+// }
+
+// test_err ts ts_index_signature_interface_member_cannot_be_static
+// interface A {
+//     static [index: string]: string
 // }
 pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
     if !is_at_ts_interface_declaration(p) {
