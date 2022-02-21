@@ -2,22 +2,29 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsInterfaceDeclaration;
+use rslint_parser::ast::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
 impl ToFormatElement for TsInterfaceDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let interface = self.interface_token().format(formatter)?;
-        let id = self.id().format(formatter)?;
-        let type_parameters = self.type_parameters().format_or_empty(formatter)?;
-        let extends = self
-            .extends_clause()
-            .format_with_or_empty(formatter, |extends| {
-                format_elements![extends, space_token()]
-            })?;
+        let TsInterfaceDeclarationFields {
+            interface_token,
+            id,
+            type_parameters,
+            extends_clause,
+            members,
+            l_curly_token,
+            r_curly_token,
+        } = self.as_fields();
+        let interface = interface_token.format(formatter)?;
+        let id = id.format(formatter)?;
+        let type_parameters = type_parameters.format_or_empty(formatter)?;
+        let extends = extends_clause.format_with_or_empty(formatter, |extends| {
+            format_elements![extends, space_token()]
+        })?;
         let members = formatter.format_delimited_soft_block_spaces(
-            &self.l_curly_token()?,
-            self.members().format(formatter)?,
-            &self.r_curly_token()?,
+            &l_curly_token?,
+            members.format(formatter)?,
+            &r_curly_token?,
         )?;
         Ok(format_elements![
             interface,

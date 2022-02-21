@@ -1,16 +1,24 @@
+use crate::formatter::TrailingSeparator;
 use crate::{
     join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::TsTypeParameters;
+use rslint_parser::ast::{TsTypeParameters, TsTypeParametersFields};
+
 impl ToFormatElement for TsTypeParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let items = formatter.format_separated(self.items(), || token(","))?;
+        let TsTypeParametersFields {
+            items,
+            r_angle_token,
+            l_angle_token,
+        } = self.as_fields();
+        let items =
+            formatter.format_separated(&items, || token(","), TrailingSeparator::Allowed)?;
 
         formatter.format_delimited_soft_block_indent(
-            &self.l_angle_token()?,
+            &l_angle_token?,
             join_elements(soft_line_break_or_space(), items),
-            &self.r_angle_token()?,
+            &r_angle_token?,
         )
     }
 }
