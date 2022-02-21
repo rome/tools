@@ -489,6 +489,7 @@ fn parse_parenthesized_arrow_function_head(
 
 // test ts ts_arrow_function_type_parameters
 // let a = <A, B extends A, C = string>(a: A, b: B, c: C) => "hello";
+// let b = async <A, B>(a: A, b: B): Promise<string> => "hello";
 fn parse_possible_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
     let start_pos = p.token_pos();
 
