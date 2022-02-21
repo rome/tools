@@ -1,3 +1,4 @@
+use crate::format_element::hard_group_elements;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
@@ -19,7 +20,7 @@ impl ToFormatElement for JsAnyClass {
                 format_elements![space_token(), extends_clause]
             })?;
 
-        Ok(format_elements![
+        Ok(hard_group_elements(format_elements![
             self.class_token().format(formatter)?,
             id,
             extends,
@@ -33,6 +34,6 @@ impl ToFormatElement for JsAnyClass {
                 ),
                 &self.r_curly_token()?
             )?
-        ])
+        ]))
     }
 }

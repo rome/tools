@@ -43,7 +43,7 @@ while (true) {} // Comment
 
 while (true) {} // Comment
 
-while (true) {} /*Comment*/
+while (true) /*Comment*/ {}
 
 while (
   true && true // Comment // Comment
@@ -51,7 +51,7 @@ while (
 
 while (true) {} // comment
 
-while (true) ++x; /* comment */
+while (true) /* comment */ ++x;
 
 while (1) foo(); // Comment
 

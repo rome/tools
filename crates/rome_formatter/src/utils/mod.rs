@@ -1,11 +1,11 @@
 mod call_expression;
-use crate::formatter_traits::FormatOptionalTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    empty_element, format_elements, hard_line_break, space_token, FormatElement, FormatResult,
-    Formatter,
+    empty_element, format_elements, hard_group_elements, hard_line_break, space_token,
+    FormatElement, FormatResult, Formatter,
 };
 pub use call_expression::format_call_expression;
-use rslint_parser::ast::JsInitializerClause;
+use rslint_parser::ast::{JsAnyStatement, JsInitializerClause};
 use rslint_parser::{SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
 /// Utility function to format the separators of the nodes that belong to the unions
@@ -80,4 +80,27 @@ pub(crate) fn has_formatter_trivia(node: &SyntaxNode) -> bool {
     }
 
     false
+}
+
+/// Format an element with a single line head and a body that might
+/// be either a block or a single statement
+///
+/// This will place the head element inside a [hard_group_elements], but
+/// the body will broken out of flat printing if its a single statement
+pub(crate) fn format_head_body_statement(
+    formatter: &Formatter,
+    head: FormatElement,
+    body: JsAnyStatement,
+) -> FormatResult<FormatElement> {
+    if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
+        Ok(hard_group_elements(format_elements![
+            head,
+            body.format(formatter)?
+        ]))
+    } else {
+        Ok(format_elements![
+            hard_group_elements(head),
+            body.format(formatter)?
+        ])
+    }
 }

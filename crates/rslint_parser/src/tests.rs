@@ -12,15 +12,8 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-type OptionsFlags
-    <Type> =
-    {
-  [Property
-        in
-        keyof
-            Type
-        as              string]?: boolean;
-};;
+type TupleD = [
+    address: string ]
     "#;
 
     let module = parse(src, 0, Syntax::default().typescript());

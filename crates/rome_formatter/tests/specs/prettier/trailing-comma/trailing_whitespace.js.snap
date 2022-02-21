@@ -97,7 +97,7 @@ this.getAttribute(
   },
 );
 this.getAttribute(
-  function (s) { /*string*/
+  function (s) /*string*/ {
     console.log();
   },
 );

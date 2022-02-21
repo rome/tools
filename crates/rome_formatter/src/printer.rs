@@ -116,7 +116,13 @@ impl<'a> Printer<'a> {
     ) -> Formatted {
         let mut queue = ElementCallQueue::new();
 
-        queue.enqueue(PrintElementCall::new(element, PrintElementArgs { indent }));
+        queue.enqueue(PrintElementCall::new(
+            element,
+            PrintElementArgs {
+                indent,
+                hard_group: false,
+            },
+        ));
 
         while let Some(print_element_call) = queue.dequeue() {
             self.print_element(
@@ -175,7 +181,12 @@ impl<'a> Printer<'a> {
                 self.print_str(token);
             }
 
+            FormatElement::HardGroup(group) => queue.enqueue(PrintElementCall::new(
+                group.content.as_ref(),
+                args.with_hard_group(true),
+            )),
             FormatElement::Group(Group { content }) => {
+                let args = args.with_hard_group(false);
                 if self.try_print_flat(queue, element, args.clone()).is_err() {
                     // Flat printing didn't work, print with line breaks
                     queue.enqueue(PrintElementCall::new(content.as_ref(), args));
@@ -197,20 +208,16 @@ impl<'a> Printer<'a> {
                 ));
             }
 
-            FormatElement::ConditionalGroupContent(ConditionalGroupContent {
-                mode: GroupPrintMode::Multiline,
-                content,
-            }) => {
-                queue.enqueue(PrintElementCall::new(content, args));
+            FormatElement::ConditionalGroupContent(ConditionalGroupContent { mode, content }) => {
+                if args.hard_group == matches!(mode, GroupPrintMode::Flat) {
+                    queue.enqueue(PrintElementCall::new(content, args));
+                }
             }
 
-            FormatElement::ConditionalGroupContent(ConditionalGroupContent {
-                mode: GroupPrintMode::Flat,
-                ..
-            }) => {}
-
             FormatElement::Line(line) => {
-                if !self.state.line_suffixes.is_empty() {
+                if args.hard_group && matches!(line.mode, LineMode::Soft | LineMode::SoftOrSpace) {
+                    self.state.pending_space |= line.mode == LineMode::SoftOrSpace;
+                } else if !self.state.line_suffixes.is_empty() {
                     queue.extend(
                         self.state
                             .line_suffixes
@@ -308,9 +315,14 @@ impl<'a> Printer<'a> {
                 }
             }
 
-            FormatElement::Group(group) => {
-                queue.enqueue(PrintElementCall::new(group.content.as_ref(), args))
-            }
+            FormatElement::HardGroup(group) => queue.enqueue(PrintElementCall::new(
+                group.content.as_ref(),
+                args.with_hard_group(true),
+            )),
+            FormatElement::Group(group) => queue.enqueue(PrintElementCall::new(
+                group.content.as_ref(),
+                args.with_hard_group(false),
+            )),
 
             // Fill elements are printed as space-separated lists in flat mode
             FormatElement::Fill(list) => {
@@ -497,15 +509,23 @@ struct PrinterStateSnapshot {
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 struct PrintElementArgs {
     indent: u16,
+    hard_group: bool,
 }
 
 impl PrintElementArgs {
     pub fn new(indent: u16) -> Self {
-        Self { indent }
+        Self {
+            indent,
+            hard_group: false,
+        }
     }
 
     pub fn with_incremented_indent(self) -> Self {
         Self::new(self.indent + 1)
+    }
+
+    pub fn with_hard_group(self, hard_group: bool) -> Self {
+        Self { hard_group, ..self }
     }
 }
 

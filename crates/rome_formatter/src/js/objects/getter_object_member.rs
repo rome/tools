@@ -1,7 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
 use rslint_parser::ast::JsGetterObjectMember;
@@ -18,7 +19,7 @@ impl ToFormatElement for JsGetterObjectMember {
             body,
         } = self.as_fields();
 
-        Ok(format_elements![
+        Ok(hard_group_elements(format_elements![
             get_token.format(formatter)?,
             space_token(),
             name.format(formatter)?,
@@ -27,6 +28,6 @@ impl ToFormatElement for JsGetterObjectMember {
             return_type.format_or_empty(formatter)?,
             space_token(),
             body.format(formatter)?
-        ])
+        ]))
     }
 }

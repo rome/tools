@@ -1,6 +1,6 @@
 use crate::formatter_traits::FormatTokenAndNode;
 
-use crate::FormatResult;
+use crate::{hard_group_elements, FormatResult};
 
 use crate::{
     format_elements, join_elements_hard_line, space_token, FormatElement, Formatter,
@@ -22,7 +22,7 @@ impl ToFormatElement for JsSwitchStatement {
             r_curly_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        Ok(hard_group_elements(format_elements![
             switch_token.format(formatter)?,
             space_token(),
             formatter.format_delimited_soft_block_indent(
@@ -41,6 +41,6 @@ impl ToFormatElement for JsSwitchStatement {
                 ),
                 &r_curly_token?
             )?
-        ])
+        ]))
     }
 }

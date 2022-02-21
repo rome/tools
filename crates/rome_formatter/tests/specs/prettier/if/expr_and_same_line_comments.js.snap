@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: expr_and_same_line_comments.js
 
 ---
@@ -34,13 +34,15 @@ if (a === 0) doSomething(); else if (a === 1) doSomethingElse(); else if ( // co
   a === 2
 ) doSomethingElse(); // comment C1
 
-if (a === 0) doSomething(); else if (a === 1) doSomethingElse(); else if ( /* comment A2 */ /* comment B2 */
+if (a === 0) doSomething(); /* comment A2 */ else if (a === 1) doSomethingElse(); /* comment B2 */ else if (
   a === 2
 ) doSomethingElse(); /* comment C2 */
 
 if (a === 0) expr; else if (a === 1) expr; else if (a === 2) expr; // comment A3 // comment B3 // comment C3
 
-if (a === 0) expr; else if (a === 1) expr; else if (a === 2) expr; /* comment A4 */ /* comment B4 */ /* comment C4 */
+if (a === 0) expr; /* comment A4 */ else if (a === 1) expr; /* comment B4 */ else if (
+  a === 2
+) expr; /* comment C4 */
 
 if (a === 0) looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; else if ( // comment A5
   a === 1
