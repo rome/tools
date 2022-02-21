@@ -38,7 +38,9 @@ use std::ops::Range;
 
 use super::function::LineBreak;
 use super::js_parse_error::unexpected_body_inside_ambient_context;
-use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
+use super::typescript::ts_parse_error::{
+    self, ts_member_cannot_be, unexpected_abstract_member_with_body,
+};
 use super::typescript::{
     expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent,
 };
@@ -454,6 +456,72 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
+// test ts ts_index_signature_class_member
+// class A {
+//     [a: number]: string;
+// }
+// class B {
+//     [index: string]: { prop }
+// }
+
+// test ts ts_index_signature_class_member_can_be_static
+// class A {
+//     static [a: number]: string;
+// }
+// class B {
+//     static readonly [a: number]: string;
+// }
+
+// test_err ts ts_index_signature_class_member_static_readonly_precedence
+// class A {
+//     readonly static [a: number]: string;
+// }
+
+// test_err ts ts_index_signature_class_member_cannot_have_visibility_modifiers
+// class A {
+//     public  [a: number]: string;
+// }
+// class B {
+//     private  [a: number]: string;
+// }
+// class C {
+//     protected  [a: number]: string;
+// }
+
+// test_err index_signature_class_member_in_js
+// class A {
+//     [a: number]: string;
+// }
+fn parse_index_signature_class_member(
+    p: &mut Parser,
+    member_marker: Marker,
+    modifiers: ClassMemberModifiers,
+) -> ParsedSyntax {
+    TypeScript.parse_exclusive_syntax(
+        p,
+        |p| {
+            let member = Present(expect_ts_index_signature_member(
+                p,
+                member_marker,
+                MemberParent::Class,
+            ));
+
+            if let Some(range) = modifiers.get_range(ModifierKind::Accessibility) {
+                let src = p.span_text(range);
+                p.error(ts_member_cannot_be(
+                    p,
+                    range.clone(),
+                    "index signature",
+                    src,
+                ));
+            }
+
+            member
+        },
+        |p, member| ts_only_syntax_error(p, "Index signatures", member.range(p).as_range()),
+    )
+}
+
 fn parse_class_member_impl(
     p: &mut Parser,
     member_marker: Marker,
@@ -511,39 +579,7 @@ fn parse_class_member_impl(
 
     // Seems like we're at an index member
     if is_at_ts_index_signature_member(p) {
-        // test ts ts_index_signature_class_member
-        // class A {
-        //     [a: number]: string;
-        // }
-        // class B {
-        //     [index: string]: { prop }
-        // }
-
-        // test ts ts_index_signature_class_member_can_be_static
-        // class A {
-        //     static [a: number]: string;
-        // }
-        // class B {
-        //     static readonly [a: number]: string;
-        // }
-
-        // test_err ts ts_index_signature_class_member_static_readonly_precedence
-        // class A {
-        //     readonly static [a: number]: string;
-        // }
-        let member = Present(expect_ts_index_signature_member(
-            p,
-            member_marker,
-            MemberParent::Class,
-        ));
-
-        // test_err index_signature_class_member_in_js
-        // class A {
-        //     [a: number]: string;
-        // }
-        return TypeScript.exclusive_syntax(p, member, |p, member| {
-            ts_only_syntax_error(p, "Index signatures", member.range(p).as_range())
-        });
+        return parse_index_signature_class_member(p, member_marker, modifiers);
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);

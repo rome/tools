@@ -270,6 +270,23 @@ pub(crate) fn is_at_ts_interface_declaration(p: &Parser) -> bool {
 // interface A {
 //     static [index: string]: string
 // }
+// interface B {
+//     public [index: string]: string
+// }
+// interface C {
+//     private [index: string]: string
+// }
+
+// test_err ts ts_index_signature_interface_member_cannot_have_visibility_modifiers
+// interface A {
+//     public  [a: number]: string;
+// }
+// interface B {
+//     private  [a: number]: string;
+// }
+// interface C {
+//     protected  [a: number]: string;
+// }
 pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
     if !is_at_ts_interface_declaration(p) {
         return Absent;
