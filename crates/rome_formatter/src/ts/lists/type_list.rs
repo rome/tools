@@ -10,11 +10,7 @@ impl ToFormatElement for TsTypeList {
         // the grouping will be applied by the parent
         Ok(join_elements(
             soft_line_break_or_space(),
-            formatter.format_separated(
-                self.clone(),
-                || token(","),
-                TrailingSeparator::Disallowed,
-            )?,
+            formatter.format_separated(self, || token(","), TrailingSeparator::Disallowed)?,
         ))
     }
 }

@@ -8,7 +8,7 @@ use rslint_parser::{ast::JsObjectMemberList, AstSeparatedList};
 impl ToFormatElement for JsObjectMemberList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let members =
-            formatter.format_separated(self.clone(), || token(","), TrailingSeparator::Allowed)?;
+            formatter.format_separated(self, || token(","), TrailingSeparator::Allowed)?;
 
         Ok(join_elements_soft_line(
             self.elements()

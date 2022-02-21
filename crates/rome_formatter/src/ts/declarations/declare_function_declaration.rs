@@ -28,6 +28,7 @@ impl ToFormatElement for TsDeclareFunctionDeclaration {
         let return_type_annotation = return_type_annotation.format_or_empty(formatter)?;
         let semicolon_token = semicolon_token.format_or(formatter, || token(";"))?;
 
+        // TODO use hard_group_elements once #2140 will land
         Ok(format_elements![
             async_token,
             function_token,

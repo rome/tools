@@ -260,7 +260,7 @@ impl Formatter {
     /// if the outer group breaks.
     pub fn format_separated<T, L, F>(
         &self,
-        list: L,
+        list: &L,
         separator_factory: F,
         trailing_separator: TrailingSeparator,
     ) -> FormatResult<impl Iterator<Item = FormatElement>>

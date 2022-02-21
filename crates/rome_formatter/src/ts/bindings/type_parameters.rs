@@ -12,7 +12,8 @@ impl ToFormatElement for TsTypeParameters {
             r_angle_token,
             l_angle_token,
         } = self.as_fields();
-        let items = formatter.format_separated(items, || token(","), TrailingSeparator::Allowed)?;
+        let items =
+            formatter.format_separated(&items, || token(","), TrailingSeparator::Allowed)?;
 
         formatter.format_delimited_soft_block_indent(
             &l_angle_token?,

@@ -26,7 +26,7 @@ impl ToFormatElement for TsEnumDeclaration {
         let id = id.format_with(formatter, |id| format_elements![id, space_token()])?;
 
         let members =
-            formatter.format_separated(members, || token(","), TrailingSeparator::Allowed)?;
+            formatter.format_separated(&members, || token(","), TrailingSeparator::Allowed)?;
         let list = formatter.format_delimited_soft_block_spaces(
             &l_curly_token?,
             join_elements(soft_line_break_or_space(), members),
