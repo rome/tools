@@ -18,7 +18,7 @@ var foo: () => [any] = function bar() {
 # Output
 ```js
 //@noImplicitAny: true
-var foo: () => [any]  = function bar() {
+var foo: () => [any] = function bar() {
   let intermediate = bar();
   intermediate = [""];
   return [undefined];

@@ -51,9 +51,9 @@ declare function fn4(n: number, y: number): string;
 declare function fn5(x, y?);
 declare function fn6(e?);
 declare function fn7(x, y?, ...z);
-declare function fn8(y?, ...z: [number]);
-declare function fn9(...q: [{}]);
-declare function fn10<T>(...q: [T]);
+declare function fn8(y?, ...z: number[]);
+declare function fn9(...q: {}[]);
+declare function fn10<T>(...q: T[]);
 
 declare class cls {
     constructor();

@@ -1,3 +1,5 @@
+import * as assert from "assert";
+
 type A = string;
 type B = number;
 type C = null;
@@ -33,12 +35,13 @@ type Z = {
 type OptionsFlags
     <Type> =
     {
-  [Property
+  +
+        readonly [Property
         in
         keyof
             Type
-        as              string]// something
-        ?: boolean;
+        as              string]
+        -?: boolean;
 };
 
 type OptionsFlag
@@ -66,3 +69,37 @@ type TupleD = [
     surname  ?:
     string[],
     ...name: string[],  ]
+
+type PA = (
+    string
+    )
+
+
+type FunctionType = <Aaaaaaaaaaaaaaaaaaaaa,bvvvvvvvvvvvvvvvvvvvvvv,ceeeeeee,deeeeeeeeeeeeee,deeeeeeeeeeeeeee,deeeeeeeeeeeeeeee,deeeeeeeewweeeeee,>(Lorem: string, ipsum: symbol,  dolor: number, sit: boolean, amet: string, consectetur: symbol) => {
+    Lorem: string, ipsum: symbol, dolor: number, sit: boolean, amet: string, consectetur: symbol
+}
+
+type FunctionTypeB = ( loreum: string )  => string ;
+
+type Indexed = string[
+    number
+    ]
+
+function test(a: string):
+    a is  string   { return true }
+
+
+type AbstractCompositeThingamabobberFactoryProvider = string;
+
+type ConstructorType = new ( options: { a: string, b: AbstractCompositeThingamabobberFactoryProvider },
+) => {};
+
+type Constructor<T> = new(...args: any[]) => T;
+
+function test2(a: string):
+    asserts a is string   {  }
+
+
+type Type01 = 0 extends
+    (1 extends 2 ? 3 : 4) ? 5 : 6
+    ;

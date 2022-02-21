@@ -43,7 +43,7 @@ var combineResult = combine("string", 10);
 var combineEle1 = combineResult[0]; // string
 var combineEle2 = combineResult[1]; // number
 
-function zip<T, U>(array1: [T], array2: [U]): [[T, U]] {
+function zip<T, U>(array1: T[], array2: U[]): [[T, U]] {
   if (array1.length != array2.length) {
     return [[undefined, undefined]];
   }

@@ -10,8 +10,8 @@ impl ToFormatElement for TsArrayType {
             r_brack_token,
         } = self.as_fields();
         Ok(format_elements![
-            l_brack_token.format(formatter)?,
             element_type.format(formatter)?,
+            l_brack_token.format(formatter)?,
             r_brack_token.format(formatter)?,
         ])
     }

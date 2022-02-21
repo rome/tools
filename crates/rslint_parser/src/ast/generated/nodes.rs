@@ -6255,7 +6255,7 @@ impl TsIndexSignatureClassMember {
             parameter: self.parameter(),
             r_brack_token: self.r_brack_token(),
             type_annotation: self.type_annotation(),
-            separator_token: self.separator_token(),
+            semicolon_token: self.semicolon_token(),
         }
     }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
@@ -6272,7 +6272,7 @@ impl TsIndexSignatureClassMember {
     pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
 pub struct TsIndexSignatureClassMemberFields {
     pub static_token: Option<SyntaxToken>,
@@ -6281,7 +6281,7 @@ pub struct TsIndexSignatureClassMemberFields {
     pub parameter: SyntaxResult<TsIndexSignatureParameter>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: SyntaxResult<TsTypeAnnotation>,
-    pub separator_token: Option<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureParameter {
@@ -14422,8 +14422,8 @@ impl std::fmt::Debug for TsIndexSignatureClassMember {
                 &support::DebugSyntaxResult(self.type_annotation()),
             )
             .field(
-                "separator_token",
-                &support::DebugOptionalElement(self.separator_token()),
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
             )
             .finish()
     }

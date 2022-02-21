@@ -58,9 +58,9 @@ function x(
 export interface ApplicationEventData {
   registerBroadcastReceiver(
     onReceiveCallback: (
-    context: any /* android.content.Context */,
-    intent: any /* android.content.Intent */
-  ) => void,
+      context: any, /* android.content.Context */
+      intent: any, /* android.content.Intent */
+    ) => void,
   ): void,
 }
 
@@ -79,7 +79,7 @@ export type WrappedFormUtils = {
       /** 校验子节点值的时机 */
       validateTrigger?: string | string[],
       /** 校验规则，参见 [async-validator](https://github.com/yiminghe/async-validator) */
-      rules?: [ValidationRule],
+      rules?: ValidationRule[],
       /** 是否和其他控件互斥，特别用于 Radio 单选控件 */
       exclusive?: boolean,
     },

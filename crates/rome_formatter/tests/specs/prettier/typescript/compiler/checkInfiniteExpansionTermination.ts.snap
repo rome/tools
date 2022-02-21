@@ -31,7 +31,7 @@ values = values2;
 // Before fix this code would cause infinite loop
 
 interface IObservable<T> {
-  n: IObservable<[T]>, // Needed, must be T[]
+  n: IObservable<T[]>, // Needed, must be T[]
 }
 
 // Needed

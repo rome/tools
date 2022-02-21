@@ -12,11 +12,11 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-type TupleD = [
-    address: string ]
+type Constructor<T> = new(...args: any[]) => T;
     "#;
 
     let module = parse(src, 0, Syntax::default().typescript());
+    dbg!(&module.syntax());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 

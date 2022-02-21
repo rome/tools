@@ -5,6 +5,8 @@ expression: type_expression.ts
 
 ---
 # Input
+import * as assert from "assert";
+
 type A = string;
 type B = number;
 type C = null;
@@ -40,12 +42,13 @@ type Z = {
 type OptionsFlags
     <Type> =
     {
-  [Property
+  +
+        readonly [Property
         in
         keyof
             Type
-        as              string]// something
-        ?: boolean;
+        as              string]
+        -?: boolean;
 };
 
 type OptionsFlag
@@ -73,6 +76,40 @@ type TupleD = [
     surname  ?:
     string[],
     ...name: string[],  ]
+
+type PA = (
+    string
+    )
+
+
+type FunctionType = <Aaaaaaaaaaaaaaaaaaaaa,bvvvvvvvvvvvvvvvvvvvvvv,ceeeeeee,deeeeeeeeeeeeee,deeeeeeeeeeeeeee,deeeeeeeeeeeeeeee,deeeeeeeewweeeeee,>(Lorem: string, ipsum: symbol,  dolor: number, sit: boolean, amet: string, consectetur: symbol) => {
+    Lorem: string, ipsum: symbol, dolor: number, sit: boolean, amet: string, consectetur: symbol
+}
+
+type FunctionTypeB = ( loreum: string )  => string ;
+
+type Indexed = string[
+    number
+    ]
+
+function test(a: string):
+    a is  string   { return true }
+
+
+type AbstractCompositeThingamabobberFactoryProvider = string;
+
+type ConstructorType = new ( options: { a: string, b: AbstractCompositeThingamabobberFactoryProvider },
+) => {};
+
+type Constructor<T> = new(...args: any[]) => T;
+
+function test2(a: string):
+    asserts a is string   {  }
+
+
+type Type01 = 0 extends
+    (1 extends 2 ? 3 : 4) ? 5 : 6
+    ;
 =============================
 # Outputs
 ## Output 1
@@ -80,6 +117,8 @@ type TupleD = [
 Indent style: Tab
 Line width: 80
 -----
+import * as assert from "assert";
+
 type A = string;
 type B = number;
 type C = null;
@@ -118,17 +157,16 @@ type X = { a: string, b: symbol };
 type Z = { a: string, b: symbol };
 
 type OptionsFlags<Type> = {
-	[Property in keyof Type as string]
-        ?: boolean; // something
+	+readonly [Property in keyof Type as string]-?: boolean;
 };
 
 type OptionsFlag<A extends OptionsFlags<any> = any> = string;
 
 type TupleA = [string];
 
-type TupleB = [...[string]];
+type TupleB = [...string[]];
 
-type TupleC = [surname?: [string], ...name: [string]];
+type TupleC = [surname?: string[], ...name: string[]];
 
 type TupleD = [
 	address: string,
@@ -136,12 +174,53 @@ type TupleD = [
 	address3: string,
 	address4: string,
 	address5: string,
-	surname?: [string],
-	...name: [string],
+	surname?: string[],
+	...name: string[],
 ];
 
+type PA = (string);
 
-## Unimplemented nodes/tokens
+type FunctionType = <
+	Aaaaaaaaaaaaaaaaaaaaa,
+	bvvvvvvvvvvvvvvvvvvvvvv,
+	ceeeeeee,
+	deeeeeeeeeeeeee,
+	deeeeeeeeeeeeeee,
+	deeeeeeeeeeeeeeee,
+	deeeeeeeewweeeeee,
+>(
+	Lorem: string,
+	ipsum: symbol,
+	dolor: number,
+	sit: boolean,
+	amet: string,
+	consectetur: symbol,
+) => {
+	Lorem: string,
+	ipsum: symbol,
+	dolor: number,
+	sit: boolean,
+	amet: string,
+	consectetur: symbol,
+};
 
-"\n        ?" => 698..708
+type FunctionTypeB = (loreum: string) => string;
+
+type Indexed = string[number];
+
+function test(a: string): a is string {
+	return true;
+}
+
+type AbstractCompositeThingamabobberFactoryProvider = string;
+
+type ConstructorType = new(
+	options: { a: string, b: AbstractCompositeThingamabobberFactoryProvider },
+) => {};
+
+type Constructor<T> = new(...args: any[]) => T;
+
+function test2(a: string): asserts a is string {}
+
+type Type01 = 0 extends (1 extends 2 ? 3 : 4) ? 5 : 6;
 

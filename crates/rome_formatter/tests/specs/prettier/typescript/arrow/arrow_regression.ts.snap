@@ -26,7 +26,7 @@ app.get("/", (req, res): void => {
 
 # Output
 ```js
-const bar = (...varargs: [any]) => {
+const bar = (...varargs: any[]) => {
   console.log(varargs);
 };
 
