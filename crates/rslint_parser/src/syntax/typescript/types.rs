@@ -459,6 +459,9 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
 // type C = A;
 // type D = B.a;
 // type E = D.c.b.a;
+//
+// test ts ts_generic_reference_type_not_lhs
+// type Bar = ReturnType<<T>(x: T) => number>;
 fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);

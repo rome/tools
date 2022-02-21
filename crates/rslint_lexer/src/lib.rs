@@ -187,17 +187,23 @@ impl<'src> Lexer<'src> {
         chr
     }
 
-    // Get the current byte
+    /// Get the current byte
     #[inline]
     fn current(&mut self) -> Option<&u8> {
         self.bytes.get(self.cur)
     }
 
-    // Get the next byte and advance the index
+    /// Get the next byte and advance the index
     #[inline]
     fn next(&mut self) -> Option<&u8> {
         self.cur += 1;
         self.bytes.get(self.cur)
+    }
+
+    /// Returns the next byte, if any
+    #[inline]
+    fn peek(&self) -> Option<&u8> {
+        self.bytes.get(self.cur + 1)
     }
 
     // Get the next byte but only advance the index if there is a next byte
@@ -1195,11 +1201,12 @@ impl<'src> Lexer<'src> {
     fn resolve_less_than(&mut self) -> LexerReturn {
         match self.next() {
             Some(b'<') => {
-                if let Some(b'=') = self.next() {
-                    self.next();
+                if let Some(b'=') = self.peek() {
+                    self.next(); // second `<`
+                    self.next(); // '=' token
                     tok!(SHLEQ, 3)
                 } else {
-                    tok!(SHL, 2)
+                    tok!(<)
                 }
             }
             Some(b'=') => {

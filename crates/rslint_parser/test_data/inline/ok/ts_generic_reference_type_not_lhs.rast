@@ -1,0 +1,116 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@5..9 "Bar" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            eq_token: EQ@9..11 "=" [] [Whitespace(" ")],
+            ty: TsReferenceType {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@11..21 "ReturnType" [] [],
+                },
+                type_arguments: TsTypeArguments {
+                    l_angle_token: L_ANGLE@21..22 "<" [] [],
+                    ts_type_argument_list: TsTypeArgumentList [
+                        TsFunctionType {
+                            type_parameters: TsTypeParameters {
+                                l_angle_token: L_ANGLE@22..23 "<" [] [],
+                                items: TsTypeParameterList [
+                                    TsTypeParameter {
+                                        name: TsTypeParameterName {
+                                            ident_token: IDENT@23..24 "T" [] [],
+                                        },
+                                        constraint: missing (optional),
+                                        default: missing (optional),
+                                    },
+                                ],
+                                r_angle_token: R_ANGLE@24..25 ">" [] [],
+                            },
+                            parameters: JsParameters {
+                                l_paren_token: L_PAREN@25..26 "(" [] [],
+                                items: JsParameterList [
+                                    JsFormalParameter {
+                                        binding: JsIdentifierBinding {
+                                            name_token: IDENT@26..27 "x" [] [],
+                                        },
+                                        question_mark_token: missing (optional),
+                                        type_annotation: TsTypeAnnotation {
+                                            colon_token: COLON@27..29 ":" [] [Whitespace(" ")],
+                                            ty: TsReferenceType {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@29..30 "T" [] [],
+                                                },
+                                                type_arguments: missing (optional),
+                                            },
+                                        },
+                                        initializer: missing (optional),
+                                    },
+                                ],
+                                r_paren_token: R_PAREN@30..32 ")" [] [Whitespace(" ")],
+                            },
+                            fat_arrow_token: FAT_ARROW@32..35 "=>" [] [Whitespace(" ")],
+                            return_type: TsNumberType {
+                                number_token: NUMBER_KW@35..41 "number" [] [],
+                            },
+                        },
+                    ],
+                    r_angle_token: R_ANGLE@41..42 ">" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@42..43 ";" [] [],
+        },
+    ],
+    eof_token: EOF@43..44 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..44
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..43
+    0: TS_TYPE_ALIAS_DECLARATION@0..43
+      0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@5..9
+        0: IDENT@5..9 "Bar" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@9..11 "=" [] [Whitespace(" ")]
+      4: TS_REFERENCE_TYPE@11..42
+        0: JS_REFERENCE_IDENTIFIER@11..21
+          0: IDENT@11..21 "ReturnType" [] []
+        1: TS_TYPE_ARGUMENTS@21..42
+          0: L_ANGLE@21..22 "<" [] []
+          1: TS_TYPE_ARGUMENT_LIST@22..41
+            0: TS_FUNCTION_TYPE@22..41
+              0: TS_TYPE_PARAMETERS@22..25
+                0: L_ANGLE@22..23 "<" [] []
+                1: TS_TYPE_PARAMETER_LIST@23..24
+                  0: TS_TYPE_PARAMETER@23..24
+                    0: TS_TYPE_PARAMETER_NAME@23..24
+                      0: IDENT@23..24 "T" [] []
+                    1: (empty)
+                    2: (empty)
+                2: R_ANGLE@24..25 ">" [] []
+              1: JS_PARAMETERS@25..32
+                0: L_PAREN@25..26 "(" [] []
+                1: JS_PARAMETER_LIST@26..30
+                  0: JS_FORMAL_PARAMETER@26..30
+                    0: JS_IDENTIFIER_BINDING@26..27
+                      0: IDENT@26..27 "x" [] []
+                    1: (empty)
+                    2: TS_TYPE_ANNOTATION@27..30
+                      0: COLON@27..29 ":" [] [Whitespace(" ")]
+                      1: TS_REFERENCE_TYPE@29..30
+                        0: JS_REFERENCE_IDENTIFIER@29..30
+                          0: IDENT@29..30 "T" [] []
+                        1: (empty)
+                    3: (empty)
+                2: R_PAREN@30..32 ")" [] [Whitespace(" ")]
+              2: FAT_ARROW@32..35 "=>" [] [Whitespace(" ")]
+              3: TS_NUMBER_TYPE@35..41
+                0: NUMBER_KW@35..41 "number" [] []
+          2: R_ANGLE@41..42 ">" [] []
+      5: SEMICOLON@42..43 ";" [] []
+  3: EOF@43..44 "" [Newline("\n")] []

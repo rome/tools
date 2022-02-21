@@ -391,6 +391,7 @@ fn parse_binary_or_logical_expression_recursive(
     // the algorithm goes at most `count(OperatorPrecedence)` levels deep.
     loop {
         let op = match p.cur() {
+            T![<] if p.nth_at(1, T![<]) => T![<<],
             T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
             T![>] if p.nth_at(1, T![>]) => T![>>],
             T![in] if !context.is_in_included() => {
@@ -452,13 +453,11 @@ fn parse_binary_or_logical_expression_recursive(
         }
 
         let m = left.precede(p);
-        if op == T![>>] {
-            p.bump_multiple(2, T![>>]);
-        } else if op == T![>>>] {
-            p.bump_multiple(3, T![>>>]);
-        } else {
-            p.bump_remap(op);
-        }
+        match op {
+            T![>>] | T![<<] => p.bump_multiple(2, op),
+            T![>>>] => p.bump_multiple(3, op),
+            _ => p.bump_remap(op),
+        };
 
         // test ts ts_as_expression
         // let x: any = "string";
