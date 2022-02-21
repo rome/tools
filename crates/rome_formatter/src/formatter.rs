@@ -324,6 +324,8 @@ impl Formatter {
                 Ok(result) => result,
                 Err(_) => {
                     self.restore(snapshot);
+                    // Lists that yield errors are formatted as they were unknown nodes.
+                    // Doing so, the formatter formats the nodes/tokens as is.
                     self.format_unknown(module_item.syntax())
                         .trim_start()
                         .trim_end()
@@ -421,7 +423,7 @@ impl Formatter {
     }
 
     /// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
-    /// doesn't track nodes/tokens.
+    /// doesn't track nodes/tokens as [FormatElement::Verbatim]. They are just printed as they are.
     pub fn format_unknown(&self, node: &SyntaxNode) -> FormatElement {
         self.format_verbatim_node_or_token(node)
     }

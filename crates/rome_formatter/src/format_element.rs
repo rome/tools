@@ -876,13 +876,18 @@ pub enum FormatElement {
 
     LineSuffix(Content),
 
+    /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](Formatter::format_verbatim) API
     Verbatim(Verbatim),
 }
 
+/// Information of the node/token formatted verbatim
 #[derive(Clone, Eq, PartialEq)]
 pub struct Verbatim {
+    /// the range that belongs to the node/token formatted verbatim
     pub range: TextRange,
+    /// the text that belongs to the node/token formatted verbatim
     pub text: String,
+    /// The [FormatElement] version of the node/token
     pub element: Box<FormatElement>,
 }
 
