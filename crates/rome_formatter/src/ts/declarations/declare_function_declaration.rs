@@ -1,6 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, token, FormatElement, FormatResult,
+    Formatter, ToFormatElement,
 };
 use rslint_parser::ast::TsDeclareFunctionDeclaration;
 use rslint_parser::ast::TsDeclareFunctionDeclarationFields;
@@ -28,8 +29,7 @@ impl ToFormatElement for TsDeclareFunctionDeclaration {
         let return_type_annotation = return_type_annotation.format_or_empty(formatter)?;
         let semicolon_token = semicolon_token.format_or(formatter, || token(";"))?;
 
-        // TODO use hard_group_elements once #2140 will land
-        Ok(format_elements![
+        Ok(hard_group_elements(format_elements![
             async_token,
             function_token,
             space_token(),
@@ -38,6 +38,6 @@ impl ToFormatElement for TsDeclareFunctionDeclaration {
             parameters,
             return_type_annotation,
             semicolon_token,
-        ])
+        ]))
     }
 }
