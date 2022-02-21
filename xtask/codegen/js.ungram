@@ -747,6 +747,7 @@ JsSetterClassMember =
 // class Test { [a: string]: number }
 //
 TsIndexSignatureClassMember =
+	'static'?
 	'readonly'?
 	'['
 	parameter: TsIndexSignatureParameter

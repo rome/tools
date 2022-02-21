@@ -44,7 +44,7 @@ fn extract_comment_blocks(
 
 pub fn generate_parser_tests(mode: Mode) -> Result<()> {
     let tests = tests_from_dir(&project_root().join(Path::new("crates/rslint_parser/src/syntax")))?;
-    fn install_tests(tests: &HashMap<String, Test>, into: &str, mode: Mode) -> Result<()> {
+    fn install_tests(tests: &HashMap<String, Test>, into: &str, mode: Mode) -> Result<bool> {
         let tests_dir = project_root().join(into);
         if !tests_dir.is_dir() {
             fs::create_dir_all(&tests_dir)?;
@@ -54,6 +54,8 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
         for t in existing.keys().filter(|&t| !tests.contains_key(t)) {
             panic!("Test is deleted: {}", t);
         }
+
+        let mut some_file_was_updated = false;
 
         for (name, test) in tests {
             let path = match existing.get(name) {
@@ -68,16 +70,31 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
                     tests_dir.join(file_name)
                 }
             };
-            update(&path, &test.text, mode)?;
+            if let crate::UpdateResult::Updated = update(&path, &test.text, mode)? {
+                some_file_was_updated = true;
+            }
         }
-        Ok(())
+
+        Ok(some_file_was_updated)
     }
-    install_tests(&tests.ok, "crates/rslint_parser/test_data/inline/ok", mode)?;
-    install_tests(
+
+    let mut some_file_was_updated = false;
+    some_file_was_updated |=
+        install_tests(&tests.ok, "crates/rslint_parser/test_data/inline/ok", mode)?;
+    some_file_was_updated |= install_tests(
         &tests.err,
         "crates/rslint_parser/test_data/inline/err",
         mode,
-    )
+    )?;
+
+    if some_file_was_updated {
+        filetime::set_file_mtime(
+            "crates/rslint_parser/src/tests.rs",
+            filetime::FileTime::now(),
+        );
+    }
+
+    Ok(())
 }
 
 #[derive(Debug)]

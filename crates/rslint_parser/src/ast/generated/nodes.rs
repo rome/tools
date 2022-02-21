@@ -6163,20 +6163,41 @@ impl TsIndexSignatureClassMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn as_fields(&self) -> TsIndexSignatureClassMemberFields {
+        TsIndexSignatureClassMemberFields {
+            static_token: self.static_token(),
+            readonly_token: self.readonly_token(),
+            l_brack_token: self.l_brack_token(),
+            parameter: self.parameter(),
+            r_brack_token: self.r_brack_token(),
+            type_annotation: self.type_annotation(),
+            separator_token: self.separator_token(),
+        }
+    }
+    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
     pub fn parameter(&self) -> SyntaxResult<TsIndexSignatureParameter> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 3usize)
     }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
     pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 5usize)
     }
-    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+}
+pub struct TsIndexSignatureClassMemberFields {
+    pub static_token: Option<SyntaxToken>,
+    pub readonly_token: Option<SyntaxToken>,
+    pub l_brack_token: SyntaxResult<SyntaxToken>,
+    pub parameter: SyntaxResult<TsIndexSignatureParameter>,
+    pub r_brack_token: SyntaxResult<SyntaxToken>,
+    pub type_annotation: SyntaxResult<TsTypeAnnotation>,
+    pub separator_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureParameter {
@@ -14199,6 +14220,10 @@ impl AstNode for TsIndexSignatureClassMember {
 impl std::fmt::Debug for TsIndexSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsIndexSignatureClassMember")
+            .field(
+                "static_token",
+                &support::DebugOptionalElement(self.static_token()),
+            )
             .field(
                 "readonly_token",
                 &support::DebugOptionalElement(self.readonly_token()),

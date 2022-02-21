@@ -518,12 +518,33 @@ fn parse_class_member_impl(
         // class B {
         //     [index: string]: { prop }
         // }
-        return Present(expect_ts_index_signature_member(
+
+        // test ts ts_index_signature_class_member_can_be_static
+        // class A {
+        //     static [a: number]: string;
+        // }
+        // class B {
+        //     static readonly [a: number]: string;
+        // }
+
+        // test_err ts ts_index_signature_class_member_static_readonly_precedence
+        // class A {
+        //     readonly static [a: number]: string;
+        // }
+        let member = Present(expect_ts_index_signature_member(
             p,
             member_marker,
             TS_INDEX_SIGNATURE_CLASS_MEMBER,
             MembersSeparator::SEMICOLON,
         ));
+
+        // test_err index_signature_class_member_in_js
+        // class A {
+        //     [a: number]: string;
+        // }
+        return TypeScript.exclusive_syntax(p, member, |p, member| {
+            ts_only_syntax_error(p, "Index signatures", member.range(p).as_range())
+        });
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);
