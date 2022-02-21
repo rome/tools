@@ -252,8 +252,7 @@ impl<'a> Printer<'a> {
                 self.state
                     .verbatim_markers
                     .push((verbatim.text.clone(), verbatim.range));
-                // queue.enqueue(PrintElementCall::new(&verbatim.element, args));
-                self.print_element(queue, &verbatim.element, args);
+                queue.enqueue(PrintElementCall::new(&verbatim.element, args));
             }
         }
     }

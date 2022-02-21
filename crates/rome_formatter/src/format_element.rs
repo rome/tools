@@ -924,7 +924,10 @@ impl Debug for FormatElement {
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
-            FormatElement::Verbatim(verbatim) => verbatim.element.fmt(fmt),
+            FormatElement::Verbatim(verbatim) => fmt
+                .debug_tuple("Verbatim")
+                .field(&verbatim.element)
+                .finish(),
         }
     }
 }
@@ -1280,7 +1283,11 @@ impl FormatElement {
             FormatElement::List(list) => FormatElement::List(list.trim_start()),
             FormatElement::Token(s) => FormatElement::Token(s.trim_start()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_start())),
-            FormatElement::Verbatim(v) => v.element.trim_start(),
+            FormatElement::Verbatim(v) => FormatElement::Verbatim(Verbatim::new(
+                v.element.trim_start(),
+                v.text.clone(),
+                v.range,
+            )),
         }
     }
 
@@ -1300,7 +1307,11 @@ impl FormatElement {
             FormatElement::List(list) => FormatElement::List(list.trim_end()),
             FormatElement::Token(s) => FormatElement::Token(s.trim_end()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_end())),
-            FormatElement::Verbatim(v) => v.element.trim_end(),
+            FormatElement::Verbatim(v) => FormatElement::Verbatim(Verbatim::new(
+                v.element.trim_end(),
+                v.text.clone(),
+                v.range,
+            )),
         }
     }
 }

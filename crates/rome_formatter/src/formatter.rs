@@ -324,7 +324,7 @@ impl Formatter {
                 Ok(result) => result,
                 Err(_) => {
                     self.restore(snapshot);
-                    self.format_verbatim(module_item.syntax())
+                    self.format_unknown(module_item.syntax())
                         .trim_start()
                         .trim_end()
                 }
@@ -432,7 +432,7 @@ impl Formatter {
                 SyntaxElement::Node(child_node) => {
                     // Here we call `format_unknown` because we don't want to track it as [FormatElement::Verbatim]
                     // all the possible children. The first node to call `format_verbatim` should be node to be tracked
-                    self.format_unknown(&child_node)
+                    self.format_verbatim_node_or_token(&child_node)
                 }
                 SyntaxElement::Token(syntax_token) => {
                     cfg_if::cfg_if! {

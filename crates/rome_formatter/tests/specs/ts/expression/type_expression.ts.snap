@@ -44,7 +44,8 @@ type OptionsFlags
         in
         keyof
             Type
-        as              string]?: boolean;
+        as              string]// something
+        ?: boolean;
 };
 
 type OptionsFlag
@@ -117,7 +118,8 @@ type X = { a: string, b: symbol };
 type Z = { a: string, b: symbol };
 
 type OptionsFlags<Type> = {
-	[Property in keyof Type as string]?: boolean;
+	[Property in keyof Type as string]
+        ?: boolean; // something
 };
 
 type OptionsFlag<A extends OptionsFlags<any> = any> = string;
@@ -141,5 +143,5 @@ type TupleD = [
 
 ## Unimplemented nodes/tokens
 
-"?" => 686..687
+"\n        ?" => 698..708
 

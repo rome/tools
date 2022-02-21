@@ -37,7 +37,8 @@ type OptionsFlags
         in
         keyof
             Type
-        as              string]?: boolean;
+        as              string]// something
+        ?: boolean;
 };
 
 type OptionsFlag
