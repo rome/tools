@@ -24,7 +24,7 @@ use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
     parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
 };
-use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
+use crate::syntax::util::is_at_contextual_keyword;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
@@ -129,17 +129,14 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
 
 // test ts typescript_export_default_abstract_class_case
 // export default abstract class {}
-pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
-    let is_at_default_class = p.at(T![default]) && p.nth_at(1, T![class]);
-    let is_at_default_abstract_class = p.at(T![default])
-        && is_nth_at_contextual_keyword(p, 1, "abstract")
-        && p.nth_at(2, T![class]);
-    if !is_at_default_class && !is_at_default_abstract_class {
+pub(super) fn parse_class_export_default_declaration(p: &mut Parser) -> ParsedSyntax {
+    let is_at_class = p.at(T![class]);
+    let is_at_abstract_class = is_at_contextual_keyword(p, "abstract");
+    if !is_at_class && !is_at_abstract_class {
         return Absent;
     }
 
     let m = p.start();
-    p.bump(T![default]);
 
     Present(parse_class(p, m, ClassKind::ExportDefault))
 }
@@ -162,7 +159,7 @@ impl From<ClassKind> for JsSyntaxKind {
         match kind {
             ClassKind::Declaration => JS_CLASS_DECLARATION,
             ClassKind::Expression => JS_CLASS_EXPRESSION,
-            ClassKind::ExportDefault => JS_EXPORT_DEFAULT_CLASS_CLAUSE,
+            ClassKind::ExportDefault => JS_CLASS_EXPORT_DEFAULT_DECLARATION,
         }
     }
 }
@@ -178,9 +175,6 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     // test_err class_decl_no_id
     // class {}
     // class implements B {}
-
-    //TODO what about extends?
-    // class extends B {}
     let id = match p.cur_src() {
         "implements" => Absent,
         _ => parse_binding(p),

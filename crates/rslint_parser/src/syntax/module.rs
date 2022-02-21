@@ -3,12 +3,12 @@ use crate::state::EnterAmbientContext;
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
 };
-use crate::syntax::class::parse_export_default_class_case;
+use crate::syntax::class::parse_class_export_default_declaration;
 use crate::syntax::expr::{
     is_nth_at_expression, is_nth_at_reference_identifier, parse_assignment_expression_or_higher,
     parse_name, parse_reference_identifier, ExpressionContext,
 };
-use crate::syntax::function::parse_export_default_function_case;
+use crate::syntax::function::parse_function_export_default_declaration;
 use crate::syntax::js_parse_error::{
     duplicate_assertion_keys_error, expected_binding, expected_declaration, expected_export_clause,
     expected_export_name_specifier, expected_expression, expected_identifier,
@@ -16,7 +16,10 @@ use crate::syntax::js_parse_error::{
     expected_named_import_specifier, expected_statement, ts_only_syntax_error,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
-use crate::syntax::typescript::parse_ts_import_equals_declaration_rest;
+use crate::syntax::typescript::{
+    parse_ts_enum_declaration, parse_ts_import_equals_declaration_rest,
+    parse_ts_interface_declaration,
+};
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
     is_nth_at_contextual_keyword,
@@ -1028,14 +1031,24 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let clause = match p.nth(1) {
-        T![class] => parse_export_default_class_case(p),
+        T![class] => {
+            parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Class)
+        }
         T![ident] if is_nth_at_contextual_keyword(p, 1, "abstract") && p.nth_at(2, T![class]) => {
-            parse_export_default_class_case(p)
+            parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Class)
         }
-        T![function] => parse_export_default_function_case(p),
+        T![function] => {
+            parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Function)
+        }
         T![ident] if is_nth_at_contextual_keyword(p, 1, "async") && p.nth_at(2, T![function]) => {
-            parse_export_default_function_case(p)
+            parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Function)
         }
+        T![ident]
+            if is_nth_at_contextual_keyword(p, 1, "interface") && !p.has_linebreak_before_n(2) =>
+        {
+            parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Interface)
+        }
+        T![enum] => parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Enum),
         _ => parse_export_default_expression_clause(p),
     };
 
@@ -1061,6 +1074,59 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
 
         clause
     })
+}
+
+enum ExportDefaultDeclarationKind {
+    Function,
+    Class,
+    Interface,
+    // Technically not supported but for better error handling
+    Enum,
+}
+
+fn parse_export_default_declaration_clause(
+    p: &mut Parser,
+    kind: ExportDefaultDeclarationKind,
+) -> ParsedSyntax {
+    if !p.at(T![default]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![default]);
+
+    let declaration = match kind {
+        ExportDefaultDeclarationKind::Function => parse_function_export_default_declaration(p),
+        ExportDefaultDeclarationKind::Class => parse_class_export_default_declaration(p),
+
+        // test ts_export_default_interface
+        // export default interface A { }
+        ExportDefaultDeclarationKind::Interface => parse_ts_interface_declaration(p),
+        ExportDefaultDeclarationKind::Enum => {
+            // test_err ts ts_export_default_enum
+            // export default enum A { X, Y, Z }
+            parse_ts_enum_declaration(p).map(|enum_declaration| {
+                p.error(p.err_builder("'export default' isn't allowed for 'enum's. Move the 'enum' declaration in its own statement and then export the enum's name.")
+                    .primary(enum_declaration.range(p), "")
+                );
+
+                enum_declaration
+            })
+        }
+    };
+
+    declaration.or_add_diagnostic(p, |_, range| {
+        expected_any(
+            &[
+                "class declaration",
+                "function declaration",
+                "interface declaration",
+            ],
+            range,
+        )
+    });
+
+    Present(m.complete(p, JS_EXPORT_DEFAULT_DECLARATION_CLAUSE))
 }
 
 // test export_default_expression_clause

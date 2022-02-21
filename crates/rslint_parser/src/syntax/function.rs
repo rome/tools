@@ -115,13 +115,16 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test export_default_function_clause
 // export default function test(a, b) {}
-pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax {
-    if !(p.at(T![default]) || p.nth_at(1, T![function]) || p.nth_src(1) == "async") {
+//
+// test ts ts_export_default_function_overload
+// export default function test(a: string): string;
+// export default function test(a: string | undefined): string { return "hello" }
+pub(super) fn parse_function_export_default_declaration(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_function(p) {
         return Absent;
     }
 
     let m = p.start();
-    p.bump(T![default]);
 
     Present(if p.state.in_ambient_context() {
         parse_ambient_function(p, m)
@@ -164,7 +167,7 @@ impl From<FunctionKind> for JsSyntaxKind {
         match kind {
             FunctionKind::Declaration { .. } => JS_FUNCTION_DECLARATION,
             FunctionKind::Expression => JS_FUNCTION_EXPRESSION,
-            FunctionKind::ExportDefault => JS_EXPORT_DEFAULT_FUNCTION_CLAUSE,
+            FunctionKind::ExportDefault => JS_FUNCTION_EXPORT_DEFAULT_DECLARATION,
         }
     }
 }
