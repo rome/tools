@@ -5140,6 +5140,65 @@ pub struct TsAsExpressionFields {
     pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAssertsCondition {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAssertsCondition {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAssertsConditionFields {
+        TsAssertsConditionFields {
+            is_token: self.is_token(),
+            ty: self.ty(),
+        }
+    }
+    pub fn is_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsAssertsConditionFields {
+    pub is_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAssertsReturnType {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAssertsReturnType {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAssertsReturnTypeFields {
+        TsAssertsReturnTypeFields {
+            asserts_token: self.asserts_token(),
+            parameter_name: self.parameter_name(),
+            predicate: self.predicate(),
+        }
+    }
+    pub fn asserts_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn parameter_name(&self) -> SyntaxResult<TsAnyTypePredicateParameterName> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn predicate(&self) -> Option<TsAssertsCondition> { support::node(&self.syntax, 2usize) }
+}
+pub struct TsAssertsReturnTypeFields {
+    pub asserts_token: SyntaxResult<SyntaxToken>,
+    pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
+    pub predicate: Option<TsAssertsCondition>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsBigIntLiteralType {
     pub(crate) syntax: SyntaxNode,
 }
@@ -7002,6 +7061,38 @@ pub struct TsParenthesizedTypeFields {
     pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsPredicateReturnType {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsPredicateReturnType {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsPredicateReturnTypeFields {
+        TsPredicateReturnTypeFields {
+            parameter_name: self.parameter_name(),
+            is_token: self.is_token(),
+            ty: self.ty(),
+        }
+    }
+    pub fn parameter_name(&self) -> SyntaxResult<TsAnyTypePredicateParameterName> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn is_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct TsPredicateReturnTypeFields {
+    pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
+    pub is_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertyParameter {
     pub(crate) syntax: SyntaxNode,
 }
@@ -7821,41 +7912,6 @@ pub struct TsTypeParametersFields {
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsTypePredicate {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsTypePredicate {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> TsTypePredicateFields {
-        TsTypePredicateFields {
-            asserts_token: self.asserts_token(),
-            parameter_name: self.parameter_name(),
-            is_token: self.is_token(),
-            ty: self.ty(),
-        }
-    }
-    pub fn asserts_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn parameter_name(&self) -> SyntaxResult<TsAnyTypePredicateParameterName> {
-        support::required_node(&self.syntax, 1usize)
-    }
-    pub fn is_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
-    }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 3usize) }
-}
-pub struct TsTypePredicateFields {
-    pub asserts_token: Option<SyntaxToken>,
-    pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
-    pub is_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeofType {
     pub(crate) syntax: SyntaxNode,
 }
@@ -8342,8 +8398,9 @@ pub enum TsAnyPropertyParameter {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyReturnType {
+    TsAssertsReturnType(TsAssertsReturnType),
+    TsPredicateReturnType(TsPredicateReturnType),
     TsType(TsType),
-    TsTypePredicate(TsTypePredicate),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyTemplateElement {
@@ -13186,6 +13243,66 @@ impl From<TsAsExpression> for SyntaxNode {
 impl From<TsAsExpression> for SyntaxElement {
     fn from(n: TsAsExpression) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsAssertsCondition {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ASSERTS_CONDITION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAssertsCondition {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAssertsCondition")
+            .field("is_token", &support::DebugSyntaxResult(self.is_token()))
+            .field("ty", &support::DebugSyntaxResult(self.ty()))
+            .finish()
+    }
+}
+impl From<TsAssertsCondition> for SyntaxNode {
+    fn from(n: TsAssertsCondition) -> SyntaxNode { n.syntax }
+}
+impl From<TsAssertsCondition> for SyntaxElement {
+    fn from(n: TsAssertsCondition) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsAssertsReturnType {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ASSERTS_RETURN_TYPE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAssertsReturnType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAssertsReturnType")
+            .field(
+                "asserts_token",
+                &support::DebugSyntaxResult(self.asserts_token()),
+            )
+            .field(
+                "parameter_name",
+                &support::DebugSyntaxResult(self.parameter_name()),
+            )
+            .field(
+                "predicate",
+                &support::DebugOptionalElement(self.predicate()),
+            )
+            .finish()
+    }
+}
+impl From<TsAssertsReturnType> for SyntaxNode {
+    fn from(n: TsAssertsReturnType) -> SyntaxNode { n.syntax }
+}
+impl From<TsAssertsReturnType> for SyntaxElement {
+    fn from(n: TsAssertsReturnType) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsBigIntLiteralType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_BIG_INT_LITERAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -15000,6 +15117,35 @@ impl From<TsParenthesizedType> for SyntaxNode {
 impl From<TsParenthesizedType> for SyntaxElement {
     fn from(n: TsParenthesizedType) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsPredicateReturnType {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PREDICATE_RETURN_TYPE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsPredicateReturnType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsPredicateReturnType")
+            .field(
+                "parameter_name",
+                &support::DebugSyntaxResult(self.parameter_name()),
+            )
+            .field("is_token", &support::DebugSyntaxResult(self.is_token()))
+            .field("ty", &support::DebugSyntaxResult(self.ty()))
+            .finish()
+    }
+}
+impl From<TsPredicateReturnType> for SyntaxNode {
+    fn from(n: TsPredicateReturnType) -> SyntaxNode { n.syntax }
+}
+impl From<TsPredicateReturnType> for SyntaxElement {
+    fn from(n: TsPredicateReturnType) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsPropertyParameter {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -15810,39 +15956,6 @@ impl From<TsTypeParameters> for SyntaxNode {
 }
 impl From<TsTypeParameters> for SyntaxElement {
     fn from(n: TsTypeParameters) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TsTypePredicate {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_PREDICATE }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTypePredicate {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsTypePredicate")
-            .field(
-                "asserts_token",
-                &support::DebugOptionalElement(self.asserts_token()),
-            )
-            .field(
-                "parameter_name",
-                &support::DebugSyntaxResult(self.parameter_name()),
-            )
-            .field("is_token", &support::DebugSyntaxResult(self.is_token()))
-            .field("ty", &support::DebugSyntaxResult(self.ty()))
-            .finish()
-    }
-}
-impl From<TsTypePredicate> for SyntaxNode {
-    fn from(n: TsTypePredicate) -> SyntaxNode { n.syntax }
-}
-impl From<TsTypePredicate> for SyntaxElement {
-    fn from(n: TsTypePredicate) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsTypeofType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPEOF_TYPE }
@@ -20054,20 +20167,32 @@ impl From<TsAnyPropertyParameter> for SyntaxElement {
         node.into()
     }
 }
-impl From<TsTypePredicate> for TsAnyReturnType {
-    fn from(node: TsTypePredicate) -> TsAnyReturnType { TsAnyReturnType::TsTypePredicate(node) }
+impl From<TsAssertsReturnType> for TsAnyReturnType {
+    fn from(node: TsAssertsReturnType) -> TsAnyReturnType {
+        TsAnyReturnType::TsAssertsReturnType(node)
+    }
+}
+impl From<TsPredicateReturnType> for TsAnyReturnType {
+    fn from(node: TsPredicateReturnType) -> TsAnyReturnType {
+        TsAnyReturnType::TsPredicateReturnType(node)
+    }
 }
 impl AstNode for TsAnyReturnType {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         match kind {
-            TS_TYPE_PREDICATE => true,
+            TS_ASSERTS_RETURN_TYPE | TS_PREDICATE_RETURN_TYPE => true,
             k if TsType::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            TS_TYPE_PREDICATE => TsAnyReturnType::TsTypePredicate(TsTypePredicate { syntax }),
+            TS_ASSERTS_RETURN_TYPE => {
+                TsAnyReturnType::TsAssertsReturnType(TsAssertsReturnType { syntax })
+            }
+            TS_PREDICATE_RETURN_TYPE => {
+                TsAnyReturnType::TsPredicateReturnType(TsPredicateReturnType { syntax })
+            }
             _ => {
                 if let Some(ts_type) = TsType::cast(syntax) {
                     return Some(TsAnyReturnType::TsType(ts_type));
@@ -20079,7 +20204,8 @@ impl AstNode for TsAnyReturnType {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyReturnType::TsTypePredicate(it) => &it.syntax,
+            TsAnyReturnType::TsAssertsReturnType(it) => &it.syntax,
+            TsAnyReturnType::TsPredicateReturnType(it) => &it.syntax,
             TsAnyReturnType::TsType(it) => it.syntax(),
         }
     }
@@ -20087,16 +20213,18 @@ impl AstNode for TsAnyReturnType {
 impl std::fmt::Debug for TsAnyReturnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            TsAnyReturnType::TsAssertsReturnType(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyReturnType::TsPredicateReturnType(it) => std::fmt::Debug::fmt(it, f),
             TsAnyReturnType::TsType(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyReturnType::TsTypePredicate(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
 impl From<TsAnyReturnType> for SyntaxNode {
     fn from(n: TsAnyReturnType) -> SyntaxNode {
         match n {
+            TsAnyReturnType::TsAssertsReturnType(it) => it.into(),
+            TsAnyReturnType::TsPredicateReturnType(it) => it.into(),
             TsAnyReturnType::TsType(it) => it.into(),
-            TsAnyReturnType::TsTypePredicate(it) => it.into(),
         }
     }
 }
@@ -21798,6 +21926,16 @@ impl std::fmt::Display for TsAsExpression {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAssertsCondition {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAssertsReturnType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsBigIntLiteralType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22078,6 +22216,11 @@ impl std::fmt::Display for TsParenthesizedType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsPredicateReturnType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsPropertyParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22209,11 +22352,6 @@ impl std::fmt::Display for TsTypeParameterName {
     }
 }
 impl std::fmt::Display for TsTypeParameters {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for TsTypePredicate {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -24552,6 +24690,12 @@ impl Debug for DebugSyntaxElement {
                 TS_AS_EXPRESSION => {
                     std::fmt::Debug::fmt(&TsAsExpression::cast(node.clone()).unwrap(), f)
                 }
+                TS_ASSERTS_CONDITION => {
+                    std::fmt::Debug::fmt(&TsAssertsCondition::cast(node.clone()).unwrap(), f)
+                }
+                TS_ASSERTS_RETURN_TYPE => {
+                    std::fmt::Debug::fmt(&TsAssertsReturnType::cast(node.clone()).unwrap(), f)
+                }
                 TS_BIG_INT_LITERAL_TYPE => {
                     std::fmt::Debug::fmt(&TsBigIntLiteralType::cast(node.clone()).unwrap(), f)
                 }
@@ -24738,6 +24882,9 @@ impl Debug for DebugSyntaxElement {
                 TS_PARENTHESIZED_TYPE => {
                     std::fmt::Debug::fmt(&TsParenthesizedType::cast(node.clone()).unwrap(), f)
                 }
+                TS_PREDICATE_RETURN_TYPE => {
+                    std::fmt::Debug::fmt(&TsPredicateReturnType::cast(node.clone()).unwrap(), f)
+                }
                 TS_PROPERTY_PARAMETER => {
                     std::fmt::Debug::fmt(&TsPropertyParameter::cast(node.clone()).unwrap(), f)
                 }
@@ -24833,9 +24980,6 @@ impl Debug for DebugSyntaxElement {
                 }
                 TS_TYPE_PARAMETERS => {
                     std::fmt::Debug::fmt(&TsTypeParameters::cast(node.clone()).unwrap(), f)
-                }
-                TS_TYPE_PREDICATE => {
-                    std::fmt::Debug::fmt(&TsTypePredicate::cast(node.clone()).unwrap(), f)
                 }
                 TS_TYPEOF_TYPE => {
                     std::fmt::Debug::fmt(&TsTypeofType::cast(node.clone()).unwrap(), f)

@@ -1207,17 +1207,33 @@ fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_type_predicate
 // type A = (a) => a is string;
 // type B = (a) => asserts a is string;
+// type C = (a) => asserts a;
 // type asserts = string;
-// type C = () => asserts;
+// type D = () => asserts;
 fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
-    eat_contextual_keyword(p, "asserts", T![asserts]);
+    let is_asserts = eat_contextual_keyword(p, "asserts", T![asserts]);
     parse_reference_identifier(p)
         .or_else(|| parse_ts_this_type(p))
         .unwrap();
-    eat_contextual_keyword(p, "is", T![is]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-    Present(m.complete(p, TS_TYPE_PREDICATE))
+
+    if is_asserts && is_at_contextual_keyword(p, "is") {
+        let condition = p.start();
+        expect_contextual_keyword(p, "is", T![is]);
+        parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+        condition.complete(p, TS_ASSERTS_CONDITION);
+    } else if !is_asserts {
+        expect_contextual_keyword(p, "is", T![is]);
+        parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    }
+
+    let kind = if is_asserts {
+        TS_ASSERTS_RETURN_TYPE
+    } else {
+        TS_PREDICATE_RETURN_TYPE
+    };
+
+    Present(m.complete(p, kind))
 }
 
 pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {

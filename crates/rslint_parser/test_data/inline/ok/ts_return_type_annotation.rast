@@ -26,8 +26,7 @@ JsModule {
                     r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
                 },
                 fat_arrow_token: FAT_ARROW@13..16 "=>" [] [Whitespace(" ")],
-                return_type: TsTypePredicate {
-                    asserts_token: missing (optional),
+                return_type: TsPredicateReturnType {
                     parameter_name: JsReferenceIdentifier {
                         value_token: IDENT@16..18 "a" [] [Whitespace(" ")],
                     },
@@ -71,8 +70,7 @@ JsModule {
                         },
                         return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@47..49 ":" [] [Whitespace(" ")],
-                            ty: TsTypePredicate {
-                                asserts_token: missing (optional),
+                            ty: TsPredicateReturnType {
                                 parameter_name: JsReferenceIdentifier {
                                     value_token: IDENT@49..51 "a" [] [Whitespace(" ")],
                                 },
@@ -117,8 +115,7 @@ JsModule {
                         },
                         return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@77..79 ":" [] [Whitespace(" ")],
-                            ty: TsTypePredicate {
-                                asserts_token: missing (optional),
+                            ty: TsPredicateReturnType {
                                 parameter_name: JsReferenceIdentifier {
                                     value_token: IDENT@79..81 "a" [] [Whitespace(" ")],
                                 },
@@ -172,8 +169,7 @@ JsModule {
                                         },
                                         return_type_annotation: TsReturnTypeAnnotation {
                                             colon_token: COLON@112..114 ":" [] [Whitespace(" ")],
-                                            ty: TsTypePredicate {
-                                                asserts_token: missing (optional),
+                                            ty: TsPredicateReturnType {
                                                 parameter_name: JsReferenceIdentifier {
                                                     value_token: IDENT@114..116 "x" [] [Whitespace(" ")],
                                                 },
@@ -256,8 +252,7 @@ JsModule {
                     },
                     return_type_annotation: TsReturnTypeAnnotation {
                         colon_token: COLON@178..180 ":" [] [Whitespace(" ")],
-                        ty: TsTypePredicate {
-                            asserts_token: missing (optional),
+                        ty: TsPredicateReturnType {
                             parameter_name: JsReferenceIdentifier {
                                 value_token: IDENT@180..182 "x" [] [Whitespace(" ")],
                             },
@@ -323,12 +318,11 @@ JsModule {
               3: (empty)
           2: R_PAREN@11..13 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@13..16 "=>" [] [Whitespace(" ")]
-        3: TS_TYPE_PREDICATE@16..27
-          0: (empty)
-          1: JS_REFERENCE_IDENTIFIER@16..18
+        3: TS_PREDICATE_RETURN_TYPE@16..27
+          0: JS_REFERENCE_IDENTIFIER@16..18
             0: IDENT@16..18 "a" [] [Whitespace(" ")]
-          2: IS_KW@18..21 "is" [] [Whitespace(" ")]
-          3: TS_STRING_TYPE@21..27
+          1: IS_KW@18..21 "is" [] [Whitespace(" ")]
+          2: TS_STRING_TYPE@21..27
             0: STRING_KW@21..27 "string" [] []
       5: SEMICOLON@27..28 ";" [] []
     1: TS_TYPE_ALIAS_DECLARATION@28..62
@@ -357,12 +351,11 @@ JsModule {
               2: R_PAREN@46..47 ")" [] []
             4: TS_RETURN_TYPE_ANNOTATION@47..61
               0: COLON@47..49 ":" [] [Whitespace(" ")]
-              1: TS_TYPE_PREDICATE@49..61
-                0: (empty)
-                1: JS_REFERENCE_IDENTIFIER@49..51
+              1: TS_PREDICATE_RETURN_TYPE@49..61
+                0: JS_REFERENCE_IDENTIFIER@49..51
                   0: IDENT@49..51 "a" [] [Whitespace(" ")]
-                2: IS_KW@51..54 "is" [] [Whitespace(" ")]
-                3: TS_STRING_TYPE@54..61
+                1: IS_KW@51..54 "is" [] [Whitespace(" ")]
+                2: TS_STRING_TYPE@54..61
                   0: STRING_KW@54..61 "string" [] [Whitespace(" ")]
             5: (empty)
         2: R_CURLY@61..62 "}" [] []
@@ -390,12 +383,11 @@ JsModule {
               2: R_PAREN@76..77 ")" [] []
             2: TS_RETURN_TYPE_ANNOTATION@77..91
               0: COLON@77..79 ":" [] [Whitespace(" ")]
-              1: TS_TYPE_PREDICATE@79..91
-                0: (empty)
-                1: JS_REFERENCE_IDENTIFIER@79..81
+              1: TS_PREDICATE_RETURN_TYPE@79..91
+                0: JS_REFERENCE_IDENTIFIER@79..81
                   0: IDENT@79..81 "a" [] [Whitespace(" ")]
-                2: IS_KW@81..84 "is" [] [Whitespace(" ")]
-                3: TS_STRING_TYPE@84..91
+                1: IS_KW@81..84 "is" [] [Whitespace(" ")]
+                2: TS_STRING_TYPE@84..91
                   0: STRING_KW@84..91 "string" [] [Whitespace(" ")]
             3: (empty)
         2: R_CURLY@91..92 "}" [] []
@@ -431,12 +423,11 @@ JsModule {
                       2: R_PAREN@111..112 ")" [] []
                     5: TS_RETURN_TYPE_ANNOTATION@112..126
                       0: COLON@112..114 ":" [] [Whitespace(" ")]
-                      1: TS_TYPE_PREDICATE@114..126
-                        0: (empty)
-                        1: JS_REFERENCE_IDENTIFIER@114..116
+                      1: TS_PREDICATE_RETURN_TYPE@114..126
+                        0: JS_REFERENCE_IDENTIFIER@114..116
                           0: IDENT@114..116 "x" [] [Whitespace(" ")]
-                        2: IS_KW@116..119 "is" [] [Whitespace(" ")]
-                        3: TS_STRING_TYPE@119..126
+                        1: IS_KW@116..119 "is" [] [Whitespace(" ")]
+                        2: TS_STRING_TYPE@119..126
                           0: STRING_KW@119..126 "string" [] [Whitespace(" ")]
                     6: JS_FUNCTION_BODY@126..159
                       0: L_CURLY@126..128 "{" [] [Whitespace(" ")]
@@ -489,12 +480,11 @@ JsModule {
             2: R_PAREN@177..178 ")" [] []
           9: TS_RETURN_TYPE_ANNOTATION@178..192
             0: COLON@178..180 ":" [] [Whitespace(" ")]
-            1: TS_TYPE_PREDICATE@180..192
-              0: (empty)
-              1: JS_REFERENCE_IDENTIFIER@180..182
+            1: TS_PREDICATE_RETURN_TYPE@180..192
+              0: JS_REFERENCE_IDENTIFIER@180..182
                 0: IDENT@180..182 "x" [] [Whitespace(" ")]
-              2: IS_KW@182..185 "is" [] [Whitespace(" ")]
-              3: TS_STRING_TYPE@185..192
+              1: IS_KW@182..185 "is" [] [Whitespace(" ")]
+              2: TS_STRING_TYPE@185..192
                 0: STRING_KW@185..192 "string" [] [Whitespace(" ")]
           10: JS_FUNCTION_BODY@192..226
             0: L_CURLY@192..194 "{" [] [Whitespace(" ")]

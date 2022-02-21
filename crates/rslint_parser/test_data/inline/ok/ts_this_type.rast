@@ -68,8 +68,7 @@ JsModule {
                     },
                     return_type_annotation: TsReturnTypeAnnotation {
                         colon_token: COLON@69..71 ":" [] [Whitespace(" ")],
-                        ty: TsTypePredicate {
-                            asserts_token: missing (optional),
+                        ty: TsPredicateReturnType {
                             parameter_name: TsThisType {
                                 this_token: THIS_KW@71..76 "this" [] [Whitespace(" ")],
                             },
@@ -169,12 +168,11 @@ JsModule {
             2: R_PAREN@68..69 ")" [] []
           9: TS_RETURN_TYPE_ANNOTATION@69..86
             0: COLON@69..71 ":" [] [Whitespace(" ")]
-            1: TS_TYPE_PREDICATE@71..86
-              0: (empty)
-              1: TS_THIS_TYPE@71..76
+            1: TS_PREDICATE_RETURN_TYPE@71..86
+              0: TS_THIS_TYPE@71..76
                 0: THIS_KW@71..76 "this" [] [Whitespace(" ")]
-              2: IS_KW@76..79 "is" [] [Whitespace(" ")]
-              3: TS_STRING_TYPE@79..86
+              1: IS_KW@76..79 "is" [] [Whitespace(" ")]
+              2: TS_STRING_TYPE@79..86
                 0: STRING_KW@79..86 "string" [] [Whitespace(" ")]
           10: JS_FUNCTION_BODY@86..133
             0: L_CURLY@86..87 "{" [] []

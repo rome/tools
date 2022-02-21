@@ -311,8 +311,7 @@ JsModule {
                     r_paren_token: R_PAREN@218..220 ")" [] [Whitespace(" ")],
                 },
                 fat_arrow_token: FAT_ARROW@220..223 "=>" [] [Whitespace(" ")],
-                return_type: TsTypePredicate {
-                    asserts_token: missing (optional),
+                return_type: TsPredicateReturnType {
                     parameter_name: JsReferenceIdentifier {
                         value_token: IDENT@223..225 "a" [] [Whitespace(" ")],
                     },
@@ -602,12 +601,11 @@ JsModule {
               3: (empty)
           2: R_PAREN@218..220 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@220..223 "=>" [] [Whitespace(" ")]
-        3: TS_TYPE_PREDICATE@223..234
-          0: (empty)
-          1: JS_REFERENCE_IDENTIFIER@223..225
+        3: TS_PREDICATE_RETURN_TYPE@223..234
+          0: JS_REFERENCE_IDENTIFIER@223..225
             0: IDENT@223..225 "a" [] [Whitespace(" ")]
-          2: IS_KW@225..228 "is" [] [Whitespace(" ")]
-          3: TS_STRING_TYPE@228..234
+          1: IS_KW@225..228 "is" [] [Whitespace(" ")]
+          2: TS_STRING_TYPE@228..234
             0: STRING_KW@228..234 "string" [] []
       5: SEMICOLON@234..235 ";" [] []
     8: TS_TYPE_ALIAS_DECLARATION@235..267
