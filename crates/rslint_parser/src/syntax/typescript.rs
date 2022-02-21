@@ -130,10 +130,9 @@ pub(crate) fn try_parse<T, E>(
     res
 }
 
-/// Must be at `[ident:]` or `readonly [ident:]`
+/// Must be at `[ident:` or `<modifiers> [ident:`
 pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
     let mut offset = 0;
-
     while is_nth_at_modifier(p, offset) {
         offset += 1;
     }
