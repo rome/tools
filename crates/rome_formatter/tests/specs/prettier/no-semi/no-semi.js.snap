@@ -127,7 +127,8 @@ class X {}
 
 // don't semicolon if it doesn't start statement
 
-if (true) (() => {})();
+if (true)
+  (() => {})();
 
 // check indentation
 
