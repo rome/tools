@@ -718,7 +718,11 @@ fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
     // type D = { readonly [a]: string }
     if is_at_ts_index_signature_member(p) {
         let m = p.start();
-        return Present(expect_ts_index_signature_member(p, m, MemberParent::Type));
+        return Present(expect_ts_index_signature_member(
+            p,
+            m,
+            MemberParent::TypeOrInterface,
+        ));
     }
 
     match p.cur() {

@@ -148,15 +148,16 @@ pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
     p.nth_at(offset + 2, T![:])
 }
 
+#[derive(Clone, Copy)]
 pub(crate) enum MemberParent {
     Class,
-    Type,
+    TypeOrInterface,
 }
 
 pub(crate) fn expect_ts_index_signature_member(
     p: &mut Parser,
     m: Marker,
-    kind: MemberParent,
+    parent: MemberParent,
 ) -> CompletedMarker {
     while is_nth_at_modifier(p, 0) {
         if is_at_contextual_keyword(p, "readonly") {
@@ -186,22 +187,24 @@ pub(crate) fn expect_ts_index_signature_member(
             .primary(range, "")
     });
 
-    let separators = match kind {
-        MemberParent::Class => (true, true),
-        MemberParent::Type => (true, true),
-    };
-    eat_members_separator(p, separators);
+    eat_members_separator(p, parent.clone());
 
     m.complete(
         p,
-        match kind {
+        match parent {
             MemberParent::Class => TS_INDEX_SIGNATURE_CLASS_MEMBER,
-            MemberParent::Type => TS_INDEX_SIGNATURE_TYPE_MEMBER,
+            MemberParent::TypeOrInterface => TS_INDEX_SIGNATURE_TYPE_MEMBER,
         },
     )
 }
 
-fn eat_members_separator(p: &mut Parser, (comma, semi_colon): (bool, bool)) {
+fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
+    let (comma, semi_colon) = match parent {
+        MemberParent::Class => (false, true),
+        MemberParent::TypeOrInterface => (true, true),
+    };
+    debug_assert!(comma || semi_colon);
+
     let separator_eaten = comma && p.eat(T![,]);
     let separator_eaten = separator_eaten || (semi_colon && optional_semi(p));
 
