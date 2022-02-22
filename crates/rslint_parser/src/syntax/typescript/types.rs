@@ -25,6 +25,7 @@ use crate::syntax::util::{
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{Absent, ParsedSyntax, Parser};
 use crate::{JsSyntaxKind::*, *};
+use rslint_errors::Span;
 use rslint_syntax::T;
 
 use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
@@ -893,12 +894,25 @@ impl ParseSeparatedList for TsTupleTypeElementList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
         if is_at_named_tuple_type_element(p) {
             let m = p.start();
-            p.eat(T![...]);
+            let has_ellipsis = p.eat(T![...]);
             parse_name(p).or_add_diagnostic(p, expected_identifier);
-            p.eat(T![?]);
+            let has_question_mark = p.eat(T![?]);
             p.bump(T![:]);
             parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-            return Present(m.complete(p, TS_NAMED_TUPLE_TYPE_ELEMENT));
+
+            let mut syntax = m.complete(p, TS_NAMED_TUPLE_TYPE_ELEMENT);
+
+            // test_err ts ts_tuple_type_cannot_be_optional_and_rest
+            // type A = [ ...name?: string[] ]
+            if has_ellipsis && has_question_mark {
+                let err = p
+                    .err_builder("A tuple member cannot be both optional and rest.")
+                    .primary(syntax.range(p).as_range(), "");
+                p.error(err);
+                syntax.change_to_unknown(p);
+            }
+
+            return Present(syntax);
         }
 
         if p.at(T![...]) {
