@@ -1,13 +1,9 @@
 use crate::{
     format_elements,
     formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
-    hard_group_elements, space_token, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{
-    JsPropertyClassMemberFields, TsAbstractMethodClassMember, TsAbstractMethodClassMemberFields,
-    TsAbstractPropertyClassMember, TsAbstractPropertyClassMemberFields,
-};
+use rslint_parser::ast::{TsAbstractPropertyClassMember, TsAbstractPropertyClassMemberFields};
 
 impl ToFormatElement for TsAbstractPropertyClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

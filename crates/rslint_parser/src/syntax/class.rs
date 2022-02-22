@@ -474,7 +474,7 @@ fn add_error_if_member_is_abstract(
     //    abstract get age(): number;
     //    abstract set age(v);
     // }
-    let member = match (member, member_abstract_token_range) {
+    match (member, member_abstract_token_range) {
         (Present(mut member), Some(member_abstract_token_range)) => {
             let err = p
                 .err_builder("Only abstract classes can have abstract members")
@@ -485,8 +485,7 @@ fn add_error_if_member_is_abstract(
         }
         (Present(member), _) => Present(member),
         (Absent, _) => Absent,
-    };
-    member
+    }
 }
 
 // test ts ts_index_signature_class_member
