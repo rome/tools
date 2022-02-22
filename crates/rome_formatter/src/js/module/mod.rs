@@ -3,9 +3,8 @@
 mod default_import_specifier;
 mod export;
 mod export_as_clause;
-mod export_default_class_clause;
+mod export_default_declaration_clause;
 mod export_default_expression_clause;
-mod export_default_function_clause;
 mod export_from_clause;
 mod export_named_clause;
 mod export_named_from_clause;

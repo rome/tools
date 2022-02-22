@@ -596,7 +596,7 @@ JsClassMemberList = JsAnyClassMember*
 JsAnyClass =
 	JsClassDeclaration
 	| JsClassExpression
-	| JsExportDefaultClassClause
+	| JsClassExportDefaultDeclaration
 
 // class Test extends A {}
 //            ^^^^^^^^^
@@ -1232,8 +1232,7 @@ JsExport =
 // export = b;
 // export import a = b;
 JsAnyExportClause =
-	JsExportDefaultFunctionClause
-	| JsExportDefaultClassClause
+	JsExportDefaultDeclarationClause
 	| JsExportDefaultExpressionClause
 	| JsExportNamedClause
 	| JsExportFromClause
@@ -1253,8 +1252,21 @@ JsExportDefaultExpressionClause =
 
 // export default class {}
 //        ^^^^^^^^^^^^^^^^
-JsExportDefaultClassClause =
+JsExportDefaultDeclarationClause =
 	'default'
+	declaration: JsAnyExportDefaultDeclaration
+	';'?
+
+JsAnyExportDefaultDeclaration =
+	JsClassExportDefaultDeclaration
+	| JsFunctionExportDefaultDeclaration
+	| TsDeclareFunctionDeclaration
+	| TsInterfaceDeclaration
+
+
+// export default class {}
+//                ^^^^^^^^
+JsClassExportDefaultDeclaration =
 	'abstract'?
 	'class'
 	id: JsAnyBinding?
@@ -1266,9 +1278,8 @@ JsExportDefaultClassClause =
 	'}'
 
 // export default function () {}
-//        ^^^^^^^^^^^^^^^^^^^^^^
-JsExportDefaultFunctionClause =
-	'default'
+//                ^^^^^^^^^^^^^^
+JsFunctionExportDefaultDeclaration =
 	'async'?
 	'function'
 	'*'?
@@ -1406,7 +1417,7 @@ JsAnyFunction =
 	JsFunctionExpression
 	| JsFunctionDeclaration
 	| JsArrowFunctionExpression
-	| JsExportDefaultFunctionClause
+	| JsFunctionExportDefaultDeclaration
 
 
 // { a: ..., "b": ..., 4: ... }
@@ -1691,13 +1702,28 @@ TsFunctionType =
 
 TsAnyReturnType =
 	TsType
-	| TsTypePredicate
+	| TsPredicateReturnType
+	| TsAssertsReturnType
 
-TsTypePredicate =
-	'asserts'?
+// function test(a): a is string { return true }
+TsPredicateReturnType =
 	parameter_name: TsAnyTypePredicateParameterName
 	'is'
 	type: TsType
+
+// function test(a): asserts a { ... }
+//                   ^^^^^^^^^
+// function test2(a): asserts a is string { ... }
+//                    ^^^^^^^^^^^^^^^^^^^
+TsAssertsReturnType =
+	'asserts'
+	parameter_name: TsAnyTypePredicateParameterName
+	predicate: TsAssertsCondition?
+
+TsAssertsCondition =
+	'is'
+	type: TsType
+
 
 TsAnyTypePredicateParameterName =
 	JsReferenceIdentifier

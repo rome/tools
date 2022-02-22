@@ -1,5 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+mod asserts_condition;
 mod call_signature_type_member;
 mod construct_signature_type_member;
 mod default_type_clause;
@@ -28,4 +29,3 @@ mod setter_signature_type_member;
 mod type_annotation;
 mod type_constraint_clause;
 mod type_parameter_name;
-mod type_predicate;

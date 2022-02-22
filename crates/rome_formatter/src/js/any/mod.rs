@@ -15,6 +15,7 @@ mod constructor_parameter;
 mod declaration;
 mod declaration_clause;
 mod export_clause;
+mod export_default_declaration;
 mod export_named_specifier;
 mod expression;
 mod for_in_or_of_initializer;
