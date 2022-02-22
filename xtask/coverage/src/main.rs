@@ -36,7 +36,7 @@ SUBCOMMANDS:
 OPTIONS
     --markdown          Emits supported output into markdown format. Supported by `compare` subcommand
     --json              Prints the test results in JSON. This mode will send all other test output and user messages to stderr.
-    --detailed=[rast]   Prints a detailed summary at the end for all failing tests. Includes the RAST output if `rast` is passed.
+    --detailed=[debug]  Prints a detailed summary at the end for all failing tests. Includes in depth details if set to `debug`
     --language=[js|ts]  Runs a specific test suite
     --filter=<file>     Filters out tests that don't match the query
     --help              Prints this help
@@ -57,6 +57,8 @@ OPTIONS
                 Some(SummaryDetailLevel::Coverage)
             }
         });
+
+    args.finish().unwrap();
 
     run(
         language.as_deref(),

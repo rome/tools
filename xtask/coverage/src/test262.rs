@@ -1,9 +1,9 @@
-use crate::runner::{TestCase, TestRunOutcome, TestSuite};
+use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
 use regex::Regex;
 use rslint_parser::{parse, Syntax};
 use serde::Deserialize;
 use std::io;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 const BASE_PATH: &str = "xtask/coverage/test262/test";
 
@@ -66,19 +66,26 @@ pub enum Phase {
 
 #[derive(Debug)]
 struct Test262TestCase {
-    path: PathBuf,
+    name: String,
     code: String,
     meta: MetaData,
 }
 
 impl Test262TestCase {
+    fn new(path: &Path, code: String, meta: MetaData) -> Self {
+        let name = path.strip_prefix(BASE_PATH).unwrap().display().to_string();
+
+        Self { name, code, meta }
+    }
+
     fn execute_test(&self, append_use_strict: bool, syntax: Syntax) -> TestRunOutcome {
-        let parse_result = if append_use_strict {
-            let code = format!("\"use strict\";\n{}", self.code);
-            parse(&code, 0, syntax).ok()
+        let code = if append_use_strict {
+            format!("\"use strict\";\n{}", self.code)
         } else {
-            parse(&self.code, 0, syntax).ok()
+            self.code.clone()
         };
+
+        let parse_result = parse(&code, 0, syntax).ok();
 
         let should_fail = self
             .meta
@@ -87,23 +94,21 @@ impl Test262TestCase {
             .filter(|neg| neg.phase == Phase::Parse)
             .is_some();
 
+        let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), syntax);
+
         match parse_result {
-            Ok(_) if !should_fail => TestRunOutcome::Passed(syntax),
-            Err(_) if should_fail => TestRunOutcome::Passed(syntax),
-            Ok(_) if should_fail => TestRunOutcome::IncorrectlyPassed(syntax),
-            Err(errors) if !should_fail => TestRunOutcome::IncorrectlyErrored { errors, syntax },
+            Ok(_) if !should_fail => TestRunOutcome::Passed(files),
+            Err(_) if should_fail => TestRunOutcome::Passed(files),
+            Ok(_) if should_fail => TestRunOutcome::IncorrectlyPassed(files),
+            Err(errors) if !should_fail => TestRunOutcome::IncorrectlyErrored { errors, files },
             _ => unreachable!(),
         }
     }
 }
 
 impl TestCase for Test262TestCase {
-    fn path(&self) -> &Path {
-        self.path.strip_prefix(BASE_PATH).unwrap()
-    }
-
-    fn code(&self) -> &str {
-        &self.code
+    fn name(&self) -> &str {
+        &self.name
     }
 
     fn run(&self) -> TestRunOutcome {
@@ -140,7 +145,7 @@ impl TestSuite for Test262TestSuite {
         }
     }
 
-    fn load_test(&self, path: PathBuf) -> Option<Box<dyn TestCase>> {
+    fn load_test(&self, path: &Path) -> Option<Box<dyn TestCase>> {
         let code = std::fs::read_to_string(&path).ok()?;
 
         let meta = read_metadata(&code).ok()?;
@@ -152,7 +157,7 @@ impl TestSuite for Test262TestSuite {
         {
             None
         } else {
-            Some(Box::new(Test262TestCase { code, path, meta }))
+            Some(Box::new(Test262TestCase::new(path, code, meta)))
         }
     }
 }

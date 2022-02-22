@@ -23,8 +23,8 @@ You can filter the tests by passing an additional `--filter` so that only the te
 cargo coverage --filter=source
 ```
 
-The `--detailed` parameter enables a more detailed summary at the end of the test run that includes diagnostic and the `rast` (when using--detailed=rast`)
-for all failing tests. `--detailed` can also be useful if you want to pipe the results to a text file.
+The `--detailed` parameter enables a more detailed summary at the end of the test run that includes diagnostic.
+You can use `--detailed-=debug` if you're debugging a test (prints the AST and diagnostics, even for passing tests). `--detailed` can also be useful if you want to pipe the results to a text file.
 
 
 ```bash

@@ -1,42 +1,43 @@
 use super::*;
 use crate::reporters::TestReporter;
-use rslint_parser::Syntax;
+use rslint_errors::file::SimpleFiles;
+use rslint_errors::termcolor::Buffer;
+use rslint_errors::Emitter;
+use rslint_parser::ast::JsAnyRoot;
+use rslint_parser::{parse, Parse, Syntax};
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use walkdir::WalkDir;
 use yastl::Pool;
 
-#[derive(Debug)]
 pub(crate) struct TestRunResult {
     pub(crate) outcome: TestRunOutcome,
-    pub(crate) code: String,
-    pub(crate) path: PathBuf,
+    pub(crate) test_case: String,
 }
 
-#[derive(Debug)]
 pub(crate) enum TestRunOutcome {
-    Passed(Syntax),
-    IncorrectlyPassed(Syntax),
+    Passed(TestCaseFiles),
+    IncorrectlyPassed(TestCaseFiles),
     IncorrectlyErrored {
-        syntax: Syntax,
+        files: TestCaseFiles,
         errors: Vec<ParserError>,
     },
     Panicked(Box<dyn Any + Send + 'static>),
 }
 
 impl TestRunOutcome {
-    pub fn syntax(&self) -> Option<&Syntax> {
-        match self {
-            TestRunOutcome::IncorrectlyErrored { syntax, .. }
-            | TestRunOutcome::IncorrectlyPassed(syntax)
-            | TestRunOutcome::Passed(syntax) => Some(syntax),
-            _ => None,
-        }
-    }
-
     pub fn is_failed(&self) -> bool {
         !matches!(self, TestRunOutcome::Passed(_))
+    }
+
+    pub fn files(&self) -> Option<&TestCaseFiles> {
+        match self {
+            TestRunOutcome::Passed(files)
+            | TestRunOutcome::IncorrectlyPassed(files)
+            | TestRunOutcome::IncorrectlyErrored { files, .. } => Some(files),
+            _ => None,
+        }
     }
 
     pub fn panic_message(&self) -> Option<&str> {
@@ -63,9 +64,107 @@ impl From<TestRunOutcome> for Outcome {
     }
 }
 
+/// A test case may parse multiple files. Represents a single file of a test case
+#[derive(Debug, Clone)]
+pub(crate) struct TestCaseFile {
+    /// The (test case relative) name of the file
+    name: String,
+
+    /// The code of the file
+    code: String,
+
+    /// The syntax used to parse the file
+    syntax: Syntax,
+
+    id: usize,
+}
+
+impl TestCaseFile {
+    pub(crate) fn parse(&self) -> Parse<JsAnyRoot> {
+        parse(&self.code, self.id, self.syntax)
+    }
+
+    pub(crate) fn name(&self) -> &str {
+        &self.name
+    }
+}
+
+#[derive(Clone, Debug)]
+pub(crate) struct TestCaseFiles {
+    files: Vec<TestCaseFile>,
+}
+
+impl TestCaseFiles {
+    pub(crate) fn single(name: String, code: String, syntax: Syntax) -> Self {
+        Self {
+            files: vec![TestCaseFile {
+                name,
+                code,
+                syntax,
+                id: 0,
+            }],
+        }
+    }
+
+    pub(crate) fn new() -> Self {
+        Self { files: vec![] }
+    }
+
+    pub(crate) fn add(&mut self, name: String, code: String, syntax: Syntax) {
+        self.files.push(TestCaseFile {
+            name,
+            code,
+            syntax,
+            id: self.files.len(),
+        })
+    }
+
+    pub(crate) fn is_empty(&self) -> bool {
+        return self.files.is_empty();
+    }
+
+    pub(crate) fn emit_errors(&self, errors: &[ParserError], buffer: &mut Buffer) {
+        let mut diag_files = SimpleFiles::new();
+
+        for file in &self.files {
+            diag_files.add(file.name.clone(), file.code.clone());
+        }
+
+        let mut emitter = Emitter::new(&diag_files);
+        for error in errors {
+            if let Err(err) = emitter.emit_with_writer(error, buffer) {
+                eprintln!("Failed to print diagnostic: {}", err);
+            }
+        }
+    }
+}
+
+impl<'a> IntoIterator for &'a TestCaseFiles {
+    type Item = &'a TestCaseFile;
+    type IntoIter = std::slice::Iter<'a, TestCaseFile>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.files.iter()
+    }
+}
+
+impl From<TestCaseFiles> for SimpleFiles {
+    fn from(files: TestCaseFiles) -> Self {
+        let mut result = SimpleFiles::new();
+
+        for file in files.files {
+            result.add(file.name, file.code);
+        }
+
+        result
+    }
+}
+
 pub(crate) trait TestCase: RefUnwindSafe + Send + Sync {
-    fn path(&self) -> &Path;
-    fn code(&self) -> &str;
+    /// Returns the (display) name of the test case. Used to uniquely identify the test case
+    fn name(&self) -> &str;
+
+    /// Runs the test case
     fn run(&self) -> TestRunOutcome;
 }
 
@@ -73,7 +172,7 @@ pub(crate) trait TestSuite: Send + Sync {
     fn name(&self) -> &str;
     fn base_path(&self) -> &str;
     fn is_test(&self, path: &Path) -> bool;
-    fn load_test(&self, entry: PathBuf) -> Option<Box<dyn TestCase>>;
+    fn load_test(&self, entry: &Path) -> Option<Box<dyn TestCase>>;
 }
 
 pub(crate) struct TestSuiteInstance {
@@ -127,7 +226,7 @@ pub(crate) fn run_test_suite(
             for result in rx {
                 context.reporter.test_completed(&result);
                 results.push(TestResult {
-                    path: result.path,
+                    test_case: result.test_case,
                     outcome: result.outcome.into(),
                 });
             }
@@ -144,8 +243,7 @@ pub(crate) fn run_test_suite(
                 let outcome = run_result.unwrap_or_else(|panic| TestRunOutcome::Panicked(panic));
 
                 tx.send(TestRunResult {
-                    code: test.code().to_string(),
-                    path: test.path().to_path_buf(),
+                    test_case: test.name().to_owned(),
                     outcome,
                 })
                 .unwrap();
@@ -186,7 +284,7 @@ fn load_tests(suite: &dyn TestSuite, context: &mut TestRunContext) -> TestSuiteI
                 true
             }
         })
-        .map(|file| file.path().to_path_buf())
+        .map(|file| file.path().to_owned())
         .collect::<Vec<_>>();
 
     context.reporter.tests_discovered(suite, paths.len());
@@ -208,7 +306,7 @@ fn load_tests(suite: &dyn TestSuite, context: &mut TestRunContext) -> TestSuiteI
             let tx = tx.clone();
 
             scope.execute(move || {
-                tx.send(suite.load_test(path)).unwrap();
+                tx.send(suite.load_test(&path)).unwrap();
             });
         }
 
