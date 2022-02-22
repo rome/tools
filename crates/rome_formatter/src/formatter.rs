@@ -32,32 +32,19 @@ pub struct Formatter {
 
 #[derive(Debug)]
 pub enum TrailingSeparator {
-    Allowed(TrailingSeparatorPosition),
+    Allowed,
     Disallowed,
-}
-
-#[derive(Debug)]
-pub enum TrailingSeparatorPosition {
-    Lead,
-    Tail,
 }
 
 impl TrailingSeparator {
     pub fn is_allowed(&self) -> bool {
-        matches!(self, TrailingSeparator::Allowed(_))
-    }
-
-    pub fn is_lead(&self) -> bool {
-        matches!(
-            self,
-            TrailingSeparator::Allowed(TrailingSeparatorPosition::Lead)
-        )
+        matches!(self, TrailingSeparator::Allowed)
     }
 }
 
 impl Default for TrailingSeparator {
     fn default() -> Self {
-        TrailingSeparator::Allowed(TrailingSeparatorPosition::Tail)
+        TrailingSeparator::Allowed
     }
 }
 
