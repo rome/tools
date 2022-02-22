@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: class.js
 
 ---
@@ -26,7 +26,9 @@ class A {
     var x = 1;
     while (typeof x == "number" || typeof x == "string") {
       x = x + 1;
-      if (true) x = "";
+      if (true) {
+        x = "";
+      }
     }
     var z = x;
   }

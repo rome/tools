@@ -1,5 +1,5 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-use crate::{concat_elements, group_elements, hard_group_elements, soft_block_indent};
+use crate::{block_indent, concat_elements, hard_group_elements, token};
 
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -11,7 +11,7 @@ use rslint_parser::SyntaxToken;
 
 impl ToFormatElement for JsIfStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let (head, mut else_clause) = format_if_item(formatter, None, self)?;
+        let (head, mut else_clause) = format_if_element(formatter, None, self)?;
 
         let mut if_chain = vec![head];
         while let Some(clause) = else_clause.take() {
@@ -22,34 +22,28 @@ impl ToFormatElement for JsIfStatement {
 
             match alternate? {
                 JsAnyStatement::JsIfStatement(stmt) => {
-                    let (head, alternate) = format_if_item(formatter, Some(else_token?), &stmt)?;
+                    let (head, alternate) = format_if_element(formatter, Some(else_token?), &stmt)?;
+
                     if_chain.push(head);
                     else_clause = alternate;
-                }
-                block @ JsAnyStatement::JsBlockStatement(_) => {
-                    if_chain.push(format_elements![
-                        space_token(),
-                        else_token.format(formatter)?,
-                        space_token(),
-                        block.format(formatter)?,
-                    ]);
                 }
                 alternate => {
                     if_chain.push(format_elements![
                         space_token(),
                         else_token.format(formatter)?,
                         space_token(),
-                        soft_block_indent(alternate.format(formatter)?),
+                        into_block(formatter, alternate)?,
                     ]);
                 }
             }
         }
 
-        Ok(group_elements(concat_elements(if_chain)))
+        Ok(hard_group_elements(concat_elements(if_chain)))
     }
 }
 
-fn format_if_item(
+/// Format a single `else? if(test) consequent` element, returning the next else clause
+fn format_if_element(
     formatter: &Formatter,
     else_token: Option<SyntaxToken>,
     stmt: &JsIfStatement,
@@ -77,17 +71,21 @@ fn format_if_item(
             &r_paren_token?,
         )?,
         space_token(),
+        into_block(formatter, consequent?)?,
     ];
 
-    let body = consequent?;
-    let head = if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-        hard_group_elements(format_elements![head, body.format(formatter)?])
-    } else {
-        format_elements![
-            hard_group_elements(head),
-            soft_block_indent(body.format(formatter)?),
-        ]
-    };
-
     Ok((head, else_clause))
+}
+
+/// Wraps the statement into a block if its not already a JsBlockStatement
+fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<FormatElement> {
+    if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
+        stmt.format(formatter)
+    } else {
+        Ok(format_elements![
+            token("{"),
+            block_indent(stmt.format(formatter)?),
+            token("}"),
+        ])
+    }
 }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 163
 expression: arrow_nested.js
 
 ---
@@ -59,7 +59,9 @@ const promiseFromCallback = (fn) =>
 		(resolve, reject) =>
 			fn(
 				(err, result) => {
-					if (err) return reject(err);
+					if (err) {
+						return reject(err);
+					}
 					return resolve(result);
 				},
 			),

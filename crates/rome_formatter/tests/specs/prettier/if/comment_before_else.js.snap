@@ -33,11 +33,12 @@ else {
   stuff;
 }
 
-if (cond)
+if (cond) {
   stuff;
-// comment
-else
+} // comment
+else {
   stuff;
+}
 
 ```
 

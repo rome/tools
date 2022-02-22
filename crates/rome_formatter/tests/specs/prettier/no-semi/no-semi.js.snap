@@ -127,8 +127,9 @@ class X {}
 
 // don't semicolon if it doesn't start statement
 
-if (true)
+if (true) {
   (() => {})();
+}
 
 // check indentation
 
@@ -140,9 +141,15 @@ if (true) {
 // check statement clauses
 
 do break; while (false);
-if (true) do break; while (false);
+if (true) {
+  do break; while (false);
+}
 
-if (true) 1; else 2;
+if (true) {
+  1;
+} else {
+  2;
+}
 for (;;)
 for (x of y)
 
