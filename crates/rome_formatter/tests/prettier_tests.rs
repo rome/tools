@@ -16,7 +16,7 @@ use rslint_parser::parse_module;
 
 static REPORTER: DiffReport = DiffReport::new();
 
-tests_macros::gen_tests! {"tests/specs/prettier/**/*.js", test_snapshot, "script"}
+tests_macros::gen_tests! {"tests/specs/prettier/**/*.js", crate::test_snapshot, "script"}
 
 fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     if input.contains("typescript")
