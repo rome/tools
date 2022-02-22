@@ -120,7 +120,7 @@ impl TestCaseFiles {
     }
 
     pub(crate) fn is_empty(&self) -> bool {
-        return self.files.is_empty();
+        self.files.is_empty()
     }
 
     pub(crate) fn emit_errors(&self, errors: &[ParserError], buffer: &mut Buffer) {
