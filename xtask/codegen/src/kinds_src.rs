@@ -457,6 +457,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_ABSTRACT_METHOD_CLASS_MEMBER",
         "TS_ABSTRACT_GETTER_CLASS_MEMBER",
         "TS_ABSTRACT_SETTER_CLASS_MEMBER",
+        "TS_ABSTRACT_PROPERTY_CLASS_MEMBER",
         // unknown nodes JS
         "JS_UNKNOWN",
         "JS_UNKNOWN_EXPRESSION",

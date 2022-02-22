@@ -31,7 +31,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@52..61 "name" [Newline("\n"), Whitespace("    ")] [],
                     },
@@ -274,12 +273,10 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@328..329 "{" [] [],
             members: JsClassMemberList [
-                JsPropertyClassMember {
-                    declare_token: missing (optional),
+                TsAbstractPropertyClassMember {
                     access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    readonly_token: missing (optional),
                     abstract_token: ABSTRACT_KW@329..343 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                    readonly_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@343..347 "name" [] [],
                     },
@@ -289,7 +286,6 @@ JsModule {
                             string_token: STRING_KW@349..355 "string" [] [],
                         },
                     },
-                    value: missing (optional),
                     semicolon_token: SEMICOLON@355..356 ";" [] [],
                 },
                 TsAbstractMethodClassMember {
@@ -305,8 +301,6 @@ JsModule {
                         r_paren_token: R_PAREN@378..379 ")" [] [],
                     },
                     return_type_annotation: missing (optional),
-                },
-                JsEmptyClassMember {
                     semicolon_token: SEMICOLON@379..380 ";" [] [],
                 },
                 TsAbstractGetterClassMember {
@@ -319,8 +313,6 @@ JsModule {
                     l_paren_token: L_PAREN@405..406 "(" [] [],
                     r_paren_token: R_PAREN@406..407 ")" [] [],
                     return_type: missing (optional),
-                },
-                JsEmptyClassMember {
                     semicolon_token: SEMICOLON@407..408 ";" [] [],
                 },
                 TsAbstractSetterClassMember {
@@ -340,8 +332,6 @@ JsModule {
                         initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@437..438 ")" [] [],
-                },
-                JsEmptyClassMember {
                     semicolon_token: SEMICOLON@438..439 ";" [] [],
                 },
             ],
@@ -381,15 +371,14 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@52..61
+          4: JS_LITERAL_MEMBER_NAME@52..61
             0: IDENT@52..61 "name" [Newline("\n"), Whitespace("    ")] []
-          6: TS_TYPE_ANNOTATION@61..69
+          5: TS_TYPE_ANNOTATION@61..69
             0: COLON@61..63 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@63..69
               0: STRING_KW@63..69 "string" [] []
-          7: (empty)
-          8: SEMICOLON@69..70 ";" [] []
+          6: (empty)
+          7: SEMICOLON@69..70 ";" [] []
         1: JS_CONSTRUCTOR_CLASS_MEMBER@70..122
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@70..86
@@ -557,21 +546,18 @@ JsModule {
       5: (empty)
       6: L_CURLY@328..329 "{" [] []
       7: JS_CLASS_MEMBER_LIST@329..439
-        0: JS_PROPERTY_CLASS_MEMBER@329..356
+        0: TS_ABSTRACT_PROPERTY_CLASS_MEMBER@329..356
           0: (empty)
-          1: (empty)
+          1: ABSTRACT_KW@329..343 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           2: (empty)
-          3: (empty)
-          4: ABSTRACT_KW@329..343 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@343..347
+          3: JS_LITERAL_MEMBER_NAME@343..347
             0: IDENT@343..347 "name" [] []
-          6: TS_TYPE_ANNOTATION@347..355
+          4: TS_TYPE_ANNOTATION@347..355
             0: COLON@347..349 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@349..355
               0: STRING_KW@349..355 "string" [] []
-          7: (empty)
-          8: SEMICOLON@355..356 ";" [] []
-        1: TS_ABSTRACT_METHOD_CLASS_MEMBER@356..379
+          5: SEMICOLON@355..356 ";" [] []
+        1: TS_ABSTRACT_METHOD_CLASS_MEMBER@356..380
           0: (empty)
           1: ABSTRACT_KW@356..370 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@370..377
@@ -582,9 +568,8 @@ JsModule {
             1: JS_PARAMETER_LIST@378..378
             2: R_PAREN@378..379 ")" [] []
           5: (empty)
-        2: JS_EMPTY_CLASS_MEMBER@379..380
-          0: SEMICOLON@379..380 ";" [] []
-        3: TS_ABSTRACT_GETTER_CLASS_MEMBER@380..407
+          6: SEMICOLON@379..380 ";" [] []
+        2: TS_ABSTRACT_GETTER_CLASS_MEMBER@380..408
           0: (empty)
           1: ABSTRACT_KW@380..394 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           2: GET_KW@394..398 "get" [] [Whitespace(" ")]
@@ -593,9 +578,8 @@ JsModule {
           4: L_PAREN@405..406 "(" [] []
           5: R_PAREN@406..407 ")" [] []
           6: (empty)
-        4: JS_EMPTY_CLASS_MEMBER@407..408
-          0: SEMICOLON@407..408 ";" [] []
-        5: TS_ABSTRACT_SETTER_CLASS_MEMBER@408..438
+          7: SEMICOLON@407..408 ";" [] []
+        3: TS_ABSTRACT_SETTER_CLASS_MEMBER@408..439
           0: (empty)
           1: ABSTRACT_KW@408..422 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           2: SET_KW@422..426 "set" [] [Whitespace(" ")]
@@ -609,7 +593,6 @@ JsModule {
             2: (empty)
             3: (empty)
           6: R_PAREN@437..438 ")" [] []
-        6: JS_EMPTY_CLASS_MEMBER@438..439
-          0: SEMICOLON@438..439 ";" [] []
+          7: SEMICOLON@438..439 ";" [] []
       8: R_CURLY@439..441 "}" [Newline("\n")] []
   3: EOF@441..442 "" [Newline("\n")] []

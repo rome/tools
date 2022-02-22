@@ -38,7 +38,8 @@ class DD extends AA {
 # Output
 ```js
 class A {
-  abstract foo();
+  
+    abstract foo();
 }
 
 class B extends A {}
@@ -64,6 +65,17 @@ abstract class CC extends AA {}
 class DD extends AA {
   foo() {}
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: Only abstract classes can have abstract members
+  ┌─ classAbstractUsingAbstractMethods2.ts:2:5
+  │
+2 │     abstract foo();
+  │     ^^^^^^^^
+
 
 ```
 

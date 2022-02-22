@@ -629,13 +629,14 @@ JsAnyClassMember =
 	| JsMethodClassMember
 	| JsGetterClassMember
 	| JsSetterClassMember
-	| JsEmptyClassMember
-	| TsIndexSignatureClassMember
-	| JsUnknownMember
-	// Abstract Members
+	| TsAbstractPropertyClassMember
 	| TsAbstractMethodClassMember
 	| TsAbstractGetterClassMember
 	| TsAbstractSetterClassMember
+	| TsIndexSignatureClassMember	
+	| JsEmptyClassMember
+	| JsUnknownMember
+	
 
 JsStaticInitializationBlockClassMember =
 	'static'
@@ -693,10 +694,17 @@ JsPropertyClassMember =
 	access_modifier: ('private' | 'protected' | 'public')?
 	'static'?
 	'readonly'?
-	'abstract'?
 	name: JsAnyClassMemberName
 	property_annotation: TsAnyPropertyAnnotation?
 	value: JsInitializerClause?
+	';'?
+
+TsAbstractPropertyClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'
+	'readonly'?
+	name: JsAnyClassMemberName
+	property_annotation: TsAnyPropertyAnnotation?
 	';'?
 
 TsAnyPropertyAnnotation =
@@ -728,11 +736,12 @@ JsMethodClassMember =
 
 TsAbstractMethodClassMember =
 	access_modifier: ('protected' | 'public')?
-	'abstract'?
+	'abstract'
 	name: JsAnyClassMemberName
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
+	';'?
 
 // class Test { get a() {} }
 //              ^^^^^^^^^^
@@ -748,11 +757,12 @@ JsGetterClassMember =
 
 TsAbstractGetterClassMember =
 	access_modifier: ('protected' | 'public')?
-	'abstract'?
+	'abstract'
 	'get'
 	name: JsAnyClassMemberName
 	'(' ')'
 	return_type: TsTypeAnnotation?
+	';'?
 
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
@@ -767,6 +777,16 @@ JsSetterClassMember =
 	')'
 	body: JsFunctionBody
 
+TsAbstractSetterClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'
+	'set'
+	name: JsAnyClassMemberName
+	'('
+	parameter: JsAnyFormalParameter
+	')'
+	';'?
+
 // class Test { [a: string]: number }
 //
 TsIndexSignatureClassMember =
@@ -777,16 +797,6 @@ TsIndexSignatureClassMember =
 	']'
 	type_annotation: TsTypeAnnotation
 	';'?
-
-	
-TsAbstractSetterClassMember =
-	access_modifier: ('protected' | 'public')?
-	'abstract'?
-	'set'
-	name: JsAnyClassMemberName
-	'('
-	parameter: JsAnyFormalParameter
-	')'
 
 JsEmptyClassMember = ';'
 

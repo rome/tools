@@ -28,82 +28,18 @@ JsModule {
                         SEMICOLON@36..37 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
-                    items: [
-                        ABSTRACT_KW@37..50 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
-                        JsLiteralMemberName {
-                            value: IDENT@50..54 "name" [] [],
-                        },
-                        JsParameters {
-                            l_paren_token: L_PAREN@54..55 "(" [] [],
-                            items: JsParameterList [],
-                            r_paren_token: R_PAREN@55..56 ")" [] [],
-                        },
-                        TsReturnTypeAnnotation {
-                            colon_token: COLON@56..58 ":" [] [Whitespace(" ")],
-                            ty: TsStringType {
-                                string_token: STRING_KW@58..64 "string" [] [],
-                            },
-                        },
-                    ],
-                },
-                JsEmptyClassMember {
-                    semicolon_token: SEMICOLON@64..65 ";" [] [],
-                },
-                JsUnknownMember {
-                    items: [
-                        ABSTRACT_KW@65..78 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
-                        GET_KW@78..82 "get" [] [Whitespace(" ")],
-                        JsLiteralMemberName {
-                            value: IDENT@82..85 "age" [] [],
-                        },
-                        L_PAREN@85..86 "(" [] [],
-                        R_PAREN@86..87 ")" [] [],
-                        TsTypeAnnotation {
-                            colon_token: COLON@87..89 ":" [] [Whitespace(" ")],
-                            ty: TsNumberType {
-                                number_token: NUMBER_KW@89..95 "number" [] [],
-                            },
-                        },
-                    ],
-                },
-                JsEmptyClassMember {
-                    semicolon_token: SEMICOLON@95..96 ";" [] [],
-                },
-                JsUnknownMember {
-                    items: [
-                        ABSTRACT_KW@96..109 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
-                        SET_KW@109..113 "set" [] [Whitespace(" ")],
-                        JsLiteralMemberName {
-                            value: IDENT@113..116 "age" [] [],
-                        },
-                        L_PAREN@116..117 "(" [] [],
-                        JsFormalParameter {
-                            binding: JsIdentifierBinding {
-                                name_token: IDENT@117..118 "v" [] [],
-                            },
-                            question_mark_token: missing (optional),
-                            type_annotation: missing (optional),
-                            initializer: missing (optional),
-                        },
-                        R_PAREN@118..119 ")" [] [],
-                    ],
-                },
-                JsEmptyClassMember {
-                    semicolon_token: SEMICOLON@119..120 ";" [] [],
-                },
             ],
-            r_curly_token: R_CURLY@120..122 "}" [Newline("\n")] [],
+            r_curly_token: R_CURLY@37..39 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@122..123 "" [Newline("\n")] [],
+    eof_token: EOF@39..40 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..123
+0: JS_MODULE@0..40
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..122
-    0: JS_CLASS_DECLARATION@0..122
+  2: JS_MODULE_ITEM_LIST@0..39
+    0: JS_CLASS_DECLARATION@0..39
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@6..8
@@ -112,7 +48,7 @@ JsModule {
       4: (empty)
       5: (empty)
       6: L_CURLY@8..9 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@9..120
+      7: JS_CLASS_MEMBER_LIST@9..37
         0: JS_UNKNOWN_MEMBER@9..37
           0: ABSTRACT_KW@9..22 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@22..28
@@ -122,50 +58,8 @@ JsModule {
             1: TS_NUMBER_TYPE@30..36
               0: NUMBER_KW@30..36 "number" [] []
           3: SEMICOLON@36..37 ";" [] []
-        1: JS_UNKNOWN_MEMBER@37..64
-          0: ABSTRACT_KW@37..50 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@50..54
-            0: IDENT@50..54 "name" [] []
-          2: JS_PARAMETERS@54..56
-            0: L_PAREN@54..55 "(" [] []
-            1: JS_PARAMETER_LIST@55..55
-            2: R_PAREN@55..56 ")" [] []
-          3: TS_RETURN_TYPE_ANNOTATION@56..64
-            0: COLON@56..58 ":" [] [Whitespace(" ")]
-            1: TS_STRING_TYPE@58..64
-              0: STRING_KW@58..64 "string" [] []
-        2: JS_EMPTY_CLASS_MEMBER@64..65
-          0: SEMICOLON@64..65 ";" [] []
-        3: JS_UNKNOWN_MEMBER@65..95
-          0: ABSTRACT_KW@65..78 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
-          1: GET_KW@78..82 "get" [] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@82..85
-            0: IDENT@82..85 "age" [] []
-          3: L_PAREN@85..86 "(" [] []
-          4: R_PAREN@86..87 ")" [] []
-          5: TS_TYPE_ANNOTATION@87..95
-            0: COLON@87..89 ":" [] [Whitespace(" ")]
-            1: TS_NUMBER_TYPE@89..95
-              0: NUMBER_KW@89..95 "number" [] []
-        4: JS_EMPTY_CLASS_MEMBER@95..96
-          0: SEMICOLON@95..96 ";" [] []
-        5: JS_UNKNOWN_MEMBER@96..119
-          0: ABSTRACT_KW@96..109 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
-          1: SET_KW@109..113 "set" [] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@113..116
-            0: IDENT@113..116 "age" [] []
-          3: L_PAREN@116..117 "(" [] []
-          4: JS_FORMAL_PARAMETER@117..118
-            0: JS_IDENTIFIER_BINDING@117..118
-              0: IDENT@117..118 "v" [] []
-            1: (empty)
-            2: (empty)
-            3: (empty)
-          5: R_PAREN@118..119 ")" [] []
-        6: JS_EMPTY_CLASS_MEMBER@119..120
-          0: SEMICOLON@119..120 ";" [] []
-      8: R_CURLY@120..122 "}" [Newline("\n")] []
-  3: EOF@122..123 "" [Newline("\n")] []
+      8: R_CURLY@37..39 "}" [Newline("\n")] []
+  3: EOF@39..40 "" [Newline("\n")] []
 --
 error[SyntaxError]: Only abstract classes can have abstract members
   ┌─ ts_concrete_class_with_abstract_members.ts:2:4
@@ -174,30 +68,6 @@ error[SyntaxError]: Only abstract classes can have abstract members
   │    ^^^^^^^^
 
 --
-error[SyntaxError]: Only abstract classes can have abstract members
-  ┌─ ts_concrete_class_with_abstract_members.ts:3:4
-  │
-3 │    abstract name(): string;
-  │    ^^^^^^^^
-
---
-error[SyntaxError]: Only abstract classes can have abstract members
-  ┌─ ts_concrete_class_with_abstract_members.ts:4:4
-  │
-4 │    abstract get age(): number;
-  │    ^^^^^^^^
-
---
-error[SyntaxError]: Only abstract classes can have abstract members
-  ┌─ ts_concrete_class_with_abstract_members.ts:5:4
-  │
-5 │    abstract set age(v);
-  │    ^^^^^^^^
-
---
 class A {
    abstract my_age: number;
-   abstract name(): string;
-   abstract get age(): number;
-   abstract set age(v);
 }

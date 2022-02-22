@@ -3901,7 +3901,6 @@ impl JsPropertyClassMember {
             access_modifier: self.access_modifier(),
             static_token: self.static_token(),
             readonly_token: self.readonly_token(),
-            abstract_token: self.abstract_token(),
             name: self.name(),
             property_annotation: self.property_annotation(),
             value: self.value(),
@@ -3912,22 +3911,20 @@ impl JsPropertyClassMember {
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
     pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 5usize)
+        support::required_node(&self.syntax, 4usize)
     }
     pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
-        support::node(&self.syntax, 6usize)
+        support::node(&self.syntax, 5usize)
     }
-    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 7usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 8usize) }
+    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
 pub struct JsPropertyClassMemberFields {
     pub declare_token: Option<SyntaxToken>,
     pub access_modifier: Option<SyntaxToken>,
     pub static_token: Option<SyntaxToken>,
     pub readonly_token: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub property_annotation: Option<TsAnyPropertyAnnotation>,
     pub value: Option<JsInitializerClause>,
@@ -5094,10 +5091,13 @@ impl TsAbstractGetterClassMember {
             l_paren_token: self.l_paren_token(),
             r_paren_token: self.r_paren_token(),
             return_type: self.return_type(),
+            semicolon_token: self.semicolon_token(),
         }
     }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -5111,15 +5111,17 @@ impl TsAbstractGetterClassMember {
         support::required_token(&self.syntax, 5usize)
     }
     pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
 pub struct TsAbstractGetterClassMemberFields {
     pub access_modifier: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
+    pub abstract_token: SyntaxResult<SyntaxToken>,
     pub get_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub return_type: Option<TsTypeAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAbstractMethodClassMember {
@@ -5141,10 +5143,13 @@ impl TsAbstractMethodClassMember {
             type_parameters: self.type_parameters(),
             parameters: self.parameters(),
             return_type_annotation: self.return_type_annotation(),
+            semicolon_token: self.semicolon_token(),
         }
     }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
@@ -5157,14 +5162,59 @@ impl TsAbstractMethodClassMember {
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 5usize)
     }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
 pub struct TsAbstractMethodClassMemberFields {
     pub access_modifier: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
+    pub abstract_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAbstractPropertyClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAbstractPropertyClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAbstractPropertyClassMemberFields {
+        TsAbstractPropertyClassMemberFields {
+            access_modifier: self.access_modifier(),
+            abstract_token: self.abstract_token(),
+            readonly_token: self.readonly_token(),
+            name: self.name(),
+            property_annotation: self.property_annotation(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
+        support::node(&self.syntax, 4usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+}
+pub struct TsAbstractPropertyClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub abstract_token: SyntaxResult<SyntaxToken>,
+    pub readonly_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub property_annotation: Option<TsAnyPropertyAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAbstractSetterClassMember {
@@ -5187,10 +5237,13 @@ impl TsAbstractSetterClassMember {
             l_paren_token: self.l_paren_token(),
             parameter: self.parameter(),
             r_paren_token: self.r_paren_token(),
+            semicolon_token: self.semicolon_token(),
         }
     }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -5206,15 +5259,17 @@ impl TsAbstractSetterClassMember {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 6usize)
     }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
 pub struct TsAbstractSetterClassMemberFields {
     pub access_modifier: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
+    pub abstract_token: SyntaxResult<SyntaxToken>,
     pub set_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub parameter: SyntaxResult<JsAnyFormalParameter>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAnyType {
@@ -8365,6 +8420,7 @@ pub enum JsAnyClassMember {
     JsUnknownMember(JsUnknownMember),
     TsAbstractGetterClassMember(TsAbstractGetterClassMember),
     TsAbstractMethodClassMember(TsAbstractMethodClassMember),
+    TsAbstractPropertyClassMember(TsAbstractPropertyClassMember),
     TsAbstractSetterClassMember(TsAbstractSetterClassMember),
     TsIndexSignatureClassMember(TsIndexSignatureClassMember),
 }
@@ -12358,10 +12414,6 @@ impl std::fmt::Debug for JsPropertyClassMember {
                 "readonly_token",
                 &support::DebugOptionalElement(self.readonly_token()),
             )
-            .field(
-                "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
-            )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "property_annotation",
@@ -13473,7 +13525,7 @@ impl std::fmt::Debug for TsAbstractGetterClassMember {
             )
             .field(
                 "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
+                &support::DebugSyntaxResult(self.abstract_token()),
             )
             .field("get_token", &support::DebugSyntaxResult(self.get_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
@@ -13488,6 +13540,10 @@ impl std::fmt::Debug for TsAbstractGetterClassMember {
             .field(
                 "return_type",
                 &support::DebugOptionalElement(self.return_type()),
+            )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
             )
             .finish()
     }
@@ -13518,7 +13574,7 @@ impl std::fmt::Debug for TsAbstractMethodClassMember {
             )
             .field(
                 "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
+                &support::DebugSyntaxResult(self.abstract_token()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -13530,6 +13586,10 @@ impl std::fmt::Debug for TsAbstractMethodClassMember {
                 "return_type_annotation",
                 &support::DebugOptionalElement(self.return_type_annotation()),
             )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
             .finish()
     }
 }
@@ -13538,6 +13598,50 @@ impl From<TsAbstractMethodClassMember> for SyntaxNode {
 }
 impl From<TsAbstractMethodClassMember> for SyntaxElement {
     fn from(n: TsAbstractMethodClassMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsAbstractPropertyClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ABSTRACT_PROPERTY_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAbstractPropertyClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAbstractPropertyClassMember")
+            .field(
+                "access_modifier",
+                &support::DebugOptionalElement(self.access_modifier()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugSyntaxResult(self.abstract_token()),
+            )
+            .field(
+                "readonly_token",
+                &support::DebugOptionalElement(self.readonly_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "property_annotation",
+                &support::DebugOptionalElement(self.property_annotation()),
+            )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsAbstractPropertyClassMember> for SyntaxNode {
+    fn from(n: TsAbstractPropertyClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsAbstractPropertyClassMember> for SyntaxElement {
+    fn from(n: TsAbstractPropertyClassMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsAbstractSetterClassMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ABSTRACT_SETTER_CLASS_MEMBER }
@@ -13559,7 +13663,7 @@ impl std::fmt::Debug for TsAbstractSetterClassMember {
             )
             .field(
                 "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
+                &support::DebugSyntaxResult(self.abstract_token()),
             )
             .field("set_token", &support::DebugSyntaxResult(self.set_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
@@ -13571,6 +13675,10 @@ impl std::fmt::Debug for TsAbstractSetterClassMember {
             .field(
                 "r_paren_token",
                 &support::DebugSyntaxResult(self.r_paren_token()),
+            )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
             )
             .finish()
     }
@@ -17375,6 +17483,11 @@ impl From<TsAbstractMethodClassMember> for JsAnyClassMember {
         JsAnyClassMember::TsAbstractMethodClassMember(node)
     }
 }
+impl From<TsAbstractPropertyClassMember> for JsAnyClassMember {
+    fn from(node: TsAbstractPropertyClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsAbstractPropertyClassMember(node)
+    }
+}
 impl From<TsAbstractSetterClassMember> for JsAnyClassMember {
     fn from(node: TsAbstractSetterClassMember) -> JsAnyClassMember {
         JsAnyClassMember::TsAbstractSetterClassMember(node)
@@ -17399,6 +17512,7 @@ impl AstNode for JsAnyClassMember {
                 | JS_UNKNOWN_MEMBER
                 | TS_ABSTRACT_GETTER_CLASS_MEMBER
                 | TS_ABSTRACT_METHOD_CLASS_MEMBER
+                | TS_ABSTRACT_PROPERTY_CLASS_MEMBER
                 | TS_ABSTRACT_SETTER_CLASS_MEMBER
                 | TS_INDEX_SIGNATURE_CLASS_MEMBER
         )
@@ -17439,6 +17553,11 @@ impl AstNode for JsAnyClassMember {
                     syntax,
                 })
             }
+            TS_ABSTRACT_PROPERTY_CLASS_MEMBER => {
+                JsAnyClassMember::TsAbstractPropertyClassMember(TsAbstractPropertyClassMember {
+                    syntax,
+                })
+            }
             TS_ABSTRACT_SETTER_CLASS_MEMBER => {
                 JsAnyClassMember::TsAbstractSetterClassMember(TsAbstractSetterClassMember {
                     syntax,
@@ -17465,6 +17584,7 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::JsUnknownMember(it) => &it.syntax,
             JsAnyClassMember::TsAbstractGetterClassMember(it) => &it.syntax,
             JsAnyClassMember::TsAbstractMethodClassMember(it) => &it.syntax,
+            JsAnyClassMember::TsAbstractPropertyClassMember(it) => &it.syntax,
             JsAnyClassMember::TsAbstractSetterClassMember(it) => &it.syntax,
             JsAnyClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
         }
@@ -17485,6 +17605,7 @@ impl std::fmt::Debug for JsAnyClassMember {
             JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsAbstractGetterClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsAbstractMethodClassMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsAbstractPropertyClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsAbstractSetterClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
         }
@@ -17503,6 +17624,7 @@ impl From<JsAnyClassMember> for SyntaxNode {
             JsAnyClassMember::JsUnknownMember(it) => it.into(),
             JsAnyClassMember::TsAbstractGetterClassMember(it) => it.into(),
             JsAnyClassMember::TsAbstractMethodClassMember(it) => it.into(),
+            JsAnyClassMember::TsAbstractPropertyClassMember(it) => it.into(),
             JsAnyClassMember::TsAbstractSetterClassMember(it) => it.into(),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => it.into(),
         }
@@ -22664,6 +22786,11 @@ impl std::fmt::Display for TsAbstractMethodClassMember {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAbstractPropertyClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAbstractSetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -25463,6 +25590,10 @@ impl Debug for DebugSyntaxElement {
                 ),
                 TS_ABSTRACT_METHOD_CLASS_MEMBER => std::fmt::Debug::fmt(
                     &TsAbstractMethodClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
+                TS_ABSTRACT_PROPERTY_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsAbstractPropertyClassMember::cast(node.clone()).unwrap(),
                     f,
                 ),
                 TS_ABSTRACT_SETTER_CLASS_MEMBER => std::fmt::Debug::fmt(

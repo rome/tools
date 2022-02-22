@@ -712,6 +712,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::TsAbstractMethodClassMember::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_ABSTRACT_PROPERTY_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsAbstractPropertyClassMember::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_ABSTRACT_SETTER_CLASS_MEMBER => {
                     let $pattern =
                         unsafe { $crate::ast::TsAbstractSetterClassMember::new_unchecked(node) };

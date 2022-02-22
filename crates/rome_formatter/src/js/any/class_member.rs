@@ -17,6 +17,7 @@ impl ToFormatElement for JsAnyClassMember {
             Self::TsAbstractMethodClassMember(node) => node.to_format_element(formatter),
             Self::TsAbstractGetterClassMember(node) => node.to_format_element(formatter),
             Self::TsAbstractSetterClassMember(node) => node.to_format_element(formatter),
+            Self::TsAbstractPropertyClassMember(node) => node.to_format_element(formatter),
         }
     }
 }

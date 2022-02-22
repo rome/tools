@@ -113,8 +113,20 @@ abstract class G {
 }
 
 class H {
-  abstract baz(): number;
+  
+    abstract baz() : number;
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: Only abstract classes can have abstract members
+   ┌─ classAbstractInstantiations2.ts:49:5
+   │
+49 │     abstract baz() : number;
+   │     ^^^^^^^^
+
 
 ```
 
