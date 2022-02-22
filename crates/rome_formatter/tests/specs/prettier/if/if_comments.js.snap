@@ -78,14 +78,23 @@ async function f1() {
 }
 
 async function f2() {
-  if (untrackedChoice === 0) /* Cancel */ null; else if (untrackedChoice === 1) shouldAmend = /* Add */
-    true; else if (untrackedChoice === 2) /* Allow Untracked */ allowUntracked =
-    true;
+  if (untrackedChoice === 0) /* Cancel */ {
+    null;
+  } else if (untrackedChoice === 1) /* Add */ {
+    shouldAmend = true;
+  } else if (untrackedChoice === 2) /* Allow Untracked */ {
+    allowUntracked = true;
+  }
 }
 
 async function f3() {
-  if (untrackedChoice === 0) null; else if (untrackedChoice === 1) shouldAmend = /* Cancel */ // Cancel /* Add */ // Add
-    true; else if (untrackedChoice === 2) allowUntracked = true; /* Allow Untracked */ // Allow Untracked
+  if (untrackedChoice === 0) /* Cancel */ { // Cancel
+    null;
+  } else if (untrackedChoice === 1) /* Add */ { // Add
+    shouldAmend = true;
+  } else if (untrackedChoice === 2) /* Allow Untracked */ { // Allow Untracked
+    allowUntracked = true;
+  }
 }
 
 async function f4() {

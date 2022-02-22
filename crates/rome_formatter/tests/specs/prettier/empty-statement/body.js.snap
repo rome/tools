@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: body.js
 
 ---
@@ -19,7 +19,7 @@ do; while(1);
 # Output
 ```js
 with (a);
-if (1) else if (2) else
+if (1) {} else if (2) {} else {}
 for (;;)
 while (1)
 for (var i in o)
