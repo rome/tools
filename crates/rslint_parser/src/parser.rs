@@ -399,7 +399,7 @@ impl<'t> Parser<'t> {
         self.error(err);
     }
 
-    pub fn span_text(&self, span: impl rslint_errors::Span) -> &str {
+    pub fn span_text(&self, span: impl rslint_errors::Span) -> &'t str {
         &self.tokens.source()[span.as_range()]
     }
 

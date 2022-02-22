@@ -858,6 +858,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::TsImportTypeQualifier::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsIndexSignatureClassMember::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => {
                     let $pattern =
                         unsafe { $crate::ast::TsIndexSignatureParameter::new_unchecked(node) };

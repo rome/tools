@@ -26,6 +26,26 @@ pub(crate) fn expected_contextual_keyword(name: &'static str) -> impl ToDiagnost
     ExpectedToken(ExpectedTokenName::Contextual(name))
 }
 
+#[must_use]
+pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> impl ToDiagnostic {
+    use std::fmt::Write;
+    let mut expected = String::new();
+
+    for (index, token) in tokens.iter().enumerate() {
+        if index > 0 {
+            expected.push_str(", ");
+        }
+
+        if index == tokens.len() - 1 {
+            expected.push_str("or ");
+        }
+
+        let _ = write!(&mut expected, "'{}'", ExpectedTokenName::Kind(*token));
+    }
+
+    ExpectedTokens(expected)
+}
+
 pub trait ToDiagnostic {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic;
 }
@@ -35,8 +55,6 @@ impl ToDiagnostic for Diagnostic {
         self
     }
 }
-
-struct ExpectedToken(ExpectedTokenName);
 
 enum ExpectedTokenName {
     Kind(JsSyntaxKind),
@@ -58,23 +76,6 @@ impl Display for ExpectedTokenName {
 pub(crate) struct ExpectedNodeDiagnosticBuilder {
     names: String,
     range: Range<usize>,
-}
-
-impl ToDiagnostic for ExpectedToken {
-    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
-        match p.cur() {
-            JsSyntaxKind::EOF => p
-                .err_builder(&format!("expected `{}` but instead the file ends", self.0))
-                .primary(p.cur_tok().range(), "the file ends here"),
-            _ => p
-                .err_builder(&format!(
-                    "expected `{}` but instead found `{}`",
-                    self.0,
-                    p.cur_src()
-                ))
-                .primary(p.cur_tok().range(), "unexpected"),
-        }
-    }
 }
 
 impl ExpectedNodeDiagnosticBuilder {
@@ -141,5 +142,43 @@ fn article_for(name: &str) -> &'static str {
     match name.chars().next() {
         Some('a' | 'e' | 'i' | 'o' | 'u') => "an",
         _ => "a",
+    }
+}
+
+struct ExpectedToken(ExpectedTokenName);
+
+impl ToDiagnostic for ExpectedToken {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
+        match p.cur() {
+            JsSyntaxKind::EOF => p
+                .err_builder(&format!("expected `{}` but instead the file ends", self.0))
+                .primary(p.cur_tok().range(), "the file ends here"),
+            _ => p
+                .err_builder(&format!(
+                    "expected `{}` but instead found `{}`",
+                    self.0,
+                    p.cur_src()
+                ))
+                .primary(p.cur_tok().range(), "unexpected"),
+        }
+    }
+}
+
+struct ExpectedTokens(String);
+
+impl ToDiagnostic for ExpectedTokens {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
+        match p.cur() {
+            JsSyntaxKind::EOF => p
+                .err_builder(&format!("expected {} but instead the file ends", self.0))
+                .primary(p.cur_tok().range(), "the file ends here"),
+            _ => p
+                .err_builder(&format!(
+                    "expected {} but instead found `{}`",
+                    self.0,
+                    p.cur_src()
+                ))
+                .primary(p.cur_tok().range(), "unexpected"),
+        }
     }
 }

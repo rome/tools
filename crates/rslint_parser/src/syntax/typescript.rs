@@ -4,6 +4,7 @@ mod statement;
 pub mod ts_parse_error;
 mod types;
 
+use crate::parser::expected_token_any;
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error::{expected_expression, expected_ts_type};
 
@@ -12,7 +13,14 @@ use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
 pub(crate) use self::statement::*;
+use self::ts_parse_error::ts_member_cannot_be;
 pub(crate) use self::types::*;
+
+use super::binding::parse_identifier_binding;
+use super::class::is_nth_at_modifier;
+use super::expr::is_nth_at_identifier;
+use super::js_parse_error::expected_identifier;
+use super::stmt::optional_semi;
 
 fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
     parse_identifier(p, TS_IDENTIFIER_BINDING).map(|mut ident| {
@@ -120,4 +128,102 @@ pub(crate) fn try_parse<T, E>(
     }
 
     res
+}
+
+/// Must be at `[ident:` or `<modifiers> [ident:`
+pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
+    let mut offset = 0;
+    while is_nth_at_modifier(p, offset) {
+        offset += 1;
+    }
+
+    if !p.nth_at(offset, T!['[']) {
+        return false;
+    }
+
+    if !is_nth_at_identifier(p, offset + 1) {
+        return false;
+    }
+
+    p.nth_at(offset + 2, T![:])
+}
+
+#[derive(Clone, Copy)]
+pub(crate) enum MemberParent {
+    Class,
+    TypeOrInterface,
+}
+
+pub(crate) fn expect_ts_index_signature_member(
+    p: &mut Parser,
+    m: Marker,
+    parent: MemberParent,
+) -> CompletedMarker {
+    while is_nth_at_modifier(p, 0) {
+        if is_at_contextual_keyword(p, "readonly") {
+            p.bump_remap(T![readonly]);
+        } else {
+            p.error(ts_member_cannot_be(
+                p,
+                p.cur_tok().range(),
+                "index signature",
+                p.cur_src(),
+            ));
+            p.bump_any();
+        }
+    }
+
+    p.bump(T!['[']);
+
+    let parameter = p.start();
+    parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_type_annotation(p).unwrap(); // It's a computed member name if the type annotation is missing
+    parameter.complete(p, TS_INDEX_SIGNATURE_PARAMETER);
+
+    p.expect(T![']']);
+
+    parse_ts_type_annotation(p).or_add_diagnostic(p, |p, range| {
+        p.err_builder("An index signature must have a type annotation")
+            .primary(range, "")
+    });
+
+    eat_members_separator(p, parent);
+
+    m.complete(
+        p,
+        match parent {
+            MemberParent::Class => TS_INDEX_SIGNATURE_CLASS_MEMBER,
+            MemberParent::TypeOrInterface => TS_INDEX_SIGNATURE_TYPE_MEMBER,
+        },
+    )
+}
+
+fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
+    let (comma, semi_colon) = match parent {
+        MemberParent::Class => (false, true),
+        MemberParent::TypeOrInterface => (true, true),
+    };
+    debug_assert!(comma || semi_colon);
+
+    let separator_eaten = comma && p.eat(T![,]);
+    let separator_eaten = separator_eaten || (semi_colon && optional_semi(p));
+
+    if !separator_eaten {
+        if semi_colon {
+            let err = p.err_builder("';' expected'").primary(
+                p.cur_tok().range(),
+                "An explicit or implicit semicolon is expected here...",
+            );
+            p.error(err);
+        } else {
+            let mut tokens = vec![];
+            if comma {
+                tokens.push(T![,]);
+            }
+            if semi_colon {
+                tokens.push(T![;]);
+            }
+            p.error(expected_token_any(&tokens));
+        }
+    }
 }

@@ -38,7 +38,12 @@ use std::ops::Range;
 
 use super::function::LineBreak;
 use super::js_parse_error::unexpected_body_inside_ambient_context;
-use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_body};
+use super::typescript::ts_parse_error::{
+    self, ts_member_cannot_be, unexpected_abstract_member_with_body,
+};
+use super::typescript::{
+    expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent,
+};
 use super::util::eat_contextual_keyword;
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
@@ -445,6 +450,72 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
+// test ts ts_index_signature_class_member
+// class A {
+//     [a: number]: string;
+// }
+// class B {
+//     [index: string]: { prop }
+// }
+
+// test ts ts_index_signature_class_member_can_be_static
+// class A {
+//     static [a: number]: string;
+// }
+// class B {
+//     static readonly [a: number]: string;
+// }
+
+// test_err ts ts_index_signature_class_member_static_readonly_precedence
+// class A {
+//     readonly static [a: number]: string;
+// }
+
+// test_err ts ts_index_signature_class_member_cannot_have_visibility_modifiers
+// class A {
+//     public  [a: number]: string;
+// }
+// class B {
+//     private  [a: number]: string;
+// }
+// class C {
+//     protected  [a: number]: string;
+// }
+
+// test_err index_signature_class_member_in_js
+// class A {
+//     [a: number]: string;
+// }
+fn parse_index_signature_class_member(
+    p: &mut Parser,
+    member_marker: Marker,
+    modifiers: ClassMemberModifiers,
+) -> ParsedSyntax {
+    TypeScript.parse_exclusive_syntax(
+        p,
+        |p| {
+            let member = Present(expect_ts_index_signature_member(
+                p,
+                member_marker,
+                MemberParent::Class,
+            ));
+
+            if let Some(range) = modifiers.get_range(ModifierKind::Accessibility) {
+                let src = p.span_text(range);
+                p.error(ts_member_cannot_be(
+                    p,
+                    range.clone(),
+                    "index signature",
+                    src,
+                ));
+            }
+
+            member
+        },
+        |p, member| ts_only_syntax_error(p, "Index signatures", member.range(p).as_range()),
+    )
+}
+
 fn parse_class_member_impl(
     p: &mut Parser,
     member_marker: Marker,
@@ -498,6 +569,11 @@ fn parse_class_member_impl(
         } else {
             parse_method_class_member(p, member_marker, modifiers, flags)
         });
+    }
+
+    // Seems like we're at an index member
+    if is_at_ts_index_signature_member(p) {
+        return parse_index_signature_class_member(p, member_marker, modifiers);
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);
@@ -1176,7 +1252,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
     // test_err class_constructor_parameter
     // class B { constructor(protected b) {} }
 
-    if is_at_modifier(p) {
+    if is_nth_at_modifier(p, 0) {
         // test ts ts_property_parameter
         // class A { constructor(private x, protected y, public z) {} }
         // class B { constructor(readonly w, private readonly x, protected readonly y, public readonly z) {} }
@@ -1316,24 +1392,25 @@ fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
     p.nth_at(offset, T!['(']) || p.nth_at(offset, T![<])
 }
 
-fn is_at_modifier(p: &Parser) -> bool {
+pub(crate) fn is_nth_at_modifier(p: &Parser, n: usize) -> bool {
     // Test if this modifier is followed by another modifier, member name or any other token that
     // starts a new member. If that's the case, then this is fairly likely a modifier. If not, then
     // this is probably not a modifier, but the name of the member. For example, all these are valid
     // members: `static() {}, private() {}, protected() {}`... but are modifiers if followed by another modifier or a name:
     // `static x() {} private static() {}`...
+    let src = p.nth_src(n);
     if !matches!(
-        p.cur_src(),
+        src,
         "public" | "private" | "protected" | "static" | "abstract" | "readonly" | "declare"
     ) {
         return false;
     }
 
-    if p.has_linebreak_before_n(1) {
+    if p.has_linebreak_before_n(n + 1) {
         return false;
     }
 
-    matches!(p.nth(1), T![*] | T!['{'] | T!['[']) | is_at_class_member_name(p, 1)
+    matches!(p.nth(n + 1), T![*] | T!['{'] | T!['[']) | is_at_class_member_name(p, 1)
 }
 
 // test static_generator_constructor_method
@@ -1453,7 +1530,7 @@ fn parse_class_member_modifiers(
 // test_err class_member_modifier
 // class A { abstract foo; }
 fn parse_modifier(p: &mut Parser) -> Option<Modifier> {
-    if !is_at_modifier(p) {
+    if !is_nth_at_modifier(p, 0) {
         // all modifiers can also be valid member names. That's why we shouldn't parse a modifier
         // if it isn't followed by a valid member name or another modifier
         return None;

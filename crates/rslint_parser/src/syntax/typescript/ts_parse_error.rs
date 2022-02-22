@@ -23,3 +23,13 @@ pub(crate) fn abstract_member_cannot_be_static(p: &Parser, range: Range<usize>) 
     p.err_builder("static members cannot be abstract")
         .primary(range, "")
 }
+
+pub(crate) fn ts_member_cannot_be(
+    p: &Parser,
+    range: Range<usize>,
+    member_type_name: &str,
+    modifier_name: &str,
+) -> Diagnostic {
+    let msg = format!("{} members cannot be {}", member_type_name, modifier_name);
+    p.err_builder(&msg).primary(range, "")
+}

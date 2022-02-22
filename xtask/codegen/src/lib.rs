@@ -25,21 +25,28 @@ const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes.rs";
 const SYNTAX_FACTORY: &str = "crates/rslint_parser/src/ast/generated/syntax_factory.rs";
 const AST_MACROS: &str = "crates/rslint_parser/src/ast/generated/macros.rs";
 
+enum UpdateResult {
+    NotUpdated,
+    Updated,
+}
+
 /// A helper to update file on disk if it has changed.
 /// With verify = false,
-fn update(path: &Path, contents: &str, mode: Mode) -> Result<()> {
+fn update(path: &Path, contents: &str, mode: Mode) -> Result<UpdateResult> {
     match fs2::read_to_string(path) {
         Ok(old_contents) if old_contents == contents => {
-            return Ok(());
+            return Ok(UpdateResult::NotUpdated);
         }
         _ => (),
     }
+
     if mode == Mode::Verify {
         anyhow::bail!("`{}` is not up-to-date", path.display());
     }
+
     eprintln!("updating {}", path.display());
     fs2::write(path, contents)?;
-    Ok(())
+    Ok(UpdateResult::Updated)
 }
 
 pub fn to_upper_snake_case(s: &str) -> String {

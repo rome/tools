@@ -626,6 +626,7 @@ JsAnyClassMember =
 	| JsGetterClassMember
 	| JsSetterClassMember
 	| JsEmptyClassMember
+	| TsIndexSignatureClassMember
 	| JsUnknownMember
 
 JsStaticInitializationBlockClassMember =
@@ -742,6 +743,17 @@ JsSetterClassMember =
 	parameter: JsAnyFormalParameter
 	')'
 	body: JsFunctionBody
+
+// class Test { [a: string]: number }
+//
+TsIndexSignatureClassMember =
+	'static'?
+	'readonly'?
+	'['
+	parameter: TsIndexSignatureParameter
+	']'
+	type_annotation: TsTypeAnnotation
+	separator: ';'?
 
 JsEmptyClassMember = ';'
 
@@ -1805,6 +1817,7 @@ TsAnyTypeMember =
 	| TsGetterSignatureTypeMember
 	| TsSetterSignatureTypeMember
 	| TsIndexSignatureTypeMember
+	| JsUnknownMember
 
 // { <A>(a: A): number }
 //   ^^^^^^^^^^^^^^^^^

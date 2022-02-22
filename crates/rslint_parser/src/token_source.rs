@@ -89,7 +89,7 @@ impl<'t> TokenSource<'t> {
     }
 
     #[inline(always)]
-    pub fn source(&self) -> &str {
+    pub fn source(&self) -> &'t str {
         self.source
     }
 

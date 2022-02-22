@@ -1,6 +1,5 @@
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{EnterType, SignatureFlags};
-use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::expr::{
     is_at_identifier, is_nth_at_identifier, is_nth_at_identifier_or_keyword,
     parse_big_int_literal_expression, parse_identifier, parse_literal_expression, parse_name,
@@ -27,6 +26,8 @@ use crate::JsSyntaxFeature::TypeScript;
 use crate::{Absent, ParsedSyntax, Parser};
 use crate::{JsSyntaxKind::*, *};
 use rslint_syntax::T;
+
+use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
 
 pub(crate) fn is_reserved_type_name(name: &str) -> bool {
     matches!(
@@ -709,8 +710,19 @@ impl ParseNodeList for TypeMembers {
 }
 
 fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
-    if is_at_ts_index_signature_type_member(p) {
-        return parse_ts_index_signature_type_member(p);
+    // test ts ts_index_signature_member
+    // type A = { [a: number]: string }
+    // type B = { readonly [a: number]: string }
+    // // not an index signature
+    // type C = { [a]: string }
+    // type D = { readonly [a]: string }
+    if is_at_ts_index_signature_member(p) {
+        let m = p.start();
+        return Present(expect_ts_index_signature_member(
+            p,
+            m,
+            MemberParent::TypeOrInterface,
+        ));
     }
 
     match p.cur() {
@@ -725,23 +737,6 @@ fn parse_ts_type_member(p: &mut Parser) -> ParsedSyntax {
             parse_ts_setter_signature_type_member(p)
         }
         _ => parse_ts_property_or_method_signature_type_member(p),
-    }
-}
-
-fn parse_ts_type_member_semi(p: &mut Parser) {
-    // type members can either be separated by a comma
-    if p.eat(T![,]) {
-        return;
-    }
-
-    // or a semicolon (possibly ASI)
-    if !optional_semi(p) {
-        let err = p.err_builder("';' expected'").primary(
-            p.cur_tok().range(),
-            "An explicit or implicit semicolon is expected here...",
-        );
-
-        p.error(err);
     }
 }
 
@@ -870,60 +865,6 @@ fn parse_ts_setter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     p.expect(T![')']);
     parse_ts_type_member_semi(p);
     Present(m.complete(p, TS_SETTER_SIGNATURE_TYPE_MEMBER))
-}
-
-/// Must be at `[ident:]` or `readonly [ident:]`
-fn is_at_ts_index_signature_type_member(p: &Parser) -> bool {
-    let mut offset = 0;
-
-    if p.at(T![ident]) && p.cur_src() == "readonly" {
-        offset = 1;
-    }
-
-    if !p.nth_at(offset, T!['[']) {
-        return false;
-    }
-
-    if !is_nth_at_identifier(p, offset + 1) {
-        return false;
-    }
-
-    p.nth_at(offset + 2, T![:])
-}
-
-// test ts ts_index_signature_member
-// type A = { [a: number]: string }
-// type B = { readonly [a: number]: string }
-// // not an index signature
-// type C = { [a]: string }
-// type D = { readonly [a]: string }
-fn parse_ts_index_signature_type_member(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_ts_index_signature_type_member(p) {
-        return Absent;
-    }
-
-    let m = p.start();
-
-    if p.at(T![ident]) && p.cur_src() == "readonly" {
-        p.bump_remap(T![readonly]);
-    }
-
-    p.bump(T!['[']);
-
-    let parameter = p.start();
-    parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_annotation(p).unwrap(); // It's a computed member name if the type annotation is missing
-    parameter.complete(p, TS_INDEX_SIGNATURE_PARAMETER);
-
-    p.expect(T![']']);
-
-    parse_ts_type_annotation(p).or_add_diagnostic(p, |p, range| {
-        p.err_builder("An index signature must have a type annotation")
-            .primary(range, "")
-    });
-    parse_ts_type_member_semi(p);
-
-    Present(m.complete(p, TS_INDEX_SIGNATURE_TYPE_MEMBER))
 }
 
 // test ts ts_tuple_type
@@ -1332,5 +1273,22 @@ impl ParseSeparatedList for TypeArgumentsList {
 
     fn allow_trailing_separating_element(&self) -> bool {
         false
+    }
+}
+
+fn parse_ts_type_member_semi(p: &mut Parser) {
+    // type members can either be separated by a comma
+    if p.eat(T![,]) {
+        return;
+    }
+
+    // or a semicolon (possibly ASI)
+    if !optional_semi(p) {
+        let err = p.err_builder("';' expected'").primary(
+            p.cur_tok().range(),
+            "An explicit or implicit semicolon is expected here...",
+        );
+
+        p.error(err);
     }
 }
