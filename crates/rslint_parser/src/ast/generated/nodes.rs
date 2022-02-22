@@ -6130,6 +6130,7 @@ impl TsImportEqualsDeclaration {
     pub fn as_fields(&self) -> TsImportEqualsDeclarationFields {
         TsImportEqualsDeclarationFields {
             import_token: self.import_token(),
+            type_token: self.type_token(),
             id: self.id(),
             eq_token: self.eq_token(),
             module_reference: self.module_reference(),
@@ -6139,17 +6140,19 @@ impl TsImportEqualsDeclaration {
     pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 1usize) }
+    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn module_reference(&self) -> SyntaxResult<TsAnyModuleReference> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 4usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 pub struct TsImportEqualsDeclarationFields {
     pub import_token: SyntaxResult<SyntaxToken>,
+    pub type_token: Option<SyntaxToken>,
     pub id: SyntaxResult<JsAnyBinding>,
     pub eq_token: SyntaxResult<SyntaxToken>,
     pub module_reference: SyntaxResult<TsAnyModuleReference>,
@@ -14283,6 +14286,10 @@ impl std::fmt::Debug for TsImportEqualsDeclaration {
             .field(
                 "import_token",
                 &support::DebugSyntaxResult(self.import_token()),
+            )
+            .field(
+                "type_token",
+                &support::DebugOptionalElement(self.type_token()),
             )
             .field("id", &support::DebugSyntaxResult(self.id()))
             .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))

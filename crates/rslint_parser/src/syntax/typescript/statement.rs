@@ -516,6 +516,7 @@ fn parse_ts_global_declaration(p: &mut Parser) -> ParsedSyntax {
 // namespace a.b {}
 // import y = a;
 // import z = a.b;
+// import type A = require("./a");
 // export import n = a;
 
 /// Parses everything after the `import` of an import equals declaration
@@ -524,6 +525,10 @@ pub(crate) fn parse_ts_import_equals_declaration_rest(
     m: Marker,
     stmt_start_pos: usize,
 ) -> CompletedMarker {
+    if is_nth_at_identifier_binding(p, 1) {
+        eat_contextual_keyword(p, "type", T![type]);
+    }
+
     parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
 
     p.expect(T![=]);
