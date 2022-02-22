@@ -92,7 +92,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@68..75 "static" [] [Whitespace(" ")],
                     },
@@ -186,11 +185,10 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@68..75
+          4: JS_LITERAL_MEMBER_NAME@68..75
             0: IDENT@68..75 "static" [] [Whitespace(" ")]
+          5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
       8: R_CURLY@75..76 "}" [] []
   3: EOF@76..77 "" [Newline("\n")] []

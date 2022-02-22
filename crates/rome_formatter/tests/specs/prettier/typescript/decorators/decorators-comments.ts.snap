@@ -91,8 +91,6 @@ class Something {
     readonly property: Array<string>
 }
 
-
-
 class Something2 {
     @foo()
     // comment

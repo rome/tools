@@ -18,7 +18,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@18..19 "#" [] [],
                         id_token: IDENT@19..26 "member" [] [Whitespace(" ")],
@@ -106,7 +105,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@93..94 "#" [] [],
                         id_token: IDENT@94..101 "member" [] [Whitespace(" ")],
@@ -185,7 +183,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@164..165 "#" [] [],
                         id_token: IDENT@165..172 "member" [] [Whitespace(" ")],
@@ -270,7 +267,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@242..243 "#" [] [],
                         id_token: IDENT@243..250 "member" [] [Whitespace(" ")],
@@ -368,7 +364,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@324..325 "#" [] [],
                         id_token: IDENT@325..332 "member" [] [Whitespace(" ")],
@@ -464,7 +459,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@409..410 "#" [] [],
                         id_token: IDENT@410..417 "member" [] [Whitespace(" ")],
@@ -569,16 +563,15 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@18..26
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@18..26
             0: HASH@18..19 "#" [] []
             1: IDENT@19..26 "member" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@26..32
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@26..32
             0: EQ@26..28 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@28..32
               0: TRUE_KW@28..32 "true" [] []
-          8: SEMICOLON@32..34 ";" [] [Whitespace(" ")]
+          7: SEMICOLON@32..34 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@34..73
           0: (empty)
           1: (empty)
@@ -635,16 +628,15 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@93..101
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@93..101
             0: HASH@93..94 "#" [] []
             1: IDENT@94..101 "member" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@101..107
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@101..107
             0: EQ@101..103 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@103..107
               0: TRUE_KW@103..107 "true" [] []
-          8: SEMICOLON@107..109 ";" [] [Whitespace(" ")]
+          7: SEMICOLON@107..109 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@109..144
           0: (empty)
           1: (empty)
@@ -695,16 +687,15 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@164..172
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@164..172
             0: HASH@164..165 "#" [] []
             1: IDENT@165..172 "member" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@172..178
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@172..178
             0: EQ@172..174 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@174..178
               0: TRUE_KW@174..178 "true" [] []
-          8: SEMICOLON@178..180 ";" [] [Whitespace(" ")]
+          7: SEMICOLON@178..180 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@180..222
           0: (empty)
           1: (empty)
@@ -759,16 +750,15 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@242..250
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@242..250
             0: HASH@242..243 "#" [] []
             1: IDENT@243..250 "member" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@250..256
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@250..256
             0: EQ@250..252 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@252..256
               0: TRUE_KW@252..256 "true" [] []
-          8: SEMICOLON@256..258 ";" [] [Whitespace(" ")]
+          7: SEMICOLON@256..258 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@258..304
           0: (empty)
           1: (empty)
@@ -834,16 +824,15 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@324..332
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@324..332
             0: HASH@324..325 "#" [] []
             1: IDENT@325..332 "member" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@332..338
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@332..338
             0: EQ@332..334 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@334..338
               0: TRUE_KW@334..338 "true" [] []
-          8: SEMICOLON@338..340 ";" [] [Whitespace(" ")]
+          7: SEMICOLON@338..340 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@340..389
           0: (empty)
           1: (empty)
@@ -907,16 +896,15 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@409..417
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@409..417
             0: HASH@409..410 "#" [] []
             1: IDENT@410..417 "member" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@417..423
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@417..423
             0: EQ@417..419 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@419..423
               0: TRUE_KW@419..423 "true" [] []
-          8: SEMICOLON@423..425 ";" [] [Whitespace(" ")]
+          7: SEMICOLON@423..425 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@425..477
           0: (empty)
           1: (empty)

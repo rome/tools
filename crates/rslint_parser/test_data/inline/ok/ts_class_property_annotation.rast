@@ -18,7 +18,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@9..13 "a" [Newline("\n"), Whitespace("  ")] [],
                     },
@@ -36,7 +35,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@22..26 "b" [Newline("\n"), Whitespace("  ")] [],
                     },
@@ -62,7 +60,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@45..49 "c" [Newline("\n"), Whitespace("  ")] [],
                     },
@@ -104,49 +101,46 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@9..13
+          4: JS_LITERAL_MEMBER_NAME@9..13
             0: IDENT@9..13 "a" [Newline("\n"), Whitespace("  ")] []
-          6: TS_TYPE_ANNOTATION@13..21
+          5: TS_TYPE_ANNOTATION@13..21
             0: COLON@13..15 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@15..21
               0: STRING_KW@15..21 "string" [] []
-          7: (empty)
-          8: SEMICOLON@21..22 ";" [] []
+          6: (empty)
+          7: SEMICOLON@21..22 ";" [] []
         1: JS_PROPERTY_CLASS_MEMBER@22..45
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@22..26
+          4: JS_LITERAL_MEMBER_NAME@22..26
             0: IDENT@22..26 "b" [Newline("\n"), Whitespace("  ")] []
-          6: TS_OPTIONAL_PROPERTY_ANNOTATION@26..36
+          5: TS_OPTIONAL_PROPERTY_ANNOTATION@26..36
             0: QUESTION@26..27 "?" [] []
             1: TS_TYPE_ANNOTATION@27..36
               0: COLON@27..29 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@29..36
                 0: STRING_KW@29..36 "string" [] [Whitespace(" ")]
-          7: JS_INITIALIZER_CLAUSE@36..44
+          6: JS_INITIALIZER_CLAUSE@36..44
             0: EQ@36..38 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@38..44
               0: JS_STRING_LITERAL@38..44 "\"test\"" [] []
-          8: SEMICOLON@44..45 ";" [] []
+          7: SEMICOLON@44..45 ";" [] []
         2: JS_PROPERTY_CLASS_MEMBER@45..59
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@45..49
+          4: JS_LITERAL_MEMBER_NAME@45..49
             0: IDENT@45..49 "c" [Newline("\n"), Whitespace("  ")] []
-          6: TS_DEFINITE_PROPERTY_ANNOTATION@49..58
+          5: TS_DEFINITE_PROPERTY_ANNOTATION@49..58
             0: BANG@49..50 "!" [] []
             1: TS_TYPE_ANNOTATION@50..58
               0: COLON@50..52 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@52..58
                 0: STRING_KW@52..58 "string" [] []
-          7: (empty)
-          8: SEMICOLON@58..59 ";" [] []
+          6: (empty)
+          7: SEMICOLON@58..59 ";" [] []
       8: R_CURLY@59..61 "}" [Newline("\n")] []
   3: EOF@61..62 "" [Newline("\n")] []

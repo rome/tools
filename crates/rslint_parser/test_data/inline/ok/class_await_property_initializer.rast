@@ -36,7 +36,6 @@ JsScript {
                                 access_modifier: missing (optional),
                                 static_token: missing (optional),
                                 readonly_token: missing (optional),
-                                abstract_token: missing (optional),
                                 name: JsLiteralMemberName {
                                     value: IDENT@46..56 "prop" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                 },
@@ -97,16 +96,15 @@ JsScript {
                 1: (empty)
                 2: (empty)
                 3: (empty)
-                4: (empty)
-                5: JS_LITERAL_MEMBER_NAME@46..56
+                4: JS_LITERAL_MEMBER_NAME@46..56
                   0: IDENT@46..56 "prop" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-                6: (empty)
-                7: JS_INITIALIZER_CLAUSE@56..63
+                5: (empty)
+                6: JS_INITIALIZER_CLAUSE@56..63
                   0: EQ@56..58 "=" [] [Whitespace(" ")]
                   1: JS_IDENTIFIER_EXPRESSION@58..63
                     0: JS_REFERENCE_IDENTIFIER@58..63
                       0: IDENT@58..63 "await" [] []
-                8: SEMICOLON@63..64 ";" [] []
+                7: SEMICOLON@63..64 ";" [] []
             8: R_CURLY@64..68 "}" [Newline("\n"), Whitespace("  ")] []
         3: R_CURLY@68..70 "}" [Newline("\n")] []
   3: EOF@70..71 "" [Newline("\n")] []

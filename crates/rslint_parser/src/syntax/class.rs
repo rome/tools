@@ -948,11 +948,9 @@ fn parse_property_class_member_body(
     //   }
     // }
 
-    p.with_state(EnterClassPropertyInitializer, |p| {
+    let initializer_syntax = p.with_state(EnterClassPropertyInitializer, |p| {
         parse_initializer_clause(p, ExpressionContext::default())
-        //TODO abstract cannot have initializer
-    })
-    .ok();
+    });
 
     if !optional_semi(p) {
         // Gets the start of the member
@@ -968,7 +966,23 @@ fn parse_property_class_member_body(
         p.error(err);
     }
 
-    Present(member_marker.complete(p, kind))
+    let member = Present(member_marker.complete(p, kind));
+
+    // test_err ts ts_abstract_property_cannot_have_initiliazers
+    // abstract class A {
+    //     abstract name: string = "";
+    // }
+
+    if kind == TS_ABSTRACT_PROPERTY_CLASS_MEMBER && initializer_syntax.is_present() {
+        member
+            .add_diagnostic_if_present(p, |p, range| {
+                p.err_builder("abstract properties cannot have initializers")
+                    .primary(range, "")
+            })
+            .map_or(Absent, Present)
+    } else {
+        member
+    }
 }
 
 // test_err js_class_property_with_ts_annotation

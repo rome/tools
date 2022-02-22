@@ -55,7 +55,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@35..43 "declare" [] [Whitespace(" ")],
                     },
@@ -126,15 +125,14 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@35..43
+          4: JS_LITERAL_MEMBER_NAME@35..43
             0: IDENT@35..43 "declare" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@43..49
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@43..49
             0: EQ@43..45 "=" [] [Whitespace(" ")]
             1: JS_IDENTIFIER_EXPRESSION@45..49
               0: JS_REFERENCE_IDENTIFIER@45..49
                 0: IDENT@45..49 "foo" [] [Whitespace(" ")]
-          8: (empty)
+          7: (empty)
       8: R_CURLY@49..50 "}" [] []
   3: EOF@50..51 "" [Newline("\n")] []

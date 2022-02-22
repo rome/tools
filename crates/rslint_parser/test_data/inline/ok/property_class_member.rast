@@ -18,7 +18,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@11..22 "property" [Newline("\n"), Whitespace("  ")] [],
                     },
@@ -31,7 +30,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@22..32 "declare" [Newline("\n"), Whitespace("  ")] [],
                     },
@@ -44,7 +42,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@33..56 "initializedProperty" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     },
@@ -62,7 +59,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: JS_STRING_LITERAL@61..67 "\"a\"" [Newline("\n"), Whitespace("  ")] [],
                     },
@@ -75,7 +71,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: JS_NUMBER_LITERAL@68..72 "5" [Newline("\n"), Whitespace("  ")] [],
                     },
@@ -88,7 +83,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsComputedMemberName {
                         l_brack_token: L_BRACK@72..76 "[" [Newline("\n"), Whitespace("  ")] [],
                         expression: JsBinaryExpression {
@@ -111,7 +105,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: STATIC_KW@86..96 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@96..110 "staticProperty" [] [],
                     },
@@ -124,7 +117,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: STATIC_KW@110..120 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@120..146 "staticInitializedProperty" [] [Whitespace(" ")],
                     },
@@ -142,7 +134,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@149..153 "#" [Newline("\n"), Whitespace("  ")] [],
                         id_token: IDENT@153..160 "private" [] [],
@@ -156,7 +147,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@160..164 "#" [Newline("\n"), Whitespace("  ")] [],
                         id_token: IDENT@164..183 "privateInitialized" [] [Whitespace(" ")],
@@ -175,7 +165,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: STATIC_KW@188..198 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@198..199 "#" [] [],
                         id_token: IDENT@199..212 "staticPrivate" [] [],
@@ -189,7 +178,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: STATIC_KW@212..222 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@222..223 "#" [] [],
                         id_token: IDENT@223..256 "staticPrivateInitializedProperty" [] [Whitespace(" ")],
@@ -229,66 +217,60 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@11..22
+          4: JS_LITERAL_MEMBER_NAME@11..22
             0: IDENT@11..22 "property" [Newline("\n"), Whitespace("  ")] []
+          5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
         1: JS_PROPERTY_CLASS_MEMBER@22..33
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@22..32
+          4: JS_LITERAL_MEMBER_NAME@22..32
             0: IDENT@22..32 "declare" [Newline("\n"), Whitespace("  ")] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: SEMICOLON@32..33 ";" [] []
+          7: SEMICOLON@32..33 ";" [] []
         2: JS_PROPERTY_CLASS_MEMBER@33..61
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@33..56
+          4: JS_LITERAL_MEMBER_NAME@33..56
             0: IDENT@33..56 "initializedProperty" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@56..61
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@56..61
             0: EQ@56..58 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@58..61
               0: JS_STRING_LITERAL@58..61 "\"a\"" [] []
-          8: (empty)
+          7: (empty)
         3: JS_PROPERTY_CLASS_MEMBER@61..68
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@61..67
+          4: JS_LITERAL_MEMBER_NAME@61..67
             0: JS_STRING_LITERAL@61..67 "\"a\"" [Newline("\n"), Whitespace("  ")] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: SEMICOLON@67..68 ";" [] []
+          7: SEMICOLON@67..68 ";" [] []
         4: JS_PROPERTY_CLASS_MEMBER@68..72
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@68..72
+          4: JS_LITERAL_MEMBER_NAME@68..72
             0: JS_NUMBER_LITERAL@68..72 "5" [Newline("\n"), Whitespace("  ")] []
+          5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
         5: JS_PROPERTY_CLASS_MEMBER@72..86
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_COMPUTED_MEMBER_NAME@72..86
+          4: JS_COMPUTED_MEMBER_NAME@72..86
             0: L_BRACK@72..76 "[" [Newline("\n"), Whitespace("  ")] []
             1: JS_BINARY_EXPRESSION@76..85
               0: JS_STRING_LITERAL_EXPRESSION@76..80
@@ -297,87 +279,81 @@ JsModule {
               2: JS_STRING_LITERAL_EXPRESSION@82..85
                 0: JS_STRING_LITERAL@82..85 "\"b\"" [] []
             2: R_BRACK@85..86 "]" [] []
+          5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
         6: JS_PROPERTY_CLASS_MEMBER@86..110
           0: (empty)
           1: (empty)
           2: STATIC_KW@86..96 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@96..110
+          4: JS_LITERAL_MEMBER_NAME@96..110
             0: IDENT@96..110 "staticProperty" [] []
+          5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
         7: JS_PROPERTY_CLASS_MEMBER@110..149
           0: (empty)
           1: (empty)
           2: STATIC_KW@110..120 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@120..146
+          4: JS_LITERAL_MEMBER_NAME@120..146
             0: IDENT@120..146 "staticInitializedProperty" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@146..149
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@146..149
             0: EQ@146..148 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@148..149
               0: JS_NUMBER_LITERAL@148..149 "1" [] []
-          8: (empty)
+          7: (empty)
         8: JS_PROPERTY_CLASS_MEMBER@149..160
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@149..160
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@149..160
             0: HASH@149..153 "#" [Newline("\n"), Whitespace("  ")] []
             1: IDENT@153..160 "private" [] []
+          5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
         9: JS_PROPERTY_CLASS_MEMBER@160..188
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@160..183
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@160..183
             0: HASH@160..164 "#" [Newline("\n"), Whitespace("  ")] []
             1: IDENT@164..183 "privateInitialized" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@183..188
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@183..188
             0: EQ@183..185 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@185..188
               0: JS_STRING_LITERAL@185..188 "\"a\"" [] []
-          8: (empty)
+          7: (empty)
         10: JS_PROPERTY_CLASS_MEMBER@188..212
           0: (empty)
           1: (empty)
           2: STATIC_KW@188..198 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@198..212
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@198..212
             0: HASH@198..199 "#" [] []
             1: IDENT@199..212 "staticPrivate" [] []
+          5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
         11: JS_PROPERTY_CLASS_MEMBER@212..259
           0: (empty)
           1: (empty)
           2: STATIC_KW@212..222 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@222..256
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@222..256
             0: HASH@222..223 "#" [] []
             1: IDENT@223..256 "staticPrivateInitializedProperty" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@256..259
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@256..259
             0: EQ@256..258 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@258..259
               0: JS_NUMBER_LITERAL@258..259 "1" [] []
-          8: (empty)
+          7: (empty)
       8: R_CURLY@259..261 "}" [Newline("\n")] []
   3: EOF@261..262 "" [Newline("\n")] []

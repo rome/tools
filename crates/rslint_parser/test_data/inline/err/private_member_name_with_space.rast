@@ -27,7 +27,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@13..17 "test" [] [],
                     },
@@ -64,12 +63,11 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@13..17
+          4: JS_LITERAL_MEMBER_NAME@13..17
             0: IDENT@13..17 "test" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: SEMICOLON@17..18 ";" [] []
+          7: SEMICOLON@17..18 ";" [] []
       8: R_CURLY@18..20 "}" [Newline("\n")] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
