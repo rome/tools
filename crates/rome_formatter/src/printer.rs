@@ -1,13 +1,11 @@
-use std::iter::once;
-
-use rome_rowan::TextSize;
-
 use crate::format_element::{ConditionalGroupContent, Group, GroupPrintMode, LineMode, List};
 use crate::intersperse::Intersperse;
 use crate::{
     hard_line_break, space_token, FormatElement, FormatOptions, Formatted, IndentStyle,
-    SourceMarker,
+    SourceMarker, TextRange,
 };
+use rome_rowan::TextSize;
+use std::iter::once;
 
 /// Options that affect how the [Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -136,7 +134,12 @@ impl<'a> Printer<'a> {
             }
         }
 
-        Formatted::new(self.state.buffer, None, self.state.source_markers)
+        Formatted::new(
+            self.state.buffer,
+            None,
+            self.state.source_markers,
+            self.state.verbatim_markers,
+        )
     }
 
     /// Prints a single element and push the following elements to queue
@@ -244,6 +247,12 @@ impl<'a> Printer<'a> {
                 self.state
                     .line_suffixes
                     .push(PrintElementCall::new(&**suffix, args));
+            }
+            FormatElement::Verbatim(verbatim) => {
+                self.state
+                    .verbatim_markers
+                    .push((verbatim.text.clone(), verbatim.range));
+                queue.enqueue(PrintElementCall::new(&verbatim.element, args));
             }
         }
     }
@@ -353,6 +362,7 @@ impl<'a> Printer<'a> {
             FormatElement::Empty
             | FormatElement::Space
             | FormatElement::Indent { .. }
+            | FormatElement::Verbatim { .. }
             | FormatElement::List { .. } => self.print_element(queue, element, args),
         }
 
@@ -461,6 +471,7 @@ struct PrinterState<'a> {
     line_width: usize,
     // mappings: Mapping[];
     line_suffixes: Vec<PrintElementCall<'a>>,
+    verbatim_markers: Vec<(String, TextRange)>,
 }
 
 impl<'a> PrinterState<'a> {
@@ -474,6 +485,7 @@ impl<'a> PrinterState<'a> {
             line_width: self.line_width,
             buffer_position: self.buffer.len(),
             tokens_position: self.source_markers.len(),
+            verbatim_markers: self.verbatim_markers.len(),
         }
     }
 
@@ -486,6 +498,7 @@ impl<'a> PrinterState<'a> {
         self.line_width = snapshot.line_width;
         self.buffer.truncate(snapshot.buffer_position);
         self.source_markers.truncate(snapshot.tokens_position);
+        self.verbatim_markers.truncate(snapshot.verbatim_markers);
     }
 }
 
@@ -498,6 +511,7 @@ struct PrinterStateSnapshot {
     line_width: usize,
     buffer_position: usize,
     tokens_position: usize,
+    verbatim_markers: usize,
 }
 
 /// Stores arguments passed to `print_element` call, holding the state specific to printing an element.

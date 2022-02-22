@@ -3,6 +3,7 @@ use std::cell::RefCell;
 #[cfg(debug_assertions)]
 use std::collections::HashSet;
 
+use crate::format_element::Verbatim;
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     block_indent, concat_elements, empty_element, empty_line,
@@ -323,7 +324,9 @@ impl Formatter {
                 Ok(result) => result,
                 Err(_) => {
                     self.restore(snapshot);
-                    self.format_verbatim(module_item.syntax())
+                    // Lists that yield errors are formatted as they were unknown nodes.
+                    // Doing so, the formatter formats the nodes/tokens as is.
+                    self.format_unknown(module_item.syntax())
                         .trim_start()
                         .trim_end()
                 }
@@ -411,25 +414,41 @@ impl Formatter {
     ///
     /// You may be inclined to call `node.text` directly. However, using `text` doesn't track the nodes
     ///nor its children source mapping information, resulting in incorrect source maps for this subtree.
+    ///
+    /// These nodes and tokens get tracked as [FormatElement::Verbatim], useful to understand
+    /// if these nodes still need to have their own implementation.
     pub fn format_verbatim(&self, node: &SyntaxNode) -> FormatElement {
-        concat_elements(node.children_with_tokens().map(|child| match child {
-            SyntaxElement::Node(child_node) => {
-                // TODO: Add source map markers before/after node as well as any additional elements that
-                // need to be tracked for every node.
-                self.format_verbatim(&child_node)
-            }
-            SyntaxElement::Token(syntax_token) => {
-                cfg_if::cfg_if! {
-                    if #[cfg(debug_assertions)] {
-                        assert!(self.printed_tokens.borrow_mut().insert(syntax_token.clone()));
-                    }
-                }
+        let verbatim = self.format_verbatim_node_or_token(node);
+        FormatElement::Verbatim(Verbatim::new(verbatim, node.to_string(), node.text_range()))
+    }
 
-                // Print the full (not trimmed) text of the token
-                FormatElement::from(Token::new_dynamic(
-                    normalize_newlines(syntax_token.text(), LINE_TERMINATORS).into_owned(),
-                    syntax_token.text_range(),
-                ))
+    /// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
+    /// doesn't track nodes/tokens as [FormatElement::Verbatim]. They are just printed as they are.
+    pub fn format_unknown(&self, node: &SyntaxNode) -> FormatElement {
+        self.format_verbatim_node_or_token(node)
+    }
+
+    fn format_verbatim_node_or_token(&self, node: &SyntaxNode) -> FormatElement {
+        concat_elements(node.children_with_tokens().map(|child| {
+            match child {
+                SyntaxElement::Node(child_node) => {
+                    // Here we call `format_unknown` because we don't want to track it as [FormatElement::Verbatim]
+                    // all the possible children. The first node to call `format_verbatim` should be node to be tracked
+                    self.format_verbatim_node_or_token(&child_node)
+                }
+                SyntaxElement::Token(syntax_token) => {
+                    cfg_if::cfg_if! {
+                        if #[cfg(debug_assertions)] {
+                            assert!(self.printed_tokens.borrow_mut().insert(syntax_token.clone()));
+                        }
+                    }
+
+                    // Print the full (not trimmed) text of the token
+                    FormatElement::from(Token::new_dynamic(
+                        normalize_newlines(syntax_token.text(), LINE_TERMINATORS).into_owned(),
+                        syntax_token.text_range(),
+                    ))
+                }
             }
         }))
     }

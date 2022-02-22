@@ -875,6 +875,30 @@ pub enum FormatElement {
     Token(Token),
 
     LineSuffix(Content),
+
+    /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](Formatter::format_verbatim) API
+    Verbatim(Verbatim),
+}
+
+/// Information of the node/token formatted verbatim
+#[derive(Clone, Eq, PartialEq)]
+pub struct Verbatim {
+    /// the range that belongs to the node/token formatted verbatim
+    pub range: TextRange,
+    /// the text that belongs to the node/token formatted verbatim
+    pub text: String,
+    /// The [FormatElement] version of the node/token
+    pub element: Box<FormatElement>,
+}
+
+impl Verbatim {
+    pub fn new(element: FormatElement, text: String, range: TextRange) -> Self {
+        Self {
+            element: Box::new(element),
+            range,
+            text,
+        }
+    }
 }
 
 impl Debug for FormatElement {
@@ -905,6 +929,10 @@ impl Debug for FormatElement {
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
+            FormatElement::Verbatim(verbatim) => fmt
+                .debug_tuple("Verbatim")
+                .field(&verbatim.element)
+                .finish(),
         }
     }
 }
@@ -1260,6 +1288,11 @@ impl FormatElement {
             FormatElement::List(list) => FormatElement::List(list.trim_start()),
             FormatElement::Token(s) => FormatElement::Token(s.trim_start()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_start())),
+            FormatElement::Verbatim(v) => FormatElement::Verbatim(Verbatim::new(
+                v.element.trim_start(),
+                v.text.clone(),
+                v.range,
+            )),
         }
     }
 
@@ -1279,6 +1312,11 @@ impl FormatElement {
             FormatElement::List(list) => FormatElement::List(list.trim_end()),
             FormatElement::Token(s) => FormatElement::Token(s.trim_end()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_end())),
+            FormatElement::Verbatim(v) => FormatElement::Verbatim(Verbatim::new(
+                v.element.trim_end(),
+                v.text.clone(),
+                v.range,
+            )),
         }
     }
 }
