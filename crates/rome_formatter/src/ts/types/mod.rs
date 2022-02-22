@@ -2,6 +2,7 @@
 
 mod any_type;
 mod array_type;
+mod asserts_return_type;
 mod big_int_literal_type;
 mod bigint_type;
 mod boolean_literal_type;
@@ -20,6 +21,7 @@ mod number_literal_type;
 mod number_type;
 mod object_type;
 mod parenthesized_type;
+mod predicate_return_type;
 mod reference_type;
 mod string_literal_type;
 mod string_type;

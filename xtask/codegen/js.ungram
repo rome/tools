@@ -1690,13 +1690,28 @@ TsFunctionType =
 
 TsAnyReturnType =
 	TsType
-	| TsTypePredicate
+	| TsPredicateReturnType
+	| TsAssertsReturnType
 
-TsTypePredicate =
-	'asserts'?
+// function test(a): a is string { return true }
+TsPredicateReturnType =
 	parameter_name: TsAnyTypePredicateParameterName
 	'is'
 	type: TsType
+
+// function test(a): asserts a { ... }
+//                   ^^^^^^^^^
+// function test2(a): asserts a is string { ... }
+//                    ^^^^^^^^^^^^^^^^^^^
+TsAssertsReturnType =
+	'asserts'
+	parameter_name: TsAnyTypePredicateParameterName
+	predicate: TsAssertsCondition?
+
+TsAssertsCondition =
+	'is'
+	type: TsType
+
 
 TsAnyTypePredicateParameterName =
 	JsReferenceIdentifier
