@@ -2,45 +2,45 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
-            items: [
-                CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-                JsIdentifierBinding {
-                    name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
-                },
-                L_CURLY@8..9 "{" [] [],
-                JsUnknown {
+        JsClassDeclaration {
+            abstract_token: missing (optional),
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@8..9 "{" [] [],
+            members: JsClassMemberList [
+                JsUnknownMember {
                     items: [
-                        JsUnknown {
-                            items: [
-                                READONLY_KW@9..23 "readonly" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
-                                STATIC_KW@23..30 "static" [] [Whitespace(" ")],
-                                L_BRACK@30..31 "[" [] [],
-                                TsIndexSignatureParameter {
-                                    binding: JsIdentifierBinding {
-                                        name_token: IDENT@31..32 "a" [] [],
-                                    },
-                                    type_annotation: TsTypeAnnotation {
-                                        colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
-                                        ty: TsNumberType {
-                                            number_token: NUMBER_KW@34..40 "number" [] [],
-                                        },
-                                    },
+                        READONLY_KW@9..23 "readonly" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        STATIC_KW@23..30 "static" [] [Whitespace(" ")],
+                        L_BRACK@30..31 "[" [] [],
+                        TsIndexSignatureParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@31..32 "a" [] [],
+                            },
+                            type_annotation: TsTypeAnnotation {
+                                colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
+                                ty: TsNumberType {
+                                    number_token: NUMBER_KW@34..40 "number" [] [],
                                 },
-                                R_BRACK@40..41 "]" [] [],
-                                TsTypeAnnotation {
-                                    colon_token: COLON@41..43 ":" [] [Whitespace(" ")],
-                                    ty: TsStringType {
-                                        string_token: STRING_KW@43..49 "string" [] [],
-                                    },
-                                },
-                                SEMICOLON@49..50 ";" [] [],
-                            ],
+                            },
                         },
+                        R_BRACK@40..41 "]" [] [],
+                        TsTypeAnnotation {
+                            colon_token: COLON@41..43 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@43..49 "string" [] [],
+                            },
+                        },
+                        SEMICOLON@49..50 ";" [] [],
                     ],
                 },
-                R_CURLY@50..52 "}" [Newline("\n")] [],
             ],
+            r_curly_token: R_CURLY@50..52 "}" [Newline("\n")] [],
         },
     ],
     eof_token: EOF@52..53 "" [Newline("\n")] [],
@@ -50,13 +50,17 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..52
-    0: JS_UNKNOWN_STATEMENT@0..52
-      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@6..8
+    0: JS_CLASS_DECLARATION@0..52
+      0: (empty)
+      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      2: L_CURLY@8..9 "{" [] []
-      3: JS_UNKNOWN@9..50
-        0: JS_UNKNOWN@9..50
+      3: (empty)
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@8..9 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@9..50
+        0: JS_UNKNOWN_MEMBER@9..50
           0: READONLY_KW@9..23 "readonly" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: STATIC_KW@23..30 "static" [] [Whitespace(" ")]
           2: L_BRACK@30..31 "[" [] []
@@ -73,7 +77,7 @@ JsModule {
             1: TS_STRING_TYPE@43..49
               0: STRING_KW@43..49 "string" [] []
           6: SEMICOLON@49..50 ";" [] []
-      4: R_CURLY@50..52 "}" [Newline("\n")] []
+      8: R_CURLY@50..52 "}" [Newline("\n")] []
   3: EOF@52..53 "" [Newline("\n")] []
 --
 error[SyntaxError]: `static` modifier must precede `readonly`.

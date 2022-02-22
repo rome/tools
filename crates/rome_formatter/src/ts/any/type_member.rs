@@ -12,6 +12,7 @@ impl ToFormatElement for TsAnyTypeMember {
             Self::TsGetterSignatureTypeMember(node) => node.to_format_element(formatter),
             Self::TsSetterSignatureTypeMember(node) => node.to_format_element(formatter),
             Self::TsIndexSignatureTypeMember(node) => node.to_format_element(formatter),
+            Self::JsUnknownMember(node) => node.to_format_element(formatter),
         }
     }
 }

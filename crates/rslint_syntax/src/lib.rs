@@ -146,6 +146,9 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_SETTER_CLASS_MEMBER
             | JS_SETTER_OBJECT_MEMBER
             | JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
+            | TS_ENUM_MEMBER
+            | TS_INDEX_SIGNATURE_CLASS_MEMBER
+            | TS_INDEX_SIGNATURE_TYPE_MEMBER
             | JS_UNKNOWN_MEMBER => JS_UNKNOWN_MEMBER,
 
             JS_ARRAY_ASSIGNMENT_PATTERN
@@ -174,8 +177,6 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | TS_READONLY_PROPERTY_PARAMETER
             | TS_THIS_PARAMETER
             | JS_UNKNOWN_PARAMETER => JS_UNKNOWN_PARAMETER,
-
-            TS_ENUM_MEMBER => JS_UNKNOWN_MEMBER,
 
             _ => JS_UNKNOWN,
         }

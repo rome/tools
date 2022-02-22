@@ -8408,6 +8408,7 @@ pub enum TsAnyTupleTypeElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyTypeMember {
+    JsUnknownMember(JsUnknownMember),
     TsCallSignatureTypeMember(TsCallSignatureTypeMember),
     TsConstructSignatureTypeMember(TsConstructSignatureTypeMember),
     TsGetterSignatureTypeMember(TsGetterSignatureTypeMember),
@@ -20354,6 +20355,9 @@ impl From<TsAnyTupleTypeElement> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsUnknownMember> for TsAnyTypeMember {
+    fn from(node: JsUnknownMember) -> TsAnyTypeMember { TsAnyTypeMember::JsUnknownMember(node) }
+}
 impl From<TsCallSignatureTypeMember> for TsAnyTypeMember {
     fn from(node: TsCallSignatureTypeMember) -> TsAnyTypeMember {
         TsAnyTypeMember::TsCallSignatureTypeMember(node)
@@ -20393,7 +20397,8 @@ impl AstNode for TsAnyTypeMember {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         matches!(
             kind,
-            TS_CALL_SIGNATURE_TYPE_MEMBER
+            JS_UNKNOWN_MEMBER
+                | TS_CALL_SIGNATURE_TYPE_MEMBER
                 | TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
                 | TS_GETTER_SIGNATURE_TYPE_MEMBER
                 | TS_INDEX_SIGNATURE_TYPE_MEMBER
@@ -20404,6 +20409,7 @@ impl AstNode for TsAnyTypeMember {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_UNKNOWN_MEMBER => TsAnyTypeMember::JsUnknownMember(JsUnknownMember { syntax }),
             TS_CALL_SIGNATURE_TYPE_MEMBER => {
                 TsAnyTypeMember::TsCallSignatureTypeMember(TsCallSignatureTypeMember { syntax })
             }
@@ -20435,6 +20441,7 @@ impl AstNode for TsAnyTypeMember {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            TsAnyTypeMember::JsUnknownMember(it) => &it.syntax,
             TsAnyTypeMember::TsCallSignatureTypeMember(it) => &it.syntax,
             TsAnyTypeMember::TsConstructSignatureTypeMember(it) => &it.syntax,
             TsAnyTypeMember::TsGetterSignatureTypeMember(it) => &it.syntax,
@@ -20448,6 +20455,7 @@ impl AstNode for TsAnyTypeMember {
 impl std::fmt::Debug for TsAnyTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            TsAnyTypeMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
             TsAnyTypeMember::TsCallSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
             TsAnyTypeMember::TsConstructSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
             TsAnyTypeMember::TsGetterSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
@@ -20461,6 +20469,7 @@ impl std::fmt::Debug for TsAnyTypeMember {
 impl From<TsAnyTypeMember> for SyntaxNode {
     fn from(n: TsAnyTypeMember) -> SyntaxNode {
         match n {
+            TsAnyTypeMember::JsUnknownMember(it) => it.into(),
             TsAnyTypeMember::TsCallSignatureTypeMember(it) => it.into(),
             TsAnyTypeMember::TsConstructSignatureTypeMember(it) => it.into(),
             TsAnyTypeMember::TsGetterSignatureTypeMember(it) => it.into(),
