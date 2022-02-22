@@ -1,13 +1,12 @@
+use rslint_parser::ast::{TsAbstractSetterClassMember, TsAbstractSetterClassMemberFields};
+
 use crate::{
     format_elements,
     formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
     hard_group_elements, space_token, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::{
-    ast::{TsAbstractSetterClassMember, TsAbstractSetterClassMemberFields},
-    AstNode,
-};
+
 impl ToFormatElement for TsAbstractSetterClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsAbstractSetterClassMemberFields {

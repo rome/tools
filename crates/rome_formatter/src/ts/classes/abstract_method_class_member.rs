@@ -4,13 +4,7 @@ use crate::{
     hard_group_elements, space_token, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::{
-    ast::{
-        TsAbstractGetterClassMember, TsAbstractGetterClassMemberFields,
-        TsAbstractMethodClassMember, TsAbstractMethodClassMemberFields,
-    },
-    AstNode,
-};
+use rslint_parser::ast::{TsAbstractMethodClassMember, TsAbstractMethodClassMemberFields};
 
 impl ToFormatElement for TsAbstractMethodClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
