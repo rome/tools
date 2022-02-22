@@ -170,7 +170,7 @@ impl From<ClassKind> for JsSyntaxKind {
 }
 
 fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
-    eat_contextual_keyword(p, "abstract", T![abstract]);
+    let is_abstract = eat_contextual_keyword(p, "abstract", T![abstract]);
 
     let class_token_range = p.cur_tok().range();
     p.expect(T![class]);
@@ -226,7 +226,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     eat_class_heritage_clause(p);
 
     p.expect(T!['{']);
-    ClassMembersList.parse_list(p);
+    ClassMembersList { is_abstract }.parse_list(p);
     p.expect(T!['}']);
 
     m.complete(p, kind.into())
@@ -377,11 +377,13 @@ fn parse_extends_expression(p: &mut Parser) -> ParsedSyntax {
     parse_lhs_expr(p, ExpressionContext::default())
 }
 
-struct ClassMembersList;
+struct ClassMembersList {
+    is_abstract: bool,
+}
 
 impl ParseNodeList for ClassMembersList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_class_member(p)
+        parse_class_member(p, self.is_abstract)
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -421,7 +423,7 @@ impl ParseNodeList for ClassMembersList {
 //  static async foo() {}
 //  static async *foo() {}
 // }
-fn parse_class_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSyntax {
     if is_at_static_initialization_block_class_member(p) {
         return parse_static_initialization_block_class_member(p);
     }
@@ -438,7 +440,13 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax {
         Err(modifiers) => (false, modifiers),
     };
 
+    let member_abstract_token_range = modifiers.get_range(ModifierKind::Abstract).cloned();
     let member = parse_class_member_impl(p, member_marker, modifiers);
+    let member = if !inside_abstract_class {
+        add_error_if_member_is_abstract(p, member, member_abstract_token_range)
+    } else {
+        member
+    };
 
     if !valid {
         member.map(|mut syntax| {
@@ -448,6 +456,33 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax {
     } else {
         member
     }
+}
+
+fn add_error_if_member_is_abstract(
+    p: &mut Parser,
+    member: ParsedSyntax,
+    member_abstract_token_range: Option<Range<usize>>,
+) -> ParsedSyntax {
+    // test_err ts ts_concrete_class_with_abstract_members
+    // class A {
+    //    abstract my_age: number;
+    //    abstract name(): string;
+    //    abstract get age(): number;
+    //    abstract set age(v);
+    // }
+    let member = match (member, member_abstract_token_range) {
+        (Present(mut member), Some(member_abstract_token_range)) => {
+            let err = p
+                .err_builder("Only abstract classes can have abstract members")
+                .primary(member_abstract_token_range, "");
+            p.error(err);
+            member.change_to_unknown(p);
+            Present(member)
+        }
+        (Present(member), _) => Present(member),
+        (Absent, _) => Absent,
+    };
+    member
 }
 
 // test ts ts_index_signature_class_member
