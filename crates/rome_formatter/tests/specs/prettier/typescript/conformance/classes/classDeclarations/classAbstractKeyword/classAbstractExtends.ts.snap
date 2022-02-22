@@ -31,7 +31,7 @@ class A {
 }
 
 abstract class B extends A {
-    abstract bar();
+  abstract bar();
 }
 
 class C extends B {}

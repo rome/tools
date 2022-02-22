@@ -14,7 +14,7 @@ class A {
 # Output
 ```js
 class A {
-    abstract foo();
+  abstract foo();
 }
 
 ```

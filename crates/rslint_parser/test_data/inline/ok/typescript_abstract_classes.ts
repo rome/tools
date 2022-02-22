@@ -1,4 +1,4 @@
-abstract class A { }
+abstract class A {}
 abstract class ConcreteMembers {
     name: string;
     constructor(name: string) { this.name = name; }

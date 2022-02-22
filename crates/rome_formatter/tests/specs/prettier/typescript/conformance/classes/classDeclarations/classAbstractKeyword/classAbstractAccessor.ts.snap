@@ -17,8 +17,8 @@ abstract class A {
 # Output
 ```js
 abstract class A {
-   abstract get a();
-   abstract set b(x: string);
+  abstract get a();
+  abstract set b(x: string);
 }
 
 ```

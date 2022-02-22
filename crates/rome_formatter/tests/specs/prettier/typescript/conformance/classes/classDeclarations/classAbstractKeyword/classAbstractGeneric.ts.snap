@@ -36,10 +36,10 @@ class G<T> extends A {
 # Output
 ```js
 abstract class A<T> {
-    t: T;
+  t: T;
 
-    abstract foo(): T;
-    abstract bar(t: T);
+  abstract foo(): T;
+  abstract bar(t: T);
 }
 
 abstract class B<T> extends A {}

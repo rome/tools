@@ -63,8 +63,10 @@ class H {
 class A {}
 
 abstract class B {
-    foo(): number { return this.bar(); }
-    abstract bar() : number;
+  foo(): number {
+    return this.bar();
+  }
+  abstract bar(): number;
 }
 
 new B();
@@ -94,8 +96,10 @@ class E extends B {
 }
 
 abstract class F extends B {
-    abstract foo() : number;
-    bar() { return 2; }
+  abstract foo(): number;
+  bar() {
+    return 2;
+  }
 }
 
 abstract class G {
@@ -109,7 +113,7 @@ abstract class G {
 }
 
 class H {
-    abstract baz() : number;
+  abstract baz(): number;
 }
 
 ```

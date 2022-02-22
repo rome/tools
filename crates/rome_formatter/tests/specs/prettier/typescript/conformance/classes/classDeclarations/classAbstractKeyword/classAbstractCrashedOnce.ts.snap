@@ -20,7 +20,7 @@ var x = new bar();
 # Output
 ```js
 abstract class foo {
-    protected abstract test();
+  protected abstract test();
 }
 
 class bar extends foo {

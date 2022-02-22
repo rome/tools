@@ -38,7 +38,7 @@ class DD extends AA {
 # Output
 ```js
 class A {
-    abstract foo();
+  abstract foo();
 }
 
 class B extends A {}
@@ -54,7 +54,7 @@ abstract class E extends A {
 }
 
 abstract class AA {
-    abstract foo();
+  abstract foo();
 }
 
 class BB extends AA {}

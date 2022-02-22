@@ -30,7 +30,7 @@ abstract class Bar {
   method() {
     return class {
       abstract m();
-    }
+    };
   }
 }
 
