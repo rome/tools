@@ -128,7 +128,7 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> Parse
     debug_assert!(p.state.name_map.is_empty());
     p.state.duplicate_binding_parent = Some("import");
 
-    let statement = if is_at_identifier_binding(p) && p.nth_at(1, T![=]) {
+    let statement = if is_at_identifier_binding(p) && (p.nth_at(1, T![=]) || p.nth_at(2, T![=])) {
         let import_equals = parse_ts_import_equals_declaration_rest(p, import, start);
         TypeScript.exclusive_syntax(p, import_equals, |p, decl| {
             ts_only_syntax_error(p, "'import =' declarations", decl.range(p))

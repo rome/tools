@@ -100,7 +100,11 @@ fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
 fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
-        parse_ts_type_arguments(p).ok();
+
+        if !p.has_linebreak_before_n(0) {
+            parse_ts_type_arguments(p).ok();
+        }
+
         m.complete(p, TS_NAME_WITH_TYPE_ARGUMENTS)
     })
 }

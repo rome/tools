@@ -1575,6 +1575,7 @@ TsEnumMember =
 
 TsImportEqualsDeclaration =
 	'import'
+	'type'?
 	id: JsAnyBinding
 	'='
 	module_reference: TsAnyModuleReference
