@@ -11,7 +11,7 @@ impl JsAnyClass {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.class_token(),
             JsAnyClass::JsClassExpression(expression) => expression.class_token(),
-            JsAnyClass::JsExportDefaultClassClause(clause) => clause.class_token(),
+            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.class_token(),
         }
     }
 
@@ -19,7 +19,7 @@ impl JsAnyClass {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.id().map(Some),
             JsAnyClass::JsClassExpression(expression) => Ok(expression.id()),
-            JsAnyClass::JsExportDefaultClassClause(clause) => Ok(clause.id()),
+            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => Ok(declaration.id()),
         }
     }
 
@@ -27,7 +27,9 @@ impl JsAnyClass {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.extends_clause(),
             JsAnyClass::JsClassExpression(expression) => expression.extends_clause(),
-            JsAnyClass::JsExportDefaultClassClause(clause) => clause.extends_clause(),
+            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => {
+                declaration.extends_clause()
+            }
         }
     }
 
@@ -35,7 +37,9 @@ impl JsAnyClass {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.implements_clause(),
             JsAnyClass::JsClassExpression(expression) => expression.implements_clause(),
-            JsAnyClass::JsExportDefaultClassClause(clause) => clause.implements_clause(),
+            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => {
+                declaration.implements_clause()
+            }
         }
     }
 
@@ -43,7 +47,7 @@ impl JsAnyClass {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.l_curly_token(),
             JsAnyClass::JsClassExpression(expression) => expression.l_curly_token(),
-            JsAnyClass::JsExportDefaultClassClause(clause) => clause.l_curly_token(),
+            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.l_curly_token(),
         }
     }
 
@@ -51,7 +55,7 @@ impl JsAnyClass {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.members(),
             JsAnyClass::JsClassExpression(expression) => expression.members(),
-            JsAnyClass::JsExportDefaultClassClause(clause) => clause.members(),
+            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.members(),
         }
     }
 
@@ -59,7 +63,7 @@ impl JsAnyClass {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.r_curly_token(),
             JsAnyClass::JsClassExpression(expression) => expression.r_curly_token(),
-            JsAnyClass::JsExportDefaultClassClause(clause) => clause.r_curly_token(),
+            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.r_curly_token(),
         }
     }
 }
@@ -70,7 +74,9 @@ impl JsAnyFunction {
             JsAnyFunction::JsArrowFunctionExpression(expr) => expr.async_token(),
             JsAnyFunction::JsFunctionExpression(expr) => expr.async_token(),
             JsAnyFunction::JsFunctionDeclaration(declaration) => declaration.async_token(),
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => clause.async_token(),
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.async_token()
+            }
         }
     }
 
@@ -85,8 +91,8 @@ impl JsAnyFunction {
             JsAnyFunction::JsFunctionDeclaration(declaration) => {
                 declaration.function_token().map(Some)
             }
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => {
-                clause.function_token().map(Some)
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.function_token().map(Some)
             }
         }
     }
@@ -96,7 +102,9 @@ impl JsAnyFunction {
             JsAnyFunction::JsArrowFunctionExpression(_) => None,
             JsAnyFunction::JsFunctionExpression(expr) => expr.star_token(),
             JsAnyFunction::JsFunctionDeclaration(declaration) => declaration.star_token(),
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => clause.star_token(),
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.star_token()
+            }
         }
     }
 
@@ -109,7 +117,7 @@ impl JsAnyFunction {
             JsAnyFunction::JsArrowFunctionExpression(_) => Ok(None),
             JsAnyFunction::JsFunctionExpression(expr) => Ok(expr.id()),
             JsAnyFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => Ok(clause.id()),
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
         }
     }
 
@@ -118,7 +126,9 @@ impl JsAnyFunction {
             JsAnyFunction::JsArrowFunctionExpression(expr) => expr.type_parameters(),
             JsAnyFunction::JsFunctionExpression(expr) => expr.type_parameters(),
             JsAnyFunction::JsFunctionDeclaration(declaration) => declaration.type_parameters(),
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => clause.type_parameters(),
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.type_parameters()
+            }
         }
     }
 
@@ -131,7 +141,7 @@ impl JsAnyFunction {
             JsAnyFunction::JsFunctionDeclaration(declaration) => declaration
                 .parameters()
                 .map(JsAnyArrowFunctionParameters::JsParameters),
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => clause
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => declaration
                 .parameters()
                 .map(JsAnyArrowFunctionParameters::JsParameters),
         }
@@ -144,7 +154,9 @@ impl JsAnyFunction {
             JsAnyFunction::JsFunctionDeclaration(declaration) => {
                 declaration.return_type_annotation()
             }
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => clause.return_type_annotation(),
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.return_type_annotation()
+            }
         }
     }
 
@@ -157,8 +169,8 @@ impl JsAnyFunction {
             JsAnyFunction::JsFunctionDeclaration(declaration) => {
                 declaration.body().map(JsAnyFunctionBody::JsFunctionBody)
             }
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => {
-                clause.body().map(JsAnyFunctionBody::JsFunctionBody)
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.body().map(JsAnyFunctionBody::JsFunctionBody)
             }
         }
     }
