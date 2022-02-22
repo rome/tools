@@ -13,7 +13,7 @@ impl ToFormatElement for TsParenthesizedType {
 
         formatter.format_delimited_soft_block_indent(
             &l_paren_token?,
-            ty.format(formatter)?,
+            group_elements(ty.format(formatter)?),
             &r_paren_token?,
         )
     }
