@@ -521,6 +521,11 @@ fn add_error_if_member_is_abstract(
 //     protected  [a: number]: string;
 // }
 
+// test_err ts ts_index_signature_class_member_cannot_be_abstract
+// abstract class A {
+//     abstract [a: number]: string;
+// }
+
 // test_err index_signature_class_member_in_js
 // class A {
 //     [a: number]: string;
@@ -546,6 +551,15 @@ fn parse_index_signature_class_member(
                     range.clone(),
                     "index signature",
                     src,
+                ));
+            }
+
+            if let Some(range) = modifiers.get_range(ModifierKind::Abstract) {
+                p.error(ts_member_cannot_be(
+                    p,
+                    range.clone(),
+                    "index signature",
+                    "abstract",
                 ));
             }
 
