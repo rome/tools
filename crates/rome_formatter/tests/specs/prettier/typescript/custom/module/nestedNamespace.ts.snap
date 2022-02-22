@@ -1,0 +1,37 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: nestedNamespace.ts
+
+---
+# Input
+```js
+namespace X {
+    export namespace Y {
+
+    }
+}
+
+namespace X.Y {
+
+}
+
+```
+
+# Output
+```js
+namespace X {
+    export namespace Y {
+
+    }
+}
+
+
+
+namespace X.Y {
+
+}
+
+```
+
+

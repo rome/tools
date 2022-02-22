@@ -1,0 +1,42 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: constructorOverloadsWithOptionalParameters.ts
+
+---
+# Input
+```js
+class C {
+    foo: string;
+    constructor(x?, y?: any[]); 
+    constructor() {
+    }
+}
+
+class D<T> {
+    foo: string;
+    constructor(x?, y?: any[]); 
+    constructor() {
+    }
+}
+```
+
+# Output
+```js
+class C {
+    foo: string;
+    constructor(x?, y?: any[]); 
+    constructor() {
+    }
+}
+
+class D<T> {
+    foo: string;
+    constructor(x?, y?: any[]); 
+    constructor() {
+    }
+}
+
+```
+
+

@@ -1,10 +1,11 @@
 use case::CaseExt;
 use globwalk::{GlobWalker, GlobWalkerBuilder};
 use proc_macro::TokenStream;
+use proc_macro2::Span;
 use proc_macro_error::*;
 use quote::*;
 use std::{
-    collections::HashSet,
+    collections::HashMap,
     ffi::OsStr,
     path::{Component, Path, PathBuf},
 };
@@ -55,6 +56,88 @@ impl Iterator for AllFiles {
     }
 }
 
+fn transform_file_name(input: &str) -> String {
+    let mut result = String::new();
+    for char in input.chars() {
+        match char {
+            '-' | '.' => {
+                result.push('_');
+            }
+            char if char.is_uppercase() => {
+                result.push('_');
+                result.extend(char.to_lowercase());
+            }
+            char => {
+                result.push(char);
+            }
+        }
+    }
+
+    let is_keyword = matches!(
+        result.as_str(),
+        "await"
+            | "break"
+            | "try"
+            | "do"
+            | "for"
+            | "return"
+            | "if"
+            | "while"
+            | "in"
+            | "async"
+            | "else"
+            | "as"
+            | "abstract"
+            | "enum"
+            | "static"
+            | "yield"
+    );
+
+    if is_keyword {
+        result.push('_');
+    }
+
+    result
+}
+
+#[derive(Default)]
+struct Modules {
+    modules: HashMap<String, Modules>,
+    tests: Vec<proc_macro2::TokenStream>,
+}
+
+impl Modules {
+    fn insert<'a>(
+        &mut self,
+        mut path: impl Iterator<Item = &'a str>,
+        test: proc_macro2::TokenStream,
+    ) {
+        match path.next() {
+            Some(module) => {
+                let name = transform_file_name(module);
+                self.modules.entry(name).or_default().insert(path, test);
+            }
+            None => {
+                self.tests.push(test);
+            }
+        }
+    }
+
+    fn print(self, output: &mut proc_macro2::TokenStream) {
+        for (name, module) in self.modules {
+            let name = syn::Ident::new(&name, Span::call_site());
+
+            let mut stream = proc_macro2::TokenStream::new();
+            module.print(&mut stream);
+            output.extend(quote! {
+                mod #name { #stream }
+            });
+        }
+
+        output.extend(self.tests);
+    }
+}
+
 impl Arguments {
     fn get_all_files(&self) -> Result<AllFiles, &str> {
         let base = std::env::var("CARGO_MANIFEST_DIR")
@@ -98,9 +181,8 @@ impl Arguments {
 
     pub fn gen(&self) -> Result<TokenStream, &str> {
         let files = self.get_all_files()?;
-        let mut duplicates = HashSet::new();
+        let mut modules = Modules::default();
 
-        let mut q = quote! {};
         for file in files.flatten() {
             let Variables {
                 test_name,
@@ -109,63 +191,39 @@ impl Arguments {
                 test_directory,
             } = Arguments::get_variables(&file).ok_or("Cannot generate variables for this file")?;
 
-            let mut test_name = test_name.replace(['-', '.'], "_");
+            let test_name = transform_file_name(&test_name);
 
-            let mut path = Path::new(&test_full_path)
-                .components()
-                .rev()
-                .skip(1)
+            let path = Path::new(&test_full_path)
+                .parent()
+                .into_iter()
+                .flat_map(|path| path.components())
                 .map(Component::as_os_str)
-                .filter_map(OsStr::to_str);
-
-            while duplicates.contains(&test_name) {
-                match path.next() {
-                    Some(item) => {
-                        let item = item.replace(['-', '.'], "_");
-                        test_name = format!("{}_{}", item, test_name);
-                    }
-                    None => break,
-                }
-            }
-
-            duplicates.insert(test_name.clone());
-
-            let is_keyword = matches!(
-                test_name.as_str(),
-                "await"
-                    | "break"
-                    | "try"
-                    | "do"
-                    | "for"
-                    | "return"
-                    | "if"
-                    | "while"
-                    | "in"
-                    | "async"
-                    | "else"
-            );
-
-            if is_keyword {
-                test_name = format!("{}_", test_name)
-            }
+                .filter_map(OsStr::to_str)
+                .skip_while(|item| *item != "specs");
 
             let span = self.pattern.lit.span();
             let test_name = syn::Ident::new(&test_name, span);
             let f = &self.called_function;
             let file_type = &self.file_type;
-            q.extend(quote! {
-                #[test]
-                pub fn #test_name () {
-                    let test_file = #test_full_path;
-                    let test_expected_file = #test_expected_fullpath;
-                    let file_type = #file_type;
-                    let test_directory = #test_directory;
-                    #f(test_file, test_expected_file, test_directory, file_type);
-                }
-            });
+
+            modules.insert(
+                path,
+                quote! {
+                    #[test]
+                    pub fn #test_name () {
+                        let test_file = #test_full_path;
+                        let test_expected_file = #test_expected_fullpath;
+                        let file_type = #file_type;
+                        let test_directory = #test_directory;
+                        #f(test_file, test_expected_file, test_directory, file_type);
+                    }
+                },
+            );
         }
 
-        Ok(q.into())
+        let mut output = proc_macro2::TokenStream::new();
+        modules.print(&mut output);
+        Ok(output.into())
     }
 }
 

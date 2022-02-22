@@ -1,0 +1,59 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: parenthesized.ts
+
+---
+# Input
+```js
+// https://github.com/babel/babel/pull/12933/files
+(<number>x) = null;
+(x!) = null;
+(a as any) = null;
+(a as number) = 42;
+((a as any) as string) = null;
+
+```
+
+# Output
+```js
+// https://github.com/babel/babel/pull/12933/files
+(<number>x) = null;
+
+(x!)  = null;
+(a as any) = null;
+(a as number) = 42;
+((a as any) as string) = null;
+
+```
+
+# Errors
+```
+error[SyntaxError]: Invalid assignment to `<number>x`
+  ┌─ parenthesized.ts:2:2
+  │
+2 │ (<number>x) = null;
+  │  ^^^^^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `a as any`
+  ┌─ parenthesized.ts:4:2
+  │
+4 │ (a as any) = null;
+  │  ^^^^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `a as number`
+  ┌─ parenthesized.ts:5:2
+  │
+5 │ (a as number) = 42;
+  │  ^^^^^^^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `(a as any) as string`
+  ┌─ parenthesized.ts:6:2
+  │
+6 │ ((a as any) as string) = null;
+  │  ^^^^^^^^^^^^^^^^^^^^ This expression cannot be assigned to
+
+
+```
+
+

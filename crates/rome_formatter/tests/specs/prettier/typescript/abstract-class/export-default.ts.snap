@@ -1,0 +1,19 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: export-default.ts
+
+---
+# Input
+```js
+export default abstract class C5 { abstract foo(): void; }
+
+```
+
+# Output
+```js
+export default abstract class C5 { abstract foo(): void; }
+
+```
+
+

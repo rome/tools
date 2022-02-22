@@ -1,0 +1,48 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: class-decorator.ts
+
+---
+# Input
+```js
+@sealed
+class Greeter {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+  greet() {
+    return "Hello, " + this.greeting;
+  }
+}
+
+```
+
+# Output
+```js
+@sealed
+class Greeter {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+  greet() {
+    return "Hello, " + this.greeting;
+  }
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '@sealed'
+  ┌─ class-decorator.ts:1:1
+  │
+1 │ @sealed
+  │ ^^^^^^^ Expected a statement here
+
+
+```
+
+

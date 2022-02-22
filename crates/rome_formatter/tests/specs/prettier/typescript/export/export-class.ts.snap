@@ -1,0 +1,25 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: export-class.ts
+
+---
+# Input
+```js
+export class A {}
+export default class B {}
+export abstract class C {}
+export default abstract class D {}
+
+```
+
+# Output
+```js
+export class A {}
+export default class B {}
+export abstract class C {}
+export default abstract class D {}
+
+```
+
+

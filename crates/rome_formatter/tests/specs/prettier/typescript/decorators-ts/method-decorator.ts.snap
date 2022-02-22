@@ -1,0 +1,56 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: method-decorator.ts
+
+---
+# Input
+```js
+class Greeter {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+
+  @enumerable(false)
+  greet() {
+    return "Hello, " + this.greeting;
+  }
+}
+
+```
+
+# Output
+```js
+class Greeter {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+
+  @enumerable(false)
+  greet() {
+    return "Hello, " + this.greeting;
+  }
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+  ┌─ method-decorator.ts:7:3
+  │
+7 │   @enumerable(false)
+  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected a parameter but instead found 'false'
+  ┌─ method-decorator.ts:7:15
+  │
+7 │   @enumerable(false)
+  │               ^^^^^ Expected a parameter here
+
+
+```
+
+

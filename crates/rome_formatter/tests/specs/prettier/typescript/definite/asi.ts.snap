@@ -1,0 +1,39 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: asi.ts
+
+---
+# Input
+```js
+let x
+!function() {};
+
+```
+
+# Output
+```js
+let x
+!;
+function() {}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `:` but instead found `function`
+  ┌─ asi.ts:2:2
+  │
+2 │ !function() {};
+  │  ^^^^^^^^ unexpected
+
+error[SyntaxError]: expected a name for the function in a function declaration, but found none
+  ┌─ asi.ts:2:10
+  │
+2 │ !function() {};
+  │          ^
+
+
+```
+
+

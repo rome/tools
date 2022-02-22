@@ -1,0 +1,27 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: declare_module.ts
+
+---
+# Input
+```js
+declare module m {
+  class C {
+    field = "field";
+  }
+}
+
+```
+
+# Output
+```js
+declare module m {
+  class C {
+    field = "field";
+  }
+}
+
+```
+
+

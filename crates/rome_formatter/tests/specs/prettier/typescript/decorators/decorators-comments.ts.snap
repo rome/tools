@@ -1,0 +1,155 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: decorators-comments.ts
+
+---
+# Input
+```js
+
+class Foo1 {
+    @foo
+    // comment
+    async method() {}
+}
+
+class Foo2 {
+    @foo
+    // comment
+    private method() {}
+}
+
+class Foo3 {
+    @foo
+    // comment
+    *method() {}
+}
+
+class Foo4 {
+    @foo
+    // comment
+    async *method() {}
+}
+
+class Something {
+    @foo()
+    // comment
+    readonly property: Array<string>
+}
+
+class Something2 {
+    @foo()
+    // comment
+    abstract property: Array<string>
+}
+
+class Something3 {
+    @foo()
+    // comment
+    abstract method(): Array<string>
+}
+
+```
+
+# Output
+```js
+class Foo1 {
+  
+    @
+  foo;
+  // comment
+  async method() {}
+}
+
+class Foo2 {
+  
+    @
+  foo;
+  // comment
+  private method() {}
+}
+
+class Foo3 {
+  
+    @
+  foo;
+  // comment
+  *method() {}
+}
+
+class Foo4 {
+  
+    @
+  foo;
+  // comment
+  async *method() {}
+}
+
+class Something {
+    @foo()
+    // comment
+    readonly property: Array<string>
+}
+
+class Something2 {
+    @foo()
+    // comment
+    abstract property: Array<string>
+}
+
+class Something3 {
+    @foo()
+    // comment
+    abstract method(): Array<string>
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+  ┌─ decorators-comments.ts:3:5
+  │
+3 │     @foo
+  │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+  ┌─ decorators-comments.ts:9:5
+  │
+9 │     @foo
+  │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+   ┌─ decorators-comments.ts:15:5
+   │
+15 │     @foo
+   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+   ┌─ decorators-comments.ts:21:5
+   │
+21 │     @foo
+   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+   ┌─ decorators-comments.ts:27:5
+   │
+27 │     @foo()
+   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+   ┌─ decorators-comments.ts:33:5
+   │
+33 │     @foo()
+   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+   ┌─ decorators-comments.ts:39:5
+   │
+39 │     @foo()
+   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+
+```
+
+
