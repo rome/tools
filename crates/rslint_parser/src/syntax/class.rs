@@ -628,7 +628,6 @@ fn parse_class_member_impl(
 
     // Seems like we're at an index member
     if is_at_ts_index_signature_member(p) {
-        //TODO what about abstract?
         return parse_index_signature_class_member(p, member_marker, modifiers);
     }
 
