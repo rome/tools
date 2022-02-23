@@ -255,7 +255,10 @@ JsCatchClause =
     body: JsBlockStatement
 
 JsCatchDeclaration =
-    '(' binding: JsAnyBindingPattern ')'
+    '('
+    binding: JsAnyBindingPattern
+    type_annotation: TsTypeAnnotation?
+    ')'
 
 JsFinallyClause =
     'finally'
