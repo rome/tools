@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: shorthand.js
 
 ---
@@ -15,8 +15,7 @@ console.log(record.url) // https://github.com/tc39/proposal-record-tuple
 # Output
 ```js
 const url = "https://github.com/tc39/proposal-record-tuple";
-
-const record = #
+const record = #;
 {
   url;
 }
@@ -31,6 +30,20 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
   │
 2 │ const record = #{ url }
   │                 ^ unexpected
+
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ shorthand.js:2:16
+  │
+2 │ const record = #{ url }
+  │                ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ shorthand.js:2:17
+  │
+2 │ const record = #{ url }
+  │ ----------------^ An explicit or implicit semicolon is expected here...
+  │ │                
+  │ ...Which is required to end this statement
 
 
 ```

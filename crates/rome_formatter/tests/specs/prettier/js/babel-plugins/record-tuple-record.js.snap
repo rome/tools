@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: record-tuple-record.js
 
 ---
@@ -18,16 +18,14 @@ const record2 = #{...record1, b: 5};
 
 # Output
 ```js
-const record1 = #
+const record1 = #;
 {
   a: 1, b;
   : 2,
     c: 3,
 }
 
-
-
-const record2 = #
+const record2 = #;
 {
   ...record1, b: 5;
 }
@@ -41,6 +39,20 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
   │
 1 │ const record1 = #{
   │                  ^ unexpected
+
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ record-tuple-record.js:1:17
+  │
+1 │ const record1 = #{
+  │                 ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ record-tuple-record.js:1:18
+  │
+1 │ const record1 = #{
+  │ -----------------^ An explicit or implicit semicolon is expected here...
+  │ │                 
+  │ ...Which is required to end this statement
 
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ record-tuple-record.js:3:6
@@ -56,6 +68,20 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
   │
 7 │ const record2 = #{...record1, b: 5};
   │                  ^ unexpected
+
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ record-tuple-record.js:7:17
+  │
+7 │ const record2 = #{...record1, b: 5};
+  │                 ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ record-tuple-record.js:7:18
+  │
+7 │ const record2 = #{...record1, b: 5};
+  │ -----------------^ An explicit or implicit semicolon is expected here...
+  │ │                 
+  │ ...Which is required to end this statement
 
 error[SyntaxError]: expected an expression but instead found '...record1, b: 5'
   ┌─ record-tuple-record.js:7:19

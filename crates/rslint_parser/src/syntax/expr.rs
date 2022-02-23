@@ -373,6 +373,7 @@ fn parse_binary_or_logical_expression(
 // a >>> b
 // 1 + 1 + 1 + 1
 // 5 + 6 - 1 * 2 / 1 ** 6
+// class Test { #name; test() { true && #name in {} } }
 
 // test_err binary_expressions_err
 // foo(foo +);
@@ -499,23 +500,6 @@ fn parse_binary_or_logical_expression_recursive(
                 OperatorPrecedence::lowest(),
                 context,
             )
-        } else if p.at(T![#]) {
-            // test_err private_name_presence_check_recursive
-            // class A {
-            // 	#prop;
-            // 	test() {
-            //    #prop in #prop in this
-            //  }
-            // }
-            let mut private_name = parse_private_name(p).unwrap();
-            private_name.change_kind(p, JS_UNKNOWN_EXPRESSION);
-            p.error(
-                p.err_builder(
-                    "Private names are only allowed on the left side of a binary expression",
-                )
-                .primary(private_name.range(p), ""),
-            );
-            Present(private_name)
         } else {
             parse_binary_or_logical_expression(p, new_precedence, context)
         };
@@ -543,6 +527,30 @@ fn parse_binary_or_logical_expression_recursive(
         };
 
         left = Present(m.complete(p, expression_kind));
+    }
+
+    if let Present(left) = &mut left {
+        // Left at this point becomes the right-hand side of a binary expression
+        // or is a standalone expression. Private names aren't allowed as standalone expressions
+        // nor on the right-hand side
+        if left.kind() == JS_PRIVATE_NAME {
+            // test_err private_name_presence_check_recursive
+            // class A {
+            // 	#prop;
+            // 	test() {
+            //    #prop in #prop in this;
+            //    5 + #prop;
+            //    #prop
+            //  }
+            // }
+            left.change_kind(p, JS_UNKNOWN_EXPRESSION);
+            p.error(
+                p.err_builder(
+                    "Private names are only allowed on the left side of a binary expression",
+                )
+                .primary(left.range(p), ""),
+            );
+        }
     }
 
     left
