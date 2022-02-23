@@ -258,9 +258,11 @@ impl SourceType {
     }
 
     pub fn from_path(path: &std::path::Path) -> Option<SourceType> {
-        let source_type = if path.ends_with("d.ts") || path.ends_with("d.mts") {
+        let file_name = path.file_name()?.to_str()?;
+
+        let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
             Self::tsd()
-        } else if path.ends_with("d.cts") {
+        } else if file_name.ends_with(".d.cts") {
             Self::tsd().with_module_kind(ModuleKind::Script)
         } else {
             let extension = path.extension()?.to_str()?;

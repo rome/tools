@@ -488,8 +488,7 @@ pub fn format_element(element: &FormatElement, options: FormatOptions) -> Format
 pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, app: &App) {
     let result = if app.can_format(rome_path) {
         let buffer = rome_path.get_buffer_from_file();
-        let source_type =
-            SourceType::from_path(rome_path.as_path()).unwrap_or_else(|| SourceType::js());
+        let source_type = SourceType::from_path(rome_path.as_path()).unwrap_or_else(SourceType::js);
         let root = parse(buffer.as_str(), 0, source_type).syntax();
         Some(format(options, &root))
     } else {
