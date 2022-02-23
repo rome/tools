@@ -6,6 +6,7 @@ use std::iter::once;
 
 use crate::format_element::Verbatim;
 use crate::formatter_traits::FormatTokenAndNode;
+use crate::utils::has_formatter_suppressions;
 use crate::{
     block_indent, concat_elements, empty_element, empty_line,
     format_element::{normalize_newlines, Token, LINE_TERMINATORS},
@@ -87,13 +88,11 @@ impl Formatter {
     }
 
     fn format_syntax_node(&self, node: &SyntaxNode) -> FormatResult<FormatElement> {
-        let start = self.format_node_start(node);
-        let content = node.to_format_element(self)?;
-        Ok(concat_elements(vec![
-            start,
-            content,
-            self.format_node_end(node),
-        ]))
+        if has_formatter_suppressions(node) {
+            return Ok(self.format_suppressed(node));
+        }
+
+        node.to_format_element(self)
     }
 
     /// Formats a group delimited by an opening and closing token,
@@ -202,20 +201,6 @@ impl Formatter {
             },
             close_token,
         )
-    }
-
-    /// Helper function that returns what should be printed before the node that work on
-    /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
-    pub(super) fn format_node_start(&self, _node: &SyntaxNode) -> FormatElement {
-        // TODO: Set the marker for the start source map location, ...
-        empty_element()
-    }
-
-    /// Helper function that returns what should be printed after the node that work on
-    /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
-    pub(super) fn format_node_end(&self, _node: &SyntaxNode) -> FormatElement {
-        // TODO: Sets the marker for the end source map location, ...
-        empty_element()
     }
 
     /// Print out a `token` from the original source with a different `content`.
@@ -432,6 +417,16 @@ impl Formatter {
     /// doesn't track nodes/tokens as [FormatElement::Verbatim]. They are just printed as they are.
     pub fn format_unknown(&self, node: &SyntaxNode) -> FormatElement {
         self.format_verbatim_node_or_token(node)
+    }
+
+    /// Format a node having formatter suppression comment applied to it
+    pub fn format_suppressed(&self, node: &SyntaxNode) -> FormatElement {
+        format_elements![
+            // Insert a force a line break to ensure the suppression comment is on its own line
+            // and correctly registers as a leading trivia on the opening token of this node
+            hard_line_break(),
+            self.format_verbatim_node_or_token(node),
+        ]
     }
 
     fn format_verbatim_node_or_token(&self, node: &SyntaxNode) -> FormatElement {

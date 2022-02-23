@@ -489,6 +489,40 @@ impl JsSyntaxKind {
             _ => false,
         }
     }
+    pub fn is_list(self) -> bool {
+        match self {
+            JS_MODULE_ITEM_LIST
+            | JS_DIRECTIVE_LIST
+            | JS_STATEMENT_LIST
+            | JS_VARIABLE_DECLARATOR_LIST
+            | JS_SWITCH_CASE_LIST
+            | JS_PARAMETER_LIST
+            | JS_ARRAY_ELEMENT_LIST
+            | JS_OBJECT_MEMBER_LIST
+            | JS_CALL_ARGUMENT_LIST
+            | JS_TEMPLATE_ELEMENT_LIST
+            | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
+            | JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
+            | JS_CLASS_MEMBER_LIST
+            | JS_CONSTRUCTOR_PARAMETER_LIST
+            | JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST
+            | JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST
+            | JS_NAMED_IMPORT_SPECIFIER_LIST
+            | JS_IMPORT_ASSERTION_ENTRY_LIST
+            | JS_EXPORT_NAMED_SPECIFIER_LIST
+            | JS_EXPORT_NAMED_FROM_SPECIFIER_LIST
+            | TS_UNION_TYPE_VARIANT_LIST
+            | TS_INTERSECTION_TYPE_ELEMENT_LIST
+            | TS_TYPE_MEMBER_LIST
+            | TS_TUPLE_TYPE_ELEMENT_LIST
+            | TS_TYPE_PARAMETER_LIST
+            | TS_TEMPLATE_ELEMENT_LIST
+            | TS_TYPE_ARGUMENT_LIST
+            | TS_TYPE_LIST
+            | TS_ENUM_MEMBER_LIST => true,
+            _ => false,
+        }
+    }
     pub fn is_before_expr(self) -> bool {
         match self {
             BANG | L_PAREN | L_BRACK | L_CURLY | SEMICOLON | COMMA | COLON | QUESTION | PLUS2
