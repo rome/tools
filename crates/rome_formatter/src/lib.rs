@@ -62,7 +62,7 @@ pub use formatter::Formatter;
 use rome_rowan::TextRange;
 use rome_rowan::TextSize;
 use rome_rowan::TokenAtOffset;
-use rslint_parser::{parse, Syntax, SyntaxError, SyntaxNode};
+use rslint_parser::{parse, SourceType, SyntaxError, SyntaxNode};
 use std::fmt::Display;
 
 pub use format_element::{
@@ -488,8 +488,9 @@ pub fn format_element(element: &FormatElement, options: FormatOptions) -> Format
 pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, app: &App) {
     let result = if app.can_format(rome_path) {
         let buffer = rome_path.get_buffer_from_file();
-        let syntax = Syntax::default().module();
-        let root = parse(buffer.as_str(), 0, syntax).syntax();
+        let source_type =
+            SourceType::from_path(rome_path.as_path()).unwrap_or_else(SourceType::js_module);
+        let root = parse(buffer.as_str(), 0, source_type).syntax();
         Some(format(options, &root))
     } else {
         None
@@ -596,14 +597,14 @@ function() {
 mod test {
     use crate::format;
     use crate::FormatOptions;
-    use rslint_parser::{parse, Syntax};
+    use rslint_parser::{parse, SourceType};
 
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"let g = [[], [0, 1], [0, 1]      ];
 "#;
-        let syntax = Syntax::default().typescript();
+        let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(

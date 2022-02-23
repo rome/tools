@@ -4,6 +4,7 @@ pub mod results;
 mod runner;
 pub mod test262;
 pub mod typescript;
+mod util;
 
 pub use crate::reporters::SummaryDetailLevel;
 

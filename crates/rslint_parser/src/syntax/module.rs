@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
-use crate::state::EnterAmbientContext;
+use crate::state::{EnterAmbientContext, ExportDefaultItem, ExportDefaultItemKind};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
 };
@@ -1031,7 +1031,7 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let clause = match p.nth(1) {
+    let (clause, default_item_kind) = match p.nth(1) {
         T![class] => {
             parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Class)
         }
@@ -1050,7 +1050,10 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
             parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Interface)
         }
         T![enum] => parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Enum),
-        _ => parse_export_default_expression_clause(p),
+        _ => (
+            parse_export_default_expression_clause(p),
+            ExportDefaultItemKind::Expression,
+        ),
     };
 
     clause.map(|mut clause| {
@@ -1058,25 +1061,45 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
         // export default (class {})
         // export default a + b;
         // export default (function a() {})
-        if let Some(range) = p.state.default_item.as_ref().filter(|_| p.is_module()) {
-            let err = p
-                .err_builder("Illegal duplicate default export declarations")
-                .secondary(
-                    range.to_owned(),
-                    "the module's default export is first defined here",
-                )
-                .primary(clause.range(p), "multiple default exports are erroneous");
+        if let Some(existing_default_item) = p.state.default_item.as_ref().filter(|_| p.is_module())
+        {
+            if existing_default_item.kind.is_overload()
+                && (default_item_kind.is_overload() || default_item_kind.is_function_declaration())
+            {
+                // It's ok to have multiple overload declarations and an implementation.
+                // This check won't catch if there are multiple implementations for the same overload
+                // or if the overloads define different functions.
+            } else {
+                let err = p
+                    .err_builder("Illegal duplicate default export declarations")
+                    .secondary(
+                        &existing_default_item.range.to_owned(),
+                        "the module's default export is first defined here",
+                    )
+                    .primary(clause.range(p), "multiple default exports are erroneous");
 
-            p.error(err);
-            clause.change_kind(p, JsSyntaxKind::JS_UNKNOWN);
-        } else {
-            p.state.default_item = Some(clause.range(p).into());
+                p.error(err);
+                clause.change_kind(p, JsSyntaxKind::JS_UNKNOWN);
+            }
+        }
+        // TypeScript supports multiple `export default interface` They all get merged together
+
+        // test ts ts_export_default_multiple_interfaces
+        // export default interface A { a: string; }
+        // export default interface B { a: string }
+        // export default function test() {}
+        else if !default_item_kind.is_interface() {
+            p.state.default_item = Some(ExportDefaultItem {
+                range: clause.range(p).into(),
+                kind: default_item_kind,
+            });
         }
 
         clause
     })
 }
 
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
 enum ExportDefaultDeclarationKind {
     Function,
     Class,
@@ -1088,9 +1111,9 @@ enum ExportDefaultDeclarationKind {
 fn parse_export_default_declaration_clause(
     p: &mut Parser,
     kind: ExportDefaultDeclarationKind,
-) -> ParsedSyntax {
+) -> (ParsedSyntax, ExportDefaultItemKind) {
     if !p.at(T![default]) {
-        return Absent;
+        return (Absent, ExportDefaultItemKind::Unknown);
     }
 
     let m = p.start();
@@ -1120,6 +1143,15 @@ fn parse_export_default_declaration_clause(
         }
     };
 
+    let item_kind = match (kind, declaration.kind()) {
+        (ExportDefaultDeclarationKind::Function, Some(TS_DECLARE_FUNCTION_DECLARATION)) => {
+            ExportDefaultItemKind::FunctionOverload
+        }
+        (ExportDefaultDeclarationKind::Function, _) => ExportDefaultItemKind::FunctionDeclaration,
+        (ExportDefaultDeclarationKind::Interface, _) => ExportDefaultItemKind::Interface,
+        _ => ExportDefaultItemKind::Declaration,
+    };
+
     declaration.or_add_diagnostic(p, |p, range| {
         if TypeScript.is_supported(p) {
             expected_any(
@@ -1135,7 +1167,10 @@ fn parse_export_default_declaration_clause(
         }
     });
 
-    Present(m.complete(p, JS_EXPORT_DEFAULT_DECLARATION_CLAUSE))
+    (
+        Present(m.complete(p, JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)),
+        item_kind,
+    )
 }
 
 // test export_default_expression_clause

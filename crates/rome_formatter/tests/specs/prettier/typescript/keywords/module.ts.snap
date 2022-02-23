@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 124
+assertion_line: 119
 expression: module.ts
 
 ---
@@ -40,6 +40,12 @@ module Y3 {
 
 # Errors
 ```
+error[SyntaxError]: Illegal use of reserved keyword `public` as an identifier in strict mode
+  ┌─ module.ts:2:3
+  │
+2 │   public module Module {
+  │   ^^^^^^
+
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ module.ts:2:10
   │

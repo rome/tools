@@ -1,4 +1,3 @@
-use std::char::decode_utf16;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::Read;
@@ -6,6 +5,7 @@ use std::path::{Path, PathBuf};
 use xtask::project_root;
 
 use crate::results::emit_compare;
+use crate::util::decode_maybe_utf16_string;
 use crate::TestResults;
 
 // this is the filename of the results coming from `main` branch
@@ -69,59 +69,10 @@ fn read_test_results(path: &Path, name: &'static str) -> HashMap<String, TestRes
     file.read_to_end(&mut buffer)
         .unwrap_or_else(|err| panic!("Can't read the file of the {} results: {:?}", name, err));
 
-    enum FileEncoding {
-        Unknown,
-        Utf8,
-        Utf16Le,
-        Utf16Be,
-    }
+    let content = decode_maybe_utf16_string(&buffer)
+        .unwrap_or_else(|err| panic!("Can't read the file of the {} results: {:?}", name, err));
 
-    let mut encoding = FileEncoding::Unknown;
-    let mut content: &[u8] = &buffer;
-
-    // Read the BOM if present and skip it
-    let bom = content.get(0..3);
-    if let Some(&[0xef, 0xbb, 0xbf]) = bom {
-        content = &content[3..];
-        encoding = FileEncoding::Utf8;
-    } else if let Some(&[0xfe, 0xff, _]) = bom {
-        content = &content[2..];
-        encoding = FileEncoding::Utf16Be;
-    } else if let Some(&[0xff, 0xfe, _]) = bom {
-        content = &content[2..];
-        encoding = FileEncoding::Utf16Le;
-    }
-
-    if matches!(encoding, FileEncoding::Unknown | FileEncoding::Utf8) {
-        // Attempt to parse as UTF-8
-        let result = serde_json::from_slice(content);
-
-        if let FileEncoding::Utf8 = encoding {
-            // If the file is known to be UTF-8 unwrap the result
-            return result.unwrap_or_else(|err| {
-                panic!(
-                    "Can't parse the JSON file of the {} results: {:?}",
-                    name, err
-                )
-            });
-        } else if let Ok(result) = result {
-            // Otherwise only return if the parsing was successful
-            return result;
-        }
-    }
-
-    // If a UTF-16 BOM was found or an error was encountered, attempt to parse as UTF-16
-    let content_str = decode_utf16(content.chunks(2).map(|bytes| match encoding {
-        FileEncoding::Utf16Be => u16::from_be_bytes([bytes[0], bytes[1]]),
-        FileEncoding::Utf16Le => u16::from_le_bytes([bytes[0], bytes[1]]),
-        // If the encoding is unknown attempt to decode in native endianness
-        FileEncoding::Unknown => u16::from_ne_bytes([bytes[0], bytes[1]]),
-        FileEncoding::Utf8 => unreachable!(),
-    }))
-    .collect::<Result<String, _>>()
-    .unwrap_or_else(|err| panic!("Can't read the file of the {} results: {:?}", name, err));
-
-    serde_json::from_str(&content_str).unwrap_or_else(|err| {
+    serde_json::from_str(&content).unwrap_or_else(|err| {
         panic!(
             "Can't parse the JSON file of the {} results: {:?}",
             name, err
