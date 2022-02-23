@@ -5,52 +5,34 @@ use crate::*;
 use rslint_errors::Severity;
 use std::marker::PhantomData;
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
-pub enum JsSourceType {
-    Script,
-    Module,
-}
-
-impl From<Syntax> for JsSourceType {
-    fn from(syntax: Syntax) -> Self {
-        match syntax.file_kind {
-            FileKind::Script => JsSourceType::Script,
-            FileKind::Module => JsSourceType::Module,
-            FileKind::TypeScript => JsSourceType::Module,
-        }
-    }
-}
-
 /// A utility struct for managing the result of a parser job
 #[derive(Debug, Clone)]
 pub struct Parse<T> {
     root: SyntaxNode,
-    source_type: JsSourceType,
     errors: Vec<ParserError>,
     _ty: PhantomData<T>,
 }
 
 impl<T> Parse<T> {
     pub fn new_module(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
-        Self::new(root, errors, JsSourceType::Module)
+        Self::new(root, errors)
     }
 
     pub fn new_script(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
-        Self::new(root, errors, JsSourceType::Script)
+        Self::new(root, errors)
     }
 
-    pub fn new(root: SyntaxNode, errors: Vec<ParserError>, source_type: JsSourceType) -> Parse<T> {
+    pub fn new(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
         Parse {
             root,
             errors,
-            source_type,
             _ty: PhantomData,
         }
     }
 
     pub fn cast<N: AstNode>(self) -> Option<Parse<N>> {
         if N::can_cast(self.syntax().kind()) {
-            Some(Parse::new(self.root, self.errors, self.source_type))
+            Some(Parse::new(self.root, self.errors))
         } else {
             None
         }
@@ -80,11 +62,6 @@ impl<T> Parse<T> {
     /// Get the errors which occurred when parsing
     pub fn errors(&self) -> &[Diagnostic] {
         self.errors.as_slice()
-    }
-
-    /// The source type of this file. Is it a "classic" script or an ES Module?
-    pub fn source_type(&self) -> JsSourceType {
-        self.source_type
     }
 }
 
@@ -135,13 +112,13 @@ pub fn tokenize(text: &str, file_id: usize) -> (Vec<rslint_lexer::Token>, Vec<Pa
 fn parse_common(
     text: &str,
     file_id: usize,
-    syntax: Syntax,
+    source_type: SourceType,
 ) -> (Vec<Event>, Vec<ParserError>, Vec<rslint_lexer::Token>) {
     let (tokens, mut errors) = tokenize(text, file_id);
 
     let tok_source = TokenSource::new(text, &tokens);
 
-    let mut parser = crate::Parser::new(tok_source, file_id, syntax);
+    let mut parser = crate::Parser::new(tok_source, file_id, source_type);
     crate::syntax::program::parse(&mut parser);
 
     let (events, p_errs) = parser.finish();
@@ -180,9 +157,13 @@ fn parse_common(
 /// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
 /// ```
 pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
-    parse(text, file_id, Syntax::default())
-        .cast::<JsScript>()
-        .unwrap()
+    parse(
+        text,
+        file_id,
+        SourceType::js().with_module_kind(ModuleKind::Script),
+    )
+    .cast::<JsScript>()
+    .unwrap()
 }
 
 /// Lossly parse text into a [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
@@ -221,7 +202,11 @@ pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
 /// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
 /// ```
 pub fn parse_script_lossy(text: &str, file_id: usize) -> Parse<JsScript> {
-    let (events, errors, tokens) = parse_common(text, file_id, Syntax::default());
+    let (events, errors, tokens) = parse_common(
+        text,
+        file_id,
+        SourceType::js().with_module_kind(ModuleKind::Script),
+    );
     let mut tree_sink = LossyTreeSink::new(text, &tokens);
     crate::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();
@@ -230,7 +215,7 @@ pub fn parse_script_lossy(text: &str, file_id: usize) -> Parse<JsScript> {
 
 /// Same as [`parse_text_lossy`] but configures the parser to parse an ECMAScript module instead of a Script
 pub fn parse_module_lossy(text: &str, file_id: usize) -> Parse<JsModule> {
-    let (events, errors, tokens) = parse_common(text, file_id, Syntax::default().module());
+    let (events, errors, tokens) = parse_common(text, file_id, SourceType::js());
     let mut tree_sink = LossyTreeSink::new(text, &tokens);
     crate::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();
@@ -239,18 +224,18 @@ pub fn parse_module_lossy(text: &str, file_id: usize) -> Parse<JsModule> {
 
 /// Same as [`parse_text`] but configures the parser to parse an ECMAScript module instead of a script
 pub fn parse_module(text: &str, file_id: usize) -> Parse<JsModule> {
-    parse(text, file_id, Syntax::default().module())
+    parse(text, file_id, SourceType::js())
         .cast::<JsModule>()
         .unwrap()
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features.
-pub fn parse(text: &str, file_id: usize, syntax: Syntax) -> Parse<JsAnyRoot> {
-    let (events, errors, tokens) = parse_common(text, file_id, syntax);
+pub fn parse(text: &str, file_id: usize, source_type: SourceType) -> Parse<JsAnyRoot> {
+    let (events, errors, tokens) = parse_common(text, file_id, source_type);
     let mut tree_sink = LosslessTreeSink::new(text, &tokens);
     crate::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();
-    Parse::new(green, parse_errors, syntax.into())
+    Parse::new(green, parse_errors)
 }
 
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
@@ -258,7 +243,7 @@ pub fn parse(text: &str, file_id: usize, syntax: Syntax) -> Parse<JsAnyRoot> {
 pub fn parse_expression(text: &str, file_id: usize) -> Parse<JsExpressionSnipped> {
     let (tokens, mut errors) = tokenize(text, file_id);
     let tok_source = TokenSource::new(text, &tokens);
-    let mut parser = crate::Parser::new(tok_source, file_id, Syntax::default());
+    let mut parser = crate::Parser::new(tok_source, file_id, SourceType::js());
     crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
     let (events, p_diags) = parser.finish();
     errors.extend(p_diags);

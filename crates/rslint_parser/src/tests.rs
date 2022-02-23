@@ -1,5 +1,5 @@
 use crate::ast::{JsAnyRoot, JsCallArguments};
-use crate::{parse, parse_module, AstNode, Parse, Syntax, SyntaxToken};
+use crate::{parse, parse_module, AstNode, Parse, SourceType, SyntaxToken};
 use expect_test::expect_file;
 use rome_rowan::TextSize;
 use rslint_errors::file::SimpleFile;
@@ -16,7 +16,7 @@ type TupleD = [
     address: string ]
     "#;
 
-    let module = parse(src, 0, Syntax::default().typescript());
+    let module = parse(src, 0, SourceType::ts());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 
@@ -49,18 +49,15 @@ fn parser_missing_smoke_test() {
 fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
     let res = catch_unwind(|| {
         let path = PathBuf::from(path);
-        let ext = path.extension().and_then(|x| x.to_str());
         // Files containing a // SCRIPT comment are parsed as script and not as module
         // This is needed to test features that are restricted in strict mode.
-        let syntax = if ext == Some("ts") {
-            Syntax::default().typescript()
-        } else if text.contains("// SCRIPT") {
-            Syntax::default()
+        let source_type = if text.contains("// SCRIPT") {
+            SourceType::js_script()
         } else {
-            Syntax::default().module()
+            SourceType::from_path(&path).unwrap()
         };
 
-        let parse = parse(text, 0, syntax);
+        let parse = parse(text, 0, source_type);
 
         assert_eq!(
             parse.syntax().to_string(),

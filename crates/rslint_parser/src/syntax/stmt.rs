@@ -151,19 +151,16 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
 
             import.change_kind(p, JS_UNKNOWN_STATEMENT);
 
-            if p.syntax.file_kind == FileKind::Script {
-                let err = p
+            let error = match p.source_type.module_kind() {
+                ModuleKind::Script => p
                     .err_builder("Illegal use of an import declaration outside of a module")
-                    .primary(import.range(p), "not allowed inside scripts");
-
-                p.error(err);
-            } else {
-                let err = p
+                    .primary(import.range(p), "not allowed inside scripts"),
+                ModuleKind::Module => p
                     .err_builder("Illegal use of an import declaration not at the top level")
-                    .primary(import.range(p), "move this declaration to the top level");
+                    .primary(import.range(p), "move this declaration to the top level"),
+            };
 
-                p.error(err);
-            }
+            p.error(error);
             Present(import)
         }
         // test_err export_decl_not_top_level
@@ -171,7 +168,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         //  export { pain } from "life";
         // }
         T![export] => parse_export(p).map(|mut export| {
-            if !p.is_module() && !p.typescript() {
+            if !p.is_module() && TypeScript.is_unsupported(p) {
                 let err = p
                     .err_builder("Illegal use of an export declaration outside of a module")
                     .primary(export.range(p), "not allowed inside scripts");
@@ -633,7 +630,7 @@ fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
     semi(p, start..p.cur_tok().end());
     let mut complete = m.complete(p, JS_RETURN_STATEMENT);
 
-    if !p.state.in_function() && !p.syntax.global_return {
+    if !p.state.in_function() {
         let err = p
             .err_builder("Illegal return statement outside of a function")
             .primary(complete.range(p), "");
@@ -1233,7 +1230,7 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
         let is_in_for_in = is_in_for_loop && p.at(T![in]);
 
         if is_in_for_of || is_in_for_in {
-            if p.typescript() {
+            if TypeScript.is_supported(p) {
                 if let Some(mut ts_annotation) = ts_annotation {
                     let err = p
                         .err_builder("`for` statement declarators cannot have a type annotation")
@@ -1443,7 +1440,7 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
                 let mut assignment =
                     expression_to_assignment_pattern(p, assignment_expr, checkpoint);
 
-                if p.typescript()
+                if TypeScript.is_supported(p)
                     && p.at(T![in])
                     && matches!(
                         assignment.kind(),

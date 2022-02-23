@@ -1,5 +1,5 @@
 use regex::Regex;
-use rslint_parser::Syntax;
+use rslint_parser::SourceType;
 use std::path::Path;
 
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
@@ -141,16 +141,12 @@ fn extract_files(code: &str, path: &str) -> TestCaseFiles {
     if let Some(current_name) = current_file_name.take() {
         add_file_if_supported(&mut files, current_name, current_file_content)
     } else if files.is_empty() {
+        let path = Path::new(path);
         // Single file case without any options
         files.add(
-            Path::new(path)
-                .file_name()
-                .unwrap()
-                .to_str()
-                .unwrap()
-                .to_string(),
+            path.file_name().unwrap().to_str().unwrap().to_string(),
             code.to_string(),
-            Syntax::default().typescript(),
+            SourceType::from_path(path).unwrap(),
         )
     }
 
@@ -158,16 +154,10 @@ fn extract_files(code: &str, path: &str) -> TestCaseFiles {
 }
 
 fn add_file_if_supported(files: &mut TestCaseFiles, name: String, content: String) {
-    let syntax = if name.ends_with(".json") {
-        // Don't add files that we don't support parsing (like JSON)
-        return;
-    } else if name.ends_with(".js") {
-        Syntax::default().module()
-    } else {
-        Syntax::default().typescript()
-    };
-
-    files.add(name, content, syntax);
+    // Skip files that aren't JS/TS files (JSON, CSS...)
+    if let Some(source_type) = SourceType::from_path(&Path::new(&name)) {
+        files.add(name, content, source_type)
+    }
 }
 
 /// Detect the line ending used in the file

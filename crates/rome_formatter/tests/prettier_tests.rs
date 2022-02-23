@@ -12,7 +12,7 @@ use std::{
 
 use rome_formatter::{FormatOptions, IndentStyle};
 use rslint_errors::{file::SimpleFiles, termcolor, Emitter};
-use rslint_parser::{parse, Syntax};
+use rslint_parser::{parse, SourceType};
 
 static REPORTER: DiffReport = DiffReport::new();
 
@@ -29,13 +29,9 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
 
     let (_, range_start_index, range_end_index) = strip_placeholders(&mut input_code);
 
-    let syntax = if input.contains(".ts") {
-        Syntax::default().typescript()
-    } else {
-        Syntax::default().module()
-    };
+    let source_type = SourceType::from_path(input_file).unwrap();
 
-    let parsed = parse(&input_code, 0, syntax);
+    let parsed = parse(&input_code, 0, source_type);
     let syntax = parsed.syntax();
 
     let options = FormatOptions::new(IndentStyle::Space(2));

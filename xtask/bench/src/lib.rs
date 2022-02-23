@@ -1,8 +1,9 @@
 mod features;
 mod utils;
 
-use rslint_parser::parse;
+use rslint_parser::{parse, SourceType};
 use std::fmt::{Display, Formatter};
+use std::path::Path;
 use std::str::FromStr;
 use std::time::Duration;
 
@@ -87,11 +88,7 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
             Ok((id, code)) => {
                 let code = code.as_str();
 
-                let syntax = if id.ends_with(".ts") {
-                    rslint_parser::Syntax::default().typescript()
-                } else {
-                    rslint_parser::Syntax::default()
-                };
+                let source_type = SourceType::from_path(Path::new(&id)).unwrap();
 
                 // Do all steps with criterion now
                 if criterion {
@@ -106,10 +103,10 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
 
                     group.bench_function(&id, |b| match feature {
                         FeatureToBenchmark::Parser => b.iter(|| {
-                            criterion::black_box(run_parse(code, syntax));
+                            criterion::black_box(run_parse(code, source_type.clone()));
                         }),
                         FeatureToBenchmark::Formatter => {
-                            let root = parse(code, 0, syntax).syntax();
+                            let root = parse(code, 0, source_type.clone()).syntax();
                             b.iter(|| {
                                 criterion::black_box(run_format(&root));
                             })
@@ -120,19 +117,19 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     //warmup
                     match feature {
                         FeatureToBenchmark::Parser => {
-                            run_parse(code, syntax);
+                            run_parse(code, source_type.clone());
                         }
                         FeatureToBenchmark::Formatter => {
-                            let root = parse(code, 0, syntax).syntax();
+                            let root = parse(code, 0, source_type.clone()).syntax();
                             run_format(&root);
                         }
                     }
                 }
 
                 let result = match feature {
-                    FeatureToBenchmark::Parser => benchmark_parse_lib(&id, code, syntax),
+                    FeatureToBenchmark::Parser => benchmark_parse_lib(&id, code, source_type),
                     FeatureToBenchmark::Formatter => {
-                        let root = parse(code, 0, syntax).syntax();
+                        let root = parse(code, 0, source_type).syntax();
                         benchmark_format_lib(&id, &root)
                     }
                 };
