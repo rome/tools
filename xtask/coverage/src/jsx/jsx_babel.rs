@@ -5,7 +5,6 @@ use crate::{
 use std::path::PathBuf;
 
 const OK_PATH: &str = "xtask/coverage/babel/packages/babel-parser/test/fixtures/jsx/basic";
-const ERROR_PATH: &str = "xtask/coverage/babel/packages/babel-parser/test/fixtures/jsx/errors";
 
 struct BabelJsxTestCase {
     path: PathBuf,
@@ -33,7 +32,7 @@ impl TestCase for BabelJsxTestCase {
         let r = rslint_parser::parse(&self.code, 0, jsx.clone());
 
         let file = TestCaseFiles::single(self.name().to_string(), self.code.clone(), jsx);
-        if r.errors().len() == 0 {
+        if r.errors().is_empty() {
             TestRunOutcome::Passed(file)
         } else {
             TestRunOutcome::IncorrectlyErrored {

@@ -154,7 +154,7 @@ pub fn run(
 
 fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
     let suites = suites.unwrap_or("*").to_lowercase();
-    let mut ids: Vec<_> = suites.split(",").collect();
+    let mut ids: Vec<_> = suites.split(',').collect();
 
     let mut suites: Vec<Box<dyn TestSuite>> = vec![];
 

@@ -34,7 +34,7 @@ impl TestCase for BabelTypescriptTestCase {
         let r = rslint_parser::parse(&self.code, 0, ts.clone());
 
         let file = TestCaseFiles::single(self.name().to_string(), self.code.clone(), ts);
-        if r.errors().len() == 0 {
+        if r.errors().is_empty() {
             TestRunOutcome::Passed(file)
         } else {
             TestRunOutcome::IncorrectlyErrored {
