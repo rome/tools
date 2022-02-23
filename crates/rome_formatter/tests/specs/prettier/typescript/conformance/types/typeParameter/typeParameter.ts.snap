@@ -15,7 +15,7 @@ interface IObservable<T> {
 # Output
 ```js
 interface IObservable<T> {
-  n: IObservable<[T]>, // fails because of comment
+  n: IObservable<T[]>, // fails because of comment
 }
 
 ```

@@ -1,7 +1,21 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsIndexedAccessType, AstNode};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use rslint_parser::ast::TsIndexedAccessType;
+use rslint_parser::ast::TsIndexedAccessTypeFields;
+
 impl ToFormatElement for TsIndexedAccessType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let TsIndexedAccessTypeFields {
+            object_type,
+            l_brack_token,
+            index_type,
+            r_brack_token,
+        } = self.as_fields();
+        Ok(format_elements![
+            object_type.format(formatter)?,
+            l_brack_token.format(formatter)?,
+            index_type.format(formatter)?,
+            r_brack_token.format(formatter)?
+        ])
     }
 }

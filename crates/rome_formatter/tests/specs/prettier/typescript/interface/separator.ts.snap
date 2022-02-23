@@ -35,7 +35,7 @@ declare module 'selenium-webdriver' {
 
 export interface Edge { cursor: {}, node: { id: {} } }
 
-interface Test { one: string, two: [any] }
+interface Test { one: string, two: any[] }
 
 ```
 

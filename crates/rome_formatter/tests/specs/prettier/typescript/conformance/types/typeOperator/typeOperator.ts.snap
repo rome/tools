@@ -12,7 +12,7 @@ let a: (keyof T)[] = ["a", "b"];
 
 # Output
 ```js
-let a: [(keyof T)] = ["a", "b"];
+let a: (keyof T)[] = ["a", "b"];
 
 ```
 

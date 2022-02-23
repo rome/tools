@@ -19,7 +19,7 @@ type A = {
   [K in Keys ];
 };
 type B = {
-  [K in Keys ]+? ;
+  [K in Keys ]+?;
 };
 
 ```

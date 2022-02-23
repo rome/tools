@@ -12,7 +12,7 @@ type X = [...number[]];
 
 # Output
 ```js
-type X = [...[number]];
+type X = [...number[]];
 
 ```
 

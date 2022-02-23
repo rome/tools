@@ -21,11 +21,20 @@ impl ToFormatElement for JsSetterClassMember {
             r_paren_token,
             body,
         } = self.as_fields();
+        let access_modifier = access_modifier.format_with_or_empty(formatter, |element| {
+            format_elements![element, space_token()]
+        })?;
+        let static_token = static_token.format_with_or_empty(formatter, |element| {
+            format_elements![element, space_token()]
+        })?;
+        let abstract_token = abstract_token.format_with_or_empty(formatter, |element| {
+            format_elements![element, space_token()]
+        })?;
 
         Ok(hard_group_elements(format_elements![
-            access_modifier.format_or_empty(formatter)?,
-            static_token.format_or_empty(formatter)?,
-            abstract_token.format_or_empty(formatter)?,
+            access_modifier,
+            static_token,
+            abstract_token,
             set_token.format(formatter)?,
             space_token(),
             name.format(formatter)?,

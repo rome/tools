@@ -87,12 +87,14 @@ const state = JSON.stringify({ next: window.location.href, nonce } as State);
 
 const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
 const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
-const value3 = thisIsAReallyLongIdentifier as (SomeInterface | SomeOtherInterface);
-const value4 = thisIsAReallyLongIdentifier as [{
+const value3 = thisIsAReallyLongIdentifier as (
+  SomeInterface | SomeOtherInterface
+);
+const value4 = thisIsAReallyLongIdentifier as {
   prop1: string,
   prop2: number,
   prop3: number,
-}];
+}[];
 const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
   string, number
 ];

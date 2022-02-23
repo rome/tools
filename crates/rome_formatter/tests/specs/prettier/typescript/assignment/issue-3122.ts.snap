@@ -19,7 +19,7 @@ export const findByDate: Resolver<void, Recipe[], { date: Date }> =
 
 # Output
 ```js
-export const findByDate: Resolver<void,[Recipe],{ date: Date }> = (
+export const findByDate: Resolver<void,Recipe[],{ date: Date }> = (
   _,
   { date },
   { req },
@@ -28,7 +28,7 @@ export const findByDate: Resolver<void,[Recipe],{ date: Date }> = (
   return repo.find({ createDate: date });
 };
 
-export const findByDate: Resolver<void,[Recipe],{ date: Date }> = (
+export const findByDate: Resolver<void,Recipe[],{ date: Date }> = (
   _,
   { date },
   { req },

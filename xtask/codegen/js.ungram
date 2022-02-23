@@ -753,7 +753,7 @@ TsIndexSignatureClassMember =
 	parameter: TsIndexSignatureParameter
 	']'
 	type_annotation: TsTypeAnnotation
-	separator: ';'?
+	';'?
 
 JsEmptyClassMember = ';'
 

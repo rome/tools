@@ -20,7 +20,7 @@ export const SUPPORTED_VEHICLE_TYPES: Array<
 
 # Output
 ```js
-const getUnusedAuthorizationHoldDocuments = async (): Promise<[DocumentData]> => {};
+const getUnusedAuthorizationHoldDocuments = async (): Promise<DocumentData[]> => {};
 
 const firestorePersonallyIdentifiablePaths: Array<
   keyof Collections.Users.Entity,
