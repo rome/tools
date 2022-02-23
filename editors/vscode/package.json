@@ -18,7 +18,7 @@
 		"url": "https://github.com/rome/tools/issues"
 	},
 	"engines": {
-		"vscode": "^1.61.0"
+		"vscode": "^1.63.0"
 	},
 	"contributes": {
 		"configuration": {
