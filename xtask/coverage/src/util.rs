@@ -14,7 +14,9 @@ impl<'a> DecodedString<'a> {
     }
 }
 
-pub(crate) fn decode_maybe_utf16_string(buffer: &[u8]) -> Result<DecodedString, DecodeUtf16Error> {
+pub(crate) fn decode_maybe_utf16_string(
+    mut content: &[u8],
+) -> Result<DecodedString, DecodeUtf16Error> {
     enum FileEncoding {
         Unknown,
         Utf8,
@@ -23,7 +25,6 @@ pub(crate) fn decode_maybe_utf16_string(buffer: &[u8]) -> Result<DecodedString, 
     }
 
     let mut encoding = FileEncoding::Unknown;
-    let mut content: &[u8] = &buffer;
 
     // Read the BOM if present and skip it
     let bom = content.get(0..3);
