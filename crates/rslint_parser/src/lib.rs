@@ -127,13 +127,20 @@ pub trait TreeSink {
     fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind);
 }
 
+/// Enum of the different ECMAScript standard versions.
+/// The versions are ordered in increasing order; The newest version comes last.
+///
+/// Defaults to the latest stable ECMAScript standard.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
 pub enum LanguageVersion {
     ES2022,
+
+    /// The next, not yet finalized ECMAScript version
     ESNext,
 }
 
 impl LanguageVersion {
+    /// Returns the latest finalized ECMAScript version
     pub const fn latest() -> Self {
         LanguageVersion::ES2022
     }
@@ -145,9 +152,14 @@ impl Default for LanguageVersion {
     }
 }
 
+/// Is the source file an ECMAScript Module or Script.
+/// Changes the parsing semantic.
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum ModuleKind {
+    /// An ECMAScript [Script](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-scripts)
     Script,
+
+    /// AN ECMAScript [Module](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-modules)
     Module,
 }
 
@@ -168,7 +180,10 @@ impl Default for ModuleKind {
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum LanguageVariant {
+    /// Standard JavaScript or TypeScript syntax without any extensions
     Standard,
+
+    /// Allows JSX syntax inside a JavaScript or TypeScript file
     JSX,
 }
 
@@ -189,22 +204,27 @@ impl Default for LanguageVariant {
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum Language {
-    JS,
-    TS { definition_file: bool },
+    JavaScript,
+
+    /// TypeScript source with or without JSX.
+    /// `definition_file` must be true for `d.ts` files.
+    TypeScript {
+        definition_file: bool,
+    },
 }
 
 impl Language {
     pub fn is_javascript(&self) -> bool {
-        matches!(self, Language::JS)
+        matches!(self, Language::JavaScript)
     }
     pub fn is_typescript(&self) -> bool {
-        matches!(self, Language::TS { .. })
+        matches!(self, Language::TypeScript { .. })
     }
 }
 
 impl Default for Language {
     fn default() -> Self {
-        Language::JS
+        Language::JavaScript
     }
 }
 
@@ -218,7 +238,7 @@ pub struct SourceType {
 
 impl SourceType {
     /// language: JS, variant: Standard, module_kind: Module, version: Latest
-    pub fn js() -> Self {
+    pub fn js_module() -> Self {
         Self::default()
     }
 
@@ -229,20 +249,20 @@ impl SourceType {
 
     /// language: JS, variant: JSX, module_kind: Module, version: Latest
     pub fn jsx() -> SourceType {
-        Self::js().with_variant(LanguageVariant::JSX)
+        Self::js_module().with_variant(LanguageVariant::JSX)
     }
 
     /// language: TS, variant: Standard, module_kind: Module, version: Latest
     pub fn ts() -> SourceType {
         Self {
-            language: Language::TS {
+            language: Language::TypeScript {
                 definition_file: false,
             },
             ..Self::default()
         }
     }
 
-    /// language: JS, variant: JSX, module_kind: Module, version: Latest
+    /// language: TS, variant: JSX, module_kind: Module, version: Latest
     pub fn tsx() -> SourceType {
         Self::ts().with_variant(LanguageVariant::JSX)
     }
@@ -251,7 +271,7 @@ impl SourceType {
     /// language: TS, ambient, variant: Standard, module_kind: Module, version: Latest
     pub fn d_ts() -> SourceType {
         Self {
-            language: Language::TS {
+            language: Language::TypeScript {
                 definition_file: true,
             },
             ..Self::default()
@@ -268,8 +288,8 @@ impl SourceType {
         } else {
             let extension = path.extension()?.to_str()?;
             match extension {
-                "js" | "mjs" => Self::js(),
-                "cjs" => Self::js().with_module_kind(ModuleKind::Script),
+                "js" | "mjs" => Self::js_module(),
+                "cjs" => Self::js_module().with_module_kind(ModuleKind::Script),
                 "jsx" => Self::jsx(),
                 "ts" | "mts" => Self::ts(),
                 "cts" => Self::ts().with_module_kind(ModuleKind::Script),

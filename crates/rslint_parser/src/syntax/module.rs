@@ -1066,7 +1066,7 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
             if existing_default_item.kind.is_overload()
                 && (default_item_kind.is_overload() || default_item_kind.is_function_declaration())
             {
-                // It's ok to have multiple overload declarations and an implementation
+                // It's ok to have multiple overload declarations and an implementation.
                 // This check won't catch if there are multiple implementations for the same overload
                 // or if the overloads define different functions.
             } else {

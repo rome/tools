@@ -116,7 +116,7 @@ impl TestCase for Test262TestCase {
         if meta.flags.contains(&TestFlag::OnlyStrict) {
             self.execute_test(true, SourceType::js_script())
         } else if meta.flags.contains(&TestFlag::Module) {
-            self.execute_test(false, SourceType::js())
+            self.execute_test(false, SourceType::js_module())
         } else if meta.flags.contains(&TestFlag::NoStrict) || meta.flags.contains(&TestFlag::Raw) {
             self.execute_test(false, SourceType::js_script())
         } else {

@@ -160,7 +160,7 @@ pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
     parse(
         text,
         file_id,
-        SourceType::js().with_module_kind(ModuleKind::Script),
+        SourceType::js_module().with_module_kind(ModuleKind::Script),
     )
     .cast::<JsScript>()
     .unwrap()
@@ -205,7 +205,7 @@ pub fn parse_script_lossy(text: &str, file_id: usize) -> Parse<JsScript> {
     let (events, errors, tokens) = parse_common(
         text,
         file_id,
-        SourceType::js().with_module_kind(ModuleKind::Script),
+        SourceType::js_module().with_module_kind(ModuleKind::Script),
     );
     let mut tree_sink = LossyTreeSink::new(text, &tokens);
     crate::process(&mut tree_sink, events, errors);
@@ -215,7 +215,7 @@ pub fn parse_script_lossy(text: &str, file_id: usize) -> Parse<JsScript> {
 
 /// Same as [`parse_text_lossy`] but configures the parser to parse an ECMAScript module instead of a Script
 pub fn parse_module_lossy(text: &str, file_id: usize) -> Parse<JsModule> {
-    let (events, errors, tokens) = parse_common(text, file_id, SourceType::js());
+    let (events, errors, tokens) = parse_common(text, file_id, SourceType::js_module());
     let mut tree_sink = LossyTreeSink::new(text, &tokens);
     crate::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();
@@ -224,7 +224,7 @@ pub fn parse_module_lossy(text: &str, file_id: usize) -> Parse<JsModule> {
 
 /// Same as [`parse_text`] but configures the parser to parse an ECMAScript module instead of a script
 pub fn parse_module(text: &str, file_id: usize) -> Parse<JsModule> {
-    parse(text, file_id, SourceType::js())
+    parse(text, file_id, SourceType::js_module())
         .cast::<JsModule>()
         .unwrap()
 }
@@ -243,7 +243,7 @@ pub fn parse(text: &str, file_id: usize, source_type: SourceType) -> Parse<JsAny
 pub fn parse_expression(text: &str, file_id: usize) -> Parse<JsExpressionSnipped> {
     let (tokens, mut errors) = tokenize(text, file_id);
     let tok_source = TokenSource::new(text, &tokens);
-    let mut parser = crate::Parser::new(tok_source, file_id, SourceType::js());
+    let mut parser = crate::Parser::new(tok_source, file_id, SourceType::js_module());
     crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
     let (events, p_diags) = parser.finish();
     errors.extend(p_diags);

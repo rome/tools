@@ -117,7 +117,7 @@ impl ParserState {
 
         if matches!(
             source_type.language(),
-            Language::TS {
+            Language::TypeScript {
                 definition_file: true
             }
         ) {
