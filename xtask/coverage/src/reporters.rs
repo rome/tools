@@ -118,6 +118,7 @@ pub enum SummaryDetailLevel {
     /// Prints the coverage table as well as all failing tests with their diagnostics
     Failing,
 
+    /// Prints the RAST of the parsed syntax and the diagnostics for all tests (including tests that pass with expected diagnostics).
     Debug,
 }
 

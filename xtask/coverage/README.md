@@ -24,7 +24,7 @@ cargo coverage --filter=source
 ```
 
 The `--detailed` parameter enables a more detailed summary at the end of the test run that includes diagnostic.
-You can use `--detailed-=debug` if you're debugging a test (prints the AST and diagnostics, even for passing tests). `--detailed` can also be useful if you want to pipe the results to a text file.
+You can use `--detailed=debug` if you're debugging a test (prints the AST and diagnostics, even for passing tests). `--detailed` can also be useful if you want to pipe the results to a text file.
 
 
 ```bash
