@@ -2,6 +2,7 @@
 use std::cell::RefCell;
 #[cfg(debug_assertions)]
 use std::collections::HashSet;
+use std::iter::once;
 
 use crate::format_element::Verbatim;
 use crate::formatter_traits::FormatTokenAndNode;
@@ -13,7 +14,8 @@ use crate::{
     soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult,
     ToFormatElement,
 };
-use rome_rowan::SyntaxElement;
+use rome_rowan::api::SyntaxTriviaPiece;
+use rome_rowan::Language;
 #[cfg(debug_assertions)]
 use rslint_parser::SyntaxNodeExt;
 use rslint_parser::{AstNode, AstNodeList, AstSeparatedList, SyntaxNode, SyntaxToken};
@@ -333,8 +335,6 @@ impl Formatter {
                     // Lists that yield errors are formatted as they were unknown nodes.
                     // Doing so, the formatter formats the nodes/tokens as is.
                     self.format_unknown(module_item.syntax())
-                        .trim_start()
-                        .trim_end()
                 }
             };
 
@@ -435,28 +435,53 @@ impl Formatter {
     }
 
     fn format_verbatim_node_or_token(&self, node: &SyntaxNode) -> FormatElement {
-        concat_elements(node.children_with_tokens().map(|child| {
-            match child {
-                SyntaxElement::Node(child_node) => {
-                    // Here we call `format_unknown` because we don't want to track it as [FormatElement::Verbatim]
-                    // all the possible children. The first node to call `format_verbatim` should be node to be tracked
-                    self.format_verbatim_node_or_token(&child_node)
-                }
-                SyntaxElement::Token(syntax_token) => {
-                    cfg_if::cfg_if! {
-                        if #[cfg(debug_assertions)] {
-                            assert!(self.printed_tokens.borrow_mut().insert(syntax_token.clone()));
-                        }
-                    }
-
-                    // Print the full (not trimmed) text of the token
-                    FormatElement::from(Token::new_dynamic(
-                        normalize_newlines(syntax_token.text(), LINE_TERMINATORS).into_owned(),
-                        syntax_token.text_range(),
-                    ))
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                for token in node.tokens() {
+                    assert!(self.printed_tokens.borrow_mut().insert(token.clone()));
                 }
             }
-        }))
+        }
+
+        fn skip_whitespace<L: Language>(piece: &SyntaxTriviaPiece<L>) -> bool {
+            piece.as_newline().is_some() || piece.as_whitespace().is_some()
+        }
+
+        fn trivia_token<L: Language>(piece: SyntaxTriviaPiece<L>) -> Token {
+            Token::new_dynamic(
+                normalize_newlines(piece.text(), LINE_TERMINATORS).into_owned(),
+                piece.text_range(),
+            )
+        }
+
+        let leading_trivia = node
+            .first_leading_trivia()
+            .into_iter()
+            .flat_map(|trivia| trivia.pieces())
+            .skip_while(skip_whitespace)
+            .map(trivia_token);
+
+        let content = Token::new_dynamic(
+            normalize_newlines(&node.text_trimmed().to_string(), LINE_TERMINATORS).into_owned(),
+            node.text_trimmed_range(),
+        );
+
+        // Clippy false positive: SkipWhile does not implement DoubleEndedIterator
+        #[allow(clippy::needless_collect)]
+        let trailing_trivia = node
+            .last_trailing_trivia()
+            .into_iter()
+            .flat_map(|trivia| trivia.pieces().rev())
+            .skip_while(skip_whitespace)
+            .map(trivia_token)
+            .collect::<Vec<_>>();
+
+        concat_elements(
+            leading_trivia
+                .chain(once(content))
+                .chain(trailing_trivia.into_iter().rev())
+                .map(FormatElement::from),
+        )
     }
 }
 

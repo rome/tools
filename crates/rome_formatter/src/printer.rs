@@ -234,8 +234,9 @@ impl<'a> Printer<'a> {
                     }
 
                     // Print a second line break if this is an empty line
-                    if line.mode == LineMode::Empty {
+                    if line.mode == LineMode::Empty && !self.state.has_empty_line {
                         self.print_str("\n");
+                        self.state.has_empty_line = true;
                     }
 
                     self.state.pending_space = false;
@@ -453,6 +454,8 @@ impl<'a> Printer<'a> {
 
                 self.state.line_width += char_width;
             }
+
+            self.state.has_empty_line = false;
         }
     }
 }
@@ -469,6 +472,7 @@ struct PrinterState<'a> {
     generated_line: usize,
     generated_column: usize,
     line_width: usize,
+    has_empty_line: bool,
     // mappings: Mapping[];
     line_suffixes: Vec<PrintElementCall<'a>>,
     verbatim_markers: Vec<(String, TextRange)>,
@@ -483,6 +487,7 @@ impl<'a> PrinterState<'a> {
             generated_line: self.generated_line,
             generated_column: self.generated_column,
             line_width: self.line_width,
+            has_empty_line: self.has_empty_line,
             buffer_position: self.buffer.len(),
             tokens_position: self.source_markers.len(),
             verbatim_markers: self.verbatim_markers.len(),
@@ -496,6 +501,7 @@ impl<'a> PrinterState<'a> {
         self.generated_column = snapshot.generated_column;
         self.generated_line = snapshot.generated_line;
         self.line_width = snapshot.line_width;
+        self.has_empty_line = snapshot.has_empty_line;
         self.buffer.truncate(snapshot.buffer_position);
         self.source_markers.truncate(snapshot.tokens_position);
         self.verbatim_markers.truncate(snapshot.verbatim_markers);
@@ -509,6 +515,7 @@ struct PrinterStateSnapshot {
     generated_column: usize,
     generated_line: usize,
     line_width: usize,
+    has_empty_line: bool,
     buffer_position: usize,
     tokens_position: usize,
     verbatim_markers: usize,
@@ -609,9 +616,9 @@ mod tests {
     use crate::format_element::join_elements;
     use crate::printer::{LineEnding, Printer, PrinterOptions};
     use crate::{
-        block_indent, format_elements, group_elements, hard_line_break, if_group_breaks,
-        soft_block_indent, soft_line_break, soft_line_break_or_space, token, FormatElement,
-        Formatted,
+        block_indent, empty_line, format_elements, group_elements, hard_line_break,
+        if_group_breaks, soft_block_indent, soft_line_break, soft_line_break_or_space, token,
+        FormatElement, Formatted,
     };
 
     /// Prints the given element with the default printer options
@@ -762,5 +769,45 @@ two lines`,
             soft_block_indent(elements),
             token("]"),
         ])
+    }
+
+    #[test]
+    fn it_prints_consecutive_hard_lines_as_one() {
+        let result = print_element(format_elements![
+            token("a"),
+            hard_line_break(),
+            hard_line_break(),
+            hard_line_break(),
+            token("b"),
+        ]);
+
+        assert_eq!("a\nb", result.as_code())
+    }
+
+    #[test]
+    fn it_prints_consecutive_empty_lines_as_one() {
+        let result = print_element(format_elements![
+            token("a"),
+            empty_line(),
+            empty_line(),
+            empty_line(),
+            token("b"),
+        ]);
+
+        assert_eq!("a\n\nb", result.as_code())
+    }
+
+    #[test]
+    fn it_prints_consecutive_mixed_lines_as_one() {
+        let result = print_element(format_elements![
+            token("a"),
+            empty_line(),
+            hard_line_break(),
+            empty_line(),
+            hard_line_break(),
+            token("b"),
+        ]);
+
+        assert_eq!("a\n\nb", result.as_code())
     }
 }
