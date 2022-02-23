@@ -34,19 +34,19 @@ USAGE:
 SUBCOMMANDS:
     compare             Compares output between two --json outputs
 OPTIONS
-    --markdown          Emits supported output into markdown format. Supported by `compare` subcommand
+    --markdown          Emits supported output into markdown format. Supported by `compare` subcommand.
     --json              Prints the test results in JSON. This mode will send all other test output and user messages to stderr.
-    --detailed=[debug]  Prints a detailed summary at the end for all failing tests. Includes in depth details if set to `debug`
-    --language=[js|ts]  Runs a specific test suite
-    --filter=<file>     Filters out tests that don't match the query
-    --help              Prints this help
+    --detailed=[debug]  Prints a detailed summary at the end for all failing tests. Includes in depth details if set to `debug`.
+    --suites=<IDS>      Runs the specified tests suites. Use comma as separator. Valid values are *, js, ts, jsx, js/262, ts/microsoft, ts/babel, jsx/babel. Default is \"*\".
+    --filter=<file>     Filters out tests that don't match the query.
+    --help              Prints this help.
 			"
         );
         return Ok(());
     }
 
     let json = args.contains("--json");
-    let language: Option<String> = args.opt_value_from_str("--language").unwrap();
+    let suites: Option<String> = args.opt_value_from_str("--suites").unwrap();
     let filter: Option<String> = args.opt_value_from_str("--filter").unwrap();
 
     let detail_level: Option<SummaryDetailLevel> =
@@ -61,7 +61,7 @@ OPTIONS
     args.finish().unwrap();
 
     run(
-        language.as_deref(),
+        suites.as_deref(),
         filter.as_deref(),
         json,
         detail_level.unwrap_or(SummaryDetailLevel::Coverage),

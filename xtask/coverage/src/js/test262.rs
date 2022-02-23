@@ -146,7 +146,7 @@ pub(crate) struct Test262TestSuite;
 
 impl TestSuite for Test262TestSuite {
     fn name(&self) -> &str {
-        "T262"
+        "js/262"
     }
 
     fn base_path(&self) -> &str {

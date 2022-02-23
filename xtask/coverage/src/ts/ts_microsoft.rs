@@ -1,30 +1,31 @@
+use crate::check_file_encoding;
+use crate::runner::{
+    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
+};
+use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use crate::util::decode_maybe_utf16_string;
 use regex::Regex;
 use rome_rowan::SyntaxKind;
 use rslint_parser::{AstNode, ModuleKind, SourceType};
 use std::path::Path;
 
-use crate::runner::{
-    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
-};
-use crate::util::decode_maybe_utf16_string;
-
 const CASES_PATH: &str = "xtask/coverage/Typescript/tests/cases";
 const REFERENCE_PATH: &str = "xtask/coverage/Typescript/tests/baselines/reference";
 
 #[derive(Debug)]
-struct TypeScriptTestCase {
+struct MicrosoftTypeScriptTestCase {
     code: String,
     name: String,
 }
 
-impl TypeScriptTestCase {
+impl MicrosoftTypeScriptTestCase {
     fn new(path: &Path, code: String) -> Self {
         let name = path.strip_prefix(CASES_PATH).unwrap().display().to_string();
         Self { name, code }
     }
 }
 
-impl TestCase for TypeScriptTestCase {
+impl TestCase for MicrosoftTypeScriptTestCase {
     fn name(&self) -> &str {
         &self.name
     }
@@ -72,11 +73,11 @@ impl TestCase for TypeScriptTestCase {
 }
 
 #[derive(Default)]
-pub(crate) struct TypeScriptTestSuite;
+pub(crate) struct MicrosoftTypescriptTestSuite;
 
-impl TestSuite for TypeScriptTestSuite {
+impl TestSuite for MicrosoftTypescriptTestSuite {
     fn name(&self) -> &str {
-        "TS"
+        "ts/microsoft"
     }
 
     fn base_path(&self) -> &str {
@@ -92,15 +93,8 @@ impl TestSuite for TypeScriptTestSuite {
 
     fn load_test(&self, path: &Path) -> Option<Box<dyn TestCase>> {
         let code = check_file_encoding(path)?;
-        Some(Box::new(TypeScriptTestCase::new(path, code)))
+        Some(Box::new(MicrosoftTypeScriptTestCase::new(path, code)))
     }
-}
-
-fn check_file_encoding(path: &std::path::Path) -> Option<String> {
-    let buffer = std::fs::read(path).unwrap();
-    decode_maybe_utf16_string(&buffer)
-        .ok()
-        .map(|decoded| decoded.to_string())
 }
 
 struct TestCaseMetadata {
