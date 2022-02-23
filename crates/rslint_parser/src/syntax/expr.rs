@@ -1249,6 +1249,9 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
             let name = p.cur_src();
 
             let error = match name {
+                // test ts await_in_ambient_context
+                // declare const await: any;
+                "await" if p.state.in_ambient_context() => None,
                 "await" if p.state.in_async() => Some(
                     p.err_builder("Illegal use of `await` as an identifier in an async context")
                         .primary(p.cur_tok().range(), ""),

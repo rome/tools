@@ -1083,6 +1083,7 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
             }
         }
         // TypeScript supports multiple `export default interface` They all get merged together
+
         // test ts ts_export_default_multiple_interfaces
         // export default interface A { a: string; }
         // export default interface B { a: string }
