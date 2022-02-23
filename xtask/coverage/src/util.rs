@@ -1,22 +1,7 @@
+use std::borrow::Cow;
 use std::char::{decode_utf16, DecodeUtf16Error};
 
-pub(crate) enum DecodedString<'a> {
-    Utf8(&'a str),
-    Utf16(String),
-}
-
-impl<'a> DecodedString<'a> {
-    pub fn as_str(&self) -> &str {
-        match self {
-            DecodedString::Utf16(string) => string.as_str(),
-            DecodedString::Utf8(str) => str,
-        }
-    }
-}
-
-pub(crate) fn decode_maybe_utf16_string(
-    mut content: &[u8],
-) -> Result<DecodedString, DecodeUtf16Error> {
+pub(crate) fn decode_maybe_utf16_string(mut content: &[u8]) -> Result<Cow<str>, DecodeUtf16Error> {
     enum FileEncoding {
         Unknown,
         Utf8,
@@ -45,10 +30,10 @@ pub(crate) fn decode_maybe_utf16_string(
 
         if let FileEncoding::Utf8 = encoding {
             // If the file is known to be UTF-8 unwrap the result
-            return Ok(DecodedString::Utf8(result.unwrap()));
+            return Ok(Cow::Borrowed(result.unwrap()));
         } else if let Ok(result) = result {
-            // Otherwise only return if the parsing was successful
-            return Ok(DecodedString::Utf8(result));
+            // Otherwise, only return if the parsing was successful
+            return Ok(Cow::Borrowed(result));
         }
     }
 
@@ -62,5 +47,5 @@ pub(crate) fn decode_maybe_utf16_string(
     }))
     .collect::<Result<String, _>>()?;
 
-    Ok(DecodedString::Utf16(content_str))
+    Ok(Cow::Owned(content_str))
 }

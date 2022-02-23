@@ -18,7 +18,7 @@ pub enum Language {
 impl From<&str> for Language {
     fn from(s: &str) -> Self {
         match s.to_lowercase().as_str() {
-            "js" | "ts" | "jsx" | "tsx" => Language::Js,
+            "js" | "ts" | "jsx" | "tsx" | "mjs" | "cjs" | "cts" | "mts" => Language::Js,
             "json" => Language::Json,
             _ => Language::Unknown,
         }
@@ -28,7 +28,7 @@ impl From<&str> for Language {
 impl From<&OsStr> for Language {
     fn from(s: &OsStr) -> Self {
         match s.to_str().unwrap() {
-            "js" | "ts" | "jsx" | "tsx" => Language::Js,
+            "js" | "ts" | "jsx" | "tsx" | "mjs" | "cjs" | "cts" | "mts" => Language::Js,
             "json" => Language::Json,
             _ => Language::Unknown,
         }

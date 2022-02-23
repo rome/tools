@@ -247,8 +247,9 @@ impl SourceType {
         Self::ts().with_variant(LanguageVariant::JSX)
     }
 
+    /// TypeScript definition file
     /// language: TS, ambient, variant: Standard, module_kind: Module, version: Latest
-    pub fn tsd() -> SourceType {
+    pub fn d_ts() -> SourceType {
         Self {
             language: Language::TS {
                 definition_file: true,
@@ -261,9 +262,9 @@ impl SourceType {
         let file_name = path.file_name()?.to_str()?;
 
         let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
-            Self::tsd()
+            Self::d_ts()
         } else if file_name.ends_with(".d.cts") {
-            Self::tsd().with_module_kind(ModuleKind::Script)
+            Self::d_ts().with_module_kind(ModuleKind::Script)
         } else {
             let extension = path.extension()?.to_str()?;
             match extension {

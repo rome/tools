@@ -84,7 +84,7 @@ fn check_file_encoding(path: &std::path::Path) -> Option<String> {
     let buffer = std::fs::read(path).unwrap();
     decode_maybe_utf16_string(&buffer)
         .ok()
-        .map(|decoded| decoded.as_str().to_string())
+        .map(|decoded| decoded.to_string())
 }
 
 struct TestCaseMetadata {

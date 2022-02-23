@@ -72,7 +72,7 @@ fn read_test_results(path: &Path, name: &'static str) -> HashMap<String, TestRes
     let content = decode_maybe_utf16_string(&buffer)
         .unwrap_or_else(|err| panic!("Can't read the file of the {} results: {:?}", name, err));
 
-    serde_json::from_str(content.as_str()).unwrap_or_else(|err| {
+    serde_json::from_str(&content).unwrap_or_else(|err| {
         panic!(
             "Can't parse the JSON file of the {} results: {:?}",
             name, err
