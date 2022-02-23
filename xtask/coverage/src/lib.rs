@@ -17,14 +17,13 @@ use crate::typescript::TypeScriptTestSuite;
 use rslint_parser::ParserError;
 use serde::{Deserialize, Serialize};
 use std::any::Any;
-use std::path::PathBuf;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TestResult {
     #[serde(rename = "o")]
     pub outcome: Outcome,
     #[serde(rename = "h")]
-    pub path: PathBuf,
+    pub test_case: String,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize, Copy, Clone)]

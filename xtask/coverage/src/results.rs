@@ -1,7 +1,6 @@
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
 use std::collections::{HashMap, HashSet};
-use std::path::PathBuf;
 
 use crate::{Outcome, TestResult, TestResults};
 
@@ -136,13 +135,10 @@ pub fn emit_compare(
                     tests.len()
                 );
                 println!("\n```");
-                let mut paths = tests
-                    .iter()
-                    .map(|test| test.path.as_os_str().to_str().unwrap())
-                    .collect::<Vec<&str>>();
-                paths.sort_unstable();
-                for path in paths {
-                    println!("{}", path);
+                let mut test_cases = tests.iter().map(|test| &test.test_case).collect::<Vec<_>>();
+                test_cases.sort_unstable();
+                for test_case in test_cases {
+                    println!("{}", test_case);
                 }
                 println!("```");
                 println!("</details>");
@@ -223,23 +219,22 @@ fn compare_diffs<'a>(
 ) -> ReportDiff<'a> {
     let mut report_diff = ReportDiff::new();
 
-    let mut all_paths: HashSet<&PathBuf> = HashSet::new();
-
-    let mut base_by_path: HashMap<&PathBuf, &TestResult> = HashMap::new();
+    let mut all_test_cases: HashSet<&str> = HashSet::new();
+    let mut base_by_test_case: HashMap<&str, &TestResult> = HashMap::new();
     for detail in base_results.details.iter() {
-        all_paths.insert(&detail.path);
-        base_by_path.insert(&detail.path, detail);
+        all_test_cases.insert(&detail.test_case);
+        base_by_test_case.insert(&detail.test_case, detail);
     }
 
-    let mut new_by_path: HashMap<&PathBuf, &TestResult> = HashMap::new();
+    let mut new_by_test_case: HashMap<&str, &TestResult> = HashMap::new();
     for detail in new_results.details.iter() {
-        all_paths.insert(&detail.path);
-        new_by_path.insert(&detail.path, detail);
+        all_test_cases.insert(&detail.test_case);
+        new_by_test_case.insert(&detail.test_case, detail);
     }
 
-    for path in all_paths {
-        let base_result = base_by_path.get(path);
-        let new_result = new_by_path.get(path);
+    for path in all_test_cases {
+        let base_result = base_by_test_case.get(path);
+        let new_result = new_by_test_case.get(path);
 
         match (base_result, new_result) {
             (None, Some(new)) => {

@@ -1,13 +1,11 @@
-use crate::runner::{TestRunOutcome, TestRunResult, TestSuite, TestSuiteInstance};
+use crate::runner::{TestCaseFiles, TestRunOutcome, TestRunResult, TestSuite, TestSuiteInstance};
 use crate::{Summary, TestResults};
 use ascii_table::{AsciiTable, Column};
 use atty::Stream;
 use colored::Colorize;
 use indicatif::ProgressBar;
-use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
-use rslint_errors::Emitter;
-use rslint_parser::{parse, ParserError};
+use rslint_parser::ParserError;
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Write;
@@ -98,11 +96,8 @@ impl TestReporter for DefaultReporter {
             | TestRunOutcome::Panicked(_) => "FAIL".bold().red(),
         };
 
-        self.pb.println(format!(
-            "{} {}",
-            label,
-            result.path.display().to_string().blue()
-        ));
+        self.pb
+            .println(format!("{} {}", label, result.test_case.blue()));
     }
 
     fn test_suite_completed(&mut self, suite: &TestSuiteInstance, _results: &TestResults) {
@@ -122,11 +117,9 @@ pub enum SummaryDetailLevel {
     Coverage,
     /// Prints the coverage table as well as all failing tests with their diagnostics
     Failing,
-    /// Prints the diagnostics of failing tests as well as of tests that are supposed to fail and correct
-    /// emitted diagnostics
-    AllDiagnostics,
-    /// Prints all failing tests with their RAST output
-    FailingWithRast,
+
+    /// Prints the RAST of the parsed syntax and the diagnostics for all tests (including tests that pass with expected diagnostics).
+    Debug,
 }
 
 impl FromStr for SummaryDetailLevel {
@@ -136,8 +129,7 @@ impl FromStr for SummaryDetailLevel {
         Ok(match s {
             "coverage" => SummaryDetailLevel::Coverage,
             "failing" => SummaryDetailLevel::Failing,
-            "rast" => SummaryDetailLevel::FailingWithRast,
-            "diagnostics" => SummaryDetailLevel::AllDiagnostics,
+            "debug" => SummaryDetailLevel::Debug,
             _ => return Err(String::from(
                 "Unknown summary detail level. Valid values are: 'coverage', 'failing, and 'rast'.",
             )),
@@ -146,16 +138,12 @@ impl FromStr for SummaryDetailLevel {
 }
 
 impl SummaryDetailLevel {
-    fn is_rast_enabled(&self) -> bool {
-        matches!(self, SummaryDetailLevel::FailingWithRast)
-    }
-
     fn is_coverage_only(&self) -> bool {
         matches!(self, SummaryDetailLevel::Coverage)
     }
 
-    fn is_all_diagnostics(&self) -> bool {
-        matches!(self, SummaryDetailLevel::AllDiagnostics)
+    fn is_debug(&self) -> bool {
+        matches!(self, SummaryDetailLevel::Debug)
     }
 }
 
@@ -217,7 +205,7 @@ impl SummaryReporter {
         }
     }
 
-    fn writeln(&mut self, msg: String) {
+    fn writeln(&mut self, msg: &str) {
         writeln!(self.buffer, "{}", msg).unwrap();
     }
 
@@ -279,17 +267,9 @@ impl SummaryReporter {
         table.format(rows)
     }
 
-    fn write_errors(&mut self, errors: &[ParserError], result: &TestRunResult) {
-        let file = SimpleFile::new(result.path.display().to_string(), result.code.to_string());
-        let mut emitter = Emitter::new(&file);
-
-        for error in errors {
-            if let Err(err) = emitter.emit_with_writer(error, &mut self.buffer) {
-                eprintln!("Failed to print diagnostic: {}", err);
-            }
-        }
-
-        self.writeln("".to_string());
+    fn write_errors(&mut self, errors: &[ParserError], files: &TestCaseFiles) {
+        files.emit_errors(errors, &mut self.buffer);
+        self.writeln("");
     }
 }
 
@@ -300,55 +280,59 @@ impl TestReporter for SummaryReporter {
         }
 
         match &result.outcome {
-            TestRunOutcome::Passed(syntax) => {
-                if self.detail_level.is_all_diagnostics() || self.detail_level.is_rast_enabled() {
-                    self.writeln(format!(
-                        "{} {}",
-                        "[PASS]".bold().green(),
-                        result.path.display()
-                    ));
-                }
+            TestRunOutcome::Passed(files) => {
+                if self.detail_level.is_debug() {
+                    self.writeln(&format!("{} {}", "[PASS]".bold().green(), result.test_case));
 
-                if self.detail_level.is_all_diagnostics() {
-                    let errors = parse(&result.code, 0, *syntax).ok().err();
+                    let mut all_errors = Vec::new();
+                    for file in files {
+                        if let Some(errors) = file.parse().ok().err() {
+                            all_errors.extend(errors);
+                        }
+                    }
 
-                    if let Some(errors) = errors {
-                        self.write_errors(&errors, result);
+                    if !all_errors.is_empty() {
+                        self.write_errors(&all_errors, files);
                     }
                 }
             }
             TestRunOutcome::Panicked(_) => {
                 let panic = result.outcome.panic_message();
-                self.writeln(format!(
+                self.writeln(&format!(
                     "{} {}: {}",
                     "[PANIC]".bold().red(),
-                    result.path.display(),
+                    result.test_case,
                     panic.unwrap_or("Unknown panic reason")
                 ));
             }
             TestRunOutcome::IncorrectlyPassed(_) => {
-                self.writeln(format!(
+                self.writeln(&format!(
                     "{} {}: Incorrectly passed",
                     "[FAIL]".bold().red(),
-                    result.path.display()
+                    result.test_case
                 ));
             }
-            TestRunOutcome::IncorrectlyErrored { errors, .. } => {
-                self.writeln(format!(
+            TestRunOutcome::IncorrectlyErrored { errors, files } => {
+                self.writeln(&format!(
                     "{} {}: Incorrectly errored:",
                     "[FAIL]".bold().red(),
-                    result.path.display()
+                    result.test_case
                 ));
 
-                self.write_errors(errors, result);
+                self.write_errors(errors, files);
             }
         }
 
-        if self.detail_level.is_rast_enabled() {
-            if let Some(syntax) = result.outcome.syntax() {
-                let program = parse(&result.code, 0, *syntax);
-                self.writeln(format!("{:#?}", program.syntax()));
-                self.writeln("".to_string());
+        if self.detail_level.is_debug() {
+            if let Some(files) = result.outcome.files() {
+                for file in files {
+                    let program = file.parse();
+                    self.writeln(&format!(
+                        "RAST Output for {}:\n{:#?}\n",
+                        &file.name().bold(),
+                        program.syntax()
+                    ));
+                }
             }
         }
     }
