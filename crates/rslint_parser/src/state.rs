@@ -1,4 +1,4 @@
-use crate::{FileKind, Parser, Syntax};
+use crate::{Language, Parser, SourceType};
 use bitflags::bitflags;
 use indexmap::IndexMap;
 use std::collections::HashSet;
@@ -20,6 +20,37 @@ impl LabelledItem {
     }
 }
 
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub(crate) enum ExportDefaultItemKind {
+    Unknown,
+    Expression,
+    FunctionOverload,
+    FunctionDeclaration,
+    Interface,
+    // Any other declaration
+    Declaration,
+}
+
+impl ExportDefaultItemKind {
+    pub(crate) fn is_overload(&self) -> bool {
+        matches!(self, ExportDefaultItemKind::FunctionOverload)
+    }
+
+    pub(crate) fn is_function_declaration(&self) -> bool {
+        matches!(self, ExportDefaultItemKind::FunctionDeclaration)
+    }
+
+    pub(crate) fn is_interface(&self) -> bool {
+        matches!(self, ExportDefaultItemKind::Interface)
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub(crate) struct ExportDefaultItem {
+    pub kind: ExportDefaultItemKind,
+    pub range: Range<usize>,
+}
+
 /// State kept by the parser while parsing.
 /// It is required for things such as strict mode or async functions
 #[derive(Debug)]
@@ -32,7 +63,7 @@ pub(crate) struct ParserState {
     /// Whether we are in strict mode code
     strict: Option<StrictMode>,
     /// The exported default item, used for checking duplicate defaults
-    pub default_item: Option<Range<usize>>,
+    pub default_item: Option<ExportDefaultItem>,
     /// If set, the parser reports bindings with identical names. The option stores the name of the
     /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
     pub duplicate_binding_parent: Option<&'static str>,
@@ -63,18 +94,12 @@ pub(crate) enum StrictMode {
     Class(Range<usize>),
 }
 
-impl Default for ParserState {
-    fn default() -> Self {
-        ParserState::new(Syntax::default())
-    }
-}
-
 impl ParserState {
-    pub fn new(syntax: Syntax) -> Self {
+    pub fn new(source_type: &SourceType) -> Self {
         let mut state = ParserState {
             parsing_context: ParsingContextFlags::TOP_LEVEL,
             label_set: IndexMap::new(),
-            strict: if syntax.file_kind == FileKind::Module {
+            strict: if source_type.module_kind().is_module() {
                 Some(StrictMode::Module)
             } else {
                 None
@@ -86,8 +111,17 @@ impl ParserState {
             speculative_parsing: false,
         };
 
-        if syntax.top_level_await {
+        if source_type.module_kind().is_module() {
             state.parsing_context |= ParsingContextFlags::IN_ASYNC
+        }
+
+        if matches!(
+            source_type.language(),
+            Language::TypeScript {
+                definition_file: true
+            }
+        ) {
+            state.parsing_context |= ParsingContextFlags::AMBIENT_CONTEXT
         }
 
         state
@@ -194,7 +228,7 @@ pub(super) struct DebugParserStateCheckpoint {
     parsing_context: ParsingContextFlags,
     label_set_len: usize,
     strict: Option<StrictMode>,
-    default_item: Option<Range<usize>>,
+    default_item: Option<ExportDefaultItem>,
     duplicate_binding_parent: Option<&'static str>,
     name_map_len: usize,
 }
@@ -573,10 +607,30 @@ impl ChangeParserStateFlags for EnterType {
     }
 }
 
+#[derive(Default)]
+pub(crate) struct EnterAmbientContextSnapshot {
+    flags: ParsingContextFlags,
+    default_item: Option<ExportDefaultItem>,
+    strict_mode: Option<StrictMode>,
+}
+
 pub(crate) struct EnterAmbientContext;
 
-impl ChangeParserStateFlags for EnterAmbientContext {
-    fn compute_new_flags(&self, existing: ParsingContextFlags) -> ParsingContextFlags {
-        existing | ParsingContextFlags::AMBIENT_CONTEXT
+impl ChangeParserState for EnterAmbientContext {
+    type Snapshot = EnterAmbientContextSnapshot;
+
+    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        let new_flags = state.parsing_context | ParsingContextFlags::AMBIENT_CONTEXT;
+        EnterAmbientContextSnapshot {
+            flags: std::mem::replace(&mut state.parsing_context, new_flags),
+            default_item: state.default_item.take(),
+            strict_mode: state.strict.take(),
+        }
+    }
+
+    fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        state.parsing_context = value.flags;
+        state.default_item = value.default_item;
+        state.strict = value.strict_mode;
     }
 }

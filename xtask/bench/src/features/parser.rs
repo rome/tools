@@ -3,7 +3,7 @@ use itertools::Itertools;
 use rslint_errors::file::SimpleFile;
 use rslint_errors::{Diagnostic, Emitter, Severity};
 use rslint_parser::ast::JsAnyRoot;
-use rslint_parser::{Parse, Syntax};
+use rslint_parser::{Parse, SourceType};
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
 use std::time::Duration;
@@ -49,7 +49,7 @@ fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
 
     current
 }
-pub fn benchmark_parse_lib(id: &str, code: &str, syntax: Syntax) -> BenchmarkSummary {
+pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> BenchmarkSummary {
     #[cfg(feature = "dhat-on")]
     println!("Start");
     #[cfg(feature = "dhat-on")]
@@ -67,7 +67,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str, syntax: Syntax) -> BenchmarkSum
 
     let parser_timer = timing::start();
     let (events, parsing_diags, tokens) = {
-        let mut parser = rslint_parser::Parser::new(tok_source, 0, syntax);
+        let mut parser = rslint_parser::Parser::new(tok_source, 0, source_type);
         rslint_parser::syntax::program::parse(&mut parser);
         let (events, parsing_diags) = parser.finish();
         (events, parsing_diags, tokens)
@@ -102,8 +102,8 @@ pub fn benchmark_parse_lib(id: &str, code: &str, syntax: Syntax) -> BenchmarkSum
     })
 }
 
-pub fn run_parse(code: &str, syntax: Syntax) -> Parse<JsAnyRoot> {
-    rslint_parser::parse(code, 0, syntax)
+pub fn run_parse(code: &str, source_type: SourceType) -> Parse<JsAnyRoot> {
+    rslint_parser::parse(code, 0, source_type)
 }
 
 impl ParseMeasurement {

@@ -1,6 +1,6 @@
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
 use regex::Regex;
-use rslint_parser::{parse, Syntax};
+use rslint_parser::{parse, SourceType};
 use serde::Deserialize;
 use std::io;
 use std::path::Path;
@@ -78,14 +78,14 @@ impl Test262TestCase {
         Self { name, code, meta }
     }
 
-    fn execute_test(&self, append_use_strict: bool, syntax: Syntax) -> TestRunOutcome {
+    fn execute_test(&self, append_use_strict: bool, source_type: SourceType) -> TestRunOutcome {
         let code = if append_use_strict {
             format!("\"use strict\";\n{}", self.code)
         } else {
             self.code.clone()
         };
 
-        let parse_result = parse(&code, 0, syntax).ok();
+        let parse_result = parse(&code, 0, source_type.clone()).ok();
 
         let should_fail = self
             .meta
@@ -94,7 +94,7 @@ impl Test262TestCase {
             .filter(|neg| neg.phase == Phase::Parse)
             .is_some();
 
-        let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), syntax);
+        let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type);
 
         match parse_result {
             Ok(_) if !should_fail => TestRunOutcome::Passed(files),
@@ -114,14 +114,14 @@ impl TestCase for Test262TestCase {
     fn run(&self) -> TestRunOutcome {
         let meta = &self.meta;
         if meta.flags.contains(&TestFlag::OnlyStrict) {
-            self.execute_test(true, Syntax::default())
+            self.execute_test(true, SourceType::js_script())
         } else if meta.flags.contains(&TestFlag::Module) {
-            self.execute_test(false, Syntax::default().module())
+            self.execute_test(false, SourceType::js_module())
         } else if meta.flags.contains(&TestFlag::NoStrict) || meta.flags.contains(&TestFlag::Raw) {
-            self.execute_test(false, Syntax::default())
+            self.execute_test(false, SourceType::js_script())
         } else {
-            let l = self.execute_test(false, Syntax::default());
-            let r = self.execute_test(true, Syntax::default());
+            let l = self.execute_test(false, SourceType::js_script());
+            let r = self.execute_test(true, SourceType::js_script());
             merge_outcomes(l, r)
         }
     }

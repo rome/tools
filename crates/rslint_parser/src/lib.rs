@@ -127,96 +127,213 @@ pub trait TreeSink {
     fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind);
 }
 
-/// Matches a `SyntaxNode` against an `ast` type.
+/// Enum of the different ECMAScript standard versions.
+/// The versions are ordered in increasing order; The newest version comes last.
 ///
-/// # Example:
-///
-/// ```ignore
-/// match_ast! {
-///     match node {
-///         ast::CallExpr(it) => { ... },
-///         ast::BlockStmt(it) => { ... },
-///         ast::Script(it) => { ... },
-///         _ => None,
-///     }
-/// }
-/// ```
-#[macro_export]
-macro_rules! match_ast {
-    (match $node:ident { $($tt:tt)* }) => { match_ast!(match ($node) { $($tt)* }) };
+/// Defaults to the latest stable ECMAScript standard.
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
+pub enum LanguageVersion {
+    ES2022,
 
-    (match ($node:expr) {
-        $( ast::$ast:ident($it:ident) => $res:expr, )*
-        _ => $catch_all:expr $(,)?
-    }) => {{
-        $( if let Some($it) = ast::$ast::cast($node.clone()) { $res } else )*
-        { $catch_all }
-    }};
+    /// The next, not yet finalized ECMAScript version
+    ESNext,
 }
 
-/// A structure describing the syntax features the parser will accept.
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct Syntax {
-    pub file_kind: FileKind,
-    pub top_level_await: bool,
-    pub global_return: bool,
-}
-
-impl Syntax {
-    pub fn new(file_kind: FileKind) -> Self {
-        let mut this = Self {
-            file_kind,
-            ..Syntax::default()
-        };
-        if file_kind == FileKind::TypeScript {
-            this = this.typescript();
-        }
-        this
-    }
-
-    pub fn top_level_await(mut self) -> Self {
-        self.top_level_await = true;
-        self
-    }
-
-    pub fn global_return(mut self) -> Self {
-        self.global_return = true;
-        self
-    }
-
-    pub fn script(mut self) -> Self {
-        self.file_kind = FileKind::Script;
-        self
-    }
-
-    pub fn module(mut self) -> Self {
-        self.file_kind = FileKind::Module;
-        self.top_level_await()
-    }
-
-    pub fn typescript(mut self) -> Self {
-        self.file_kind = FileKind::TypeScript;
-        self.top_level_await()
+impl LanguageVersion {
+    /// Returns the latest finalized ECMAScript version
+    pub const fn latest() -> Self {
+        LanguageVersion::ES2022
     }
 }
 
-/// The kind of file we are parsing
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum FileKind {
-    Script,
-    Module,
-    TypeScript,
-}
-
-impl Default for FileKind {
+impl Default for LanguageVersion {
     fn default() -> Self {
-        FileKind::Script
+        Self::latest()
     }
 }
 
-impl From<FileKind> for Syntax {
-    fn from(kind: FileKind) -> Self {
-        Syntax::new(kind)
+/// Is the source file an ECMAScript Module or Script.
+/// Changes the parsing semantic.
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum ModuleKind {
+    /// An ECMAScript [Script](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-scripts)
+    Script,
+
+    /// AN ECMAScript [Module](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-modules)
+    Module,
+}
+
+impl ModuleKind {
+    pub fn is_script(&self) -> bool {
+        matches!(self, ModuleKind::Script)
+    }
+    pub fn is_module(&self) -> bool {
+        matches!(self, ModuleKind::Module)
+    }
+}
+
+impl Default for ModuleKind {
+    fn default() -> Self {
+        ModuleKind::Module
+    }
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum LanguageVariant {
+    /// Standard JavaScript or TypeScript syntax without any extensions
+    Standard,
+
+    /// Allows JSX syntax inside a JavaScript or TypeScript file
+    JSX,
+}
+
+impl LanguageVariant {
+    pub fn is_standard(&self) -> bool {
+        matches!(self, LanguageVariant::Standard)
+    }
+    pub fn is_jsx(&self) -> bool {
+        matches!(self, LanguageVariant::JSX)
+    }
+}
+
+impl Default for LanguageVariant {
+    fn default() -> Self {
+        LanguageVariant::Standard
+    }
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum Language {
+    JavaScript,
+
+    /// TypeScript source with or without JSX.
+    /// `definition_file` must be true for `d.ts` files.
+    TypeScript {
+        definition_file: bool,
+    },
+}
+
+impl Language {
+    pub fn is_javascript(&self) -> bool {
+        matches!(self, Language::JavaScript)
+    }
+    pub fn is_typescript(&self) -> bool {
+        matches!(self, Language::TypeScript { .. })
+    }
+}
+
+impl Default for Language {
+    fn default() -> Self {
+        Language::JavaScript
+    }
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct SourceType {
+    language: Language,
+    variant: LanguageVariant,
+    module_kind: ModuleKind,
+    version: LanguageVersion,
+}
+
+impl SourceType {
+    /// language: JS, variant: Standard, module_kind: Module, version: Latest
+    pub fn js_module() -> Self {
+        Self::default()
+    }
+
+    /// language: JS, variant: Standard, module_kind: Script, version: Latest
+    pub fn js_script() -> Self {
+        Self::default().with_module_kind(ModuleKind::Script)
+    }
+
+    /// language: JS, variant: JSX, module_kind: Module, version: Latest
+    pub fn jsx() -> SourceType {
+        Self::js_module().with_variant(LanguageVariant::JSX)
+    }
+
+    /// language: TS, variant: Standard, module_kind: Module, version: Latest
+    pub fn ts() -> SourceType {
+        Self {
+            language: Language::TypeScript {
+                definition_file: false,
+            },
+            ..Self::default()
+        }
+    }
+
+    /// language: TS, variant: JSX, module_kind: Module, version: Latest
+    pub fn tsx() -> SourceType {
+        Self::ts().with_variant(LanguageVariant::JSX)
+    }
+
+    /// TypeScript definition file
+    /// language: TS, ambient, variant: Standard, module_kind: Module, version: Latest
+    pub fn d_ts() -> SourceType {
+        Self {
+            language: Language::TypeScript {
+                definition_file: true,
+            },
+            ..Self::default()
+        }
+    }
+
+    pub fn from_path(path: &std::path::Path) -> Option<SourceType> {
+        let file_name = path.file_name()?.to_str()?;
+
+        let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
+            Self::d_ts()
+        } else if file_name.ends_with(".d.cts") {
+            Self::d_ts().with_module_kind(ModuleKind::Script)
+        } else {
+            let extension = path.extension()?.to_str()?;
+            match extension {
+                "js" | "mjs" => Self::js_module(),
+                "cjs" => Self::js_module().with_module_kind(ModuleKind::Script),
+                "jsx" => Self::jsx(),
+                "ts" | "mts" => Self::ts(),
+                "cts" => Self::ts().with_module_kind(ModuleKind::Script),
+                "tsx" => Self::tsx(),
+                _ => return None,
+            }
+        };
+
+        Some(source_type)
+    }
+
+    pub fn with_module_kind(mut self, kind: ModuleKind) -> Self {
+        self.module_kind = kind;
+        self
+    }
+
+    pub fn with_version(mut self, version: LanguageVersion) -> Self {
+        self.version = version;
+        self
+    }
+
+    pub fn with_variant(mut self, variant: LanguageVariant) -> Self {
+        self.variant = variant;
+        self
+    }
+
+    pub fn language(&self) -> Language {
+        self.language
+    }
+
+    pub fn variant(&self) -> LanguageVariant {
+        self.variant
+    }
+
+    pub fn version(&self) -> LanguageVersion {
+        self.version
+    }
+
+    pub fn module_kind(&self) -> ModuleKind {
+        self.module_kind
+    }
+
+    pub fn is_module(&self) -> bool {
+        self.module_kind.is_module()
     }
 }
 
@@ -320,7 +437,7 @@ impl SyntaxFeature for JsSyntaxFeature {
         match self {
             JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
             JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
-            JsSyntaxFeature::TypeScript => p.syntax.file_kind == FileKind::TypeScript,
+            JsSyntaxFeature::TypeScript => p.source_type.language().is_typescript(),
         }
     }
 }

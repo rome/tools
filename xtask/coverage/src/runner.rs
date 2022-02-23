@@ -4,7 +4,7 @@ use rslint_errors::file::SimpleFiles;
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::Emitter;
 use rslint_parser::ast::JsAnyRoot;
-use rslint_parser::{parse, Parse, Syntax};
+use rslint_parser::{parse, Parse, SourceType};
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
 use std::path::Path;
@@ -73,15 +73,15 @@ pub(crate) struct TestCaseFile {
     /// The code of the file
     code: String,
 
-    /// The syntax used to parse the file
-    syntax: Syntax,
+    /// The source type used to parse the file
+    source_type: SourceType,
 
     id: usize,
 }
 
 impl TestCaseFile {
     pub(crate) fn parse(&self) -> Parse<JsAnyRoot> {
-        parse(&self.code, self.id, self.syntax)
+        parse(&self.code, self.id, self.source_type.clone())
     }
 
     pub(crate) fn name(&self) -> &str {
@@ -95,12 +95,12 @@ pub(crate) struct TestCaseFiles {
 }
 
 impl TestCaseFiles {
-    pub(crate) fn single(name: String, code: String, syntax: Syntax) -> Self {
+    pub(crate) fn single(name: String, code: String, source_type: SourceType) -> Self {
         Self {
             files: vec![TestCaseFile {
                 name,
                 code,
-                syntax,
+                source_type,
                 id: 0,
             }],
         }
@@ -110,11 +110,11 @@ impl TestCaseFiles {
         Self { files: vec![] }
     }
 
-    pub(crate) fn add(&mut self, name: String, code: String, syntax: Syntax) {
+    pub(crate) fn add(&mut self, name: String, code: String, source_type: SourceType) {
         self.files.push(TestCaseFile {
             name,
             code,
-            syntax,
+            source_type,
             id: self.files.len(),
         })
     }

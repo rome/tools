@@ -15,12 +15,12 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 
     let strict_snapshot = directives(p);
 
-    let result = match p.syntax.file_kind {
-        FileKind::Script => {
+    let result = match p.source_type.module_kind() {
+        ModuleKind::Script => {
             parse_statements(p, false);
             m.complete(p, JS_SCRIPT)
         }
-        FileKind::Module | FileKind::TypeScript => parse_module_body(p, m),
+        ModuleKind::Module => parse_module_body(p, m),
     };
 
     if let Some(strict_snapshot) = strict_snapshot {

@@ -73,7 +73,7 @@ impl ParserProgress {
 ///     SyntaxNode,
 ///     process,
 ///     AstNode,
-///     Syntax
+///     SourceType,
 /// };
 /// use rslint_parser::ast::JsExpressionSnipped;
 ///
@@ -89,7 +89,7 @@ impl ParserProgress {
 /// // and giving raw tokens to allow the parser to turn completed markers into syntax nodes
 /// let token_source = TokenSource::new(source, &tokens);
 ///
-/// let mut parser = Parser::new(token_source, 0, Syntax::default());
+/// let mut parser = Parser::new(token_source, 0, SourceType::default());
 ///
 /// // Use one of the syntax parsing functions to parse an expression.
 /// // This adds node and token events to the parser which are then used to make a node.
@@ -131,25 +131,21 @@ pub struct Parser<'t> {
     pub(super) tokens: TokenSource<'t>,
     pub(super) events: Vec<Event>,
     pub(super) state: ParserState,
-    pub syntax: Syntax,
+    pub source_type: SourceType,
     pub errors: Vec<ParserError>,
 }
 
 impl<'t> Parser<'t> {
     /// Make a new parser
-    pub fn new(tokens: TokenSource<'t>, file_id: usize, syntax: Syntax) -> Parser<'t> {
+    pub fn new(tokens: TokenSource<'t>, file_id: usize, source_type: SourceType) -> Parser<'t> {
         Parser {
             file_id,
             tokens,
             events: vec![],
-            state: ParserState::new(syntax),
-            syntax,
+            state: ParserState::new(&source_type),
+            source_type,
             errors: vec![],
         }
-    }
-
-    pub(crate) fn typescript(&self) -> bool {
-        self.syntax.file_kind == FileKind::TypeScript
     }
 
     /// Get the source code of a token
@@ -424,7 +420,7 @@ impl<'t> Parser<'t> {
 
     /// Whether the code we are parsing is a module
     pub fn is_module(&self) -> bool {
-        self.syntax.file_kind == FileKind::Module
+        self.source_type.module_kind.is_module()
     }
 }
 
@@ -650,7 +646,7 @@ pub struct Checkpoint {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Parser, Syntax, TokenSource};
+    use crate::{Parser, SourceType, TokenSource};
     use rslint_lexer::Token;
     use rslint_syntax::JsSyntaxKind;
 
@@ -662,7 +658,7 @@ mod tests {
         let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
         let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
-        let mut parser = Parser::new(token_source, 0, Syntax::default());
+        let mut parser = Parser::new(token_source, 0, SourceType::default());
 
         let _ = parser.start();
         // drop the marker without calling complete or abandon
@@ -673,7 +669,7 @@ mod tests {
         let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
         let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
-        let mut p = Parser::new(token_source, 0, Syntax::default());
+        let mut p = Parser::new(token_source, 0, SourceType::default());
 
         let m = p.start();
         p.expect(JsSyntaxKind::JS_STRING_LITERAL);
@@ -685,7 +681,7 @@ mod tests {
         let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
         let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
-        let mut p = Parser::new(token_source, 0, Syntax::default());
+        let mut p = Parser::new(token_source, 0, SourceType::default());
 
         let m = p.start();
         m.abandon(&mut p);
