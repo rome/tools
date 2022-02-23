@@ -10,3 +10,4 @@ a >> b
 a >>> b
 1 + 1 + 1 + 1
 5 + 6 - 1 * 2 / 1 ** 6
+class Test { #name; test() { true && #name in {} } }

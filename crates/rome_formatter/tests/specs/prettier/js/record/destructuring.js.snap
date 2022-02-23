@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: destructuring.js
 
 ---
@@ -20,7 +20,7 @@ assert(rest.c === 3);
 
 # Output
 ```js
-const { a, b } = #
+const { a, b } = #;
 {
   a: 1, b;
   : 2 
@@ -28,9 +28,7 @@ const { a, b } = #
 assert(a === 1);
 assert(b === 2);
 
-
-
-const { a, ...rest } = #
+const { a, ...rest } = #;
 {
   a: 1, b;
   : 2, c: 3 
@@ -50,6 +48,20 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 1 │ const { a, b } = #{ a: 1, b: 2 };
   │                   ^ unexpected
 
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ destructuring.js:1:18
+  │
+1 │ const { a, b } = #{ a: 1, b: 2 };
+  │                  ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ destructuring.js:1:19
+  │
+1 │ const { a, b } = #{ a: 1, b: 2 };
+  │ ------------------^ An explicit or implicit semicolon is expected here...
+  │ │                  
+  │ ...Which is required to end this statement
+
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ destructuring.js:1:28
   │
@@ -64,6 +76,20 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
   │
 5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
   │                         ^ unexpected
+
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ destructuring.js:5:24
+  │
+5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+  │                        ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ destructuring.js:5:25
+  │
+5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+  │ ------------------------^ An explicit or implicit semicolon is expected here...
+  │ │                        
+  │ ...Which is required to end this statement
 
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ destructuring.js:5:34

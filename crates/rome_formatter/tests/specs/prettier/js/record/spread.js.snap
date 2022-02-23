@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: spread.js
 
 ---
@@ -17,18 +17,16 @@ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
 
 # Output
 ```js
-const formData = #
+const formData = #;
 {
   title: "Implement all the things";
 }
-
-const taskNow = #
+const taskNow = #;
 {
   id: 42, status;
   : "WIP", ...formData 
 }
-
-const taskLater = #
+const taskLater = #;
 {
   ...taskNow, status: "DONE" ;
 }
@@ -46,11 +44,39 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 1 │ const formData = #{ title: "Implement all the things" }
   │                   ^ unexpected
 
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ spread.js:1:18
+  │
+1 │ const formData = #{ title: "Implement all the things" }
+  │                  ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ spread.js:1:19
+  │
+1 │ const formData = #{ title: "Implement all the things" }
+  │ ------------------^ An explicit or implicit semicolon is expected here...
+  │ │                  
+  │ ...Which is required to end this statement
+
 error[SyntaxError]: expected `IDENT` but instead found `{`
   ┌─ spread.js:2:18
   │
 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
   │                  ^ unexpected
+
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ spread.js:2:17
+  │
+2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  │                 ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ spread.js:2:18
+  │
+2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  │ -----------------^ An explicit or implicit semicolon is expected here...
+  │ │                 
+  │ ...Which is required to end this statement
 
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ spread.js:2:34
@@ -66,6 +92,20 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
   │
 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
   │                    ^ unexpected
+
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ spread.js:3:19
+  │
+3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  │                   ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ spread.js:3:20
+  │
+3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  │ -------------------^ An explicit or implicit semicolon is expected here...
+  │ │                   
+  │ ...Which is required to end this statement
 
 error[SyntaxError]: expected an expression but instead found '...taskNow, status: "DONE"'
   ┌─ spread.js:3:22

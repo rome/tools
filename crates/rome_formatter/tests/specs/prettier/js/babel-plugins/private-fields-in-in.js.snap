@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: private-fields-in-in.js
 
 ---
@@ -109,7 +109,7 @@ class C3 {
   get #getter() {}
 
   static isC(obj) {
-    return #brand in obj && #method  in obj && #getter  in obj;
+    return #brand in obj && #method in obj && #getter in obj;
   }
 }// Invalid https://github.com/tc39/proposal-private-fields-in-in#try-statement
 // class C {
@@ -119,23 +119,6 @@ class C3 {
 //     return try obj.#brand;
 //   }
 // }
-
-```
-
-# Errors
-```
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
-   ┌─ private-fields-in-in.js:44:29
-   │
-44 │     return #brand in obj && #method in obj && #getter in obj;
-   │                             ^^^^^^^
-
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
-   ┌─ private-fields-in-in.js:44:47
-   │
-44 │     return #brand in obj && #method in obj && #getter in obj;
-   │                                               ^^^^^^^
-
 
 ```
 
