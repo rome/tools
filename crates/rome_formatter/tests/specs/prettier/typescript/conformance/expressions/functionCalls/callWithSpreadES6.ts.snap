@@ -64,14 +64,14 @@ class D extends C {
 ```js
 // @target: ES6
 
-interface X { foo(x: number, y: number, ...z: [string]) }
+interface X { foo(x: number, y: number, ...z: string[]) }
 
-function foo(x: number, y: number, ...z: [string]) {}
+function foo(x: number, y: number, ...z: string[]) {}
 
-var a: [string];
-var z: [number];
+var a: string[];
+var z: number[];
 var obj: X;
-var xa: [X];
+var xa: X[];
 
 foo(1, 2, "abc");
 
@@ -102,12 +102,12 @@ xa[1].foo(1, 2, ...a, "abc");
 (<Function>xa[1].foo)(...[1, 2, "abc"]);
 
 class C {
-  constructor(x: number, y: number, ...z: [string]) {
+  constructor(x: number, y: number, ...z: string[]) {
     this.foo(x, y);
     
         this.foo(x, y, ...z);
   }
-  foo(x: number, y: number, ...z: [string]) {}
+  foo(x: number, y: number, ...z: string[]) {}
 }
 
 class D extends C {

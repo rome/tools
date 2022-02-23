@@ -115,12 +115,12 @@ export const getVehicleDescriptor = async (vehicleId: string): Promise<
 > => {};
 
 export const getVehicleDescriptor = async (vehicleId: string): Promise<
-  [Descriptor],
+  Descriptor[],
 > => {};
 
 export const getVehicleDescriptor = async (vehicleId: string): Promise<
-  [
-  Collections.Parts.PrintedCircuitBoardAssemblyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy],
+  
+  Collections.Parts.PrintedCircuitBoardAssemblyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy[],
 > => {};
 
 ```

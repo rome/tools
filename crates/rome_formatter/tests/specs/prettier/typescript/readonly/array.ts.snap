@@ -13,7 +13,7 @@ declare const tuple: readonly [number, number];
 
 # Output
 ```js
-declare const array: readonly [number];
+declare const array: readonly number[];
 declare const tuple: readonly [number, number];
 
 ```

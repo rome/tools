@@ -27,9 +27,9 @@ export interface ShopQueryResult {
 ```js
 export interface ShopQueryResult {
   chic: boolean,
-  location: [number],
-  menus: [Menu],
-  openingDays: [number],
+  location: number[],
+  menus: Menu[],
+  openingDays: number[],
   closingDays: [
     { from: string, to: string }, // <== this one
   ],

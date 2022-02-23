@@ -15,10 +15,9 @@ type T = abstract
 
 # Output
 ```js
-type T = abstract new () => void;
-type T = abstract    new () => void;
-type T = abstract
-  new () => void;
+type T = abstract new() => void;
+type T = abstract new() => void;
+type T = abstract new() => void;
 
 ```
 

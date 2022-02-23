@@ -15,7 +15,7 @@ var x: {
 # Output
 ```js
 var x: {
-  [A in keyof B ]?: any;
+    [A in keyof B]?: any;
 };
 
 ```

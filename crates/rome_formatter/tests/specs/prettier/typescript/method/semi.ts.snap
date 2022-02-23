@@ -23,7 +23,7 @@ declare module 'foo' {
   function bar(namespace: string): void;
 }
 
-function pickCard(x: [{ suit: string, card: number }]): number;
+function pickCard(x: { suit: string, card: number }[]): number;
 function pickCard(x: number): { suit: string, card: number };
 
 ```

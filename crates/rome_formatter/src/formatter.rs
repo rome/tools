@@ -42,6 +42,12 @@ impl TrailingSeparator {
     }
 }
 
+impl Default for TrailingSeparator {
+    fn default() -> Self {
+        TrailingSeparator::Allowed
+    }
+}
+
 impl Formatter {
     /// Creates a new context that uses the given formatter options
     pub fn new(options: FormatOptions) -> Self {
@@ -216,19 +222,19 @@ impl Formatter {
     /// `token` is then marked as consumed by the formatter.
     pub fn format_replaced(
         &self,
-        token: &SyntaxToken,
-        content: FormatElement,
+        current_token: &SyntaxToken,
+        content_to_replace_with: FormatElement,
     ) -> FormatResult<FormatElement> {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                assert!(self.printed_tokens.borrow_mut().insert(token.clone()));
+                assert!(self.printed_tokens.borrow_mut().insert(current_token.clone()));
             }
         }
 
         Ok(format_elements![
-            self.print_leading_trivia(token, TriviaPrintMode::Full),
-            content,
-            self.print_trailing_trivia(token),
+            self.print_leading_trivia(current_token, TriviaPrintMode::Full),
+            content_to_replace_with,
+            self.print_trailing_trivia(current_token),
         ])
     }
 

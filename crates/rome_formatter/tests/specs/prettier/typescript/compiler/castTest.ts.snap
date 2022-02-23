@@ -49,9 +49,9 @@ var a = <any>0;
 var b = <boolean>true;
 var s = <string>"";
 
-var ar = <[any]>null;
+var ar = <any[]>null;
 
-var f = <(res : number) => void>null;
+var f = <(res: number) => void>null;
 
 declare class Point
 {

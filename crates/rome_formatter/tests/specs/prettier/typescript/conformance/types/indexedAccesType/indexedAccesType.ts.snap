@@ -14,7 +14,7 @@ const a: Foo['bar'] = {
 
 # Output
 ```js
-const a: Foo['bar']  = { baz: "yawp" };
+const a: Foo['bar'] = { baz: "yawp" };
 
 ```
 
