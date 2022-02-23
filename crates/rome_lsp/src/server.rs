@@ -5,7 +5,7 @@ use lspower::{Client, LanguageServer, LspService, Server};
 use rome_analyze::AnalysisServer;
 use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};
-use tracing::{error, info};
+use tracing::{error, info, trace};
 
 use crate::capabilities::server_capabilities;
 use crate::config::CONFIGURATION_SECTION;
@@ -65,15 +65,18 @@ impl LanguageServer for LSPServer {
         let configurations = self.client.configuration(items).await;
 
         if let Ok(configurations) = configurations {
-            let configuration = configurations.into_iter().next().unwrap();
-            self.session
-                .config
-                .write()
-                .set_workspace_settings(configuration)
-                .map_err(|err| {
-                    error!("Cannot set workspace settings: {}", err);
-                })
-                .ok();
+            configurations.into_iter().next().and_then(|configuration| {
+                self.session
+                    .config
+                    .write()
+                    .set_workspace_settings(configuration)
+                    .map_err(|err| {
+                        error!("Cannot set workspace settings: {}", err);
+                    })
+                    .ok()
+            });
+        } else {
+            trace!("Cannot read configuration from the client");
         }
 
         let msg = format!("Server initialized with PID: {}", std::process::id());
