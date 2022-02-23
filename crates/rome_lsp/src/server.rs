@@ -1,11 +1,14 @@
+use lspower::jsonrpc::Error as LspError;
 use lspower::jsonrpc::Result as LspResult;
 use lspower::lsp::*;
 use lspower::{Client, LanguageServer, LspService, Server};
 use rome_analyze::AnalysisServer;
 use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};
+use tracing::{error, info};
 
 use crate::capabilities::server_capabilities;
+use crate::config::CONFIGURATION_SECTION;
 use crate::handlers;
 use crate::handlers::formatting::{to_format_options, FormatOnTypeParams, FormatRangeParams};
 use crate::line_index::LineIndex;
@@ -27,6 +30,19 @@ impl LSPServer {
 #[lspower::async_trait]
 impl LanguageServer for LSPServer {
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
+        info!("Starting Rome Language Server...");
+
+        if let Some(value) = params.initialization_options {
+            self.session
+                .config
+                .write()
+                .set_workspace_settings(value)
+                .map_err(|err| {
+                    error!("Cannot set workspace settings: {}", err);
+                    LspError::internal_error()
+                })?;
+        }
+
         self.session
             .client_capabilities
             .write()
@@ -36,10 +52,30 @@ impl LanguageServer for LSPServer {
             capabilities: server_capabilities(),
             ..Default::default()
         };
+
         Ok(init)
     }
 
     async fn initialized(&self, _: InitializedParams) {
+        let item = ConfigurationItem {
+            scope_uri: None,
+            section: Some(String::from(CONFIGURATION_SECTION)),
+        };
+        let items = vec![item];
+        let configurations = self.client.configuration(items).await;
+
+        if let Ok(configurations) = configurations {
+            let configuration = configurations.into_iter().next().unwrap();
+            self.session
+                .config
+                .write()
+                .set_workspace_settings(configuration)
+                .map_err(|err| {
+                    error!("Cannot set workspace settings: {}", err);
+                })
+                .ok();
+        }
+
         let msg = format!("Server initialized with PID: {}", std::process::id());
         self.client.log_message(MessageType::INFO, msg).await;
     }
@@ -71,12 +107,18 @@ impl LanguageServer for LSPServer {
     ) -> LspResult<Option<Vec<TextEdit>>> {
         let url = params.text_document.uri;
         let doc = self.session.document(&url)?;
+        let workspace_settings = self.session.config.read().get_workspace_settings();
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format(&doc.text, doc.file_id, &params.options)
+            handlers::formatting::format(
+                &doc.text,
+                doc.file_id,
+                &params.options,
+                workspace_settings,
+            )
         });
         let edits = task.await?;
-        Ok(Some(edits))
+        Ok(edits)
     }
 
     async fn range_formatting(
@@ -85,17 +127,21 @@ impl LanguageServer for LSPServer {
     ) -> LspResult<Option<Vec<TextEdit>>> {
         let url = params.text_document.uri;
         let doc = self.session.document(&url)?;
+        let workspace_settings = self.session.config.read().get_workspace_settings();
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format_range(FormatRangeParams {
-                text: doc.text.as_ref(),
-                file_id: doc.file_id,
-                format_options: to_format_options(&params.options),
-                range: params.range,
-            })
+            handlers::formatting::format_range(
+                FormatRangeParams {
+                    text: doc.text.as_ref(),
+                    file_id: doc.file_id,
+                    format_options: to_format_options(&params.options),
+                    range: params.range,
+                },
+                workspace_settings,
+            )
         });
         let edits = task.await?;
-        Ok(Some(edits))
+        Ok(edits)
     }
 
     async fn on_type_formatting(
@@ -104,17 +150,33 @@ impl LanguageServer for LSPServer {
     ) -> LspResult<Option<Vec<TextEdit>>> {
         let url = params.text_document_position.text_document.uri;
         let doc = self.session.document(&url)?;
+        let workspace_settings = self.session.config.read().get_workspace_settings();
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format_on_type(FormatOnTypeParams {
-                text: doc.text.as_ref(),
-                file_id: doc.file_id,
-                format_options: to_format_options(&params.options),
-                position: params.text_document_position.position,
-            })
+            handlers::formatting::format_on_type(
+                FormatOnTypeParams {
+                    text: doc.text.as_ref(),
+                    file_id: doc.file_id,
+                    format_options: to_format_options(&params.options),
+                    position: params.text_document_position.position,
+                },
+                workspace_settings,
+            )
         });
         let edits = task.await?;
-        Ok(Some(edits))
+        Ok(edits)
+    }
+
+    async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
+        let result = self
+            .session
+            .config
+            .write()
+            .set_workspace_settings(params.settings);
+
+        if let Err(err) = result {
+            error!("Cannot set workspace settings: {}", err);
+        }
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {

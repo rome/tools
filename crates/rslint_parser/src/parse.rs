@@ -63,6 +63,11 @@ impl<T> Parse<T> {
     pub fn errors(&self) -> &[Diagnostic] {
         self.errors.as_slice()
     }
+
+    /// Returns [true] if the parser encountered some errors during the parsing
+    pub fn has_errors(&self) -> bool {
+        !self.errors.is_empty()
+    }
 }
 
 impl<T: AstNode> Parse<T> {

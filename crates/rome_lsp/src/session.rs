@@ -5,6 +5,7 @@ use lspower::lsp;
 use parking_lot::RwLock;
 use rome_analyze::{AnalysisServer, FileId};
 
+use crate::config::Config;
 use crate::{documents::Document, handlers, url_interner::UrlInterner};
 
 /// Represents the state of an LSP server session.
@@ -13,6 +14,10 @@ pub(crate) struct Session {
     pub(crate) client: lspower::Client,
     /// The capabilities provided by the client as part of [`lsp::InitializeParams`]
     pub(crate) client_capabilities: RwLock<Option<lsp::ClientCapabilities>>,
+
+    /// the configuration of the LSP
+    pub(crate) config: RwLock<Config>,
+
     documents: RwLock<HashMap<lsp::Url, Document>>,
     url_interner: RwLock<UrlInterner>,
 }
@@ -51,11 +56,13 @@ impl Session {
         let client_capabilities = RwLock::new(Default::default());
         let documents = Default::default();
         let url_interner = Default::default();
+        let config = RwLock::new(Config::new());
         Self {
             client,
             client_capabilities,
             documents,
             url_interner,
+            config,
         }
     }
 
