@@ -173,9 +173,13 @@ fn add_file_if_supported(files: &mut TestCaseFiles, name: String, content: Strin
     // Skip files that aren't JS/TS files (JSON, CSS...)
     if let Some(mut source_type) = SourceType::from_path(&path) {
         let is_module_regex = Regex::new("(import|export)\\s").unwrap();
-        // A very cheap heuristic if a file is a module or not.
-        // TypeScript detects if a file is a module or a script during parsing but that's
-        // something we don't support
+        // A very basic heuristic to determine if a module is a `Script` or a `Module`.
+        // The TypeScript parser automatically detects whatever a file is a module or a script
+        // by the presence of any module syntax. Rome's parser doesn't support this today
+        // because it would require moving any "strict mode" or "module" specific checks
+        // into a second compiler pass. The reason this is needed is that the module syntax
+        // may appear at the very end of the file after the parser has already processed
+        // some syntax that is invalid in strict mode (for example, an "arguments" variable).
         if !is_module_regex.is_match(&content) {
             source_type = source_type.with_module_kind(ModuleKind::Script);
         }
