@@ -153,6 +153,7 @@ impl JsBinaryExpression {
     }
 }
 
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum JsLogicalOperation {
     /// `??`
     NullishCoalescing,

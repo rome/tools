@@ -1,7 +1,5 @@
 use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-
 use rslint_parser::ast::JsTemplateElement;
 use rslint_parser::ast::JsTemplateElementFields;
 
