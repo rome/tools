@@ -111,6 +111,6 @@ jobs:
         run: cargo build --release --locked -p xtask_coverage
       - name: Run Test262 suite
         continue-on-error: true
-        run: cargo coverage js
+        run: cargo coverage
       - name: Clean cache
         run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
