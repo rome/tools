@@ -3,6 +3,7 @@ use rslint_parser::{ModuleKind, SourceType};
 use std::path::Path;
 
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use crate::util::decode_maybe_utf16_string;
 
 const CASES_PATH: &str = "xtask/coverage/Typescript/tests/cases";
 const REFERENCE_PATH: &str = "xtask/coverage/Typescript/tests/baselines/reference";
@@ -30,6 +31,7 @@ impl TestCase for TypeScriptTestCase {
             files,
             module_options,
         } = extract_metadata(&self.code, &self.name);
+
         let mut all_errors = Vec::new();
 
         for file in &files {
@@ -80,15 +82,9 @@ impl TestSuite for TypeScriptTestSuite {
 
 fn check_file_encoding(path: &std::path::Path) -> Option<String> {
     let buffer = std::fs::read(path).unwrap();
-    let bom = buffer.get(0..3);
-    //Utf16Be or // Utf16Le
-    if let Some(&[0xfe, 0xff, _] | &[0xff, 0xfe, _]) = bom {
-        None
-    } else {
-        std::str::from_utf8(buffer.as_slice())
-            .ok()
-            .map(str::to_string)
-    }
+    decode_maybe_utf16_string(&buffer)
+        .ok()
+        .map(|decoded| decoded.as_str().to_string())
 }
 
 struct TestCaseMetadata {
@@ -158,7 +154,7 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
         add_file_if_supported(
             &mut files,
             path.file_name().unwrap().to_str().unwrap().to_string(),
-            code.to_string(),
+            current_file_content,
         );
     }
 
