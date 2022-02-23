@@ -70,9 +70,9 @@ interface foo5 {
 
 interface foo6 { /* foo */ new /* bar */ ( /* baz */ ): /* bat */ string }
 
-type foo7 = ( /* bar */ ) => void; /* foo */ /* baz */
+type foo7 = ( /* bar */ ) /* baz */ => void; /* foo */
 
-type foo8 = (a: /* bar */ string) => void; /* foo */ /* baz */
+type foo8 = (a: /* bar */ string) /* baz */ => void; /* foo */
 
 let foo9: new /* foo */ ( /* bar */ ) /* baz */ => string;
 

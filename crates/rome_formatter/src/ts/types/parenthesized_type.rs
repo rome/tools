@@ -1,5 +1,5 @@
 use crate::formatter_traits::FormatTokenAndNode;
-use crate::{group_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::TsParenthesizedType;
 use rslint_parser::ast::TsParenthesizedTypeFields;
 
@@ -13,7 +13,7 @@ impl ToFormatElement for TsParenthesizedType {
 
         formatter.format_delimited_soft_block_indent(
             &l_paren_token?,
-            group_elements(ty.format(formatter)?),
+            ty.format(formatter)?,
             &r_paren_token?,
         )
     }

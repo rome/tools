@@ -17,9 +17,7 @@ impl ToFormatElement for TsAssertsReturnType {
             space_token(),
             parameter_name.format(formatter)?,
             space_token(),
-            predicate.format_with_or_empty(formatter, |element| {
-                format_elements![element, space_token()]
-            })?
+            predicate.format_or_empty(formatter)?
         ])
     }
 }
