@@ -45,7 +45,7 @@ jobs:
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
         run: 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
-  
+
   build:
     strategy:
       matrix:
@@ -96,7 +96,7 @@ jobs:
       - name: Audit crates.io dependencies
         if: matrix.code-target == 'linux-x64'
         run: cargo audit
-      
+
       - name: Build LSP
         run: cargo build -p rome_lsp --release --target ${{ matrix.target }}
         env:
@@ -126,6 +126,15 @@ jobs:
           mkdir ../../dist
           npx vsce package -o "../../dist/rome_lsp-${{ matrix.code-target }}.vsix" --target ${{ matrix.code-target }}
         working-directory: editors/vscode
+        if: needs.check.outputs.prerelease != 'true'
+      - name: Package extension (pre-release)
+        run: |
+          npm ci
+          npm run compile
+          mkdir ../../dist
+          npx vsce package --pre-release -o "../../dist/rome_lsp-${{ matrix.code-target }}.vsix" --target ${{ matrix.code-target }}
+        working-directory: editors/vscode
+        if: needs.check.outputs.prerelease == 'true'
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
