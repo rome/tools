@@ -189,7 +189,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     match id {
         Present(id) => {
             let text = p.span_text(id.range(p));
-            if p.typescript() && is_reserved_type_name(text) {
+            if TypeScript.is_supported(p) && is_reserved_type_name(text) {
                 let err = p
                     .err_builder(&format!(
                             "`{}` cannot be used as a class name because it is already reserved as a type",
@@ -990,7 +990,7 @@ fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, Range<u
 
         // test_err optional_member
         // class B { foo?; }
-        if p.typescript() {
+        if TypeScript.is_supported(p) {
             Ok(Some(range))
         } else {
             let err = p
@@ -1502,7 +1502,9 @@ fn parse_class_member_modifiers(
                 }
             }
 
-            if !p.typescript() && !matches!(&current_modifier.kind, ModifierKind::Static) {
+            if TypeScript.is_unsupported(p)
+                && !matches!(&current_modifier.kind, ModifierKind::Static)
+            {
                 p.error(
                     p.err_builder(&format!(
                         "`{}` modifier can only be used in TypeScript files",

@@ -1,7 +1,7 @@
 use rome_core::App;
 use rome_formatter::{format, FormatOptions, Formatted, IndentStyle};
 use rome_path::RomePath;
-use rslint_parser::{parse, Syntax};
+use rslint_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::fs;
@@ -128,20 +128,15 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
     if app.can_format(&rome_path) {
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
-        let syntax = if file_type == "module" {
-            if rome_path.extension().unwrap().to_str().unwrap().eq("ts") {
-                Syntax::default().typescript()
-            } else {
-                Syntax::default().module()
-            }
-        } else {
-            Syntax::default()
-        };
+        let mut source_type = SourceType::from_path(rome_path.as_path()).unwrap();
+        if file_type != "module" {
+            source_type = source_type.with_module_kind(ModuleKind::Script);
+        }
 
         let input = fs::read_to_string(file_path).unwrap();
         snapshot_content.set_input(input.as_str());
 
-        let root = parse(buffer.as_str(), 0, syntax).syntax();
+        let root = parse(buffer.as_str(), 0, source_type).syntax();
         let formatted_result = format(FormatOptions::default(), &root);
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
         // we ignore the error for now
