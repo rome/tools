@@ -26,6 +26,7 @@ pub(crate) enum ExportDefaultItemKind {
     Expression,
     FunctionOverload,
     FunctionDeclaration,
+    Interface,
     // Any other declaration
     Declaration,
 }
@@ -37,6 +38,10 @@ impl ExportDefaultItemKind {
 
     pub(crate) fn is_function_declaration(&self) -> bool {
         matches!(self, ExportDefaultItemKind::FunctionDeclaration)
+    }
+
+    pub(crate) fn is_interface(&self) -> bool {
+        matches!(self, ExportDefaultItemKind::Interface)
     }
 }
 
@@ -606,6 +611,7 @@ impl ChangeParserStateFlags for EnterType {
 pub(crate) struct EnterAmbientContextSnapshot {
     flags: ParsingContextFlags,
     default_item: Option<ExportDefaultItem>,
+    strict_mode: Option<StrictMode>,
 }
 
 pub(crate) struct EnterAmbientContext;
@@ -618,11 +624,13 @@ impl ChangeParserState for EnterAmbientContext {
         EnterAmbientContextSnapshot {
             flags: std::mem::replace(&mut state.parsing_context, new_flags),
             default_item: state.default_item.take(),
+            strict_mode: state.strict.take(),
         }
     }
 
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
         state.parsing_context = value.flags;
         state.default_item = value.default_item;
+        state.strict = value.strict_mode;
     }
 }

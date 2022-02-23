@@ -168,19 +168,16 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         //  export { pain } from "life";
         // }
         T![export] => parse_export(p).map(|mut export| {
-            if !p.is_module() && TypeScript.is_unsupported(p) {
-                let err = p
-                    .err_builder("Illegal use of an export declaration outside of a module")
-                    .primary(export.range(p), "not allowed inside scripts");
-
-                p.error(err);
-            } else {
-                let err = p
+            let error = match p.source_type.module_kind() {
+                ModuleKind::Module => p
                     .err_builder("Illegal use of an import declaration not at the top level")
-                    .primary(export.range(p), "move this declaration to the top level");
+                    .primary(export.range(p), "move this declaration to the top level"),
+                ModuleKind::Script => p
+                    .err_builder("Illegal use of an export declaration outside of a module")
+                    .primary(export.range(p), "not allowed inside scripts"),
+            };
 
-                p.error(err);
-            }
+            p.error(error);
             export.change_kind(p, JS_UNKNOWN_STATEMENT);
             export
         }),

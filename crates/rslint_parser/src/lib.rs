@@ -194,10 +194,10 @@ pub enum Language {
 }
 
 impl Language {
-    pub fn is_js(&self) -> bool {
+    pub fn is_javascript(&self) -> bool {
         matches!(self, Language::JS)
     }
-    pub fn is_ts(&self) -> bool {
+    pub fn is_typescript(&self) -> bool {
         matches!(self, Language::TS { .. })
     }
 }
@@ -414,7 +414,7 @@ impl SyntaxFeature for JsSyntaxFeature {
         match self {
             JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
             JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
-            JsSyntaxFeature::TypeScript => p.source_type.language().is_ts(),
+            JsSyntaxFeature::TypeScript => p.source_type.language().is_typescript(),
         }
     }
 }

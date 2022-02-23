@@ -1081,7 +1081,13 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
                 p.error(err);
                 clause.change_kind(p, JsSyntaxKind::JS_UNKNOWN);
             }
-        } else {
+        }
+        // TypeScript supports multiple `export default interface` They all get merged together
+        // test ts ts_export_default_multiple_interfaces
+        // export default interface A { a: string; }
+        // export default interface B { a: string }
+        // export default function test() {}
+        else if !default_item_kind.is_interface() {
             p.state.default_item = Some(ExportDefaultItem {
                 range: clause.range(p).into(),
                 kind: default_item_kind,
@@ -1141,6 +1147,7 @@ fn parse_export_default_declaration_clause(
             ExportDefaultItemKind::FunctionOverload
         }
         (ExportDefaultDeclarationKind::Function, _) => ExportDefaultItemKind::FunctionDeclaration,
+        (ExportDefaultDeclarationKind::Interface, _) => ExportDefaultItemKind::Interface,
         _ => ExportDefaultItemKind::Declaration,
     };
 
