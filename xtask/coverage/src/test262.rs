@@ -1,6 +1,8 @@
 use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
 use regex::Regex;
-use rslint_parser::{parse, SourceType};
+use rome_rowan::api::SyntaxKind;
+use rslint_errors::{Diagnostic, Severity};
+use rslint_parser::{parse, AstNode, SourceType};
 use serde::Deserialize;
 use std::io;
 use std::path::Path;
@@ -97,7 +99,25 @@ impl Test262TestCase {
         let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type);
 
         match parse_result {
-            Ok(_) if !should_fail => TestRunOutcome::Passed(files),
+            Ok(root) if !should_fail => {
+                if let Some(unknown) = root
+                    .syntax()
+                    .descendants()
+                    .find(|descendant| descendant.kind().is_unknown())
+                {
+                    TestRunOutcome::IncorrectlyErrored {
+                        errors: vec![Diagnostic::new(
+                            0,
+                            Severity::Bug,
+                            "Unknown node in test that should pass",
+                        )
+                        .primary(unknown.text_range(), "")],
+                        files,
+                    }
+                } else {
+                    TestRunOutcome::Passed(files)
+                }
+            }
             Err(_) if should_fail => TestRunOutcome::Passed(files),
             Ok(_) if should_fail => TestRunOutcome::IncorrectlyPassed(files),
             Err(errors) if !should_fail => TestRunOutcome::IncorrectlyErrored { errors, files },

@@ -1,6 +1,6 @@
 use super::*;
 use crate::reporters::TestReporter;
-use rslint_errors::file::SimpleFiles;
+use rslint_errors::file::{FileId, SimpleFiles};
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::Emitter;
 use rslint_parser::ast::JsAnyRoot;
@@ -76,7 +76,7 @@ pub(crate) struct TestCaseFile {
     /// The source type used to parse the file
     source_type: SourceType,
 
-    id: usize,
+    id: FileId,
 }
 
 impl TestCaseFile {
@@ -86,6 +86,10 @@ impl TestCaseFile {
 
     pub(crate) fn name(&self) -> &str {
         &self.name
+    }
+
+    pub(crate) fn id(&self) -> FileId {
+        self.id
     }
 }
 

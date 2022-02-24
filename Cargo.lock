@@ -2233,6 +2233,7 @@ dependencies = [
  "once_cell",
  "pico-args",
  "regex",
+ "rome_rowan",
  "rslint_errors",
  "rslint_parser",
  "serde",
