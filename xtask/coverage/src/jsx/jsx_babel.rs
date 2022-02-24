@@ -1,3 +1,5 @@
+use rslint_parser::ModuleKind;
+
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
@@ -31,7 +33,7 @@ impl TestCase for BabelJsxTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let jsx = rslint_parser::SourceType::jsx();
+        let jsx = rslint_parser::SourceType::jsx().with_module_kind(ModuleKind::Script);
         let r = rslint_parser::parse(&self.code, 0, jsx.clone());
 
         let file = TestCaseFiles::single(self.name().to_string(), self.code.clone(), jsx);
