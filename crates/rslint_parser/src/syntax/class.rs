@@ -785,7 +785,7 @@ fn parse_class_member_impl(
 
                         let kind = if is_member_abstract {
                             p.eat(T![;]);
-                            TS_ABSTRACT_GETTER_CLASS_MEMBER
+                            TS_GETTER_SIGNATURE_CLASS_MEMBER
                         } else {
                             JS_GETTER_CLASS_MEMBER
                         };
@@ -820,7 +820,7 @@ fn parse_class_member_impl(
 
                         let kind = if is_member_abstract {
                             p.eat(T![;]);
-                            TS_ABSTRACT_SETTER_CLASS_MEMBER
+                            TS_SETTER_SIGNATURE_CLASS_MEMBER
                         } else {
                             JS_SETTER_CLASS_MEMBER
                         };
@@ -856,7 +856,7 @@ fn parse_class_member_impl(
                     p,
                     member_marker,
                     if is_member_abstract {
-                        TS_ABSTRACT_PROPERTY_CLASS_MEMBER
+                        TS_PROPERTY_SIGNATURE_CLASS_MEMBER
                     } else {
                         JS_PROPERTY_CLASS_MEMBER
                     },
@@ -985,7 +985,7 @@ fn parse_property_class_member_body(
     //     abstract name: string = "";
     // }
 
-    if kind == TS_ABSTRACT_PROPERTY_CLASS_MEMBER && initializer_syntax.is_present() {
+    if kind == TS_PROPERTY_SIGNATURE_CLASS_MEMBER && initializer_syntax.is_present() {
         member
             .add_diagnostic_if_present(p, |p, range| {
                 p.err_builder("abstract properties cannot have initializers")
@@ -1158,7 +1158,7 @@ fn parse_method_class_member_rest(
         optional_member_token(p),
         modifiers.has(ModifierKind::Abstract),
     ) {
-        (Ok(_), true) => TS_ABSTRACT_METHOD_CLASS_MEMBER,
+        (Ok(_), true) => TS_METHOD_SIGNATURE_CLASS_MEMBER,
         (Ok(_), false) => JS_METHOD_CLASS_MEMBER,
         _ => JS_UNKNOWN_MEMBER,
     };

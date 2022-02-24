@@ -702,26 +702,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::NewTarget::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_ABSTRACT_GETTER_CLASS_MEMBER => {
-                    let $pattern =
-                        unsafe { $crate::ast::TsAbstractGetterClassMember::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::TS_ABSTRACT_METHOD_CLASS_MEMBER => {
-                    let $pattern =
-                        unsafe { $crate::ast::TsAbstractMethodClassMember::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::TS_ABSTRACT_PROPERTY_CLASS_MEMBER => {
-                    let $pattern =
-                        unsafe { $crate::ast::TsAbstractPropertyClassMember::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::TS_ABSTRACT_SETTER_CLASS_MEMBER => {
-                    let $pattern =
-                        unsafe { $crate::ast::TsAbstractSetterClassMember::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::TS_ANY_TYPE => {
                     let $pattern = unsafe { $crate::ast::TsAnyType::new_unchecked(node) };
                     $body
@@ -851,6 +831,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsFunctionType::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_GETTER_SIGNATURE_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsGetterSignatureClassMember::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_GETTER_SIGNATURE_TYPE_MEMBER => {
                     let $pattern =
                         unsafe { $crate::ast::TsGetterSignatureTypeMember::new_unchecked(node) };
@@ -935,6 +920,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_METHOD_SIGNATURE_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsMethodSignatureClassMember::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_METHOD_SIGNATURE_TYPE_MEMBER => {
                     let $pattern =
                         unsafe { $crate::ast::TsMethodSignatureTypeMember::new_unchecked(node) };
@@ -1015,6 +1005,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsPropertyParameter::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_PROPERTY_SIGNATURE_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsPropertySignatureClassMember::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_PROPERTY_SIGNATURE_TYPE_MEMBER => {
                     let $pattern =
                         unsafe { $crate::ast::TsPropertySignatureTypeMember::new_unchecked(node) };
@@ -1046,6 +1041,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 $crate::JsSyntaxKind::TS_RETURN_TYPE_ANNOTATION => {
                     let $pattern =
                         unsafe { $crate::ast::TsReturnTypeAnnotation::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_SETTER_SIGNATURE_CLASS_MEMBER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsSetterSignatureClassMember::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_SETTER_SIGNATURE_TYPE_MEMBER => {

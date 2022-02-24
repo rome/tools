@@ -583,7 +583,6 @@ JsClassDeclaration =
 	members: JsClassMemberList
 	'}'
 
-
 JsClassExpression =
 	'class'
 	id: JsAnyBinding?
@@ -622,17 +621,16 @@ JsAnyClassMemberName =
 	| JsPrivateClassMemberName
 
 JsAnyClassMember =
-	// Concrete Members
 	JsConstructorClassMember
 	| JsStaticInitializationBlockClassMember
 	| JsPropertyClassMember
 	| JsMethodClassMember
 	| JsGetterClassMember
 	| JsSetterClassMember
-	| TsAbstractPropertyClassMember
-	| TsAbstractMethodClassMember
-	| TsAbstractGetterClassMember
-	| TsAbstractSetterClassMember
+	| TsPropertySignatureClassMember
+	| TsMethodSignatureClassMember
+	| TsGetterSignatureClassMember
+	| TsSetterSignatureClassMember
 	| TsIndexSignatureClassMember	
 	| JsEmptyClassMember
 	| JsUnknownMember
@@ -699,7 +697,7 @@ JsPropertyClassMember =
 	value: JsInitializerClause?
 	';'?
 
-TsAbstractPropertyClassMember =
+TsPropertySignatureClassMember =
 	access_modifier: ('protected' | 'public')?
 	'abstract'
 	'readonly'?
@@ -734,7 +732,7 @@ JsMethodClassMember =
 	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
-TsAbstractMethodClassMember =
+TsMethodSignatureClassMember =
 	access_modifier: ('protected' | 'public')?
 	'abstract'
 	name: JsAnyClassMemberName
@@ -755,7 +753,7 @@ JsGetterClassMember =
 	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
 
-TsAbstractGetterClassMember =
+TsGetterSignatureClassMember =
 	access_modifier: ('protected' | 'public')?
 	'abstract'
 	'get'
@@ -777,7 +775,7 @@ JsSetterClassMember =
 	')'
 	body: JsFunctionBody
 
-TsAbstractSetterClassMember =
+TsSetterSignatureClassMember =
 	access_modifier: ('protected' | 'public')?
 	'abstract'
 	'set'

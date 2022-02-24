@@ -11,13 +11,13 @@ impl ToFormatElement for JsAnyClassMember {
             Self::JsMethodClassMember(node) => node.to_format_element(formatter),
             Self::JsGetterClassMember(node) => node.to_format_element(formatter),
             Self::JsSetterClassMember(node) => node.to_format_element(formatter),
-            Self::JsEmptyClassMember(node) => node.to_format_element(formatter),
+            Self::TsPropertySignatureClassMember(node) => node.to_format_element(formatter),
+            Self::TsMethodSignatureClassMember(node) => node.to_format_element(formatter),
+            Self::TsGetterSignatureClassMember(node) => node.to_format_element(formatter),
+            Self::TsSetterSignatureClassMember(node) => node.to_format_element(formatter),
             Self::TsIndexSignatureClassMember(node) => node.to_format_element(formatter),
+            Self::JsEmptyClassMember(node) => node.to_format_element(formatter),
             Self::JsUnknownMember(node) => node.to_format_element(formatter),
-            Self::TsAbstractMethodClassMember(node) => node.to_format_element(formatter),
-            Self::TsAbstractGetterClassMember(node) => node.to_format_element(formatter),
-            Self::TsAbstractSetterClassMember(node) => node.to_format_element(formatter),
-            Self::TsAbstractPropertyClassMember(node) => node.to_format_element(formatter),
         }
     }
 }

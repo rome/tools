@@ -1,8 +1,8 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-mod abstract_getter_class_member;
-mod abstract_method_class_member;
-mod abstract_property_class_member;
-mod abstract_setter_class_member;
 mod extends_clause;
+mod getter_signature_class_member;
 mod index_signature_class_member;
+mod method_signature_class_member;
+mod property_signature_class_member;
+mod setter_signature_class_member;

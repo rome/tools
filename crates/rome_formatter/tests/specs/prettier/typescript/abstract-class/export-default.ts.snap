@@ -13,7 +13,7 @@ export default abstract class C5 { abstract foo(): void; }
 # Output
 ```js
 export default abstract class C5 {
-  abstract foo(): void;
+  abstract foo(): void; 
 }
 
 ```

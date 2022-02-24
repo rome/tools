@@ -52,11 +52,15 @@ abstract class A {
 }
 
 abstract class B {
-  abstract foo(): number;
-  abstract foo();
+  
+    abstract foo() : number;
+  
+    abstract foo();
   x: number;
-  abstract foo();
-  abstract foo();
+  
+    abstract foo();
+  
+    abstract foo();
 }
 
 ```

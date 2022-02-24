@@ -273,7 +273,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@328..329 "{" [] [],
             members: JsClassMemberList [
-                TsAbstractPropertyClassMember {
+                TsPropertySignatureClassMember {
                     access_modifier: missing (optional),
                     abstract_token: ABSTRACT_KW@329..343 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                     readonly_token: missing (optional),
@@ -288,7 +288,7 @@ JsModule {
                     },
                     semicolon_token: SEMICOLON@355..356 ";" [] [],
                 },
-                TsAbstractMethodClassMember {
+                TsMethodSignatureClassMember {
                     access_modifier: missing (optional),
                     abstract_token: ABSTRACT_KW@356..370 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
@@ -303,7 +303,7 @@ JsModule {
                     return_type_annotation: missing (optional),
                     semicolon_token: SEMICOLON@379..380 ";" [] [],
                 },
-                TsAbstractGetterClassMember {
+                TsGetterSignatureClassMember {
                     access_modifier: missing (optional),
                     abstract_token: ABSTRACT_KW@380..394 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                     get_token: GET_KW@394..398 "get" [] [Whitespace(" ")],
@@ -315,7 +315,7 @@ JsModule {
                     return_type: missing (optional),
                     semicolon_token: SEMICOLON@407..408 ";" [] [],
                 },
-                TsAbstractSetterClassMember {
+                TsSetterSignatureClassMember {
                     access_modifier: missing (optional),
                     abstract_token: ABSTRACT_KW@408..422 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                     set_token: SET_KW@422..426 "set" [] [Whitespace(" ")],
@@ -546,7 +546,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@328..329 "{" [] []
       7: JS_CLASS_MEMBER_LIST@329..439
-        0: TS_ABSTRACT_PROPERTY_CLASS_MEMBER@329..356
+        0: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@329..356
           0: (empty)
           1: ABSTRACT_KW@329..343 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           2: (empty)
@@ -557,7 +557,7 @@ JsModule {
             1: TS_STRING_TYPE@349..355
               0: STRING_KW@349..355 "string" [] []
           5: SEMICOLON@355..356 ";" [] []
-        1: TS_ABSTRACT_METHOD_CLASS_MEMBER@356..380
+        1: TS_METHOD_SIGNATURE_CLASS_MEMBER@356..380
           0: (empty)
           1: ABSTRACT_KW@356..370 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@370..377
@@ -569,7 +569,7 @@ JsModule {
             2: R_PAREN@378..379 ")" [] []
           5: (empty)
           6: SEMICOLON@379..380 ";" [] []
-        2: TS_ABSTRACT_GETTER_CLASS_MEMBER@380..408
+        2: TS_GETTER_SIGNATURE_CLASS_MEMBER@380..408
           0: (empty)
           1: ABSTRACT_KW@380..394 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           2: GET_KW@394..398 "get" [] [Whitespace(" ")]
@@ -579,7 +579,7 @@ JsModule {
           5: R_PAREN@406..407 ")" [] []
           6: (empty)
           7: SEMICOLON@407..408 ";" [] []
-        3: TS_ABSTRACT_SETTER_CLASS_MEMBER@408..439
+        3: TS_SETTER_SIGNATURE_CLASS_MEMBER@408..439
           0: (empty)
           1: ABSTRACT_KW@408..422 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           2: SET_KW@422..426 "set" [] [Whitespace(" ")]
