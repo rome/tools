@@ -38,42 +38,29 @@ expression: strings.js
 ```js
 [
   "abc",
-  'abc',
+  "abc",
 
-  '\'',
+  "\'",
 
-  '"',
-  '\"',
-  '\\"',
+  """,
+  "\"",
+  "\\"",
 
   "'",
   "\'",
   "\\'",
 
   "'\"",
-  '\'"',
+  "\'"",
 
-  '\\',
+  "\\",
   "\\",
 
-  '\0',
-  '🐶',
+  "\0",
+  "🐶",
 
-  '\uD801\uDC28',
+  "\uD801\uDC28",
 ];
-
-```
-
-# Errors
-```
-error: invalid digits after unicode escape sequence
-   ┌─ strings.js:24:4
-   │
-24 │   '\uD801\uDC28',
-   │    ^^^^^^^^^^^^ expected valid unicode escape sequence
-   │    │      
-   │    expected valid unicode escape sequence
-
 
 ```
 
