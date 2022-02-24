@@ -1146,13 +1146,20 @@ fn parse_ts_function_type(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_FUNCTION_TYPE))
 }
 
+// test ts ts_return_type_asi
+// interface I {
+//  foo(test: string): I
+//  is(): boolean;
+//  bar(test: string): I
+//  asserts(): boolean;
+// }
 fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
     let is_asserts_predicate = is_at_contextual_keyword(p, "asserts")
         && (is_nth_at_identifier(p, 1) || p.nth_at(1, T![this]));
     let is_is_predicate =
         (is_at_identifier(p) || p.at(T![this])) && is_nth_at_contextual_keyword(p, 1, "is");
 
-    if is_asserts_predicate || is_is_predicate {
+    if !p.has_linebreak_before_n(1) && (is_asserts_predicate || is_is_predicate) {
         parse_ts_type_predicate(p)
     } else {
         parse_ts_type(p)
