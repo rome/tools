@@ -1781,12 +1781,33 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
     p.bump_any(); // bump (
     parse_binding_pattern(p, ExpressionContext::default()).or_add_diagnostic(p, expected_binding);
 
-    let type_annotation = parse_ts_type_parameters(p);
-    JsSyntaxFeature::TypeScript
-        .exclusive_syntax(p, type_annotation, |p, annotation| {
-            ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
-        })
-        .ok();
+    // test ts ts_catch_declaration
+    // try {} catch (error: any) {}
+    // try {} catch (error: unknown) {}
+    if p.at(T![:]) && is_nth_at_identifier(p, 1) {
+        let type_name_token = p.nth_tok(1);
+
+        // test_err ts ts_catch_declaration_non_any_unknown_type_annotation
+        // try {} catch (error: Error) {}
+        if TypeScript.is_supported(p)
+            && !matches!(
+                p.source(type_name_token.range().as_text_range()),
+                "any" | "unknown"
+            )
+        {
+            p.error(
+                p
+                    .err_builder("Catch clause variable type annotation must be 'any' or 'unknown' if specified.")
+                    .primary(type_name_token.range(), "")
+            );
+        }
+
+        JsSyntaxFeature::TypeScript
+            .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
+                ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
+            })
+            .ok();
+    }
 
     p.expect(T![')']);
 

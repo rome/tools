@@ -1,6 +1,6 @@
-use crate::formatter_traits::FormatTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
 use rslint_parser::ast::JsCatchDeclaration;
 use rslint_parser::ast::JsCatchDeclarationFields;
@@ -11,11 +11,15 @@ impl ToFormatElement for JsCatchDeclaration {
             l_paren_token,
             binding,
             r_paren_token,
+            type_annotation,
         } = self.as_fields();
 
         formatter.format_delimited_soft_block_indent(
             &l_paren_token?,
-            binding.format(formatter)?,
+            format_elements![
+                binding.format(formatter)?,
+                type_annotation.format_or_empty(formatter)?
+            ],
             &r_paren_token?,
         )
     }

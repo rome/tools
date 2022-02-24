@@ -690,6 +690,7 @@ impl JsCatchDeclaration {
         JsCatchDeclarationFields {
             l_paren_token: self.l_paren_token(),
             binding: self.binding(),
+            type_annotation: self.type_annotation(),
             r_paren_token: self.r_paren_token(),
         }
     }
@@ -699,13 +700,17 @@ impl JsCatchDeclaration {
     pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 1usize)
     }
+    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 2usize)
+    }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+        support::required_token(&self.syntax, 3usize)
     }
 }
 pub struct JsCatchDeclarationFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub binding: SyntaxResult<JsAnyBindingPattern>,
+    pub type_annotation: Option<TsTypeAnnotation>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9198,6 +9203,10 @@ impl std::fmt::Debug for JsCatchDeclaration {
                 &support::DebugSyntaxResult(self.l_paren_token()),
             )
             .field("binding", &support::DebugSyntaxResult(self.binding()))
+            .field(
+                "type_annotation",
+                &support::DebugOptionalElement(self.type_annotation()),
+            )
             .field(
                 "r_paren_token",
                 &support::DebugSyntaxResult(self.r_paren_token()),
