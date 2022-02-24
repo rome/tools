@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: assignment2.ts
 
 ---
@@ -69,38 +69,6 @@ const annotate = (angular.injector as any).$$annotate as (fn: Function) => strin
 
 const originalPrototype = originalConstructor.prototype as TComponent & InjectionTarget,
   propertyToServiceName = originalPrototype._inject;
-
-```
-
-# Errors
-```
-error[SyntaxError]: Invalid assignment to `this.configuration as any`
-  ┌─ assignment2.ts:5:2
-  │
-5 │ (this.configuration as any) = (this.editor as any) = (this
-  │  ^^^^^^^^^^^^^^^^^^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: Invalid assignment to `this.editor as any`
-  ┌─ assignment2.ts:5:32
-  │
-5 │ (this.configuration as any) = (this.editor as any) = (this
-  │                                ^^^^^^^^^^^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: Invalid assignment to `this
-  .editorBody as any`
-  ┌─ assignment2.ts:5:55
-  │  
-5 │   (this.configuration as any) = (this.editor as any) = (this
-  │ ┌───────────────────────────────────────────────────────^
-6 │ │   .editorBody as any) = undefined;
-  │ └────────────────────^ This expression cannot be assigned to
-
-error[SyntaxError]: Invalid assignment to `this.selectorElem as any`
-   ┌─ assignment2.ts:17:2
-   │
-17 │ (this.selectorElem as any) = this.multiselectWidget = this.initialValues = undefined;
-   │  ^^^^^^^^^^^^^^^^^^^^^^^^ This expression cannot be assigned to
-
 
 ```
 

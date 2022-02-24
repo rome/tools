@@ -507,7 +507,7 @@ impl Marker {
 }
 
 /// A structure signifying a completed node
-#[derive(Debug, PartialEq, Eq, Hash, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct CompletedMarker {
     pub(crate) start_pos: u32,
     // Hack for parsing completed markers which have been preceded

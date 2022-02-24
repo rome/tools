@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: assert-and-assign.ts
 
 ---
@@ -14,23 +14,6 @@ expression: assert-and-assign.ts
 ```js
 (a as number) = 42;
 ({ a: (b as any) = 2000 } = x);
-
-```
-
-# Errors
-```
-error[SyntaxError]: Invalid assignment to `a as number`
-  ┌─ assert-and-assign.ts:1:2
-  │
-1 │ (a as number) = 42;
-  │  ^^^^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: Invalid assignment to `b as any`
-  ┌─ assert-and-assign.ts:2:8
-  │
-2 │ ({ a: (b as any) = 2000 } = x);
-  │        ^^^^^^^^ This expression cannot be assigned to
-
 
 ```
 

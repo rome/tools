@@ -240,3 +240,11 @@ pub(crate) fn private_names_only_allowed_on_left_side_of_in_expression(
     p.err_builder("Private names are only allowed on the left side of a 'in' expression")
         .primary(private_name_range, "")
 }
+
+pub(crate) fn invalid_assignment_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+    p.err_builder(&format!(
+        "Invalid assignment to `{}`",
+        p.source(range.as_text_range())
+    ))
+    .primary(range, "This expression cannot be assigned to")
+}

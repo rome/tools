@@ -9,6 +9,8 @@ impl ToFormatElement for JsAnyAssignment {
             Self::JsStaticMemberAssignment(node) => node.to_format_element(formatter),
             Self::JsComputedMemberAssignment(node) => node.to_format_element(formatter),
             Self::JsParenthesizedAssignment(node) => node.to_format_element(formatter),
+            Self::TsNonNullAssertionAssignment(node) => node.to_format_element(formatter),
+            Self::TsAsAssignment(node) => node.to_format_element(formatter),
             Self::JsUnknownAssignment(node) => node.to_format_element(formatter),
         }
     }
