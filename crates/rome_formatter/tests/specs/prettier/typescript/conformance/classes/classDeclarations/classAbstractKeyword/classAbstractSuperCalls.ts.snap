@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: classAbstractSuperCalls.ts
 
 ---
@@ -43,7 +43,8 @@ class A {
 }
 
 abstract class B extends A {
-  abstract foo();
+  
+    abstract foo();
   bar() {
     super.foo();
   }
@@ -74,7 +75,8 @@ class AA {
 }
 
 abstract class BB extends AA {
-  abstract foo();
+  
+    abstract foo();
 }
 
 ```
