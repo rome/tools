@@ -152,10 +152,10 @@ pub fn run(
     }
 }
 
-const ALL_SUITES: &'static str = "*";
-const ALL_JS_SUITES: &'static str = "js";
-const ALL_TS_SUITES: &'static str = "ts";
-const ALL_JSX_SUITES: &'static str = "jsx";
+const ALL_SUITES: &str = "*";
+const ALL_JS_SUITES: &str = "js";
+const ALL_TS_SUITES: &str = "ts";
+const ALL_JSX_SUITES: &str = "jsx";
 
 fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
     let suites = suites.unwrap_or("*").to_lowercase();
