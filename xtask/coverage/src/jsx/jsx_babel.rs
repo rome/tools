@@ -7,24 +7,27 @@ use std::path::PathBuf;
 const OK_PATH: &str = "xtask/coverage/babel/packages/babel-parser/test/fixtures/jsx/basic";
 
 struct BabelJsxTestCase {
-    path: PathBuf,
+    name: String,
     code: String,
 }
 
 impl BabelJsxTestCase {
     fn new(path: PathBuf, code: String) -> Self {
-        Self { path, code }
-    }
-}
-
-impl TestCase for BabelJsxTestCase {
-    fn name(&self) -> &str {
-        self.path
+        let name = path
             .components()
             .rev()
             .nth(1)
             .and_then(|x| x.as_os_str().to_str())
             .unwrap_or("")
+            .to_string();
+
+        Self { name, code }
+    }
+}
+
+impl TestCase for BabelJsxTestCase {
+    fn name(&self) -> &str {
+        &self.name
     }
 
     fn run(&self) -> TestRunOutcome {
