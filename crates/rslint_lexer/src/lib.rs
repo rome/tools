@@ -319,13 +319,7 @@ impl<'src> Lexer<'src> {
                 if !advance {
                     self.cur -= 4;
                 }
-                std::char::from_u32(digits).ok_or_else(|| {
-                    invalid_digits_after_unicode_escape_sequence(
-                        self.file_id,
-                        self.cur - 5,
-                        self.cur + 1,
-                    )
-                })
+                Ok(std::char::from_u32_unchecked(digits))
             } else {
                 // Safety: we know this is unreachable because 4 hexdigits cannot make an out of bounds char,
                 // and we make sure that the chars are actually hex digits
