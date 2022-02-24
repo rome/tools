@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: indent.js
 
 ---
@@ -26,14 +26,23 @@ while (0);
 # Output
 ```js
 if (
-  someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
+    someVeryLongStringA &&
+    someVeryLongStringB &&
+    someVeryLongStringC &&
+    someVeryLongStringD
 ) {
 }
 while (
-  someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
+    someVeryLongStringA &&
+    someVeryLongStringB &&
+    someVeryLongStringC &&
+    someVeryLongStringD
 ) {}
 do {} while (
-  someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
+    someVeryLongStringA &&
+    someVeryLongStringB &&
+    someVeryLongStringC &&
+    someVeryLongStringD
 );
 
 if (

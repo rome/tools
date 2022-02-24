@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: identifier.js
 
 ---
@@ -20,7 +20,10 @@ const bifornCringerMoshedPerplexSawder = // !!!
 ```js
 const kochabCooieGameOnOboleUnweave = annularCooeedSplicesWalksWayWay; // ???
 
-const bifornCringerMoshedPerplexSawder = glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl - anodyneCondosMalateOverateRetinol; // !!!
+const bifornCringerMoshedPerplexSawder = // !!!
+  glimseGlyphsHazardNoopsTieTie + averredBathersBoxroomBuggyNurl -
+  anodyneCondosMalateOverateRetinol
+;
 
 ```
 

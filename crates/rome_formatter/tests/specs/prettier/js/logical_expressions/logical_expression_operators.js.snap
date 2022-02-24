@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: logical_expression_operators.js
 
 ---
@@ -43,8 +43,10 @@ foo || bar && baz;
 
 # Output
 ```js
-// Same operators do not require parens
-(foo && bar) && baz;
+  // Same operators do not require parens
+  (foo && bar) &&
+  baz
+;
 foo && (bar && baz);
 foo && ((bar && baz) && qux);
 foo && (bar && (baz && qux));
@@ -65,15 +67,21 @@ foo ?? (bar ?? (baz ?? qux));
 foo ?? (bar ?? ((baz ?? qux) ?? xyz));
 foo ?? (bar ?? (baz ?? (qux ?? xyz)));
 
-// Explicitly parenthesized && and || requires parens
-(foo && bar) || baz;
+  // Explicitly parenthesized && and || requires parens
+  (foo && bar) ||
+  baz
+;
 (foo || bar) && baz;
 
 foo && (bar || baz);
 foo || (bar && baz);
 
-// Implicitly parenthesized && and || requires parens
-foo && bar || baz;
+    // Implicitly parenthesized && and || requires parens
+    foo &&
+    bar
+  ||
+  baz
+;
 foo || bar && baz;
 
 ```

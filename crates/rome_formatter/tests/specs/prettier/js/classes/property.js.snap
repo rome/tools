@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: property.js
 
 ---
@@ -30,13 +30,19 @@ class B {
 # Output
 ```js
 class A {
-  foobar = // comment to break
-  1 + // comment to break again
-  2;
+  foobar =
+    // comment to break
+    1 +
+    // comment to break again
+    2
+  ;
 }
 
 class B {
-  someInstanceProperty = this.props.foofoofoofoofoofoo && this.props.barbarbarbar;
+  someInstanceProperty =
+    this.props.foofoofoofoofoofoo &&
+    this.props.barbarbarbar
+  ;
 
   someInstanceProperty2 = {
     foo: this.props.foofoofoofoofoofoo && this.props.barbarbarbar,

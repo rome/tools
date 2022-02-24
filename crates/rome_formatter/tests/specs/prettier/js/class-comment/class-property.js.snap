@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: class-property.js
 
 ---
@@ -19,8 +19,12 @@ class X {
 # Output
 ```js
 class X {
-  TEMPLATE = // tab index is needed so we can focus, which is needed for keyboard events
-  "<div class="ag-large-text" tabindex="0">" + "<div class="ag-large-textarea"></div>" + "</div>";
+  TEMPLATE =
+    // tab index is needed so we can focus, which is needed for keyboard events
+    "<div class="ag-large-text" tabindex="0">" +
+    "<div class="ag-large-textarea"></div>" +
+    "</div>"
+  ;
 }
 
 ```

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: binary-expressions-single-comments.js
 
 ---
@@ -28,22 +28,34 @@ c;
 # Output
 ```js
 a =
-  b || c; // Comment
+    b || // Comment
+    c
+  ;
 
 a =
-  b || c; // TODO this is a very very very very long comment that makes it go > 80 columns
+    b || // TODO this is a very very very very long comment that makes it go > 80 columns
+    c
+  ;
 
 a =
-  b && c; // Comment
+    b && // Comment
+    c
+  ;
 
 a =
-  b && c; // TODO this is a very very very very long comment that makes it go > 80 columns
+    b && // TODO this is a very very very very long comment that makes it go > 80 columns
+    c
+  ;
 
 a =
-  b + c; // Comment
+    b + // Comment
+    c
+  ;
 
 a =
-  b + c; // TODO this is a very very very very long comment that makes it go > 80 columns
+    b + // TODO this is a very very very very long comment that makes it go > 80 columns
+    c
+  ;
 
 ```
 

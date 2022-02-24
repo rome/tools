@@ -266,10 +266,12 @@ var a = function f() {
   return f(); // ?
 }();
 
-// FunctionExpression with non -void return type annotation with a single throw statement
-undefined === function (): number {
-  throw undefined;
-};
+  // FunctionExpression with non -void return type annotation with a single throw statement
+  undefined ===
+  function (): number {
+    throw undefined;
+  }
+;
 
 // Type of 'this' in function implementation is 'any'
 function thisFunc() {
