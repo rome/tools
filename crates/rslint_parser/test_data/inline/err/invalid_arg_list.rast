@@ -2,56 +2,116 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@9..12 "foo" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@12..13 "(" [] [],
+                items: JsParameterList [
+                    JsRestParameter {
+                        dotdotdot_token: DOT2@13..16 "..." [] [],
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@16..20 "args" [] [],
+                        },
+                        type_annotation: missing (optional),
+                    },
+                ],
+                r_paren_token: R_PAREN@20..22 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@22..23 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@23..24 "}" [] [],
+            },
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: LET_KW@24..29 "let" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@29..30 "a" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                    COMMA@30..32 "," [] [Whitespace(" ")],
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@32..33 "b" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                    COMMA@33..35 "," [] [Whitespace(" ")],
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@35..36 "c" [] [],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@36..37 ";" [] [],
+        },
         JsExpressionStatement {
             expression: JsCallExpression {
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@0..3 "foo" [] [],
+                        value_token: IDENT@37..41 "foo" [Newline("\n")] [],
                     },
                 },
                 optional_chain_token: missing (optional),
                 type_arguments: missing (optional),
                 arguments: JsCallArguments {
-                    l_paren_token: L_PAREN@3..4 "(" [] [],
+                    l_paren_token: L_PAREN@41..42 "(" [] [],
                     args: JsCallArgumentList [
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
-                                value_token: IDENT@4..5 "a" [] [],
+                                value_token: IDENT@42..43 "a" [] [],
                             },
                         },
-                        COMMA@5..6 "," [] [],
+                        COMMA@43..44 "," [] [],
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
-                                value_token: IDENT@6..7 "b" [] [],
+                                value_token: IDENT@44..45 "b" [] [],
                             },
                         },
                     ],
                     r_paren_token: missing (required),
                 },
             },
-            semicolon_token: SEMICOLON@7..8 ";" [] [],
+            semicolon_token: SEMICOLON@45..46 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsCallExpression {
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@8..12 "foo" [Newline("\n")] [],
+                        value_token: IDENT@46..50 "foo" [Newline("\n")] [],
                     },
                 },
                 optional_chain_token: missing (optional),
                 type_arguments: missing (optional),
                 arguments: JsCallArguments {
-                    l_paren_token: L_PAREN@12..13 "(" [] [],
+                    l_paren_token: L_PAREN@50..51 "(" [] [],
                     args: JsCallArgumentList [
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
-                                value_token: IDENT@13..14 "a" [] [],
+                                value_token: IDENT@51..52 "a" [] [],
                             },
                         },
-                        COMMA@14..15 "," [] [],
+                        COMMA@52..53 "," [] [],
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
-                                value_token: IDENT@15..17 "b" [] [Whitespace(" ")],
+                                value_token: IDENT@53..55 "b" [] [Whitespace(" ")],
                             },
                         },
                     ],
@@ -62,145 +122,246 @@ JsModule {
         },
         JsVariableStatement {
             declaration: JsVariableDeclaration {
-                kind: VAR_KW@17..20 "var" [] [],
+                kind: VAR_KW@55..58 "var" [] [],
                 declarators: JsVariableDeclaratorList [],
             },
-            semicolon_token: SEMICOLON@20..21 ";" [] [],
+            semicolon_token: SEMICOLON@58..59 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsCallExpression {
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@21..26 "foo" [Newline("\n")] [Whitespace(" ")],
+                        value_token: IDENT@59..64 "foo" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
                 optional_chain_token: missing (optional),
                 type_arguments: missing (optional),
                 arguments: JsCallArguments {
-                    l_paren_token: L_PAREN@26..27 "(" [] [],
+                    l_paren_token: L_PAREN@64..65 "(" [] [],
                     args: JsCallArgumentList [
                         missing element,
-                        COMMA@27..28 "," [] [],
+                        COMMA@65..66 "," [] [],
                         missing element,
-                        COMMA@28..29 "," [] [],
+                        COMMA@66..67 "," [] [],
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
-                                value_token: IDENT@29..30 "b" [] [],
+                                value_token: IDENT@67..68 "b" [] [],
                             },
                         },
                     ],
-                    r_paren_token: R_PAREN@30..31 ")" [] [],
+                    r_paren_token: R_PAREN@68..69 ")" [] [],
                 },
             },
-            semicolon_token: missing (optional),
+            semicolon_token: SEMICOLON@69..70 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsCallExpression {
+                callee: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@70..75 "foo" [Newline("\n")] [Whitespace(" ")],
+                    },
+                },
+                optional_chain_token: missing (optional),
+                type_arguments: missing (optional),
+                arguments: JsCallArguments {
+                    l_paren_token: L_PAREN@75..76 "(" [] [],
+                    args: JsCallArgumentList [
+                        JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@76..77 "a" [] [],
+                            },
+                        },
+                        COMMA@77..79 "," [] [Whitespace(" ")],
+                        JsSpread {
+                            dotdotdot_token: DOT2@79..82 "..." [] [],
+                            argument: missing (required),
+                        },
+                    ],
+                    r_paren_token: R_PAREN@82..83 ")" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@83..84 ";" [] [],
         },
     ],
-    eof_token: EOF@31..32 "" [Newline("\n")] [],
+    eof_token: EOF@84..85 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..32
+0: JS_MODULE@0..85
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..31
-    0: JS_EXPRESSION_STATEMENT@0..8
-      0: JS_CALL_EXPRESSION@0..7
-        0: JS_IDENTIFIER_EXPRESSION@0..3
-          0: JS_REFERENCE_IDENTIFIER@0..3
-            0: IDENT@0..3 "foo" [] []
-        1: (empty)
-        2: (empty)
-        3: JS_CALL_ARGUMENTS@3..7
-          0: L_PAREN@3..4 "(" [] []
-          1: JS_CALL_ARGUMENT_LIST@4..7
-            0: JS_IDENTIFIER_EXPRESSION@4..5
-              0: JS_REFERENCE_IDENTIFIER@4..5
-                0: IDENT@4..5 "a" [] []
-            1: COMMA@5..6 "," [] []
-            2: JS_IDENTIFIER_EXPRESSION@6..7
-              0: JS_REFERENCE_IDENTIFIER@6..7
-                0: IDENT@6..7 "b" [] []
-          2: (empty)
-      1: SEMICOLON@7..8 ";" [] []
-    1: JS_EXPRESSION_STATEMENT@8..17
-      0: JS_CALL_EXPRESSION@8..17
-        0: JS_IDENTIFIER_EXPRESSION@8..12
-          0: JS_REFERENCE_IDENTIFIER@8..12
-            0: IDENT@8..12 "foo" [Newline("\n")] []
-        1: (empty)
-        2: (empty)
-        3: JS_CALL_ARGUMENTS@12..17
-          0: L_PAREN@12..13 "(" [] []
-          1: JS_CALL_ARGUMENT_LIST@13..17
-            0: JS_IDENTIFIER_EXPRESSION@13..14
-              0: JS_REFERENCE_IDENTIFIER@13..14
-                0: IDENT@13..14 "a" [] []
-            1: COMMA@14..15 "," [] []
-            2: JS_IDENTIFIER_EXPRESSION@15..17
-              0: JS_REFERENCE_IDENTIFIER@15..17
-                0: IDENT@15..17 "b" [] [Whitespace(" ")]
-          2: (empty)
-      1: (empty)
-    2: JS_VARIABLE_STATEMENT@17..21
-      0: JS_VARIABLE_DECLARATION@17..20
-        0: VAR_KW@17..20 "var" [] []
-        1: JS_VARIABLE_DECLARATOR_LIST@20..20
-      1: SEMICOLON@20..21 ";" [] []
-    3: JS_EXPRESSION_STATEMENT@21..31
-      0: JS_CALL_EXPRESSION@21..31
-        0: JS_IDENTIFIER_EXPRESSION@21..26
-          0: JS_REFERENCE_IDENTIFIER@21..26
-            0: IDENT@21..26 "foo" [Newline("\n")] [Whitespace(" ")]
-        1: (empty)
-        2: (empty)
-        3: JS_CALL_ARGUMENTS@26..31
-          0: L_PAREN@26..27 "(" [] []
-          1: JS_CALL_ARGUMENT_LIST@27..30
-            0: (empty)
-            1: COMMA@27..28 "," [] []
+  2: JS_MODULE_ITEM_LIST@0..84
+    0: JS_FUNCTION_DECLARATION@0..24
+      0: (empty)
+      1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@9..12
+        0: IDENT@9..12 "foo" [] []
+      4: (empty)
+      5: JS_PARAMETERS@12..22
+        0: L_PAREN@12..13 "(" [] []
+        1: JS_PARAMETER_LIST@13..20
+          0: JS_REST_PARAMETER@13..20
+            0: DOT2@13..16 "..." [] []
+            1: JS_IDENTIFIER_BINDING@16..20
+              0: IDENT@16..20 "args" [] []
             2: (empty)
-            3: COMMA@28..29 "," [] []
-            4: JS_IDENTIFIER_EXPRESSION@29..30
-              0: JS_REFERENCE_IDENTIFIER@29..30
-                0: IDENT@29..30 "b" [] []
-          2: R_PAREN@30..31 ")" [] []
+        2: R_PAREN@20..22 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@22..24
+        0: L_CURLY@22..23 "{" [] []
+        1: JS_DIRECTIVE_LIST@23..23
+        2: JS_STATEMENT_LIST@23..23
+        3: R_CURLY@23..24 "}" [] []
+    1: JS_VARIABLE_STATEMENT@24..37
+      0: JS_VARIABLE_DECLARATION@24..36
+        0: LET_KW@24..29 "let" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@29..36
+          0: JS_VARIABLE_DECLARATOR@29..30
+            0: JS_IDENTIFIER_BINDING@29..30
+              0: IDENT@29..30 "a" [] []
+            1: (empty)
+            2: (empty)
+          1: COMMA@30..32 "," [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR@32..33
+            0: JS_IDENTIFIER_BINDING@32..33
+              0: IDENT@32..33 "b" [] []
+            1: (empty)
+            2: (empty)
+          3: COMMA@33..35 "," [] [Whitespace(" ")]
+          4: JS_VARIABLE_DECLARATOR@35..36
+            0: JS_IDENTIFIER_BINDING@35..36
+              0: IDENT@35..36 "c" [] []
+            1: (empty)
+            2: (empty)
+      1: SEMICOLON@36..37 ";" [] []
+    2: JS_EXPRESSION_STATEMENT@37..46
+      0: JS_CALL_EXPRESSION@37..45
+        0: JS_IDENTIFIER_EXPRESSION@37..41
+          0: JS_REFERENCE_IDENTIFIER@37..41
+            0: IDENT@37..41 "foo" [Newline("\n")] []
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@41..45
+          0: L_PAREN@41..42 "(" [] []
+          1: JS_CALL_ARGUMENT_LIST@42..45
+            0: JS_IDENTIFIER_EXPRESSION@42..43
+              0: JS_REFERENCE_IDENTIFIER@42..43
+                0: IDENT@42..43 "a" [] []
+            1: COMMA@43..44 "," [] []
+            2: JS_IDENTIFIER_EXPRESSION@44..45
+              0: JS_REFERENCE_IDENTIFIER@44..45
+                0: IDENT@44..45 "b" [] []
+          2: (empty)
+      1: SEMICOLON@45..46 ";" [] []
+    3: JS_EXPRESSION_STATEMENT@46..55
+      0: JS_CALL_EXPRESSION@46..55
+        0: JS_IDENTIFIER_EXPRESSION@46..50
+          0: JS_REFERENCE_IDENTIFIER@46..50
+            0: IDENT@46..50 "foo" [Newline("\n")] []
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@50..55
+          0: L_PAREN@50..51 "(" [] []
+          1: JS_CALL_ARGUMENT_LIST@51..55
+            0: JS_IDENTIFIER_EXPRESSION@51..52
+              0: JS_REFERENCE_IDENTIFIER@51..52
+                0: IDENT@51..52 "a" [] []
+            1: COMMA@52..53 "," [] []
+            2: JS_IDENTIFIER_EXPRESSION@53..55
+              0: JS_REFERENCE_IDENTIFIER@53..55
+                0: IDENT@53..55 "b" [] [Whitespace(" ")]
+          2: (empty)
       1: (empty)
-  3: EOF@31..32 "" [Newline("\n")] []
+    4: JS_VARIABLE_STATEMENT@55..59
+      0: JS_VARIABLE_DECLARATION@55..58
+        0: VAR_KW@55..58 "var" [] []
+        1: JS_VARIABLE_DECLARATOR_LIST@58..58
+      1: SEMICOLON@58..59 ";" [] []
+    5: JS_EXPRESSION_STATEMENT@59..70
+      0: JS_CALL_EXPRESSION@59..69
+        0: JS_IDENTIFIER_EXPRESSION@59..64
+          0: JS_REFERENCE_IDENTIFIER@59..64
+            0: IDENT@59..64 "foo" [Newline("\n")] [Whitespace(" ")]
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@64..69
+          0: L_PAREN@64..65 "(" [] []
+          1: JS_CALL_ARGUMENT_LIST@65..68
+            0: (empty)
+            1: COMMA@65..66 "," [] []
+            2: (empty)
+            3: COMMA@66..67 "," [] []
+            4: JS_IDENTIFIER_EXPRESSION@67..68
+              0: JS_REFERENCE_IDENTIFIER@67..68
+                0: IDENT@67..68 "b" [] []
+          2: R_PAREN@68..69 ")" [] []
+      1: SEMICOLON@69..70 ";" [] []
+    6: JS_EXPRESSION_STATEMENT@70..84
+      0: JS_CALL_EXPRESSION@70..83
+        0: JS_IDENTIFIER_EXPRESSION@70..75
+          0: JS_REFERENCE_IDENTIFIER@70..75
+            0: IDENT@70..75 "foo" [Newline("\n")] [Whitespace(" ")]
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@75..83
+          0: L_PAREN@75..76 "(" [] []
+          1: JS_CALL_ARGUMENT_LIST@76..82
+            0: JS_IDENTIFIER_EXPRESSION@76..77
+              0: JS_REFERENCE_IDENTIFIER@76..77
+                0: IDENT@76..77 "a" [] []
+            1: COMMA@77..79 "," [] [Whitespace(" ")]
+            2: JS_SPREAD@79..82
+              0: DOT2@79..82 "..." [] []
+              1: (empty)
+          2: R_PAREN@82..83 ")" [] []
+      1: SEMICOLON@83..84 ";" [] []
+  3: EOF@84..85 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `,` but instead found `;`
-  ┌─ invalid_arg_list.js:1:8
+  ┌─ invalid_arg_list.js:3:8
   │
-1 │ foo(a,b;
+3 │ foo(a,b;
   │        ^ unexpected
 
 --
 error[SyntaxError]: expected `,` but instead found `var`
-  ┌─ invalid_arg_list.js:2:9
+  ┌─ invalid_arg_list.js:4:9
   │
-2 │ foo(a,b var;
+4 │ foo(a,b var;
   │         ^^^ unexpected
 
 --
 error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ';'
-  ┌─ invalid_arg_list.js:2:12
+  ┌─ invalid_arg_list.js:4:12
   │
-2 │ foo(a,b var;
+4 │ foo(a,b var;
   │            ^ Expected an identifier, an array pattern, or an object pattern here
 
 --
 error[SyntaxError]: expected an expression but instead found ','
-  ┌─ invalid_arg_list.js:3:6
+  ┌─ invalid_arg_list.js:5:6
   │
-3 │ foo (,,b)
+5 │ foo (,,b);
   │      ^ Expected an expression here
 
 --
 error[SyntaxError]: expected an expression but instead found ','
-  ┌─ invalid_arg_list.js:3:7
+  ┌─ invalid_arg_list.js:5:7
   │
-3 │ foo (,,b)
+5 │ foo (,,b);
   │       ^ Expected an expression here
 
 --
+error[SyntaxError]: expected an expression, or an assignment but instead found ')'
+  ┌─ invalid_arg_list.js:6:12
+  │
+6 │ foo (a, ...);
+  │            ^ Expected an expression, or an assignment here
+
+--
+function foo(...args) {}
+let a, b, c;
 foo(a,b;
 foo(a,b var;
-foo (,,b)
+foo (,,b);
+foo (a, ...);

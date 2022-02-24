@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: chaining.js
 
 ---
@@ -99,7 +99,6 @@ var fooValue = myForm.querySelector("input[name=foo]")?.value;
 
 obj?.prop;
 obj?.[expr];
-
 func?.(...args);
 
 a?.();

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: mixinClassesAnnotated.ts
 
 ---
@@ -97,8 +97,7 @@ function Tagged<T extends Constructor<{}>>(superClass: T): Constructor<Tagged> &
   class C extends superClass {
     _tag: string;
     constructor(...args: any[]) {
-      
-            super(...args);
+      super(...args);
       this._tag = "hello";
     }
   }
