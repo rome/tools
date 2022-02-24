@@ -23,6 +23,7 @@
 	"contributes": {
 		"configuration": {
 			"title": "Rome",
+			"type": "object",
 			"properties": {
 				"rome.lspBin": {
 					"type": [
@@ -30,7 +31,16 @@
 						"null"
 					],
 					"default": null,
-					"description": "The rome lsp server executable."
+					"markdownDescription": "The rome lsp server executable."
+				},
+				"rome.formatter.formatWithSyntaxErrors": {
+					"type": "boolean",
+					"default": false,
+					"markdownDescription": "Allows the formatter to format code that contains syntax errors",
+					"examples": [
+						true,
+						false
+					]
 				}
 			}
 		}
@@ -50,12 +60,12 @@
 		"install-extension": "code --install-extension rome_lsp.vsix"
 	},
 	"dependencies": {
-		"vscode-languageclient": "8.0.0-next.7"
+		"vscode-languageclient": "8.0.0-next.12"
 	},
 	"devDependencies": {
 		"@types/node": "^16.11.9",
 		"@types/vscode": "^1.52.0",
 		"typescript": "^4.5.2",
-		"vsce": "^2.4.0"
+		"vsce": "^2.6.7"
 	}
 }

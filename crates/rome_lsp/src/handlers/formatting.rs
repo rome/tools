@@ -1,9 +1,10 @@
+use crate::config::WorkspaceSettings;
 use crate::line_index::{self, LineCol};
 use anyhow::{bail, Result};
 use lspower::lsp::*;
 use rome_analyze::FileId;
 use rome_formatter::{FormatOptions, IndentStyle};
-use rslint_parser::{parse_script, TextRange, TokenAtOffset};
+use rslint_parser::{parse, SourceType, TextRange, TokenAtOffset};
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
 /// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand
@@ -19,12 +20,23 @@ pub(crate) fn to_format_options(params: &FormattingOptions) -> FormatOptions {
     }
 }
 
-pub fn format(text: &str, file_id: FileId, params: &FormattingOptions) -> Result<Vec<TextEdit>> {
-    let tree = parse_script(text, file_id).syntax();
+pub fn format(
+    text: &str,
+    file_id: FileId,
+    params: &FormattingOptions,
+    workspace_settings: WorkspaceSettings,
+) -> Result<Option<Vec<TextEdit>>> {
+    let syntax = SourceType::ts();
 
+    let parse_result = parse(text, file_id, syntax);
+
+    // can't format, we bail early
+    if !workspace_settings.formatter.format_with_syntax_errors || parse_result.has_errors() {
+        return Ok(None);
+    }
     let options = to_format_options(params);
 
-    let new_text = rome_formatter::format(options, &tree)?.into_code();
+    let new_text = rome_formatter::format(options, &parse_result.syntax())?.into_code();
 
     let num_lines: u32 = line_index::LineIndex::new(text).newlines.len().try_into()?;
 
@@ -37,7 +49,7 @@ pub fn format(text: &str, file_id: FileId, params: &FormattingOptions) -> Result
     };
 
     let edits = vec![TextEdit { range, new_text }];
-    Ok(edits)
+    Ok(Some(edits))
 }
 
 pub(crate) struct FormatRangeParams<'input> {
@@ -46,11 +58,22 @@ pub(crate) struct FormatRangeParams<'input> {
     pub(crate) range: Range,
     /// Options to pass to [rome_formatter]
     pub(crate) format_options: FormatOptions,
+    pub(crate) workspace_settings: WorkspaceSettings,
 }
 
-pub(crate) fn format_range(params: FormatRangeParams) -> Result<Vec<TextEdit>> {
-    let tree = parse_script(params.text, params.file_id).syntax();
+pub(crate) fn format_range(params: FormatRangeParams) -> Result<Option<Vec<TextEdit>>> {
+    let syntax = SourceType::ts();
+    let parse_result = parse(params.text, params.file_id, syntax);
 
+    // can't format, we bail early
+    if params
+        .workspace_settings
+        .formatter
+        .format_with_syntax_errors
+        || !parse_result.has_errors()
+    {
+        return Ok(None);
+    }
     let line_index = line_index::LineIndex::new(params.text);
     let start_index = line_index.offset(LineCol {
         line: params.range.start.line,
@@ -61,6 +84,7 @@ pub(crate) fn format_range(params: FormatRangeParams) -> Result<Vec<TextEdit>> {
         col: params.range.end.character,
     });
 
+    let tree = parse_result.syntax();
     let format_range = TextRange::new(start_index, end_index);
     let formatted = rome_formatter::format_range(params.format_options, &tree, format_range)?;
 
@@ -89,10 +113,10 @@ pub(crate) fn format_range(params: FormatRangeParams) -> Result<Vec<TextEdit>> {
         },
     };
 
-    Ok(vec![TextEdit {
+    Ok(Some(vec![TextEdit {
         range: formatted_range,
         new_text: formatted.into_code(),
-    }])
+    }]))
 }
 
 pub(crate) struct FormatOnTypeParams<'input> {
@@ -101,20 +125,31 @@ pub(crate) struct FormatOnTypeParams<'input> {
     pub(crate) position: Position,
     /// Options to pass to [rome_formatter]
     pub(crate) format_options: FormatOptions,
+    pub(crate) workspace_settings: WorkspaceSettings,
 }
 
-pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Vec<TextEdit>> {
-    let tree = parse_script(params.text, params.file_id).syntax();
+pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Option<Vec<TextEdit>>> {
+    let syntax = SourceType::ts();
+    let parse_result = parse(params.text, params.file_id, syntax);
 
+    // can't format, we bail early
+    if params
+        .workspace_settings
+        .formatter
+        .format_with_syntax_errors
+        || !parse_result.has_errors()
+    {
+        return Ok(None);
+    }
     let line_index = line_index::LineIndex::new(params.text);
     let offset = line_index.offset(LineCol {
         line: params.position.line,
         col: params.position.character,
     });
-
+    let tree = parse_result.syntax();
     let token = match tree.token_at_offset(offset) {
         // File is empty, do nothing
-        TokenAtOffset::None => return Ok(vec![]),
+        TokenAtOffset::None => return Ok(None),
         TokenAtOffset::Single(token) => token,
         // The cursor should be right after the closing character that was just typed,
         // select the previous token as the correct one
@@ -153,8 +188,8 @@ pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Vec<TextEdit>
         },
     };
 
-    Ok(vec![TextEdit {
+    Ok(Some(vec![TextEdit {
         range: formatted_range,
         new_text: formatted.into_code(),
-    }])
+    }]))
 }

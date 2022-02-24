@@ -1,7 +1,7 @@
 use crate::ast::{JsAnyRoot, JsCallArguments};
-use crate::{parse, parse_module, AstNode, Parse, SourceType, SyntaxToken};
+use crate::{parse, parse_module, AstNode, Parse, SourceType, SyntaxNode, SyntaxToken};
 use expect_test::expect_file;
-use rome_rowan::TextSize;
+use rome_rowan::{SyntaxKind, TextSize};
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::{file::SimpleFiles, Emitter};
@@ -155,12 +155,18 @@ fn assert_errors_are_present(program: &Parse<JsAnyRoot>, path: &Path) {
     );
 }
 
+// sometimes our parser emits unknown nodes without diagnostics;
+// this check makes sure that we don't signal that the tree has errors.
+fn has_unknown_nodes(node: &SyntaxNode) -> bool {
+    node.descendants()
+        .any(|descendant| descendant.kind().is_unknown())
+}
+
 fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
-    if program.errors().is_empty() {
+    let syntax = program.syntax();
+    if !program.has_errors() && !has_unknown_nodes(&syntax) {
         return;
     }
-
-    let syntax = program.syntax();
 
     let file = SimpleFile::new(path.to_str().unwrap().to_string(), syntax.to_string());
     let mut emitter = Emitter::new(&file);
