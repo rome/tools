@@ -142,8 +142,7 @@ JsModule {
             1: IDENT@12..16 "prop" [] []
           5: (empty)
           6: (empty)
-          7: (empty)
-          8: SEMICOLON@16..17 ";" [] []
+          7: SEMICOLON@16..17 ";" [] []
         1: JS_METHOD_CLASS_MEMBER@17..94
           0: (empty)
           1: (empty)
@@ -157,8 +156,8 @@ JsModule {
             0: L_PAREN@23..24 "(" [] []
             1: JS_PARAMETER_LIST@24..24
             2: R_PAREN@24..26 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@26..94
+          8: (empty)
+          9: JS_FUNCTION_BODY@26..94
             0: L_CURLY@26..27 "{" [] []
             1: JS_DIRECTIVE_LIST@27..27
             2: JS_STATEMENT_LIST@27..91
