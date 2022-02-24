@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 173
+assertion_line: 168
 expression: class.ts
 
 ---
@@ -109,9 +109,21 @@ abstract class ConcreteMembers {
 	#private_method() {}
 }
 abstract class AbstractMembers {
+	
     abstract name: string;
+	
     abstract display();
+	
     abstract get my_name();
+	
     abstract set my_name(val);
 }
+
+
+## Unimplemented nodes/tokens
+
+"\n    abstract name: string;" => 781..808
+"\n    abstract display();" => 808..832
+"\n    abstract get my_name();" => 832..860
+"\n    abstract set my_name(val);" => 860..891
 
