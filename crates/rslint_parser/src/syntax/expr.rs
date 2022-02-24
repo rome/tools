@@ -691,7 +691,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     };
 
     if p.at(T!['(']) {
-        parse_arguments(p, context).unwrap();
+        parse_call_arguments(p, context).unwrap();
     } else if let Present(type_arguments) = type_arguments {
         let error = p.err_builder("A 'new' expression with type arguments must always be followed by a parenthesized argument list.").primary(type_arguments.range(p), "");
         p.error(error);
@@ -860,11 +860,22 @@ pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax {
 ///
 /// `"(" (AssignExpr ",")* ")"`
 
+// test call_arguments
+// function foo(...args) {}
+// let a, b, c, d;
+// foo(a);
+// foo(a, b,);
+// foo(a, b, ...c);
+// foo(...a, ...b, c, ...d,);
+//
 // test_err invalid_arg_list
+// function foo(...args) {}
+// let a, b, c;
 // foo(a,b;
 // foo(a,b var;
-// foo (,,b)
-fn parse_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+// foo (,,b);
+// foo (a, ...);
+fn parse_call_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
@@ -910,7 +921,7 @@ fn parse_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
                 p,
                 &ParseRecovery::new(
                     JS_UNKNOWN_EXPRESSION,
-                    EXPR_RECOVERY_SET.union(token_set!(T![')'], T![;])),
+                    EXPR_RECOVERY_SET.union(token_set!(T![')'], T![;], T![...])),
                 )
                 .enable_recovery_on_line_break(),
                 js_parse_error::expected_expression,
@@ -1559,12 +1570,12 @@ fn parse_call_expression_rest(
                     continue;
                 }
 
-                parse_arguments(p, context).or_add_diagnostic(p, expected_parameters);
+                parse_call_arguments(p, context).or_add_diagnostic(p, expected_parameters);
                 lhs = m.complete(p, JS_CALL_EXPRESSION);
                 continue;
             }
         } else if p.at(T!['(']) {
-            parse_arguments(p, context)
+            parse_call_arguments(p, context)
                 .expect("Expected parsed out arguments because the parser is positioned at '('");
             lhs = m.complete(p, JS_CALL_EXPRESSION);
             continue;

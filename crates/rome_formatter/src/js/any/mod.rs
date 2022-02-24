@@ -8,6 +8,7 @@ mod assignment;
 mod assignment_pattern;
 mod binding;
 mod binding_pattern;
+mod call_argument;
 mod class;
 mod class_member;
 mod class_member_name;

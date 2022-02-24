@@ -8530,7 +8530,7 @@ impl SyntaxFactory for JsSyntaxFactory {
             JS_CALL_ARGUMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyExpression::can_cast,
+                JsAnyCallArgument::can_cast,
                 T ! [,],
                 true,
             ),

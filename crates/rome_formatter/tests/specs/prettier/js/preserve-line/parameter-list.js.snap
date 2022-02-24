@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: parameter-list.js
 
 ---
@@ -192,10 +192,9 @@ function foo(one, ...rest) {}
 
 function foo(one, ...rest) {}
 
-
-
 f(
-  superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperLong,...args
+  superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperLong,
+  ...args,
 );
 
 it(

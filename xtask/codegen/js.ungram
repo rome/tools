@@ -1496,7 +1496,11 @@ TsThisParameter =
 
 JsCallArguments = '(' args: JsCallArgumentList ')'
 
-JsCallArgumentList = (JsAnyExpression (',' JsAnyExpression)* ','?)
+JsCallArgumentList = (JsAnyCallArgument (',' JsAnyCallArgument)* ','?)
+
+JsAnyCallArgument =
+	JsAnyExpression
+	| JsSpread
 
 
 // let a = 10;

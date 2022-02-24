@@ -8203,6 +8203,11 @@ pub enum JsAnyBindingPattern {
     JsObjectBindingPattern(JsObjectBindingPattern),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyCallArgument {
+    JsAnyExpression(JsAnyExpression),
+    JsSpread(JsSpread),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClass {
     JsClassDeclaration(JsClassDeclaration),
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
@@ -16940,6 +16945,58 @@ impl From<JsAnyBindingPattern> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsSpread> for JsAnyCallArgument {
+    fn from(node: JsSpread) -> JsAnyCallArgument { JsAnyCallArgument::JsSpread(node) }
+}
+impl AstNode for JsAnyCallArgument {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        match kind {
+            JS_SPREAD => true,
+            k if JsAnyExpression::can_cast(k) => true,
+            _ => false,
+        }
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_SPREAD => JsAnyCallArgument::JsSpread(JsSpread { syntax }),
+            _ => {
+                if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
+                    return Some(JsAnyCallArgument::JsAnyExpression(js_any_expression));
+                }
+                return None;
+            }
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsAnyCallArgument::JsSpread(it) => &it.syntax,
+            JsAnyCallArgument::JsAnyExpression(it) => it.syntax(),
+        }
+    }
+}
+impl std::fmt::Debug for JsAnyCallArgument {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsAnyCallArgument::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyCallArgument::JsSpread(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsAnyCallArgument> for SyntaxNode {
+    fn from(n: JsAnyCallArgument) -> SyntaxNode {
+        match n {
+            JsAnyCallArgument::JsAnyExpression(it) => it.into(),
+            JsAnyCallArgument::JsSpread(it) => it.into(),
+        }
+    }
+}
+impl From<JsAnyCallArgument> for SyntaxElement {
+    fn from(n: JsAnyCallArgument) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsClassDeclaration> for JsAnyClass {
     fn from(node: JsClassDeclaration) -> JsAnyClass { JsAnyClass::JsClassDeclaration(node) }
 }
@@ -21323,6 +21380,11 @@ impl std::fmt::Display for JsAnyBindingPattern {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsAnyCallArgument {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsAnyClass {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -23282,7 +23344,7 @@ impl AstNode for JsCallArgumentList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyExpression> for JsCallArgumentList {
+impl AstSeparatedList<JsAnyCallArgument> for JsCallArgumentList {
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsCallArgumentList {
@@ -23292,13 +23354,13 @@ impl Debug for JsCallArgumentList {
     }
 }
 impl IntoIterator for JsCallArgumentList {
-    type Item = SyntaxResult<JsAnyExpression>;
-    type IntoIter = AstSeparatedListNodesIterator<JsAnyExpression>;
+    type Item = SyntaxResult<JsAnyCallArgument>;
+    type IntoIter = AstSeparatedListNodesIterator<JsAnyCallArgument>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsCallArgumentList {
-    type Item = SyntaxResult<JsAnyExpression>;
-    type IntoIter = AstSeparatedListNodesIterator<JsAnyExpression>;
+    type Item = SyntaxResult<JsAnyCallArgument>;
+    type IntoIter = AstSeparatedListNodesIterator<JsAnyCallArgument>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
