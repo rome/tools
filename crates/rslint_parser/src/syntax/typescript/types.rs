@@ -1002,14 +1002,14 @@ fn parse_ts_literal_type(p: &mut Parser) -> ParsedSyntax {
             .or_else(|| parse_big_int_literal_expression(p))
             .unwrap();
 
-        // Inline the number or big int literal into the number/big int literal type
-        number_expr.undo_completion(p).abandon(p);
-
         let type_kind = match number_expr.kind() {
             JS_NUMBER_LITERAL_EXPRESSION => TS_NUMBER_LITERAL_TYPE,
             JS_BIG_INT_LITERAL_EXPRESSION => TS_BIG_INT_LITERAL_TYPE,
             _ => unreachable!(),
         };
+
+        // Inline the number or big int literal into the number/big int literal type
+        number_expr.undo_completion(p).abandon(p);
 
         return Present(m.complete(p, type_kind));
     }

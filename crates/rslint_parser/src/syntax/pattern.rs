@@ -229,10 +229,10 @@ fn validate_rest_pattern(
     }
 
     if p.at(T![=]) {
+        let kind = rest.kind();
         let rest_range = rest.range(p);
         let rest_marker = rest.undo_completion(p);
         let default_start = p.cur_tok().start();
-        let kind = rest.kind();
         p.bump(T![=]);
 
         if let Ok(recovered) = recovery.recover(p) {
