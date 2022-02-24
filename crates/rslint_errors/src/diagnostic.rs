@@ -395,6 +395,11 @@ impl Diagnostic {
     pub fn footer_note(self, msg: impl Into<String>) -> Self {
         self.footer(Severity::Note, msg)
     }
+
+    /// Checks if the severity of the current diagnostic is [Severity::Error] or higher
+    pub fn is_error(&self) -> bool {
+        self.severity.ge(&Severity::Error)
+    }
 }
 
 /// Everything that can be added to a diagnostic, like

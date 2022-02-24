@@ -2,7 +2,6 @@
 
 use crate::ast::{JsAnyRoot, JsExpressionSnipped, JsModule, JsScript};
 use crate::*;
-use rome_rowan::SyntaxKind;
 use rslint_errors::Severity;
 use std::marker::PhantomData;
 
@@ -66,31 +65,8 @@ impl<T> Parse<T> {
     }
 
     /// Returns [true] if the parser encountered some errors during the parsing.
-    ///
-    /// The the parse result has errors if:
-    /// - diagnostics have been emitted
-    /// - the tree has some unknown nodes
     pub fn has_errors(&self) -> bool {
-        if !self.errors.is_empty() {
-            return true;
-        }
-
-        // sometimes our parser emits unknown nodes without diagnostics;
-        // this check makes sure that we don't signal that the tree has errors.
-        self.has_unknown_nodes(&self.root)
-    }
-
-    fn has_unknown_nodes(&self, node: &SyntaxNode) -> bool {
-        let mut has_unknown_nodes = false;
-
-        for descendent in node.descendants() {
-            if descendent.kind().is_unknown() {
-                has_unknown_nodes = true;
-                break;
-            }
-        }
-
-        has_unknown_nodes
+        self.errors.iter().any(|diagnostic| diagnostic.is_error())
     }
 }
 
