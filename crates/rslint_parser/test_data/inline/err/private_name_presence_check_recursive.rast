@@ -94,22 +94,37 @@ JsModule {
                                 },
                                 semicolon_token: missing (optional),
                             },
+                            JsExpressionStatement {
+                                expression: JsBinaryExpression {
+                                    left: JsUnknownExpression {
+                                        items: [
+                                            HASH@77..82 "#" [Newline("\n"), Whitespace("   ")] [],
+                                            IDENT@82..87 "prop" [] [Whitespace(" ")],
+                                        ],
+                                    },
+                                    operator: PLUS@87..89 "+" [] [Whitespace(" ")],
+                                    right: JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@89..90 "5" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@90..91 ";" [] [],
+                            },
                         ],
-                        r_curly_token: R_CURLY@77..80 "}" [Newline("\n"), Whitespace(" ")] [],
+                        r_curly_token: R_CURLY@91..94 "}" [Newline("\n"), Whitespace(" ")] [],
                     },
                 },
             ],
-            r_curly_token: R_CURLY@80..82 "}" [Newline("\n")] [],
+            r_curly_token: R_CURLY@94..96 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@82..83 "" [Newline("\n")] [],
+    eof_token: EOF@96..97 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..83
+0: JS_MODULE@0..97
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..82
-    0: JS_CLASS_DECLARATION@0..82
+  2: JS_MODULE_ITEM_LIST@0..96
+    0: JS_CLASS_DECLARATION@0..96
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@6..8
@@ -118,7 +133,7 @@ JsModule {
       4: (empty)
       5: (empty)
       6: L_CURLY@8..9 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@9..80
+      7: JS_CLASS_MEMBER_LIST@9..94
         0: JS_PROPERTY_CLASS_MEMBER@9..17
           0: (empty)
           1: (empty)
@@ -131,7 +146,7 @@ JsModule {
           6: (empty)
           7: (empty)
           8: SEMICOLON@16..17 ";" [] []
-        1: JS_METHOD_CLASS_MEMBER@17..80
+        1: JS_METHOD_CLASS_MEMBER@17..94
           0: (empty)
           1: (empty)
           2: (empty)
@@ -146,10 +161,10 @@ JsModule {
             1: JS_PARAMETER_LIST@24..24
             2: R_PAREN@24..26 ")" [] [Whitespace(" ")]
           9: (empty)
-          10: JS_FUNCTION_BODY@26..80
+          10: JS_FUNCTION_BODY@26..94
             0: L_CURLY@26..27 "{" [] []
             1: JS_DIRECTIVE_LIST@27..27
-            2: JS_STATEMENT_LIST@27..77
+            2: JS_STATEMENT_LIST@27..91
               0: JS_EXPRESSION_STATEMENT@27..54
                 0: JS_IN_EXPRESSION@27..53
                   0: JS_IN_EXPRESSION@27..46
@@ -178,28 +193,44 @@ JsModule {
                   0: HASH@68..73 "#" [Newline("\n"), Whitespace("   ")] []
                   1: IDENT@73..77 "prop" [] []
                 1: (empty)
-            3: R_CURLY@77..80 "}" [Newline("\n"), Whitespace(" ")] []
-      8: R_CURLY@80..82 "}" [Newline("\n")] []
-  3: EOF@82..83 "" [Newline("\n")] []
+              3: JS_EXPRESSION_STATEMENT@77..91
+                0: JS_BINARY_EXPRESSION@77..90
+                  0: JS_UNKNOWN_EXPRESSION@77..87
+                    0: HASH@77..82 "#" [Newline("\n"), Whitespace("   ")] []
+                    1: IDENT@82..87 "prop" [] [Whitespace(" ")]
+                  1: PLUS@87..89 "+" [] [Whitespace(" ")]
+                  2: JS_NUMBER_LITERAL_EXPRESSION@89..90
+                    0: JS_NUMBER_LITERAL@89..90 "5" [] []
+                1: SEMICOLON@90..91 ";" [] []
+            3: R_CURLY@91..94 "}" [Newline("\n"), Whitespace(" ")] []
+      8: R_CURLY@94..96 "}" [Newline("\n")] []
+  3: EOF@96..97 "" [Newline("\n")] []
 --
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ private_name_presence_check_recursive.js:4:13
   │
 4 │    #prop in #prop in this;
   │             ^^^^^
 
 --
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ private_name_presence_check_recursive.js:5:8
   │
 5 │    5 + #prop;
   │        ^^^^^
 
 --
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ private_name_presence_check_recursive.js:6:4
   │
 6 │    #prop
+  │    ^^^^^
+
+--
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+  ┌─ private_name_presence_check_recursive.js:7:4
+  │
+7 │    #prop + 5;
   │    ^^^^^
 
 --
@@ -209,5 +240,6 @@ class A {
    #prop in #prop in this;
    5 + #prop;
    #prop
+   #prop + 5;
  }
 }

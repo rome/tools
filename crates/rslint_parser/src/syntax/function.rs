@@ -903,6 +903,8 @@ pub(crate) fn parse_formal_parameter(
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
     parse_binding_pattern(p, expression_context).map(|binding| {
+        let binding_kind = binding.kind();
+        let binding_range = binding.range(p);
         let m = binding.precede(p);
         let mut valid = true;
 
@@ -930,7 +932,7 @@ pub(crate) fn parse_formal_parameter(
 
         if valid
             && matches!(
-                binding.kind(),
+                binding_kind,
                 JS_OBJECT_BINDING_PATTERN | JS_ARRAY_BINDING_PATTERN
             )
         {
@@ -940,7 +942,7 @@ pub(crate) fn parse_formal_parameter(
                     p.err_builder(
                         "A parameter property may not be declared using a binding pattern.",
                     )
-                    .primary(binding.range(p), ""),
+                    .primary(binding_range, ""),
                 );
             } else if parameter_context.is_implementation() && is_optional {
                 valid = false;
@@ -948,7 +950,7 @@ pub(crate) fn parse_formal_parameter(
 					p.err_builder(
 						"A binding pattern parameter cannot be optional in an implementation signature.",
 					)
-						.primary(binding.range(p), ""),
+						.primary(binding_range, ""),
 				);
             }
         }

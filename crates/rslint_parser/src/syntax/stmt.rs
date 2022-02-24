@@ -1177,6 +1177,8 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
     p.state.duplicate_binding_parent = None;
 
     id.map(|id| {
+        let id_kind = id.kind();
+        let id_range = id.range(p);
         let m = id.precede(p);
 
         let ts_annotation = TypeScript.parse_exclusive_syntax(p, parse_ts_variable_annotation,
@@ -1279,14 +1281,14 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
         } else if initializer.is_none()
             && !p.state.in_ambient_context()
             && matches!(
-                id.kind(),
+                id_kind,
                 JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
             )
         {
             let err = p
                 .err_builder("Object and Array patterns require initializers")
                 .primary(
-                    id.range(p),
+                    id_range,
                     "this pattern is declared, but it is not given an initialized value",
                 );
 
@@ -1294,7 +1296,7 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
         } else if initializer.is_none() && context.is_const.is_some() && !p.state.in_ambient_context() {
             let err = p
                 .err_builder("Const var declarations must have an initialized value")
-                .primary(id.range(p), "this variable needs to be initialized");
+                .primary(id_range, "this variable needs to be initialized");
 
             p.error(err);
         }
@@ -1604,10 +1606,7 @@ impl ParseNodeList for SwitchCaseStatementList {
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
-fn parse_switch_clause(
-    p: &mut Parser,
-    first_default: &mut Option<CompletedMarker>,
-) -> ParsedSyntax {
+fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<Range<usize>>) -> ParsedSyntax {
     let m = p.start();
     match p.cur() {
         T![default] => {
@@ -1626,13 +1625,13 @@ fn parse_switch_clause(
             p.expect(T![:]);
             SwitchCaseStatementList.parse_list(p);
             let default = m.complete(p, syntax_kind);
-            if first_default.is_some() {
+            if let Some(first_default_range) = first_default {
                 let err = p
                     .err_builder(
                         "Multiple default clauses inside of a switch statement are not allowed",
                     )
                     .secondary(
-                        first_default.unwrap().range(p),
+                        first_default_range,
                         "the first default clause is defined here",
                     )
                     .primary(default.range(p), "a second clause here is not allowed");
@@ -1659,16 +1658,16 @@ fn parse_switch_clause(
 }
 #[derive(Default)]
 struct SwitchCasesList {
-    first_default: Option<CompletedMarker>,
+    first_default: Option<Range<usize>>,
 }
 
 impl ParseNodeList for SwitchCasesList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
         let clause = parse_switch_clause(p, &mut self.first_default);
 
-        if let Present(marker) = clause {
+        if let Present(marker) = &clause {
             if marker.kind() == JS_DEFAULT_CLAUSE && self.first_default == None {
-                self.first_default = Some(marker);
+                self.first_default = Some(marker.range(p).as_range());
             }
         }
 

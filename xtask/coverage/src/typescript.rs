@@ -27,10 +27,7 @@ impl TestCase for TypeScriptTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let TestCaseMetadata {
-            files,
-            module_options,
-        } = extract_metadata(&self.code, &self.name);
+        let TestCaseMetadata { files, run_options } = extract_metadata(&self.code, &self.name);
 
         let mut all_errors = Vec::new();
 
@@ -40,7 +37,7 @@ impl TestCase for TypeScriptTestCase {
             }
         }
 
-        let expected_errors = should_error(&self.name, &module_options);
+        let expected_errors = should_error(&self.name, &run_options);
 
         if all_errors.is_empty() && expected_errors {
             TestRunOutcome::IncorrectlyPassed(files)
@@ -89,7 +86,7 @@ fn check_file_encoding(path: &std::path::Path) -> Option<String> {
 
 struct TestCaseMetadata {
     files: TestCaseFiles,
-    module_options: Vec<String>,
+    run_options: Vec<String>,
 }
 
 /// TypeScript supports multiple files in a single test case.
@@ -104,7 +101,7 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
     let line_ending = infer_line_ending(code);
     let mut current_file_content = String::new();
     let mut current_file_name: Option<String> = None;
-    let mut module_options: Vec<String> = vec![];
+    let mut run_options: Vec<String> = vec![];
 
     for line in code.lines() {
         if let Some(option) = options_regex.captures(line) {
@@ -113,12 +110,12 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
 
             if option_name == "alwaysstrict" {
                 current_file_content.push_str(&format!("\"use strict\";{}", line_ending))
-            } else if option_name == "module" && files.is_empty() {
-                module_options.extend(
+            } else if matches!(option_name.as_str(), "module" | "target") && files.is_empty() {
+                run_options.extend(
                     option_value
                         .split(',')
                         .into_iter()
-                        .map(|module_value| module_value.to_string()),
+                        .map(|module_value| format!("{option_name}={}", module_value.trim())),
                 );
             }
 
@@ -158,10 +155,7 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
         );
     }
 
-    TestCaseMetadata {
-        files,
-        module_options,
-    }
+    TestCaseMetadata { files, run_options }
 }
 
 fn add_file_if_supported(files: &mut TestCaseFiles, name: String, content: String) {
@@ -197,27 +191,27 @@ fn infer_line_ending(code: &str) -> &'static str {
     }
 }
 
-fn should_error(name: &str, module_options: &[String]) -> bool {
-    if module_options.len() > 1 {
-        module_options.iter().any(|module| {
-            let errors_file_name = Path::new(name)
-                .file_stem()
-                .and_then(|name| name.to_str())
-                .map(|name| format!("{name}(module={module}).errors.txt"))
-                .unwrap();
+fn should_error(name: &str, run_options: &[String]) -> bool {
+    let error_reference_file = Path::new(REFERENCE_PATH).join(
+        Path::new(name)
+            .with_extension("errors.txt")
+            .file_name()
+            .unwrap(),
+    );
 
-            let path = Path::new(REFERENCE_PATH).join(&errors_file_name);
-
-            path.exists()
-        })
-    } else {
-        let error_reference_file = Path::new(REFERENCE_PATH).join(
-            Path::new(name)
-                .with_extension("errors.txt")
-                .file_name()
-                .unwrap(),
-        );
-
-        error_reference_file.exists()
+    if error_reference_file.exists() {
+        return true;
     }
+
+    run_options.iter().any(|option| {
+        let errors_file_name = Path::new(name)
+            .file_stem()
+            .and_then(|name| name.to_str())
+            .map(|name| format!("{name}({option}).errors.txt"))
+            .unwrap();
+
+        let path = Path::new(REFERENCE_PATH).join(&errors_file_name);
+
+        path.exists()
+    })
 }

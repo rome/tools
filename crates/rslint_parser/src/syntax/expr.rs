@@ -19,7 +19,8 @@ use crate::syntax::function::{
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
     expected_expression, expected_identifier, expected_parameters,
-    expected_simple_assignment_target, expected_ts_type, ts_only_syntax_error,
+    expected_simple_assignment_target, expected_ts_type,
+    private_names_only_allowed_on_left_side_of_in_expression, ts_only_syntax_error,
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
@@ -420,7 +421,7 @@ fn parse_binary_or_logical_expression_recursive(
         let op_tok = p.cur_tok();
 
         let mut is_unknown = false;
-        if let Present(left) = &left {
+        if let Present(left) = &mut left {
             // test exponent_unary_parenthesized
             // (delete a.b) ** 2;
             // (void ident) ** 2;
@@ -449,6 +450,12 @@ fn parse_binary_or_logical_expression_recursive(
 
                 p.error(err);
                 is_unknown = true;
+            } else if op != T![in] && left.kind() == JS_PRIVATE_NAME {
+                p.error(private_names_only_allowed_on_left_side_of_in_expression(
+                    p,
+                    left.range(p).as_range(),
+                ));
+                left.change_kind(p, JS_UNKNOWN_EXPRESSION);
             }
         }
 
@@ -541,15 +548,14 @@ fn parse_binary_or_logical_expression_recursive(
             //    #prop in #prop in this;
             //    5 + #prop;
             //    #prop
+            //    #prop + 5;
             //  }
             // }
             left.change_kind(p, JS_UNKNOWN_EXPRESSION);
-            p.error(
-                p.err_builder(
-                    "Private names are only allowed on the left side of a binary expression",
-                )
-                .primary(left.range(p), ""),
-            );
+            p.error(private_names_only_allowed_on_left_side_of_in_expression(
+                p,
+                left.range(p).as_range(),
+            ));
         }
     }
 
@@ -1512,7 +1518,16 @@ fn parse_call_expression_rest(
     loop {
         lhs = parse_member_expression_rest(p, lhs, context, true, &mut in_optional_chain);
 
-        let m = lhs.precede(p);
+        if p.at(T![?.]) {}
+
+        if !matches!(p.cur(), T![?.] | T![<] | T!['(']) {
+            break lhs;
+        }
+
+        // Cloning here is necessary because parsing out the type arguments may rewind in which
+        // case we want to return the `lhs`.
+        let m = lhs.clone().precede(p);
+        let start_pos = p.token_pos();
         let optional_chain_call = p.eat(T![?.]);
         in_optional_chain = in_optional_chain || optional_chain_call;
 
@@ -1539,20 +1554,34 @@ fn parse_call_expression_rest(
                 continue;
             }
         } else if p.at(T!['(']) {
-            parse_arguments(p, context).or_add_diagnostic(p, expected_parameters);
+            parse_arguments(p, context)
+                .expect("Expected parsed out arguments because the parser is positioned at '('");
             lhs = m.complete(p, JS_CALL_EXPRESSION);
             continue;
         }
 
-        if optional_chain_call {
+        if in_optional_chain {
+            // If the `?.` is present and what followed was neither a valid type arguments nor valid arguments.
+            // In this case, parse this as a static member access with an optional chain
+
+            // test_err ts optional_chain_call_without_arguments
+            // let a = { test: null };
+            // a.test?.;
+            // a.test?.<ab;
             p.error(expected_identifier(p, p.cur_tok().range()));
+            lhs = m.complete(p, JS_STATIC_MEMBER_EXPRESSION);
+        } else {
+            // Safety:
+            // * The method initially checks if the parsers at a '<', '(', or '?.' token.
+            // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
+            // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
+            // * if the parser is at '(': This always parses out as valid arguments.
+            debug_assert_eq!(p.token_pos(), start_pos);
+            m.abandon(p);
         }
 
-        m.abandon(p);
-        break;
+        break lhs;
     }
-
-    lhs
 }
 
 /// A postifx expression, either `LHSExpr [no linebreak] ++` or `LHSExpr [no linebreak] --`.
