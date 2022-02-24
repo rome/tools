@@ -18,19 +18,17 @@ JsModule {
             semicolon_token: SEMICOLON@5..6 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    TsNonNullAssertionAssignment {
-                        assignment: JsIdentifierAssignment {
-                            name_token: IDENT@6..8 "a" [Newline("\n")] [],
-                        },
-                        excl_token: BANG@8..10 "!" [] [Whitespace(" ")],
+            expression: JsAssignmentExpression {
+                left: TsNonNullAssertionAssignment {
+                    assignment: JsIdentifierAssignment {
+                        name_token: IDENT@6..8 "a" [Newline("\n")] [],
                     },
-                    AMPEQ@10..13 "&=" [] [Whitespace(" ")],
-                    JsNumberLiteralExpression {
-                        value_token: JS_NUMBER_LITERAL@13..14 "2" [] [],
-                    },
-                ],
+                    excl_token: BANG@8..10 "!" [] [Whitespace(" ")],
+                },
+                operator_token: AMPEQ@10..13 "&=" [] [Whitespace(" ")],
+                right: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@13..14 "2" [] [],
+                },
             },
             semicolon_token: SEMICOLON@14..15 ";" [] [],
         },
@@ -67,27 +65,25 @@ JsModule {
             semicolon_token: SEMICOLON@35..36 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    TsNonNullAssertionAssignment {
-                        assignment: JsStaticMemberAssignment {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@36..38 "b" [Newline("\n")] [],
-                                },
-                            },
-                            dot_token: DOT@38..39 "." [] [],
-                            member: JsName {
-                                value_token: IDENT@39..40 "a" [] [],
+            expression: JsAssignmentExpression {
+                left: TsNonNullAssertionAssignment {
+                    assignment: JsStaticMemberAssignment {
+                        object: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@36..38 "b" [Newline("\n")] [],
                             },
                         },
-                        excl_token: BANG@40..42 "!" [] [Whitespace(" ")],
+                        dot_token: DOT@38..39 "." [] [],
+                        member: JsName {
+                            value_token: IDENT@39..40 "a" [] [],
+                        },
                     },
-                    AMPEQ@42..45 "&=" [] [Whitespace(" ")],
-                    JsNumberLiteralExpression {
-                        value_token: JS_NUMBER_LITERAL@45..46 "5" [] [],
-                    },
-                ],
+                    excl_token: BANG@40..42 "!" [] [Whitespace(" ")],
+                },
+                operator_token: AMPEQ@42..45 "&=" [] [Whitespace(" ")],
+                right: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@45..46 "5" [] [],
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -110,7 +106,7 @@ JsModule {
             2: (empty)
       1: SEMICOLON@5..6 ";" [] []
     1: JS_EXPRESSION_STATEMENT@6..15
-      0: JS_UNKNOWN_EXPRESSION@6..14
+      0: JS_ASSIGNMENT_EXPRESSION@6..14
         0: TS_NON_NULL_ASSERTION_ASSIGNMENT@6..10
           0: JS_IDENTIFIER_ASSIGNMENT@6..8
             0: IDENT@6..8 "a" [Newline("\n")] []
@@ -141,7 +137,7 @@ JsModule {
                 2: R_CURLY@34..35 "}" [] []
       1: SEMICOLON@35..36 ";" [] []
     3: JS_EXPRESSION_STATEMENT@36..46
-      0: JS_UNKNOWN_EXPRESSION@36..46
+      0: JS_ASSIGNMENT_EXPRESSION@36..46
         0: TS_NON_NULL_ASSERTION_ASSIGNMENT@36..42
           0: JS_STATIC_MEMBER_ASSIGNMENT@36..40
             0: JS_IDENTIFIER_EXPRESSION@36..38

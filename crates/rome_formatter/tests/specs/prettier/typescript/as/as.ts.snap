@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: as.ts
 
 ---
@@ -109,23 +109,6 @@ const iter2 = createIterator(
   child,
   self.tag as SyncFunctionComponent,
 );
-
-```
-
-# Errors
-```
-error[SyntaxError]: Invalid assignment to `foo.bar as Baz`
-   ┌─ as.ts:27:2
-   │
-27 │ (foo.bar as Baz) = [bar];
-   │  ^^^^^^^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: Invalid assignment to `foo.bar as any`
-   ┌─ as.ts:28:2
-   │
-28 │ (foo.bar as any)++;
-   │  ^^^^^^^^^^^^^^ This expression cannot be assigned to
-
 
 ```
 

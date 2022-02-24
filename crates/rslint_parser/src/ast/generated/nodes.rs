@@ -3502,13 +3502,13 @@ impl JsObjectAssignmentPatternShorthandProperty {
             init: self.init(),
         }
     }
-    pub fn identifier(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn identifier(&self) -> SyntaxResult<JsIdentifierAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
 }
 pub struct JsObjectAssignmentPatternShorthandPropertyFields {
-    pub identifier: SyntaxResult<JsAnyAssignment>,
+    pub identifier: SyntaxResult<JsIdentifierAssignment>,
     pub init: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5133,6 +5133,38 @@ pub struct TsArrayTypeFields {
     pub element_type: SyntaxResult<TsType>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAsAssignment {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAsAssignment {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAsAssignmentFields {
+        TsAsAssignmentFields {
+            assignment: self.assignment(),
+            as_token: self.as_token(),
+            ty: self.ty(),
+        }
+    }
+    pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct TsAsAssignmentFields {
+    pub assignment: SyntaxResult<JsAnyAssignment>,
+    pub as_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAsExpression {
@@ -8150,6 +8182,8 @@ pub enum JsAnyAssignment {
     JsParenthesizedAssignment(JsParenthesizedAssignment),
     JsStaticMemberAssignment(JsStaticMemberAssignment),
     JsUnknownAssignment(JsUnknownAssignment),
+    TsAsAssignment(TsAsAssignment),
+    TsNonNullAssertionAssignment(TsNonNullAssertionAssignment),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyAssignmentPattern {
@@ -13334,6 +13368,32 @@ impl From<TsArrayType> for SyntaxNode {
 impl From<TsArrayType> for SyntaxElement {
     fn from(n: TsArrayType) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsAsAssignment {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_AS_ASSIGNMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAsAssignment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAsAssignment")
+            .field("assignment", &support::DebugSyntaxResult(self.assignment()))
+            .field("as_token", &support::DebugSyntaxResult(self.as_token()))
+            .field("ty", &support::DebugSyntaxResult(self.ty()))
+            .finish()
+    }
+}
+impl From<TsAsAssignment> for SyntaxNode {
+    fn from(n: TsAsAssignment) -> SyntaxNode { n.syntax }
+}
+impl From<TsAsAssignment> for SyntaxElement {
+    fn from(n: TsAsAssignment) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsAsExpression {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_AS_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -16601,6 +16661,14 @@ impl From<JsUnknownAssignment> for JsAnyAssignment {
         JsAnyAssignment::JsUnknownAssignment(node)
     }
 }
+impl From<TsAsAssignment> for JsAnyAssignment {
+    fn from(node: TsAsAssignment) -> JsAnyAssignment { JsAnyAssignment::TsAsAssignment(node) }
+}
+impl From<TsNonNullAssertionAssignment> for JsAnyAssignment {
+    fn from(node: TsNonNullAssertionAssignment) -> JsAnyAssignment {
+        JsAnyAssignment::TsNonNullAssertionAssignment(node)
+    }
+}
 impl AstNode for JsAnyAssignment {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         matches!(
@@ -16610,6 +16678,8 @@ impl AstNode for JsAnyAssignment {
                 | JS_PARENTHESIZED_ASSIGNMENT
                 | JS_STATIC_MEMBER_ASSIGNMENT
                 | JS_UNKNOWN_ASSIGNMENT
+                | TS_AS_ASSIGNMENT
+                | TS_NON_NULL_ASSERTION_ASSIGNMENT
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -16629,6 +16699,12 @@ impl AstNode for JsAnyAssignment {
             JS_UNKNOWN_ASSIGNMENT => {
                 JsAnyAssignment::JsUnknownAssignment(JsUnknownAssignment { syntax })
             }
+            TS_AS_ASSIGNMENT => JsAnyAssignment::TsAsAssignment(TsAsAssignment { syntax }),
+            TS_NON_NULL_ASSERTION_ASSIGNMENT => {
+                JsAnyAssignment::TsNonNullAssertionAssignment(TsNonNullAssertionAssignment {
+                    syntax,
+                })
+            }
             _ => return None,
         };
         Some(res)
@@ -16640,6 +16716,8 @@ impl AstNode for JsAnyAssignment {
             JsAnyAssignment::JsParenthesizedAssignment(it) => &it.syntax,
             JsAnyAssignment::JsStaticMemberAssignment(it) => &it.syntax,
             JsAnyAssignment::JsUnknownAssignment(it) => &it.syntax,
+            JsAnyAssignment::TsAsAssignment(it) => &it.syntax,
+            JsAnyAssignment::TsNonNullAssertionAssignment(it) => &it.syntax,
         }
     }
 }
@@ -16651,6 +16729,8 @@ impl std::fmt::Debug for JsAnyAssignment {
             JsAnyAssignment::JsParenthesizedAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::JsStaticMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::JsUnknownAssignment(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyAssignment::TsAsAssignment(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyAssignment::TsNonNullAssertionAssignment(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -16662,6 +16742,8 @@ impl From<JsAnyAssignment> for SyntaxNode {
             JsAnyAssignment::JsParenthesizedAssignment(it) => it.into(),
             JsAnyAssignment::JsStaticMemberAssignment(it) => it.into(),
             JsAnyAssignment::JsUnknownAssignment(it) => it.into(),
+            JsAnyAssignment::TsAsAssignment(it) => it.into(),
+            JsAnyAssignment::TsNonNullAssertionAssignment(it) => it.into(),
         }
     }
 }
@@ -22211,6 +22293,11 @@ impl std::fmt::Display for TsArrayType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAsAssignment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAsExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -24986,6 +25073,9 @@ impl Debug for DebugSyntaxElement {
                 NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
                 TS_ANY_TYPE => std::fmt::Debug::fmt(&TsAnyType::cast(node.clone()).unwrap(), f),
                 TS_ARRAY_TYPE => std::fmt::Debug::fmt(&TsArrayType::cast(node.clone()).unwrap(), f),
+                TS_AS_ASSIGNMENT => {
+                    std::fmt::Debug::fmt(&TsAsAssignment::cast(node.clone()).unwrap(), f)
+                }
                 TS_AS_EXPRESSION => {
                     std::fmt::Debug::fmt(&TsAsExpression::cast(node.clone()).unwrap(), f)
                 }

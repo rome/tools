@@ -1,3 +1,4 @@
+use crate::ast::TsType;
 use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
@@ -6,12 +7,14 @@ use crate::syntax::expr::{
 };
 use crate::syntax::js_parse_error::{
     expected_assignment_target, expected_identifier, expected_object_member_name,
+    invalid_assignment_error,
 };
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser};
 use crate::{JsSyntaxKind::*, *};
+use rslint_errors::Span;
 
 // test assignment_target
 // foo += bar = b ??= 3;
@@ -36,6 +39,21 @@ use crate::{JsSyntaxKind::*, *};
 // a! &= 2;
 // let b = { a: null };
 // b.a! &= 5
+
+// test ts ts_as_assignment
+// let a: any;
+// type B<A> = { a: A };
+// (a as string) = "string";
+// ((a as any) as string) = null;
+// ({ b: a as string } = { b: "test" });
+// ([ a as string ] = [ "test" ]);
+// for (a as string in []) {}
+// (a as B<string>) = { a: "test" };
+
+// test_err ts ts_as_assignment_no_parenthesize
+// let a: any;
+// a as string = "string";
+// (a() as string) = "string";
 
 /// Converts the passed in lhs expression to an assignment pattern
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
@@ -321,6 +339,7 @@ fn try_expression_to_assignment(
             | JS_COMPUTED_MEMBER_EXPRESSION
             | JS_IDENTIFIER_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
+            | TS_AS_EXPRESSION
     ) {
         return Err(checkpoint);
     }
@@ -342,7 +361,7 @@ struct ReparseAssignment {
     parents: Vec<(JsSyntaxKind, Option<Marker>)>,
     // Stores the completed assignment node (valid or invalid).
     result: Option<CompletedMarker>,
-    // Tracks if the visitor is still inside of an assignment
+    // Tracks if the visitor is still inside an assignment
     inside_assignment: bool,
     // Tracks if the visitor is inside a member expression or computed expression
     // for eval/arguments validation
@@ -372,6 +391,7 @@ impl RewriteParseEvents for ReparseAssignment {
             return;
         }
 
+        // Make sure to also add the kind to the match in `try_expression_to_assignment`
         let mapped_kind = match kind {
             JS_PARENTHESIZED_EXPRESSION => JS_PARENTHESIZED_ASSIGNMENT,
             JS_STATIC_MEMBER_EXPRESSION => {
@@ -386,13 +406,20 @@ impl RewriteParseEvents for ReparseAssignment {
             }
             JS_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT,
             TS_NON_NULL_ASSERTION_EXPRESSION => TS_NON_NULL_ASSERTION_ASSIGNMENT,
+            TS_AS_EXPRESSION => TS_AS_ASSIGNMENT,
             JS_REFERENCE_IDENTIFIER => {
                 self.parents.push((kind, None)); // Omit reference identifiers
                 return;
             }
             _ => {
                 self.inside_assignment = false;
-                JS_UNKNOWN_ASSIGNMENT
+                if TsType::can_cast(kind)
+                    && matches!(self.parents.last(), Some((TS_AS_ASSIGNMENT, _)))
+                {
+                    kind
+                } else {
+                    JS_UNKNOWN_ASSIGNMENT
+                }
             }
         };
 
@@ -406,7 +433,7 @@ impl RewriteParseEvents for ReparseAssignment {
             let completed = m.complete(p, kind);
 
             if kind == JS_UNKNOWN_ASSIGNMENT {
-                p.error(invalid_assignment_error(p, completed.range(p)));
+                p.error(invalid_assignment_error(p, completed.range(p).as_range()));
             }
             self.result = Some(completed);
         }
@@ -460,12 +487,7 @@ fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) 
 
     let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT);
 
-    p.error(invalid_assignment_error(p, completed.range(p)));
+    p.error(invalid_assignment_error(p, completed.range(p).as_range()));
 
     completed
-}
-
-fn invalid_assignment_error(p: &Parser, range: TextRange) -> Diagnostic {
-    p.err_builder(&format!("Invalid assignment to `{}`", p.source(range)))
-        .primary(range, "This expression cannot be assigned to")
 }

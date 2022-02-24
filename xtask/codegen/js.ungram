@@ -769,6 +769,8 @@ JsAnyAssignment =
 	| JsStaticMemberAssignment
 	| JsComputedMemberAssignment
 	| JsParenthesizedAssignment
+	| TsNonNullAssertionAssignment
+	| TsAsAssignment
 	| JsUnknownAssignment
 
 
@@ -807,6 +809,14 @@ JsComputedMemberAssignment =
 TsNonNullAssertionAssignment =
 	assignment: JsAnyAssignment
 	'!'
+
+// Only valid inside of parenthesized assignments
+// (a as string) = "test";
+//  ^^^^^^^^^^^^
+TsAsAssignment =
+	assignment: JsAnyAssignment
+	'as'
+	type: TsType
 
 JsAnyAssignmentPattern =
 	JsAnyAssignment
@@ -854,7 +864,7 @@ JsAnyObjectAssignmentPatternMember =
 // ({ x } = b) or ({ x = "test" } = b)
 //    ^              ^^^^^^^^^^
 JsObjectAssignmentPatternShorthandProperty =
-	identifier: JsAnyAssignment
+	identifier: JsIdentifierAssignment
 	init: JsInitializerClause?
 
 // ({ x: a } = b) or ({ x: a = "test" } = b)

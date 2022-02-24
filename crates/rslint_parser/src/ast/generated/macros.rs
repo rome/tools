@@ -710,6 +710,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsArrayType::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_AS_ASSIGNMENT => {
+                    let $pattern = unsafe { $crate::ast::TsAsAssignment::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_AS_EXPRESSION => {
                     let $pattern = unsafe { $crate::ast::TsAsExpression::new_unchecked(node) };
                     $body

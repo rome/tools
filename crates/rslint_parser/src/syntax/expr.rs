@@ -19,7 +19,7 @@ use crate::syntax::function::{
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
     expected_expression, expected_identifier, expected_parameters,
-    expected_simple_assignment_target, expected_ts_type,
+    expected_simple_assignment_target, expected_ts_type, invalid_assignment_error,
     private_names_only_allowed_on_left_side_of_in_expression, ts_only_syntax_error,
 };
 use crate::syntax::object::parse_object_expression;
@@ -239,12 +239,22 @@ fn parse_assignment_expression_or_higher_base(
 // ({ foo: { eval }}) = o
 fn parse_assign_expr_recursive(
     p: &mut Parser,
-    target: CompletedMarker,
+    mut target: CompletedMarker,
     checkpoint: Checkpoint,
     context: ExpressionContext,
 ) -> ParsedSyntax {
     if is_assign_token(p.cur()) {
-        let target = expression_to_assignment_pattern(p, target, checkpoint);
+        let target = if target.kind() == JS_BINARY_EXPRESSION {
+            // Special handling for binary expressions to avoid having to deal with `a as string = ...`
+            // inside of the `ReparseAssignment` implementation because not using parentheses is valid
+            // in for heads `for (a as any in []) {}`
+            p.error(invalid_assignment_error(p, target.range(p).as_range()));
+            target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
+            target
+        } else {
+            expression_to_assignment_pattern(p, target, checkpoint)
+        };
+
         let m = target.precede(p);
         p.bump_any(); // operator
         parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true))
