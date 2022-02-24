@@ -1,10 +1,11 @@
 use regex::Regex;
 use rome_rowan::SyntaxKind;
-use rslint_errors::{Diagnostic, Severity};
 use rslint_parser::{AstNode, ModuleKind, SourceType};
 use std::path::Path;
 
-use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use crate::runner::{
+    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
+};
 use crate::util::decode_maybe_utf16_string;
 
 const CASES_PATH: &str = "xtask/coverage/Typescript/tests/cases";
@@ -42,14 +43,8 @@ impl TestCase for TypeScriptTestCase {
                         .descendants()
                         .find(|descendant| descendant.kind().is_unknown())
                     {
-                        unknowns_errors.push(
-                            Diagnostic::new(
-                                file.id(),
-                                Severity::Bug,
-                                "Unknown node in test that should pass",
-                            )
-                            .primary(unknown.text_trimmed_range(), ""),
-                        );
+                        unknowns_errors
+                            .push(create_unknown_node_in_tree_diagnostic(file.id(), unknown));
                     }
                 }
                 Err(errors) => all_errors.extend(errors),

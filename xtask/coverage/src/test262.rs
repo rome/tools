@@ -1,7 +1,8 @@
-use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use crate::runner::{
+    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
+};
 use regex::Regex;
 use rome_rowan::api::SyntaxKind;
-use rslint_errors::{Diagnostic, Severity};
 use rslint_parser::{parse, AstNode, SourceType};
 use serde::Deserialize;
 use std::io;
@@ -105,12 +106,7 @@ impl Test262TestCase {
                     .find(|descendant| descendant.kind().is_unknown())
                 {
                     TestRunOutcome::IncorrectlyErrored {
-                        errors: vec![Diagnostic::new(
-                            0,
-                            Severity::Bug,
-                            "Unknown node in test that should pass",
-                        )
-                        .primary(unknown.text_trimmed_range(), "")],
+                        errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
                         files,
                     }
                 } else {

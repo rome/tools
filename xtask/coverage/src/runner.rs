@@ -1,10 +1,11 @@
 use super::*;
 use crate::reporters::TestReporter;
+use rome_rowan::SyntaxKind;
 use rslint_errors::file::{FileId, SimpleFiles};
 use rslint_errors::termcolor::Buffer;
-use rslint_errors::Emitter;
+use rslint_errors::{Diagnostic, Emitter, Severity};
 use rslint_parser::ast::JsAnyRoot;
-use rslint_parser::{parse, Parse, SourceType};
+use rslint_parser::{parse, Parse, SourceType, SyntaxNode};
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
 use std::path::Path;
@@ -91,6 +92,19 @@ impl TestCaseFile {
     pub(crate) fn id(&self) -> FileId {
         self.id
     }
+}
+
+pub(crate) fn create_unknown_node_in_tree_diagnostic(
+    file_id: FileId,
+    node: SyntaxNode,
+) -> Diagnostic {
+    assert!(node.kind().is_unknown());
+    Diagnostic::new(
+        file_id,
+        Severity::Bug,
+        "There are no parse errors but the parsed tree contains unknown nodes.",
+    )
+        .primary(node.text_trimmed_range(), "This unknown node is present in the parsed tree but the parser didn't emit a diagnostic for it. Change the parser to either emit a diagnostic, fix the grammar, or the parsing.")
 }
 
 #[derive(Clone, Debug)]
