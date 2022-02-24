@@ -156,7 +156,7 @@ fn assert_errors_are_present(program: &Parse<JsAnyRoot>, path: &Path) {
 }
 
 fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
-    if program.errors().is_empty() {
+    if !program.has_errors() {
         return;
     }
 
