@@ -84,31 +84,27 @@ fnString =
     // Comment
     "some" +
     "long" +
-    "string"
-  ;
+    "string";
 
 fnString =
     // Comment
 
     "some" +
     "long" +
-    "string"
-  ;
+    "string";
 
 fnString =
     // Comment
 
     "some" +
     "long" +
-    "string"
-  ;
+    "string";
 
 fnString =
     /* comment */
     "some" +
     "long" +
-    "string"
-  ;
+    "string";
 
 fnString =
     /**
@@ -116,8 +112,7 @@ fnString =
    */
     "some" +
     "long" +
-    "string"
-  ;
+    "string";
 
 fnString =
     /* inline */ "some" +
@@ -131,15 +126,13 @@ fnString =
     "string" +
     "some" +
     "long" +
-    "string"
-  ;
+    "string";
 
 fnString = // Comment0
     // Comment1
     "some" +
     "long" +
-    "string"
-  ;
+    "string";
 
 fnString = "some" + "long" + "string"; // Comment
 
@@ -147,31 +140,27 @@ fnString =
     // Comment
     "some" +
     "long" +
-    "string"
-  ;
+    "string";
 
 var fnString =
   // Comment
 
   "some" +
   "long" +
-  "string"
-;
+  "string";
 
 var fnString =
   // Comment
 
   "some" +
   "long" +
-  "string"
-;
+  "string";
 
 var fnString =
   /* comment */
   "some" +
   "long" +
-  "string"
-;
+  "string";
 
 var fnString =
   /**
@@ -179,8 +168,7 @@ var fnString =
    */
   "some" +
   "long" +
-  "string"
-;
+  "string";
 
 var fnString =
   /* inline */ "some" +
@@ -194,15 +182,13 @@ var fnString =
   "string" +
   "some" +
   "long" +
-  "string"
-;
+  "string";
 
 var fnString = // Comment0
   // Comment1
   "some" +
   "long" +
-  "string"
-;
+  "string";
 
 var fnString = "some" + "long" + "string"; // Comment
 

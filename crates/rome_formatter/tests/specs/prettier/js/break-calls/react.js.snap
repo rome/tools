@@ -184,8 +184,7 @@ function Comp4() {
         baz ||
         foo && baz(foo) + bar(foo) + foo && bar && baz ||
         baz ||
-        foo && baz(foo) + bar(foo)
-      ,
+        foo && baz(foo) + bar(foo),
     [foo, bar, baz],
   );
 }

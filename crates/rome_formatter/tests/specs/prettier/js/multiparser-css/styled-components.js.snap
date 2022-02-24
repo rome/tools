@@ -474,8 +474,7 @@ const bar = styled.div`
     (props.complete || props.inProgress) &&
     css`
       border-color: rgba(var(--green-rgb), 0.15);
-    `
-  }
+    `}
 
   div {
     background-color: var(--purpleTT);
@@ -489,15 +488,13 @@ const bar = styled.div`
     css`
         background-color: var(--green);
         border-width: 7px;
-      `
-  }
+      `}
 
     ${(props) =>
     (props.complete || props.inProgress) &&
     css`
         border-color: var(--green);
-      `
-  }
+      `}
   }
 `;
 
@@ -508,8 +505,7 @@ const A = styled.a`
     props.a &&
     css`
     display: none;
-  `
-  }
+  `}
    height: 30px;
 `;
 

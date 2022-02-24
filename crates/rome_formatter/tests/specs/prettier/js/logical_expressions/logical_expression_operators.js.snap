@@ -45,8 +45,7 @@ foo || bar && baz;
 ```js
   // Same operators do not require parens
   (foo && bar) &&
-  baz
-;
+  baz;
 foo && (bar && baz);
 foo && ((bar && baz) && qux);
 foo && (bar && (baz && qux));
@@ -69,8 +68,7 @@ foo ?? (bar ?? (baz ?? (qux ?? xyz)));
 
   // Explicitly parenthesized && and || requires parens
   (foo && bar) ||
-  baz
-;
+  baz;
 (foo || bar) && baz;
 
 foo && (bar || baz);
@@ -78,10 +76,8 @@ foo || (bar && baz);
 
     // Implicitly parenthesized && and || requires parens
     foo &&
-    bar
-  ||
-  baz
-;
+    bar ||
+  baz;
 foo || bar && baz;
 
 ```

@@ -37,8 +37,7 @@ ExampleStory.getFragment('story')}
 ```js
 `${
   a + // a
-  a
-}
+  a}
 
 ${a}
 

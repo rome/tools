@@ -23,8 +23,7 @@ class A {
     // comment to break
     1 +
     // comment to break again
-    2
-  ;
+    2;
 }
 
 ```

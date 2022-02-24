@@ -85,85 +85,73 @@ function bitwiseXor() {
 function addition() {
     0 // Comment
     +
-    x
-  ;
+    x;
 }
 
 function multiplication() {
     0 // Comment
     *
-    x
-  ;
+    x;
 }
 
 function division() {
     0 // Comment
     /
-    x
-  ;
+    x;
 }
 
 function substraction() {
     0 // Comment
     -
-    x
-  ;
+    x;
 }
 
 function remainder() {
     0 // Comment
     %
-    x
-  ;
+    x;
 }
 
 function exponentiation() {
     0 // Comment
     **
-    x
-  ;
+    x;
 }
 
 function leftShift() {
     0 // Comment
     <<
-    x
-  ;
+    x;
 }
 
 function rightShift() {
     0 // Comment
     >>
-    x
-  ;
+    x;
 }
 
 function unsignedRightShift() {
     0 // Comment
     >>>
-    x
-  ;
+    x;
 }
 
 function bitwiseAnd() {
     0 // Comment
     &
-    x
-  ;
+    x;
 }
 
 function bitwiseOr() {
     0 // Comment
     |
-    x
-  ;
+    x;
 }
 
 function bitwiseXor() {
     0 // Comment
     ^
-    x
-  ;
+    x;
 }
 
 ```

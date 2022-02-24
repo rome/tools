@@ -111,8 +111,7 @@ const regex = new RegExp(
     "[\'"]" + // opening quotation mark
     escapeStringRegExp(target.name) + // target name
     "[\'"]" + // closing quotation mark
-    ",?$"
-  , // optional trailing comma
+    ",?$", // optional trailing comma
 );
 
 // The comment is moved and doesn't trigger the eslint rule anymore

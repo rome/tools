@@ -29,33 +29,27 @@ c;
 ```js
 a =
     b || // Comment
-    c
-  ;
+    c;
 
 a =
     b || // TODO this is a very very very very long comment that makes it go > 80 columns
-    c
-  ;
+    c;
 
 a =
     b && // Comment
-    c
-  ;
+    c;
 
 a =
     b && // TODO this is a very very very very long comment that makes it go > 80 columns
-    c
-  ;
+    c;
 
 a =
     b + // Comment
-    c
-  ;
+    c;
 
 a =
     b + // TODO this is a very very very very long comment that makes it go > 80 columns
-    c
-  ;
+    c;
 
 ```
 

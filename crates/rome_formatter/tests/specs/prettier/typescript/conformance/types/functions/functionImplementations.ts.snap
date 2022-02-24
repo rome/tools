@@ -270,8 +270,7 @@ var a = function f() {
   undefined ===
   function (): number {
     throw undefined;
-  }
-;
+  };
 
 // Type of 'this' in function implementation is 'any'
 function thisFunc() {

@@ -32,15 +32,13 @@ const o = {
 const blablah =
   "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
   "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
-  "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf"
-;
+  "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf";
 
 const k = {
   blablah:
     "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
     "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
-    "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf"
-  ,
+    "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf",
 };
 
 somethingThatsAReallyLongPropName =
@@ -49,8 +47,7 @@ somethingThatsAReallyLongPropName =
 const o = {
   somethingThatsAReallyLongPropName:
     this.props.cardType ===
-    AwesomizerCardEnum.SEEFIRST
-  ,
+    AwesomizerCardEnum.SEEFIRST,
 };
 
 ```

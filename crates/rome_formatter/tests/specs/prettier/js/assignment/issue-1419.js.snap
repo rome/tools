@@ -18,8 +18,7 @@ someReallyLongThingStoredInAMapWithAReallyBigName[pageletID] =
 someReallyLongThingStoredInAMapWithAReallyBigName[pageletID] =
   _someVariableThatWeAreCheckingForFalsiness ?
     Date.now() -
-    _someVariableThatWeAreCheckingForFalsiness
-  : 0;
+    _someVariableThatWeAreCheckingForFalsiness : 0;
 
 ```
 

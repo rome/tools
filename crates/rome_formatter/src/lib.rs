@@ -263,6 +263,7 @@ impl Formatted {
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Formatted> {
     let element = Formatter::new(options).format_root(syntax)?;
+    // dbg!(&element);
     Ok(Printer::new(options).print(&element))
 }
 

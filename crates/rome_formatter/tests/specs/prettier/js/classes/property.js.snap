@@ -34,15 +34,13 @@ class A {
     // comment to break
     1 +
     // comment to break again
-    2
-  ;
+    2;
 }
 
 class B {
   someInstanceProperty =
     this.props.foofoofoofoofoofoo &&
-    this.props.barbarbarbar
-  ;
+    this.props.barbarbarbar;
 
   someInstanceProperty2 = {
     foo: this.props.foofoofoofoofoofoo && this.props.barbarbarbar,

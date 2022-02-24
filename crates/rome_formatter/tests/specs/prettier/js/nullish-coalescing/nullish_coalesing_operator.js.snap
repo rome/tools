@@ -45,8 +45,7 @@ foo ?? (bar ?? baz);
   // Mixing ?? and (&& or ||) requires parens
   // It's a syntax error without it.
   (foo ?? baz) ||
-  baz
-;
+  baz;
 foo ?? (baz || baz);
 
 (foo ?? baz) && baz;
