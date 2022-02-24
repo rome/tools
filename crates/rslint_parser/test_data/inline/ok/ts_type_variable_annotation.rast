@@ -43,14 +43,56 @@ JsModule {
             },
             semicolon_token: SEMICOLON@34..35 ";" [] [],
         },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: LET_KW@35..40 "let" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@40..48 "a" [] [Whitespace(" "), Comments("// ASI")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: BANG@48..50 "!" [Newline("\n")] [],
+                argument: JsFunctionExpression {
+                    async_token: missing (optional),
+                    function_token: FUNCTION_KW@50..59 "function" [] [Whitespace(" ")],
+                    star_token: missing (optional),
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@59..63 "test" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@63..64 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@64..66 ")" [] [Whitespace(" ")],
+                    },
+                    return_type_annotation: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@66..67 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@67..68 "}" [] [],
+                    },
+                },
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@35..36 "" [Newline("\n")] [],
+    eof_token: EOF@68..69 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..36
+0: JS_MODULE@0..69
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..35
+  2: JS_MODULE_ITEM_LIST@0..68
     0: JS_VARIABLE_STATEMENT@0..35
       0: JS_VARIABLE_DECLARATION@0..34
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -78,4 +120,35 @@ JsModule {
                   0: NUMBER_KW@28..34 "number" [] []
             2: (empty)
       1: SEMICOLON@34..35 ";" [] []
-  3: EOF@35..36 "" [Newline("\n")] []
+    1: JS_VARIABLE_STATEMENT@35..48
+      0: JS_VARIABLE_DECLARATION@35..48
+        0: LET_KW@35..40 "let" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@40..48
+          0: JS_VARIABLE_DECLARATOR@40..48
+            0: JS_IDENTIFIER_BINDING@40..48
+              0: IDENT@40..48 "a" [] [Whitespace(" "), Comments("// ASI")]
+            1: (empty)
+            2: (empty)
+      1: (empty)
+    2: JS_EXPRESSION_STATEMENT@48..68
+      0: JS_UNARY_EXPRESSION@48..68
+        0: BANG@48..50 "!" [Newline("\n")] []
+        1: JS_FUNCTION_EXPRESSION@50..68
+          0: (empty)
+          1: FUNCTION_KW@50..59 "function" [] [Whitespace(" ")]
+          2: (empty)
+          3: JS_IDENTIFIER_BINDING@59..63
+            0: IDENT@59..63 "test" [] []
+          4: (empty)
+          5: JS_PARAMETERS@63..66
+            0: L_PAREN@63..64 "(" [] []
+            1: JS_PARAMETER_LIST@64..64
+            2: R_PAREN@64..66 ")" [] [Whitespace(" ")]
+          6: (empty)
+          7: JS_FUNCTION_BODY@66..68
+            0: L_CURLY@66..67 "{" [] []
+            1: JS_DIRECTIVE_LIST@67..67
+            2: JS_STATEMENT_LIST@67..67
+            3: R_CURLY@67..68 "}" [] []
+      1: (empty)
+  3: EOF@68..69 "" [Newline("\n")] []

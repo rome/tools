@@ -1313,9 +1313,15 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
 //
 // test ts ts_type_variable_annotation
 // let a: string = "test", b!: number;
+// let a // ASI
+// !function test() {}
 fn parse_ts_variable_annotation(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![!]) {
         return parse_ts_type_annotation(p);
+    }
+
+    if p.has_linebreak_before_n(0) {
+        return Absent;
     }
 
     let m = p.start();
