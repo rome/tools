@@ -4,7 +4,7 @@ use anyhow::{bail, Result};
 use lspower::lsp::*;
 use rome_analyze::FileId;
 use rome_formatter::{FormatOptions, IndentStyle};
-use rslint_parser::{parse, Syntax, TextRange, TokenAtOffset};
+use rslint_parser::{parse, SourceType, TextRange, TokenAtOffset};
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
 /// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand
@@ -26,7 +26,7 @@ pub fn format(
     params: &FormattingOptions,
     workspace_settings: WorkspaceSettings,
 ) -> Result<Option<Vec<TextEdit>>> {
-    let syntax = Syntax::default();
+    let syntax = SourceType::ts();
 
     let parse_result = parse(text, file_id, syntax);
 
@@ -62,12 +62,17 @@ pub(crate) struct FormatRangeParams<'input> {
 }
 
 pub(crate) fn format_range(params: FormatRangeParams) -> Result<Option<Vec<TextEdit>>> {
-    let syntax = Syntax::default();
+    let syntax = SourceType::ts();
     let parse_result = parse(params.text, params.file_id, syntax);
 
     // can't format, we bail early
-    if workspace_settings.formatter.format_errored_code || !parse_result.has_errors() {
-        Ok(None)
+    if params
+        .workspace_settings
+        .formatter
+        .format_with_syntax_errors
+        || !parse_result.has_errors()
+    {
+        return Ok(None);
     }
     let line_index = line_index::LineIndex::new(params.text);
     let start_index = line_index.offset(LineCol {
@@ -124,12 +129,17 @@ pub(crate) struct FormatOnTypeParams<'input> {
 }
 
 pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Option<Vec<TextEdit>>> {
-    let syntax = Syntax::default().module();
+    let syntax = SourceType::ts();
     let parse_result = parse(params.text, params.file_id, syntax);
 
     // can't format, we bail early
-    if workspace_settings.formatter.format_errored_code || !parse_result.has_errors() {
-        Ok(None)
+    if params
+        .workspace_settings
+        .formatter
+        .format_with_syntax_errors
+        || !parse_result.has_errors()
+    {
+        return Ok(None);
     }
     let line_index = line_index::LineIndex::new(params.text);
     let offset = line_index.offset(LineCol {
