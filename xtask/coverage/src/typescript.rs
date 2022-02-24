@@ -42,11 +42,14 @@ impl TestCase for TypeScriptTestCase {
                         .descendants()
                         .find(|descendant| descendant.kind().is_unknown())
                     {
-                        unknowns_errors.push(Diagnostic::new(
-                            file.id(),
-                            Severity::Bug,
-                            "Unknown node in test that should pass",
-                        ));
+                        unknowns_errors.push(
+                            Diagnostic::new(
+                                file.id(),
+                                Severity::Bug,
+                                "Unknown node in test that should pass",
+                            )
+                            .primary(unknown.text_trimmed_range(), ""),
+                        );
                     }
                 }
                 Err(errors) => all_errors.extend(errors),

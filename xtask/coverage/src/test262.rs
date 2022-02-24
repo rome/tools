@@ -87,8 +87,6 @@ impl Test262TestCase {
             self.code.clone()
         };
 
-        let parse_result = parse(&code, 0, source_type.clone()).ok();
-
         let should_fail = self
             .meta
             .negative
@@ -96,9 +94,10 @@ impl Test262TestCase {
             .filter(|neg| neg.phase == Phase::Parse)
             .is_some();
 
-        let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type);
+        let files =
+            TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type.clone());
 
-        match parse_result {
+        match parse(&code, 0, source_type).ok() {
             Ok(root) if !should_fail => {
                 if let Some(unknown) = root
                     .syntax()
@@ -111,7 +110,7 @@ impl Test262TestCase {
                             Severity::Bug,
                             "Unknown node in test that should pass",
                         )
-                        .primary(unknown.text_range(), "")],
+                        .primary(unknown.text_trimmed_range(), "")],
                         files,
                     }
                 } else {

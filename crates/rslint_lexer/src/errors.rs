@@ -5,7 +5,7 @@ pub fn invalid_digits_after_unicode_escape_sequence(
     start: usize,
     end: usize,
 ) -> Box<Diagnostic> {
-    let err = Diagnostic::warning(file_id, "", "invalid digits after unicode escape sequence")
+    let err = Diagnostic::error(file_id, "", "invalid digits after unicode escape sequence")
         .primary(start..end, "expected valid unicode escape sequence");
     Box::new(err)
 }
