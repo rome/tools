@@ -1,4 +1,6 @@
-use rslint_parser::ModuleKind;
+use rome_rowan::SyntaxKind;
+use rslint_errors::{Diagnostic, Severity};
+use rslint_parser::{parse, ModuleKind, SourceType};
 
 use crate::{
     check_file_encoding,
@@ -33,16 +35,34 @@ impl TestCase for BabelJsxTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let jsx = rslint_parser::SourceType::jsx().with_module_kind(ModuleKind::Script);
-        let r = rslint_parser::parse(&self.code, 0, jsx.clone());
+        let source_type = SourceType::jsx().with_module_kind(ModuleKind::Script);
+        let files = TestCaseFiles::single(
+            self.name().to_string(),
+            self.code.clone(),
+            source_type.clone(),
+        );
+        let result = parse(&self.code, 0, source_type);
 
-        let file = TestCaseFiles::single(self.name().to_string(), self.code.clone(), jsx);
-        if r.errors().is_empty() {
-            TestRunOutcome::Passed(file)
+        if let Some(unknown) = result
+            .syntax()
+            .descendants()
+            .find(|descendant| descendant.kind().is_unknown())
+        {
+            TestRunOutcome::IncorrectlyErrored {
+                files,
+                errors: vec![Diagnostic::new(
+                    0,
+                    Severity::Bug,
+                    "Unknown node in test that should pass",
+                )
+                .primary(unknown.text_range(), "")],
+            }
+        } else if result.errors().is_empty() {
+            TestRunOutcome::Passed(files)
         } else {
             TestRunOutcome::IncorrectlyErrored {
-                files: file,
-                errors: r.errors().to_vec(),
+                files,
+                errors: result.errors().to_vec(),
             }
         }
     }

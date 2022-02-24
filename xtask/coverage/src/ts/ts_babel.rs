@@ -1,3 +1,5 @@
+use rome_rowan::SyntaxKind;
+use rslint_errors::{Diagnostic, Severity};
 use rslint_parser::SourceType;
 
 use crate::{
@@ -33,16 +35,34 @@ impl TestCase for BabelTypescriptTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let ts = SourceType::ts();
-        let r = rslint_parser::parse(&self.code, 0, ts.clone());
+        let source_type = SourceType::ts();
+        let files = TestCaseFiles::single(
+            self.name().to_string(),
+            self.code.clone(),
+            source_type.clone(),
+        );
+        let result = rslint_parser::parse(&self.code, 0, source_type);
 
-        let file = TestCaseFiles::single(self.name().to_string(), self.code.clone(), ts);
-        if r.errors().is_empty() {
-            TestRunOutcome::Passed(file)
+        if let Some(unknown) = result
+            .syntax()
+            .descendants()
+            .find(|descendant| descendant.kind().is_unknown())
+        {
+            TestRunOutcome::IncorrectlyErrored {
+                files,
+                errors: vec![Diagnostic::new(
+                    0,
+                    Severity::Bug,
+                    "Unknown node in test that should pass",
+                )
+                .primary(unknown.text_range(), "")],
+            }
+        } else if result.errors().is_empty() {
+            TestRunOutcome::Passed(files)
         } else {
             TestRunOutcome::IncorrectlyErrored {
-                files: file,
-                errors: r.errors().to_vec(),
+                files,
+                errors: result.errors().to_vec(),
             }
         }
     }
