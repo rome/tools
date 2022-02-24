@@ -133,15 +133,13 @@ impl LanguageServer for LSPServer {
         let workspace_settings = self.session.config.read().get_workspace_settings();
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format_range(
-                FormatRangeParams {
-                    text: doc.text.as_ref(),
-                    file_id: doc.file_id,
-                    format_options: to_format_options(&params.options),
-                    range: params.range,
-                },
+            handlers::formatting::format_range(FormatRangeParams {
+                text: doc.text.as_ref(),
+                file_id: doc.file_id,
+                format_options: to_format_options(&params.options),
+                range: params.range,
                 workspace_settings,
-            )
+            })
         });
         let edits = task.await?;
         Ok(edits)
@@ -156,15 +154,13 @@ impl LanguageServer for LSPServer {
         let workspace_settings = self.session.config.read().get_workspace_settings();
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format_on_type(
-                FormatOnTypeParams {
-                    text: doc.text.as_ref(),
-                    file_id: doc.file_id,
-                    format_options: to_format_options(&params.options),
-                    position: params.text_document_position.position,
-                },
+            handlers::formatting::format_on_type(FormatOnTypeParams {
+                text: doc.text.as_ref(),
+                file_id: doc.file_id,
+                format_options: to_format_options(&params.options),
+                position: params.text_document_position.position,
                 workspace_settings,
-            )
+            })
         });
         let edits = task.await?;
         Ok(edits)

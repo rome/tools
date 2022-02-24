@@ -33,7 +33,7 @@
 					"default": null,
 					"markdownDescription": "The rome lsp server executable."
 				},
-				"rome.formatter.formatErroredCode": {
+				"rome.formatter.formatWithSyntaxErrors": {
 					"type": "boolean",
 					"default": false,
 					"markdownDescription": "Allows the formatter to format code that contains syntax errors",

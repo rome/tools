@@ -9,7 +9,7 @@ pub const CONFIGURATION_SECTION: &str = "rome";
 /// Specific settings for Rome formatter
 pub struct FormatterWorkspaceSettings {
     /// Allows to format code that might contain syntax errors
-    pub format_errored_code: bool,
+    pub format_with_syntax_errors: bool,
 }
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
