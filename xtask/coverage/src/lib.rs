@@ -152,6 +152,11 @@ pub fn run(
     }
 }
 
+const ALL_SUITES: &'static str = "*";
+const ALL_JS_SUITES: &'static str = "js";
+const ALL_TS_SUITES: &'static str = "ts";
+const ALL_JSX_SUITES: &'static str = "jsx";
+
 fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
     let suites = suites.unwrap_or("*").to_lowercase();
     let mut ids: Vec<_> = suites.split(',').collect();
@@ -160,10 +165,10 @@ fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
 
     while let Some(id) = ids.pop() {
         match id {
-            "js" | "javascript" => ids.extend(["js/262"]),
-            "ts" | "typescript" => ids.extend(["ts/microsoft", "ts/babel"]),
-            "jsx" => ids.extend(["jsx/babel"]),
-            "*" => ids.extend(["js", "ts", "jsx"]),
+            ALL_JS_SUITES | "javascript" => ids.extend(["js/262"]),
+            ALL_TS_SUITES | "typescript" => ids.extend(["ts/microsoft", "ts/babel"]),
+            ALL_JSX_SUITES => ids.extend(["jsx/babel"]),
+            ALL_SUITES => ids.extend(["js", "ts", "jsx"]),
 
             "js/262" => suites.push(Box::new(Test262TestSuite)),
             "ts/microsoft" => suites.push(Box::new(MicrosoftTypescriptTestSuite)),
