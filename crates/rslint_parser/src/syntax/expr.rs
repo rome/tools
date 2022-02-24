@@ -19,7 +19,8 @@ use crate::syntax::function::{
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
     expected_expression, expected_identifier, expected_parameters,
-    expected_simple_assignment_target, expected_ts_type, ts_only_syntax_error,
+    expected_simple_assignment_target, expected_ts_type,
+    private_names_only_allowed_on_left_side_of_in_expression, ts_only_syntax_error,
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
@@ -420,7 +421,7 @@ fn parse_binary_or_logical_expression_recursive(
         let op_tok = p.cur_tok();
 
         let mut is_unknown = false;
-        if let Present(left) = &left {
+        if let Present(mut left) = &left {
             // test exponent_unary_parenthesized
             // (delete a.b) ** 2;
             // (void ident) ** 2;
@@ -449,6 +450,12 @@ fn parse_binary_or_logical_expression_recursive(
 
                 p.error(err);
                 is_unknown = true;
+            } else if op != T![in] && left.kind() == JS_PRIVATE_NAME {
+                p.error(private_names_only_allowed_on_left_side_of_in_expression(
+                    p,
+                    left.range(p).as_range(),
+                ));
+                left.change_kind(p, JS_UNKNOWN_EXPRESSION);
             }
         }
 
@@ -541,15 +548,14 @@ fn parse_binary_or_logical_expression_recursive(
             //    #prop in #prop in this;
             //    5 + #prop;
             //    #prop
+            //    #prop + 5;
             //  }
             // }
             left.change_kind(p, JS_UNKNOWN_EXPRESSION);
-            p.error(
-                p.err_builder(
-                    "Private names are only allowed on the left side of a binary expression",
-                )
-                .primary(left.range(p), ""),
-            );
+            p.error(private_names_only_allowed_on_left_side_of_in_expression(
+                p,
+                left.range(p).as_range(),
+            ));
         }
     }
 

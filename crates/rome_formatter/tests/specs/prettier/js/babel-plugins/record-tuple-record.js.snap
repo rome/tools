@@ -40,7 +40,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 1 │ const record1 = #{
   │                  ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ record-tuple-record.js:1:17
   │
 1 │ const record1 = #{
@@ -69,7 +69,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 7 │ const record2 = #{...record1, b: 5};
   │                  ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ record-tuple-record.js:7:17
   │
 7 │ const record2 = #{...record1, b: 5};

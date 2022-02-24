@@ -31,7 +31,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 2 │ const record = #{ url }
   │                 ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ shorthand.js:2:16
   │
 2 │ const record = #{ url }

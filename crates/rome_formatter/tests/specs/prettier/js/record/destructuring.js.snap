@@ -48,7 +48,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 1 │ const { a, b } = #{ a: 1, b: 2 };
   │                   ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ destructuring.js:1:18
   │
 1 │ const { a, b } = #{ a: 1, b: 2 };
@@ -77,7 +77,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
   │                         ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ destructuring.js:5:24
   │
 5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };

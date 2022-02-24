@@ -44,7 +44,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 1 │ const formData = #{ title: "Implement all the things" }
   │                   ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ spread.js:1:18
   │
 1 │ const formData = #{ title: "Implement all the things" }
@@ -64,7 +64,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
   │                  ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ spread.js:2:17
   │
 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
@@ -93,7 +93,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
   │                    ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ spread.js:3:19
   │
 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
@@ -119,7 +119,7 @@ error[SyntaxError]: expected `IDENT` but instead found `{`
 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
   │                       ^ unexpected
 
-error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ spread.js:6:22
   │
 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
