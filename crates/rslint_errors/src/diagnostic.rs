@@ -398,7 +398,7 @@ impl Diagnostic {
 
     /// Checks if the severity of the current diagnostic is [Severity::Error] or higher
     pub fn is_error(&self) -> bool {
-        self.severity.ge(&Severity::Error)
+        self.severity >= Severity::Error
     }
 }
 

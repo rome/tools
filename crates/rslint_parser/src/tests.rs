@@ -158,16 +158,8 @@ fn assert_errors_are_present(program: &Parse<JsAnyRoot>, path: &Path) {
 // sometimes our parser emits unknown nodes without diagnostics;
 // this check makes sure that we don't signal that the tree has errors.
 fn has_unknown_nodes(node: &SyntaxNode) -> bool {
-    let mut has_unknown_nodes = false;
-
-    for descendent in node.descendants() {
-        if descendent.kind().is_unknown() {
-            has_unknown_nodes = true;
-            break;
-        }
-    }
-
-    has_unknown_nodes
+    node.descendants()
+        .any(|descendant| descendant.kind().is_unknown())
 }
 
 fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
