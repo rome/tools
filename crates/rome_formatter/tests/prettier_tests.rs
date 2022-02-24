@@ -18,6 +18,9 @@ static REPORTER: DiffReport = DiffReport::new();
 
 tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts}", crate::test_snapshot, "script"}
 
+const PRETTIER_IGNORE: &str = "prettier-ignore";
+const ROME_IGNORE: &str = "rome-ignore format: prettier ignore";
+
 fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     if input.contains("jsx") || input.contains("flow") || input.contains("prepare_tests") {
         return;
@@ -28,10 +31,11 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
     let (_, range_start_index, range_end_index) = strip_placeholders(&mut input_code);
+    let parse_input = input_code.replace(PRETTIER_IGNORE, ROME_IGNORE);
 
     let source_type = SourceType::from_path(input_file).unwrap();
 
-    let parsed = parse(&input_code, 0, source_type);
+    let parsed = parse(&parse_input, 0, source_type);
     let syntax = parsed.syntax();
 
     let options = FormatOptions::new(IndentStyle::Space(2));
@@ -64,12 +68,14 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                 .expect("the result of format_range should have a range");
 
             let formatted = formatted.as_code();
-            let mut output_code = input_code.clone();
+            let mut output_code = parse_input.clone();
             output_code.replace_range(Range::<usize>::from(range), formatted);
             output_code
         }
         _ => formatted.into_code(),
     };
+
+    let formatted = formatted.replace(ROME_IGNORE, PRETTIER_IGNORE);
 
     let mut snapshot = String::new();
 
@@ -89,7 +95,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
 
     if !parsed.errors().is_empty() {
         let mut files = SimpleFiles::new();
-        files.add(file_name.into(), input_code);
+        files.add(file_name.into(), parse_input);
 
         let mut buffer = termcolor::Buffer::no_color();
         let mut emitter = Emitter::new(&files);

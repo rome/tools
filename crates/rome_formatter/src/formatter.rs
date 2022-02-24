@@ -359,7 +359,7 @@ impl Formatter {
 
                 line_count = 0;
                 trim_mode = TriviaPrintMode::Full;
-            } else if piece.as_newline().is_some() && trim_mode == TriviaPrintMode::Full {
+            } else if piece.is_newline() && trim_mode == TriviaPrintMode::Full {
                 line_count += 1;
             }
         }
@@ -439,7 +439,7 @@ impl Formatter {
         }
 
         fn skip_whitespace<L: Language>(piece: &SyntaxTriviaPiece<L>) -> bool {
-            piece.as_newline().is_some() || piece.as_whitespace().is_some()
+            piece.is_newline() || piece.is_whitespace()
         }
 
         fn trivia_token<L: Language>(piece: SyntaxTriviaPiece<L>) -> Token {

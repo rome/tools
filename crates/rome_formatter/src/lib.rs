@@ -445,8 +445,8 @@ pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Fo
         .chain(next_tokens_trivias)
         .filter(|piece| {
             // We're only interested in newline and whitespace trivias, skip over comments
-            let is_newline = piece.as_newline().is_some();
-            let is_whitespace = piece.as_whitespace().is_some();
+            let is_newline = piece.is_newline();
+            let is_whitespace = piece.is_whitespace();
             is_newline || is_whitespace
         });
 

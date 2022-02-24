@@ -361,9 +361,9 @@ where
         // Then add the newlines in the leading trivia of the next node
         if let Some(leading_trivia) = next_node.first_leading_trivia() {
             for piece in leading_trivia.pieces() {
-                if piece.as_newline().is_some() {
+                if piece.is_newline() {
                     line_count += 1;
-                } else if piece.as_comments().is_some() {
+                } else if piece.is_comments() {
                     // Stop at the first comment piece, the comment printer
                     // will handle newlines between the comment and the node
                     break;
