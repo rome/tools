@@ -7,7 +7,7 @@ use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
-use crate::parser::{ParserProgress, RecoveryResult};
+use crate::parser::{expected_token, ParserProgress, RecoveryResult};
 use crate::syntax::assignment::{
     expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
     AssignmentExprPrecedence,
