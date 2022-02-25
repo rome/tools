@@ -855,17 +855,14 @@ fn parse_class_member_impl(
             // test_err class_declare_member
             // class B { declare foo }
             let property = if modifiers.has(ModifierKind::Declare) {
-                property_declaration_class_member_body(p, member_marker, member_name.kind())
-            } else {
-                parse_property_class_member_body(
+                property_declaration_class_member_body(
                     p,
                     member_marker,
-                    if is_member_abstract {
-                        TS_PROPERTY_SIGNATURE_CLASS_MEMBER
-                    } else {
-                        JS_PROPERTY_CLASS_MEMBER
-                    },
+                    member_name.kind(),
+                    &modifiers,
                 )
+            } else {
+                parse_property_class_member_body(p, member_marker, &modifiers)
             };
 
             property.map(|mut property| {
@@ -927,8 +924,9 @@ fn property_declaration_class_member_body(
     p: &mut Parser,
     member_marker: Marker,
     member_name_kind: JsSyntaxKind,
+    modifiers: &ClassMemberModifiers,
 ) -> ParsedSyntax {
-    let property = parse_property_class_member_body(p, member_marker, JS_PROPERTY_CLASS_MEMBER);
+    let property = parse_property_class_member_body(p, member_marker, modifiers);
     property.map(|mut property| {
         if member_name_kind == JS_PRIVATE_CLASS_MEMBER_NAME {
             let err = p
@@ -945,9 +943,9 @@ fn property_declaration_class_member_body(
 fn parse_property_class_member_body(
     p: &mut Parser,
     member_marker: Marker,
-    kind: JsSyntaxKind,
+    modifiers: &ClassMemberModifiers,
 ) -> ParsedSyntax {
-    parse_ts_property_annotation(p).ok();
+    parse_ts_property_annotation(p, modifiers).ok();
 
     // test class_await_property_initializer
     // // SCRIPT
@@ -983,6 +981,13 @@ fn parse_property_class_member_body(
         p.error(err);
     }
 
+    let is_member_abstract = modifiers.has(ModifierKind::Abstract);
+    let kind = if is_member_abstract {
+        TS_PROPERTY_SIGNATURE_CLASS_MEMBER
+    } else {
+        JS_PROPERTY_CLASS_MEMBER
+    };
+
     let member = Present(member_marker.complete(p, kind));
 
     // test_err ts ts_abstract_property_cannot_have_initiliazers
@@ -1015,7 +1020,7 @@ fn parse_property_class_member_body(
 //   b?: string = "test";
 //   c!: string;
 // }
-fn parse_ts_property_annotation(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers) -> ParsedSyntax {
     if !p.at(T![?]) && !p.at(T![!]) {
         return parse_ts_type_annotation_or_error(p);
     }
@@ -1038,6 +1043,19 @@ fn parse_ts_property_annotation(p: &mut Parser) -> ParsedSyntax {
         if TypeScript.is_unsupported(p) {
             let error = p
                 .err_builder("`!` modifiers can only be used in TypeScript files")
+                .primary(range.clone(), "");
+
+            p.error(error);
+            valid = false;
+        }
+
+        // test_err ts ts_abstract_property_cannot_be_definite
+        // abstract class A {
+        //      abstract name!: string;
+        // }
+        if modifiers.has(ModifierKind::Abstract) {
+            let error = p
+                .err_builder("Abstract properties cannot have definite assignment assertions.")
                 .primary(range.clone(), "");
 
             p.error(error);

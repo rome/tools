@@ -7346,7 +7346,8 @@ impl TsPropertySignatureClassMember {
             abstract_token: self.abstract_token(),
             readonly_token: self.readonly_token(),
             name: self.name(),
-            property_annotation: self.property_annotation(),
+            question_mark_token: self.question_mark_token(),
+            type_annotation: self.type_annotation(),
             semicolon_token: self.semicolon_token(),
         }
     }
@@ -7358,17 +7359,21 @@ impl TsPropertySignatureClassMember {
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
         support::required_node(&self.syntax, 3usize)
     }
-    pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
-        support::node(&self.syntax, 4usize)
+    pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 4usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
+        support::required_node(&self.syntax, 5usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
 pub struct TsPropertySignatureClassMemberFields {
     pub access_modifier: Option<SyntaxToken>,
     pub abstract_token: SyntaxResult<SyntaxToken>,
     pub readonly_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
-    pub property_annotation: Option<TsAnyPropertyAnnotation>,
+    pub question_mark_token: Option<SyntaxToken>,
+    pub type_annotation: SyntaxResult<TsTypeAnnotation>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -15724,8 +15729,12 @@ impl std::fmt::Debug for TsPropertySignatureClassMember {
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "property_annotation",
-                &support::DebugOptionalElement(self.property_annotation()),
+                "question_mark_token",
+                &support::DebugOptionalElement(self.question_mark_token()),
+            )
+            .field(
+                "type_annotation",
+                &support::DebugSyntaxResult(self.type_annotation()),
             )
             .field(
                 "semicolon_token",
