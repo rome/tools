@@ -55,8 +55,7 @@ abstract class E extends A {
 }
 
 abstract class AA {
-  
-    abstract foo();
+  abstract foo();
 }
 
 class BB extends AA {}

@@ -28,8 +28,7 @@ a.foo();
 # Output
 ```js
 abstract class A {
-  
-    abstract foo() : number;
+  abstract foo(): number;
 }
 
 class B extends A {
@@ -39,8 +38,7 @@ class B extends A {
 }
 
 abstract class C extends A {
-  
-    abstract foo() : number;
+  abstract foo(): number;
 }
 
 var a = new B();

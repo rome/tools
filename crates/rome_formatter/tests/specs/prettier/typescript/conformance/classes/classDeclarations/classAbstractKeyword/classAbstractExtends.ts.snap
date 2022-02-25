@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: classAbstractExtends.ts
 
 ---
@@ -31,8 +31,7 @@ class A {
 }
 
 abstract class B extends A {
-  
-    abstract bar();
+  abstract bar();
 }
 
 class C extends B {}

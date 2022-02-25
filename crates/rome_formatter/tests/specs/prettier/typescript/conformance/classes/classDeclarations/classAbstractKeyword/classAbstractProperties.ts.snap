@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: classAbstractProperties.ts
 
 ---
@@ -24,26 +24,17 @@ abstract class A {
 # Output
 ```js
 abstract class A {
-  
-    abstract x : number;
-  
-    public abstract y : number;
-  
-    protected abstract z : number;
+  abstract x: number;
+  public abstract y: number;
+  protected abstract z: number;
   
     private abstract w : number;
 
-  
-    
-    abstract m: () => void; 
+  abstract m: () => void;
 
-  
-    
-    abstract foo_x() : number;
-  
-    public abstract foo_y() : number;
-  
-    protected abstract foo_z() : number;
+  abstract foo_x(): number;
+  public abstract foo_y(): number;
+  protected abstract foo_z(): number;
   
     private abstract foo_w() : number;
 }

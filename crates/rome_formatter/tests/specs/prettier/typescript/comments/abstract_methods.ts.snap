@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: abstract_methods.ts
 
 ---
@@ -23,17 +23,14 @@ abstract class AbstractFoo {
 # Output
 ```js
 abstract class AbstractFoo {
-  
-  abstract method1(/* comment */ arg: string);
-  
+  abstract method1( /* comment */ arg: string);
   abstract method2(
     /* comment */
-    arg: string
+    arg: string,
   );
-  
   abstract method3(
     // comment
-    arg: string
+    arg: string,
   );
 }
 

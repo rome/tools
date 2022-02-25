@@ -6,6 +6,7 @@ mod module_reference;
 mod name;
 mod property_annotation;
 mod property_parameter;
+mod property_signature_annotation;
 mod return_type;
 mod template_element;
 mod ts_type;

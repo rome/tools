@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: classAbstractInstantiations2.ts
 
 ---
@@ -66,8 +66,7 @@ abstract class B {
   foo(): number {
     return this.bar();
   }
-  
-    abstract bar() : number;
+  abstract bar(): number;
 }
 
 new B();
@@ -97,8 +96,7 @@ class E extends B {
 }
 
 abstract class F extends B {
-  
-    abstract foo() : number;
+  abstract foo(): number;
   bar() {
     return 2;
   }

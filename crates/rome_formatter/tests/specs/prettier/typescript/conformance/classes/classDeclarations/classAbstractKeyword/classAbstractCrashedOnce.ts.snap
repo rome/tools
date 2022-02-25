@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: classAbstractCrashedOnce.ts
 
 ---
@@ -20,8 +20,7 @@ var x = new bar();
 # Output
 ```js
 abstract class foo {
-  
-    protected abstract test();
+  protected abstract test();
 }
 
 class bar extends foo {
