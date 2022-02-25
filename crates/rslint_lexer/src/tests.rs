@@ -1346,3 +1346,30 @@ fn newline_space_must_be_two_tokens() {
         MULTILINE_COMMENT:13
     }
 }
+
+#[test]
+fn are_we_jsx() {
+    assert_lex! {
+        r#"<div>{"Hey" + 1 + fn()}</div>"#,
+        L_ANGLE:1
+        IDENT:3
+        R_ANGLE:1
+        L_CURLY:1
+        JS_STRING_LITERAL:5
+        WHITESPACE:1
+        PLUS:1
+        WHITESPACE:1
+        JS_NUMBER_LITERAL:1
+        WHITESPACE:1
+        PLUS:1
+        WHITESPACE:1
+        IDENT:2
+        L_PAREN:1
+        R_PAREN:1
+        R_CURLY:1
+        L_ANGLE:1
+        SLASH:1
+        IDENT:3
+        R_ANGLE:1
+    }
+}

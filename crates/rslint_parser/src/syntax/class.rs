@@ -169,6 +169,11 @@ impl From<ClassKind> for JsSyntaxKind {
     }
 }
 
+// test class_named_abstract_is_valid_in_js
+// class abstract {}
+
+// test ts ts_class_named_abstract_is_valid_in_ts
+// class abstract {}
 fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     let is_abstract = eat_contextual_keyword(p, "abstract", T![abstract]);
 
