@@ -280,8 +280,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@343..347 "name" [] [],
                     },
-                    question_mark_token: missing (optional),
-                    type_annotation: TsTypeAnnotation {
+                    property_annotation: TsTypeAnnotation {
                         colon_token: COLON@347..349 ":" [] [Whitespace(" ")],
                         ty: TsStringType {
                             string_token: STRING_KW@349..355 "string" [] [],
@@ -553,12 +552,11 @@ JsModule {
           2: (empty)
           3: JS_LITERAL_MEMBER_NAME@343..347
             0: IDENT@343..347 "name" [] []
-          4: (empty)
-          5: TS_TYPE_ANNOTATION@347..355
+          4: TS_TYPE_ANNOTATION@347..355
             0: COLON@347..349 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@349..355
               0: STRING_KW@349..355 "string" [] []
-          6: SEMICOLON@355..356 ";" [] []
+          5: SEMICOLON@355..356 ";" [] []
         1: TS_METHOD_SIGNATURE_CLASS_MEMBER@356..380
           0: (empty)
           1: ABSTRACT_KW@356..370 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
