@@ -16,8 +16,7 @@ someReallyLongThingStoredInAMapWithAReallyBigName[pageletID] =
 # Output
 ```js
 someReallyLongThingStoredInAMapWithAReallyBigName[pageletID] =
-  _someVariableThatWeAreCheckingForFalsiness ?
-    Date.now() -
+  _someVariableThatWeAreCheckingForFalsiness ? Date.now() -
     _someVariableThatWeAreCheckingForFalsiness : 0;
 
 ```

@@ -1,15 +1,17 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    concat_elements, empty_element, format_elements, group_elements, hard_group_elements,
-    hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent, join_elements,
-    soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    block_indent, concat_elements, empty_element, format_elements, group_elements,
+    hard_group_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
+    join_elements, soft_line_break, soft_line_break_or_space, soft_line_indent_or_space,
+    space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
     JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsLogicalExpression,
     JsLogicalExpressionFields,
 };
 use rslint_parser::{
-    parse_expression, AstNode, AstToken, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken,
+    parse_expression, AstNode, AstToken, JsLanguage, JsSyntaxKind, SyntaxNode, SyntaxNodeExt,
+    SyntaxToken,
 };
 use std::fmt::Debug;
 
@@ -105,33 +107,88 @@ pub fn format_binaryish_expression(
 
     flatten_expressions(&mut flatten_nodes, syntax_node.to_owned(), formatter, None)?;
 
-    dbg!(&flatten_nodes);
-    let should_break = flatten_nodes.len() >= 3
-        || flatten_nodes
-            .first()
-            .map_or_else(|| false, |node| node.has_comments());
+    // let should_break = should_break(&flatten_nodes);
+    let len = flatten_nodes.len();
 
-    let groups = flatten_nodes
+    let mut groups: Vec<FormatElement> = flatten_nodes
         .into_iter()
-        .map(|item| item.into())
+        .enumerate()
+        // groups are not like ["something &&", "something &&" ]
+        // we want to add a space between them in case they can't break
+        .map(|(index, element)| {
+            let element: FormatElement = element.into();
+            if index + 1 == len {
+                element
+            } else {
+                format_elements![element, space_token()]
+            }
+        })
         .collect::<Vec<FormatElement>>();
 
-    if should_break {
-        Ok(group_elements(format_elements![
-            if_group_fits_on_single_line(join_elements(space_token(), groups.clone())),
-            // Sometimes a chain of logical/binary expressions is inside a `JsParenthesizedExpression`.
-            // If so, we can can't force the parent to correctly apply the indentation.
-            // Because of that, if the group breaks, we manually add an indentation.
-            if_group_breaks(format_elements![indent(format_elements![
+    // if !should_break {
+    //     // we bail early if group doesn't need to be broken. We don't need to do further checks
+    //     return Ok(hard_group_elements(join_elements(
+    //         soft_line_break_or_space(),
+    //         groups,
+    //     )));
+    // }
+
+    let is_inside_parenthesis = is_inside_parenthesis(syntax_node);
+    let should_not_indent = should_not_indent_if_parent_indents(syntax_node);
+    let should_ident_if_parent_inlines = should_indent_if_parent_inlines(syntax_node);
+
+    if is_inside_parenthesis {
+        Ok(format_elements![
+            if_group_breaks(group_elements(format_elements![
                 hard_line_break(),
-                join_elements(soft_line_break_or_space(), groups,),
-            ]),])
-        ]))
-    } else {
-        Ok(hard_group_elements(join_elements(
-            space_token(),
-            groups.clone(),
+                join_elements(soft_line_break_or_space(), groups.clone(),),
+            ])),
+            if_group_fits_on_single_line(hard_group_elements(join_elements(
+                soft_line_break_or_space(),
+                groups,
+            )))
+        ])
+    } else if should_not_indent {
+        Ok(group_elements(join_elements(
+            soft_line_break_or_space(),
+            groups,
         )))
+    } else if should_ident_if_parent_inlines {
+        // in order to correctly break, we need to check if the parent created a group
+        // that breaks or not. In order to do that , we need to create two conditional groups
+        // that behave differently depending on the situation
+        Ok(format_elements![
+            // the parent has created a group that breaks, then we create an indentation
+            if_group_breaks(indent(format_elements![
+                hard_line_break(),
+                group_elements(join_elements(soft_line_break_or_space(), groups.clone(),),)
+            ])),
+            // the group doesn't break, so we just normally group
+            if_group_fits_on_single_line(group_elements(join_elements(
+                soft_line_break_or_space(),
+                groups,
+            )))
+        ])
+    } else {
+        // if none of the previous conditions is met,
+        // we take take out the first element from the rest of group, then we hard group the "head"
+        // and we indent the rest of the groups in a new line
+        let rest = groups.split_off(1);
+        let head = groups;
+
+        Ok(format_elements![
+            hard_group_elements(join_elements(soft_line_break_or_space(), head,)),
+            group_elements(format_elements![
+                if_group_breaks(indent(format_elements![
+                    hard_line_break(),
+                    join_elements(soft_line_break_or_space(), rest.clone(),)
+                ],)),
+                if_group_fits_on_single_line(hard_group_elements(join_elements(
+                    soft_line_break_or_space(),
+                    rest,
+                )),)
+            ])
+        ])
     }
 }
 
@@ -154,19 +211,51 @@ impl From<FlattenItemFormatted> for FormatElement {
     }
 }
 
+enum WithComments {
+    True,
+    False,
+}
+
+impl From<&WithComments> for bool {
+    fn from(w_c: &WithComments) -> Self {
+        match w_c {
+            WithComments::True => true,
+            WithComments::False => false,
+        }
+    }
+}
+impl From<bool> for WithComments {
+    fn from(b: bool) -> Self {
+        match b {
+            true => WithComments::True,
+            false => WithComments::False,
+        }
+    }
+}
+
+impl Debug for WithComments {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WithComments::True => write!(f, "has comments"),
+            WithComments::False => write!(f, "no comments"),
+        }
+    }
+}
+
+///
 enum FlattenItem {
-    Binary(JsBinaryExpression, FlattenItemFormatted, bool),
-    Logical(JsLogicalExpression, FlattenItemFormatted, bool),
+    Binary(JsBinaryExpression, FlattenItemFormatted, WithComments),
+    Logical(JsLogicalExpression, FlattenItemFormatted, WithComments),
     // nodes that don't need any special handling
-    Node(SyntaxNode, FormatElement, bool),
+    Node(SyntaxNode, FormatElement, WithComments),
 }
 
 impl FlattenItem {
     pub fn has_comments(&self) -> bool {
         match self {
-            FlattenItem::Binary(_, _, has_comments) => *has_comments,
-            FlattenItem::Logical(_, _, has_comments) => *has_comments,
-            FlattenItem::Node(_, _, has_comments) => *has_comments,
+            FlattenItem::Binary(_, _, w_c) => w_c.into(),
+            FlattenItem::Logical(_, _, w_c) => w_c.into(),
+            FlattenItem::Node(_, _, w_c) => w_c.into(),
         }
     }
 }
@@ -177,21 +266,21 @@ impl Debug for FlattenItem {
             FlattenItem::Logical(_, formatted, has_comments) => {
                 write!(
                     f,
-                    "LogicalExpression: {:?} - {:?}\nHas comments: {}",
+                    "LogicalExpression: {:?} - {:?}\nHas comments: {:?}",
                     formatted.node_element, formatted.operator_element, has_comments
                 )
             }
             FlattenItem::Binary(_, formatted, has_comments) => {
                 write!(
                     f,
-                    "BinaryExpression: {:?} - {:?}\nHas comments: {}",
+                    "BinaryExpression: {:?} - {:?}\nHas comments: {:?}",
                     formatted.node_element, formatted.operator_element, has_comments
                 )
             }
             FlattenItem::Node(_, formatted, has_comments) => {
                 write!(
                     f,
-                    "Any other node: {:?}\nHas comments: {}",
+                    "Any other node: {:?}\nHas comments: {:?}",
                     formatted, has_comments
                 )
             }
@@ -235,7 +324,6 @@ fn flatten_expressions(
                 let has_comments =
                     right.syntax().contains_comments() || operator.has_trailing_comments();
 
-                dbg!(has_comments);
                 flatten_expressions(parts, left?.syntax().to_owned(), formatter, Some(operator))?;
                 parts.push(FlattenItem::Binary(
                     binary_expression,
@@ -243,7 +331,7 @@ fn flatten_expressions(
                         node_element: right.format(formatter)?,
                         operator_element: previous_operator.format_or_empty(formatter)?,
                     },
-                    has_comments,
+                    has_comments.into(),
                 ))
             } else {
                 let operator = operator?;
@@ -277,7 +365,6 @@ fn flatten_expressions(
                 let has_comments =
                     right.syntax().contains_comments() || operator.has_trailing_comments();
 
-                dbg!(has_comments, &right.syntax());
                 flatten_expressions(parts, left?.syntax().to_owned(), formatter, Some(operator))?;
                 parts.push(FlattenItem::Logical(
                     logical_expression,
@@ -285,7 +372,7 @@ fn flatten_expressions(
                         node_element: right.format(formatter)?,
                         operator_element: previous_operator.format_or_empty(formatter)?,
                     },
-                    has_comments,
+                    has_comments.into(),
                 ));
             } else {
                 let (left_item, right_item) =
@@ -313,7 +400,11 @@ fn flatten_expressions(
                     ])
                 },
             )?;
-            parts.push(FlattenItem::Node(syntax_node, formatted, has_comments));
+            parts.push(FlattenItem::Node(
+                syntax_node,
+                formatted,
+                has_comments.into(),
+            ));
         }
     }
 
@@ -405,7 +496,7 @@ fn split_binaryish_to_flatten_items<Node: AstNode + FormatTokenAndNode>(
     let left_item = FlattenItem::Node(
         left.syntax().to_owned(),
         formatted_left,
-        operator.has_trailing_comments(),
+        operator.has_trailing_comments().into(),
     );
 
     let (previous_operator, has_comments) = if let Some(previous_operator) = previous_operator {
@@ -414,12 +505,70 @@ fn split_binaryish_to_flatten_items<Node: AstNode + FormatTokenAndNode>(
             previous_operator.has_trailing_comments(),
         )
     } else {
-        dbg!("right {}", right.syntax().contains_comments());
         (empty_element(), right.syntax().contains_comments())
     };
 
     let formatted_right = concat_elements([right.format(formatter)?, previous_operator]);
-    let right_item = FlattenItem::Node(right.syntax().to_owned(), formatted_right, has_comments);
+    let right_item = FlattenItem::Node(
+        right.syntax().to_owned(),
+        formatted_right,
+        has_comments.into(),
+    );
 
     Ok((left_item, right_item))
+}
+
+/// Dirty a quick check if the group can potentially break
+fn should_break(flatten_nodes: &[FlattenItem]) -> bool {
+    // We don't want to have 1 + 2 to break, for example.
+    // If there are any trailing comments, let's break.
+    flatten_nodes.len() <= 2 && flatten_nodes.iter().any(|node| node.has_comments())
+}
+
+fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
+    current_node.parent().map_or(false, |parent| {
+        let kind = parent.kind();
+        matches!(
+            kind,
+            JsSyntaxKind::JS_IF_STATEMENT
+                | JsSyntaxKind::JS_DO_WHILE_STATEMENT
+                | JsSyntaxKind::JS_WHILE_STATEMENT
+                | JsSyntaxKind::JS_SWITCH_STATEMENT
+        )
+    })
+}
+
+/// This function checks whether the chain of logical/binary expressions **should not** be indented
+///
+/// There are some cases where the indentation is done by the parent, so if the parent is already doing
+/// the indentation, then there's no need to do a second indentation.
+fn should_not_indent_if_parent_indents(current_node: &SyntaxNode) -> bool {
+    let parent = current_node.parent();
+    let grand_parent = parent.as_ref().map_or_else(|| None, |p| p.parent());
+
+    match (parent, grand_parent) {
+        (Some(parent), _) => {
+            matches!(parent.kind(), JsSyntaxKind::JS_RETURN_STATEMENT)
+                || matches!(parent.kind(), JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
+        }
+        _ => false,
+    }
+}
+
+/// There are other cases where the parent decides to inline the the element; in
+/// these cases the decide to actually break on a new line and indent it.
+///
+/// This function checks what the parents adheres to this behaviour
+fn should_indent_if_parent_inlines(current_node: &SyntaxNode) -> bool {
+    let parent = current_node.parent();
+    let grand_parent = parent.as_ref().map_or_else(|| None, |p| p.parent());
+
+    match (parent, grand_parent) {
+        (Some(parent), Some(grand_parent)) => {
+            matches!(parent.kind(), JsSyntaxKind::JS_INITIALIZER_CLAUSE)
+                && matches!(grand_parent.kind(), JsSyntaxKind::JS_VARIABLE_DECLARATOR)
+        }
+
+        _ => false,
+    }
 }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: destructuring.js
 
 ---
@@ -34,7 +34,8 @@ const {
   accessibilityModule: FooAccessibilityModule2,
   accessibilityModule: FooAccessibilityModule3,
   accessibilityModule: FooAccessibilityModule4,
-} = foo || {};
+} =
+  foo || {};
 
 ({ prop: toAssign = "default" } = { prop: "propval" });
 

@@ -72,17 +72,13 @@ const x8 =
   [];
 
 const x9 =
-  longVariable * longint &&
-  longVariable >> 0 &&
-  longVariable + longVariable;
+  longVariable * longint && longVariable >> 0 && longVariable + longVariable;
 
 const x10 =
-  longVariable > longint &&
-  longVariable === 0 + longVariable * longVariable;
+  longVariable > longint && longVariable === 0 + longVariable * longVariable;
 
 foo(
-  obj.property * new Class() && obj instanceof Class && longVariable ?
-    number +
+  obj.property * new Class() && obj instanceof Class && longVariable ? number +
     5 : false,
 );
 

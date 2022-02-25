@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 163
+assertion_line: 168
 expression: if_else.js
 
 ---

@@ -81,41 +81,31 @@ var fnString = // Comment
 # Output
 ```js
 fnString =
-    // Comment
-    "some" +
-    "long" +
-    "string";
+  // Comment
+  "some" + "long" + "string";
 
 fnString =
-    // Comment
+  // Comment
 
-    "some" +
-    "long" +
-    "string";
+  "some" + "long" + "string";
 
 fnString =
-    // Comment
+  // Comment
 
-    "some" +
-    "long" +
-    "string";
+  "some" + "long" + "string";
 
 fnString =
-    /* comment */
-    "some" +
-    "long" +
-    "string";
+  /* comment */
+  "some" + "long" + "string";
 
 fnString =
-    /**
+  /**
    * multi-line
    */
-    "some" +
-    "long" +
-    "string";
+  "some" + "long" + "string";
 
 fnString =
-    /* inline */ "some" +
+  /* inline */ "some" +
     "long" +
     "string" +
     "some" +
@@ -129,18 +119,14 @@ fnString =
     "string";
 
 fnString = // Comment0
-    // Comment1
-    "some" +
-    "long" +
-    "string";
+  // Comment1
+  "some" + "long" + "string";
 
 fnString = "some" + "long" + "string"; // Comment
 
 fnString =
-    // Comment
-    "some" +
-    "long" +
-    "string";
+  // Comment
+  "some" + "long" + "string";
 
 var fnString =
   // Comment
@@ -190,7 +176,8 @@ var fnString = // Comment0
   "long" +
   "string";
 
-var fnString = "some" + "long" + "string"; // Comment
+var fnString = // Comment
+  "some" + "long" + "string";
 
 ```
 
