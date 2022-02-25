@@ -1,4 +1,6 @@
 mod call_expression;
+mod simple;
+
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, hard_group_elements, hard_line_break, space_token,
@@ -7,6 +9,8 @@ use crate::{
 pub use call_expression::format_call_expression;
 use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause};
 use rslint_parser::{AstNode, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+
+pub(crate) use simple::*;
 
 /// Utility function to format the separators of the nodes that belong to the unions
 /// of [rslint_parser::ast::TsAnyTypeMember].

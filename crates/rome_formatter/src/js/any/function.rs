@@ -2,6 +2,7 @@ use crate::format_element::{hard_group_elements, soft_line_indent_or_space};
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
+use crate::utils::is_simple_expression;
 use crate::{
     concat_elements, empty_element, format_elements, group_elements, space_token, token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -84,13 +85,14 @@ impl ToFormatElement for JsAnyFunction {
         //
         // TODO: Explore the concept of hierarchical line breaking
         //   or vertical stacking for arrow functions
-        let body_has_soft_line_break = matches!(
-            body,
-            JsAnyFunctionBody::JsFunctionBody(_)
-                | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrayExpression(_))
-                | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(_))
-                | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsObjectExpression(_))
-        );
+        let body_has_soft_line_break = match body {
+            JsAnyFunctionBody::JsFunctionBody(_) => true,
+            JsAnyFunctionBody::JsAnyExpression(expr) => match expr {
+                JsAnyExpression::JsArrowFunctionExpression(_) => true,
+                JsAnyExpression::JsParenthesizedExpression(_) => true,
+                expr => is_simple_expression(expr)?,
+            },
+        };
 
         if body_has_soft_line_break {
             body_group.push(self.body().format(formatter)?);
