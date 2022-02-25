@@ -1021,6 +1021,7 @@ fn parse_property_class_member_body(
 //   c!: string;
 // }
 fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers) -> ParsedSyntax {
+    dbg!(p.cur_src());
     if !p.at(T![?]) && !p.at(T![!]) {
         return parse_ts_type_annotation_or_error(p);
     }
@@ -1028,6 +1029,10 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
     let m = p.start();
     let mut valid = true;
 
+    // test ts ts_abstract_property_can_be_optional
+    // abstract class A {
+    //      abstract name?: string;
+    // }
     let optional_range = match optional_member_token(p) {
         Ok(optional_range) => optional_range,
         Err(optional_range) => {

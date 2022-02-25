@@ -702,9 +702,12 @@ TsPropertySignatureClassMember =
 	'abstract'
 	'readonly'?
 	name: JsAnyClassMemberName
-	'?'?
-	type_annotation: TsTypeAnnotation
+	property_annotation: TsAnyPropertySignatureAnnotation?
 	';'?
+
+TsAnyPropertySignatureAnnotation =
+	TsTypeAnnotation
+	| TsOptionalPropertyAnnotation
 
 TsAnyPropertyAnnotation =
 	TsTypeAnnotation

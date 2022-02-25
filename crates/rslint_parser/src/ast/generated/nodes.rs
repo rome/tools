@@ -7346,8 +7346,7 @@ impl TsPropertySignatureClassMember {
             abstract_token: self.abstract_token(),
             readonly_token: self.readonly_token(),
             name: self.name(),
-            question_mark_token: self.question_mark_token(),
-            type_annotation: self.type_annotation(),
+            property_annotation: self.property_annotation(),
             semicolon_token: self.semicolon_token(),
         }
     }
@@ -7359,21 +7358,17 @@ impl TsPropertySignatureClassMember {
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
         support::required_node(&self.syntax, 3usize)
     }
-    pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 4usize)
+    pub fn property_annotation(&self) -> Option<TsAnyPropertySignatureAnnotation> {
+        support::node(&self.syntax, 4usize)
     }
-    pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
-        support::required_node(&self.syntax, 5usize)
-    }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 pub struct TsPropertySignatureClassMemberFields {
     pub access_modifier: Option<SyntaxToken>,
     pub abstract_token: SyntaxResult<SyntaxToken>,
     pub readonly_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
-    pub question_mark_token: Option<SyntaxToken>,
-    pub type_annotation: SyntaxResult<TsTypeAnnotation>,
+    pub property_annotation: Option<TsAnyPropertySignatureAnnotation>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -8723,6 +8718,11 @@ pub enum TsAnyPropertyAnnotation {
 pub enum TsAnyPropertyParameter {
     TsPropertyParameter(TsPropertyParameter),
     TsReadonlyPropertyParameter(TsReadonlyPropertyParameter),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyPropertySignatureAnnotation {
+    TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
+    TsTypeAnnotation(TsTypeAnnotation),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyReturnType {
@@ -15729,12 +15729,8 @@ impl std::fmt::Debug for TsPropertySignatureClassMember {
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "question_mark_token",
-                &support::DebugOptionalElement(self.question_mark_token()),
-            )
-            .field(
-                "type_annotation",
-                &support::DebugSyntaxResult(self.type_annotation()),
+                "property_annotation",
+                &support::DebugOptionalElement(self.property_annotation()),
             )
             .field(
                 "semicolon_token",
@@ -21018,6 +21014,65 @@ impl From<TsAnyPropertyParameter> for SyntaxElement {
         node.into()
     }
 }
+impl From<TsOptionalPropertyAnnotation> for TsAnyPropertySignatureAnnotation {
+    fn from(node: TsOptionalPropertyAnnotation) -> TsAnyPropertySignatureAnnotation {
+        TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node)
+    }
+}
+impl From<TsTypeAnnotation> for TsAnyPropertySignatureAnnotation {
+    fn from(node: TsTypeAnnotation) -> TsAnyPropertySignatureAnnotation {
+        TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node)
+    }
+}
+impl AstNode for TsAnyPropertySignatureAnnotation {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, TS_OPTIONAL_PROPERTY_ANNOTATION | TS_TYPE_ANNOTATION)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_OPTIONAL_PROPERTY_ANNOTATION => {
+                TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(
+                    TsOptionalPropertyAnnotation { syntax },
+                )
+            }
+            TS_TYPE_ANNOTATION => {
+                TsAnyPropertySignatureAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyPropertySignatureAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyPropertySignatureAnnotation> for SyntaxNode {
+    fn from(n: TsAnyPropertySignatureAnnotation) -> SyntaxNode {
+        match n {
+            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => it.into(),
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyPropertySignatureAnnotation> for SyntaxElement {
+    fn from(n: TsAnyPropertySignatureAnnotation) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<TsAssertsReturnType> for TsAnyReturnType {
     fn from(node: TsAssertsReturnType) -> TsAnyReturnType {
         TsAnyReturnType::TsAssertsReturnType(node)
@@ -22011,6 +22066,11 @@ impl std::fmt::Display for TsAnyPropertyAnnotation {
     }
 }
 impl std::fmt::Display for TsAnyPropertyParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAnyPropertySignatureAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
