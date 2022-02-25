@@ -197,7 +197,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
         T!['{'] => parse_import_named_clause_rest(p, m),
         _ if is_at_identifier_binding(p) => {
             parse_identifier_binding(p).unwrap();
-            parse_import_default_or_named_clause_rest(p, m)
+            parse_import_default_or_named_clause_rest(p, m, is_typed)
         }
         _ => {
             // SAFETY: Safe because the parser only eats the "type" keyword if it's followed by
@@ -219,15 +219,35 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
 
 /// Parses the rest of an import named or default clause.
 /// Rest meaning, everything after `type binding`
-fn parse_import_default_or_named_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker {
+fn parse_import_default_or_named_clause_rest(
+    p: &mut Parser,
+    m: Marker,
+    is_typed: bool,
+) -> CompletedMarker {
     match p.cur() {
         T![,] | T!['{'] => {
             p.expect(T![,]);
 
             let default_specifier = m.complete(p, JS_DEFAULT_IMPORT_SPECIFIER);
+            let default_start = default_specifier.range(p).start();
+
             let named_clause = default_specifier.precede(p);
 
             parse_named_import(p).or_add_diagnostic(p, expected_named_import);
+
+            if is_typed {
+                let end = p
+                    .tokens
+                    .last_tok()
+                    .map(|t| t.end())
+                    .unwrap_or_else(|| p.cur_tok().start());
+
+                // test_err ts ts_typed_default_import_with_named
+                // import type A, { B, C } from './a';
+                p.error(p.err_builder("A type-only import can specify a default import or named bindings, but not both.")
+                    .primary(default_start.into()..end, ""))
+            }
+
             expect_contextual_keyword(p, "from", T![from]);
             parse_module_source(p).or_add_diagnostic(p, expected_module_source);
             parse_import_assertion(p).ok();

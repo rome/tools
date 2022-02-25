@@ -14,7 +14,9 @@ use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
     ts_accessor_type_parameters_error, ts_only_syntax_error, ts_set_accessor_return_type_error,
 };
-use crate::syntax::typescript::{parse_ts_return_type_annotation, parse_ts_type_parameters};
+use crate::syntax::typescript::{
+    parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
+};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{ParseRecovery, ParseSeparatedList, Parser, SyntaxFeature};
 use rslint_errors::Span;
@@ -269,8 +271,8 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
     p.expect(T![')']);
 
     TypeScript
-        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
-            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+        .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
+            ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
         })
         .ok();
 

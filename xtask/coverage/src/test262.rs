@@ -1,6 +1,9 @@
-use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use crate::runner::{
+    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
+};
 use regex::Regex;
-use rslint_parser::{parse, SourceType};
+use rome_rowan::api::SyntaxKind;
+use rslint_parser::{parse, AstNode, SourceType};
 use serde::Deserialize;
 use std::io;
 use std::path::Path;
@@ -85,8 +88,6 @@ impl Test262TestCase {
             self.code.clone()
         };
 
-        let parse_result = parse(&code, 0, source_type.clone()).ok();
-
         let should_fail = self
             .meta
             .negative
@@ -94,10 +95,24 @@ impl Test262TestCase {
             .filter(|neg| neg.phase == Phase::Parse)
             .is_some();
 
-        let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type);
+        let files =
+            TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type.clone());
 
-        match parse_result {
-            Ok(_) if !should_fail => TestRunOutcome::Passed(files),
+        match parse(&code, 0, source_type).ok() {
+            Ok(root) if !should_fail => {
+                if let Some(unknown) = root
+                    .syntax()
+                    .descendants()
+                    .find(|descendant| descendant.kind().is_unknown())
+                {
+                    TestRunOutcome::IncorrectlyErrored {
+                        errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
+                        files,
+                    }
+                } else {
+                    TestRunOutcome::Passed(files)
+                }
+            }
             Err(_) if should_fail => TestRunOutcome::Passed(files),
             Ok(_) if should_fail => TestRunOutcome::IncorrectlyPassed(files),
             Err(errors) if !should_fail => TestRunOutcome::IncorrectlyErrored { errors, files },

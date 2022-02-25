@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: type-modifier.ts
 
 ---
@@ -42,6 +42,17 @@ import type * as foo from './bar';
 import type foo from 'bar';
 
 import type foo, { bar } from 'bar';
+
+```
+
+# Errors
+```
+error[SyntaxError]: A type-only import can specify a default import or named bindings, but not both.
+   ┌─ type-modifier.ts:15:8
+   │
+15 │ import type foo, { bar } from 'bar';
+   │        ^^^^^^^^^^^^^^^^^
+
 
 ```
 

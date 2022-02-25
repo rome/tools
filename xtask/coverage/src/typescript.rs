@@ -1,8 +1,11 @@
 use regex::Regex;
-use rslint_parser::{ModuleKind, SourceType};
+use rome_rowan::SyntaxKind;
+use rslint_parser::{AstNode, ModuleKind, SourceType};
 use std::path::Path;
 
-use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use crate::runner::{
+    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
+};
 use crate::util::decode_maybe_utf16_string;
 
 const CASES_PATH: &str = "xtask/coverage/Typescript/tests/cases";
@@ -30,10 +33,21 @@ impl TestCase for TypeScriptTestCase {
         let TestCaseMetadata { files, run_options } = extract_metadata(&self.code, &self.name);
 
         let mut all_errors = Vec::new();
+        let mut unknowns_errors = Vec::new();
 
         for file in &files {
-            if let Some(errors) = file.parse().ok().err() {
-                all_errors.extend(errors);
+            match file.parse().ok() {
+                Ok(root) => {
+                    if let Some(unknown) = root
+                        .syntax()
+                        .descendants()
+                        .find(|descendant| descendant.kind().is_unknown())
+                    {
+                        unknowns_errors
+                            .push(create_unknown_node_in_tree_diagnostic(file.id(), unknown));
+                    }
+                }
+                Err(errors) => all_errors.extend(errors),
             }
         }
 
@@ -44,6 +58,11 @@ impl TestCase for TypeScriptTestCase {
         } else if !all_errors.is_empty() && !expected_errors {
             TestRunOutcome::IncorrectlyErrored {
                 errors: all_errors,
+                files,
+            }
+        } else if !unknowns_errors.is_empty() {
+            TestRunOutcome::IncorrectlyErrored {
+                errors: unknowns_errors,
                 files,
             }
         } else {
