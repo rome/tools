@@ -1,5 +1,7 @@
 use crate::ast::{JsAnyRoot, JsCallArguments};
-use crate::{parse, parse_module, AstNode, Parse, SourceType, SyntaxNode, SyntaxToken};
+use crate::{
+    parse, parse_module, AstNode, Parse, SourceType, SyntaxNode, SyntaxNodeExt, SyntaxToken,
+};
 use expect_test::expect_file;
 use rome_rowan::{SyntaxKind, TextSize};
 use rslint_errors::file::SimpleFile;
@@ -312,4 +314,13 @@ pub fn just_trivia_must_be_appended_to_eof() {
 
     assert_eq!(TextSize::from(0), start);
     assert_eq!(TextSize::from(34), end);
+}
+
+#[test]
+pub fn node_contains_comments() {
+    let text = "true && true // comment";
+    let root = parse_module(text, 0);
+    let syntax = root.syntax();
+
+    assert!(syntax.contains_comments());
 }
