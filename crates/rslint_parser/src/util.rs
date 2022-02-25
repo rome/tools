@@ -160,7 +160,7 @@ pub trait SyntaxNodeExt {
     fn contains_comments(&self) -> bool {
         self.tokens()
             .iter()
-            .any(|tok| tok.kind() == JsSyntaxKind::COMMENT)
+            .any(|tok| tok.has_leading_comments() || tok.has_trailing_comments())
     }
 
     /// Get the first child with a specific kind.
