@@ -1005,7 +1005,7 @@ fn parse_property_class_member_body(
     if kind == TS_PROPERTY_SIGNATURE_CLASS_MEMBER && initializer_syntax.is_present() {
         member
             .add_diagnostic_if_present(p, |p, range| {
-                p.err_builder("abstract properties cannot have initializers")
+                p.err_builder("Abstract properties cannot have initializers")
                     .primary(range, "")
             })
             .map_or(Absent, Present)
