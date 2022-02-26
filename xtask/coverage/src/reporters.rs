@@ -239,11 +239,18 @@ impl SummaryReporter {
         create_number_column("Panics".red());
         create_number_column("Coverage".cyan());
 
+        let mut results: Vec<_> = results.into_iter().collect();
+        results.sort_by(|(l, _), (r, _)| l.cmp(r));
+
         let rows = results.into_iter().map(|(suite, summary)| {
             let panicked = summary.panics;
             let errored = summary.failed;
             let passed = summary.passed;
-            let coverage = format!("{:.2}", summary.coverage);
+            let coverage = if summary.coverage.is_nan() {
+                "\u{221E}".to_string()
+            } else {
+                format!("{:.2}", summary.coverage)
+            };
 
             let total = panicked + errored + passed;
 

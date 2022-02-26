@@ -190,7 +190,7 @@ pub(crate) trait TestSuite: Send + Sync {
     fn name(&self) -> &str;
     fn base_path(&self) -> &str;
     fn is_test(&self, path: &Path) -> bool;
-    fn load_test(&self, entry: &Path) -> Option<Box<dyn TestCase>>;
+    fn load_test(&self, path: &Path) -> Option<Box<dyn TestCase>>;
 }
 
 pub(crate) struct TestSuiteInstance {

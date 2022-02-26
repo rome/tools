@@ -7,3 +7,8 @@
 	path = xtask/coverage/Typescript
 	url = https://github.com/microsoft/Typescript
 	shallow = true
+
+[submodule "xtask/coverage/babel"]
+	path = xtask/coverage/babel
+	url = https://github.com/babel/babel
+	shallow = true

@@ -1,23 +1,27 @@
 pub mod compare;
+pub mod js;
+pub mod jsx;
 mod reporters;
 pub mod results;
 mod runner;
-pub mod test262;
-pub mod typescript;
+pub mod ts;
 mod util;
 
 pub use crate::reporters::SummaryDetailLevel;
 
+use crate::js::test262::Test262TestSuite;
 use crate::reporters::{
     DefaultReporter, JsonReporter, MulticastTestReporter, OutputTarget, SummaryReporter,
     TestReporter,
 };
 use crate::runner::{run_test_suite, TestRunContext, TestSuite};
-use crate::test262::Test262TestSuite;
-use crate::typescript::TypeScriptTestSuite;
+use jsx::jsx_babel::BabelJsxTestSuite;
 use rslint_parser::ParserError;
 use serde::{Deserialize, Serialize};
 use std::any::Any;
+use ts::ts_babel::BabelTypescriptTestSuite;
+use ts::ts_microsoft::MicrosoftTypescriptTestSuite;
+use util::decode_maybe_utf16_string;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TestResult {
@@ -113,7 +117,7 @@ impl TestResults {
 }
 
 pub fn run(
-    language: Option<&str>,
+    suites: Option<&str>,
     filter: Option<&str>,
     json: bool,
     detail_level: SummaryDetailLevel,
@@ -136,7 +140,7 @@ pub fn run(
     };
 
     let mut ran_any_tests = false;
-    for test_suite in get_test_suites(language) {
+    for test_suite in get_test_suites(suites) {
         let result = run_test_suite(test_suite.as_ref(), &mut context);
         ran_any_tests = ran_any_tests || result.summary.tests_ran > 0
     }
@@ -148,16 +152,39 @@ pub fn run(
     }
 }
 
-fn get_test_suites(language: Option<&str>) -> Vec<Box<dyn TestSuite>> {
-    language
-        .map(|language| {
-            let test_suite: Box<dyn TestSuite> = match language.to_lowercase().as_str() {
-                "js" | "javascript" => Box::new(Test262TestSuite),
-                "ts" | "typescript" => Box::new(TypeScriptTestSuite),
-                other => panic!("Unknown language: {}", other),
-            };
+const ALL_SUITES: &str = "*";
+const ALL_JS_SUITES: &str = "js";
+const ALL_TS_SUITES: &str = "ts";
+const ALL_JSX_SUITES: &str = "jsx";
 
-            vec![test_suite]
-        })
-        .unwrap_or_else(|| vec![Box::new(Test262TestSuite), Box::new(TypeScriptTestSuite)])
+fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
+    let suites = suites.unwrap_or("*").to_lowercase();
+    let mut ids: Vec<_> = suites.split(',').collect();
+
+    let mut suites: Vec<Box<dyn TestSuite>> = vec![];
+
+    while let Some(id) = ids.pop() {
+        match id {
+            ALL_JS_SUITES | "javascript" => ids.extend(["js/262"]),
+            ALL_TS_SUITES | "typescript" => ids.extend(["ts/microsoft", "ts/babel"]),
+            ALL_JSX_SUITES => ids.extend(["jsx/babel"]),
+            ALL_SUITES => ids.extend(["js", "ts", "jsx"]),
+
+            "js/262" => suites.push(Box::new(Test262TestSuite)),
+            "ts/microsoft" => suites.push(Box::new(MicrosoftTypescriptTestSuite)),
+            "ts/babel" => suites.push(Box::new(BabelTypescriptTestSuite)),
+            "jsx/babel" => suites.push(Box::new(BabelJsxTestSuite)),
+
+            _ => {}
+        }
+    }
+
+    suites
+}
+
+fn check_file_encoding(path: &std::path::Path) -> Option<String> {
+    let buffer = std::fs::read(path).unwrap();
+    decode_maybe_utf16_string(&buffer)
+        .ok()
+        .map(|decoded| decoded.to_string())
 }
