@@ -939,7 +939,14 @@ fn property_declaration_class_member_body(
     })
 }
 
-/// Parses the body of a property class member (anything after the member name)
+/// Parses the body of a property class member (anything after the member name). If the current member is abstract, the [ParsedSyntax]
+/// will have kind TS_PROPERTY_SIGNATURE_CLASS_MEMBER, otehrwise will be JS_PROPERTY_CLASS_MEMBER.
+///
+///  # Arguments
+///
+/// * `p` - Parser being used
+/// * `member_marker` - Marker that will be completed at the end of this function
+/// * `modifiers` - All the member modifiers parsed previously. This will be used for validation and for the [ParsedSyntax::kind]
 fn parse_property_class_member_body(
     p: &mut Parser,
     member_marker: Marker,
