@@ -43,22 +43,24 @@ impl TestCase for BabelJsxTestCase {
         );
         let result = parse(&self.code, 0, source_type);
 
-        if let Some(unknown) = result
-            .syntax()
-            .descendants()
-            .find(|descendant| descendant.kind().is_unknown())
-        {
-            TestRunOutcome::IncorrectlyErrored {
-                files,
-                errors: vec![Diagnostic::new(
-                    0,
-                    Severity::Bug,
-                    "Unknown node in test that should pass",
-                )
-                .primary(unknown.text_range(), "")],
+        if result.errors().is_empty() {
+            if let Some(unknown) = result
+                .syntax()
+                .descendants()
+                .find(|descendant| descendant.kind().is_unknown())
+            {
+                TestRunOutcome::IncorrectlyErrored {
+                    files,
+                    errors: vec![Diagnostic::new(
+                        0,
+                        Severity::Bug,
+                        "Unknown node in test that should pass",
+                    )
+                    .primary(unknown.text_trimmed_range(), "")],
+                }
+            } else {
+                TestRunOutcome::Passed(files)
             }
-        } else if result.errors().is_empty() {
-            TestRunOutcome::Passed(files)
         } else {
             TestRunOutcome::IncorrectlyErrored {
                 files,
