@@ -71,7 +71,7 @@ JsModule {
       8: R_CURLY@50..52 "}" [Newline("\n")] []
   3: EOF@52..53 "" [Newline("\n")] []
 --
-error[SyntaxError]: abstract properties cannot have initializers
+error[SyntaxError]: Abstract properties cannot have initializers
   ┌─ ts_abstract_property_cannot_have_initiliazers.ts:2:5
   │
 2 │     abstract name: string = "";
