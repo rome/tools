@@ -2,8 +2,6 @@ use crate::check_file_encoding;
 use crate::runner::{
     create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
-use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
-use crate::util::decode_maybe_utf16_string;
 use regex::Regex;
 use rome_rowan::SyntaxKind;
 use rslint_parser::{AstNode, ModuleKind, SourceType};
