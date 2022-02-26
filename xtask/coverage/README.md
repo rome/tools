@@ -2,35 +2,32 @@
 
 
 ## `cargo coverage`
-Runs the parser against the [Test262](https://github.com/tc39/test262) and [TypesCript tests](https://github.com/microsoft/TypeScript/tree/main/tests)
-test suites to validate its conformance.
+Runs the parser against the various test suites to validate its conformance.
 
-You can run all test suites with
-
-```bash
-cargo coverage
 ```
-
-...or a specific test suite by specifying the language:
-
-```bash
-cargo coverage --language=js
+Run coverage command.
+USAGE:
+    cargo coverage <SUBCOMMAND> [option]
+SUBCOMMANDS:
+    compare             Compares output between two --json outputs
+OPTIONS
+    --markdown          Emits supported output into markdown format. Supported by `compare` subcommand.
+    --json              Prints the test results in JSON. This mode will send all other test output and user messages to stderr.
+    --detailed=[debug]  Prints a detailed summary at the end for all failing tests. Includes in depth details if set to `debug`.
+    --suites=<IDS>      Runs the specified tests suites. Use comma as separator.
+                        Valid values are:
+                            *: will run all suites
+                            js: will run all javascript suites; Same as "js/262";
+                            ts: will run all typescript suites; Same as "ts/microsoft,ts/babel";
+                            jsx: will run all jsx suites; Same as "jsx/babel";
+                            js/262: will run https://github.com/tc39/test262/tree/main/test;
+                            ts/microsoft: will run https://github.com/microsoft/Typescript/tree/main/tests/cases
+                            ts/babel: will run https://github.com/babel/babel/tree/main/packages/babel-parser/test/fixtures/typescript
+                            jsx/babel: will run https://github.com/babel/babel/tree/main/packages/babel-parser/test/fixtures/jsx/basic
+                        Default is "*".
+    --filter=<file>     Filters out tests that don't match the query.
+    --help              Prints this help.
 ```
-
-You can filter the tests by passing an additional `--filter` so that only the tests matching the passed name are executed:
-
-```bash
-cargo coverage --filter=source
-```
-
-The `--detailed` parameter enables a more detailed summary at the end of the test run that includes diagnostic.
-You can use `--detailed=debug` if you're debugging a test (prints the AST and diagnostics, even for passing tests). `--detailed` can also be useful if you want to pipe the results to a text file.
-
-
-```bash
-cargo coverage --detailed
-```
-
 
 ## `cargo coverage compare`
 
