@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: mappedType.ts
 
 ---
@@ -16,7 +16,7 @@ type Flags = { [K in Keys]: boolean };
 ```js
 type Keys = 'option1' | 'option2';
 type Flags = {
-  [K in Keys ]: boolean;
+  [K in Keys]: boolean;
 };
 
 ```

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: minustoken.ts
 
 ---
@@ -19,11 +19,11 @@ type ReadonlyPartial<T> = {
 # Output
 ```js
 type MutableRequired<T> = {
-  -readonly [P in keyof T ]-?: T[P];
+  -readonly [P in keyof T]-?: T[P];
 }; // Remove readonly and ?
 
 type ReadonlyPartial<T> = {
-  +readonly [P in keyof T ]+?: T[P];
+  +readonly [P in keyof T]+?: T[P];
 }; // Add readonly and ?
 
 ```

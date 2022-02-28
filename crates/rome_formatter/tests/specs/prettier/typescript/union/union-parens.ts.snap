@@ -195,12 +195,12 @@ let a6: /*1*/ C;
 let a7: /*1*/ (C);
 let a8: /*1*/ (C);
 let a9: ( /*1*/ C);
-let a10: /*1*/ C;
-let a11: /*1*/ (C);
+let a10: /*1*/ /*2*/ C;
+let a11: /*1*/ ( /*2*/ C);
 
-let aa1: /*1*/ C | D;
-let aa2: /*1*/ C | /*3*/ D;
-let aa3: /*1*/ C | /*3*/ D /*4*/ ;
+let aa1: /*1*/ /*2*/ C | D;
+let aa2: /*1*/ /*2*/ C | /*3*/ D;
+let aa3: /*1*/ /*2*/ C | /*3*/ D /*4*/ ;
 
 type A1 = C;
 type A2 = C;
@@ -211,14 +211,14 @@ type A6 = C; /*1*/
 type A7 = (C); /*1*/
 type A8 = (C); /*1*/
 type A9 = ( /*1*/ C);
-type A10 = C; /*1*/
-type A11 = (C); /*1*/
+type A10 = /*2*/ C; /*1*/
+type A11 = ( /*2*/ C); /*1*/
 type A12 = ((C)); /*1*/
 type A13 = ((C)); /*1*/
 
-type Aa1 = C | D; /*1*/
-type Aa2 = C | /*3*/ D; /*1*/
-type Aa3 = C | /*3*/ D /*4*/ ; /*1*/
+type Aa1 = /*2*/ C | D; /*1*/
+type Aa2 = /*2*/ C | /*3*/ D; /*1*/
+type Aa3 = /*2*/ C | /*3*/ D /*4*/ ; /*1*/
 
 type C1 = a | b; /*1*/
 type C2 = a | (b); /*1*/

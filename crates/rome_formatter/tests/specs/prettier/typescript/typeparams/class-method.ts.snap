@@ -178,7 +178,7 @@ export class Thing9 implements OtherThing {
 
 export class Thing10 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
-    (veryLongArgName: ObjectType): Provider<Options,MoreOptions> =>
+    (veryLongArgName: ObjectType): Provider<Options, MoreOptions> =>
       veryLongArgName,
   );
 }
@@ -273,7 +273,7 @@ export class Thing20 implements OtherThing {
 
 export class Thing21 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
-    function (veryLongArgName: ObjectType): Provider<Options,MoreOptions> {
+    function (veryLongArgName: ObjectType): Provider<Options, MoreOptions> {
       return veryLongArgName;
     },
   );

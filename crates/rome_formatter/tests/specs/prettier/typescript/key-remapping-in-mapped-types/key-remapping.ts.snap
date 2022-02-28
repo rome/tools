@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: key-remapping.ts
 
 ---
@@ -27,7 +27,7 @@ type MappedTypeWithNewKeys<T> = {
 };
 
 type RemoveKindField<T> = {
-  [K in keyof T as Exclude<K,"kind">]: T[K];
+  [K in keyof T as Exclude<K, "kind">]: T[K];
 };
 
 type PickByValueType<T, U> = {

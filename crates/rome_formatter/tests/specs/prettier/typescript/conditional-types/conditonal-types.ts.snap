@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: conditonal-types.ts
 
 ---
@@ -52,7 +52,7 @@ export type DeepReadonly<T> = T extends any[] ? DeepReadonlyArray<T[number]> : T
 > : T;
 
 type NonFunctionPropertyNames<T> = {
-  [K in keyof T ]: T[K] extends Function ? never : K;
+  [K in keyof T]: T[K] extends Function ? never : K;
 }[keyof T];
 
 interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
