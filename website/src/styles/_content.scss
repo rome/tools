@@ -209,7 +209,7 @@
 	h3,
 	h4,
 	h5 {
-		padding: $unit / 4 0;
+		padding: calc($unit / 4) 0;
 	}
 
 	table {
@@ -219,12 +219,12 @@
 
 	thead th {
 		text-align: left;
-		padding: $unit / 2;
+		padding: calc($unit / 2);
 		font-weight: bold;
 	}
 
 	tbody td {
-		padding: $unit / 2;
+		padding: calc($unit / 2);
 		border: 1px solid var(--soft-border-color);
 	}
 

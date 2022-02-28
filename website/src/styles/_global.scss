@@ -49,22 +49,22 @@ pre code {
 
 h1 {
 	font-size: 2em;
-	line-height: $body-line-height / 2em;
+	line-height: calc($body-line-height / 2em);
 }
 
 h2 {
 	font-size: 1.5em;
-	line-height: $body-line-height / 1.5em;
+	line-height: calc($body-line-height / 1.5em);
 }
 
 h3 {
 	font-size: 1.2em;
-	line-height: $body-line-height / 1.2em;
+	line-height: calc($body-line-height / 1.2em);
 }
 
 h4, h5 {
 	font-size: 1em;
-	line-height: $body-line-height / 1em;
+	line-height: calc($body-line-height / 1em);
 }
 
 h1, h2{
@@ -89,7 +89,7 @@ a, .link {
 		text-decoration: none;
 		color: var(--link-hover-color);
 	}
-	
+
 	&:active {
 		color: var(--primary-color);
 	}
@@ -143,8 +143,8 @@ ul.breadcrumbs {
 
 		> a {
 			display: flex;
-			padding-left: $unit * 2 + $unit / 2;
-			padding-right: $unit / 2;
+			padding-left: calc($unit * 2 + $unit / 2);
+			padding-right: calc($unit / 2);
 			line-height: $breadcrumbs-height;
 
 			span{
@@ -183,7 +183,7 @@ ul.breadcrumbs {
 
 		&.active {
 			font-weight: bold;
-			padding-left: $unit * 2 + $unit / 2;
+			padding-left: calc($unit * 2 + $unit / 2);
 			padding-right: $unit;
 			line-height: $breadcrumbs-height;
 		}
@@ -210,7 +210,7 @@ ul.breadcrumbs {
 
 		li {
 			a {
-				padding: $unit / 2 $unit;
+				padding: calc($unit / 2) $unit;
 				display: block;
 			}
 
@@ -237,7 +237,7 @@ ul.breadcrumbs {
 	position: absolute;
 	right: 0;
 	top: -40px;
-	padding: $unit / 2 $unit;
+	padding: calc($unit / 2) $unit;
 	z-index: 100;
 	background: var(--logo-font-color);
 	color: var(--container-color);
