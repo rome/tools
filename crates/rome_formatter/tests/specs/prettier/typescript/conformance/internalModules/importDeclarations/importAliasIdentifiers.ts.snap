@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: importAliasIdentifiers.ts
 
 ---
@@ -57,12 +57,10 @@ var p: { x: number; y: number; };
 # Output
 ```js
 module moduleA {
-    export class Point {
-        constructor(public x: number, public y: number) { }
-    }
+  export class Point {
+    constructor(public x: number, public y: number) {}
+  }
 }
-
-
 
 import alias = moduleA;
 
@@ -74,16 +72,10 @@ class clodule {
   name: string;
 }
 
-
-
 module clodule {
-    export interface Point {
-        x: number; y: number;
-    }
-    var Point: Point = { x: 0, y: 0 };
+  export interface Point { x: number, y: number }
+  var Point: Point = { x: 0, y: 0 };
 }
-
-
 
 import clolias = clodule;
 
@@ -95,16 +87,10 @@ function fundule() {
   return { x: 0, y: 0 };
 }
 
-
-
 module fundule {
-    export interface Point {
-        x: number; y: number;
-    }
-    var Point: Point = { x: 0, y: 0 };
+  export interface Point { x: number, y: number }
+  var Point: Point = { x: 0, y: 0 };
 }
-
-
 
 import funlias = fundule;
 

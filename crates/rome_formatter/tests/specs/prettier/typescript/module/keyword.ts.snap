@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: keyword.ts
 
 ---
@@ -44,19 +44,13 @@ namespace X {
 ```js
 module X {}
 
-
-
 module X {
   const x = 1;
 }
 
-
-
 module X {
   module X {}
 }
-
-
 
 module X {
   module X {
@@ -64,23 +58,15 @@ module X {
   }
 }
 
-
-
 namespace X {}
-
-
 
 namespace X {
   const x = 1;
 }
 
-
-
 namespace X {
   namespace X {}
 }
-
-
 
 namespace X {
   namespace X {

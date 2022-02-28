@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: globalIsContextualKeyword.ts
 
 ---
@@ -33,10 +33,7 @@ function b() {
   class global {}
 }
 
-
-
-namespace global {
-}
+namespace global {}
 
 function foo(global: number) {}
 

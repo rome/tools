@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: moduleDeclaration.ts
 
 ---
@@ -21,8 +21,7 @@ declare module "B" {
 # Output
 ```js
 module A {
-    export class A {
-    }
+  export class A {}
 }
 
 declare module "B" {

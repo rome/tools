@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: class-method.ts
 
 ---
@@ -109,13 +109,13 @@ const appIDs = createSelector(
 # Output
 ```js
 // https://github.com/prettier/prettier/issues/4070
-export class Thing implements OtherThing  {
+export class Thing implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType): Provider<Opts> => {},
   );
 }
 
-export class Thing2 implements OtherThing  {
+export class Thing2 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType): Provider<Opts> => {
       const someVar = doSomething(type);
@@ -127,7 +127,7 @@ export class Thing2 implements OtherThing  {
   );
 }
 
-export class Thing3 implements OtherThing  {
+export class Thing3 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type) => {
       const someVar = doSomething(type);
@@ -139,51 +139,51 @@ export class Thing3 implements OtherThing  {
   );
 }
 
-export class Thing4 implements OtherThing  {
+export class Thing4 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType): Provider<Opts> => type.doSomething(),
   );
 }
 
-export class Thing5 implements OtherThing  {
+export class Thing5 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType): Provider<Opts> => <any>type.doSomething(),
   );
 }
 
-export class Thing6 implements OtherThing  {
+export class Thing6 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType): Provider<Opts> => <Provider<Opts>>type.doSomething(),
   );
 }
 
-export class Thing7 implements OtherThing  {
+export class Thing7 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType) => <Provider<Opts>>type.doSomething(),
   );
 }
 
-export class Thing8 implements OtherThing  {
+export class Thing8 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType) =>
       <Provider<Opts>>type.doSomething(withArgs, soIt, does, not, fit).extraCall(),
   );
 }
 
-export class Thing9 implements OtherThing  {
+export class Thing9 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType) => type.doSomething(),
   );
 }
 
-export class Thing10 implements OtherThing  {
+export class Thing10 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (veryLongArgName: ObjectType): Provider<Options,MoreOptions> =>
       veryLongArgName,
   );
 }
 
-export class Thing11 implements OtherThing  {
+export class Thing11 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType): Provider => {},
   );
@@ -191,7 +191,7 @@ export class Thing11 implements OtherThing  {
 
 // regular non-arrow functions
 
-export class Thing12 implements OtherThing  {
+export class Thing12 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType): Provider<Opts> {
       return type;
@@ -199,7 +199,7 @@ export class Thing12 implements OtherThing  {
   );
 }
 
-export class Thing13 implements OtherThing  {
+export class Thing13 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType): Provider<Opts> {
       const someVar = doSomething(type);
@@ -211,7 +211,7 @@ export class Thing13 implements OtherThing  {
   );
 }
 
-export class Thing14 implements OtherThing  {
+export class Thing14 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type) {
       const someVar = doSomething(type);
@@ -223,7 +223,7 @@ export class Thing14 implements OtherThing  {
   );
 }
 
-export class Thing15 implements OtherThing  {
+export class Thing15 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType): Provider<Opts> {
       return type.doSomething();
@@ -231,7 +231,7 @@ export class Thing15 implements OtherThing  {
   );
 }
 
-export class Thing16 implements OtherThing  {
+export class Thing16 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType): Provider<Opts> {
       return <any>type.doSomething();
@@ -239,7 +239,7 @@ export class Thing16 implements OtherThing  {
   );
 }
 
-export class Thing17 implements OtherThing  {
+export class Thing17 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType): Provider<Opts> {
       return <Provider<Opts>>type.doSomething();
@@ -247,7 +247,7 @@ export class Thing17 implements OtherThing  {
   );
 }
 
-export class Thing18 implements OtherThing  {
+export class Thing18 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType) {
       return <Provider<Opts>>type.doSomething();
@@ -255,7 +255,7 @@ export class Thing18 implements OtherThing  {
   );
 }
 
-export class Thing19 implements OtherThing  {
+export class Thing19 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType) {
       return <Provider<Opts>>type.doSomething(withArgs, soIt, does, not, fit).extraCall();
@@ -263,7 +263,7 @@ export class Thing19 implements OtherThing  {
   );
 }
 
-export class Thing20 implements OtherThing  {
+export class Thing20 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType) {
       return type.doSomething();
@@ -271,7 +271,7 @@ export class Thing20 implements OtherThing  {
   );
 }
 
-export class Thing21 implements OtherThing  {
+export class Thing21 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (veryLongArgName: ObjectType): Provider<Options,MoreOptions> {
       return veryLongArgName;
@@ -279,7 +279,7 @@ export class Thing21 implements OtherThing  {
   );
 }
 
-export class Thing22 implements OtherThing  {
+export class Thing22 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     function (type: ObjectType): Provider {},
   );

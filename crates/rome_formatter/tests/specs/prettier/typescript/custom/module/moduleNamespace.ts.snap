@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: moduleNamespace.ts
 
 ---
@@ -15,8 +15,6 @@ namespace f {}
 # Output
 ```js
 declare module "f" {}
-
-
 
 namespace f {}
 

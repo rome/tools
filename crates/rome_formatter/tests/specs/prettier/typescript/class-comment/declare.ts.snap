@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: declare.ts
 
 ---
@@ -22,9 +22,8 @@ extends B<T> // 3
 
 # Output
 ```js
-declare class a 
-  // extends b   // 2
-  implements z,x // 3 { // 1
+declare class a // extends b   // 2 // 1
+implements z, x { // 3
   doo: boolean;
 }
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: functionImplementations.ts
 
 ---
@@ -312,7 +312,7 @@ class AnotherClass {
 // if f is a contextually typed function expression, the inferred return type is the union type
 // of the types of the return statement expressions in the function body,
 // ignoring return statements with no expressions.
-var f7: (x: number) => string | number  = (x) => {
+var f7: (x: number) => string | number = (x) => {
   // should be (x: number) => number | string
   if (x < 0) {
     return x;

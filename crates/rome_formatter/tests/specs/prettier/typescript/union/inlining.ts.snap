@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: inlining.ts
 
 ---
@@ -53,23 +53,21 @@ type T8 = number | (((((arg: any) => void))));
 # Output
 ```js
 interface RelayProps { articles: a | null }
-interface RelayProps {
-  articles: Array<{
-    __id: string,
-  } | null> | null | void,
-}
+interface RelayProps { articles: Array<{ __id: string } | null> | null | void }
 
 type UploadState<E, EM, D> // The upload hasnt begun yet
-= {type: "Not_begun"}
+=
+  | { type: "Not_begun" }
   // The upload timed out
-  | {type: "Timed_out"}
+  | { type: "Timed_out" }
   // Failed somewhere on the line
-  | {type: "Failed", error: E, errorMsg: EM}
+  | { type: "Failed", error: E, errorMsg: EM }
   // Uploading to aws3 and CreatePostMutation succeeded
-  | {type: "Success", data: D};
+  | { type: "Success", data: D };
 
 type UploadState2<E, EM, D> // The upload hasnt begun yet
-= A
+=
+  | A
   // The upload timed out
   | B
   // Failed somewhere on the line
@@ -77,9 +75,7 @@ type UploadState2<E, EM, D> // The upload hasnt begun yet
   // Uploading to aws3 and CreatePostMutation succeeded
   | D;
 
-type window = Window & {
-  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: Function;
-};
+type window = Window & { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: Function };
 
 type T1 = (number | string)["toString"];
 type T2 = ((number | string))["toString"];

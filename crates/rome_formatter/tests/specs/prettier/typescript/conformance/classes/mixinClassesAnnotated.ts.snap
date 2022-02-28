@@ -85,7 +85,10 @@ class Derived extends Base {
   }
 }
 
-const Printable = <T extends Constructor<Base>>(superClass: T): Constructor<Printable> & { message: string } & T  =>
+const Printable = <T extends Constructor<Base>>(superClass: T):
+  & Constructor<Printable>
+  & { message: string }
+  & T =>
   class extends superClass {
     static message = "hello";
     print() {
@@ -93,7 +96,9 @@ const Printable = <T extends Constructor<Base>>(superClass: T): Constructor<Prin
     }
   };
 
-function Tagged<T extends Constructor<{}>>(superClass: T): Constructor<Tagged> & T  {
+function Tagged<T extends Constructor<{}>>(superClass: T):
+  & Constructor<Tagged>
+  & T {
   class C extends superClass {
     _tag: string;
     constructor(...args: any[]) {

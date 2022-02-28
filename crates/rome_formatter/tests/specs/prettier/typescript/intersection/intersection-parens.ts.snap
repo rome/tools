@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: intersection-parens.ts
 
 ---
@@ -60,43 +60,43 @@ type C = (((number | string))) & boolean;
 type D = ((((number | string)))) & boolean;
 
 let b1: C;
-let b2: & C;
-let b3: (& C);
-let b4: & (C);
-let b5: (& (C));
-let b6: /*1*/ & C;
-let b7: /*1*/ & (C);
-let b8: /*1*/ (& C);
-let b9: ( /*1*/ & C);
-let b10: /*1*/ & /*2*/ C;
-let b11: /*1*/ (& /*2*/ C);
+let b2: C;
+let b3: (C);
+let b4: (C);
+let b5: ((C));
+let b6: /*1*/ C;
+let b7: /*1*/ (C);
+let b8: /*1*/ (C);
+let b9: ( /*1*/ C);
+let b10: /*1*/ C;
+let b11: /*1*/ (C);
 
-let bb1: /*1*/ & /*2*/ C & D;
-let bb2: /*1*/ & /*2*/ C & /*3*/ D;
-let bb3: /*1*/ & /*2*/ C & /*3*/ D /*5*/;
+let bb1: /*1*/ C & D;
+let bb2: /*1*/ C & /*3*/ D;
+let bb3: /*1*/ C & /*3*/ D /*5*/ ;
 
-type B2 = & C;
-type B3 = (& C);
-type B4 = & (C);
-type B5 = (& (C));
-type B6 = & C; /*1*/
-type B7 = & (C); /*1*/
-type B8 = (& C); /*1*/
-type B9 = ( /*1*/ & C);
-type B10 = & /*2*/ C; /*1*/
-type B11 = (& /*2*/ C); /*1*/
-type B12 = & ( (C)); /*1*/
+type B2 = C;
+type B3 = (C);
+type B4 = (C);
+type B5 = ((C));
+type B6 = C; /*1*/
+type B7 = (C); /*1*/
+type B8 = (C); /*1*/
+type B9 = ( /*1*/ C);
+type B10 = C; /*1*/
+type B11 = (C); /*1*/
+type B12 = ((C)); /*1*/
 
-type Bb1 = & /*2*/ C & D; /*1*/
-type Bb2 = & /*2*/ C & /*3*/ D; /*1*/
-type Bb3 = & /*2*/ C & /*3*/ D /*4*/; /*1*/
+type Bb1 = C & D; /*1*/
+type Bb2 = C & /*3*/ D; /*1*/
+type Bb3 = C & /*3*/ D /*4*/ ; /*1*/
 
-type D1 = | a & b; /*1*/
-type D2 = | a & (b); /*1*/
-type D3 = | a & (| b); /*1*/
-type D4 = | (a & b); /*1*/
-type D5 = (| a & b); /*1*/
-type D6 = (| a & b); /*0*/ /*1*/
+type D1 = a & b; /*1*/
+type D2 = a & (b); /*1*/
+type D3 = a & (b); /*1*/
+type D4 = (a & b); /*1*/
+type D5 = (a & b); /*1*/
+type D6 = (a & b); /*0*/ /*1*/
 
 ```
 
