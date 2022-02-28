@@ -444,7 +444,13 @@ impl Groups {
             return false;
         }
 
-        // Break the groups if any hard line break is found
+        // This emulates a simplified version of the similar logic found in the
+        // printer to force groups to break if they contain any "hard line
+        // break" (these not only include hard_line_break elements but also
+        // empty_line or tokens containing the "\n" character): The idea is
+        // that since any of these will force the group to break when it gets
+        // printed, the formatter needs to emit a group element for the call
+        // chain in the first place or it will not be printed correctly
         let has_line_breaks = self
             .groups
             .iter()

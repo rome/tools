@@ -1,3 +1,44 @@
+//! This module exposes utility functions for detecting "simple" expressions
+//!
+//! Simple expressions are expressions that are going to create a single group
+//! anyway, so they don't need to be wrapped in a second one: this includes
+//! object, array or parenthesized expressions, as well as function
+//! declarations that have a high probability of breaking only in their body
+//! group.
+//! This last bit is defined recursively in [is_simple_function_expression] as
+//! functions that only have a few (less than 3) identifier parameters, no type
+//! parameter or return type and a block body: technically such a function
+//! expression can still break in both the parameters and body group but the
+//! small number of parameters makes it unlikely.
+//!
+//! The use case for detecting these "simple" expressions is to avoid creating
+//! redundant groups in nested delimited expressions when only one would
+//! suffice, for instance in call expressions:
+//!
+//! ```js
+//! // Formatter output without handling of simple expressions
+//! new Promise(
+//!   (resolve, reject) => {
+//!     resolve();
+//!   },
+//! );
+//!
+//! func(
+//!   {
+//!     key: 'value',
+//!   },
+//! );
+//!
+//! // Formatter output with handling of simple expressions
+//! new Promise((resolve, reject) => {
+//!   resolve();
+//! });
+//!
+//! func({
+//!   key: 'value',
+//! });
+//! ```
+
 use rslint_parser::ast::JsParameters;
 use rslint_parser::ast::{
     JsAnyExpression, JsAnyFunction, JsAnyFunctionBody, JsArrayExpression, JsArrayExpressionFields,
