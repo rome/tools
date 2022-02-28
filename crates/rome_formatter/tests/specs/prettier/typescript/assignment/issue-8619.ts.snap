@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: issue-8619.ts
 
 ---
@@ -21,7 +21,7 @@ expression: issue-8619.ts
 {
   {
     {
-      const myLongVariableName: MyLongTypeName | null  = myLongFunctionCallHere();
+      const myLongVariableName: MyLongTypeName | null = myLongFunctionCallHere();
     }
   }
 }

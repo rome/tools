@@ -1,0 +1,1 @@
+type QualifiedType = A  .  B . C

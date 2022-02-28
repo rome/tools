@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: index-signature.ts
 
 ---
@@ -15,7 +15,7 @@ class LocalStorage implements Storage {
 
 # Output
 ```js
-class LocalStorage implements Storage  {
+class LocalStorage implements Storage {
   [index: number]: string;
   [key: string]: any;
 }

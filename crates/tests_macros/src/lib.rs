@@ -91,6 +91,7 @@ fn transform_file_name(input: &str) -> String {
             | "enum"
             | "static"
             | "yield"
+            | "type"
     );
 
     if is_keyword {

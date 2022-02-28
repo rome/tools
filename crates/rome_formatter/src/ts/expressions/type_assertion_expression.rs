@@ -13,9 +13,11 @@ impl ToFormatElement for TsTypeAssertionExpression {
         } = self.as_fields();
 
         Ok(format_elements![
-            l_angle_token.format(formatter)?,
-            ty.format(formatter)?,
-            r_angle_token.format(formatter)?,
+            formatter.format_delimited_soft_block_indent(
+                &l_angle_token?,
+                ty.format(formatter)?,
+                &r_angle_token?,
+            )?,
             expression.format(formatter)?
         ])
     }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: comments.ts
 
 ---
@@ -23,8 +23,8 @@ type B3 = a | /* 1 */ /* 2 */ b;
 ```js
 type A1 = a /* 1 */ | b;
 type A2 = a | /* 1 */ b;
-type A3 = (a /* 1 */) | b;
-type A4 = a | (/* 1 */ b);
+type A3 = (a /* 1 */ ) | b;
+type A4 = a | ( /* 1 */ b);
 type A5 = (a) /* 1 */ | b;
 type A6 = a | /* 1 */ (b);
 

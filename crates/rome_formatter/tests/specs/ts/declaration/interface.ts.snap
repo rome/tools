@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 163
+assertion_line: 168
 expression: interface.ts
 
 ---
@@ -51,10 +51,10 @@ interface C<
 // @ts-ignore
 interface D
 	extends
-		B<string,symbol>,
-		F<string,symbol>,
-		G<string,number,symbol>,
-		H<string,number,symbol>
+		B<string, symbol>,
+		F<string, symbol>,
+		G<string, number, symbol>,
+		H<string, number, symbol>
 {
 	something1: string,
 	something2: string,
@@ -63,5 +63,5 @@ interface D
 	something5: string,
 }
 // @ts-ignore
-interface D extends B<string,symbol>, F<string,symbol> {}
+interface D extends B<string, symbol>, F<string, symbol> {}
 

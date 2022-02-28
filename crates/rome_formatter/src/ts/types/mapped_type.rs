@@ -15,7 +15,9 @@ impl ToFormatElement for TsMappedType {
         let property_name = self.property_name().format(formatter)?;
         let in_token = self.in_token().format(formatter)?;
         let keys = self.keys_type().format(formatter)?;
-        let as_clause = self.as_clause().format_or_empty(formatter)?;
+        let as_clause = self
+            .as_clause()
+            .format_with_or_empty(formatter, |clause| format_elements![space_token(), clause])?;
         let r_square = self.r_brack_token().format(formatter)?;
         let optional_modifier = self.optional_modifier().format_or_empty(formatter)?;
         let mapped_type = self.mapped_type().format_or_empty(formatter)?;
@@ -31,7 +33,6 @@ impl ToFormatElement for TsMappedType {
                 in_token,
                 space_token(),
                 keys,
-                space_token(),
                 as_clause,
                 r_square,
                 optional_modifier,

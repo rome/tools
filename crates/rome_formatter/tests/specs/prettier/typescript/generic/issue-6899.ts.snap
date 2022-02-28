@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: issue-6899.ts
 
 ---
@@ -27,7 +27,6 @@ const firestorePersonallyIdentifiablePaths: Array<
 > = [];
 
 export const SUPPORTED_VEHICLE_TYPES: Array<
-  
   Collections.VehiclesStates.Entity['type'],
 > = Object.values(Collections.VehiclesStates.Type);
 

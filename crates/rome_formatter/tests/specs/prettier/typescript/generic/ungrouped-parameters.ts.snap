@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: ungrouped-parameters.ts
 
 ---
@@ -25,7 +25,7 @@ function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
 # Output
 ```js
 function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
-  customTooltipWithoutAggregatedField?: 
+  customTooltipWithoutAggregatedField?:
     | StringFieldDefWithCondition<F>
     | StringValueDefWithCondition<F>
     | StringFieldDef<F>[],

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: mappedTypeWithCombinedTypeMappers.ts
 
 ---
@@ -32,12 +32,12 @@ const shouldFail: { important: boolean } = output.x.children;
 // Repro from #13351
 
 type Meta<T, A> = {
-  [P in keyof T ]: { value: T[P], also: A, readonly children: Meta<T[P],A> };
+  [P in keyof T]: { value: T[P], also: A, readonly children: Meta<T[P], A> };
 };
 
 interface Input { x: string, y: number }
 
-declare const output: Meta<Input,boolean>;
+declare const output: Meta<Input, boolean>;
 
 const shouldFail: { important: boolean } = output.x.children;
 

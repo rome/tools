@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: commentInNamespaceDeclarationWithIdentifierPathName.ts
 
 ---
@@ -15,9 +15,8 @@ expression: commentInNamespaceDeclarationWithIdentifierPathName.ts
 
 # Output
 ```js
-﻿namespace hello.hi.world
-{
-    function foo() {}
+namespace hello.hi.world {
+  function foo() {}
 }
 
 ```

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: issue-10352-consistency.ts
 
 ---
@@ -34,7 +34,7 @@ export interface Store {
   >,
 }
 
-export default class StoreImpl extends Service implements Store  {
+export default class StoreImpl extends Service implements Store {
   getRecord(collectionName: string, documentPath: string): TaskEither<
     Error,
     Option<GenericRecord>,

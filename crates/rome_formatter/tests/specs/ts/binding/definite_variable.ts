@@ -1,0 +1,1 @@
+let definiteVariable!: TypeName;

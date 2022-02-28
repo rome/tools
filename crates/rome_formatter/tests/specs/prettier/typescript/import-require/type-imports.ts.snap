@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: type-imports.ts
 
 ---
@@ -29,28 +29,16 @@ b = require("b");
 
 # Output
 ```js
-import type A = require("foo");
+import typeA = require("foo");
 export import type = require("A");
 
+import typeA = require("A");
 
+import typea = require("a");
 
-import type
-A = require("A");
+export import typeB = require("B");
 
-
-
-import
-type
-a = require("a");
-
-export import
-type
-B = require("B");
-
-export 
-import
-type
-b = require("b");
+export import typeb = require("b");
 
 ```
 

@@ -1,13 +1,19 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsTypeArguments;
+use rslint_parser::ast::{TsTypeArguments, TsTypeArgumentsFields};
 
 impl ToFormatElement for TsTypeArguments {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let TsTypeArgumentsFields {
+            l_angle_token,
+            ts_type_argument_list,
+            r_angle_token,
+        } = self.as_fields();
+
         formatter.format_delimited_soft_block_indent(
-            &self.l_angle_token()?,
-            self.ts_type_argument_list().format(formatter)?,
-            &self.r_angle_token()?,
+            &l_angle_token?,
+            ts_type_argument_list.format(formatter)?,
+            &r_angle_token?,
         )
     }
 }

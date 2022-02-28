@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: invalidImportAliasIdentifiers.ts
 
 ---
@@ -38,27 +38,19 @@ import i = I;
 
 var V = 12;
 
-
-
 import v = V;
 
 class C {
   name: string;
 }
 
-
-
 import c = C;
 
 enum E { Red, Blue }
 
-
-
 import e = E;
 
 interface I { id: number }
-
-
 
 import i = I;
 
