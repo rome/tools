@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: assignment.js
 
 ---
@@ -43,7 +43,9 @@ module.exports = class A extends B {
 # Output
 ```js
 aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 =
-  class extends (aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg1) {
+  class extends (
+    aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg1
+  ) {
     method() {
       console.log("foo");
     }

@@ -65,8 +65,12 @@ foo[
 # Output
 ```js
 a =
-  ( // Comment 1
-  (Math.random() * (yRange * (1 - minVerticalFraction))) + (minVerticalFraction * yRange)) - offset;
+  (
+    // Comment 1
+    (Math.random() * (yRange * (1 - minVerticalFraction))) + (
+      minVerticalFraction * yRange
+    )
+  ) - offset;
 
 a + a + a + a + a; // comment
 
@@ -80,7 +84,11 @@ var a = x(
 
 foo[a + a + a + bar[b + b + b + b + b]]; // comment // comment
 
-!(a + a + a + !(b + b + b + b + b)); // comment // comment
+!(
+  a + a + a + !( // comment
+    b + b + b + b + b // comment
+  )
+);
 
 ```
 

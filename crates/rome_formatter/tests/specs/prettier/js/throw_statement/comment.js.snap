@@ -38,13 +38,17 @@ function x() {
 }
 
 function f() {
-  throw (foo // comment
-  .bar());
+  throw (
+    foo // comment
+    .bar()
+  );
 }
 
 fn(function f() {
-  throw (foo // comment
-  .bar());
+  throw (
+    foo // comment
+    .bar()
+  );
 });
 
 ```

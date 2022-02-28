@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: issue-4124.js
 
 ---
@@ -32,9 +32,13 @@ const test = /** @type (function (*): ?|undefined) */ (foo);
 
 const prop = /** @type {Object} */ (myObject.property).someProp;
 
-const test = (goog.partial(NewThing.onTemplateChange, rationaleField, typeField)); /** @type (function (*): ?|undefined) */
+const test = ( /** @type (function (*): ?|undefined) */
+  goog.partial(NewThing.onTemplateChange, rationaleField, typeField)
+);
 
-const test = (goog.partial(NewThing.onTemplateChange, rationaleField, typeField)); /** @type (function (*): ?|undefined) */
+const test = ( /** @type (function (*): ?|undefined) */
+  goog.partial(NewThing.onTemplateChange, rationaleField, typeField)
+);
 
 const model = /** @type {?{getIndex: Function}} */ (model);
 

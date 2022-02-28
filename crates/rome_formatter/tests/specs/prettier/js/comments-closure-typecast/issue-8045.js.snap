@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: issue-8045.js
 
 ---
@@ -41,13 +41,19 @@ function jsdocCastInReturn() {
 const myLongVariableName = (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
 
 function jsdocCastInReturn() {
-  return ((fooBarBaz)); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+  return (
+    /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+    (fooBarBaz)
+  );
 }
 
 const myLongVariableName = (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
 
 function jsdocCastInReturn() {
-  return ((fooBarBaz)); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+  return (
+    /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+    (fooBarBaz)
+  );
 }
 
 ```

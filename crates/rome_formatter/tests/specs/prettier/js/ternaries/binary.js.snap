@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 125
 expression: binary.js
 
 ---
@@ -32,11 +32,15 @@ const funnelSnapshotCard = (report === MY_OVERVIEW &&
 
 room =
   room.map(
-    (row, rowIndex) =>
-      (row.map(
-        (col, colIndex) =>
-          ((rowIndex === 0 || colIndex === 0 || rowIndex === height || colIndex === width) ? 1 : 0),
-      )),
+    (row, rowIndex) => (
+      row.map(
+        (col, colIndex) => (
+          (
+            rowIndex === 0 || colIndex === 0 || rowIndex === height || colIndex === width
+          ) ? 1 : 0
+        ),
+      )
+    ),
   );
 
 ```

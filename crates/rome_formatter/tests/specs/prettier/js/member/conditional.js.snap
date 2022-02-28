@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: conditional.js
 
 ---
@@ -15,9 +15,11 @@ expression: conditional.js
 
 # Output
 ```js
-(valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-  this.defaultUser,
-)).prop;
+(
+  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
+    this.defaultUser,
+  )
+).prop;
 
 ```
 

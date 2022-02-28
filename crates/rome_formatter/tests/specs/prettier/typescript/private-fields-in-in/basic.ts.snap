@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: basic.ts
 
 ---
@@ -33,7 +33,9 @@ class Person {
   }
 
   equals(other: unknown) {
-    return (other && typeof other === "object" && #name in other && this.#name === other.#name); // <- this is new!
+    return (
+      other && typeof other === "object" && #name in other && this.#name === other.#name // <- this is new!
+    );
   }
 }
 

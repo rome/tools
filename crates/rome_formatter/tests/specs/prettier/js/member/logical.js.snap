@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: logical.js
 
 ---
@@ -16,7 +16,9 @@ expression: logical.js
 ```js
 (veryLongVeryLongVeryLong || e).prop;
 
-(veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError).prop;
+(
+  veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError
+).prop;
 
 ```
 

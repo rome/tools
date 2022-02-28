@@ -100,9 +100,11 @@ foo.bar.baz
 
 helloWorld.text().then((t) => t);
 
-(veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError).map(
-  (tickets) => TicketRecord.createFromSomeLongString(),
-).filter((obj) => !!obj);
+(
+  veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError
+).map((tickets) => TicketRecord.createFromSomeLongString()).filter(
+  (obj) => !!obj,
+);
 
 const sel = this.connections.concat(this.activities.concat(this.operators)).filter(
   (x) => x.selected,

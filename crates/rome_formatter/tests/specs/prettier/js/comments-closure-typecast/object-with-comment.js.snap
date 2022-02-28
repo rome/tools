@@ -22,8 +22,10 @@ const objectWithComment2 = /** @type MyType */ (  /* comment */  {
 
 # Output
 ```js
-const objectWithComment = ( /* comment */ /** @type MyType */
-{ foo: bar });
+const objectWithComment = ( /** @type MyType */
+  /* comment */
+  { foo: bar }
+);
 
 const objectWithComment2 = /** @type MyType */ ( /* comment */ { foo: bar });
 

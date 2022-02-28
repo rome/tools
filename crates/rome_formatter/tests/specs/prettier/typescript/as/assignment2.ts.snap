@@ -61,9 +61,11 @@ angular
 (this.selectorElem as any) =
   this.multiselectWidget = this.initialValues = undefined;
 
-const extraRendererAttrs = ((attrs.rendererAttrs && this.utils.safeParseJsonString(
-  attrs.rendererAttrs,
-)) || Object.create(null)) as FieldService.RendererAttributes;
+const extraRendererAttrs = (
+  (attrs.rendererAttrs && this.utils.safeParseJsonString(attrs.rendererAttrs)) || Object.create(
+    null,
+  )
+) as FieldService.RendererAttributes;
 
 const annotate = (angular.injector as any).$$annotate as (fn: Function) => string[];
 

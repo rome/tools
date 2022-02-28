@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: conditional.js
 
 ---
@@ -42,17 +42,23 @@ object[valid
 
 (a ? b : c).d().e().f();
 
-(valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-  this.defaultUser,
-)).map();
+(
+  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
+    this.defaultUser,
+  )
+).map();
 
-(valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-  this.defaultUser,
-)).map().filter();
+(
+  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
+    this.defaultUser,
+  )
+).map().filter();
 
-(valid ? helper.responseBody(this.currentUser) : helper.responseBody(
-  defaultUser,
-)).map();
+(
+  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
+    defaultUser,
+  )
+).map();
 
 object[valid ? helper.responseBody(this.currentUser) : helper.responseBody(
   defaultUser,

@@ -75,13 +75,17 @@ function x() {
 }
 
 function f() {
-  return (foo // comment
-  .bar());
+  return (
+    foo // comment
+    .bar()
+  );
 }
 
 fn(function f() {
-  return (foo // comment
-  .bar());
+  return (
+    foo // comment
+    .bar()
+  );
 });
 
 ```
