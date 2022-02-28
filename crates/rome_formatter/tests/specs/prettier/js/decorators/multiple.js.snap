@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: multiple.js
 
 ---
@@ -27,8 +27,7 @@ const foo = {
 # Output
 ```js
 const dog = {
-
-  @readonly
+@readonly
   @nonenumerable
   @doubledValue
   legs: 4,
@@ -40,8 +39,7 @@ const dog = {
 }
 
 const foo = {
-
-  @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
+@multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
 }
 
 ```

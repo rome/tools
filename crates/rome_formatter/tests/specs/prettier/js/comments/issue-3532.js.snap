@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: issue-3532.js
 
 ---
@@ -95,7 +95,6 @@ const AspectRatioBox = ({
 }
 </div>
   </div>
-
 )
 
 export default AspectRatioBox;

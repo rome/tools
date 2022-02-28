@@ -1,5 +1,5 @@
 use rome_rowan::api::SyntaxTriviaPieceComments;
-use rome_rowan::{Language, SyntaxToken, TextRange, TextSize};
+use rome_rowan::{Language, SyntaxToken, TextRange};
 use rslint_parser::{AstNode, SyntaxNode};
 
 use crate::format_elements;
@@ -361,9 +361,9 @@ where
         // Then add the newlines in the leading trivia of the next node
         if let Some(leading_trivia) = next_node.first_leading_trivia() {
             for piece in leading_trivia.pieces() {
-                if piece.as_newline().is_some() {
+                if piece.is_newline() {
                     line_count += 1;
-                } else if piece.as_comments().is_some() {
+                } else if piece.is_comments() {
                     // Stop at the first comment piece, the comment printer
                     // will handle newlines between the comment and the node
                     break;
@@ -1003,62 +1003,6 @@ impl List {
     fn new(content: Vec<FormatElement>) -> Self {
         Self { content }
     }
-
-    fn trim_start(&self) -> Self {
-        let mut content: Vec<_> = self
-            .iter()
-            .skip_while(|e| match e {
-                FormatElement::Empty => true,
-                FormatElement::Space => true,
-                FormatElement::Line(_) => true,
-                FormatElement::Indent(_) => true,
-                FormatElement::Token(t) => {
-                    let s = t.trim_start();
-                    s.is_empty()
-                }
-                _ => false,
-            })
-            .map(Clone::clone)
-            .collect();
-
-        if let Some(FormatElement::Token(s)) = content.get_mut(0) {
-            *s = s.trim_start();
-        }
-
-        Self::new(content)
-    }
-
-    fn trim_end(&self) -> Self {
-        let idx_first_non_empty = self.iter().rev().position(|e| match e {
-            FormatElement::Empty => false,
-            FormatElement::Space => false,
-            FormatElement::Line(_) => false,
-            FormatElement::Indent(_) => false,
-            FormatElement::Token(t) => {
-                let s = t.trim_end();
-                !s.is_empty()
-            }
-            _ => true,
-        });
-
-        match idx_first_non_empty {
-            Some(idx_first_non_empty) => {
-                let idx_first_non_empty = self.len() - idx_first_non_empty;
-                let mut content: Vec<_> = self
-                    .iter()
-                    .take(idx_first_non_empty)
-                    .map(Clone::clone)
-                    .collect();
-
-                if let Some(FormatElement::Token(s)) = content.last_mut() {
-                    *s = s.trim_end();
-                }
-
-                Self::new(content)
-            }
-            None => Self::new(vec![]),
-        }
-    }
 }
 
 impl Deref for List {
@@ -1158,42 +1102,6 @@ impl Token {
             Token::Dynamic { source, .. } => Some(source),
         }
     }
-
-    fn trim_start(&self) -> Self {
-        match self {
-            Token::Static { text } => Self::Static {
-                text: text.trim_start(),
-            },
-            Token::Dynamic { text, source } => {
-                let prev_len = TextSize::from(text.len() as u32);
-                let text = text.trim_start();
-                let next_len = TextSize::from(text.len() as u32);
-                let diff = prev_len - next_len;
-                Self::Dynamic {
-                    text: text.into(),
-                    source: TextRange::new(source.start() + diff, source.end()),
-                }
-            }
-        }
-    }
-
-    fn trim_end(&self) -> Self {
-        match self {
-            Token::Static { text } => Self::Static {
-                text: text.trim_end(),
-            },
-            Token::Dynamic { text, source } => {
-                let prev_len = TextSize::from(text.len() as u32);
-                let text = text.trim_end();
-                let next_len = TextSize::from(text.len() as u32);
-                let diff = prev_len - next_len;
-                Self::Dynamic {
-                    text: text.into(),
-                    source: TextRange::new(source.start(), source.end() - diff),
-                }
-            }
-        }
-    }
 }
 
 // Token equality only compares the text content
@@ -1271,54 +1179,6 @@ impl FormatElement {
     pub fn is_empty(&self) -> bool {
         self == &FormatElement::Empty
     }
-
-    /// Remove all spaces, line breaks, indents from the start of
-    /// the [FormatElement].
-    /// Including "whitespace" characters of the [FormatElement::Token] variant.
-    pub fn trim_start(&self) -> FormatElement {
-        match self {
-            FormatElement::Empty => FormatElement::Empty,
-            FormatElement::Space => FormatElement::Empty,
-            FormatElement::Line(_) => FormatElement::Empty,
-            FormatElement::Indent(i) => i.content.trim_start(),
-            FormatElement::Group(g) => g.content.trim_start(),
-            FormatElement::HardGroup(g) => g.content.trim_start(),
-            FormatElement::Fill(list) => FormatElement::Fill(list.trim_start()),
-            FormatElement::ConditionalGroupContent(g) => g.content.trim_start(),
-            FormatElement::List(list) => FormatElement::List(list.trim_start()),
-            FormatElement::Token(s) => FormatElement::Token(s.trim_start()),
-            FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_start())),
-            FormatElement::Verbatim(v) => FormatElement::Verbatim(Verbatim::new(
-                v.element.trim_start(),
-                v.text.clone(),
-                v.range,
-            )),
-        }
-    }
-
-    /// Remove all spaces, line breaks, indents from the end of
-    /// the [FormatElement].
-    /// Including "whitespace" characters of the [FormatElement::Token] variant.
-    pub fn trim_end(&self) -> FormatElement {
-        match self {
-            FormatElement::Empty => FormatElement::Empty,
-            FormatElement::Space => FormatElement::Empty,
-            FormatElement::Line(_) => FormatElement::Empty,
-            FormatElement::Indent(i) => i.content.trim_end(),
-            FormatElement::Group(g) => g.content.trim_end(),
-            FormatElement::HardGroup(g) => g.content.trim_end(),
-            FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
-            FormatElement::Fill(list) => FormatElement::Fill(list.trim_end()),
-            FormatElement::List(list) => FormatElement::List(list.trim_end()),
-            FormatElement::Token(s) => FormatElement::Token(s.trim_end()),
-            FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_end())),
-            FormatElement::Verbatim(v) => FormatElement::Verbatim(Verbatim::new(
-                v.element.trim_end(),
-                v.text.clone(),
-                v.range,
-            )),
-        }
-    }
 }
 
 impl From<Token> for FormatElement {
@@ -1366,7 +1226,9 @@ impl From<Option<FormatElement>> for FormatElement {
 #[cfg(test)]
 mod tests {
 
-    use crate::format_element::{empty_element, join_elements, List};
+    use crate::format_element::{
+        empty_element, join_elements, normalize_newlines, List, LINE_TERMINATORS,
+    };
     use crate::{concat_elements, space_token, token, FormatElement};
 
     #[test]
@@ -1476,24 +1338,11 @@ mod tests {
     }
 
     #[test]
-    fn format_element_trim() {
-        use crate::format_element::*;
-        let f = concat_elements([
-            FormatElement::Empty,
-            FormatElement::Indent(Indent::new(FormatElement::Empty)),
-            FormatElement::Line(Line::new(LineMode::Hard)),
-            FormatElement::Space,
-            FormatElement::Token(Token::new_static(" \t \n")),
-            FormatElement::List(List::new(vec![FormatElement::Empty])),
-            FormatElement::Group(Group::new(FormatElement::Empty)),
-            FormatElement::ConditionalGroupContent(ConditionalGroupContent::new(
-                FormatElement::Empty,
-                GroupPrintMode::Flat,
-            )),
-        ]);
-
-        let f = f.trim_start();
-        matches!(f.trim_start(), FormatElement::Empty);
-        matches!(f.trim_end(), FormatElement::Empty);
+    fn test_normalize_newlines() {
+        assert_eq!(normalize_newlines("a\nb", LINE_TERMINATORS), "a\nb");
+        assert_eq!(normalize_newlines("a\rb", LINE_TERMINATORS), "a\nb");
+        assert_eq!(normalize_newlines("a\r\nb", LINE_TERMINATORS), "a\nb");
+        assert_eq!(normalize_newlines("a\u{2028}b", LINE_TERMINATORS), "a\nb");
+        assert_eq!(normalize_newlines("a\u{2029}b", LINE_TERMINATORS), "a\nb");
     }
 }

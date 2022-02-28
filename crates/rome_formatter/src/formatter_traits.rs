@@ -1,4 +1,5 @@
 use crate::formatter::TriviaPrintMode;
+use crate::utils::has_formatter_suppressions;
 use crate::Token;
 use crate::{
     empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -279,14 +280,14 @@ impl<N: AstNode + ToFormatElement> FormatTokenAndNode for N {
         With: FnOnce(FormatElement) -> WithResult,
         WithResult: IntoFormatResult,
     {
-        let leading = formatter.format_node_start(self.syntax());
-        let trailing = formatter.format_node_end(self.syntax());
-        with(format_elements![
-            leading,
-            self.to_format_element(formatter)?,
-            trailing,
-        ])
-        .into_format_result()
+        let node = self.syntax();
+        let element = if has_formatter_suppressions(node) {
+            formatter.format_suppressed(node)
+        } else {
+            self.to_format_element(formatter)?
+        };
+
+        with(element).into_format_result()
     }
 }
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: method_chain.js
 
 ---
@@ -37,8 +37,7 @@ import { takeUntil } from 'rxjs/operator/takeUntil';
 
 function test(observable) {
   return observable;
-  
-        ::filter(data => data.someTest)
+  ::filter(data => data.someTest)
         ::throttle(() =>
             interval(10)
                 ::take(1)

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: ignore.js
 
 ---
@@ -60,14 +60,14 @@ foo = {
 foo =
   {
     // prettier-ignore
-    bar: 1,
+  bar:            1,
   };
 
 foo =
   {
     _: "",
     // prettier-ignore
-    bar: 1,
+  bar:            1,
   };
 
 /* comments */
@@ -75,21 +75,21 @@ foo =
   {
     _: "",
     // prettier-ignore
-    bar: 1, // comment
+  bar:            1, // comment
   };
 
 foo =
   {
     _: "",
     // prettier-ignore
-    bar: 1, /* comment */
+  bar:            1, /* comment */
   };
 
 foo =
   {
     _: "",
     // prettier-ignore
-    bar: 1, /* comment */
+  bar:            /* comment */          1,
   };
 
 /* SpreadElement */
@@ -97,7 +97,7 @@ foo =
   {
     _: "",
     // prettier-ignore
-    ...bar,
+  ...bar,
   };
 
 // Nested
@@ -105,10 +105,10 @@ foo =
   {
     baz: {
       // prettier-ignore
-      foo: [1, 2, 3],
+  foo: [1, 2,    3],
     },
     // prettier-ignore
-    bar: 1,
+  bar:            1,
   };
 
 ```

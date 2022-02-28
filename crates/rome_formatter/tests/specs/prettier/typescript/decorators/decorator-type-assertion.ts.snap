@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: decorator-type-assertion.ts
 
 ---
@@ -22,8 +22,6 @@ class Decorated {
 ```js
 @(bind as ClassDecorator)
 class Decorated {}
-
-
 
 @(<ClassDecorator>bind)
 class Decorated {}

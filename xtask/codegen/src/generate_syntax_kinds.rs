@@ -62,6 +62,18 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
         .map(|name| format_ident!("{}", name))
         .collect::<Vec<_>>();
 
+    let lists = grammar
+        .nodes
+        .iter()
+        .filter_map(|name| {
+            if name.ends_with("_LIST") {
+                Some(format_ident!("{}", name))
+            } else {
+                None
+            }
+        })
+        .collect::<Vec<_>>();
+
     let ast = quote! {
         #![allow(clippy::all)]
         #![allow(bad_style, missing_docs, unreachable_pub)]
@@ -105,6 +117,13 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
             pub fn is_literal(self) -> bool {
                 match self {
                     #(#literals)|* => true,
+                    _ => false,
+                }
+            }
+
+            pub fn is_list(self) -> bool {
+                match self {
+                    #(#lists)|* => true,
                     _ => false,
                 }
             }

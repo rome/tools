@@ -16,13 +16,11 @@ expression: syntax.js
 ```js
 #
 {}
-
 #;
 {
   a: 1, b;
-  : 2 
+  : 2
 }
-
 #;
 {
   a: 1, b;
@@ -30,7 +28,7 @@ expression: syntax.js
   {
     c: 4;
   }
-  ] 
+  ]
 }
 
 ```

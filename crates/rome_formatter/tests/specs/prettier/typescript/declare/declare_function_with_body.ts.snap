@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: declare_function_with_body.ts
 
 ---
@@ -18,7 +18,6 @@ declare function bar() {
 ```js
 // Invalid, but recoverable
 declare function foo() {}
-
 declare function bar() {
   // comment
 }

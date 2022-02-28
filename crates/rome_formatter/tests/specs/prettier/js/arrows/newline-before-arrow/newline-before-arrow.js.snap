@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: newline-before-arrow.js
 
 ---
@@ -15,7 +15,6 @@ async x
 ```js
 async;
 x;
-
 => x
 
 ```

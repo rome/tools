@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 124
+assertion_line: 119
 expression: modifiersOnInterfaceIndexSignature1.ts
 
 ---
@@ -13,10 +13,7 @@ interface I {
 
 # Output
 ```js
-interface I {
-  
-  public [a: string]: number;,
-}
+interface I { public [a: string]: number; }
 
 ```
 

@@ -195,6 +195,69 @@ impl<L: Language> SyntaxTriviaPiece<L> {
         TextRange::at(self.offset, self.text_len())
     }
 
+    /// Returns true if this trivia piece is a [SyntaxTriviaPieceNewline].
+    ///
+    /// ```
+    /// use rome_rowan::*;
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use std::iter::Iterator;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n\t/**/let",
+    ///         &[TriviaPiece::Newline(1), TriviaPiece::Whitespace(1), TriviaPiece::Comments(4, false)],
+    ///         &[],
+    ///     );
+    /// });
+    /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
+    /// assert!(pieces[0].is_newline())
+    /// ```
+    pub fn is_newline(&self) -> bool {
+        matches!(self.trivia, TriviaPiece::Newline(..))
+    }
+
+    /// Returns true if this trivia piece is a [SyntaxTriviaPieceWhitespace].
+    ///
+    /// ```
+    /// use rome_rowan::*;
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use std::iter::Iterator;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n\t/**/let",
+    ///         &[TriviaPiece::Newline(1), TriviaPiece::Whitespace(1), TriviaPiece::Comments(4, false)],
+    ///         &[],
+    ///     );
+    /// });
+    /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
+    /// assert!(pieces[1].is_whitespace())
+    /// ```
+    pub fn is_whitespace(&self) -> bool {
+        matches!(self.trivia, TriviaPiece::Whitespace(..))
+    }
+
+    /// Returns true if this trivia piece is a [SyntaxTriviaPieceComments].
+    ///
+    /// ```
+    /// use rome_rowan::*;
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use std::iter::Iterator;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n\t/**/let",
+    ///         &[TriviaPiece::Newline(1), TriviaPiece::Whitespace(1), TriviaPiece::Comments(4, false)],
+    ///         &[],
+    ///     );
+    /// });
+    /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
+    /// assert!(pieces[2].is_comments())
+    /// ```
+    pub fn is_comments(&self) -> bool {
+        matches!(self.trivia, TriviaPiece::Comments(..))
+    }
+
     /// Cast this trivia piece to [SyntaxTriviaPieceNewline].
     ///
     /// ```
@@ -994,7 +1057,7 @@ impl<L: Language> SyntaxToken<L> {
         self.trailing_trivia()
             .pieces()
             .into_iter()
-            .any(|piece| piece.as_comments().is_some())
+            .any(|piece| piece.is_comments())
     }
 
     /// Checks if the current token has leading comments
@@ -1002,7 +1065,7 @@ impl<L: Language> SyntaxToken<L> {
         self.leading_trivia()
             .pieces()
             .into_iter()
-            .any(|piece| piece.as_comments().is_some())
+            .any(|piece| piece.is_comments())
     }
 }
 
@@ -1710,12 +1773,12 @@ mod tests {
         assert_eq!("\n\t ", pieces[0].text());
         assert_eq!(TextSize::from(3), pieces[0].text_len());
         assert_eq!(TextRange::new(0.into(), 3.into()), pieces[0].text_range());
-        assert!(pieces[0].as_whitespace().is_some());
+        assert!(pieces[0].is_whitespace());
 
         assert_eq!("/**/", pieces[1].text());
         assert_eq!(TextSize::from(4), pieces[1].text_len());
         assert_eq!(TextRange::new(3.into(), 7.into()), pieces[1].text_range());
-        assert!(pieces[1].as_comments().is_some());
+        assert!(pieces[1].is_comments());
 
         let pieces_rev: Vec<_> = node
             .first_leading_trivia()

@@ -30,24 +30,15 @@ abstract class A {
 
   public abstract foo_b();
   protected abstract foo_c();
-  
-    private abstract foo_d();
+  private abstract foo_d();
 
-  
-    
-    abstract public foo_bb();
-  
-    abstract protected foo_cc();
-  
-    abstract private foo_dd();
+  abstract public foo_bb();
+  abstract protected foo_cc();
+  abstract private foo_dd();
 
-  
-    
-    abstract static foo_d();
+  abstract static foo_d();
 
-  
-    
-    static abstract foo_e();
+  static abstract foo_e();
 }
 
 ```

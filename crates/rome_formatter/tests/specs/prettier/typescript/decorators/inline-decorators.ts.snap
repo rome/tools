@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: inline-decorators.ts
 
 ---
@@ -60,7 +60,6 @@ class MyContainerComponent {
 
 # Output
 ```js
-
 @d1
 @d2(foo)
 @d3.bar
@@ -98,15 +97,13 @@ class Class3 {
             x: string
         }) private a: string,
     ) {}
-
 }
 
-@decorated 
+@decorated
 class Foo {}
 
 class Bar {
-  
-    @
+  @
   decorated;
   method() {}
 }

@@ -38,8 +38,7 @@ class DD extends AA {
 # Output
 ```js
 class A {
-  
-    abstract foo();
+  abstract foo();
 }
 
 class B extends A {}

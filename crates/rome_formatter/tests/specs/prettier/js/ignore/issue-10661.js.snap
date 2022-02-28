@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 119
 expression: issue-10661.js
 
 ---
@@ -45,8 +45,9 @@ verylongidentifierthatwillwrap123123123123123(
 
 call(
   // comment
-  a.// prettier-ignore
-  b,
+  a.
+  // prettier-ignore
+    b,
 );
 
 call(

@@ -113,8 +113,7 @@ abstract class G {
 }
 
 class H {
-  
-    abstract baz() : number;
+  abstract baz() : number;
 }
 
 ```

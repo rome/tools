@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: ignore-2.js
 
 ---
@@ -41,13 +41,14 @@ function HelloWorld() {
     >
       test
     </div>
-  
   )
 }
 
 a = <div {.../* prettier-ignore */b};
 />
-a = <div {...b/* prettier-ignore */
+a = <div {...b/ * rome - ignore;
+format: prettier;
+ignore */
 }/>
 a = <div {.../* prettier-ignore */
 {}
@@ -62,8 +63,8 @@ a = <div {...{}/* prettier-ignore */}/>
 error: unterminated regex literal
    ┌─ ignore-2.js:20:1
    │
-19 │ a = <div {...{}/* prettier-ignore */}/>
-   │                                      - a regex literal starts there...
+19 │ a = <div {...{}/* rome-ignore format: prettier ignore */}/>
+   │                                                          - a regex literal starts there...
 20 │ 
    │ ^ ...but the file ends here
 
@@ -72,8 +73,8 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
   │  
 5 │ ┌     <div
 6 │ │       {...{} /*
-7 │ │       // @ts-ignore */ /* prettier-ignore */}
-  │ └─────────────────────────────────────────────^ TypeScript only syntax
+7 │ │       // @ts-ignore */ /* rome-ignore format: prettier ignore */}
+  │ └─────────────────────────────────────────────────────────────────^ TypeScript only syntax
 
 error[SyntaxError]: expected `')'` but instead found `invalidProp`
   ┌─ ignore-2.js:8:7
@@ -98,42 +99,60 @@ error[SyntaxError]: expected an expression but instead found ')'
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ ignore-2.js:15:5
    │
-15 │ a = <div {.../* prettier-ignore */b}/>
-   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+15 │ a = <div {.../* rome-ignore format: prettier ignore */b}/>
+   │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ ignore-2.js:15:37
+   ┌─ ignore-2.js:15:57
    │    
-15 │ ┌   a = <div {.../* prettier-ignore */b}/>
-   │ │ ┌─────────────────────────────────────^
-16 │ │ │ a = <div {...b/* prettier-ignore */}/>
+15 │ ┌   a = <div {.../* rome-ignore format: prettier ignore */b}/>
+   │ │ ┌─────────────────────────────────────────────────────────^
+16 │ │ │ a = <div {...b/* rome-ignore format: prettier ignore */}/>
    │ └─│───────────────' ...Which is required to end this statement
    │   └───────────────^ An explicit or implicit semicolon is expected here...
 
-error[SyntaxError]: Expected an expression for the right hand side of a `*`, but found an operator instead
-   ┌─ ignore-2.js:16:35
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ ignore-2.js:16:30
+   │  
+15 │   a = <div {.../* rome-ignore format: prettier ignore */b}/>
+   │ ┌─────────────────────────────────────────────────────────'
+16 │ │ a = <div {...b/* rome-ignore format: prettier ignore */}/>
+   │ │                              ^^^^^^ An explicit or implicit semicolon is expected here...
+   │ └───────────────────────────────────' ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ ignore-2.js:16:47
    │
-16 │ a = <div {...b/* prettier-ignore */}/>
-   │                                  -^ But this operator was encountered instead
-   │                                  │ 
-   │                                  This operator requires a right hand side value
+16 │ a = <div {...b/* rome-ignore format: prettier ignore */}/>
+   │                                      ---------^^^^^^
+   │                                      │        │
+   │                                      │        An explicit or implicit semicolon is expected here...
+   │                                      ...Which is required to end this statement
+
+error[SyntaxError]: Expected an expression for the right hand side of a `*`, but found an operator instead
+   ┌─ ignore-2.js:16:55
+   │
+16 │ a = <div {...b/* rome-ignore format: prettier ignore */}/>
+   │                                                      -^ But this operator was encountered instead
+   │                                                      │ 
+   │                                                      This operator requires a right hand side value
 
 error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ ignore-2.js:16:36
+   ┌─ ignore-2.js:16:56
    │
-16 │ a = <div {...b/* prettier-ignore */}/>
-   │                                    ^ Expected an expression here
+16 │ a = <div {...b/* rome-ignore format: prettier ignore */}/>
+   │                                                        ^ Expected an expression here
 
 error[SyntaxError]: expected a statement but instead found '}/>
-a = <div {...{/* prettier-ignore */}}/>
-a = <div {...{}/* prettier-ignore */}/>
+a = <div {...{/* rome-ignore format: prettier ignore */}}/>
+a = <div {...{}/* rome-ignore format: prettier ignore */}/>
 '
-   ┌─ ignore-2.js:17:37
+   ┌─ ignore-2.js:17:57
    │  
-17 │   a = <div {.../* prettier-ignore */{}}/>
-   │ ┌─────────────────────────────────────^
-18 │ │ a = <div {...{/* prettier-ignore */}}/>
-19 │ │ a = <div {...{}/* prettier-ignore */}/>
+17 │   a = <div {.../* rome-ignore format: prettier ignore */{}}/>
+   │ ┌─────────────────────────────────────────────────────────^
+18 │ │ a = <div {...{/* rome-ignore format: prettier ignore */}}/>
+19 │ │ a = <div {...{}/* rome-ignore format: prettier ignore */}/>
 20 │ │ 
    │ └^ Expected a statement here
 
