@@ -124,11 +124,10 @@ function f7(n = m, m?) {}
 
 // FunctionExpression with non -void return type annotation with a throw, no return, and other code
 // Should be error but isn't
-undefined ===
-  function (): number {
-    throw undefined;
-    var x = 4;
-  };
+undefined === function (): number {
+  throw undefined;
+  var x = 4;
+};
 
 class Base {
   private x;

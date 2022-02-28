@@ -44,8 +44,7 @@ somethingThatsAReallyLongPropName =
   this.props.cardType === AwesomizerCardEnum.SEEFIRST;
 
 const o = {
-  somethingThatsAReallyLongPropName: this.props.cardType ===
-    AwesomizerCardEnum.SEEFIRST,
+  somethingThatsAReallyLongPropName: this.props.cardType === AwesomizerCardEnum.SEEFIRST,
 };
 
 ```

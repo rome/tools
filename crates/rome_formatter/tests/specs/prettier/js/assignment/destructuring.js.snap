@@ -34,8 +34,7 @@ const {
   accessibilityModule: FooAccessibilityModule2,
   accessibilityModule: FooAccessibilityModule3,
   accessibilityModule: FooAccessibilityModule4,
-} =
-  foo || {};
+} = foo || {};
 
 ({ prop: toAssign = "default" } = { prop: "propval" });
 

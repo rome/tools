@@ -51,3 +51,29 @@ const a = x + y
 happy &&
 thoughts && dldldlldldldldldldldl && dldldlldldldldldldldl
 }
+
+if ( somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin || somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin) {}
+
+
+undefined === function () {
+    throw undefined;
+};
+
+const b = `${(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar)}`;
+
+
+const a =
+    aa &&
+    bb &&
+    something &&
+    elsewhere &&
+    happy &&
+    thoughts &&
+    somethingsomethingsomethingsomething ||
+    aa &&
+    bb &&
+    something &&
+    elsewhere &&
+    happy &&
+    thoughts &&
+    somethingsomethingsomethingsomething
