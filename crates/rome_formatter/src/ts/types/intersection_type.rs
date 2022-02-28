@@ -17,7 +17,7 @@ impl ToFormatElement for TsIntersectionType {
             Some(token) => {
                 // The SyntaxToken is converted into a FormatElement using
                 // Token::from to strip the token's trivia pieces which are
-                // then reinserted informat_replaced outside of the
+                // then reinserted in format_replaced outside of the
                 // if_group_breaks block to avoid removing comments when the
                 // group does not break
                 let replaced =
