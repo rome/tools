@@ -116,7 +116,7 @@ fn flatten_expressions(
 ) -> FormatResult<()> {
     match syntax_node.kind() {
         JsSyntaxKind::JS_BINARY_EXPRESSION => {
-            let binary_expression = JsBinaryExpression::cast(syntax_node.to_owned()).unwrap();
+            let binary_expression = JsBinaryExpression::cast(syntax_node).unwrap();
             let JsBinaryExpressionFields {
                 left,
                 right,
@@ -160,7 +160,7 @@ fn flatten_expressions(
             };
         }
         JsSyntaxKind::JS_LOGICAL_EXPRESSION => {
-            let logical_expression = JsLogicalExpression::cast(syntax_node.to_owned()).unwrap();
+            let logical_expression = JsLogicalExpression::cast(syntax_node).unwrap();
 
             let JsLogicalExpressionFields {
                 left,
