@@ -1,6 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement, group_elements, if_group_breaks, block_indent, soft_block_indent, if_group_fits_on_single_line,
+    block_indent, format_elements, group_elements, if_group_breaks, if_group_fits_on_single_line,
+    soft_block_indent, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::TsImplementsClause;
 use rslint_parser::ast::TsImplementsClauseFields;
