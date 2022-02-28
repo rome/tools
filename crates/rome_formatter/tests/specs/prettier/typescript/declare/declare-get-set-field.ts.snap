@@ -16,38 +16,9 @@ class C {
 # Output
 ```js
 class C {
-  declare get: string
-  declare set: string
+  declare get: string;
+  declare set: string;
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ':'
-  ┌─ declare-get-set-field.ts:2:14
-  │
-2 │   declare get: string
-  │              ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'declare'
-  ┌─ declare-get-set-field.ts:3:3
-  │
-3 │   declare set: string;
-  │   ^^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ':'
-  ┌─ declare-get-set-field.ts:3:14
-  │
-3 │   declare set: string;
-  │              ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found ';'
-  ┌─ declare-get-set-field.ts:3:22
-  │
-3 │   declare set: string;
-  │                      ^ Expected a class method body here
-
 
 ```
 
