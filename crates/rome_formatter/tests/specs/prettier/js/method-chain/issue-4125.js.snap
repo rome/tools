@@ -246,9 +246,10 @@ fetchUser(id).then(fetchAccountForUser).catch(handleFetchError); //
 // examples from https://github.com/prettier/prettier/issues/3107
 
 function HelloWorld() {
-  window.FooClient.setVars(
-    { locale: getFooLocale({ page }), authorizationToken: data.token },
-  ).initVerify("foo_container");
+  window.FooClient.setVars({
+    locale: getFooLocale({ page }),
+    authorizationToken: data.token,
+  }).initVerify("foo_container");
 
   fejax
     .ajax({ url: "/verification/", dataType: "json" })
@@ -283,9 +284,10 @@ action$
       ),
   );
 
-window.FooClient.setVars(
-  { locale: getFooLocale({ page }), authorizationToken: data.token },
-).initVerify("foo_container");
+window.FooClient.setVars({
+  locale: getFooLocale({ page }),
+  authorizationToken: data.token,
+}).initVerify("foo_container");
 
 it(
   "gets triggered by mouseenter",

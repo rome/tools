@@ -28,23 +28,19 @@ of("test")
 ```js
 of("test")
   .pipe(throwIfEmpty())
-  .subscribe(
-    {
-      error(err) {
-        thrown = err;
-      },
+  .subscribe({
+    error(err) {
+      thrown = err;
     },
-  );
+  });
 
 of("test")
   .pipe(throwIfEmpty())
-  .subscribe(
-    {
-      get foo() {
-        bar();
-      },
+  .subscribe({
+    get foo() {
+      bar();
     },
-  );
+  });
 
 ```
 

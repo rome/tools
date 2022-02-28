@@ -42,89 +42,61 @@ someObject.someFunction().then(function() {
 ```js
 someObject
   .someFunction()
-  .then(
-    function () {
-      return someObject
-        .someFunction()
-        .then(
-          function () {
+  .then(function () {
+    return someObject
+      .someFunction()
+      .then(function () {
+        return someObject
+          .someFunction()
+          .then(function () {
             return someObject
               .someFunction()
-              .then(
-                function () {
-                  return someObject
-                    .someFunction()
-                    .then(
-                      function () {
+              .then(function () {
+                return someObject
+                  .someFunction()
+                  .then(function () {
+                    return someObject
+                      .someFunction()
+                      .then(function () {
                         return someObject
                           .someFunction()
-                          .then(
-                            function () {
-                              return someObject
-                                .someFunction()
-                                .then(
-                                  function () {
+                          .then(function () {
+                            return someObject
+                              .someFunction()
+                              .then(function () {
+                                return someObject
+                                  .someFunction()
+                                  .then(function () {
                                     return someObject
                                       .someFunction()
-                                      .then(
-                                        function () {
-                                          return someObject
-                                            .someFunction()
-                                            .then(
-                                              function () {
+                                      .then(function () {
+                                        return someObject
+                                          .someFunction()
+                                          .then(function () {
+                                            return someObject
+                                              .someFunction()
+                                              .then(function () {
                                                 return someObject
                                                   .someFunction()
-                                                  .then(
-                                                    function () {
-                                                      return someObject
-                                                        .someFunction()
-                                                        .then(
-                                                          function () {
-                                                            return someObject
-                                                              .someFunction()
-                                                              .then(
-                                                                function () {
-                                                                  return someObject
-                                                                    .someFunction()
-                                                                    .then(
-                                                                      function () {
-                                                                        return someObject
-                                                                          .someFunction()
-                                                                          .then(
-                                                                            function () {
-                                                                              return someObject
-                                                                                .someFunction()
-                                                                                .then(
-                                                                                  function () {
-                                                                                    anotherFunction();
-                                                                                  },
-                                                                                );
-                                                                            },
-                                                                          );
-                                                                      },
-                                                                    );
-                                                                },
-                                                              );
-                                                          },
-                                                        );
-                                                    },
-                                                  );
-                                              },
-                                            );
-                                        },
-                                      );
-                                  },
-                                );
-                            },
-                          );
-                      },
-                    );
-                },
-              );
-          },
-        );
-    },
-  );
+                                                  .then(function () {
+                                                    return someObject
+                                                      .someFunction()
+                                                      .then(function () {
+                                                        anotherFunction();
+                                                      });
+                                                  });
+                                              });
+                                          });
+                                      });
+                                  });
+                              });
+                          });
+                      });
+                  });
+              });
+          });
+      });
+  });
 
 ```
 

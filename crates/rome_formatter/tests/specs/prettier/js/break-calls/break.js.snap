@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: break.js
 
 ---
@@ -56,11 +56,9 @@ expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLon
 ```js
 h(
   f(
-    g(
-      () => {
-        a;
-      },
-    ),
+    g(() => {
+      a;
+    }),
   ),
 );
 

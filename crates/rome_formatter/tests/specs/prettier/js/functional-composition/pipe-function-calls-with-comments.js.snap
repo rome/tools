@@ -83,18 +83,16 @@ expression: pipe-function-calls-with-comments.js
     ),
   )()
     .then(messageResponse(logger, msg))
-    .catch(
-      (err) => {
-        logger.error(
-          pipe(
-            // add a descriptive comment here
-            O.fromNullable(err.stack),
-            O.getOrElse(constant(err.message)),
-          ),
-        );
-        process.exit(1);
-      },
-    );
+    .catch((err) => {
+      logger.error(
+        pipe(
+          // add a descriptive comment here
+          O.fromNullable(err.stack),
+          O.getOrElse(constant(err.message)),
+        ),
+      );
+      process.exit(1);
+    });
 
   pipe(
     // add a descriptive comment here

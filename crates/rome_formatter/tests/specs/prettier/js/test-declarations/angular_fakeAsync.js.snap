@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: angular_fakeAsync.js
 
 ---
@@ -36,37 +36,29 @@ function x() { fakeAsync(() => {}) }
 # Output
 ```js
 beforeEach(
-  fakeAsync(
-    () => {
-      // code
-    },
-  ),
+  fakeAsync(() => {
+    // code
+  }),
 );
 
 afterAll(
-  fakeAsync(
-    () => {
-      console.log("Hello");
-    },
-  ),
+  fakeAsync(() => {
+    console.log("Hello");
+  }),
 );
 
 it(
   "should create the app",
-  fakeAsync(
-    () => {
-      //code
-    },
-  ),
+  fakeAsync(() => {
+    //code
+  }),
 );
 
 it(
   "does something really long and complicated so I have to write a very long name for the test",
-  fakeAsync(
-    () => {
-      // code
-    },
-  ),
+  fakeAsync(() => {
+    // code
+  }),
 );
 
 it(

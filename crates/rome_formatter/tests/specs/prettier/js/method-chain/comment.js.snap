@@ -87,18 +87,14 @@ Something
 
 // Warm-up first
 measure()
-  .then(
-    () => {
-      SomethingLong();
-    },
-  );
+  .then(() => {
+    SomethingLong();
+  });
 
 measure() // Warm-up first
-  .then(
-    () => {
-      SomethingLong();
-    },
-  );
+  .then(() => {
+    SomethingLong();
+  });
 
 const configModel = this.baseConfigurationService.getCache().consolidated.merge( // global/default values (do NOT modify)
   this.cachedWorkspaceConfig,
