@@ -76,4 +76,20 @@ const a =
     elsewhere &&
     happy &&
     thoughts &&
-    somethingsomethingsomethingsomething
+    somethingsomethingsomethingsomething;
+
+
+(
+    lorem && // foo
+    ipsum
+);
+
+(
+    lorem && ipsum // foo
+);
+
+(
+    lorem &&
+    // foo
+    ipsum
+);

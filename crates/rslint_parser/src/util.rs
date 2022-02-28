@@ -163,6 +163,16 @@ pub trait SyntaxNodeExt {
             .any(|tok| tok.has_trailing_comments() || tok.has_leading_comments())
     }
 
+    /// Whether the node contains trailing comments.
+    fn has_trailing_comments(&self) -> bool {
+        self.tokens().iter().any(|tok| tok.has_trailing_comments())
+    }
+
+    /// Whether the node leading trailing comments.
+    fn has_leading_comments(&self) -> bool {
+        self.tokens().iter().any(|tok| tok.has_leading_comments())
+    }
+
     /// Get the first child with a specific kind.
     fn child_with_kind(&self, kind: JsSyntaxKind) -> Option<SyntaxNode> {
         self.to_node().children().find(|child| child.kind() == kind)

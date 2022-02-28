@@ -1,4 +1,4 @@
-use crate::ast::{JsAnyRoot, JsCallArguments};
+use crate::ast::{JsAnyRoot, JsCallArguments, JsLogicalExpression};
 use crate::{
     parse, parse_module, AstNode, Parse, SourceType, SyntaxNode, SyntaxNodeExt, SyntaxToken,
 };
@@ -336,4 +336,38 @@ fn parser_regexp_after_operator() {
     assert_no_errors(r#"a===/a/"#);
     assert_no_errors(r#"a!=/a/"#);
     assert_no_errors(r#"a!==/a/"#);
+}
+
+#[test]
+pub fn node_contains_trailing_comments() {
+    let text = "true && true // comment";
+    let root = parse_module(text, 0);
+    let syntax = root.syntax();
+    let node = syntax
+        .descendants()
+        .find(|n| n.kind() == JsSyntaxKind::JS_LOGICAL_EXPRESSION)
+        .unwrap();
+
+    let logical_expression = JsLogicalExpression::cast(node).unwrap();
+    let right = logical_expression.right().unwrap();
+
+    assert!(right.syntax().has_trailing_comments());
+    assert!(!right.syntax().has_leading_comments());
+}
+
+#[test]
+pub fn node_contains_leading_comments() {
+    let text = "true && \n// comment \ntrue";
+    let root = parse_module(text, 0);
+    let syntax = root.syntax();
+    let node = syntax
+        .descendants()
+        .find(|n| n.kind() == JsSyntaxKind::JS_LOGICAL_EXPRESSION)
+        .unwrap();
+
+    let logical_expression = JsLogicalExpression::cast(node).unwrap();
+    let right = logical_expression.right().unwrap();
+
+    assert!(right.syntax().has_leading_comments());
+    assert!(!right.syntax().has_trailing_comments());
 }

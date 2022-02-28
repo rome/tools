@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: while.js
 
 ---
@@ -46,8 +46,7 @@ while (true) {} // Comment
 while (true) /*Comment*/ {}
 
 while (
-  true && // Comment
-  true // Comment
+  true && true // Comment // Comment
 ) {}
 
 while (true) {} // comment

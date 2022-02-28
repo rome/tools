@@ -102,7 +102,6 @@ pub fn format_binaryish_expression(
     let mut flatten_nodes = FlattenItems::new(syntax_node.to_owned());
 
     flatten_expressions(&mut flatten_nodes, syntax_node.to_owned(), formatter, None)?;
-
     flatten_nodes.into_format_element()
 }
 
@@ -205,17 +204,24 @@ fn flatten_expressions(
             }
         }
         _ => {
-            let has_comments = syntax_node.contains_comments();
-            let formatted = previous_operator.map_or_else(
-                || syntax_node.to_format_element(formatter),
-                |operator| {
-                    Ok(format_elements![
-                        syntax_node.to_format_element(formatter)?,
-                        space_token(),
-                        operator.format(formatter)?
-                    ])
-                },
-            )?;
+            let (formatted, has_comments) = if let Some(previous_operator) = previous_operator {
+                let formatted = format_elements![
+                    syntax_node.to_format_element(formatter)?,
+                    space_token(),
+                    previous_operator.format(formatter)?
+                ];
+                (
+                    formatted,
+                    previous_operator.has_leading_comments()
+                        || previous_operator.has_trailing_comments(),
+                )
+            } else {
+                (
+                    syntax_node.to_format_element(formatter)?,
+                    syntax_node.contains_comments(),
+                )
+            };
+
             flatten_items.items.push(FlattenItem::Node(
                 syntax_node,
                 formatted,
@@ -230,7 +236,14 @@ fn flatten_expressions(
 /// A binary expression can be "flatten" until we have binary expressions with the same operator.
 ///
 /// Here we check, given a binary expression node, if its `left` field is a binary expression and its operator
-/// is the same
+/// is the same.
+///
+/// For example, given this code:
+/// ```ignore
+///  lorem - ipsum + dolor
+/// ```
+///
+/// We will flatten until `lorem - ipsum`
 fn should_flatten_binary_expression(node: &JsBinaryExpression) -> FormatResult<bool> {
     let JsBinaryExpressionFields { left, .. } = node.as_fields();
 
@@ -248,7 +261,14 @@ fn should_flatten_binary_expression(node: &JsBinaryExpression) -> FormatResult<b
 /// A logical expression can be "flatten" until we have logical expressions with the same operator
 ///
 /// Here we check, given a logical expression node, if its `left` field is a logical expression and its operator
-/// is the same
+/// is the same.
+///
+/// For example, given this code:
+/// ```ignore
+///  lorem && ipsum || dolor
+/// ```
+///
+/// We will flatten until `lorem && ipsum`
 fn should_flatten_logical_expression(node: &JsLogicalExpression) -> FormatResult<bool> {
     let JsLogicalExpressionFields { left, .. } = node.as_fields();
 
@@ -322,15 +342,28 @@ fn split_binaryish_to_flatten_items(
     let (previous_operator, has_comments) = if let Some(previous_operator) = previous_operator {
         (
             format_elements![space_token(), previous_operator.format(formatter)?],
-            previous_operator.has_trailing_comments(),
+            // Here we care only about trailing comments that belong to the previous operator
+            previous_operator.has_trailing_comments() || right.syntax().contains_comments(),
         )
     } else {
-        (empty_element(), right.syntax().contains_comments())
+        (
+            empty_element(),
+            // Here we want to check only leading comments;
+            // trailing comments will be added after the end of the whole expression.
+            // We want to handle cases like `lorem && ipsum // comment`
+            // This part is a signal to the formatter to tell it if the whole expression should break.
+            right.syntax().has_leading_comments(),
+        )
     };
 
+    // here we handle cases where the `right` part of a binary/logical expression should be as its
+    // own group.
+    // An example is `true && true || false && false`, there the `right` branch of the first
+    // logical expression (`||`) is another logical expression.
+    // In that case, we call `format_binaryish_expression` from scratch, with its own flatten items.
     let right_item = if right_expression_should_group {
         let formatted = format_binaryish_expression(right.syntax(), formatter)?;
-        FlattenItem::RightGroup(formatted, has_comments.into())
+        FlattenItem::Group(formatted, has_comments.into())
     } else {
         let formatted_right = concat_elements([right.format(formatter)?, previous_operator]);
         FlattenItem::Node(
@@ -355,7 +388,7 @@ fn should_break(flatten_nodes: &[FlattenItem]) -> bool {
     flatten_nodes.len() > 2
         || flatten_nodes
             .iter()
-            .any(|node| node.has_comments() || matches!(node, FlattenItem::RightGroup(..)))
+            .any(|node| node.has_comments() || matches!(node, FlattenItem::Group(..)))
 }
 
 fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
@@ -440,7 +473,6 @@ impl FlattenItems {
             })
             .collect::<Vec<FormatElement>>();
 
-        dbg!(should_break);
         if !should_break {
             // we bail early if group doesn't need to be broken. We don't need to do further checks
             return Ok(hard_group_elements(join_elements(
@@ -566,7 +598,7 @@ enum FlattenItem {
 
     /// Used when the right side of a binary/logical expression is another binary/logical.
     /// When we have such cases we
-    RightGroup(FormatElement, WithComments),
+    Group(FormatElement, WithComments),
 
     // nodes that don't need any special handling
     Node(SyntaxNode, FormatElement, WithComments),
@@ -578,7 +610,7 @@ impl FlattenItem {
             FlattenItem::Binary(_, _, w_c) => w_c.into(),
             FlattenItem::Logical(_, _, w_c) => w_c.into(),
             FlattenItem::Node(_, _, w_c) => w_c.into(),
-            FlattenItem::RightGroup(_, w_c) => w_c.into(),
+            FlattenItem::Group(_, w_c) => w_c.into(),
         }
     }
 }
@@ -607,7 +639,7 @@ impl Debug for FlattenItem {
                     formatted, has_comments
                 )
             }
-            FlattenItem::RightGroup(formatted, has_comments) => {
+            FlattenItem::Group(formatted, has_comments) => {
                 write!(
                     f,
                     "Right group: {:?}\nHas comments: {:?}",
@@ -624,7 +656,7 @@ impl From<FlattenItem> for FormatElement {
             FlattenItem::Binary(_, formatted, _) => formatted.into(),
             FlattenItem::Logical(_, formatted, _) => formatted.into(),
             FlattenItem::Node(_, element, _) => element,
-            FlattenItem::RightGroup(element, _) => element,
+            FlattenItem::Group(element, _) => element,
         }
     }
 }

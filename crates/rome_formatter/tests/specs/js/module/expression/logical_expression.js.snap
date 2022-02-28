@@ -83,7 +83,23 @@ const a =
     elsewhere &&
     happy &&
     thoughts &&
-    somethingsomethingsomethingsomething
+    somethingsomethingsomethingsomething;
+
+
+(
+    lorem && // foo
+    ipsum
+);
+
+(
+    lorem && ipsum // foo
+);
+
+(
+    lorem &&
+    // foo
+    ipsum
+);
 =============================
 # Outputs
 ## Output 1
@@ -224,4 +240,12 @@ const a =
 		happy &&
 		thoughts &&
 		somethingsomethingsomethingsomething;
+
+(lorem && ipsum); // foo
+
+(lorem && ipsum); // foo
+
+(lorem &&
+	// foo
+	ipsum);
 
