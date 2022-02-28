@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: variables.ts
 
 ---
@@ -46,13 +46,15 @@ const baaaaaaaaaaaaaaar: SomeThing<
   },
 > = looooooooooooooooooooooooooooooongNameFunc();
 const baaaaaaaaaaaaaaaar: SomeThing<K extends T ? G : S> = looooooooooooooooooooooooooooooongNameFunc();
-const isAnySuccessfulAttempt$: Observable<boolean> = this._quizService.isAnySuccessfulAttempt$().pipe(
-  tap(
-    (isAnySuccessfulAttempt: boolean) => {
-      this.isAnySuccessfulAttempt = isAnySuccessfulAttempt;
-    },
-  ),
-);
+const isAnySuccessfulAttempt$: Observable<boolean> = this._quizService
+  .isAnySuccessfulAttempt$()
+  .pipe(
+    tap(
+      (isAnySuccessfulAttempt: boolean) => {
+        this.isAnySuccessfulAttempt = isAnySuccessfulAttempt;
+      },
+    ),
+  );
 const isAnySuccessfulAttempt2$: Observable<boolean> = this._someMethodWithLongName();
 const fooooooooooooooo: SomeThing<boolean | string> = looooooooooooooooooooooooooooooongNameFunc();
 const fooooooooooooooo: SomeThing<boolean & string> = looooooooooooooooooooooooooooooongNameFunc();

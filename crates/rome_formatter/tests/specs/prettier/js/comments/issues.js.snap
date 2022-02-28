@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: issues.js
 
 ---
@@ -96,13 +96,14 @@ throw new ProcessSystemError(
 
 // Missing one level of indentation because of the comment
 const rootEpic = (actions, store) =>
-  (combineEpics(...epics)(actions, store)// Log errors and continue.
-  .catch(
-    (err, stream) => {
-      getLogger().error(err);
-      return stream;
-    },
-  ));
+  (combineEpics(...epics)(actions, store)
+    // Log errors and continue.
+    .catch(
+      (err, stream) => {
+        getLogger().error(err);
+        return stream;
+      },
+    ));
 
 // optional trailing comma gets moved all the way to the beginning
 const regex = new RegExp(
