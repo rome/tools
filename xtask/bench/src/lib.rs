@@ -2,6 +2,7 @@ mod features;
 mod utils;
 
 use rslint_parser::{parse, SourceType};
+use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::path::Path;
 use std::str::FromStr;
@@ -71,9 +72,32 @@ fn err_to_string<E: std::fmt::Debug>(e: E) -> String {
     format!("{:?}", e)
 }
 
-pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: FeatureToBenchmark) {
+pub fn run(
+    filter: String,
+    criterion: bool,
+    baseline: Option<String>,
+    feature: FeatureToBenchmark,
+    suites_to_run: &str,
+) {
     let regex = regex::Regex::new(filter.as_str()).unwrap();
-    let libs = include_str!("libs.txt").lines();
+
+    let mut suites = HashMap::new();
+    suites.insert("js", include_str!("libs-js.txt"));
+    suites.insert("ts", include_str!("libs-ts.txt"));
+
+    let mut libs = vec![];
+    let suites_to_run = suites_to_run.split(",");
+    for suite in suites_to_run {
+        match suite {
+            "*" => {
+                libs.extend(suites["js"].lines());
+                libs.extend(suites["ts"].lines());
+            }
+            "js" => libs.extend(suites["js"].lines()),
+            "ts" => libs.extend(suites["ts"].lines()),
+            _ => {}
+        }
+    }
 
     let mut summary = vec![];
 

@@ -30,10 +30,15 @@ fn main() -> Result<(), pico_args::Error> {
         .opt_value_from_str("--criterion")
         .unwrap()
         .unwrap_or(true);
+    let suites = args
+        .opt_value_from_str("--suites")
+        .unwrap()
+        .unwrap_or("*".to_string());
+
     let baseline: Option<String> = args.opt_value_from_str("--save-baseline").unwrap();
     // "feature" is a mandatory option and will throw an error if it's missing or incorrect
     let feature: FeatureToBenchmark = args.value_from_str("--feature")?;
 
-    run(filter, criterion, baseline, feature);
+    run(filter, criterion, baseline, feature, &suites);
     Ok(())
 }
