@@ -711,7 +711,7 @@ fn parse_class_member_impl(
                     && !is_at_line_break_or_generator
                     && matches!(member_name_text, "get" | "set")
                 {
-                    let is_getter = dbg!(member_name_text == "get");
+                    let is_getter = member_name_text == "get";
 
                     // test getter_class_member
                     // class Getters {
