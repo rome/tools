@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: comment.js
 
 ---
@@ -24,13 +24,13 @@ g
 # Output
 ```js
 `
-(?:${escapeChar}[\\S\\s]|(?:(?!${// Intentionally not passing `basicFlags` to `XRegExp.union` since any syntax // Using `XRegExp.union` safely rewrites backreferences in `left` and `right`.
+(?:${escapeChar}[\\S\\s]|(?:(?!${ // Intentionally not passing `basicFlags` to `XRegExp.union` since any syntax // Using `XRegExp.union` safely rewrites backreferences in `left` and `right`.
 // transformation resulting from those flags was already applied to `left` and
 // `right` when they were passed through the XRegExp constructor above.
 XRegExp.union([left, right], "", { conjunction: "or" }).source})[^${escapeChar}])+)+
 `;
 
-`a${c}e${g// h /* b */ /* d */ // f
+`a${c}e${g // h /* b */ /* d */ // f
 }`;
 
 ```

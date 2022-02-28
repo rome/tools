@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: variable_declarator.js
 
 ---
@@ -123,7 +123,7 @@ let foo1 = "val"; // Comment
 
 let foo2 = "val", bar = "val"; // Comment
 
-const foo3 = 123// Nothing to see here.
+const foo3 = 123 // Nothing to see here.
 ;
 ["2", "3"].forEach((x) => console.log(x));
 

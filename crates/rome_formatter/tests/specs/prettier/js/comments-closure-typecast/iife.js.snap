@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: iife.js
 
 ---
@@ -31,7 +31,7 @@ const helpers2 = ((function () { /** @type {Helpers} */
 })());
 
 // TODO: @param is misplaced https://github.com/prettier/prettier/issues/5850
-const helpers = ((/** @param {Partial<Helpers>} helpers */ /** @type {Helpers} */
+const helpers = (( /** @param {Partial<Helpers>} helpers */ /** @type {Helpers} */
 (helpers = {}) => helpers)());
 
 ```

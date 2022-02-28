@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: bigint.js
 
 ---
@@ -264,7 +264,7 @@ const badPrecision = BigInt(9007199254740993);
 const goodPrecision = BigInt("9007199254740993");
 // ↪9007199254740993n
 
-const alsoGoodPrecision = 9007199254740993n;// ↪9007199254740993n
+const alsoGoodPrecision = 9007199254740993n; // ↪9007199254740993n
 
 ```
 

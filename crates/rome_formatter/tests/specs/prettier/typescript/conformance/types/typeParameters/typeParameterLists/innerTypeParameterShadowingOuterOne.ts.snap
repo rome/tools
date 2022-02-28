@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: innerTypeParameterShadowingOuterOne.ts
 
 ---
@@ -58,7 +58,7 @@ function f2<T extends Date, U extends Date>() {
   }
   var x: U;
   x.getDate();
-}//function f2<T extends Date, U extends T>() {
+} //function f2<T extends Date, U extends T>() {
 //    function g<T extends Number, U extends T>() {
 //        var x: U;
 //        x.toFixed();

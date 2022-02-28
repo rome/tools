@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: return-statement.js
 
 ---
@@ -140,7 +140,7 @@ function jsx() {
 }
 
 function unary() {
-  return (// Comment
+  return ( // Comment
   !!x);
 }
 
@@ -149,57 +149,57 @@ function numericLiteralNoParen() {
 }
 
 function logical() {
-  return (// Reason for 42
+  return ( // Reason for 42
   42) && 84;
 }
 
 function binary() {
-  return (// Reason for 42
+  return ( // Reason for 42
   42) * 84;
 }
 
 function binaryInBinaryLeft() {
-  return (// Reason for 42
+  return ( // Reason for 42
   42) * 84 + 2;
 }
 
 function binaryInBinaryRight() {
-  return (// Reason for 42
+  return ( // Reason for 42
   42) + 84 * 2;
 }
 
 function conditional() {
-  return (// Reason for 42
+  return ( // Reason for 42
   42) ? 1 : 2;
 }
 
 function binaryInConditional() {
-  return (// Reason for 42
+  return ( // Reason for 42
   42) * 3 ? 1 : 2;
 }
 
 function call() {
-  return (// Reason for a
+  return ( // Reason for a
   a)();
 }
 
 function memberInside() {
-  return (// Reason for a.b
+  return ( // Reason for a.b
   a.b).c;
 }
 
 function memberOutside() {
-  return (// Reason for a
+  return ( // Reason for a
   a).b.c;
 }
 
 function memberInAndOutWithCalls() {
-  return (// Reason for a
+  return ( // Reason for a
   aFunction.b()).c.d();
 }
 
 function excessiveEverything() {
-  return (// Reason for stuff
+  return ( // Reason for stuff
   a.b() * 3 + 4 ? (a`hi`, 1) ? 1 : 1 : 1);
 }
 
@@ -216,12 +216,12 @@ function sequenceExpressionInside() {
 }
 
 function taggedTemplate() {
-  return (// Reason for a
+  return ( // Reason for a
   a)`b`;
 }
 
 function inlineComment() {
-  return (/* hi */ 42) || 42;
+  return ( /* hi */ 42) || 42;
 }
 
 ```

@@ -61,26 +61,26 @@ function f() {
 }
 
 function f() {
-  return/* b */ ; // a
+  return /* b */ ; // a
 }
 
 function f() {
-  return// b /* a */
+  return // b /* a */
   ;
 }
 
 function x() {
-  return func2//comment
+  return func2 //comment
   .bar();
 }
 
 function f() {
-  return (foo// comment
+  return (foo // comment
   .bar());
 }
 
 fn(function f() {
-  return (foo// comment
+  return (foo // comment
   .bar());
 });
 
