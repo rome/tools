@@ -704,10 +704,14 @@ fn parse_class_member_impl(
     match member_name {
         Some(member_name) => {
             if member_name.kind() == JS_LITERAL_MEMBER_NAME {
+                let is_at_semicolon = p.at(T![:]);
                 let is_at_line_break_or_generator = p.has_linebreak_before_n(0) && p.at(T![*]);
                 let member_name_text = member_name.text(p);
-                if matches!(member_name_text, "get" | "set") && !is_at_line_break_or_generator {
-                    let is_getter = member_name_text == "get";
+                if !is_at_semicolon
+                    && !is_at_line_break_or_generator
+                    && matches!(member_name_text, "get" | "set")
+                {
+                    let is_getter = dbg!(member_name_text == "get");
 
                     // test getter_class_member
                     // class Getters {
@@ -854,6 +858,9 @@ fn parse_class_member_impl(
             //
             // test_err class_declare_member
             // class B { declare foo }
+
+            // test ts ts_property_class_member_can_be_named_set_or_get
+            // class B { set: String; get: Number }
             let property = if modifiers.has(ModifierKind::Declare) {
                 property_declaration_class_member_body(
                     p,
