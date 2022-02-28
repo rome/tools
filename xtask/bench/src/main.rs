@@ -16,6 +16,30 @@ fn main() -> Result<(), pico_args::Error> {
     let _d = pushd(project_root());
     let mut args = Arguments::from_env();
 
+    if args.contains("--help") {
+        eprintln!(
+            "\
+cargo bench
+Benchmark parser and formatter.
+USAGE:
+    cargo bench <SUBCOMMAND> [option]
+OPTIONS
+    --save-baseline     Allows different runs to be compared.
+    --feature           Possible values: parser, formatter
+    --criterion=[true/false]  Run a series of statistical test to assess with the this run is faster or slower than previous runs.
+    --suites=<IDS>      Runs the specified benchmarks. Use comma as separator. 
+                        Valid values are:
+                            *: will run all benchmarks;
+                            js: will benchmark all javascript libraries;
+                            ts: will benchmark all typescript libraries;
+                        Default is \"*\".
+    --filter=<file>     Filters out tests that don't match the query.
+    --help              Prints this help.
+			"
+        );
+        return Ok(());
+    }
+
     // on pr branch, run
     // git checkout main
     // cargo benchmark --save-baseline main
