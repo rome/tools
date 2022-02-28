@@ -28,7 +28,8 @@ class MyClass extends BaseClass {
   size = 5;
   override;
   readonly size = 5;
-  abstract override;
+  
+  abstract override 
   foo: string;
   static override;
   foo: string;

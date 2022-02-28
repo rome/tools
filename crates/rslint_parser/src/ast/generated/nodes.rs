@@ -3019,7 +3019,6 @@ impl JsMethodClassMember {
         JsMethodClassMemberFields {
             access_modifier: self.access_modifier(),
             static_token: self.static_token(),
-            abstract_token: self.abstract_token(),
             async_token: self.async_token(),
             star_token: self.star_token(),
             name: self.name(),
@@ -3032,32 +3031,30 @@ impl JsMethodClassMember {
     }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 5usize)
+        support::required_node(&self.syntax, 4usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 6usize)
+        support::token(&self.syntax, 5usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 7usize)
+        support::node(&self.syntax, 6usize)
     }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
-        support::required_node(&self.syntax, 8usize)
+        support::required_node(&self.syntax, 7usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
-        support::node(&self.syntax, 9usize)
+        support::node(&self.syntax, 8usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 10usize)
+        support::required_node(&self.syntax, 9usize)
     }
 }
 pub struct JsMethodClassMemberFields {
     pub access_modifier: Option<SyntaxToken>,
     pub static_token: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -3904,7 +3901,6 @@ impl JsPropertyClassMember {
             access_modifier: self.access_modifier(),
             static_token: self.static_token(),
             readonly_token: self.readonly_token(),
-            abstract_token: self.abstract_token(),
             name: self.name(),
             property_annotation: self.property_annotation(),
             value: self.value(),
@@ -3915,22 +3911,20 @@ impl JsPropertyClassMember {
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
     pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 5usize)
+        support::required_node(&self.syntax, 4usize)
     }
     pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
-        support::node(&self.syntax, 6usize)
+        support::node(&self.syntax, 5usize)
     }
-    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 7usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 8usize) }
+    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
 pub struct JsPropertyClassMemberFields {
     pub declare_token: Option<SyntaxToken>,
     pub access_modifier: Option<SyntaxToken>,
     pub static_token: Option<SyntaxToken>,
     pub readonly_token: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub property_annotation: Option<TsAnyPropertyAnnotation>,
     pub value: Option<JsInitializerClause>,
@@ -6026,6 +6020,59 @@ pub struct TsFunctionTypeFields {
     pub return_type: SyntaxResult<TsAnyReturnType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsGetterSignatureClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsGetterSignatureClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsGetterSignatureClassMemberFields {
+        TsGetterSignatureClassMemberFields {
+            access_modifier: self.access_modifier(),
+            abstract_token: self.abstract_token(),
+            get_token: self.get_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            r_paren_token: self.r_paren_token(),
+            return_type: self.return_type(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 4usize)
+    }
+    pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 5usize)
+    }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
+}
+pub struct TsGetterSignatureClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub abstract_token: SyntaxResult<SyntaxToken>,
+    pub get_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub return_type: Option<TsTypeAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsGetterSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
@@ -6696,6 +6743,56 @@ pub struct TsMappedTypeReadonlyModifierClauseFields {
     pub readonly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsMethodSignatureClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsMethodSignatureClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsMethodSignatureClassMemberFields {
+        TsMethodSignatureClassMemberFields {
+            access_modifier: self.access_modifier(),
+            abstract_token: self.abstract_token(),
+            name: self.name(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+        support::required_node(&self.syntax, 2usize)
+    }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 3usize)
+    }
+    pub fn parameters(&self) -> SyntaxResult<JsParameters> {
+        support::required_node(&self.syntax, 4usize)
+    }
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
+        support::node(&self.syntax, 5usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+}
+pub struct TsMethodSignatureClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub abstract_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMethodSignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
@@ -7232,6 +7329,49 @@ pub struct TsPropertyParameterFields {
     pub formal_parameter: SyntaxResult<JsAnyFormalParameter>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsPropertySignatureClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsPropertySignatureClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsPropertySignatureClassMemberFields {
+        TsPropertySignatureClassMemberFields {
+            access_modifier: self.access_modifier(),
+            abstract_token: self.abstract_token(),
+            readonly_token: self.readonly_token(),
+            name: self.name(),
+            property_annotation: self.property_annotation(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn property_annotation(&self) -> Option<TsAnyPropertySignatureAnnotation> {
+        support::node(&self.syntax, 4usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+}
+pub struct TsPropertySignatureClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub abstract_token: SyntaxResult<SyntaxToken>,
+    pub readonly_token: Option<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub property_annotation: Option<TsAnyPropertySignatureAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertySignatureTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
@@ -7443,6 +7583,61 @@ impl TsReturnTypeAnnotation {
 pub struct TsReturnTypeAnnotationFields {
     pub colon_token: SyntaxResult<SyntaxToken>,
     pub ty: SyntaxResult<TsAnyReturnType>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsSetterSignatureClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsSetterSignatureClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsSetterSignatureClassMemberFields {
+        TsSetterSignatureClassMemberFields {
+            access_modifier: self.access_modifier(),
+            abstract_token: self.abstract_token(),
+            set_token: self.set_token(),
+            name: self.name(),
+            l_paren_token: self.l_paren_token(),
+            parameter: self.parameter(),
+            r_paren_token: self.r_paren_token(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 4usize)
+    }
+    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+        support::required_node(&self.syntax, 5usize)
+    }
+    pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 6usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
+}
+pub struct TsSetterSignatureClassMemberFields {
+    pub access_modifier: Option<SyntaxToken>,
+    pub abstract_token: SyntaxResult<SyntaxToken>,
+    pub set_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub l_paren_token: SyntaxResult<SyntaxToken>,
+    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub r_paren_token: SyntaxResult<SyntaxToken>,
+    pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSetterSignatureTypeMember {
@@ -8223,7 +8418,11 @@ pub enum JsAnyClassMember {
     JsSetterClassMember(JsSetterClassMember),
     JsStaticInitializationBlockClassMember(JsStaticInitializationBlockClassMember),
     JsUnknownMember(JsUnknownMember),
+    TsGetterSignatureClassMember(TsGetterSignatureClassMember),
     TsIndexSignatureClassMember(TsIndexSignatureClassMember),
+    TsMethodSignatureClassMember(TsMethodSignatureClassMember),
+    TsPropertySignatureClassMember(TsPropertySignatureClassMember),
+    TsSetterSignatureClassMember(TsSetterSignatureClassMember),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMemberName {
@@ -8519,6 +8718,11 @@ pub enum TsAnyPropertyAnnotation {
 pub enum TsAnyPropertyParameter {
     TsPropertyParameter(TsPropertyParameter),
     TsReadonlyPropertyParameter(TsReadonlyPropertyParameter),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyPropertySignatureAnnotation {
+    TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
+    TsTypeAnnotation(TsTypeAnnotation),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyReturnType {
@@ -11390,10 +11594,6 @@ impl std::fmt::Debug for JsMethodClassMember {
                 &support::DebugOptionalElement(self.static_token()),
             )
             .field(
-                "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
-            )
-            .field(
                 "async_token",
                 &support::DebugOptionalElement(self.async_token()),
             )
@@ -12218,10 +12418,6 @@ impl std::fmt::Debug for JsPropertyClassMember {
             .field(
                 "readonly_token",
                 &support::DebugOptionalElement(self.readonly_token()),
-            )
-            .field(
-                "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -14222,6 +14418,55 @@ impl From<TsFunctionType> for SyntaxNode {
 impl From<TsFunctionType> for SyntaxElement {
     fn from(n: TsFunctionType) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsGetterSignatureClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_GETTER_SIGNATURE_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsGetterSignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsGetterSignatureClassMember")
+            .field(
+                "access_modifier",
+                &support::DebugOptionalElement(self.access_modifier()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugSyntaxResult(self.abstract_token()),
+            )
+            .field("get_token", &support::DebugSyntaxResult(self.get_token()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "l_paren_token",
+                &support::DebugSyntaxResult(self.l_paren_token()),
+            )
+            .field(
+                "r_paren_token",
+                &support::DebugSyntaxResult(self.r_paren_token()),
+            )
+            .field(
+                "return_type",
+                &support::DebugOptionalElement(self.return_type()),
+            )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsGetterSignatureClassMember> for SyntaxNode {
+    fn from(n: TsGetterSignatureClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsGetterSignatureClassMember> for SyntaxElement {
+    fn from(n: TsGetterSignatureClassMember) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsGetterSignatureTypeMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_GETTER_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -14872,6 +15117,51 @@ impl From<TsMappedTypeReadonlyModifierClause> for SyntaxNode {
 impl From<TsMappedTypeReadonlyModifierClause> for SyntaxElement {
     fn from(n: TsMappedTypeReadonlyModifierClause) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsMethodSignatureClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsMethodSignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsMethodSignatureClassMember")
+            .field(
+                "access_modifier",
+                &support::DebugOptionalElement(self.access_modifier()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugSyntaxResult(self.abstract_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
+            .field("parameters", &support::DebugSyntaxResult(self.parameters()))
+            .field(
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
+            )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsMethodSignatureClassMember> for SyntaxNode {
+    fn from(n: TsMethodSignatureClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsMethodSignatureClassMember> for SyntaxElement {
+    fn from(n: TsMethodSignatureClassMember) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsMethodSignatureTypeMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -15411,6 +15701,50 @@ impl From<TsPropertyParameter> for SyntaxNode {
 impl From<TsPropertyParameter> for SyntaxElement {
     fn from(n: TsPropertyParameter) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsPropertySignatureClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsPropertySignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsPropertySignatureClassMember")
+            .field(
+                "access_modifier",
+                &support::DebugOptionalElement(self.access_modifier()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugSyntaxResult(self.abstract_token()),
+            )
+            .field(
+                "readonly_token",
+                &support::DebugOptionalElement(self.readonly_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "property_annotation",
+                &support::DebugOptionalElement(self.property_annotation()),
+            )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsPropertySignatureClassMember> for SyntaxNode {
+    fn from(n: TsPropertySignatureClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsPropertySignatureClassMember> for SyntaxElement {
+    fn from(n: TsPropertySignatureClassMember) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsPropertySignatureTypeMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -15621,6 +15955,52 @@ impl From<TsReturnTypeAnnotation> for SyntaxNode {
 }
 impl From<TsReturnTypeAnnotation> for SyntaxElement {
     fn from(n: TsReturnTypeAnnotation) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsSetterSignatureClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_SETTER_SIGNATURE_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsSetterSignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsSetterSignatureClassMember")
+            .field(
+                "access_modifier",
+                &support::DebugOptionalElement(self.access_modifier()),
+            )
+            .field(
+                "abstract_token",
+                &support::DebugSyntaxResult(self.abstract_token()),
+            )
+            .field("set_token", &support::DebugSyntaxResult(self.set_token()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "l_paren_token",
+                &support::DebugSyntaxResult(self.l_paren_token()),
+            )
+            .field("parameter", &support::DebugSyntaxResult(self.parameter()))
+            .field(
+                "r_paren_token",
+                &support::DebugSyntaxResult(self.r_paren_token()),
+            )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsSetterSignatureClassMember> for SyntaxNode {
+    fn from(n: TsSetterSignatureClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsSetterSignatureClassMember> for SyntaxElement {
+    fn from(n: TsSetterSignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsSetterSignatureTypeMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_SETTER_SIGNATURE_TYPE_MEMBER }
@@ -17098,9 +17478,29 @@ impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
 impl From<JsUnknownMember> for JsAnyClassMember {
     fn from(node: JsUnknownMember) -> JsAnyClassMember { JsAnyClassMember::JsUnknownMember(node) }
 }
+impl From<TsGetterSignatureClassMember> for JsAnyClassMember {
+    fn from(node: TsGetterSignatureClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsGetterSignatureClassMember(node)
+    }
+}
 impl From<TsIndexSignatureClassMember> for JsAnyClassMember {
     fn from(node: TsIndexSignatureClassMember) -> JsAnyClassMember {
         JsAnyClassMember::TsIndexSignatureClassMember(node)
+    }
+}
+impl From<TsMethodSignatureClassMember> for JsAnyClassMember {
+    fn from(node: TsMethodSignatureClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsMethodSignatureClassMember(node)
+    }
+}
+impl From<TsPropertySignatureClassMember> for JsAnyClassMember {
+    fn from(node: TsPropertySignatureClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsPropertySignatureClassMember(node)
+    }
+}
+impl From<TsSetterSignatureClassMember> for JsAnyClassMember {
+    fn from(node: TsSetterSignatureClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsSetterSignatureClassMember(node)
     }
 }
 impl AstNode for JsAnyClassMember {
@@ -17115,7 +17515,11 @@ impl AstNode for JsAnyClassMember {
                 | JS_SETTER_CLASS_MEMBER
                 | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
                 | JS_UNKNOWN_MEMBER
+                | TS_GETTER_SIGNATURE_CLASS_MEMBER
                 | TS_INDEX_SIGNATURE_CLASS_MEMBER
+                | TS_METHOD_SIGNATURE_CLASS_MEMBER
+                | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
+                | TS_SETTER_SIGNATURE_CLASS_MEMBER
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -17144,8 +17548,28 @@ impl AstNode for JsAnyClassMember {
                 )
             }
             JS_UNKNOWN_MEMBER => JsAnyClassMember::JsUnknownMember(JsUnknownMember { syntax }),
+            TS_GETTER_SIGNATURE_CLASS_MEMBER => {
+                JsAnyClassMember::TsGetterSignatureClassMember(TsGetterSignatureClassMember {
+                    syntax,
+                })
+            }
             TS_INDEX_SIGNATURE_CLASS_MEMBER => {
                 JsAnyClassMember::TsIndexSignatureClassMember(TsIndexSignatureClassMember {
+                    syntax,
+                })
+            }
+            TS_METHOD_SIGNATURE_CLASS_MEMBER => {
+                JsAnyClassMember::TsMethodSignatureClassMember(TsMethodSignatureClassMember {
+                    syntax,
+                })
+            }
+            TS_PROPERTY_SIGNATURE_CLASS_MEMBER => {
+                JsAnyClassMember::TsPropertySignatureClassMember(TsPropertySignatureClassMember {
+                    syntax,
+                })
+            }
+            TS_SETTER_SIGNATURE_CLASS_MEMBER => {
+                JsAnyClassMember::TsSetterSignatureClassMember(TsSetterSignatureClassMember {
                     syntax,
                 })
             }
@@ -17163,7 +17587,11 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::JsSetterClassMember(it) => &it.syntax,
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
             JsAnyClassMember::JsUnknownMember(it) => &it.syntax,
+            JsAnyClassMember::TsGetterSignatureClassMember(it) => &it.syntax,
             JsAnyClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
+            JsAnyClassMember::TsMethodSignatureClassMember(it) => &it.syntax,
+            JsAnyClassMember::TsPropertySignatureClassMember(it) => &it.syntax,
+            JsAnyClassMember::TsSetterSignatureClassMember(it) => &it.syntax,
         }
     }
 }
@@ -17180,7 +17608,11 @@ impl std::fmt::Debug for JsAnyClassMember {
                 std::fmt::Debug::fmt(it, f)
             }
             JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsGetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsMethodSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsPropertySignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsSetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -17195,7 +17627,11 @@ impl From<JsAnyClassMember> for SyntaxNode {
             JsAnyClassMember::JsSetterClassMember(it) => it.into(),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
             JsAnyClassMember::JsUnknownMember(it) => it.into(),
+            JsAnyClassMember::TsGetterSignatureClassMember(it) => it.into(),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => it.into(),
+            JsAnyClassMember::TsMethodSignatureClassMember(it) => it.into(),
+            JsAnyClassMember::TsPropertySignatureClassMember(it) => it.into(),
+            JsAnyClassMember::TsSetterSignatureClassMember(it) => it.into(),
         }
     }
 }
@@ -20578,6 +21014,65 @@ impl From<TsAnyPropertyParameter> for SyntaxElement {
         node.into()
     }
 }
+impl From<TsOptionalPropertyAnnotation> for TsAnyPropertySignatureAnnotation {
+    fn from(node: TsOptionalPropertyAnnotation) -> TsAnyPropertySignatureAnnotation {
+        TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node)
+    }
+}
+impl From<TsTypeAnnotation> for TsAnyPropertySignatureAnnotation {
+    fn from(node: TsTypeAnnotation) -> TsAnyPropertySignatureAnnotation {
+        TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node)
+    }
+}
+impl AstNode for TsAnyPropertySignatureAnnotation {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, TS_OPTIONAL_PROPERTY_ANNOTATION | TS_TYPE_ANNOTATION)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_OPTIONAL_PROPERTY_ANNOTATION => {
+                TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(
+                    TsOptionalPropertyAnnotation { syntax },
+                )
+            }
+            TS_TYPE_ANNOTATION => {
+                TsAnyPropertySignatureAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyPropertySignatureAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyPropertySignatureAnnotation> for SyntaxNode {
+    fn from(n: TsAnyPropertySignatureAnnotation) -> SyntaxNode {
+        match n {
+            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => it.into(),
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyPropertySignatureAnnotation> for SyntaxElement {
+    fn from(n: TsAnyPropertySignatureAnnotation) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<TsAssertsReturnType> for TsAnyReturnType {
     fn from(node: TsAssertsReturnType) -> TsAnyReturnType {
         TsAnyReturnType::TsAssertsReturnType(node)
@@ -21575,6 +22070,11 @@ impl std::fmt::Display for TsAnyPropertyParameter {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAnyPropertySignatureAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAnyReturnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22490,6 +22990,11 @@ impl std::fmt::Display for TsFunctionType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsGetterSignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsGetterSignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22576,6 +23081,11 @@ impl std::fmt::Display for TsMappedTypeOptionalModifierClause {
     }
 }
 impl std::fmt::Display for TsMappedTypeReadonlyModifierClause {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsMethodSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -22670,6 +23180,11 @@ impl std::fmt::Display for TsPropertyParameter {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsPropertySignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsPropertySignatureTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22701,6 +23216,11 @@ impl std::fmt::Display for TsRestTupleTypeElement {
     }
 }
 impl std::fmt::Display for TsReturnTypeAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsSetterSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -25225,6 +25745,10 @@ impl Debug for DebugSyntaxElement {
                 TS_FUNCTION_TYPE => {
                     std::fmt::Debug::fmt(&TsFunctionType::cast(node.clone()).unwrap(), f)
                 }
+                TS_GETTER_SIGNATURE_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsGetterSignatureClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_GETTER_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
                     &TsGetterSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
@@ -25286,6 +25810,10 @@ impl Debug for DebugSyntaxElement {
                     &TsMappedTypeReadonlyModifierClause::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_METHOD_SIGNATURE_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsMethodSignatureClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_METHOD_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
                     &TsMethodSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
@@ -25343,6 +25871,10 @@ impl Debug for DebugSyntaxElement {
                 TS_PROPERTY_PARAMETER => {
                     std::fmt::Debug::fmt(&TsPropertyParameter::cast(node.clone()).unwrap(), f)
                 }
+                TS_PROPERTY_SIGNATURE_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsPropertySignatureClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_PROPERTY_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
                     &TsPropertySignatureTypeMember::cast(node.clone()).unwrap(),
                     f,
@@ -25366,6 +25898,10 @@ impl Debug for DebugSyntaxElement {
                 TS_RETURN_TYPE_ANNOTATION => {
                     std::fmt::Debug::fmt(&TsReturnTypeAnnotation::cast(node.clone()).unwrap(), f)
                 }
+                TS_SETTER_SIGNATURE_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsSetterSignatureClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_SETTER_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
                     &TsSetterSignatureTypeMember::cast(node.clone()).unwrap(),
                     f,

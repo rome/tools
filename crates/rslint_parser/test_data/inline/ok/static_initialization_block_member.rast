@@ -18,7 +18,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: STATIC_KW@9..19 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@19..20 "a" [] [],
                     },
@@ -77,12 +76,11 @@ JsModule {
           1: (empty)
           2: STATIC_KW@9..19 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@19..20
+          4: JS_LITERAL_MEMBER_NAME@19..20
             0: IDENT@19..20 "a" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: SEMICOLON@20..21 ";" [] []
+          7: SEMICOLON@20..21 ";" [] []
         1: JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER@21..57
           0: STATIC_KW@21..31 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: L_CURLY@31..32 "{" [] []

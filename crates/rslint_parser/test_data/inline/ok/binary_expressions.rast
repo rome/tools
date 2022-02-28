@@ -241,7 +241,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@153..154 "#" [] [],
                         id_token: IDENT@154..158 "name" [] [],
@@ -253,7 +252,6 @@ JsModule {
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -468,29 +466,27 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@153..158
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@153..158
             0: HASH@153..154 "#" [] []
             1: IDENT@154..158 "name" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: SEMICOLON@158..160 ";" [] [Whitespace(" ")]
+          7: SEMICOLON@158..160 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@160..191
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@160..164
+          4: JS_LITERAL_MEMBER_NAME@160..164
             0: IDENT@160..164 "test" [] []
+          5: (empty)
           6: (empty)
-          7: (empty)
-          8: JS_PARAMETERS@164..167
+          7: JS_PARAMETERS@164..167
             0: L_PAREN@164..165 "(" [] []
             1: JS_PARAMETER_LIST@165..165
             2: R_PAREN@165..167 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@167..191
+          8: (empty)
+          9: JS_FUNCTION_BODY@167..191
             0: L_CURLY@167..169 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@169..169
             2: JS_STATEMENT_LIST@169..189

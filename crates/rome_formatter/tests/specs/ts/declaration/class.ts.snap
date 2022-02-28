@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 173
+assertion_line: 168
 expression: class.ts
 
 ---
@@ -109,9 +109,9 @@ abstract class ConcreteMembers {
 	#private_method() {}
 }
 abstract class AbstractMembers {
-    abstract name: string;
-    abstract display();
-    abstract get my_name();
-    abstract set my_name(val);
+	abstract name: string;
+	abstract display();
+	abstract get my_name();
+	abstract set my_name(val);
 }
 

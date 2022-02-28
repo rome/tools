@@ -18,7 +18,6 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@10..16 "lorem" [] [Whitespace(" ")],
                     },
@@ -55,14 +54,13 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@10..16
+          4: JS_LITERAL_MEMBER_NAME@10..16
             0: IDENT@10..16 "lorem" [] [Whitespace(" ")]
-          6: (empty)
-          7: JS_INITIALIZER_CLAUSE@16..18
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@16..18
             0: EQ@16..18 "=" [] [Whitespace(" ")]
             1: (empty)
-          8: SEMICOLON@18..20 ";" [] [Whitespace(" ")]
+          7: SEMICOLON@18..20 ";" [] [Whitespace(" ")]
       8: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Newline("\n")] []
 --

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: classAbstractInstantiations2.ts
 
 ---
@@ -63,8 +63,10 @@ class H {
 class A {}
 
 abstract class B {
-    foo(): number { return this.bar(); }
-    abstract bar() : number;
+  foo(): number {
+    return this.bar();
+  }
+  abstract bar(): number;
 }
 
 new B();
@@ -94,8 +96,10 @@ class E extends B {
 }
 
 abstract class F extends B {
-    abstract foo() : number;
-    bar() { return 2; }
+  abstract foo(): number;
+  bar() {
+    return 2;
+  }
 }
 
 abstract class G {
@@ -109,8 +113,20 @@ abstract class G {
 }
 
 class H {
+  
     abstract baz() : number;
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: Only abstract classes can have abstract members
+   ┌─ classAbstractInstantiations2.ts:49:5
+   │
+49 │     abstract baz() : number;
+   │     ^^^^^^^^
+
 
 ```
 

@@ -583,7 +583,6 @@ JsClassDeclaration =
 	members: JsClassMemberList
 	'}'
 
-
 JsClassExpression =
 	'class'
 	id: JsAnyBinding?
@@ -628,9 +627,14 @@ JsAnyClassMember =
 	| JsMethodClassMember
 	| JsGetterClassMember
 	| JsSetterClassMember
+	| TsPropertySignatureClassMember
+	| TsMethodSignatureClassMember
+	| TsGetterSignatureClassMember
+	| TsSetterSignatureClassMember
+	| TsIndexSignatureClassMember	
 	| JsEmptyClassMember
-	| TsIndexSignatureClassMember
 	| JsUnknownMember
+	
 
 JsStaticInitializationBlockClassMember =
 	'static'
@@ -688,11 +692,22 @@ JsPropertyClassMember =
 	access_modifier: ('private' | 'protected' | 'public')?
 	'static'?
 	'readonly'?
-	'abstract'?
 	name: JsAnyClassMemberName
 	property_annotation: TsAnyPropertyAnnotation?
 	value: JsInitializerClause?
 	';'?
+
+TsPropertySignatureClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'
+	'readonly'?
+	name: JsAnyClassMemberName
+	property_annotation: TsAnyPropertySignatureAnnotation?
+	';'?
+
+TsAnyPropertySignatureAnnotation =
+	TsTypeAnnotation
+	| TsOptionalPropertyAnnotation
 
 TsAnyPropertyAnnotation =
 	TsTypeAnnotation
@@ -712,7 +727,6 @@ TsDefinitePropertyAnnotation =
 JsMethodClassMember =
 	access_modifier: ('private' | 'protected' | 'public')?
 	'static'?
-	'abstract'?
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
@@ -721,6 +735,15 @@ JsMethodClassMember =
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
+
+TsMethodSignatureClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'
+	name: JsAnyClassMemberName
+	type_parameters: TsTypeParameters?
+	parameters: JsParameters
+	return_type_annotation: TsReturnTypeAnnotation?
+	';'?
 
 // class Test { get a() {} }
 //              ^^^^^^^^^^
@@ -734,6 +757,15 @@ JsGetterClassMember =
 	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
 
+TsGetterSignatureClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'
+	'get'
+	name: JsAnyClassMemberName
+	'(' ')'
+	return_type: TsTypeAnnotation?
+	';'?
+
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
 JsSetterClassMember =
@@ -746,6 +778,16 @@ JsSetterClassMember =
 	parameter: JsAnyFormalParameter
 	')'
 	body: JsFunctionBody
+
+TsSetterSignatureClassMember =
+	access_modifier: ('protected' | 'public')?
+	'abstract'
+	'set'
+	name: JsAnyClassMemberName
+	'('
+	parameter: JsAnyFormalParameter
+	')'
+	';'?
 
 // class Test { [a: string]: number }
 //

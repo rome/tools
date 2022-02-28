@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: classAbstractUsingAbstractMethods2.ts
 
 ---
@@ -38,6 +38,7 @@ class DD extends AA {
 # Output
 ```js
 class A {
+  
     abstract foo();
 }
 
@@ -54,7 +55,7 @@ abstract class E extends A {
 }
 
 abstract class AA {
-    abstract foo();
+  abstract foo();
 }
 
 class BB extends AA {}
@@ -64,6 +65,17 @@ abstract class CC extends AA {}
 class DD extends AA {
   foo() {}
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: Only abstract classes can have abstract members
+  ┌─ classAbstractUsingAbstractMethods2.ts:2:5
+  │
+2 │     abstract foo();
+  │     ^^^^^^^^
+
 
 ```
 

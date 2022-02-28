@@ -143,11 +143,23 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 33 │     @foo()
    │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
+error[SyntaxError]: Only abstract classes can have abstract members
+   ┌─ decorators-comments.ts:35:5
+   │
+35 │     abstract property: Array<string>
+   │     ^^^^^^^^
+
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ decorators-comments.ts:39:5
    │
 39 │     @foo()
    │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: Only abstract classes can have abstract members
+   ┌─ decorators-comments.ts:41:5
+   │
+41 │     abstract method(): Array<string>
+   │     ^^^^^^^^
 
 
 ```

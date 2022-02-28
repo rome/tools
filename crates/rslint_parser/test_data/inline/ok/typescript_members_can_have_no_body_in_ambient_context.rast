@@ -18,7 +18,6 @@ JsModule {
                     JsMethodClassMember {
                         access_modifier: missing (optional),
                         static_token: missing (optional),
-                        abstract_token: missing (optional),
                         async_token: missing (optional),
                         star_token: missing (optional),
                         name: JsLiteralMemberName {
@@ -109,7 +108,6 @@ JsModule {
                                 JsMethodClassMember {
                                     access_modifier: missing (optional),
                                     static_token: missing (optional),
-                                    abstract_token: missing (optional),
                                     async_token: missing (optional),
                                     star_token: missing (optional),
                                     name: JsLiteralMemberName {
@@ -205,17 +203,16 @@ JsModule {
             1: (empty)
             2: (empty)
             3: (empty)
-            4: (empty)
-            5: JS_LITERAL_MEMBER_NAME@20..29
+            4: JS_LITERAL_MEMBER_NAME@20..29
               0: IDENT@20..29 "name" [Newline("\n"), Whitespace("    ")] []
+            5: (empty)
             6: (empty)
-            7: (empty)
-            8: JS_PARAMETERS@29..31
+            7: JS_PARAMETERS@29..31
               0: L_PAREN@29..30 "(" [] []
               1: JS_PARAMETER_LIST@30..30
               2: R_PAREN@30..31 ")" [] []
+            8: (empty)
             9: (empty)
-            10: (empty)
           1: JS_EMPTY_CLASS_MEMBER@31..32
             0: SEMICOLON@31..32 ";" [] []
           2: JS_GETTER_CLASS_MEMBER@32..55
@@ -277,17 +274,16 @@ JsModule {
                   1: (empty)
                   2: (empty)
                   3: (empty)
-                  4: (empty)
-                  5: JS_LITERAL_MEMBER_NAME@115..129
+                  4: JS_LITERAL_MEMBER_NAME@115..129
                     0: IDENT@115..129 "name" [Newline("\n"), Whitespace("         ")] []
+                  5: (empty)
                   6: (empty)
-                  7: (empty)
-                  8: JS_PARAMETERS@129..131
+                  7: JS_PARAMETERS@129..131
                     0: L_PAREN@129..130 "(" [] []
                     1: JS_PARAMETER_LIST@130..130
                     2: R_PAREN@130..131 ")" [] []
+                  8: (empty)
                   9: (empty)
-                  10: (empty)
                 1: JS_EMPTY_CLASS_MEMBER@131..132
                   0: SEMICOLON@131..132 ";" [] []
                 2: JS_GETTER_CLASS_MEMBER@132..160

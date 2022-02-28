@@ -14,7 +14,6 @@ impl ToFormatElement for JsPropertyClassMember {
             access_modifier,
             static_token,
             readonly_token,
-            abstract_token,
             name,
             property_annotation,
             value,
@@ -29,8 +28,6 @@ impl ToFormatElement for JsPropertyClassMember {
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
         let readonly_token = readonly_token
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let abstract_token = abstract_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
 
         let property_annotation = property_annotation.format_or_empty(formatter)?;
 
@@ -44,7 +41,6 @@ impl ToFormatElement for JsPropertyClassMember {
             access_modifier,
             static_token,
             readonly_token,
-            abstract_token,
             name.format(formatter)?,
             property_annotation,
             init,

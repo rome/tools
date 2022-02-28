@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: classAbstractUsingAbstractMethod1.ts
 
 ---
@@ -28,7 +28,7 @@ a.foo();
 # Output
 ```js
 abstract class A {
-    abstract foo() : number;
+  abstract foo(): number;
 }
 
 class B extends A {
@@ -37,8 +37,8 @@ class B extends A {
   }
 }
 
-abstract class C extends A  {
-    abstract foo() : number;
+abstract class C extends A {
+  abstract foo(): number;
 }
 
 var a = new B();
