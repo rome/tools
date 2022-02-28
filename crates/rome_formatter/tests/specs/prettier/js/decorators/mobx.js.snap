@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: mobx.js
 
 ---
@@ -49,15 +49,11 @@ import {observable} from "mobx";
 ```js
 import { observable } from "mobx";
 
-
-
-@observer 
+@observer
 class OrderLine {
-  
   @
   observable;
   price:number = 0;
-  
   @
   observable;
   amount:number = 1;
@@ -66,15 +62,11 @@ class OrderLine {
     this.price = price;
   }
 
-  
-
   @
   computed;
   get total() {
     return this.price * this.amount;
   }
-
-  
 
   @
   action;
@@ -84,15 +76,11 @@ class OrderLine {
     this.price = price;
   }
 
-  
-
   @
   computed;
   get total() {
     return this.price * this.amount;
   }
-
-  
 
   @
   action;
@@ -102,8 +90,6 @@ class OrderLine {
     this.price = price;
   }
 
-  
-  
   @
   computed;
   @
@@ -121,15 +107,11 @@ class OrderLine {
   get total() {
     return this.price * this.amount;
   }
-
-  
 
   @
   action;
   handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
 
-  
-  
   @
   action;
   handleSomething = (event: React.ChangeEvent<HTMLInputElement>) =>

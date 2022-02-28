@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: duplicates-access-modifier.ts
 
 ---
@@ -19,15 +19,10 @@ class Foo {
 # Output
 ```js
 class Foo {
-  
   public public a;
-  
   private public b;
-  
   protected private c;
-  
   public protected d;
-  
   public protected private e;
 }
 

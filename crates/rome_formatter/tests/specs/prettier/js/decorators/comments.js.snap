@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: comments.js
 
 ---
@@ -44,8 +44,6 @@ export class Bar{}
 ```js
 var x = 100;
 
-
-
 @Hello(
 {
   a: "a", // test // Comment is in the wrong place
@@ -54,9 +52,6 @@ var x = 100;
 }
 )
 class X {}
-
-
-
 
 @NgModule(
 {
@@ -72,8 +67,6 @@ class X {}
 }
 )
 export class AppModule {}
-
-
 
 // A
 @Foo()

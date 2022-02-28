@@ -24,8 +24,7 @@ module Y3 {
 # Output
 ```js
 module Y3 {
-  
-  public ;
+  public;
   module Module {
     class A {
       s: string;
@@ -34,10 +33,10 @@ module Y3 {
 
   // Apparently this parses :P
   export
-  private ;
-  public ;
-  protected ;
-  static ;
+  private;
+  public;
+  protected;
+  static;
   readonly;
   abstract;
   async;

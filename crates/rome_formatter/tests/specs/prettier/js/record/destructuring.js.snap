@@ -23,7 +23,7 @@ assert(rest.c === 3);
 const { a, b } = #;
 {
   a: 1, b;
-  : 2 
+  : 2
 }
 assert(a === 1);
 assert(b === 2);
@@ -31,7 +31,7 @@ assert(b === 2);
 const { a, ...rest } = #;
 {
   a: 1, b;
-  : 2, c: 3 
+  : 2, c: 3
 }
 assert(a === 1);
 assert(typeof rest === "object");

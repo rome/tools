@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: argument-list-preserve-line.ts
 
 ---
@@ -36,7 +36,6 @@ class Foo {
 
         private readonly anotherThing: IAnotherThing | undefined,
     ) { }
-
 }
 
 ```

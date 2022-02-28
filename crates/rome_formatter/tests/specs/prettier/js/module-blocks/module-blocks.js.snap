@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: module-blocks.js
 
 ---
@@ -67,15 +67,12 @@ class B {
 
 const m = module;
 {
-  
   export const foo = "foo";
-  
   export { foo };
 }
 
 module;
 {
-  
   export { foo }
 }
 
@@ -84,26 +81,24 @@ const m = module;
 
 const worker = new Worker(module {
   export const foo = "foo";
-
 })
 
 let m = module;
 {
   module;
   {
-    
     export let foo = "foo";
   }
 }
 
 const m = module;
 {
-  export const foo = "foo" 
+  export const foo = "foo"
 }
 
 let moduleBlock = module;
 {
-  export let y = 1; 
+  export let y = 1;
 }
 
 foo(module { export let foo = "foo";

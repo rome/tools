@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: fsharp_style_pipeline_operator.js
 
 ---
@@ -106,14 +106,12 @@ const _g = (x) => x
 
 const __g = (x) => x
   |> (
-    y => 
+    y =>
 {
-  
-      return (y + 1 |> (z) 
+  return (y + 1 |> (z)
   => z * y)
 }
-
-  )
+)
 
 const f = x + ((f) => (f |> f))
 const f = x |> (f)

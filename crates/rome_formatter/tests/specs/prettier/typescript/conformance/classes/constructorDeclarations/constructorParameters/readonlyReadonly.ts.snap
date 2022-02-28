@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: readonlyReadonly.ts
 
 ---
@@ -15,8 +15,7 @@ class C {
 # Output
 ```js
 class C {
-  
-    readonly readonly x: number;
+  readonly readonly x: number;
   constructor(readonly readonly y: number) {}
 }
 

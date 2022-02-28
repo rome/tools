@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: ignore-2.js
 
 ---
@@ -41,7 +41,6 @@ function HelloWorld() {
     >
       test
     </div>
-  
   )
 }
 

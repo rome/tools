@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: class.js
 
 ---
@@ -148,7 +148,6 @@ class C2 {
 // The semicolon is *not* necessary
 x();
 {}
-
 }
 class C3 {
   set; // The semicolon *is* necessary
@@ -159,7 +158,6 @@ class C4 {
 // The semicolon is *not* necessary
 x();
 {}
-
 }
 
 class A1 {

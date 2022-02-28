@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: throw_expression.js
 
 ---
@@ -29,7 +29,7 @@ class Product {
 # Output
 ```js
 function save(filename = throw new TypeError("Argument required")
-) 
+)
 {}
 
 lint(ast, {

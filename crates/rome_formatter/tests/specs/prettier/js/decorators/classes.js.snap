@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: classes.js
 
 ---
@@ -26,28 +26,23 @@ const bar =
 
 # Output
 ```js
-@deco 
+@deco
 class Foo {}
 
-
-
-@deco 
+@deco
 export class Bar {}
 
-
-
-@deco 
+@deco
 export default class Baz {}
 
 const foo =
-@deco 
+@deco
 class {
   //
 }
 
 const bar =
-
-  @deco
+@deco
 class {
     //
   }

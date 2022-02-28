@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: module-blocks.js
 
 ---
@@ -17,9 +17,7 @@ let m = module {
 ```js
 let m = module;
 {
-  
   export let m = 2;
-  
   export let n = 3;
 }
 

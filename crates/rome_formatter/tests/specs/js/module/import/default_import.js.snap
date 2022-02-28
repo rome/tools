@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 168
 expression: default_import.js
 
 ---
@@ -33,7 +33,7 @@ import foo from "foo.json" assert { type: "json" };
 import foo2 from "foo.json" assert {
 	"type": "json",
 	type: "html",
-	"type": "js" ,
+	"type": "js",
 };
 import a, * as b from "foo";
 

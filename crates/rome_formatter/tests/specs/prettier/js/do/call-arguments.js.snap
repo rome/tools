@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: call-arguments.js
 
 ---
@@ -95,8 +95,7 @@ expect(
       var bar = "foo";
     };
 bar;
-
-  }
+}
 ).toThrow(ReferenceError)
 
 ```

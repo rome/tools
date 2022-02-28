@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: constructor.ts
 
 ---
@@ -38,15 +38,13 @@ class foo {
 }
 
 class A {
-  
-    'constructor': typeof A
+  'constructor': typeof A
   static Foo() {
     return new A();
   }
 }
 
 class B {
-  
   constructor<>() {}
 }
 

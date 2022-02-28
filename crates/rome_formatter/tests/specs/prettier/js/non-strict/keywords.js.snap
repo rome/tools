@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: keywords.js
 
 ---
@@ -19,7 +19,7 @@ function myFunction() {
 
 # Output
 ```js
-var package  = require("../package");
+var package = require("../package");
 
 /**
  * My amazing comment

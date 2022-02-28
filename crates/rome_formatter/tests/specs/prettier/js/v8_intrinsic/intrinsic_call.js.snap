@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 119
 expression: intrinsic_call.js
 
 ---
@@ -36,8 +36,7 @@ function doSmth()     {
 # Output
 ```js
 function doSmth() {
-  
-            %DebugPrint
+  %DebugPrint
         (
                 foo )
 }

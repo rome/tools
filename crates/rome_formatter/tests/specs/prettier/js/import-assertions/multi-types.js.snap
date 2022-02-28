@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: multi-types.js
 
 ---
@@ -12,7 +12,7 @@ import json from "./foo.json" assert { type: "json", type: "bar" };
 
 # Output
 ```js
-import json from "./foo.json" assert { type: "json", type: "bar"  };
+import json from "./foo.json" assert { type: "json", type: "bar" };
 
 ```
 

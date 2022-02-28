@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 119
 expression: delete-variable.js
 
 ---
@@ -16,7 +16,6 @@ function foo() {
 ```js
 function foo() {
   var bar = 1;
-  
   delete bar;
 }
 

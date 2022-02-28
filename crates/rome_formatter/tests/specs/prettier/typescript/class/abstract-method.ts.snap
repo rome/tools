@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: abstract-method.ts
 
 ---
@@ -23,14 +23,12 @@ abstract class Bar {
 # Output
 ```js
 class Foo {
-  
   abstract foo();
 }
 
 abstract class Bar {
   method() {
     return class {
-      
       abstract m();
     };
   }

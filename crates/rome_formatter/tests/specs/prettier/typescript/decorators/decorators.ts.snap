@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 119
 expression: decorators.ts
 
 ---
@@ -93,13 +93,10 @@ export class TestTextFileService {
 		@ILifecycleService lifecycleService,
 	) {
 	}
-
 }
 
 @commonEditorContribution
 export class TabCompletionController {}
-
-
 
 @Component(
 {
@@ -115,11 +112,10 @@ class Class {
     @Decorator
     { prop1, prop2 }
 : Type
-  ) 
+  )
 {
   doSomething();
 }
-
 }
 
 class Class2 {
@@ -128,11 +124,10 @@ class Class2 {
     @Decorator2
     { prop1, prop2 }
 : Type
-  ) 
+  )
 {
   doSomething();
 }
-
 }
 
 class Class3 {
@@ -144,11 +139,10 @@ class Class3 {
   prop2_1, prop2_2;
 }
 : Type
-  ) 
+  )
 {
   doSomething();
 }
-
 }
 
 class Class4 {
@@ -157,18 +151,16 @@ class Class4 {
     @Decorator
     { prop1, prop2 }
 : Type
-  ) 
+  )
 {}
-
 }
 
 class Class5 {
   method(
     @Decorator { prop1 }
 : Type
-  ) 
+  )
 {}
-
 }
 
 class Class6 {
@@ -176,36 +168,32 @@ class Class6 {
     @Decorator({}) { prop1 }: Type
   ) {}
 method(
-
-    @Decorator(
+@Decorator(
 {}
-) 
+)
 {
   prop1;
 }
 : Type
-  ) 
+  )
 {}
 method(
-
-    @Decorator([]) 
+@Decorator([])
 {
   prop1;
 }
 : Type
-  ) 
+  )
 {}
 method(
-
-    @Decorator(
-      []) 
+@Decorator(
+      [])
 {
   prop1;
 }
 : Type
-  ) 
+  )
 {}
-
 }
 
 ```
