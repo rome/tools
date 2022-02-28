@@ -22,7 +22,7 @@ fn main() -> Result<(), pico_args::Error> {
 cargo bench
 Benchmark parser and formatter.
 USAGE:
-    cargo bench <SUBCOMMAND> [option]
+    cargo bench [option]
 OPTIONS
     --save-baseline     Allows different runs to be compared.
     --feature           Possible values: parser, formatter
@@ -57,7 +57,7 @@ OPTIONS
     let suites = args
         .opt_value_from_str("--suites")
         .unwrap()
-        .unwrap_or("*".to_string());
+        .unwrap_or_else(|| "*".to_string());
 
     let baseline: Option<String> = args.opt_value_from_str("--save-baseline").unwrap();
     // "feature" is a mandatory option and will throw an error if it's missing or incorrect

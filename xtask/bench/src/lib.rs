@@ -86,7 +86,7 @@ pub fn run(
     suites.insert("ts", include_str!("libs-ts.txt"));
 
     let mut libs = vec![];
-    let suites_to_run = suites_to_run.split(",");
+    let suites_to_run = suites_to_run.split(',');
     for suite in suites_to_run {
         match suite {
             "*" => {
