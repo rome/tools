@@ -704,10 +704,10 @@ fn parse_class_member_impl(
     match member_name {
         Some(member_name) => {
             if member_name.kind() == JS_LITERAL_MEMBER_NAME {
-                let is_at_semicolon = p.at(T![:]);
+                let is_at_colon = p.at(T![:]);
                 let is_at_line_break_or_generator = p.has_linebreak_before_n(0) && p.at(T![*]);
                 let member_name_text = member_name.text(p);
-                if !is_at_semicolon
+                if !is_at_colon
                     && !is_at_line_break_or_generator
                     && matches!(member_name_text, "get" | "set")
                 {
