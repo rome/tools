@@ -213,7 +213,7 @@ fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
         })
         // If the above returns None this means either all items were skipped
         // or the list was empty. In either case, this means the first group
-        // covers the entire list of FlattenItems
+        // covers the entire list of [FlattenItem]
         .unwrap_or(flatten_items.len())
 }
 

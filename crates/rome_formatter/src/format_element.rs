@@ -1180,7 +1180,7 @@ impl FormatElement {
         self == &FormatElement::Empty
     }
 
-    /// Returns true if this FormatElement recursively contains any hard line break
+    /// Returns true if this [FormatElement] recursively contains any hard line break
     /// ([hard_line_break], [empty_line], [Token] containing the '\n' character)
     pub fn has_hard_line_breaks(&self) -> bool {
         match self {
