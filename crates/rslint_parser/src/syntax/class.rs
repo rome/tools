@@ -1035,7 +1035,6 @@ fn parse_property_class_member_body(
 //   c!: string;
 // }
 fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers) -> ParsedSyntax {
-    dbg!(p.cur_src());
     if !p.at(T![?]) && !p.at(T![!]) {
         return parse_ts_type_annotation_or_error(p);
     }
