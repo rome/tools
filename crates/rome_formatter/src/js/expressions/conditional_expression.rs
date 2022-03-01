@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, hard_line_break, indent, join_elements, soft_line_break, space_token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, group_elements, hard_line_break, indent, space_token, FormatElement,
+    FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsConditionalExpression;
 use rslint_parser::ast::JsConditionalExpressionFields;
@@ -44,10 +44,17 @@ impl ToFormatElement for JsConditionalExpression {
         {
             indent(format_elements![
                 hard_line_break(),
-                join_elements(soft_line_break(), vec![consequent, alternate],)
+                consequent,
+                hard_line_break(),
+                alternate
             ])
         } else {
-            join_elements(space_token(), vec![consequent, alternate])
+            group_elements(format_elements![
+                space_token(),
+                consequent,
+                space_token(),
+                alternate
+            ])
         };
         Ok(format_elements![test, space_token(), body])
     }

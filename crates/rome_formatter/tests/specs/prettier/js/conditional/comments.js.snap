@@ -173,7 +173,7 @@ test
     comment */
     : bar;
 
-test ? foo : bar; /* comment */
+test ? /* comment */ foo : bar;
 
 test ? foo : bar; /* comment
          comment
@@ -194,7 +194,7 @@ test
     comment
    */
 
-test ? foo : bar; /* comment */
+test ? foo : /* comment */ bar;
 
 test
   ? test /* c

@@ -1,6 +1,6 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, hard_line_break, indent, join_elements, soft_line_break, space_token,
+    format_elements, group_elements, hard_line_break, indent, soft_line_break, space_token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::TsConditionalType;
@@ -46,10 +46,15 @@ impl ToFormatElement for TsConditionalType {
         {
             indent(format_elements![
                 hard_line_break(),
-                join_elements(soft_line_break(), vec![true_type, false_type],)
+                format_elements![soft_line_break(), true_type, soft_line_break(), false_type]
             ])
         } else {
-            join_elements(space_token(), vec![true_type, false_type])
+            group_elements(format_elements![
+                space_token(),
+                true_type,
+                space_token(),
+                false_type
+            ])
         };
 
         Ok(format_elements![

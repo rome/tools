@@ -107,7 +107,7 @@ type T = test extends B
     comment */
     : bar;
 
-type T = test extends B ? foo : bar; /* comment */
+type T = test extends B ? /* comment */ foo : bar;
 
 type T = test extends B ? foo : bar; /* comment
          comment
@@ -128,7 +128,7 @@ type T = test extends B
     comment
    */
 
-type T = test extends B ? foo : bar; /* comment */
+type T = test extends B ? foo : /* comment */ bar;
 
 type T = test extends B
   ? test extends B /* c
