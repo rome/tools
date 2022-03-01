@@ -1,8 +1,11 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+mod abstract_modifier;
+mod accessibility_modifier;
 mod asserts_condition;
 mod call_signature_type_member;
 mod construct_signature_type_member;
+mod declare_modifier;
 mod default_type_clause;
 mod definite_property_annotation;
 mod definite_variable_annotation;
@@ -20,9 +23,11 @@ mod module_block;
 mod named_tuple_type_element;
 mod optional_property_annotation;
 mod optional_tuple_type_element;
+mod override_modifier;
 mod property_signature_type_member;
 mod qualified_module_name;
 mod qualified_name;
+mod readonly_modifier;
 mod rest_tuple_type_element;
 mod return_type_annotation;
 mod setter_signature_type_member;

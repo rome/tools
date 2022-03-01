@@ -15,7 +15,13 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
-                        ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        JsUnknown {
+                            items: [
+                                TsAbstractModifier {
+                                    modifier_token: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                },
+                            ],
+                        },
                         JsLiteralMemberName {
                             value: IDENT@46..57 "constructor" [] [],
                         },
@@ -34,7 +40,11 @@ JsModule {
                 },
                 JsUnknownMember {
                     items: [
-                        ABSTRACT_KW@63..77 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        TsMethodSignatureModifierList [
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@63..77 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                        ],
                         JsLiteralMemberName {
                             value: IDENT@77..84 "display" [] [],
                         },
@@ -59,7 +69,11 @@ JsModule {
                 },
                 JsUnknownMember {
                     items: [
-                        ABSTRACT_KW@96..110 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        TsMethodSignatureModifierList [
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@96..110 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                        ],
                         GET_KW@110..114 "get" [] [Whitespace(" ")],
                         JsLiteralMemberName {
                             value: IDENT@114..121 "my_name" [] [],
@@ -76,7 +90,11 @@ JsModule {
                 },
                 JsUnknownMember {
                     items: [
-                        ABSTRACT_KW@127..141 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        TsMethodSignatureModifierList [
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@127..141 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                        ],
                         SET_KW@141..145 "set" [] [Whitespace(" ")],
                         JsLiteralMemberName {
                             value: IDENT@145..152 "my_name" [] [],
@@ -101,7 +119,11 @@ JsModule {
                 },
                 JsUnknownMember {
                     items: [
-                        ABSTRACT_KW@162..176 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        TsMethodSignatureModifierList [
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@162..176 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                        ],
                         JsUnknownMember {
                             items: [
                                 HASH@176..177 "#" [] [],
@@ -143,7 +165,9 @@ JsModule {
       6: L_CURLY@31..32 "{" [] []
       7: JS_CLASS_MEMBER_LIST@32..195
         0: JS_UNKNOWN_MEMBER@32..63
-          0: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          0: JS_UNKNOWN@32..46
+            0: TS_ABSTRACT_MODIFIER@32..46
+              0: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@46..57
             0: IDENT@46..57 "constructor" [] []
           2: JS_CONSTRUCTOR_PARAMETERS@57..60
@@ -156,7 +180,9 @@ JsModule {
             2: JS_STATEMENT_LIST@62..62
             3: R_CURLY@62..63 "}" [] []
         1: JS_UNKNOWN_MEMBER@63..96
-          0: ABSTRACT_KW@63..77 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          0: TS_METHOD_SIGNATURE_MODIFIER_LIST@63..77
+            0: TS_ABSTRACT_MODIFIER@63..77
+              0: ABSTRACT_KW@63..77 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@77..84
             0: IDENT@77..84 "display" [] []
           2: JS_PARAMETERS@84..86
@@ -173,7 +199,9 @@ JsModule {
             2: JS_STATEMENT_LIST@95..95
             3: R_CURLY@95..96 "}" [] []
         2: JS_UNKNOWN_MEMBER@96..127
-          0: ABSTRACT_KW@96..110 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          0: TS_METHOD_SIGNATURE_MODIFIER_LIST@96..110
+            0: TS_ABSTRACT_MODIFIER@96..110
+              0: ABSTRACT_KW@96..110 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: GET_KW@110..114 "get" [] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@114..121
             0: IDENT@114..121 "my_name" [] []
@@ -185,7 +213,9 @@ JsModule {
             2: JS_STATEMENT_LIST@126..126
             3: R_CURLY@126..127 "}" [] []
         3: JS_UNKNOWN_MEMBER@127..162
-          0: ABSTRACT_KW@127..141 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          0: TS_METHOD_SIGNATURE_MODIFIER_LIST@127..141
+            0: TS_ABSTRACT_MODIFIER@127..141
+              0: ABSTRACT_KW@127..141 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: SET_KW@141..145 "set" [] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@145..152
             0: IDENT@145..152 "my_name" [] []
@@ -203,7 +233,9 @@ JsModule {
             2: JS_STATEMENT_LIST@161..161
             3: R_CURLY@161..162 "}" [] []
         4: JS_UNKNOWN_MEMBER@162..195
-          0: ABSTRACT_KW@162..176 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          0: TS_METHOD_SIGNATURE_MODIFIER_LIST@162..176
+            0: TS_ABSTRACT_MODIFIER@162..176
+              0: ABSTRACT_KW@162..176 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: JS_UNKNOWN_MEMBER@176..189
             0: HASH@176..177 "#" [] []
             1: IDENT@177..189 "private_name" [] []

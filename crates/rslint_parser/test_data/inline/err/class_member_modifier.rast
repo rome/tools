@@ -15,7 +15,11 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
-                        ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")],
+                        TsPropertySignatureModifierList [
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")],
+                            },
+                        ],
                         JsLiteralMemberName {
                             value: IDENT@19..22 "foo" [] [],
                         },
@@ -44,7 +48,9 @@ JsModule {
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..24
         0: JS_UNKNOWN_MEMBER@10..24
-          0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
+          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@10..19
+            0: TS_ABSTRACT_MODIFIER@10..19
+              0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@19..22
             0: IDENT@19..22 "foo" [] []
           2: SEMICOLON@22..24 ";" [] [Whitespace(" ")]

@@ -17,5 +17,6 @@ mod private_name;
 mod reference_identifier;
 mod script;
 mod spread;
+mod static_modifier;
 mod variable_declaration_clause;
 mod variable_declarator;

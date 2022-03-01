@@ -45,10 +45,7 @@ JsModule {
             l_curly_token: L_CURLY@80..81 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    readonly_token: missing (optional),
+                    modifiers: JsPropertyModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@81..88 "x" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                     },
@@ -104,17 +101,14 @@ JsModule {
       6: L_CURLY@80..81 "{" [] []
       7: JS_CLASS_MEMBER_LIST@81..99
         0: JS_PROPERTY_CLASS_MEMBER@81..99
-          0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@81..88
+          0: JS_PROPERTY_MODIFIER_LIST@81..81
+          1: JS_LITERAL_MEMBER_NAME@81..88
             0: IDENT@81..88 "x" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-          5: (empty)
-          6: JS_INITIALIZER_CLAUSE@88..98
+          2: (empty)
+          3: JS_INITIALIZER_CLAUSE@88..98
             0: EQ@88..90 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@90..98
               0: JS_STRING_LITERAL@90..98 "\"string\"" [] []
-          7: SEMICOLON@98..99 ";" [] []
+          4: SEMICOLON@98..99 ";" [] []
       8: R_CURLY@99..101 "}" [Newline("\n")] []
   3: EOF@101..102 "" [Newline("\n")] []

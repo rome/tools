@@ -11,8 +11,7 @@ use rslint_parser::ast::JsMethodClassMemberFields;
 impl ToFormatElement for JsMethodClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsMethodClassMemberFields {
-            access_modifier,
-            static_token,
+            modifiers,
             async_token,
             star_token,
             name,
@@ -23,10 +22,6 @@ impl ToFormatElement for JsMethodClassMember {
             body,
         } = self.as_fields();
 
-        let access_modifier = access_modifier
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let static_token = static_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
         let async_token = async_token
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
 
@@ -39,8 +34,8 @@ impl ToFormatElement for JsMethodClassMember {
         let body = body.format(formatter)?;
 
         Ok(hard_group_elements(format_elements![
-            access_modifier,
-            static_token,
+            modifiers.format(formatter)?,
+            space_token(),
             async_token,
             star_token,
             name,

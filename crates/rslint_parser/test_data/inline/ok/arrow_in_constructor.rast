@@ -14,7 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
                 JsConstructorClassMember {
-                    access_modifier: missing (optional),
+                    modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@9..23 "constructor" [Newline("\n"), Whitespace("  ")] [],
                     },
@@ -115,7 +115,7 @@ JsModule {
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..72
         0: JS_CONSTRUCTOR_CLASS_MEMBER@9..72
-          0: (empty)
+          0: JS_CONSTRUCTOR_MODIFIER_LIST@9..9
           1: JS_LITERAL_MEMBER_NAME@9..23
             0: IDENT@9..23 "constructor" [Newline("\n"), Whitespace("  ")] []
           2: JS_CONSTRUCTOR_PARAMETERS@23..26

@@ -1,7 +1,7 @@
 use rome_rowan::SyntaxKind;
-use rslint_errors::{Diagnostic, Severity};
 use rslint_parser::{parse, ModuleKind, SourceType};
 
+use crate::runner::create_unknown_node_in_tree_diagnostic;
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
@@ -51,12 +51,7 @@ impl TestCase for BabelJsxTestCase {
             {
                 TestRunOutcome::IncorrectlyErrored {
                     files,
-                    errors: vec![Diagnostic::new(
-                        0,
-                        Severity::Bug,
-                        "Unknown node in test that should pass",
-                    )
-                    .primary(unknown.text_trimmed_range(), "")],
+                    errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
                 }
             } else {
                 TestRunOutcome::Passed(files)

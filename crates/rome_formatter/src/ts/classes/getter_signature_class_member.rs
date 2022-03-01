@@ -9,8 +9,7 @@ use rslint_parser::ast::{TsGetterSignatureClassMember, TsGetterSignatureClassMem
 impl ToFormatElement for TsGetterSignatureClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsGetterSignatureClassMemberFields {
-            access_modifier,
-            abstract_token,
+            modifiers,
             get_token,
             name,
             l_paren_token,
@@ -19,9 +18,6 @@ impl ToFormatElement for TsGetterSignatureClassMember {
             semicolon_token,
         } = self.as_fields();
 
-        let access_modifier = access_modifier
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let abstract_token = abstract_token.format(formatter)?;
         let get_token = get_token.format(formatter)?;
         let name = name.format(formatter)?;
         let l_paren_token = l_paren_token.format(formatter)?;
@@ -30,8 +26,7 @@ impl ToFormatElement for TsGetterSignatureClassMember {
         let semicolon_token = semicolon_token.format_or(formatter, || token(";"))?;
 
         Ok(hard_group_elements(format_elements![
-            access_modifier,
-            abstract_token,
+            modifiers.format(formatter)?,
             space_token(),
             get_token,
             space_token(),

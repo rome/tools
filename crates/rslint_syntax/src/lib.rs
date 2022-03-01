@@ -135,6 +135,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_UNKNOWN_BINDING => JS_UNKNOWN_BINDING,
 
             JS_CONSTRUCTOR_CLASS_MEMBER
+            | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
             | JS_EMPTY_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
             | JS_GETTER_OBJECT_MEMBER
@@ -146,8 +147,6 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_SETTER_CLASS_MEMBER
             | JS_SETTER_OBJECT_MEMBER
             | JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
-            | TS_ENUM_MEMBER
-            | TS_INDEX_SIGNATURE_TYPE_MEMBER
             | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
             | TS_METHOD_SIGNATURE_CLASS_MEMBER
             | TS_GETTER_SIGNATURE_CLASS_MEMBER
@@ -180,7 +179,6 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             JS_FORMAL_PARAMETER
             | JS_REST_PARAMETER
             | TS_PROPERTY_PARAMETER
-            | TS_READONLY_PROPERTY_PARAMETER
             | TS_THIS_PARAMETER
             | JS_UNKNOWN_PARAMETER => JS_UNKNOWN_PARAMETER,
 

@@ -8,7 +8,6 @@ impl ToFormatElement for JsAnyConstructorParameter {
             Self::JsAnyFormalParameter(node) => node.to_format_element(formatter),
             Self::JsRestParameter(node) => node.to_format_element(formatter),
             Self::TsPropertyParameter(node) => node.to_format_element(formatter),
-            Self::TsReadonlyPropertyParameter(node) => node.to_format_element(formatter),
         }
     }
 }

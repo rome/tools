@@ -15,6 +15,7 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
+                        JsPropertyModifierList [],
                         JsLiteralMemberName {
                             value: IDENT@10..13 "foo" [] [],
                         },
@@ -48,11 +49,12 @@ JsModule {
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..16
         0: JS_UNKNOWN_MEMBER@10..16
-          0: JS_LITERAL_MEMBER_NAME@10..13
+          0: JS_PROPERTY_MODIFIER_LIST@10..10
+          1: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          1: JS_UNKNOWN@13..14
+          2: JS_UNKNOWN@13..14
             0: QUESTION@13..14 "?" [] []
-          2: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
+          3: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       8: R_CURLY@16..17 "}" [] []
   3: EOF@17..18 "" [Newline("\n")] []
 --

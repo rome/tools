@@ -137,7 +137,7 @@ pub(crate) fn try_parse<T, E>(
 /// Must be at `[ident:` or `<modifiers> [ident:`
 pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
     let mut offset = 0;
-    while is_nth_at_modifier(p, offset) {
+    while is_nth_at_modifier(p, offset, false) {
         offset += 1;
     }
 
@@ -163,7 +163,7 @@ pub(crate) fn expect_ts_index_signature_member(
     m: Marker,
     parent: MemberParent,
 ) -> CompletedMarker {
-    while is_nth_at_modifier(p, 0) {
+    while is_nth_at_modifier(p, 0, false) {
         if is_at_contextual_keyword(p, "readonly") {
             p.bump_remap(T![readonly]);
         } else {

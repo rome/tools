@@ -14,7 +14,7 @@ JsScript {
             l_curly_token: L_CURLY@18..20 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsConstructorClassMember {
-                    access_modifier: missing (optional),
+                    modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@20..31 "constructor" [] [],
                     },
@@ -94,7 +94,7 @@ JsScript {
       6: L_CURLY@18..20 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@20..73
         0: JS_CONSTRUCTOR_CLASS_MEMBER@20..73
-          0: (empty)
+          0: JS_CONSTRUCTOR_MODIFIER_LIST@20..20
           1: JS_LITERAL_MEMBER_NAME@20..31
             0: IDENT@20..31 "constructor" [] []
           2: JS_CONSTRUCTOR_PARAMETERS@31..70

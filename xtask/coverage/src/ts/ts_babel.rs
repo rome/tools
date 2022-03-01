@@ -1,7 +1,7 @@
 use rome_rowan::SyntaxKind;
-use rslint_errors::{Diagnostic, Severity};
 use rslint_parser::SourceType;
 
+use crate::runner::create_unknown_node_in_tree_diagnostic;
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
@@ -43,22 +43,19 @@ impl TestCase for BabelTypescriptTestCase {
         );
         let result = rslint_parser::parse(&self.code, 0, source_type);
 
-        if let Some(unknown) = result
-            .syntax()
-            .descendants()
-            .find(|descendant| descendant.kind().is_unknown())
-        {
-            TestRunOutcome::IncorrectlyErrored {
-                files,
-                errors: vec![Diagnostic::new(
-                    0,
-                    Severity::Bug,
-                    "Unknown node in test that should pass",
-                )
-                .primary(unknown.text_range(), "")],
+        if result.errors().is_empty() {
+            if let Some(unknown) = result
+                .syntax()
+                .descendants()
+                .find(|descendant| descendant.kind().is_unknown())
+            {
+                TestRunOutcome::IncorrectlyErrored {
+                    files,
+                    errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
+                }
+            } else {
+                TestRunOutcome::Passed(files)
             }
-        } else if result.errors().is_empty() {
-            TestRunOutcome::Passed(files)
         } else {
             TestRunOutcome::IncorrectlyErrored {
                 files,
