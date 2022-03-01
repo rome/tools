@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: emoji.js
 
 ---
@@ -18,7 +18,7 @@ const test = '💖'
 ```js
 /* #2091 */
 
-const test = "💖";// This comment
+const test = "💖"; // This comment
 // should not get collapsed
 
 ```

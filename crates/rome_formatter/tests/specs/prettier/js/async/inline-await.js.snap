@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: inline-await.js
 
 ---
@@ -15,11 +15,15 @@ async function f() {
 # Output
 ```js
 async function f() {
-  const admins = (await (db
-    .select("*")
-    .from("admins")
-    .leftJoin("bla")
-    .where("id", "in", [1, 2, 3, 4]))).map(({ id, name }) => ({ id, name }));
+  const admins = (
+    await (
+      db
+        .select("*")
+        .from("admins")
+        .leftJoin("bla")
+        .where("id", "in", [1, 2, 3, 4])
+    )
+  ).map(({ id, name }) => ({ id, name }));
 }
 
 ```

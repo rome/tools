@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: unary.js
 
 ---
@@ -15,7 +15,9 @@ const anyTestFailures = !(
 
 # Output
 ```js
-const anyTestFailures = !(aggregatedResults.numFailedTests === 0 && aggregatedResults.numRuntimeErrorTestSuites === 0);
+const anyTestFailures = !(
+  aggregatedResults.numFailedTests === 0 && aggregatedResults.numRuntimeErrorTestSuites === 0
+);
 
 ```
 

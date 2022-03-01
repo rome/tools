@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: issue-10661.js
 
 ---
@@ -38,7 +38,7 @@ because the prettier-ignore comment is attached as MemberExpression leading comm
 # Output
 ```js
 verylongidentifierthatwillwrap123123123123123(
-  a.b// prettier-ignore
+  a.b // prettier-ignore
   // Some other comment here
   .c,
 );
@@ -59,7 +59,7 @@ because the prettier-ignore comment is attached as MemberExpression leading comm
     1,
     2.0000,
     3,
-  )// prettier-ignore
+  ) // prettier-ignore
   .c,
 );
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: pipe-function-calls.js
 
 ---
@@ -58,14 +58,14 @@ expression: pipe-function-calls.js
   pipe(
     serviceEventFromMessage(msg),
     TE.chain(flow(publishServiceEvent(analytics), TE.mapLeft(nackFromError))),
-  )().then(messageResponse(logger, msg)).catch(
-    (err) => {
+  )()
+    .then(messageResponse(logger, msg))
+    .catch((err) => {
       logger.error(
         pipe(O.fromNullable(err.stack), O.getOrElse(constant(err.message))),
       );
       process.exit(1);
-    },
-  );
+    });
 
   pipe(Changelog.timestampOfFirstCommit([[commit]]), O.toUndefined);
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: inline-object-array.js
 
 ---
@@ -146,20 +146,24 @@ this.steps =
 
 const create = () => {
   const result = doSomething();
-  return (shouldReturn && result.ok && {
-    status: "ok",
-    createdAt: result.createdAt,
-    updatedAt: result.updatedAt,
-  });
+  return (
+    shouldReturn && result.ok && {
+      status: "ok",
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+    }
+  );
 };
 
 const create2 = () => {
   const result = doSomething();
-  return (shouldReturn && result.ok && result || {
-    status: "ok",
-    createdAt: result.createdAt,
-    updatedAt: result.updatedAt,
-  });
+  return (
+    shouldReturn && result.ok && result || {
+      status: "ok",
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+    }
+  );
 };
 
 const obj = {

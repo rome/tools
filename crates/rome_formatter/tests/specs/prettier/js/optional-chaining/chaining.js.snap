@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: chaining.js
 
 ---
@@ -156,7 +156,9 @@ a?.[b ? c : d];
 (() => f)?.();
 (() => f)?.x;
 (a?.(x)).x;
-(aaaaaaaaaaaaaaaaaaaaaaaa && aaaaaaaaaaaaaaaaaaaaaaaa && aaaaaaaaaaaaaaaaaaaaaaaa)?.();
+(
+  aaaaaaaaaaaaaaaaaaaaaaaa && aaaaaaaaaaaaaaaaaaaaaaaa && aaaaaaaaaaaaaaaaaaaaaaaa
+)?.();
 
 let f = () => ({}?.());
 let g = () => ({}?.b);

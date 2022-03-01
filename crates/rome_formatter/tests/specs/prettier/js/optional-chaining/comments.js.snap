@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: comments.js
 
 ---
@@ -58,8 +58,11 @@ foo.bar.baz
 # Output
 ```js
 function foo() {
-  return a.b().c()// Comment
-  ?.d();
+  return a
+    .b()
+    .c()
+    // Comment
+    ?.d();
 }
 
 fooBar
@@ -84,10 +87,11 @@ foo.bar.baz
   .doOneMoreThing(config)
   ?.bar.run(() => console.log("Bar"));
 
-(somethingGood ? thisIsIt : maybeNot)// Hello world
-.doSomething("Hello World")?.doAnotherThing("Foo", { foo: bar }).run( // Run this
-  () => console.log("Bar"),
-); // Do this
+(somethingGood ? thisIsIt : maybeNot)
+  // Hello world
+  .doSomething("Hello World")
+  ?.doAnotherThing("Foo", { foo: bar }) // Run this
+  .run(() => console.log("Bar")); // Do this
 
 ```
 

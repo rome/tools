@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: continue-and-break-comment-without-blocks.js
 
 ---
@@ -108,22 +108,22 @@ label1: for (;;) continue label1
 
 # Output
 ```js
-for (;;) continue// comment
+for (;;) continue // comment
 ;
 
-for (;;) break// comment
+for (;;) break // comment
 ;
 
-for (const f of []) continue// comment
+for (const f of []) continue // comment
 ;
 
-for (const f of []) break// comment
+for (const f of []) break // comment
 ;
 
-for (const f in {}) continue// comment
+for (const f in {}) continue // comment
 ;
 
-for (const f in {}) break// comment
+for (const f in {}) break // comment
 ;
 
 for (;;) continue; // comment
@@ -150,32 +150,32 @@ for (const f in {}) continue; /* comment */
 
 for (const f in {}) break; /* comment */
 
-for (;;) continue/* comment */
+for (;;) continue /* comment */
 ;
 
-for (;;) break/* comment */
+for (;;) break /* comment */
 ;
 
-for (const f of []) continue/* comment */
+for (const f of []) continue /* comment */
 ;
 
-for (const f of []) break/* comment */
+for (const f of []) break /* comment */
 ;
 
-for (const f in {}) continue/* comment */
+for (const f in {}) continue /* comment */
 ;
 
-for (const f in {}) break/* comment */
+for (const f in {}) break /* comment */
 ;
 
 label1: for (;;) continue label1 /* comment */ ;
 
-label1: for (;;) continue label1/* comment */
+label1: for (;;) continue label1 /* comment */
 ;
 
 label1: for (;;) continue label1; // comment
 
-label1: for (;;) continue label1// comment
+label1: for (;;) continue label1 // comment
 ;
 
 ```

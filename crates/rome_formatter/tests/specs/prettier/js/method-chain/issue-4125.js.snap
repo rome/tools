@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: issue-4125.js
 
 ---
@@ -171,11 +171,7 @@ const x = moment().add(1, "day").valueOf();
 
 // should stay on one line:
 const y = obj.foo(1).foo(2).foo(3);
-const z = obj
-  .foo(-1)
-  .foo(import("2"))
-  .foo(!x)
-  .check(/[A-Z]/);
+const z = obj.foo(-1).foo(import("2")).foo(!x).check(/[A-Z]/);
 
 // better on multiple lines:
 somePromise.then(format).then((val) => doSomething(val)).catch(
@@ -213,19 +209,18 @@ d3
   .enter()
   .style("color", "white");
 
-Object.keys(props).filter((key) => key in own === false).reduce(
-  (a, key) => {
-    a[key] = props[key];
-    return a;
-  },
-  {},
-);
+Object
+  .keys(props)
+  .filter((key) => key in own === false)
+  .reduce(
+    (a, key) => {
+      a[key] = props[key];
+      return a;
+    },
+    {},
+  );
 
-point()
-  .x(4)
-  .y(3)
-  .z(6)
-  .plot();
+point().x(4).y(3).z(6).plot();
 
 assert.equal(this.$().text().trim(), "1000");
 
@@ -242,11 +237,7 @@ db.branch(
 
 sandbox.stub(config, "get").withArgs("env").returns("dev");
 
-const date = moment
-  .utc(userInput)
-  .hour(0)
-  .minute(0)
-  .second(0);
+const date = moment.utc(userInput).hour(0).minute(0).second(0);
 
 fetchUser(id).then(fetchAccountForUser).catch(handleFetchError);
 
@@ -255,20 +246,23 @@ fetchUser(id).then(fetchAccountForUser).catch(handleFetchError); //
 // examples from https://github.com/prettier/prettier/issues/3107
 
 function HelloWorld() {
-  window.FooClient.setVars(
-    { locale: getFooLocale({ page }), authorizationToken: data.token },
-  ).initVerify("foo_container");
+  window.FooClient.setVars({
+    locale: getFooLocale({ page }),
+    authorizationToken: data.token,
+  }).initVerify("foo_container");
 
-  fejax.ajax({ url: "/verification/", dataType: "json" }).then(
-    (data) => {
-      this.setState({ isLoading: false });
-      this.initWidget(data);
-    },
-    (data) => {
-      this.logImpression("foo_fetch_error", data);
-      Flash.error(I18n.t("offline_identity.foo_issue"));
-    },
-  );
+  fejax
+    .ajax({ url: "/verification/", dataType: "json" })
+    .then(
+      (data) => {
+        this.setState({ isLoading: false });
+        this.initWidget(data);
+      },
+      (data) => {
+        this.logImpression("foo_fetch_error", data);
+        Flash.error(I18n.t("offline_identity.foo_issue"));
+      },
+    );
 }
 
 action$
@@ -290,9 +284,10 @@ action$
       ),
   );
 
-window.FooClient.setVars(
-  { locale: getFooLocale({ page }), authorizationToken: data.token },
-).initVerify("foo_container");
+window.FooClient.setVars({
+  locale: getFooLocale({ page }),
+  authorizationToken: data.token,
+}).initVerify("foo_container");
 
 it(
   "gets triggered by mouseenter",
@@ -308,12 +303,7 @@ const a3 = x.d("").e(`${123}`).f(g);
 const a4 = x.h(i.j).k(l()).m([n, o]);
 class X {
   y() {
-    const j = x
-      .a(this)
-      .b(super.cde())
-      .f(/g/)
-      .h(new i())
-      .j();
+    const j = x.a(this).b(super.cde()).f(/g/).h(new i()).j();
   }
 }
 

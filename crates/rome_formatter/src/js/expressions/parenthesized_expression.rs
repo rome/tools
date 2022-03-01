@@ -1,9 +1,13 @@
 use crate::formatter_traits::FormatTokenAndNode;
 
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::utils::is_simple_expression;
+use crate::{
+    format_elements, hard_group_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
+};
 
 use rslint_parser::ast::JsParenthesizedExpression;
 use rslint_parser::ast::JsParenthesizedExpressionFields;
+use rslint_parser::SyntaxResult;
 
 impl ToFormatElement for JsParenthesizedExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -13,10 +17,36 @@ impl ToFormatElement for JsParenthesizedExpression {
             r_paren_token,
         } = self.as_fields();
 
-        Ok(format_elements![
-            l_paren_token.format(formatter)?,
-            expression.format(formatter)?,
-            r_paren_token.format(formatter)?,
-        ])
+        if is_simple_parenthesized_expression(self)? {
+            Ok(hard_group_elements(format_elements![
+                l_paren_token.format(formatter)?,
+                expression.format(formatter)?,
+                r_paren_token.format(formatter)?,
+            ]))
+        } else {
+            formatter.format_delimited_soft_block_indent(
+                &l_paren_token?,
+                expression.format(formatter)?,
+                &r_paren_token?,
+            )
+        }
     }
+}
+
+fn is_simple_parenthesized_expression(node: &JsParenthesizedExpression) -> SyntaxResult<bool> {
+    let JsParenthesizedExpressionFields {
+        l_paren_token,
+        expression,
+        r_paren_token,
+    } = node.as_fields();
+
+    if l_paren_token?.has_trailing_comments() || r_paren_token?.has_leading_comments() {
+        return Ok(false);
+    }
+
+    if !is_simple_expression(expression?)? {
+        return Ok(false);
+    }
+
+    Ok(true)
 }

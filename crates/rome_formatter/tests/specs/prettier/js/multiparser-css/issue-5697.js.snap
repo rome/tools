@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: issue-5697.js
 
 ---
@@ -39,8 +39,9 @@ const StyledH1 = styled.div`
                 align-items: center;
                 justify-content: center;
                 text-align: center;` : ""}
-  @media (max-width: ${(props) =>
-  (props.noBreakPoint ? "0" : constants.layout.breakpoint.break1)}px) {
+  @media (max-width: ${(props) => (
+  props.noBreakPoint ? "0" : constants.layout.breakpoint.break1
+)}px) {
     font-size: 2em;
   }
 `;

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: edge_case.js
 
 ---
@@ -97,13 +97,11 @@ exports.examples = [
   }
 ]
 
-someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a(
-  [
-    [],
-    // comment
-    [],
-  ],
-);
+someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
+  [],
+  // comment
+  [],
+]);
 
 (function webpackUniversalModuleDefinition() {})(
   this,
@@ -111,7 +109,7 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
     return (function (modules) { /******/
       // webpackBootstrap
       /******/
-    })/************************************************************************/
+    }) /************************************************************************/
     /******/ (
       [
         /* 0 */

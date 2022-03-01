@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: nested-await-and-as.ts
 
 ---
@@ -19,9 +19,15 @@ const getAccountCount = async () =>
 # Output
 ```js
 const getAccountCount = async () =>
-  (await ((await (await focusOnSection(BOOKMARKED_PROJECTS_SECTION_NAME)).findItem(
-    "My bookmarks",
-  )) as TreeItem).getChildren()).length;
+  (
+    await (
+      (
+        await (await focusOnSection(BOOKMARKED_PROJECTS_SECTION_NAME)).findItem(
+          "My bookmarks",
+        )
+      ) as TreeItem
+    ).getChildren()
+  ).length;
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: nested.js
 
 ---
@@ -40,63 +40,63 @@ someObject.someFunction().then(function() {
 
 # Output
 ```js
-someObject.someFunction().then(
-  function () {
-    return someObject.someFunction().then(
-      function () {
-        return someObject.someFunction().then(
-          function () {
-            return someObject.someFunction().then(
-              function () {
-                return someObject.someFunction().then(
-                  function () {
-                    return someObject.someFunction().then(
-                      function () {
-                        return someObject.someFunction().then(
-                          function () {
-                            return someObject.someFunction().then(
-                              function () {
-                                return someObject.someFunction().then(
-                                  function () {
-                                    return someObject.someFunction().then(
-                                      function () {
-                                        return someObject.someFunction().then(
-                                          function () {
-                                            return someObject.someFunction().then(
-                                              function () {
-                                                return someObject.someFunction().then(
-                                                  function () {
-                                                    return someObject.someFunction().then(
-                                                      function () {
+someObject
+  .someFunction()
+  .then(function () {
+    return someObject
+      .someFunction()
+      .then(function () {
+        return someObject
+          .someFunction()
+          .then(function () {
+            return someObject
+              .someFunction()
+              .then(function () {
+                return someObject
+                  .someFunction()
+                  .then(function () {
+                    return someObject
+                      .someFunction()
+                      .then(function () {
+                        return someObject
+                          .someFunction()
+                          .then(function () {
+                            return someObject
+                              .someFunction()
+                              .then(function () {
+                                return someObject
+                                  .someFunction()
+                                  .then(function () {
+                                    return someObject
+                                      .someFunction()
+                                      .then(function () {
+                                        return someObject
+                                          .someFunction()
+                                          .then(function () {
+                                            return someObject
+                                              .someFunction()
+                                              .then(function () {
+                                                return someObject
+                                                  .someFunction()
+                                                  .then(function () {
+                                                    return someObject
+                                                      .someFunction()
+                                                      .then(function () {
                                                         anotherFunction();
-                                                      },
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-            );
-          },
-        );
-      },
-    );
-  },
-);
+                                                      });
+                                                  });
+                                              });
+                                          });
+                                      });
+                                  });
+                              });
+                          });
+                      });
+                  });
+              });
+          });
+      });
+  });
 
 ```
 

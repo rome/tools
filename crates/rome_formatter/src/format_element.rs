@@ -1179,6 +1179,27 @@ impl FormatElement {
     pub fn is_empty(&self) -> bool {
         self == &FormatElement::Empty
     }
+
+    /// Returns true if this [FormatElement] recursively contains any hard line break
+    /// ([hard_line_break], [empty_line], [Token] containing the '\n' character)
+    pub fn has_hard_line_breaks(&self) -> bool {
+        match self {
+            FormatElement::Empty => false,
+            FormatElement::Space => false,
+            FormatElement::Line(line) => matches!(line.mode, LineMode::Hard | LineMode::Empty),
+            FormatElement::Indent(indent) => indent.content.has_hard_line_breaks(),
+            FormatElement::Group(group) | FormatElement::HardGroup(group) => {
+                group.content.has_hard_line_breaks()
+            }
+            FormatElement::ConditionalGroupContent(group) => group.content.has_hard_line_breaks(),
+            FormatElement::List(list) | FormatElement::Fill(list) => {
+                list.content.iter().any(FormatElement::has_hard_line_breaks)
+            }
+            FormatElement::Token(token) => token.contains('\n'),
+            FormatElement::LineSuffix(suffix) => suffix.has_hard_line_breaks(),
+            FormatElement::Verbatim(verbatim) => verbatim.element.has_hard_line_breaks(),
+        }
+    }
 }
 
 impl From<Token> for FormatElement {

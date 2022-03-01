@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: angularjs_inject.js
 
 ---
@@ -64,11 +64,9 @@ it(
 
 it(
   "does something really long and complicated so I have to write a very long name for the test",
-  inject(
-    () => {
-      // code
-    },
-  ),
+  inject(() => {
+    // code
+  }),
 );
 
 it(

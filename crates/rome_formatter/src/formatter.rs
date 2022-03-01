@@ -355,7 +355,7 @@ impl Formatter {
                     }
                 };
 
-                elements.push(format_elements![comment, line_break]);
+                elements.push(format_elements![space_token(), comment, line_break]);
 
                 line_count = 0;
                 trim_mode = TriviaPrintMode::Full;

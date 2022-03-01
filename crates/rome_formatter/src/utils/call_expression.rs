@@ -1,6 +1,6 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    concat_elements, format_elements, hard_line_break, indent, join_elements, soft_line_break,
+    concat_elements, format_elements, group_elements, indent, join_elements, soft_line_break,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
@@ -8,6 +8,7 @@ use rslint_parser::ast::{
 };
 use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode};
 use std::fmt::Debug;
+use std::slice;
 
 /// Utility function that applies some heuristic to format chain member expressions and call expressions
 ///
@@ -123,6 +124,13 @@ pub fn format_call_expression(
 
     flatten_call_expression(&mut flattened_items, syntax_node.to_owned(), formatter)?;
 
+    // Count the number of CallExpression in the chain,
+    // will be used later to decide on how to format it
+    let calls_count = flattened_items
+        .iter()
+        .filter(|item| item.is_loose_call_expression())
+        .count();
+
     // as explained before, the first group is particular, so we calculate it
     let index_to_split_at = compute_first_group_index(&flattened_items);
     let mut flattened_items = flattened_items.into_iter();
@@ -135,7 +143,7 @@ pub fn format_call_expression(
     // `flattened_items` now contains only the nodes that should have a sequence of
     // `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
     let rest_of_groups = compute_groups(flattened_items)?;
-    Ok(format_groups(first_group, rest_of_groups))
+    Ok(format_groups(calls_count, first_group, rest_of_groups))
 }
 
 /// Retrieves the index where we want to calculate the first group.
@@ -203,9 +211,10 @@ fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
                 Some(index)
             }
         })
-        // The first group has always at least one item. If no more items have been skipped,
-        // and we arrive here, we can say that the index where want to split the group is 1
-        .unwrap_or(1)
+        // If the above returns None this means either all items were skipped
+        // or the list was empty. In either case, this means the first group
+        // covers the entire list of [FlattenItem]
+        .unwrap_or(flatten_items.len())
 }
 
 /// computes groups coming after the first group
@@ -247,17 +256,22 @@ fn compute_groups(flatten_items: impl Iterator<Item = FlattenItem>) -> FormatRes
 }
 
 /// Formats together the first group and the rest of groups
-fn format_groups(first_formatted_group: FormatElement, groups: Groups) -> FormatElement {
-    let formatted_groups = if groups.groups_should_break() {
-        indent(format_elements![
-            hard_line_break(),
-            groups.into_joined_groups()
+fn format_groups(
+    calls_count: usize,
+    first_formatted_group: FormatElement,
+    groups: Groups,
+) -> FormatElement {
+    if groups.groups_should_break(calls_count) {
+        group_elements(format_elements![
+            first_formatted_group,
+            indent(format_elements![
+                soft_line_break(),
+                groups.into_joined_groups()
+            ]),
         ])
     } else {
-        groups.into_concatenated_groups()
-    };
-
-    format_elements![first_formatted_group, formatted_groups]
+        format_elements![first_formatted_group, groups.into_concatenated_groups()]
+    }
 }
 
 /// This function tries to flatten the AST. It stores nodes and its formatted version
@@ -346,6 +360,15 @@ impl FlattenItem {
             _ => false,
         }
     }
+
+    fn as_format_elements(&self) -> &[FormatElement] {
+        match self {
+            FlattenItem::StaticMember(_, elements) => elements,
+            FlattenItem::CallExpression(_, elements) => elements,
+            FlattenItem::ComputedExpression(_, elements) => elements,
+            FlattenItem::Node(_, element) => slice::from_ref(element),
+        }
+    }
 }
 
 impl Debug for FlattenItem {
@@ -415,10 +438,32 @@ impl Groups {
     }
 
     /// It tells if the groups should be break on multiple lines
-    pub fn groups_should_break(&self) -> bool {
-        // TODO: #2089 here we should check the length of the group and apply
-        // an heuristic to when break the groups or not (comments also count),
-        // see prettier logic
+    pub fn groups_should_break(&self, calls_count: usize) -> bool {
+        // Do not allow the group to break if it only contains a single call expression
+        if calls_count <= 1 {
+            return false;
+        }
+
+        // This emulates a simplified version of the similar logic found in the
+        // printer to force groups to break if they contain any "hard line
+        // break" (these not only include hard_line_break elements but also
+        // empty_line or tokens containing the "\n" character): The idea is
+        // that since any of these will force the group to break when it gets
+        // printed, the formatter needs to emit a group element for the call
+        // chain in the first place or it will not be printed correctly
+        let has_line_breaks = self
+            .groups
+            .iter()
+            .flat_map(|group| group.iter())
+            .flat_map(|item| item.as_format_elements())
+            .any(|element| element.has_hard_line_breaks());
+
+        if has_line_breaks {
+            return true;
+        }
+
+        // Otherwise, use a simple complexity threshold to
+        // determine whether the group should be allow to break
         self.groups.len() > 3
     }
 

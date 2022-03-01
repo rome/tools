@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: expression.js
 
 ---
@@ -50,11 +50,15 @@ a = () => ({}).x;
 const a1 = { someKey: (shortName, shortName) };
 
 const a2 = {
-  someKey: (longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName),
+  someKey: (
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName
+  ),
 };
 
 const a3 = {
-  someKey: (longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName),
+  someKey: (
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName
+  ),
 };
 
 ```

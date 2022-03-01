@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: comments.ts
 
 ---
@@ -27,7 +27,7 @@ const fn1 = () => {
 
 const fn2 = () => {
   return;
-}// foo
+} // foo
 ;
 
 ```

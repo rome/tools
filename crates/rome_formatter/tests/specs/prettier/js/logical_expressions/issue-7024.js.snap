@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: issue-7024.js
 
 ---
@@ -15,9 +15,9 @@ const radioSelectedAttr =
 
 # Output
 ```js
-const radioSelectedAttr = (isAnyValueSelected && node.getAttribute(
-  radioAttr.toLowerCase(),
-) === radioValue) || ((!isAnyValueSelected && values[a].default === true) || a === 0);
+const radioSelectedAttr = (
+  isAnyValueSelected && node.getAttribute(radioAttr.toLowerCase()) === radioValue
+) || ((!isAnyValueSelected && values[a].default === true) || a === 0);
 
 ```
 

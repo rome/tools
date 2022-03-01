@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: comment-inside.js
 
 ---
@@ -75,35 +75,35 @@ expr1 = html`
 // #9274
 html`
   <div>
-    ${this.set && this.set.artist/* avoid console errors if `this.set` is undefined */ }
+    ${this.set && this.set.artist /* avoid console errors if `this.set` is undefined */ }
   </div>
 `;
 
-html`${foo/* comment */
+html`${foo /* comment */
 }`;
 html`
-${foo/* comment */
+${foo /* comment */
 }
 `;
 
-graphql`${foo/* comment */
+graphql`${foo /* comment */
 }`;
 graphql`
-${foo/* comment */
+${foo /* comment */
 }
 `;
 
-css`${foo/* comment */
+css`${foo /* comment */
 }`;
 css`
-${foo/* comment */
+${foo /* comment */
 }
 `;
 
-markdown`${foo/* comment */
+markdown`${foo /* comment */
 }`;
 markdown`
-${foo/* comment */
+${foo /* comment */
 }
 `;
 
