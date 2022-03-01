@@ -5,7 +5,7 @@ use crate::{
 };
 use rslint_parser::ast::JsConditionalExpression;
 use rslint_parser::ast::JsConditionalExpressionFields;
-use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode};
+use rslint_parser::{AstNode, JsSyntaxKind};
 
 impl ToFormatElement for JsConditionalExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -35,8 +35,8 @@ fn format_conditional(
         consequent.syntax().kind() == JsSyntaxKind::JS_CONDITIONAL_EXPRESSION;
 
     let test = test.format(formatter)?;
-    let consequent =
-        if is_consequent_conditional || (parent_is_conditional && is_consequent_conditional) {
+    let consequent = if is_consequent_conditional || parent_is_conditional {
+        if is_consequent_conditional {
             let consequent = JsConditionalExpression::cast(consequent.syntax().to_owned()).unwrap();
             let consequent = format_conditional(&consequent, formatter, true)?;
             format_elements![
@@ -45,24 +45,38 @@ fn format_conditional(
                 consequent
             ]
         } else {
-            format_elements![
+            indent(format_elements![
                 question_mark_token.format(formatter)?,
                 space_token(),
                 consequent.format(formatter)?
-            ]
-        };
-    let alternate =
-        if is_alternate_conditional || (parent_is_conditional && is_alternate_conditional) {
+            ])
+        }
+    } else {
+        format_elements![
+            question_mark_token.format(formatter)?,
+            space_token(),
+            consequent.format(formatter)?
+        ]
+    };
+    let alternate = if is_alternate_conditional || parent_is_conditional {
+        if is_alternate_conditional {
             let alternate = JsConditionalExpression::cast(alternate.syntax().to_owned()).unwrap();
             let alternate = format_conditional(&alternate, formatter, true)?;
             format_elements![colon_token.format(formatter)?, space_token(), alternate]
         } else {
-            format_elements![
+            indent(format_elements![
                 colon_token.format(formatter)?,
                 space_token(),
                 alternate.format(formatter)?
-            ]
-        };
+            ])
+        }
+    } else {
+        format_elements![
+            colon_token.format(formatter)?,
+            space_token(),
+            alternate.format(formatter)?
+        ]
+    };
 
     let body = if is_alternate_conditional || is_consequent_conditional || parent_is_conditional {
         indent(format_elements![

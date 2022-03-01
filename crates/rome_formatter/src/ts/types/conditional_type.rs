@@ -34,8 +34,8 @@ fn format_conditional(
     let is_true_type_conditional = true_type.syntax().kind() == JsSyntaxKind::TS_CONDITIONAL_TYPE;
     let is_false_type_conditional = false_type.syntax().kind() == JsSyntaxKind::TS_CONDITIONAL_TYPE;
 
-    let true_type =
-        if is_true_type_conditional || (is_true_type_conditional && parent_is_conditional) {
+    let true_type = if is_true_type_conditional || parent_is_conditional {
+        if is_true_type_conditional {
             let true_type = TsConditionalType::cast(true_type.syntax().to_owned()).unwrap();
             let true_type = format_conditional(&true_type, formatter, true)?;
             format_elements![
@@ -47,12 +47,19 @@ fn format_conditional(
             format_elements![
                 question_mark_token.format(formatter)?,
                 space_token(),
-                true_type.format(formatter)?,
+                true_type.format(formatter)?
             ]
-        };
+        }
+    } else {
+        format_elements![
+            question_mark_token.format(formatter)?,
+            space_token(),
+            true_type.format(formatter)?,
+        ]
+    };
 
-    let false_type =
-        if is_false_type_conditional || (is_false_type_conditional && parent_is_conditional) {
+    let false_type = if is_false_type_conditional || parent_is_conditional {
+        if is_false_type_conditional {
             let false_type = TsConditionalType::cast(false_type.syntax().to_owned()).unwrap();
             let false_type = format_conditional(&false_type, formatter, true)?;
             format_elements![colon_token.format(formatter)?, space_token(), false_type]
@@ -62,7 +69,14 @@ fn format_conditional(
                 space_token(),
                 false_type.format(formatter)?
             ]
-        };
+        }
+    } else {
+        format_elements![
+            colon_token.format(formatter)?,
+            space_token(),
+            false_type.format(formatter)?
+        ]
+    };
 
     let body = if is_true_type_conditional || is_false_type_conditional || parent_is_conditional {
         indent(format_elements![
