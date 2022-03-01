@@ -36,7 +36,10 @@ room =
       row.map(
         (col, colIndex) => (
           (
-            rowIndex === 0 || colIndex === 0 || rowIndex === height || colIndex === width
+            rowIndex === 0 ||
+              colIndex === 0 ||
+              rowIndex === height ||
+              colIndex === width
           ) ? 1 : 0
         ),
       )

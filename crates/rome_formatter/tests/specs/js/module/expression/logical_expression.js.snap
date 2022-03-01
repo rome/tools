@@ -223,7 +223,9 @@ undefined === function () {
 	throw undefined;
 };
 
-const b = `${(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar)}`;
+const b = `${(
+	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+)}`;
 
 const a =
 	aa &&
@@ -241,11 +243,17 @@ const a =
 		thoughts &&
 		somethingsomethingsomethingsomething;
 
-(lorem && ipsum); // foo
+(
+	lorem && ipsum // foo
+);
 
-(lorem && ipsum); // foo
+(
+	lorem && ipsum // foo
+);
 
-(lorem &&
-	// foo
-	ipsum);
+(
+	lorem &&
+		// foo
+		ipsum
+);
 

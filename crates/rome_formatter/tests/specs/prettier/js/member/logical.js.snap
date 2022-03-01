@@ -17,7 +17,9 @@ expression: logical.js
 (veryLongVeryLongVeryLong || e).prop;
 
 (
-  veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError
+  veryLongVeryLongVeryLong ||
+    anotherVeryLongVeryLongVeryLong ||
+    veryVeryVeryLongError
 ).prop;
 
 ```

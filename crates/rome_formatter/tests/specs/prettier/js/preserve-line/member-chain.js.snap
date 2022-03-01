@@ -101,7 +101,9 @@ foo.bar.baz
 helloWorld.text().then((t) => t);
 
 (
-  veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError
+  veryLongVeryLongVeryLong ||
+    anotherVeryLongVeryLongVeryLong ||
+    veryVeryVeryLongError
 ).map((tickets) => TicketRecord.createFromSomeLongString()).filter(
   (obj) => !!obj,
 );
