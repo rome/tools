@@ -2,6 +2,7 @@ mod features;
 mod utils;
 
 use rslint_parser::{parse, SourceType};
+use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::path::Path;
 use std::str::FromStr;
@@ -71,9 +72,36 @@ fn err_to_string<E: std::fmt::Debug>(e: E) -> String {
     format!("{:?}", e)
 }
 
-pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: FeatureToBenchmark) {
-    let regex = regex::Regex::new(filter.as_str()).unwrap();
-    let libs = include_str!("libs.txt").lines();
+pub struct RunArgs {
+    pub filter: String,
+    pub criterion: bool,
+    pub baseline: Option<String>,
+    pub feature: FeatureToBenchmark,
+    pub suites: String,
+}
+
+pub fn run(args: RunArgs) {
+    let regex = regex::Regex::new(args.filter.as_str()).unwrap();
+
+    let mut all_suites = HashMap::new();
+    all_suites.insert("js", include_str!("libs-js.txt"));
+    all_suites.insert("ts", include_str!("libs-ts.txt"));
+
+    let mut libs = vec![];
+    let suites_to_run = args.suites.split(',');
+    for suite in suites_to_run {
+        match suite {
+            "*" => {
+                libs.extend(all_suites["js"].lines());
+                libs.extend(all_suites["ts"].lines());
+            }
+            "js" => libs.extend(all_suites["js"].lines()),
+            "ts" => libs.extend(all_suites["ts"].lines()),
+            unknown => {
+                eprintln!("Unknown suite: {}", unknown);
+            }
+        }
+    }
 
     let mut summary = vec![];
 
@@ -91,17 +119,17 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                 let source_type = SourceType::from_path(Path::new(&id)).unwrap();
 
                 // Do all steps with criterion now
-                if criterion {
+                if args.criterion {
                     let mut criterion = criterion::Criterion::default()
                         .without_plots()
                         .measurement_time(Duration::new(10, 0));
-                    if let Some(ref baseline) = baseline {
+                    if let Some(ref baseline) = args.baseline {
                         criterion = criterion.save_baseline(baseline.to_string());
                     }
-                    let mut group = criterion.benchmark_group(feature.to_string());
+                    let mut group = criterion.benchmark_group(args.feature.to_string());
                     group.throughput(criterion::Throughput::Bytes(code.len() as u64));
 
-                    group.bench_function(&id, |b| match feature {
+                    group.bench_function(&id, |b| match args.feature {
                         FeatureToBenchmark::Parser => b.iter(|| {
                             criterion::black_box(run_parse(code, source_type.clone()));
                         }),
@@ -115,7 +143,7 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     group.finish();
                 } else {
                     //warmup
-                    match feature {
+                    match args.feature {
                         FeatureToBenchmark::Parser => {
                             run_parse(code, source_type.clone());
                         }
@@ -126,7 +154,7 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     }
                 }
 
-                let result = match feature {
+                let result = match args.feature {
                     FeatureToBenchmark::Parser => benchmark_parse_lib(&id, code, source_type),
                     FeatureToBenchmark::Formatter => {
                         let root = parse(code, 0, source_type).syntax();

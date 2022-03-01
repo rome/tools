@@ -1,6 +1,6 @@
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Result};
-use xtask_bench::{run, FeatureToBenchmark};
+use xtask_bench::{run, FeatureToBenchmark, RunArgs};
 
 #[cfg(feature = "dhat-on")]
 use dhat::DhatAlloc;
@@ -16,6 +16,30 @@ fn main() -> Result<(), pico_args::Error> {
     let _d = pushd(project_root());
     let mut args = Arguments::from_env();
 
+    if args.contains("--help") {
+        eprintln!(
+            "\
+cargo bench
+Benchmark parser and formatter.
+USAGE:
+    cargo bench [option]
+OPTIONS
+    --save-baseline     Allows different runs to be compared.
+    --feature           Possible values: parser, formatter
+    --criterion=[true/false]  Run a series of statistical test to assess with the this run is faster or slower than previous runs.
+    --suites=<IDS>      Runs the specified benchmarks. Use comma as separator. 
+                        Valid values are:
+                            *: will run all benchmarks;
+                            js: will benchmark all javascript libraries;
+                            ts: will benchmark all typescript libraries;
+                        Default is \"*\".
+    --filter=<file>     Filters out tests that don't match the query.
+    --help              Prints this help.
+			"
+        );
+        return Ok(());
+    }
+
     // on pr branch, run
     // git checkout main
     // cargo benchmark --save-baseline main
@@ -30,10 +54,22 @@ fn main() -> Result<(), pico_args::Error> {
         .opt_value_from_str("--criterion")
         .unwrap()
         .unwrap_or(true);
+    let suites = args
+        .opt_value_from_str("--suites")
+        .unwrap()
+        .unwrap_or_else(|| "*".to_string());
+
     let baseline: Option<String> = args.opt_value_from_str("--save-baseline").unwrap();
     // "feature" is a mandatory option and will throw an error if it's missing or incorrect
     let feature: FeatureToBenchmark = args.value_from_str("--feature")?;
 
-    run(filter, criterion, baseline, feature);
+    run(RunArgs {
+        filter,
+        criterion,
+        baseline,
+        feature,
+        suites,
+    });
+
     Ok(())
 }
