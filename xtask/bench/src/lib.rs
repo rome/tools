@@ -95,7 +95,9 @@ pub fn run(
             }
             "js" => libs.extend(suites["js"].lines()),
             "ts" => libs.extend(suites["ts"].lines()),
-            _ => {}
+            unknown => {
+                eprintln!("Unknown suite: {}", unknown);
+            }
         }
     }
 
