@@ -54,7 +54,13 @@ $var =
 
 const value = (
   bifornCringerMoshedPerplexSawder ? askTrovenaBeenaDependsRowans : glimseGlyphsHazardNoopsTieTie
-) ? true ? true : false : true ? true : false;
+)
+  ? true
+    ? true
+    : false
+  : true
+    ? true
+    : false;
 
 (bifornCringerMoshedPerplexSawder ? (
   askTrovenaBeenaDependsRowans
