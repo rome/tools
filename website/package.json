@@ -2,7 +2,7 @@
 	"name": "rome-website",
 	"private": true,
 	"scripts": {
-		"build": "node-sass --style=compressed src/styles:src/_includes/styles && cross-env ELEVENTY_ENV=production eleventy",
+		"build": "sass --style=compressed src/styles:src/_includes/styles && cross-env ELEVENTY_ENV=production eleventy",
 		"build:styles": "sass --style=compressed src/styles:src/_includes/styles",
 		"start": "npm-run-all build:styles --parallel watch:*",
 		"watch:eleventy": "eleventy --serve",
@@ -26,40 +26,5 @@
 		"terser": "^4.8.0",
 		"ts-node": "^10.5.0",
 		"typescript": "^4.5.5"
-	},
-	"rome": {
-		"extends": "../package.json",
-		"lint": {
-			"globals": [
-				"Stripe",
-				"Sentry"
-			]
-		},
-		"bundler": {
-			"externals": [
-				"@11ty/eleventy-plugin-syntaxhighlight",
-				"@11ty/eleventy-navigation",
-				"markdown-it",
-				"markdown-it-header-sections",
-				"markdown-it-anchor",
-				"eleventy-plugin-sass",
-				"eleventy-plugin-nesting-toc",
-				"gray-matter",
-				"prismjs/plugins/autolinker/prism-autolinker",
-				"terser",
-				"clean-css",
-				"html-minifier",
-				"node-sass",
-				"markdown-it-imsize",
-				"@sentry/node",
-				"stripe",
-				"pg",
-				"morgan",
-				"node-fetch",
-				"express",
-				"body-parser",
-				"dotenv"
-			]
-		}
 	}
 }
