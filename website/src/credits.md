@@ -14,7 +14,7 @@ layout: layouts/page.liquid
 			<img src="https://github.com/xunilrj.png?s=176">
 			<span>Daniel Frederico Lins Leite</span>
 		</a>
-	</li>		
+	</li>
 	<li>
 		<a href="https://github.com/ematipico">
 			<img src="https://github.com/ematipico.png?s=176">
@@ -26,13 +26,13 @@ layout: layouts/page.liquid
 			<img src="https://github.com/leops.png?s=176">
 			<span>Léo-Paul Couturier</span>
 		</a>
-	</li>	
+	</li>
 	<li>
 		<a href="https://github.com/MichaReiser">
 			<img src="https://github.com/MichaReiser.png?s=176">
 			<span>Micha Reiser</span>
 		</a>
-	</li>	
+	</li>
 	<li>
 		<a href="https://github.com/NicholasLYang">
 			<img src="https://github.com/NicholasLYang.png?s=176">
@@ -416,58 +416,50 @@ layout: layouts/page.liquid
 </ul>
 <!-- GENERATED:END(id:main) -->
 
-## Lint rules
-
-Some lint rule semantics and documentation inspired by and taken from the following projects:
-
-- [ESLint](https://eslint.org)
-- [eslint-plugin-jsx-a11y]( https://github.com/jsx-eslint/eslint-plugin-jsx-a11y)
-- [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
-
-See individual [lint rule docs](/docs/lint/rules) for direct references.
-
 ## Forks
 
-Rome contains code forked from other projects. They have been transformed in some way, sometimes substantially rewritten, switched to use internal Rome libraries, added strong types, or simplified to our bare requirements.
+Rome contains code forked from other projects. They have been transformed in some way, sometimes
+substantially rewritten.
 
+- [`crates/rslint_parser`]()
 - [`internal/codec-source-map`](https://github.com/rome/tools/tree/main/internal/codec-source-map)
-	- **Original**: [mozilla/source-map](https://github.com/mozilla/source-map)
-	- **Author**: [Mozilla Foundation and contributors](https://foundation.mozilla.org/en/)
-	- **License**: BSD-3-Clause
+  - **Original**: [mozilla/source-map](https://github.com/mozilla/source-map)
+  - **Author**: [Mozilla Foundation and contributors](https://foundation.mozilla.org/en/)
+  - **License**: BSD-3-Clause
 
 - [`internal/formatter`](https://github.com/rome/tools/tree/main/internal/formatter)
-	- **Original**: [babel/babel-generator](https://github.com/babel/babel/tree/main/packages/babel-generator) by [Sebastian McKenzie and contributors](https://twitter.com/sebmck)
-	- **License**: MIT
+  - **Original**: [babel/babel-generator](https://github.com/babel/babel/tree/main/packages/babel-generator) by [Sebastian McKenzie and contributors](https://twitter.com/sebmck)
+  - **License**: MIT
 
 - [`internal/js-parser`](https://github.com/rome/tools/tree/main/internal/js-parser)
-	- **Original**: [babel/babel-parser](https://github.com/babel/babel/tree/main/packages/babel-parser) by [various contributors](https://github.com/rome/tools/tree/main/internal/js-parser/AUTHORS)
-	- **Parent**: [acornjs/acorn](https://github.com/acornjs/acorn)
-	- **Author**: MIT
+  - **Original**: [babel/babel-parser](https://github.com/babel/babel/tree/main/packages/babel-parser) by [various contributors](https://github.com/rome/tools/tree/main/internal/js-parser/AUTHORS)
+  - **Parent**: [acornjs/acorn](https://github.com/acornjs/acorn)
+  - **Author**: MIT
 
 - [`internal/string-diff`](https://github.com/rome/tools/tree/main/internal/string-diff)
-	- **Original**: [jhchen/fast-diff](https://github.com/jhchen/fast-diff) by [Jason Chen](https://github.com/jhchen)
-	- **Parent**: [google-diff-match-patch](http://code.google.com/p/google-diff-match-patch/)
-	- **Copyholder**: Google Inc
-	- **License**: Apache-2.0
+  - **Original**: [jhchen/fast-diff](https://github.com/jhchen/fast-diff) by [Jason Chen](https://github.com/jhchen)
+  - **Parent**: [google-diff-match-patch](http://code.google.com/p/google-diff-match-patch/)
+  - **Copyholder**: Google Inc
+  - **License**: Apache-2.0
 
 - [`internal/string-escape/escapeJSString.ts`](https://github.com/rome/tools/tree/main/internal/string-escape/escapeJSString.ts)
-	- **Original**: [mathiasbynens/jsesc](https://github.com/mathiasbynens/jsesc) by [Mathias Bynens](https://mathiasbynens.be/)
-	- **License**: MIT
+  - **Original**: [mathiasbynens/jsesc](https://github.com/mathiasbynens/jsesc) by [Mathias Bynens](https://mathiasbynens.be/)
+  - **License**: MIT
 
 - [`internal/string-escape/escapeRegex.ts`](https://github.com/rome/tools/tree/main/internal/string-escape/escapeRegex.ts)
-	- **Original**: [sindresorhus/escape-string-regexp](https://github.com/sindresorhus/escape-string-regexp) by [Sindre Sorhus](https://sindresorhus.com)
-	- **License**: MIT
+  - **Original**: [sindresorhus/escape-string-regexp](https://github.com/sindresorhus/escape-string-regexp) by [Sindre Sorhus](https://sindresorhus.com)
+  - **License**: MIT
 
 - [`internal/string-utils/humanizeFileSize.ts`](https://github.com/rome/tools/tree/main/internal/string-utils/humanizeFileSize.ts)
-	- **Original**: [sindresorhus/pretty-bytes](https://github.com/sindresorhus/pretty-bytes) by [Sindre Sorhus](https://sindresorhus.com)
-	- **License**: MIT
+  - **Original**: [sindresorhus/pretty-bytes](https://github.com/sindresorhus/pretty-bytes) by [Sindre Sorhus](https://sindresorhus.com)
+  - **License**: MIT
 
 - [`internal/string-utils/naturalCompare.ts`](https://github.com/rome/tools/tree/main/internal/string-utils/naturalCompare.ts)
-	- **Original**: [nwoltman/string-natural-compare](https://github.com/nwoltman/string-natural-compare)
-	- **Author**: [Nathan Woltman](https://github.com/nwoltman)
-	- **License**: MIT
+  - **Original**: [nwoltman/string-natural-compare](https://github.com/nwoltman/string-natural-compare)
+  - **Author**: [Nathan Woltman](https://github.com/nwoltman)
+  - **License**: MIT
 
 - [`internal/codec-binary-serial/CachedKeyDecoder.ts`](https://github.com/rome/tools/tree/main/internal/codec-binary-serial/CachedKeyDecoder.ts) [`internal/codec-binary-serial/utf8.ts`](https://github.com/rome/tools/tree/main/internal/codec-binary-serial/utf8.ts)
-	- **Original**: [msgpack/msgpack-javascript](https://github.com/msgpack/msgpack-javascript)
-	- **Author**: [The MessagePack Community](https://msgpack.org/)
-	- **License**: ISC
+  - **Original**: [msgpack/msgpack-javascript](https://github.com/msgpack/msgpack-javascript)
+  - **Author**: [The MessagePack Community](https://msgpack.org/)
+  - **License**: ISC
