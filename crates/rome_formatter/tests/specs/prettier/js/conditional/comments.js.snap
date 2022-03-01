@@ -161,13 +161,17 @@ test ? foo : bar; /* comment
           comment
   */
 
-test ? foo : test ? foo : bar; /* comment
+test
+  ? foo /* comment
        comment
        comment
        comment
-    */ /* comment
+    */
+  : test
+    ? foo /* comment
   comment
     comment */
+    : bar;
 
 test ? foo : bar; /* comment */
 
@@ -177,19 +181,27 @@ test ? foo : bar; /* comment
            comment
     */
 
-test ? foo : test ? foo : bar; /* comment
+test
+  ? foo
+  : test /* comment
          comment
      comment
            comment
-    */ /* comment
+    */
+    ? foo
+    : bar; /* comment
   comment
     comment
    */
 
 test ? foo : bar; /* comment */
 
-test ? test ? foo : bar : bar; /* c
+test
+  ? test /* c
 c */
+    ? foo
+    : bar
+  : bar;
 
 ```
 

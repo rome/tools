@@ -1,10 +1,11 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, group_elements, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, hard_line_break, indent, join_elements, soft_line_break, space_token,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::TsConditionalType;
 use rslint_parser::ast::TsConditionalTypeFields;
+use rslint_parser::{AstNode, JsSyntaxKind};
 
 impl ToFormatElement for TsConditionalType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -17,6 +18,40 @@ impl ToFormatElement for TsConditionalType {
             colon_token,
             false_type,
         } = self.as_fields();
+
+        let true_type = true_type?;
+        let false_type = false_type?;
+
+        let is_true_type_conditional =
+            true_type.syntax().kind() == JsSyntaxKind::TS_CONDITIONAL_TYPE;
+        let is_false_type_conditional =
+            false_type.syntax().kind() == JsSyntaxKind::TS_CONDITIONAL_TYPE;
+        let parent_is_conditional = self
+            .syntax()
+            .parent()
+            .map_or(false, |n| n.kind() == JsSyntaxKind::TS_CONDITIONAL_TYPE);
+
+        let true_type = format_elements![
+            question_mark_token.format(formatter)?,
+            space_token(),
+            true_type.format(formatter)?,
+        ];
+        let false_type = format_elements![
+            colon_token.format(formatter)?,
+            space_token(),
+            false_type.format(formatter)?
+        ];
+
+        let body = if is_true_type_conditional || is_false_type_conditional || parent_is_conditional
+        {
+            indent(format_elements![
+                hard_line_break(),
+                join_elements(soft_line_break(), vec![true_type, false_type],)
+            ])
+        } else {
+            join_elements(space_token(), vec![true_type, false_type])
+        };
+
         Ok(format_elements![
             check_type.format(formatter)?,
             space_token(),
@@ -24,17 +59,7 @@ impl ToFormatElement for TsConditionalType {
             space_token(),
             extends_type.format(formatter)?,
             space_token(),
-            group_elements(format_elements![
-                question_mark_token.format(formatter)?,
-                space_token(),
-                true_type.format(formatter)?,
-            ]),
-            space_token(),
-            group_elements(format_elements![
-                colon_token.format(formatter)?,
-                space_token(),
-                false_type.format(formatter)?
-            ]),
+            body
         ])
     }
 }
