@@ -52,7 +52,7 @@ class B {
 
 # Errors
 ```
-error[SyntaxError]: 'static' modifier can only appear on a class, method, or property declaration.
+error[SyntaxError]: 'static cannot appear on a parameter
   ┌─ constructor.ts:2:15
   │
 2 │   constructor(static a: number) {}

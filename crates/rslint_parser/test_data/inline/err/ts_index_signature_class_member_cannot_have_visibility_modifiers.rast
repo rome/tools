@@ -234,21 +234,21 @@ JsModule {
       8: R_CURLY@136..138 "}" [Newline("\n")] []
   3: EOF@138..139 "" [Newline("\n")] []
 --
-error[SyntaxError]: index signature members cannot be public
+error[SyntaxError]: 'public' modifier cannot appear on an index signature.
   ┌─ ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:2:5
   │
 2 │     public  [a: number]: string;
   │     ^^^^^^
 
 --
-error[SyntaxError]: index signature members cannot be private
+error[SyntaxError]: 'private' modifier cannot appear on an index signature.
   ┌─ ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:5:5
   │
 5 │     private  [a: number]: string;
   │     ^^^^^^^
 
 --
-error[SyntaxError]: index signature members cannot be protected
+error[SyntaxError]: 'protected' modifier cannot appear on an index signature.
   ┌─ ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:8:5
   │
 8 │     protected  [a: number]: string;

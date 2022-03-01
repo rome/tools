@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: parameter-property.ts
 
 ---
@@ -21,17 +21,6 @@ class D extends B {
     super();
   }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected `,` but instead found `foo`
-  ┌─ parameter-property.ts:2:24
-  │
-2 │   constructor(override foo: string) {
-  │                        ^^^ unexpected
-
 
 ```
 

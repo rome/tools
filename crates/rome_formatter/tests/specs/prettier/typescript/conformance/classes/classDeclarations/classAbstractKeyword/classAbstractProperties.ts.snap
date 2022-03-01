@@ -27,15 +27,36 @@ abstract class A {
   abstract x: number;
   public abstract y: number;
   protected abstract z: number;
-  private abstract w: number;
+  private abstract w : number;
 
   abstract m: () => void;
 
   abstract foo_x(): number;
   public abstract foo_y(): number;
   protected abstract foo_z(): number;
-  private abstract foo_w(): number;
+  private abstract foo_w() : number;
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: 'abstract' cannot be used with 'private' modifier.
+  ┌─ classAbstractProperties.ts:5:13
+  │
+5 │     private abstract w : number;
+  │     ------- ^^^^^^^^
+  │     │        
+  │     private' modifier
+
+error[SyntaxError]: 'abstract' cannot be used with 'private' modifier.
+   ┌─ classAbstractProperties.ts:12:13
+   │
+12 │     private abstract foo_w() : number;
+   │     ------- ^^^^^^^^
+   │     │        
+   │     private' modifier
+
 
 ```
 

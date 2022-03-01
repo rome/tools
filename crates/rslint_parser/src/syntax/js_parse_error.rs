@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, expected_node, ToDiagnostic};
-use crate::{CompletedMarker, Parser};
+use crate::{CompletedMarker, Parser, TextRange};
 use rslint_errors::{Diagnostic, Span};
 use std::ops::Range;
 
@@ -212,11 +212,6 @@ pub(crate) fn ts_constructor_type_parameters_error(
         .primary(type_parameters.range(p), "")
 }
 
-pub(crate) fn accessor_readonly_error(p: &Parser, readonly_range: &Range<usize>) -> Diagnostic {
-    p.err_builder("getters and setters cannot be readonly")
-        .primary(readonly_range, "")
-}
-
 pub(crate) fn ts_set_accessor_return_type_error(
     p: &Parser,
     type_annotation: &CompletedMarker,
@@ -247,4 +242,55 @@ pub(crate) fn invalid_assignment_error(p: &Parser, range: Range<usize>) -> Diagn
         p.source(range.as_text_range())
     ))
     .primary(range, "This expression cannot be assigned to")
+}
+
+pub(crate) fn modifier_already_seen(
+    p: &Parser,
+    second_range: TextRange,
+    first_range: TextRange,
+) -> Diagnostic {
+    let modifier = p.span_text(second_range);
+    p.err_builder(&format!("'{modifier}' already seen"))
+        .primary(second_range, "duplicate modifier")
+        .secondary(first_range, "first seen here")
+}
+
+pub(crate) fn accessibility_modifier_already_seen(
+    p: &Parser,
+    second_range: TextRange,
+    first_range: TextRange,
+) -> Diagnostic {
+    p.err_builder("Accessibility modifier already seen")
+        .primary(second_range, "duplicate modifier")
+        .secondary(first_range, "first modifier")
+}
+
+pub(crate) fn modifier_cannot_be_used_with_modifier(
+    p: &Parser,
+    range: TextRange,
+    other_modifier_range: TextRange,
+) -> Diagnostic {
+    let modifier = p.span_text(range);
+    let other_modifier = p.span_text(other_modifier_range);
+
+    p.err_builder(&format!(
+        "'{modifier}' cannot be used with '{other_modifier}' modifier."
+    ))
+    .primary(range, "")
+    .secondary(other_modifier_range, &format!("{other_modifier}' modifier"))
+}
+
+pub(crate) fn modifier_must_precede_modifier(
+    p: &Parser,
+    range: TextRange,
+    to_precede_modifier_range: TextRange,
+) -> Diagnostic {
+    let modifier_name = p.span_text(range);
+    let to_precede_name = p.span_text(to_precede_modifier_range);
+
+    p.err_builder(&format!(
+        "'{modifier_name}' must precede '{to_precede_name}'"
+    ))
+    .primary(range, "move this modifier")
+    .secondary(to_precede_modifier_range, "before this modifier")
 }

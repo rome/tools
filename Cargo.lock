@@ -1430,6 +1430,7 @@ dependencies = [
  "rslint_errors",
  "rslint_lexer",
  "rslint_syntax",
+ "smallvec",
  "tests_macros",
  "thiserror",
 ]
