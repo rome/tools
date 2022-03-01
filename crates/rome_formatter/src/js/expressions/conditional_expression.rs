@@ -1,11 +1,8 @@
 use crate::formatter_traits::FormatTokenAndNode;
-use rome_core::file_handlers::Language::Js;
-
 use crate::{
     format_elements, hard_line_break, indent, join_elements, soft_line_break, space_token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-
 use rslint_parser::ast::JsConditionalExpression;
 use rslint_parser::ast::JsConditionalExpressionFields;
 use rslint_parser::{AstNode, JsSyntaxKind};
@@ -52,6 +49,6 @@ impl ToFormatElement for JsConditionalExpression {
         } else {
             join_elements(space_token(), vec![consequent, alternate])
         };
-        Ok(format_elements![test.clone(), space_token(), body])
+        Ok(format_elements![test, space_token(), body])
     }
 }
