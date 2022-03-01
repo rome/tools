@@ -1,6 +1,6 @@
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Result};
-use xtask_bench::{run, FeatureToBenchmark};
+use xtask_bench::{run, FeatureToBenchmark, RunArgs};
 
 #[cfg(feature = "dhat-on")]
 use dhat::DhatAlloc;
@@ -63,6 +63,13 @@ OPTIONS
     // "feature" is a mandatory option and will throw an error if it's missing or incorrect
     let feature: FeatureToBenchmark = args.value_from_str("--feature")?;
 
-    run(filter, criterion, baseline, feature, &suites);
+    run(RunArgs {
+        filter,
+        criterion,
+        baseline,
+        feature,
+        suites,
+    });
+
     Ok(())
 }
