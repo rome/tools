@@ -1,13 +1,13 @@
 <section>
 
 <!-- GENERATED:START(hash:62ccf90aeb8e7fa260c04d350a1a148b77d011c2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
-**Rome** is a formatter, linter, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+**Rome** is a formatter, linter, bundler, and [more](#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
 **Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://rome.tools/#philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](#philosophy).
 
 **Rome** is [written in Rust](https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust).
 
@@ -39,8 +39,12 @@ We plan on covering the following areas:
 
 ### Language Support
 
-| Language | Parsing | Formatting | Linting |
-| ------- | ------- | ---------- | ------- |
-| JavaScript | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
-| TypeScript | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
-| JSX  | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
+| Language | Parsing                                                 | Formatting                                              | Linting |
+| ------- |---------------------------------------------------------|---------------------------------------------------------| ------- |
+| JavaScript | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span> |
+| TypeScript | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span> |
+| JSX  | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span> |
+| JSON | <span aria-label="Work In Progress" role="img">⌛</span>        | <span aria-label="Work In Progress" role="img">⌛</span>        | <span aria-label="Supported" role="img">✅</span> |
+| HTML [#983](https://github.com/rome/tools/issues/983) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
+| CSS [#984](https://github.com/rome/tools/issues/984) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
+| Markdown [#985](https://github.com/rome/tools/issues/985) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
