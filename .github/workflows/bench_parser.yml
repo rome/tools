@@ -50,7 +50,7 @@ jobs:
         run: cargo build --release --locked -p xtask_bench
 
       - name: Run Bench on PR Branch
-        run: cargo bench_parser --suites=* --save-baseline pr
+        run: cargo bench_parser --save-baseline pr
 
       - name: Checkout Main Branch
         run: git checkout main
