@@ -117,7 +117,7 @@ pub fn run(args: RunArgs) {
             Ok((id, code)) => {
                 let code = code.as_str();
 
-                let source_type: SourceType = RomePath::new(&*id).try_into().unwrap();
+                let source_type: SourceType = RomePath::new(&id).try_into().unwrap();
 
                 // Do all steps with criterion now
                 if args.criterion {
