@@ -17,9 +17,9 @@ fn main() -> Result<()> {
         // cargo coverage js --json > new_results.json
         // cargo coverage compare ./base_results.json ./new_results.json --markdown
         let markdown = args.contains("--markdown");
-        let free = args.free()?;
-        let base_result_path = free.get(0).map(String::as_str);
-        let new_result_path = free.get(1).map(String::as_str);
+        let free = args.finish();
+        let base_result_path = free.get(0).and_then(|arg| arg.to_str());
+        let new_result_path = free.get(1).and_then(|arg| arg.to_str());
         coverage_compare(base_result_path, new_result_path, markdown);
         return Ok(());
     }
@@ -68,7 +68,7 @@ OPTIONS
             }
         });
 
-    args.finish().unwrap();
+    args.finish();
 
     run(
         suites.as_deref(),

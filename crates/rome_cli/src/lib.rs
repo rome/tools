@@ -1,74 +1,59 @@
-use clap::{crate_version, App as ClapApp, AppSettings, Arg};
+use pico_args::Arguments;
 use rome_core::App;
 use rome_formatter::{format_file_and_save, FormatOptions, IndentStyle};
 use rome_path::RomePath;
-use std::{path::PathBuf, str::FromStr};
+use std::ffi::OsString;
+
+const HELP: &str = concat!(
+    "Rome CLI v",
+    env!("CARGO_PKG_VERSION"),
+    "
+Available commands:
+- format
+- help
+",
+);
 
 /// Main function to run Rome CLI
-pub fn run_cli() {
-    let cli_app = ClapApp::new("rome")
-        .about("The official Rome CLI")
-        .version(crate_version!())
-        .setting(AppSettings::SubcommandRequiredElseHelp)
-        .subcommand(
-            ClapApp::new("format")
-                .about("Format a file")
-                .arg(
-                    Arg::new("indent_style")
-                        .long("indent-style")
-                        .help("The style of indentation")
-                        .value_name("tab|space")
-                        .default_value("tab")
-                        .validator(|value| IndentStyle::from_str(value).map(|_| ())),
-                )
-                .arg(
-                    Arg::new("indent_size")
-                        .long("indent-size")
-                        .help("The size of the indent.")
-                        .value_name("NUMBER")
-                        .default_value("2")
-                        .validator(|value| {
-                            value
-                                .parse::<u8>()
-                                .map_err(|_| "Invalid indent-size value. Try using a number")
-                        }),
-                )
-                .arg(
-                    Arg::new("input")
-                        .help("File to format")
-                        .required(true)
-                        .validator(|value| {
-                            let path = PathBuf::from(&value);
-                            if !path.exists() {
-                                return Err(format!("The file \"{}\" doesn't exist.", value));
-                            }
-                            Ok(())
-                        }),
-                ),
-        );
+pub fn run_cli(args: Vec<OsString>) {
+    let mut args = Arguments::from_vec(args);
+    let subcommand = args.subcommand();
+    match subcommand.as_ref().map(Option::as_deref) {
+        Ok(Some("format")) => {
+            let mut options = FormatOptions::default();
 
-    let rome_app = App::new();
+            let size = args
+                .opt_value_from_str("--indent-size")
+                .expect("failed to parse indent-size argument");
 
-    match cli_app.get_matches().subcommand().unwrap() {
-        ("format", matches) => {
-            let size = matches.value_of("indent_size");
-            let style = matches.value_of("indent_style");
-            let input = matches.value_of("input").unwrap();
-            let options: IndentStyle = style
-                .map(|s| match s {
-                    "tab" => IndentStyle::Tab,
-                    "space" => {
-                        let size = size.unwrap_or("2");
-                        IndentStyle::Space(size.parse::<u8>().unwrap_or(2))
-                    }
-                    _ => IndentStyle::default(),
-                })
-                .unwrap_or_default();
+            let style = args
+                .opt_value_from_str("--indent-style")
+                .expect("failed to parse indent-style argument");
 
-            let mut file = RomePath::new(input);
+            match style {
+                Some(IndentStyle::Tab) => {
+                    options.indent_style = IndentStyle::Tab;
+                }
+                Some(IndentStyle::Space(default_size)) => {
+                    options.indent_style = IndentStyle::Space(size.unwrap_or(default_size));
+                }
+                None => {}
+            }
 
-            format_file_and_save(&mut file, FormatOptions::new(options), &rome_app);
+            let rome_app = App::new();
+            for input in args.finish() {
+                let mut file = RomePath::new(input);
+                format_file_and_save(&mut file, options, &rome_app);
+            }
         }
-        _ => unreachable!("clap should ensure we don't get here"),
+        Ok(None | Some("help")) => {
+            println!("{HELP}");
+        }
+        Ok(Some(cmd)) => {
+            panic!("unknown command {cmd:?}")
+        }
+        Err(err) => {
+            panic!("failed to parse command: {err}")
+        }
     }
 }

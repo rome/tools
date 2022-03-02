@@ -9,4 +9,4 @@ edition = "2021"
 rome_formatter = { path = "../rome_formatter" }
 rome_core = { path = "../rome_core", version = "0.0.0" }
 rome_path = { path = "../rome_path", version = "0.0.0" }
-clap = {version = "3.0.9", features = ["cargo"]}
+pico-args = "0.4.2"
