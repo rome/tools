@@ -316,6 +316,7 @@ where
             while let Some((line_index, line)) = lines.next() {
                 let code = &source[line.range.clone()];
 
+                // If line fits in a console, we print as the whole line...
                 if code.len() < 80 {
                     renderer.render_snippet_source(
                         outer_padding,
@@ -327,7 +328,8 @@ where
                         &line.multi_labels,
                     )?;
                 } else {
-                    // File is too big. We fallback to printing one single_label per time
+                    // ... if not... We print one single_label per time
+                    // showing only the interesting part of the line.
                     for single_label in line.single_labels.iter() {
                         let mut single_labels = [single_label.clone()];
 
