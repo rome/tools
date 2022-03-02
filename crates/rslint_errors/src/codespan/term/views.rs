@@ -314,15 +314,47 @@ where
                 .peekable();
 
             while let Some((line_index, line)) = lines.next() {
-                renderer.render_snippet_source(
-                    outer_padding,
-                    line.number,
-                    &source[line.range.clone()],
-                    self.diagnostic.severity,
-                    &line.single_labels,
-                    labeled_file.num_multi_labels,
-                    &line.multi_labels,
-                )?;
+                let code = &source[line.range.clone()];
+
+                if code.len() < 80 {
+                    renderer.render_snippet_source(
+                        outer_padding,
+                        line.number,
+                        code,
+                        self.diagnostic.severity,
+                        &line.single_labels,
+                        labeled_file.num_multi_labels,
+                        &line.multi_labels,
+                    )?;
+                } else {
+                    // File is too big. We fallback to printing one single_label per time
+                    for single_label in line.single_labels.iter() {
+                        let mut single_labels = [single_label.clone()];
+
+                        // We need to know which part of the long line we are going to display
+                        let width = single_label.1.end - single_label.1.start;
+                        let spacing = (80 - width) / 2;
+                        let new_line_range =
+                            (single_label.1.start - spacing)..(single_label.1.end + spacing);
+                        let new_code_range = (line.range.start + new_line_range.start)
+                            ..(line.range.start + new_line_range.end);
+
+                        // We need to adjust the label start/end so it thinks
+                        // that the line start where we start printing.
+                        single_labels[0].1.start -= new_line_range.start;
+                        single_labels[0].1.end -= new_line_range.start;
+
+                        renderer.render_snippet_source(
+                            outer_padding,
+                            line.number,
+                            &source[new_code_range],
+                            self.diagnostic.severity,
+                            &single_labels[..],
+                            0,
+                            &[],
+                        )?;
+                    }
+                }
 
                 // Check to see if we need to render any intermediate stuff
                 // before rendering the next line.
