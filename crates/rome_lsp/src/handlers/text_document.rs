@@ -41,7 +41,7 @@ pub(crate) async fn did_change(session: Arc<Session>, params: lsp::DidChangeText
         None => return error!("Invalid textDocument/didChange for {:?}", url),
     };
     let path = RomePath::new(url.path()).with_id(doc.path.file_id().unwrap_or(0_usize));
-    let doc = Document::new(path, doc.language_id, version, text);
+    let doc = Document::new(path, doc.editor_language, version, text);
     session.insert_document(url.clone(), doc);
 
     if let Err(err) = session.update_diagnostics(url).await {

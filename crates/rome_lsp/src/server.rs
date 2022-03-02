@@ -118,9 +118,10 @@ impl LanguageServer for LSPServer {
         let task = utils::spawn_blocking_task(move || {
             handlers::formatting::format(FormatParams {
                 text: &doc.text,
-                rome_path: &doc.path,
+                source_type: doc.get_source_type(),
                 format_options: to_format_options(&params.options),
                 workspace_settings,
+                file_id: doc.file_id(),
             })
         });
         let edits = task.await?;
@@ -142,7 +143,7 @@ impl LanguageServer for LSPServer {
                 format_options: to_format_options(&params.options),
                 range: params.range,
                 workspace_settings,
-                rome_path: &doc.path,
+                source_type: doc.get_source_type(),
             })
         });
         let edits = task.await?;
@@ -164,7 +165,7 @@ impl LanguageServer for LSPServer {
                 format_options: to_format_options(&params.options),
                 position: params.text_document_position.position,
                 workspace_settings,
-                rome_path: &doc.path,
+                source_type: doc.get_source_type(),
             })
         });
         let edits = task.await?;

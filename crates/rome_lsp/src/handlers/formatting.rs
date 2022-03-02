@@ -4,8 +4,7 @@ use anyhow::{bail, Result};
 use lspower::lsp::*;
 use rome_analyze::FileId;
 use rome_formatter::{FormatOptions, IndentStyle};
-use rome_path::RomePath;
-use rslint_parser::{parse, TextRange, TokenAtOffset};
+use rslint_parser::{parse, SourceType, TextRange, TokenAtOffset};
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
 /// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand
@@ -23,9 +22,10 @@ pub(crate) fn to_format_options(params: &FormattingOptions) -> FormatOptions {
 
 pub(crate) struct FormatParams<'input> {
     pub(crate) text: &'input str,
+    pub(crate) file_id: usize,
     pub(crate) format_options: FormatOptions,
     pub(crate) workspace_settings: WorkspaceSettings,
-    pub(crate) rome_path: &'input RomePath,
+    pub(crate) source_type: SourceType,
 }
 
 pub(crate) fn format(params: FormatParams) -> Result<Option<Vec<TextEdit>>> {
@@ -33,12 +33,10 @@ pub(crate) fn format(params: FormatParams) -> Result<Option<Vec<TextEdit>>> {
         format_options,
         text,
         workspace_settings,
-        rome_path,
+        source_type,
+        file_id,
     } = params;
 
-    let source_type = rome_path.as_path().try_into()?;
-
-    let file_id = rome_path.file_id().unwrap_or(0_usize);
     let parse_result = parse(text, file_id, source_type);
 
     // can't format, we bail early
@@ -69,12 +67,11 @@ pub(crate) struct FormatRangeParams<'input> {
     /// Options to pass to [rome_formatter]
     pub(crate) format_options: FormatOptions,
     pub(crate) workspace_settings: WorkspaceSettings,
-    pub(crate) rome_path: &'input RomePath,
+    pub(crate) source_type: SourceType,
 }
 
 pub(crate) fn format_range(params: FormatRangeParams) -> Result<Option<Vec<TextEdit>>> {
-    let source_type = params.rome_path.as_path().try_into()?;
-    let parse_result = parse(params.text, params.file_id, source_type);
+    let parse_result = parse(params.text, params.file_id, params.source_type);
 
     // can't format, we bail early
     if params
@@ -137,12 +134,11 @@ pub(crate) struct FormatOnTypeParams<'input> {
     /// Options to pass to [rome_formatter]
     pub(crate) format_options: FormatOptions,
     pub(crate) workspace_settings: WorkspaceSettings,
-    pub(crate) rome_path: &'input RomePath,
+    pub(crate) source_type: SourceType,
 }
 
 pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Option<Vec<TextEdit>>> {
-    let source_type = params.rome_path.as_path().try_into()?;
-    let parse_result = parse(params.text, params.file_id, source_type);
+    let parse_result = parse(params.text, params.file_id, params.source_type);
 
     // can't format, we bail early
     if params
