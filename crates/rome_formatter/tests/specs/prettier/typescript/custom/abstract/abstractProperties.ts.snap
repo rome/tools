@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: abstractProperties.ts
 
 ---
@@ -24,7 +24,7 @@ abstract class Foo {
   private abstract b: 2;
   static abstract c: 3;
   abstract private ['g'];
-  private abstract ['h'];
+  private abstract ["h"];
   static abstract ['i'];
 }
 

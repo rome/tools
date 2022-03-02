@@ -3,7 +3,6 @@
 mod identifier_binding;
 mod index_signature_parameter;
 mod property_parameter;
-mod readonly_property_parameter;
 mod this_parameter;
 mod type_parameter;
 mod type_parameters;

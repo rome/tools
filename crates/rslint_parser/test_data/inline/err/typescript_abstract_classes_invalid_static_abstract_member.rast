@@ -15,8 +15,12 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
-                        ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")],
-                        STATIC_KW@28..35 "static" [] [Whitespace(" ")],
+                        TsAbstractModifier {
+                            modifier_token: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")],
+                        },
+                        JsStaticModifier {
+                            modifier_token: STATIC_KW@28..35 "static" [] [Whitespace(" ")],
+                        },
                         JsLiteralMemberName {
                             value: IDENT@35..38 "fn1" [] [],
                         },
@@ -44,8 +48,12 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
-                        STATIC_KW@63..70 "static" [] [Whitespace(" ")],
-                        ABSTRACT_KW@70..79 "abstract" [] [Whitespace(" ")],
+                        JsStaticModifier {
+                            modifier_token: STATIC_KW@63..70 "static" [] [Whitespace(" ")],
+                        },
+                        TsAbstractModifier {
+                            modifier_token: ABSTRACT_KW@70..79 "abstract" [] [Whitespace(" ")],
+                        },
                         JsLiteralMemberName {
                             value: IDENT@79..82 "fn1" [] [],
                         },
@@ -79,8 +87,10 @@ JsModule {
       6: L_CURLY@17..19 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@19..42
         0: JS_UNKNOWN_MEMBER@19..42
-          0: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")]
-          1: STATIC_KW@28..35 "static" [] [Whitespace(" ")]
+          0: TS_ABSTRACT_MODIFIER@19..28
+            0: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")]
+          1: JS_STATIC_MODIFIER@28..35
+            0: STATIC_KW@28..35 "static" [] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@35..38
             0: IDENT@35..38 "fn1" [] []
           3: JS_PARAMETERS@38..40
@@ -100,8 +110,10 @@ JsModule {
       6: L_CURLY@61..63 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@63..86
         0: JS_UNKNOWN_MEMBER@63..86
-          0: STATIC_KW@63..70 "static" [] [Whitespace(" ")]
-          1: ABSTRACT_KW@70..79 "abstract" [] [Whitespace(" ")]
+          0: JS_STATIC_MODIFIER@63..70
+            0: STATIC_KW@63..70 "static" [] [Whitespace(" ")]
+          1: TS_ABSTRACT_MODIFIER@70..79
+            0: ABSTRACT_KW@70..79 "abstract" [] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@79..82
             0: IDENT@79..82 "fn1" [] []
           3: JS_PARAMETERS@82..84

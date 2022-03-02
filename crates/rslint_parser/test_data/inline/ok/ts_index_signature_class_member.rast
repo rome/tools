@@ -14,8 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
                 TsIndexSignatureClassMember {
-                    static_token: missing (optional),
-                    readonly_token: missing (optional),
+                    modifiers: TsIndexSignatureModifierList [],
                     l_brack_token: L_BRACK@9..15 "[" [Newline("\n"), Whitespace("    ")] [],
                     parameter: TsIndexSignatureParameter {
                         binding: JsIdentifierBinding {
@@ -52,8 +51,7 @@ JsModule {
             l_curly_token: L_CURLY@45..46 "{" [] [],
             members: JsClassMemberList [
                 TsIndexSignatureClassMember {
-                    static_token: missing (optional),
-                    readonly_token: missing (optional),
+                    modifiers: TsIndexSignatureModifierList [],
                     l_brack_token: L_BRACK@46..52 "[" [Newline("\n"), Whitespace("    ")] [],
                     parameter: TsIndexSignatureParameter {
                         binding: JsIdentifierBinding {
@@ -109,22 +107,21 @@ JsModule {
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..34
         0: TS_INDEX_SIGNATURE_CLASS_MEMBER@9..34
-          0: (empty)
-          1: (empty)
-          2: L_BRACK@9..15 "[" [Newline("\n"), Whitespace("    ")] []
-          3: TS_INDEX_SIGNATURE_PARAMETER@15..24
+          0: TS_INDEX_SIGNATURE_MODIFIER_LIST@9..9
+          1: L_BRACK@9..15 "[" [Newline("\n"), Whitespace("    ")] []
+          2: TS_INDEX_SIGNATURE_PARAMETER@15..24
             0: JS_IDENTIFIER_BINDING@15..16
               0: IDENT@15..16 "a" [] []
             1: TS_TYPE_ANNOTATION@16..24
               0: COLON@16..18 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@18..24
                 0: NUMBER_KW@18..24 "number" [] []
-          4: R_BRACK@24..25 "]" [] []
-          5: TS_TYPE_ANNOTATION@25..33
+          3: R_BRACK@24..25 "]" [] []
+          4: TS_TYPE_ANNOTATION@25..33
             0: COLON@25..27 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@27..33
               0: STRING_KW@27..33 "string" [] []
-          6: SEMICOLON@33..34 ";" [] []
+          5: SEMICOLON@33..34 ";" [] []
       8: R_CURLY@34..36 "}" [Newline("\n")] []
     1: JS_CLASS_DECLARATION@36..78
       0: (empty)
@@ -137,18 +134,17 @@ JsModule {
       6: L_CURLY@45..46 "{" [] []
       7: JS_CLASS_MEMBER_LIST@46..76
         0: TS_INDEX_SIGNATURE_CLASS_MEMBER@46..76
-          0: (empty)
-          1: (empty)
-          2: L_BRACK@46..52 "[" [Newline("\n"), Whitespace("    ")] []
-          3: TS_INDEX_SIGNATURE_PARAMETER@52..65
+          0: TS_INDEX_SIGNATURE_MODIFIER_LIST@46..46
+          1: L_BRACK@46..52 "[" [Newline("\n"), Whitespace("    ")] []
+          2: TS_INDEX_SIGNATURE_PARAMETER@52..65
             0: JS_IDENTIFIER_BINDING@52..57
               0: IDENT@52..57 "index" [] []
             1: TS_TYPE_ANNOTATION@57..65
               0: COLON@57..59 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@59..65
                 0: STRING_KW@59..65 "string" [] []
-          4: R_BRACK@65..66 "]" [] []
-          5: TS_TYPE_ANNOTATION@66..76
+          3: R_BRACK@65..66 "]" [] []
+          4: TS_TYPE_ANNOTATION@66..76
             0: COLON@66..68 ":" [] [Whitespace(" ")]
             1: TS_OBJECT_TYPE@68..76
               0: L_CURLY@68..70 "{" [] [Whitespace(" ")]
@@ -161,6 +157,6 @@ JsModule {
                   3: (empty)
                   4: (empty)
               2: R_CURLY@75..76 "}" [] []
-          6: (empty)
+          5: (empty)
       8: R_CURLY@76..78 "}" [Newline("\n")] []
   3: EOF@78..79 "" [Newline("\n")] []

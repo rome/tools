@@ -14,10 +14,11 @@ JsModule {
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
-                    access_modifier: missing (optional),
-                    static_token: STATIC_KW@9..19 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
-                    readonly_token: missing (optional),
+                    modifiers: JsPropertyModifierList [
+                        JsStaticModifier {
+                            modifier_token: STATIC_KW@9..19 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
+                        },
+                    ],
                     name: JsLiteralMemberName {
                         value: IDENT@19..20 "a" [] [],
                     },
@@ -72,15 +73,14 @@ JsModule {
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..57
         0: JS_PROPERTY_CLASS_MEMBER@9..21
-          0: (empty)
-          1: (empty)
-          2: STATIC_KW@9..19 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-          3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@19..20
+          0: JS_PROPERTY_MODIFIER_LIST@9..19
+            0: JS_STATIC_MODIFIER@9..19
+              0: STATIC_KW@9..19 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@19..20
             0: IDENT@19..20 "a" [] []
-          5: (empty)
-          6: (empty)
-          7: SEMICOLON@20..21 ";" [] []
+          2: (empty)
+          3: (empty)
+          4: SEMICOLON@20..21 ";" [] []
         1: JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER@21..57
           0: STATIC_KW@21..31 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: L_CURLY@31..32 "{" [] []

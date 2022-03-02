@@ -98,10 +98,7 @@ JsModule {
             l_curly_token: L_CURLY@65..66 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    readonly_token: missing (optional),
+                    modifiers: JsPropertyModifierList [],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@66..70 "#" [Newline("\n"), Whitespace("  ")] [],
                         id_token: IDENT@70..73 "bar" [] [],
@@ -111,8 +108,7 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsMethodClassMember {
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
+                    modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -275,26 +271,22 @@ JsModule {
       6: L_CURLY@65..66 "{" [] []
       7: JS_CLASS_MEMBER_LIST@66..157
         0: JS_PROPERTY_CLASS_MEMBER@66..73
-          0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: JS_PRIVATE_CLASS_MEMBER_NAME@66..73
+          0: JS_PROPERTY_MODIFIER_LIST@66..66
+          1: JS_PRIVATE_CLASS_MEMBER_NAME@66..73
             0: HASH@66..70 "#" [Newline("\n"), Whitespace("  ")] []
             1: IDENT@70..73 "bar" [] []
-          5: (empty)
-          6: (empty)
-          7: (empty)
-        1: JS_METHOD_CLASS_MEMBER@73..157
-          0: (empty)
-          1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@73..80
+          4: (empty)
+        1: JS_METHOD_CLASS_MEMBER@73..157
+          0: JS_METHOD_MODIFIER_LIST@73..73
+          1: (empty)
+          2: (empty)
+          3: JS_LITERAL_MEMBER_NAME@73..80
             0: IDENT@73..80 "test" [Newline("\n"), Whitespace("  ")] []
+          4: (empty)
           5: (empty)
-          6: (empty)
-          7: JS_PARAMETERS@80..88
+          6: JS_PARAMETERS@80..88
             0: L_PAREN@80..81 "(" [] []
             1: JS_PARAMETER_LIST@81..86
               0: JS_FORMAL_PARAMETER@81..86
@@ -304,8 +296,8 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@88..157
+          7: (empty)
+          8: JS_FUNCTION_BODY@88..157
             0: L_CURLY@88..89 "{" [] []
             1: JS_DIRECTIVE_LIST@89..89
             2: JS_STATEMENT_LIST@89..153

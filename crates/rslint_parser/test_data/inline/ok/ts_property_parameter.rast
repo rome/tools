@@ -14,7 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsConstructorClassMember {
-                    access_modifier: missing (optional),
+                    modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@10..21 "constructor" [] [],
                     },
@@ -22,7 +22,11 @@ JsModule {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: JsConstructorParameterList [
                             TsPropertyParameter {
-                                accessibility: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")],
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsAccessibilityModifier {
+                                        modifier_token: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@30..31 "x" [] [],
@@ -34,7 +38,11 @@ JsModule {
                             },
                             COMMA@31..33 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
-                                accessibility: PROTECTED_KW@33..43 "protected" [] [Whitespace(" ")],
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsAccessibilityModifier {
+                                        modifier_token: PROTECTED_KW@33..43 "protected" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@43..44 "y" [] [],
@@ -46,7 +54,11 @@ JsModule {
                             },
                             COMMA@44..46 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
-                                accessibility: PUBLIC_KW@46..53 "public" [] [Whitespace(" ")],
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsAccessibilityModifier {
+                                        modifier_token: PUBLIC_KW@46..53 "public" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@53..54 "z" [] [],
@@ -81,16 +93,19 @@ JsModule {
             l_curly_token: L_CURLY@69..71 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsConstructorClassMember {
-                    access_modifier: missing (optional),
+                    modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@71..82 "constructor" [] [],
                     },
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@82..83 "(" [] [],
                         parameters: JsConstructorParameterList [
-                            TsReadonlyPropertyParameter {
-                                accessibility: missing (optional),
-                                readonly_token: READONLY_KW@83..92 "readonly" [] [Whitespace(" ")],
+                            TsPropertyParameter {
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsReadonlyModifier {
+                                        modifier_token: READONLY_KW@83..92 "readonly" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@92..93 "w" [] [],
@@ -101,9 +116,15 @@ JsModule {
                                 },
                             },
                             COMMA@93..95 "," [] [Whitespace(" ")],
-                            TsReadonlyPropertyParameter {
-                                accessibility: PRIVATE_KW@95..103 "private" [] [Whitespace(" ")],
-                                readonly_token: READONLY_KW@103..112 "readonly" [] [Whitespace(" ")],
+                            TsPropertyParameter {
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsAccessibilityModifier {
+                                        modifier_token: PRIVATE_KW@95..103 "private" [] [Whitespace(" ")],
+                                    },
+                                    TsReadonlyModifier {
+                                        modifier_token: READONLY_KW@103..112 "readonly" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@112..113 "x" [] [],
@@ -114,9 +135,15 @@ JsModule {
                                 },
                             },
                             COMMA@113..115 "," [] [Whitespace(" ")],
-                            TsReadonlyPropertyParameter {
-                                accessibility: PROTECTED_KW@115..125 "protected" [] [Whitespace(" ")],
-                                readonly_token: READONLY_KW@125..134 "readonly" [] [Whitespace(" ")],
+                            TsPropertyParameter {
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsAccessibilityModifier {
+                                        modifier_token: PROTECTED_KW@115..125 "protected" [] [Whitespace(" ")],
+                                    },
+                                    TsReadonlyModifier {
+                                        modifier_token: READONLY_KW@125..134 "readonly" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@134..135 "y" [] [],
@@ -127,9 +154,15 @@ JsModule {
                                 },
                             },
                             COMMA@135..137 "," [] [Whitespace(" ")],
-                            TsReadonlyPropertyParameter {
-                                accessibility: PUBLIC_KW@137..144 "public" [] [Whitespace(" ")],
-                                readonly_token: READONLY_KW@144..153 "readonly" [] [Whitespace(" ")],
+                            TsPropertyParameter {
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsAccessibilityModifier {
+                                        modifier_token: PUBLIC_KW@137..144 "public" [] [Whitespace(" ")],
+                                    },
+                                    TsReadonlyModifier {
+                                        modifier_token: READONLY_KW@144..153 "readonly" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@153..154 "z" [] [],
@@ -164,7 +197,7 @@ JsModule {
             l_curly_token: L_CURLY@169..171 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsConstructorClassMember {
-                    access_modifier: missing (optional),
+                    modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@171..182 "constructor" [] [],
                     },
@@ -172,7 +205,11 @@ JsModule {
                         l_paren_token: L_PAREN@182..183 "(" [] [],
                         parameters: JsConstructorParameterList [
                             TsPropertyParameter {
-                                accessibility: PRIVATE_KW@183..191 "private" [] [Whitespace(" ")],
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsAccessibilityModifier {
+                                        modifier_token: PRIVATE_KW@183..191 "private" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@191..192 "x" [] [],
@@ -188,9 +225,12 @@ JsModule {
                                 },
                             },
                             COMMA@200..202 "," [] [Whitespace(" ")],
-                            TsReadonlyPropertyParameter {
-                                accessibility: missing (optional),
-                                readonly_token: READONLY_KW@202..211 "readonly" [] [Whitespace(" ")],
+                            TsPropertyParameter {
+                                modifiers: TsPropertyParameterModifierList [
+                                    TsReadonlyModifier {
+                                        modifier_token: READONLY_KW@202..211 "readonly" [] [Whitespace(" ")],
+                                    },
+                                ],
                                 formal_parameter: JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@211..212 "y" [] [],
@@ -254,14 +294,16 @@ JsModule {
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..59
         0: JS_CONSTRUCTOR_CLASS_MEMBER@10..59
-          0: (empty)
+          0: JS_CONSTRUCTOR_MODIFIER_LIST@10..10
           1: JS_LITERAL_MEMBER_NAME@10..21
             0: IDENT@10..21 "constructor" [] []
           2: JS_CONSTRUCTOR_PARAMETERS@21..56
             0: L_PAREN@21..22 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..54
               0: TS_PROPERTY_PARAMETER@22..31
-                0: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")]
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@22..30
+                  0: TS_ACCESSIBILITY_MODIFIER@22..30
+                    0: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")]
                 1: JS_FORMAL_PARAMETER@30..31
                   0: JS_IDENTIFIER_BINDING@30..31
                     0: IDENT@30..31 "x" [] []
@@ -270,7 +312,9 @@ JsModule {
                   3: (empty)
               1: COMMA@31..33 "," [] [Whitespace(" ")]
               2: TS_PROPERTY_PARAMETER@33..44
-                0: PROTECTED_KW@33..43 "protected" [] [Whitespace(" ")]
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@33..43
+                  0: TS_ACCESSIBILITY_MODIFIER@33..43
+                    0: PROTECTED_KW@33..43 "protected" [] [Whitespace(" ")]
                 1: JS_FORMAL_PARAMETER@43..44
                   0: JS_IDENTIFIER_BINDING@43..44
                     0: IDENT@43..44 "y" [] []
@@ -279,7 +323,9 @@ JsModule {
                   3: (empty)
               3: COMMA@44..46 "," [] [Whitespace(" ")]
               4: TS_PROPERTY_PARAMETER@46..54
-                0: PUBLIC_KW@46..53 "public" [] [Whitespace(" ")]
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@46..53
+                  0: TS_ACCESSIBILITY_MODIFIER@46..53
+                    0: PUBLIC_KW@46..53 "public" [] [Whitespace(" ")]
                 1: JS_FORMAL_PARAMETER@53..54
                   0: JS_IDENTIFIER_BINDING@53..54
                     0: IDENT@53..54 "z" [] []
@@ -304,46 +350,56 @@ JsModule {
       6: L_CURLY@69..71 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@71..159
         0: JS_CONSTRUCTOR_CLASS_MEMBER@71..159
-          0: (empty)
+          0: JS_CONSTRUCTOR_MODIFIER_LIST@71..71
           1: JS_LITERAL_MEMBER_NAME@71..82
             0: IDENT@71..82 "constructor" [] []
           2: JS_CONSTRUCTOR_PARAMETERS@82..156
             0: L_PAREN@82..83 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@83..154
-              0: TS_READONLY_PROPERTY_PARAMETER@83..93
-                0: (empty)
-                1: READONLY_KW@83..92 "readonly" [] [Whitespace(" ")]
-                2: JS_FORMAL_PARAMETER@92..93
+              0: TS_PROPERTY_PARAMETER@83..93
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@83..92
+                  0: TS_READONLY_MODIFIER@83..92
+                    0: READONLY_KW@83..92 "readonly" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@92..93
                   0: JS_IDENTIFIER_BINDING@92..93
                     0: IDENT@92..93 "w" [] []
                   1: (empty)
                   2: (empty)
                   3: (empty)
               1: COMMA@93..95 "," [] [Whitespace(" ")]
-              2: TS_READONLY_PROPERTY_PARAMETER@95..113
-                0: PRIVATE_KW@95..103 "private" [] [Whitespace(" ")]
-                1: READONLY_KW@103..112 "readonly" [] [Whitespace(" ")]
-                2: JS_FORMAL_PARAMETER@112..113
+              2: TS_PROPERTY_PARAMETER@95..113
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@95..112
+                  0: TS_ACCESSIBILITY_MODIFIER@95..103
+                    0: PRIVATE_KW@95..103 "private" [] [Whitespace(" ")]
+                  1: TS_READONLY_MODIFIER@103..112
+                    0: READONLY_KW@103..112 "readonly" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@112..113
                   0: JS_IDENTIFIER_BINDING@112..113
                     0: IDENT@112..113 "x" [] []
                   1: (empty)
                   2: (empty)
                   3: (empty)
               3: COMMA@113..115 "," [] [Whitespace(" ")]
-              4: TS_READONLY_PROPERTY_PARAMETER@115..135
-                0: PROTECTED_KW@115..125 "protected" [] [Whitespace(" ")]
-                1: READONLY_KW@125..134 "readonly" [] [Whitespace(" ")]
-                2: JS_FORMAL_PARAMETER@134..135
+              4: TS_PROPERTY_PARAMETER@115..135
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@115..134
+                  0: TS_ACCESSIBILITY_MODIFIER@115..125
+                    0: PROTECTED_KW@115..125 "protected" [] [Whitespace(" ")]
+                  1: TS_READONLY_MODIFIER@125..134
+                    0: READONLY_KW@125..134 "readonly" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@134..135
                   0: JS_IDENTIFIER_BINDING@134..135
                     0: IDENT@134..135 "y" [] []
                   1: (empty)
                   2: (empty)
                   3: (empty)
               5: COMMA@135..137 "," [] [Whitespace(" ")]
-              6: TS_READONLY_PROPERTY_PARAMETER@137..154
-                0: PUBLIC_KW@137..144 "public" [] [Whitespace(" ")]
-                1: READONLY_KW@144..153 "readonly" [] [Whitespace(" ")]
-                2: JS_FORMAL_PARAMETER@153..154
+              6: TS_PROPERTY_PARAMETER@137..154
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@137..153
+                  0: TS_ACCESSIBILITY_MODIFIER@137..144
+                    0: PUBLIC_KW@137..144 "public" [] [Whitespace(" ")]
+                  1: TS_READONLY_MODIFIER@144..153
+                    0: READONLY_KW@144..153 "readonly" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@153..154
                   0: JS_IDENTIFIER_BINDING@153..154
                     0: IDENT@153..154 "z" [] []
                   1: (empty)
@@ -367,14 +423,16 @@ JsModule {
       6: L_CURLY@169..171 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@171..242
         0: JS_CONSTRUCTOR_CLASS_MEMBER@171..242
-          0: (empty)
+          0: JS_CONSTRUCTOR_MODIFIER_LIST@171..171
           1: JS_LITERAL_MEMBER_NAME@171..182
             0: IDENT@171..182 "constructor" [] []
           2: JS_CONSTRUCTOR_PARAMETERS@182..239
             0: L_PAREN@182..183 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@183..237
               0: TS_PROPERTY_PARAMETER@183..200
-                0: PRIVATE_KW@183..191 "private" [] [Whitespace(" ")]
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@183..191
+                  0: TS_ACCESSIBILITY_MODIFIER@183..191
+                    0: PRIVATE_KW@183..191 "private" [] [Whitespace(" ")]
                 1: JS_FORMAL_PARAMETER@191..200
                   0: JS_IDENTIFIER_BINDING@191..192
                     0: IDENT@191..192 "x" [] []
@@ -385,10 +443,11 @@ JsModule {
                       0: STRING_KW@194..200 "string" [] []
                   3: (empty)
               1: COMMA@200..202 "," [] [Whitespace(" ")]
-              2: TS_READONLY_PROPERTY_PARAMETER@202..213
-                0: (empty)
-                1: READONLY_KW@202..211 "readonly" [] [Whitespace(" ")]
-                2: JS_FORMAL_PARAMETER@211..213
+              2: TS_PROPERTY_PARAMETER@202..213
+                0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@202..211
+                  0: TS_READONLY_MODIFIER@202..211
+                    0: READONLY_KW@202..211 "readonly" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@211..213
                   0: JS_IDENTIFIER_BINDING@211..212
                     0: IDENT@211..212 "y" [] []
                   1: QUESTION@212..213 "?" [] []

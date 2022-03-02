@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: keywords.ts
 
 ---
@@ -70,7 +70,9 @@ module Y3 {
   async;
   enum X {}
 
-  interface x { export, private static readonly [x: any]: any; }
+  interface x {
+        export private static readonly [x: any]: any;
+    }
 }
 
 module Y4 {

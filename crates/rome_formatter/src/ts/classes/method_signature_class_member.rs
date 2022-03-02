@@ -9,8 +9,7 @@ use rslint_parser::ast::{TsMethodSignatureClassMember, TsMethodSignatureClassMem
 impl ToFormatElement for TsMethodSignatureClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsMethodSignatureClassMemberFields {
-            access_modifier,
-            abstract_token,
+            modifiers,
             name,
             type_parameters,
             parameters,
@@ -18,9 +17,6 @@ impl ToFormatElement for TsMethodSignatureClassMember {
             semicolon_token,
         } = self.as_fields();
 
-        let access_modifier = access_modifier
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
-        let abstract_token = abstract_token.format(formatter)?;
         let name = name.format(formatter)?;
         let type_parameters = type_parameters.format_or_empty(formatter)?;
         let parameters = parameters.format(formatter)?;
@@ -28,8 +24,7 @@ impl ToFormatElement for TsMethodSignatureClassMember {
         let semicolon_token = semicolon_token.format_or(formatter, || token(";"))?;
 
         Ok(hard_group_elements(format_elements![
-            access_modifier,
-            abstract_token,
+            modifiers.format(formatter)?,
             space_token(),
             name,
             type_parameters,

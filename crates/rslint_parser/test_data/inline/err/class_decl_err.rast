@@ -44,9 +44,7 @@ JsModule {
             l_curly_token: L_CURLY@40..42 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsSetterClassMember {
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    abstract_token: missing (optional),
+                    modifiers: JsMethodModifierList [],
                     set_token: SET_KW@42..46 "set" [] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),
@@ -121,15 +119,13 @@ JsModule {
       6: L_CURLY@40..42 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@42..49
         0: JS_SETTER_CLASS_MEMBER@42..49
-          0: (empty)
-          1: (empty)
+          0: JS_METHOD_MODIFIER_LIST@42..42
+          1: SET_KW@42..46 "set" [] [Whitespace(" ")]
           2: (empty)
-          3: SET_KW@42..46 "set" [] [Whitespace(" ")]
+          3: (empty)
           4: (empty)
           5: (empty)
-          6: (empty)
-          7: (empty)
-          8: JS_FUNCTION_BODY@46..49
+          6: JS_FUNCTION_BODY@46..49
             0: L_CURLY@46..47 "{" [] []
             1: JS_DIRECTIVE_LIST@47..47
             2: JS_STATEMENT_LIST@47..47

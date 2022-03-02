@@ -631,16 +631,23 @@ JsAnyClassMember =
 	| TsMethodSignatureClassMember
 	| TsGetterSignatureClassMember
 	| TsSetterSignatureClassMember
-	| TsIndexSignatureClassMember	
+	| TsIndexSignatureClassMember
 	| JsEmptyClassMember
 	| JsUnknownMember
-	
+
+JsStaticModifier = modifier: 'static'
+TsDeclareModifier = modifier: 'declare'
+TsReadonlyModifier = modifier: 'readonly'
+TsAbstractModifier = modifier: 'abstract'
+TsOverrideModifier = modifier: 'override'
+TsAccessibilityModifier = modifier_token: ('private' | 'protected' | 'public')
 
 JsStaticInitializationBlockClassMember =
 	'static'
 	'{'
 	statements: JsStatementList
 	'}'
+
 
 // class Test { constructor() {} }
 //              ^^^^^^^^^^^^^^^^
@@ -649,10 +656,12 @@ JsStaticInitializationBlockClassMember =
 // class Test { 'constructor'() {} }
 //              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
-	access_modifier: ('private' | 'protected' | 'public')?
+	modifiers: JsConstructorModifierList
 	name: JsLiteralMemberName
 	parameters: JsConstructorParameters
 	body: JsFunctionBody
+
+JsConstructorModifierList = TsAccessibilityModifier*
 
 JsConstructorParameters =
 	'('
@@ -665,45 +674,52 @@ JsAnyConstructorParameter =
 	JsAnyFormalParameter
 	| JsRestParameter
 	| TsPropertyParameter
-	| TsReadonlyPropertyParameter
 
 // constructor(private a: string)
 //             ^^^^^^^^^^^^^^^^^
 TsPropertyParameter =
-	accessibility: ('private' | 'protected' | 'public')
+	modifiers: TsPropertyParameterModifierList
 	formal_parameter: JsAnyFormalParameter
 
-// constructor(private readonly a: string, readonly b: number)
-//             ^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^
-TsReadonlyPropertyParameter =
-	accessibility: ('private' | 'protected' | 'public')?
-	'readonly'
-	formal_parameter: JsAnyFormalParameter
+TsPropertyParameterModifierList = TsAnyPropertyParameterModifier*
 
-TsAnyPropertyParameter =
-	TsPropertyParameter
-	| TsReadonlyPropertyParameter
-
+TsAnyPropertyParameterModifier =
+	TsAccessibilityModifier
+	| TsReadonlyModifier
+	| TsOverrideModifier
 
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
-	'declare'?
-	access_modifier: ('private' | 'protected' | 'public')?
-	'static'?
-	'readonly'?
+	modifiers: JsPropertyModifierList
 	name: JsAnyClassMemberName
 	property_annotation: TsAnyPropertyAnnotation?
 	value: JsInitializerClause?
 	';'?
 
+JsAnyPropertyModifier =
+	TsAccessibilityModifier
+	| JsStaticModifier
+	| TsReadonlyModifier
+	| TsOverrideModifier
+
+JsPropertyModifierList = JsAnyPropertyModifier*
+
 TsPropertySignatureClassMember =
-	access_modifier: ('protected' | 'public')?
-	'abstract'
-	'readonly'?
+	modifiers: TsPropertySignatureModifierList
 	name: JsAnyClassMemberName
 	property_annotation: TsAnyPropertySignatureAnnotation?
 	';'?
+
+TsPropertySignatureModifierList = TsAnyPropertySignatureModifier*
+
+TsAnyPropertySignatureModifier =
+	TsDeclareModifier
+  	| TsAccessibilityModifier
+  	| JsStaticModifier
+  	| TsReadonlyModifier
+  	| TsOverrideModifier
+  	| TsAbstractModifier
 
 TsAnyPropertySignatureAnnotation =
 	TsTypeAnnotation
@@ -725,8 +741,7 @@ TsDefinitePropertyAnnotation =
 // class Test { a() {} }
 //              ^^^^^^
 JsMethodClassMember =
-	access_modifier: ('private' | 'protected' | 'public')?
-	'static'?
+	modifiers: JsMethodModifierList
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
@@ -736,21 +751,32 @@ JsMethodClassMember =
 	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
+JsAnyMethodModifier =
+	TsAccessibilityModifier
+	| JsStaticModifier
+	| TsOverrideModifier
+
+JsMethodModifierList = JsAnyMethodModifier*
+
 TsMethodSignatureClassMember =
-	access_modifier: ('protected' | 'public')?
-	'abstract'
+	modifiers: TsMethodSignatureModifierList
 	name: JsAnyClassMemberName
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	';'?
 
+TsMethodSignatureModifierList = TsAnyMethodSignatureModifier*
+TsAnyMethodSignatureModifier =
+	TsAccessibilityModifier
+	| JsStaticModifier
+	| TsOverrideModifier
+	| TsAbstractModifier
+
 // class Test { get a() {} }
 //              ^^^^^^^^^^
 JsGetterClassMember =
-	access_modifier: ('private' | 'protected' | 'public')?
-	'static'?
-	'abstract'?
+	modifiers: JsMethodModifierList
 	'get'
 	name: JsAnyClassMemberName
 	'(' ')'
@@ -758,8 +784,7 @@ JsGetterClassMember =
 	body: JsFunctionBody
 
 TsGetterSignatureClassMember =
-	access_modifier: ('protected' | 'public')?
-	'abstract'
+	modifiers: TsMethodSignatureModifierList
 	'get'
 	name: JsAnyClassMemberName
 	'(' ')'
@@ -769,9 +794,7 @@ TsGetterSignatureClassMember =
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
 JsSetterClassMember =
-	access_modifier: ('private' | 'protected' | 'public')?
-	'static'?
-	'abstract'?
+	modifiers: JsMethodModifierList
 	'set'
 	name: JsAnyClassMemberName
 	'('
@@ -780,8 +803,7 @@ JsSetterClassMember =
 	body: JsFunctionBody
 
 TsSetterSignatureClassMember =
-	access_modifier: ('protected' | 'public')?
-	'abstract'
+	modifiers: TsMethodSignatureModifierList
 	'set'
 	name: JsAnyClassMemberName
 	'('
@@ -792,13 +814,18 @@ TsSetterSignatureClassMember =
 // class Test { [a: string]: number }
 //
 TsIndexSignatureClassMember =
-	'static'?
-	'readonly'?
+	modifiers: TsIndexSignatureModifierList
 	'['
 	parameter: TsIndexSignatureParameter
 	']'
 	type_annotation: TsTypeAnnotation
 	';'?
+
+TsAnyIndexSignatureModifier =
+	JsStaticModifier
+	| TsReadonlyModifier
+
+TsIndexSignatureModifierList = TsAnyIndexSignatureModifier*
 
 JsEmptyClassMember = ';'
 

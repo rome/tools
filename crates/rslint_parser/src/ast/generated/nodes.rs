@@ -1053,13 +1053,13 @@ impl JsConstructorClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsConstructorClassMemberFields {
         JsConstructorClassMemberFields {
-            access_modifier: self.access_modifier(),
+            modifiers: self.modifiers(),
             name: self.name(),
             parameters: self.parameters(),
             body: self.body(),
         }
     }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn modifiers(&self) -> JsConstructorModifierList { support::list(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
@@ -1071,7 +1071,7 @@ impl JsConstructorClassMember {
     }
 }
 pub struct JsConstructorClassMemberFields {
-    pub access_modifier: Option<SyntaxToken>,
+    pub modifiers: JsConstructorModifierList,
     pub name: SyntaxResult<JsLiteralMemberName>,
     pub parameters: SyntaxResult<JsConstructorParameters>,
     pub body: SyntaxResult<JsFunctionBody>,
@@ -2292,9 +2292,7 @@ impl JsGetterClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsGetterClassMemberFields {
         JsGetterClassMemberFields {
-            access_modifier: self.access_modifier(),
-            static_token: self.static_token(),
-            abstract_token: self.abstract_token(),
+            modifiers: self.modifiers(),
             get_token: self.get_token(),
             name: self.name(),
             l_paren_token: self.l_paren_token(),
@@ -2303,30 +2301,26 @@ impl JsGetterClassMember {
             body: self.body(),
         }
     }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 0usize) }
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 1usize)
     }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 4usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 7usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 5usize) }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 8usize)
+        support::required_node(&self.syntax, 6usize)
     }
 }
 pub struct JsGetterClassMemberFields {
-    pub access_modifier: Option<SyntaxToken>,
-    pub static_token: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
+    pub modifiers: JsMethodModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -3017,8 +3011,7 @@ impl JsMethodClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsMethodClassMemberFields {
         JsMethodClassMemberFields {
-            access_modifier: self.access_modifier(),
-            static_token: self.static_token(),
+            modifiers: self.modifiers(),
             async_token: self.async_token(),
             star_token: self.star_token(),
             name: self.name(),
@@ -3029,32 +3022,30 @@ impl JsMethodClassMember {
             body: self.body(),
         }
     }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 0usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 3usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 5usize)
+        support::token(&self.syntax, 4usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 6usize)
+        support::node(&self.syntax, 5usize)
     }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
-        support::required_node(&self.syntax, 7usize)
+        support::required_node(&self.syntax, 6usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
-        support::node(&self.syntax, 8usize)
+        support::node(&self.syntax, 7usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 9usize)
+        support::required_node(&self.syntax, 8usize)
     }
 }
 pub struct JsMethodClassMemberFields {
-    pub access_modifier: Option<SyntaxToken>,
-    pub static_token: Option<SyntaxToken>,
+    pub modifiers: JsMethodModifierList,
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -3897,34 +3888,25 @@ impl JsPropertyClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsPropertyClassMemberFields {
         JsPropertyClassMemberFields {
-            declare_token: self.declare_token(),
-            access_modifier: self.access_modifier(),
-            static_token: self.static_token(),
-            readonly_token: self.readonly_token(),
+            modifiers: self.modifiers(),
             name: self.name(),
             property_annotation: self.property_annotation(),
             value: self.value(),
             semicolon_token: self.semicolon_token(),
         }
     }
-    pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+    pub fn modifiers(&self) -> JsPropertyModifierList { support::list(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
-        support::node(&self.syntax, 5usize)
+        support::node(&self.syntax, 2usize)
     }
-    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 6usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
+    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
 pub struct JsPropertyClassMemberFields {
-    pub declare_token: Option<SyntaxToken>,
-    pub access_modifier: Option<SyntaxToken>,
-    pub static_token: Option<SyntaxToken>,
-    pub readonly_token: Option<SyntaxToken>,
+    pub modifiers: JsPropertyModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub property_annotation: Option<TsAnyPropertyAnnotation>,
     pub value: Option<JsInitializerClause>,
@@ -4157,9 +4139,7 @@ impl JsSetterClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsSetterClassMemberFields {
         JsSetterClassMemberFields {
-            access_modifier: self.access_modifier(),
-            static_token: self.static_token(),
-            abstract_token: self.abstract_token(),
+            modifiers: self.modifiers(),
             set_token: self.set_token(),
             name: self.name(),
             l_paren_token: self.l_paren_token(),
@@ -4168,32 +4148,28 @@ impl JsSetterClassMember {
             body: self.body(),
         }
     }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 0usize) }
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 1usize)
     }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
-        support::required_node(&self.syntax, 6usize)
+        support::required_node(&self.syntax, 4usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 7usize)
+        support::required_token(&self.syntax, 5usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 8usize)
+        support::required_node(&self.syntax, 6usize)
     }
 }
 pub struct JsSetterClassMemberFields {
-    pub access_modifier: Option<SyntaxToken>,
-    pub static_token: Option<SyntaxToken>,
-    pub abstract_token: Option<SyntaxToken>,
+    pub modifiers: JsMethodModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -4428,6 +4404,30 @@ pub struct JsStaticMemberExpressionFields {
     pub object: SyntaxResult<JsAnyExpression>,
     pub operator: SyntaxResult<SyntaxToken>,
     pub member: SyntaxResult<JsAnyName>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsStaticModifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsStaticModifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsStaticModifierFields {
+        JsStaticModifierFields {
+            modifier_token: self.modifier_token(),
+        }
+    }
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct JsStaticModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteralExpression {
@@ -5071,6 +5071,54 @@ pub struct NewTargetFields {
     pub target_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAbstractModifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAbstractModifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAbstractModifierFields {
+        TsAbstractModifierFields {
+            modifier_token: self.modifier_token(),
+        }
+    }
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct TsAbstractModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsAccessibilityModifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsAccessibilityModifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsAccessibilityModifierFields {
+        TsAccessibilityModifierFields {
+            modifier_token: self.modifier_token(),
+        }
+    }
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct TsAccessibilityModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAnyType {
     pub(crate) syntax: SyntaxNode,
 }
@@ -5577,6 +5625,30 @@ pub struct TsDeclareFunctionDeclarationFields {
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsDeclareModifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsDeclareModifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDeclareModifierFields {
+        TsDeclareModifierFields {
+            modifier_token: self.modifier_token(),
+        }
+    }
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct TsDeclareModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDeclareStatement {
     pub(crate) syntax: SyntaxNode,
 }
@@ -6033,8 +6105,7 @@ impl TsGetterSignatureClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsGetterSignatureClassMemberFields {
         TsGetterSignatureClassMemberFields {
-            access_modifier: self.access_modifier(),
-            abstract_token: self.abstract_token(),
+            modifiers: self.modifiers(),
             get_token: self.get_token(),
             name: self.name(),
             l_paren_token: self.l_paren_token(),
@@ -6043,28 +6114,24 @@ impl TsGetterSignatureClassMember {
             semicolon_token: self.semicolon_token(),
         }
     }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn modifiers(&self) -> TsMethodSignatureModifierList { support::list(&self.syntax, 0usize) }
+    pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
-    }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+        support::required_token(&self.syntax, 4usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 5usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
 pub struct TsGetterSignatureClassMemberFields {
-    pub access_modifier: Option<SyntaxToken>,
-    pub abstract_token: SyntaxResult<SyntaxToken>,
+    pub modifiers: TsMethodSignatureModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -6333,8 +6400,7 @@ impl TsIndexSignatureClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsIndexSignatureClassMemberFields {
         TsIndexSignatureClassMemberFields {
-            static_token: self.static_token(),
-            readonly_token: self.readonly_token(),
+            modifiers: self.modifiers(),
             l_brack_token: self.l_brack_token(),
             parameter: self.parameter(),
             r_brack_token: self.r_brack_token(),
@@ -6342,25 +6408,23 @@ impl TsIndexSignatureClassMember {
             semicolon_token: self.semicolon_token(),
         }
     }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn modifiers(&self) -> TsIndexSignatureModifierList { support::list(&self.syntax, 0usize) }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+        support::required_token(&self.syntax, 1usize)
     }
     pub fn parameter(&self) -> SyntaxResult<TsIndexSignatureParameter> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
-        support::required_node(&self.syntax, 5usize)
+        support::required_node(&self.syntax, 4usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 pub struct TsIndexSignatureClassMemberFields {
-    pub static_token: Option<SyntaxToken>,
-    pub readonly_token: Option<SyntaxToken>,
+    pub modifiers: TsIndexSignatureModifierList,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub parameter: SyntaxResult<TsIndexSignatureParameter>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
@@ -6756,8 +6820,7 @@ impl TsMethodSignatureClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsMethodSignatureClassMemberFields {
         TsMethodSignatureClassMemberFields {
-            access_modifier: self.access_modifier(),
-            abstract_token: self.abstract_token(),
+            modifiers: self.modifiers(),
             name: self.name(),
             type_parameters: self.type_parameters(),
             parameters: self.parameters(),
@@ -6765,27 +6828,23 @@ impl TsMethodSignatureClassMember {
             semicolon_token: self.semicolon_token(),
         }
     }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
-    }
+    pub fn modifiers(&self) -> TsMethodSignatureModifierList { support::list(&self.syntax, 0usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 2usize)
     }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 3usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
-        support::node(&self.syntax, 5usize)
+        support::node(&self.syntax, 4usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 pub struct TsMethodSignatureClassMemberFields {
-    pub access_modifier: Option<SyntaxToken>,
-    pub abstract_token: SyntaxResult<SyntaxToken>,
+    pub modifiers: TsMethodSignatureModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
@@ -7236,6 +7295,30 @@ pub struct TsOptionalTupleTypeElementFields {
     pub question_mark_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsOverrideModifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsOverrideModifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsOverrideModifierFields {
+        TsOverrideModifierFields {
+            modifier_token: self.modifier_token(),
+        }
+    }
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct TsOverrideModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsParenthesizedType {
     pub(crate) syntax: SyntaxNode,
 }
@@ -7313,19 +7396,19 @@ impl TsPropertyParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsPropertyParameterFields {
         TsPropertyParameterFields {
-            accessibility: self.accessibility(),
+            modifiers: self.modifiers(),
             formal_parameter: self.formal_parameter(),
         }
     }
-    pub fn accessibility(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+    pub fn modifiers(&self) -> TsPropertyParameterModifierList {
+        support::list(&self.syntax, 0usize)
     }
     pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
         support::required_node(&self.syntax, 1usize)
     }
 }
 pub struct TsPropertyParameterFields {
-    pub accessibility: SyntaxResult<SyntaxToken>,
+    pub modifiers: TsPropertyParameterModifierList,
     pub formal_parameter: SyntaxResult<JsAnyFormalParameter>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -7342,31 +7425,25 @@ impl TsPropertySignatureClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsPropertySignatureClassMemberFields {
         TsPropertySignatureClassMemberFields {
-            access_modifier: self.access_modifier(),
-            abstract_token: self.abstract_token(),
-            readonly_token: self.readonly_token(),
+            modifiers: self.modifiers(),
             name: self.name(),
             property_annotation: self.property_annotation(),
             semicolon_token: self.semicolon_token(),
         }
     }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+    pub fn modifiers(&self) -> TsPropertySignatureModifierList {
+        support::list(&self.syntax, 0usize)
     }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn property_annotation(&self) -> Option<TsAnyPropertySignatureAnnotation> {
-        support::node(&self.syntax, 4usize)
+        support::node(&self.syntax, 2usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
 }
 pub struct TsPropertySignatureClassMemberFields {
-    pub access_modifier: Option<SyntaxToken>,
-    pub abstract_token: SyntaxResult<SyntaxToken>,
-    pub readonly_token: Option<SyntaxToken>,
+    pub modifiers: TsPropertySignatureModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub property_annotation: Option<TsAnyPropertySignatureAnnotation>,
     pub semicolon_token: Option<SyntaxToken>,
@@ -7472,10 +7549,10 @@ pub struct TsQualifiedNameFields {
     pub right: SyntaxResult<JsName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsReadonlyPropertyParameter {
+pub struct TsReadonlyModifier {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsReadonlyPropertyParameter {
+impl TsReadonlyModifier {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -7483,25 +7560,17 @@ impl TsReadonlyPropertyParameter {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> TsReadonlyPropertyParameterFields {
-        TsReadonlyPropertyParameterFields {
-            accessibility: self.accessibility(),
-            readonly_token: self.readonly_token(),
-            formal_parameter: self.formal_parameter(),
+    pub fn as_fields(&self) -> TsReadonlyModifierFields {
+        TsReadonlyModifierFields {
+            modifier_token: self.modifier_token(),
         }
     }
-    pub fn accessibility(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
-    }
-    pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
-        support::required_node(&self.syntax, 2usize)
+    pub fn modifier_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
     }
 }
-pub struct TsReadonlyPropertyParameterFields {
-    pub accessibility: Option<SyntaxToken>,
-    pub readonly_token: SyntaxResult<SyntaxToken>,
-    pub formal_parameter: SyntaxResult<JsAnyFormalParameter>,
+pub struct TsReadonlyModifierFields {
+    pub modifier_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsReferenceType {
@@ -7598,8 +7667,7 @@ impl TsSetterSignatureClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsSetterSignatureClassMemberFields {
         TsSetterSignatureClassMemberFields {
-            access_modifier: self.access_modifier(),
-            abstract_token: self.abstract_token(),
+            modifiers: self.modifiers(),
             set_token: self.set_token(),
             name: self.name(),
             l_paren_token: self.l_paren_token(),
@@ -7608,30 +7676,26 @@ impl TsSetterSignatureClassMember {
             semicolon_token: self.semicolon_token(),
         }
     }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn abstract_token(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn modifiers(&self) -> TsMethodSignatureModifierList { support::list(&self.syntax, 0usize) }
+    pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
-    }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
-        support::required_node(&self.syntax, 5usize)
+        support::required_node(&self.syntax, 4usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 5usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
 pub struct TsSetterSignatureClassMemberFields {
-    pub access_modifier: Option<SyntaxToken>,
-    pub abstract_token: SyntaxResult<SyntaxToken>,
+    pub modifiers: TsMethodSignatureModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
@@ -8435,7 +8499,6 @@ pub enum JsAnyConstructorParameter {
     JsAnyFormalParameter(JsAnyFormalParameter),
     JsRestParameter(JsRestParameter),
     TsPropertyParameter(TsPropertyParameter),
-    TsReadonlyPropertyParameter(TsReadonlyPropertyParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyDeclaration {
@@ -8580,6 +8643,12 @@ pub enum JsAnyLiteralExpression {
     JsStringLiteralExpression(JsStringLiteralExpression),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyMethodModifier {
+    JsStaticModifier(JsStaticModifier),
+    TsAccessibilityModifier(TsAccessibilityModifier),
+    TsOverrideModifier(TsOverrideModifier),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyModuleItem {
     JsAnyStatement(JsAnyStatement),
     JsExport(JsExport),
@@ -8638,6 +8707,13 @@ pub enum JsAnyParameter {
     TsThisParameter(TsThisParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyPropertyModifier {
+    JsStaticModifier(JsStaticModifier),
+    TsAccessibilityModifier(TsAccessibilityModifier),
+    TsOverrideModifier(TsOverrideModifier),
+    TsReadonlyModifier(TsReadonlyModifier),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyRoot {
     JsExpressionSnipped(JsExpressionSnipped),
     JsModule(JsModule),
@@ -8694,6 +8770,18 @@ pub enum TsAnyExternalModuleDeclarationBody {
     TsModuleBlock(TsModuleBlock),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyIndexSignatureModifier {
+    JsStaticModifier(JsStaticModifier),
+    TsReadonlyModifier(TsReadonlyModifier),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyMethodSignatureModifier {
+    JsStaticModifier(JsStaticModifier),
+    TsAbstractModifier(TsAbstractModifier),
+    TsAccessibilityModifier(TsAccessibilityModifier),
+    TsOverrideModifier(TsOverrideModifier),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyModuleName {
     TsIdentifierBinding(TsIdentifierBinding),
     TsQualifiedModuleName(TsQualifiedModuleName),
@@ -8715,14 +8803,24 @@ pub enum TsAnyPropertyAnnotation {
     TsTypeAnnotation(TsTypeAnnotation),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum TsAnyPropertyParameter {
-    TsPropertyParameter(TsPropertyParameter),
-    TsReadonlyPropertyParameter(TsReadonlyPropertyParameter),
+pub enum TsAnyPropertyParameterModifier {
+    TsAccessibilityModifier(TsAccessibilityModifier),
+    TsOverrideModifier(TsOverrideModifier),
+    TsReadonlyModifier(TsReadonlyModifier),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyPropertySignatureAnnotation {
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyPropertySignatureModifier {
+    JsStaticModifier(JsStaticModifier),
+    TsAbstractModifier(TsAbstractModifier),
+    TsAccessibilityModifier(TsAccessibilityModifier),
+    TsDeclareModifier(TsDeclareModifier),
+    TsOverrideModifier(TsOverrideModifier),
+    TsReadonlyModifier(TsReadonlyModifier),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyReturnType {
@@ -9768,10 +9866,7 @@ impl AstNode for JsConstructorClassMember {
 impl std::fmt::Debug for JsConstructorClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsConstructorClassMember")
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field("body", &support::DebugSyntaxResult(self.body()))
@@ -10931,18 +11026,7 @@ impl AstNode for JsGetterClassMember {
 impl std::fmt::Debug for JsGetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsGetterClassMember")
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "static_token",
-                &support::DebugOptionalElement(self.static_token()),
-            )
-            .field(
-                "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("get_token", &support::DebugSyntaxResult(self.get_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -11585,14 +11669,7 @@ impl AstNode for JsMethodClassMember {
 impl std::fmt::Debug for JsMethodClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsMethodClassMember")
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "static_token",
-                &support::DebugOptionalElement(self.static_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field(
                 "async_token",
                 &support::DebugOptionalElement(self.async_token()),
@@ -12403,22 +12480,7 @@ impl AstNode for JsPropertyClassMember {
 impl std::fmt::Debug for JsPropertyClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsPropertyClassMember")
-            .field(
-                "declare_token",
-                &support::DebugOptionalElement(self.declare_token()),
-            )
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "static_token",
-                &support::DebugOptionalElement(self.static_token()),
-            )
-            .field(
-                "readonly_token",
-                &support::DebugOptionalElement(self.readonly_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "property_annotation",
@@ -12658,18 +12720,7 @@ impl AstNode for JsSetterClassMember {
 impl std::fmt::Debug for JsSetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsSetterClassMember")
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "static_token",
-                &support::DebugOptionalElement(self.static_token()),
-            )
-            .field(
-                "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("set_token", &support::DebugSyntaxResult(self.set_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -12893,6 +12944,33 @@ impl From<JsStaticMemberExpression> for SyntaxNode {
 }
 impl From<JsStaticMemberExpression> for SyntaxElement {
     fn from(n: JsStaticMemberExpression) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsStaticModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATIC_MODIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsStaticModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsStaticModifier")
+            .field(
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsStaticModifier> for SyntaxNode {
+    fn from(n: JsStaticModifier) -> SyntaxNode { n.syntax }
+}
+impl From<JsStaticModifier> for SyntaxElement {
+    fn from(n: JsStaticModifier) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsStringLiteralExpression {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STRING_LITERAL_EXPRESSION }
@@ -13510,6 +13588,60 @@ impl From<NewTarget> for SyntaxNode {
 impl From<NewTarget> for SyntaxElement {
     fn from(n: NewTarget) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsAbstractModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ABSTRACT_MODIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAbstractModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAbstractModifier")
+            .field(
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsAbstractModifier> for SyntaxNode {
+    fn from(n: TsAbstractModifier) -> SyntaxNode { n.syntax }
+}
+impl From<TsAbstractModifier> for SyntaxElement {
+    fn from(n: TsAbstractModifier) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsAccessibilityModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ACCESSIBILITY_MODIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsAccessibilityModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsAccessibilityModifier")
+            .field(
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsAccessibilityModifier> for SyntaxNode {
+    fn from(n: TsAccessibilityModifier) -> SyntaxNode { n.syntax }
+}
+impl From<TsAccessibilityModifier> for SyntaxElement {
+    fn from(n: TsAccessibilityModifier) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsAnyType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ANY_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -13991,6 +14123,33 @@ impl From<TsDeclareFunctionDeclaration> for SyntaxNode {
 impl From<TsDeclareFunctionDeclaration> for SyntaxElement {
     fn from(n: TsDeclareFunctionDeclaration) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsDeclareModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DECLARE_MODIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsDeclareModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsDeclareModifier")
+            .field(
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsDeclareModifier> for SyntaxNode {
+    fn from(n: TsDeclareModifier) -> SyntaxNode { n.syntax }
+}
+impl From<TsDeclareModifier> for SyntaxElement {
+    fn from(n: TsDeclareModifier) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsDeclareStatement {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DECLARE_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -14432,14 +14591,7 @@ impl AstNode for TsGetterSignatureClassMember {
 impl std::fmt::Debug for TsGetterSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsGetterSignatureClassMember")
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "abstract_token",
-                &support::DebugSyntaxResult(self.abstract_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("get_token", &support::DebugSyntaxResult(self.get_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -14719,14 +14871,7 @@ impl AstNode for TsIndexSignatureClassMember {
 impl std::fmt::Debug for TsIndexSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsIndexSignatureClassMember")
-            .field(
-                "static_token",
-                &support::DebugOptionalElement(self.static_token()),
-            )
-            .field(
-                "readonly_token",
-                &support::DebugOptionalElement(self.readonly_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field(
                 "l_brack_token",
                 &support::DebugSyntaxResult(self.l_brack_token()),
@@ -15131,14 +15276,7 @@ impl AstNode for TsMethodSignatureClassMember {
 impl std::fmt::Debug for TsMethodSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsMethodSignatureClassMember")
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "abstract_token",
-                &support::DebugSyntaxResult(self.abstract_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "type_parameters",
@@ -15609,6 +15747,33 @@ impl From<TsOptionalTupleTypeElement> for SyntaxNode {
 impl From<TsOptionalTupleTypeElement> for SyntaxElement {
     fn from(n: TsOptionalTupleTypeElement) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsOverrideModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OVERRIDE_MODIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsOverrideModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsOverrideModifier")
+            .field(
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsOverrideModifier> for SyntaxNode {
+    fn from(n: TsOverrideModifier) -> SyntaxNode { n.syntax }
+}
+impl From<TsOverrideModifier> for SyntaxElement {
+    fn from(n: TsOverrideModifier) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsParenthesizedType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PARENTHESIZED_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -15684,10 +15849,7 @@ impl AstNode for TsPropertyParameter {
 impl std::fmt::Debug for TsPropertyParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsPropertyParameter")
-            .field(
-                "accessibility",
-                &support::DebugSyntaxResult(self.accessibility()),
-            )
+            .field("modifiers", &self.modifiers())
             .field(
                 "formal_parameter",
                 &support::DebugSyntaxResult(self.formal_parameter()),
@@ -15715,18 +15877,7 @@ impl AstNode for TsPropertySignatureClassMember {
 impl std::fmt::Debug for TsPropertySignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsPropertySignatureClassMember")
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "abstract_token",
-                &support::DebugSyntaxResult(self.abstract_token()),
-            )
-            .field(
-                "readonly_token",
-                &support::DebugOptionalElement(self.readonly_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "property_annotation",
@@ -15837,8 +15988,8 @@ impl From<TsQualifiedName> for SyntaxNode {
 impl From<TsQualifiedName> for SyntaxElement {
     fn from(n: TsQualifiedName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsReadonlyPropertyParameter {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_READONLY_PROPERTY_PARAMETER }
+impl AstNode for TsReadonlyModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_READONLY_MODIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -15848,29 +15999,21 @@ impl AstNode for TsReadonlyPropertyParameter {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsReadonlyPropertyParameter {
+impl std::fmt::Debug for TsReadonlyModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsReadonlyPropertyParameter")
+        f.debug_struct("TsReadonlyModifier")
             .field(
-                "accessibility",
-                &support::DebugOptionalElement(self.accessibility()),
-            )
-            .field(
-                "readonly_token",
-                &support::DebugSyntaxResult(self.readonly_token()),
-            )
-            .field(
-                "formal_parameter",
-                &support::DebugSyntaxResult(self.formal_parameter()),
+                "modifier_token",
+                &support::DebugSyntaxResult(self.modifier_token()),
             )
             .finish()
     }
 }
-impl From<TsReadonlyPropertyParameter> for SyntaxNode {
-    fn from(n: TsReadonlyPropertyParameter) -> SyntaxNode { n.syntax }
+impl From<TsReadonlyModifier> for SyntaxNode {
+    fn from(n: TsReadonlyModifier) -> SyntaxNode { n.syntax }
 }
-impl From<TsReadonlyPropertyParameter> for SyntaxElement {
-    fn from(n: TsReadonlyPropertyParameter) -> SyntaxElement { n.syntax.into() }
+impl From<TsReadonlyModifier> for SyntaxElement {
+    fn from(n: TsReadonlyModifier) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsReferenceType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_REFERENCE_TYPE }
@@ -15970,14 +16113,7 @@ impl AstNode for TsSetterSignatureClassMember {
 impl std::fmt::Debug for TsSetterSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsSetterSignatureClassMember")
-            .field(
-                "access_modifier",
-                &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "abstract_token",
-                &support::DebugSyntaxResult(self.abstract_token()),
-            )
+            .field("modifiers", &self.modifiers())
             .field("set_token", &support::DebugSyntaxResult(self.set_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -17720,15 +17856,10 @@ impl From<TsPropertyParameter> for JsAnyConstructorParameter {
         JsAnyConstructorParameter::TsPropertyParameter(node)
     }
 }
-impl From<TsReadonlyPropertyParameter> for JsAnyConstructorParameter {
-    fn from(node: TsReadonlyPropertyParameter) -> JsAnyConstructorParameter {
-        JsAnyConstructorParameter::TsReadonlyPropertyParameter(node)
-    }
-}
 impl AstNode for JsAnyConstructorParameter {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         match kind {
-            JS_REST_PARAMETER | TS_PROPERTY_PARAMETER | TS_READONLY_PROPERTY_PARAMETER => true,
+            JS_REST_PARAMETER | TS_PROPERTY_PARAMETER => true,
             k if JsAnyFormalParameter::can_cast(k) => true,
             _ => false,
         }
@@ -17740,11 +17871,6 @@ impl AstNode for JsAnyConstructorParameter {
             }
             TS_PROPERTY_PARAMETER => {
                 JsAnyConstructorParameter::TsPropertyParameter(TsPropertyParameter { syntax })
-            }
-            TS_READONLY_PROPERTY_PARAMETER => {
-                JsAnyConstructorParameter::TsReadonlyPropertyParameter(
-                    TsReadonlyPropertyParameter { syntax },
-                )
             }
             _ => {
                 if let Some(js_any_formal_parameter) = JsAnyFormalParameter::cast(syntax) {
@@ -17761,7 +17887,6 @@ impl AstNode for JsAnyConstructorParameter {
         match self {
             JsAnyConstructorParameter::JsRestParameter(it) => &it.syntax,
             JsAnyConstructorParameter::TsPropertyParameter(it) => &it.syntax,
-            JsAnyConstructorParameter::TsReadonlyPropertyParameter(it) => &it.syntax,
             JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.syntax(),
         }
     }
@@ -17772,9 +17897,6 @@ impl std::fmt::Debug for JsAnyConstructorParameter {
             JsAnyConstructorParameter::JsAnyFormalParameter(it) => std::fmt::Debug::fmt(it, f),
             JsAnyConstructorParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
             JsAnyConstructorParameter::TsPropertyParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyConstructorParameter::TsReadonlyPropertyParameter(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
         }
     }
 }
@@ -17784,7 +17906,6 @@ impl From<JsAnyConstructorParameter> for SyntaxNode {
             JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.into(),
             JsAnyConstructorParameter::JsRestParameter(it) => it.into(),
             JsAnyConstructorParameter::TsPropertyParameter(it) => it.into(),
-            JsAnyConstructorParameter::TsReadonlyPropertyParameter(it) => it.into(),
         }
     }
 }
@@ -19457,6 +19578,75 @@ impl From<JsAnyLiteralExpression> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsStaticModifier> for JsAnyMethodModifier {
+    fn from(node: JsStaticModifier) -> JsAnyMethodModifier {
+        JsAnyMethodModifier::JsStaticModifier(node)
+    }
+}
+impl From<TsAccessibilityModifier> for JsAnyMethodModifier {
+    fn from(node: TsAccessibilityModifier) -> JsAnyMethodModifier {
+        JsAnyMethodModifier::TsAccessibilityModifier(node)
+    }
+}
+impl From<TsOverrideModifier> for JsAnyMethodModifier {
+    fn from(node: TsOverrideModifier) -> JsAnyMethodModifier {
+        JsAnyMethodModifier::TsOverrideModifier(node)
+    }
+}
+impl AstNode for JsAnyMethodModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JS_STATIC_MODIFIER | TS_ACCESSIBILITY_MODIFIER | TS_OVERRIDE_MODIFIER
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_STATIC_MODIFIER => {
+                JsAnyMethodModifier::JsStaticModifier(JsStaticModifier { syntax })
+            }
+            TS_ACCESSIBILITY_MODIFIER => {
+                JsAnyMethodModifier::TsAccessibilityModifier(TsAccessibilityModifier { syntax })
+            }
+            TS_OVERRIDE_MODIFIER => {
+                JsAnyMethodModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsAnyMethodModifier::JsStaticModifier(it) => &it.syntax,
+            JsAnyMethodModifier::TsAccessibilityModifier(it) => &it.syntax,
+            JsAnyMethodModifier::TsOverrideModifier(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsAnyMethodModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsAnyMethodModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyMethodModifier::TsAccessibilityModifier(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyMethodModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsAnyMethodModifier> for SyntaxNode {
+    fn from(n: JsAnyMethodModifier) -> SyntaxNode {
+        match n {
+            JsAnyMethodModifier::JsStaticModifier(it) => it.into(),
+            JsAnyMethodModifier::TsAccessibilityModifier(it) => it.into(),
+            JsAnyMethodModifier::TsOverrideModifier(it) => it.into(),
+        }
+    }
+}
+impl From<JsAnyMethodModifier> for SyntaxElement {
+    fn from(n: JsAnyMethodModifier) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsExport> for JsAnyModuleItem {
     fn from(node: JsExport) -> JsAnyModuleItem { JsAnyModuleItem::JsExport(node) }
 }
@@ -20143,6 +20333,89 @@ impl From<JsAnyParameter> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsStaticModifier> for JsAnyPropertyModifier {
+    fn from(node: JsStaticModifier) -> JsAnyPropertyModifier {
+        JsAnyPropertyModifier::JsStaticModifier(node)
+    }
+}
+impl From<TsAccessibilityModifier> for JsAnyPropertyModifier {
+    fn from(node: TsAccessibilityModifier) -> JsAnyPropertyModifier {
+        JsAnyPropertyModifier::TsAccessibilityModifier(node)
+    }
+}
+impl From<TsOverrideModifier> for JsAnyPropertyModifier {
+    fn from(node: TsOverrideModifier) -> JsAnyPropertyModifier {
+        JsAnyPropertyModifier::TsOverrideModifier(node)
+    }
+}
+impl From<TsReadonlyModifier> for JsAnyPropertyModifier {
+    fn from(node: TsReadonlyModifier) -> JsAnyPropertyModifier {
+        JsAnyPropertyModifier::TsReadonlyModifier(node)
+    }
+}
+impl AstNode for JsAnyPropertyModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JS_STATIC_MODIFIER
+                | TS_ACCESSIBILITY_MODIFIER
+                | TS_OVERRIDE_MODIFIER
+                | TS_READONLY_MODIFIER
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_STATIC_MODIFIER => {
+                JsAnyPropertyModifier::JsStaticModifier(JsStaticModifier { syntax })
+            }
+            TS_ACCESSIBILITY_MODIFIER => {
+                JsAnyPropertyModifier::TsAccessibilityModifier(TsAccessibilityModifier { syntax })
+            }
+            TS_OVERRIDE_MODIFIER => {
+                JsAnyPropertyModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+            }
+            TS_READONLY_MODIFIER => {
+                JsAnyPropertyModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsAnyPropertyModifier::JsStaticModifier(it) => &it.syntax,
+            JsAnyPropertyModifier::TsAccessibilityModifier(it) => &it.syntax,
+            JsAnyPropertyModifier::TsOverrideModifier(it) => &it.syntax,
+            JsAnyPropertyModifier::TsReadonlyModifier(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsAnyPropertyModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsAnyPropertyModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyPropertyModifier::TsAccessibilityModifier(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyPropertyModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyPropertyModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsAnyPropertyModifier> for SyntaxNode {
+    fn from(n: JsAnyPropertyModifier) -> SyntaxNode {
+        match n {
+            JsAnyPropertyModifier::JsStaticModifier(it) => it.into(),
+            JsAnyPropertyModifier::TsAccessibilityModifier(it) => it.into(),
+            JsAnyPropertyModifier::TsOverrideModifier(it) => it.into(),
+            JsAnyPropertyModifier::TsReadonlyModifier(it) => it.into(),
+        }
+    }
+}
+impl From<JsAnyPropertyModifier> for SyntaxElement {
+    fn from(n: JsAnyPropertyModifier) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsExpressionSnipped> for JsAnyRoot {
     fn from(node: JsExpressionSnipped) -> JsAnyRoot { JsAnyRoot::JsExpressionSnipped(node) }
 }
@@ -20718,6 +20991,148 @@ impl From<TsAnyExternalModuleDeclarationBody> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsStaticModifier> for TsAnyIndexSignatureModifier {
+    fn from(node: JsStaticModifier) -> TsAnyIndexSignatureModifier {
+        TsAnyIndexSignatureModifier::JsStaticModifier(node)
+    }
+}
+impl From<TsReadonlyModifier> for TsAnyIndexSignatureModifier {
+    fn from(node: TsReadonlyModifier) -> TsAnyIndexSignatureModifier {
+        TsAnyIndexSignatureModifier::TsReadonlyModifier(node)
+    }
+}
+impl AstNode for TsAnyIndexSignatureModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JS_STATIC_MODIFIER | TS_READONLY_MODIFIER)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_STATIC_MODIFIER => {
+                TsAnyIndexSignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
+            }
+            TS_READONLY_MODIFIER => {
+                TsAnyIndexSignatureModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyIndexSignatureModifier::JsStaticModifier(it) => &it.syntax,
+            TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyIndexSignatureModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyIndexSignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyIndexSignatureModifier> for SyntaxNode {
+    fn from(n: TsAnyIndexSignatureModifier) -> SyntaxNode {
+        match n {
+            TsAnyIndexSignatureModifier::JsStaticModifier(it) => it.into(),
+            TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyIndexSignatureModifier> for SyntaxElement {
+    fn from(n: TsAnyIndexSignatureModifier) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsStaticModifier> for TsAnyMethodSignatureModifier {
+    fn from(node: JsStaticModifier) -> TsAnyMethodSignatureModifier {
+        TsAnyMethodSignatureModifier::JsStaticModifier(node)
+    }
+}
+impl From<TsAbstractModifier> for TsAnyMethodSignatureModifier {
+    fn from(node: TsAbstractModifier) -> TsAnyMethodSignatureModifier {
+        TsAnyMethodSignatureModifier::TsAbstractModifier(node)
+    }
+}
+impl From<TsAccessibilityModifier> for TsAnyMethodSignatureModifier {
+    fn from(node: TsAccessibilityModifier) -> TsAnyMethodSignatureModifier {
+        TsAnyMethodSignatureModifier::TsAccessibilityModifier(node)
+    }
+}
+impl From<TsOverrideModifier> for TsAnyMethodSignatureModifier {
+    fn from(node: TsOverrideModifier) -> TsAnyMethodSignatureModifier {
+        TsAnyMethodSignatureModifier::TsOverrideModifier(node)
+    }
+}
+impl AstNode for TsAnyMethodSignatureModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JS_STATIC_MODIFIER
+                | TS_ABSTRACT_MODIFIER
+                | TS_ACCESSIBILITY_MODIFIER
+                | TS_OVERRIDE_MODIFIER
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_STATIC_MODIFIER => {
+                TsAnyMethodSignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
+            }
+            TS_ABSTRACT_MODIFIER => {
+                TsAnyMethodSignatureModifier::TsAbstractModifier(TsAbstractModifier { syntax })
+            }
+            TS_ACCESSIBILITY_MODIFIER => {
+                TsAnyMethodSignatureModifier::TsAccessibilityModifier(TsAccessibilityModifier {
+                    syntax,
+                })
+            }
+            TS_OVERRIDE_MODIFIER => {
+                TsAnyMethodSignatureModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyMethodSignatureModifier::JsStaticModifier(it) => &it.syntax,
+            TsAnyMethodSignatureModifier::TsAbstractModifier(it) => &it.syntax,
+            TsAnyMethodSignatureModifier::TsAccessibilityModifier(it) => &it.syntax,
+            TsAnyMethodSignatureModifier::TsOverrideModifier(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyMethodSignatureModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyMethodSignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyMethodSignatureModifier::TsAbstractModifier(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyMethodSignatureModifier::TsAccessibilityModifier(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyMethodSignatureModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyMethodSignatureModifier> for SyntaxNode {
+    fn from(n: TsAnyMethodSignatureModifier) -> SyntaxNode {
+        match n {
+            TsAnyMethodSignatureModifier::JsStaticModifier(it) => it.into(),
+            TsAnyMethodSignatureModifier::TsAbstractModifier(it) => it.into(),
+            TsAnyMethodSignatureModifier::TsAccessibilityModifier(it) => it.into(),
+            TsAnyMethodSignatureModifier::TsOverrideModifier(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyMethodSignatureModifier> for SyntaxElement {
+    fn from(n: TsAnyMethodSignatureModifier) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<TsIdentifierBinding> for TsAnyModuleName {
     fn from(node: TsIdentifierBinding) -> TsAnyModuleName {
         TsAnyModuleName::TsIdentifierBinding(node)
@@ -20957,29 +21372,40 @@ impl From<TsAnyPropertyAnnotation> for SyntaxElement {
         node.into()
     }
 }
-impl From<TsPropertyParameter> for TsAnyPropertyParameter {
-    fn from(node: TsPropertyParameter) -> TsAnyPropertyParameter {
-        TsAnyPropertyParameter::TsPropertyParameter(node)
+impl From<TsAccessibilityModifier> for TsAnyPropertyParameterModifier {
+    fn from(node: TsAccessibilityModifier) -> TsAnyPropertyParameterModifier {
+        TsAnyPropertyParameterModifier::TsAccessibilityModifier(node)
     }
 }
-impl From<TsReadonlyPropertyParameter> for TsAnyPropertyParameter {
-    fn from(node: TsReadonlyPropertyParameter) -> TsAnyPropertyParameter {
-        TsAnyPropertyParameter::TsReadonlyPropertyParameter(node)
+impl From<TsOverrideModifier> for TsAnyPropertyParameterModifier {
+    fn from(node: TsOverrideModifier) -> TsAnyPropertyParameterModifier {
+        TsAnyPropertyParameterModifier::TsOverrideModifier(node)
     }
 }
-impl AstNode for TsAnyPropertyParameter {
+impl From<TsReadonlyModifier> for TsAnyPropertyParameterModifier {
+    fn from(node: TsReadonlyModifier) -> TsAnyPropertyParameterModifier {
+        TsAnyPropertyParameterModifier::TsReadonlyModifier(node)
+    }
+}
+impl AstNode for TsAnyPropertyParameterModifier {
     fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(kind, TS_PROPERTY_PARAMETER | TS_READONLY_PROPERTY_PARAMETER)
+        matches!(
+            kind,
+            TS_ACCESSIBILITY_MODIFIER | TS_OVERRIDE_MODIFIER | TS_READONLY_MODIFIER
+        )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            TS_PROPERTY_PARAMETER => {
-                TsAnyPropertyParameter::TsPropertyParameter(TsPropertyParameter { syntax })
-            }
-            TS_READONLY_PROPERTY_PARAMETER => {
-                TsAnyPropertyParameter::TsReadonlyPropertyParameter(TsReadonlyPropertyParameter {
+            TS_ACCESSIBILITY_MODIFIER => {
+                TsAnyPropertyParameterModifier::TsAccessibilityModifier(TsAccessibilityModifier {
                     syntax,
                 })
+            }
+            TS_OVERRIDE_MODIFIER => {
+                TsAnyPropertyParameterModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+            }
+            TS_READONLY_MODIFIER => {
+                TsAnyPropertyParameterModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
             }
             _ => return None,
         };
@@ -20987,29 +21413,34 @@ impl AstNode for TsAnyPropertyParameter {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyPropertyParameter::TsPropertyParameter(it) => &it.syntax,
-            TsAnyPropertyParameter::TsReadonlyPropertyParameter(it) => &it.syntax,
+            TsAnyPropertyParameterModifier::TsAccessibilityModifier(it) => &it.syntax,
+            TsAnyPropertyParameterModifier::TsOverrideModifier(it) => &it.syntax,
+            TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => &it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyPropertyParameter {
+impl std::fmt::Debug for TsAnyPropertyParameterModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyPropertyParameter::TsPropertyParameter(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyPropertyParameter::TsReadonlyPropertyParameter(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyPropertyParameterModifier::TsAccessibilityModifier(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyPropertyParameterModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyPropertyParameter> for SyntaxNode {
-    fn from(n: TsAnyPropertyParameter) -> SyntaxNode {
+impl From<TsAnyPropertyParameterModifier> for SyntaxNode {
+    fn from(n: TsAnyPropertyParameterModifier) -> SyntaxNode {
         match n {
-            TsAnyPropertyParameter::TsPropertyParameter(it) => it.into(),
-            TsAnyPropertyParameter::TsReadonlyPropertyParameter(it) => it.into(),
+            TsAnyPropertyParameterModifier::TsAccessibilityModifier(it) => it.into(),
+            TsAnyPropertyParameterModifier::TsOverrideModifier(it) => it.into(),
+            TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => it.into(),
         }
     }
 }
-impl From<TsAnyPropertyParameter> for SyntaxElement {
-    fn from(n: TsAnyPropertyParameter) -> SyntaxElement {
+impl From<TsAnyPropertyParameterModifier> for SyntaxElement {
+    fn from(n: TsAnyPropertyParameterModifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -21069,6 +21500,117 @@ impl From<TsAnyPropertySignatureAnnotation> for SyntaxNode {
 }
 impl From<TsAnyPropertySignatureAnnotation> for SyntaxElement {
     fn from(n: TsAnyPropertySignatureAnnotation) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsStaticModifier> for TsAnyPropertySignatureModifier {
+    fn from(node: JsStaticModifier) -> TsAnyPropertySignatureModifier {
+        TsAnyPropertySignatureModifier::JsStaticModifier(node)
+    }
+}
+impl From<TsAbstractModifier> for TsAnyPropertySignatureModifier {
+    fn from(node: TsAbstractModifier) -> TsAnyPropertySignatureModifier {
+        TsAnyPropertySignatureModifier::TsAbstractModifier(node)
+    }
+}
+impl From<TsAccessibilityModifier> for TsAnyPropertySignatureModifier {
+    fn from(node: TsAccessibilityModifier) -> TsAnyPropertySignatureModifier {
+        TsAnyPropertySignatureModifier::TsAccessibilityModifier(node)
+    }
+}
+impl From<TsDeclareModifier> for TsAnyPropertySignatureModifier {
+    fn from(node: TsDeclareModifier) -> TsAnyPropertySignatureModifier {
+        TsAnyPropertySignatureModifier::TsDeclareModifier(node)
+    }
+}
+impl From<TsOverrideModifier> for TsAnyPropertySignatureModifier {
+    fn from(node: TsOverrideModifier) -> TsAnyPropertySignatureModifier {
+        TsAnyPropertySignatureModifier::TsOverrideModifier(node)
+    }
+}
+impl From<TsReadonlyModifier> for TsAnyPropertySignatureModifier {
+    fn from(node: TsReadonlyModifier) -> TsAnyPropertySignatureModifier {
+        TsAnyPropertySignatureModifier::TsReadonlyModifier(node)
+    }
+}
+impl AstNode for TsAnyPropertySignatureModifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JS_STATIC_MODIFIER
+                | TS_ABSTRACT_MODIFIER
+                | TS_ACCESSIBILITY_MODIFIER
+                | TS_DECLARE_MODIFIER
+                | TS_OVERRIDE_MODIFIER
+                | TS_READONLY_MODIFIER
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_STATIC_MODIFIER => {
+                TsAnyPropertySignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
+            }
+            TS_ABSTRACT_MODIFIER => {
+                TsAnyPropertySignatureModifier::TsAbstractModifier(TsAbstractModifier { syntax })
+            }
+            TS_ACCESSIBILITY_MODIFIER => {
+                TsAnyPropertySignatureModifier::TsAccessibilityModifier(TsAccessibilityModifier {
+                    syntax,
+                })
+            }
+            TS_DECLARE_MODIFIER => {
+                TsAnyPropertySignatureModifier::TsDeclareModifier(TsDeclareModifier { syntax })
+            }
+            TS_OVERRIDE_MODIFIER => {
+                TsAnyPropertySignatureModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+            }
+            TS_READONLY_MODIFIER => {
+                TsAnyPropertySignatureModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyPropertySignatureModifier::JsStaticModifier(it) => &it.syntax,
+            TsAnyPropertySignatureModifier::TsAbstractModifier(it) => &it.syntax,
+            TsAnyPropertySignatureModifier::TsAccessibilityModifier(it) => &it.syntax,
+            TsAnyPropertySignatureModifier::TsDeclareModifier(it) => &it.syntax,
+            TsAnyPropertySignatureModifier::TsOverrideModifier(it) => &it.syntax,
+            TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyPropertySignatureModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyPropertySignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyPropertySignatureModifier::TsAbstractModifier(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyPropertySignatureModifier::TsAccessibilityModifier(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyPropertySignatureModifier::TsDeclareModifier(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyPropertySignatureModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyPropertySignatureModifier> for SyntaxNode {
+    fn from(n: TsAnyPropertySignatureModifier) -> SyntaxNode {
+        match n {
+            TsAnyPropertySignatureModifier::JsStaticModifier(it) => it.into(),
+            TsAnyPropertySignatureModifier::TsAbstractModifier(it) => it.into(),
+            TsAnyPropertySignatureModifier::TsAccessibilityModifier(it) => it.into(),
+            TsAnyPropertySignatureModifier::TsDeclareModifier(it) => it.into(),
+            TsAnyPropertySignatureModifier::TsOverrideModifier(it) => it.into(),
+            TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyPropertySignatureModifier> for SyntaxElement {
+    fn from(n: TsAnyPropertySignatureModifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -21975,6 +22517,11 @@ impl std::fmt::Display for JsAnyLiteralExpression {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsAnyMethodModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsAnyModuleItem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22020,6 +22567,11 @@ impl std::fmt::Display for JsAnyParameter {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsAnyPropertyModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsAnyRoot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22045,6 +22597,16 @@ impl std::fmt::Display for TsAnyExternalModuleDeclarationBody {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAnyIndexSignatureModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAnyMethodSignatureModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAnyModuleName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22065,12 +22627,17 @@ impl std::fmt::Display for TsAnyPropertyAnnotation {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyPropertyParameter {
+impl std::fmt::Display for TsAnyPropertyParameterModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
 impl std::fmt::Display for TsAnyPropertySignatureAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAnyPropertySignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -22745,6 +23312,11 @@ impl std::fmt::Display for JsStaticMemberExpression {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsStaticModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsStringLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22845,6 +23417,16 @@ impl std::fmt::Display for NewTarget {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAbstractModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAccessibilityModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAnyType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -22916,6 +23498,11 @@ impl std::fmt::Display for TsConstructorType {
     }
 }
 impl std::fmt::Display for TsDeclareFunctionDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsDeclareModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -23165,6 +23752,11 @@ impl std::fmt::Display for TsOptionalTupleTypeElement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsOverrideModifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsParenthesizedType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -23200,7 +23792,7 @@ impl std::fmt::Display for TsQualifiedName {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsReadonlyPropertyParameter {
+impl std::fmt::Display for TsReadonlyModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -23933,6 +24525,55 @@ impl IntoIterator for JsClassMemberList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
+pub struct JsConstructorModifierList {
+    syntax_list: SyntaxList,
+}
+impl JsConstructorModifierList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for JsConstructorModifierList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONSTRUCTOR_MODIFIER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<JsConstructorModifierList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(JsConstructorModifierList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<TsAccessibilityModifier> for JsConstructorModifierList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for JsConstructorModifierList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("JsConstructorModifierList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &JsConstructorModifierList {
+    type Item = TsAccessibilityModifier;
+    type IntoIter = AstNodeListIterator<TsAccessibilityModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for JsConstructorModifierList {
+    type Item = TsAccessibilityModifier;
+    type IntoIter = AstNodeListIterator<TsAccessibilityModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsConstructorParameterList {
     syntax_list: SyntaxList,
 }
@@ -24175,6 +24816,55 @@ impl IntoIterator for JsImportAssertionEntryList {
 impl IntoIterator for &JsImportAssertionEntryList {
     type Item = SyntaxResult<JsAnyImportAssertionEntry>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyImportAssertionEntry>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct JsMethodModifierList {
+    syntax_list: SyntaxList,
+}
+impl JsMethodModifierList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for JsMethodModifierList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_METHOD_MODIFIER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<JsMethodModifierList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(JsMethodModifierList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<JsAnyMethodModifier> for JsMethodModifierList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for JsMethodModifierList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("JsMethodModifierList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &JsMethodModifierList {
+    type Item = JsAnyMethodModifier;
+    type IntoIter = AstNodeListIterator<JsAnyMethodModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for JsMethodModifierList {
+    type Item = JsAnyMethodModifier;
+    type IntoIter = AstNodeListIterator<JsAnyMethodModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -24474,6 +25164,55 @@ impl IntoIterator for &JsParameterList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
+pub struct JsPropertyModifierList {
+    syntax_list: SyntaxList,
+}
+impl JsPropertyModifierList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for JsPropertyModifierList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PROPERTY_MODIFIER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<JsPropertyModifierList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(JsPropertyModifierList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<JsAnyPropertyModifier> for JsPropertyModifierList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for JsPropertyModifierList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("JsPropertyModifierList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &JsPropertyModifierList {
+    type Item = JsAnyPropertyModifier;
+    type IntoIter = AstNodeListIterator<JsAnyPropertyModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for JsPropertyModifierList {
+    type Item = JsAnyPropertyModifier;
+    type IntoIter = AstNodeListIterator<JsAnyPropertyModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsStatementList {
     syntax_list: SyntaxList,
 }
@@ -24719,6 +25458,55 @@ impl IntoIterator for &TsEnumMemberList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
+pub struct TsIndexSignatureModifierList {
+    syntax_list: SyntaxList,
+}
+impl TsIndexSignatureModifierList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for TsIndexSignatureModifierList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_MODIFIER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<TsIndexSignatureModifierList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(TsIndexSignatureModifierList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<TsAnyIndexSignatureModifier> for TsIndexSignatureModifierList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for TsIndexSignatureModifierList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("TsIndexSignatureModifierList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &TsIndexSignatureModifierList {
+    type Item = TsAnyIndexSignatureModifier;
+    type IntoIter = AstNodeListIterator<TsAnyIndexSignatureModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for TsIndexSignatureModifierList {
+    type Item = TsAnyIndexSignatureModifier;
+    type IntoIter = AstNodeListIterator<TsAnyIndexSignatureModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsIntersectionTypeElementList {
     syntax_list: SyntaxList,
 }
@@ -24765,6 +25553,153 @@ impl IntoIterator for TsIntersectionTypeElementList {
 impl IntoIterator for &TsIntersectionTypeElementList {
     type Item = SyntaxResult<TsType>;
     type IntoIter = AstSeparatedListNodesIterator<TsType>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct TsMethodSignatureModifierList {
+    syntax_list: SyntaxList,
+}
+impl TsMethodSignatureModifierList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for TsMethodSignatureModifierList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE_MODIFIER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<TsMethodSignatureModifierList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(TsMethodSignatureModifierList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<TsAnyMethodSignatureModifier> for TsMethodSignatureModifierList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for TsMethodSignatureModifierList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("TsMethodSignatureModifierList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &TsMethodSignatureModifierList {
+    type Item = TsAnyMethodSignatureModifier;
+    type IntoIter = AstNodeListIterator<TsAnyMethodSignatureModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for TsMethodSignatureModifierList {
+    type Item = TsAnyMethodSignatureModifier;
+    type IntoIter = AstNodeListIterator<TsAnyMethodSignatureModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct TsPropertyParameterModifierList {
+    syntax_list: SyntaxList,
+}
+impl TsPropertyParameterModifierList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for TsPropertyParameterModifierList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_PARAMETER_MODIFIER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<TsPropertyParameterModifierList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(TsPropertyParameterModifierList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<TsAnyPropertyParameterModifier> for TsPropertyParameterModifierList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for TsPropertyParameterModifierList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("TsPropertyParameterModifierList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &TsPropertyParameterModifierList {
+    type Item = TsAnyPropertyParameterModifier;
+    type IntoIter = AstNodeListIterator<TsAnyPropertyParameterModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for TsPropertyParameterModifierList {
+    type Item = TsAnyPropertyParameterModifier;
+    type IntoIter = AstNodeListIterator<TsAnyPropertyParameterModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct TsPropertySignatureModifierList {
+    syntax_list: SyntaxList,
+}
+impl TsPropertySignatureModifierList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for TsPropertySignatureModifierList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_MODIFIER_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<TsPropertySignatureModifierList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(TsPropertySignatureModifierList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<TsAnyPropertySignatureModifier> for TsPropertySignatureModifierList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for TsPropertySignatureModifierList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("TsPropertySignatureModifierList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &TsPropertySignatureModifierList {
+    type Item = TsAnyPropertySignatureModifier;
+    type IntoIter = AstNodeListIterator<TsAnyPropertySignatureModifier>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for TsPropertySignatureModifierList {
+    type Item = TsAnyPropertySignatureModifier;
+    type IntoIter = AstNodeListIterator<TsAnyPropertySignatureModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -25225,6 +26160,9 @@ impl Debug for DebugSyntaxElement {
                 JS_CONSTRUCTOR_CLASS_MEMBER => {
                     std::fmt::Debug::fmt(&JsConstructorClassMember::cast(node.clone()).unwrap(), f)
                 }
+                JS_CONSTRUCTOR_MODIFIER_LIST => {
+                    std::fmt::Debug::fmt(&JsConstructorModifierList::cast(node.clone()).unwrap(), f)
+                }
                 JS_CONSTRUCTOR_PARAMETER_LIST => std::fmt::Debug::fmt(
                     &JsConstructorParameterList::cast(node.clone()).unwrap(),
                     f,
@@ -25408,6 +26346,9 @@ impl Debug for DebugSyntaxElement {
                 JS_METHOD_CLASS_MEMBER => {
                     std::fmt::Debug::fmt(&JsMethodClassMember::cast(node.clone()).unwrap(), f)
                 }
+                JS_METHOD_MODIFIER_LIST => {
+                    std::fmt::Debug::fmt(&JsMethodModifierList::cast(node.clone()).unwrap(), f)
+                }
                 JS_METHOD_OBJECT_MEMBER => {
                     std::fmt::Debug::fmt(&JsMethodObjectMember::cast(node.clone()).unwrap(), f)
                 }
@@ -25513,6 +26454,9 @@ impl Debug for DebugSyntaxElement {
                 JS_PROPERTY_CLASS_MEMBER => {
                     std::fmt::Debug::fmt(&JsPropertyClassMember::cast(node.clone()).unwrap(), f)
                 }
+                JS_PROPERTY_MODIFIER_LIST => {
+                    std::fmt::Debug::fmt(&JsPropertyModifierList::cast(node.clone()).unwrap(), f)
+                }
                 JS_PROPERTY_OBJECT_MEMBER => {
                     std::fmt::Debug::fmt(&JsPropertyObjectMember::cast(node.clone()).unwrap(), f)
                 }
@@ -25559,6 +26503,9 @@ impl Debug for DebugSyntaxElement {
                 }
                 JS_STATIC_MEMBER_EXPRESSION => {
                     std::fmt::Debug::fmt(&JsStaticMemberExpression::cast(node.clone()).unwrap(), f)
+                }
+                JS_STATIC_MODIFIER => {
+                    std::fmt::Debug::fmt(&JsStaticModifier::cast(node.clone()).unwrap(), f)
                 }
                 JS_STRING_LITERAL_EXPRESSION => {
                     std::fmt::Debug::fmt(&JsStringLiteralExpression::cast(node.clone()).unwrap(), f)
@@ -25653,6 +26600,12 @@ impl Debug for DebugSyntaxElement {
                     std::fmt::Debug::fmt(&JsYieldExpression::cast(node.clone()).unwrap(), f)
                 }
                 NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
+                TS_ABSTRACT_MODIFIER => {
+                    std::fmt::Debug::fmt(&TsAbstractModifier::cast(node.clone()).unwrap(), f)
+                }
+                TS_ACCESSIBILITY_MODIFIER => {
+                    std::fmt::Debug::fmt(&TsAccessibilityModifier::cast(node.clone()).unwrap(), f)
+                }
                 TS_ANY_TYPE => std::fmt::Debug::fmt(&TsAnyType::cast(node.clone()).unwrap(), f),
                 TS_ARRAY_TYPE => std::fmt::Debug::fmt(&TsArrayType::cast(node.clone()).unwrap(), f),
                 TS_AS_ASSIGNMENT => {
@@ -25696,6 +26649,9 @@ impl Debug for DebugSyntaxElement {
                     &TsDeclareFunctionDeclaration::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_DECLARE_MODIFIER => {
+                    std::fmt::Debug::fmt(&TsDeclareModifier::cast(node.clone()).unwrap(), f)
+                }
                 TS_DECLARE_STATEMENT => {
                     std::fmt::Debug::fmt(&TsDeclareStatement::cast(node.clone()).unwrap(), f)
                 }
@@ -25775,6 +26731,10 @@ impl Debug for DebugSyntaxElement {
                     &TsIndexSignatureClassMember::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_INDEX_SIGNATURE_MODIFIER_LIST => std::fmt::Debug::fmt(
+                    &TsIndexSignatureModifierList::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_INDEX_SIGNATURE_PARAMETER => {
                     std::fmt::Debug::fmt(&TsIndexSignatureParameter::cast(node.clone()).unwrap(), f)
                 }
@@ -25812,6 +26772,10 @@ impl Debug for DebugSyntaxElement {
                 ),
                 TS_METHOD_SIGNATURE_CLASS_MEMBER => std::fmt::Debug::fmt(
                     &TsMethodSignatureClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
+                TS_METHOD_SIGNATURE_MODIFIER_LIST => std::fmt::Debug::fmt(
+                    &TsMethodSignatureModifierList::cast(node.clone()).unwrap(),
                     f,
                 ),
                 TS_METHOD_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
@@ -25862,6 +26826,9 @@ impl Debug for DebugSyntaxElement {
                     &TsOptionalTupleTypeElement::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_OVERRIDE_MODIFIER => {
+                    std::fmt::Debug::fmt(&TsOverrideModifier::cast(node.clone()).unwrap(), f)
+                }
                 TS_PARENTHESIZED_TYPE => {
                     std::fmt::Debug::fmt(&TsParenthesizedType::cast(node.clone()).unwrap(), f)
                 }
@@ -25871,8 +26838,16 @@ impl Debug for DebugSyntaxElement {
                 TS_PROPERTY_PARAMETER => {
                     std::fmt::Debug::fmt(&TsPropertyParameter::cast(node.clone()).unwrap(), f)
                 }
+                TS_PROPERTY_PARAMETER_MODIFIER_LIST => std::fmt::Debug::fmt(
+                    &TsPropertyParameterModifierList::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_PROPERTY_SIGNATURE_CLASS_MEMBER => std::fmt::Debug::fmt(
                     &TsPropertySignatureClassMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
+                TS_PROPERTY_SIGNATURE_MODIFIER_LIST => std::fmt::Debug::fmt(
+                    &TsPropertySignatureModifierList::cast(node.clone()).unwrap(),
                     f,
                 ),
                 TS_PROPERTY_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
@@ -25885,10 +26860,9 @@ impl Debug for DebugSyntaxElement {
                 TS_QUALIFIED_NAME => {
                     std::fmt::Debug::fmt(&TsQualifiedName::cast(node.clone()).unwrap(), f)
                 }
-                TS_READONLY_PROPERTY_PARAMETER => std::fmt::Debug::fmt(
-                    &TsReadonlyPropertyParameter::cast(node.clone()).unwrap(),
-                    f,
-                ),
+                TS_READONLY_MODIFIER => {
+                    std::fmt::Debug::fmt(&TsReadonlyModifier::cast(node.clone()).unwrap(), f)
+                }
                 TS_REFERENCE_TYPE => {
                     std::fmt::Debug::fmt(&TsReferenceType::cast(node.clone()).unwrap(), f)
                 }
