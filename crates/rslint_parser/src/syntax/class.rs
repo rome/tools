@@ -924,6 +924,7 @@ fn parse_static_initialization_block_class_member(
             p.err_builder("Static class blocks cannot have any modifier.")
                 .primary(modifiers.list_marker.range(p), ""),
         );
+        modifiers.complete(p, JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER);
     }
 
     p.bump_remap(T![static]);
@@ -1858,7 +1859,7 @@ impl ClassMemberModifiers {
             JS_CONSTRUCTOR_CLASS_MEMBER => JS_CONSTRUCTOR_MODIFIER_LIST,
             TS_INDEX_SIGNATURE_CLASS_MEMBER => TS_INDEX_SIGNATURE_MODIFIER_LIST,
             TS_PROPERTY_PARAMETER => TS_PROPERTY_PARAMETER_MODIFIER_LIST,
-            JS_UNKNOWN_MEMBER => {
+            JS_UNKNOWN_MEMBER | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER => {
                 // Error recovery kicked in. There's no "right" list to pick in this case, let's just remove it
                 self.list_marker.undo_completion(p).abandon(p);
                 return;
