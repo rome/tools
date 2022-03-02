@@ -1,13 +1,9 @@
 
 ## Development Status
 
-**Rome is being rewritten in Rust, so it doesn't support all the wanted features**.
+**Rome is being rewritten in Rust, so it doesn't support all the intended features**.
 
 Rome is currently only supported as a [formatter](#formatter) for JavaScript and TypeScript.** 
-
-We are actively working on support for other languages.
-
-Once our usage as a linter has matured we will work on releasing the other parts of Rome and expand beyond linting. **Significant implementation already exist for most functionality.**
 
 We plan on covering the following areas:
 
