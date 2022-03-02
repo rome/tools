@@ -9,4 +9,3 @@ https://cdn.jsdelivr.net/npm/pixi.js@6.2.0/dist/browser/pixi.min.js
 https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js
 https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-chtml-full.js
 https://cdn.jsdelivr.net/npm/mathjs@10.3.0/lib/browser/math.js
-https://cdn.jsdelivr.net/npm/dateformat

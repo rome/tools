@@ -1,5 +1,3 @@
-use std::io::Cursor;
-
 use termcolor::WriteColor;
 
 use crate::{file::SimpleFile, Diagnostic, Emitter};
@@ -17,7 +15,7 @@ impl std::io::Write for TestEmitter {
     }
 
     fn flush(&mut self) -> std::io::Result<()> {
-        std::io::stdout().flush();
+        let _ = std::io::stdout().flush();
         Ok(())
     }
 }
@@ -27,7 +25,7 @@ impl WriteColor for TestEmitter {
         false
     }
 
-    fn set_color(&mut self, spec: &termcolor::ColorSpec) -> std::io::Result<()> {
+    fn set_color(&mut self, _: &termcolor::ColorSpec) -> std::io::Result<()> {
         Ok(())
     }
 
