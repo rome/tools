@@ -17,6 +17,13 @@ pub struct FormatConditionalPayload<'f, Node: AstNode + ToFormatElement> {
     pub formatter: &'f Formatter,
 }
 
+/// Utility function to use to format ternary operators
+///
+/// # Panics
+///
+/// It panics if it's used with nodes that are different from:
+/// - [rslint_parser::ast::TsConditionalType]
+/// - [rslint_parser::ast::JsConditionalExpression]
 pub fn format_conditional(
     current_node: &SyntaxNode,
     formatter: &Formatter,
@@ -89,7 +96,7 @@ pub fn format_conditional(
             )
         }
 
-        _ => unreachable!(
+        _ => panic!(
             "This function should be used only for JsConditionalExpression and TsConditionalType"
         ),
     };
@@ -123,18 +130,16 @@ where
         JsSyntaxKind::JS_CONDITIONAL_EXPRESSION | JsSyntaxKind::TS_CONDITIONAL_TYPE
     );
 
-    let consequent = if is_consequent_conditional || parent_is_conditional {
-        if is_consequent_conditional {
-            let consequent = cast(consequent.syntax().to_owned());
-            let consequent = format_conditional(&consequent, formatter, true)?;
-            format_elements![question_mark.format(formatter)?, space_token(), consequent]
-        } else {
-            indent(format_elements![
-                question_mark.format(formatter)?,
-                space_token(),
-                consequent.format(formatter)?,
-            ])
-        }
+    let consequent = if is_consequent_conditional {
+        let consequent = cast(consequent.syntax().to_owned());
+        let consequent = format_conditional(&consequent, formatter, true)?;
+        format_elements![question_mark.format(formatter)?, space_token(), consequent]
+    } else if parent_is_conditional {
+        indent(format_elements![
+            question_mark.format(formatter)?,
+            space_token(),
+            consequent.format(formatter)?,
+        ])
     } else {
         format_elements![
             question_mark.format(formatter)?,
@@ -142,18 +147,16 @@ where
             consequent.format(formatter)?
         ]
     };
-    let alternate = if is_alternate_conditional || parent_is_conditional {
-        if is_alternate_conditional {
-            let alternate = cast(alternate.syntax().to_owned());
-            let alternate = format_conditional(&alternate, formatter, true)?;
-            format_elements![colon.format(formatter)?, space_token(), alternate]
-        } else {
-            indent(format_elements![
-                colon.format(formatter)?,
-                space_token(),
-                alternate.format(formatter)?
-            ])
-        }
+    let alternate = if is_alternate_conditional {
+        let alternate = cast(alternate.syntax().to_owned());
+        let alternate = format_conditional(&alternate, formatter, true)?;
+        format_elements![colon.format(formatter)?, space_token(), alternate]
+    } else if parent_is_conditional {
+        indent(format_elements![
+            colon.format(formatter)?,
+            space_token(),
+            alternate.format(formatter)?
+        ])
     } else {
         format_elements![
             colon.format(formatter)?,
