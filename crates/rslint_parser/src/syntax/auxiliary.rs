@@ -45,15 +45,16 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
         return true;
     }
 
-    if is_nth_at_contextual_keyword(p, n, "type") | is_nth_at_contextual_keyword(p, n, "interface")
+    if p.has_linebreak_before_n(n + 1) {
+        return false;
+    }
+
+    if is_nth_at_contextual_keyword(p, n, "type") || is_nth_at_contextual_keyword(p, n, "interface")
     {
         return true;
     }
 
-    if is_nth_at_contextual_keyword(p, n, "async")
-        && !p.has_linebreak_before_n(n + 1)
-        && p.nth_at(n + 1, T![function])
-    {
+    if is_nth_at_contextual_keyword(p, n, "async") && p.nth_at(n + 1, T![function]) {
         return true;
     }
 
@@ -61,10 +62,7 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
         return true;
     }
 
-    if is_nth_at_contextual_keyword(p, n, "abstract")
-        && !p.has_linebreak_before_n(n + 1)
-        && p.nth_at(n + 1, T![class])
-    {
+    if is_nth_at_contextual_keyword(p, n, "abstract") && p.nth_at(n + 1, T![class]) {
         return true;
     }
 

@@ -4,14 +4,15 @@ JsModule {
     items: JsModuleItemList [
         JsExport {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
-            export_clause: TsTypeAliasDeclaration {
-                type_token: TYPE_KW@7..11 "type" [] [],
-                binding_identifier: missing (required),
-                type_parameters: missing (optional),
-                eq_token: missing (required),
-                ty: missing (required),
-                semicolon_token: missing (optional),
+            export_clause: missing (required),
+        },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@7..11 "type" [] [],
+                },
             },
+            semicolon_token: missing (optional),
         },
     ],
     eof_token: EOF@11..12 "" [Newline("\n")] [],
@@ -21,22 +22,21 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..11
-    0: JS_EXPORT@0..11
+    0: JS_EXPORT@0..7
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: TS_TYPE_ALIAS_DECLARATION@7..11
-        0: TYPE_KW@7..11 "type" [] []
-        1: (empty)
-        2: (empty)
-        3: (empty)
-        4: (empty)
-        5: (empty)
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@7..11
+      0: JS_IDENTIFIER_EXPRESSION@7..11
+        0: JS_REFERENCE_IDENTIFIER@7..11
+          0: IDENT@7..11 "type" [] []
+      1: (empty)
   3: EOF@11..12 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier but instead found ''
-  ┌─ ts_export_type.ts:2:1
+error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'type'
+  ┌─ ts_export_type.ts:1:8
   │
-2 │ 
-  │ ^ Expected an identifier here
+1 │ export type
+  │        ^^^^ Expected a class, a function, or a variable declaration here
 
 --
 export type

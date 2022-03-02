@@ -6,26 +6,31 @@ use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
-use std::path::PathBuf;
+use std::path::Path;
 
 const CASES_PATH: &str = "xtask/coverage/babel/packages/babel-parser/test/fixtures/typescript";
 
 struct BabelTypescriptTestCase {
     name: String,
+    expected_to_fail: bool,
     code: String,
 }
 
 impl BabelTypescriptTestCase {
-    fn new(path: PathBuf, code: String) -> Self {
+    fn new(path: &Path, code: String, expected_to_fail: bool) -> Self {
         let name = path
-            .components()
-            .rev()
-            .nth(1)
-            .and_then(|x| x.as_os_str().to_str())
-            .unwrap_or("")
+            .parent()
+            .unwrap()
+            .strip_prefix(CASES_PATH)
+            .unwrap()
+            .display()
             .to_string();
 
-        Self { name, code }
+        Self {
+            name,
+            code,
+            expected_to_fail,
+        }
     }
 }
 
@@ -41,26 +46,29 @@ impl TestCase for BabelTypescriptTestCase {
             self.code.clone(),
             source_type.clone(),
         );
+
         let result = rslint_parser::parse(&self.code, 0, source_type);
 
-        if result.errors().is_empty() {
-            if let Some(unknown) = result
-                .syntax()
-                .descendants()
-                .find(|descendant| descendant.kind().is_unknown())
-            {
-                TestRunOutcome::IncorrectlyErrored {
-                    files,
-                    errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
-                }
-            } else {
-                TestRunOutcome::Passed(files)
-            }
-        } else {
+        if self.expected_to_fail && result.errors().is_empty() {
+            TestRunOutcome::IncorrectlyPassed(files)
+        } else if self.expected_to_fail {
+            TestRunOutcome::Passed(files)
+        } else if !result.errors().is_empty() {
             TestRunOutcome::IncorrectlyErrored {
                 files,
                 errors: result.errors().to_vec(),
             }
+        } else if let Some(unknown) = result
+            .syntax()
+            .descendants()
+            .find(|descendant| descendant.kind().is_unknown())
+        {
+            TestRunOutcome::IncorrectlyErrored {
+                files,
+                errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
+            }
+        } else {
+            TestRunOutcome::Passed(files)
         }
     }
 }
@@ -83,9 +91,26 @@ impl TestSuite for BabelTypescriptTestSuite {
 
     fn load_test(&self, path: &std::path::Path) -> Option<Box<dyn crate::runner::TestCase>> {
         let code = check_file_encoding(path)?;
+
+        let output_json_path = path.with_file_name("output.json");
+        let options_path = path.with_file_name("options.json");
+
+        let should_fail = if output_json_path.exists() {
+            check_file_encoding(&output_json_path)
+                .map(|content| content.contains("\"errors\":"))
+                .unwrap_or(false)
+        } else if options_path.exists() {
+            check_file_encoding(&options_path)
+                .map(|content| content.contains("\"throws\":"))
+                .unwrap_or(false)
+        } else {
+            false
+        };
+
         Some(Box::new(BabelTypescriptTestCase::new(
-            path.to_path_buf(),
+            path,
             code,
+            should_fail,
         )))
     }
 }
