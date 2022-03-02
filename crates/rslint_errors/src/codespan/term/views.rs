@@ -314,12 +314,11 @@ where
                 .peekable();
 
             while let Some((line_index, line)) = lines.next() {
-                let code = &source[line.range.clone()];
                 renderer.render_snippet_source(
                     outer_padding,
                     line.number,
                     line.range.clone(),
-                    code,
+                    source,
                     self.diagnostic.severity,
                     &line.single_labels,
                     labeled_file.num_multi_labels,
@@ -350,7 +349,7 @@ where
                                 outer_padding,
                                 line_number,
                                 line_range.clone(),
-                                &source[line_range],
+                                source,
                                 self.diagnostic.severity,
                                 &[],
                                 labeled_file.num_multi_labels,

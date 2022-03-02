@@ -600,23 +600,37 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
         outer_padding: usize,
         source: &str,
     ) -> Result<(), Error> {
-        let first_start = single_labels.iter().next().unwrap().1.start;
-        let last_end = single_labels.iter().last().unwrap().1.end;
-        let width = last_end - first_start;
+        let labels_start = single_labels.iter().next().unwrap().1.start;
+        let labels_end = single_labels.iter().last().unwrap().1.end;
+        let labels_width = labels_end - labels_start;
 
-        let spacing = (80 - width.min(80)) / 2;
-        let new_line_range =
-            (first_start.saturating_sub(spacing))..(last_end.saturating_add(spacing));
-        let mut new_code_range =
-            (line_range.start + new_line_range.start)..(line_range.start + new_line_range.end);
+        let spacing = (max_line_length - labels_width.min(max_line_length)) / 2;
 
+        // This line is bigger than one line, so we change its range to be as tight as possible
+        // around the range of all labels
+        let interesting_part_start = labels_start.saturating_sub(spacing);
+        let interesting_part_end = labels_end.saturating_add(spacing);
+        let interesting_part_range = interesting_part_start..interesting_part_end;
+
+        // labels range are relative to the start of the line, now we
+        // need the range relative to the file start.
+        let mut new_code_range = (line_range.start + interesting_part_range.start)
+            ..(line_range.start + interesting_part_range.end);
+
+        // We need to adjust all labels ranges to be at the start
+        // of the interesting part
         for label in single_labels.iter_mut() {
-            label.1.start -= new_line_range.start;
-            label.1.end -= new_line_range.start;
+            label.1.start -= interesting_part_range.start;
+            label.1.end -= interesting_part_range.start;
 
-            label.1.end = label.1.end.min(label.1.start + 80);
+            // We need to limit the width of the range
+            label.1.end = label
+                .1
+                .end
+                .min(interesting_part_range.start + max_line_length);
         }
 
+        // and the width of what we are going to print
         new_code_range.end = new_code_range.end.min(new_code_range.start + 80);
 
         self.render_snippet_source_impl(
@@ -628,8 +642,6 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
             0,
             &[],
         )?;
-
-        single_labels.clear();
 
         Ok(())
     }
@@ -652,6 +664,8 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
         multi_labels: &[(usize, LabelStyle, MultiLabel<'_>)],
     ) -> Result<(), Error> {
         let max_line_length = 80;
+
+        // if the line is smaller than max_line_length, we print it completely...
         if source.len() < max_line_length {
             return self.render_snippet_source_impl(
                 outer_padding,
@@ -663,38 +677,45 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
                 &multi_labels,
             );
         } else {
+            // This implementation ignores multi_labels
             debug_assert!(multi_labels.len() == 0);
 
-            // ... if not... We print one single_label per time
+            // ... if not, we print one single_label per time
             // showing only the interesting part of the line.
-            let mut current_single_labels = vec![];
+            let mut candidates = vec![];
             for single_label in single_labels.iter() {
-                current_single_labels.push(single_label.clone());
+                candidates.push(single_label.clone());
 
                 // We need to know which part of the long line we are going to display
-                let width = current_single_labels.iter().last().unwrap().1.end
-                    - current_single_labels.iter().next().unwrap().1.start;
+                let last_end = candidates.iter().last().unwrap().1.end;
+                let first_start = candidates.iter().next().unwrap().1.start;
+                let width = last_end - first_start;
+
                 if width < max_line_length {
+                    // we still can fit more labels
                     continue;
                 }
+
                 self.render_snippet_source_huge_line(
                     max_line_length,
                     line_number,
                     line_range.clone(),
                     severity,
-                    &mut current_single_labels,
+                    &mut candidates,
                     outer_padding,
                     source,
                 )?;
+
+                candidates.clear();
             }
 
-            if current_single_labels.len() > 0 {
+            if candidates.len() > 0 {
                 self.render_snippet_source_huge_line(
                     max_line_length,
                     line_number,
                     line_range,
                     severity,
-                    &mut current_single_labels,
+                    &mut candidates,
                     outer_padding,
                     source,
                 )?;
