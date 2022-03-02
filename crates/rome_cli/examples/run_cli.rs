@@ -1,5 +1,4 @@
-use rome_cli::run_cli;
-use std::env;
+use rome_cli::{run_cli, CliSession};
 
 ///
 /// To run this example, run:
@@ -26,5 +25,5 @@ use std::env;
 /// cargo run --example run_cli format examples/input.js
 /// ```
 fn main() {
-    run_cli(env::args_os().skip(1).collect());
+    run_cli(CliSession::from_env());
 }

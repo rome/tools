@@ -1,8 +1,8 @@
 use pico_args::Arguments;
 use rome_core::App;
-use rome_formatter::{format_file_and_save, FormatOptions, IndentStyle};
-use rome_path::RomePath;
-use std::ffi::OsString;
+use std::env;
+
+mod commands;
 
 const HELP: &str = concat!(
     "Rome CLI v",
@@ -14,38 +14,25 @@ Available commands:
 ",
 );
 
-/// Main function to run Rome CLI
-pub fn run_cli(args: Vec<OsString>) {
-    let mut args = Arguments::from_vec(args);
-    let subcommand = args.subcommand();
-    match subcommand.as_ref().map(Option::as_deref) {
-        Ok(Some("format")) => {
-            let mut options = FormatOptions::default();
+pub struct CliSession {
+    pub app: App,
+    pub args: Arguments,
+}
 
-            let size = args
-                .opt_value_from_str("--indent-size")
-                .expect("failed to parse indent-size argument");
-
-            let style = args
-                .opt_value_from_str("--indent-style")
-                .expect("failed to parse indent-style argument");
-
-            match style {
-                Some(IndentStyle::Tab) => {
-                    options.indent_style = IndentStyle::Tab;
-                }
-                Some(IndentStyle::Space(default_size)) => {
-                    options.indent_style = IndentStyle::Space(size.unwrap_or(default_size));
-                }
-                None => {}
-            }
-
-            let rome_app = App::new();
-            for input in args.finish() {
-                let mut file = RomePath::new(input);
-                format_file_and_save(&mut file, options, &rome_app);
-            }
+impl CliSession {
+    pub fn from_env() -> Self {
+        Self {
+            app: App::new(),
+            args: Arguments::from_env(),
         }
+    }
+}
+
+/// Main function to run Rome CLI
+pub fn run_cli(mut session: CliSession) {
+    let subcommand = session.args.subcommand();
+    match subcommand.as_ref().map(Option::as_deref) {
+        Ok(Some("format")) => crate::commands::format::format(session),
         Ok(None | Some("help")) => {
             println!("{HELP}");
         }
