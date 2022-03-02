@@ -380,6 +380,7 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
                     }
                 }
             }
+
             if let Some((trailing_label_index, (_, trailing_range, _))) = trailing_label {
                 // Check to see if the trailing label candidate overlaps any of
                 // the other labels on the current line.
@@ -446,6 +447,7 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
                     None if metrics.byte_index < max_label_end => Some(' '),
                     None => None,
                 };
+
                 if let Some(caret_ch) = caret_ch {
                     // FIXME: improve rendering of carets between character boundaries
                     (0..metrics.unicode_width).try_for_each(|_| write!(self, "{}", caret_ch))?;

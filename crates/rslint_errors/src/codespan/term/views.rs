@@ -21,6 +21,15 @@ pub struct RichDiagnostic<'diagnostic, 'config, FileId> {
     config: &'config Config,
 }
 
+struct Line<'diagnostic> {
+    number: usize,
+    range: std::ops::Range<usize>,
+    // TODO: How do we reuse these allocations?
+    single_labels: Vec<SingleLabel<'diagnostic>>,
+    multi_labels: Vec<(usize, LabelStyle, MultiLabel<'diagnostic>)>,
+    must_render: bool,
+}
+
 impl<'diagnostic, 'config, FileId> RichDiagnostic<'diagnostic, 'config, FileId>
 where
     FileId: Copy + PartialEq,
@@ -68,15 +77,6 @@ where
                     must_render: false,
                 })
             }
-        }
-
-        struct Line<'diagnostic> {
-            number: usize,
-            range: std::ops::Range<usize>,
-            // TODO: How do we reuse these allocations?
-            single_labels: Vec<SingleLabel<'diagnostic>>,
-            multi_labels: Vec<(usize, LabelStyle, MultiLabel<'diagnostic>)>,
-            must_render: bool,
         }
 
         // TODO: Make this data structure external, to allow for allocation reuse
@@ -313,10 +313,14 @@ where
                 .filter(|(_, line)| line.must_render)
                 .peekable();
 
+            let max_line_length = 80;
+
             while let Some((line_index, line)) = lines.next() {
                 let code = &source[line.range.clone()];
 
-                // If line fits in a console, we print as the whole line...
+                dbg!(&line.multi_labels);
+
+                // If line is not huge, we print it as the whole...
                 if code.len() < 80 {
                     renderer.render_snippet_source(
                         outer_padding,
@@ -330,30 +334,34 @@ where
                 } else {
                     // ... if not... We print one single_label per time
                     // showing only the interesting part of the line.
+                    let mut single_labels = vec![];
                     for single_label in line.single_labels.iter() {
-                        let mut single_labels = [single_label.clone()];
+                        single_labels.push(single_label.clone());
 
                         // We need to know which part of the long line we are going to display
-                        let width = single_label.1.end - single_label.1.start;
-                        let spacing = (80 - width) / 2;
-                        let new_line_range =
-                            (single_label.1.start - spacing)..(single_label.1.end + spacing);
-                        let new_code_range = (line.range.start + new_line_range.start)
-                            ..(line.range.start + new_line_range.end);
-
-                        // We need to adjust the label start/end so it thinks
-                        // that the line start where we start printing.
-                        single_labels[0].1.start -= new_line_range.start;
-                        single_labels[0].1.end -= new_line_range.start;
-
-                        renderer.render_snippet_source(
+                        let width = single_labels.iter().last().unwrap().1.end
+                            - single_labels.iter().next().unwrap().1.start;
+                        if width < 80 {
+                            continue;
+                        }
+                        self.render_snippet_source_huge_line(
+                            max_line_length,
+                            line,
+                            &mut single_labels,
+                            renderer,
                             outer_padding,
-                            line.number,
-                            &source[new_code_range],
-                            self.diagnostic.severity,
-                            &single_labels[..],
-                            0,
-                            &[],
+                            source,
+                        )?;
+                    }
+
+                    if single_labels.len() > 0 {
+                        self.render_snippet_source_huge_line(
+                            max_line_length,
+                            line,
+                            &mut single_labels,
+                            renderer,
+                            outer_padding,
+                            source,
                         )?;
                     }
                 }
@@ -437,6 +445,51 @@ where
                 idx != self.diagnostic.notes.len() - 1,
             )?;
         }
+        Ok(())
+    }
+
+    fn render_snippet_source_huge_line<'writer>(
+        &self,
+        max_line_length: usize,
+        line: &Line<'diagnostic>,
+        single_labels: &mut Vec<(LabelStyle, Range<usize>, &str)>,
+        renderer: &mut Renderer<'_, '_>,
+        outer_padding: usize,
+        source: &str,
+    ) -> Result<(), Error> {
+        debug_assert!(line.multi_labels.len() == 0);
+
+        let first_start = single_labels.iter().next().unwrap().1.start;
+        let last_end = single_labels.iter().last().unwrap().1.end;
+        let width = last_end - first_start;
+
+        let spacing = (80 - width.min(80)) / 2;
+        let new_line_range =
+            (first_start.saturating_sub(spacing))..(last_end.saturating_add(spacing));
+        let mut new_code_range =
+            (line.range.start + new_line_range.start)..(line.range.start + new_line_range.end);
+
+        for label in single_labels.iter_mut() {
+            label.1.start -= new_line_range.start;
+            label.1.end -= new_line_range.start;
+
+            label.1.end = label.1.end.min(label.1.start + 80);
+        }
+
+        new_code_range.end = new_code_range.end.min(new_code_range.start + 80);
+
+        renderer.render_snippet_source(
+            outer_padding,
+            line.number,
+            &source[new_code_range],
+            self.diagnostic.severity,
+            single_labels.as_slice(),
+            0,
+            &[],
+        )?;
+
+        single_labels.clear();
+
         Ok(())
     }
 }
