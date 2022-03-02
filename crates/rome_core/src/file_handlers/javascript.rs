@@ -13,7 +13,7 @@ impl ExtensionHandler for JsFileHandler {
     }
 
     fn language(&self) -> super::Language {
-        super::Language::Js
+        super::Language::JavaScript
     }
 
     fn mime(&self) -> super::Mime {

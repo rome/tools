@@ -1,7 +1,6 @@
-use std::sync::Arc;
-
 use anyhow::bail;
 use rome_analyze::FileId;
+use std::sync::Arc;
 
 /// Internal representation of supported [language identifiers]
 ///

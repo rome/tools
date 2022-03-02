@@ -91,6 +91,7 @@ pub use crate::{
     token_source::TokenSource,
     util::{SyntaxNodeExt, SyntaxTokenExt},
 };
+use std::fmt::{Debug, Formatter};
 
 pub(crate) use state::{ParserState, StrictMode};
 
@@ -105,6 +106,8 @@ pub type ParserError = rslint_errors::Diagnostic;
 use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
+use rome_core::RomeError;
+use rome_path::RomePath;
 use rslint_errors::Diagnostic;
 use std::ops::Range;
 
@@ -228,7 +231,7 @@ impl Default for Language {
     }
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Default)]
 pub struct SourceType {
     language: Language,
     variant: LanguageVariant,
@@ -278,29 +281,6 @@ impl SourceType {
         }
     }
 
-    pub fn from_path(path: &std::path::Path) -> Option<SourceType> {
-        let file_name = path.file_name()?.to_str()?;
-
-        let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
-            Self::d_ts()
-        } else if file_name.ends_with(".d.cts") {
-            Self::d_ts().with_module_kind(ModuleKind::Script)
-        } else {
-            let extension = path.extension()?.to_str()?;
-            match extension {
-                "js" | "mjs" => Self::js_module(),
-                "cjs" => Self::js_module().with_module_kind(ModuleKind::Script),
-                "jsx" => Self::jsx(),
-                "ts" | "mts" => Self::ts(),
-                "cts" => Self::ts().with_module_kind(ModuleKind::Script),
-                "tsx" => Self::tsx(),
-                _ => return None,
-            }
-        };
-
-        Some(source_type)
-    }
-
     pub fn with_module_kind(mut self, kind: ModuleKind) -> Self {
         self.module_kind = kind;
         self
@@ -334,6 +314,76 @@ impl SourceType {
 
     pub fn is_module(&self) -> bool {
         self.module_kind.is_module()
+    }
+}
+
+impl TryFrom<&mut RomePath> for SourceType {
+    type Error = RomeError;
+
+    fn try_from(path: &mut RomePath) -> Result<Self, Self::Error> {
+        let file_name = path.file_name().ok_or(RomeError::CantReadTheFile)?;
+        let file_name = file_name.to_str().ok_or(RomeError::CantReadTheFile)?;
+        let extension = path.extension_as_str();
+
+        compute_source_type_from_path_or_extension(file_name, extension)
+    }
+}
+
+impl TryFrom<&RomePath> for SourceType {
+    type Error = RomeError;
+
+    fn try_from(path: &RomePath) -> Result<Self, Self::Error> {
+        let file_name = path.file_name().ok_or(RomeError::CantReadTheFile)?;
+        let file_name = file_name.to_str().ok_or(RomeError::CantReadTheFile)?;
+        let extension = path.extension_as_str();
+
+        compute_source_type_from_path_or_extension(file_name, extension)
+    }
+}
+
+impl TryFrom<RomePath> for SourceType {
+    type Error = RomeError;
+
+    fn try_from(path: RomePath) -> Result<Self, Self::Error> {
+        let file_name = path.file_name().ok_or(RomeError::CantReadTheFile)?;
+        let file_name = file_name.to_str().ok_or(RomeError::CantReadTheFile)?;
+        let extension = path.extension_as_str();
+
+        compute_source_type_from_path_or_extension(file_name, extension)
+    }
+}
+
+/// It deduce the [SourceType] from the file name and its extension
+fn compute_source_type_from_path_or_extension(
+    file_name: &str,
+    extension: &str,
+) -> Result<SourceType, RomeError> {
+    let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
+        SourceType::d_ts()
+    } else if file_name.ends_with(".d.cts") {
+        SourceType::d_ts().with_module_kind(ModuleKind::Script)
+    } else {
+        match extension {
+            "js" | "mjs" => SourceType::js_module(),
+            "cjs" => SourceType::js_module().with_module_kind(ModuleKind::Script),
+            "jsx" => SourceType::jsx(),
+            "ts" | "mts" => SourceType::ts(),
+            "cts" => SourceType::ts().with_module_kind(ModuleKind::Script),
+            "tsx" => SourceType::tsx(),
+            _ => return Err(RomeError::SourceFileNotSupported(extension.into())),
+        }
+    };
+    Ok(source_type)
+}
+
+impl Debug for SourceType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Source Type")
+            .field("Language", &self.language)
+            .field("Module kind", &self.module_kind)
+            .field("Variant", &self.variant)
+            .field("Version", &self.version)
+            .finish()
     }
 }
 

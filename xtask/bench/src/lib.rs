@@ -1,10 +1,11 @@
 mod features;
 mod utils;
 
+use rome_path::RomePath;
 use rslint_parser::{parse, SourceType};
 use std::collections::HashMap;
+use std::convert::TryInto;
 use std::fmt::{Display, Formatter};
-use std::path::Path;
 use std::str::FromStr;
 use std::time::Duration;
 
@@ -116,7 +117,7 @@ pub fn run(args: RunArgs) {
             Ok((id, code)) => {
                 let code = code.as_str();
 
-                let source_type = SourceType::from_path(Path::new(&id)).unwrap();
+                let source_type: SourceType = RomePath::new(&*id).try_into().unwrap();
 
                 // Do all steps with criterion now
                 if args.criterion {

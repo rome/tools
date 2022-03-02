@@ -3,6 +3,7 @@ use lspower::jsonrpc::Result as LspResult;
 use lspower::lsp::*;
 use lspower::{Client, LanguageServer, LspService, Server};
 use rome_analyze::AnalysisServer;
+use rome_path::RomePath;
 use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};
 use tracing::{error, info, trace};
@@ -10,7 +11,9 @@ use tracing::{error, info, trace};
 use crate::capabilities::server_capabilities;
 use crate::config::CONFIGURATION_SECTION;
 use crate::handlers;
-use crate::handlers::formatting::{to_format_options, FormatOnTypeParams, FormatRangeParams};
+use crate::handlers::formatting::{
+    to_format_options, FormatOnTypeParams, FormatParams, FormatRangeParams,
+};
 use crate::line_index::LineIndex;
 use crate::session::Session;
 use crate::utils;
@@ -110,15 +113,16 @@ impl LanguageServer for LSPServer {
     ) -> LspResult<Option<Vec<TextEdit>>> {
         let url = params.text_document.uri;
         let doc = self.session.document(&url)?;
+        let rome_path = RomePath::new(url.path()).with_id(doc.file_id);
         let workspace_settings = self.session.config.read().get_workspace_settings();
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format(
-                &doc.text,
-                doc.file_id,
-                &params.options,
+            handlers::formatting::format(FormatParams {
+                text: &doc.text,
+                rome_path: &rome_path,
+                format_options: to_format_options(&params.options),
                 workspace_settings,
-            )
+            })
         });
         let edits = task.await?;
         Ok(edits)
@@ -131,6 +135,7 @@ impl LanguageServer for LSPServer {
         let url = params.text_document.uri;
         let doc = self.session.document(&url)?;
         let workspace_settings = self.session.config.read().get_workspace_settings();
+        let rome_path = RomePath::new(url.path()).with_id(doc.file_id);
 
         let task = utils::spawn_blocking_task(move || {
             handlers::formatting::format_range(FormatRangeParams {
@@ -139,6 +144,7 @@ impl LanguageServer for LSPServer {
                 format_options: to_format_options(&params.options),
                 range: params.range,
                 workspace_settings,
+                rome_path: &rome_path,
             })
         });
         let edits = task.await?;
@@ -152,6 +158,7 @@ impl LanguageServer for LSPServer {
         let url = params.text_document_position.text_document.uri;
         let doc = self.session.document(&url)?;
         let workspace_settings = self.session.config.read().get_workspace_settings();
+        let rome_path = RomePath::new(url.path()).with_id(doc.file_id);
 
         let task = utils::spawn_blocking_task(move || {
             handlers::formatting::format_on_type(FormatOnTypeParams {
@@ -160,6 +167,7 @@ impl LanguageServer for LSPServer {
                 format_options: to_format_options(&params.options),
                 position: params.text_document_position.position,
                 workspace_settings,
+                rome_path: &rome_path,
             })
         });
         let edits = task.await?;

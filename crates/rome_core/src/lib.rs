@@ -2,6 +2,8 @@ use crate::file_handlers::unknown::UnknownFileHandler;
 use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
 use file_handlers::json::JsonFileHandler;
 use rome_path::RomePath;
+use std::error::Error;
+use std::fmt::{Debug, Display, Formatter};
 
 pub mod file_handlers;
 
@@ -28,6 +30,43 @@ impl Default for App {
         }
     }
 }
+
+/// Generic errors thrown during rome operations
+pub enum RomeError {
+    /// A file can't be read
+    CantReadTheFile,
+    /// A fiile is not supported. It contains the extension of the file
+    /// Use this error if Rome is trying to process a file that Rome can't understand
+    SourceFileNotSupported(String),
+}
+
+impl Debug for RomeError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RomeError::SourceFileNotSupported(extension) => {
+                write!(f, "Rome doesn't support this {extension} yet")
+            }
+            RomeError::CantReadTheFile => {
+                write!(f, "Rome is not able to read the file")
+            }
+        }
+    }
+}
+
+impl Display for RomeError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RomeError::SourceFileNotSupported(extension) => {
+                write!(f, "Rome doesn't support this {extension} yet")
+            }
+            RomeError::CantReadTheFile => {
+                write!(f, "Rome is not able to read the file")
+            }
+        }
+    }
+}
+
+impl Error for RomeError {}
 
 impl App {
     pub fn new() -> Self {
@@ -61,23 +100,27 @@ impl App {
 
     /// Checks if the current file can be formatted
     pub fn can_format(&self, rome_path: &RomePath) -> bool {
-        let language = self.get_language(rome_path.extension().expect("Could not read the file"));
+        rome_path.extension().map_or(false, |extension| {
+            let language = self.get_language(extension);
 
-        match language {
-            Language::Js => self.features.js.capabilities().format,
-            Language::Json => self.features.json.capabilities().format,
-            Language::Unknown => self.features.unknown.capabilities().format,
-        }
+            match language {
+                Language::JavaScript => self.features.js.capabilities().format,
+                Language::Json => self.features.json.capabilities().format,
+                Language::Unknown => self.features.unknown.capabilities().format,
+            }
+        })
     }
 
     /// Checks if the current file can be analyzed for linting rules
     pub fn can_lint(&self, rome_path: &RomePath) -> bool {
-        let language = self.get_language(rome_path.extension().expect("Could not read the file"));
+        rome_path.extension().map_or(false, |extension| {
+            let language = self.get_language(extension);
 
-        match language {
-            Language::Js => self.features.js.capabilities().lint,
-            Language::Json => self.features.json.capabilities().lint,
-            Language::Unknown => self.features.unknown.capabilities().lint,
-        }
+            match language {
+                Language::JavaScript => self.features.js.capabilities().lint,
+                Language::Json => self.features.json.capabilities().lint,
+                Language::Unknown => self.features.unknown.capabilities().lint,
+            }
+        })
     }
 }

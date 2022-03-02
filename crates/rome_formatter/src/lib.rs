@@ -456,7 +456,7 @@ pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Fo
         Some(trivia) => {
             // This logic is based on the formatting options passed in
             // the be user (or the editor) as we do not have any kind
-            // of identation type detection yet. Unfortunately this
+            // of indentation type detection yet. Unfortunately this
             // may not actually match the current content of the file
             let length = trivia.text().len() as u16;
             match options.indent_style {
@@ -488,8 +488,9 @@ pub fn format_element(element: &FormatElement, options: FormatOptions) -> Format
 pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, app: &App) {
     let result = if app.can_format(rome_path) {
         let buffer = rome_path.get_buffer_from_file();
-        let source_type =
-            SourceType::from_path(rome_path.as_path()).unwrap_or_else(SourceType::js_module);
+        let source_type = rome_path
+            .try_into()
+            .unwrap_or_else(|_| SourceType::js_module());
         let root = parse(buffer.as_str(), 0, source_type).syntax();
         Some(format(options, &root))
     } else {

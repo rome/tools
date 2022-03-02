@@ -1,12 +1,10 @@
-use std::{collections::HashMap, error::Error, fmt::Display};
-
+use crate::config::Config;
+use crate::{documents::Document, handlers, url_interner::UrlInterner};
 use lspower::jsonrpc::Error as LspError;
 use lspower::lsp;
 use parking_lot::RwLock;
 use rome_analyze::{AnalysisServer, FileId};
-
-use crate::config::Config;
-use crate::{documents::Document, handlers, url_interner::UrlInterner};
+use std::{collections::HashMap, error::Error, fmt::Display};
 
 /// Represents the state of an LSP server session.
 pub(crate) struct Session {
