@@ -97,9 +97,8 @@ pub(crate) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
     p.bump(T![<]);
     if p.at(T![>]) {
         p.error(expected_ts_type_parameter(p, p.cur_tok().range()));
-    } else {
-        TsTypeParameterList.parse_list(p);
     }
+    TsTypeParameterList.parse_list(p);
     p.expect(T![>]);
 
     Present(m.complete(p, TS_TYPE_PARAMETERS))
@@ -1244,9 +1243,8 @@ pub(crate) fn parse_ts_type_arguments_impl(
 
     if p.at(T![>]) {
         p.error(expected_ts_type_parameter(p, p.cur_tok().range()));
-    } else {
-        TypeArgumentsList { recover_on_errors }.parse_list(p);
     }
+    TypeArgumentsList { recover_on_errors }.parse_list(p);
     p.expect(T![>]);
     m.complete(p, TS_TYPE_ARGUMENTS)
 }
