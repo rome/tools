@@ -1,3 +1,6 @@
+@use 'sass:color';
+@use 'sass:math';
+
 .hero-funding {
 	margin-top: 16px;
 	border-top: 1px solid var(--soft-border-color);
@@ -111,7 +114,7 @@
 
 			.button {
 				margin-left: 5px;
-	
+
 				&:last-child {
 					margin-right: 0;
 				}
@@ -162,7 +165,7 @@
 			border: none;
 			background-color: $color-4;
 			border: 1px solid darken($color-4, 5%) !important;
-			
+
 			&:hover {
 				background-color: darken($color-4, 5%);
 
@@ -170,7 +173,7 @@
 					background: none;
 				}
 			}
-		
+
 			&:active, &.active {
 				background-color: darken($color-4, 10%);
 				border-color: darken($color-4, 15%);
@@ -208,7 +211,7 @@
 		&:hover::before {
 			background-color: rgba(0, 0, 0, 0.6);
 		}
-		
+
 		.modal {
 			max-width: 100%;
 			width: 100%;
@@ -302,7 +305,7 @@
 		list-style: decimal;
 		counter-reset: form-steps-item;
 		line-height: 24px;
-	
+
 		li {
 			display: inline;
 			counter-increment: form-steps-item;
@@ -393,7 +396,7 @@
 
 		@media only screen and (max-width: 650px) {
 			display: block;
-			
+
 			> * {
 				width: 100%;
 			}
@@ -449,12 +452,12 @@
 		&.platinum, &.diamond, &.gold {
 			color: #000;
 		}
-		
+
 		&.copper {
 			background-color: rgba(255, 255, 255, 0.1);
 		}
 	}
-	
+
 	&.copper {
 		background-color: rgba(0, 0, 0, 0.05);
 	}
@@ -499,18 +502,18 @@
 	font-weight: bold;
 
 	&.error {
-		background-color: rgba(adjust-hue($color-4, 300%), 0.3);
-		border-color: rgba(adjust-hue($color-4, 300%), 0.5);
+		background-color: rgba(color.adjust($color-4, $hue: math.div(300%, 1%)), 0.3);
+		border-color: rgba(color.adjust($color-4, $hue: math.div(300%, 1%)), 0.5);
 	}
 
 	&.warning {
-		background-color: rgba(adjust-hue($color-4, 0%), 0.3);
-		border-color: rgba(adjust-hue($color-4, 0%), 0.5);
+		background-color: rgba($color-4, 0.3);
+		border-color: rgba($color-4, 0.5);
 	}
 
 	&.success {
-		background-color: rgba(adjust-hue($color-4, 450%), 0.3);
-		border-color: rgba(adjust-hue($color-4, 450%), 0.5);
+		background-color: rgba(color.adjust($color-4, $hue: math.div(450%, 1%)), 0.3);
+		border-color: rgba(color.adjust($color-4, $hue: math.div(450%, 1%)), 0.5);
 
 		@include dark-mode {
 			color: #fff;

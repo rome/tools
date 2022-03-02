@@ -96,7 +96,7 @@
 	padding-left: $unit;
 
 	> ol > li {
-		margin-bottom: $unit / 2;
+		margin-bottom: calc($unit / 2);
 	}
 
 	ol li ol{
@@ -137,7 +137,7 @@
 
 	li a {
 		height: auto;
-		padding: $unit / 5 $unit / 2;
+		padding: calc($unit / 5) calc($unit / 2);
 		display: inline-block;
 		padding-left: 32px;
 		margin-left: 0;

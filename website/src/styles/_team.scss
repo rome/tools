@@ -14,7 +14,7 @@ ul.team-list {
 		li {
 			width: 130px;
 			margin: 0;
-			margin: $unit / 4;
+			margin: calc($unit / 4);
 
 			img {
 				width: 128px;
@@ -22,7 +22,7 @@ ul.team-list {
 			}
 
 			span {
-				margin: $unit / 2 0;
+				margin: calc($unit / 2) 0;
 			}
 		}
 	}
