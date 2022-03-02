@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, expected_node, ToDiagnostic};
-use crate::{CompletedMarker, Parser, TextRange};
+use crate::{Parser, TextRange};
 use rslint_errors::{Diagnostic, Span};
 use std::ops::Range;
 
@@ -164,14 +164,6 @@ pub(crate) fn expected_unary_expression(p: &Parser, range: Range<usize>) -> Diag
     expected_node("unary expression", range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_ts_type(p: &Parser, range: Range<usize>) -> Diagnostic {
-    expected_node("type", range).to_diagnostic(p)
-}
-
-pub(crate) fn expected_ts_type_parameter(p: &Parser, range: Range<usize>) -> Diagnostic {
-    expected_node("type parameter", range).to_diagnostic(p)
-}
-
 pub(crate) fn expected_property_or_signature(p: &Parser, range: Range<usize>) -> Diagnostic {
     expected_any(&["property", "signature"], range).to_diagnostic(p)
 }
@@ -189,35 +181,6 @@ pub(crate) fn expected_declaration(p: &Parser, range: Range<usize>) -> Diagnosti
         range,
     )
     .to_diagnostic(p)
-}
-
-pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: impl Span) -> Diagnostic {
-    p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax))
-		.primary(range, "TypeScript only syntax")
-}
-
-pub(crate) fn ts_accessor_type_parameters_error(
-    p: &Parser,
-    type_parameters: &CompletedMarker,
-) -> Diagnostic {
-    p.err_builder("An accessor cannot have type parameters")
-        .primary(type_parameters.range(p), "")
-}
-
-pub(crate) fn ts_constructor_type_parameters_error(
-    p: &Parser,
-    type_parameters: &CompletedMarker,
-) -> Diagnostic {
-    p.err_builder("constructors cannot have type parameters")
-        .primary(type_parameters.range(p), "")
-}
-
-pub(crate) fn ts_set_accessor_return_type_error(
-    p: &Parser,
-    type_annotation: &CompletedMarker,
-) -> Diagnostic {
-    p.err_builder("A 'set' accessor cannot have a return type annotation.")
-        .primary(type_annotation.range(p), "")
 }
 
 pub(crate) fn unexpected_body_inside_ambient_context(
@@ -253,16 +216,6 @@ pub(crate) fn modifier_already_seen(
     p.err_builder(&format!("'{modifier}' already seen"))
         .primary(second_range, "duplicate modifier")
         .secondary(first_range, "first seen here")
-}
-
-pub(crate) fn accessibility_modifier_already_seen(
-    p: &Parser,
-    second_range: TextRange,
-    first_range: TextRange,
-) -> Diagnostic {
-    p.err_builder("Accessibility modifier already seen")
-        .primary(second_range, "duplicate modifier")
-        .secondary(first_range, "first modifier")
 }
 
 pub(crate) fn modifier_cannot_be_used_with_modifier(

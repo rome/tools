@@ -13,18 +13,18 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    accessibility_modifier_already_seen, expected_binding, modifier_already_seen,
-    modifier_cannot_be_used_with_modifier, modifier_must_precede_modifier,
-    ts_accessor_type_parameters_error, ts_constructor_type_parameters_error, ts_only_syntax_error,
-    ts_set_accessor_return_type_error,
+    expected_binding, modifier_already_seen, modifier_cannot_be_used_with_modifier,
+    modifier_must_precede_modifier,
 };
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
 use crate::syntax::stmt::{optional_semi, parse_statements, StatementContext};
 use crate::syntax::typescript::ts_parse_error::{
-    ts_modifier_cannot_appear_on_a_constructor_declaration,
-    ts_modifier_cannot_appear_on_a_parameter,
+    ts_accessibility_modifier_already_seen, ts_accessor_type_parameters_error,
+    ts_constructor_type_parameters_error, ts_modifier_cannot_appear_on_a_constructor_declaration,
+    ts_modifier_cannot_appear_on_a_parameter, ts_only_syntax_error,
+    ts_set_accessor_return_type_error,
 };
 use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
@@ -464,9 +464,7 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
     match member {
         Present(mut member) => {
             let mut valid = true;
-            if modifiers.check_class_member(p, member.kind()).is_err() {
-                valid = false;
-            } else if !inside_abstract_class {
+            if !inside_abstract_class {
                 // test_err ts ts_concrete_class_with_abstract_members
                 // class A {
                 //    abstract my_age: number;
@@ -485,7 +483,9 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
                 }
             }
 
-            modifiers.complete(p, member.kind());
+            if modifiers.validate_and_complete(p, member.kind()).is_err() {
+                valid = false;
+            }
 
             if !valid {
                 member.change_to_unknown(p);
@@ -881,7 +881,9 @@ fn parse_static_initialization_block_class_member(
             p.err_builder("Static class blocks cannot have any modifier.")
                 .primary(modifiers.list_marker.range(p), ""),
         );
-        modifiers.complete(p, JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER);
+        modifiers
+            .validate_and_complete(p, JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER)
+            .ok();
     }
 
     p.bump_remap(T![static]);
@@ -1352,15 +1354,13 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
             .or_add_diagnostic(p, expected_binding);
 
         let kind = if modifiers
-            .check_class_member(p, TS_PROPERTY_PARAMETER)
+            .validate_and_complete(p, TS_PROPERTY_PARAMETER)
             .is_err()
         {
             JS_UNKNOWN_PARAMETER
         } else {
             TS_PROPERTY_PARAMETER
         };
-
-        modifiers.complete(p, TS_PROPERTY_PARAMETER);
 
         Present(property_parameter.complete(p, kind))
     } else {
@@ -1716,7 +1716,15 @@ impl ClassMemberModifiers {
         self.bomb.defuse();
     }
 
-    fn complete(mut self, p: &mut Parser, member_kind: JsSyntaxKind) {
+    /// Validates if these modifiers are valid for a member of the given kind and
+    /// completes the modifier list.
+    ///
+    /// Returns `Ok` if all modifiers are valid. Returns `Err` otherwise
+    fn validate_and_complete(
+        mut self,
+        p: &mut Parser,
+        member_kind: JsSyntaxKind,
+    ) -> Result<ModifierFlags, ()> {
         self.bomb.defuse();
 
         let list_kind = match member_kind {
@@ -1734,12 +1742,32 @@ impl ClassMemberModifiers {
             JS_UNKNOWN_MEMBER | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER => {
                 // Error recovery kicked in. There's no "right" list to pick in this case, let's just remove it
                 self.list_marker.undo_completion(p).abandon(p);
-                return;
+                return Err(());
             }
             t => panic!("Unknown member kind {:?}", t),
         };
 
         self.list_marker.change_kind(p, list_kind);
+
+        let mut flags = ModifierFlags::empty();
+        let mut valid = true;
+
+        for modifier in self.modifiers.iter() {
+            if let Some(diagnostic) =
+                self.check_class_member_modifier(p, modifier, flags, member_kind)
+            {
+                p.error(diagnostic);
+                valid = false;
+            }
+
+            flags |= modifier.kind.as_flags(); // Keep track of the seen modifiers
+        }
+
+        if valid {
+            Ok(flags)
+        } else {
+            Err(())
+        }
     }
 
     // test ts ts_class_property_member_modifiers
@@ -2007,7 +2035,7 @@ impl ClassMemberModifiers {
                         self.get_first_range_unchecked(ModifierKind::Public)
                     };
 
-                    return Some(accessibility_modifier_already_seen(
+                    return Some(ts_accessibility_modifier_already_seen(
                         p,
                         modifier.as_text_range(),
                         range,
@@ -2111,31 +2139,5 @@ impl ClassMemberModifiers {
         }
 
         None
-    }
-
-    fn check_class_member(
-        &self,
-        p: &mut Parser,
-        member_kind: JsSyntaxKind,
-    ) -> Result<ModifierFlags, ()> {
-        let mut flags = ModifierFlags::empty();
-        let mut valid = true;
-
-        for modifier in self.modifiers.iter() {
-            if let Some(diagnostic) =
-                self.check_class_member_modifier(p, modifier, flags, member_kind)
-            {
-                p.error(diagnostic);
-                valid = false;
-            }
-
-            flags |= modifier.kind.as_flags(); // Keep track of the seen modifiers
-        }
-
-        if valid {
-            Ok(flags)
-        } else {
-            Err(())
-        }
     }
 }

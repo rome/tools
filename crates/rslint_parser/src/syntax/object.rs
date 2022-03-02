@@ -11,7 +11,7 @@ use crate::syntax::function::{
     parse_formal_parameter, parse_function_body, parse_parameter_list, ParameterContext,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{
+use crate::syntax::typescript::ts_parse_error::{
     ts_accessor_type_parameters_error, ts_only_syntax_error, ts_set_accessor_return_type_error,
 };
 use crate::syntax::typescript::{

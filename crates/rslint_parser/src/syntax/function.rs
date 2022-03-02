@@ -8,10 +8,9 @@ use crate::syntax::expr::{
     is_nth_at_identifier, parse_assignment_expression_or_higher, ExpressionContext,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{
-    expected_binding, expected_parameter, expected_parameters, ts_only_syntax_error,
-};
+use crate::syntax::js_parse_error::{expected_binding, expected_parameter, expected_parameters};
 use crate::syntax::stmt::{is_semi, parse_block_impl, semi, StatementContext};
+use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
     parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters, try_parse,
 };

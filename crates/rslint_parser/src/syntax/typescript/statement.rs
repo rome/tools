@@ -8,11 +8,10 @@ use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
 use super::ts_parse_error::expected_ts_enum_member;
 use crate::state::EnterAmbientContext;
 use crate::syntax::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
-use crate::syntax::js_parse_error::{
-    expected_identifier, expected_module_source, expected_ts_type,
-};
+use crate::syntax::js_parse_error::{expected_identifier, expected_module_source};
 use crate::syntax::module::{parse_module_item_list, parse_module_source, ModuleItemListParent};
 use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
+use crate::syntax::typescript::ts_parse_error::expected_ts_type;
 use crate::syntax::typescript::{
     expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_name,
     parse_ts_type, parse_ts_type_parameters, TypeMembers,

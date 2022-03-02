@@ -11,13 +11,14 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error::{
     expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
-    expected_property_or_signature, expected_ts_type, expected_ts_type_parameter,
+    expected_property_or_signature,
 };
 use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_type_member_name, parse_object_member_name,
 };
 use crate::syntax::stmt::optional_semi;
 use crate::syntax::typescript::try_parse;
+use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
     is_nth_at_contextual_keyword,

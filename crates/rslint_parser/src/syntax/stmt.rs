@@ -22,8 +22,9 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, expected_statement, ts_only_syntax_error};
+use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::module::parse_import_or_import_equals_declaration;
+use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};

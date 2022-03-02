@@ -13,9 +13,10 @@ use crate::syntax::js_parse_error::{
     duplicate_assertion_keys_error, expected_binding, expected_declaration, expected_export_clause,
     expected_export_name_specifier, expected_expression, expected_identifier,
     expected_literal_export_name, expected_module_source, expected_named_import,
-    expected_named_import_specifier, expected_statement, ts_only_syntax_error,
+    expected_named_import_specifier, expected_statement,
 };
 use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY_SET};
+use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
     parse_ts_enum_declaration, parse_ts_import_equals_declaration_rest,
     parse_ts_interface_declaration,

@@ -19,11 +19,12 @@ use crate::syntax::function::{
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
     expected_expression, expected_identifier, expected_parameters,
-    expected_simple_assignment_target, expected_ts_type, invalid_assignment_error,
-    private_names_only_allowed_on_left_side_of_in_expression, ts_only_syntax_error,
+    expected_simple_assignment_target, invalid_assignment_error,
+    private_names_only_allowed_on_left_side_of_in_expression,
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
+use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{JsSyntaxKind::*, *};
@@ -492,7 +493,7 @@ fn parse_binary_or_logical_expression_recursive(
             if TypeScript.is_unsupported(p) {
                 p.error(ts_only_syntax_error(
                     p,
-                    "as expression",
+                    "'as' expression",
                     as_expression.range(p).as_range(),
                 ));
                 as_expression.change_to_unknown(p);
