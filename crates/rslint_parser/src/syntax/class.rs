@@ -483,7 +483,7 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
             Present(member)
         }
         Absent => {
-            assert!(modifiers.is_empty());
+            debug_assert!(modifiers.is_empty());
             modifiers.abandon(p);
             Absent
         }
@@ -1839,7 +1839,7 @@ impl ClassMemberModifiers {
     /// ## Panics
     /// If the modifier list isn't empty
     fn abandon(mut self, p: &mut Parser) {
-        assert!(self.is_empty());
+        debug_assert!(self.is_empty());
         self.list_marker.undo_completion(p).abandon(p);
         self.bomb.defuse();
     }
