@@ -6,7 +6,7 @@ use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
-use std::path::PathBuf;
+use std::path::Path;
 
 const OK_PATH: &str = "xtask/coverage/babel/packages/babel-parser/test/fixtures/jsx/basic";
 
@@ -16,7 +16,7 @@ struct BabelJsxTestCase {
 }
 
 impl BabelJsxTestCase {
-    fn new(path: PathBuf, code: String) -> Self {
+    fn new(path: &Path, code: String) -> Self {
         let name = path
             .components()
             .rev()
@@ -83,6 +83,6 @@ impl TestSuite for BabelJsxTestSuite {
 
     fn load_test(&self, path: &std::path::Path) -> Option<Box<dyn crate::runner::TestCase>> {
         let code = check_file_encoding(path)?;
-        Some(Box::new(BabelJsxTestCase::new(path.to_path_buf(), code)))
+        Some(Box::new(BabelJsxTestCase::new(path, code)))
     }
 }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: constructor.ts
 
 ---
@@ -75,6 +75,12 @@ error[SyntaxError]: class properties may not be called `constructor`
    │
 10 │     'constructor': typeof A
    │     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+   ┌─ constructor.ts:17:15
+   │
+17 │   constructor<>() {}
+   │               ^ Expected a type parameter here
 
 error[SyntaxError]: constructors cannot have type parameters
    ┌─ constructor.ts:17:14
