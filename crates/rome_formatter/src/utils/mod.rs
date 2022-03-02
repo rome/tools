@@ -4,11 +4,11 @@ mod simple;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, hard_group_elements, hard_line_break, space_token,
-    FormatElement, FormatResult, Formatter,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 pub use call_expression::format_call_expression;
 use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause};
-use rslint_parser::{AstNode, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use rslint_parser::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
 pub(crate) use simple::*;
 
@@ -348,4 +348,41 @@ mod tests {
             }],
         );
     }
+}
+
+/// Helpful data structure to make the order modifiers predictable inside the formatter
+#[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
+#[repr(u8)]
+pub(crate) enum SortedModifiers {
+    Accessibility = 1,
+    Declare = 2,
+    Static = 3,
+    Abstract = 4,
+    Override = 5,
+    Readonly = 6,
+}
+
+/// This function consumes a list of modifiers and applies a predictable sorting.
+///
+/// The function needs to accept a closure that maps the node modifier to the correct [SortedModifier].
+pub(crate) fn into_sorted_modifiers<List, Node, MapTo>(list: List, map_to: MapTo) -> Vec<Node>
+where
+    Node: AstNode + ToFormatElement,
+    List: AstNodeList<Node>,
+    MapTo: Fn(&Node) -> SortedModifiers,
+{
+    let mut nodes_and_modifiers = list
+        .iter()
+        .map(|node| {
+            let sorted_modifier: SortedModifiers = map_to(&node);
+            (node, sorted_modifier)
+        })
+        .collect::<Vec<(Node, SortedModifiers)>>();
+
+    nodes_and_modifiers.sort_unstable_by(|(_, left), (_, right)| left.cmp(right));
+
+    nodes_and_modifiers
+        .into_iter()
+        .map(|(node, _)| node)
+        .collect::<Vec<Node>>()
 }
