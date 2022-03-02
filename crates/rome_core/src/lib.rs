@@ -35,7 +35,7 @@ impl Default for App {
 pub enum RomeError {
     /// A file can't be read
     CantReadTheFile,
-    /// A fiile is not supported. It contains the extension of the file
+    /// A file is not supported. It contains the extension of the file
     /// Use this error if Rome is trying to process a file that Rome can't understand
     SourceFileNotSupported(String),
 }
@@ -56,12 +56,8 @@ impl Debug for RomeError {
 impl Display for RomeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            RomeError::SourceFileNotSupported(extension) => {
-                write!(f, "Rome doesn't support this {extension} yet")
-            }
-            RomeError::CantReadTheFile => {
-                write!(f, "Rome is not able to read the file")
-            }
+            RomeError::SourceFileNotSupported(_) => std::fmt::Debug::fmt(self, f),
+            RomeError::CantReadTheFile => std::fmt::Debug::fmt(self, f),
         }
     }
 }

@@ -1,4 +1,5 @@
 use lspower::lsp;
+use rome_path::RomePath;
 use std::sync::Arc;
 use tracing::error;
 
@@ -13,8 +14,9 @@ pub(crate) async fn did_open(session: Arc<Session>, params: lsp::DidOpenTextDocu
         Ok(id) => id,
         Err(err) => return error!("{}", err),
     };
+    let path = RomePath::new(url.path()).with_id(file_id);
 
-    let doc = Document::new(file_id, language_id, version, params.text_document.text);
+    let doc = Document::new(path, language_id, version, params.text_document.text);
     session.insert_document(url.clone(), doc);
 
     if let Err(err) = session.update_diagnostics(url).await {
@@ -38,8 +40,8 @@ pub(crate) async fn did_change(session: Arc<Session>, params: lsp::DidChangeText
         Some(change) => change.text,
         None => return error!("Invalid textDocument/didChange for {:?}", url),
     };
-
-    let doc = Document::new(doc.file_id, doc.language_id, version, text);
+    let path = RomePath::new(url.path()).with_id(doc.path.file_id().unwrap_or(0_usize));
+    let doc = Document::new(path, doc.language_id, version, text);
     session.insert_document(url.clone(), doc);
 
     if let Err(err) = session.update_diagnostics(url).await {

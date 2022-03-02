@@ -3,10 +3,9 @@ use crate::runner::{
     create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
-use rome_path::RomePath;
 use rome_rowan::SyntaxKind;
 use rslint_parser::{AstNode, ModuleKind, SourceType};
-use std::convert::TryInto;
+use std::convert::TryFrom;
 use std::path::Path;
 
 const CASES_PATH: &str = "xtask/coverage/Typescript/tests/cases";
@@ -172,9 +171,9 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
 }
 
 fn add_file_if_supported(files: &mut TestCaseFiles, name: String, content: String) {
+    let path = Path::new(&name);
     // Skip files that aren't JS/TS files (JSON, CSS...)
-    if let Ok(source_type) = RomePath::new(&name).try_into() {
-        let mut source_type: SourceType = source_type;
+    if let Ok(mut source_type) = SourceType::try_from(path) {
         let is_module_regex = Regex::new("(import|export)\\s").unwrap();
         // A very basic heuristic to determine if a module is a `Script` or a `Module`.
         // The TypeScript parser automatically detects whatever a file is a module or a script

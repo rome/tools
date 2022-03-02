@@ -489,6 +489,7 @@ pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, ap
     let result = if app.can_format(rome_path) {
         let buffer = rome_path.get_buffer_from_file();
         let source_type = rome_path
+            .as_path()
             .try_into()
             .unwrap_or_else(|_| SourceType::js_module());
         let root = parse(buffer.as_str(), 0, source_type).syntax();

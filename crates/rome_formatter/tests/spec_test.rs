@@ -128,7 +128,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
     if app.can_format(&rome_path) {
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
-        let mut source_type: SourceType = rome_path.try_into().unwrap();
+        let mut source_type: SourceType = rome_path.as_path().try_into().unwrap();
         if file_type != "module" {
             source_type = source_type.with_module_kind(ModuleKind::Script);
         }

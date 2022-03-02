@@ -1,5 +1,5 @@
 use anyhow::bail;
-use rome_analyze::FileId;
+use rome_path::RomePath;
 use std::sync::Arc;
 
 /// Internal representation of supported [language identifiers]
@@ -28,7 +28,7 @@ impl TryFrom<&str> for Language {
 /// [`textDocument`]: https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocumentItem
 #[derive(Clone)]
 pub struct Document {
-    pub file_id: FileId,
+    pub path: RomePath,
     pub language_id: Language,
     pub version: i32,
     pub text: Arc<str>,
@@ -36,16 +36,21 @@ pub struct Document {
 
 impl Document {
     pub fn new(
-        file_id: FileId,
+        path: RomePath,
         language_id: Language,
         version: i32,
         text: impl Into<Arc<str>>,
     ) -> Self {
         Self {
-            file_id,
+            path,
             language_id,
             version,
             text: text.into(),
         }
+    }
+
+    /// Retrieves the unique ID associated to the current document (file)
+    pub fn file_id(&self) -> usize {
+        self.path.file_id().unwrap_or(0_usize)
     }
 }

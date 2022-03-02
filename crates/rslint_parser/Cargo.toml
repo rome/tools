@@ -9,7 +9,6 @@ repository = "https://github.com/rslint/rslint"
 
 [dependencies]
 rome_core = { path = "../rome_core", version = "0.0.0" }
-rome_path = { path = "../rome_path", version = "0.0.0" }
 rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
 rslint_syntax = { path = "../rslint_syntax", version = "0.1" }
 rslint_lexer = { path = "../rslint_lexer", version = "0.2", features = ["highlight"] }

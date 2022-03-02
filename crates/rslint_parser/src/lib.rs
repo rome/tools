@@ -77,7 +77,6 @@ mod tests;
 pub mod ast;
 pub mod syntax;
 pub mod util;
-
 pub use crate::{
     ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult},
     event::{process, Event},
@@ -91,25 +90,21 @@ pub use crate::{
     token_source::TokenSource,
     util::{SyntaxNodeExt, SyntaxTokenExt},
 };
-use std::fmt::{Debug, Formatter};
-
-pub(crate) use state::{ParserState, StrictMode};
-
 pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
-
 pub use rslint_syntax::*;
+pub(crate) use state::{ParserState, StrictMode};
+use std::fmt::Debug;
 
 /// The type of error emitted by the parser, this includes warnings, notes, and errors.
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
-
 use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
 use rome_core::RomeError;
-use rome_path::RomePath;
 use rslint_errors::Diagnostic;
 use std::ops::Range;
+use std::path::Path;
 
 /// An abstraction for syntax tree implementations
 pub trait TreeSink {
@@ -231,7 +226,7 @@ impl Default for Language {
     }
 }
 
-#[derive(Clone, Default)]
+#[derive(Clone, Debug, Default)]
 pub struct SourceType {
     language: Language,
     variant: LanguageVariant,
@@ -317,37 +312,17 @@ impl SourceType {
     }
 }
 
-impl TryFrom<&mut RomePath> for SourceType {
+impl TryFrom<&Path> for SourceType {
     type Error = RomeError;
 
-    fn try_from(path: &mut RomePath) -> Result<Self, Self::Error> {
-        let file_name = path.file_name().ok_or(RomeError::CantReadTheFile)?;
-        let file_name = file_name.to_str().ok_or(RomeError::CantReadTheFile)?;
-        let extension = path.extension_as_str();
-
-        compute_source_type_from_path_or_extension(file_name, extension)
-    }
-}
-
-impl TryFrom<&RomePath> for SourceType {
-    type Error = RomeError;
-
-    fn try_from(path: &RomePath) -> Result<Self, Self::Error> {
-        let file_name = path.file_name().ok_or(RomeError::CantReadTheFile)?;
-        let file_name = file_name.to_str().ok_or(RomeError::CantReadTheFile)?;
-        let extension = path.extension_as_str();
-
-        compute_source_type_from_path_or_extension(file_name, extension)
-    }
-}
-
-impl TryFrom<RomePath> for SourceType {
-    type Error = RomeError;
-
-    fn try_from(path: RomePath) -> Result<Self, Self::Error> {
-        let file_name = path.file_name().ok_or(RomeError::CantReadTheFile)?;
-        let file_name = file_name.to_str().ok_or(RomeError::CantReadTheFile)?;
-        let extension = path.extension_as_str();
+    fn try_from(path: &Path) -> Result<Self, Self::Error> {
+        let file_name = path.file_name().expect("Can't read the file");
+        let file_name = file_name.to_str().expect("Can't read the file");
+        let extension = path
+            .extension()
+            .expect("Can't read the file extension")
+            .to_str()
+            .expect("Can't read the file extension");
 
         compute_source_type_from_path_or_extension(file_name, extension)
     }
@@ -376,17 +351,7 @@ fn compute_source_type_from_path_or_extension(
     Ok(source_type)
 }
 
-impl Debug for SourceType {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("Source Type")
-            .field("Language", &self.language)
-            .field("Module kind", &self.module_kind)
-            .field("Variant", &self.variant)
-            .field("Version", &self.version)
-            .finish()
-    }
-}
-
+/// A syntax feature that may or may not be supported depending on the file type and parser configuration
 /// A syntax feature that may or may not be supported depending on the file type and parser configuration
 pub trait SyntaxFeature: Sized {
     /// Returns `true` if the current parsing context supports this syntax feature.

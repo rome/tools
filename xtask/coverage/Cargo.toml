@@ -9,7 +9,6 @@ xtask = { path = '../', version = "0.0" }
 rome_rowan = { path = "../../crates/rome_rowan" }
 rslint_parser = { path = "../../crates/rslint_parser", version = "0.3" }
 rslint_errors = { path = "../../crates/rslint_errors", version = "0.2.0" }
-rome_path = { path = "../../crates/rome_path", version = "0.0.0" }
 pico-args = "0.3.4"
 ascii_table = "3.0.2"
 colored = "2.0.0"

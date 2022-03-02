@@ -36,7 +36,7 @@ pub(crate) fn format(params: FormatParams) -> Result<Option<Vec<TextEdit>>> {
         rome_path,
     } = params;
 
-    let source_type = rome_path.try_into()?;
+    let source_type = rome_path.as_path().try_into()?;
 
     let file_id = rome_path.file_id().unwrap_or(0_usize);
     let parse_result = parse(text, file_id, source_type);
@@ -73,7 +73,7 @@ pub(crate) struct FormatRangeParams<'input> {
 }
 
 pub(crate) fn format_range(params: FormatRangeParams) -> Result<Option<Vec<TextEdit>>> {
-    let source_type = params.rome_path.try_into()?;
+    let source_type = params.rome_path.as_path().try_into()?;
     let parse_result = parse(params.text, params.file_id, source_type);
 
     // can't format, we bail early
@@ -141,7 +141,7 @@ pub(crate) struct FormatOnTypeParams<'input> {
 }
 
 pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Option<Vec<TextEdit>>> {
-    let source_type = params.rome_path.try_into()?;
+    let source_type = params.rome_path.as_path().try_into()?;
     let parse_result = parse(params.text, params.file_id, source_type);
 
     // can't format, we bail early

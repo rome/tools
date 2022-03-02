@@ -3,7 +3,6 @@ use crate::{
     parse, parse_module, AstNode, Parse, SourceType, SyntaxNode, SyntaxNodeExt, SyntaxToken,
 };
 use expect_test::expect_file;
-use rome_path::RomePath;
 use rome_rowan::{SyntaxKind, TextSize};
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
@@ -50,13 +49,13 @@ fn parser_missing_smoke_test() {
 
 fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
     let res = catch_unwind(|| {
-        let rome_path = RomePath::new(path);
+        let path = Path::new(path);
         // Files containing a // SCRIPT comment are parsed as script and not as module
         // This is needed to test features that are restricted in strict mode.
         let source_type = if text.contains("// SCRIPT") {
             SourceType::js_script()
         } else {
-            rome_path.try_into().unwrap()
+            path.try_into().unwrap()
         };
 
         let parse = parse(text, 0, source_type);

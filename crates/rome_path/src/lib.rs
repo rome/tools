@@ -7,7 +7,7 @@ use std::fs::read_to_string;
 use std::io::Read;
 use std::{fs::File, io, io::Write, ops::Deref, path::PathBuf};
 
-#[derive(Debug, Eq, Hash, PartialEq)]
+#[derive(Debug, Clone, Eq, Hash, PartialEq)]
 pub struct RomePath {
     file: PathBuf,
     file_id: Option<usize>,
