@@ -9,7 +9,6 @@ This list includes general ethos the project should abide by. This list is not c
 
 ### Technical
 
-- **No external dependencies.** This allows us to develop faster and provide a more cohesive experience by integrating internal libraries more tightly and sharing concepts and abstractions. There always exist opportunities to have a better experience by having something purpose-built.
 - **Errors should suggest fixes and hints where possible.** These should be inferred and filtered from usage to reduce surfacing irrelevant and unhelpful messages.
 - **Unique and specific error messages.** No generic error messages. This not only helps users understand what went wrong, but should provide maintainers with a unique call site and the necessary information to debug.
 - **Minimize API.** Question the existence of all options and flags. Are they necessary? Can they be combined? How can we reduce code branching?

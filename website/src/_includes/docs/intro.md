@@ -20,31 +20,3 @@ and top-notch error recovery.
 {% include action-links.liquid %}
 
 </section>
-
-## Development Status
-
-**Rome is currently only supported as a [formatter](#formatter) for JavaScript and TypeScript.** We are actively working on support for other languages.
-
-We plan on covering the following areas:
-
- - Bundling
- - Compiling
- - Documentation Generation
- - Formatting
- - Linting
- - Minification
- - Testing
- - Type Checking
- - ... and more
-
-### Language Support
-
-| Language | Parsing                                                 | Formatting                                              | Linting |
-| ------- |---------------------------------------------------------|---------------------------------------------------------| ------- |
-| JavaScript | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span> |
-| TypeScript | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span> |
-| JSX  | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span> |
-| JSON | <span aria-label="Work In Progress" role="img">⌛</span>        | <span aria-label="Work In Progress" role="img">⌛</span>        | <span aria-label="Supported" role="img">✅</span> |
-| HTML [#983](https://github.com/rome/tools/issues/983) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
-| CSS [#984](https://github.com/rome/tools/issues/984) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
-| Markdown [#985](https://github.com/rome/tools/issues/985) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
