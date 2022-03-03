@@ -4,10 +4,10 @@ mod simple;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, hard_group_elements, hard_line_break, space_token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    FormatElement, FormatResult, Formatter,
 };
 pub use call_expression::format_call_expression;
-use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause};
+use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause, Modifiers};
 use rslint_parser::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
 pub(crate) use simple::*;
@@ -350,34 +350,16 @@ mod tests {
     }
 }
 
-/// Helpful data structure to make the order modifiers predictable inside the formatter
-#[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
-#[repr(u8)]
-pub(crate) enum SortedModifiers {
-    // please we wary of the order
-    Accessibility,
-    Declare,
-    Static,
-    Abstract,
-    Override,
-    Readonly,
-}
-
 /// This function consumes a list of modifiers and applies a predictable sorting.
-///
-/// The function needs to accept a closure that maps the node modifier to the correct [SortedModifier].
-pub(crate) fn sort_modifiers_by_precedence<List, Node, MapTo>(
-    list: &List,
-    map_to: MapTo,
-) -> Vec<Node>
+pub(crate) fn sort_modifiers_by_precedence<List, Node>(list: &List) -> Vec<Node>
 where
-    Node: AstNode + ToFormatElement,
+    Node: AstNode + Clone,
     List: AstNodeList<Node>,
-    MapTo: Fn(&Node) -> SortedModifiers,
+    Modifiers: for<'a> From<&'a Node>,
 {
     let mut nodes_and_modifiers = list.iter().collect::<Vec<Node>>();
 
-    nodes_and_modifiers.sort_unstable_by_key(|node| map_to(node));
+    nodes_and_modifiers.sort_unstable_by_key(|node| Modifiers::from(node));
 
     nodes_and_modifiers
 }
