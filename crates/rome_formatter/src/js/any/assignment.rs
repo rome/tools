@@ -11,6 +11,7 @@ impl ToFormatElement for JsAnyAssignment {
             Self::JsParenthesizedAssignment(node) => node.to_format_element(formatter),
             Self::TsNonNullAssertionAssignment(node) => node.to_format_element(formatter),
             Self::TsAsAssignment(node) => node.to_format_element(formatter),
+            Self::TsTypeAssertionAssignment(node) => node.to_format_element(formatter),
             Self::JsUnknownAssignment(node) => node.to_format_element(formatter),
         }
     }

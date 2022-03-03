@@ -166,6 +166,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_STATIC_MEMBER_ASSIGNMENT
             | TS_AS_ASSIGNMENT
             | TS_NON_NULL_ASSERTION_ASSIGNMENT
+            | TS_TYPE_ASSERTION_ASSIGNMENT
             | JS_UNKNOWN_ASSIGNMENT => JS_UNKNOWN_ASSIGNMENT,
 
             JS_NAMED_IMPORT_SPECIFIER

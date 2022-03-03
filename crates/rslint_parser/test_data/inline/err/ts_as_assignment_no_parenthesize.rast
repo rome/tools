@@ -73,14 +73,37 @@ JsModule {
             },
             semicolon_token: SEMICOLON@62..63 ";" [] [],
         },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsUnknownAssignment {
+                    items: [
+                        L_ANGLE@63..65 "<" [Newline("\n")] [],
+                        TsNumberType {
+                            number_token: NUMBER_KW@65..71 "number" [] [],
+                        },
+                        R_ANGLE@71..73 ">" [] [Whitespace(" ")],
+                        JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@73..75 "a" [] [Whitespace(" ")],
+                            },
+                        },
+                    ],
+                },
+                operator_token: EQ@75..77 "=" [] [Whitespace(" ")],
+                right: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@77..78 "3" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@78..79 ";" [] [],
+        },
     ],
-    eof_token: EOF@63..64 "" [Newline("\n")] [],
+    eof_token: EOF@79..80 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..64
+0: JS_MODULE@0..80
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..63
+  2: JS_MODULE_ITEM_LIST@0..79
     0: JS_VARIABLE_STATEMENT@0..11
       0: JS_VARIABLE_DECLARATION@0..10
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -127,7 +150,21 @@ JsModule {
         2: JS_STRING_LITERAL_EXPRESSION@54..62
           0: JS_STRING_LITERAL@54..62 "\"string\"" [] []
       1: SEMICOLON@62..63 ";" [] []
-  3: EOF@63..64 "" [Newline("\n")] []
+    3: JS_EXPRESSION_STATEMENT@63..79
+      0: JS_ASSIGNMENT_EXPRESSION@63..78
+        0: JS_UNKNOWN_ASSIGNMENT@63..75
+          0: L_ANGLE@63..65 "<" [Newline("\n")] []
+          1: TS_NUMBER_TYPE@65..71
+            0: NUMBER_KW@65..71 "number" [] []
+          2: R_ANGLE@71..73 ">" [] [Whitespace(" ")]
+          3: JS_IDENTIFIER_EXPRESSION@73..75
+            0: JS_REFERENCE_IDENTIFIER@73..75
+              0: IDENT@73..75 "a" [] [Whitespace(" ")]
+        1: EQ@75..77 "=" [] [Whitespace(" ")]
+        2: JS_NUMBER_LITERAL_EXPRESSION@77..78
+          0: JS_NUMBER_LITERAL@77..78 "3" [] []
+      1: SEMICOLON@78..79 ";" [] []
+  3: EOF@79..80 "" [Newline("\n")] []
 --
 error[SyntaxError]: Invalid assignment to `a()`
   ┌─ ts_as_assignment_no_parenthesize.ts:3:2
@@ -136,6 +173,14 @@ error[SyntaxError]: Invalid assignment to `a()`
   │  ^^^ This expression cannot be assigned to
 
 --
+error[SyntaxError]: Invalid assignment to `<number> a`
+  ┌─ ts_as_assignment_no_parenthesize.ts:4:1
+  │
+4 │ <number> a = 3;
+  │ ^^^^^^^^^^ This expression cannot be assigned to
+
+--
 let a: any;
 a as string = "string";
 (a() as string) = "string";
+<number> a = 3;

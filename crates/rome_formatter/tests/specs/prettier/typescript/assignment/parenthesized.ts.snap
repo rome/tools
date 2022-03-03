@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: parenthesized.ts
 
 ---
@@ -23,17 +23,6 @@ expression: parenthesized.ts
 (a as any) = null;
 (a as number) = 42;
 ((a as any) as string) = null;
-
-```
-
-# Errors
-```
-error[SyntaxError]: Invalid assignment to `<number>x`
-  ┌─ parenthesized.ts:2:2
-  │
-2 │ (<number>x) = null;
-  │  ^^^^^^^^^ This expression cannot be assigned to
-
 
 ```
 

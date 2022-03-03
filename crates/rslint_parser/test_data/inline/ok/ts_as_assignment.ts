@@ -6,3 +6,4 @@ type B<A> = { a: A };
 ([ a as string ] = [ "test" ]);
 for (a as string in []) {}
 (a as B<string>) = { a: "test" };
+(<number> a) += 1

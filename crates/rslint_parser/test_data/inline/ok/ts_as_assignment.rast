@@ -271,14 +271,37 @@ JsModule {
             },
             semicolon_token: SEMICOLON@220..221 ";" [] [],
         },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsParenthesizedAssignment {
+                    l_paren_token: L_PAREN@221..223 "(" [Newline("\n")] [],
+                    assignment: TsTypeAssertionAssignment {
+                        l_angle_token: L_ANGLE@223..224 "<" [] [],
+                        ty: TsNumberType {
+                            number_token: NUMBER_KW@224..230 "number" [] [],
+                        },
+                        r_angle_token: R_ANGLE@230..232 ">" [] [Whitespace(" ")],
+                        assignment: JsIdentifierAssignment {
+                            name_token: IDENT@232..233 "a" [] [],
+                        },
+                    },
+                    r_paren_token: R_PAREN@233..235 ")" [] [Whitespace(" ")],
+                },
+                operator_token: PLUSEQ@235..238 "+=" [] [Whitespace(" ")],
+                right: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@238..239 "1" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@221..222 "" [Newline("\n")] [],
+    eof_token: EOF@239..240 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..222
+0: JS_MODULE@0..240
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..221
+  2: JS_MODULE_ITEM_LIST@0..239
     0: JS_VARIABLE_STATEMENT@0..11
       0: JS_VARIABLE_DECLARATION@0..10
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -464,4 +487,20 @@ JsModule {
                 0: JS_STRING_LITERAL@212..219 "\"test\"" [] [Whitespace(" ")]
           2: R_CURLY@219..220 "}" [] []
       1: SEMICOLON@220..221 ";" [] []
-  3: EOF@221..222 "" [Newline("\n")] []
+    8: JS_EXPRESSION_STATEMENT@221..239
+      0: JS_ASSIGNMENT_EXPRESSION@221..239
+        0: JS_PARENTHESIZED_ASSIGNMENT@221..235
+          0: L_PAREN@221..223 "(" [Newline("\n")] []
+          1: TS_TYPE_ASSERTION_ASSIGNMENT@223..233
+            0: L_ANGLE@223..224 "<" [] []
+            1: TS_NUMBER_TYPE@224..230
+              0: NUMBER_KW@224..230 "number" [] []
+            2: R_ANGLE@230..232 ">" [] [Whitespace(" ")]
+            3: JS_IDENTIFIER_ASSIGNMENT@232..233
+              0: IDENT@232..233 "a" [] []
+          2: R_PAREN@233..235 ")" [] [Whitespace(" ")]
+        1: PLUSEQ@235..238 "+=" [] [Whitespace(" ")]
+        2: JS_NUMBER_LITERAL_EXPRESSION@238..239
+          0: JS_NUMBER_LITERAL@238..239 "1" [] []
+      1: (empty)
+  3: EOF@239..240 "" [Newline("\n")] []

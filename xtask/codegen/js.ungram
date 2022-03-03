@@ -840,6 +840,7 @@ JsAnyAssignment =
 	| JsParenthesizedAssignment
 	| TsNonNullAssertionAssignment
 	| TsAsAssignment
+	| TsTypeAssertionAssignment
 	| JsUnknownAssignment
 
 
@@ -886,6 +887,12 @@ TsAsAssignment =
 	assignment: JsAnyAssignment
 	'as'
 	type: TsType
+
+TsTypeAssertionAssignment =
+	'<'
+	type: TsType
+	'>'
+	assignment: JsAnyAssignment
 
 JsAnyAssignmentPattern =
 	JsAnyAssignment

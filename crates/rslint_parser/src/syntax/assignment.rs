@@ -49,11 +49,13 @@ use rslint_errors::Span;
 // ([ a as string ] = [ "test" ]);
 // for (a as string in []) {}
 // (a as B<string>) = { a: "test" };
+// (<number> a) += 1
 
 // test_err ts ts_as_assignment_no_parenthesize
 // let a: any;
 // a as string = "string";
 // (a() as string) = "string";
+// <number> a = 3;
 
 /// Converts the passed in lhs expression to an assignment pattern
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
@@ -339,12 +341,13 @@ fn try_expression_to_assignment(
             | JS_COMPUTED_MEMBER_EXPRESSION
             | JS_IDENTIFIER_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
+            | TS_TYPE_ASSERTION_EXPRESSION
             | TS_AS_EXPRESSION
     ) {
         return Err(checkpoint);
     }
 
-    // At this point it's guaranteed that the root node can be mapped to a assignment
+    // At this point it's guaranteed that the root node can be mapped to an assignment,
     // but it's not yet guaranteed if it is valid or not (for example, a static member expression
     // is valid, except if it uses optional chaining).
     let mut reparse_assignment = ReparseAssignment::new();
@@ -407,6 +410,7 @@ impl RewriteParseEvents for ReparseAssignment {
             JS_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT,
             TS_NON_NULL_ASSERTION_EXPRESSION => TS_NON_NULL_ASSERTION_ASSIGNMENT,
             TS_AS_EXPRESSION => TS_AS_ASSIGNMENT,
+            TS_TYPE_ASSERTION_EXPRESSION => TS_TYPE_ASSERTION_ASSIGNMENT,
             JS_REFERENCE_IDENTIFIER => {
                 self.parents.push((kind, None)); // Omit reference identifiers
                 return;
@@ -414,7 +418,10 @@ impl RewriteParseEvents for ReparseAssignment {
             _ => {
                 self.inside_assignment = false;
                 if TsType::can_cast(kind)
-                    && matches!(self.parents.last(), Some((TS_AS_ASSIGNMENT, _)))
+                    && matches!(
+                        self.parents.last(),
+                        Some((TS_AS_ASSIGNMENT | TS_TYPE_ASSERTION_ASSIGNMENT, _))
+                    )
                 {
                     kind
                 } else {
@@ -436,6 +443,15 @@ impl RewriteParseEvents for ReparseAssignment {
                 p.error(invalid_assignment_error(p, completed.range(p).as_range()));
             }
             self.result = Some(completed);
+        }
+
+        if TsType::can_cast(kind)
+            && matches!(
+                self.parents.last(),
+                Some((TS_TYPE_ASSERTION_ASSIGNMENT | TS_AS_ASSIGNMENT, _))
+            )
+        {
+            self.inside_assignment = true;
         }
     }
 

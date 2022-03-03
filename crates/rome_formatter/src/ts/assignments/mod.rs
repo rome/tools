@@ -2,3 +2,4 @@
 
 mod as_assignment;
 mod non_null_assertion_assignment;
+mod type_assertion_assignment;
