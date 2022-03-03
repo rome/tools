@@ -642,10 +642,14 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
             .end
             .min(new_code_range.start + MAX_LINE_LENGTH);
 
+        let source = source
+            .get(new_code_range)
+            .unwrap_or_else(|| &source[line_range]);
+
         self.render_snippet_source_impl(
             outer_padding,
             line_number,
-            &source[new_code_range],
+            source,
             severity,
             single_labels.as_slice(),
             0,
