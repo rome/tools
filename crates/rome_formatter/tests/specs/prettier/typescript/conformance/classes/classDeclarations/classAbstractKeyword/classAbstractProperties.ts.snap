@@ -41,21 +41,17 @@ abstract class A {
 
 # Errors
 ```
-error[SyntaxError]: 'abstract' cannot be used with 'private' modifier.
-  ┌─ classAbstractProperties.ts:5:13
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+  ┌─ classAbstractProperties.ts:5:5
   │
 5 │     private abstract w : number;
-  │     ------- ^^^^^^^^
-  │     │        
-  │     private' modifier
+  │     ^^^^^^^ -------- 'abstract' modifier
 
-error[SyntaxError]: 'abstract' cannot be used with 'private' modifier.
-   ┌─ classAbstractProperties.ts:12:13
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+   ┌─ classAbstractProperties.ts:12:5
    │
 12 │     private abstract foo_w() : number;
-   │     ------- ^^^^^^^^
-   │     │        
-   │     private' modifier
+   │     ^^^^^^^ -------- 'abstract' modifier
 
 
 ```

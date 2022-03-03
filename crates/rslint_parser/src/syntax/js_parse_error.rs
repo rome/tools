@@ -230,7 +230,10 @@ pub(crate) fn modifier_cannot_be_used_with_modifier(
         "'{modifier}' cannot be used with '{other_modifier}' modifier."
     ))
     .primary(range, "")
-    .secondary(other_modifier_range, &format!("{other_modifier}' modifier"))
+    .secondary(
+        other_modifier_range,
+        &format!("'{other_modifier}' modifier"),
+    )
 }
 
 pub(crate) fn modifier_must_precede_modifier(

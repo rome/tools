@@ -26,11 +26,11 @@ declare module m {
 
 # Errors
 ```
-error[SyntaxError]: Abstract properties cannot have initializers
-  ┌─ declare_module.ts:3:5
+error[SyntaxError]: Initializers are not allowed in ambient contexts.
+  ┌─ declare_module.ts:3:11
   │
 3 │     field = "field";
-  │     ^^^^^^^^^^^^^^^^
+  │           ^^^^^^^^^
 
 
 ```

@@ -36,17 +36,17 @@ declare class D {
 
 # Errors
 ```
-error[SyntaxError]: Abstract properties cannot have initializers
-  ┌─ declare_class_fields.ts:4:3
+error[SyntaxError]: Initializers are not allowed in ambient contexts.
+  ┌─ declare_class_fields.ts:4:17
   │
 4 │   declare field = "field";
-  │   ^^^^^^^^^^^^^^^^^^^^^^^^
+  │                 ^^^^^^^^^
 
-error[SyntaxError]: Abstract properties cannot have initializers
-  ┌─ declare_class_fields.ts:7:3
+error[SyntaxError]: Initializers are not allowed in ambient contexts.
+  ┌─ declare_class_fields.ts:7:9
   │
 7 │   field = "field";
-  │   ^^^^^^^^^^^^^^^^
+  │         ^^^^^^^^^
 
 
 ```

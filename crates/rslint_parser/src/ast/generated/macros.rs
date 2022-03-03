@@ -770,6 +770,12 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::TsConstructSignatureTypeMember::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER => {
+                    let $pattern = unsafe {
+                        $crate::ast::TsConstructorSignatureClassMember::new_unchecked(node)
+                    };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_CONSTRUCTOR_TYPE => {
                     let $pattern = unsafe { $crate::ast::TsConstructorType::new_unchecked(node) };
                     $body

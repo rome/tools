@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: angular.ts
 
 ---
@@ -61,11 +61,23 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 6 │   @Output() change = new EventEmitter<any>();
   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
+error[SyntaxError]: expected a class method body but instead found 'change'
+  ┌─ angular.ts:6:13
+  │
+6 │   @Output() change = new EventEmitter<any>();
+  │             ^^^^^^ Expected a class method body here
+
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
   ┌─ angular.ts:7:3
   │
 7 │   @Input() label: string;
   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected a class method body but instead found 'label'
+  ┌─ angular.ts:7:12
+  │
+7 │   @Input() label: string;
+  │            ^^^^^ Expected a class method body here
 
 
 ```

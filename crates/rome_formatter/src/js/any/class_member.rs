@@ -11,6 +11,7 @@ impl ToFormatElement for JsAnyClassMember {
             Self::JsMethodClassMember(node) => node.to_format_element(formatter),
             Self::JsGetterClassMember(node) => node.to_format_element(formatter),
             Self::JsSetterClassMember(node) => node.to_format_element(formatter),
+            Self::TsConstructorSignatureClassMember(node) => node.to_format_element(formatter),
             Self::TsPropertySignatureClassMember(node) => node.to_format_element(formatter),
             Self::TsMethodSignatureClassMember(node) => node.to_format_element(formatter),
             Self::TsGetterSignatureClassMember(node) => node.to_format_element(formatter),

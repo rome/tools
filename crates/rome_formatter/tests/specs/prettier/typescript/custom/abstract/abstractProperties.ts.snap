@@ -38,15 +38,13 @@ error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
 2 │     abstract private a: 1;
   │     -------- ^^^^^^^
   │     │         
-  │     abstract' modifier
+  │     'abstract' modifier
 
-error[SyntaxError]: 'abstract' cannot be used with 'private' modifier.
-  ┌─ abstractProperties.ts:3:13
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+  ┌─ abstractProperties.ts:3:5
   │
 3 │     private abstract b: 2;
-  │     ------- ^^^^^^^^
-  │     │        
-  │     private' modifier
+  │     ^^^^^^^ -------- 'abstract' modifier
 
 error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
   ┌─ abstractProperties.ts:4:12
@@ -54,7 +52,7 @@ error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
 4 │     static abstract c: 3;
   │     ------ ^^^^^^^^
   │     │       
-  │     static' modifier
+  │     'static' modifier
 
 error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
   ┌─ abstractProperties.ts:5:14
@@ -62,15 +60,13 @@ error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
 5 │     abstract private ['g'];
   │     -------- ^^^^^^^
   │     │         
-  │     abstract' modifier
+  │     'abstract' modifier
 
-error[SyntaxError]: 'abstract' cannot be used with 'private' modifier.
-  ┌─ abstractProperties.ts:6:13
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+  ┌─ abstractProperties.ts:6:5
   │
 6 │     private abstract ['h'];
-  │     ------- ^^^^^^^^
-  │     │        
-  │     private' modifier
+  │     ^^^^^^^ -------- 'abstract' modifier
 
 error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
   ┌─ abstractProperties.ts:7:12
@@ -78,7 +74,7 @@ error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
 7 │     static abstract ['i'];
   │     ------ ^^^^^^^^
   │     │       
-  │     static' modifier
+  │     'static' modifier
 
 
 ```

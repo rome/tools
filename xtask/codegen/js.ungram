@@ -627,6 +627,7 @@ JsAnyClassMember =
 	| JsMethodClassMember
 	| JsGetterClassMember
 	| JsSetterClassMember
+	| TsConstructorSignatureClassMember
 	| TsPropertySignatureClassMember
 	| TsMethodSignatureClassMember
 	| TsGetterSignatureClassMember
@@ -687,6 +688,12 @@ TsAnyPropertyParameterModifier =
 	TsAccessibilityModifier
 	| TsReadonlyModifier
 	| TsOverrideModifier
+
+TsConstructorSignatureClassMember =
+	modifiers: JsConstructorModifierList
+	name: JsLiteralMemberName
+	parameters: JsConstructorParameters
+	';'?
 
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
@@ -760,7 +767,9 @@ JsMethodModifierList = JsAnyMethodModifier*
 
 TsMethodSignatureClassMember =
 	modifiers: TsMethodSignatureModifierList
+	'async'?
 	name: JsAnyClassMemberName
+	'?'?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?

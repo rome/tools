@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: argument-list-preserve-line.ts
 
 ---
@@ -48,7 +48,7 @@ error[SyntaxError]: expected a parameter but instead found '@'
 3 │         @inject(Bar)
   │         ^ Expected a parameter here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
   ┌─ argument-list-preserve-line.ts:4:9
   │
 4 │         private readonly bar: IBar,
@@ -60,7 +60,7 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 4 │         private readonly bar: IBar,
   │                                   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
   ┌─ argument-list-preserve-line.ts:7:9
   │
 7 │         private readonly myProcessor: IMyProcessor,
@@ -84,7 +84,7 @@ error[SyntaxError]: expected `,` but instead found `AnotherThing`
 9 │         @inject(InjectionTypes.AnotherThing)
   │                                ^^^^^^^^^^^^ unexpected
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ argument-list-preserve-line.ts:11:9
    │
 11 │         private readonly anotherThing: IAnotherThing | undefined,
