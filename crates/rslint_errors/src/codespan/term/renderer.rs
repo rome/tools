@@ -666,11 +666,12 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
         let max_line_length = 80;
 
         // if the line is smaller than max_line_length, we print it completely...
+        dbg!(source.len());
         if source.len() < max_line_length {
             return self.render_snippet_source_impl(
                 outer_padding,
                 line_number,
-                source,
+                &source[line_range],
                 severity,
                 &single_labels,
                 num_multi_labels,
