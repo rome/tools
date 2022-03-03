@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, expected_node, ToDiagnostic};
-use crate::{CompletedMarker, Parser};
+use crate::{Parser, TextRange};
 use rslint_errors::{Diagnostic, Span};
 use std::ops::Range;
 
@@ -164,14 +164,6 @@ pub(crate) fn expected_unary_expression(p: &Parser, range: Range<usize>) -> Diag
     expected_node("unary expression", range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_ts_type(p: &Parser, range: Range<usize>) -> Diagnostic {
-    expected_node("type", range).to_diagnostic(p)
-}
-
-pub(crate) fn expected_ts_type_parameter(p: &Parser, range: Range<usize>) -> Diagnostic {
-    expected_node("type parameter", range).to_diagnostic(p)
-}
-
 pub(crate) fn expected_property_or_signature(p: &Parser, range: Range<usize>) -> Diagnostic {
     expected_any(&["property", "signature"], range).to_diagnostic(p)
 }
@@ -189,40 +181,6 @@ pub(crate) fn expected_declaration(p: &Parser, range: Range<usize>) -> Diagnosti
         range,
     )
     .to_diagnostic(p)
-}
-
-pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: impl Span) -> Diagnostic {
-    p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax))
-		.primary(range, "TypeScript only syntax")
-}
-
-pub(crate) fn ts_accessor_type_parameters_error(
-    p: &Parser,
-    type_parameters: &CompletedMarker,
-) -> Diagnostic {
-    p.err_builder("An accessor cannot have type parameters")
-        .primary(type_parameters.range(p), "")
-}
-
-pub(crate) fn ts_constructor_type_parameters_error(
-    p: &Parser,
-    type_parameters: &CompletedMarker,
-) -> Diagnostic {
-    p.err_builder("constructors cannot have type parameters")
-        .primary(type_parameters.range(p), "")
-}
-
-pub(crate) fn accessor_readonly_error(p: &Parser, readonly_range: &Range<usize>) -> Diagnostic {
-    p.err_builder("getters and setters cannot be readonly")
-        .primary(readonly_range, "")
-}
-
-pub(crate) fn ts_set_accessor_return_type_error(
-    p: &Parser,
-    type_annotation: &CompletedMarker,
-) -> Diagnostic {
-    p.err_builder("A 'set' accessor cannot have a return type annotation.")
-        .primary(type_annotation.range(p), "")
 }
 
 pub(crate) fn unexpected_body_inside_ambient_context(
@@ -247,4 +205,45 @@ pub(crate) fn invalid_assignment_error(p: &Parser, range: Range<usize>) -> Diagn
         p.source(range.as_text_range())
     ))
     .primary(range, "This expression cannot be assigned to")
+}
+
+pub(crate) fn modifier_already_seen(
+    p: &Parser,
+    second_range: TextRange,
+    first_range: TextRange,
+) -> Diagnostic {
+    let modifier = p.span_text(second_range);
+    p.err_builder(&format!("'{modifier}' already seen"))
+        .primary(second_range, "duplicate modifier")
+        .secondary(first_range, "first seen here")
+}
+
+pub(crate) fn modifier_cannot_be_used_with_modifier(
+    p: &Parser,
+    range: TextRange,
+    other_modifier_range: TextRange,
+) -> Diagnostic {
+    let modifier = p.span_text(range);
+    let other_modifier = p.span_text(other_modifier_range);
+
+    p.err_builder(&format!(
+        "'{modifier}' cannot be used with '{other_modifier}' modifier."
+    ))
+    .primary(range, "")
+    .secondary(other_modifier_range, &format!("{other_modifier}' modifier"))
+}
+
+pub(crate) fn modifier_must_precede_modifier(
+    p: &Parser,
+    range: TextRange,
+    to_precede_modifier_range: TextRange,
+) -> Diagnostic {
+    let modifier_name = p.span_text(range);
+    let to_precede_name = p.span_text(to_precede_modifier_range);
+
+    p.err_builder(&format!(
+        "'{modifier_name}' must precede '{to_precede_name}'"
+    ))
+    .primary(range, "move this modifier")
+    .secondary(to_precede_modifier_range, "before this modifier")
 }

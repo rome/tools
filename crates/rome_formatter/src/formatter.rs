@@ -300,7 +300,7 @@ impl Formatter {
         Ok(result.into_iter())
     }
 
-    /// It formats a list of nodes that are not separated. It's a ad-hoc function to
+    /// It formats a list of nodes that are not separated. It's an ad-hoc function to
     /// format lists that implement [rslint_parser::AstNodeList].
     ///
     /// The elements of the list are joined together using [join_elements_hard_line], which will

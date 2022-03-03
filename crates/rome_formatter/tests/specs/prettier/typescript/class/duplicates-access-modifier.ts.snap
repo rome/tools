@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: duplicates-access-modifier.ts
 
 ---
@@ -30,53 +30,53 @@ class Foo {
 
 # Errors
 ```
-error[SyntaxError]: `public` modifier already seen.
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:2:10
   │
 2 │   public public a;
-  │   ------ ^^^^^^ remove the duplicate `public` here
+  │   ------ ^^^^^^ duplicate modifier
   │   │       
-  │   first usage
+  │   first modifier
 
-error[SyntaxError]: `public` modifier already seen.
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:3:11
   │
 3 │   private public b;
-  │   ------- ^^^^^^ remove the duplicate `public` here
+  │   ------- ^^^^^^ duplicate modifier
   │   │        
-  │   first usage
+  │   first modifier
 
-error[SyntaxError]: `private` modifier already seen.
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:4:13
   │
 4 │   protected private c;
-  │   --------- ^^^^^^^ remove the duplicate `private` here
+  │   --------- ^^^^^^^ duplicate modifier
   │   │          
-  │   first usage
+  │   first modifier
 
-error[SyntaxError]: `protected` modifier already seen.
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:5:10
   │
 5 │   public protected d;
-  │   ------ ^^^^^^^^^ remove the duplicate `protected` here
+  │   ------ ^^^^^^^^^ duplicate modifier
   │   │       
-  │   first usage
+  │   first modifier
 
-error[SyntaxError]: `protected` modifier already seen.
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:6:10
   │
 6 │   public protected private e;
-  │   ------ ^^^^^^^^^ remove the duplicate `protected` here
+  │   ------ ^^^^^^^^^ duplicate modifier
   │   │       
-  │   first usage
+  │   first modifier
 
-error[SyntaxError]: `private` modifier already seen.
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:6:20
   │
 6 │   public protected private e;
-  │   ------           ^^^^^^^ remove the duplicate `private` here
-  │   │                 
-  │   first usage
+  │          --------- ^^^^^^^ duplicate modifier
+  │          │          
+  │          first modifier
 
 
 ```

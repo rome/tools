@@ -6,8 +6,9 @@ mod types;
 
 use crate::parser::expected_token_any;
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
-use crate::syntax::js_parse_error::{expected_expression, expected_ts_type};
+use crate::syntax::js_parse_error::expected_expression;
 
+use crate::syntax::typescript::ts_parse_error::expected_ts_type;
 use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
