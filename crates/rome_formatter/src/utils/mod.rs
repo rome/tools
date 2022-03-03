@@ -8,7 +8,7 @@ use crate::{
     FormatElement, FormatResult, Formatter,
 };
 pub(crate) use call_expression::format_call_expression;
-pub(crate) use format_conditional::format_conditional;
+pub(crate) use format_conditional::{format_conditional, Conditional};
 use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause, Modifiers};
 use rslint_parser::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 

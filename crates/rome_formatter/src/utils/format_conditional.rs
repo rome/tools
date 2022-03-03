@@ -7,7 +7,7 @@ use rslint_parser::ast::{
     JsConditionalExpression, JsConditionalExpressionFields, TsConditionalType,
     TsConditionalTypeFields,
 };
-use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxToken};
+use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
 
 pub struct FormatConditionalPayload<'f, Node: AstNode + ToFormatElement> {
     pub question_mark: SyntaxToken,
@@ -15,6 +15,11 @@ pub struct FormatConditionalPayload<'f, Node: AstNode + ToFormatElement> {
     pub consequent: Node,
     pub alternate: Node,
     pub formatter: &'f Formatter,
+}
+
+pub enum Conditional {
+    Expression(JsConditionalExpression),
+    Type(TsConditionalType),
 }
 
 /// Utility function to use to format ternary operators
@@ -25,14 +30,12 @@ pub struct FormatConditionalPayload<'f, Node: AstNode + ToFormatElement> {
 /// - [rslint_parser::ast::TsConditionalType]
 /// - [rslint_parser::ast::JsConditionalExpression]
 pub fn format_conditional(
-    current_node: &SyntaxNode,
+    conditional: Conditional,
     formatter: &Formatter,
     parent_is_conditional: bool,
 ) -> FormatResult<FormatElement> {
-    let (head, body) = match current_node.kind() {
-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
-            let conditional_expression =
-                JsConditionalExpression::cast(current_node.to_owned()).unwrap();
+    let (head, body) = match conditional {
+        Conditional::Expression(conditional_expression) => {
             let JsConditionalExpressionFields {
                 consequent,
                 colon_token,
@@ -53,16 +56,13 @@ pub fn format_conditional(
                     },
                     parent_is_conditional,
                     |node| {
-                        JsConditionalExpression::cast(node)
-                            .unwrap()
-                            .syntax()
-                            .to_owned()
+                        JsConditionalExpression::cast(node.clone())
+                            .and_then(|node| Some(Conditional::Expression(node)))
                     },
                 )?,
             )
         }
-        JsSyntaxKind::TS_CONDITIONAL_TYPE => {
-            let conditional_type = TsConditionalType::cast(current_node.to_owned()).unwrap();
+        Conditional::Type(conditional_type) => {
             let TsConditionalTypeFields {
                 check_type,
                 extends_token,
@@ -91,26 +91,25 @@ pub fn format_conditional(
                         formatter,
                     },
                     parent_is_conditional,
-                    |node| TsConditionalType::cast(node).unwrap().syntax().to_owned(),
+                    |node| {
+                        TsConditionalType::cast(node.clone())
+                            .and_then(|node| Some(Conditional::Type(node)))
+                    },
                 )?,
             )
         }
-
-        _ => panic!(
-            "This function should be used only for JsConditionalExpression and TsConditionalType"
-        ),
     };
 
     Ok(format_elements![head, body])
 }
 
-fn format_conditional_body<Node: AstNode + ToFormatElement, Cast>(
+fn format_conditional_body<Node: AstNode + ToFormatElement, ToConditional>(
     payload: FormatConditionalPayload<Node>,
     parent_is_conditional: bool,
-    cast: Cast,
+    to_conditional: ToConditional,
 ) -> FormatResult<FormatElement>
 where
-    Cast: Fn(SyntaxNode) -> SyntaxNode,
+    ToConditional: Fn(&SyntaxNode) -> Option<Conditional>,
 {
     let FormatConditionalPayload {
         colon,
@@ -120,19 +119,10 @@ where
         alternate,
     } = payload;
 
-    let is_alternate_conditional = matches!(
-        alternate.syntax().kind(),
-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION | JsSyntaxKind::TS_CONDITIONAL_TYPE
-    );
-
-    let is_consequent_conditional = matches!(
-        consequent.syntax().kind(),
-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION | JsSyntaxKind::TS_CONDITIONAL_TYPE
-    );
-
-    let consequent = if is_consequent_conditional {
-        let consequent = cast(consequent.syntax().to_owned());
-        let consequent = format_conditional(&consequent, formatter, true)?;
+    let mut left_or_right_is_conditional = false;
+    let consequent = if let Some(consequent) = to_conditional(consequent.syntax()) {
+        left_or_right_is_conditional = true;
+        let consequent = format_conditional(consequent, formatter, true)?;
         format_elements![question_mark.format(formatter)?, space_token(), consequent]
     } else {
         format_elements![
@@ -141,9 +131,10 @@ where
             consequent.format(formatter)?
         ]
     };
-    let alternate = if is_alternate_conditional {
-        let alternate = cast(alternate.syntax().to_owned());
-        let alternate = format_conditional(&alternate, formatter, true)?;
+
+    let alternate = if let Some(alternate) = to_conditional(alternate.syntax()) {
+        left_or_right_is_conditional = true;
+        let alternate = format_conditional(alternate, formatter, true)?;
         format_elements![colon.format(formatter)?, space_token(), alternate]
     } else {
         format_elements![
@@ -153,7 +144,7 @@ where
         ]
     };
 
-    let body = if is_alternate_conditional || is_consequent_conditional || parent_is_conditional {
+    let body = if left_or_right_is_conditional || parent_is_conditional {
         indent(format_elements![
             hard_line_break(),
             consequent,
