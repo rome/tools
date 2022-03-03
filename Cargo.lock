@@ -1311,6 +1311,7 @@ dependencies = [
  "rome_core",
  "rome_formatter",
  "rome_path",
+ "rslint_errors",
  "rslint_parser",
 ]
 

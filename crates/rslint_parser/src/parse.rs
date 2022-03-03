@@ -65,6 +65,11 @@ impl<T> Parse<T> {
         self.errors.as_slice()
     }
 
+    /// Get the errors which occurred when parsing
+    pub fn into_errors(self) -> Vec<Diagnostic> {
+        self.errors
+    }
+
     /// Returns [true] if the parser encountered some errors during the parsing.
     pub fn has_errors(&self) -> bool {
         self.errors.iter().any(|diagnostic| diagnostic.is_error())
