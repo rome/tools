@@ -600,9 +600,12 @@ mod test {
     use rslint_parser::{parse, SourceType};
 
     #[test]
+    #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"let g = [[], [0, 1], [0, 1]      ];
+        let src = r#"abstract class A {
+      declare private name?: string;
+}
 "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);

@@ -7,8 +7,8 @@ use crate::{
     FormatElement, FormatResult, Formatter,
 };
 pub use call_expression::format_call_expression;
-use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause};
-use rslint_parser::{AstNode, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause, Modifiers};
+use rslint_parser::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
 pub(crate) use simple::*;
 
@@ -348,4 +348,18 @@ mod tests {
             }],
         );
     }
+}
+
+/// This function consumes a list of modifiers and applies a predictable sorting.
+pub(crate) fn sort_modifiers_by_precedence<List, Node>(list: &List) -> Vec<Node>
+where
+    Node: AstNode + Clone,
+    List: AstNodeList<Node>,
+    Modifiers: for<'a> From<&'a Node>,
+{
+    let mut nodes_and_modifiers = list.iter().collect::<Vec<Node>>();
+
+    nodes_and_modifiers.sort_unstable_by_key(|node| Modifiers::from(node));
+
+    nodes_and_modifiers
 }

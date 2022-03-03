@@ -7,6 +7,7 @@
 #[macro_use]
 mod expr_ext;
 mod generated;
+mod modifier_ext;
 mod stmt_ext;
 mod union_ext;
 
@@ -16,9 +17,9 @@ use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use thiserror::Error;
 
-pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*};
-
 pub(crate) use self::generated::syntax_factory::JsSyntaxFactory;
+pub use self::modifier_ext::Modifiers;
+pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*};
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly

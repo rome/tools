@@ -55,6 +55,16 @@ abstract class AbstractMembers {
     abstract get my_name();
     abstract set my_name(val);
 }
+
+
+abstract class Test1 {
+                private c?: string;
+                private d?: string;
+                private readonly e: string;
+                private readonly f: string;
+                protected abstract readonly g: string;
+                protected readonly abstract h: string;
+}
 =============================
 # Outputs
 ## Output 1
@@ -67,7 +77,7 @@ class Test {
 
 	constructor(a: string) {}
 
-	declare private readonly test?: string;
+	private declare readonly test?: string;
 	readonly test2!: string;
 
 	display2(): void {
@@ -113,5 +123,14 @@ abstract class AbstractMembers {
 	abstract display();
 	abstract get my_name();
 	abstract set my_name(val);
+}
+
+abstract class Test1 {
+	private c?: string;
+	private d?: string;
+	private readonly e: string;
+	private readonly f: string;
+	protected abstract readonly g: string;
+	protected abstract readonly h: string;
 }
 

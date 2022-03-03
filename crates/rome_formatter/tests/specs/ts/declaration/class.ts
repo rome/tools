@@ -48,3 +48,13 @@ abstract class AbstractMembers {
     abstract get my_name();
     abstract set my_name(val);
 }
+
+
+abstract class Test1 {
+                private c?: string;
+                private d?: string;
+                private readonly e: string;
+                private readonly f: string;
+                protected abstract readonly g: string;
+                protected readonly abstract h: string;
+}
