@@ -37,7 +37,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(
 ) -> Diagnostic {
     let modifier = p.span_text(modifier_range);
     p.err_builder(&format!(
-        "'{modifier} cannot appear on a constructor declaration."
+        "'{modifier}' cannot appear on a constructor declaration."
     ))
     .primary(modifier_range, "")
 }
@@ -56,7 +56,7 @@ pub(crate) fn ts_accessibility_modifier_already_seen(
     second_range: TextRange,
     first_range: TextRange,
 ) -> Diagnostic {
-    p.err_builder("Accessibility modifier already seen")
+    p.err_builder("Accessibility modifier already seen.")
         .primary(second_range, "duplicate modifier")
         .secondary(first_range, "first modifier")
 }
@@ -70,7 +70,7 @@ pub(crate) fn ts_accessor_type_parameters_error(
     p: &Parser,
     type_parameters: &CompletedMarker,
 ) -> Diagnostic {
-    p.err_builder("An accessor cannot have type parameters")
+    p.err_builder("An accessor cannot have type parameters.")
         .primary(type_parameters.range(p), "")
 }
 
@@ -78,7 +78,7 @@ pub(crate) fn ts_constructor_type_parameters_error(
     p: &Parser,
     type_parameters: &CompletedMarker,
 ) -> Diagnostic {
-    p.err_builder("constructors cannot have type parameters")
+    p.err_builder("constructors cannot have type parameters.")
         .primary(type_parameters.range(p), "")
 }
 

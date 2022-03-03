@@ -256,7 +256,7 @@ error[SyntaxError]: abstract members should not have a body
   │                            ^^^
 
 --
-error[SyntaxError]: 'abstract cannot appear on a constructor declaration.
+error[SyntaxError]: 'abstract' cannot appear on a constructor declaration.
   ┌─ typescript_abstract_class_member_should_not_have_body.ts:2:5
   │
 2 │     abstract constructor() { }

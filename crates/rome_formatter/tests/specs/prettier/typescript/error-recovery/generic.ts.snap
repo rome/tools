@@ -76,7 +76,7 @@ error[SyntaxError]: expected a type parameter but instead found '>'
 8 │     constructor<>() {}
   │                 ^ Expected a type parameter here
 
-error[SyntaxError]: constructors cannot have type parameters
+error[SyntaxError]: constructors cannot have type parameters.
   ┌─ generic.ts:8:16
   │
 8 │     constructor<>() {}

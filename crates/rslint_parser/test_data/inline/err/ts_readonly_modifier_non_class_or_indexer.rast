@@ -226,7 +226,7 @@ JsModule {
       8: R_CURLY@139..141 "}" [Newline("\n")] []
   3: EOF@141..142 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'readonly cannot appear on a constructor declaration.
+error[SyntaxError]: 'readonly' cannot appear on a constructor declaration.
   ┌─ ts_readonly_modifier_non_class_or_indexer.ts:2:3
   │
 2 │   readonly constructor() {}

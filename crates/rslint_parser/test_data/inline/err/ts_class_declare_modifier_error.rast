@@ -328,7 +328,7 @@ error[SyntaxError]: 'declare' cannot appear on a parameter.
   │                         ^^^^^^^
 
 --
-error[SyntaxError]: 'declare cannot appear on a constructor declaration.
+error[SyntaxError]: 'declare' cannot appear on a constructor declaration.
   ┌─ ts_class_declare_modifier_error.ts:3:5
   │
 3 │     declare constructor(declare readonly prop) {}

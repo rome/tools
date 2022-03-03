@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: duplicates-access-modifier.ts
 
 ---
@@ -30,7 +30,7 @@ class Foo {
 
 # Errors
 ```
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:2:10
   │
 2 │   public public a;
@@ -38,7 +38,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │   │       
   │   first modifier
 
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:3:11
   │
 3 │   private public b;
@@ -46,7 +46,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │   │        
   │   first modifier
 
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:4:13
   │
 4 │   protected private c;
@@ -54,7 +54,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │   │          
   │   first modifier
 
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:5:10
   │
 5 │   public protected d;
@@ -62,7 +62,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │   │       
   │   first modifier
 
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:6:10
   │
 6 │   public protected private e;
@@ -70,7 +70,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │   │       
   │   first modifier
 
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ duplicates-access-modifier.ts:6:20
   │
 6 │   public protected private e;

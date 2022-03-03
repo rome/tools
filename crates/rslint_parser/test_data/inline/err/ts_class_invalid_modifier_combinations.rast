@@ -535,7 +535,7 @@ error[SyntaxError]: 'declare' already seen
   │     first seen here
 
 --
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ ts_class_invalid_modifier_combinations.ts:5:13
   │
 5 │     private protected public c;
@@ -544,7 +544,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │     first modifier
 
 --
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ ts_class_invalid_modifier_combinations.ts:5:23
   │
 5 │     private protected public c;
@@ -553,7 +553,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │     first modifier
 
 --
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ ts_class_invalid_modifier_combinations.ts:6:13
   │
 6 │     private private d;
@@ -562,7 +562,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │     first modifier
 
 --
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ ts_class_invalid_modifier_combinations.ts:7:15
   │
 7 │     protected protected e;
@@ -571,7 +571,7 @@ error[SyntaxError]: Accessibility modifier already seen
   │     first modifier
 
 --
-error[SyntaxError]: Accessibility modifier already seen
+error[SyntaxError]: Accessibility modifier already seen.
   ┌─ ts_class_invalid_modifier_combinations.ts:8:12
   │
 8 │     public public f;
