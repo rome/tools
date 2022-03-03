@@ -663,15 +663,15 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
         num_multi_labels: usize,
         multi_labels: &[(usize, LabelStyle, MultiLabel<'_>)],
     ) -> Result<(), Error> {
-        let max_line_length = 80;
+        let max_line_length = 250;
 
-        // if the line is smaller than max_line_length, we print it completely...
-        dbg!(source.len());
-        if source.len() < max_line_length {
+        // if the line is smaller than max_line_length, we print it entirely...
+        let line_candidate = &source[line_range.clone()];
+        if line_candidate.len() < max_line_length {
             return self.render_snippet_source_impl(
                 outer_padding,
                 line_number,
-                &source[line_range],
+                line_candidate,
                 severity,
                 &single_labels,
                 num_multi_labels,
