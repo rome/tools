@@ -4,10 +4,10 @@ use crate::{
     FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
-    JsConditionalExpression, JsConditionalExpressionFields, TsConditionalType,
-    TsConditionalTypeFields,
+    JsAnyExpression, JsConditionalExpression, JsConditionalExpressionFields, TsConditionalType,
+    TsConditionalTypeFields, TsType,
 };
-use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
+use rslint_parser::{AstNode, SyntaxToken};
 
 pub struct FormatConditionalPayload<'f, Node: AstNode + ToFormatElement> {
     pub question_mark: SyntaxToken,
@@ -20,6 +20,27 @@ pub struct FormatConditionalPayload<'f, Node: AstNode + ToFormatElement> {
 pub enum Conditional {
     Expression(JsConditionalExpression),
     Type(TsConditionalType),
+}
+
+impl Conditional {
+    pub fn from_type(ts_type: TsType) -> Option<Self> {
+        if let Some(TsType::TsConditionalType(conditional)) = TsType::cast(ts_type.syntax().clone())
+        {
+            Some(Self::Type(conditional))
+        } else {
+            None
+        }
+    }
+
+    pub fn from_expression(any_expression: JsAnyExpression) -> Option<Self> {
+        if let Some(JsAnyExpression::JsConditionalExpression(conditional)) =
+            JsAnyExpression::cast(any_expression.syntax().clone())
+        {
+            Some(Self::Expression(conditional))
+        } else {
+            None
+        }
+    }
 }
 
 /// Utility function to use to format ternary operators
@@ -55,7 +76,7 @@ pub fn format_conditional(
                         formatter,
                     },
                     parent_is_conditional,
-                    |node| JsConditionalExpression::cast(node.clone()).map(Conditional::Expression),
+                    |node| node.and_then(Conditional::from_expression),
                 )?,
             )
         }
@@ -88,7 +109,7 @@ pub fn format_conditional(
                         formatter,
                     },
                     parent_is_conditional,
-                    |node| TsConditionalType::cast(node.clone()).map(Conditional::Type),
+                    |node| node.and_then(Conditional::from_type),
                 )?,
             )
         }
@@ -103,7 +124,7 @@ fn format_conditional_body<Node: AstNode + ToFormatElement, ToConditional>(
     to_conditional: ToConditional,
 ) -> FormatResult<FormatElement>
 where
-    ToConditional: Fn(&SyntaxNode) -> Option<Conditional>,
+    ToConditional: Fn(Option<Node>) -> Option<Conditional>,
 {
     let FormatConditionalPayload {
         colon,
@@ -114,7 +135,8 @@ where
     } = payload;
 
     let mut left_or_right_is_conditional = false;
-    let consequent = if let Some(consequent) = to_conditional(consequent.syntax()) {
+    let conditional = Node::cast(consequent.syntax().clone());
+    let consequent = if let Some(consequent) = to_conditional(conditional) {
         left_or_right_is_conditional = true;
         let consequent = format_conditional(consequent, formatter, true)?;
         format_elements![question_mark.format(formatter)?, space_token(), consequent]
@@ -126,7 +148,8 @@ where
         ]
     };
 
-    let alternate = if let Some(alternate) = to_conditional(alternate.syntax()) {
+    let conditional = Node::cast(alternate.syntax().clone());
+    let alternate = if let Some(alternate) = to_conditional(conditional) {
         left_or_right_is_conditional = true;
         let alternate = format_conditional(alternate, formatter, true)?;
         format_elements![colon.format(formatter)?, space_token(), alternate]
