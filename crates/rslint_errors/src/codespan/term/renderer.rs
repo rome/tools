@@ -601,8 +601,10 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
         outer_padding: usize,
         source: &str,
     ) -> Result<(), Error> {
-        let labels_start = single_labels.iter().next().unwrap().1.start;
-        let labels_end = single_labels.iter().last().unwrap().1.end;
+        let labels_start = single_labels
+            .first()
+            .map_or(line_range.start, |x| x.1.start);
+        let labels_end = single_labels.last().map_or(line_range.end, |x| x.1.end);
 
         // If labels width are larger then max_line_length, we will
         // trim the label
@@ -691,8 +693,8 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
                 candidates.push(single_label.clone());
 
                 // We need to know which part of the long line we are going to display
-                let labels_start = candidates.iter().next().unwrap().1.start;
-                let labels_end = candidates.iter().last().unwrap().1.end;
+                let labels_start = candidates.first().map_or(line_range.start, |x| x.1.start);
+                let labels_end = candidates.last().map_or(line_range.end, |x| x.1.end);
                 let labels_width = labels_end - labels_start;
 
                 if labels_width >= MAX_LINE_LENGTH {
