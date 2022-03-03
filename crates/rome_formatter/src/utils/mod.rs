@@ -354,35 +354,30 @@ mod tests {
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
 #[repr(u8)]
 pub(crate) enum SortedModifiers {
-    Accessibility = 1,
-    Declare = 2,
-    Static = 3,
-    Abstract = 4,
-    Override = 5,
-    Readonly = 6,
+    // please we wary of the order
+    Accessibility,
+    Declare,
+    Static,
+    Abstract,
+    Override,
+    Readonly,
 }
 
 /// This function consumes a list of modifiers and applies a predictable sorting.
 ///
 /// The function needs to accept a closure that maps the node modifier to the correct [SortedModifier].
-pub(crate) fn into_sorted_modifiers<List, Node, MapTo>(list: List, map_to: MapTo) -> Vec<Node>
+pub(crate) fn sort_modifiers_by_precedence<List, Node, MapTo>(
+    list: &List,
+    map_to: MapTo,
+) -> Vec<Node>
 where
     Node: AstNode + ToFormatElement,
     List: AstNodeList<Node>,
     MapTo: Fn(&Node) -> SortedModifiers,
 {
-    let mut nodes_and_modifiers = list
-        .iter()
-        .map(|node| {
-            let sorted_modifier: SortedModifiers = map_to(&node);
-            (node, sorted_modifier)
-        })
-        .collect::<Vec<(Node, SortedModifiers)>>();
+    let mut nodes_and_modifiers = list.iter().collect::<Vec<Node>>();
 
-    nodes_and_modifiers.sort_unstable_by(|(_, left), (_, right)| left.cmp(right));
+    nodes_and_modifiers.sort_unstable_by_key(|node| map_to(node));
 
     nodes_and_modifiers
-        .into_iter()
-        .map(|(node, _)| node)
-        .collect::<Vec<Node>>()
 }
