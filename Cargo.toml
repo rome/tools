@@ -4,6 +4,7 @@
 resolver = "2"
 members = [
 	"crates/*",
+	"playground",
 	"xtask/",
 	"xtask/bench",
 	"xtask/codegen",
