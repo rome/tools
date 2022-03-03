@@ -174,9 +174,8 @@ pub trait SyntaxNodeExt {
     /// Whether the node contains leading comments.
     fn has_leading_comments(&self) -> bool {
         self.tokens()
-            .iter()
-            .next()
-            .map_or(false, |tok| dbg!(tok).has_leading_comments())
+            .get(0)
+            .map_or(false, |tok| tok.has_leading_comments())
     }
 
     /// Get the first child with a specific kind.
