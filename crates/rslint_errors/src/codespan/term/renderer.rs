@@ -6,6 +6,8 @@ use super::super::diagnostic::{LabelStyle, Note, Severity};
 use super::super::files::{Error, Location};
 use super::super::term::{Chars, Config, Styles};
 
+const MAX_LINE_LENGTH: usize = 250;
+
 /// The 'location focus' of a source code snippet.
 pub struct Locus {
     /// The user-facing name of the file.
@@ -592,7 +594,6 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
 
     fn render_snippet_source_inside_of_long_line(
         &mut self,
-        max_line_length: usize,
         line_number: usize,
         line_range: Range<usize>,
         severity: Severity,
@@ -605,9 +606,9 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
 
         // If labels width are larger then max_line_length, we will
         // trim the label
-        let labels_width = (labels_end - labels_start).min(max_line_length);
+        let labels_width = (labels_end - labels_start).min(MAX_LINE_LENGTH);
 
-        let spacing = (max_line_length - labels_width) / 2;
+        let spacing = (MAX_LINE_LENGTH - labels_width) / 2;
 
         // We will try to center the interesting part of the line
         let interesting_part_start = labels_start.saturating_sub(spacing);
@@ -631,13 +632,13 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
             label.1.end = label
                 .1
                 .end
-                .min(interesting_part_range.start + max_line_length);
+                .min(interesting_part_range.start + MAX_LINE_LENGTH);
         }
 
         // and the width of what we are going to print
         new_code_range.end = new_code_range
             .end
-            .min(new_code_range.start + max_line_length);
+            .min(new_code_range.start + MAX_LINE_LENGTH);
 
         self.render_snippet_source_impl(
             outer_padding,
@@ -669,12 +670,10 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
         num_multi_labels: usize,
         multi_labels: &[(usize, LabelStyle, MultiLabel<'_>)],
     ) -> Result<(), Error> {
-        let max_line_length = 250;
-
         // if the line is smaller than max_line_length, we print it entirely...
         // we also print it entirely if there are multi_labels
         let line_candidate = &source[line_range.clone()];
-        if (line_candidate.len() < max_line_length) || (multi_labels.len() > 0) {
+        if (line_candidate.len() < MAX_LINE_LENGTH) || (multi_labels.len() > 0) {
             return self.render_snippet_source_impl(
                 outer_padding,
                 line_number,
@@ -696,9 +695,8 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
                 let labels_end = candidates.iter().last().unwrap().1.end;
                 let labels_width = labels_end - labels_start;
 
-                if labels_width >= max_line_length {
+                if labels_width >= MAX_LINE_LENGTH {
                     self.render_snippet_source_inside_of_long_line(
-                        max_line_length,
                         line_number,
                         line_range.clone(),
                         severity,
@@ -712,7 +710,6 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
 
             if candidates.len() > 0 {
                 self.render_snippet_source_inside_of_long_line(
-                    max_line_length,
                     line_number,
                     line_range,
                     severity,
