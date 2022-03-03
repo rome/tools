@@ -603,9 +603,7 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"abstract class A {
-      declare private name?: string;
-}
+        let src = r#"somethingThatsAReallyLongPropName1 ? somethingThatsAReallyLongPropName2 ? somethingThatsAReallyLongPropName3 : somethingThatsAReallyLongPropName4 : somethingThatsAReallyLongPropName6
 "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);

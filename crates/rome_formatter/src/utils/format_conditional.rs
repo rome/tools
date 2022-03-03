@@ -137,16 +137,36 @@ impl Conditional {
         consequent: Option<FormatElement>,
     ) -> FormatResult<FormatElement> {
         match self {
-            Conditional::Expression(expr) => Ok(format_elements![
-                expr.colon_token().format(formatter)?,
-                space_token(),
-                consequent
-            ]),
-            Conditional::Type(ty) => Ok(format_elements![
-                ty.colon_token().format(formatter)?,
-                space_token(),
-                consequent
-            ]),
+            Conditional::Expression(expr) => {
+                if let Some(consequent) = consequent {
+                    Ok(format_elements![
+                        expr.question_mark_token().format(formatter)?,
+                        space_token(),
+                        consequent
+                    ])
+                } else {
+                    Ok(format_elements![
+                        expr.question_mark_token().format(formatter)?,
+                        space_token(),
+                        expr.consequent().format(formatter)?
+                    ])
+                }
+            }
+            Conditional::Type(ty) => {
+                if let Some(consequent) = consequent {
+                    Ok(format_elements![
+                        ty.question_mark_token().format(formatter)?,
+                        space_token(),
+                        consequent
+                    ])
+                } else {
+                    Ok(format_elements![
+                        ty.question_mark_token().format(formatter)?,
+                        space_token(),
+                        ty.true_type().format(formatter)?
+                    ])
+                }
+            }
         }
     }
 
@@ -156,16 +176,36 @@ impl Conditional {
         alternate: Option<FormatElement>,
     ) -> FormatResult<FormatElement> {
         match self {
-            Conditional::Expression(expr) => Ok(format_elements![
-                expr.colon_token().format(formatter)?,
-                space_token(),
-                alternate
-            ]),
-            Conditional::Type(ty) => Ok(format_elements![
-                ty.colon_token().format(formatter)?,
-                space_token(),
-                alternate
-            ]),
+            Conditional::Expression(expr) => {
+                if let Some(alternate) = alternate {
+                    Ok(format_elements![
+                        expr.colon_token().format(formatter)?,
+                        space_token(),
+                        alternate
+                    ])
+                } else {
+                    Ok(format_elements![
+                        expr.colon_token().format(formatter)?,
+                        space_token(),
+                        expr.alternate().format(formatter)?
+                    ])
+                }
+            }
+            Conditional::Type(ty) => {
+                if let Some(alternate) = alternate {
+                    Ok(format_elements![
+                        ty.colon_token().format(formatter)?,
+                        space_token(),
+                        alternate
+                    ])
+                } else {
+                    Ok(format_elements![
+                        ty.colon_token().format(formatter)?,
+                        space_token(),
+                        ty.false_type().format(formatter)?
+                    ])
+                }
+            }
         }
     }
 }
