@@ -55,10 +55,7 @@ pub fn format_conditional(
                         formatter,
                     },
                     parent_is_conditional,
-                    |node| {
-                        JsConditionalExpression::cast(node.clone())
-                            .and_then(|node| Some(Conditional::Expression(node)))
-                    },
+                    |node| JsConditionalExpression::cast(node.clone()).map(Conditional::Expression),
                 )?,
             )
         }
@@ -91,10 +88,7 @@ pub fn format_conditional(
                         formatter,
                     },
                     parent_is_conditional,
-                    |node| {
-                        TsConditionalType::cast(node.clone())
-                            .and_then(|node| Some(Conditional::Type(node)))
-                    },
+                    |node| TsConditionalType::cast(node.clone()).map(Conditional::Type),
                 )?,
             )
         }
