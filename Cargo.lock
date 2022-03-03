@@ -1427,7 +1427,6 @@ dependencies = [
  "expect-test",
  "indexmap",
  "num-bigint",
- "rome_core",
  "rome_rowan",
  "rslint_errors",
  "rslint_lexer",

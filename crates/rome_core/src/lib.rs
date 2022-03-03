@@ -43,12 +43,8 @@ pub enum RomeError {
 impl Debug for RomeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            RomeError::SourceFileNotSupported(extension) => {
-                write!(f, "Rome doesn't support this {extension} yet")
-            }
-            RomeError::CantReadTheFile => {
-                write!(f, "Rome is not able to read the file")
-            }
+            RomeError::SourceFileNotSupported(_) => std::fmt::Display::fmt(self, f),
+            RomeError::CantReadTheFile => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -56,8 +52,12 @@ impl Debug for RomeError {
 impl Display for RomeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            RomeError::SourceFileNotSupported(_) => std::fmt::Debug::fmt(self, f),
-            RomeError::CantReadTheFile => std::fmt::Debug::fmt(self, f),
+            RomeError::SourceFileNotSupported(extension) => {
+                write!(f, "Rome doesn't support this {extension} yet")
+            }
+            RomeError::CantReadTheFile => {
+                write!(f, "Rome is not able to read the file")
+            }
         }
     }
 }

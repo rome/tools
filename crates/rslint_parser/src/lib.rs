@@ -93,7 +93,7 @@ pub use crate::{
 pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
 pub use rslint_syntax::*;
 pub(crate) use state::{ParserState, StrictMode};
-use std::fmt::Debug;
+use std::fmt::{Debug, Display};
 
 /// The type of error emitted by the parser, this includes warnings, notes, and errors.
 /// It also includes labels and possibly notes
@@ -101,7 +101,6 @@ pub type ParserError = rslint_errors::Diagnostic;
 use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
-use rome_core::RomeError;
 use rslint_errors::Diagnostic;
 use std::ops::Range;
 use std::path::Path;
@@ -313,11 +312,15 @@ impl SourceType {
 }
 
 impl TryFrom<&Path> for SourceType {
-    type Error = RomeError;
+    type Error = SourceTypeError;
 
     fn try_from(path: &Path) -> Result<Self, Self::Error> {
-        let file_name = path.file_name().expect("Can't read the file");
-        let file_name = file_name.to_str().expect("Can't read the file");
+        let file_name = path
+            .file_name()
+            .expect("Can't read the file name")
+            .to_str()
+            .expect("Can't read the file name");
+
         let extension = path
             .extension()
             .expect("Can't read the file extension")
@@ -328,11 +331,30 @@ impl TryFrom<&Path> for SourceType {
     }
 }
 
+/// Errors around the construct of the source type
+#[derive(Debug)]
+pub enum SourceTypeError {
+    /// The source type is unknown
+    UnknownExtension(String),
+}
+
+impl std::error::Error for SourceTypeError {}
+
+impl Display for SourceTypeError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SourceTypeError::UnknownExtension(extension) => {
+                write!(f, "The parser can't parse the extension '{extension}' yet")
+            }
+        }
+    }
+}
+
 /// It deduce the [SourceType] from the file name and its extension
 fn compute_source_type_from_path_or_extension(
     file_name: &str,
     extension: &str,
-) -> Result<SourceType, RomeError> {
+) -> Result<SourceType, SourceTypeError> {
     let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
         SourceType::d_ts()
     } else if file_name.ends_with(".d.cts") {
@@ -345,7 +367,7 @@ fn compute_source_type_from_path_or_extension(
             "ts" | "mts" => SourceType::ts(),
             "cts" => SourceType::ts().with_module_kind(ModuleKind::Script),
             "tsx" => SourceType::tsx(),
-            _ => return Err(RomeError::SourceFileNotSupported(extension.into())),
+            _ => return Err(SourceTypeError::UnknownExtension(extension.into())),
         }
     };
     Ok(source_type)
