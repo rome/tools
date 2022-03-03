@@ -1,3 +1,3 @@
 ## Formatter
 
-You can use our formatter using our VS Code extension.
+You can use the formatter via [our VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome).

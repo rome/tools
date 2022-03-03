@@ -1,6 +1,9 @@
+
 <section>
 
+## About Rome
 <!-- GENERATED:START(hash:62ccf90aeb8e7fa260c04d350a1a148b77d011c2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
+
 **Rome** is a formatter, linter, bundler, and [more](#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.

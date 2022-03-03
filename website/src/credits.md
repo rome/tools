@@ -421,45 +421,30 @@ layout: layouts/page.liquid
 Rome contains code forked from other projects. They have been transformed in some way, sometimes
 substantially rewritten.
 
-- [`crates/rslint_parser`]()
-- [`internal/codec-source-map`](https://github.com/rome/tools/tree/main/internal/codec-source-map)
-  - **Original**: [mozilla/source-map](https://github.com/mozilla/source-map)
-  - **Author**: [Mozilla Foundation and contributors](https://foundation.mozilla.org/en/)
-  - **License**: BSD-3-Clause
-
-- [`internal/formatter`](https://github.com/rome/tools/tree/main/internal/formatter)
-  - **Original**: [babel/babel-generator](https://github.com/babel/babel/tree/main/packages/babel-generator) by [Sebastian McKenzie and contributors](https://twitter.com/sebmck)
+- [`crates/rslint_errors`](https://github.com/rome/tools/tree/main/crates/rslint_errors)
+  - **Original**: [`rslint/rslint_errors`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
   - **License**: MIT
 
-- [`internal/js-parser`](https://github.com/rome/tools/tree/main/internal/js-parser)
-  - **Original**: [babel/babel-parser](https://github.com/babel/babel/tree/main/packages/babel-parser) by [various contributors](https://github.com/rome/tools/tree/main/internal/js-parser/AUTHORS)
-  - **Parent**: [acornjs/acorn](https://github.com/acornjs/acorn)
-  - **Author**: MIT
-
-- [`internal/string-diff`](https://github.com/rome/tools/tree/main/internal/string-diff)
-  - **Original**: [jhchen/fast-diff](https://github.com/jhchen/fast-diff) by [Jason Chen](https://github.com/jhchen)
-  - **Parent**: [google-diff-match-patch](http://code.google.com/p/google-diff-match-patch/)
-  - **Copyholder**: Google Inc
-  - **License**: Apache-2.0
-
-- [`internal/string-escape/escapeJSString.ts`](https://github.com/rome/tools/tree/main/internal/string-escape/escapeJSString.ts)
-  - **Original**: [mathiasbynens/jsesc](https://github.com/mathiasbynens/jsesc) by [Mathias Bynens](https://mathiasbynens.be/)
+- [`crates/rslint_parser`](https://github.com/rome/tools/tree/main/crates/rslint_parser)
+  - **Original**: [`rslint/rslint_parser`](https://github.com/rslint/rslint/tree/master/crates/rslint_parser)
   - **License**: MIT
 
-- [`internal/string-escape/escapeRegex.ts`](https://github.com/rome/tools/tree/main/internal/string-escape/escapeRegex.ts)
-  - **Original**: [sindresorhus/escape-string-regexp](https://github.com/sindresorhus/escape-string-regexp) by [Sindre Sorhus](https://sindresorhus.com)
+- [`crates/rslint_lexer`](https://github.com/rome/tools/tree/main/crates/rslint_lexer)
+  - **Original**:  [`rslint/rslint_lexer`](https://github.com/rslint/rslint/tree/master/crates/rslint_lexer)
   - **License**: MIT
 
-- [`internal/string-utils/humanizeFileSize.ts`](https://github.com/rome/tools/tree/main/internal/string-utils/humanizeFileSize.ts)
-  - **Original**: [sindresorhus/pretty-bytes](https://github.com/sindresorhus/pretty-bytes) by [Sindre Sorhus](https://sindresorhus.com)
+- [`crates/rslint_regex`](https://github.com/rome/tools/tree/main/crates/rslint_regex)
+  - **Original**: [`rslint/rslint_regex`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
   - **License**: MIT
 
-- [`internal/string-utils/naturalCompare.ts`](https://github.com/rome/tools/tree/main/internal/string-utils/naturalCompare.ts)
-  - **Original**: [nwoltman/string-natural-compare](https://github.com/nwoltman/string-natural-compare)
-  - **Author**: [Nathan Woltman](https://github.com/nwoltman)
-  - **License**: MIT
+- [`crates/rslint_syntax`](https://github.com/rome/tools/tree/main/crates/rslint_syntax)
+	- **Original**: [`rslint/rslint_syntax`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
+	- **License**: MIT
 
-- [`internal/codec-binary-serial/CachedKeyDecoder.ts`](https://github.com/rome/tools/tree/main/internal/codec-binary-serial/CachedKeyDecoder.ts) [`internal/codec-binary-serial/utf8.ts`](https://github.com/rome/tools/tree/main/internal/codec-binary-serial/utf8.ts)
-  - **Original**: [msgpack/msgpack-javascript](https://github.com/msgpack/msgpack-javascript)
-  - **Author**: [The MessagePack Community](https://msgpack.org/)
-  - **License**: ISC
+- [`crates/rslint_text_edit`](https://github.com/rome/tools/tree/main/crates/rslint_text_edit)
+	- **Original**: [`rslint/rslint_text_edit`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
+	- **License**: MIT
+
+- [`crates/rome_rowan`](https://github.com/rome/tools/tree/main/crates/rome_rowan)
+	- **Original**: [`rust-analyzer/rowan`](https://github.com/rust-analyzer/rowan)
+	- **License**: Apache License, Version 2.0
