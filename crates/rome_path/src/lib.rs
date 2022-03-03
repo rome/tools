@@ -3,12 +3,14 @@
 //! give additional information around the the file that holds:
 //! - the [FileHandlers] for the specific file
 //! - shortcuts to open/write to the file
+use std::fs::read_to_string;
 use std::io::Read;
-use std::{fs::File, io::Write, ops::Deref, path::PathBuf};
+use std::{fs::File, io, io::Write, ops::Deref, path::PathBuf};
 
-#[derive(Debug, Eq, Hash, PartialEq)]
+#[derive(Debug, Clone, Eq, Hash, PartialEq)]
 pub struct RomePath {
     file: PathBuf,
+    file_id: Option<usize>,
 }
 
 impl Deref for RomePath {
@@ -23,7 +25,14 @@ impl RomePath {
     pub fn new(path_to_file: &str) -> Self {
         Self {
             file: PathBuf::from(path_to_file),
+            file_id: None,
         }
+    }
+
+    /// Builder pattern. It assigns an ID to the file
+    pub fn with_id(mut self, file_id: usize) -> Self {
+        self.file_id = Some(file_id);
+        self
     }
 
     // TODO: handle error with diagnostic?
@@ -48,5 +57,24 @@ impl RomePath {
             .expect("cannot read the file to format");
 
         buffer
+    }
+
+    /// Small wrapper for [read_to_string]
+    pub fn read_to_string(&self) -> io::Result<String> {
+        let path = self.file.as_path();
+        read_to_string(path)
+    }
+
+    /// Retrieves the ID assigned to the file. It might not exist, that's why it
+    /// returns an [Option]
+    pub fn file_id(&self) -> Option<usize> {
+        self.file_id
+    }
+
+    pub fn extension_as_str(&self) -> &str {
+        self.extension()
+            .expect("Can't read the file")
+            .to_str()
+            .expect("Can't read the file")
     }
 }

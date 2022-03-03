@@ -10,7 +10,9 @@ use tracing::{error, info, trace};
 use crate::capabilities::server_capabilities;
 use crate::config::CONFIGURATION_SECTION;
 use crate::handlers;
-use crate::handlers::formatting::{to_format_options, FormatOnTypeParams, FormatRangeParams};
+use crate::handlers::formatting::{
+    to_format_options, FormatOnTypeParams, FormatParams, FormatRangeParams,
+};
 use crate::line_index::LineIndex;
 use crate::session::Session;
 use crate::utils;
@@ -94,11 +96,12 @@ impl LanguageServer for LSPServer {
         let line_index = LineIndex::new(&doc.text);
         let cursor_range = crate::utils::text_range(&line_index, params.range);
 
+        let file_id = doc.file_id();
         let mut analysis_server = AnalysisServer::default();
-        analysis_server.set_file_text(doc.file_id, doc.text);
+        analysis_server.set_file_text(file_id, doc.text);
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::analysis::code_actions(analysis_server, doc.file_id, url, cursor_range)
+            handlers::analysis::code_actions(analysis_server, file_id, url, cursor_range)
         });
         let actions = task.await?;
         Ok(Some(actions))
@@ -113,12 +116,13 @@ impl LanguageServer for LSPServer {
         let workspace_settings = self.session.config.read().get_workspace_settings();
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::formatting::format(
-                &doc.text,
-                doc.file_id,
-                &params.options,
+            handlers::formatting::format(FormatParams {
+                text: &doc.text,
+                source_type: doc.get_source_type(),
+                format_options: to_format_options(&params.options),
                 workspace_settings,
-            )
+                file_id: doc.file_id(),
+            })
         });
         let edits = task.await?;
         Ok(edits)
@@ -135,10 +139,11 @@ impl LanguageServer for LSPServer {
         let task = utils::spawn_blocking_task(move || {
             handlers::formatting::format_range(FormatRangeParams {
                 text: doc.text.as_ref(),
-                file_id: doc.file_id,
+                file_id: doc.file_id(),
                 format_options: to_format_options(&params.options),
                 range: params.range,
                 workspace_settings,
+                source_type: doc.get_source_type(),
             })
         });
         let edits = task.await?;
@@ -156,10 +161,11 @@ impl LanguageServer for LSPServer {
         let task = utils::spawn_blocking_task(move || {
             handlers::formatting::format_on_type(FormatOnTypeParams {
                 text: doc.text.as_ref(),
-                file_id: doc.file_id,
+                file_id: doc.file_id(),
                 format_options: to_format_options(&params.options),
                 position: params.text_document_position.position,
                 workspace_settings,
+                source_type: doc.get_source_type(),
             })
         });
         let edits = task.await?;

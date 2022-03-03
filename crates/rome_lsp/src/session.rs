@@ -1,12 +1,10 @@
-use std::{collections::HashMap, error::Error, fmt::Display};
-
+use crate::config::Config;
+use crate::{documents::Document, handlers, url_interner::UrlInterner};
 use lspower::jsonrpc::Error as LspError;
 use lspower::lsp;
 use parking_lot::RwLock;
 use rome_analyze::{AnalysisServer, FileId};
-
-use crate::config::Config;
-use crate::{documents::Document, handlers, url_interner::UrlInterner};
+use std::{collections::HashMap, error::Error, fmt::Display};
 
 /// Represents the state of an LSP server session.
 pub(crate) struct Session {
@@ -108,11 +106,12 @@ impl Session {
     pub(crate) async fn update_diagnostics(&self, url: lsp::Url) -> anyhow::Result<()> {
         let doc = self.document(&url)?;
 
+        let file_id = doc.file_id();
         let mut analysis_server = AnalysisServer::default();
-        analysis_server.set_file_text(doc.file_id, doc.text);
+        analysis_server.set_file_text(file_id, doc.text);
 
         let handle = tokio::task::spawn_blocking(move || {
-            handlers::analysis::diagnostics(analysis_server, doc.file_id)
+            handlers::analysis::diagnostics(analysis_server, file_id)
         });
 
         let diagnostics = handle.await??;

@@ -12,7 +12,7 @@ use std::{
 
 use rome_formatter::{FormatOptions, IndentStyle};
 use rslint_errors::{file::SimpleFiles, termcolor, Emitter};
-use rslint_parser::{parse, SourceType};
+use rslint_parser::parse;
 
 static REPORTER: DiffReport = DiffReport::new();
 
@@ -33,7 +33,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     let (_, range_start_index, range_end_index) = strip_placeholders(&mut input_code);
     let parse_input = input_code.replace(PRETTIER_IGNORE, ROME_IGNORE);
 
-    let source_type = SourceType::from_path(input_file).unwrap();
+    let source_type = input_file.try_into().unwrap();
 
     let parsed = parse(&parse_input, 0, source_type);
     let syntax = parsed.syntax();

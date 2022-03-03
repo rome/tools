@@ -77,7 +77,6 @@ mod tests;
 pub mod ast;
 pub mod syntax;
 pub mod util;
-
 pub use crate::{
     ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult},
     event::{process, Event},
@@ -91,22 +90,20 @@ pub use crate::{
     token_source::TokenSource,
     util::{SyntaxNodeExt, SyntaxTokenExt},
 };
-
-pub(crate) use state::{ParserState, StrictMode};
-
 pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
-
 pub use rslint_syntax::*;
+pub(crate) use state::{ParserState, StrictMode};
+use std::fmt::{Debug, Display};
 
 /// The type of error emitted by the parser, this includes warnings, notes, and errors.
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
-
 use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
 use rslint_errors::Diagnostic;
 use std::ops::Range;
+use std::path::Path;
 
 /// An abstraction for syntax tree implementations
 pub trait TreeSink {
@@ -278,29 +275,6 @@ impl SourceType {
         }
     }
 
-    pub fn from_path(path: &std::path::Path) -> Option<SourceType> {
-        let file_name = path.file_name()?.to_str()?;
-
-        let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
-            Self::d_ts()
-        } else if file_name.ends_with(".d.cts") {
-            Self::d_ts().with_module_kind(ModuleKind::Script)
-        } else {
-            let extension = path.extension()?.to_str()?;
-            match extension {
-                "js" | "mjs" => Self::js_module(),
-                "cjs" => Self::js_module().with_module_kind(ModuleKind::Script),
-                "jsx" => Self::jsx(),
-                "ts" | "mts" => Self::ts(),
-                "cts" => Self::ts().with_module_kind(ModuleKind::Script),
-                "tsx" => Self::tsx(),
-                _ => return None,
-            }
-        };
-
-        Some(source_type)
-    }
-
     pub fn with_module_kind(mut self, kind: ModuleKind) -> Self {
         self.module_kind = kind;
         self
@@ -337,6 +311,69 @@ impl SourceType {
     }
 }
 
+impl TryFrom<&Path> for SourceType {
+    type Error = SourceTypeError;
+
+    fn try_from(path: &Path) -> Result<Self, Self::Error> {
+        let file_name = path
+            .file_name()
+            .expect("Can't read the file name")
+            .to_str()
+            .expect("Can't read the file name");
+
+        let extension = path
+            .extension()
+            .expect("Can't read the file extension")
+            .to_str()
+            .expect("Can't read the file extension");
+
+        compute_source_type_from_path_or_extension(file_name, extension)
+    }
+}
+
+/// Errors around the construct of the source type
+#[derive(Debug)]
+pub enum SourceTypeError {
+    /// The source type is unknown
+    UnknownExtension(String),
+}
+
+impl std::error::Error for SourceTypeError {}
+
+impl Display for SourceTypeError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SourceTypeError::UnknownExtension(extension) => {
+                write!(f, "The parser can't parse the extension '{extension}' yet")
+            }
+        }
+    }
+}
+
+/// It deduce the [SourceType] from the file name and its extension
+fn compute_source_type_from_path_or_extension(
+    file_name: &str,
+    extension: &str,
+) -> Result<SourceType, SourceTypeError> {
+    let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
+        SourceType::d_ts()
+    } else if file_name.ends_with(".d.cts") {
+        SourceType::d_ts().with_module_kind(ModuleKind::Script)
+    } else {
+        match extension {
+            "js" | "mjs" => SourceType::js_module(),
+            "cjs" => SourceType::js_module().with_module_kind(ModuleKind::Script),
+            "jsx" => SourceType::jsx(),
+            "ts" | "mts" => SourceType::ts(),
+            "cts" => SourceType::ts().with_module_kind(ModuleKind::Script),
+            "tsx" => SourceType::tsx(),
+            _ => return Err(SourceTypeError::UnknownExtension(extension.into())),
+        }
+    };
+    Ok(source_type)
+}
+
+/// A syntax feature that may or may not be supported depending on the file type and parser configuration
 /// A syntax feature that may or may not be supported depending on the file type and parser configuration
 pub trait SyntaxFeature: Sized {
     /// Returns `true` if the current parsing context supports this syntax feature.

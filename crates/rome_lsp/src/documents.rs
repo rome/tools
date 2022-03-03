@@ -1,25 +1,40 @@
-use std::sync::Arc;
-
 use anyhow::bail;
-use rome_analyze::FileId;
+use rome_path::RomePath;
+use rslint_parser::SourceType;
+use std::sync::Arc;
 
 /// Internal representation of supported [language identifiers]
 ///
 /// [language identifiers]: https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-pub enum Language {
+pub enum EditorLanguage {
     JavaScript,
+    JavaScriptReact,
     TypeScript,
+    TypeScriptReact,
 }
 
-impl TryFrom<&str> for Language {
+impl TryFrom<&str> for EditorLanguage {
     type Error = anyhow::Error;
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         match value {
-            "javascript" => Ok(Language::JavaScript),
-            "typescript" => Ok(Language::TypeScript),
+            "javascript" => Ok(EditorLanguage::JavaScript),
+            "javascriptreact" => Ok(EditorLanguage::JavaScriptReact),
+            "typescript" => Ok(EditorLanguage::TypeScript),
+            "typescriptreact" => Ok(EditorLanguage::TypeScriptReact),
             _ => bail!("Unsupported language: {}", value),
+        }
+    }
+}
+
+impl From<EditorLanguage> for SourceType {
+    fn from(l: EditorLanguage) -> Self {
+        match l {
+            EditorLanguage::JavaScript => SourceType::js_module(),
+            EditorLanguage::JavaScriptReact => SourceType::jsx(),
+            EditorLanguage::TypeScript => SourceType::ts(),
+            EditorLanguage::TypeScriptReact => SourceType::tsx(),
         }
     }
 }
@@ -29,24 +44,33 @@ impl TryFrom<&str> for Language {
 /// [`textDocument`]: https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocumentItem
 #[derive(Clone)]
 pub struct Document {
-    pub file_id: FileId,
-    pub language_id: Language,
+    pub path: RomePath,
+    pub editor_language: EditorLanguage,
     pub version: i32,
     pub text: Arc<str>,
 }
 
 impl Document {
     pub fn new(
-        file_id: FileId,
-        language_id: Language,
+        path: RomePath,
+        language_id: EditorLanguage,
         version: i32,
         text: impl Into<Arc<str>>,
     ) -> Self {
         Self {
-            file_id,
-            language_id,
+            path,
+            editor_language: language_id,
             version,
             text: text.into(),
         }
+    }
+
+    /// Retrieves the unique ID associated to the current document (file)
+    pub fn file_id(&self) -> usize {
+        self.path.file_id().unwrap_or(0_usize)
+    }
+
+    pub fn get_source_type(&self) -> SourceType {
+        self.editor_language.into()
     }
 }
