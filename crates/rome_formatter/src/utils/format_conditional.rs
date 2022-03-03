@@ -134,12 +134,6 @@ where
         let consequent = cast(consequent.syntax().to_owned());
         let consequent = format_conditional(&consequent, formatter, true)?;
         format_elements![question_mark.format(formatter)?, space_token(), consequent]
-    } else if parent_is_conditional {
-        indent(format_elements![
-            question_mark.format(formatter)?,
-            space_token(),
-            consequent.format(formatter)?,
-        ])
     } else {
         format_elements![
             question_mark.format(formatter)?,
@@ -151,12 +145,6 @@ where
         let alternate = cast(alternate.syntax().to_owned());
         let alternate = format_conditional(&alternate, formatter, true)?;
         format_elements![colon.format(formatter)?, space_token(), alternate]
-    } else if parent_is_conditional {
-        indent(format_elements![
-            colon.format(formatter)?,
-            space_token(),
-            alternate.format(formatter)?
-        ])
     } else {
         format_elements![
             colon.format(formatter)?,
