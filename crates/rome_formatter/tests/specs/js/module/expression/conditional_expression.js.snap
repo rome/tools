@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 168
 expression: conditional_expression.js
 
 ---
@@ -10,6 +10,11 @@ d
 	? (e + f)
 	: (g + h)
 
+somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName
+
+somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName
+
+somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName
 =============================
 # Outputs
 ## Output 1
@@ -19,4 +24,18 @@ Line width: 80
 -----
 a ? b : c;
 d ? (e + f) : (g + h);
+
+somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName;
+
+somethingThatsAReallyLongPropName
+	? somethingThatsAReallyLongPropName
+		? somethingThatsAReallyLongPropName
+		: somethingThatsAReallyLongPropName
+	: somethingThatsAReallyLongPropName;
+
+somethingThatsAReallyLongPropName
+	? somethingThatsAReallyLongPropName
+	: somethingThatsAReallyLongPropName
+		? somethingThatsAReallyLongPropName
+		: somethingThatsAReallyLongPropName;
 

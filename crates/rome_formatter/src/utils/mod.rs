@@ -1,4 +1,5 @@
 mod call_expression;
+mod format_conditional;
 mod simple;
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
@@ -6,7 +7,8 @@ use crate::{
     empty_element, format_elements, hard_group_elements, hard_line_break, space_token,
     FormatElement, FormatResult, Formatter,
 };
-pub use call_expression::format_call_expression;
+pub(crate) use call_expression::format_call_expression;
+pub(crate) use format_conditional::{format_conditional, Conditional};
 use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause, Modifiers};
 use rslint_parser::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 

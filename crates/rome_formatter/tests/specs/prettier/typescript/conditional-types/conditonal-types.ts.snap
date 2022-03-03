@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: conditonal-types.ts
 
 ---
@@ -47,9 +47,11 @@ type U2 = (new () => X) extends T ? U : V;
 
 # Output
 ```js
-export type DeepReadonly<T> = T extends any[] ? DeepReadonlyArray<T[number]> : T extends object ? DeepReadonlyObject<
-  T,
-> : T;
+export type DeepReadonly<T> = T extends any[]
+  ? DeepReadonlyArray<T[number]>
+  : T extends object
+    ? DeepReadonlyObject<T>
+    : T;
 
 type NonFunctionPropertyNames<T> = {
   [K in keyof T]: T[K] extends Function ? never : K;
@@ -61,7 +63,17 @@ type DeepReadonlyObject<T> = {
     readonly [P in NonFunctionPropertyNames<T>]: DeepReadonly<T[P]>;
 };
 
-type TypeName<T> = T extends string ? "string" : T extends number ? "number" : T extends boolean ? "boolean" : T extends undefined ? "undefined" : T extends Function ? "function" : "object";
+type TypeName<T> = T extends string
+  ? "string"
+  : T extends number
+    ? "number"
+    : T extends boolean
+      ? "boolean"
+      : T extends undefined
+        ? "undefined"
+        : T extends Function
+          ? "function"
+          : "object";
 
 type Type01 = 0 extends (1 extends 2 ? 3 : 4) ? 5 : 6;
 type Type02 = 0 extends ((1 extends 2 ? 3 : 4)) ? 5 : 6;

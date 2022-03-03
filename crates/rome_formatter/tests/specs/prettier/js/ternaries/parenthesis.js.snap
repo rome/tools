@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: parenthesis.js
 
 ---
@@ -17,8 +17,16 @@ a => a ? aasdasdasdasdasdasdaaasdasdasdasdasdasdasdasdasdasdasdasdasdaaaaaa : a
 
 # Output
 ```js
-debug ? this.state.isVisible ? "partially visible" : "hidden" : null;
-debug ? this.state.isVisible && somethingComplex ? "partially visible" : "hidden" : null;
+debug
+  ? this.state.isVisible
+    ? "partially visible"
+    : "hidden"
+  : null;
+debug
+  ? this.state.isVisible && somethingComplex
+    ? "partially visible"
+    : "hidden"
+  : null;
 
 (a) =>
   a ? () => {
