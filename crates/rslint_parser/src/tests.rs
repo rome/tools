@@ -324,3 +324,16 @@ pub fn node_contains_comments() {
 
     assert!(syntax.contains_comments());
 }
+
+#[test]
+fn parser_regexp_after_operator() {
+    fn assert_no_errors(src: &str) {
+        let module = parse(src, 0, SourceType::js_script());
+        assert_errors_are_absent(&module, Path::new("parser_regexp_after_operator"));
+    }
+    assert_no_errors(r#"a=/a/"#);
+    assert_no_errors(r#"a==/a/"#);
+    assert_no_errors(r#"a===/a/"#);
+    assert_no_errors(r#"a!=/a/"#);
+    assert_no_errors(r#"a!==/a/"#);
+}
