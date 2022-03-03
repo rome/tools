@@ -340,7 +340,7 @@ fn parser_regexp_after_operator() {
 
 #[test]
 pub fn node_contains_trailing_comments() {
-    let text = "true && true // comment";
+    let text = "true && (3 - 2 == 0) // comment";
     let root = parse_module(text, 0);
     let syntax = root.syntax();
     let node = syntax
@@ -357,7 +357,9 @@ pub fn node_contains_trailing_comments() {
 
 #[test]
 pub fn node_contains_leading_comments() {
-    let text = "true && \n// comment \ntrue";
+    let text = r"true &&
+// comment 
+(3 - 2 == 0)";
     let root = parse_module(text, 0);
     let syntax = root.syntax();
     let node = syntax

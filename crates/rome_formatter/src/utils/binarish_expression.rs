@@ -99,9 +99,9 @@ pub fn format_binaryish_expression(
     syntax_node: &SyntaxNode,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
-    let mut flatten_nodes = FlattenItems::new(syntax_node.to_owned());
+    let mut flatten_nodes = FlattenItems::new(syntax_node.clone());
 
-    flatten_expressions(&mut flatten_nodes, syntax_node.to_owned(), formatter, None)?;
+    flatten_expressions(&mut flatten_nodes, syntax_node.clone(), formatter, None)?;
     flatten_nodes.into_format_element()
 }
 
@@ -133,7 +133,7 @@ fn flatten_expressions(
             if should_flatten_binary_expression(&binary_expression)? {
                 flatten_expressions(
                     flatten_items,
-                    left.syntax().to_owned(),
+                    left.syntax().clone(),
                     formatter,
                     Some(operator),
                 )?;
@@ -178,7 +178,7 @@ fn flatten_expressions(
             if should_flatten_logical_expression(&logical_expression)? {
                 flatten_expressions(
                     flatten_items,
-                    left.syntax().to_owned(),
+                    left.syntax().clone(),
                     formatter,
                     Some(operator),
                 )?;
@@ -334,7 +334,7 @@ fn split_binaryish_to_flatten_items(
         operator.format(formatter)?,
     ]);
     let left_item = FlattenItem::Node(
-        left.syntax().to_owned(),
+        left.syntax().clone(),
         formatted_left,
         operator.has_trailing_comments().into(),
     );
@@ -350,7 +350,7 @@ fn split_binaryish_to_flatten_items(
             empty_element(),
             // Here we want to check only leading comments;
             // trailing comments will be added after the end of the whole expression.
-            // We want to handle cases like `lorem && ipsum // comment`
+            // We want to handle cases like `lorem && (3 + 5 == 9) // comment`.
             // This part is a signal to the formatter to tell it if the whole expression should break.
             right.syntax().has_leading_comments(),
         )
@@ -366,11 +366,7 @@ fn split_binaryish_to_flatten_items(
         FlattenItem::Group(formatted, has_comments.into())
     } else {
         let formatted_right = concat_elements([right.format(formatter)?, previous_operator]);
-        FlattenItem::Node(
-            right.syntax().to_owned(),
-            formatted_right,
-            has_comments.into(),
-        )
+        FlattenItem::Node(right.syntax().clone(), formatted_right, has_comments.into())
     };
 
     Ok((left_item, right_item))
@@ -461,10 +457,11 @@ impl FlattenItems {
             .items
             .into_iter()
             .enumerate()
-            // groups are not like ["something &&", "something &&" ]
+            // groups not like ["something &&", "something &&" ]
             // we want to add a space between them in case they can't break
             .map(|(index, element)| {
                 let element: FormatElement = element.into();
+                // the last element doesn't need a space
                 if index + 1 == len {
                     element
                 } else {
@@ -486,16 +483,7 @@ impl FlattenItems {
         let should_ident_if_parent_inlines = should_indent_if_parent_inlines(&self.current_node);
 
         if is_inside_parenthesis {
-            Ok(format_elements![
-                if_group_breaks(group_elements(format_elements![
-                    hard_line_break(),
-                    join_elements(soft_line_break_or_space(), groups.clone(),),
-                ])),
-                if_group_fits_on_single_line(hard_group_elements(join_elements(
-                    soft_line_break_or_space(),
-                    groups,
-                )))
-            ])
+            Ok(join_elements(soft_line_break_or_space(), groups))
         } else if should_not_indent {
             Ok(group_elements(join_elements(
                 soft_line_break_or_space(),

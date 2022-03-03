@@ -85,11 +85,11 @@ const a =
 );
 
 (
-    lorem && ipsum // foo
+    lorem && call_function(1, 3) // foo
 );
 
 (
     lorem &&
     // foo
-    ipsum
+    (3 + 6 == 9)
 );

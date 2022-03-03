@@ -122,7 +122,7 @@ pub fn format_call_expression(
 ) -> FormatResult<FormatElement> {
     let mut flattened_items = vec![];
 
-    flatten_call_expression(&mut flattened_items, syntax_node.to_owned(), formatter)?;
+    flatten_call_expression(&mut flattened_items, syntax_node.clone(), formatter)?;
 
     // Count the number of CallExpression in the chain,
     // will be used later to decide on how to format it
@@ -285,7 +285,7 @@ fn flatten_call_expression(
         JsSyntaxKind::JS_CALL_EXPRESSION => {
             let call_expression = JsCallExpression::cast(node).unwrap();
             let callee = call_expression.callee()?;
-            flatten_call_expression(queue, callee.syntax().to_owned(), formatter)?;
+            flatten_call_expression(queue, callee.syntax().clone(), formatter)?;
             let formatted = vec![
                 call_expression
                     .optional_chain_token()
@@ -301,7 +301,7 @@ fn flatten_call_expression(
         JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
             let static_member = JsStaticMemberExpression::cast(node).unwrap();
             let object = static_member.object()?;
-            flatten_call_expression(queue, object.syntax().to_owned(), formatter)?;
+            flatten_call_expression(queue, object.syntax().clone(), formatter)?;
             let formatted = vec![
                 static_member.operator().format(formatter)?,
                 static_member.member().format(formatter)?,
@@ -312,7 +312,7 @@ fn flatten_call_expression(
         JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
             let computed_expression = JsComputedMemberExpression::cast(node).unwrap();
             let object = computed_expression.object()?;
-            flatten_call_expression(queue, object.syntax().to_owned(), formatter)?;
+            flatten_call_expression(queue, object.syntax().clone(), formatter)?;
             let formatted = vec![
                 computed_expression
                     .optional_chain_token()
