@@ -10,9 +10,6 @@ mod emit;
 mod formatters;
 mod suggestion;
 
-#[cfg(test)]
-mod tests;
-
 pub use diagnostic::{Diagnostic, SubDiagnostic};
 pub use emit::Emitter;
 pub use file::Span;
