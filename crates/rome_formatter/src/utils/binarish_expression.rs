@@ -396,6 +396,8 @@ fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
                 | JsSyntaxKind::JS_DO_WHILE_STATEMENT
                 | JsSyntaxKind::JS_WHILE_STATEMENT
                 | JsSyntaxKind::JS_SWITCH_STATEMENT
+                | JsSyntaxKind::JS_TEMPLATE_ELEMENT
+                | JsSyntaxKind::TS_TEMPLATE_ELEMENT
         )
     })
 }

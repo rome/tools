@@ -17,7 +17,6 @@ use rslint_parser::ast::{
     TsTemplateElementFields, TsType,
 };
 use rslint_parser::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
-use thiserror::private::DisplayAsDisplay;
 
 use crate::format_element::normalize_newlines;
 pub(crate) use simple::*;
@@ -470,17 +469,16 @@ impl TemplateElement {
                     | JsAnyExpression::JsAnyLiteralExpression(_)
                     | JsAnyExpression::JsCallExpression(_)
                     | JsAnyExpression::JsParenthesizedExpression(_) => Ok(true),
-                    JsAnyExpression::JsFunctionExpression(function_expression) => {
-                        Ok(is_simple_function_expression(
-                            JsAnyFunction::JsFunctionExpression(function_expression.clone()),
-                        )?)
+
+                    _ => {
+                        if let Some(function) =
+                            JsAnyFunction::cast(current_expression.syntax().clone())
+                        {
+                            Ok(is_simple_function_expression(function)?)
+                        } else {
+                            Ok(false)
+                        }
                     }
-                    JsAnyExpression::JsArrowFunctionExpression(function_expression) => {
-                        Ok(is_simple_function_expression(
-                            JsAnyFunction::JsArrowFunctionExpression(function_expression.clone()),
-                        )?)
-                    }
-                    _ => Ok(false),
                 }
             }
             TemplateElement::Ts(template_element) => {
