@@ -40,7 +40,9 @@ jobs:
       - name: Check prerelease status
         id: prerelease
         if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
-        run: echo "prerelease=true" >> $GITHUB_ENV
+        run: |
+          echo "prerelease=true" >> $GITHUB_ENV
+          echo "version=(date +"pre-release-%F")" >> $GITHUB_ENV
 
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
