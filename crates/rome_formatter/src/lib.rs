@@ -605,7 +605,8 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"somethingThatsAReallyLongPropName1 ? somethingThatsAReallyLongPropName2 ? somethingThatsAReallyLongPropName3 : somethingThatsAReallyLongPropName4 : somethingThatsAReallyLongPropName6
+        let src = r#"
+        `something ${ () => { var hey; const looooooooooong_expression = "loooooooooong_expression" }} something else ${ ehy }`;
 "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);

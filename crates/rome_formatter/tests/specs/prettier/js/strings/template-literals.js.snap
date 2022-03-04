@@ -69,48 +69,13 @@ const Bar = styled.div`
 # Output
 ```js
 foo(
-  `a long string ${1 +
-    2 +
-    3 +
-    2 +
-    3 +
-    2 +
-    3 +
-    2 +
-    3 +
-    2 +
-    3 +
-    2 +
-    3 +
-    2 +
-    3 +
-    2 +
-    3} with expr`,
+  `a long string ${
+    1 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3 + 2 + 3
+  } with expr`,
 );
 
-const x = `a long string ${1 +
-  2 +
-  3 +
-  2 +
-  3 +
-  2 +
-  3 +
-  2 +
-  3 +
-  2 +
-  3 +
-  2 +
-  (function () {
-    return 3;
-  })() +
-  3 +
-  2 +
-  3 +
-  2 +
-  3} with expr`;
-
-foo(
-  `a long string ${1 +
+const x = `a long string ${
+  1 +
     2 +
     3 +
     2 +
@@ -123,15 +88,40 @@ foo(
     3 +
     2 +
     (function () {
-      const x = 5;
-
-      return x;
+      return 3;
     })() +
     3 +
     2 +
     3 +
     2 +
-    3} with expr`,
+    3
+} with expr`;
+
+foo(
+  `a long string ${
+    1 +
+      2 +
+      3 +
+      2 +
+      3 +
+      2 +
+      3 +
+      2 +
+      3 +
+      2 +
+      3 +
+      2 +
+      (function () {
+        const x = 5;
+
+        return x;
+      })() +
+      3 +
+      2 +
+      3 +
+      2 +
+      3
+  } with expr`,
 );
 
 pipe.write(
@@ -180,11 +170,13 @@ const makeBody = (store, assets, html) =>
 
 // https://github.com/prettier/prettier/issues/1626#issue-229655106
 const Bar = styled.div`
-  color: ${(props) => (
-  props.highlight.length > 0 ? palette(["text", "dark", "tertiary"])(props) : palette([
-    "text", "dark", "primary",
-  ])(props)
-)} !important;
+  color: ${
+  (props) => (
+    props.highlight.length > 0 ? palette(["text", "dark", "tertiary"])(props) : palette([
+      "text", "dark", "primary",
+    ])(props)
+  )
+} !important;
 `;
 
 ```

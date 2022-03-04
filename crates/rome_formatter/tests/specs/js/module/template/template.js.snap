@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 168
 expression: template.js
 
 ---
@@ -23,6 +23,29 @@ output
   abcd ${ () => { var hey; const looooooooooong_expression = "loooooooooong_expression"; return hey; }}
 output
 `;
+
+// don't break
+const bar =`but where will ${this.fanta} wrap ${baz} ${"hello"} template literal? ${bar.ff.sss} long long long long ${foo.[3]} long long long long long long`;
+
+const foo = `but where will ${a && b && bar || c && d && g} wrap long long long long long long`;
+
+const foo = `but where will ${lorem && loremlorem && loremlorem || loremc && lorem && loremlorem} wrap long long long long long long`;
+
+const a = `
+let expression_is_simple = is_plain_expression(&expression)?;
+${loooooong || loooooong || loooooong || loooooong || loooooong || loooooong || loooooong || loooooong }       
+let expression_is_simple = is_plain_expression(&expression)?;
+`;
+
+const foo = `but where will ${
+    // with comment
+    this.fanta} wrap long long long long long long`;
+
+`<div>${this.set && this.set.artist
+    /* avoid console errors if `this.set` is undefined */}</div>`;
+
+`<div>${ /* avoid console errors if `this.set` is undefined */
+    this.set && this.set.artist}</div>`;
 =============================
 # Outputs
 ## Output 1
@@ -57,4 +80,43 @@ output
 }}
 output
 `;
+
+// don't break
+const bar =`but where will ${this.fanta} wrap ${baz} ${"hello"} template literal? ${bar.ff.sss} long long long long ${foo.[3]} long long long long long long`;
+
+const foo = `but where will ${a && b && bar || c && d && g} wrap long long long long long long`;
+
+const foo = `but where will ${
+	lorem && loremlorem && loremlorem || loremc && lorem && loremlorem
+} wrap long long long long long long`;
+
+const a = `
+let expression_is_simple = is_plain_expression(&expression)?;
+${
+	loooooong ||
+		loooooong ||
+		loooooong ||
+		loooooong ||
+		loooooong ||
+		loooooong ||
+		loooooong ||
+		loooooong
+}       
+let expression_is_simple = is_plain_expression(&expression)?;
+`;
+
+const foo = `but where will ${
+	// with comment
+	this.fanta
+} wrap long long long long long long`;
+
+`<div>${
+	this.set && this.set.artist
+	/* avoid console errors if `this.set` is undefined */
+}</div>`;
+
+`<div>${
+	/* avoid console errors if `this.set` is undefined */
+	this.set && this.set.artist
+}</div>`;
 
