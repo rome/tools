@@ -6,14 +6,20 @@ mod simple;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, hard_group_elements, hard_line_break, space_token,
-    FormatElement, FormatResult, Formatter,
+    FormatElement, FormatResult, Formatter, Token,
 };
 pub use binarish_expression::format_binaryish_expression;
 pub(crate) use call_expression::format_call_expression;
 pub(crate) use format_conditional::{format_conditional, Conditional};
-use rslint_parser::ast::{JsAnyRoot, JsAnyStatement, JsInitializerClause, Modifiers};
+use rslint_parser::ast::{
+    JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause,
+    JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
+    TsTemplateElementFields, TsType,
+};
 use rslint_parser::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use thiserror::private::DisplayAsDisplay;
 
+use crate::format_element::normalize_newlines;
 pub(crate) use simple::*;
 
 /// Utility function to format the separators of the nodes that belong to the unions
@@ -366,4 +372,155 @@ where
     nodes_and_modifiers.sort_unstable_by_key(|node| Modifiers::from(node));
 
     nodes_and_modifiers
+}
+
+/// Utility to format
+pub(crate) fn format_template_chunk(
+    chunk: SyntaxToken,
+    formatter: &Formatter,
+) -> FormatResult<FormatElement> {
+    // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
+    // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
+    formatter.format_replaced(
+        &chunk,
+        FormatElement::from(Token::new_dynamic(
+            normalize_newlines(chunk.text_trimmed(), ['\r']).into_owned(),
+            chunk.text_trimmed_range(),
+        )),
+    )
+}
+
+/// Function to format template literals and template literal types
+pub(crate) fn format_template_literal(
+    literal: TemplateElement,
+    formatter: &Formatter,
+) -> FormatResult<FormatElement> {
+    literal.into_format_element(formatter)
+}
+
+pub(crate) enum TemplateElement {
+    Js(JsTemplateElement),
+    Ts(TsTemplateElement),
+}
+
+impl TemplateElement {
+    pub fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let expression_is_plain = self.is_plain_expression()?;
+        let has_comments = self.has_comments()?;
+        let should_hard_group = expression_is_plain && !has_comments;
+
+        let (dollar_curly_token, middle, r_curly_token) = match self {
+            TemplateElement::Js(template_element) => {
+                let JsTemplateElementFields {
+                    dollar_curly_token,
+                    expression,
+                    r_curly_token,
+                } = template_element.as_fields();
+
+                let dollar_curly_token = dollar_curly_token?;
+                let expression = expression.format(formatter)?;
+                let r_curly_token = r_curly_token?;
+
+                (dollar_curly_token, expression, r_curly_token)
+            }
+            TemplateElement::Ts(template_element) => {
+                let TsTemplateElementFields {
+                    ty,
+                    r_curly_token,
+                    dollar_curly_token,
+                } = template_element.as_fields();
+
+                let dollar_curly_token = dollar_curly_token?;
+                let ty = ty.format(formatter)?;
+                let r_curly_token = r_curly_token?;
+
+                (dollar_curly_token, ty, r_curly_token)
+            }
+        };
+
+        if should_hard_group {
+            Ok(hard_group_elements(format_elements![
+                dollar_curly_token.format(formatter)?,
+                middle,
+                r_curly_token.format(formatter)?
+            ]))
+        } else {
+            formatter.format_delimited_soft_block_indent(
+                &dollar_curly_token,
+                middle,
+                &r_curly_token,
+            )
+        }
+    }
+
+    /// We want to break the template element only when we have articulated expressions inside it.
+    ///
+    /// We a plain expression is when it's one of the following:
+    /// - `loreum ${this.something} ipsum`
+    /// - `loreum ${a.b.c} ipsum`
+    /// - `loreum ${a} ipsum`
+    fn is_plain_expression(&self) -> FormatResult<bool> {
+        match self {
+            TemplateElement::Js(template_element) => {
+                let current_expression = template_element.expression()?;
+                match current_expression {
+                    JsAnyExpression::JsStaticMemberExpression(_)
+                    | JsAnyExpression::JsComputedMemberExpression(_)
+                    | JsAnyExpression::JsIdentifierExpression(_)
+                    | JsAnyExpression::JsAnyLiteralExpression(_)
+                    | JsAnyExpression::JsCallExpression(_)
+                    | JsAnyExpression::JsParenthesizedExpression(_) => Ok(true),
+                    JsAnyExpression::JsFunctionExpression(function_expression) => {
+                        Ok(is_simple_function_expression(
+                            JsAnyFunction::JsFunctionExpression(function_expression.clone()),
+                        )?)
+                    }
+                    JsAnyExpression::JsArrowFunctionExpression(function_expression) => {
+                        Ok(is_simple_function_expression(
+                            JsAnyFunction::JsArrowFunctionExpression(function_expression.clone()),
+                        )?)
+                    }
+                    _ => Ok(false),
+                }
+            }
+            TemplateElement::Ts(template_element) => {
+                let current_type = template_element.ty()?;
+                match current_type {
+                    TsType::TsMappedType(_) => Ok(false),
+                    _ => Ok(true),
+                }
+            }
+        }
+    }
+
+    fn has_comments(&self) -> FormatResult<bool> {
+        match self {
+            TemplateElement::Js(template_element) => {
+                let JsTemplateElementFields {
+                    expression,
+                    r_curly_token,
+                    dollar_curly_token,
+                } = template_element.as_fields();
+
+                let has_comments = expression?.syntax().contains_comments()
+                    || r_curly_token?.has_leading_comments()
+                    || dollar_curly_token?.has_trailing_comments();
+
+                Ok(has_comments)
+            }
+            TemplateElement::Ts(template_element) => {
+                let TsTemplateElementFields {
+                    ty,
+                    r_curly_token,
+                    dollar_curly_token,
+                } = template_element.as_fields();
+
+                let has_comments = ty?.syntax().contains_comments()
+                    || r_curly_token?.has_leading_comments()
+                    || dollar_curly_token?.has_trailing_comments();
+
+                Ok(has_comments)
+            }
+        }
+    }
 }
