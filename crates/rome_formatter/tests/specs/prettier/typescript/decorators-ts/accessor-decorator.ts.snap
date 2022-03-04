@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: accessor-decorator.ts
 
 ---
@@ -37,12 +37,14 @@ class Point {
     this._y = y;
   }
 
-  @configurable(false)
+  @
+  configurable(false);
   get x() {
     return this._x;
   }
 
-  @configurable(false)
+  @
+  configurable(false);
   get y() {
     return this._y;
   }

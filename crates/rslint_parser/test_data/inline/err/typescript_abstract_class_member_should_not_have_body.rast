@@ -249,13 +249,6 @@ JsModule {
       8: R_CURLY@195..197 "}" [Newline("\n")] []
   3: EOF@197..198 "" [Newline("\n")] []
 --
-error[SyntaxError]: abstract members should not have a body
-  ┌─ typescript_abstract_class_member_should_not_have_body.ts:2:28
-  │
-2 │     abstract constructor() { }
-  │                            ^^^
-
---
 error[SyntaxError]: 'abstract' cannot appear on a constructor declaration.
   ┌─ typescript_abstract_class_member_should_not_have_body.ts:2:5
   │
@@ -291,7 +284,7 @@ error[SyntaxError]: abstract members should not have a body
   │                              ^^^
 
 --
-error[SyntaxError]: 'abstract' modifier cannot be used with a private identifier'
+error[SyntaxError]: 'abstract' modifier cannot be used with a private identifier'.
   ┌─ typescript_abstract_class_member_should_not_have_body.ts:6:5
   │
 6 │     abstract #private_name() { }

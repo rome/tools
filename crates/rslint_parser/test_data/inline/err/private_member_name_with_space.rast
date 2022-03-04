@@ -74,11 +74,11 @@ error[SyntaxError]: Unexpected space or comment between `#` and identifier
   │      ^ remove the space or comment here
 
 --
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
   ┌─ private_member_name_with_space.js:2:2
   │
 2 │     # test;
-  │     ^^
+  │     ^
 
 --
 class A {

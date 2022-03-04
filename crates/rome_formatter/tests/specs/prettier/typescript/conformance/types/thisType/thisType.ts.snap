@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: thisType.ts
 
 ---
@@ -15,7 +15,7 @@ declare class MyArray<T> extends Array<T> {
 # Output
 ```js
 declare class MyArray<T> extends Array<T> {
-    sort(compareFn?: (a: T, b: T) => number): this;
+  sort(compareFn?: (a: T, b: T) => number): this;
 }
 
 ```

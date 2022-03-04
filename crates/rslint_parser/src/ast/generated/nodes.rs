@@ -5530,6 +5530,41 @@ pub struct TsConstructSignatureTypeMemberFields {
     pub separator_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsConstructorSignatureClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsConstructorSignatureClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsConstructorSignatureClassMemberFields {
+        TsConstructorSignatureClassMemberFields {
+            modifiers: self.modifiers(),
+            name: self.name(),
+            parameters: self.parameters(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn modifiers(&self) -> JsConstructorModifierList { support::list(&self.syntax, 0usize) }
+    pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn parameters(&self) -> SyntaxResult<JsConstructorParameters> {
+        support::required_node(&self.syntax, 2usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+}
+pub struct TsConstructorSignatureClassMemberFields {
+    pub modifiers: JsConstructorModifierList,
+    pub name: SyntaxResult<JsLiteralMemberName>,
+    pub parameters: SyntaxResult<JsConstructorParameters>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorType {
     pub(crate) syntax: SyntaxNode,
 }
@@ -6821,7 +6856,9 @@ impl TsMethodSignatureClassMember {
     pub fn as_fields(&self) -> TsMethodSignatureClassMemberFields {
         TsMethodSignatureClassMemberFields {
             modifiers: self.modifiers(),
+            async_token: self.async_token(),
             name: self.name(),
+            question_mark_token: self.question_mark_token(),
             type_parameters: self.type_parameters(),
             parameters: self.parameters(),
             return_type_annotation: self.return_type_annotation(),
@@ -6829,23 +6866,29 @@ impl TsMethodSignatureClassMember {
         }
     }
     pub fn modifiers(&self) -> TsMethodSignatureModifierList { support::list(&self.syntax, 0usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
+    }
+    pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 3usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 2usize)
-    }
-    pub fn parameters(&self) -> SyntaxResult<JsParameters> {
-        support::required_node(&self.syntax, 3usize)
-    }
-    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 4usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn parameters(&self) -> SyntaxResult<JsParameters> {
+        support::required_node(&self.syntax, 5usize)
+    }
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
+        support::node(&self.syntax, 6usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
 pub struct TsMethodSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
+    pub async_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub question_mark_token: Option<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -8520,6 +8563,7 @@ pub enum JsAnyClassMember {
     JsSetterClassMember(JsSetterClassMember),
     JsStaticInitializationBlockClassMember(JsStaticInitializationBlockClassMember),
     JsUnknownMember(JsUnknownMember),
+    TsConstructorSignatureClassMember(TsConstructorSignatureClassMember),
     TsGetterSignatureClassMember(TsGetterSignatureClassMember),
     TsIndexSignatureClassMember(TsIndexSignatureClassMember),
     TsMethodSignatureClassMember(TsMethodSignatureClassMember),
@@ -14075,6 +14119,36 @@ impl From<TsConstructSignatureTypeMember> for SyntaxNode {
 impl From<TsConstructSignatureTypeMember> for SyntaxElement {
     fn from(n: TsConstructSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsConstructorSignatureClassMember {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsConstructorSignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsConstructorSignatureClassMember")
+            .field("modifiers", &self.modifiers())
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field("parameters", &support::DebugSyntaxResult(self.parameters()))
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsConstructorSignatureClassMember> for SyntaxNode {
+    fn from(n: TsConstructorSignatureClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsConstructorSignatureClassMember> for SyntaxElement {
+    fn from(n: TsConstructorSignatureClassMember) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsConstructorType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -15315,7 +15389,15 @@ impl std::fmt::Debug for TsMethodSignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsMethodSignatureClassMember")
             .field("modifiers", &self.modifiers())
+            .field(
+                "async_token",
+                &support::DebugOptionalElement(self.async_token()),
+            )
             .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "question_mark_token",
+                &support::DebugOptionalElement(self.question_mark_token()),
+            )
             .field(
                 "type_parameters",
                 &support::DebugOptionalElement(self.type_parameters()),
@@ -17697,6 +17779,11 @@ impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
 impl From<JsUnknownMember> for JsAnyClassMember {
     fn from(node: JsUnknownMember) -> JsAnyClassMember { JsAnyClassMember::JsUnknownMember(node) }
 }
+impl From<TsConstructorSignatureClassMember> for JsAnyClassMember {
+    fn from(node: TsConstructorSignatureClassMember) -> JsAnyClassMember {
+        JsAnyClassMember::TsConstructorSignatureClassMember(node)
+    }
+}
 impl From<TsGetterSignatureClassMember> for JsAnyClassMember {
     fn from(node: TsGetterSignatureClassMember) -> JsAnyClassMember {
         JsAnyClassMember::TsGetterSignatureClassMember(node)
@@ -17734,6 +17821,7 @@ impl AstNode for JsAnyClassMember {
                 | JS_SETTER_CLASS_MEMBER
                 | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
                 | JS_UNKNOWN_MEMBER
+                | TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER
                 | TS_GETTER_SIGNATURE_CLASS_MEMBER
                 | TS_INDEX_SIGNATURE_CLASS_MEMBER
                 | TS_METHOD_SIGNATURE_CLASS_MEMBER
@@ -17767,6 +17855,11 @@ impl AstNode for JsAnyClassMember {
                 )
             }
             JS_UNKNOWN_MEMBER => JsAnyClassMember::JsUnknownMember(JsUnknownMember { syntax }),
+            TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER => {
+                JsAnyClassMember::TsConstructorSignatureClassMember(
+                    TsConstructorSignatureClassMember { syntax },
+                )
+            }
             TS_GETTER_SIGNATURE_CLASS_MEMBER => {
                 JsAnyClassMember::TsGetterSignatureClassMember(TsGetterSignatureClassMember {
                     syntax,
@@ -17806,6 +17899,7 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::JsSetterClassMember(it) => &it.syntax,
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
             JsAnyClassMember::JsUnknownMember(it) => &it.syntax,
+            JsAnyClassMember::TsConstructorSignatureClassMember(it) => &it.syntax,
             JsAnyClassMember::TsGetterSignatureClassMember(it) => &it.syntax,
             JsAnyClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
             JsAnyClassMember::TsMethodSignatureClassMember(it) => &it.syntax,
@@ -17827,6 +17921,7 @@ impl std::fmt::Debug for JsAnyClassMember {
                 std::fmt::Debug::fmt(it, f)
             }
             JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyClassMember::TsConstructorSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsGetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsMethodSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
@@ -17846,6 +17941,7 @@ impl From<JsAnyClassMember> for SyntaxNode {
             JsAnyClassMember::JsSetterClassMember(it) => it.into(),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
             JsAnyClassMember::JsUnknownMember(it) => it.into(),
+            JsAnyClassMember::TsConstructorSignatureClassMember(it) => it.into(),
             JsAnyClassMember::TsGetterSignatureClassMember(it) => it.into(),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => it.into(),
             JsAnyClassMember::TsMethodSignatureClassMember(it) => it.into(),
@@ -23575,6 +23671,11 @@ impl std::fmt::Display for TsConstructSignatureTypeMember {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsConstructorSignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsConstructorType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -26728,6 +26829,10 @@ impl Debug for DebugSyntaxElement {
                 }
                 TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER => std::fmt::Debug::fmt(
                     &TsConstructSignatureTypeMember::cast(node.clone()).unwrap(),
+                    f,
+                ),
+                TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER => std::fmt::Debug::fmt(
+                    &TsConstructorSignatureClassMember::cast(node.clone()).unwrap(),
                     f,
                 ),
                 TS_CONSTRUCTOR_TYPE => {

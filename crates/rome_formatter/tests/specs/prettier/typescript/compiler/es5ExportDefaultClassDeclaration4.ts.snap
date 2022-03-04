@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: es5ExportDefaultClassDeclaration4.ts
 
 ---
@@ -35,8 +35,8 @@ declare module "foo" {
   export var before: C;
 
   export default class C {
-        method(): C;
-    }
+    method(): C;
+  }
 
   export var after: C;
 

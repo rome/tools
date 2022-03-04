@@ -297,16 +297,16 @@ JsModule {
                             items: JsParameterList [],
                             r_paren_token: R_PAREN@426..427 ")" [] [],
                         },
+                        SEMICOLON@427..428 ";" [] [],
                     ],
-                },
-                JsEmptyClassMember {
-                    semicolon_token: SEMICOLON@427..428 ";" [] [],
                 },
                 JsUnknownMember {
                     items: [
-                        TsDeclareModifier {
-                            modifier_token: DECLARE_KW@428..441 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
-                        },
+                        TsPropertySignatureModifierList [
+                            TsDeclareModifier {
+                                modifier_token: DECLARE_KW@428..441 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                        ],
                         JsPrivateClassMemberName {
                             hash_token: HASH@441..442 "#" [] [],
                             id_token: IDENT@442..443 "l" [] [],
@@ -494,7 +494,7 @@ JsModule {
             1: JS_PARAMETER_LIST@403..403
             2: R_PAREN@403..404 ")" [] []
           4: SEMICOLON@404..405 ";" [] []
-        14: JS_UNKNOWN_MEMBER@405..427
+        14: JS_UNKNOWN_MEMBER@405..428
           0: JS_UNKNOWN@405..418
             0: TS_DECLARE_MODIFIER@405..418
               0: DECLARE_KW@405..418 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -505,11 +505,11 @@ JsModule {
             0: L_PAREN@425..426 "(" [] []
             1: JS_PARAMETER_LIST@426..426
             2: R_PAREN@426..427 ")" [] []
-        15: JS_EMPTY_CLASS_MEMBER@427..428
-          0: SEMICOLON@427..428 ";" [] []
-        16: JS_UNKNOWN_MEMBER@428..444
-          0: TS_DECLARE_MODIFIER@428..441
-            0: DECLARE_KW@428..441 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          4: SEMICOLON@427..428 ";" [] []
+        15: JS_UNKNOWN_MEMBER@428..444
+          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@428..441
+            0: TS_DECLARE_MODIFIER@428..441
+              0: DECLARE_KW@428..441 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: JS_PRIVATE_CLASS_MEMBER_NAME@441..443
             0: HASH@441..442 "#" [] []
             1: IDENT@442..443 "l" [] []
@@ -613,32 +613,28 @@ error[SyntaxError]: 'declare' cannot be used with 'override' modifier.
 12 │     override declare base2;
    │     -------- ^^^^^^^
    │     │         
-   │     override' modifier
+   │     'override' modifier
 
 --
-error[SyntaxError]: 'abstract' cannot be used with 'private' modifier.
-   ┌─ ts_class_invalid_modifier_combinations.ts:13:13
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+   ┌─ ts_class_invalid_modifier_combinations.ts:13:5
    │
 13 │     private abstract j;
-   │     ------- ^^^^^^^^
-   │     │        
-   │     private' modifier
+   │     ^^^^^^^ -------- 'abstract' modifier
 
 --
-error[SyntaxError]: 'abstract' modifier cannot be used with a private identifier'
+error[SyntaxError]: 'abstract' modifier cannot be used with a private identifier'.
    ┌─ ts_class_invalid_modifier_combinations.ts:14:5
    │
 14 │     abstract #j;
    │     ^^^^^^^^
 
 --
-error[SyntaxError]: 'static' cannot be used with 'abstract' modifier.
-   ┌─ ts_class_invalid_modifier_combinations.ts:15:14
+error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
+   ┌─ ts_class_invalid_modifier_combinations.ts:15:5
    │
 15 │     abstract static k;
-   │     -------- ^^^^^^
-   │     │         
-   │     abstract' modifier
+   │     ^^^^^^^^ ------ 'static' modifier
 
 --
 error[SyntaxError]: async members cannot be abstract
@@ -648,18 +644,18 @@ error[SyntaxError]: async members cannot be abstract
    │     ^^^^^^^^
 
 --
-error[SyntaxError]: 'declare' modifier only allowed on properties
+error[SyntaxError]: 'declare' modifier is only allowed on properties.
    ┌─ ts_class_invalid_modifier_combinations.ts:17:5
    │
 17 │     declare async m();
    │     ^^^^^^^
 
 --
-error[SyntaxError]: private class properties with `declare` are invalid
+error[SyntaxError]: 'declare' modifier cannot be used with a private identifier'.
    ┌─ ts_class_invalid_modifier_combinations.ts:18:5
    │
 18 │     declare #l;
-   │     ^^^^^^^^^^^
+   │     ^^^^^^^
 
 --
 class Base { base1; base2; }

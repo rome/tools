@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: castTest.ts
 
 ---
@@ -53,13 +53,12 @@ var ar = <any[]>null;
 
 var f = <(res: number) => void>null;
 
-declare class Point
-{
-    x: number;
-    y: number;
-    add(dx: number, dy: number): Point;
-    mult(p: Point): Point;
-    constructor(x: number, y: number);
+declare class Point {
+  x: number;
+  y: number;
+  add(dx: number, dy: number): Point;
+  mult(p: Point): Point;
+  constructor(x: number, y: number);
 }
 
 var p_cast = <Point>({

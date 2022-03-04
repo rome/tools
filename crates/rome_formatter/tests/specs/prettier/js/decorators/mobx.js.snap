@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: mobx.js
 
 ---
@@ -134,11 +134,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 4 │   @observable price:number = 0;
   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
   ┌─ mobx.js:4:4
   │
 4 │   @observable price:number = 0;
-  │    ^^^^^^^^^^^
+  │    ^^^^^^^^^^
 
 error[SyntaxError]: return types can only be used in TypeScript files
   ┌─ mobx.js:4:20
@@ -152,11 +152,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 5 │   @observable amount:number = 1;
   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
   ┌─ mobx.js:5:4
   │
 5 │   @observable amount:number = 1;
-  │    ^^^^^^^^^^^
+  │    ^^^^^^^^^^
 
 error[SyntaxError]: return types can only be used in TypeScript files
   ┌─ mobx.js:5:21
@@ -170,11 +170,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 11 │   @computed get total() {
    │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:11:4
    │
 11 │   @computed get total() {
-   │    ^^^^^^^^^
+   │    ^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:15:3
@@ -182,7 +182,7 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 15 │   @action.bound setPrice(price) {
    │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:15:4
    │
 15 │   @action.bound setPrice(price) {
@@ -194,11 +194,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 15 │   @action.bound setPrice(price) {
    │          ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:15:11
    │
 15 │   @action.bound setPrice(price) {
-   │           ^^^^^^
+   │           ^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:19:3
@@ -212,7 +212,7 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 24 │   @action.bound
    │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:24:4
    │
 24 │   @action.bound
@@ -230,11 +230,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
    │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:29:4
    │
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
-   │    ^^^^^^^^^
+   │    ^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:29:13
@@ -242,11 +242,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
    │             ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:29:14
    │
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
-   │              ^^^^^^^^^
+   │              ^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:29:23
@@ -254,11 +254,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
    │                       ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:29:24
    │
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
-   │                        ^^^^^^^^^
+   │                        ^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:29:33
@@ -266,11 +266,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
    │                                 ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:29:34
    │
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
-   │                                  ^^^^^^^^^
+   │                                  ^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:29:43
@@ -278,11 +278,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
    │                                           ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:29:44
    │
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
-   │                                            ^^^^^^^^^
+   │                                            ^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:29:53
@@ -290,11 +290,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
    │                                                     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:29:54
    │
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
-   │                                                      ^^^^^^^^^
+   │                                                      ^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:29:63
@@ -302,11 +302,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
    │                                                               ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:29:64
    │
 29 │   @computed @computed @computed @computed @computed @computed @computed get total() {
-   │                                                                ^^^^^^^^^
+   │                                                                ^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ mobx.js:33:3
@@ -314,11 +314,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 33 │   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
    │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:33:4
    │
 33 │   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-   │    ^^^^^^^
+   │    ^^^^^^
 
 error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ mobx.js:33:34
@@ -332,11 +332,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 35 │   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
    │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ mobx.js:35:4
    │
 35 │   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
-   │    ^^^^^^^
+   │    ^^^^^^
 
 error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ mobx.js:35:35

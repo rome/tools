@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: comments.js
 
 ---
@@ -31,6 +31,12 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
   │
 2 │     @Annotateme()
   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected a class method body but instead found 'static'
+  ┌─ comments.js:4:5
+  │
+4 │     static property: Array<string>;
+  │     ^^^^^^ Expected a class method body here
 
 error[SyntaxError]: return types can only be used in TypeScript files
   ┌─ comments.js:4:20

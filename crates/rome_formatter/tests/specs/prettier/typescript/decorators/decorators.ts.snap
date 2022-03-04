@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: decorators.ts
 
 ---
@@ -206,13 +206,13 @@ error[SyntaxError]: expected a parameter but instead found '@'
 3 │         @ILifecycleService lifecycleService,
   │         ^ Expected a parameter here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
   ┌─ decorators.ts:3:4
   │
 3 │         @ILifecycleService lifecycleService,
-  │          ^^^^^^^^^^^^^^^^^^
+  │          ^^^^^^^^^^^^^^^^^
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
   ┌─ decorators.ts:3:22
   │
 3 │         @ILifecycleService lifecycleService,
@@ -258,6 +258,12 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 16 │   @Input() myInput: string;
    │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
+error[SyntaxError]: expected a class method body but instead found 'myInput'
+   ┌─ decorators.ts:16:12
+   │
+16 │   @Input() myInput: string;
+   │            ^^^^^^^ Expected a class method body here
+
 error[SyntaxError]: expected a parameter but instead found '@'
    ┌─ decorators.ts:21:5
    │
@@ -270,7 +276,7 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 22 │     { prop1, prop2 }: Type
    │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ decorators.ts:22:7
    │
 22 │     { prop1, prop2 }: Type
@@ -315,7 +321,7 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 32 │     { prop1, prop2 }: Type
    │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ decorators.ts:32:7
    │
 32 │     { prop1, prop2 }: Type
@@ -354,7 +360,7 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 41 │     { prop1_1, prop1_2 }: Type,
    │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ decorators.ts:41:7
    │
 41 │     { prop1_1, prop1_2 }: Type,
@@ -399,7 +405,7 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 52 │     { prop1, prop2 }: Type
    │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ decorators.ts:52:7
    │
 52 │     { prop1, prop2 }: Type
@@ -432,11 +438,11 @@ error[SyntaxError]: expected a parameter but instead found '@'
 58 │     @Decorator { prop1 }: Type
    │     ^ Expected a parameter here
 
-error[SyntaxError]: expected a semicolon for a class property, but found none
+error[SyntaxError]: expected a semicolon to end the class property, but found none
    ┌─ decorators.ts:58:6
    │
 58 │     @Decorator { prop1 }: Type
-   │      ^^^^^^^^^^
+   │      ^^^^^^^^^
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
    ┌─ decorators.ts:58:16

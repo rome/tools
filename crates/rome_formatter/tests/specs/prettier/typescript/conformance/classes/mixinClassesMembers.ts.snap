@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: mixinClassesMembers.ts
 
 ---
@@ -113,23 +113,23 @@ class C3 extends Mixed3 {
 // @declaration: true
 
 declare class C1 {
-    public a: number;
-    protected b: number;
-    private c: number;
-    constructor(s: string);
-    constructor(n: number);
+  public a: number;
+  protected b: number;
+  private c: number;
+  constructor(s: string);
+  constructor(n: number);
 }
 
 declare class M1 {
-    constructor(...args: any[]);
-    p: number;
-    static p: number;
+  constructor(...args: any[]);
+  p: number;
+  static p: number;
 }
 
 declare class M2 {
-    constructor(...args: any[]);
-    f(): number;
-    static f(): number;
+  constructor(...args: any[]);
+  f(): number;
+  static f(): number;
 }
 
 declare const Mixed1: typeof M1 & typeof C1;

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: decorators-comments.ts
 
 ---
@@ -82,20 +82,23 @@ class Foo4 {
 }
 
 class Something {
-    @foo()
-    // comment
-    readonly property: Array<string>
+  @
+  foo();
+  // comment
+  readonly property: Array<string>;
 }
 
 class Something2 {
-    @foo()
-    // comment
+  @
+  foo();
+  // comment
     abstract property: Array<string>
 }
 
 class Something3 {
-    @foo()
-    // comment
+  @
+  foo();
+  // comment
     abstract method(): Array<string>
 }
 
