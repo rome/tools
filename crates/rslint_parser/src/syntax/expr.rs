@@ -245,8 +245,11 @@ fn parse_assign_expr_recursive(
     context: ExpressionContext,
 ) -> ParsedSyntax {
     if is_assign_token(p.cur()) {
-        let target = if target.kind() == JS_BINARY_EXPRESSION {
-            // Special handling for binary expressions to avoid having to deal with `a as string = ...`
+        let target = if matches!(
+            target.kind(),
+            JS_BINARY_EXPRESSION | TS_TYPE_ASSERTION_EXPRESSION
+        ) {
+            // Special handling for binary expressions and type assertions to avoid having to deal with `a as string = ...`
             // inside of the `ReparseAssignment` implementation because not using parentheses is valid
             // in for heads `for (a as any in []) {}`
             p.error(invalid_assignment_error(p, target.range(p).as_range()));

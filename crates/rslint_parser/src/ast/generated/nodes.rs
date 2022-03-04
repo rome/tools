@@ -8102,6 +8102,43 @@ pub struct TsTypeArgumentsFields {
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsTypeAssertionAssignment {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsTypeAssertionAssignment {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsTypeAssertionAssignmentFields {
+        TsTypeAssertionAssignmentFields {
+            l_angle_token: self.l_angle_token(),
+            ty: self.ty(),
+            r_angle_token: self.r_angle_token(),
+            assignment: self.assignment(),
+        }
+    }
+    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+        support::required_node(&self.syntax, 3usize)
+    }
+}
+pub struct TsTypeAssertionAssignmentFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
+    pub assignment: SyntaxResult<JsAnyAssignment>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAssertionExpression {
     pub(crate) syntax: SyntaxNode,
 }
@@ -8443,6 +8480,7 @@ pub enum JsAnyAssignment {
     JsUnknownAssignment(JsUnknownAssignment),
     TsAsAssignment(TsAsAssignment),
     TsNonNullAssertionAssignment(TsNonNullAssertionAssignment),
+    TsTypeAssertionAssignment(TsTypeAssertionAssignment),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyAssignmentPattern {
@@ -16530,6 +16568,39 @@ impl From<TsTypeArguments> for SyntaxNode {
 impl From<TsTypeArguments> for SyntaxElement {
     fn from(n: TsTypeArguments) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsTypeAssertionAssignment {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ASSERTION_ASSIGNMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsTypeAssertionAssignment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsTypeAssertionAssignment")
+            .field(
+                "l_angle_token",
+                &support::DebugSyntaxResult(self.l_angle_token()),
+            )
+            .field("ty", &support::DebugSyntaxResult(self.ty()))
+            .field(
+                "r_angle_token",
+                &support::DebugSyntaxResult(self.r_angle_token()),
+            )
+            .field("assignment", &support::DebugSyntaxResult(self.assignment()))
+            .finish()
+    }
+}
+impl From<TsTypeAssertionAssignment> for SyntaxNode {
+    fn from(n: TsTypeAssertionAssignment) -> SyntaxNode { n.syntax }
+}
+impl From<TsTypeAssertionAssignment> for SyntaxElement {
+    fn from(n: TsTypeAssertionAssignment) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsTypeAssertionExpression {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ASSERTION_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -17190,6 +17261,11 @@ impl From<TsNonNullAssertionAssignment> for JsAnyAssignment {
         JsAnyAssignment::TsNonNullAssertionAssignment(node)
     }
 }
+impl From<TsTypeAssertionAssignment> for JsAnyAssignment {
+    fn from(node: TsTypeAssertionAssignment) -> JsAnyAssignment {
+        JsAnyAssignment::TsTypeAssertionAssignment(node)
+    }
+}
 impl AstNode for JsAnyAssignment {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         matches!(
@@ -17201,6 +17277,7 @@ impl AstNode for JsAnyAssignment {
                 | JS_UNKNOWN_ASSIGNMENT
                 | TS_AS_ASSIGNMENT
                 | TS_NON_NULL_ASSERTION_ASSIGNMENT
+                | TS_TYPE_ASSERTION_ASSIGNMENT
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -17226,6 +17303,9 @@ impl AstNode for JsAnyAssignment {
                     syntax,
                 })
             }
+            TS_TYPE_ASSERTION_ASSIGNMENT => {
+                JsAnyAssignment::TsTypeAssertionAssignment(TsTypeAssertionAssignment { syntax })
+            }
             _ => return None,
         };
         Some(res)
@@ -17239,6 +17319,7 @@ impl AstNode for JsAnyAssignment {
             JsAnyAssignment::JsUnknownAssignment(it) => &it.syntax,
             JsAnyAssignment::TsAsAssignment(it) => &it.syntax,
             JsAnyAssignment::TsNonNullAssertionAssignment(it) => &it.syntax,
+            JsAnyAssignment::TsTypeAssertionAssignment(it) => &it.syntax,
         }
     }
 }
@@ -17252,6 +17333,7 @@ impl std::fmt::Debug for JsAnyAssignment {
             JsAnyAssignment::JsUnknownAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::TsAsAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::TsNonNullAssertionAssignment(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyAssignment::TsTypeAssertionAssignment(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -17265,6 +17347,7 @@ impl From<JsAnyAssignment> for SyntaxNode {
             JsAnyAssignment::JsUnknownAssignment(it) => it.into(),
             JsAnyAssignment::TsAsAssignment(it) => it.into(),
             JsAnyAssignment::TsNonNullAssertionAssignment(it) => it.into(),
+            JsAnyAssignment::TsTypeAssertionAssignment(it) => it.into(),
         }
     }
 }
@@ -23882,6 +23965,11 @@ impl std::fmt::Display for TsTypeArguments {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsTypeAssertionAssignment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsTypeAssertionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -26920,6 +27008,9 @@ impl Debug for DebugSyntaxElement {
                 }
                 TS_TYPE_ARGUMENTS => {
                     std::fmt::Debug::fmt(&TsTypeArguments::cast(node.clone()).unwrap(), f)
+                }
+                TS_TYPE_ASSERTION_ASSIGNMENT => {
+                    std::fmt::Debug::fmt(&TsTypeAssertionAssignment::cast(node.clone()).unwrap(), f)
                 }
                 TS_TYPE_ASSERTION_EXPRESSION => {
                     std::fmt::Debug::fmt(&TsTypeAssertionExpression::cast(node.clone()).unwrap(), f)

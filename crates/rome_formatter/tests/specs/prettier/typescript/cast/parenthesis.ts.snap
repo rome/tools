@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 125
 expression: parenthesis.ts
 
 ---
@@ -27,17 +27,6 @@ true || <x>a;
 true || <x>a;
 <x>a + <x>b;
 (<x>a) = 1;
-
-```
-
-# Errors
-```
-error[SyntaxError]: Invalid assignment to `<x>a`
-  ┌─ parenthesis.ts:8:2
-  │
-8 │ (<x>a) = 1;
-  │  ^^^^ This expression cannot be assigned to
-
 
 ```
 

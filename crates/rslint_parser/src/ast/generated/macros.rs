@@ -1124,6 +1124,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsTypeArguments::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_TYPE_ASSERTION_ASSIGNMENT => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsTypeAssertionAssignment::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION => {
                     let $pattern =
                         unsafe { $crate::ast::TsTypeAssertionExpression::new_unchecked(node) };
