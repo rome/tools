@@ -23,21 +23,21 @@ class C {
 
 # Errors
 ```
-error[SyntaxError]: 'readonly' already seen
+error[SyntaxError]: `readonly` modifier already seen.
   ┌─ readonlyReadonly.ts:2:14
   │
 2 │     readonly readonly x: number;
-  │     -------- ^^^^^^^^ duplicate modifier
+  │     -------- ^^^^^^^^ remove the duplicate `readonly` here
   │     │         
-  │     first seen here
+  │     first usage
 
-error[SyntaxError]: 'readonly' already seen
+error[SyntaxError]: `readonly` modifier already seen.
   ┌─ readonlyReadonly.ts:3:26
   │
 3 │     constructor(readonly readonly y: number) {}
-  │                 -------- ^^^^^^^^ duplicate modifier
+  │                 -------- ^^^^^^^^ remove the duplicate `readonly` here
   │                 │         
-  │                 first seen here
+  │                 first usage
 
 
 ```
