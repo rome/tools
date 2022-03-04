@@ -8,6 +8,7 @@ use std::{
     ops::Range,
     panic::catch_unwind,
     path::{Path, PathBuf},
+    process,
     str::Utf8Error,
     sync::{
         atomic::{AtomicUsize, Ordering},
@@ -53,6 +54,7 @@ pub(crate) fn format(mut session: CliSession) {
     }
 
     let is_check = session.args.contains("--check");
+    let is_silent = session.args.contains("--silent");
 
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![session
@@ -139,22 +141,26 @@ pub(crate) fn format(mut session: CliSession) {
         return;
     }
 
-    let mut files = PathFiles::default();
-    while let Ok((file_id, path)) = rx_files.recv() {
-        if !file_ids.contains(&file_id) {
-            continue;
+    if !is_silent {
+        let mut files = PathFiles::default();
+        while let Ok((file_id, path)) = rx_files.recv() {
+            if !file_ids.contains(&file_id) {
+                continue;
+            }
+
+            let name = path.display().to_string();
+            let source = fs::read_to_string(path).ok().unwrap_or_else(String::new);
+
+            files.storage.insert(file_id, SimpleFile::new(name, source));
         }
 
-        let name = path.display().to_string();
-        let source = fs::read_to_string(path).ok().unwrap_or_else(String::new);
-
-        files.storage.insert(file_id, SimpleFile::new(name, source));
+        let mut emit = Emitter::new(&files);
+        for diag in diagnostics {
+            emit.emit_stderr(&diag, true).unwrap();
+        }
     }
 
-    let mut emit = Emitter::new(&files);
-    for diag in diagnostics {
-        emit.emit_stderr(&diag, true).unwrap();
-    }
+    process::exit(1)
 }
 
 fn into_os_string(arg: &OsStr) -> Result<OsString, Infallible> {
@@ -337,7 +343,7 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
         ));
     }
 
-    let source_type = SourceType::from_path(params.path).unwrap_or_else(SourceType::js_module);
+    let source_type = SourceType::try_from(params.path).unwrap_or_else(|_| SourceType::js_module());
 
     let mut file = fs::File::options()
         .read(true)
@@ -345,7 +351,7 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
         .open(params.path)
         .with_file_id(params.file_id)?;
 
-    let input = FileBuffer::read(&mut file).with_file_id(params.file_id)?;
+    let input = FileBuffer::read(&mut file, !params.is_check).with_file_id(params.file_id)?;
 
     let root = parse(
         input.to_str().with_file_id_and_code(params.file_id, "IO")?,
@@ -396,10 +402,12 @@ enum FileBuffer {
 }
 
 impl FileBuffer {
-    fn read(file: &mut fs::File) -> io::Result<Self> {
+    fn read(file: &mut fs::File, allow_mmap: bool) -> io::Result<Self> {
         // TODO: figure out on which platforms this is useful
-        if let Ok(mmap) = unsafe { memmap2::Mmap::map(&*file) } {
-            return Ok(Self::Mmap(mmap));
+        if allow_mmap {
+            if let Ok(mmap) = unsafe { memmap2::Mmap::map(&*file) } {
+                return Ok(Self::Mmap(mmap));
+            }
         }
 
         let mut buffer = String::new();
