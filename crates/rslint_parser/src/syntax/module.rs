@@ -592,6 +592,10 @@ fn parse_import_assertion_entry(
 // export type { d } from "./d";
 // export { type e } from "./e";
 // export { type e as ee } from "./e";
+
+// test_err export_huge_function_in_script
+// // SCRIPT
+// export function A () { return "Kinsmen hot Moria tea serves. Sticky camp spell covering forged they're Oakenshield vines. Admirable relatives march regained wheel Ere eternally on rest parts unhappy? Leave hundreds market's Argonath answered avail grieve doing goodness! Wrong miserable well-wishers wander stood immediately neither Agreed goat poison holes fire? Nobody tosses a Dwarf. Brigands Bilbo Baggins prisoner stinker birthday injuries. Kili's loosened shy spiders till. Gandalf's death was not in vain. Nor would he have you give up hope. Bread kindly ghost Beorn's jelly. Andûril two-faced bitterness biding seemed says drinking splendor feed light unnoticed one! Carven nearest Eärendil fireworks former. Mattress smelling wandering teaching appear taste wise Mithril uprooted winter forebearers wheel. Let's beside Proudfoots succumbed! Excuse Anárion stolen helpless nudge study shown holding form? Changes point Snowbourn material side outer highest eaves flash-flame relic descendant lurking. Thousand death Agreed oppose whole? Glóin head's hurts feasting fight shiny legacy. Thror's broken odds suffice believe well-protected? Rightfully manners begged Maggot's fairer. Unheard-of grog shields sad wondering gardener killed gone Galadriel! Pan Frodo fingers spreads magic parting amount interest idly naked. It's some form of Elvish. I can't read it. Silverwork Wraiths riddled enchantment apple anywhere."; }
 pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![export]) {
         return Absent;
