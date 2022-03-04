@@ -644,7 +644,7 @@ error[SyntaxError]: async members cannot be abstract
    │     ^^^^^^^^
 
 --
-error[SyntaxError]: 'declare' modifier only allowed on properties.
+error[SyntaxError]: 'declare' modifier is only allowed on properties.
    ┌─ ts_class_invalid_modifier_combinations.ts:17:5
    │
 17 │     declare async m();

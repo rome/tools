@@ -1255,7 +1255,7 @@ enum ClassMethodMemberKind {
 
 impl ClassMethodMemberKind {
     /// The body of methods is optional if it's a method overload definition
-    /// ```t
+    /// ```ts
     /// class Test {
     ///   method();
     ///   method() { ... }
@@ -1281,6 +1281,20 @@ impl ClassMethodMemberKind {
     }
 }
 
+/// Parses the body of a method (constructor, getter, setter, or regular method).
+///
+/// TypeScript supports method signatures. These are methods without a body (and are terminated by a semicolon or ASI).
+/// A method is a signature if one of the following applies
+/// * The member has an `abstract` modifier (not supported by constructors)
+/// * It's a declaration in an ambient context (`declare class { ... }` or `declare namespace { class { ... } }`).
+/// * It's a method overload (doesn't apply to getters/setters)
+///
+/// The method determines which case applies to the current member and emits a diagnostic if:
+/// * the body is absent for a method declaration
+/// * the body is present for a method signature
+/// * a method signature isn't terminate by a semicolon or ASI
+///
+/// The method returns the inferred kind (signature or declaration) of the parsed method body
 fn expect_method_body(
     p: &mut Parser,
     member_marker: &Marker,
@@ -2084,7 +2098,7 @@ impl ClassMemberModifiers {
                     JS_PROPERTY_CLASS_MEMBER | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
                 ) {
                     return Some(
-                        p.err_builder("'declare' modifier only allowed on properties.")
+                        p.err_builder("'declare' modifier is only allowed on properties.")
                             .primary(modifier.as_text_range(), ""),
                     );
                 } else if self.flags.contains(ModifierFlags::PRIVATE_NAME) {
