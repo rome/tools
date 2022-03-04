@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: react.js
 
 ---
@@ -180,9 +180,11 @@ function Comp3() {
 function Comp4() {
   const { firstName, lastName } = useMemo(
     () =>
-      foo && bar && baz || baz || foo && baz(foo) + bar(foo) + foo && bar && baz || baz || foo && baz(
-        foo,
-      ) + bar(foo),
+      foo && bar && baz ||
+      baz ||
+      foo && baz(foo) + bar(foo) + foo && bar && baz ||
+      baz ||
+      foo && baz(foo) + bar(foo),
     [foo, bar, baz],
   );
 }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: right-break.js
 
 ---
@@ -29,10 +29,15 @@ const o = {
 
 # Output
 ```js
-const blablah = "aldkfkladfskladklsfkladklfkaldfadfkdaf" + "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" + "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf";
+const blablah =
+  "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
+  "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
+  "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf";
 
 const k = {
-  blablah: "aldkfkladfskladklsfkladklfkaldfadfkdaf" + "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" + "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf",
+  blablah: "aldkfkladfskladklsfkladklfkaldfadfkdaf" +
+    "adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
+    "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf",
 };
 
 somethingThatsAReallyLongPropName =

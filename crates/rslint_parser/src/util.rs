@@ -160,7 +160,22 @@ pub trait SyntaxNodeExt {
     fn contains_comments(&self) -> bool {
         self.tokens()
             .iter()
-            .any(|tok| tok.has_leading_comments() || tok.has_trailing_comments())
+            .any(|tok| tok.has_trailing_comments() || tok.has_leading_comments())
+    }
+
+    /// Whether the node contains trailing comments.
+    fn has_trailing_comments(&self) -> bool {
+        self.tokens()
+            .iter()
+            .last()
+            .map_or(false, |tok| tok.has_trailing_comments())
+    }
+
+    /// Whether the node contains leading comments.
+    fn has_leading_comments(&self) -> bool {
+        self.tokens()
+            .get(0)
+            .map_or(false, |tok| tok.has_leading_comments())
     }
 
     /// Get the first child with a specific kind.

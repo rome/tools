@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: property.js
 
 ---
@@ -31,8 +31,9 @@ class B {
 ```js
 class A {
   foobar = // comment to break
-  1 + // comment to break again
-  2;
+  1 +
+    // comment to break again
+    2;
 }
 
 class B {

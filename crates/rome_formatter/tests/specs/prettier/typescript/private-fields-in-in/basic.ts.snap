@@ -34,7 +34,10 @@ class Person {
 
   equals(other: unknown) {
     return (
-      other && typeof other === "object" && #name in other && this.#name === other.#name // <- this is new!
+      other &&
+        typeof other === "object" &&
+        #name in other && // <- this is new!
+        this.#name === other.#name
     );
   }
 }
