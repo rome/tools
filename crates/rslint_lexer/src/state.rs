@@ -32,7 +32,7 @@ impl LexerState {
 
     /// Based on https://users.soe.ucsc.edu/~cormac/papers/dls14a.pdf
     fn update_expr_allowed(&mut self, current: JsSyntaxKind) -> bool {
-        if current.is_keyword() && self.prev == Some(T![.]) {
+        if current.is_non_contextual_keyword() && self.prev == Some(T![.]) {
             return false;
         }
 
@@ -113,7 +113,7 @@ impl LexerState {
 
             T!['('] => {
                 let next = match self.prev {
-                    Some(t) if t.is_keyword() => match t {
+                    Some(t) if t.is_non_contextual_keyword() => match t {
                         T![if] | T![with] | T![while] => Context::ParenStmt { for_loop: false },
                         T![for] => Context::ParenStmt { for_loop: true },
                         _ => Context::ParenExpr,

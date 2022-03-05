@@ -44,6 +44,7 @@ mod tests {
     #[test]
     fn var_decl_let_token() {
         let parsed = parse_script("/* */let a = 5;", 0).tree();
+        dbg!(&parsed);
         let var_decl = parsed
             .statements()
             .iter()

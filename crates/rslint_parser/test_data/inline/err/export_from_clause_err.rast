@@ -32,21 +32,29 @@ JsModule {
         },
         JsExport {
             export_token: EXPORT_KW@26..34 "export" [Newline("\n")] [Whitespace(" ")],
-            export_clause: JsExportFromClause {
-                star_token: missing (required),
-                export_as: JsExportAsClause {
-                    as_token: AS_KW@34..37 "as" [] [Whitespace(" ")],
-                    exported_name: JsLiteralExportName {
-                        value: IDENT@37..42 "from" [] [Whitespace(" ")],
-                    },
+            export_clause: missing (required),
+        },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@34..37 "as" [] [Whitespace(" ")],
                 },
-                from_token: missing (required),
-                source: JsModuleSource {
-                    value_token: JS_STRING_LITERAL@42..48 "\"test\"" [] [],
-                },
-                assertion: missing (optional),
-                semicolon_token: SEMICOLON@48..49 ";" [] [],
             },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@37..42 "from" [] [Whitespace(" ")],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStringLiteralExpression {
+                value_token: JS_STRING_LITERAL@42..48 "\"test\"" [] [],
+            },
+            semicolon_token: SEMICOLON@48..49 ";" [] [],
         },
         JsExport {
             export_token: EXPORT_KW@49..57 "export" [Newline("\n")] [Whitespace(" ")],
@@ -91,20 +99,24 @@ JsModule {
       0: JS_NUMBER_LITERAL_EXPRESSION@24..25
         0: JS_NUMBER_LITERAL@24..25 "5" [] []
       1: SEMICOLON@25..26 ";" [] []
-    3: JS_EXPORT@26..49
+    3: JS_EXPORT@26..34
       0: EXPORT_KW@26..34 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@34..49
-        0: (empty)
-        1: JS_EXPORT_AS_CLAUSE@34..42
-          0: AS_KW@34..37 "as" [] [Whitespace(" ")]
-          1: JS_LITERAL_EXPORT_NAME@37..42
-            0: IDENT@37..42 "from" [] [Whitespace(" ")]
-        2: (empty)
-        3: JS_MODULE_SOURCE@42..48
-          0: JS_STRING_LITERAL@42..48 "\"test\"" [] []
-        4: (empty)
-        5: SEMICOLON@48..49 ";" [] []
-    4: JS_EXPORT@49..69
+      1: (empty)
+    4: JS_EXPRESSION_STATEMENT@34..37
+      0: JS_IDENTIFIER_EXPRESSION@34..37
+        0: JS_REFERENCE_IDENTIFIER@34..37
+          0: IDENT@34..37 "as" [] [Whitespace(" ")]
+      1: (empty)
+    5: JS_EXPRESSION_STATEMENT@37..42
+      0: JS_IDENTIFIER_EXPRESSION@37..42
+        0: JS_REFERENCE_IDENTIFIER@37..42
+          0: IDENT@37..42 "from" [] [Whitespace(" ")]
+      1: (empty)
+    6: JS_EXPRESSION_STATEMENT@42..49
+      0: JS_STRING_LITERAL_EXPRESSION@42..48
+        0: JS_STRING_LITERAL@42..48 "\"test\"" [] []
+      1: SEMICOLON@48..49 ";" [] []
+    7: JS_EXPORT@49..69
       0: EXPORT_KW@49..57 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_EXPORT_FROM_CLAUSE@57..69
         0: (empty)
@@ -116,7 +128,7 @@ JsModule {
         5: SEMICOLON@68..69 ";" [] []
   3: EOF@69..70 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `from` but instead found `;`
+error[SyntaxError]: expected `FROM_KW` but instead found `;`
   ┌─ export_from_clause_err.js:1:9
   │
 1 │ export *;
@@ -130,18 +142,31 @@ error[SyntaxError]: expected a string literal but instead found '5'
   │               ^ Expected a string literal here
 
 --
-error[SyntaxError]: expected `*` but instead found `as`
+error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'as'
   ┌─ export_from_clause_err.js:3:8
   │
 3 │ export as from "test";
-  │        ^^ unexpected
+  │        ^^ Expected a class, a function, or a variable declaration here
 
 --
-error[SyntaxError]: expected `from` but instead found `"test"`
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ export_from_clause_err.js:3:11
+  │
+3 │ export as from "test";
+  │        ---^^^^
+  │        │  │
+  │        │  An explicit or implicit semicolon is expected here...
+  │        ...Which is required to end this statement
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ export_from_clause_err.js:3:16
   │
 3 │ export as from "test";
-  │                ^^^^^^ unexpected
+  │           -----^^^^^^
+  │           │    │
+  │           │    An explicit or implicit semicolon is expected here...
+  │           ...Which is required to end this statement
 
 --
 error[SyntaxError]: expected `*` but instead found `from`

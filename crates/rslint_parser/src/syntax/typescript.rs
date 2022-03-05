@@ -9,7 +9,7 @@ use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext}
 use crate::syntax::js_parse_error::expected_expression;
 
 use crate::syntax::typescript::ts_parse_error::expected_ts_type;
-use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
+
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
@@ -64,7 +64,7 @@ pub(crate) fn parse_ts_type_assertion_expression(
 }
 
 pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
-    if !is_at_contextual_keyword(p, "implements") {
+    if !p.at(T![implements]) {
         return Absent;
     }
 
@@ -72,7 +72,7 @@ pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
     // class B implements C {}
 
     let m = p.start();
-    expect_contextual_keyword(p, "implements", T![implements]);
+    p.expect(T![implements]);
     expect_ts_type_list(p, "implements");
 
     Present(m.complete(p, TS_IMPLEMENTS_CLAUSE))
@@ -165,7 +165,7 @@ pub(crate) fn expect_ts_index_signature_member(
     parent: MemberParent,
 ) -> CompletedMarker {
     while is_nth_at_modifier(p, 0, false) {
-        if is_at_contextual_keyword(p, "readonly") {
+        if p.at(T![readonly]) {
             p.bump_remap(T![readonly]);
         } else {
             p.error(ts_member_cannot_be(

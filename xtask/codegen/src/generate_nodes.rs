@@ -720,6 +720,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 pub(crate) fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
     let kind_variant_name = to_upper_snake_case(name);
+
     if KINDS_SRC.literals.contains(&kind_variant_name.as_str())
         || KINDS_SRC.tokens.contains(&kind_variant_name.as_str())
     {

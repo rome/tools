@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: spread.js
 
 ---
@@ -38,11 +38,11 @@ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
 
 # Errors
 ```
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ spread.js:1:19
   │
 1 │ const formData = #{ title: "Implement all the things" }
-  │                   ^ unexpected
+  │                   ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ spread.js:1:18
@@ -58,11 +58,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │                  
   │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ spread.js:2:18
   │
 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │                  ^ unexpected
+  │                  ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ spread.js:2:17
@@ -87,11 +87,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │                        │         An explicit or implicit semicolon is expected here...
   │                        ...Which is required to end this statement
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ spread.js:3:20
   │
 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │                    ^ unexpected
+  │                    ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ spread.js:3:19
@@ -113,11 +113,11 @@ error[SyntaxError]: expected an expression but instead found '...taskNow, status
 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
   │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected an expression here
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ spread.js:6:23
   │
 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-  │                       ^ unexpected
+  │                       ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ spread.js:6:22

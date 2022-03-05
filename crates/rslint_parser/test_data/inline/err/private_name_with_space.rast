@@ -13,15 +13,15 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
-                    items: [
-                        JsPropertyModifierList [],
-                        JsUnknown {
-                            items: [
-                                HASH@9..13 "#" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")],
-                            ],
-                        },
-                    ],
+                JsPropertyClassMember {
+                    modifiers: JsPropertyModifierList [],
+                    name: JsPrivateClassMemberName {
+                        hash_token: HASH@9..13 "#" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")],
+                        id_token: missing (required),
+                    },
+                    property_annotation: missing (optional),
+                    value: missing (optional),
+                    semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
                     modifiers: JsPropertyModifierList [],
@@ -53,10 +53,14 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..18
-        0: JS_UNKNOWN_MEMBER@9..13
+        0: JS_PROPERTY_CLASS_MEMBER@9..13
           0: JS_PROPERTY_MODIFIER_LIST@9..9
-          1: JS_UNKNOWN@9..13
+          1: JS_PRIVATE_CLASS_MEMBER_NAME@9..13
             0: HASH@9..13 "#" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")]
+            1: (empty)
+          2: (empty)
+          3: (empty)
+          4: (empty)
         1: JS_PROPERTY_CLASS_MEMBER@13..18
           0: JS_PROPERTY_MODIFIER_LIST@13..13
           1: JS_LITERAL_MEMBER_NAME@13..17
@@ -71,7 +75,7 @@ error[SyntaxError]: Unexpected space or comment between `#` and identifier
   ┌─ private_name_with_space.js:2:3
   │
 2 │     # test;
-  │      ^ remove the space or comment here
+  │      ^ remove the space here
 
 --
 error[SyntaxError]: expected a semicolon to end the class property, but found none

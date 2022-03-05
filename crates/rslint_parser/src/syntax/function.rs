@@ -14,9 +14,7 @@ use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
     parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters, try_parse,
 };
-use crate::syntax::util::{
-    eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
-};
+
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, Parser, SyntaxFeature};
@@ -343,7 +341,7 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
 
     // test_err ts ts_declare_async_function
     // declare async function test();
-    let is_async = is_at_contextual_keyword(p, "async");
+    let is_async = p.at(T![async]);
     if is_async {
         p.error(
             p.err_builder("'async' modifier cannot be used in an ambient context.")
@@ -395,7 +393,7 @@ pub(crate) enum LineBreak {
 #[inline]
 /// Checks if the parser is inside a "async function"
 pub(super) fn is_at_async_function(p: &Parser, should_check_line_break: LineBreak) -> bool {
-    let async_function_tokens = p.cur_src() == "async" && p.nth_at(1, T![function]);
+    let async_function_tokens = p.at(T![async]) && p.nth_at(1, T![function]);
     if should_check_line_break == LineBreak::DoCheck {
         async_function_tokens && !p.has_linebreak_before_n(1)
     } else {
@@ -448,7 +446,7 @@ fn try_parse_parenthesized_arrow_function_head(
     ambiguity: Ambiguity,
 ) -> Result<(Marker, SignatureFlags), Marker> {
     let m = p.start();
-    let flags = if eat_contextual_keyword(p, "async", T![async]) {
+    let flags = if p.eat(T![async]) {
         SignatureFlags::ASYNC
     } else {
         SignatureFlags::empty()
@@ -574,7 +572,7 @@ fn is_parenthesized_arrow_function_expression(
         T!['('] | T![<] => {
             is_parenthesized_arrow_function_expression_impl(p, SignatureFlags::empty())
         }
-        T![ident] if is_at_contextual_keyword(p, "async") => {
+        T![async] => {
             // test async_arrow_expr
             // let a = async foo => {}
             // let b = async (bar) => {}
@@ -692,10 +690,10 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    let is_async = is_at_contextual_keyword(p, "async") && is_nth_at_identifier_binding(p, 1);
+    let is_async = p.at(T![async]) && is_nth_at_identifier_binding(p, 1);
 
     let flags = if is_async {
-        expect_contextual_keyword(p, "async", T![async]);
+        p.expect(T![async]);
         SignatureFlags::ASYNC
     } else {
         SignatureFlags::empty()
@@ -714,7 +712,7 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn is_arrow_function_with_single_parameter(p: &Parser) -> bool {
-    if is_at_contextual_keyword(p, "async") && !p.has_linebreak_before_n(1) {
+    if p.at(T![async]) && !p.has_linebreak_before_n(1) {
         is_nth_at_identifier_binding(p, 1) && p.nth_at(2, T![=>]) && !p.has_linebreak_before_n(2)
     } else {
         is_at_identifier_binding(p) && p.nth_at(1, T![=>]) && !p.has_linebreak_before_n(1)
@@ -1082,6 +1080,7 @@ pub(super) fn parse_parameters_list(
                         T![await],
                         T![yield],
                         T![this],
+                        // TODO include contextual keywords
                         T![,],
                         T!['['],
                         T![...],

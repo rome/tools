@@ -35,35 +35,19 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@45..51 "\"bar\"" [] [Whitespace(" ")],
                 },
-                assertion: missing (optional),
-            },
-            semicolon_token: missing (optional),
-        },
-        JsExpressionStatement {
-            expression: JsIdentifierExpression {
-                name: JsReferenceIdentifier {
-                    value_token: IDENT@51..63 "\\u{61}ssert" [] [Whitespace(" ")],
-                },
-            },
-            semicolon_token: missing (optional),
-        },
-        JsBlockStatement {
-            l_curly_token: L_CURLY@63..65 "{" [] [Whitespace(" ")],
-            statements: JsStatementList [
-                JsLabeledStatement {
-                    label_token: IDENT@65..69 "type" [] [],
-                    colon_token: COLON@69..71 ":" [] [Whitespace(" ")],
-                    body: JsExpressionStatement {
-                        expression: JsStringLiteralExpression {
+                assertion: JsImportAssertion {
+                    assert_token: ASSERT_KW@51..63 "\\u{61}ssert" [] [Whitespace(" ")],
+                    l_curly_token: L_CURLY@63..65 "{" [] [Whitespace(" ")],
+                    assertions: JsImportAssertionEntryList [
+                        JsImportAssertionEntry {
+                            key: IDENT@65..69 "type" [] [],
+                            colon_token: COLON@69..71 ":" [] [Whitespace(" ")],
                             value_token: JS_STRING_LITERAL@71..78 "\"json\"" [] [Whitespace(" ")],
                         },
-                        semicolon_token: missing (optional),
-                    },
+                    ],
+                    r_curly_token: R_CURLY@78..79 "}" [] [],
                 },
-            ],
-            r_curly_token: R_CURLY@78..79 "}" [] [],
-        },
-        JsEmptyStatement {
+            },
             semicolon_token: SEMICOLON@79..80 ";" [] [],
         },
         JsImport {
@@ -299,32 +283,22 @@ JsModule {
               2: (empty)
           3: R_CURLY@35..36 "}" [] []
       2: SEMICOLON@36..37 ";" [] []
-    1: JS_IMPORT@37..51
+    1: JS_IMPORT@37..80
       0: IMPORT_KW@37..45 "import" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IMPORT_BARE_CLAUSE@45..51
+      1: JS_IMPORT_BARE_CLAUSE@45..79
         0: JS_MODULE_SOURCE@45..51
           0: JS_STRING_LITERAL@45..51 "\"bar\"" [] [Whitespace(" ")]
-        1: (empty)
-      2: (empty)
-    2: JS_EXPRESSION_STATEMENT@51..63
-      0: JS_IDENTIFIER_EXPRESSION@51..63
-        0: JS_REFERENCE_IDENTIFIER@51..63
-          0: IDENT@51..63 "\\u{61}ssert" [] [Whitespace(" ")]
-      1: (empty)
-    3: JS_BLOCK_STATEMENT@63..79
-      0: L_CURLY@63..65 "{" [] [Whitespace(" ")]
-      1: JS_STATEMENT_LIST@65..78
-        0: JS_LABELED_STATEMENT@65..78
-          0: IDENT@65..69 "type" [] []
-          1: COLON@69..71 ":" [] [Whitespace(" ")]
-          2: JS_EXPRESSION_STATEMENT@71..78
-            0: JS_STRING_LITERAL_EXPRESSION@71..78
-              0: JS_STRING_LITERAL@71..78 "\"json\"" [] [Whitespace(" ")]
-            1: (empty)
-      2: R_CURLY@78..79 "}" [] []
-    4: JS_EMPTY_STATEMENT@79..80
-      0: SEMICOLON@79..80 ";" [] []
-    5: JS_IMPORT@80..120
+        1: JS_IMPORT_ASSERTION@51..79
+          0: ASSERT_KW@51..63 "\\u{61}ssert" [] [Whitespace(" ")]
+          1: L_CURLY@63..65 "{" [] [Whitespace(" ")]
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@65..78
+            0: JS_IMPORT_ASSERTION_ENTRY@65..78
+              0: IDENT@65..69 "type" [] []
+              1: COLON@69..71 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@71..78 "\"json\"" [] [Whitespace(" ")]
+          3: R_CURLY@78..79 "}" [] []
+      2: SEMICOLON@79..80 ";" [] []
+    2: JS_IMPORT@80..120
       0: IMPORT_KW@80..88 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@88..119
         0: (empty)
@@ -349,19 +323,19 @@ JsModule {
               2: JS_STRING_LITERAL@111..118 "\"json\"" [] [Whitespace(" ")]
           3: R_CURLY@118..119 "}" [] []
       2: SEMICOLON@119..120 ";" [] []
-    6: JS_IMPORT@120..135
+    3: JS_IMPORT@120..135
       0: IMPORT_KW@120..128 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_BARE_CLAUSE@128..135
         0: JS_MODULE_SOURCE@128..135
           0: JS_STRING_LITERAL@128..135 "\"lorem\"" [] []
         1: (empty)
       2: (empty)
-    7: JS_EXPRESSION_STATEMENT@135..143
+    4: JS_EXPRESSION_STATEMENT@135..143
       0: JS_IDENTIFIER_EXPRESSION@135..143
         0: JS_REFERENCE_IDENTIFIER@135..143
           0: IDENT@135..143 "assert" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
-    8: JS_BLOCK_STATEMENT@143..159
+    5: JS_BLOCK_STATEMENT@143..159
       0: L_CURLY@143..145 "{" [] [Whitespace(" ")]
       1: JS_STATEMENT_LIST@145..158
         0: JS_LABELED_STATEMENT@145..158
@@ -372,7 +346,7 @@ JsModule {
               0: JS_STRING_LITERAL@151..158 "\"json\"" [] [Whitespace(" ")]
             1: (empty)
       2: R_CURLY@158..159 "}" [] []
-    9: JS_IMPORT@159..242
+    6: JS_IMPORT@159..242
       0: IMPORT_KW@159..167 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_DEFAULT_CLAUSE@167..241
         0: (empty)
@@ -401,7 +375,7 @@ JsModule {
               2: JS_STRING_LITERAL@235..240 "\"js\"" [] [Whitespace(" ")]
           3: R_CURLY@240..241 "}" [] []
       2: SEMICOLON@241..242 ";" [] []
-    10: JS_IMPORT@242..261
+    7: JS_IMPORT@242..261
       0: IMPORT_KW@242..250 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_BARE_CLAUSE@250..260
         0: JS_MODULE_SOURCE@250..254
@@ -412,7 +386,7 @@ JsModule {
           2: JS_IMPORT_ASSERTION_ENTRY_LIST@260..260
           3: (empty)
       2: SEMICOLON@260..261 ";" [] []
-    11: JS_IMPORT@261..345
+    8: JS_IMPORT@261..345
       0: IMPORT_KW@261..269 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_DEFAULT_CLAUSE@269..344
         0: (empty)
@@ -449,7 +423,7 @@ JsModule {
               0: JS_NUMBER_LITERAL@341..343 "1" [] [Whitespace(" ")]
           3: R_CURLY@343..344 "}" [] []
       2: SEMICOLON@344..345 ";" [] []
-    12: JS_IMPORT@345..379
+    9: JS_IMPORT@345..379
       0: IMPORT_KW@345..353 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@353..379
         0: (empty)
@@ -487,26 +461,7 @@ error[SyntaxError]: expected `:` but instead found `}`
   │                                    ^ unexpected
 
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ import_assertion_err.js:2:14
-  │
-2 │ import "bar" \u{61}ssert { type: "json" };
-  │ -------------^^^^^^^^^^^ An explicit or implicit semicolon is expected here...
-  │ │             
-  │ ...Which is required to end this statement
-
---
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ import_assertion_err.js:2:26
-  │
-2 │ import "bar" \u{61}ssert { type: "json" };
-  │              ------------^
-  │              │           │
-  │              │           An explicit or implicit semicolon is expected here...
-  │              ...Which is required to end this statement
-
---
-error[SyntaxError]: expected `from` but instead found `assert`
+error[SyntaxError]: expected `FROM_KW` but instead found `assert`
   ┌─ import_assertion_err.js:3:16
   │
 3 │ import { foo } assert { type: "json" };

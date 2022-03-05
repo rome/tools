@@ -25,7 +25,7 @@ use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::module::parse_import_or_import_equals_declaration;
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
-use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
+
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -53,6 +53,18 @@ pub const STMT_RECOVERY_SET: TokenSet = token_set![
     CLASS_KW,
     IMPORT_KW,
     EXPORT_KW,
+    ABSTRACT_KW,
+    INTERFACE_KW,
+    ENUM_KW,
+    TYPE_KW,
+    DECLARE_KW,
+    MODULE_KW,
+    NAMESPACE_KW,
+    LET_KW,
+    CONST_KW,
+    MODULE_KW,
+    NAMESPACE_KW,
+    GLOBAL_KW,
     T![;]
 ];
 
@@ -207,12 +219,12 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![debugger] => parse_debugger_statement(p),
         // function and async function
         T![function] => parse_function_declaration(p, context),
-        T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
+        T![async] if is_at_async_function(p, LineBreak::DoCheck) => {
             parse_function_declaration(p, context)
         }
         // class and abstract class
         T![class] => parse_class_declaration(p, context),
-        T![ident] if is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck) => {
+        T![abstract] if is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck) => {
             // test_err abstract_class_in_js
             // abstract class A {}
             TypeScript.parse_exclusive_syntax(
@@ -223,10 +235,9 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
                 },
             )
         }
-        T![ident] | T![await] | T![yield] | T![enum] if p.nth_at(1, T![:]) => {
-            parse_labeled_statement(p, context)
-        }
-        T![ident] if is_nth_at_let_variable_statement(p, 0) => {
+        T![ident] if p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
+        _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
+        T![let] if is_nth_at_let_variable_statement(p, 0) => {
             // test_err let_newline_in_async_function
             // async function f() {
             //   let
@@ -250,51 +261,46 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
                 parse_expression_statement(p)
             }
         }
-        // contextual keywords that expect to be followed by another token on the same line
-        T![ident] if !p.has_linebreak_before_n(1) => {
-            if is_at_async_function(p, LineBreak::DoNotCheck) {
-                parse_function_declaration(p, context)
-            } else if is_at_contextual_keyword(p, "type") && is_nth_at_identifier(p, 1) {
-                // test ts ts_type_variable
-                // let type;
-                // type = getFlowTypeInConstructor(symbol, getDeclaringConstructor(symbol)!);
-                TypeScript.parse_exclusive_syntax(
-                    p,
-                    parse_ts_type_alias_declaration,
-                    |p, type_alias| {
-                        ts_only_syntax_error(p, "type alias", type_alias.range(p).as_range())
-                    },
-                )
-            } else if is_at_ts_interface_declaration(p) {
-                TypeScript.parse_exclusive_syntax(
-                    p,
-                    parse_ts_interface_declaration,
-                    |p, interface| {
-                        ts_only_syntax_error(p, "interface", interface.range(p).as_range())
-                    },
-                )
-            } else if is_at_ts_declare_statement(p) {
-                let declare_range = p.cur_tok().range();
-                TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
-                    p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
-                        .primary(declare_range, "")
-                })
-            } else if is_at_any_ts_namespace_declaration(p) {
-                let name = p.cur_tok().range();
-                TypeScript.parse_exclusive_syntax(
-                    p,
-                    parse_any_ts_namespace_declaration_statement,
-                    |p, declaration| {
-                        ts_only_syntax_error(
-                            p,
-                            p.source(name.as_text_range()),
-                            declaration.range(p).as_range(),
-                        )
-                    },
-                )
-            } else {
-                parse_expression_statement(p)
-            }
+        T![type] if !p.has_linebreak_before_n(1) && is_nth_at_identifier(p, 1) => {
+            // test ts ts_type_variable
+            // let type;
+            // type = getFlowTypeInConstructor(symbol, getDeclaringConstructor(symbol)!);
+            TypeScript.parse_exclusive_syntax(
+                p,
+                parse_ts_type_alias_declaration,
+                |p, type_alias| {
+                    ts_only_syntax_error(p, "type alias", type_alias.range(p).as_range())
+                },
+            )
+        }
+        T![interface] if is_at_ts_interface_declaration(p) => {
+            TypeScript.parse_exclusive_syntax(p, parse_ts_interface_declaration, |p, interface| {
+                ts_only_syntax_error(p, "interface", interface.range(p).as_range())
+            })
+        }
+        T![declare] if is_at_ts_declare_statement(p) => {
+            let declare_range = p.cur_tok().range();
+            TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
+                p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
+                    .primary(declare_range, "")
+            })
+        }
+        T![async] if is_at_async_function(p, LineBreak::DoNotCheck) => {
+            parse_function_declaration(p, context)
+        }
+        T![module] | T![namespace] | T![global] if is_at_any_ts_namespace_declaration(p) => {
+            let name = p.cur_tok().range();
+            TypeScript.parse_exclusive_syntax(
+                p,
+                parse_any_ts_namespace_declaration_statement,
+                |p, declaration| {
+                    ts_only_syntax_error(
+                        p,
+                        p.source(name.as_text_range()),
+                        declaration.range(p).as_range(),
+                    )
+                },
+            )
         }
         _ if is_at_expression(p) => parse_expression_statement(p),
         _ => Absent,
@@ -954,17 +960,17 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 pub(crate) fn is_nth_at_variable_declarations(p: &Parser, n: usize) -> bool {
     match p.nth(n) {
         T![var] | T![const] => true,
-        T![ident] if is_nth_at_let_variable_statement(p, n) => true,
+        T![let] if is_nth_at_let_variable_statement(p, n) => true,
         _ => false,
     }
 }
 
 pub(crate) fn is_nth_at_let_variable_statement(p: &Parser, n: usize) -> bool {
-    is_nth_at_contextual_keyword(p, n, "let")
-        && matches!(
-            p.nth(n + 1),
-            T!['{'] | T!['['] | T![ident] | T![yield] | T![await] | T![enum]
-        )
+    if !p.nth_at(n, T![let]) {
+        return false;
+    }
+
+    matches!(p.nth(n + 1), T!['{'] | T!['[']) || is_nth_at_identifier(p, n + 1)
 }
 
 /// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
@@ -1060,12 +1066,10 @@ fn eat_variable_declaration(
         T![var] => p.bump_any(),
         T![const] => {
             context.is_const = Some(p.cur_tok().range());
-            p.bump_any()
+            p.bump(T![const])
         }
-        T![ident] if p.cur_src() == "let" => {
-            // let is a valid identifier name that's why the returns an ident for let.
-            // remap it here because we know from the context that this is the let keyword.
-            p.bump_remap(T![let]);
+        T![let] => {
+            p.bump(T![let]);
             context.is_let = true;
         }
         _ => {

@@ -40,7 +40,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if element.kind() == T![meta] {
+                    if element.kind() == META {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5322,7 +5322,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if element.kind() == T![target] {
+                    if element.kind() == TARGET {
                         slots.mark_present();
                         current_element = elements.next();
                     }

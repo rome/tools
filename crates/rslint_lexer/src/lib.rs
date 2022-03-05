@@ -570,45 +570,250 @@ impl<'src> Lexer<'src> {
 
         let (count, _) = self.consume_and_get_ident(&mut buf[len..]);
 
-        let kind = match &buf[..count + len] {
-            b"await" => Some(AWAIT_KW),
-            b"break" => Some(BREAK_KW),
-            b"case" => Some(CASE_KW),
-            b"catch" => Some(CATCH_KW),
-            b"class" => Some(CLASS_KW),
-            b"const" => Some(CONST_KW),
-            b"continue" => Some(CONTINUE_KW),
-            b"debugger" => Some(DEBUGGER_KW),
-            b"default" => Some(DEFAULT_KW),
-            b"delete" => Some(DELETE_KW),
-            b"do" => Some(DO_KW),
-            b"else" => Some(ELSE_KW),
-            b"enum" => Some(ENUM_KW),
-            b"export" => Some(EXPORT_KW),
-            b"extends" => Some(EXTENDS_KW),
-            b"false" => Some(FALSE_KW),
-            b"finally" => Some(FINALLY_KW),
-            b"for" => Some(FOR_KW),
-            b"function" => Some(FUNCTION_KW),
-            b"if" => Some(IF_KW),
-            b"in" => Some(IN_KW),
-            b"import" => Some(IMPORT_KW),
-            b"instanceof" => Some(INSTANCEOF_KW),
-            b"new" => Some(NEW_KW),
-            b"null" => Some(NULL_KW),
-            b"return" => Some(RETURN_KW),
-            b"super" => Some(SUPER_KW),
-            b"switch" => Some(SWITCH_KW),
-            b"this" => Some(THIS_KW),
-            b"throw" => Some(THROW_KW),
-            b"try" => Some(TRY_KW),
-            b"true" => Some(TRUE_KW),
-            b"typeof" => Some(TYPEOF_KW),
-            b"var" => Some(VAR_KW),
-            b"void" => Some(VOID_KW),
-            b"while" => Some(WHILE_KW),
-            b"with" => Some(WITH_KW),
-            b"yield" => Some(YIELD_KW),
+        let slice = &buf[..count + len];
+
+        let kind = match slice[0] {
+            b'a' if slice.len() > 1 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'b' => Self::check_keyword(rest, "stract", ABSTRACT_KW),
+                    b'n' => Self::check_keyword(rest, "y", ANY_KW),
+                    b'w' => Self::check_keyword(rest, "ait", AWAIT_KW),
+                    b's' => {
+                        if slice.len() == 2 {
+                            Some(AS_KW)
+                        } else {
+                            let rest = &slice[3..];
+                            match slice[2] {
+                                b'y' => Self::check_keyword(rest, "nc", ASYNC_KW),
+                                b's' => match rest {
+                                    b"ert" => Some(ASSERT_KW),
+                                    b"erts" => Some(ASSERTS_KW),
+                                    _ => None,
+                                },
+                                _ => None,
+                            }
+                        }
+                    }
+                    _ => None,
+                }
+            }
+            b'b' if slice.len() > 4 => {
+                let rest = &slice[2..];
+                match &slice[1] {
+                    b'i' => Self::check_keyword(rest, "gint", BIGINT_KW),
+                    b'o' => Self::check_keyword(rest, "olean", BOOLEAN_KW),
+                    b'r' => Self::check_keyword(rest, "eak", BREAK_KW),
+                    _ => None,
+                }
+            }
+            b'c' if slice.len() > 3 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'a' if slice.len() > 2 => {
+                        let rest = &slice[3..];
+                        match slice[2] {
+                            b's' => Self::check_keyword(rest, "e", CASE_KW),
+                            b't' => Self::check_keyword(rest, "ch", CATCH_KW),
+                            _ => None,
+                        }
+                    }
+                    b'l' => Self::check_keyword(rest, "ass", CLASS_KW),
+                    b'o' if slice.len() > 4 && slice[2] == b'n' => {
+                        let rest = &slice[4..];
+                        match slice[3] {
+                            b's' if slice.len() == 5 => Self::check_keyword(rest, "t", CONST_KW),
+                            b's' => Self::check_keyword(rest, "tructor", CONSTRUCTOR_KW),
+                            b't' => Self::check_keyword(rest, "inue", CONTINUE_KW),
+                            _ => None,
+                        }
+                    }
+                    _ => None,
+                }
+            }
+            b'd' if slice.len() > 1 => match slice[1] {
+                b'e' if slice.len() > 5 => {
+                    let rest = &slice[3..];
+                    match slice[2] {
+                        b'b' => Self::check_keyword(rest, "ugger", DEBUGGER_KW),
+                        b'f' => Self::check_keyword(rest, "ault", DEFAULT_KW),
+                        b'l' => Self::check_keyword(rest, "ete", DELETE_KW),
+                        b'c' => Self::check_keyword(rest, "lare", DECLARE_KW),
+                        _ => None,
+                    }
+                }
+                b'o' if slice.len() == 2 => Some(DO_KW),
+                _ => None,
+            },
+            b'e' if slice.len() > 3 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'l' => Self::check_keyword(rest, "se", ELSE_KW),
+                    b'n' => Self::check_keyword(rest, "um", ENUM_KW),
+                    b'x' => {
+                        let rest = &slice[3..];
+                        match slice[2] {
+                            b'p' => Self::check_keyword(rest, "ort", EXPORT_KW),
+                            b't' => Self::check_keyword(rest, "ends", EXTENDS_KW),
+                            _ => None,
+                        }
+                    }
+                    _ => None,
+                }
+            }
+            b'f' if slice.len() > 2 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'a' => Self::check_keyword(rest, "lse", FALSE_KW),
+                    b'i' => Self::check_keyword(rest, "nally", FINALLY_KW),
+                    b'o' => Self::check_keyword(rest, "r", FOR_KW),
+                    b'u' => Self::check_keyword(rest, "nction", FUNCTION_KW),
+                    b'r' => Self::check_keyword(rest, "om", FROM_KW),
+                    _ => None,
+                }
+            }
+            b'g' if slice.len() > 2 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'e' => Self::check_keyword(rest, "t", GET_KW),
+                    b'l' => Self::check_keyword(rest, "obal", GLOBAL_KW),
+                    _ => None,
+                }
+            }
+            b'i' if slice.len() > 1 => match slice[1] {
+                b'f' if slice.len() == 2 => Some(IF_KW),
+                b's' if slice.len() == 2 => Some(IS_KW),
+                b'n' if slice.len() == 2 => Some(IN_KW),
+                b'n' if slice.len() > 4 => {
+                    let rest = &slice[3..];
+                    match slice[2] {
+                        b'f' => Self::check_keyword(rest, "er", INFER_KW),
+                        b's' => Self::check_keyword(rest, "tanceof", INSTANCEOF_KW),
+                        b't' => Self::check_keyword(rest, "erface", INTERFACE_KW),
+                        _ => None,
+                    }
+                }
+                b'm' if slice.len() > 5 && slice[2] == b'p' => {
+                    let rest = &slice[4..];
+                    match slice[3] {
+                        b'o' => Self::check_keyword(rest, "rt", IMPORT_KW),
+                        b'l' => Self::check_keyword(rest, "ements", IMPLEMENTS_KW),
+                        _ => None,
+                    }
+                }
+                _ => None,
+            },
+            b'k' => Self::check_keyword(&slice[1..], "eyof", KEYOF_KW),
+            b'l' => Self::check_keyword(&slice[1..], "et", LET_KW),
+            b'm' => Self::check_keyword(&slice[1..], "odule", MODULE_KW),
+            b'n' if slice.len() > 2 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'a' => Self::check_keyword(rest, "mespace", NAMESPACE_KW),
+                    b'e' if slice.len() == 3 => Self::check_keyword(rest, "w", NEW_KW),
+                    b'e' => Self::check_keyword(rest, "ver", NEVER_KW),
+                    b'u' if slice.len() == 4 => Self::check_keyword(rest, "ll", NULL_KW),
+                    b'u' => Self::check_keyword(rest, "mber", NUMBER_KW),
+                    _ => None,
+                }
+            }
+            b'o' if slice.len() > 1 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'b' => Self::check_keyword(rest, "ject", OBJECT_KW),
+                    b'f' if slice.len() == 2 => Some(OF_KW),
+                    b'v' => Self::check_keyword(rest, "erride", OVERRIDE_KW),
+                    _ => None,
+                }
+            }
+            b'p' if slice.len() > 5 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'a' => Self::check_keyword(rest, "ckage", PACKAGE_KW),
+                    b'r' if slice[2] == b'i' => {
+                        Self::check_keyword(&slice[3..], "vate", PRIVATE_KW)
+                    }
+                    b'r' if slice[2] == b'o' => {
+                        Self::check_keyword(&slice[3..], "tected", PROTECTED_KW)
+                    }
+                    b'u' => Self::check_keyword(rest, "blic", PUBLIC_KW),
+                    _ => None,
+                }
+            }
+            b'r' if slice.len() > 5 && slice[1] == b'e' => {
+                let rest = &slice[3..];
+                match slice[2] {
+                    b'a' => Self::check_keyword(rest, "donly", READONLY_KW),
+                    b'q' => Self::check_keyword(rest, "uire", REQUIRE_KW),
+                    b't' => Self::check_keyword(rest, "urn", RETURN_KW),
+                    _ => None,
+                }
+            }
+            b's' if slice.len() > 2 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'e' => Self::check_keyword(rest, "t", SET_KW),
+                    b'u' => Self::check_keyword(rest, "per", SUPER_KW),
+                    b'w' => Self::check_keyword(rest, "itch", SWITCH_KW),
+                    b'y' => Self::check_keyword(rest, "mbol", SYMBOL_KW),
+                    b't' if slice[2] == b'a' => Self::check_keyword(&slice[3..], "tic", STATIC_KW),
+                    b't' if slice[2] == b'r' => Self::check_keyword(&slice[3..], "ing", STRING_KW),
+                    _ => None,
+                }
+            }
+            b't' if slice.len() > 2 => match slice[1] {
+                b'h' if slice.len() > 3 => {
+                    let rest = &slice[3..];
+                    match slice[2] {
+                        b'i' => Self::check_keyword(rest, "s", THIS_KW),
+                        b'r' => Self::check_keyword(rest, "ow", THROW_KW),
+                        _ => None,
+                    }
+                }
+                b'r' => {
+                    let rest = &slice[3..];
+                    match slice[2] {
+                        b'u' => Self::check_keyword(rest, "e", TRUE_KW),
+                        b'y' if slice.len() == 3 => Some(TRY_KW),
+                        _ => None,
+                    }
+                }
+                b'y' if slice[2] == b'p' => {
+                    let rest = &slice[3..];
+                    match slice.len() {
+                        4 => Self::check_keyword(rest, "e", TYPE_KW),
+                        6 => Self::check_keyword(rest, "eof", TYPEOF_KW),
+                        _ => None,
+                    }
+                }
+                _ => None,
+            },
+            b'u' if slice.len() > 5 && slice[1] == b'n' => {
+                let rest = &slice[3..];
+                match slice[2] {
+                    b'd' => Self::check_keyword(rest, "efined", UNDEFINED_KW),
+                    b'i' => Self::check_keyword(rest, "que", UNIQUE_KW),
+                    b'k' => Self::check_keyword(rest, "nown", UNKNOWN_KW),
+                    _ => None,
+                }
+            }
+            b'v' if slice.len() > 2 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'a' => Self::check_keyword(rest, "r", VAR_KW),
+                    b'o' => Self::check_keyword(rest, "id", VOID_KW),
+                    _ => None,
+                }
+            }
+            b'w' if slice.len() > 3 => {
+                let rest = &slice[2..];
+                match slice[1] {
+                    b'h' => Self::check_keyword(rest, "ile", WHILE_KW),
+                    b'i' => Self::check_keyword(rest, "th", WITH_KW),
+                    _ => None,
+                }
+            }
+            b'y' if slice.len() > 1 => Self::check_keyword(&slice[1..], "ield", YIELD_KW),
             _ => None,
         };
 
@@ -616,6 +821,15 @@ impl<'src> Lexer<'src> {
             (Token::new(kind, self.cur - start), None)
         } else {
             (Token::new(T![ident], self.cur - start), None)
+        }
+    }
+
+    #[inline]
+    fn check_keyword(slice: &[u8], rest: &str, kind: JsSyntaxKind) -> Option<JsSyntaxKind> {
+        if slice == rest.as_bytes() {
+            Some(kind)
+        } else {
+            None
         }
     }
 

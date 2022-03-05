@@ -32,6 +32,32 @@ impl JsSyntaxKind {
                 | JsSyntaxKind::MULTILINE_COMMENT
         )
     }
+
+    /// Returns `true` for any contextual (await) or non-contextual keyword
+    #[inline]
+    pub const fn is_keyword(self) -> bool {
+        (self as u16) <= (JsSyntaxKind::OF_KW as u16)
+            && (self as u16) >= (JsSyntaxKind::BREAK_KW as u16)
+    }
+
+    /// Returns `true` for contextual keywords (excluding strict mode contextual keywords)
+    #[inline]
+    pub const fn is_contextual_keyword(self) -> bool {
+        (self as u16) >= (JsSyntaxKind::ABSTRACT_KW as u16)
+            && (self as u16) <= (JsSyntaxKind::OF_KW as u16)
+    }
+
+    /// Returns true for all non-contextual keywords (includes future reserved keywords)
+    #[inline]
+    pub const fn is_non_contextual_keyword(self) -> bool {
+        self.is_keyword() && !self.is_contextual_keyword()
+    }
+
+    #[inline]
+    pub const fn is_future_reserved_keyword(self) -> bool {
+        (self as u16) >= (JsSyntaxKind::IMPLEMENTS_KW as u16)
+            && (self as u16) <= (JsSyntaxKind::YIELD_KW as u16)
+    }
 }
 
 impl rome_rowan::SyntaxKind for JsSyntaxKind {

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 125
 expression: async-do-expressions.js
 
 ---
@@ -82,7 +82,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │     An explicit or implicit semicolon is expected here...
   │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `;`
+error[SyntaxError]: expected `while` but instead found `;`
   ┌─ async-do-expressions.js:3:2
   │
 3 │ };
@@ -94,7 +94,7 @@ error[SyntaxError]: expected `')'` but instead found `do`
 5 │ (async do {});
   │        ^^ unexpected
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `)`
+error[SyntaxError]: expected `while` but instead found `)`
   ┌─ async-do-expressions.js:5:13
   │
 5 │ (async do {});
@@ -108,7 +108,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │              
   │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `;`
+error[SyntaxError]: expected `while` but instead found `;`
    ┌─ async-do-expressions.js:11:2
    │
 11 │ };
@@ -123,7 +123,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ │     An explicit or implicit semicolon is expected here...
    │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `function`
+error[SyntaxError]: expected `while` but instead found `function`
    ┌─ async-do-expressions.js:17:1
    │
 17 │ function iter() {
@@ -138,7 +138,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │   │            An explicit or implicit semicolon is expected here...
    │   ...Which is required to end this statement
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `}`
+error[SyntaxError]: expected `while` but instead found `}`
    ┌─ async-do-expressions.js:21:1
    │
 21 │ };
@@ -158,7 +158,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ │              
    │ ...Which is required to end this statement
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `;`
+error[SyntaxError]: expected `while` but instead found `;`
    ┌─ async-do-expressions.js:26:2
    │
 26 │ };

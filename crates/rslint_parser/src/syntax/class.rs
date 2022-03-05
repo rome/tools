@@ -5,7 +5,7 @@ use crate::state::{
 };
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{
-    parse_assignment_expression_or_higher, parse_lhs_expr, ExpressionContext,
+    parse_assignment_expression_or_higher, parse_lhs_expr, parse_private_name, ExpressionContext,
 };
 use crate::syntax::function::{
     parse_any_parameter, parse_formal_parameter, parse_function_body, parse_parameter_list,
@@ -30,7 +30,7 @@ use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
     parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
 };
-use crate::syntax::util::is_at_contextual_keyword;
+
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
@@ -54,13 +54,12 @@ use super::typescript::ts_parse_error::{self, unexpected_abstract_member_with_bo
 use super::typescript::{
     expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent,
 };
-use super::util::eat_contextual_keyword;
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
     p: &Parser,
     should_check_line_break: LineBreak,
 ) -> bool {
-    let tokens = is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![class]);
+    let tokens = p.at(T![abstract]) && p.nth_at(1, T![class]);
     if should_check_line_break == LineBreak::DoCheck {
         tokens && !p.has_linebreak_before_n(1)
     } else {
@@ -117,7 +116,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
-    let is_abstract_class = is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![class]);
+    let is_abstract_class = p.at(T![abstract]) && p.nth_at(1, T![class]);
 
     if !p.at(T![class]) && !is_abstract_class {
         return Absent;
@@ -145,7 +144,7 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
 // test ts typescript_export_default_abstract_class_case
 // export default abstract class {}
 pub(super) fn parse_class_export_default_declaration(p: &mut Parser) -> ParsedSyntax {
-    let is_abstract_class = is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![class]);
+    let is_abstract_class = p.at(T![abstract]) && p.nth_at(1, T![class]);
 
     if !p.at(T![class]) && !is_abstract_class {
         return Absent;
@@ -185,18 +184,19 @@ impl From<ClassKind> for JsSyntaxKind {
 // test ts ts_class_named_abstract_is_valid_in_ts
 // class abstract {}
 fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
-    let is_abstract = eat_contextual_keyword(p, "abstract", T![abstract]);
+    let is_abstract = p.eat(T![abstract]);
 
     let class_token_range = p.cur_tok().range();
     p.expect(T![class]);
 
     let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_tok().range())));
 
-    // test_err class_decl_no_id
+    // test_err ts class_decl_no_id
     // class {}
     // class implements B {}
-    let id = match p.cur_src() {
-        "implements" => Absent,
+    let id = match p.cur() {
+        T![implements] if TypeScript.is_supported(p) => Absent,
+        T![extends] => Absent,
         _ => parse_binding(p),
     };
 
@@ -271,58 +271,63 @@ fn eat_class_heritage_clause(p: &mut Parser) {
     let mut first_implements: Option<CompletedMarker> = None;
 
     loop {
-        if p.at(T![extends]) {
-            let current = parse_extends_clause(p)
-                .expect("Expected extends clause because parser is positioned at extends keyword");
+        match p.cur() {
+            T![extends] => {
+                let current = parse_extends_clause(p).expect(
+                    "Expected extends clause because parser is positioned at extends keyword",
+                );
 
-            match first_extends.as_ref() {
-                None => {
-                    first_extends = {
-                        if let Some(first_implements) = first_implements.as_ref() {
-                            p.error(
-                                p.err_builder("'extends' clause must precede 'implements' clause.")
+                match first_extends.as_ref() {
+                    None => {
+                        first_extends = {
+                            if let Some(first_implements) = first_implements.as_ref() {
+                                p.error(
+                                    p.err_builder(
+                                        "'extends' clause must precede 'implements' clause.",
+                                    )
                                     .primary(current.range(p), "")
                                     .secondary(first_implements.range(p), ""),
-                            )
-                        }
-
-                        Some(current)
-                    }
-                }
-                Some(first_extends) => p.error(
-                    p.err_builder("'extends' clause already seen.")
-                        .primary(current.range(p), "")
-                        .secondary(first_extends.range(p), "first 'extends' clause"),
-                ),
-            }
-        } else if is_at_contextual_keyword(p, "implements") {
-            let mut current = parse_ts_implements_clause(p).expect("expected 'implements' clause because parser is positioned at 'implements' keyword.");
-
-            match first_implements.as_ref() {
-                None => {
-                    first_implements = {
-                        if TypeScript.is_unsupported(p) {
-                            p.error(
-                                p.err_builder(
-                                    "classes can only implement interfaces in TypeScript files",
                                 )
-                                .primary(current.range(p), ""),
-                            );
-                            current.change_to_unknown(p);
+                            }
+
+                            Some(current)
                         }
-                        Some(current)
                     }
-                }
-                Some(first_implements) => {
-                    p.error(
-                        p.err_builder("'implements' clause already seen.")
+                    Some(first_extends) => p.error(
+                        p.err_builder("'extends' clause already seen.")
                             .primary(current.range(p), "")
-                            .secondary(first_implements.range(p), "first 'implements' clause"),
-                    );
+                            .secondary(first_extends.range(p), "first 'extends' clause"),
+                    ),
                 }
             }
-        } else {
-            break;
+            T![implements] => {
+                let mut current = parse_ts_implements_clause(p).expect("expected 'implements' clause because parser is positioned at 'implements' keyword.");
+
+                match first_implements.as_ref() {
+                    None => {
+                        first_implements = {
+                            if TypeScript.is_unsupported(p) {
+                                p.error(
+                                    p.err_builder(
+                                        "classes can only implement interfaces in TypeScript files",
+                                    )
+                                    .primary(current.range(p), ""),
+                                );
+                                current.change_to_unknown(p);
+                            }
+                            Some(current)
+                        }
+                    }
+                    Some(first_implements) => {
+                        p.error(
+                            p.err_builder("'implements' clause already seen.")
+                                .primary(current.range(p), "")
+                                .secondary(first_implements.range(p), "first 'implements' clause"),
+                        );
+                    }
+                }
+            }
+            _ => break,
         }
     }
 }
@@ -387,7 +392,7 @@ fn parse_extends_expression(p: &mut Parser) -> ParsedSyntax {
         // * extends {} {
         // * extends {} implements
         // * extends {},
-        if !matches!(p.nth(2), T![extends] | T![ident] | T!['{'] | T![,]) {
+        if !matches!(p.nth(2), T![extends] | T![implements] | T!['{'] | T![,]) {
             return Absent;
         }
     }
@@ -419,7 +424,21 @@ impl ParseNodeList for ClassMembersList {
             p,
             &ParseRecovery::new(
                 JS_UNKNOWN_MEMBER,
-                token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
+                token_set![
+                    T![;],
+                    T![ident],
+                    T![readonly],
+                    T![private],
+                    T![protected],
+                    T![public],
+                    T![override],
+                    T![declare],
+                    T![static],
+                    T![async],
+                    T![yield],
+                    T!['}'],
+                    T![#]
+                ],
             ),
             js_parse_error::expected_class_member,
         )
@@ -557,7 +576,7 @@ fn parse_class_member_impl(
     };
 
     // Seems like we're at an async method
-    if is_at_contextual_keyword(p, "async")
+    if p.at(T![async])
         && !p.nth_at(1, T![?])
         && !is_at_method_class_member(p, 1)
         && !p.has_linebreak_before_n(1)
@@ -824,7 +843,7 @@ fn parse_class_member_impl(
 }
 
 fn is_at_static_initialization_block_class_member(p: &Parser) -> bool {
-    p.at(T![ident]) && p.cur_src() == "static" && p.nth_at(1, T!['{'])
+    p.at(T![static]) && p.nth_at(1, T!['{'])
 }
 
 // test static_initialization_block_member
@@ -1527,32 +1546,10 @@ fn parse_class_member_name(p: &mut Parser, modifiers: &mut ClassMemberModifiers)
 }
 
 pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![#]) {
-        return Absent;
-    }
-    let m = p.start();
-    let hash_end = p.cur_tok().range().end;
-
-    p.expect(T![#]);
-
-    if p.at(T![ident]) && hash_end != p.cur_tok().start() {
-        // test_err private_member_name_with_space
-        // class A {
-        // 	# test;
-        // }
-        p.error(
-            p.err_builder("Unexpected space or comment between `#` and identifier")
-                .primary(
-                    hash_end..p.cur_tok().start(),
-                    "remove the space or comment here",
-                ),
-        );
-        Present(m.complete(p, JS_UNKNOWN))
-    } else {
-        p.expect(T![ident]);
-
-        Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
-    }
+    parse_private_name(p).map(|mut name| {
+        name.change_kind(p, JS_PRIVATE_CLASS_MEMBER_NAME);
+        name
+    })
 }
 
 fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {

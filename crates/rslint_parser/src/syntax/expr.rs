@@ -29,7 +29,6 @@ use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{JsSyntaxKind::*, *};
 use bitflags::bitflags;
-use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -412,7 +411,7 @@ fn parse_binary_or_logical_expression_recursive(
             T![in] if !context.is_in_included() => {
                 break;
             }
-            _ if is_at_contextual_keyword(p, "as") && !p.has_linebreak_before_n(0) => T![as],
+            T![as] if p.has_linebreak_before_n(0) => break,
             k => k,
         };
 
@@ -675,7 +674,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // new.target
     if p.at(T![.]) && p.token_src(p.nth_tok(1)) == "target" {
         p.bump_any();
-        p.bump_remap(T![target]);
+        p.bump_remap(TARGET);
         return Present(m.complete(p, NEW_TARGET));
     }
 
@@ -785,7 +784,7 @@ fn parse_static_member_expression(
     Present(m.complete(p, JS_STATIC_MEMBER_EXPRESSION))
 }
 
-fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![#]) {
         return Absent;
     }
@@ -794,7 +793,7 @@ fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
     let hash_end = p.cur_tok().range().end;
     p.expect(T![#]);
 
-    if p.at(T![ident]) && hash_end != p.cur_tok().start() {
+    if (is_nth_at_identifier_or_keyword(p, 0)) && hash_end != p.cur_tok().start() {
         // test_err private_name_with_space
         // class A {
         // 	# test;
@@ -805,7 +804,13 @@ fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
         );
         Present(m.complete(p, JS_UNKNOWN))
     } else {
-        p.expect(T![ident]);
+        if p.cur().is_keyword() {
+            p.bump_remap(T![ident]);
+        } else if p.at(T![ident]) {
+            p.bump(T![ident]);
+        } else {
+            p.error(expected_identifier(p, p.cur_tok().range()));
+        }
         Present(m.complete(p, JS_PRIVATE_NAME))
     }
 }
@@ -1069,8 +1074,7 @@ pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
         | JS_STRING_LITERAL
         | NULL_KW
         | JS_REGEX_LITERAL => true,
-        T![enum] if !p.has_linebreak_before_n(n + 1) => true,
-        _ => false,
+        t => t.is_contextual_keyword() || t.is_future_reserved_keyword(),
     }
 }
 
@@ -1101,7 +1105,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         }
         // test async_ident
         // let a = async;
-        T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
+        T![async] if is_at_async_function(p, LineBreak::DoCheck) => {
             // test async_function_expr
             // let a = async function() {};
             // let b = async function foo() {};
@@ -1113,14 +1117,6 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
             // let b = function foo() {}
 
             parse_function_expression(p).unwrap()
-        }
-        T![ident] | T![yield] | T![await] | T![enum] => {
-            // test identifier_reference
-            // // SCRIPT
-            // foo;
-            // yield;
-            // await;
-            parse_identifier_expression(p).unwrap()
         }
         // test grouping_expr
         // ((foo))
@@ -1139,7 +1135,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                 // import.foo
                 // import.metaa
                 if p.at(T![ident]) && p.token_src(p.cur_tok()) == "meta" {
-                    p.bump_remap(T![meta]);
+                    p.bump_remap(META);
                     m.complete(p, IMPORT_META)
                 } else if p.at(T![ident]) {
                     let err = p
@@ -1233,8 +1229,17 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
             p.bump_any();
             m.complete(p, JS_UNKNOWN)
         }
+        T![ident] => parse_identifier_expression(p).unwrap(),
         // test_err primary_expr_invalid_recovery
         // let a = \; foo();
+        t if t.is_contextual_keyword() || t.is_future_reserved_keyword() => {
+            // test identifier_reference
+            // // SCRIPT
+            // foo;
+            // yield;
+            // await;
+            parse_identifier_expression(p).unwrap()
+        }
         _ => {
             return Absent;
         }
@@ -1282,59 +1287,66 @@ pub(crate) fn is_nth_at_reference_identifier(p: &Parser, n: usize) -> bool {
 /// * It is named `await` inside of an async function
 /// * It is named `yield` inside of a generator function or in strict mode
 pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
-    match p.cur() {
-        T![yield] | T![await] | T![ident] | T![enum] => {
-            let m = p.start();
-            let name = p.cur_src();
+    if !is_at_identifier(p) {
+        return Absent;
+    }
 
-            let error = match name {
-                // test ts await_in_ambient_context
-                // declare const await: any;
-                "await" if p.state.in_ambient_context() => None,
-                "await" if p.state.in_async() => Some(
+    let error = match p.cur() {
+        T![yield] if p.state.in_generator() => Some(
+            p.err_builder("Illegal use of `yield` as an identifier in generator function")
+                .primary(p.cur_tok().range(), ""),
+        ),
+        t if t.is_future_reserved_keyword() => {
+            if StrictMode.is_supported(p) {
+                let name = p.cur_src();
+                Some(
+                    p.err_builder(&format!(
+                        "Illegal use of reserved keyword `{}` as an identifier in strict mode",
+                        name
+                    ))
+                    .primary(p.cur_tok().range(), ""),
+                )
+            } else {
+                None
+            }
+        }
+        // test ts await_in_ambient_context
+        // declare const await: any;
+        T![await] if !p.state.in_ambient_context() => {
+            if p.state.in_async() {
+                Some(
                     p.err_builder("Illegal use of `await` as an identifier in an async context")
                         .primary(p.cur_tok().range(), ""),
-                ),
-                "await" if p.source_type.is_module() => Some(
+                )
+            } else if p.source_type.is_module() {
+                Some(
                     p.err_builder("Illegal use of `await` as an identifier inside of a module")
                         .primary(p.cur_tok().range(), ""),
-                ),
-                "yield" if p.state.in_generator() => Some(
-                    p.err_builder("Illegal use of `yield` as an identifier in generator function")
-                        .primary(p.cur_tok().range(), ""),
-                ),
-
-                "yield" | "let" | "public" | "protected" | "private" | "package" | "implements"
-                | "interface" | "static"
-                    if StrictMode.is_supported(p) =>
-                {
-                    Some(
-                        p.err_builder(&format!(
-                            "Illegal use of reserved keyword `{}` as an identifier in strict mode",
-                            name
-                        ))
-                        .primary(p.cur_tok().range(), ""),
-                    )
-                }
-                _ if p.cur() == T![enum] => Some(
-                    p.err_builder("Illegal use of reserved keyword `enum` as an identifier")
-                        .primary(p.cur_tok().range(), ""),
-                ),
-                _ => None,
-            };
-
-            p.bump_remap(T![ident]);
-            let mut identifier = m.complete(p, kind);
-
-            if let Some(error) = error {
-                p.error(error);
-                identifier.change_kind(p, kind.to_unknown());
+                )
+            } else {
+                None
             }
-
-            Present(identifier)
         }
-        _ => Absent,
+        // t if t.is_non_contextual_keyword() => Some(
+        //     p.err_builder(&format!(
+        //         "Illegal use of reserved keyword `{}` as an identifier",
+        //         p.cur_src(),
+        //     ))
+        //     .primary(p.cur_tok().range(), ""),
+        // ),
+        _ => None,
+    };
+
+    let m = p.start();
+    p.bump_remap(T![ident]);
+    let mut identifier = m.complete(p, kind);
+
+    if let Some(error) = error {
+        p.error(error);
+        identifier.change_to_unknown(p);
     }
+
+    return Present(identifier);
 }
 
 #[inline]
@@ -1344,7 +1356,9 @@ pub(crate) fn is_at_identifier(p: &Parser) -> bool {
 
 #[inline]
 pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
-    matches!(p.nth(n), T![ident] | T![await] | T![yield] | T![enum])
+    p.nth_at(n, T![ident])
+        || p.nth(n).is_contextual_keyword()
+        || p.nth(n).is_future_reserved_keyword()
 }
 
 #[inline]

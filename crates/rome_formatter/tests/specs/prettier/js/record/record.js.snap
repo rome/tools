@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: record.js
 
 ---
@@ -52,11 +52,11 @@ assert(record1.d?.a === undefined);
 
 # Errors
 ```
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ record.js:1:18
   │
 1 │ const record1 = #{
-  │                  ^ unexpected
+  │                  ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ record.js:1:17
@@ -81,11 +81,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │      ^ An explicit or implicit semicolon is expected here...
   │ └──────' ...Which is required to end this statement
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ record.js:7:18
   │
 7 │ const record2 = #{...record1, b: 5};
-  │                  ^ unexpected
+  │                  ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ record.js:7:17
@@ -107,11 +107,11 @@ error[SyntaxError]: expected an expression but instead found '...record1, b: 5'
 7 │ const record2 = #{...record1, b: 5};
   │                   ^^^^^^^^^^^^^^^^ Expected an expression here
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
    ┌─ record.js:12:21
    │
 12 │ assert(record2 === #{ a: 1, c: 3, b: 5 });
-   │                     ^ unexpected
+   │                     ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
    ┌─ record.js:12:20

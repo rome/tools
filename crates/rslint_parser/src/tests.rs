@@ -358,7 +358,7 @@ pub fn node_contains_trailing_comments() {
 #[test]
 pub fn node_contains_leading_comments() {
     let text = r"true &&
-// comment 
+// comment
 (3 - 2 == 0)";
     let root = parse_module(text, 0);
     let syntax = root.syntax();

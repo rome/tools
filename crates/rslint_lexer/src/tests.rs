@@ -3,6 +3,8 @@
 
 use crate::Lexer;
 use quickcheck_macros::quickcheck;
+use rslint_syntax::JsSyntaxKind;
+use rslint_syntax::JsSyntaxKind::EOF;
 use std::sync::mpsc::channel;
 use std::thread;
 use std::time::Duration;
@@ -631,7 +633,7 @@ fn labels_i() {
         "icecream is interesting, innit?",
         IDENT:8,
         WHITESPACE:1,
-        IDENT:2,
+        IS_KW:2,
         WHITESPACE:1,
         IDENT:11,
         COMMA:1,
@@ -728,7 +730,7 @@ fn labels_v() {
         WHITESPACE:1,
         IDENT:7,
         WHITESPACE:1,
-        IDENT:2,
+        IS_KW:2,
         WHITESPACE:1,
         IDENT:3
     }
@@ -1169,7 +1171,7 @@ fn unicode_ident_separated_by_unicode_whitespace() {
 fn issue_30() {
     assert_lex! {
         "let foo = { α: true }",
-        IDENT:3,
+        LET_KW:3,
         WHITESPACE:1,
         IDENT:3,
         WHITESPACE:1,
@@ -1216,7 +1218,7 @@ fn object_expr_getter() {
         L_PAREN:1
         L_CURLY:1
         WHITESPACE:1
-        IDENT:3
+        GET_KW:3
         WHITESPACE:1
         L_BRACK:1
         IDENT:3
@@ -1371,5 +1373,123 @@ fn are_we_jsx() {
         SLASH:1
         IDENT:3
         R_ANGLE:1
+    }
+}
+
+#[test]
+fn keywords() {
+    let keywords = vec![
+        "break",
+        "case",
+        "catch",
+        "class",
+        "const",
+        "continue",
+        "debugger",
+        "default",
+        "delete",
+        "do",
+        "else",
+        "enum",
+        "export",
+        "extends",
+        "false",
+        "finally",
+        "for",
+        "function",
+        "if",
+        "in",
+        "instanceof",
+        "import",
+        "new",
+        "null",
+        "return",
+        "super",
+        "switch",
+        "this",
+        "throw",
+        "try",
+        "true",
+        "typeof",
+        "var",
+        "void",
+        "while",
+        "with",
+        // Strict mode contextual keywords
+        "implements",
+        "interface",
+        "let",
+        "package",
+        "private",
+        "protected",
+        "public",
+        "static",
+        "yield",
+        // contextual keywords
+        "abstract",
+        "as",
+        "asserts",
+        "assert",
+        "any",
+        "async",
+        "await",
+        "boolean",
+        "constructor",
+        "declare",
+        "get",
+        "infer",
+        "is",
+        "keyof",
+        "module",
+        "namespace",
+        "never",
+        "readonly",
+        "require",
+        "number",
+        "object",
+        "set",
+        "string",
+        "symbol",
+        "type",
+        "undefined",
+        "unique",
+        "unknown",
+        "from",
+        "global",
+        "bigint",
+        "override",
+        "of",
+    ];
+
+    for keyword in keywords {
+        let kind = JsSyntaxKind::from_keyword(keyword).expect(
+            "Expected `JsSyntaxKind::from_keyword` to return a kind for keyword {keyword}.",
+        );
+
+        let mut lexer = Lexer::from_str(keyword, 0);
+        let mut tokens = lexer.collect::<Vec<_>>();
+
+        assert_eq!(
+            tokens.len(),
+            2,
+            "Expected exactly two lexed token for keyword {keyword}, the keyword and EOF"
+        );
+        let token = &tokens[0];
+
+        let lexed_kind = token.0.kind;
+        assert_eq!(
+            lexed_kind, kind,
+            "Expected token '{keyword}' to be of kind {:?} but is {:?}.",
+            kind, lexed_kind
+        );
+        assert_eq!(
+            token.0.len as usize,
+            keyword.len(),
+            "Expected lexed keyword to be of len {} but has length {}",
+            keyword.len(),
+            token.0.len
+        );
+
+        assert_eq!(tokens[1].0.kind, EOF);
     }
 }
