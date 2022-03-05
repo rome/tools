@@ -1313,6 +1313,7 @@ dependencies = [
  "once_cell",
  "rslint_errors",
  "rslint_parser",
+ "rslint_syntax",
  "tracing",
 ]
 
@@ -1346,6 +1347,7 @@ dependencies = [
  "rome_rowan",
  "rslint_errors",
  "rslint_parser",
+ "rslint_syntax",
  "serde",
  "serde_json",
  "similar",
@@ -1366,6 +1368,7 @@ dependencies = [
  "rome_path",
  "rslint_errors",
  "rslint_parser",
+ "rslint_syntax",
  "serde",
  "serde_json",
  "tokio",
@@ -1426,14 +1429,12 @@ dependencies = [
  "drop_bomb",
  "expect-test",
  "indexmap",
- "num-bigint",
  "rome_rowan",
  "rslint_errors",
  "rslint_lexer",
  "rslint_syntax",
  "smallvec",
  "tests_macros",
- "thiserror",
 ]
 
 [[package]]
@@ -1450,7 +1451,9 @@ dependencies = [
 name = "rslint_syntax"
 version = "0.1.4"
 dependencies = [
+ "num-bigint",
  "rome_rowan",
+ "thiserror",
 ]
 
 [[package]]
@@ -2201,6 +2204,7 @@ dependencies = [
  "rome_formatter",
  "rslint_errors",
  "rslint_parser",
+ "rslint_syntax",
  "timing",
  "ureq",
  "url",
@@ -2238,6 +2242,7 @@ dependencies = [
  "rome_rowan",
  "rslint_errors",
  "rslint_parser",
+ "rslint_syntax",
  "serde",
  "serde_json",
  "serde_yaml",

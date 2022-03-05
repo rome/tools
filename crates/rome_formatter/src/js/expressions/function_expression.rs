@@ -1,6 +1,6 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::{JsAnyFunction, JsFunctionExpression};
+use rslint_syntax::{JsAnyFunction, JsFunctionExpression};
 
 impl ToFormatElement for JsFunctionExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

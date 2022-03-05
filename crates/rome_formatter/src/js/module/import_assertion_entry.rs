@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsImportAssertionEntry;
-use rslint_parser::ast::JsImportAssertionEntryFields;
+use rslint_syntax::JsImportAssertionEntry;
+use rslint_syntax::JsImportAssertionEntryFields;
 
 impl ToFormatElement for JsImportAssertionEntry {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

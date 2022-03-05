@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsImportCallExpression;
-use rslint_parser::ast::JsImportCallExpressionFields;
+use rslint_syntax::JsImportCallExpression;
+use rslint_syntax::JsImportCallExpressionFields;
 
 impl ToFormatElement for JsImportCallExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

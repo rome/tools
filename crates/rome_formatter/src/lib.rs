@@ -62,7 +62,8 @@ pub use formatter::Formatter;
 use rome_rowan::TextRange;
 use rome_rowan::TextSize;
 use rome_rowan::TokenAtOffset;
-use rslint_parser::{parse, SourceType, SyntaxError, SyntaxNode};
+use rslint_parser::{parse, SourceType};
+use rslint_syntax::{SyntaxError, SyntaxNode};
 use std::fmt::Display;
 
 pub use format_element::{

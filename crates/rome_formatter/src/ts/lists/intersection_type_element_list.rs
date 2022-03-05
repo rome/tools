@@ -3,7 +3,7 @@ use crate::{
     soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::{ast::TsIntersectionTypeElementList, AstSeparatedList};
+use rslint_syntax::{AstSeparatedList, TsIntersectionTypeElementList};
 
 impl ToFormatElement for TsIntersectionTypeElementList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

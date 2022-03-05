@@ -4,8 +4,8 @@ use crate::{
     format_elements, hard_group_elements, space_token, token, FormatElement, FormatResult,
     Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsConstructorSignatureClassMember;
-use rslint_parser::ast::TsConstructorSignatureClassMemberFields;
+use rslint_syntax::TsConstructorSignatureClassMember;
+use rslint_syntax::TsConstructorSignatureClassMemberFields;
 
 impl ToFormatElement for TsConstructorSignatureClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

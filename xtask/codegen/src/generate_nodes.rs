@@ -687,17 +687,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
     };
 
     let ast = quote! {
-    #![allow(clippy::enum_variant_names)]
-    // sometimes we generate comparison of simple tokens
-    #![allow(clippy::match_like_matches_macro)]
-
-    use crate::{
-        ast::*,
-        JsSyntaxKind::{self, *},
-        SyntaxNode, SyntaxToken,
-        SyntaxResult
-    };
-
+        #![allow(clippy::enum_variant_names)]
+        // sometimes we generate comparison of simple tokens
+        #![allow(clippy::match_like_matches_macro)]
+        use crate::{
+            ast::*,
+            JsSyntaxKind::{self, *},
+            SyntaxElement, SyntaxElementChildren, SyntaxList, SyntaxNode, SyntaxResult, SyntaxToken,
+        };
+        use rome_rowan::NodeOrToken;
+        use std::fmt::{Debug, Formatter};
 
         #(#node_defs)*
         #(#union_defs)*

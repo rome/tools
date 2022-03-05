@@ -1,8 +1,8 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsNamedImportSpecifiers;
-use rslint_parser::ast::JsNamedImportSpecifiersFields;
+use rslint_syntax::JsNamedImportSpecifiers;
+use rslint_syntax::JsNamedImportSpecifiersFields;
 
 impl ToFormatElement for JsNamedImportSpecifiers {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

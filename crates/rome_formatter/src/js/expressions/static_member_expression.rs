@@ -4,8 +4,8 @@ use crate::{
     format_elements, group_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsStaticMemberExpression;
-use rslint_parser::ast::JsStaticMemberExpressionFields;
+use rslint_syntax::JsStaticMemberExpression;
+use rslint_syntax::JsStaticMemberExpressionFields;
 
 impl ToFormatElement for JsStaticMemberExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

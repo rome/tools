@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsParenthesizedType;
-use rslint_parser::ast::TsParenthesizedTypeFields;
+use rslint_syntax::TsParenthesizedType;
+use rslint_syntax::TsParenthesizedTypeFields;
 
 impl ToFormatElement for TsParenthesizedType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

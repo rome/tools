@@ -1,6 +1,6 @@
 use crate::utils::sort_modifiers_by_precedence;
 use crate::{join_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsIndexSignatureModifierList;
+use rslint_syntax::TsIndexSignatureModifierList;
 
 impl ToFormatElement for TsIndexSignatureModifierList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

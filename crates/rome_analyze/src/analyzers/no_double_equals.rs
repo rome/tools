@@ -1,9 +1,5 @@
-use rslint_parser::{
-    ast::{self, JsAnyExpression},
-    AstNode,
-    JsSyntaxKind::*,
-    SyntaxResult,
-};
+use rslint_syntax::JsSyntaxKind::*;
+use rslint_syntax::{AstNode, JsAnyExpression, JsBinaryExpression, SyntaxResult};
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
@@ -16,7 +12,7 @@ pub fn create() -> Analyzer {
 }
 
 fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
-    ctx.query_nodes::<ast::JsBinaryExpression>()
+    ctx.query_nodes::<JsBinaryExpression>()
         .filter_map(|n| {
             let op = n.operator().ok()?;
 

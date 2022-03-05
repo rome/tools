@@ -1,7 +1,7 @@
 use lspower::lsp::CodeActionOrCommand;
 use lspower::{jsonrpc, lsp};
 use rome_analyze::{AnalysisServer, FileId};
-use rslint_parser::TextRange;
+use rslint_syntax::TextRange;
 
 use crate::line_index::LineIndex;
 use crate::utils;

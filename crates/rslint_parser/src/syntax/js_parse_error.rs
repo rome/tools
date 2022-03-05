@@ -1,6 +1,7 @@
 use crate::parser::{expected_any, expected_node, ToDiagnostic};
-use crate::{Parser, TextRange};
+use crate::Parser;
 use rslint_errors::{Diagnostic, Span};
+use rslint_syntax::TextRange;
 use std::ops::Range;
 
 ///! Provides factory function to create common diagnostics for the JavaScript syntax

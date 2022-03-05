@@ -1,6 +1,6 @@
 use rome_rowan::api::SyntaxTriviaPieceComments;
 use rome_rowan::{Language, SyntaxToken, TextRange};
-use rslint_parser::{AstNode, SyntaxNode};
+use rslint_syntax::{AstNode, SyntaxNode};
 
 use crate::format_elements;
 use crate::intersperse::{Intersperse, IntersperseFn};

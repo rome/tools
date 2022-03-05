@@ -1,7 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::JsAnyArrayBindingPatternElement;
+use rslint_syntax::JsAnyArrayBindingPatternElement;
 impl ToFormatElement for JsAnyArrayBindingPatternElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {

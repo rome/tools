@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsInExpression;
-use rslint_parser::ast::JsInExpressionFields;
+use rslint_syntax::JsInExpression;
+use rslint_syntax::JsInExpressionFields;
 
 impl ToFormatElement for JsInExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -1,8 +1,7 @@
-use crate::{
-    JsSyntaxKind, ParserError, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
-};
+use crate::{ParserError, TreeSink};
 use rome_rowan::TriviaPiece;
 use rslint_lexer::Token;
+use rslint_syntax::{JsSyntaxKind, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize};
 use std::mem;
 
 /// Structure to convert events to a lossy syntax tree which does not preserve whitespace.

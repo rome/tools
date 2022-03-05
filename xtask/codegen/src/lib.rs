@@ -20,10 +20,10 @@ pub use self::formatter::generate_formatter;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
 
-const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/generated.rs";
-const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes.rs";
-const SYNTAX_FACTORY: &str = "crates/rslint_parser/src/ast/generated/syntax_factory.rs";
-const AST_MACROS: &str = "crates/rslint_parser/src/ast/generated/macros.rs";
+const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/kind.rs";
+const AST_NODES: &str = "crates/rslint_syntax/src/generated/nodes.rs";
+const SYNTAX_FACTORY: &str = "crates/rslint_syntax/src/generated/syntax_factory.rs";
+const AST_MACROS: &str = "crates/rslint_syntax/src/generated/macros.rs";
 
 enum UpdateResult {
     NotUpdated,

@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsThrowStatement;
-use rslint_parser::ast::JsThrowStatementFields;
+use rslint_syntax::JsThrowStatement;
+use rslint_syntax::JsThrowStatementFields;
 
 impl ToFormatElement for JsThrowStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

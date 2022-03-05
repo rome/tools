@@ -1,4 +1,4 @@
-use crate::JsSyntaxKind::EOF;
+use rslint_syntax::JsSyntaxKind::EOF;
 use std::iter::FusedIterator;
 
 /// The source of tokens for the parser

@@ -1,8 +1,8 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsObjectExpression;
-use rslint_parser::ast::JsObjectExpressionFields;
+use rslint_syntax::JsObjectExpression;
+use rslint_syntax::JsObjectExpressionFields;
 
 impl ToFormatElement for JsObjectExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -4,7 +4,7 @@ use crate::{
     hard_group_elements, space_token, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::{TsGetterSignatureClassMember, TsGetterSignatureClassMemberFields};
+use rslint_syntax::{TsGetterSignatureClassMember, TsGetterSignatureClassMemberFields};
 
 impl ToFormatElement for TsGetterSignatureClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -1,11 +1,11 @@
-use rslint_parser::ast::JsForVariableDeclaration;
+use rslint_syntax::JsForVariableDeclaration;
 
 use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::JsForVariableDeclarationFields;
+use rslint_syntax::JsForVariableDeclarationFields;
 
 impl ToFormatElement for JsForVariableDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

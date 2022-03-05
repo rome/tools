@@ -1,4 +1,4 @@
-use rslint_parser::{NodeOrToken, SyntaxElement, TextRange, TextSize};
+use rslint_syntax::{NodeOrToken, SyntaxElement, TextRange, TextSize};
 
 /// A single insert or deletion of text.
 pub struct Indel {

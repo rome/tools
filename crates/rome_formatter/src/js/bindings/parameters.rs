@@ -2,8 +2,8 @@ use crate::{
     formatter_traits::FormatTokenAndNode, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsParameters;
-use rslint_parser::ast::JsParametersFields;
+use rslint_syntax::JsParameters;
+use rslint_syntax::JsParametersFields;
 
 impl ToFormatElement for JsParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

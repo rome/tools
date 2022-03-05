@@ -1,5 +1,5 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsObjectType;
+use rslint_syntax::TsObjectType;
 
 impl ToFormatElement for TsObjectType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

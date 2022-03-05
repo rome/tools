@@ -3,8 +3,8 @@ use crate::{
     ToFormatElement,
 };
 
-use rslint_parser::ast::JsFunctionBody;
-use rslint_parser::ast::JsFunctionBodyFields;
+use rslint_syntax::JsFunctionBody;
+use rslint_syntax::JsFunctionBodyFields;
 
 impl ToFormatElement for JsFunctionBody {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -3,7 +3,7 @@
 pub mod flip_bin_exp;
 
 use once_cell::sync::Lazy;
-use rslint_parser::{AstNode, SyntaxNode, SyntaxToken, TextRange, TextSize, TokenAtOffset};
+use rslint_syntax::{AstNode, SyntaxNode, SyntaxToken, TextRange, TextSize, TokenAtOffset};
 
 use crate::{ActionCategory, Analysis, AnalysisServer, AnalyzerContext, FileId};
 

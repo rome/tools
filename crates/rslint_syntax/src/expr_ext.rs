@@ -1,7 +1,14 @@
 //! Extensions for things which are not easily generated in ast expr nodes
-use crate::{ast::*, numbers::*, TextRange, T};
-use rome_rowan::{SyntaxText, TextSize};
-use JsSyntaxKind::*;
+use crate::numbers::{parse_js_big_int, parse_js_number};
+use crate::JsSyntaxKind::*;
+use crate::{
+    AstNode, AstSeparatedList, JsArrayExpression, JsArrayHole, JsAssignmentExpression,
+    JsBigIntLiteralExpression, JsBinaryExpression, JsLiteralMemberName, JsLogicalExpression,
+    JsNumberLiteralExpression, JsObjectExpression, JsStringLiteralExpression, JsTemplate,
+    JsUnaryExpression, SyntaxResult, SyntaxToken,
+};
+use num_bigint::BigInt;
+use rome_rowan::{NodeOrToken, SyntaxText, TextRange, TextSize};
 
 impl JsLiteralMemberName {
     /// Returns the name of the member as a syntax text
@@ -11,8 +18,7 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a string literal
     ///
     /// ```
-    /// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder};
-    /// use rslint_parser::ast::JsLiteralMemberName;
+    /// use rslint_syntax::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder, JsLiteralMemberName};
     ///
     /// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
@@ -26,8 +32,7 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a number literal
     ///
     /// ```
-    /// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder};
-    /// use rslint_parser::ast::JsLiteralMemberName;
+    /// use rslint_syntax::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder, JsLiteralMemberName};
     ///
     /// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, "5");
@@ -41,8 +46,7 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing an identifier
     ///
     /// ```
-    /// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder};
-    /// use rslint_parser::ast::JsLiteralMemberName;
+    /// use rslint_syntax::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder, JsLiteralMemberName};
     ///
     /// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::IDENT, "abcd");
@@ -330,161 +334,4 @@ impl JsTemplate {
             self.syntax().text_range().end(),
         ))
     }
-}
-
-/// A simple macro for making assign, binop, or unary operators
-#[macro_export]
-macro_rules! op {
-    (<) => {
-        $crate::ast::BinOp::LessThan
-    };
-    (>) => {
-        $crate::ast::BinOp::GreaterThan
-    };
-    (<=) => {
-        $crate::ast::BinOp::LessThanOrEqual
-    };
-    (>=) => {
-        $crate::ast::BinOp::GreaterThanOrEqual
-    };
-    (==) => {
-        $crate::ast::BinOp::Equality
-    };
-    (===) => {
-        $crate::ast::BinOp::StrictEquality
-    };
-    (!=) => {
-        $crate::ast::BinOp::Inequality
-    };
-    (!==) => {
-        $crate::ast::BinOp::StrictInequality
-    };
-    (+) => {
-        $crate::ast::BinOp::Plus
-    };
-    (-) => {
-        $crate::ast::BinOp::Minus
-    };
-    (*) => {
-        $crate::ast::BinOp::Times
-    };
-    (/) => {
-        $crate::ast::BinOp::Divide
-    };
-    (%) => {
-        $crate::ast::BinOp::Remainder
-    };
-    (**) => {
-        $crate::ast::BinOp::Exponent
-    };
-    (<<) => {
-        $crate::ast::BinOp::LeftShift
-    };
-    (>>) => {
-        $crate::ast::BinOp::RightShift
-    };
-    (>>>) => {
-        $crate::ast::BinOp::UnsignedRightShift
-    };
-    (&) => {
-        $crate::ast::BinOp::BitwiseAnd
-    };
-    (|) => {
-        $crate::ast::BinOp::BitwiseOr
-    };
-    (^) => {
-        $crate::ast::BinOp::BitwiseXor
-    };
-    (??) => {
-        $crate::ast::BinOp::NullishCoalescing
-    };
-    (||) => {
-        $crate::ast::BinOp::LogicalOr
-    };
-    (&&) => {
-        $crate::ast::BinOp::LogicalAnd
-    };
-    (in) => {
-        $crate::ast::BinOp::In
-    };
-    (instanceof) => {
-        $crate::ast::BinOp::Instanceof
-    };
-
-    (=) => {
-        $crate::ast::AssignOp::Assign
-    };
-    (+=) => {
-        $crate::ast::AssignOp::AddAssign
-    };
-    (-=) => {
-        $crate::ast::AssignOp::SubtractAssign
-    };
-    (*=) => {
-        $crate::ast::AssignOp::TimesAssign
-    };
-    (%=) => {
-        $crate::ast::AssignOp::RemainderAssign
-    };
-    (**=) => {
-        $crate::ast::AssignOp::ExponentAssign
-    };
-    (>>=) => {
-        $crate::ast::AssignOp::LeftShiftAssign
-    };
-    (<<=) => {
-        $crate::ast::AssignOp::RightShiftAssign
-    };
-    (>>>=) => {
-        $crate::ast::AssignOp::UnsignedRightShiftAssign
-    };
-    (&=) => {
-        $crate::ast::AssignOp::BitwiseAndAssign
-    };
-    (|=) => {
-        $crate::ast::AssignOp::BitwiseOrAssign
-    };
-    (^=) => {
-        $crate::ast::AssignOp::BitwiseXorAssign
-    };
-    (&&=) => {
-        $crate::ast::AssignOp::LogicalAndAssign
-    };
-    (||=) => {
-        $crate::ast::AssignOp::LogicalOrAssign
-    };
-    (??=) => {
-        $crate::ast::AssignOp::NullishCoalescingAssign
-    };
-
-    (++) => {
-        $crate::ast::UnaryOp::Increment
-    };
-    (--) => {
-        $crate::ast::UnaryOp::Decrement
-    };
-    (delete) => {
-        $crate::ast::UnaryOp::Delete
-    };
-    (void) => {
-        $crate::ast::UnaryOp::Void
-    };
-    (typeof) => {
-        $crate::ast::UnaryOp::Typeof
-    };
-    (+) => {
-        $crate::ast::UnaryOp::Plus
-    };
-    (-) => {
-        $crate::ast::UnaryOp::Minus
-    };
-    (~) => {
-        $crate::ast::UnaryOp::BitwiseNot
-    };
-    (!) => {
-        $crate::ast::UnaryOp::LogicalNot
-    };
-    (await) => {
-        $crate::ast::UnaryOp::Await
-    };
 }

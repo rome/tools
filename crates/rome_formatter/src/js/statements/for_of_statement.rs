@@ -1,4 +1,4 @@
-use rslint_parser::ast::JsForOfStatement;
+use rslint_syntax::JsForOfStatement;
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
@@ -7,7 +7,7 @@ use crate::{
     format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::JsForOfStatementFields;
+use rslint_syntax::JsForOfStatementFields;
 
 impl ToFormatElement for JsForOfStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

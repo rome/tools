@@ -24,10 +24,14 @@ use crate::syntax::util::{
     is_nth_at_contextual_keyword,
 };
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{Absent, ParsedSyntax, Parser};
-use crate::{JsSyntaxKind::*, *};
+use crate::{
+    Absent, CompletedMarker, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
+    Parser, Present, SyntaxFeature,
+};
 use rslint_errors::Span;
+use rslint_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rslint_syntax::T;
+use rslint_syntax::{JsSyntaxKind::*, *};
 
 use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
 

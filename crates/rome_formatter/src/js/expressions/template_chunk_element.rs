@@ -3,8 +3,8 @@ use crate::{
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsTemplateChunkElement;
-use rslint_parser::ast::JsTemplateChunkElementFields;
+use rslint_syntax::JsTemplateChunkElement;
+use rslint_syntax::JsTemplateChunkElementFields;
 
 impl ToFormatElement for JsTemplateChunkElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

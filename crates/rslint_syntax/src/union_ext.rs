@@ -1,9 +1,9 @@
-use crate::ast::{
+use crate::{
     JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFunction, JsAnyFunctionBody,
-    JsClassMemberList, JsExtendsClause, TsAnyPropertyAnnotation, TsAnyVariableAnnotation,
-    TsImplementsClause, TsReturnTypeAnnotation, TsTypeAnnotation, TsTypeParameters,
+    JsClassMemberList, JsExtendsClause, SyntaxResult, SyntaxToken, TsAnyPropertyAnnotation,
+    TsAnyVariableAnnotation, TsImplementsClause, TsReturnTypeAnnotation, TsTypeAnnotation,
+    TsTypeParameters,
 };
-use crate::{SyntaxResult, SyntaxToken};
 
 impl JsAnyClass {
     pub fn abstract_token(&self) -> Option<SyntaxToken> {

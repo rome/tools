@@ -6,9 +6,10 @@ publish = false
 
 [dependencies]
 xtask = { path = '../', version = "0.0" }
-rslint_parser = { path = "../../crates/rslint_parser", version = "0.3" }
-rslint_errors = { path = "../../crates/rslint_errors", version = "0.2.0" }
-rome_formatter = { path = "../../crates/rome_formatter", version = "0.0.0" }
+rslint_syntax = { path = "../../crates/rslint_syntax"}
+rslint_parser = { path = "../../crates/rslint_parser"}
+rslint_errors = { path = "../../crates/rslint_errors"}
+rome_formatter = { path = "../../crates/rome_formatter"}
 
 pico-args = "0.3.4"
 timing = "0.2.3"

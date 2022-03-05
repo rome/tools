@@ -1,4 +1,3 @@
-use crate::ast::TsType;
 use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
@@ -12,9 +11,10 @@ use crate::syntax::js_parse_error::{
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, Parser};
-use crate::{JsSyntaxKind::*, *};
-use rslint_errors::Span;
+use crate::{Checkpoint, CompletedMarker, Marker, Parser};
+use rslint_errors::{Diagnostic, Span};
+use rslint_syntax::{JsSyntaxKind::*, *};
+use std::ops::Range;
 
 // test assignment_target
 // foo += bar = b ??= 3;

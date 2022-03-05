@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsNumberLiteralExpression;
-use rslint_parser::ast::JsNumberLiteralExpressionFields;
+use rslint_syntax::JsNumberLiteralExpression;
+use rslint_syntax::JsNumberLiteralExpressionFields;
 
 impl ToFormatElement for JsNumberLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

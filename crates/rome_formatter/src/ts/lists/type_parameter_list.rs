@@ -3,7 +3,7 @@ use crate::{
     join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::TsTypeParameterList;
+use rslint_syntax::TsTypeParameterList;
 
 impl ToFormatElement for TsTypeParameterList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

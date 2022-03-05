@@ -1,8 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 use crate::{space_token, token};
-use rslint_parser::ast::TsImportEqualsDeclaration;
-use rslint_parser::ast::TsImportEqualsDeclarationFields;
+use rslint_syntax::TsImportEqualsDeclaration;
+use rslint_syntax::TsImportEqualsDeclarationFields;
 
 impl ToFormatElement for TsImportEqualsDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

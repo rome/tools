@@ -18,8 +18,8 @@ use crate::{
 use rome_rowan::api::SyntaxTriviaPiece;
 use rome_rowan::Language;
 #[cfg(debug_assertions)]
-use rslint_parser::SyntaxNodeExt;
-use rslint_parser::{AstNode, AstNodeList, AstSeparatedList, SyntaxNode, SyntaxToken};
+use rslint_syntax::SyntaxNodeExt;
+use rslint_syntax::{AstNode, AstNodeList, AstSeparatedList, SyntaxNode, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -301,7 +301,7 @@ impl Formatter {
     }
 
     /// It formats a list of nodes that are not separated. It's an ad-hoc function to
-    /// format lists that implement [rslint_parser::AstNodeList].
+    /// format lists that implement [rslint_syntax::AstNodeList].
     ///
     /// The elements of the list are joined together using [join_elements_hard_line], which will
     /// end up separated by hard lines or empty lines.

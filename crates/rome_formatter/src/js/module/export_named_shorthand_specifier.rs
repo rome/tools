@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsExportNamedShorthandSpecifier;
-use rslint_parser::ast::JsExportNamedShorthandSpecifierFields;
+use rslint_syntax::JsExportNamedShorthandSpecifier;
+use rslint_syntax::JsExportNamedShorthandSpecifierFields;
 
 impl ToFormatElement for JsExportNamedShorthandSpecifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

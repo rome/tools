@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsModuleDeclaration;
-use rslint_parser::ast::TsModuleDeclarationFields;
+use rslint_syntax::TsModuleDeclaration;
+use rslint_syntax::TsModuleDeclarationFields;
 
 impl ToFormatElement for TsModuleDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

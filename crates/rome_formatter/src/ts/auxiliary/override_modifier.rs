@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsOverrideModifier;
-use rslint_parser::ast::TsOverrideModifierFields;
+use rslint_syntax::TsOverrideModifier;
+use rslint_syntax::TsOverrideModifierFields;
 
 impl ToFormatElement for TsOverrideModifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

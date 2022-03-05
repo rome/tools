@@ -1,5 +1,5 @@
 use rslint_errors::{Diagnostic, Span};
-use rslint_parser::TextRange;
+use rslint_syntax::TextRange;
 
 use crate::{ActionCategory, Indel, SyntaxEdit};
 

@@ -8,7 +8,7 @@ use crate::{
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::{
+use rslint_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
 

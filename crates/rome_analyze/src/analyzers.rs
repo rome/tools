@@ -5,7 +5,7 @@ pub(crate) mod use_while;
 
 use once_cell::sync::Lazy;
 use rslint_errors::{Diagnostic, Span};
-use rslint_parser::{AstNode, SyntaxNode, TextRange};
+use rslint_syntax::{AstNode, SyntaxNode, TextRange};
 
 use crate::{analysis_server::AnalysisServer, ActionCategory, Analysis, FileId};
 

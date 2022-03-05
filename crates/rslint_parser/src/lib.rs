@@ -64,34 +64,24 @@ mod token_set;
 mod event;
 mod lossless_tree_sink;
 mod lossy_tree_sink;
-mod numbers;
 mod parse;
 mod state;
-mod syntax_node;
 mod token_source;
 
 #[cfg(test)]
 mod tests;
 
-#[macro_use]
-pub mod ast;
 pub mod syntax;
-pub mod util;
+
 pub use crate::{
-    ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult},
     event::{process, Event},
     lossless_tree_sink::LosslessTreeSink,
     lossy_tree_sink::LossyTreeSink,
-    numbers::BigInt,
     parse::*,
     parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
-    syntax_node::*,
     token_set::TokenSet,
     token_source::TokenSource,
-    util::{SyntaxNodeExt, SyntaxTokenExt},
 };
-pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
-pub use rslint_syntax::*;
 pub(crate) use state::{ParserState, StrictMode};
 use std::fmt::{Debug, Display};
 
@@ -102,7 +92,8 @@ use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
 use rslint_errors::Diagnostic;
-use std::ops::Range;
+pub use rslint_syntax::numbers::BigInt;
+use rslint_syntax::JsSyntaxKind;
 use std::path::Path;
 
 /// An abstraction for syntax tree implementations

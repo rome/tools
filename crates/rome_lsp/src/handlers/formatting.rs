@@ -4,7 +4,8 @@ use anyhow::{bail, Result};
 use lspower::lsp::*;
 use rome_analyze::FileId;
 use rome_formatter::{FormatOptions, IndentStyle};
-use rslint_parser::{parse, SourceType, TextRange, TokenAtOffset};
+use rslint_parser::{parse, SourceType};
+use rslint_syntax::{TextRange, TokenAtOffset};
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
 /// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand

@@ -2,8 +2,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsCatchDeclaration;
-use rslint_parser::ast::JsCatchDeclarationFields;
+use rslint_syntax::JsCatchDeclaration;
+use rslint_syntax::JsCatchDeclarationFields;
 
 impl ToFormatElement for JsCatchDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

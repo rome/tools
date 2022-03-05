@@ -1,6 +1,6 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsThisParameter;
+use rslint_syntax::TsThisParameter;
 
 impl ToFormatElement for TsThisParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

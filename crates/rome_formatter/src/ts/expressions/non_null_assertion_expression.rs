@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsNonNullAssertionExpression;
-use rslint_parser::ast::TsNonNullAssertionExpressionFields;
+use rslint_syntax::TsNonNullAssertionExpression;
+use rslint_syntax::TsNonNullAssertionExpressionFields;
 
 impl ToFormatElement for TsNonNullAssertionExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

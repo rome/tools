@@ -2,8 +2,8 @@ use crate::{
     formatter_traits::FormatTokenAndNode, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsArrayBindingPattern;
-use rslint_parser::ast::JsArrayBindingPatternFields;
+use rslint_syntax::JsArrayBindingPattern;
+use rslint_syntax::JsArrayBindingPatternFields;
 
 impl ToFormatElement for JsArrayBindingPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

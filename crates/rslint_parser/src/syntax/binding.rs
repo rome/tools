@@ -8,9 +8,11 @@ use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{JsSyntaxKind::*, *};
+use crate::{ParsedSyntax, Parser, SyntaxFeature};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
-use rslint_errors::Span;
+use rslint_errors::{Diagnostic, Span};
+use rslint_syntax::{JsSyntaxKind::*, *};
+use std::ops::Range;
 
 pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     match p.cur() {

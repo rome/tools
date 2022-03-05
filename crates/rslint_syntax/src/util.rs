@@ -1,8 +1,6 @@
 //! Extra utlities for untyped syntax nodes, syntax tokens, and AST nodes.
 
-use crate::*;
-
-pub use rslint_lexer::color;
+use crate::{AstNode, JsSyntaxKind, NodeOrToken, SyntaxElement, SyntaxNode, SyntaxToken};
 
 /// Extensions to rowan's SyntaxNode
 pub trait SyntaxNodeExt {
@@ -41,82 +39,6 @@ pub trait SyntaxNodeExt {
         T::cast(self.to_node().to_owned())
     }
 
-    /// Compare two syntax nodes by comparing their underlying non-whitespace tokens.
-    ///
-    /// This is a more accurate way of comparing nodes because it does not count whitespace.
-    /// Text based equality counts `foo. bar` and `foo.bar` as different, while this counts them as the same.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rslint_parser::{SyntaxNodeExt, parse_expression};
-    ///
-    /// let left = parse_expression("foo. bar", 0).syntax();
-    /// let right = parse_expression("foo.bar", 0).syntax();
-    ///
-    /// assert!(left.lexical_eq(&right));
-    ///
-    /// assert_ne!(left.text(), right.text());
-    /// ```
-    fn lexical_eq(&self, right: &SyntaxNode) -> bool {
-        let left = self.tokens();
-        let right = right.tokens();
-
-        if left.len() == right.len() {
-            left.iter()
-                .zip(right.iter())
-                .all(|(l, r)| l.text_trimmed() == r.text_trimmed())
-        } else {
-            false
-        }
-    }
-
-    /// Syntax highlight the node's text into an ANSI string.
-    /// If stdout and stderr are not terminals, this will return the raw
-    /// node text.
-    fn color(&self) -> String {
-        color(&self.to_node().text().to_string())
-    }
-
-    /// Check whether this node's kind is contained in a token set.
-    fn in_ts(&self, set: TokenSet) -> bool {
-        set.contains(self.to_node().kind())
-    }
-
-    /// A human readable name for this node's kind. e.g.:
-    /// `BREAK_STMT` => `Break statement`
-    ///
-    /// Returns a capitalized name without an underscore for anything not a statement. e.g.:
-    /// `FN_DECL` => `Fn decl`
-    fn readable_stmt_name(&self) -> String {
-        let mut string = format!("{:?}", self.to_node().kind())
-            .to_ascii_lowercase()
-            .replace("_", " ");
-        // Safety: the kind cannot produce an empty string and all kinds are ascii uppercase letters.
-        unsafe {
-            string.as_bytes_mut()[0] = string.as_bytes()[0] - 32;
-        }
-
-        if self.to_node().is::<ast::JsAnyStatement>() {
-            string = string.replace("stmt", "statement");
-        }
-
-        string
-    }
-
-    /// Whether this node is an iteration statement.
-    #[inline]
-    fn is_loop(&self) -> bool {
-        const ITERATION_STMT: [JsSyntaxKind; 5] = [
-            JsSyntaxKind::JS_FOR_IN_STATEMENT,
-            JsSyntaxKind::JS_FOR_OF_STATEMENT,
-            JsSyntaxKind::JS_FOR_STATEMENT,
-            JsSyntaxKind::JS_WHILE_STATEMENT,
-            JsSyntaxKind::JS_DO_WHILE_STATEMENT,
-        ];
-        ITERATION_STMT.contains(&self.to_node().kind())
-    }
-
     /// Go over the descendants of this node, at every descendant call `func`, and keep traversing
     /// the descendants of that node if the function's return is `true`. If the function returns false
     /// then stop traversing the descendants of that node go on to the next child.
@@ -139,20 +61,6 @@ pub trait SyntaxNodeExt {
             if func(&node) {
                 node.descendants_with(func);
             }
-        }
-    }
-
-    /// Separate all the lossy tokens of this node, then compare each token's text with the corresponding
-    /// text in `tokens`.
-    fn structural_lossy_token_eq(&self, tokens: &[impl AsRef<str>]) -> bool {
-        let node_tokens = self.to_node().tokens();
-        if node_tokens.len() == tokens.len() {
-            node_tokens
-                .iter()
-                .zip(tokens.iter())
-                .all(|(l, r)| l.text() == r.as_ref())
-        } else {
-            false
         }
     }
 
@@ -291,11 +199,6 @@ pub trait SyntaxTokenExt {
             content,
             token: self.to_token().clone(),
         })
-    }
-
-    /// Check whether this token's kind is contained in a token set.
-    fn in_ts(&self, set: TokenSet) -> bool {
-        set.contains(self.to_token().kind())
     }
 }
 

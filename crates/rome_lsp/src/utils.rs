@@ -8,7 +8,7 @@ use lspower::lsp::{self, CodeAction, CodeActionKind, Diagnostic, TextEdit, Url, 
 use rome_analyze::{DiagnosticExt, Indel, TextAction};
 use tracing::trace;
 
-use rslint_parser::{TextRange, TextSize};
+use rslint_syntax::{TextRange, TextSize};
 
 pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp::Position {
     let line_col = line_index.line_col(offset);

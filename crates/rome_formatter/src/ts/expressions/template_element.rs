@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsTemplateElement;
-use rslint_parser::ast::TsTemplateElementFields;
+use rslint_syntax::TsTemplateElement;
+use rslint_syntax::TsTemplateElementFields;
 
 impl ToFormatElement for TsTemplateElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

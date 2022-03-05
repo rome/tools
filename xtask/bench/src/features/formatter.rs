@@ -1,6 +1,6 @@
 use crate::BenchmarkSummary;
 use rome_formatter::{format, FormatOptions, Formatted};
-use rslint_parser::SyntaxNode;
+use rslint_syntax::SyntaxNode;
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
 

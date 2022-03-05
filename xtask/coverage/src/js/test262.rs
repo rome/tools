@@ -3,7 +3,8 @@ use crate::runner::{
 };
 use regex::Regex;
 use rome_rowan::api::SyntaxKind;
-use rslint_parser::{parse, AstNode, SourceType};
+use rslint_parser::{parse, SourceType};
+use rslint_syntax::AstNode;
 use serde::Deserialize;
 use std::io;
 use std::path::Path;

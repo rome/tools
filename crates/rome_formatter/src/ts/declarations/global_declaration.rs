@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsGlobalDeclaration;
-use rslint_parser::ast::TsGlobalDeclarationFields;
+use rslint_syntax::TsGlobalDeclaration;
+use rslint_syntax::TsGlobalDeclarationFields;
 
 impl ToFormatElement for TsGlobalDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

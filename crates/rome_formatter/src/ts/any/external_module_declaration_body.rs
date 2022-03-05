@@ -1,7 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsAnyExternalModuleDeclarationBody;
+use rslint_syntax::TsAnyExternalModuleDeclarationBody;
 impl ToFormatElement for TsAnyExternalModuleDeclarationBody {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {

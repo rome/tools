@@ -1,5 +1,5 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{map_syntax_node, SyntaxNode};
+use rslint_syntax::{map_syntax_node, SyntaxNode};
 
 impl ToFormatElement for SyntaxNode {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -299,7 +299,7 @@ pub fn generate_formatter() {
         let tokens = match kind {
             NodeKind::List { separated: false } => quote! {
                 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-                use rslint_parser::ast::#id;
+                use rslint_syntax::#id;
 
                 impl ToFormatElement for #id {
                     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -310,7 +310,7 @@ pub fn generate_formatter() {
             NodeKind::Node | NodeKind::Unknown | NodeKind::List { separated: true } => {
                 quote! {
                     use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-                    use rslint_parser::{ast::#id, AstNode};
+                    use rslint_syntax::{#id, AstNode};
 
                     impl ToFormatElement for #id {
                         fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -331,7 +331,7 @@ pub fn generate_formatter() {
 
                 quote! {
                     use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-                    use rslint_parser::ast::#id;
+                    use rslint_syntax::#id;
 
                     impl ToFormatElement for #id {
                         fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

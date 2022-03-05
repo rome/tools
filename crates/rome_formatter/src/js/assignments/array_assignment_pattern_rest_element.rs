@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsArrayAssignmentPatternRestElement;
-use rslint_parser::ast::JsArrayAssignmentPatternRestElementFields;
+use rslint_syntax::JsArrayAssignmentPatternRestElement;
+use rslint_syntax::JsArrayAssignmentPatternRestElementFields;
 
 impl ToFormatElement for JsArrayAssignmentPatternRestElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

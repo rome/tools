@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsImportDefaultClause;
-use rslint_parser::ast::JsImportDefaultClauseFields;
+use rslint_syntax::JsImportDefaultClause;
+use rslint_syntax::JsImportDefaultClauseFields;
 
 impl ToFormatElement for JsImportDefaultClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

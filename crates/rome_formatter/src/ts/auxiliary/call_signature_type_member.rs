@@ -1,7 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::utils::format_type_member_separator;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsCallSignatureTypeMember;
+use rslint_syntax::TsCallSignatureTypeMember;
 
 impl ToFormatElement for TsCallSignatureTypeMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

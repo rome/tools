@@ -4,7 +4,8 @@ use crate::runner::{
 };
 use regex::Regex;
 use rome_rowan::SyntaxKind;
-use rslint_parser::{AstNode, ModuleKind, SourceType};
+use rslint_parser::{ModuleKind, SourceType};
+use rslint_syntax::AstNode;
 use std::convert::TryFrom;
 use std::path::Path;
 

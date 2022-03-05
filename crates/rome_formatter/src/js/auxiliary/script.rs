@@ -4,8 +4,8 @@ use crate::{
     FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsScript;
-use rslint_parser::ast::JsScriptFields;
+use rslint_syntax::JsScript;
+use rslint_syntax::JsScriptFields;
 
 impl ToFormatElement for JsScript {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

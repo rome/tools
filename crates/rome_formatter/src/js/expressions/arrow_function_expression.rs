@@ -1,4 +1,4 @@
-use rslint_parser::ast::{JsAnyFunction, JsArrowFunctionExpression};
+use rslint_syntax::{JsAnyFunction, JsArrowFunctionExpression};
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 

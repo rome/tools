@@ -3,7 +3,7 @@ use crate::utils::format_type_member_separator;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsPropertySignatureTypeMember;
+use rslint_syntax::TsPropertySignatureTypeMember;
 
 impl ToFormatElement for TsPropertySignatureTypeMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

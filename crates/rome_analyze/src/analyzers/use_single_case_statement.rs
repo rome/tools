@@ -1,4 +1,4 @@
-use rslint_parser::{ast, AstNode, AstNodeList};
+use rslint_syntax::{AstNode, AstNodeList, JsCaseClause};
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
@@ -11,7 +11,7 @@ pub fn create() -> Analyzer {
 }
 
 fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
-    ctx.query_nodes::<ast::JsCaseClause>()
+    ctx.query_nodes::<JsCaseClause>()
         .filter(|n| n.consequent().len() > 1)
         .map(|node| {
             let message = "A switch case should only have a single statement.";

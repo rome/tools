@@ -2,7 +2,7 @@
 
 use std::collections::HashMap;
 
-use rslint_parser::{SyntaxNode, SyntaxToken, TextRange};
+use rslint_syntax::{SyntaxNode, SyntaxToken, TextRange};
 
 const ROME_IGNORE: &str = "rome-ignore";
 

@@ -2,8 +2,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsAssertsReturnType;
-use rslint_parser::ast::TsAssertsReturnTypeFields;
+use rslint_syntax::TsAssertsReturnType;
+use rslint_syntax::TsAssertsReturnTypeFields;
 
 impl ToFormatElement for TsAssertsReturnType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

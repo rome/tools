@@ -5,8 +5,7 @@
 //!
 //! This is a simple wrapper around the `rowan` crate which does most of the heavy lifting and is language agnostic.
 
-use crate::ast::JsSyntaxFactory;
-use crate::JsSyntaxKind;
+use crate::{JsSyntaxFactory, JsSyntaxKind};
 use rome_rowan::{Language, TreeBuilder};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]

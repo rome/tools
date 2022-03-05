@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsSpread;
-use rslint_parser::ast::JsSpreadFields;
+use rslint_syntax::JsSpread;
+use rslint_syntax::JsSpreadFields;
 
 impl ToFormatElement for JsSpread {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

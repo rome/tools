@@ -5,8 +5,8 @@ use crate::{
     Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsDoWhileStatementFields;
-use rslint_parser::ast::{JsAnyStatement, JsDoWhileStatement};
+use rslint_syntax::JsDoWhileStatementFields;
+use rslint_syntax::{JsAnyStatement, JsDoWhileStatement};
 
 impl ToFormatElement for JsDoWhileStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

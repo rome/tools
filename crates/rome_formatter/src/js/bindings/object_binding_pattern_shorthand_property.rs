@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsObjectBindingPatternShorthandProperty;
-use rslint_parser::ast::JsObjectBindingPatternShorthandPropertyFields;
+use rslint_syntax::JsObjectBindingPatternShorthandProperty;
+use rslint_syntax::JsObjectBindingPatternShorthandPropertyFields;
 
 impl ToFormatElement for JsObjectBindingPatternShorthandProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsPropertyClassMember;
-use rslint_parser::ast::JsPropertyClassMemberFields;
+use rslint_syntax::JsPropertyClassMember;
+use rslint_syntax::JsPropertyClassMemberFields;
 
 impl ToFormatElement for JsPropertyClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

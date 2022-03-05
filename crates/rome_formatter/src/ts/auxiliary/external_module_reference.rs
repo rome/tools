@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsExternalModuleReference;
-use rslint_parser::ast::TsExternalModuleReferenceFields;
+use rslint_syntax::TsExternalModuleReference;
+use rslint_syntax::TsExternalModuleReferenceFields;
 
 impl ToFormatElement for TsExternalModuleReference {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

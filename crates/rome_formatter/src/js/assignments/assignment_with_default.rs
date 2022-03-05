@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsAssignmentWithDefault;
-use rslint_parser::ast::JsAssignmentWithDefaultFields;
+use rslint_syntax::JsAssignmentWithDefault;
+use rslint_syntax::JsAssignmentWithDefaultFields;
 
 impl ToFormatElement for JsAssignmentWithDefault {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

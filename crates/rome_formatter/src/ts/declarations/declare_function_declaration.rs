@@ -3,8 +3,8 @@ use crate::{
     format_elements, hard_group_elements, space_token, token, FormatElement, FormatResult,
     Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsDeclareFunctionDeclaration;
-use rslint_parser::ast::TsDeclareFunctionDeclarationFields;
+use rslint_syntax::TsDeclareFunctionDeclaration;
+use rslint_syntax::TsDeclareFunctionDeclarationFields;
 
 impl ToFormatElement for TsDeclareFunctionDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

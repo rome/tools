@@ -39,13 +39,13 @@
 //! });
 //! ```
 
-use rslint_parser::ast::JsParameters;
-use rslint_parser::ast::{
+use rslint_syntax::JsParameters;
+use rslint_syntax::{AstNode, AstSeparatedList, SyntaxNodeExt, SyntaxResult, SyntaxToken};
+use rslint_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyFunctionBody, JsArrayExpression, JsArrayExpressionFields,
     JsFormalParameter, JsFormalParameterFields, JsFunctionBodyFields, JsIdentifierBinding,
     JsIdentifierBindingFields, JsObjectExpression, JsObjectExpressionFields, JsParametersFields,
 };
-use rslint_parser::{AstNode, AstSeparatedList, SyntaxNodeExt, SyntaxResult, SyntaxToken};
 
 /// Returns true is the passed [JsAnyExpression] is a simple function, array or object expression
 pub(crate) fn is_simple_expression(node: JsAnyExpression) -> SyntaxResult<bool> {
