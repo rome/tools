@@ -39,3 +39,7 @@ const foo = `but where will ${
 
 `<div>${ /* avoid console errors if `this.set` is undefined */
     this.set && this.set.artist}</div>`;
+
+`${// $FlowFixMe found when converting React.createClass to ES6
+ExampleStory.getFragment('story')}
+`;

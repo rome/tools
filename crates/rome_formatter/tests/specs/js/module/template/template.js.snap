@@ -46,6 +46,10 @@ const foo = `but where will ${
 
 `<div>${ /* avoid console errors if `this.set` is undefined */
     this.set && this.set.artist}</div>`;
+
+`${// $FlowFixMe found when converting React.createClass to ES6
+ExampleStory.getFragment('story')}
+`;
 =============================
 # Outputs
 ## Output 1
@@ -87,20 +91,21 @@ const bar =`but where will ${this.fanta} wrap ${baz} ${"hello"} template literal
 const foo = `but where will ${a && b && bar || c && d && g} wrap long long long long long long`;
 
 const foo = `but where will ${
-	lorem && loremlorem && loremlorem || loremc && lorem && loremlorem
+	lorem && loremlorem && loremlorem ||
+	loremc && lorem && loremlorem
 } wrap long long long long long long`;
 
 const a = `
 let expression_is_simple = is_plain_expression(&expression)?;
 ${
 	loooooong ||
-		loooooong ||
-		loooooong ||
-		loooooong ||
-		loooooong ||
-		loooooong ||
-		loooooong ||
-		loooooong
+	loooooong ||
+	loooooong ||
+	loooooong ||
+	loooooong ||
+	loooooong ||
+	loooooong ||
+	loooooong
 }       
 let expression_is_simple = is_plain_expression(&expression)?;
 `;
@@ -119,4 +124,10 @@ const foo = `but where will ${
 	/* avoid console errors if `this.set` is undefined */
 	this.set && this.set.artist
 }</div>`;
+
+`${
+	// $FlowFixMe found when converting React.createClass to ES6
+	ExampleStory.getFragment("story")
+}
+`;
 

@@ -482,11 +482,8 @@ impl TemplateElement {
                 }
             }
             TemplateElement::Ts(template_element) => {
-                let current_type = template_element.ty()?;
-                match current_type {
-                    TsType::TsMappedType(_) => Ok(false),
-                    _ => Ok(true),
-                }
+                let is_mapped_type = matches!(template_element.ty()?, TsType::TsMappedType(_));
+                Ok(!is_mapped_type)
             }
         }
     }
@@ -494,28 +491,14 @@ impl TemplateElement {
     fn has_comments(&self) -> FormatResult<bool> {
         match self {
             TemplateElement::Js(template_element) => {
-                let JsTemplateElementFields {
-                    expression,
-                    r_curly_token,
-                    dollar_curly_token,
-                } = template_element.as_fields();
-
-                let has_comments = expression?.syntax().contains_comments()
-                    || r_curly_token?.has_leading_comments()
-                    || dollar_curly_token?.has_trailing_comments();
+                let has_comments = template_element.expression()?.syntax().contains_comments()
+                    || template_element.syntax().contains_comments();
 
                 Ok(has_comments)
             }
             TemplateElement::Ts(template_element) => {
-                let TsTemplateElementFields {
-                    ty,
-                    r_curly_token,
-                    dollar_curly_token,
-                } = template_element.as_fields();
-
-                let has_comments = ty?.syntax().contains_comments()
-                    || r_curly_token?.has_leading_comments()
-                    || dollar_curly_token?.has_trailing_comments();
+                let has_comments = template_element.ty()?.syntax().contains_comments()
+                    || template_element.syntax().contains_comments();
 
                 Ok(has_comments)
             }
