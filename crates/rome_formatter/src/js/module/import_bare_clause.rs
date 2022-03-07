@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsImportBareClause;
-use rslint_syntax::JsImportBareClauseFields;
+use rome_js_syntax::JsImportBareClause;
+use rome_js_syntax::JsImportBareClauseFields;
 
 impl ToFormatElement for JsImportBareClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

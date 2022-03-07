@@ -5,8 +5,8 @@ use crate::{
     FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsAssignmentExpression;
-use rslint_syntax::JsAssignmentExpressionFields;
+use rome_js_syntax::JsAssignmentExpression;
+use rome_js_syntax::JsAssignmentExpressionFields;
 
 impl ToFormatElement for JsAssignmentExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

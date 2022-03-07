@@ -30,9 +30,9 @@ use crate::{
     Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
     Present, SyntaxFeature,
 };
+use rome_js_syntax::JsSyntaxKind::*;
+use rome_js_syntax::{JsSyntaxKind, T};
 use rslint_errors::Span;
-use rslint_syntax::JsSyntaxKind::*;
-use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
 use std::ops::Range;
 

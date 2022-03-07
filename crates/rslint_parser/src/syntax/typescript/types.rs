@@ -28,10 +28,10 @@ use crate::{
     Absent, CompletedMarker, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
     Parser, Present, SyntaxFeature,
 };
+use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
+use rome_js_syntax::T;
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rslint_errors::Span;
-use rslint_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
-use rslint_syntax::T;
-use rslint_syntax::{JsSyntaxKind::*, *};
 
 use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
 

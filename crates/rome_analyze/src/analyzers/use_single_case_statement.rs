@@ -1,4 +1,4 @@
-use rslint_syntax::{AstNode, AstNodeList, JsCaseClause};
+use rome_js_syntax::{AstNode, AstNodeList, JsCaseClause};
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 

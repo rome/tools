@@ -2,7 +2,7 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::{TsNamedTupleTypeElement, TsNamedTupleTypeElementFields};
+use rome_js_syntax::{TsNamedTupleTypeElement, TsNamedTupleTypeElementFields};
 
 impl ToFormatElement for TsNamedTupleTypeElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsIdentifierBinding;
-use rslint_syntax::JsIdentifierBindingFields;
+use rome_js_syntax::JsIdentifierBinding;
+use rome_js_syntax::JsIdentifierBindingFields;
 
 impl ToFormatElement for JsIdentifierBinding {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

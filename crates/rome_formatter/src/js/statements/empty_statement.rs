@@ -1,7 +1,7 @@
 use crate::{empty_element, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsEmptyStatement;
-use rslint_syntax::JsEmptyStatementFields;
+use rome_js_syntax::JsEmptyStatement;
+use rome_js_syntax::JsEmptyStatementFields;
 
 impl ToFormatElement for JsEmptyStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -3,8 +3,8 @@ use crate::{
     format_elements, group_elements, if_group_breaks, indent, soft_line_break, space_token, token,
     FormatElement, FormatResult, Formatter, ToFormatElement, Token,
 };
-use rslint_syntax::TsIntersectionType;
-use rslint_syntax::TsIntersectionTypeFields;
+use rome_js_syntax::TsIntersectionType;
+use rome_js_syntax::TsIntersectionTypeFields;
 
 impl ToFormatElement for TsIntersectionType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

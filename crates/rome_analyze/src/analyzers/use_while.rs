@@ -1,4 +1,4 @@
-use rslint_syntax::{AstNode, JsForStatement};
+use rome_js_syntax::{AstNode, JsForStatement};
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 

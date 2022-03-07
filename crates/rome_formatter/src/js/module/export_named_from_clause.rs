@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsExportNamedFromClause;
-use rslint_syntax::JsExportNamedFromClauseFields;
+use rome_js_syntax::JsExportNamedFromClause;
+use rome_js_syntax::JsExportNamedFromClauseFields;
 
 impl ToFormatElement for JsExportNamedFromClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

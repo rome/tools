@@ -4,10 +4,10 @@ use crate::{
     format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsBlockStatement;
+use rome_js_syntax::JsBlockStatement;
 
-use rslint_syntax::JsBlockStatementFields;
-use rslint_syntax::{AstNode, AstNodeList, JsSyntaxKind};
+use rome_js_syntax::JsBlockStatementFields;
+use rome_js_syntax::{AstNode, AstNodeList, JsSyntaxKind};
 
 impl ToFormatElement for JsBlockStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

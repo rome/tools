@@ -7,8 +7,8 @@ use crate::{
     Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsCaseClause;
-use rslint_syntax::JsCaseClauseFields;
+use rome_js_syntax::JsCaseClause;
+use rome_js_syntax::JsCaseClauseFields;
 
 impl ToFormatElement for JsCaseClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

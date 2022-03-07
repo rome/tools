@@ -32,9 +32,9 @@ use crate::{
     Parser, SyntaxFeature, TokenSet,
 };
 use bitflags::bitflags;
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
-use rslint_syntax::{JsSyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 

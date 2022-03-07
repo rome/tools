@@ -9,7 +9,7 @@ repository = "https://github.com/rslint/rslint"
 
 [dependencies]
 rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
-rslint_syntax = { version = "0.1.4", path = "../rslint_syntax" }
+rome_js_syntax = { version = "0.1.4", path = "../rome_js_syntax" }
 atty = { version = "0.2.14", optional = true }
 ansi_term = { version = "0.12.1", optional = true }
 

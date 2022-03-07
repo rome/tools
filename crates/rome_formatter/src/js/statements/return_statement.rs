@@ -6,8 +6,8 @@ use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsReturnStatement;
-use rslint_syntax::JsReturnStatementFields;
+use rome_js_syntax::JsReturnStatement;
+use rome_js_syntax::JsReturnStatementFields;
 
 impl ToFormatElement for JsReturnStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

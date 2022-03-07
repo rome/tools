@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsContinueStatement;
-use rslint_syntax::JsContinueStatementFields;
+use rome_js_syntax::JsContinueStatement;
+use rome_js_syntax::JsContinueStatementFields;
 
 impl ToFormatElement for JsContinueStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

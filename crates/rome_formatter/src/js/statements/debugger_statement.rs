@@ -2,8 +2,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{format_elements, token, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsDebuggerStatement;
-use rslint_syntax::JsDebuggerStatementFields;
+use rome_js_syntax::JsDebuggerStatement;
+use rome_js_syntax::JsDebuggerStatementFields;
 
 impl ToFormatElement for JsDebuggerStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

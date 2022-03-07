@@ -3,8 +3,8 @@ use crate::{
     format_elements, group_elements, if_group_breaks, indent, soft_line_break, space_token, token,
     FormatElement, FormatResult, Formatter, ToFormatElement, Token,
 };
-use rslint_syntax::TsUnionType;
-use rslint_syntax::TsUnionTypeFields;
+use rome_js_syntax::TsUnionType;
+use rome_js_syntax::TsUnionTypeFields;
 
 impl ToFormatElement for TsUnionType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

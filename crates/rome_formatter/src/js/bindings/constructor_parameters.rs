@@ -2,8 +2,8 @@ use crate::{
     formatter_traits::FormatTokenAndNode, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsConstructorParameters;
-use rslint_syntax::JsConstructorParametersFields;
+use rome_js_syntax::JsConstructorParameters;
+use rome_js_syntax::JsConstructorParametersFields;
 
 impl ToFormatElement for JsConstructorParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

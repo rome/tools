@@ -3,8 +3,8 @@ use crate::{
     concat_elements, format_elements, group_elements, indent, join_elements, soft_line_break,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::{AstNode, JsSyntaxKind, SyntaxNode};
-use rslint_syntax::{
+use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode};
+use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsImportCallExpression, JsStaticMemberExpression,
 };
 use std::fmt::Debug;
@@ -70,7 +70,7 @@ use std::slice;
 /// }
 /// ```
 ///
-/// When we track the first [rslint_syntax::JsCallExpression], we hold basically all the children,
+/// When we track the first [rome_js_syntax::JsCallExpression], we hold basically all the children,
 /// that applies for the rest of the nodes. If we decided to format all the children of each node,
 /// we will risk to format the last node, the `Reference`, four times.
 ///
@@ -94,11 +94,11 @@ use std::slice;
 /// The first group is special, because it holds the reference; it has its own heuristic.
 /// Inside the first group we store the first element of the flattened array, then:
 ///
-/// 1. as many as [rslint_syntax::JsCallExpression] we can find, this cover cases like
+/// 1. as many as [rome_js_syntax::JsCallExpression] we can find, this cover cases like
 /// `something()()().then()`;
-/// 2. as many as [rslint_syntax::JsComputedMemberExpression] we can find, this cover cases like
+/// 2. as many as [rome_js_syntax::JsComputedMemberExpression] we can find, this cover cases like
 /// `something()()[1][3].then()`;
-/// 3. as many as consecutive [rslint_syntax::JsStaticMemberExpression] or [rslint_syntax::JsComputedExpression], this cover cases like
+/// 3. as many as consecutive [rome_js_syntax::JsStaticMemberExpression] or [rome_js_syntax::JsComputedExpression], this cover cases like
 /// `this.items[0].then()`
 ///
 /// The rest of the groups are essentially a sequence of `[StaticMemberExpression , CallExpression]`.
@@ -340,19 +340,19 @@ fn flatten_call_expression(
 #[derive(Clone)]
 /// Data structure that holds the node with its formatted version
 pub(crate) enum FlattenItem {
-    /// Holds onto a [rslint_syntax::JsStaticMemberExpression]
+    /// Holds onto a [rome_js_syntax::JsStaticMemberExpression]
     StaticMember(JsStaticMemberExpression, Vec<FormatElement>),
-    /// Holds onto a [rslint_syntax::JsCallExpression]
+    /// Holds onto a [rome_js_syntax::JsCallExpression]
     CallExpression(JsCallExpression, Vec<FormatElement>),
-    /// Holds onto a [rslint_syntax::JsComputedMemberExpression]
+    /// Holds onto a [rome_js_syntax::JsComputedMemberExpression]
     ComputedExpression(JsComputedMemberExpression, Vec<FormatElement>),
-    /// Any other node that are not  [rslint_syntax::JsCallExpression] or [rslint_syntax::JsStaticMemberExpression]
+    /// Any other node that are not  [rome_js_syntax::JsCallExpression] or [rome_js_syntax::JsStaticMemberExpression]
     /// Are tracked using this variant
     Node(SyntaxNode, FormatElement),
 }
 
 impl FlattenItem {
-    /// checks if the current node is a [rslint_syntax::JsCallExpression] or a [rslint_syntax::JsImportExpression]
+    /// checks if the current node is a [rome_js_syntax::JsCallExpression] or a [rome_js_syntax::JsImportExpression]
     pub fn is_loose_call_expression(&self) -> bool {
         match self {
             FlattenItem::CallExpression(_, _) => true,

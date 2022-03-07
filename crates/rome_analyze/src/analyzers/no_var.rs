@@ -1,5 +1,5 @@
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
-use rslint_syntax::{AstNode, JsVariableDeclaration};
+use rome_js_syntax::{AstNode, JsVariableDeclaration};
 
 pub fn create() -> Analyzer {
     Analyzer {

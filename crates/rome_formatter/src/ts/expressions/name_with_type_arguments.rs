@@ -1,6 +1,6 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::{TsNameWithTypeArguments, TsNameWithTypeArgumentsFields};
+use rome_js_syntax::{TsNameWithTypeArguments, TsNameWithTypeArgumentsFields};
 
 impl ToFormatElement for TsNameWithTypeArguments {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

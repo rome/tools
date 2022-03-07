@@ -15,7 +15,7 @@ rome_formatter = { path = "../rome_formatter" }
 rome_analyze = { path = "../rome_analyze" }
 rslint_errors = { path = "../rslint_errors"}
 rslint_parser = { path = "../rslint_parser"}
-rslint_syntax = { path = "../rslint_syntax" }
+rome_js_syntax = { path = "../rome_js_syntax" }
 lspower = "1.5"
 tokio = { version = "1.15.0", features = ["full" ] }
 tracing = { version = "0.1.29", features = ["max_level_trace"] }

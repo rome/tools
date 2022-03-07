@@ -3,7 +3,7 @@ use crate::{
     group_elements, join_elements, soft_line_break_or_space, token, FormatElement, FormatResult,
     Formatter, ToFormatElement,
 };
-use rslint_syntax::TsTupleTypeElementList;
+use rome_js_syntax::TsTupleTypeElementList;
 
 impl ToFormatElement for TsTupleTypeElementList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

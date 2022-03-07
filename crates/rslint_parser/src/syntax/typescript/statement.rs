@@ -25,7 +25,7 @@ use crate::{
     syntax, Absent, CompletedMarker, Marker, ParseNodeList, ParseRecovery, ParseSeparatedList,
     ParsedSyntax, Parser, Present,
 };
-use rslint_syntax::{JsSyntaxKind::*, *};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 
 fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();

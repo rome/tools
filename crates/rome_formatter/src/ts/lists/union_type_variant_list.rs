@@ -3,7 +3,7 @@ use crate::{
     soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_syntax::{AstSeparatedList, TsUnionTypeVariantList};
+use rome_js_syntax::{AstSeparatedList, TsUnionTypeVariantList};
 
 impl ToFormatElement for TsUnionTypeVariantList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

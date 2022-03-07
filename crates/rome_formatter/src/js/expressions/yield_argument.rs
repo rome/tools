@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsYieldArgument;
-use rslint_syntax::JsYieldArgumentFields;
+use rome_js_syntax::JsYieldArgument;
+use rome_js_syntax::JsYieldArgumentFields;
 
 impl ToFormatElement for JsYieldArgument {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

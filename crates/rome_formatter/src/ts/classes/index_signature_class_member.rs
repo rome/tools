@@ -2,8 +2,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::TsIndexSignatureClassMember;
-use rslint_syntax::TsIndexSignatureClassMemberFields;
+use rome_js_syntax::TsIndexSignatureClassMember;
+use rome_js_syntax::TsIndexSignatureClassMemberFields;
 
 impl ToFormatElement for TsIndexSignatureClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

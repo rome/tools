@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::TsNonNullAssertionExpression;
-use rslint_syntax::TsNonNullAssertionExpressionFields;
+use rome_js_syntax::TsNonNullAssertionExpression;
+use rome_js_syntax::TsNonNullAssertionExpressionFields;
 
 impl ToFormatElement for TsNonNullAssertionExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

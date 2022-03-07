@@ -2,8 +2,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{format_elements, token, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsExpressionStatement;
-use rslint_syntax::JsExpressionStatementFields;
+use rome_js_syntax::JsExpressionStatement;
+use rome_js_syntax::JsExpressionStatementFields;
 
 impl ToFormatElement for JsExpressionStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -5,8 +5,8 @@ use crate::{
     ToFormatElement,
 };
 
-use rslint_syntax::JsSetterClassMember;
-use rslint_syntax::JsSetterClassMemberFields;
+use rome_js_syntax::JsSetterClassMember;
+use rome_js_syntax::JsSetterClassMemberFields;
 
 impl ToFormatElement for JsSetterClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

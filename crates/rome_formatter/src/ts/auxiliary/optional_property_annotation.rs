@@ -1,7 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::TsOptionalPropertyAnnotation;
-use rslint_syntax::TsOptionalPropertyAnnotationFields;
+use rome_js_syntax::TsOptionalPropertyAnnotation;
+use rome_js_syntax::TsOptionalPropertyAnnotationFields;
 
 impl ToFormatElement for TsOptionalPropertyAnnotation {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

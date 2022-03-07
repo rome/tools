@@ -1,4 +1,4 @@
-use rslint_syntax::{JsAnyFunction, JsArrowFunctionExpression};
+use rome_js_syntax::{JsAnyFunction, JsArrowFunctionExpression};
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 

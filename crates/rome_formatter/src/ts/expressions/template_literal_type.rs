@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::TsTemplateLiteralType;
-use rslint_syntax::TsTemplateLiteralTypeFields;
+use rome_js_syntax::TsTemplateLiteralType;
+use rome_js_syntax::TsTemplateLiteralTypeFields;
 
 impl ToFormatElement for TsTemplateLiteralType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

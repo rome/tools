@@ -5,11 +5,11 @@ use crate::{
     ToFormatElement,
 };
 
-use rslint_syntax::JsUnaryExpression;
+use rome_js_syntax::JsUnaryExpression;
 
+use rome_js_syntax::JsUnaryExpressionFields;
+use rome_js_syntax::T;
 use rslint_parser::token_set;
-use rslint_syntax::JsUnaryExpressionFields;
-use rslint_syntax::T;
 
 impl ToFormatElement for JsUnaryExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

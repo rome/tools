@@ -91,9 +91,9 @@ pub type ParserError = rslint_errors::Diagnostic;
 use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
+pub use rome_js_syntax::numbers::BigInt;
+use rome_js_syntax::JsSyntaxKind;
 use rslint_errors::Diagnostic;
-pub use rslint_syntax::numbers::BigInt;
-use rslint_syntax::JsSyntaxKind;
 use std::path::Path;
 
 /// An abstraction for syntax tree implementations

@@ -4,8 +4,8 @@ use crate::{
     formatter_traits::FormatTokenAndNode, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsCallArgumentsFields;
-use rslint_syntax::{AstSeparatedList, JsAnyCallArgument, JsCallArguments, SyntaxResult};
+use rome_js_syntax::JsCallArgumentsFields;
+use rome_js_syntax::{AstSeparatedList, JsAnyCallArgument, JsCallArguments, SyntaxResult};
 
 impl ToFormatElement for JsCallArguments {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

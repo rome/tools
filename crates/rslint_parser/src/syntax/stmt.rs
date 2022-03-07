@@ -32,9 +32,9 @@ use crate::{
     parser, CompletedMarker, JsSyntaxFeature, ModuleKind, ParseRecovery, ParseSeparatedList,
     Parser, SyntaxFeature, TokenSet,
 };
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
-use rslint_syntax::{JsSyntaxKind::*, *};
 use std::ops::Range;
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![

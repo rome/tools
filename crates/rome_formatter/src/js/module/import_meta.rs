@@ -1,9 +1,9 @@
-use rslint_syntax::ImportMeta;
+use rome_js_syntax::ImportMeta;
 
 use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::ImportMetaFields;
+use rome_js_syntax::ImportMetaFields;
 
 impl ToFormatElement for ImportMeta {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

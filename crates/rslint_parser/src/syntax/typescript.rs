@@ -11,8 +11,8 @@ use crate::syntax::js_parse_error::expected_expression;
 use crate::syntax::typescript::ts_parse_error::expected_ts_type;
 use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{Absent, CompletedMarker, Marker, ParsedSyntax, Parser, Present};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
-use rslint_syntax::{JsSyntaxKind::*, *};
 
 pub(crate) use self::statement::*;
 use self::ts_parse_error::ts_member_cannot_be;

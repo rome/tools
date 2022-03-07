@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsBreakStatement;
-use rslint_syntax::JsBreakStatementFields;
+use rome_js_syntax::JsBreakStatement;
+use rome_js_syntax::JsBreakStatementFields;
 
 impl ToFormatElement for JsBreakStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

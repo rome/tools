@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsFinallyClause;
-use rslint_syntax::JsFinallyClauseFields;
+use rome_js_syntax::JsFinallyClause;
+use rome_js_syntax::JsFinallyClauseFields;
 
 impl ToFormatElement for JsFinallyClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

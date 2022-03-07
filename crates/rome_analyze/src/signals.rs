@@ -1,5 +1,5 @@
+use rome_js_syntax::TextRange;
 use rslint_errors::{Diagnostic, Span};
-use rslint_syntax::TextRange;
 
 use crate::{ActionCategory, Indel, SyntaxEdit};
 

@@ -39,9 +39,9 @@
 //! });
 //! ```
 
-use rslint_syntax::JsParameters;
-use rslint_syntax::{AstNode, AstSeparatedList, SyntaxNodeExt, SyntaxResult, SyntaxToken};
-use rslint_syntax::{
+use rome_js_syntax::JsParameters;
+use rome_js_syntax::{AstNode, AstSeparatedList, SyntaxNodeExt, SyntaxResult, SyntaxToken};
+use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyFunctionBody, JsArrayExpression, JsArrayExpressionFields,
     JsFormalParameter, JsFormalParameterFields, JsFunctionBodyFields, JsIdentifierBinding,
     JsIdentifierBindingFields, JsObjectExpression, JsObjectExpressionFields, JsParametersFields,

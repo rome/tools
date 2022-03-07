@@ -1,6 +1,6 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::{TsOptionalTupleTypeElement, TsOptionalTupleTypeElementFields};
+use rome_js_syntax::{TsOptionalTupleTypeElement, TsOptionalTupleTypeElementFields};
 
 impl ToFormatElement for TsOptionalTupleTypeElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -19,9 +19,9 @@ use crate::syntax::typescript::{
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{ParseRecovery, ParseSeparatedList, Parser, SyntaxFeature};
+use rome_js_syntax::JsSyntaxKind::*;
+use rome_js_syntax::{JsSyntaxKind, T};
 use rslint_errors::Span;
-use rslint_syntax::JsSyntaxKind::*;
-use rslint_syntax::{JsSyntaxKind, T};
 
 // test object_expr
 // let a = {};

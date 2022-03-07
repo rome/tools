@@ -8,7 +8,7 @@ use crate::{
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::{
+use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
 

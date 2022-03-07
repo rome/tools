@@ -2,7 +2,7 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::TsInferType;
+use rome_js_syntax::TsInferType;
 
 impl ToFormatElement for TsInferType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

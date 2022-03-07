@@ -1,7 +1,7 @@
 use crate::format_element::normalize_newlines;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement, Token};
-use rslint_syntax::TsTemplateChunkElement;
-use rslint_syntax::TsTemplateChunkElementFields;
+use rome_js_syntax::TsTemplateChunkElement;
+use rome_js_syntax::TsTemplateChunkElementFields;
 
 impl ToFormatElement for TsTemplateChunkElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

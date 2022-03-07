@@ -38,11 +38,11 @@ use crate::{
 };
 use bitflags::bitflags;
 use drop_bomb::DebugDropBomb;
+use rome_js_syntax::JsSyntaxKind::*;
+use rome_js_syntax::TextSize;
+use rome_js_syntax::{JsSyntaxKind, T};
 use rome_rowan::{SyntaxKind, TextRange};
 use rslint_errors::{Diagnostic, Span};
-use rslint_syntax::JsSyntaxKind::*;
-use rslint_syntax::TextSize;
-use rslint_syntax::{JsSyntaxKind, T};
 use smallvec::SmallVec;
 use std::fmt::Debug;
 use std::ops::{Add, Range};

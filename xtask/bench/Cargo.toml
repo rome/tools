@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 xtask = { path = '../', version = "0.0" }
-rslint_syntax = { path = "../../crates/rslint_syntax"}
+rome_js_syntax = { path = "../../crates/rome_js_syntax" }
 rslint_parser = { path = "../../crates/rslint_parser"}
 rslint_errors = { path = "../../crates/rslint_errors"}
 rome_formatter = { path = "../../crates/rome_formatter"}

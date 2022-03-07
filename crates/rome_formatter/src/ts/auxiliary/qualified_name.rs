@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::TsQualifiedName;
-use rslint_syntax::TsQualifiedNameFields;
+use rome_js_syntax::TsQualifiedName;
+use rome_js_syntax::TsQualifiedNameFields;
 
 impl ToFormatElement for TsQualifiedName {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -1,5 +1,5 @@
-use rslint_syntax::JsSyntaxKind::*;
-use rslint_syntax::{AstNode, JsAnyExpression, JsBinaryExpression, SyntaxResult};
+use rome_js_syntax::JsSyntaxKind::*;
+use rome_js_syntax::{AstNode, JsAnyExpression, JsBinaryExpression, SyntaxResult};
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 

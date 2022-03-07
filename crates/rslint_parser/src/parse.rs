@@ -1,8 +1,8 @@
 //! Utilities for high level parsing of js code.
 
 use crate::*;
+use rome_js_syntax::{AstNode, JsAnyRoot, JsExpressionSnipped, JsModule, JsScript, SyntaxNode};
 use rslint_errors::Severity;
-use rslint_syntax::{AstNode, JsAnyRoot, JsExpressionSnipped, JsModule, JsScript, SyntaxNode};
 use std::marker::PhantomData;
 
 /// A utility struct for managing the result of a parser job
@@ -42,7 +42,7 @@ impl<T> Parse<T> {
     ///
     /// ```
     /// use rslint_parser::parse_script;
-    /// use rslint_syntax::{JsIfStatement, SyntaxNodeExt, JsSyntaxKind, AstNode, AstNodeList};
+    /// use rome_js_syntax::{JsIfStatement, SyntaxNodeExt, JsSyntaxKind, AstNode, AstNodeList};
     ///
     /// let parse = parse_script(
     /// "
@@ -138,7 +138,7 @@ fn parse_common(
 ///
 /// ```
 /// use rslint_parser::parse_script;
-/// use rslint_syntax::{AstNode, SyntaxToken, SyntaxNodeExt,  SyntaxList, util, JsComputedMemberExpression};
+/// use rome_js_syntax::{AstNode, SyntaxToken, SyntaxNodeExt,  SyntaxList, util, JsComputedMemberExpression};
 ///
 /// let parse = parse_script("foo.bar[2]", 0);
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
@@ -183,7 +183,7 @@ pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
 ///
 /// ```
 /// use rslint_parser::parse_script_lossy;
-/// use rslint_syntax::{JsComputedMemberExpression, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
+/// use rome_js_syntax::{JsComputedMemberExpression, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
 ///
 /// let parse = parse_script_lossy("foo.bar[2]", 0);
 /// // Parse returns a JS Root with two children, an empty list of directives and the list of statements, let's get the statements

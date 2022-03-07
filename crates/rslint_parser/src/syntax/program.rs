@@ -5,7 +5,7 @@ use super::stmt::parse_statements;
 use crate::state::{ChangeParserState, EnableStrictMode};
 use crate::syntax::stmt::directives;
 use crate::{CompletedMarker, ModuleKind, Parser};
-use rslint_syntax::JsSyntaxKind::*;
+use rome_js_syntax::JsSyntaxKind::*;
 
 // test_err unterminated_unicode_codepoint
 // let s = "\u{200";

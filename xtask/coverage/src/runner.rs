@@ -1,11 +1,11 @@
 use super::*;
 use crate::reporters::TestReporter;
+use rome_js_syntax::{JsAnyRoot, SyntaxNode};
 use rome_rowan::SyntaxKind;
 use rslint_errors::file::{FileId, SimpleFiles};
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::{Diagnostic, Emitter, Severity};
 use rslint_parser::{parse, Parse, SourceType};
-use rslint_syntax::{JsAnyRoot, SyntaxNode};
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
 use std::path::Path;

@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::TsMappedTypeOptionalModifierClause;
-use rslint_syntax::TsMappedTypeOptionalModifierClauseFields;
+use rome_js_syntax::TsMappedTypeOptionalModifierClause;
+use rome_js_syntax::TsMappedTypeOptionalModifierClauseFields;
 
 impl ToFormatElement for TsMappedTypeOptionalModifierClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

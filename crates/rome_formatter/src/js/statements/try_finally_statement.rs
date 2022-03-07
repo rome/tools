@@ -5,8 +5,8 @@ use crate::{
     ToFormatElement,
 };
 
-use rslint_syntax::JsTryFinallyStatement;
-use rslint_syntax::JsTryFinallyStatementFields;
+use rome_js_syntax::JsTryFinallyStatement;
+use rome_js_syntax::JsTryFinallyStatementFields;
 
 impl ToFormatElement for JsTryFinallyStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

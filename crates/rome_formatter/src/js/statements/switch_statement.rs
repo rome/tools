@@ -7,8 +7,8 @@ use crate::{
     ToFormatElement,
 };
 
-use rslint_syntax::JsSwitchStatement;
-use rslint_syntax::JsSwitchStatementFields;
+use rome_js_syntax::JsSwitchStatement;
+use rome_js_syntax::JsSwitchStatementFields;
 
 impl ToFormatElement for JsSwitchStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

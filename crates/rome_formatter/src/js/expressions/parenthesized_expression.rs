@@ -5,7 +5,7 @@ use crate::{
     format_elements, hard_group_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::{JsParenthesizedExpression, JsParenthesizedExpressionFields, SyntaxResult};
+use rome_js_syntax::{JsParenthesizedExpression, JsParenthesizedExpressionFields, SyntaxResult};
 
 impl ToFormatElement for JsParenthesizedExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

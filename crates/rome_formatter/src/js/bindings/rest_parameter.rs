@@ -2,8 +2,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsRestParameter;
-use rslint_syntax::JsRestParameterFields;
+use rome_js_syntax::JsRestParameter;
+use rome_js_syntax::JsRestParameterFields;
 
 impl ToFormatElement for JsRestParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

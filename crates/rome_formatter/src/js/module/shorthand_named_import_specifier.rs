@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsShorthandNamedImportSpecifier;
-use rslint_syntax::JsShorthandNamedImportSpecifierFields;
+use rome_js_syntax::JsShorthandNamedImportSpecifier;
+use rome_js_syntax::JsShorthandNamedImportSpecifierFields;
 
 impl ToFormatElement for JsShorthandNamedImportSpecifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

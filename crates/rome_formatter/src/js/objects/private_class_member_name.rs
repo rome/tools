@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsPrivateClassMemberName;
-use rslint_syntax::JsPrivateClassMemberNameFields;
+use rome_js_syntax::JsPrivateClassMemberName;
+use rome_js_syntax::JsPrivateClassMemberNameFields;
 
 impl ToFormatElement for JsPrivateClassMemberName {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

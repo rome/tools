@@ -8,12 +8,12 @@ mod parse_lists;
 mod parse_recovery;
 mod parsed_syntax;
 pub(crate) mod single_token_parse_recovery;
-use rslint_syntax::{JsSyntaxKind, TextRange};
+use rome_js_syntax::{JsSyntaxKind, TextRange};
 
 use drop_bomb::DebugDropBomb;
+use rome_js_syntax::JsSyntaxKind::EOF;
 use rslint_errors::Diagnostic;
 use rslint_lexer::Token;
-use rslint_syntax::JsSyntaxKind::EOF;
 use std::ops::Range;
 
 pub use parse_error::*;
@@ -73,7 +73,7 @@ impl ParserProgress {
 ///     tokenize,
 /// };
 /// use rslint_parser::syntax::expr::parse_expression_snipped;
-/// use rslint_syntax::{JsExpressionSnipped, AstNode, SyntaxNode, JsParenthesizedExpression, JsAnyExpression};
+/// use rome_js_syntax::{JsExpressionSnipped, AstNode, SyntaxNode, JsParenthesizedExpression, JsAnyExpression};
 ///
 /// let source = "(void b)";
 ///
@@ -645,8 +645,8 @@ pub struct Checkpoint {
 #[cfg(test)]
 mod tests {
     use crate::{Parser, SourceType, TokenSource};
+    use rome_js_syntax::JsSyntaxKind;
     use rslint_lexer::Token;
-    use rslint_syntax::JsSyntaxKind;
 
     #[test]
     #[should_panic(

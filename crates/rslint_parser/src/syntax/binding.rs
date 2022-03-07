@@ -9,9 +9,9 @@ use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDef
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{ParsedSyntax, Parser, SyntaxFeature};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 use rslint_errors::{Diagnostic, Span};
-use rslint_syntax::{JsSyntaxKind::*, *};
 use std::ops::Range;
 
 pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {

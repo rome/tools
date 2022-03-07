@@ -1,8 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::utils::format_initializer_clause;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::JsVariableDeclarator;
-use rslint_syntax::JsVariableDeclaratorFields;
+use rome_js_syntax::JsVariableDeclarator;
+use rome_js_syntax::JsVariableDeclaratorFields;
 
 impl ToFormatElement for JsVariableDeclarator {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

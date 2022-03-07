@@ -9,7 +9,7 @@ repository = "https://github.com/rslint/rslint"
 
 [dependencies]
 rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
-rslint_syntax = { path = "../rslint_syntax", version = "0.1" }
+rome_js_syntax = { path = "../rome_js_syntax", version = "0.1" }
 rslint_lexer = { path = "../rslint_lexer", version = "0.2", features = ["highlight"] }
 rome_rowan = { path = "../rome_rowan", version = "0.0.0" }
 drop_bomb = "0.1.5"

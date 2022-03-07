@@ -12,8 +12,8 @@ use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{Checkpoint, CompletedMarker, Marker, Parser};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rslint_errors::{Diagnostic, Span};
-use rslint_syntax::{JsSyntaxKind::*, *};
 use std::ops::Range;
 
 // test assignment_target

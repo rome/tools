@@ -7,8 +7,8 @@ use crate::{
     Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsDefaultClause;
-use rslint_syntax::JsDefaultClauseFields;
+use rome_js_syntax::JsDefaultClause;
+use rome_js_syntax::JsDefaultClauseFields;
 
 impl ToFormatElement for JsDefaultClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

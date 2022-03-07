@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::TsExportDeclareClause;
-use rslint_syntax::TsExportDeclareClauseFields;
+use rome_js_syntax::TsExportDeclareClause;
+use rome_js_syntax::TsExportDeclareClauseFields;
 
 impl ToFormatElement for TsExportDeclareClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

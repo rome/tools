@@ -1,7 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::JsAnyLiteralExpression;
+use rome_js_syntax::JsAnyLiteralExpression;
 impl ToFormatElement for JsAnyLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {

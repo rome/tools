@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsStaticMemberAssignment;
-use rslint_syntax::JsStaticMemberAssignmentFields;
+use rome_js_syntax::JsStaticMemberAssignment;
+use rome_js_syntax::JsStaticMemberAssignmentFields;
 
 impl ToFormatElement for JsStaticMemberAssignment {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

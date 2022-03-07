@@ -1,13 +1,13 @@
 use crate::{parse, parse_module, Parse, SourceType};
 use expect_test::expect_file;
+use rome_js_syntax::{
+    AstNode, JsCallArguments, JsLogicalExpression, SyntaxNode, SyntaxNodeExt, SyntaxToken,
+};
+use rome_js_syntax::{JsAnyRoot, JsSyntaxKind};
 use rome_rowan::{SyntaxKind, TextSize};
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::{file::SimpleFiles, Emitter};
-use rslint_syntax::{
-    AstNode, JsCallArguments, JsLogicalExpression, SyntaxNode, SyntaxNodeExt, SyntaxToken,
-};
-use rslint_syntax::{JsAnyRoot, JsSyntaxKind};
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
@@ -187,7 +187,7 @@ fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
 
 #[test]
 pub fn test_trivia_attached_to_tokens() {
-    use rslint_syntax::SyntaxNodeExt;
+    use rome_js_syntax::SyntaxNodeExt;
 
     let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
     let m = parse_module(text, 0);

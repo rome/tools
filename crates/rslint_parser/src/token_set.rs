@@ -1,4 +1,4 @@
-use rslint_syntax::JsSyntaxKind;
+use rome_js_syntax::JsSyntaxKind;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct TokenSet([u128; 2]);

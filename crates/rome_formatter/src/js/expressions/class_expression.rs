@@ -1,6 +1,6 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::{JsAnyClass, JsClassExpression};
+use rome_js_syntax::{JsAnyClass, JsClassExpression};
 
 impl ToFormatElement for JsClassExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsNullLiteralExpression;
-use rslint_syntax::JsNullLiteralExpressionFields;
+use rome_js_syntax::JsNullLiteralExpression;
+use rome_js_syntax::JsNullLiteralExpressionFields;
 
 impl ToFormatElement for JsNullLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

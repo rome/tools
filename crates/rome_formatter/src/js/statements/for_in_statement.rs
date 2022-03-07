@@ -1,4 +1,4 @@
-use rslint_syntax::JsForInStatement;
+use rome_js_syntax::JsForInStatement;
 
 use crate::formatter_traits::FormatTokenAndNode;
 
@@ -7,7 +7,7 @@ use crate::{
     format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_syntax::JsForInStatementFields;
+use rome_js_syntax::JsForInStatementFields;
 
 impl ToFormatElement for JsForInStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

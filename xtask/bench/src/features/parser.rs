@@ -1,9 +1,9 @@
 use crate::BenchmarkSummary;
 use itertools::Itertools;
+use rome_js_syntax::JsAnyRoot;
 use rslint_errors::file::SimpleFile;
 use rslint_errors::{Diagnostic, Emitter, Severity};
 use rslint_parser::{Parse, SourceType};
-use rslint_syntax::JsAnyRoot;
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
 use std::time::Duration;

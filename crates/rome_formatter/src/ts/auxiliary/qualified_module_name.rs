@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_syntax::TsQualifiedModuleName;
-use rslint_syntax::TsQualifiedModuleNameFields;
+use rome_js_syntax::TsQualifiedModuleName;
+use rome_js_syntax::TsQualifiedModuleNameFields;
 
 impl ToFormatElement for TsQualifiedModuleName {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -5,8 +5,8 @@ use crate::{
     ToFormatElement,
 };
 
-use rslint_syntax::JsNamedImportSpecifier;
-use rslint_syntax::JsNamedImportSpecifierFields;
+use rome_js_syntax::JsNamedImportSpecifier;
+use rome_js_syntax::JsNamedImportSpecifierFields;
 
 impl ToFormatElement for JsNamedImportSpecifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

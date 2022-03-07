@@ -2,7 +2,7 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::{TsPropertyParameter, TsPropertyParameterFields};
+use rome_js_syntax::{TsPropertyParameter, TsPropertyParameterFields};
 
 impl ToFormatElement for TsPropertyParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

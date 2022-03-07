@@ -2,7 +2,7 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::TsTypeConstraintClause;
+use rome_js_syntax::TsTypeConstraintClause;
 
 impl ToFormatElement for TsTypeConstraintClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -2,8 +2,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::TsExternalModuleDeclaration;
-use rslint_syntax::TsExternalModuleDeclarationFields;
+use rome_js_syntax::TsExternalModuleDeclaration;
+use rome_js_syntax::TsExternalModuleDeclarationFields;
 
 impl ToFormatElement for TsExternalModuleDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

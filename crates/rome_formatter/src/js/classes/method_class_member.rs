@@ -5,8 +5,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_syntax::JsMethodClassMember;
-use rslint_syntax::JsMethodClassMemberFields;
+use rome_js_syntax::JsMethodClassMember;
+use rome_js_syntax::JsMethodClassMemberFields;
 
 impl ToFormatElement for JsMethodClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

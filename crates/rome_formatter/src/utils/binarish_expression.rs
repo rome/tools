@@ -4,8 +4,8 @@ use crate::{
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent, join_elements,
     soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_syntax::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
-use rslint_syntax::{
+use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use rome_js_syntax::{
     JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsLogicalExpression,
     JsLogicalExpressionFields,
 };

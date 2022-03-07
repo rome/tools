@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_syntax::JsDefaultImportSpecifier;
-use rslint_syntax::JsDefaultImportSpecifierFields;
+use rome_js_syntax::JsDefaultImportSpecifier;
+use rome_js_syntax::JsDefaultImportSpecifierFields;
 
 impl ToFormatElement for JsDefaultImportSpecifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
