@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: styled-components.js
 
 ---
@@ -470,10 +470,12 @@ const bar = styled.div`
   height: 40px;
   width: 40px;
 
-  ${(props) =>
-  (props.complete || props.inProgress) && css`
+  ${
+  (props) =>
+    (props.complete || props.inProgress) && css`
       border-color: rgba(var(--green-rgb), 0.15);
-    `}
+    `
+}
 
   div {
     background-color: var(--purpleTT);
@@ -482,36 +484,44 @@ const bar = styled.div`
     color: var(--purpleTT);
     display: inline-flex;
 
-    ${(props) =>
-  props.complete && css`
+    ${
+  (props) =>
+    props.complete && css`
         background-color: var(--green);
         border-width: 7px;
-      `}
+      `
+}
 
-    ${(props) =>
-  (props.complete || props.inProgress) && css`
+    ${
+  (props) =>
+    (props.complete || props.inProgress) && css`
         border-color: var(--green);
-      `}
+      `
+}
   }
 `;
 
 const A = styled.a`
   display: inline-block;
   color: #fff;
-  ${(props) =>
-  props.a && css`
+  ${
+  (props) =>
+    props.a && css`
     display: none;
-  `}
+  `
+}
    height: 30px;
 `;
 
 const Foo = styled.p`
   max-width: 980px;
-  ${mediaBreakpointOnlyXs`
+  ${
+  mediaBreakpointOnlyXs`
     && {
       font-size: 0.8rem;
     }
-  `}
+  `
+}
 
   &.bottom {
     margin-top: 3rem;

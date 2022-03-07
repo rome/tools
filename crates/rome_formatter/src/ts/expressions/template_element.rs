@@ -1,20 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::utils::{format_template_literal, TemplateElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::TsTemplateElement;
-use rslint_parser::ast::TsTemplateElementFields;
 
 impl ToFormatElement for TsTemplateElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let TsTemplateElementFields {
-            dollar_curly_token,
-            ty,
-            r_curly_token,
-        } = self.as_fields();
-
-        Ok(format_elements![
-            dollar_curly_token.format(formatter)?,
-            ty.format(formatter)?,
-            r_curly_token.format(formatter)?,
-        ])
+        format_template_literal(TemplateElement::Ts(self.clone()), formatter)
     }
 }

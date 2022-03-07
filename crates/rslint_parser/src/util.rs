@@ -160,7 +160,7 @@ pub trait SyntaxNodeExt {
     fn contains_comments(&self) -> bool {
         self.tokens()
             .iter()
-            .any(|tok| tok.has_trailing_comments() || tok.has_leading_comments())
+            .any(|tok| dbg!(tok).has_trailing_comments() || tok.has_leading_comments())
     }
 
     /// Whether the node contains trailing comments.

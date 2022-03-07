@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: template-literal.js
 
 ---
@@ -24,14 +24,19 @@ d //comment
 # Output
 ```js
 `
-${a}
+${
+  a // comment
+}
 
-${b}
+${b /* comment */ }
 
-${c}
+${ /* comment */ c /* comment */ }
 
-${d};
-`; // comment /* comment */ /* comment */ /* comment */ // comment //comment
+${
+  // comment
+  d //comment
+};
+`;
 
 ```
 

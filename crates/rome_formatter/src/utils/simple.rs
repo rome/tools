@@ -62,7 +62,7 @@ pub(crate) fn is_simple_expression(node: JsAnyExpression) -> SyntaxResult<bool> 
 
 /// Returns true if the passed [JsAnyFunction] does not have any comment, type
 /// parameters, return type annotation and simple parameters (see [is_simple_function_parameters])
-fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult<bool> {
+pub(crate) fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult<bool> {
     if let Some(token) = func.async_token() {
         if token_has_comments(token) {
             return Ok(false);
