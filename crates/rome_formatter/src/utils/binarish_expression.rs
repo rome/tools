@@ -287,10 +287,15 @@ fn should_flatten_logical_expression(node: &JsLogicalExpression) -> FormatResult
 ///
 /// Check the documentation of  [split_node_to_flatten_items] for a better explanation of the payload
 struct SplitToElementParams<'a> {
+    /// Current instance of the formatter
     formatter: &'a Formatter,
+    /// The left property of the current binaryish expression
     left: JsAnyExpression,
+    /// The right property of the current binaryish expression
     right: JsAnyExpression,
+    /// The token of the operator of the current binaryish expression
     operator: SyntaxToken,
+    /// The  token of the operator of the previous binaryish expression, if it exists
     previous_operator: Option<SyntaxToken>,
 }
 
@@ -484,18 +489,15 @@ impl FlattenItems {
         let should_not_indent = should_not_indent_if_parent_indents(&self.current_node);
         let should_ident_if_parent_inlines = should_indent_if_parent_inlines(&self.current_node);
 
-        if is_inside_parenthesis {
-            Ok(join_elements(soft_line_break_or_space(), groups))
+        let formatted = if is_inside_parenthesis {
+            join_elements(soft_line_break_or_space(), groups)
         } else if should_not_indent {
-            Ok(group_elements(join_elements(
-                soft_line_break_or_space(),
-                groups,
-            )))
+            group_elements(join_elements(soft_line_break_or_space(), groups))
         } else if should_ident_if_parent_inlines {
             // in order to correctly break, we need to check if the parent created a group
             // that breaks or not. In order to do that , we need to create two conditional groups
             // that behave differently depending on the situation
-            Ok(format_elements![
+            format_elements![
                 // the parent has created a group that breaks, then we create an indentation
                 if_group_breaks(indent(format_elements![
                     hard_line_break(),
@@ -506,7 +508,7 @@ impl FlattenItems {
                     soft_line_break_or_space(),
                     groups,
                 )))
-            ])
+            ]
         } else {
             // if none of the previous conditions is met,
             // we take take out the first element from the rest of group, then we hard group the "head"
@@ -514,7 +516,7 @@ impl FlattenItems {
             let rest = groups.split_off(1);
             let head = groups;
 
-            Ok(format_elements![
+            format_elements![
                 hard_group_elements(join_elements(soft_line_break_or_space(), head,)),
                 group_elements(format_elements![
                     if_group_breaks(indent(format_elements![
@@ -526,8 +528,10 @@ impl FlattenItems {
                         rest,
                     )),)
                 ])
-            ])
-        }
+            ]
+        };
+
+        Ok(formatted)
     }
 }
 

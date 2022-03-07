@@ -606,11 +606,11 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"
-        `something ${ () => { var hey; const looooooooooong_expression = "loooooooooong_expression" }} something else ${ ehy }`;
+        let src = r#"(list || list2)?.length
 "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);
+        dbg!(&tree.syntax());
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
             result.as_code(),

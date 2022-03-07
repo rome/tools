@@ -70,7 +70,7 @@ impl JsLiteralMemberName {
 }
 
 /// A binary operation applied to two expressions
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Ord, PartialOrd)]
 pub enum JsBinaryOperation {
     /// `<`
     LessThan,
@@ -157,7 +157,7 @@ impl JsBinaryExpression {
     }
 }
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Ord, PartialOrd)]
 pub enum JsLogicalOperation {
     /// `??`
     NullishCoalescing,
