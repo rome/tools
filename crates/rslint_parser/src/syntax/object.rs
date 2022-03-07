@@ -249,7 +249,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
 
-    p.bump_remap(T![get]);
+    p.expect_keyword(T![get], "get");
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
@@ -281,7 +281,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
 
-    p.bump_remap(T![set]);
+    p.expect_keyword(T![set], "set");
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
@@ -404,7 +404,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
     //  async *foo() {}
     // }
     if is_async {
-        p.bump_remap(T![async]);
+        p.eat_keyword(T![async], "async");
         flags |= SignatureFlags::ASYNC;
     }
 

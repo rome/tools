@@ -25,7 +25,8 @@ v;
 from;
 "mod";
 export
-a, * as b
+a, * as
+b;
 from;
 "mod";
 export
@@ -83,22 +84,23 @@ error[SyntaxError]: expected a class, a function, or a variable declaration but 
 3 │ export a, * as b from 'mod';
   │        ^ Expected a class, a function, or a variable declaration here
 
-error[SyntaxError]: Expected an expression for the right hand side of a `*`, but found an operator instead
-  ┌─ export.js:3:13
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ export.js:3:16
   │
 3 │ export a, * as b from 'mod';
-  │           - ^^ But this operator was encountered instead
-  │           │  
-  │           This operator requires a right hand side value
+  │        --------^
+  │        │       │
+  │        │       An explicit or implicit semicolon is expected here...
+  │        ...Which is required to end this statement
 
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ export.js:3:18
   │
 3 │ export a, * as b from 'mod';
-  │        ----------^^^^
-  │        │         │
-  │        │         An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+  │                --^^^^
+  │                │ │
+  │                │ An explicit or implicit semicolon is expected here...
+  │                ...Which is required to end this statement
 
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ export.js:3:23

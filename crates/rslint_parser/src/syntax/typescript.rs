@@ -72,7 +72,7 @@ pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
     // class B implements C {}
 
     let m = p.start();
-    p.expect(T![implements]);
+    p.expect_keyword(T![implements], "implements");
     expect_ts_type_list(p, "implements");
 
     Present(m.complete(p, TS_IMPLEMENTS_CLAUSE))
@@ -165,8 +165,8 @@ pub(crate) fn expect_ts_index_signature_member(
     parent: MemberParent,
 ) -> CompletedMarker {
     while is_nth_at_modifier(p, 0, false) {
-        if p.at(T![readonly]) {
-            p.bump_remap(T![readonly]);
+        if p.eat_keyword(T![readonly], "readonly") {
+            continue;
         } else {
             p.error(ts_member_cannot_be(
                 p,

@@ -179,11 +179,13 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
 
     let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
     if in_async {
-        p.bump_remap(T![async]);
+        // test_err function_escaped_async
+        // void \u0061sync function f(){}
+        p.eat_keyword(T![async], "async");
         flags |= SignatureFlags::ASYNC;
     }
 
-    p.expect(T![function]);
+    p.expect_keyword(T![function], "function");
     let generator_range = if p.eat(T![*]) {
         flags |= SignatureFlags::GENERATOR;
         p.tokens.last_tok().map(|t| t.range())
@@ -347,10 +349,10 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
             p.err_builder("'async' modifier cannot be used in an ambient context.")
                 .primary(p.cur_tok().range(), ""),
         );
-        p.bump_remap(T![async]);
+        p.bump(T![async]);
     }
 
-    p.expect(T![function]);
+    p.expect_keyword(T![function], "function");
     parse_binding(p).or_add_diagnostic(p, expected_binding);
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
@@ -446,7 +448,10 @@ fn try_parse_parenthesized_arrow_function_head(
     ambiguity: Ambiguity,
 ) -> Result<(Marker, SignatureFlags), Marker> {
     let m = p.start();
-    let flags = if p.eat(T![async]) {
+
+    // test_err arrow_escaped_async
+    // \u0061sync () => {}
+    let flags = if p.eat_keyword(T![async], "async") {
         SignatureFlags::ASYNC
     } else {
         SignatureFlags::empty()
@@ -693,7 +698,7 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
     let is_async = p.at(T![async]) && is_nth_at_identifier_binding(p, 1);
 
     let flags = if is_async {
-        p.expect(T![async]);
+        p.eat_keyword(T![async], "async");
         SignatureFlags::ASYNC
     } else {
         SignatureFlags::empty()
@@ -840,7 +845,7 @@ pub(crate) fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
     }
 
     let parameter = p.start();
-    p.bump(T![this]);
+    p.expect_keyword(T![this], "this");
     parse_ts_type_annotation(p).ok();
     Present(parameter.complete(p, TS_THIS_PARAMETER))
 }
@@ -1080,7 +1085,6 @@ pub(super) fn parse_parameters_list(
                         T![await],
                         T![yield],
                         T![this],
-                        // TODO include contextual keywords
                         T![,],
                         T!['['],
                         T![...],

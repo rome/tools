@@ -300,7 +300,7 @@ fn is_assign_token(kind: JsSyntaxKind) -> bool {
 // }
 fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> CompletedMarker {
     let m = p.start();
-    p.expect(T![yield]);
+    p.expect_keyword(T![yield], "yield");
 
     if !is_semi(p, 0) && (p.at(T![*]) || is_at_expression(p)) {
         let argument = p.start();
@@ -473,13 +473,24 @@ fn parse_binary_or_logical_expression_recursive(
         }
 
         let m = left.precede(p);
-        if op == T![>>] {
-            p.bump_multiple(2, T![>>]);
-        } else if op == T![>>>] {
-            p.bump_multiple(3, T![>>>]);
-        } else {
-            p.bump_remap(op);
-        }
+        match op {
+            T![>>] => {
+                p.bump_multiple(2, T![>>]);
+            }
+            T![>>>] => {
+                p.bump_multiple(3, T![>>>]);
+            }
+            T![in] => {
+                p.expect_keyword(T![in], "in");
+            }
+            T![as] => {
+                p.expect_keyword(T![as], "as");
+            }
+            T![instanceof] => {
+                p.expect_keyword(T![instanceof], "instanceof");
+            }
+            _ => p.bump_remap(op),
+        };
 
         // test ts ts_as_expression
         // let x: any = "string";
@@ -506,8 +517,14 @@ fn parse_binary_or_logical_expression_recursive(
 
         // This is a hack to allow us to effectively recover from `foo + / bar`
         let right = if OperatorPrecedence::try_from_binary_operator(p.cur()).is_ok()
-            && !p.at_ts(token_set![T![-], T![+], T![<]])
-        {
+            && !p.at_ts(token_set![
+                T![-],
+                T![+],
+                T![<],
+                T![as],
+                T![in],
+                T![instanceof]
+            ]) {
             let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(op_tok)))
 				.secondary(op_tok.range(), "This operator requires a right hand side value")
 				.primary(p.cur_tok().range(), "But this operator was encountered instead");
@@ -669,7 +686,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump_any();
+    p.expect_keyword(T![new], "new");
 
     // new.target
     if p.at(T![.]) && p.token_src(p.nth_tok(1)) == "target" {
@@ -727,7 +744,7 @@ fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let super_marker = p.start();
-    p.expect(T![super]);
+    p.expect_keyword(T![super], "super");
     let mut super_expression = super_marker.complete(p, JS_SUPER_EXPRESSION);
 
     if p.at(T![?.]) {
@@ -1091,7 +1108,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
             // this
             // this.foo
             let m = p.start();
-            p.bump_any();
+            p.expect_keyword(T![this], "this");
             m.complete(p, JS_THIS_EXPRESSION)
         }
         T![class] => {
@@ -1346,7 +1363,7 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
         identifier.change_to_unknown(p);
     }
 
-    return Present(identifier);
+    Present(identifier)
 }
 
 #[inline]
@@ -1677,7 +1694,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         // async function test() {}
         // await test();
         let m = p.start();
-        p.bump(T![await]);
+        p.expect_keyword(T![await], "await");
 
         parse_unary_expr(p, context)
             .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
@@ -1752,7 +1769,14 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
     if p.at_ts(UNARY_SINGLE) {
         let m = p.start();
         let op = p.cur();
-        p.bump_any();
+
+        let is_delete = op == T![delete];
+
+        if is_delete {
+            p.expect_keyword(T![delete], "delete");
+        } else {
+            p.bump_any();
+        }
 
         // test unary_delete
         // delete obj.key;
@@ -1803,7 +1827,6 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         // delete (obj?.inner.#member);
         // delete (obj.key, obj.#key);
 
-        let is_delete = op == T![delete];
         let mut kind = JS_UNARY_EXPRESSION;
 
         let res = if is_delete {

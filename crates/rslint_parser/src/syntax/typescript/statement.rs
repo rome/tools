@@ -172,10 +172,10 @@ pub(crate) fn parse_ts_enum_declaration(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.eat(T![const]);
+    p.eat_keyword(T![const], "const");
 
     let enum_token_range = p.cur_tok().range();
-    p.expect(T![enum]);
+    p.expect_keyword(T![enum], "enum");
     parse_ts_enum_id(p, enum_token_range);
 
     // test_err ts enum_no_l_curly
@@ -199,7 +199,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
 
     let start = p.cur_tok().range().start;
     let m = p.start();
-    p.expect(T![type]);
+    p.expect_keyword(T![type], "type");
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_parameters(p).ok();
     p.expect(T![=]);
@@ -219,7 +219,7 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
 
     let stmt_start_pos = p.cur_tok().start();
     let m = p.start();
-    p.expect(T![declare]);
+    p.expect_keyword(T![declare], "declare");
 
     p.with_state(EnterAmbientContext, |p| {
         parse_declaration_clause(p, stmt_start_pos)
@@ -289,7 +289,7 @@ pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect(T![interface]);
+    p.expect_keyword(T![interface], "interface");
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_parameters(p).ok();
     eat_interface_heritage_clause(p);
@@ -348,7 +348,7 @@ fn parse_ts_extends_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump(T![extends]);
+    p.expect_keyword(T![extends], "extends");
     expect_ts_type_list(p, "extends");
     Present(m.complete(p, TS_EXTENDS_CLAUSE))
 }
@@ -433,8 +433,8 @@ fn parse_ts_namespace_or_module_declaration_clause(
 
     let m = p.start();
 
-    if !p.eat(T![namespace]) {
-        p.expect(T![module]);
+    if !p.eat_keyword(T![namespace], "namespace") {
+        p.expect_keyword(T![module], "module");
 
         if p.at(JS_STRING_LITERAL) {
             parse_module_source(p).expect("expected module source to be present because parser is positioned at a string literal");
@@ -500,7 +500,7 @@ fn parse_ts_global_declaration(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect(T![global]);
+    p.expect_keyword(T![global], "global");
     parse_ts_module_block(p).or_add_diagnostic(p, |_, _| expected_token(T!['{']));
     Present(m.complete(p, TS_GLOBAL_DECLARATION))
 }
@@ -520,7 +520,7 @@ pub(crate) fn parse_ts_import_equals_declaration_rest(
     stmt_start_pos: usize,
 ) -> CompletedMarker {
     if is_nth_at_identifier_binding(p, 1) {
-        p.eat(T![type]);
+        p.eat_keyword(T![type], "type");
     }
 
     parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
@@ -544,7 +544,7 @@ fn parse_ts_external_module_reference(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump_remap(T![require]);
+    p.expect_keyword(T![require], "require");
     p.expect(T!['(']);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     p.expect(T![')']);

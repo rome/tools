@@ -156,7 +156,7 @@ fn parse_ts_type_constraint_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump(T![extends]);
+    p.expect_keyword(T![extends], "extends");
 
     parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_TYPE_CONSTRAINT_CLAUSE))
@@ -217,7 +217,7 @@ fn parse_ts_type_impl(p: &mut Parser, conditional_type: ConditionalType) -> Pars
                 // type C = A extends (B extends A ? number : string) ? void : number;
                 if !p.has_linebreak_before_n(0) && p.at(T![extends]) {
                     let m = left.precede(p);
-                    p.bump(T![extends]);
+                    p.expect_keyword(T![extends], "extends");
                     parse_ts_type_impl(p, ConditionalType::Disallowed)
                         .or_add_diagnostic(p, expected_ts_type);
                     p.expect(T![?]);
@@ -295,34 +295,46 @@ fn parse_ts_union_or_intersection_type(
     p: &mut Parser,
     ty_kind: IntersectionOrUnionType,
 ) -> ParsedSyntax {
-    let m = p.start();
-
-    let has_leading = p.at(ty_kind.operator());
-    if has_leading {
+    // Leading operator: `& A & B`
+    if p.at(ty_kind.operator()) {
+        let m = p.start();
         p.bump(ty_kind.operator());
-    };
+        let list = p.start();
+        ty_kind
+            .parse_element(p)
+            .or_add_diagnostic(p, expected_ts_type);
 
-    let list = p.start();
-    let first = ty_kind.parse_element(p);
-
-    if has_leading || p.at(ty_kind.operator()) {
-        first.or_add_diagnostic(p, expected_ts_type);
-
-        while p.at(ty_kind.operator()) {
-            p.bump(ty_kind.operator());
-
-            ty_kind
-                .parse_element(p)
-                .or_add_diagnostic(p, expected_ts_type);
-        }
+        eat_ts_union_or_intersection_type_elements(p, ty_kind);
 
         list.complete(p, ty_kind.list_kind());
 
         Present(m.complete(p, ty_kind.kind()))
     } else {
-        list.abandon(p);
-        m.abandon(p);
-        first
+        let first = ty_kind.parse_element(p);
+
+        if p.at(ty_kind.operator()) {
+            let list = first.precede(p);
+
+            eat_ts_union_or_intersection_type_elements(p, ty_kind);
+
+            let completed_list = list.complete(p, ty_kind.list_kind());
+            let m = completed_list.precede(p);
+            Present(m.complete(p, ty_kind.kind()))
+        } else {
+            // Not a union or intersection type
+            first
+        }
+    }
+}
+
+#[inline]
+fn eat_ts_union_or_intersection_type_elements(p: &mut Parser, ty_kind: IntersectionOrUnionType) {
+    while p.at(ty_kind.operator()) {
+        p.bump(ty_kind.operator());
+
+        ty_kind
+            .parse_element(p)
+            .or_add_diagnostic(p, expected_ts_type);
     }
 }
 
@@ -332,7 +344,7 @@ fn parse_ts_primary_type(p: &mut Parser) -> ParsedSyntax {
     // type B = { a: infer U; b: infer U};
     if p.at(T![infer]) {
         let m = p.start();
-        p.bump_remap(T![infer]);
+        p.expect_keyword(T![infer], "infer");
         parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_identifier);
         return Present(m.complete(p, TS_INFER_TYPE));
     }
@@ -405,7 +417,7 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
         T!['['] => parse_ts_tuple_type(p),
         T![void] => {
             let m = p.start();
-            p.bump(T![void]);
+            p.expect_keyword(T![void], "void");
             Present(m.complete(p, TS_VOID_TYPE))
         }
         JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | T![null] => {
@@ -424,23 +436,23 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
         T![import] => parse_ts_import_type(p),
         _ => {
             if !p.nth_at(1, T![.]) {
-                let literal_type_kind = match p.cur() {
-                    T![any] => Some(TS_ANY_TYPE),
-                    T![unknown] => Some(TS_UNKNOWN_TYPE),
-                    T![number] => Some(TS_NUMBER_TYPE),
-                    T![object] => Some(TS_NON_PRIMITIVE_TYPE),
-                    T![boolean] => Some(TS_BOOLEAN_TYPE),
-                    T![bigint] => Some(TS_BIGINT_TYPE),
-                    T![string] => Some(TS_STRING_TYPE),
-                    T![symbol] => Some(TS_SYMBOL_TYPE),
-                    T![undefined] => Some(TS_UNDEFINED_TYPE),
-                    T![never] => Some(TS_NEVER_TYPE),
+                let mapping = match p.cur() {
+                    T![any] => Some((TS_ANY_TYPE, "any")),
+                    T![unknown] => Some((TS_UNKNOWN_TYPE, "unknown")),
+                    T![number] => Some((TS_NUMBER_TYPE, "number")),
+                    T![object] => Some((TS_NON_PRIMITIVE_TYPE, "object")),
+                    T![boolean] => Some((TS_BOOLEAN_TYPE, "boolean")),
+                    T![bigint] => Some((TS_BIGINT_TYPE, "bigint")),
+                    T![string] => Some((TS_STRING_TYPE, "string")),
+                    T![symbol] => Some((TS_SYMBOL_TYPE, "symbol")),
+                    T![undefined] => Some((TS_UNDEFINED_TYPE, "undefined")),
+                    T![never] => Some((TS_NEVER_TYPE, "never")),
                     _ => None,
                 };
 
-                if let Some(literal_type_kind) = literal_type_kind {
+                if let Some((literal_type_kind, name)) = mapping {
                     let m = p.start();
-                    p.bump_any();
+                    p.expect_keyword(p.cur(), name);
                     return Present(m.complete(p, literal_type_kind));
                 }
             }
@@ -496,7 +508,7 @@ fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump(T![typeof]);
+    p.expect_keyword(T![typeof], "typeof");
     parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
 
     Present(m.complete(p, TS_TYPEOF_TYPE))
@@ -517,7 +529,7 @@ fn parse_ts_this_type(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump(T![this]);
+    p.expect_keyword(T![this], "this");
     Present(m.complete(p, TS_THIS_TYPE))
 }
 
@@ -579,7 +591,7 @@ fn parse_ts_mapped_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_mapped_type_readonly_modifier_clause(p).ok();
     p.expect(T!['[']);
     parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_ts_type_parameter);
-    p.expect(T![in]);
+    p.expect_keyword(T![in], "in");
     parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
     parse_ts_mapped_type_as_clause(p).ok();
     p.expect(T![']']);
@@ -605,12 +617,12 @@ fn parse_ts_mapped_type_as_clause(p: &mut Parser) -> ParsedSyntax {
 fn parse_ts_mapped_type_readonly_modifier_clause(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![readonly]) {
         let m = p.start();
-        p.bump_remap(T![readonly]);
+        p.expect_keyword(T![readonly], "readonly");
         Present(m.complete(p, TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE))
     } else if p.at(T![+]) || p.at(T![-]) {
         let m = p.start();
         p.bump_any();
-        p.expect(T![readonly]);
+        p.expect_keyword(T![readonly], "readonly");
         Present(m.complete(p, TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE))
     } else {
         Absent
@@ -646,8 +658,8 @@ fn parse_ts_import_type(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.eat(T![typeof]);
-    p.expect(T![import]);
+    p.eat_keyword(T![typeof], "typeof");
+    p.expect_keyword(T![import], "import");
     p.expect(T!['(']);
     p.expect(JS_STRING_LITERAL);
     p.expect(T![')']);
@@ -750,7 +762,7 @@ fn parse_ts_property_or_method_signature_type_member(p: &mut Parser) -> ParsedSy
     let m = p.start();
     let readonly_range = if p.at(T![readonly]) && is_nth_at_type_member_name(p, 1) {
         let range = p.cur_tok().range();
-        p.bump(T![readonly]);
+        p.expect_keyword(T![readonly], "readonly");
         Some(range)
     } else {
         None
@@ -807,7 +819,7 @@ fn parse_ts_construct_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump(T![new]);
+    p.expect_keyword(T![new], "new");
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
@@ -830,7 +842,7 @@ fn parse_ts_getter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump(T![get]);
+    p.expect_keyword(T![get], "get");
     parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
     p.expect(T!['(']);
     p.expect(T![')']);
@@ -852,7 +864,7 @@ fn parse_ts_setter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.bump(T![set]);
+    p.expect_keyword(T![set], "set");
     parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
     p.expect(T!['(']);
     parse_formal_parameter(p, ParameterContext::Setter, ExpressionContext::default())
@@ -1065,8 +1077,8 @@ fn parse_ts_constructor_type(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.eat(T![abstract]);
-    p.expect(T![new]);
+    p.eat_keyword(T![abstract], "abstract");
+    p.expect_keyword(T![new], "new");
 
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
@@ -1167,7 +1179,7 @@ fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
 // type D = () => asserts;
 fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
-    let is_asserts = p.eat(T![asserts]);
+    let is_asserts = p.eat_keyword(T![asserts], "asserts");
 
     parse_ts_this_type(p)
         .or_else(|| parse_reference_identifier(p))
@@ -1175,11 +1187,11 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 
     if is_asserts && p.at(T![is]) {
         let condition = p.start();
-        p.expect(T![is]);
+        p.expect_keyword(T![is], "is");
         parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
         condition.complete(p, TS_ASSERTS_CONDITION);
     } else if !is_asserts {
-        p.expect(T![is]);
+        p.expect_keyword(T![is], "is");
         parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
     }
 

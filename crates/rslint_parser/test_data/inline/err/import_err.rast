@@ -482,14 +482,14 @@ error[SyntaxError]: expected a default import, a namespace import, or a named im
   │       ^ Expected a default import, a namespace import, or a named import here
 
 --
-error[SyntaxError]: expected `AS_KW` but instead found `;`
+error[SyntaxError]: expected `as` but instead found `;`
   ┌─ import_err.js:2:9
   │
 2 │ import *;
   │         ^ unexpected
 
 --
-error[SyntaxError]: expected `FROM_KW` but instead found `,`
+error[SyntaxError]: expected `from` but instead found `,`
   ┌─ import_err.js:3:14
   │
 3 │ import * as c, { a, b } from "c";
@@ -513,14 +513,14 @@ error[SyntaxError]: expected `,` but instead found `+`
   │             ^ unexpected
 
 --
-error[SyntaxError]: expected `AS_KW` but instead found `}`
+error[SyntaxError]: expected `as` but instead found `}`
   ┌─ import_err.js:6:18
   │
 6 │ import { default } from "c";
   │                  ^ unexpected
 
 --
-error[SyntaxError]: expected `AS_KW` but instead found `}`
+error[SyntaxError]: expected `as` but instead found `}`
   ┌─ import_err.js:7:14
   │
 7 │ import { "a" } from "c";
