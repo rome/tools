@@ -468,7 +468,6 @@ pub enum JsSyntaxKind {
     __LAST,
 }
 use self::JsSyntaxKind::*;
-
 impl JsSyntaxKind {
     pub fn is_keyword(self) -> bool {
         match self {
