@@ -64,6 +64,14 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
     if let Some(parent) = parent {
         if matches!(
             parent.kind(),
+            // these are particular nodes where eliding parenthesis would cause
+            // in the semantic change in the code, this means that we can't remove the parenthesis
+            //
+            // For example:
+            // ```ignore
+            // (hey ? bar() : rebar())`Template literal`
+            // ```
+            // Here, we can't remove the parenthesis.
             JsSyntaxKind::TS_AS_EXPRESSION
                 | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION
                 | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
@@ -88,25 +96,25 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
         return Ok(true);
     }
 
+    // Here we handle cases where we have binary/logical expressions.
+    // We want to remove the parenthesis only in cases where `left` and `right` are not other
+    // binary/logical expressions.
+    //
+    // From another point of view, logical/binary expressions with the same operator can stay without
+    // parenthesis.
     match expression {
         JsAnyExpression::JsBinaryExpression(expression) => {
             let left = expression.left()?;
             let right = expression.right()?;
 
-            let simple =
-                not_binaryish_expression(left.syntax()) && not_binaryish_expression(right.syntax());
-
-            Ok(simple)
+            Ok(not_binaryish_expression(left.syntax()) && not_binaryish_expression(right.syntax()))
         }
 
         JsAnyExpression::JsLogicalExpression(expression) => {
             let left = expression.left()?;
             let right = expression.right()?;
 
-            let simple =
-                not_binaryish_expression(left.syntax()) && not_binaryish_expression(right.syntax());
-
-            Ok(simple)
+            Ok(not_binaryish_expression(left.syntax()) && not_binaryish_expression(right.syntax()))
         }
         _ => Ok(false),
     }
