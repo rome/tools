@@ -102,7 +102,9 @@ const a =
 );
 
 
-let a = ( a  ||  b)  && c;
+let a = a  ||  b  && c;
+
+let foo = one && two || three && four || five && six;
 =============================
 # Outputs
 ## Output 1
@@ -217,8 +219,8 @@ const a = x + y;
 }
 
 if (
-	somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin ||
-	somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
+	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin) ||
+	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin)
 ) {
 }
 
@@ -229,20 +231,24 @@ undefined === function () {
 const b = `${veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar}`;
 
 const a =
-	aa &&
-		bb &&
-		something &&
-		elsewhere &&
-		happy &&
-		thoughts &&
-		somethingsomethingsomethingsomething ||
-	aa &&
-		bb &&
-		something &&
-		elsewhere &&
-		happy &&
-		thoughts &&
-		somethingsomethingsomethingsomething;
+	(
+		aa &&
+			bb &&
+			something &&
+			elsewhere &&
+			happy &&
+			thoughts &&
+			somethingsomethingsomethingsomething
+	) ||
+	(
+		aa &&
+			bb &&
+			something &&
+			elsewhere &&
+			happy &&
+			thoughts &&
+			somethingsomethingsomethingsomething
+	);
 
 lorem && ipsum; // foo
 
@@ -252,5 +258,7 @@ lorem &&
 	// foo
 	(3 + 6 == 9);
 
-let a = (a || b) && c;
+let a = a || (b && c);
+
+let foo = (one && two) || (three && four) || five && six;
 

@@ -122,17 +122,19 @@ prevState =
 
 prevState =
   prevState ||
-    defaultState && {
-      catalogs: [],
-      loadState: LOADED,
-      opened: false,
-      searchQuery: "",
-      selectedCatalog: null,
-    };
+    (
+      defaultState && {
+        catalogs: [],
+        loadState: LOADED,
+        opened: false,
+        searchQuery: "",
+        selectedCatalog: null,
+      }
+    );
 
 prevState =
   prevState ||
-    useDefault && defaultState
+    (useDefault && defaultState) ||
     {
       catalogs: [],
       loadState: LOADED,
@@ -144,10 +146,10 @@ prevState =
 this.steps = steps || [{ name: "mock-module", path: "/nux/mock-module" }];
 
 this.steps =
-  steps || checkStep && [{ name: "mock-module", path: "/nux/mock-module" }];
+  steps || (checkStep && [{ name: "mock-module", path: "/nux/mock-module" }]);
 
 this.steps =
-  steps && checkStep || [{ name: "mock-module", path: "/nux/mock-module" }];
+  (steps && checkStep) || [{ name: "mock-module", path: "/nux/mock-module" }];
 
 const create = () => {
   const result = doSomething();
@@ -161,7 +163,7 @@ const create = () => {
 const create2 = () => {
   const result = doSomething();
   return (
-    shouldReturn && result.ok && result || {
+    (shouldReturn && result.ok && result) || {
       status: "ok",
       createdAt: result.createdAt,
       updatedAt: result.updatedAt,
@@ -171,7 +173,7 @@ const create2 = () => {
 
 const obj = {
   state: shouldHaveState && stateIsOK && { loadState: LOADED, opened: false },
-  loadNext: stateIsOK && hasNext || { skipNext: true },
+  loadNext: (stateIsOK && hasNext) || { skipNext: true },
   loaded: true,
 };
 

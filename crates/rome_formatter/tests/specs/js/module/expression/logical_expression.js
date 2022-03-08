@@ -95,4 +95,6 @@ const a =
 );
 
 
-let a = ( a  ||  b)  && c;
+let a = a  ||  b  && c;
+
+let foo = one && two || three && four || five && six;

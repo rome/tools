@@ -2,13 +2,15 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     concat_elements, empty_element, format_elements, group_elements, hard_group_elements,
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent, join_elements,
-    soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    soft_block_indent, soft_line_break_or_space, space_token, token, FormatElement, FormatResult,
+    Formatter, ToFormatElement,
 };
 use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use rome_js_syntax::{
-    JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsLogicalExpression,
-    JsLogicalExpressionFields,
+    JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperation,
+    JsLogicalExpression, JsLogicalExpressionFields, JsLogicalOperation,
 };
+use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxResult, SyntaxToken};
 use std::fmt::Debug;
 
 /// This function is charge to flat binaryish expressions that have the same precedence of their operators
@@ -130,6 +132,7 @@ fn flatten_expressions(
             // In order to flatten the expression, we have to check if the left node
             // is a binary expression with the same operator.
             // If the two operators are not the same, we stop the flattening.
+            let current_operator = Operation::Binary(binary_expression.operator_kind()?);
             if should_flatten_binary_expression(&binary_expression)? {
                 flatten_expressions(
                     flatten_items,
@@ -140,7 +143,11 @@ fn flatten_expressions(
                 flatten_items.items.push(FlattenItem::Binary(
                     binary_expression,
                     FlattenItemFormatted {
-                        node_element: right.format(formatter)?,
+                        node_element: format_with_or_without_parenthesis(
+                            current_operator,
+                            right,
+                            formatter,
+                        )?,
                         operator_element: previous_operator.format_or_empty(formatter)?,
                     },
                     has_comments.into(),
@@ -153,6 +160,7 @@ fn flatten_expressions(
                         previous_operator,
                         right,
                         operator,
+                        current_operator,
                     })?;
                 flatten_items.items.push(left_item);
                 flatten_items.items.push(right_item);
@@ -175,6 +183,7 @@ fn flatten_expressions(
             // In order to flatten the expression, we have to check if the left node
             // is a binary expression with the same operator.
             // If the two operators are not the same, we stop the flattening.
+            let current_operator = Operation::Logical(logical_expression.operator_kind()?);
             if should_flatten_logical_expression(&logical_expression)? {
                 flatten_expressions(
                     flatten_items,
@@ -182,10 +191,15 @@ fn flatten_expressions(
                     formatter,
                     Some(operator),
                 )?;
+
                 flatten_items.items.push(FlattenItem::Logical(
                     logical_expression,
                     FlattenItemFormatted {
-                        node_element: right.format(formatter)?,
+                        node_element: format_with_or_without_parenthesis(
+                            current_operator,
+                            right,
+                            formatter,
+                        )?,
                         operator_element: previous_operator.format_or_empty(formatter)?,
                     },
                     has_comments.into(),
@@ -198,6 +212,7 @@ fn flatten_expressions(
                         previous_operator,
                         right,
                         operator,
+                        current_operator,
                     })?;
                 flatten_items.items.push(left_item);
                 flatten_items.items.push(right_item);
@@ -283,6 +298,12 @@ fn should_flatten_logical_expression(node: &JsLogicalExpression) -> FormatResult
     Ok(should_flatten)
 }
 
+#[derive(Debug, Clone, Copy, PartialOrd, Ord, Eq, PartialEq)]
+enum Operation {
+    Logical(JsLogicalOperation),
+    Binary(JsBinaryOperation),
+}
+
 /// Parameters needed for [split_node_to_flatten_items].
 ///
 /// Check the documentation of  [split_node_to_flatten_items] for a better explanation of the payload
@@ -297,6 +318,9 @@ struct SplitToElementParams<'a> {
     operator: SyntaxToken,
     /// The  token of the operator of the previous binaryish expression, if it exists
     previous_operator: Option<SyntaxToken>,
+
+    /// The current operator of the node
+    current_operator: Operation,
 }
 
 /// This function is usually code on the last binary/logical expression of the stack.
@@ -328,16 +352,18 @@ fn split_binaryish_to_flatten_items(
         operator,
         previous_operator,
         right,
+        current_operator,
     } = params;
 
     let right_kind = &right.syntax().kind();
     let right_expression_should_group = right_expression_should_group(right_kind);
 
-    let formatted_left = concat_elements([
-        left.format(formatter)?,
+    let formatted_left = format_elements![
+        format_with_or_without_parenthesis(current_operator, left.clone(), formatter)?,
         space_token(),
         operator.format(formatter)?,
-    ]);
+    ];
+
     let left_item = FlattenItem::Node(
         left.syntax().clone(),
         formatted_left,
@@ -367,14 +393,62 @@ fn split_binaryish_to_flatten_items(
     // logical expression (`||`) is another logical expression.
     // In that case, we call `format_binaryish_expression` from scratch, with its own flatten items.
     let right_item = if right_expression_should_group {
-        let formatted = format_binaryish_expression(right.syntax(), formatter)?;
+        let formatted = format_elements![
+            format_with_or_without_parenthesis(current_operator, right, formatter)?,
+            previous_operator
+        ];
+
         FlattenItem::Group(formatted, has_comments.into())
     } else {
-        let formatted_right = concat_elements([right.format(formatter)?, previous_operator]);
+        let formatted_right = concat_elements([
+            format_with_or_without_parenthesis(current_operator, right.clone(), formatter)?,
+            previous_operator,
+        ]);
         FlattenItem::Node(right.syntax().clone(), formatted_right, has_comments.into())
     };
 
     Ok((left_item, right_item))
+}
+
+fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
+    base: Operation,
+    node: Node,
+    formatter: &Formatter,
+) -> FormatResult<FormatElement> {
+    let compare_to = if let Some(logical) = JsLogicalExpression::cast(node.syntax().clone()) {
+        Some(Operation::Logical(logical.operator_kind()?))
+    } else if let Some(binary) = JsBinaryExpression::cast(node.syntax().clone()) {
+        Some(Operation::Binary(binary.operator_kind()?))
+    } else {
+        None
+    };
+
+    let operation_is_higher = if let Some(compare_to) = compare_to {
+        match (base, compare_to) {
+            (Operation::Logical(base), Operation::Logical(compare_to)) => compare_to > base,
+
+            // Prettier, for some reason, decided that binary expressions with different precedence.
+            // This comments is here for the compatibility reason.
+            // (Operation::Binary(_base), Operation::Binary(_compare_to)) => {
+            //     compare_to > base
+            // }
+            _ => false,
+        }
+    } else {
+        false
+    };
+
+    let formatted = if operation_is_higher {
+        format_elements![group_elements(format_elements![
+            token("("),
+            soft_block_indent(node.format(formatter)?,),
+            token(")"),
+        ]),]
+    } else {
+        format_elements![node.format(formatter)?,]
+    };
+
+    Ok(formatted)
 }
 
 /// This function tells the algorithm if the right part should be a separated group

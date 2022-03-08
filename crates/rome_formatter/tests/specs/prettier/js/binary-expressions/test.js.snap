@@ -49,9 +49,9 @@ const x4 =
   longVariable &&
   longVariable;
 const x5 =
-  longVariable && longVariable ||
-  longVariable && longVariable
-  longVariable && longVariable;
+  (longVariable && longVariable) ||
+  (longVariable && longVariable) ||
+  (longVariable && longVariable);
 const x6 =
   firstItemWithAVeryLongNameThatKeepsGoing ||
   firstItemWithAVeryLongNameThatKeepsGoing ||
