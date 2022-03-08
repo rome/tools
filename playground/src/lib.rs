@@ -1,3 +1,5 @@
+#![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
+
 use rome_formatter::{format as format_code, to_format_element, FormatOptions, IndentStyle};
 use rslint_errors::file::SimpleFiles;
 use rslint_errors::termcolor::{ColorSpec, WriteColor};
