@@ -1447,16 +1447,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rslint_regex"
-version = "0.3.0"
-dependencies = [
- "bitflags",
- "criterion",
- "once_cell",
- "rslint_errors",
-]
-
-[[package]]
 name = "rslint_text_edit"
 version = "0.1.0"
 dependencies = [
