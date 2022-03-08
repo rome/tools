@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsDefinitePropertyAnnotation;
-use rslint_parser::ast::TsDefinitePropertyAnnotationFields;
+use rome_js_syntax::TsDefinitePropertyAnnotation;
+use rome_js_syntax::TsDefinitePropertyAnnotationFields;
 
 impl ToFormatElement for TsDefinitePropertyAnnotation {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

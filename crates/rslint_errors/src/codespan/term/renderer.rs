@@ -6,6 +6,8 @@ use super::super::diagnostic::{LabelStyle, Note, Severity};
 use super::super::files::{Error, Location};
 use super::super::term::{Chars, Config, Styles};
 
+const MAX_LINE_LENGTH: usize = 250;
+
 /// The 'location focus' of a source code snippet.
 pub struct Locus {
     /// The user-facing name of the file.
@@ -220,13 +222,7 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
         Ok(())
     }
 
-    /// A line of source code.
-    ///
-    /// ```text
-    /// 10 │   │ muffin. Halvah croissant candy canes bonbon candy. Apple pie jelly
-    ///    │ ╭─│─────────^
-    /// ```
-    pub fn render_snippet_source(
+    pub fn render_snippet_source_impl(
         &mut self,
         outer_padding: usize,
         line_number: usize,
@@ -380,6 +376,7 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
                     }
                 }
             }
+
             if let Some((trailing_label_index, (_, trailing_range, _))) = trailing_label {
                 // Check to see if the trailing label candidate overlaps any of
                 // the other labels on the current line.
@@ -446,6 +443,7 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
                     None if metrics.byte_index < max_label_end => Some(' '),
                     None => None,
                 };
+
                 if let Some(caret_ch) = caret_ch {
                     // FIXME: improve rendering of carets between character boundaries
                     (0..metrics.unicode_width).try_for_each(|_| write!(self, "{}", caret_ch))?;
@@ -588,6 +586,143 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
                 Some(message) => {
                     self.label_multi_bottom_caret(severity, label_style, source, *range, message)?
                 }
+            }
+        }
+
+        Ok(())
+    }
+
+    fn render_snippet_source_inside_of_long_line(
+        &mut self,
+        line_number: usize,
+        line_range: Range<usize>,
+        severity: Severity,
+        single_labels: &mut Vec<(LabelStyle, Range<usize>, &str)>,
+        outer_padding: usize,
+        source: &str,
+    ) -> Result<(), Error> {
+        let labels_start = single_labels
+            .first()
+            .map_or(line_range.start, |x| x.1.start);
+        let labels_end = single_labels.last().map_or(line_range.end, |x| x.1.end);
+
+        // If labels width are larger then max_line_length, we will
+        // trim the label
+        let labels_width = (labels_end - labels_start).min(MAX_LINE_LENGTH);
+
+        let spacing = (MAX_LINE_LENGTH - labels_width) / 2;
+
+        // We will try to center the interesting part of the line
+        let interesting_part_start = labels_start.saturating_sub(spacing);
+        let interesting_part_end = labels_end.saturating_add(spacing);
+        let interesting_part_range = interesting_part_start..interesting_part_end;
+
+        // labels range are relative to the start of the line, now we
+        // need the range relative to the file start.
+        let mut new_code_range = line_range
+            .start
+            .saturating_add(interesting_part_range.start)
+            ..line_range.start.saturating_add(interesting_part_range.end);
+
+        // We need to adjust all labels ranges to be relative to the start
+        // of the interesting part
+        for label in single_labels.iter_mut() {
+            label.1.start -= interesting_part_range.start;
+            label.1.end -= interesting_part_range.start;
+
+            // We need to limit the width of the range
+            label.1.end = label
+                .1
+                .end
+                .min(interesting_part_range.start + MAX_LINE_LENGTH);
+        }
+
+        // and the width of what we are going to print
+        new_code_range.end = new_code_range
+            .end
+            .min(new_code_range.start + MAX_LINE_LENGTH);
+
+        let source = source
+            .get(new_code_range)
+            .unwrap_or_else(|| &source[line_range]);
+
+        self.render_snippet_source_impl(
+            outer_padding,
+            line_number,
+            source,
+            severity,
+            single_labels.as_slice(),
+            0,
+            &[],
+        )?;
+
+        Ok(())
+    }
+
+    /// A line of source code.
+    ///
+    /// ```text
+    /// 10 │   │ muffin. Halvah croissant candy canes bonbon candy. Apple pie jelly
+    ///    │ ╭─│─────────^
+    /// ```
+    pub fn render_snippet_source(
+        &mut self,
+        outer_padding: usize,
+        line_number: usize,
+        line_range: Range<usize>,
+        source: &str,
+        severity: Severity,
+        single_labels: &[SingleLabel<'_>],
+        num_multi_labels: usize,
+        multi_labels: &[(usize, LabelStyle, MultiLabel<'_>)],
+    ) -> Result<(), Error> {
+        // if the line is smaller than max_line_length, we print it entirely...
+        // we also print it entirely if there are multi_labels
+        let line_candidate = &source[line_range.clone()];
+        if (line_candidate.len() < MAX_LINE_LENGTH) || (multi_labels.len() > 0) {
+            return self.render_snippet_source_impl(
+                outer_padding,
+                line_number,
+                line_candidate,
+                severity,
+                &single_labels,
+                num_multi_labels,
+                &multi_labels,
+            );
+        } else {
+            // ... if not, we try to fit as many single_labels as possible
+            // showing only the interesting part of the line.
+            let mut candidates = vec![];
+            for single_label in single_labels.iter() {
+                candidates.push(single_label.clone());
+
+                // We need to know which part of the long line we are going to display
+                let labels_start = candidates.first().map_or(line_range.start, |x| x.1.start);
+                let labels_end = candidates.last().map_or(line_range.end, |x| x.1.end);
+                let labels_width = labels_end - labels_start;
+
+                if labels_width >= MAX_LINE_LENGTH {
+                    self.render_snippet_source_inside_of_long_line(
+                        line_number,
+                        line_range.clone(),
+                        severity,
+                        &mut candidates,
+                        outer_padding,
+                        source,
+                    )?;
+                    candidates.clear();
+                }
+            }
+
+            if candidates.len() > 0 {
+                self.render_snippet_source_inside_of_long_line(
+                    line_number,
+                    line_range,
+                    severity,
+                    &mut candidates,
+                    outer_padding,
+                    source,
+                )?;
             }
         }
 

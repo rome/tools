@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsOverrideModifier;
-use rslint_parser::ast::TsOverrideModifierFields;
+use rome_js_syntax::TsOverrideModifier;
+use rome_js_syntax::TsOverrideModifierFields;
 
 impl ToFormatElement for TsOverrideModifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

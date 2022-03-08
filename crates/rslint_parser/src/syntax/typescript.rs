@@ -9,8 +9,8 @@ use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext}
 use crate::syntax::js_parse_error::expected_expression;
 
 use crate::syntax::typescript::ts_parse_error::expected_ts_type;
-
-use crate::{JsSyntaxKind::*, *};
+use crate::{Absent, CompletedMarker, Marker, ParsedSyntax, Parser, Present};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
 pub(crate) use self::statement::*;

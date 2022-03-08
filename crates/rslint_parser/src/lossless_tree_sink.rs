@@ -1,6 +1,7 @@
-use crate::{
+use crate::{ParserError, TreeSink};
+use rome_js_syntax::{
     JsSyntaxKind::{self, *},
-    ParserError, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
+    SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize,
 };
 use rome_rowan::TriviaPiece;
 use rslint_lexer::Token;

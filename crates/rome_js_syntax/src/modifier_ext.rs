@@ -1,4 +1,4 @@
-use crate::ast::{
+use crate::{
     JsAnyMethodModifier, JsAnyPropertyModifier, TsAnyIndexSignatureModifier,
     TsAnyMethodSignatureModifier, TsAnyPropertyParameterModifier, TsAnyPropertySignatureModifier,
 };

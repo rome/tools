@@ -18,10 +18,10 @@ use crate::syntax::typescript::{
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, Parser, SyntaxFeature};
+use rome_js_syntax::JsSyntaxKind::*;
+use rome_js_syntax::{JsSyntaxKind, T};
 use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
-use rslint_syntax::JsSyntaxKind::*;
-use rslint_syntax::{JsSyntaxKind, T};
 
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.

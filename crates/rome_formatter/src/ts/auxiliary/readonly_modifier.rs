@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsReadonlyModifier;
-use rslint_parser::ast::TsReadonlyModifierFields;
+use rome_js_syntax::TsReadonlyModifier;
+use rome_js_syntax::TsReadonlyModifierFields;
 
 impl ToFormatElement for TsReadonlyModifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

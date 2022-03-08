@@ -3,8 +3,7 @@
 
 use crate::Lexer;
 use quickcheck_macros::quickcheck;
-use rslint_syntax::JsSyntaxKind;
-use rslint_syntax::JsSyntaxKind::EOF;
+use rome_js_syntax::JsSyntaxKind::{self, EOF};
 use std::sync::mpsc::channel;
 use std::thread;
 use std::time::Duration;
@@ -25,7 +24,7 @@ macro_rules! assert_lex {
         $(
             assert_eq!(
                 tokens[idx].0.kind,
-                rslint_syntax::JsSyntaxKind::$kind,
+                rome_js_syntax::JsSyntaxKind::$kind,
                 "expected token kind {}, but found {:?}",
                 stringify!($kind),
                 tokens[idx].0.kind,

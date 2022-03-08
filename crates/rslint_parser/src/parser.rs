@@ -8,11 +8,14 @@ mod parse_lists;
 mod parse_recovery;
 mod parsed_syntax;
 pub(crate) mod single_token_parse_recovery;
+use rome_js_syntax::{
+    JsSyntaxKind::{self, EOF, ERROR_TOKEN},
+    TextRange,
+};
 
 use drop_bomb::DebugDropBomb;
 use rslint_errors::Diagnostic;
 use rslint_lexer::Token;
-use rslint_syntax::JsSyntaxKind::{EOF, ERROR_TOKEN};
 use std::ops::Range;
 
 pub use parse_error::*;
@@ -65,17 +68,14 @@ impl ParserProgress {
 /// ```
 /// use rslint_parser::{
 ///     Parser,
-///     syntax::expr,
-///     tokenize,
 ///     TokenSource,
-///     ast::{JsParenthesizedExpression, JsAnyExpression},
 ///     LosslessTreeSink,
-///     SyntaxNode,
 ///     process,
-///     AstNode,
 ///     SourceType,
+///     tokenize,
 /// };
-/// use rslint_parser::ast::JsExpressionSnipped;
+/// use rslint_parser::syntax::expr::parse_expression_snipped;
+/// use rome_js_syntax::{JsExpressionSnipped, AstNode, SyntaxNode, JsParenthesizedExpression, JsAnyExpression};
 ///
 /// let source = "(void b)";
 ///
@@ -96,7 +96,7 @@ impl ParserProgress {
 /// // A completed marker marks the start and end indices in the events vec which signify
 /// // the Start event, and the Finish event.
 /// // Completed markers can be turned into an ast node with parse_marker on the parser
-/// let completed_marker = expr::parse_expression_snipped(&mut parser).unwrap();
+/// let completed_marker = parse_expression_snipped(&mut parser).unwrap();
 ///
 /// // Make a new text tree sink, its job is assembling events into a rowan GreenNode.
 /// // At each point (Start, Token, Finish, Error) it also consumes whitespace.
@@ -120,7 +120,7 @@ impl ParserProgress {
 /// match expression {
 ///   JsAnyExpression::JsParenthesizedExpression(parenthesized) => { ///
 ///     assert_eq!(parenthesized.expression().unwrap().syntax().text(), "void b");
-///   },
+///   }
 ///   _ => panic!("Expected parenthesized expression")
 /// }
 ///
@@ -666,8 +666,8 @@ pub struct Checkpoint {
 #[cfg(test)]
 mod tests {
     use crate::{Parser, SourceType, TokenSource};
+    use rome_js_syntax::JsSyntaxKind;
     use rslint_lexer::Token;
-    use rslint_syntax::JsSyntaxKind;
 
     #[test]
     #[should_panic(

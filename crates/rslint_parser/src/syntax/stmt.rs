@@ -28,10 +28,14 @@ use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::SyntaxFeature;
-use crate::{JsSyntaxKind::*, *};
+use crate::{
+    parser, CompletedMarker, JsSyntaxFeature, ModuleKind, ParseRecovery, ParseSeparatedList,
+    Parser, SyntaxFeature, TokenSet,
+};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
+use std::ops::Range;
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
     L_CURLY,

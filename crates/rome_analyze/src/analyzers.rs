@@ -4,8 +4,8 @@ pub(crate) mod use_single_case_statement;
 pub(crate) mod use_while;
 
 use once_cell::sync::Lazy;
+use rome_js_syntax::{AstNode, SyntaxNode, TextRange};
 use rslint_errors::{Diagnostic, Span};
-use rslint_parser::{AstNode, SyntaxNode, TextRange};
 
 use crate::{analysis_server::AnalysisServer, ActionCategory, Analysis, FileId};
 

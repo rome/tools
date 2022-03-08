@@ -59,10 +59,11 @@ mod ts;
 mod utils;
 
 pub use formatter::Formatter;
+use rome_js_syntax::{SyntaxError, SyntaxNode};
 use rome_rowan::TextRange;
 use rome_rowan::TextSize;
 use rome_rowan::TokenAtOffset;
-use rslint_parser::{parse, SourceType, SyntaxError, SyntaxNode};
+use rslint_parser::{parse, SourceType};
 use std::fmt::Display;
 
 pub use format_element::{
@@ -605,7 +606,8 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"somethingThatsAReallyLongPropName1 ? somethingThatsAReallyLongPropName2 ? somethingThatsAReallyLongPropName3 : somethingThatsAReallyLongPropName4 : somethingThatsAReallyLongPropName6
+        let src = r#"
+        `something ${ () => { var hey; const looooooooooong_expression = "loooooooooong_expression" }} something else ${ ehy }`;
 "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);

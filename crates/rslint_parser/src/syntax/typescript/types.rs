@@ -21,10 +21,14 @@ use crate::syntax::typescript::try_parse;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
 
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{Absent, ParsedSyntax, Parser};
-use crate::{JsSyntaxKind::*, *};
+use crate::{
+    Absent, CompletedMarker, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
+    Parser, Present, SyntaxFeature,
+};
+use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
+use rome_js_syntax::T;
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rslint_errors::Span;
-use rslint_syntax::T;
 
 use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
 

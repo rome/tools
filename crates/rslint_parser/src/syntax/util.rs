@@ -1,6 +1,6 @@
 //! General utility functions for parsing and error checking.
 
-use rslint_syntax::{JsSyntaxKind, T};
+use rome_js_syntax::{JsSyntaxKind, T};
 
 /// See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#table
 #[allow(dead_code)]

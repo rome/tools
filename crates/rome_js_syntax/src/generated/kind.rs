@@ -763,7 +763,6 @@ impl JsSyntaxKind {
             OVERRIDE_KW => "override",
             OF_KW => "of",
             JS_STRING_LITERAL => "string literal",
-            IDENT => "identifier",
             _ => return None,
         };
         Some(tok)

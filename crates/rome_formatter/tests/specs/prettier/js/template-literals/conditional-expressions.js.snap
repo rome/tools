@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: conditional-expressions.js
 
 ---
@@ -14,7 +14,9 @@ expression: conditional-expressions.js
 
 # Output
 ```js
-`111111111 222222222 333333333 444444444 555555555 666666666 777777777 ${1 ? 1 : 2}`;
+`111111111 222222222 333333333 444444444 555555555 666666666 777777777 ${
+  1 ? 1 : 2
+}`;
 
 ```
 

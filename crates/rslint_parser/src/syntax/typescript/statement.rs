@@ -4,6 +4,7 @@ use crate::syntax::binding::{
 };
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
+use std::ops::Range;
 
 use super::ts_parse_error::expected_ts_enum_member;
 use crate::state::EnterAmbientContext;
@@ -16,8 +17,11 @@ use crate::syntax::typescript::{
     expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_name,
     parse_ts_type, parse_ts_type_parameters, TypeMembers,
 };
-
-use crate::{JsSyntaxKind::*, *};
+use crate::{
+    syntax, Absent, CompletedMarker, Marker, ParseNodeList, ParseRecovery, ParseSeparatedList,
+    ParsedSyntax, Parser, Present,
+};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 
 fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();

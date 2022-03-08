@@ -39,13 +39,13 @@
 //! });
 //! ```
 
-use rslint_parser::ast::JsParameters;
-use rslint_parser::ast::{
+use rome_js_syntax::JsParameters;
+use rome_js_syntax::{AstNode, AstSeparatedList, SyntaxNodeExt, SyntaxResult, SyntaxToken};
+use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyFunctionBody, JsArrayExpression, JsArrayExpressionFields,
     JsFormalParameter, JsFormalParameterFields, JsFunctionBodyFields, JsIdentifierBinding,
     JsIdentifierBindingFields, JsObjectExpression, JsObjectExpressionFields, JsParametersFields,
 };
-use rslint_parser::{AstNode, AstSeparatedList, SyntaxNodeExt, SyntaxResult, SyntaxToken};
 
 /// Returns true is the passed [JsAnyExpression] is a simple function, array or object expression
 pub(crate) fn is_simple_expression(node: JsAnyExpression) -> SyntaxResult<bool> {
@@ -62,7 +62,7 @@ pub(crate) fn is_simple_expression(node: JsAnyExpression) -> SyntaxResult<bool> 
 
 /// Returns true if the passed [JsAnyFunction] does not have any comment, type
 /// parameters, return type annotation and simple parameters (see [is_simple_function_parameters])
-fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult<bool> {
+pub(crate) fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult<bool> {
     if let Some(token) = func.async_token() {
         if token_has_comments(token) {
             return Ok(false);

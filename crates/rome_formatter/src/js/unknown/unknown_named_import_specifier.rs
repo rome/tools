@@ -1,8 +1,8 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsUnknownNamedImportSpecifier;
+use rome_js_syntax::JsUnknownNamedImportSpecifier;
 
-use rslint_parser::AstNode;
+use rome_js_syntax::AstNode;
 
 impl ToFormatElement for JsUnknownNamedImportSpecifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

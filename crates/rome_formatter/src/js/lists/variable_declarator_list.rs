@@ -4,7 +4,7 @@ use crate::{
     group_elements, indent, join_elements, soft_line_break_or_space, token, FormatElement,
     FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::{ast::JsVariableDeclaratorList, AstSeparatedList};
+use rome_js_syntax::{AstSeparatedList, JsVariableDeclaratorList};
 
 impl ToFormatElement for JsVariableDeclaratorList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

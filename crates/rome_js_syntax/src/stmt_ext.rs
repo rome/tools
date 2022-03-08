@@ -1,6 +1,6 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
-use crate::{ast::*, T};
+use crate::{JsVariableDeclaration, SyntaxResult};
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum JsVariableKind {
@@ -39,26 +39,31 @@ impl JsVariableDeclaration {
 
 #[cfg(test)]
 mod tests {
-    use crate::*;
-
-    #[test]
-    fn var_decl_let_token() {
-        let parsed = parse_script("/* */let a = 5;", 0).tree();
-        let var_decl = parsed
-            .statements()
-            .iter()
-            .find_map(|stmt| ast::JsVariableStatement::cast(stmt.syntax().clone()));
-
-        assert!(var_decl.is_some());
-    }
+    use crate::{
+        AstNode, JsVariableDeclaration, SyntaxTreeBuilder, IDENT, JS_IDENTIFIER_BINDING,
+        JS_VARIABLE_DECLARATION, JS_VARIABLE_DECLARATOR, JS_VARIABLE_DECLARATOR_LIST, VAR_KW,
+    };
 
     #[test]
     fn is_var_check() {
-        let root = parse_script("var a = 5;", 0).syntax();
-        let var_decl = root
-            .descendants()
-            .find_map(ast::JsVariableDeclaration::cast);
+        let mut tree_builder = SyntaxTreeBuilder::new();
+        tree_builder.start_node(JS_VARIABLE_DECLARATION);
+        tree_builder.token(VAR_KW, "var");
+        tree_builder.start_node(JS_VARIABLE_DECLARATOR_LIST);
+        tree_builder.start_node(JS_VARIABLE_DECLARATOR);
 
-        assert!(var_decl.unwrap().is_var());
+        tree_builder.start_node(JS_IDENTIFIER_BINDING);
+        tree_builder.token(IDENT, "a");
+        tree_builder.finish_node();
+
+        tree_builder.finish_node(); // declarator
+        tree_builder.finish_node(); // list
+        tree_builder.finish_node(); // declaration
+
+        let root = tree_builder.finish();
+
+        let var_decl = JsVariableDeclaration::cast(root).unwrap();
+
+        assert!(var_decl.is_var());
     }
 }

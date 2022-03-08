@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 125
 expression: boundary.js
 
 ---
@@ -35,18 +35,29 @@ ExampleStory.getFragment('story')}
 
 # Output
 ```js
-`${a + a}
+`${
+  a + // a
+  a
+}
 
-${a}
+${
+  a // comment
+}
 
-${b}
+${b /* comment */ }
 
-${c}
+${ /* comment */ c /* comment */ }
 
-${d}
+${
+  // comment
+  d //comment
+}
 
-${ExampleStory.getFragment("story")}
-`; // a // comment /* comment */ /* comment */ /* comment */ // comment //comment // $FlowFixMe found when converting React.createClass to ES6
+${
+  // $FlowFixMe found when converting React.createClass to ES6
+  ExampleStory.getFragment("story")
+}
+`;
 
 <div>
 {ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6

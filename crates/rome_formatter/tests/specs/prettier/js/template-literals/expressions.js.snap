@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 125
 expression: expressions.js
 
 ---
@@ -57,7 +57,9 @@ throw new Error(`pretty-format: Option "theme" has a key "${key}" whose value "$
 
 # Output
 ```js
-const long1 = `long ${a.b} long longlong ${a.b.c.d.e} long longlong ${a.b.c.d.e} long longlong ${a.b.c.d.e} long long`; //comment
+const long1 = `long ${
+  a.b //comment
+} long longlong ${a.b.c.d.e} long longlong ${a.b.c.d.e} long longlong ${a.b.c.d.e} long long`;
 const long2 = `long ${a.b.c.d.e} long longlong ${loooooooooooooooooong} long longlong ${loooooooooooooooooong} long longlong ${loooooooooooooooooong} long long`;
 
 const long3 = `long long long long long long long long long long long ${a.b.c.d.e} long long long long long long long long long long long long long`;
@@ -77,7 +79,9 @@ console.log(
 );
 
 x =
-  `mdl-textfield mdl-js-textfield ${className} ${content.length > 0 ? "is-dirty" : ""} combo-box__input`;
+  `mdl-textfield mdl-js-textfield ${className} ${
+    content.length > 0 ? "is-dirty" : ""
+  } combo-box__input`;
 
 function testing() {
   const p = {};

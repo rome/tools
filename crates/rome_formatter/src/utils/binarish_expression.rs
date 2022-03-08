@@ -4,11 +4,11 @@ use crate::{
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent, join_elements,
     soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{
+use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use rome_js_syntax::{
     JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsLogicalExpression,
     JsLogicalExpressionFields,
 };
-use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use std::fmt::Debug;
 
 /// This function is charge to flat binaryish expressions that have the same precedence of their operators
@@ -26,7 +26,7 @@ use std::fmt::Debug;
 /// ```
 ///
 /// These expressions have a nested  nodes, which is roughly something like this:
-///  
+///
 /// ```block
 /// JsLogicalExpression {
 ///     left: JsLogicalExpression {
@@ -396,6 +396,8 @@ fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
                 | JsSyntaxKind::JS_DO_WHILE_STATEMENT
                 | JsSyntaxKind::JS_WHILE_STATEMENT
                 | JsSyntaxKind::JS_SWITCH_STATEMENT
+                | JsSyntaxKind::JS_TEMPLATE_ELEMENT
+                | JsSyntaxKind::TS_TEMPLATE_ELEMENT
         )
     })
 }

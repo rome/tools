@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsObjectBindingPatternRest;
-use rslint_parser::ast::JsObjectBindingPatternRestFields;
+use rome_js_syntax::JsObjectBindingPatternRest;
+use rome_js_syntax::JsObjectBindingPatternRestFields;
 
 impl ToFormatElement for JsObjectBindingPatternRest {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

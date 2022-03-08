@@ -1,4 +1,4 @@
-use rslint_parser::{ast::JsBinaryExpression, AstNode};
+use rome_js_syntax::{AstNode, JsBinaryExpression};
 
 use crate::{Action, ActionCategory, Analysis, AssistContext, SyntaxEdit};
 

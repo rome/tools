@@ -10,8 +10,8 @@ use crate::syntax::typescript::{
     parse_ts_enum_declaration, parse_ts_interface_declaration, parse_ts_type_alias_declaration,
 };
 use crate::{Absent, ParsedSyntax, Parser};
-use rslint_syntax::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE;
-use rslint_syntax::T;
+use rome_js_syntax::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE;
+use rome_js_syntax::T;
 
 // test export_variable_clause
 // export let a;

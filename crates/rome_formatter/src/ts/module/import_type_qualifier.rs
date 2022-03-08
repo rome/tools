@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsImportTypeQualifier;
-use rslint_parser::ast::TsImportTypeQualifierFields;
+use rome_js_syntax::TsImportTypeQualifier;
+use rome_js_syntax::TsImportTypeQualifierFields;
 
 impl ToFormatElement for TsImportTypeQualifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

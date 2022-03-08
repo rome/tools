@@ -4,18 +4,18 @@ use crate::Token;
 use crate::{
     empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::{AstNode, SyntaxResult, SyntaxToken};
+use rome_js_syntax::{AstNode, SyntaxResult, SyntaxToken};
 
 /// Utility trait used to simplify the formatting of optional tokens
 pub trait FormatOptionalTokenAndNode {
-    /// This function tries to format an optional [token](rslint_parser::SyntaxToken) or [node](rslint_parser::AstNode).
+    /// This function tries to format an optional [token](rslint_parser::SyntaxToken) or [node](rome_js_syntax::AstNode).
     /// If the token doesn't exist, an [empty token](FormatElement::Empty) is created
     ///
     /// ## Examples
     ///
     /// ```
     /// use rome_formatter::{Formatter, empty_element};
-    /// use rslint_parser::{SyntaxToken};
+    /// use rome_js_syntax::{SyntaxToken};
     /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
     ///
     /// let formatter = Formatter::default();
@@ -36,9 +36,9 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// ```
     /// use rome_formatter::{Formatter, empty_element, space_token, format_elements, token};
-    /// use rslint_parser::{SyntaxToken};
+    /// use rome_js_syntax::{SyntaxToken};
     /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
-    /// use rslint_parser::{SyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let formatter = Formatter::default();
     /// let empty_token: Option<SyntaxToken> = None;
@@ -78,7 +78,7 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// ```
     /// use rome_formatter::{Formatter, token};
-    /// use rslint_parser::{SyntaxToken};
+    /// use rome_js_syntax::{SyntaxToken};
     /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
     ///
     /// let formatter = Formatter::default();
@@ -106,9 +106,9 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// ```
     /// use rome_formatter::{Formatter, empty_element, space_token, format_elements, token};
-    /// use rslint_parser::{SyntaxToken};
+    /// use rome_js_syntax::{SyntaxToken};
     /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
-    /// use rslint_parser::{SyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let formatter = Formatter::default();
     /// let empty_token: Option<SyntaxToken> = None;
@@ -154,7 +154,7 @@ pub trait FormatTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, token, space_token};
     /// use rome_formatter::formatter_traits::FormatTokenAndNode;
-    /// use rslint_parser::{SyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let mut builder = SyntaxTreeBuilder::new();
     ///
@@ -184,7 +184,7 @@ pub trait FormatTokenAndNode {
     ///
     /// ```
     /// use rome_formatter::{Formatter, token, format_elements, space_token};
-    /// use rslint_parser::{SyntaxNode, SyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{SyntaxNode, SyntaxTreeBuilder, JsSyntaxKind};
     /// use rome_formatter::formatter_traits::FormatTokenAndNode;
     ///
     /// let mut builder = SyntaxTreeBuilder::new();

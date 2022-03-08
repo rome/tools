@@ -1,7 +1,7 @@
 //! Utilities for high level parsing of js code.
 
-use crate::ast::{JsAnyRoot, JsExpressionSnipped, JsModule, JsScript};
 use crate::*;
+use rome_js_syntax::{AstNode, JsAnyRoot, JsExpressionSnipped, JsModule, JsScript, SyntaxNode};
 use rslint_errors::Severity;
 use std::marker::PhantomData;
 
@@ -41,7 +41,8 @@ impl<T> Parse<T> {
     /// The syntax node represented by this Parse result
     ///
     /// ```
-    /// use rslint_parser::{parse_script, ast::JsIfStatement, SyntaxNodeExt, JsSyntaxKind, AstNode, AstNodeList};
+    /// use rslint_parser::parse_script;
+    /// use rome_js_syntax::{JsIfStatement, SyntaxNodeExt, JsSyntaxKind, AstNode, AstNodeList};
     ///
     /// let parse = parse_script(
     /// "
@@ -136,7 +137,8 @@ fn parse_common(
 /// Or turned into a typed [`Script`](Script) with [`tree`](Parse::tree).
 ///
 /// ```
-/// use rslint_parser::{ast::JsComputedMemberExpression, parse_script, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
+/// use rslint_parser::parse_script;
+/// use rome_js_syntax::{AstNode, SyntaxToken, SyntaxNodeExt,  SyntaxList, util, JsComputedMemberExpression};
 ///
 /// let parse = parse_script("foo.bar[2]", 0);
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
@@ -180,7 +182,8 @@ pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
 /// The [`util`](crate::util) module has utility functions for dealing with this easily.
 ///
 /// ```
-/// use rslint_parser::{ast::JsComputedMemberExpression, parse_script_lossy, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
+/// use rslint_parser::parse_script_lossy;
+/// use rome_js_syntax::{JsComputedMemberExpression, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
 ///
 /// let parse = parse_script_lossy("foo.bar[2]", 0);
 /// // Parse returns a JS Root with two children, an empty list of directives and the list of statements, let's get the statements

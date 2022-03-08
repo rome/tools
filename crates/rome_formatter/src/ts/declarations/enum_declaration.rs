@@ -4,7 +4,7 @@ use crate::{
     format_elements, join_elements, soft_line_break_or_space, space_token, token, FormatElement,
     FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{TsEnumDeclaration, TsEnumDeclarationFields};
+use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
 
 impl ToFormatElement for TsEnumDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -3,8 +3,8 @@ use crate::{
     format_elements, group_elements, hard_line_break, indent, space_token, FormatElement,
     FormatResult, Formatter,
 };
-use rslint_parser::ast::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
-use rslint_parser::AstNode;
+use rome_js_syntax::AstNode;
+use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
 
 pub enum Conditional {
     Expression(JsConditionalExpression),
@@ -215,8 +215,8 @@ impl Conditional {
 /// # Panics
 ///
 /// It panics if it's used with nodes that are different from:
-/// - [rslint_parser::ast::TsConditionalType]
-/// - [rslint_parser::ast::JsConditionalExpression]
+/// - [rome_js_syntax::TsConditionalType]
+/// - [rome_js_syntax::JsConditionalExpression]
 pub fn format_conditional(
     conditional: Conditional,
     formatter: &Formatter,

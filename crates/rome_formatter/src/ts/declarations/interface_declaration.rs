@@ -3,7 +3,7 @@ use crate::{
     format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
+use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
 impl ToFormatElement for TsInterfaceDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

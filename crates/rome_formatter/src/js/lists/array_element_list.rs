@@ -10,9 +10,9 @@ use crate::{
     utils::has_formatter_trivia,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::{
-    ast::{JsAnyArrayElement, JsAnyExpression, JsArrayElementList},
-    AstNode, AstSeparatedList,
+
+use rome_js_syntax::{
+    AstNode, AstSeparatedList, JsAnyArrayElement, JsAnyExpression, JsArrayElementList,
 };
 
 impl ToFormatElement for JsArrayElementList {
@@ -63,9 +63,9 @@ impl ToFormatElement for JsArrayElementList {
 /// with 10 or less characters, potentially wrapped in a "short"
 /// unary expression (+, -, ~ or !)
 fn can_print_fill(list: &JsArrayElementList) -> bool {
-    use rslint_parser::ast::JsAnyArrayElement::*;
-    use rslint_parser::ast::JsAnyExpression::*;
-    use rslint_parser::ast::JsUnaryOperation::*;
+    use rome_js_syntax::JsAnyArrayElement::*;
+    use rome_js_syntax::JsAnyExpression::*;
+    use rome_js_syntax::JsUnaryOperation::*;
 
     list.iter().all(|item| match item {
         Ok(JsAnyExpression(JsUnaryExpression(expr))) => {

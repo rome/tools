@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsObjectAssignmentPatternShorthandProperty;
-use rslint_parser::ast::JsObjectAssignmentPatternShorthandPropertyFields;
+use rome_js_syntax::JsObjectAssignmentPatternShorthandProperty;
+use rome_js_syntax::JsObjectAssignmentPatternShorthandPropertyFields;
 
 impl ToFormatElement for JsObjectAssignmentPatternShorthandProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

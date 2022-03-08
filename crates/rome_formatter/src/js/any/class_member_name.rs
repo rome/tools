@@ -1,7 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::JsAnyClassMemberName;
+use rome_js_syntax::JsAnyClassMemberName;
 impl ToFormatElement for JsAnyClassMemberName {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {

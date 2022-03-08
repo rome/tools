@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 rslint_parser = { path = "../rslint_parser" }
+rome_js_syntax = { path = "../rome_js_syntax" }
 rome_rowan = { path = "../rome_rowan" }
 rome_path = { version = "0.0.0", path = "../rome_path" }
 rome_core = { version = "0.0.0", path = "../rome_core" }

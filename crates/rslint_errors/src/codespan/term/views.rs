@@ -21,6 +21,15 @@ pub struct RichDiagnostic<'diagnostic, 'config, FileId> {
     config: &'config Config,
 }
 
+struct Line<'diagnostic> {
+    number: usize,
+    range: std::ops::Range<usize>,
+    // TODO: How do we reuse these allocations?
+    single_labels: Vec<SingleLabel<'diagnostic>>,
+    multi_labels: Vec<(usize, LabelStyle, MultiLabel<'diagnostic>)>,
+    must_render: bool,
+}
+
 impl<'diagnostic, 'config, FileId> RichDiagnostic<'diagnostic, 'config, FileId>
 where
     FileId: Copy + PartialEq,
@@ -68,15 +77,6 @@ where
                     must_render: false,
                 })
             }
-        }
-
-        struct Line<'diagnostic> {
-            number: usize,
-            range: std::ops::Range<usize>,
-            // TODO: How do we reuse these allocations?
-            single_labels: Vec<SingleLabel<'diagnostic>>,
-            multi_labels: Vec<(usize, LabelStyle, MultiLabel<'diagnostic>)>,
-            must_render: bool,
         }
 
         // TODO: Make this data structure external, to allow for allocation reuse
@@ -317,7 +317,8 @@ where
                 renderer.render_snippet_source(
                     outer_padding,
                     line.number,
-                    &source[line.range.clone()],
+                    line.range.clone(),
+                    source,
                     self.diagnostic.severity,
                     &line.single_labels,
                     labeled_file.num_multi_labels,
@@ -342,10 +343,13 @@ where
                                 .get(&(line_index + 1))
                                 .map_or(&[][..], |line| &line.multi_labels[..]);
 
+                            let line_number = files.line_number(file_id, line_index + 1)?;
+                            let line_range = files.line_range(file_id, line_index + 1)?;
                             renderer.render_snippet_source(
                                 outer_padding,
-                                files.line_number(file_id, line_index + 1)?,
-                                &source[files.line_range(file_id, line_index + 1)?],
+                                line_number,
+                                line_range.clone(),
+                                source,
                                 self.diagnostic.severity,
                                 &[],
                                 labeled_file.num_multi_labels,

@@ -1,8 +1,8 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsTypeAssertionAssignmentFields;
+use rome_js_syntax::TsTypeAssertionAssignmentFields;
 
-use rslint_parser::ast::TsTypeAssertionAssignment;
+use rome_js_syntax::TsTypeAssertionAssignment;
 
 impl ToFormatElement for TsTypeAssertionAssignment {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

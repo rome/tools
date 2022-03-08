@@ -1,7 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsAnyPropertyParameterModifier;
+use rome_js_syntax::TsAnyPropertyParameterModifier;
 impl ToFormatElement for TsAnyPropertyParameterModifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {

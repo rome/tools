@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsSequenceExpression;
-use rslint_parser::ast::JsSequenceExpressionFields;
+use rome_js_syntax::JsSequenceExpression;
+use rome_js_syntax::JsSequenceExpressionFields;
 
 impl ToFormatElement for JsSequenceExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

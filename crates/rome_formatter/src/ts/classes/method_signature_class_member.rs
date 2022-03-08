@@ -4,7 +4,7 @@ use crate::{
     hard_group_elements, space_token, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::{TsMethodSignatureClassMember, TsMethodSignatureClassMemberFields};
+use rome_js_syntax::{TsMethodSignatureClassMember, TsMethodSignatureClassMemberFields};
 
 impl ToFormatElement for TsMethodSignatureClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

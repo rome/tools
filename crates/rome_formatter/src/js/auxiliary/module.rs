@@ -3,8 +3,8 @@ use crate::{
     format_elements, formatter_traits::FormatTokenAndNode, hard_line_break, FormatElement,
     FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::JsModule;
-use rslint_parser::ast::JsModuleFields;
+use rome_js_syntax::JsModule;
+use rome_js_syntax::JsModuleFields;
 
 impl ToFormatElement for JsModule {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

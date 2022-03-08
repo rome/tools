@@ -1,6 +1,6 @@
 use crate::{CompletedMarker, Parser, TokenSet};
-use rslint_syntax::JsSyntaxKind;
-use rslint_syntax::JsSyntaxKind::EOF;
+use rome_js_syntax::JsSyntaxKind;
+use rome_js_syntax::JsSyntaxKind::EOF;
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 

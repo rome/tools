@@ -25,7 +25,7 @@ pub fn generate_macros(ast: &AstSrc) -> Result<String> {
             quote! {
                 $crate::JsSyntaxKind::#node_kind => {
                     // SAFETY: The call to new_unchecked is guarded by matching on node.kind()
-                    let $pattern = unsafe { $crate::ast::#name::new_unchecked(node) };
+                    let $pattern = unsafe { $crate::#name::new_unchecked(node) };
                     $body
                 }
             }

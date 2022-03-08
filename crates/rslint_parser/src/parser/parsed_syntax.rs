@@ -2,8 +2,8 @@ use crate::parser::parse_recovery::RecoveryResult;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParseRecovery, ToDiagnostic};
 use crate::{CompletedMarker, Marker, Parser};
+use rome_js_syntax::JsSyntaxKind;
 use rslint_errors::{Diagnostic, Span};
-use rslint_syntax::JsSyntaxKind;
 use std::ops::Range;
 
 /// Syntax that is either present in the source tree or absent.

@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::JsStaticModifier;
-use rslint_parser::ast::JsStaticModifierFields;
+use rome_js_syntax::JsStaticModifier;
+use rome_js_syntax::JsStaticModifierFields;
 
 impl ToFormatElement for JsStaticModifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

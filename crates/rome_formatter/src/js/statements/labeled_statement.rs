@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsLabeledStatement;
-use rslint_parser::ast::JsLabeledStatementFields;
+use rome_js_syntax::JsLabeledStatement;
+use rome_js_syntax::JsLabeledStatementFields;
 
 impl ToFormatElement for JsLabeledStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

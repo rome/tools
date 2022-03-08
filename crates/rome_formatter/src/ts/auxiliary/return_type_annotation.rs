@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsReturnTypeAnnotation;
-use rslint_parser::ast::TsReturnTypeAnnotationFields;
+use rome_js_syntax::TsReturnTypeAnnotation;
+use rome_js_syntax::TsReturnTypeAnnotationFields;
 
 impl ToFormatElement for TsReturnTypeAnnotation {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
