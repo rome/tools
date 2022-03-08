@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: destructuring.js
 
 ---
@@ -42,11 +42,11 @@ assert(rest.c === 3);
 
 # Errors
 ```
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ destructuring.js:1:19
   │
 1 │ const { a, b } = #{ a: 1, b: 2 };
-  │                   ^ unexpected
+  │                   ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ destructuring.js:1:18
@@ -71,11 +71,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │                        │   An explicit or implicit semicolon is expected here...
   │                        ...Which is required to end this statement
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ destructuring.js:5:25
   │
 5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
-  │                         ^ unexpected
+  │                         ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ destructuring.js:5:24

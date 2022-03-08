@@ -5,13 +5,6 @@ use quote::{format_ident, quote};
 use super::kinds_src::KindsSrc;
 
 pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
-    let (single_byte_tokens_values, single_byte_tokens): (Vec<_>, Vec<_>) = grammar
-        .punct
-        .iter()
-        .filter(|(token, _name)| token.len() == 1)
-        .map(|(token, name)| (token.chars().next().unwrap(), format_ident!("{}", name)))
-        .unzip();
-
     let punctuation_values = grammar.punct.iter().map(|(token, _name)| {
         // These tokens, when parsed to proc_macro2::TokenStream, generates a stream of bytes
         // that can't be recognized by [quote].
@@ -35,14 +28,19 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
     let full_keywords_values = &grammar.keywords;
     let full_keywords = full_keywords_values
         .iter()
-        .map(|kw| format_ident!("{}_KW", to_upper_snake_case(kw)));
+        .map(|kw| format_ident!("{}_KW", to_upper_snake_case(kw)))
+        .collect::<Vec<_>>();
 
     let all_keywords_values = grammar.keywords.to_vec();
-    let all_keywords_idents = all_keywords_values.iter().map(|kw| format_ident!("{}", kw));
+    let all_keywords_idents = all_keywords_values
+        .iter()
+        .map(|kw| format_ident!("{}", kw))
+        .collect::<Vec<_>>();
     let all_keywords = all_keywords_values
         .iter()
         .map(|name| format_ident!("{}_KW", to_upper_snake_case(name)))
         .collect::<Vec<_>>();
+    let all_keyword_strings = all_keywords_values.iter().map(|name| name.to_string());
 
     let literals = grammar
         .literals
@@ -100,35 +98,28 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
         use self::JsSyntaxKind::*;
 
         impl JsSyntaxKind {
-            pub fn is_keyword(self) -> bool {
-                match self {
-                    #(#all_keywords)|* => true,
-                    _ => false,
-                }
-            }
-
-            pub fn is_punct(self) -> bool {
+            pub const fn is_punct(self) -> bool {
                 match self {
                     #(#punctuation)|* => true,
                     _ => false,
                 }
             }
 
-            pub fn is_literal(self) -> bool {
+            pub const fn is_literal(self) -> bool {
                 match self {
                     #(#literals)|* => true,
                     _ => false,
                 }
             }
 
-            pub fn is_list(self) -> bool {
+            pub const fn is_list(self) -> bool {
                 match self {
                     #(#lists)|* => true,
                     _ => false,
                 }
             }
 
-            pub fn is_before_expr(self) -> bool {
+            pub const fn is_before_expr(self) -> bool {
                 match self {
                     BANG | L_PAREN | L_BRACK | L_CURLY | SEMICOLON | COMMA | COLON | QUESTION | PLUS2
                     | MINUS2 | TILDE | CASE_KW | DEFAULT_KW | DO_KW | ELSE_KW | RETURN_KW | THROW_KW
@@ -147,17 +138,10 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
                 Some(kw)
             }
 
-            pub fn from_char(c: char) -> Option<JsSyntaxKind> {
-                let tok = match c {
-                    #(#single_byte_tokens_values => #single_byte_tokens,)*
-                    _ => return None,
-                };
-                Some(tok)
-            }
-
-            pub fn to_string(&self) -> Option<&str> {
+            pub const fn to_string(&self) -> Option<&'static str> {
                 let tok = match self {
                     #(#punctuation => #punctuation_strings,)*
+                    #(#all_keywords => #all_keyword_strings,)*
                     JS_STRING_LITERAL => "string literal",
                     _ => return None,
                 };

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: syntax.js
 
 ---
@@ -47,11 +47,11 @@ error[SyntaxError]: expected a statement but instead found '#'
 1 │ #{}
   │ ^ Expected a statement here
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ syntax.js:2:2
   │
 2 │ #{ a: 1, b: 2 }
-  │  ^ unexpected
+  │  ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ syntax.js:2:1
@@ -77,11 +77,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │       │   An explicit or implicit semicolon is expected here...
   │       ...Which is required to end this statement
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ syntax.js:3:2
   │
 3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
-  │  ^ unexpected
+  │  ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ syntax.js:3:1

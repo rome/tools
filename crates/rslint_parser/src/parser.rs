@@ -8,10 +8,12 @@ mod parse_lists;
 mod parse_recovery;
 mod parsed_syntax;
 pub(crate) mod single_token_parse_recovery;
-use rome_js_syntax::{JsSyntaxKind, TextRange};
+use rome_js_syntax::{
+    JsSyntaxKind::{self, EOF, ERROR_TOKEN},
+    TextRange,
+};
 
 use drop_bomb::DebugDropBomb;
-use rome_js_syntax::JsSyntaxKind::EOF;
 use rslint_errors::Diagnostic;
 use rslint_lexer::Token;
 use std::ops::Range;
@@ -198,6 +200,22 @@ impl<'t> Parser<'t> {
         true
     }
 
+    /// Eats a keyword that doesn't allow unicode escape characters
+    pub fn eat_keyword(&mut self, kind: JsSyntaxKind, name: &str) -> bool {
+        if self.at(kind) && self.cur_src() != name {
+            self.error(
+                self.err_builder(&format!(
+                    "'{name}' keyword cannot contain escape character."
+                ))
+                .primary(self.cur_tok().range(), ""),
+            );
+            self.bump_remap(ERROR_TOKEN);
+            true
+        } else {
+            self.eat(kind)
+        }
+    }
+
     /// Starts a new node in the syntax tree. All nodes and tokens
     /// consumed between the `start` and the corresponding `Marker::complete`
     /// belong to the same node.
@@ -290,13 +308,6 @@ impl<'t> Parser<'t> {
             .expect("Parser source and tokens mismatch")
     }
 
-    pub fn nth_src(&self, n: usize) -> &str {
-        self.tokens
-            .source()
-            .get(self.nth_tok(n).range())
-            .expect("Parser source and tokens mismatch")
-    }
-
     /// Try to eat a specific token kind, if the kind is not there then adds an error to the events stack.
     pub fn expect(&mut self, kind: JsSyntaxKind) -> bool {
         if self.eat(kind) {
@@ -304,6 +315,16 @@ impl<'t> Parser<'t> {
         } else {
             self.error(expected_token(kind));
             false
+        }
+    }
+
+    /// Expects a keyword (doesn't allow unicode escape sequence).
+    pub fn expect_keyword(&mut self, kind: JsSyntaxKind, name: &str) -> bool {
+        if !self.eat_keyword(kind, name) {
+            self.error(expected_token(kind));
+            false
+        } else {
+            true
         }
     }
 

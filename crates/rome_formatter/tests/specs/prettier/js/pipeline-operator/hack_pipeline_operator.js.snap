@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 125
 expression: hack_pipeline_operator.js
 
 ---
@@ -102,7 +102,7 @@ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
   |> debounce(%, 300)
   |> distinctUntilChanged(%)
   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
-  |> share(%)
+  |> share(%);
 
 v |> %
 .method() |> f(%)
@@ -413,6 +413,104 @@ error[SyntaxError]: expected an expression but instead found '.'
    │
 26 │  |> %.map(a => a * 2 )
    │      ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:33:4
+   │
+33 │   |> map(%, event => event.target.value)
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ hack_pipeline_operator.js:33:11
+   │
+33 │   |> map(%, event => event.target.value)
+   │           ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:34:4
+   │
+34 │   |> filter(%, searchText => searchText.length > 2)
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ hack_pipeline_operator.js:34:14
+   │
+34 │   |> filter(%, searchText => searchText.length > 2)
+   │              ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:35:4
+   │
+35 │   |> debounce(%, 300)
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ hack_pipeline_operator.js:35:16
+   │
+35 │   |> debounce(%, 300)
+   │                ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:36:4
+   │
+36 │   |> distinctUntilChanged(%)
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:36:28
+   │
+36 │   |> distinctUntilChanged(%)
+   │                            ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:37:4
+   │
+37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ hack_pipeline_operator.js:37:17
+   │
+37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+   │                 ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:37:55
+   │
+37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+   │                                                      -^ But this operator was encountered instead
+   │                                                      │ 
+   │                                                      This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ hack_pipeline_operator.js:37:64
+   │
+37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+   │                                                                ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:38:4
+   │
+38 │   |> share(%);
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:38:13
+   │
+38 │   |> share(%);
+   │             ^ Expected an expression here
 
 error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
    ┌─ hack_pipeline_operator.js:40:4

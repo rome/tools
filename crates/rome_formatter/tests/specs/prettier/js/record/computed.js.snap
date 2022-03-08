@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: computed.js
 
 ---
@@ -34,11 +34,11 @@ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
 
 # Errors
 ```
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:2:9
   │
 2 │ assert(#{ [key]: 1 } === #{ a: 1 })
-  │         ^ unexpected
+  │         ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:2:8
@@ -52,11 +52,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 2 │ assert(#{ [key]: 1 } === #{ a: 1 })
   │         ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:2:27
   │
 2 │ assert(#{ [key]: 1 } === #{ a: 1 })
-  │                           ^ unexpected
+  │                           ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:2:26
@@ -70,11 +70,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 2 │ assert(#{ [key]: 1 } === #{ a: 1 })
   │                           ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:3:9
   │
 3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
-  │         ^ unexpected
+  │         ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:3:8
@@ -88,11 +88,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
   │         ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:3:41
   │
 3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
-  │                                         ^ unexpected
+  │                                         ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:3:40
@@ -106,11 +106,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
   │                                         ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:5:9
   │
 5 │ assert(#{ [true]: 1 } === #{ true: 1 })
-  │         ^ unexpected
+  │         ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:5:8
@@ -124,11 +124,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 5 │ assert(#{ [true]: 1 } === #{ true: 1 })
   │         ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:5:28
   │
 5 │ assert(#{ [true]: 1 } === #{ true: 1 })
-  │                            ^ unexpected
+  │                            ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:5:27
@@ -142,11 +142,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 5 │ assert(#{ [true]: 1 } === #{ true: 1 })
   │                            ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:6:9
   │
 6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
-  │         ^ unexpected
+  │         ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:6:8
@@ -160,11 +160,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
   │         ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:6:28
   │
 6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
-  │                            ^ unexpected
+  │                            ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:6:27
@@ -178,11 +178,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
   │                            ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:8:9
   │
 8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
-  │         ^ unexpected
+  │         ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:8:8
@@ -196,11 +196,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
   │         ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:8:33
   │
 8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
-  │                                 ^ unexpected
+  │                                 ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:8:32
@@ -214,11 +214,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
   │                                 ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:9:9
   │
 9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-  │         ^ unexpected
+  │         ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:9:8
@@ -232,11 +232,11 @@ error[SyntaxError]: expected `,` but instead found `{`
 9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
   │         ^ unexpected
 
-error[SyntaxError]: expected `IDENT` but instead found `{`
+error[SyntaxError]: expected an identifier but instead found '{'
   ┌─ computed.js:9:33
   │
 9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-  │                                 ^ unexpected
+  │                                 ^ Expected an identifier here
 
 error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
   ┌─ computed.js:9:32

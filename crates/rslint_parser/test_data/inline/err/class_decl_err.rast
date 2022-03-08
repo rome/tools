@@ -43,22 +43,27 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@40..42 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsSetterClassMember {
-                    modifiers: JsMethodModifierList [],
-                    set_token: SET_KW@42..46 "set" [] [Whitespace(" ")],
-                    name: missing (required),
-                    l_paren_token: missing (required),
-                    parameter: missing (required),
-                    r_paren_token: missing (required),
-                    body: JsFunctionBody {
-                        l_curly_token: L_CURLY@46..47 "{" [] [],
-                        directives: JsDirectiveList [],
-                        statements: JsStatementList [],
-                        r_curly_token: R_CURLY@47..49 "}" [] [Whitespace(" ")],
+                JsPropertyClassMember {
+                    modifiers: JsPropertyModifierList [],
+                    name: JsLiteralMemberName {
+                        value: IDENT@42..46 "set" [] [Whitespace(" ")],
                     },
+                    property_annotation: missing (optional),
+                    value: missing (optional),
+                    semicolon_token: missing (optional),
+                },
+                JsUnknownMember {
+                    items: [
+                        L_CURLY@46..47 "{" [] [],
+                    ],
                 },
             ],
-            r_curly_token: R_CURLY@49..50 "}" [] [],
+            r_curly_token: R_CURLY@47..49 "}" [] [Whitespace(" ")],
+        },
+        JsUnknownStatement {
+            items: [
+                R_CURLY@49..50 "}" [] [],
+            ],
         },
         JsClassDeclaration {
             abstract_token: missing (optional),
@@ -108,7 +113,7 @@ JsModule {
       6: L_CURLY@27..28 "{" [] []
       7: JS_CLASS_MEMBER_LIST@28..28
       8: R_CURLY@28..29 "}" [] []
-    2: JS_CLASS_DECLARATION@29..50
+    2: JS_CLASS_DECLARATION@29..49
       0: (empty)
       1: CLASS_KW@29..36 "class" [Newline("\n")] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@36..40
@@ -117,21 +122,20 @@ JsModule {
       4: (empty)
       5: (empty)
       6: L_CURLY@40..42 "{" [] [Whitespace(" ")]
-      7: JS_CLASS_MEMBER_LIST@42..49
-        0: JS_SETTER_CLASS_MEMBER@42..49
-          0: JS_METHOD_MODIFIER_LIST@42..42
-          1: SET_KW@42..46 "set" [] [Whitespace(" ")]
+      7: JS_CLASS_MEMBER_LIST@42..47
+        0: JS_PROPERTY_CLASS_MEMBER@42..46
+          0: JS_PROPERTY_MODIFIER_LIST@42..42
+          1: JS_LITERAL_MEMBER_NAME@42..46
+            0: IDENT@42..46 "set" [] [Whitespace(" ")]
           2: (empty)
           3: (empty)
           4: (empty)
-          5: (empty)
-          6: JS_FUNCTION_BODY@46..49
-            0: L_CURLY@46..47 "{" [] []
-            1: JS_DIRECTIVE_LIST@47..47
-            2: JS_STATEMENT_LIST@47..47
-            3: R_CURLY@47..49 "}" [] [Whitespace(" ")]
-      8: R_CURLY@49..50 "}" [] []
-    3: JS_CLASS_DECLARATION@50..67
+        1: JS_UNKNOWN_MEMBER@46..47
+          0: L_CURLY@46..47 "{" [] []
+      8: R_CURLY@47..49 "}" [] [Whitespace(" ")]
+    3: JS_UNKNOWN_STATEMENT@49..50
+      0: R_CURLY@49..50 "}" [] []
+    4: JS_CLASS_DECLARATION@50..67
       0: (empty)
       1: CLASS_KW@50..57 "class" [Newline("\n")] [Whitespace(" ")]
       2: (empty)
@@ -160,11 +164,25 @@ error[SyntaxError]: class declarations must have a name
   │ ^^^^^^
 
 --
+error[SyntaxError]: expected a semicolon to end the class property, but found none
+  ┌─ class_decl_err.js:3:13
+  │
+3 │ class foo { set {} }
+  │             ^^^
+
+--
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
   ┌─ class_decl_err.js:3:17
   │
 3 │ class foo { set {} }
   │                 ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+--
+error[SyntaxError]: expected a statement but instead found '}'
+  ┌─ class_decl_err.js:3:20
+  │
+3 │ class foo { set {} }
+  │                    ^ Expected a statement here
 
 --
 error[SyntaxError]: class declarations must have a name

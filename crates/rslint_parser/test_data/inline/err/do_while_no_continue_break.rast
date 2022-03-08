@@ -130,7 +130,7 @@ JsModule {
       0: R_PAREN@46..47 ")" [] []
   3: EOF@47..48 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `WHILE_KW` but instead found `break`
+error[SyntaxError]: expected `while` but instead found `break`
   ┌─ do_while_no_continue_break.js:1:8
   │
 1 │ do { } break (continue)
@@ -185,7 +185,7 @@ error[SyntaxError]: expected a statement but instead found ')'
   │                       ^ Expected a statement here
 
 --
-error[SyntaxError]: expected `WHILE_KW` but instead found `continue`
+error[SyntaxError]: expected `while` but instead found `continue`
   ┌─ do_while_no_continue_break.js:2:8
   │
 2 │ do { } continue (break)

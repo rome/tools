@@ -9,7 +9,6 @@ use crate::syntax::typescript::{
     is_nth_at_any_ts_namespace_declaration, parse_any_ts_namespace_declaration_clause,
     parse_ts_enum_declaration, parse_ts_interface_declaration, parse_ts_type_alias_declaration,
 };
-use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
 use crate::{Absent, ParsedSyntax, Parser};
 use rome_js_syntax::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE;
 use rome_js_syntax::T;
@@ -49,12 +48,11 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
         return false;
     }
 
-    if is_nth_at_contextual_keyword(p, n, "type") || is_nth_at_contextual_keyword(p, n, "interface")
-    {
+    if p.nth_at(n, T![type]) || p.nth_at(n, T![interface]) {
         return true;
     }
 
-    if is_nth_at_contextual_keyword(p, n, "async") && p.nth_at(n + 1, T![function]) {
+    if p.nth_at(n, T![async]) && p.nth_at(n + 1, T![function]) {
         return true;
     }
 
@@ -62,7 +60,7 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
         return true;
     }
 
-    if is_nth_at_contextual_keyword(p, n, "abstract") && p.nth_at(n + 1, T![class]) {
+    if p.nth_at(n, T![abstract]) && p.nth_at(n + 1, T![class]) {
         return true;
     }
 
@@ -73,9 +71,7 @@ pub(crate) fn parse_declaration_clause(p: &mut Parser, stmt_start_pos: usize) ->
     match p.cur() {
         T![function] => parse_function_declaration(p, StatementContext::StatementList),
         T![class] => parse_class_declaration(p, StatementContext::StatementList),
-        T![ident] if is_at_contextual_keyword(p, "abstract") => {
-            parse_class_declaration(p, StatementContext::StatementList)
-        }
+        T![abstract] => parse_class_declaration(p, StatementContext::StatementList),
         T![const] => {
             if p.nth_at(1, T![enum]) {
                 parse_ts_enum_declaration(p)
@@ -95,31 +91,27 @@ pub(crate) fn parse_declaration_clause(p: &mut Parser, stmt_start_pos: usize) ->
             parse_ts_enum_declaration(p)
         }
         T![import] => parse_import_or_import_equals_declaration(p),
-        T![ident] => {
-            if is_at_contextual_keyword(p, "async") {
-                parse_function_declaration(p, StatementContext::StatementList)
-            } else if is_at_contextual_keyword(p, "type") {
-                // test ts ts_declare_type_alias
-                // declare type A = string;
-                // declare type B = string | number & { a: string, b: number }
-                parse_ts_type_alias_declaration(p)
-            } else if is_at_contextual_keyword(p, "interface") {
-                // test ts ts_ambient_interface
-                // declare interface A { b: string, c: number }
-                parse_ts_interface_declaration(p)
-            } else if is_at_contextual_keyword(p, "let") {
-                // test ts ts_ambient_let_variable_statement
-                // declare let a, b, c, d;
-                parse_variable_declaration_clause(p)
-            } else if is_at_contextual_keyword(p, "namespace")
-                || is_at_contextual_keyword(p, "global")
-                || is_at_contextual_keyword(p, "module")
-            {
-                parse_any_ts_namespace_declaration_clause(p, stmt_start_pos)
-            } else {
-                Absent
-            }
+        T![async] => parse_function_declaration(p, StatementContext::StatementList),
+        T![type] => {
+            // test ts ts_declare_type_alias
+            // declare type A = string;
+            // declare type B = string | number & { a: string, b: number }
+            parse_ts_type_alias_declaration(p)
         }
+        T![interface] => {
+            // test ts ts_ambient_interface
+            // declare interface A { b: string, c: number }
+            parse_ts_interface_declaration(p)
+        }
+        T![let] => {
+            // test ts ts_ambient_let_variable_statement
+            // declare let a, b, c, d;
+            parse_variable_declaration_clause(p)
+        }
+        T![namespace] | T![global] | T![module] => {
+            parse_any_ts_namespace_declaration_clause(p, stmt_start_pos)
+        }
+
         _ => Absent,
     }
 }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 125
 expression: do.js
 
 ---
@@ -185,7 +185,7 @@ error[SyntaxError]: expected an expression, or an assignment but instead found '
 9 │ let x = do {
   │         ^^ Expected an expression, or an assignment here
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `;`
+error[SyntaxError]: expected `while` but instead found `;`
    ┌─ do.js:12:2
    │
 12 │ };
@@ -197,7 +197,7 @@ error[SyntaxError]: expected an expression, or an assignment but instead found '
 14 │ let y = do {
    │         ^^ Expected an expression, or an assignment here
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `;`
+error[SyntaxError]: expected `while` but instead found `;`
    ┌─ do.js:18:2
    │
 18 │ };
@@ -288,7 +288,7 @@ error[SyntaxError]: expected `')'` but instead found `do`
 37 │ (do {});
    │  ^^ unexpected
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `)`
+error[SyntaxError]: expected `while` but instead found `)`
    ┌─ do.js:37:7
    │
 37 │ (do {});
@@ -300,7 +300,7 @@ error[SyntaxError]: expected `')'` but instead found `do`
 38 │ (do {} + 1);
    │  ^^ unexpected
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `+`
+error[SyntaxError]: expected `while` but instead found `+`
    ┌─ do.js:38:8
    │
 38 │ (do {} + 1);
@@ -312,7 +312,7 @@ error[SyntaxError]: expected an expression but instead found 'do'
 39 │ (1 + do {});
    │      ^^ Expected an expression here
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `)`
+error[SyntaxError]: expected `while` but instead found `)`
    ┌─ do.js:39:11
    │
 39 │ (1 + do {});
@@ -324,7 +324,7 @@ error[SyntaxError]: expected a function body, or an expression but instead found
 40 │ () => do {};
    │       ^^ Expected a function body, or an expression here
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `;`
+error[SyntaxError]: expected `while` but instead found `;`
    ┌─ do.js:40:12
    │
 40 │ () => do {};
@@ -336,7 +336,7 @@ error[SyntaxError]: expected `')'` but instead found `do`
 42 │ (do {
    │  ^^ unexpected
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `)`
+error[SyntaxError]: expected `while` but instead found `)`
    ┌─ do.js:47:2
    │
 47 │ });
@@ -348,7 +348,7 @@ error[SyntaxError]: expected a function body, or an expression but instead found
 49 │ () => do {
    │       ^^ Expected a function body, or an expression here
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `;`
+error[SyntaxError]: expected `while` but instead found `;`
    ┌─ do.js:54:2
    │
 54 │ };

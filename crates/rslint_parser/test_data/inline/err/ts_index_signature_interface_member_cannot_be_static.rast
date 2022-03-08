@@ -13,7 +13,7 @@ JsModule {
                     items: [
                         JsUnknown {
                             items: [
-                                IDENT@13..25 "static" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                STATIC_KW@13..25 "static" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                 L_BRACK@25..26 "[" [] [],
                                 TsIndexSignatureParameter {
                                     binding: JsIdentifierBinding {
@@ -51,7 +51,7 @@ JsModule {
                     items: [
                         JsUnknown {
                             items: [
-                                IDENT@64..76 "public" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                PUBLIC_KW@64..76 "public" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                 L_BRACK@76..77 "[" [] [],
                                 TsIndexSignatureParameter {
                                     binding: JsIdentifierBinding {
@@ -89,7 +89,7 @@ JsModule {
                     items: [
                         JsUnknown {
                             items: [
-                                IDENT@115..128 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                PRIVATE_KW@115..128 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                 L_BRACK@128..129 "[" [] [],
                                 TsIndexSignatureParameter {
                                     binding: JsIdentifierBinding {
@@ -131,7 +131,7 @@ JsModule {
       2: L_CURLY@12..13 "{" [] []
       3: JS_UNKNOWN@13..48
         0: JS_UNKNOWN@13..48
-          0: IDENT@13..25 "static" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          0: STATIC_KW@13..25 "static" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@25..26 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@26..39
             0: JS_IDENTIFIER_BINDING@26..31
@@ -153,7 +153,7 @@ JsModule {
       2: L_CURLY@63..64 "{" [] []
       3: JS_UNKNOWN@64..99
         0: JS_UNKNOWN@64..99
-          0: IDENT@64..76 "public" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          0: PUBLIC_KW@64..76 "public" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@76..77 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@77..90
             0: JS_IDENTIFIER_BINDING@77..82
@@ -175,7 +175,7 @@ JsModule {
       2: L_CURLY@114..115 "{" [] []
       3: JS_UNKNOWN@115..151
         0: JS_UNKNOWN@115..151
-          0: IDENT@115..128 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+          0: PRIVATE_KW@115..128 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@128..129 "[" [] []
           2: TS_INDEX_SIGNATURE_PARAMETER@129..142
             0: JS_IDENTIFIER_BINDING@129..134

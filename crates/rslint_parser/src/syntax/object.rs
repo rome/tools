@@ -99,11 +99,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         //    return "This is a method and not a getter";
         //   }
         // }
-        T![ident]
-            if p.cur_src() == "get"
-                && !p.has_linebreak_before_n(1)
-                && is_nth_at_type_member_name(p, 1) =>
-        {
+        T![get] if !p.has_linebreak_before_n(1) && is_nth_at_type_member_name(p, 1) => {
             parse_getter_object_member(p)
         }
 
@@ -128,11 +124,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         //     return 5;
         //  }
         // }
-        T![ident]
-            if p.cur_src() == "set"
-                && !p.has_linebreak_before_n(1)
-                && is_nth_at_type_member_name(p, 1) =>
-        {
+        T![set] if !p.has_linebreak_before_n(1) && is_nth_at_type_member_name(p, 1) => {
             parse_setter_object_member(p)
         }
 
@@ -141,7 +133,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         //   async foo() {},
         //   async *foo() {}
         // }
-        T![ident] if is_parser_at_async_method_member(p) => parse_method_object_member(p),
+        T![async] if is_parser_at_async_method_member(p) => parse_method_object_member(p),
 
         // test object_expr_spread_prop
         // let a = {...foo}
@@ -251,13 +243,13 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 
 /// Parses a getter object member: `{ get a() { return "a"; } }`
 fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![ident]) || p.cur_src() != "get" {
+    if !p.at(T![get]) {
         return Absent;
     }
 
     let m = p.start();
 
-    p.bump_remap(T![get]);
+    p.expect_keyword(T![get], "get");
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
@@ -284,12 +276,12 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 /// Parses a setter object member like `{ set a(value) { .. } }`
 fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![ident]) || p.cur_src() != "set" {
+    if !p.at(T![set]) {
         return Absent;
     }
     let m = p.start();
 
-    p.bump_remap(T![set]);
+    p.expect_keyword(T![set], "set");
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
@@ -412,7 +404,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
     //  async *foo() {}
     // }
     if is_async {
-        p.bump_remap(T![async]);
+        p.eat_keyword(T![async], "async");
         flags |= SignatureFlags::ASYNC;
     }
 
@@ -455,8 +447,7 @@ fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
 }
 
 fn is_parser_at_async_method_member(p: &Parser) -> bool {
-    p.cur() == T![ident]
-        && p.cur_src() == "async"
+    p.at(T![async])
         && !p.has_linebreak_before_n(1)
         && (is_nth_at_type_member_name(p, 1) || p.nth_at(1, T![*]))
 }

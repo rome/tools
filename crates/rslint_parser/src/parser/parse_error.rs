@@ -1,7 +1,6 @@
 use crate::Parser;
 use rome_js_syntax::JsSyntaxKind;
 use rslint_errors::{Diagnostic, Span};
-use std::fmt::{Display, Formatter};
 use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
@@ -18,12 +17,11 @@ pub(crate) fn expected_any(names: &[&str], range: Range<usize>) -> ExpectedNodeD
 
 #[must_use]
 pub(crate) fn expected_token(token: JsSyntaxKind) -> impl ToDiagnostic {
-    ExpectedToken(ExpectedTokenName::Kind(token))
-}
-
-#[must_use]
-pub(crate) fn expected_contextual_keyword(name: &'static str) -> impl ToDiagnostic {
-    ExpectedToken(ExpectedTokenName::Contextual(name))
+    ExpectedToken(
+        token
+            .to_string()
+            .expect("Expected token to be a punctuation or keyword."),
+    )
 }
 
 #[must_use]
@@ -40,7 +38,13 @@ pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> impl ToDiagnostic {
             expected.push_str("or ");
         }
 
-        let _ = write!(&mut expected, "'{}'", ExpectedTokenName::Kind(*token));
+        let _ = write!(
+            &mut expected,
+            "'{}'",
+            token
+                .to_string()
+                .expect("Expected token to be a punctuation or keyword.")
+        );
     }
 
     ExpectedTokens(expected)
@@ -53,23 +57,6 @@ pub trait ToDiagnostic {
 impl ToDiagnostic for Diagnostic {
     fn to_diagnostic(self, _: &Parser) -> Diagnostic {
         self
-    }
-}
-
-enum ExpectedTokenName {
-    Kind(JsSyntaxKind),
-    Contextual(&'static str),
-}
-
-impl Display for ExpectedTokenName {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ExpectedTokenName::Kind(kind) => match kind.to_string() {
-                Some(name) => f.write_str(name),
-                None => write!(f, "{:?}", kind),
-            },
-            ExpectedTokenName::Contextual(name) => f.write_str(name),
-        }
     }
 }
 
@@ -145,7 +132,7 @@ fn article_for(name: &str) -> &'static str {
     }
 }
 
-struct ExpectedToken(ExpectedTokenName);
+struct ExpectedToken(&'static str);
 
 impl ToDiagnostic for ExpectedToken {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic {
