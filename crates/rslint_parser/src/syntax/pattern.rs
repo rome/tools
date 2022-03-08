@@ -4,9 +4,9 @@ use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionConte
 use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, ParseRecovery, ParsedSyntax, Parser};
+use rome_js_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};
+use rome_js_syntax::{JsSyntaxKind, T};
 use rslint_errors::Diagnostic;
-use rslint_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};
-use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
 
 /// Trait for parsing a pattern with an optional default of the form `pattern = default`

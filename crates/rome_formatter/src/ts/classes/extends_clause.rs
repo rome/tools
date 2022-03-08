@@ -3,7 +3,7 @@ use crate::{
     block_indent, format_elements, group_elements, if_group_breaks, if_group_fits_on_single_line,
     soft_block_indent, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{TsExtendsClause, TsExtendsClauseFields};
+use rome_js_syntax::{TsExtendsClause, TsExtendsClauseFields};
 
 impl ToFormatElement for TsExtendsClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

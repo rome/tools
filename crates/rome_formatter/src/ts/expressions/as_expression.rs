@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsAsExpression;
-use rslint_parser::ast::TsAsExpressionFields;
+use rome_js_syntax::TsAsExpression;
+use rome_js_syntax::TsAsExpressionFields;
 
 impl ToFormatElement for TsAsExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

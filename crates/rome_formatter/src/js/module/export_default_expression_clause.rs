@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsExportDefaultExpressionClause;
-use rslint_parser::ast::JsExportDefaultExpressionClauseFields;
+use rome_js_syntax::JsExportDefaultExpressionClause;
+use rome_js_syntax::JsExportDefaultExpressionClauseFields;
 
 impl ToFormatElement for JsExportDefaultExpressionClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

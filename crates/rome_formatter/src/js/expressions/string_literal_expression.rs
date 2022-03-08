@@ -4,8 +4,8 @@ use crate::format_element::normalize_newlines;
 
 use crate::{format_element::Token, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsStringLiteralExpression;
-use rslint_parser::ast::JsStringLiteralExpressionFields;
+use rome_js_syntax::JsStringLiteralExpression;
+use rome_js_syntax::JsStringLiteralExpressionFields;
 
 impl ToFormatElement for JsStringLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

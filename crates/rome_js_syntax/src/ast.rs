@@ -4,22 +4,17 @@
 //! from any error and produce an ast from any source code. If you don't want to account for
 //! optionals for everything, you can use ...
 
-#[macro_use]
-mod expr_ext;
-mod generated;
-mod modifier_ext;
-mod stmt_ext;
-mod union_ext;
-
-use crate::{syntax_node::*, util::SyntaxNodeExt, JsSyntaxKind, SyntaxList, TextRange};
+pub use crate::expr_ext::*;
+use rome_rowan::TextRange;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use thiserror::Error;
 
-pub(crate) use self::generated::syntax_factory::JsSyntaxFactory;
-pub use self::modifier_ext::Modifiers;
-pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*};
+pub use crate::modifier_ext::Modifiers;
+pub use crate::stmt_ext::*;
+use crate::util::SyntaxNodeExt;
+use crate::{JsSyntaxKind, SyntaxList, SyntaxNode, SyntaxSlot, SyntaxSlots, SyntaxToken};
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
@@ -334,15 +329,14 @@ pub enum SyntaxError {
     MissingRequiredChild(SyntaxNode),
 }
 
-mod support {
+pub(super) mod support {
     use super::{AstNode, SyntaxNode, SyntaxToken};
-    use crate::ast::DebugSyntaxElement;
-    use crate::{SyntaxElementChildren, SyntaxNodeExt};
-    use crate::{SyntaxError, SyntaxResult};
+    use crate::util::SyntaxNodeExt;
+    use crate::{DebugSyntaxElement, SyntaxElementChildren, SyntaxError, SyntaxResult};
     use rome_rowan::SyntaxSlot;
     use std::fmt::{Debug, Formatter};
 
-    pub(super) fn node<N: AstNode>(parent: &SyntaxNode, slot_index: usize) -> Option<N> {
+    pub(crate) fn node<N: AstNode>(parent: &SyntaxNode, slot_index: usize) -> Option<N> {
         match parent.slots().nth(slot_index)? {
             SyntaxSlot::Empty => None,
             SyntaxSlot::Node(node) => Some(node.to()),
@@ -353,7 +347,7 @@ mod support {
         }
     }
 
-    pub(super) fn required_node<N: AstNode>(
+    pub(crate) fn required_node<N: AstNode>(
         parent: &SyntaxNode,
         slot_index: usize,
     ) -> SyntaxResult<N> {
@@ -361,16 +355,16 @@ mod support {
             .ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
     }
 
-    pub(super) fn elements(parent: &SyntaxNode) -> SyntaxElementChildren {
+    pub(crate) fn elements(parent: &SyntaxNode) -> SyntaxElementChildren {
         parent.children_with_tokens()
     }
 
-    pub(super) fn list<L: AstNode>(parent: &SyntaxNode, slot_index: usize) -> L {
+    pub(crate) fn list<L: AstNode>(parent: &SyntaxNode, slot_index: usize) -> L {
         required_node(parent, slot_index)
             .unwrap_or_else(|_| panic!("expected a list in slot {}", slot_index))
     }
 
-    pub(super) fn token(parent: &SyntaxNode, slot_index: usize) -> Option<SyntaxToken> {
+    pub(crate) fn token(parent: &SyntaxNode, slot_index: usize) -> Option<SyntaxToken> {
         match parent.slots().nth(slot_index)? {
             SyntaxSlot::Empty => None,
             SyntaxSlot::Token(token) => Some(token),
@@ -381,7 +375,7 @@ mod support {
         }
     }
 
-    pub(super) fn required_token(
+    pub(crate) fn required_token(
         parent: &SyntaxNode,
         slot_index: usize,
     ) -> SyntaxResult<SyntaxToken> {
@@ -390,7 +384,7 @@ mod support {
 
     /// New-type wrapper to flatten the debug output of syntax result fields when printing [AstNode]s.
     /// Omits the [Ok] if the node is present and prints `missing (required)` if the child is missing
-    pub(super) struct DebugSyntaxResult<N>(pub(super) SyntaxResult<N>);
+    pub(crate) struct DebugSyntaxResult<N>(pub(crate) SyntaxResult<N>);
 
     impl<N: Debug> Debug for DebugSyntaxResult<N> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -403,7 +397,7 @@ mod support {
 
     /// New-type wrapper to flatten the debug output of optional children when printing [AstNode]s.
     /// Omits the [Some] if the node is present and prints `missing (optional)` if the child is missing
-    pub(super) struct DebugOptionalElement<N>(pub(super) Option<N>);
+    pub(crate) struct DebugOptionalElement<N>(pub Option<N>);
 
     impl<N: Debug> Debug for DebugOptionalElement<N> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -415,7 +409,7 @@ mod support {
     }
 
     #[derive(Clone)]
-    pub(super) struct DebugSyntaxElementChildren(pub(super) SyntaxElementChildren);
+    pub(crate) struct DebugSyntaxElementChildren(pub SyntaxElementChildren);
 
     impl Debug for DebugSyntaxElementChildren {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -428,10 +422,11 @@ mod support {
 
 #[cfg(test)]
 mod tests {
-    use crate::ast::{
-        AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression, JsSyntaxFactory,
+    use crate::ast::AstSeparatedElement;
+    use crate::{
+        AstNode, AstSeparatedList, JsLanguage, JsNumberLiteralExpression, JsSyntaxFactory,
+        JsSyntaxKind, SyntaxNode, SyntaxResult,
     };
-    use crate::{AstNode, JsLanguage, JsSyntaxKind, SyntaxNode, SyntaxResult};
     use rome_rowan::{SyntaxList, TreeBuilder};
 
     struct TestList {

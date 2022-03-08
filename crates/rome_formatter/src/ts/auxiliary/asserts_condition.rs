@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::TsAssertsCondition;
-use rslint_parser::ast::TsAssertsConditionFields;
+use rome_js_syntax::TsAssertsCondition;
+use rome_js_syntax::TsAssertsConditionFields;
 
 impl ToFormatElement for TsAssertsCondition {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

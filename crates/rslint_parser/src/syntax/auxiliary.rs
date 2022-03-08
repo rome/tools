@@ -11,8 +11,8 @@ use crate::syntax::typescript::{
 };
 use crate::syntax::util::{is_at_contextual_keyword, is_nth_at_contextual_keyword};
 use crate::{Absent, ParsedSyntax, Parser};
-use rslint_syntax::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE;
-use rslint_syntax::T;
+use rome_js_syntax::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE;
+use rome_js_syntax::T;
 
 // test export_variable_clause
 // export let a;

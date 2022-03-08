@@ -2,10 +2,8 @@
 
 use std::mem;
 
-use crate::{
-    JsSyntaxKind::{self, *},
-    Parser, ParserError, TreeSink,
-};
+use crate::{Parser, ParserError, TreeSink};
+use rome_js_syntax::JsSyntaxKind::{self, *};
 
 use crate::parser::Checkpoint;
 

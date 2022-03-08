@@ -10,7 +10,8 @@ use crate::syntax::js_parse_error::expected_expression;
 
 use crate::syntax::typescript::ts_parse_error::expected_ts_type;
 use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
-use crate::{JsSyntaxKind::*, *};
+use crate::{Absent, CompletedMarker, Marker, ParsedSyntax, Parser, Present};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
 pub(crate) use self::statement::*;

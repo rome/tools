@@ -5,8 +5,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsWithStatement;
-use rslint_parser::ast::JsWithStatementFields;
+use rome_js_syntax::JsWithStatement;
+use rome_js_syntax::JsWithStatementFields;
 
 impl ToFormatElement for JsWithStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

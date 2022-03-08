@@ -4,6 +4,7 @@ use crate::syntax::binding::{
 };
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
+use std::ops::Range;
 
 use super::ts_parse_error::expected_ts_enum_member;
 use crate::state::EnterAmbientContext;
@@ -20,7 +21,11 @@ use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
     is_nth_at_contextual_keyword,
 };
-use crate::{JsSyntaxKind::*, *};
+use crate::{
+    syntax, Absent, CompletedMarker, Marker, ParseNodeList, ParseRecovery, ParseSeparatedList,
+    ParsedSyntax, Parser, Present,
+};
+use rome_js_syntax::{JsSyntaxKind::*, *};
 
 fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();

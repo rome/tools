@@ -1,6 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{ast::*, JsSyntaxKind::*, T};
+use crate::{generated::nodes::*, AstNode, JsSyntaxKind, JsSyntaxKind::*, T};
 use rome_rowan::{ParsedChildren, RawNodeSlots, RawSyntaxNode, SyntaxFactory, SyntaxKind};
 #[derive(Debug)]
 pub struct JsSyntaxFactory;

@@ -11,18 +11,18 @@ use crate::{
 pub use binarish_expression::format_binaryish_expression;
 pub(crate) use call_expression::format_call_expression;
 pub(crate) use format_conditional::{format_conditional, Conditional};
-use rslint_parser::ast::{
+use rome_js_syntax::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause,
     JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
     TsTemplateElementFields, TsType,
 };
-use rslint_parser::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
 use crate::format_element::normalize_newlines;
 pub(crate) use simple::*;
 
 /// Utility function to format the separators of the nodes that belong to the unions
-/// of [rslint_parser::ast::TsAnyTypeMember].
+/// of [rome_js_syntax::TsAnyTypeMember].
 ///
 /// We can have two kind of separators: `,`, `;` or ASI.
 /// Because of how the grammar crafts the nodes, the parent will add the separator to the node.
@@ -38,7 +38,7 @@ pub(crate) fn format_type_member_separator(
     }
 }
 
-/// Utility function to format the node [rslint_parser::ast::JsInitializerClause]
+/// Utility function to format the node [rome_js_syntax::JsInitializerClause]
 pub(crate) fn format_initializer_clause(
     formatter: &Formatter,
     initializer: Option<JsInitializerClause>,

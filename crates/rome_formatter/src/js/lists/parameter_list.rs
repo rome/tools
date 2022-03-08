@@ -3,7 +3,7 @@ use crate::{
     join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::JsParameterList;
+use rome_js_syntax::JsParameterList;
 
 impl ToFormatElement for JsParameterList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -34,7 +34,7 @@ use rslint_errors::Diagnostic;
 use state::LexerState;
 use tables::derived_property::*;
 
-pub use rslint_syntax::*;
+pub use rome_js_syntax::*;
 pub type LexerReturn = (Token, Option<Box<Diagnostic>>);
 
 // Simple macro for unwinding a loop
@@ -1626,7 +1626,7 @@ enum Dispatch {
     TLD,
     UNI,
 }
-use rslint_syntax::JsSyntaxKind::BACKTICK;
+use rome_js_syntax::JsSyntaxKind::BACKTICK;
 use Dispatch::*;
 
 use crate::errors::invalid_digits_after_unicode_escape_sequence;

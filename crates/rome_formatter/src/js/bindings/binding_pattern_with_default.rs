@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsBindingPatternWithDefault;
-use rslint_parser::ast::JsBindingPatternWithDefaultFields;
+use rome_js_syntax::JsBindingPatternWithDefault;
+use rome_js_syntax::JsBindingPatternWithDefaultFields;
 
 impl ToFormatElement for JsBindingPatternWithDefault {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

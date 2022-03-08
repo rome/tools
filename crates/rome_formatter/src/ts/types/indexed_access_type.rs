@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::TsIndexedAccessType;
-use rslint_parser::ast::TsIndexedAccessTypeFields;
+use rome_js_syntax::TsIndexedAccessType;
+use rome_js_syntax::TsIndexedAccessTypeFields;
 
 impl ToFormatElement for TsIndexedAccessType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

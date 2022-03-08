@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsComputedMemberAssignment;
-use rslint_parser::ast::JsComputedMemberAssignmentFields;
+use rome_js_syntax::JsComputedMemberAssignment;
+use rome_js_syntax::JsComputedMemberAssignmentFields;
 
 impl ToFormatElement for JsComputedMemberAssignment {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

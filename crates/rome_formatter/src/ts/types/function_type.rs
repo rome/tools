@@ -3,8 +3,8 @@ use crate::{
     format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::TsFunctionType;
-use rslint_parser::ast::TsFunctionTypeFields;
+use rome_js_syntax::TsFunctionType;
+use rome_js_syntax::TsFunctionTypeFields;
 
 impl ToFormatElement for TsFunctionType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

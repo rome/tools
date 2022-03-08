@@ -2,8 +2,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{format_elements, token, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsDirective;
-use rslint_parser::ast::JsDirectiveFields;
+use rome_js_syntax::JsDirective;
+use rome_js_syntax::JsDirectiveFields;
 
 impl ToFormatElement for JsDirective {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

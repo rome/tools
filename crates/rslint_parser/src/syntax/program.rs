@@ -4,7 +4,8 @@ use super::module::parse_module_body;
 use super::stmt::parse_statements;
 use crate::state::{ChangeParserState, EnableStrictMode};
 use crate::syntax::stmt::directives;
-use crate::{JsSyntaxKind::*, *};
+use crate::{CompletedMarker, ModuleKind, Parser};
+use rome_js_syntax::JsSyntaxKind::*;
 
 // test_err unterminated_unicode_codepoint
 // let s = "\u{200";

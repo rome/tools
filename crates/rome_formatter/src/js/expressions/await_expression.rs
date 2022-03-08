@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsAwaitExpression;
-use rslint_parser::ast::JsAwaitExpressionFields;
+use rome_js_syntax::JsAwaitExpression;
+use rome_js_syntax::JsAwaitExpressionFields;
 
 impl ToFormatElement for JsAwaitExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

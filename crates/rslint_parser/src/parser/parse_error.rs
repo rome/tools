@@ -1,6 +1,6 @@
 use crate::Parser;
+use rome_js_syntax::JsSyntaxKind;
 use rslint_errors::{Diagnostic, Span};
-use rslint_syntax::JsSyntaxKind;
 use std::fmt::{Display, Formatter};
 use std::ops::Range;
 

@@ -4,8 +4,8 @@ use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::JsImport;
-use rslint_parser::ast::JsImportFields;
+use rome_js_syntax::JsImport;
+use rome_js_syntax::JsImportFields;
 
 impl ToFormatElement for JsImport {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -5,9 +5,9 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
-use rslint_parser::ast::{JsElseClause, JsIfStatementFields};
-use rslint_parser::SyntaxToken;
+use rome_js_syntax::SyntaxToken;
+use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
+use rome_js_syntax::{JsElseClause, JsIfStatementFields};
 
 impl ToFormatElement for JsIfStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

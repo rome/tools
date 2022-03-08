@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsComputedMemberName;
-use rslint_parser::ast::JsComputedMemberNameFields;
+use rome_js_syntax::JsComputedMemberName;
+use rome_js_syntax::JsComputedMemberNameFields;
 
 impl ToFormatElement for JsComputedMemberName {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

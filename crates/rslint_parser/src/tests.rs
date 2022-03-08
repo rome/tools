@@ -1,13 +1,13 @@
-use crate::ast::{JsAnyRoot, JsCallArguments, JsLogicalExpression};
-use crate::{
-    parse, parse_module, AstNode, Parse, SourceType, SyntaxNode, SyntaxNodeExt, SyntaxToken,
-};
+use crate::{parse, parse_module, Parse, SourceType};
 use expect_test::expect_file;
+use rome_js_syntax::{
+    AstNode, JsCallArguments, JsLogicalExpression, SyntaxNode, SyntaxNodeExt, SyntaxToken,
+};
+use rome_js_syntax::{JsAnyRoot, JsSyntaxKind};
 use rome_rowan::{SyntaxKind, TextSize};
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::{file::SimpleFiles, Emitter};
-use rslint_syntax::JsSyntaxKind;
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
@@ -35,8 +35,8 @@ fn parser_missing_smoke_test() {
         .find_map(JsCallArguments::cast)
         .unwrap();
 
-    let opening = arg_list.syntax.element_in_slot(0);
-    let list = arg_list.syntax.element_in_slot(1);
+    let opening = arg_list.syntax().element_in_slot(0);
+    let list = arg_list.syntax().element_in_slot(1);
     let closing = arg_list.syntax().element_in_slot(2);
 
     assert_eq!(opening.map(|o| o.to_string()), Some(String::from("(")));
@@ -187,7 +187,7 @@ fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
 
 #[test]
 pub fn test_trivia_attached_to_tokens() {
-    use crate::util::SyntaxNodeExt;
+    use rome_js_syntax::SyntaxNodeExt;
 
     let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
     let m = parse_module(text, 0);
@@ -358,7 +358,7 @@ pub fn node_contains_trailing_comments() {
 #[test]
 pub fn node_contains_leading_comments() {
     let text = r"true &&
-// comment 
+// comment
 (3 - 2 == 0)";
     let root = parse_module(text, 0);
     let syntax = root.syntax();

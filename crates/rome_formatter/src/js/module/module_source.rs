@@ -2,8 +2,8 @@ use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::JsModuleSource;
-use rslint_parser::ast::JsModuleSourceFields;
+use rome_js_syntax::JsModuleSource;
+use rome_js_syntax::JsModuleSourceFields;
 
 impl ToFormatElement for JsModuleSource {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

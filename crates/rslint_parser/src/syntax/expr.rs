@@ -27,8 +27,12 @@ use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{JsSyntaxKind::*, *};
+use crate::{
+    syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
+    Parser, SyntaxFeature, TokenSet,
+};
 use bitflags::bitflags;
+use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
 

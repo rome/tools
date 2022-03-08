@@ -1311,6 +1311,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "once_cell",
+ "rome_js_syntax",
  "rslint_errors",
  "rslint_parser",
  "tracing",
@@ -1342,6 +1343,7 @@ dependencies = [
  "insta",
  "parking_lot 0.12.0",
  "rome_core",
+ "rome_js_syntax",
  "rome_path",
  "rome_rowan",
  "rslint_errors",
@@ -1350,6 +1352,15 @@ dependencies = [
  "serde_json",
  "similar",
  "tests_macros",
+ "thiserror",
+]
+
+[[package]]
+name = "rome_js_syntax"
+version = "0.1.4"
+dependencies = [
+ "num-bigint",
+ "rome_rowan",
  "thiserror",
 ]
 
@@ -1363,6 +1374,7 @@ dependencies = [
  "parking_lot 0.12.0",
  "rome_analyze",
  "rome_formatter",
+ "rome_js_syntax",
  "rome_path",
  "rslint_errors",
  "rslint_parser",
@@ -1413,8 +1425,8 @@ dependencies = [
  "atty",
  "quickcheck",
  "quickcheck_macros",
+ "rome_js_syntax",
  "rslint_errors",
- "rslint_syntax",
 ]
 
 [[package]]
@@ -1426,14 +1438,12 @@ dependencies = [
  "drop_bomb",
  "expect-test",
  "indexmap",
- "num-bigint",
+ "rome_js_syntax",
  "rome_rowan",
  "rslint_errors",
  "rslint_lexer",
- "rslint_syntax",
  "smallvec",
  "tests_macros",
- "thiserror",
 ]
 
 [[package]]
@@ -1444,13 +1454,6 @@ dependencies = [
  "criterion",
  "once_cell",
  "rslint_errors",
-]
-
-[[package]]
-name = "rslint_syntax"
-version = "0.1.4"
-dependencies = [
- "rome_rowan",
 ]
 
 [[package]]
@@ -2199,6 +2202,7 @@ dependencies = [
  "pico-args",
  "regex",
  "rome_formatter",
+ "rome_js_syntax",
  "rslint_errors",
  "rslint_parser",
  "timing",
@@ -2235,6 +2239,7 @@ dependencies = [
  "once_cell",
  "pico-args",
  "regex",
+ "rome_js_syntax",
  "rome_rowan",
  "rslint_errors",
  "rslint_parser",

@@ -1,6 +1,6 @@
 use crate::{join_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::JsConstructorModifierList;
-use rslint_parser::AstNodeList;
+use rome_js_syntax::AstNodeList;
+use rome_js_syntax::JsConstructorModifierList;
 
 impl ToFormatElement for JsConstructorModifierList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
