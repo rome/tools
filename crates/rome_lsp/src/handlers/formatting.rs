@@ -79,7 +79,7 @@ pub(crate) fn format_range(params: FormatRangeParams) -> Result<Option<Vec<TextE
         .workspace_settings
         .formatter
         .format_with_syntax_errors
-        || !parse_result.has_errors()
+        && !parse_result.has_errors()
     {
         return Ok(None);
     }
@@ -146,7 +146,7 @@ pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Option<Vec<Te
         .workspace_settings
         .formatter
         .format_with_syntax_errors
-        || !parse_result.has_errors()
+        && !parse_result.has_errors()
     {
         return Ok(None);
     }
