@@ -1,14 +1,13 @@
 use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::utils::is_simple_expression;
 use crate::{
     empty_element, format_elements, hard_group_elements, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rslint_parser::ast::JsParenthesizedExpressionFields;
-use rslint_parser::ast::{JsAnyExpression, JsParenthesizedExpression};
-use rslint_parser::{AstNode, SyntaxNode};
-use rslint_parser::{JsSyntaxKind, SyntaxResult};
+use rome_js_syntax::{
+    AstNode, JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields,
+    JsSyntaxKind, SyntaxNode, SyntaxResult,
+};
 
 impl ToFormatElement for JsParenthesizedExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

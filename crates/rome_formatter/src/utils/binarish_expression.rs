@@ -10,7 +10,6 @@ use rome_js_syntax::{
     JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperation,
     JsLogicalExpression, JsLogicalExpressionFields, JsLogicalOperation,
 };
-use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use std::fmt::Debug;
 
 /// This function is charge to flat binaryish expressions that have the same precedence of their operators
