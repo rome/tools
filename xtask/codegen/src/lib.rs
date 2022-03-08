@@ -20,7 +20,7 @@ pub use self::formatter::generate_formatter;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
 
-const SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/kind.rs";
+const SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
 const AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";
 const SYNTAX_FACTORY: &str = "crates/rome_js_syntax/src/generated/syntax_factory.rs";
 const AST_MACROS: &str = "crates/rome_js_syntax/src/generated/macros.rs";
