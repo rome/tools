@@ -5,7 +5,7 @@ mod simple;
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    empty_element, format_elements, hard_group_elements, hard_line_break, space_token,
+    empty_element, format_elements, hard_group_elements, hard_line_break, space_token, token,
     FormatElement, FormatResult, Formatter, Token,
 };
 pub use binarish_expression::format_binaryish_expression;
@@ -108,12 +108,19 @@ pub(crate) fn format_head_body_statement(
     if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
         Ok(hard_group_elements(format_elements![
             head,
-            body.format(formatter)?
+            body.format(formatter)?,
         ]))
+    } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+        // Force semicolon insertion if the body is empty
+        Ok(format_elements![
+            hard_group_elements(head),
+            body.format(formatter)?,
+            token(";"),
+        ])
     } else {
         Ok(format_elements![
             hard_group_elements(head),
-            body.format(formatter)?
+            body.format(formatter)?,
         ])
     }
 }
@@ -405,7 +412,7 @@ pub(crate) enum TemplateElement {
 impl TemplateElement {
     pub fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let expression_is_plain = self.is_plain_expression()?;
-        let has_comments = self.has_comments()?;
+        let has_comments = self.has_comments();
         let should_hard_group = expression_is_plain && !has_comments;
 
         let (dollar_curly_token, middle, r_curly_token) = match self {
@@ -488,20 +495,10 @@ impl TemplateElement {
         }
     }
 
-    fn has_comments(&self) -> FormatResult<bool> {
+    fn has_comments(&self) -> bool {
         match self {
-            TemplateElement::Js(template_element) => {
-                let has_comments = template_element.expression()?.syntax().contains_comments()
-                    || template_element.syntax().contains_comments();
-
-                Ok(has_comments)
-            }
-            TemplateElement::Ts(template_element) => {
-                let has_comments = template_element.ty()?.syntax().contains_comments()
-                    || template_element.syntax().contains_comments();
-
-                Ok(has_comments)
-            }
+            TemplateElement::Js(template_element) => template_element.syntax().contains_comments(),
+            TemplateElement::Ts(template_element) => template_element.syntax().contains_comments(),
         }
     }
 }

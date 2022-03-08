@@ -575,6 +575,11 @@ impl Iterator for SyntaxTriviaPiecesIterator {
 
         Some(piece)
     }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        let len = self.end_index.saturating_sub(self.next_index);
+        (len, Some(len))
+    }
 }
 
 impl DoubleEndedIterator for SyntaxTriviaPiecesIterator {
@@ -591,6 +596,8 @@ impl DoubleEndedIterator for SyntaxTriviaPiecesIterator {
         Some((self.end_offset, trivia))
     }
 }
+
+impl ExactSizeIterator for SyntaxTriviaPiecesIterator {}
 
 impl SyntaxTrivia {
     pub(crate) fn text(&self) -> &str {

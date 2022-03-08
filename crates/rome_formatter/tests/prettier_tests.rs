@@ -12,7 +12,7 @@ use std::{
 
 use rome_formatter::{FormatOptions, IndentStyle};
 use rslint_errors::{file::SimpleFiles, termcolor, Emitter};
-use rslint_parser::parse;
+use rslint_parser::{parse, SourceType};
 
 static REPORTER: DiffReport = DiffReport::new();
 
@@ -27,15 +27,18 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     }
 
     let input_file = Path::new(input);
+    let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
     let mut input_code = read_to_string(input_file)
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
     let (_, range_start_index, range_end_index) = strip_placeholders(&mut input_code);
     let parse_input = input_code.replace(PRETTIER_IGNORE, ROME_IGNORE);
 
-    let source_type = input_file.try_into().unwrap();
+    let source_type: SourceType = input_file.try_into().unwrap();
 
-    let parsed = parse(&parse_input, 0, source_type);
+    let parsed = parse(&parse_input, 0, source_type.clone());
+
+    let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();
 
     let options = FormatOptions::new(IndentStyle::Space(2));
@@ -72,7 +75,37 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             output_code.replace_range(Range::<usize>::from(range), formatted);
             output_code
         }
-        _ => formatted.into_code(),
+        _ => {
+            let result = formatted.into_code();
+
+            if !has_errors {
+                let re_parse = parse(&result, 0, source_type);
+
+                if re_parse.has_errors() {
+                    let mut files = SimpleFiles::new();
+                    files.add(file_name.into(), result);
+
+                    let mut buffer = termcolor::Buffer::ansi();
+                    let mut emitter = Emitter::new(&files);
+
+                    for error in re_parse.errors() {
+                        emitter
+                            .emit_with_writer(error, &mut buffer)
+                            .expect("failed to emit diagnostic");
+                    }
+
+                    panic!(
+                        "formatter output had error diagnostics where input had none:\n{}",
+                        std::str::from_utf8(buffer.as_slice()).expect("non utf8 in error buffer")
+                    )
+                }
+
+                let re_format = rome_formatter::format(options, &re_parse.syntax()).unwrap();
+                similar_asserts::assert_str_eq!(result, re_format.into_code());
+            }
+
+            result
+        }
     };
 
     let formatted = formatted.replace(ROME_IGNORE, PRETTIER_IGNORE);
@@ -91,9 +124,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     writeln!(snapshot, "```").unwrap();
     writeln!(snapshot).unwrap();
 
-    let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
-
-    if !parsed.errors().is_empty() {
+    if has_errors {
         let mut files = SimpleFiles::new();
         files.add(file_name.into(), parse_input);
 

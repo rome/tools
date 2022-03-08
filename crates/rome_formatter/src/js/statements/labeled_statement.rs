@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 use rome_js_syntax::JsLabeledStatement;
@@ -17,8 +17,13 @@ impl ToFormatElement for JsLabeledStatement {
 
         let label = label_token.format(formatter)?;
         let colon = colon_token.format(formatter)?;
-        let statement = body.format(formatter)?;
 
-        Ok(format_elements![label, colon, space_token(), statement])
+        let statement = body.format(formatter)?;
+        if statement.is_empty() {
+            // If the body is an empty statement, force semicolon insertion
+            Ok(format_elements![label, colon, token(";")])
+        } else {
+            Ok(format_elements![label, colon, space_token(), statement])
+        }
     }
 }

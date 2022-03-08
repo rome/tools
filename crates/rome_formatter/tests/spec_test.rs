@@ -1,6 +1,8 @@
 use rome_core::App;
 use rome_formatter::{format, FormatOptions, Formatted, IndentStyle};
 use rome_path::RomePath;
+use rslint_errors::file::SimpleFiles;
+use rslint_errors::{termcolor, Emitter};
 use rslint_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
@@ -136,11 +138,24 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let input = fs::read_to_string(file_path).unwrap();
         snapshot_content.set_input(input.as_str());
 
-        let root = parse(buffer.as_str(), 0, source_type).syntax();
+        let parsed = parse(buffer.as_str(), 0, source_type.clone());
+        let has_errors = parsed.has_errors();
+        let root = parsed.syntax();
+
         let formatted_result = format(FormatOptions::default(), &root);
+
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
         // we ignore the error for now
         let result = formatted_result.unwrap();
+
+        if !has_errors {
+            check_reformat(
+                result.as_code(),
+                source_type.clone(),
+                file_name,
+                FormatOptions::default(),
+            );
+        }
 
         snapshot_content.add_output(result, FormatOptions::default());
 
@@ -156,6 +171,16 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                 for test_case in options.cases {
                     let format_options: FormatOptions = test_case.into();
                     let formatted_result = format(format_options, &root).unwrap();
+
+                    if !has_errors {
+                        check_reformat(
+                            formatted_result.as_code(),
+                            source_type.clone(),
+                            file_name,
+                            format_options,
+                        );
+                    }
+
                     snapshot_content.add_output(formatted_result, format_options);
                 }
             }
@@ -168,4 +193,36 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
             insta::assert_snapshot!(file_name, snapshot_content.snap_content(), file_name);
         });
     }
+}
+
+fn check_reformat(
+    text: &str,
+    source_type: SourceType,
+    file_name: &str,
+    format_options: FormatOptions,
+) {
+    let re_parse = parse(text, 0, source_type);
+
+    if re_parse.has_errors() {
+        let mut files = SimpleFiles::new();
+        files.add(file_name.into(), text.into());
+
+        let mut buffer = termcolor::Buffer::ansi();
+        let mut emitter = Emitter::new(&files);
+
+        for error in re_parse.errors() {
+            emitter
+                .emit_with_writer(error, &mut buffer)
+                .expect("failed to emit diagnostic");
+        }
+
+        panic!(
+            "formatter output had error diagnostics where input had none:\n{}",
+            std::str::from_utf8(buffer.as_slice()).expect("non utf8 in error buffer")
+        )
+    }
+
+    let re_format = format(format_options, &re_parse.syntax()).unwrap();
+
+    similar_asserts::assert_str_eq!(text, re_format.as_code());
 }

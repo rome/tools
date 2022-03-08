@@ -3,7 +3,7 @@ use crate::{
     concat_elements, format_elements, group_elements, indent, join_elements, soft_line_break,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode};
+use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt};
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsImportCallExpression, JsStaticMemberExpression,
 };
@@ -222,12 +222,15 @@ fn compute_groups(flatten_items: impl Iterator<Item = FlattenItem>) -> FormatRes
     let mut has_seen_call_expression = false;
     let mut groups = Groups::default();
     for item in flatten_items {
+        let has_trailing_comments = item.syntax().has_trailing_comments();
+
         match item {
             FlattenItem::StaticMember(_, _) => {
                 // if we have seen a JsCallExpression, we want to close the group.
                 // The resultant group will be something like: [ . , then, () ];
                 // `.` and `then` belong to the previous StaticMemberExpression,
                 // and `()` belong to the call expression we just encountered
+
                 if has_seen_call_expression {
                     groups.close_group();
                     groups.start_or_continue_group(item);
@@ -248,7 +251,13 @@ fn compute_groups(flatten_items: impl Iterator<Item = FlattenItem>) -> FormatRes
             }
             FlattenItem::Node(_, _) => groups.continue_group(item),
         }
+
+        // Close the group immediately if the node had any trailing comments
+        if has_trailing_comments {
+            groups.close_group();
+        }
     }
+
     // closing possible loose groups
     groups.close_group();
 
@@ -367,6 +376,15 @@ impl FlattenItem {
             FlattenItem::CallExpression(_, elements) => elements,
             FlattenItem::ComputedExpression(_, elements) => elements,
             FlattenItem::Node(_, element) => slice::from_ref(element),
+        }
+    }
+
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            FlattenItem::StaticMember(node, _) => node.syntax(),
+            FlattenItem::CallExpression(node, _) => node.syntax(),
+            FlattenItem::ComputedExpression(node, _) => node.syntax(),
+            FlattenItem::Node(node, _) => node,
         }
     }
 }
