@@ -1093,6 +1093,12 @@ struct VariableDeclaratorList {
     remaining_declarator_range: Option<TextRange>,
 }
 
+// test_err variable_declarator_list_incomplete
+// const a = 1,
+//
+// test_err variable_declarator_list_empty
+// const;
+// const
 impl ParseSeparatedList for VariableDeclaratorList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
         parse_variable_declarator(p, &self.declarator_context).map(|declarator| {
