@@ -10,7 +10,7 @@ use rome_js_syntax::{
     JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperation,
     JsLogicalExpression, JsLogicalExpressionFields, JsLogicalOperation,
 };
-use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxResult, SyntaxToken};
+use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use std::fmt::Debug;
 
 /// This function is charge to flat binaryish expressions that have the same precedence of their operators
@@ -410,8 +410,25 @@ fn split_binaryish_to_flatten_items(
     Ok((left_item, right_item))
 }
 
+/// This function is in charge of formatting a node inside a binaryish expression with parenthesis or not
+///
+/// At the moment this logic is applied only to logical expressions.
+///
+/// A logical expressions should be decorated with parenthesis only if its previous operation has a lower
+/// precedence.
+///
+/// For example:
+///
+/// ```ignore
+/// foo && bar || lorem
+/// ```
+///
+/// The logical expression `foo && bar` has higher precedence of `bar || lorem`. This means that
+/// first `foo && bar` is computed and its result is then computed against `|| lorem`.
+///
+/// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis
 fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
-    base: Operation,
+    previous_operation: Operation,
     node: Node,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
@@ -424,8 +441,10 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
     };
 
     let operation_is_higher = if let Some(compare_to) = compare_to {
-        match (base, compare_to) {
-            (Operation::Logical(base), Operation::Logical(compare_to)) => compare_to > base,
+        match (previous_operation, compare_to) {
+            (Operation::Logical(previous_operation), Operation::Logical(compare_to)) => {
+                compare_to > previous_operation
+            }
 
             // Prettier, for some reason, decided that binary expressions with different precedence.
             // This comments is here for the compatibility reason.
@@ -441,6 +460,7 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
     let formatted = if operation_is_higher {
         format_elements![group_elements(format_elements![
             token("("),
+            // TODO: wait for #2209, leading comments that belong to `node` should be kicked out from the group
             soft_block_indent(node.format(formatter)?,),
             token(")"),
         ]),]
