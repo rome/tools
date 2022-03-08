@@ -68,13 +68,12 @@ pub trait SyntaxNodeExt {
     fn contains_comments(&self) -> bool {
         self.tokens()
             .iter()
-            .any(|tok| dbg!(tok).has_trailing_comments() || tok.has_leading_comments())
+            .any(|tok| tok.has_trailing_comments() || tok.has_leading_comments())
     }
 
     /// Whether the node contains trailing comments.
     fn has_trailing_comments(&self) -> bool {
         self.tokens()
-            .iter()
             .last()
             .map_or(false, |tok| tok.has_trailing_comments())
     }
@@ -82,7 +81,7 @@ pub trait SyntaxNodeExt {
     /// Whether the node contains leading comments.
     fn has_leading_comments(&self) -> bool {
         self.tokens()
-            .get(0)
+            .first()
             .map_or(false, |tok| tok.has_leading_comments())
     }
 
