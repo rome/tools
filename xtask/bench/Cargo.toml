@@ -13,7 +13,7 @@ rome_formatter = { path = "../../crates/rome_formatter", version = "0.0.0" }
 pico-args = "0.3.4"
 timing = "0.2.3"
 criterion = "0.3.5"
-regex = "1.5.4"
+regex = "1.5.5"
 ureq = "2.4.0"
 url = "2.2.2"
 itertools = "0.10.3"
