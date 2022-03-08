@@ -1348,13 +1348,6 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
                 None
             }
         }
-        // t if t.is_non_contextual_keyword() => Some(
-        //     p.err_builder(&format!(
-        //         "Illegal use of reserved keyword `{}` as an identifier",
-        //         p.cur_src(),
-        //     ))
-        //     .primary(p.cur_tok().range(), ""),
-        // ),
         _ => None,
     };
 

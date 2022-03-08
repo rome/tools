@@ -485,7 +485,7 @@ fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
 }
 
 pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
-    let mut left = if p.cur().is_keyword() {
+    let mut left = if p.cur().is_non_contextual_keyword() && !p.cur().is_future_reserved_keyword() {
         let m = p.start();
         p.bump_remap(T![ident]);
         Present(m.complete(p, JS_REFERENCE_IDENTIFIER))
