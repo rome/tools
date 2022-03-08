@@ -5,13 +5,12 @@ use crate::{
 };
 use rome_rowan::TextRange;
 use rslint_errors::{Diagnostic, Span};
-use std::ops::Range;
 
-pub(crate) fn expected_ts_enum_member(p: &Parser, range: Range<usize>) -> Diagnostic {
+pub(crate) fn expected_ts_enum_member(p: &Parser, range: TextRange) -> Diagnostic {
     expected_any(&["identifier", "string literal", "computed name"], range).to_diagnostic(p)
 }
 
-pub(crate) fn unexpected_abstract_member_with_body(p: &Parser, range: Range<usize>) -> Diagnostic {
+pub(crate) fn unexpected_abstract_member_with_body(p: &Parser, range: TextRange) -> Diagnostic {
     p.err_builder("abstract members should not have a body")
         .primary(range, "")
 }
@@ -35,7 +34,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(
     p: &Parser,
     modifier_range: TextRange,
 ) -> Diagnostic {
-    let modifier = p.span_text(modifier_range);
+    let modifier = p.source(modifier_range);
     p.err_builder(&format!(
         "'{modifier}' cannot appear on a constructor declaration."
     ))
@@ -46,7 +45,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_parameter(
     p: &Parser,
     modifier_range: TextRange,
 ) -> Diagnostic {
-    let modifier = p.span_text(modifier_range);
+    let modifier = p.source(modifier_range);
     p.err_builder(&format!("'{modifier}' cannot appear on a parameter."))
         .primary(modifier_range, "")
 }
@@ -61,7 +60,7 @@ pub(crate) fn ts_accessibility_modifier_already_seen(
         .secondary(first_range, "first modifier")
 }
 
-pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: impl Span) -> Diagnostic {
+pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: TextRange) -> Diagnostic {
     p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax))
         .primary(range, "TypeScript only syntax")
 }
@@ -90,10 +89,10 @@ pub(crate) fn ts_set_accessor_return_type_error(
         .primary(type_annotation.range(p), "")
 }
 
-pub(crate) fn expected_ts_type(p: &Parser, range: Range<usize>) -> Diagnostic {
+pub(crate) fn expected_ts_type(p: &Parser, range: TextRange) -> Diagnostic {
     expected_node("type", range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_ts_type_parameter(p: &Parser, range: Range<usize>) -> Diagnostic {
+pub(crate) fn expected_ts_type_parameter(p: &Parser, range: TextRange) -> Diagnostic {
     expected_node("type parameter", range).to_diagnostic(p)
 }

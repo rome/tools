@@ -1570,7 +1570,7 @@ impl<'src> Lexer<'src> {
             Some(token) => match diagnostic {
                 None => (token, None),
                 Some(diagnostic) => (
-                    Token::new(JsSyntaxKind::ERROR_TOKEN, token.len as usize),
+                    Token::new(JsSyntaxKind::ERROR_TOKEN, token.len.into()),
                     Some(diagnostic),
                 ),
             },
@@ -1591,7 +1591,7 @@ impl Iterator for Lexer<'_> {
             if !self.returned_eof {
                 self.returned_eof = true;
                 let mut token = tok!(EOF, 0);
-                token.0.offset = self.cur as u32;
+                token.0.offset = TextSize::from(self.cur as u32);
                 token.0.after_newline = self.state.after_newline;
                 return Some(token);
             }
@@ -1611,7 +1611,7 @@ impl Iterator for Lexer<'_> {
             _ => false,
         };
 
-        token.0.offset = self.cur as u32 - token.0.len;
+        token.0.offset = TextSize::from(self.cur as u32) - token.0.len;
         token.0.after_newline = std::mem::replace(&mut self.state.after_newline, after_newline);
 
         if !matches!(

@@ -19,9 +19,8 @@ use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, Parser, SyntaxFeature};
 use rome_js_syntax::JsSyntaxKind::*;
-use rome_js_syntax::{JsSyntaxKind, T};
+use rome_js_syntax::{JsSyntaxKind, TextRange, T};
 use rome_rowan::SyntaxKind;
-use rslint_errors::Span;
 
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.
@@ -339,7 +338,7 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
 //   function test(): string;
 // }
 pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMarker {
-    let stmt_start = p.cur_tok().start();
+    let stmt_start = p.cur_range().start();
 
     // test_err ts ts_declare_async_function
     // declare async function test();
@@ -347,7 +346,7 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
     if is_async {
         p.error(
             p.err_builder("'async' modifier cannot be used in an ambient context.")
-                .primary(p.cur_tok().range(), ""),
+                .primary(p.cur_range(), ""),
         );
         p.bump(T![async]);
     }
@@ -366,7 +365,7 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
         );
     }
 
-    semi(p, stmt_start..p.cur_tok().start());
+    semi(p, TextRange::new(stmt_start, p.cur_range().start()));
 
     if is_async {
         m.complete(p, JS_UNKNOWN_STATEMENT)
@@ -482,14 +481,14 @@ fn try_parse_parenthesized_arrow_function_head(
 
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
-            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+            ts_only_syntax_error(p, "return type annotation", annotation.range(p))
         })
         .ok();
 
     if p.has_linebreak_before_n(0) {
         p.error(
             p.err_builder("Line terminator not permitted before arrow.")
-                .primary(p.cur_tok().range(), ""),
+                .primary(p.cur_range(), ""),
         );
     }
 
@@ -763,7 +762,7 @@ pub(crate) fn parse_any_parameter(
                 p.error(ts_only_syntax_error(
                     p,
                     "this parameter",
-                    parameter.range(p).as_range(),
+                    parameter.range(p),
                 ));
             } else if parameter_context.is_arrow_function() {
                 // test_err ts ts_arrow_function_this_parameter
@@ -794,7 +793,7 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     if p.eat(T![?]) {
         let err = p
             .err_builder("rest patterns cannot be optional")
-            .primary(p.cur_tok().range(), "");
+            .primary(p.cur_range(), "");
 
         p.error(err);
         valid = false;
@@ -803,7 +802,7 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     // type annotation `...foo: number[]`
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
-            ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
+            ts_only_syntax_error(p, "type annotation", annotation.range(p))
         })
         .ok();
 
@@ -915,13 +914,13 @@ pub(crate) fn parse_formal_parameter(
                 p.error(ts_only_syntax_error(
                     p,
                     "optional parameters",
-                    p.cur_tok().range(),
+                    p.cur_range(),
                 ));
                 valid = false;
             } else if parameter_context.is_setter() {
                 p.error(
                     p.err_builder("A 'set' accessor cannot have an optional parameter.")
-                        .primary(p.cur_tok().range(), ""),
+                        .primary(p.cur_range(), ""),
                 );
                 valid = false;
             }
@@ -959,7 +958,7 @@ pub(crate) fn parse_formal_parameter(
 
         TypeScript
             .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
-                ts_only_syntax_error(p, "Type annotations", annotation.range(p).as_range())
+                ts_only_syntax_error(p, "Type annotations", annotation.range(p))
             })
             .ok();
 

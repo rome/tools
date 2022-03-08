@@ -1,9 +1,11 @@
 #![cfg(test)]
 #![allow(unused_mut, unused_variables, unused_assignments)]
 
-use crate::Lexer;
+use crate::{Lexer, TextSize};
 use quickcheck_macros::quickcheck;
 use rome_js_syntax::JsSyntaxKind::{self, EOF};
+use rome_js_syntax::TextRange;
+use rslint_errors::Span;
 use std::sync::mpsc::channel;
 use std::thread;
 use std::time::Duration;
@@ -15,7 +17,7 @@ macro_rules! assert_lex {
         let mut lexer = Lexer::from_str($src, 0);
         let mut tokens = lexer.collect::<Vec<_>>();
         let mut idx = 0;
-        let mut tok_idx = 0;
+        let mut tok_idx = TextSize::default();
 
         let mut new_str = String::with_capacity($src.len());
         // remove eof
@@ -32,16 +34,15 @@ macro_rules! assert_lex {
 
             assert_eq!(
                 tokens[idx].0.len,
-                $len,
-                "expected token length of {}, but found {} for token {:?}",
+                TextSize::from($len),
+                "expected token length of {}, but found {:?} for token {:?}",
                 $len,
                 tokens[idx].0.len,
                 tokens[idx].0.kind,
             );
 
-            let tok_start = tok_idx as usize;
-            let tok_end = tok_idx as usize + tokens[idx].0.len as usize;
-            new_str.push_str($src.get(tok_start..tok_end).unwrap());
+            let tok_end = tokens[idx].0.len;
+            new_str.push_str($src.get(TextRange::at(tok_idx, tok_end).as_range()).unwrap());
             tok_idx += tokens[idx].0.len;
 
             idx += 1;
@@ -86,12 +87,14 @@ fn losslessness(string: String) -> bool {
         });
 
     let mut new_str = String::with_capacity(string.len());
-    let mut idx = 0;
+    let mut idx = TextSize::from(0);
 
     for token in tokens {
-        let start = idx as usize;
-        let end = idx as usize + token.len as usize;
-        new_str.push_str(string.get(start..end).unwrap());
+        new_str.push_str(
+            string
+                .get(TextRange::at(idx, token.len).as_range())
+                .unwrap(),
+        );
         idx += token.len;
     }
 
@@ -1482,9 +1485,9 @@ fn keywords() {
             kind, lexed_kind
         );
         assert_eq!(
-            token.0.len as usize,
-            keyword.len(),
-            "Expected lexed keyword to be of len {} but has length {}",
+            token.0.len,
+            TextSize::from(keyword.len() as u32),
+            "Expected lexed keyword to be of len {} but has length {:?}",
             keyword.len(),
             token.0.len
         );

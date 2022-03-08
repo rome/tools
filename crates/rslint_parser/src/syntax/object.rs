@@ -21,7 +21,6 @@ use crate::JsSyntaxFeature::TypeScript;
 use crate::{ParseRecovery, ParseSeparatedList, Parser, SyntaxFeature};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, T};
-use rslint_errors::Span;
 
 // test object_expr
 // let a = {};
@@ -172,7 +171,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
                     // test_err object_shorthand_with_initializer
                     // ({ arrow = () => {} })
                     p.error(p.err_builder("Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.")
-						.primary(p.cur_tok().range(), ""));
+						.primary(p.cur_range(), ""));
                     p.bump(T![=]);
                     parse_assignment_expression_or_higher(p, ExpressionContext::default()).ok();
                     return Present(m.complete(p, JS_UNKNOWN_MEMBER));
@@ -264,7 +263,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
-            ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
+            ts_only_syntax_error(p, "type annotation", annotation.range(p))
         })
         .ok();
 
@@ -430,7 +429,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
-            ts_only_syntax_error(p, "type parameters", type_parameters.range(p).as_range())
+            ts_only_syntax_error(p, "type parameters", type_parameters.range(p))
         })
         .ok();
 
@@ -439,7 +438,7 @@ fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
 
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
-            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+            ts_only_syntax_error(p, "return type annotation", annotation.range(p))
         })
         .ok();
 

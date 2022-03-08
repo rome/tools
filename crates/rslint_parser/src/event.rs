@@ -4,6 +4,7 @@ use std::mem;
 
 use crate::{Parser, ParserError, TreeSink};
 use rome_js_syntax::JsSyntaxKind::{self, *};
+use rslint_lexer::TextSize;
 
 use crate::parser::Checkpoint;
 
@@ -20,13 +21,13 @@ pub enum Event {
     /// become the children of the respective node.
     Start {
         kind: JsSyntaxKind,
-        start: usize,
+        start: TextSize,
         forward_parent: Option<u32>,
     },
 
     /// Complete the previous `Start` event
     Finish {
-        end: usize,
+        end: TextSize,
     },
 
     /// Produce a single leaf-element.
@@ -44,7 +45,7 @@ pub enum Event {
 }
 
 impl Event {
-    pub fn tombstone(start: usize) -> Self {
+    pub fn tombstone(start: TextSize) -> Self {
         Event::Start {
             kind: TOMBSTONE,
             forward_parent: None,
@@ -60,7 +61,7 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
     let mut forward_parents = Vec::new();
 
     for i in 0..events.len() {
-        match mem::replace(&mut events[i], Event::tombstone(0)) {
+        match mem::replace(&mut events[i], Event::tombstone(TextSize::default())) {
             Event::Start {
                 kind: TOMBSTONE, ..
             } => (),
@@ -81,7 +82,8 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
                 while let Some(fwd) = fp {
                     idx += fwd as usize;
                     // append `A`'s forward_parent `B`
-                    fp = match mem::replace(&mut events[idx], Event::tombstone(0)) {
+                    fp = match mem::replace(&mut events[idx], Event::tombstone(TextSize::default()))
+                    {
                         Event::Start {
                             kind,
                             forward_parent,

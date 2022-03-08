@@ -33,7 +33,6 @@ use crate::{
 };
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
-use rslint_errors::Span;
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
@@ -131,7 +130,7 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
 // 00, 012, 08, 091, 0789 // parser errors
 // 01n, 0_0, 01.2 // lexer errors
 pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
-    let literal_kind = match p.cur_tok().kind {
+    let literal_kind = match p.cur() {
         JsSyntaxKind::JS_NUMBER_LITERAL => {
             return parse_number_literal_expression(p)
                 .or_else(|| parse_big_int_literal_expression(p));
@@ -176,7 +175,7 @@ pub(crate) fn parse_number_literal_expression(p: &mut Parser) -> ParsedSyntax {
         } else {
             "\"0\"-prefixed octal literals are deprecated; use the \"0o\" prefix instead."
         };
-        p.error(p.err_builder(err_msg).primary(p.cur_tok().range(), ""));
+        p.error(p.err_builder(err_msg).primary(p.cur_range(), ""));
     }
 
     let m = p.start();
@@ -255,7 +254,7 @@ fn parse_assign_expr_recursive(
             // Special handling for binary expressions and type assertions to avoid having to deal with `a as string = ...`
             // inside of the `ReparseAssignment` implementation because not using parentheses is valid
             // in for heads `for (a as any in []) {}`
-            p.error(invalid_assignment_error(p, target.range(p).as_range()));
+            p.error(invalid_assignment_error(p, target.range(p)));
             target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
             target
         } else {
@@ -435,7 +434,7 @@ fn parse_binary_or_logical_expression_recursive(
             break;
         }
 
-        let op_tok = p.cur_tok();
+        let op_range = p.cur_range();
 
         let mut is_unknown = false;
         if let Present(left) = &mut left {
@@ -462,7 +461,7 @@ fn parse_binary_or_logical_expression_recursive(
 					.err_builder(
 						"unparenthesized unary expression can't appear on the left-hand side of '**'",
 					)
-					.secondary(op_tok.range(), "")
+					.secondary(op_range, "")
 					.primary(left.range(p), "");
 
                 p.error(err);
@@ -470,7 +469,7 @@ fn parse_binary_or_logical_expression_recursive(
             } else if op != T![in] && left.kind() == JS_PRIVATE_NAME {
                 p.error(private_names_only_allowed_on_left_side_of_in_expression(
                     p,
-                    left.range(p).as_range(),
+                    left.range(p),
                 ));
                 left.change_kind(p, JS_UNKNOWN_EXPRESSION);
             }
@@ -511,7 +510,7 @@ fn parse_binary_or_logical_expression_recursive(
                 p.error(ts_only_syntax_error(
                     p,
                     "'as' expression",
-                    as_expression.range(p).as_range(),
+                    as_expression.range(p),
                 ));
                 as_expression.change_to_unknown(p);
             }
@@ -529,9 +528,9 @@ fn parse_binary_or_logical_expression_recursive(
                 T![in],
                 T![instanceof]
             ]) {
-            let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(op_tok)))
-				.secondary(op_tok.range(), "This operator requires a right hand side value")
-				.primary(p.cur_tok().range(), "But this operator was encountered instead");
+            let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.source(op_range)))
+				.secondary(op_range, "This operator requires a right hand side value")
+				.primary(p.cur_range(), "But this operator was encountered instead");
 
             p.error(err);
 
@@ -588,7 +587,7 @@ fn parse_binary_or_logical_expression_recursive(
             left.change_kind(p, JS_UNKNOWN_EXPRESSION);
             p.error(private_names_only_allowed_on_left_side_of_in_expression(
                 p,
-                left.range(p).as_range(),
+                left.range(p),
             ));
         }
     }
@@ -665,7 +664,7 @@ fn parse_member_expression_rest(
                     p.error(ts_only_syntax_error(
                         p,
                         "non-null assertions",
-                        non_null.range(p).as_range(),
+                        non_null.range(p),
                     ));
                 }
 
@@ -693,9 +692,24 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     p.expect_keyword(T![new], "new");
 
     // new.target
-    if p.at(T![.]) && p.token_src(p.nth_tok(1)) == "target" {
-        p.bump_any();
-        p.bump_remap(TARGET);
+    if p.eat(T![.]) {
+        if p.at(T![ident]) && p.cur_src() == "target" {
+            p.bump_remap(TARGET);
+        } else if is_at_identifier(p) {
+            let identifier_range = p.cur_range();
+            let name = p.cur_src();
+            let error = p
+                .err_builder(&format!(
+                    "'{name}' is not a valid meta-property for keyword 'new'."
+                ))
+                .primary(identifier_range, "Did you mean 'target'?");
+
+            p.error(error);
+            p.bump_remap(T![ident]);
+        } else {
+            p.error(expected_identifier(p, p.cur_range()));
+        }
+
         return Present(m.complete(p, NEW_TARGET));
     }
 
@@ -811,17 +825,17 @@ pub(super) fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    let hash_end = p.cur_tok().range().end;
+    let hash_end = p.cur_range().end();
     p.expect(T![#]);
 
-    if (is_nth_at_identifier_or_keyword(p, 0)) && hash_end != p.cur_tok().start() {
+    if (is_nth_at_identifier_or_keyword(p, 0)) && hash_end != p.cur_range().start() {
         // test_err private_name_with_space
         // class A {
         // 	# test;
         // }
         p.error(
             p.err_builder("Unexpected space or comment between `#` and identifier")
-                .primary(hash_end..p.cur_tok().start(), "remove the space here"),
+                .primary(hash_end..p.cur_range().start(), "remove the space here"),
         );
         Present(m.complete(p, JS_UNKNOWN))
     } else {
@@ -830,7 +844,7 @@ pub(super) fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
         } else if p.at(T![ident]) {
             p.bump(T![ident]);
         } else {
-            p.error(expected_identifier(p, p.cur_tok().range()));
+            p.error(expected_identifier(p, p.cur_range()));
         }
         Present(m.complete(p, JS_PRIVATE_NAME))
     }
@@ -995,7 +1009,7 @@ fn parse_parenthesized_expression(p: &mut Parser, context: ExpressionContext) ->
         // ();
         p.error(
             p.err_builder("Parenthesized expression didnt contain anything")
-                .primary(p.cur_tok().range(), "Expected an expression here"),
+                .primary(p.cur_range(), "Expected an expression here"),
         );
     } else {
         let first =
@@ -1155,23 +1169,23 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                 // test_err import_no_meta
                 // import.foo
                 // import.metaa
-                if p.at(T![ident]) && p.token_src(p.cur_tok()) == "meta" {
+                if p.at(T![ident]) && p.source(p.cur_range()) == "meta" {
                     p.bump_remap(META);
                     m.complete(p, IMPORT_META)
                 } else if p.at(T![ident]) {
                     let err = p
                         .err_builder(&format!(
                             "Expected `meta` following an import keyword, but found `{}`",
-                            p.token_src(p.cur_tok())
+                            p.source(p.cur_range())
                         ))
-                        .primary(p.cur_tok().range(), "");
+                        .primary(p.cur_range(), "");
 
                     p.err_and_bump(err, JS_UNKNOWN);
                     m.complete(p, IMPORT_META)
                 } else {
                     let err = p
                         .err_builder("Expected `meta` following an import keyword, but found none")
-                        .primary(p.cur_tok().range(), "");
+                        .primary(p.cur_range(), "");
 
                     p.error(err);
                     m.complete(p, JS_UNKNOWN)
@@ -1191,7 +1205,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                 let args_list = p.start();
 
                 let mut progress = ParserProgress::default();
-                let mut error_range_start = p.cur_tok().start();
+                let mut error_range_start = p.cur_range().start();
                 let mut args_count = 0;
 
                 while !p.at(EOF) && !p.at(T![')']) {
@@ -1199,13 +1213,13 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                     args_count += 1;
 
                     if args_count == 3 {
-                        error_range_start = p.cur_tok().start();
+                        error_range_start = p.cur_range().start();
                     }
 
                     if p.at(T![...]) {
                         let err = p
                             .err_builder("`...` is not allowed in `import()`")
-                            .primary(p.cur_tok().range(), "");
+                            .primary(p.cur_range(), "");
                         p.error(err);
                     } else {
                         parse_assignment_expression_or_higher(
@@ -1228,7 +1242,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                 if args_count == 0 || args_count > 2 {
                     let err = p
                         .err_builder("`import()` requires exactly one or two arguments. ")
-                        .primary(error_range_start..p.cur_tok().end(), "");
+                        .primary(error_range_start..p.cur_range().end(), "");
                     p.error(err);
                 }
 
@@ -1315,7 +1329,7 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
     let error = match p.cur() {
         T![yield] if p.state.in_generator() => Some(
             p.err_builder("Illegal use of `yield` as an identifier in generator function")
-                .primary(p.cur_tok().range(), ""),
+                .primary(p.cur_range(), ""),
         ),
         t if t.is_future_reserved_keyword() => {
             if StrictMode.is_supported(p) {
@@ -1325,7 +1339,7 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
                         "Illegal use of reserved keyword `{}` as an identifier in strict mode",
                         name
                     ))
-                    .primary(p.cur_tok().range(), ""),
+                    .primary(p.cur_range(), ""),
                 )
             } else {
                 None
@@ -1337,12 +1351,12 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
             if p.state.in_async() {
                 Some(
                     p.err_builder("Illegal use of `await` as an identifier in an async context")
-                        .primary(p.cur_tok().range(), ""),
+                        .primary(p.cur_range(), ""),
                 )
             } else if p.source_type.is_module() {
                 Some(
                     p.err_builder("Illegal use of `await` as an identifier inside of a module")
-                        .primary(p.cur_tok().range(), ""),
+                        .primary(p.cur_range(), ""),
                 )
             } else {
                 None
@@ -1461,7 +1475,7 @@ pub(crate) fn parse_template_elements<P>(
             }
             ERROR_TOKEN => {
                 let err = p.err_builder("Invalid template literal")
-                    .primary(p.cur_tok().range(), "");
+                    .primary(p.cur_range(), "");
                 p.err_and_bump(err, JsSyntaxKind::JS_UNKNOWN);
             }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
@@ -1621,7 +1635,7 @@ fn parse_call_expression_rest(
             // let a = { test: null };
             // a.test?.;
             // a.test?.<ab;
-            p.error(expected_identifier(p, p.cur_tok().range()));
+            p.error(expected_identifier(p, p.cur_range()));
             lhs = m.complete(p, JS_STATIC_MEMBER_EXPRESSION);
         } else {
             // Safety:
@@ -1724,7 +1738,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         return TypeScript.parse_exclusive_syntax(
             p,
             |p| parse_ts_type_assertion_expression(p, context),
-            |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p).as_range()),
+            |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
         );
     }
 

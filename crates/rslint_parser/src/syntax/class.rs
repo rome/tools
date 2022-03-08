@@ -42,10 +42,10 @@ use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::TextSize;
 use rome_js_syntax::{JsSyntaxKind, T};
 use rome_rowan::{SyntaxKind, TextRange};
-use rslint_errors::{Diagnostic, Span};
+use rslint_errors::Diagnostic;
 use smallvec::SmallVec;
 use std::fmt::Debug;
-use std::ops::{Add, Range};
+use std::ops::Add;
 use std::slice::Iter;
 
 use super::function::LineBreak;
@@ -186,10 +186,10 @@ impl From<ClassKind> for JsSyntaxKind {
 fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     let is_abstract = p.eat_keyword(T![abstract], "abstract");
 
-    let class_token_range = p.cur_tok().range();
+    let class_token_range = p.cur_range();
     p.expect_keyword(T![class], "class");
 
-    let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_tok().range())));
+    let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_range())));
 
     // test_err ts class_decl_no_id
     // class {}
@@ -203,7 +203,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     // parse class id
     match id {
         Present(id) => {
-            let text = p.span_text(id.range(p));
+            let text = p.source(id.range(p));
             if TypeScript.is_supported(p) && is_reserved_type_name(text) {
                 let err = p
                     .err_builder(&format!(
@@ -219,7 +219,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
             if !kind.is_id_optional() {
                 let err = p
                     .err_builder("class declarations must have a name")
-                    .primary(class_token_range.start..p.cur_tok().start(), "");
+                    .primary(class_token_range.start()..p.cur_range().start(), "");
 
                 p.error(err);
             }
@@ -230,11 +230,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     // class BuildError<A, B, C> {}
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
-            ts_only_syntax_error(
-                p,
-                "class type parameters",
-                type_parameters.range(p).as_range(),
-            )
+            ts_only_syntax_error(p, "class type parameters", type_parameters.range(p))
         })
         .ok();
 
@@ -343,7 +339,7 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    let extends_end = p.cur_tok().end();
+    let extends_end = p.cur_range().end();
     p.expect_keyword(T![extends], "extends");
 
     if parse_extends_expression(p).is_absent() {
@@ -354,13 +350,13 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
     } else {
         TypeScript
             .parse_exclusive_syntax(p, parse_ts_type_arguments, |p, arguments| {
-                ts_only_syntax_error(p, "type arguments", arguments.range(p).as_range())
+                ts_only_syntax_error(p, "type arguments", arguments.range(p))
             })
             .ok();
     }
 
     while p.at(T![,]) {
-        let comma_range = p.cur_tok().range();
+        let comma_range = p.cur_range();
         p.bump(T![,]);
 
         let extra = p.start();
@@ -544,7 +540,7 @@ fn parse_index_signature_class_member(p: &mut Parser, member_marker: Marker) -> 
                 MemberParent::Class,
             ))
         },
-        |p, member| ts_only_syntax_error(p, "Index signatures", member.range(p).as_range()),
+        |p, member| ts_only_syntax_error(p, "Index signatures", member.range(p)),
     )
 }
 
@@ -554,7 +550,7 @@ fn parse_class_member_impl(
     modifiers: &mut ClassMemberModifiers,
 ) -> ParsedSyntax {
     let start_token_pos = p.token_pos();
-    let generator_range = p.cur_tok().range();
+    let generator_range = p.cur_range();
 
     // Seems like we're at a generator method
     if p.at(T![*]) {
@@ -581,7 +577,7 @@ fn parse_class_member_impl(
         && !is_at_method_class_member(p, 1)
         && !p.has_linebreak_before_n(1)
     {
-        let async_range = p.cur_tok().range();
+        let async_range = p.cur_range();
         p.expect_keyword(T![async], "async");
 
         let mut flags = SignatureFlags::ASYNC;
@@ -948,7 +944,7 @@ fn expect_member_semi(p: &mut Parser, member_marker: &Marker, name: &str) {
             .tokens
             .last_tok()
             .map(|t| t.end())
-            .unwrap_or_else(|| p.cur_tok().start());
+            .unwrap_or_else(|| p.cur_range().start());
 
         let err = p
             .err_builder(&format!(
@@ -994,13 +990,13 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
     };
 
     let definite_range = if p.at(T![!]) {
-        let range = p.cur_tok().range();
+        let range = p.cur_range();
         p.bump(T![!]);
 
         if TypeScript.is_unsupported(p) {
             let error = p
                 .err_builder("`!` modifiers can only be used in TypeScript files")
-                .primary(range.clone(), "");
+                .primary(range, "");
 
             p.error(error);
             valid = false;
@@ -1014,7 +1010,7 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
                 p.err_builder(
                     "A definite assignment operator '!' cannot appear on an 'abstract' property.",
                 )
-                .primary(range.clone(), ""),
+                .primary(range, ""),
             );
             valid = false;
         } else if modifiers.has(ModifierKind::Declare) || p.state.in_ambient_context() {
@@ -1025,7 +1021,7 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
                 p.err_builder(
                     "Definite assignment operators '!' aren't allowed in ambient contexts.",
                 )
-                .primary(range.clone(), ""),
+                .primary(range, ""),
             );
         }
 
@@ -1069,9 +1065,9 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
 }
 
 /// Eats the '?' token for optional member. Emits an error if this isn't typescript
-fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, Range<usize>> {
+fn optional_member_token(p: &mut Parser) -> Result<Option<TextRange>, TextRange> {
     if p.at(T![?]) {
-        let range = p.cur_tok().range();
+        let range = p.cur_range();
         p.bump(T![?]);
 
         // test_err optional_member
@@ -1081,7 +1077,7 @@ fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, Range<u
         } else {
             let err = p
                 .err_builder("`?` modifiers can only be used in TypeScript files")
-                .primary(range.clone(), "");
+                .primary(range, "");
 
             p.error(err);
             Err(range)
@@ -1140,7 +1136,7 @@ fn parse_method_class_member_rest(
 
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, marker| {
-            ts_only_syntax_error(p, "type parameters", marker.range(p).as_range())
+            ts_only_syntax_error(p, "type parameters", marker.range(p))
         })
         .ok();
 
@@ -1157,7 +1153,7 @@ fn parse_method_class_member_rest(
 
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
-            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+            ts_only_syntax_error(p, "return type annotation", annotation.range(p))
         })
         .ok();
 
@@ -1338,10 +1334,7 @@ fn expect_method_body(
     // }
     if p.state.in_ambient_context() {
         match body {
-            Present(body) => p.error(unexpected_body_inside_ambient_context(
-                p,
-                body.range(p).as_range(),
-            )),
+            Present(body) => p.error(unexpected_body_inside_ambient_context(p, body.range(p))),
             Absent => {
                 // test_err ts ts_ambient_context_semi
                 // declare class A { method() method2() method3() }
@@ -1360,10 +1353,7 @@ fn expect_method_body(
     // }
     else if modifiers.has(ModifierKind::Abstract) && !method_kind.is_constructor() {
         match body {
-            Present(body) => p.error(unexpected_abstract_member_with_body(
-                p,
-                body.range(p).as_range(),
-            )),
+            Present(body) => p.error(unexpected_abstract_member_with_body(p, body.range(p))),
             Absent => {
                 // test_err ts ts_abstract_member_ansi
                 // abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
@@ -1640,13 +1630,13 @@ fn parse_modifier(p: &mut Parser, constructor_parameter: bool) -> Option<ClassMe
     };
 
     let m = p.start();
-    let range = p.cur_tok().range();
+    let range = p.cur_range();
     p.expect_keyword(p.cur(), name);
     m.complete(p, modifier_kind.as_syntax_kind());
 
     Some(ClassMemberModifier {
-        start: TextSize::from(range.start as u32),
-        length: range.len() as u8,
+        start: range.start(),
+        length: u32::from(range.len()) as u8,
         kind: modifier_kind,
     })
 }
@@ -1951,7 +1941,7 @@ impl ClassMemberModifiers {
             return Some(
                 p.err_builder(&format!(
                     "'{}' modifier can only be used in TypeScript files",
-                    p.span_text(modifier.as_text_range())
+                    p.source(modifier.as_text_range())
                 ))
                 .primary(modifier.as_text_range(), ""),
             );
@@ -1978,7 +1968,7 @@ impl ClassMemberModifiers {
             return Some(
                 p.err_builder(&format!(
                     "'{}' modifier cannot appear on an index signature.",
-                    p.span_text(modifier.as_text_range())
+                    p.source(modifier.as_text_range())
                 ))
                 .primary(modifier.as_text_range(), ""),
             );

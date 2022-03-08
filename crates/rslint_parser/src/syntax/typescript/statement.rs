@@ -4,7 +4,6 @@ use crate::syntax::binding::{
 };
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_name, ExpressionContext};
-use std::ops::Range;
 
 use super::ts_parse_error::expected_ts_enum_member;
 use crate::state::EnterAmbientContext;
@@ -35,7 +34,7 @@ fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
         JS_NUMBER_LITERAL => {
             let err = p
                 .err_builder("An enum member cannot have a numeric name")
-                .primary(p.cur_tok().range(), "");
+                .primary(p.cur_range(), "");
             p.error(err);
             p.bump_any()
         }
@@ -56,7 +55,7 @@ fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
         T![#] => {
             let err = p
                 .err_builder("An `enum` member cannot be private")
-                .primary(p.cur_tok().range(), "");
+                .primary(p.cur_range(), "");
             p.error(err);
             syntax::class::parse_private_class_member_name(p).map(|mut x| {
                 x.change_to_unknown(p);
@@ -116,10 +115,10 @@ fn is_reserved_enum_name(name: &str) -> bool {
     super::is_reserved_type_name(name)
 }
 
-fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
+fn parse_ts_enum_id(p: &mut Parser, enum_token_range: TextRange) {
     match parse_binding(p) {
         Present(id) => {
-            let text = p.span_text(id.range(p));
+            let text = p.source(id.range(p));
             if is_reserved_enum_name(text) {
                 let err = p
                     .err_builder(&format!(
@@ -136,7 +135,7 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
         // enum 1 {A,B,C}
         Absent => {
             if p.nth_at(1, L_CURLY) {
-                let range = p.cur_tok().range();
+                let range = p.cur_range();
 
                 let m = p.start();
                 p.bump_any();
@@ -145,9 +144,10 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
                 let err = p.err_builder("invalid `enum` name").primary(range, "");
                 p.error(err);
             } else {
-                let err = p
-                    .err_builder("`enum` statements must have a name")
-                    .primary(enum_token_range.start..p.cur_tok().start(), "");
+                let err = p.err_builder("`enum` statements must have a name").primary(
+                    TextRange::new(enum_token_range.start(), p.cur_range().start()),
+                    "",
+                );
                 p.error(err);
             }
         }
@@ -178,7 +178,7 @@ pub(crate) fn parse_ts_enum_declaration(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.eat_keyword(T![const], "const");
 
-    let enum_token_range = p.cur_tok().range();
+    let enum_token_range = p.cur_range();
     p.expect_keyword(T![enum], "enum");
     parse_ts_enum_id(p, enum_token_range);
 
@@ -201,7 +201,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let start = p.cur_tok().range().start;
+    let start = p.cur_range().start();
     let m = p.start();
     p.expect_keyword(T![type], "type");
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
@@ -209,7 +209,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
     p.expect(T![=]);
     parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
 
-    semi(p, start..p.cur_tok().range().end);
+    semi(p, TextRange::new(start, p.cur_range().end()));
 
     Present(m.complete(p, TS_TYPE_ALIAS_DECLARATION))
 }
@@ -221,7 +221,7 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let stmt_start_pos = p.cur_tok().start();
+    let stmt_start_pos = p.cur_range().start();
     let m = p.start();
     p.expect_keyword(T![declare], "declare");
 
@@ -393,7 +393,7 @@ pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &Parser, n: usize) -> bo
 
 pub(crate) fn parse_any_ts_namespace_declaration_clause(
     p: &mut Parser,
-    stmt_start_pos: usize,
+    stmt_start_pos: TextSize,
 ) -> ParsedSyntax {
     match p.cur() {
         T![global] => parse_ts_global_declaration(p),
@@ -405,7 +405,7 @@ pub(crate) fn parse_any_ts_namespace_declaration_clause(
 }
 
 pub(crate) fn parse_any_ts_namespace_declaration_statement(p: &mut Parser) -> ParsedSyntax {
-    parse_any_ts_namespace_declaration_clause(p, p.cur_tok().start())
+    parse_any_ts_namespace_declaration_clause(p, p.cur_range().start())
 }
 
 // test ts ts_namespace_declaration
@@ -429,7 +429,7 @@ pub(crate) fn parse_any_ts_namespace_declaration_statement(p: &mut Parser) -> Pa
 // declare module "a" declare module "b"; // missing semi
 fn parse_ts_namespace_or_module_declaration_clause(
     p: &mut Parser,
-    stmt_start_pos: usize,
+    stmt_start_pos: TextSize,
 ) -> ParsedSyntax {
     if !matches!(p.cur(), T![namespace] | T![module]) {
         return Absent;
@@ -447,7 +447,7 @@ fn parse_ts_namespace_or_module_declaration_clause(
 
             if body.is_absent() {
                 let body = p.start();
-                semi(p, stmt_start_pos..p.cur_tok().end());
+                semi(p, TextRange::new(stmt_start_pos, p.cur_range().end()));
                 body.complete(p, TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY);
             }
 
@@ -521,7 +521,7 @@ fn parse_ts_global_declaration(p: &mut Parser) -> ParsedSyntax {
 pub(crate) fn parse_ts_import_equals_declaration_rest(
     p: &mut Parser,
     m: Marker,
-    stmt_start_pos: usize,
+    stmt_start_pos: TextSize,
 ) -> CompletedMarker {
     if is_nth_at_identifier_binding(p, 1) {
         p.eat_keyword(T![type], "type");
@@ -538,7 +538,7 @@ pub(crate) fn parse_ts_import_equals_declaration_rest(
         parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
     }
 
-    semi(p, stmt_start_pos..p.cur_tok().end());
+    semi(p, TextRange::new(stmt_start_pos, p.cur_range().end()));
     m.complete(p, TS_IMPORT_EQUALS_DECLARATION)
 }
 
