@@ -20,11 +20,6 @@ const Component2 = ({
 
 # Output
 ```js
-<<<<<<< HEAD
-const Component1 = ({ props }) => (<Text>Test</Text>);
-
-const Component2 = ({ props }) => (<Text>Test</Text>);
-=======
 const Component1 = ({ props }) => (
   <Text>
 Test</Text>
@@ -36,25 +31,11 @@ const Component2 = ({
   <Text>
 Test</Text>
 )
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 ```
 
 # Errors
 ```
-<<<<<<< HEAD
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ expand.js:2:3
-  │
-2 │   <Text>Test</Text>
-  │   ^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ expand.js:8:3
-  │
-8 │   <Text>Test</Text>
-  │   ^^^^^^^^^^^^^^^^^ JSX only syntax
-=======
 error[SyntaxError]: expected `')'` but instead found `Test`
   ┌─ expand.js:2:9
   │
@@ -94,7 +75,6 @@ error[SyntaxError]: expected an expression but instead found ')'
   │
 9 │ );
   │ ^ Expected an expression here
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 
 ```

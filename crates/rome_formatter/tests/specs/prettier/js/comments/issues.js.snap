@@ -127,16 +127,11 @@ Observable
   .takeUntil(exit);
 
 // Comments disappear inside of JSX
-<<<<<<< HEAD
-<div>
-  {/* Some comment */} < /div>;
-=======
 <div>;
 {
   /* Some comment */
 }
 </div>;
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 // Comments in JSX tag are placed in a non optimal way
 <div
@@ -169,16 +164,6 @@ foo(
 # Errors
 ```
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-<<<<<<< HEAD
-   ┌─ issues.js:43:1
-   │  
-43 │ ┌ <div>
-44 │ │   {/* Some comment */}
-   │ └──────────────────────^ TypeScript only syntax
-
-error: unterminated regex literal
-   ┌─ issues.js:45:8
-=======
    ┌─ issues.js:45:1
    │
 45 │ </div>;
@@ -186,24 +171,12 @@ error: unterminated regex literal
 
 error[SyntaxError]: expected an expression but instead found ';'
    ┌─ issues.js:45:7
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
    │
 45 │ </div>;
    │  -     ^ ...but the line ends here
    │  │     
    │  a regex literal starts there...
 
-<<<<<<< HEAD
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ issues.js:48:1
-   │  
-48 │ ┌ <div
-49 │ │   // comment
-50 │ │ />;
-   │ └──^ JSX only syntax
-
-=======
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 
 ```
 

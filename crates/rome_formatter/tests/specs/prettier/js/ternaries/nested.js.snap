@@ -138,104 +138,6 @@ Title>{'Missing story book'}</Title>
 BackButton/>
         </Content>
       </Message>
-<<<<<<< HEAD
-    )
-)
-
-const message = (i % 3) === 0 && (i % 5) === 0
-  ? "fizzbuzz"
-  : (i % 3) === 0
-    ? "fizz"
-    : (i % 5) === 0
-      ? "buzz"
-      : String(i);
-
-const paymentMessage = state == "success"
-  ? "Payment completed successfully"
-  : state == "processing"
-    ? "Payment processing"
-    : state == "invalid_cvc"
-      ? "There was an issue with your CVC number"
-      : state == "invalid_expiry"
-        ? "Expiry must be sometime in the past."
-        : "There was an issue with the payment.  Please contact support.";
-
-const paymentMessage2 = state == "success"
-  ? 1 //'Payment completed successfully'
-  : state == "processing"
-    ? 2 //'Payment processing'
-    : state == "invalid_cvc"
-      ? 3 //'There was an issue with your CVC number'
-      : true
-        //state == 'invalid_expiry'
-        ? 4 //'Expiry must be sometime in the past.'
-        : 5; // 'There was an issue with the payment.  Please contact support.'
-
-const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-	{medals[0].record ? (
-		i18n('Record')
-	) : medals[0].unique ? (
-		i18n('Unique')
-	) : medals[0].type === 0 ? (
-		i18n('Silver')
-	) : medals[0].type === 1 ? (
-		i18n('Gold')
-	) : medals[0].type === 2 ? (
-		i18n('Platinum')
-	) : (
-		i18n('Theme')
-	)}
-</div>
-
-a
-    ? literalline
-    : {
-      123: 12
-    }
-    ? line
-    : softline
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:16:7
-   │
-16 │     ? <ButtonStorybook />
-   │       ^^^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:18:7
-   │
-18 │     ? <ColorBook />
-   │       ^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:20:7
-   │
-20 │     ? <TypographyBook />
-   │       ^^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:22:7
-   │
-22 │     ? <LoaderStorybook />
-   │       ^^^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:24:7
-   │
-24 │     ? <DealListStory />
-   │       ^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ nested.js:26:7
-   │  
-26 │ ┌       <Message>
-27 │ │         <Title>{'Missing story book'}</Title>
-   │ └─────────────────────────────────────^ TypeScript only syntax
-=======
 )
 )
 
@@ -320,7 +222,6 @@ error[SyntaxError]: expected `:` but instead found `}`
    │
 27 │         <Title>{'Missing story book'}</Title>
    │                                     ^ unexpected
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 
 error: unterminated regex literal
    ┌─ nested.js:27:46
@@ -337,9 +238,6 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ ┌──────────'
 28 │ │         <Content>
 29 │ │           <BackButton/>
-<<<<<<< HEAD
-   │ └───────────────────────^ TypeScript only syntax
-=======
    │ │            ^^^^^^^^^^ An explicit or implicit semicolon is expected here...
    │ └─────────────────────' ...Which is required to end this statement
 
@@ -350,7 +248,6 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
    │                      -^ But this operator was encountered instead
    │                      │ 
    │                      This operator requires a right hand side value
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 
 error: unterminated regex literal
    ┌─ nested.js:30:19
@@ -378,27 +275,11 @@ error[SyntaxError]: expected a statement but instead found '>'
 73 │ const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
    │                                                                                                                                                    ^ Expected a statement here
 
-<<<<<<< HEAD
-error[SyntaxError]: expected a function body but instead found ')'
-   ┌─ nested.js:76:2
-   │
-76 │     ) : medals[0].unique ? (
-   │     ^ Expected a function body here
-
-error: unterminated regex literal
-   ┌─ nested.js:87:7
-   │
-87 │ </div>
-   │  -    ^ ...but the line ends here
-   │  │    
-   │  a regex literal starts there...
-=======
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ nested.js:87:1
    │
 87 │ </div>
    │ ^ TypeScript only syntax
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 
 ```

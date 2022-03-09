@@ -94,15 +94,6 @@ error[SyntaxError]: expected a statement but instead found '.'
 7 │ const Profile2 = view.with({ name }).as((props) => (
   │                                     ^ Expected a statement here
 
-<<<<<<< HEAD
-error: unterminated regex literal
-  ┌─ pr-7889.js:9:33
-  │
-9 │     <h1>Hello, {props.name}</h1>
-  │                             -   ^ ...but the line ends here
-  │                             │   
-  │                             a regex literal starts there...
-=======
 error[SyntaxError]: `with` statements are not allowed in strict mode
   ┌─ pr-7889.js:7:23
   │
@@ -125,7 +116,6 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
   │
 9 │     <h1>Hello, {props.name}</h1>
   │                            ^ TypeScript only syntax
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ pr-7889.js:10:3

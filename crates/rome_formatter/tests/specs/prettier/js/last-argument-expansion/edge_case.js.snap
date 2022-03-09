@@ -137,10 +137,6 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
 
 # Errors
 ```
-<<<<<<< HEAD
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ edge_case.js:18:11
-=======
 error[SyntaxError]: expected `')'` but instead found `InlineBlock`
    ┌─ edge_case.js:19:14
    │
@@ -158,7 +154,6 @@ error[SyntaxError]: Invalid assignment to `InlineBlock>
               <img
                 src`
    ┌─ edge_case.js:19:14
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
    │  
 19 │               <InlineBlock>
    │ ┌──────────────^
@@ -168,10 +163,6 @@ error[SyntaxError]: Invalid assignment to `InlineBlock>
 23 │ │               />
    │ └────────────────^ TypeScript only syntax
 
-<<<<<<< HEAD
-error: unterminated regex literal
-   ┌─ edge_case.js:24:27
-=======
 error[SyntaxError]: expected `:` but instead found `.`
    ┌─ edge_case.js:21:38
    │
@@ -200,7 +191,6 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ edge_case.js:24:13
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
    │
 24 │             </InlineBlock>
    │              -            ^ ...but the line ends here
