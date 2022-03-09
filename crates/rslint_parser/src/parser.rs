@@ -231,6 +231,7 @@ impl<'s> Parser<'s> {
         self.tokens.has_nth_preceding_line_break(n)
     }
 
+<<<<<<< HEAD
     /// Tests if there's a line break before the current token (between the last and current)
     #[inline]
     pub fn has_preceding_line_break(&self) -> bool {
@@ -250,12 +251,21 @@ impl<'s> Parser<'s> {
         assert_eq!(
             kind,
             self.cur(),
+=======
+    /// Consume the next token if `kind` matches.
+    pub fn bump(&mut self, kind: JsSyntaxKind) {
+        assert!(
+            self.eat(kind),
+>>>>>>> ffd1ec03eb (reverting parser::bump)
             "expected {:?} but at {:?}",
             kind,
             self.cur()
         );
+<<<<<<< HEAD
 
         self.do_bump(kind, context);
+=======
+>>>>>>> ffd1ec03eb (reverting parser::bump)
     }
 
     /// Consume any token but cast it as a different kind
