@@ -3,7 +3,8 @@ use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParseRecovery, ToDiagnostic};
 use crate::{CompletedMarker, Marker, Parser};
 use rome_js_syntax::JsSyntaxKind;
-use rslint_errors::{Diagnostic, Span};
+use rome_rowan::TextRange;
+use rslint_errors::Diagnostic;
 use std::ops::Range;
 
 /// Syntax that is either present in the source tree or absent.
@@ -191,13 +192,13 @@ impl ParsedSyntax {
         error_builder: E,
     ) -> Option<CompletedMarker>
     where
-        E: FnOnce(&Parser, Range<usize>) -> D,
+        E: FnOnce(&Parser, TextRange) -> D,
         D: ToDiagnostic,
     {
         match self {
             Present(syntax) => Some(syntax),
             Absent => {
-                let diagnostic = error_builder(p, p.cur_tok().range());
+                let diagnostic = error_builder(p, p.cur_range());
                 p.error(diagnostic);
                 None
             }
@@ -210,13 +211,13 @@ impl ParsedSyntax {
     #[inline]
     pub fn precede_or_add_diagnostic<E, D>(self, p: &mut Parser, error_builder: E) -> Marker
     where
-        E: FnOnce(&Parser, Range<usize>) -> D,
+        E: FnOnce(&Parser, TextRange) -> D,
         D: ToDiagnostic,
     {
         match self {
             Present(completed) => completed.precede(p),
             Absent => {
-                let diagnostic = error_builder(p, p.cur_tok().range());
+                let diagnostic = error_builder(p, p.cur_range());
                 p.error(diagnostic);
                 p.start()
             }
@@ -248,19 +249,19 @@ impl ParsedSyntax {
         error_builder: E,
     ) -> RecoveryResult
     where
-        E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+        E: FnOnce(&Parser, TextRange) -> Diagnostic,
     {
         match self {
             Present(syntax) => Ok(syntax),
             Absent => match recovery.recover(p) {
                 Ok(recovered) => {
-                    let diagnostic = error_builder(p, recovered.range(p).as_range());
+                    let diagnostic = error_builder(p, recovered.range(p));
                     p.error(diagnostic);
                     Ok(recovered)
                 }
 
                 Err(recovery_error) => {
-                    let diagnostic = error_builder(p, p.cur_tok().range());
+                    let diagnostic = error_builder(p, p.cur_range());
                     p.error(diagnostic);
                     Err(recovery_error)
                 }

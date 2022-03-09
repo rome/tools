@@ -1,6 +1,7 @@
 use crate::{Language, Parser, SourceType};
 use bitflags::bitflags;
 use indexmap::IndexMap;
+use rome_rowan::TextRange;
 use std::collections::HashSet;
 use std::ops::{Deref, DerefMut, Range};
 
@@ -8,12 +9,12 @@ type LabelSet = IndexMap<String, LabelledItem>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub(crate) enum LabelledItem {
-    Iteration(Range<usize>),
-    Other(Range<usize>),
+    Iteration(TextRange),
+    Other(TextRange),
 }
 
 impl LabelledItem {
-    pub(crate) fn range(&self) -> &Range<usize> {
+    pub(crate) fn range(&self) -> &TextRange {
         match self {
             LabelledItem::Iteration(range) | LabelledItem::Other(range) => range,
         }
@@ -90,8 +91,8 @@ pub(crate) struct ParserState {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(crate) enum StrictMode {
     Module,
-    Explicit(Range<usize>),
-    Class(Range<usize>),
+    Explicit(TextRange),
+    Class(TextRange),
 }
 
 impl ParserState {

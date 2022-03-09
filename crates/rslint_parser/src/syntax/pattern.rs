@@ -5,9 +5,8 @@ use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, ParseRecovery, ParsedSyntax, Parser};
 use rome_js_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};
-use rome_js_syntax::{JsSyntaxKind, T};
+use rome_js_syntax::{JsSyntaxKind, TextRange, T};
 use rslint_errors::Diagnostic;
-use std::ops::Range;
 
 /// Trait for parsing a pattern with an optional default of the form `pattern = default`
 pub(crate) trait ParseWithDefaultPattern {
@@ -16,7 +15,7 @@ pub(crate) trait ParseWithDefaultPattern {
 
     /// Creates a diagnostic for the case where the pattern is missing. For example, if the
     /// code only contains ` = default`
-    fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
+    fn expected_pattern_error(p: &Parser, range: TextRange) -> Diagnostic;
 
     /// Parses a pattern (without its default value)
     fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax;
@@ -52,7 +51,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
     /// The kind of the list
     fn list_kind() -> JsSyntaxKind;
     ///  Creates a diagnostic saying that the parser expected an element at the position passed as an argument.
-    fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
+    fn expected_element_error(p: &Parser, range: TextRange) -> Diagnostic;
     /// Creates a pattern with default instance. Used to parse the array elements.
     fn pattern_with_default(&self) -> P;
 
@@ -120,14 +119,14 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
         }
 
         let m = p.start();
-        let rest_end = p.cur_tok().end();
+        let rest_end = p.cur_range().end();
         p.bump(T![...]);
 
         let with_default = self.pattern_with_default();
 
-        with_default
-            .parse_pattern(p)
-            .or_add_diagnostic(p, |p, _| P::expected_pattern_error(p, rest_end..rest_end));
+        with_default.parse_pattern(p).or_add_diagnostic(p, |p, _| {
+            P::expected_pattern_error(p, TextRange::new(rest_end, rest_end))
+        });
 
         Present(m.complete(p, Self::rest_pattern_kind()))
     }
@@ -142,7 +141,7 @@ pub(crate) trait ParseObjectPattern {
     /// The kind of the property list
     fn list_kind() -> JsSyntaxKind;
     /// Creates a diagnostic saying that a property is expected at the passed in range that isn't present.
-    fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
+    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> Diagnostic;
 
     /// Parses the object pattern like node
     fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax {
@@ -161,10 +160,7 @@ pub(crate) trait ParseObjectPattern {
 
             if p.at(T![,]) {
                 // missing element
-                p.error(Self::expected_property_pattern_error(
-                    p,
-                    p.cur_tok().range(),
-                ));
+                p.error(Self::expected_property_pattern_error(p, p.cur_range()));
                 p.bump_any(); // bump ,
                 continue;
             }
@@ -232,7 +228,7 @@ fn validate_rest_pattern(
         let kind = rest.kind();
         let rest_range = rest.range(p);
         let rest_marker = rest.undo_completion(p);
-        let default_start = p.cur_tok().start();
+        let default_start = p.cur_range().start();
         p.bump(T![=]);
 
         if let Ok(recovered) = recovery.recover(p) {
@@ -241,7 +237,7 @@ fn validate_rest_pattern(
         p.error(
             p.err_builder("rest element cannot have a default")
                 .primary(
-                    default_start..p.cur_tok().start(),
+                    default_start..p.cur_range().start(),
                     "Remove the default value here",
                 )
                 .secondary(rest_range, "Rest element"),
@@ -253,7 +249,7 @@ fn validate_rest_pattern(
     } else if p.at(T![,]) && p.nth_at(1, end_token) {
         p.error(
             p.err_builder("rest element may not have a trailing comma")
-                .primary(p.cur_tok().range(), "Remove the trailing comma here")
+                .primary(p.cur_range(), "Remove the trailing comma here")
                 .secondary(rest.range(p), "Rest element"),
         );
         rest.change_to_unknown(p);

@@ -1,17 +1,16 @@
 use crate::Parser;
-use rome_js_syntax::JsSyntaxKind;
+use rome_js_syntax::{JsSyntaxKind, TextRange};
 use rslint_errors::{Diagnostic, Span};
-use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
 
 /// Creates a diagnostic saying that the node [name] was expected at range
-pub(crate) fn expected_node(name: &str, range: Range<usize>) -> ExpectedNodeDiagnosticBuilder {
+pub(crate) fn expected_node(name: &str, range: TextRange) -> ExpectedNodeDiagnosticBuilder {
     ExpectedNodeDiagnosticBuilder::with_single_node(name, range)
 }
 
 /// Creates a diagnostic saying that any of the nodes in [names] was expected at range
-pub(crate) fn expected_any(names: &[&str], range: Range<usize>) -> ExpectedNodeDiagnosticBuilder {
+pub(crate) fn expected_any(names: &[&str], range: TextRange) -> ExpectedNodeDiagnosticBuilder {
     ExpectedNodeDiagnosticBuilder::with_any(names, range)
 }
 
@@ -62,18 +61,18 @@ impl ToDiagnostic for Diagnostic {
 
 pub(crate) struct ExpectedNodeDiagnosticBuilder {
     names: String,
-    range: Range<usize>,
+    range: TextRange,
 }
 
 impl ExpectedNodeDiagnosticBuilder {
-    fn with_single_node(name: &str, range: Range<usize>) -> Self {
+    fn with_single_node(name: &str, range: TextRange) -> Self {
         ExpectedNodeDiagnosticBuilder {
             names: format!("{} {}", article_for(name), name),
             range,
         }
     }
 
-    fn with_any(names: &[&str], range: Range<usize>) -> Self {
+    fn with_any(names: &[&str], range: TextRange) -> Self {
         debug_assert!(names.len() > 1, "Requires at least 2 names");
 
         if names.len() < 2 {
@@ -107,7 +106,7 @@ impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic {
         let range = &self.range;
 
-        let msg = if range.is_empty() && p.tokens.source().get(range.to_owned()) == None {
+        let msg = if range.is_empty() && p.tokens.source().get(range.as_range()) == None {
             format!(
                 "expected {} but instead found the end of the file",
                 self.names
@@ -139,14 +138,14 @@ impl ToDiagnostic for ExpectedToken {
         match p.cur() {
             JsSyntaxKind::EOF => p
                 .err_builder(&format!("expected `{}` but instead the file ends", self.0))
-                .primary(p.cur_tok().range(), "the file ends here"),
+                .primary(p.cur_range(), "the file ends here"),
             _ => p
                 .err_builder(&format!(
                     "expected `{}` but instead found `{}`",
                     self.0,
                     p.cur_src()
                 ))
-                .primary(p.cur_tok().range(), "unexpected"),
+                .primary(p.cur_range(), "unexpected"),
         }
     }
 }
@@ -158,14 +157,14 @@ impl ToDiagnostic for ExpectedTokens {
         match p.cur() {
             JsSyntaxKind::EOF => p
                 .err_builder(&format!("expected {} but instead the file ends", self.0))
-                .primary(p.cur_tok().range(), "the file ends here"),
+                .primary(p.cur_range(), "the file ends here"),
             _ => p
                 .err_builder(&format!(
                     "expected {} but instead found `{}`",
                     self.0,
                     p.cur_src()
                 ))
-                .primary(p.cur_tok().range(), "unexpected"),
+                .primary(p.cur_range(), "unexpected"),
         }
     }
 }

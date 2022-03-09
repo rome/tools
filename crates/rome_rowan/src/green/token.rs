@@ -18,8 +18,8 @@ use crate::{
 #[allow(clippy::box_collection)]
 pub enum GreenTokenTrivia {
     None,
-    Whitespace(u32),
-    Comment(u32, bool),
+    Whitespace(TextSize),
+    Comment(TextSize, bool),
     Many(Box<Vec<TriviaPiece>>),
 }
 
@@ -27,15 +27,15 @@ impl GreenTokenTrivia {
     pub fn text_len(&self) -> TextSize {
         match self {
             GreenTokenTrivia::None => 0.into(),
-            GreenTokenTrivia::Whitespace(len) => (*len as u32).into(),
-            GreenTokenTrivia::Comment(len, _) => (*len as u32).into(),
+            GreenTokenTrivia::Whitespace(len) => *len,
+            GreenTokenTrivia::Comment(len, _) => *len,
             GreenTokenTrivia::Many(v) => {
-                let r = v.iter().fold(Some(TextSize::of("")), |len, trivia| {
+                let r = v.iter().fold(Some(TextSize::from(0)), |len, trivia| {
                     len.and_then(|x| x.checked_add(trivia.text_len()))
                 });
 
                 // Realistically we will never have files bigger than usize::MAX, nor u32::MAX
-                r.unwrap_or_else(|| u32::MAX.into())
+                r.unwrap_or_else(|| TextSize::from(u32::MAX))
             }
         }
     }
@@ -281,8 +281,8 @@ mod tests {
         let t = GreenToken::with_trivia(
             RawSyntaxKind(0),
             "\n\t let \t\t",
-            GreenTokenTrivia::Whitespace(3),
-            GreenTokenTrivia::Whitespace(3),
+            GreenTokenTrivia::Whitespace(TextSize::from(3)),
+            GreenTokenTrivia::Whitespace(TextSize::from(3)),
         );
 
         assert_eq!("\n\t let \t\t", t.text());
@@ -303,21 +303,16 @@ mod tests {
 
     #[quickcheck]
     fn whitespace_and_comments_text_len(len: u32) {
-        assert_eq!(
-            TextSize::from(len),
-            GreenTokenTrivia::Whitespace(len).text_len()
-        );
-        assert_eq!(
-            TextSize::from(len),
-            GreenTokenTrivia::Comment(len, false).text_len()
-        );
+        let len = TextSize::from(len);
+        assert_eq!(len, GreenTokenTrivia::Whitespace(len).text_len());
+        assert_eq!(len, GreenTokenTrivia::Comment(len, false).text_len());
     }
 
     #[test]
     fn many_text_len_dont_panic() {
         let trivia = GreenTokenTrivia::Many(Box::new(vec![
-            TriviaPiece::Whitespace(u32::MAX),
-            TriviaPiece::Comments(1, false),
+            TriviaPiece::Whitespace(TextSize::from(u32::MAX)),
+            TriviaPiece::Comments(TextSize::from(1), false),
         ]));
         assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
     }
@@ -326,7 +321,7 @@ mod tests {
     fn many_text_len(lengths: Vec<u32>) {
         let trivia: Vec<_> = lengths
             .iter()
-            .map(|x| TriviaPiece::Whitespace(*x))
+            .map(|x| TriviaPiece::Whitespace(TextSize::from(*x)))
             .collect();
         let trivia = GreenTokenTrivia::Many(Box::new(trivia));
 

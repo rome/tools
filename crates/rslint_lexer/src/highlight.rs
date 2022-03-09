@@ -64,8 +64,11 @@ impl<'s> Highlighter<'s> {
     }
 
     fn src(&self) -> &'s str {
-        let end = self.cur_idx + self.tokens.get(self.cur).unwrap().len as usize;
-        &self.source[self.cur_idx..end]
+        let range = TextRange::at(
+            TextSize::from(self.cur_idx as u32),
+            self.tokens.get(self.cur).unwrap().len,
+        );
+        &self.source[range]
     }
 }
 
@@ -134,7 +137,8 @@ impl<'s> Iterator for Highlighter<'s> {
         };
 
         let string = self.src();
-        self.cur_idx += self.tokens.get(self.cur).unwrap().len as usize;
+        let token_len: usize = self.tokens.get(self.cur).unwrap().len.into();
+        self.cur_idx += token_len;
         self.cur += 1;
         Some(color.paint(string))
     }

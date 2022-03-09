@@ -24,7 +24,7 @@ use crate::syntax::function::{is_at_async_function, parse_function_declaration, 
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::module::parse_import_or_import_equals_declaration;
-use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
+use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
@@ -35,7 +35,6 @@ use crate::{
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
-use std::ops::Range;
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
     L_CURLY,
@@ -81,7 +80,7 @@ pub const STMT_RECOVERY_SET: TokenSet = token_set![
 // let foo4
 // let foo5
 // function foo6() { return true }
-pub fn semi(p: &mut Parser, err_range: Range<usize>) -> bool {
+pub fn semi(p: &mut Parser, err_range: TextRange) -> bool {
     // test_err semicolons_err
     // let foo = bar throw foo
 
@@ -91,7 +90,7 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) -> bool {
                 "Expected a semicolon or an implicit semicolon after a statement, but found none",
             )
             .primary(
-                p.cur_tok().range(),
+                p.cur_range(),
                 "An explicit or implicit semicolon is expected here...",
             )
             .secondary(err_range, "...Which is required to end this statement");
@@ -207,7 +206,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             // test_err enum_in_js
             // enum A {}
             TypeScript.parse_exclusive_syntax(p, parse_ts_enum_declaration, |p, declaration| {
-                ts_only_syntax_error(p, "'enum's", declaration.range(p).as_range())
+                ts_only_syntax_error(p, "'enum's", declaration.range(p))
             })
         }
         T![var] => parse_variable_statement(p, context),
@@ -235,7 +234,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
                 p,
                 |p| parse_class_declaration(p, context),
                 |p, abstract_class| {
-                    ts_only_syntax_error(p, "abstract classes", abstract_class.range(p).as_range())
+                    ts_only_syntax_error(p, "abstract classes", abstract_class.range(p))
                 },
             )
         }
@@ -275,18 +274,16 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             TypeScript.parse_exclusive_syntax(
                 p,
                 parse_ts_type_alias_declaration,
-                |p, type_alias| {
-                    ts_only_syntax_error(p, "type alias", type_alias.range(p).as_range())
-                },
+                |p, type_alias| ts_only_syntax_error(p, "type alias", type_alias.range(p)),
             )
         }
         T![interface] if is_at_ts_interface_declaration(p) => {
             TypeScript.parse_exclusive_syntax(p, parse_ts_interface_declaration, |p, interface| {
-                ts_only_syntax_error(p, "interface", interface.range(p).as_range())
+                ts_only_syntax_error(p, "interface", interface.range(p))
             })
         }
         T![declare] if is_at_ts_declare_statement(p) => {
-            let declare_range = p.cur_tok().range();
+            let declare_range = p.cur_range();
             TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
                 p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
                     .primary(declare_range, "")
@@ -296,16 +293,12 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             parse_function_declaration(p, context)
         }
         T![module] | T![namespace] | T![global] if is_at_any_ts_namespace_declaration(p) => {
-            let name = p.cur_tok().range();
+            let name = p.cur_range();
             TypeScript.parse_exclusive_syntax(
                 p,
                 parse_any_ts_namespace_declaration_statement,
                 |p, declaration| {
-                    ts_only_syntax_error(
-                        p,
-                        p.source(name.as_text_range()),
-                        declaration.range(p).as_range(),
-                    )
+                    ts_only_syntax_error(p, p.source(name.as_text_range()), declaration.range(p))
                 },
             )
         }
@@ -353,8 +346,8 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 		let body = match p.state.get_labelled_item(label) {
 			None => {
 				let labelled_item = match p.cur() {
-					T![for] | T![do] | T![while] => LabelledItem::Iteration(identifier_range.as_range()),
-					_ => LabelledItem::Other(identifier_range.as_range())
+					T![for] | T![do] | T![while] => LabelledItem::Iteration(identifier_range),
+					_ => LabelledItem::Other(identifier_range)
 				};
 				let change = WithLabel(String::from(label), labelled_item);
 				p.with_state(change, |p| parse_body(p, context))
@@ -412,14 +405,14 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 // public = 4;
 // implements = 5;
 fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
-    let start = p.cur_tok().start();
+    let start = p.cur_range().start();
 
     let expr =
         parse_expression_or_recover_to_next_statement(p, false, ExpressionContext::default());
 
     if let Ok(expr) = expr {
         let m = expr.precede(p);
-        semi(p, start..p.cur_tok().end());
+        semi(p, TextRange::new(start, p.cur_range().end()));
         Present(m.complete(p, JS_EXPRESSION_STATEMENT))
     } else {
         Absent
@@ -442,7 +435,7 @@ fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    let range = p.cur_tok().range();
+    let range = p.cur_range();
     p.expect_keyword(T![debugger], "debugger"); // debugger keyword
     semi(p, range);
     Present(m.complete(p, JS_DEBUGGER_STATEMENT))
@@ -461,17 +454,17 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    let start = p.cur_tok().start();
+    let start = p.cur_range().start();
     p.expect_keyword(T![throw], "throw"); // throw keyword
     if p.has_linebreak_before_n(0) {
         let mut err = p
             .err_builder(
                 "Linebreaks between a throw statement and the error to be thrown are not allowed",
             )
-            .primary(p.cur_tok().range(), "A linebreak is not allowed here");
+            .primary(p.cur_range(), "A linebreak is not allowed here");
 
         if is_at_expression(p) {
-            err = err.secondary(p.cur_tok().range(), "Help: did you mean to throw this?");
+            err = err.secondary(p.cur_range(), "Help: did you mean to throw this?");
         }
 
         p.error(err);
@@ -479,7 +472,7 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
         parse_expression_or_recover_to_next_statement(p, false, ExpressionContext::default()).ok();
     }
 
-    semi(p, start..p.cur_tok().end());
+    semi(p, TextRange::new(start, p.cur_range().end()));
     Present(m.complete(p, JS_THROW_STATEMENT))
 }
 
@@ -503,12 +496,11 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    let start = p.cur_tok().range();
+    let start = p.cur_range();
     p.expect_keyword(T![break], "break"); // break keyword
 
     let error = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
-        let label_token = p.cur_tok();
-        let label_name = p.token_src(label_token);
+        let label_name = p.cur_src();
 
         let error = match p.state.get_labelled_item(label_name) {
             Some(_) => None,
@@ -517,10 +509,7 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
                     "Use of undefined statement label `{}`",
                     label_name
                 ))
-                .primary(
-                    label_token.range(),
-                    "This label is used, but it is never defined",
-                ),
+                .primary(p.cur_range(), "This label is used, but it is never defined"),
             ),
         };
 
@@ -528,12 +517,12 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
         error
     } else if !p.state.break_allowed() {
         Some(p.err_builder("A `break` statement can only be used within an enclosing iteration or switch statement.")
-			.primary(start.clone(), ""))
+			.primary(start, ""))
     } else {
         None
     };
 
-    semi(p, start.start..p.cur_tok().end());
+    semi(p, TextRange::new(start.start(), p.cur_range().end()));
 
     if let Some(error) = error {
         p.error(error);
@@ -566,18 +555,17 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    let start = p.cur_tok().range();
+    let start = p.cur_range();
     p.expect_keyword(T![continue], "continue"); // continue keyword
 
     let error = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
-        let label_token = p.cur_tok();
-        let label_name = p.token_src(label_token);
+        let label_name = p.cur_src();
 
         let error = match p.state.get_labelled_item(label_name) {
 			Some(LabelledItem::Iteration(_)) => None,
 			Some(LabelledItem::Other(range)) => {
 				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.")
-					.primary(label_token.range(), "This label")
+					.primary(p.cur_range(), "This label")
 					.secondary(range.to_owned(), "points to non-iteration statement"))
 			}
 			None => {
@@ -587,7 +575,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 						label_name
 					))
 					.primary(
-						label_token.range(),
+						p.cur_range(),
 						"This label is used, but it is never defined",
 					))
 			}
@@ -601,13 +589,13 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
             p.err_builder(
                 "A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.",
             )
-            .primary(start.clone(), ""),
+            .primary(start, ""),
         )
     } else {
         None
     };
 
-    semi(p, start.start..p.cur_tok().end());
+    semi(p, TextRange::new(start.start(), p.cur_range().end()));
 
     if let Some(error) = error {
         p.error(error);
@@ -632,13 +620,13 @@ fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    let start = p.cur_tok().start();
+    let start = p.cur_range().start();
     p.expect_keyword(T![return], "return");
     if !p.has_linebreak_before_n(0) {
         parse_expression(p, ExpressionContext::default()).ok();
     }
 
-    semi(p, start..p.cur_tok().end());
+    semi(p, TextRange::new(start, p.cur_range().end()));
     let mut complete = m.complete(p, JS_RETURN_STATEMENT);
 
     if !p.state.in_function() {
@@ -719,7 +707,7 @@ impl DirectivesList {
 
 impl ParseNodeList for DirectivesList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        let directive_token = p.cur_tok();
+        let directive_range = p.cur_range();
 
         let directive = p.start();
         // bump string token
@@ -730,7 +718,7 @@ impl ParseNodeList for DirectivesList {
 
         let completed_marker = directive.complete(p, JS_DIRECTIVE);
 
-        let directive_text = p.token_src(directive_token);
+        let directive_text = p.source(directive_range);
 
         if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
             if let Some(strict) = p.state.strict() {
@@ -748,11 +736,11 @@ impl ParseNodeList for DirectivesList {
                     }
                 }
 
-                err = err.primary(directive_token.range(), "this declaration is redundant");
+                err = err.primary(directive_range, "this declaration is redundant");
                 p.error(err);
             } else if self.strict_snapshot.is_none() {
                 self.strict_snapshot = Some(
-                    EnableStrictMode(StrictModeState::Explicit(directive_token.range()))
+                    EnableStrictMode(StrictModeState::Explicit(directive_range))
                         .apply(&mut p.state),
                 );
             }
@@ -1000,12 +988,12 @@ pub(crate) fn parse_variable_statement(p: &mut Parser, context: StatementContext
     // test_err var_decl_err
     // var a =;
     // const b = 5 let c = 5;
-    let start = p.cur_tok().start();
+    let start = p.cur_range().start();
     let is_var = p.at(T![var]);
 
     parse_variable_declaration(p, VariableDeclarationParent::VariableStatement).map(|declaration| {
         let m = declaration.precede(p);
-        semi(p, start..p.cur_tok().start());
+        semi(p, TextRange::new(start, p.cur_range().start()));
 
         let mut statement = m.complete(p, JS_VARIABLE_STATEMENT);
 
@@ -1066,7 +1054,7 @@ pub(super) enum VariableDeclarationParent {
 fn eat_variable_declaration(
     p: &mut Parser,
     declaration_parent: VariableDeclarationParent,
-) -> Option<(CompletedMarker, Option<Range<usize>>)> {
+) -> Option<(CompletedMarker, Option<TextRange>)> {
     let mut context = VariableDeclaratorContext::new(declaration_parent);
 
     match p.cur() {
@@ -1074,7 +1062,7 @@ fn eat_variable_declaration(
             p.expect_keyword(T![var], "var");
         }
         T![const] => {
-            context.is_const = Some(p.cur_tok().range());
+            context.is_const = Some(p.cur_range());
             p.expect_keyword(T![const], "const");
         }
         T![let] => {
@@ -1102,7 +1090,7 @@ struct VariableDeclaratorList {
     declarator_context: VariableDeclaratorContext,
     // Range of the declarators succeeding the first declarator
     // None until this hits the second declarator
-    remaining_declarator_range: Option<Range<usize>>,
+    remaining_declarator_range: Option<TextRange>,
 }
 
 impl ParseSeparatedList for VariableDeclaratorList {
@@ -1111,9 +1099,9 @@ impl ParseSeparatedList for VariableDeclaratorList {
             if self.declarator_context.is_first {
                 self.declarator_context.is_first = false;
             } else if let Some(range) = self.remaining_declarator_range.as_mut() {
-                range.end = declarator.range(p).as_range().end;
+                *range = TextRange::new(range.start(), declarator.range(p).end());
             } else {
-                self.remaining_declarator_range = Some(declarator.range(p).as_range());
+                self.remaining_declarator_range = Some(declarator.range(p));
             }
             declarator
         })
@@ -1147,7 +1135,7 @@ impl ParseSeparatedList for VariableDeclaratorList {
 
 struct VariableDeclaratorContext {
     /// The range of the `const` keyword if this is `const` variable declaration.
-    is_const: Option<Range<usize>>,
+    is_const: Option<TextRange>,
     /// `true` if this is a let variable declaration
     is_let: bool,
     /// Is this the first declaration in the declaration list (a first, b second in `let a, b`)
@@ -1203,7 +1191,7 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
                     _ => unreachable!(),
                 };
 
-                ts_only_syntax_error(p, name, annotation.range(p).as_range())
+                ts_only_syntax_error(p, name, annotation.range(p))
             })
             .ok();
 
@@ -1377,7 +1365,7 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    let start = p.cur_tok().start();
+    let start = p.cur_range().start();
     p.expect_keyword(T![do], "do");
 
     p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
@@ -1393,8 +1381,8 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
     if parenthesized_expression(p) {
         optional_semi(p);
     } else {
-        let end_range = p.cur_tok().end();
-        semi(p, start..end_range);
+        let end_range = p.cur_range().end();
+        semi(p, TextRange::new(start, end_range));
     }
     Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
@@ -1569,7 +1557,7 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 
     let mut await_range = None;
     if p.at(T![await]) {
-        await_range = Some(p.cur_tok().range());
+        await_range = Some(p.cur_range());
         p.expect_keyword(T![await], "await");
     }
 
@@ -1626,7 +1614,7 @@ impl ParseNodeList for SwitchCaseStatementList {
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
-fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<Range<usize>>) -> ParsedSyntax {
+fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) -> ParsedSyntax {
     let m = p.start();
     match p.cur() {
         T![default] => {
@@ -1678,7 +1666,7 @@ fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<Range<usize>>)
 }
 #[derive(Default)]
 struct SwitchCasesList {
-    first_default: Option<Range<usize>>,
+    first_default: Option<TextRange>,
 }
 
 impl ParseNodeList for SwitchCasesList {
@@ -1687,7 +1675,7 @@ impl ParseNodeList for SwitchCasesList {
 
         if let Present(marker) = &clause {
             if marker.kind() == JS_DEFAULT_CLAUSE && self.first_default == None {
-                self.first_default = Some(marker.range(p).as_range());
+                self.first_default = Some(marker.range(p));
             }
         }
 
@@ -1804,27 +1792,31 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
     // try {} catch (error: any) {}
     // try {} catch (error: unknown) {}
     if p.at(T![:]) && is_nth_at_identifier(p, 1) {
-        let type_name_token = p.nth_tok(1);
-
         // test_err ts ts_catch_declaration_non_any_unknown_type_annotation
         // try {} catch (error: Error) {}
-        if TypeScript.is_supported(p)
-            && !matches!(
-                p.source(type_name_token.range().as_text_range()),
-                "any" | "unknown"
-            )
-        {
-            p.error(
-                p
-                    .err_builder("Catch clause variable type annotation must be 'any' or 'unknown' if specified.")
-                    .primary(type_name_token.range(), "")
-            );
-        }
-
         JsSyntaxFeature::TypeScript
-            .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
-                ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
-            })
+            .parse_exclusive_syntax(
+                p,
+                |p| {
+                    let annotation = p.start();
+                    p.bump(T![:]);
+
+                    if let Some(ty) = parse_ts_type(p).or_add_diagnostic(p, expected_ts_type) {
+                        if !matches!(ty.kind(), TS_ANY_TYPE | TS_UNKNOWN_TYPE) {
+                            p.error(
+                                p
+                                    .err_builder("Catch clause variable type annotation must be 'any' or 'unknown' if specified.")
+                                    .primary(ty.range(p), "")
+                            );
+                        }
+                    }
+
+                    Present(annotation.complete(p, TS_TYPE_ANNOTATION))
+                },
+                |p, annotation| {
+                    ts_only_syntax_error(p, "type annotation", annotation.range(p))
+                },
+            )
             .ok();
     }
 

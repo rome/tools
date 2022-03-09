@@ -12,6 +12,7 @@ use crate::syntax::typescript::{
 use crate::{Absent, ParsedSyntax, Parser};
 use rome_js_syntax::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE;
 use rome_js_syntax::T;
+use rome_rowan::{TextRange, TextSize};
 
 // test export_variable_clause
 // export let a;
@@ -23,11 +24,11 @@ use rome_js_syntax::T;
 // export const b;
 // export let d, c;
 pub(crate) fn parse_variable_declaration_clause(p: &mut Parser) -> ParsedSyntax {
-    let start = p.cur_tok().start();
+    let start = p.cur_range().start();
 
     parse_variable_declaration(p, VariableDeclarationParent::Clause).map(|declaration| {
         let m = declaration.precede(p);
-        semi(p, start..p.cur_tok().end());
+        semi(p, TextRange::new(start, p.cur_range().end()));
         m.complete(p, JS_VARIABLE_DECLARATION_CLAUSE)
     })
 }
@@ -67,7 +68,7 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
     false
 }
 
-pub(crate) fn parse_declaration_clause(p: &mut Parser, stmt_start_pos: usize) -> ParsedSyntax {
+pub(crate) fn parse_declaration_clause(p: &mut Parser, stmt_start_pos: TextSize) -> ParsedSyntax {
     match p.cur() {
         T![function] => parse_function_declaration(p, StatementContext::StatementList),
         T![class] => parse_class_declaration(p, StatementContext::StatementList),

@@ -1,4 +1,5 @@
 use rome_js_syntax::JsSyntaxKind::EOF;
+use rome_rowan::TextSize;
 use std::iter::FusedIterator;
 
 /// The source of tokens for the parser
@@ -120,8 +121,8 @@ impl<'t> TokenSource<'t> {
     }
 
     #[inline(always)]
-    pub fn cur_pos(&self) -> usize {
-        self.current().offset as usize
+    pub fn cur_pos(&self) -> TextSize {
+        self.current().offset
     }
 
     #[inline(always)]

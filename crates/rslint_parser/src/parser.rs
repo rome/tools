@@ -15,13 +15,11 @@ use rome_js_syntax::{
 
 use drop_bomb::DebugDropBomb;
 use rslint_errors::Diagnostic;
-use rslint_lexer::Token;
-use std::ops::Range;
 
 pub use parse_error::*;
 pub use parse_lists::{ParseNodeList, ParseSeparatedList};
 pub use parsed_syntax::ParsedSyntax;
-use rome_rowan::SyntaxKind as SyntaxKindTrait;
+use rome_rowan::{SyntaxKind as SyntaxKindTrait, TextSize};
 #[allow(deprecated)]
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
@@ -52,8 +50,10 @@ impl ParserProgress {
     pub fn assert_progressing(&mut self, p: &Parser) {
         assert!(
             self.has_progressed(p),
-            "The parser is no longer progressing. Stuck at {:?}",
-            p.cur_tok()
+            "The parser is no longer progressing. Stuck at '{}' {:?}:{:?}",
+            p.cur_src(),
+            p.cur(),
+            p.cur_range(),
         );
 
         self.0 = Some(p.token_pos());
@@ -148,14 +148,6 @@ impl<'t> Parser<'t> {
         }
     }
 
-    /// Get the source code of a token
-    pub fn token_src(&self, token: &Token) -> &str {
-        self.tokens
-            .source()
-            .get(token.range())
-            .expect("Token range and src mismatch")
-    }
-
     /// Consume the parser and return the list of events it produced
     pub fn finish(self) -> (Vec<Event>, Vec<ParserError>) {
         (self.events, self.errors)
@@ -163,12 +155,11 @@ impl<'t> Parser<'t> {
 
     /// Get the current token kind of the parser
     pub fn cur(&self) -> JsSyntaxKind {
-        self.nth(0)
+        self.tokens.current().kind
     }
 
-    /// Get the current token of the parser
-    pub fn cur_tok(&self) -> &'t Token {
-        self.nth_tok(0)
+    pub fn cur_range(&self) -> TextRange {
+        self.tokens.current().range()
     }
 
     /// Look ahead at a token and get its kind, **The max lookahead is 4**.
@@ -176,19 +167,14 @@ impl<'t> Parser<'t> {
         self.tokens.lookahead_nth(n).kind
     }
 
-    /// Look ahead at a token, **The max lookahead is 4**.
-    pub fn nth_tok(&self, n: usize) -> &'t Token {
-        self.tokens.lookahead_nth(n)
-    }
-
     /// Check if the parser is currently at a specific token
     pub fn at(&self, kind: JsSyntaxKind) -> bool {
-        self.nth_at(0, kind)
+        self.cur() == kind
     }
 
     /// Check if a token lookahead is something, `n` must be smaller or equal to `4`
     pub fn nth_at(&self, n: usize, kind: JsSyntaxKind) -> bool {
-        self.nth_tok(n).kind == kind
+        self.nth(n) == kind
     }
 
     /// Consume the next token if `kind` matches.
@@ -207,7 +193,7 @@ impl<'t> Parser<'t> {
                 self.err_builder(&format!(
                     "'{name}' keyword cannot contain escape character."
                 ))
-                .primary(self.cur_tok().range(), ""),
+                .primary(self.cur_range(), ""),
             );
             self.bump_remap(ERROR_TOKEN);
             true
@@ -259,7 +245,6 @@ impl<'t> Parser<'t> {
     }
 
     /// Add an error
-    #[cold]
     pub fn error(&mut self, err: impl ToDiagnostic) {
         let err = err.to_diagnostic(self);
 
@@ -302,10 +287,7 @@ impl<'t> Parser<'t> {
     /// # Panics
     /// This method panics if the token range and source code range mismatch
     pub fn cur_src(&self) -> &str {
-        self.tokens
-            .source()
-            .get(self.nth_tok(0).range())
-            .expect("Parser source and tokens mismatch")
+        &self.tokens.source()[self.cur_range()]
     }
 
     /// Try to eat a specific token kind, if the kind is not there then adds an error to the events stack.
@@ -326,22 +308,6 @@ impl<'t> Parser<'t> {
         } else {
             true
         }
-    }
-
-    /// Get the byte index range of a completed marker for error reporting.
-    pub fn marker_range(&self, marker: &CompletedMarker) -> Range<usize> {
-        match self.events[marker.start_pos as usize] {
-            Event::Start { start, .. } => match self.events[marker.finish_pos as usize] {
-                Event::Finish { end } => start..end,
-                _ => unreachable!(),
-            },
-            _ => unreachable!(),
-        }
-    }
-
-    /// Get the source code of a range
-    pub fn source(&self, range: TextRange) -> &str {
-        &self.tokens.source()[range]
     }
 
     /// Rewind the parser back to a previous position in time
@@ -414,8 +380,9 @@ impl<'t> Parser<'t> {
         self.error(err);
     }
 
-    pub fn span_text(&self, span: impl rslint_errors::Span) -> &'t str {
-        &self.tokens.source()[span.as_range()]
+    /// Gets the source of a range
+    pub fn source(&self, span: TextRange) -> &'t str {
+        &self.tokens.source()[span]
     }
 
     pub(crate) fn bump_multiple(&mut self, amount: u8, kind: JsSyntaxKind) {
@@ -423,18 +390,6 @@ impl<'t> Parser<'t> {
         for _ in 0..amount {
             self.tokens.bump();
         }
-    }
-
-    pub fn marker_vec_range(&self, markers: &[CompletedMarker]) -> Range<usize> {
-        let start = markers
-            .first()
-            .map(|x| usize::from(x.range(self).start()))
-            .unwrap_or_default();
-        let end = markers
-            .last()
-            .map(|x| usize::from(x.range(self).end()))
-            .unwrap_or_default();
-        start..end
     }
 
     /// Whether the code we are parsing is a module
@@ -450,14 +405,14 @@ pub struct Marker {
     /// The index in the events list
     pub pos: u32,
     /// The byte index where the node starts
-    pub start: usize,
+    pub start: TextSize,
     pub old_start: u32,
     pub(crate) child_idx: Option<usize>,
     bomb: DebugDropBomb,
 }
 
 impl Marker {
-    pub fn new(pos: u32, start: usize) -> Marker {
+    pub fn new(pos: u32, start: TextSize) -> Marker {
         Marker {
             pos,
             start,
@@ -490,7 +445,7 @@ impl Marker {
         }
         let finish_pos = p.events.len() as u32;
         p.push_event(Event::Finish {
-            end: p.tokens.last_tok().map(|t| t.end()).unwrap_or(0),
+            end: p.tokens.last_tok().map(|t| t.end()).unwrap_or_default(),
         });
         let new = CompletedMarker::new(self.pos, finish_pos, kind);
         new.old_start(self.old_start)
@@ -582,14 +537,14 @@ impl CompletedMarker {
     /// Get the range of the marker
     pub fn range(&self, p: &Parser) -> TextRange {
         let start = match p.events[self.old_start as usize] {
-            Event::Start { start, .. } => start as u32,
+            Event::Start { start, .. } => start,
             _ => unreachable!(),
         };
         let end = match p.events[self.finish_pos as usize] {
-            Event::Finish { end } => end as u32,
+            Event::Finish { end } => end,
             _ => unreachable!(),
         };
-        TextRange::new(start.into(), end.into())
+        TextRange::new(start, end)
     }
 
     /// Get the underlying text of a marker
