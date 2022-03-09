@@ -43,7 +43,7 @@ jobs:
         working-directory: editors/vscode
         run: |
           CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
-          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F")-${{ github.sha }}
+          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")}
           cat package.json | sed "s/'"version": "${CURRENT_VERSION}"'/'"version": "${NEW_VERSION}"'/g" >  temp
           mv temp package.json
 
