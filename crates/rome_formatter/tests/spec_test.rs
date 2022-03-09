@@ -7,6 +7,10 @@ use std::fmt::Debug;
 use std::fs;
 use std::path::{Path, PathBuf};
 
+mod check_reformat {
+    include!("check_reformat.rs");
+}
+
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
 pub enum SerializableIndentStyle {
     /// Tab
@@ -136,11 +140,25 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let input = fs::read_to_string(file_path).unwrap();
         snapshot_content.set_input(input.as_str());
 
-        let root = parse(buffer.as_str(), 0, source_type).syntax();
+        let parsed = parse(buffer.as_str(), 0, source_type.clone());
+        let has_errors = parsed.has_errors();
+        let root = parsed.syntax();
+
         let formatted_result = format(FormatOptions::default(), &root);
+
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
         // we ignore the error for now
         let result = formatted_result.unwrap();
+
+        if !has_errors {
+            check_reformat::check_reformat(check_reformat::CheckReformatParams {
+                root: &root,
+                text: result.as_code(),
+                source_type: source_type.clone(),
+                file_name,
+                format_options: FormatOptions::default(),
+            });
+        }
 
         snapshot_content.add_output(result, FormatOptions::default());
 
@@ -156,6 +174,17 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                 for test_case in options.cases {
                     let format_options: FormatOptions = test_case.into();
                     let formatted_result = format(format_options, &root).unwrap();
+
+                    if !has_errors {
+                        check_reformat::check_reformat(check_reformat::CheckReformatParams {
+                            root: &root,
+                            text: formatted_result.as_code(),
+                            source_type: source_type.clone(),
+                            file_name,
+                            format_options,
+                        });
+                    }
+
                     snapshot_content.add_output(formatted_result, format_options);
                 }
             }

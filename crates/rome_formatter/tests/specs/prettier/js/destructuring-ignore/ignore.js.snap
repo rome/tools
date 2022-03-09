@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: ignore.js
 
 ---
@@ -83,7 +83,7 @@ const {
 /* RestElement */
 const {
   // prettier-ignore
-  ...bar6,
+  ...bar6
 } = foo;
 
 // Nested

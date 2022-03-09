@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: lit-html.js
 
 ---
@@ -180,17 +180,17 @@ function HelloWorld() {
 }
 
 const trickyParens = html`<script> f((${expr}) / 2); </script>`;
-const nestedFun = `${outerExpr(1)} <script>const tpl = html\`<div>\${innerExpr( 1 )} ${outerExpr( /* HTML */
+const nestedFun = /* HTML */ `${outerExpr(1)} <script>const tpl = html\`<div>\${innerExpr( 1 )} ${outerExpr(
   2,
 )}</div>\`</script>`;
 
-const closingScriptTagShouldBeEscapedProperly = `
+const closingScriptTagShouldBeEscapedProperly = /* HTML */ `
   <script>
     const html = /* HTML */ \`<script><\\/script>\`;
   </script>
-`; /* HTML */
+`;
 
-const closingScriptTag2 = `<script>const  scriptTag='<\\/script>'; <\/script>`; /* HTML */
+const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
 
 html`
  <div style="

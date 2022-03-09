@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: tagged-template-literal.js
 
 ---
@@ -33,11 +33,11 @@ foo``; // comment
 foo`
 `; // comment
 
-foo`
-`; /* comment */
+foo /* comment */ `
+`;
 
-foo`
-`; /* comment */
+foo /* comment */ `
+`;
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: generic.ts
 
 ---
@@ -33,11 +33,13 @@ class G1<T> implements IPoly<T> {
   x: T;
 }
 
-class G2<T> implements IPoly<T> { // g2
+class G2<T> implements IPoly<T> {
+  // g2
   x: T;
 }
 
-class G3<T> extends U implements IPoly<T> { // g3
+class G3<T> extends U implements IPoly<T> {
+  // g3
   x: T;
 }
 

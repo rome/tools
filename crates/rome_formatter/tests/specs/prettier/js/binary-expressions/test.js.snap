@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: test.js
 
 ---
@@ -50,7 +50,7 @@ const x4 =
   longVariable;
 const x5 =
   longVariable && longVariable ||
-  longVariable && longVariable
+  longVariable && longVariable ||
   longVariable && longVariable;
 const x6 =
   firstItemWithAVeryLongNameThatKeepsGoing ||

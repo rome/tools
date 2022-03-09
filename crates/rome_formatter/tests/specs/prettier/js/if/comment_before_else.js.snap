@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: comment_before_else.js
 
 ---
@@ -28,14 +28,16 @@ if (cond) {
   stuff;
 } /* comment */ else if (cond) {
   stuff;
-} // comment
+}
+// comment
 else {
   stuff;
 }
 
 if (cond) {
   stuff;
-} // comment
+}
+// comment
 else {
   stuff;
 }

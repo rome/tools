@@ -66,14 +66,42 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: LET_KW@35..40 "let" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@40..42 "b" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@44..46 "{" [] [Whitespace(" ")],
+                                members: JsObjectMemberList [
+                                    JsShorthandPropertyObjectMember {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@46..49 "foo" [] [],
+                                        },
+                                    },
+                                ],
+                                r_curly_token: missing (required),
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@35..36 "" [Newline("\n")] [],
+    eof_token: EOF@49..50 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..36
+0: JS_MODULE@0..50
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..35
+  2: JS_MODULE_ITEM_LIST@0..49
     0: JS_VARIABLE_STATEMENT@0..15
       0: JS_VARIABLE_DECLARATION@0..15
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -116,7 +144,25 @@ JsModule {
                       0: IDENT@30..34 "bar" [] [Whitespace(" ")]
                 2: R_CURLY@34..35 "}" [] []
       1: (empty)
-  3: EOF@35..36 "" [Newline("\n")] []
+    2: JS_VARIABLE_STATEMENT@35..49
+      0: JS_VARIABLE_DECLARATION@35..49
+        0: LET_KW@35..40 "let" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@40..49
+          0: JS_VARIABLE_DECLARATOR@40..49
+            0: JS_IDENTIFIER_BINDING@40..42
+              0: IDENT@40..42 "b" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@42..49
+              0: EQ@42..44 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@44..49
+                0: L_CURLY@44..46 "{" [] [Whitespace(" ")]
+                1: JS_OBJECT_MEMBER_LIST@46..49
+                  0: JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@46..49
+                    0: JS_REFERENCE_IDENTIFIER@46..49
+                      0: IDENT@46..49 "foo" [] []
+                2: (empty)
+      1: (empty)
+  3: EOF@49..50 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `,` but instead found `bar`
   ┌─ object_expr_err.js:2:15
@@ -125,5 +171,13 @@ error[SyntaxError]: expected `,` but instead found `bar`
   │               ^^^ unexpected
 
 --
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ object_expr_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
 let a = {, foo}
 let b = { foo bar }
+let b = { foo

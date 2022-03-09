@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: comments.ts
 
 ---
@@ -43,18 +43,21 @@ interface A1 { foo(): bar } // comment
 
 interface A2 extends Base { foo(): bar } // comment
 
-interface A3 // comment1
+interface A3
+  // comment1
   extends
     Base // comment2
 { foo(): bar }
 
-interface A4 // comment1
+interface A4
+  // comment1
   extends
     Base // comment2
 // comment3
 { foo(): bar }
 
-interface A5 // comment1
+interface A5
+  // comment1
   extends
     Base // comment2
 // comment3
@@ -63,7 +66,8 @@ interface A5 // comment1
   foo(): bar,
 }
 
-interface A6 // comment1
+interface A6
+  // comment1
   extends
     Base // comment2
 // comment3

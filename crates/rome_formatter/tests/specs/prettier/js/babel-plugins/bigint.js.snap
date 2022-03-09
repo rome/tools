@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: bigint.js
 
 ---
@@ -244,7 +244,8 @@ view[0];
 1n + 2;
 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
-1n * 2 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
+1n * 2
+// ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
 + 1n;
 // ↪ TypeError: Cannot convert a BigInt value to a number
@@ -264,7 +265,8 @@ const badPrecision = BigInt(9007199254740993);
 const goodPrecision = BigInt("9007199254740993");
 // ↪9007199254740993n
 
-const alsoGoodPrecision = 9007199254740993n; // ↪9007199254740993n
+const alsoGoodPrecision = 9007199254740993n;
+// ↪9007199254740993n
 
 ```
 

@@ -4,8 +4,8 @@ use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::utils::is_simple_expression;
 use crate::{
-    concat_elements, empty_element, format_elements, group_elements, space_token, token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    concat_elements, empty_element, format_elements, group_elements, if_group_breaks,
+    soft_block_indent, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 use rome_js_syntax::{
@@ -37,7 +37,14 @@ impl ToFormatElement for JsAnyFunction {
 
         tokens.push(match self.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
-                format_elements![token("("), binding.format(formatter)?, token(")")]
+                group_elements(format_elements![
+                    token("("),
+                    soft_block_indent(format_elements![
+                        binding.format(formatter)?,
+                        if_group_breaks(token(",")),
+                    ]),
+                    token(")"),
+                ])
             }
             JsAnyArrowFunctionParameters::JsParameters(params) => params.format(formatter)?,
         });

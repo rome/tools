@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: as.ts
 
 ---
@@ -65,7 +65,7 @@ export default class Column<T> extends (
     ColumnProps<T>,
     ColumnProps<T>,
     ColumnProps<T>,
-    ColumnProps<T>,
+    ColumnProps<T>
   >
 ) {}
 export const MobxTypedForm = class extends (Form as { new(): any }) {};
@@ -98,7 +98,8 @@ const value4 = thisIsAReallyLongIdentifier as {
   prop3: number,
 }[];
 const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
-  string, number
+  string,
+  number,
 ];
 
 const iter1 = createIterator(

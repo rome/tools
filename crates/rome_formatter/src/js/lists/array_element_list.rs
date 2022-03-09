@@ -91,7 +91,7 @@ fn is_short_literal(expr: &JsAnyExpression) -> bool {
         JsAnyExpression::JsAnyLiteralExpression(lit) => {
             let token_len = lit
                 .syntax()
-                .text()
+                .text_trimmed()
                 .try_fold_chunks::<_, _, Infallible>(0, |sum, chunk| {
                     // Count actual characters instead of byte length
                     Ok(sum + chunk.chars().count())

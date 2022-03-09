@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 168
+assertion_line: 197
 expression: if_else.js
 
 ---
@@ -89,10 +89,12 @@ if (Math.random() > 0.5) {
 
 if (Math.random() > 0.5) {
 	console.log(1);
-} // wow
+}
+// wow
 else if (Math.random() > 0.5) {
 	console.log(2);
-} // so cool
+}
+// so cool
 else {
 	console.log(3);
 }

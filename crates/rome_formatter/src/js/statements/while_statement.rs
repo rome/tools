@@ -28,7 +28,6 @@ impl ToFormatElement for JsWhileStatement {
                     test.format(formatter)?,
                     &r_paren_token?,
                 )?,
-                space_token(),
             ],
             body?,
         )

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: object-with-comment.js
 
 ---
@@ -22,7 +22,7 @@ const objectWithComment2 = /** @type MyType */ (  /* comment */  {
 
 # Output
 ```js
-const objectWithComment = ( /** @type MyType */
+const objectWithComment = /** @type MyType */ (
   /* comment */
   { foo: bar }
 );

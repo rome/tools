@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: html-template-literals.js
 
 ---
@@ -43,15 +43,15 @@ setFoo(
 
 # Output
 ```js
-const nestedFun = `${outerExpr(1)}
+const nestedFun = /* HTML */ `${outerExpr(1)}
   <script>
     const tpl = html\`<div>\${innerExpr(1)} ${outerExpr(2)}</div>\`;
-  </script>`; /* HTML */
+  </script>`;
 
-const nestedFun2 = `${outerExpr(1)}
+const nestedFun2 = /* HTML */ `${outerExpr(1)}
   <script>
     const tpl = html\`\\n<div>\${innerExpr(1)} ${outerExpr(2)}</div>\\n\`;
-  </script>`; /* HTML */
+  </script>`;
 
 setFoo(
   html`<div>one</div>

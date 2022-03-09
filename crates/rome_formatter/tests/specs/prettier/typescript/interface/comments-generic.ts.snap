@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: comments-generic.ts
 
 ---
@@ -51,7 +51,8 @@ interface ReallyReallyLongName2<
   TypeArgumentNumberOne,
   TypeArgumentNumberTwo,
   TypeArgumentNumberThree,
-> // 1
+>
+  // 1
   // 2
   extends
     BaseInterface
@@ -61,7 +62,8 @@ interface ReallyReallyLongName3<
   TypeArgumentNumberOne,
   TypeArgumentNumberTwo,
   TypeArgumentNumberThree,
-> // 1
+>
+  // 1
   // 2
   extends
     BaseInterface // 3

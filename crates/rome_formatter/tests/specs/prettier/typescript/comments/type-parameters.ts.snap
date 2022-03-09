@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: type-parameters.ts
 
 ---
@@ -48,7 +48,7 @@ interface Foo { < /* comment */ >(arg): any }
 type T = < /* comment */ >(arg) => any;
 
 functionName<
-  A, // comment
+  A // comment
 >();
 const a: T<
   // comment

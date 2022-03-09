@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: comment.js
 
 ---
@@ -61,29 +61,34 @@ function f() {
 }
 
 function f() {
-  return /* b */ ; // a
+  return // a
+  /* b */ ;
 }
 
 function f() {
-  return // b /* a */
+  return /* a */
+  // b
   ;
 }
 
 function x() {
-  return func2 //comment
+  return func2
+  //comment
   .bar();
 }
 
 function f() {
   return (
-    foo // comment
+    foo
+    // comment
     .bar()
   );
 }
 
 fn(function f() {
   return (
-    foo // comment
+    foo
+    // comment
     .bar()
   );
 });
