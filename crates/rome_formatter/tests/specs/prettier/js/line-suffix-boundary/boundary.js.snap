@@ -59,15 +59,24 @@ ${
 }
 `;
 
+<<<<<<< HEAD
 <div>
 {ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
 } < /div>;
+=======
+<div>;
+{
+  ExampleStory.getFragment("story"); // $FlowFixMe found when converting React.createClass to ES6
+}
+</div>;
+>>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 ```
 
 # Errors
 ```
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+<<<<<<< HEAD
    ┌─ boundary.js:21:1
    │  
 21 │ ┌ <div>
@@ -77,6 +86,15 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
 
 error: unterminated regex literal
    ┌─ boundary.js:24:8
+=======
+   ┌─ boundary.js:24:1
+   │
+24 │ </div>;
+   │ ^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ';'
+   ┌─ boundary.js:24:7
+>>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
    │
 24 │ </div>;
    │  -     ^ ...but the line ends here

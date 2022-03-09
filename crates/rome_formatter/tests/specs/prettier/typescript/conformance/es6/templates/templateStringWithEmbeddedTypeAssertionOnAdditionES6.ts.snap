@@ -14,7 +14,18 @@ var x = `abc${ <any>(10 + 10) }def`;
 # Output
 ```js
 // @target: ES6
-var x = `abc${<any>(10 + 10)}def`;
+var x = `abc${ <any>(10 + 10) }def`;
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `'}'` but instead found `(`
+  ┌─ templateStringWithEmbeddedTypeAssertionOnAdditionES6.ts:2:21
+  │
+2 │ var x = `abc${ <any>(10 + 10) }def`;
+  │                     ^ unexpected
+
 
 ```
 

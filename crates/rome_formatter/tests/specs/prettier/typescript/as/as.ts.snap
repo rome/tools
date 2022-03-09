@@ -85,7 +85,8 @@ const state = JSON.stringify({ next: window.location.href, nonce } as State);
 (foo.bar as any)++;
 
 (bValue as boolean) ? 0 : -1;
-<boolean>bValue ? 0 : -1;
+<boolean>;
+bValue ? 0 : -1;
 
 const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
 const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
@@ -112,6 +113,20 @@ const iter2 = createIterator(
   child,
   self.tag as SyncFunctionComponent,
 );
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ as.ts:31:10
+   │
+31 │ <boolean>bValue ? 0 : -1;
+   │ ---------^^^^^^
+   │ │        │
+   │ │        An explicit or implicit semicolon is expected here...
+   │ ...Which is required to end this statement
+
 
 ```
 

@@ -81,25 +81,44 @@ const value = (
     <Sub />
     <Sub />
   </Element2>
-);
+)
 
 ```
 
 # Errors
 ```
+<<<<<<< HEAD
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ nested-in-condition.js:22:3
    │  
 22 │ ┌   <Element>
 23 │ │     <Sub />
    │ └───────────^ TypeScript only syntax
+=======
+error[SyntaxError]: expected `')'` but instead found `Sub`
+   ┌─ nested-in-condition.js:23:6
+   │
+23 │     <Sub />
+   │      ^^^ unexpected
+>>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 
+<<<<<<< HEAD
 error[SyntaxError]: expected an expression but instead found '>'
    ┌─ nested-in-condition.js:24:11
    │
 24 │     <Sub />
    │           ^ Expected an expression here
+=======
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+   ┌─ nested-in-condition.js:23:11
+   │
+23 │     <Sub />
+   │          -^ But this operator was encountered instead
+   │          │ 
+   │          This operator requires a right hand side value
+>>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
+<<<<<<< HEAD
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested-in-condition.js:25:5
    │
@@ -110,8 +129,21 @@ error[SyntaxError]: expected an expression but instead found '>'
    ┌─ nested-in-condition.js:26:11
    │
 26 │     <Sub />
+<<<<<<< HEAD
    │           ^ Expected an expression here
+=======
+=======
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+   ┌─ nested-in-condition.js:25:11
+   │
+25 │     <Sub />
+>>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
+   │          -^ But this operator was encountered instead
+   │          │ 
+   │          This operator requires a right hand side value
+>>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
+<<<<<<< HEAD
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested-in-condition.js:27:5
    │
@@ -122,13 +154,36 @@ error[SyntaxError]: expected an expression but instead found '>'
    ┌─ nested-in-condition.js:28:11
    │
 28 │     <Sub />
+<<<<<<< HEAD
    │           ^ Expected an expression here
+=======
+=======
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+   ┌─ nested-in-condition.js:27:11
+   │
+27 │     <Sub />
+>>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
+   │          -^ But this operator was encountered instead
+   │          │ 
+   │          This operator requires a right hand side value
+>>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
+<<<<<<< HEAD
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ nested-in-condition.js:29:3
+=======
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+   ┌─ nested-in-condition.js:29:4
+>>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
    │
 29 │   </Element>
+<<<<<<< HEAD
    │   ^^^^^^^^^ TypeScript only syntax
+=======
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+>>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ nested-in-condition.js:30:1
@@ -136,6 +191,7 @@ error[SyntaxError]: expected an expression but instead found ')'
 30 │ ) : (
    │ ^ Expected an expression here
 
+<<<<<<< HEAD
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ nested-in-condition.js:31:3
    │  
@@ -169,6 +225,8 @@ error[SyntaxError]: expected an expression but instead found ')'
 36 │ );
    │ ^ Expected an expression here
 
+=======
+>>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 
 ```
 

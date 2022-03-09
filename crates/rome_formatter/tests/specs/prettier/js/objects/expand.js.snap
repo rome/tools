@@ -20,14 +20,29 @@ const Component2 = ({
 
 # Output
 ```js
+<<<<<<< HEAD
 const Component1 = ({ props }) => (<Text>Test</Text>);
 
 const Component2 = ({ props }) => (<Text>Test</Text>);
+=======
+const Component1 = ({ props }) => (
+  <Text>
+Test</Text>
+)
+
+const Component2 = ({
+  props
+}) => (
+  <Text>
+Test</Text>
+)
+>>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 ```
 
 # Errors
 ```
+<<<<<<< HEAD
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
   ┌─ expand.js:2:3
   │
@@ -39,6 +54,47 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
   │
 8 │   <Text>Test</Text>
   │   ^^^^^^^^^^^^^^^^^ JSX only syntax
+=======
+error[SyntaxError]: expected `')'` but instead found `Test`
+  ┌─ expand.js:2:9
+  │
+2 │   <Text>Test</Text>
+  │         ^^^^ unexpected
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+  ┌─ expand.js:2:14
+  │
+2 │   <Text>Test</Text>
+  │             -^ But this operator was encountered instead
+  │             │ 
+  │             This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ expand.js:3:1
+  │
+3 │ );
+  │ ^ Expected an expression here
+
+error[SyntaxError]: expected `')'` but instead found `Test`
+  ┌─ expand.js:8:9
+  │
+8 │   <Text>Test</Text>
+  │         ^^^^ unexpected
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+  ┌─ expand.js:8:14
+  │
+8 │   <Text>Test</Text>
+  │             -^ But this operator was encountered instead
+  │             │ 
+  │             This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ expand.js:9:1
+  │
+9 │ );
+  │ ^ Expected an expression here
+>>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 
 ```

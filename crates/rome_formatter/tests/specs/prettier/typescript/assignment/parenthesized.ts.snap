@@ -18,11 +18,33 @@ expression: parenthesized.ts
 # Output
 ```js
 // https://github.com/babel/babel/pull/12933/files
-(<number>x) = null;
+(<number>
+x;
+) = null
 (x!) = null;
 (a as any) = null;
 (a as number) = 42;
 ((a as any) as string) = null;
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `')'` but instead found `x`
+  ┌─ parenthesized.ts:2:10
+  │
+2 │ (<number>x) = null;
+  │          ^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ parenthesized.ts:2:11
+  │
+2 │ (<number>x) = null;
+  │          -^
+  │          ││
+  │          │An explicit or implicit semicolon is expected here...
+  │          ...Which is required to end this statement
+
 
 ```
 
