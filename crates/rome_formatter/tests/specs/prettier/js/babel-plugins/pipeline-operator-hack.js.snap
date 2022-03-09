@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: pipeline-operator-hack.js
 
 ---
@@ -24,7 +24,8 @@ return list
 
 return list
  |> take(prefix.length, %)
- |> equals(%, prefix); // (The % token isn't final; it might instead be @ or ? or #.)
+ |> equals(%, prefix);
+// (The % token isn't final; it might instead be @ or ? or #.)
 
 ```
 

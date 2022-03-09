@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 197
 expression: function_args.js
 
 ---
@@ -22,7 +22,7 @@ function foo(
 	someotherlongvariableshould4,
 	someotherlongvariableshould5,
 	someotherlongvariableshould6 = foooooooooooo,
-	...someotherlongvariableshould7,
+	...someotherlongvariableshould7
 ) {
 	return "nothing";
 }

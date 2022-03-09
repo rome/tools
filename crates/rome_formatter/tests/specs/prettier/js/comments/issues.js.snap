@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: issues.js
 
 ---
@@ -108,9 +108,9 @@ const rootEpic = (actions, store) => (
 const regex = new RegExp(
   "^\\s*" + // beginning of the line
     "name\\s*=\\s*" + // name =
-    "[\'"]" + // opening quotation mark
+    '[\'"]' + // opening quotation mark
     escapeStringRegExp(target.name) + // target name
-    "[\'"]" + // closing quotation mark
+    '[\'"]' + // closing quotation mark
     ",?$", // optional trailing comma
 );
 
@@ -143,7 +143,8 @@ if (1) {
 
 // Comments trigger invalid JavaScript in-between else if
 if (1) {
-} // Comment
+}
+// Comment
 else {
 }
 

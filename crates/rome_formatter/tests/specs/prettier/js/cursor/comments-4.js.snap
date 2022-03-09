@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: comments-4.js
 
 ---
@@ -17,7 +17,8 @@ const y = 5
 ```js
 // howdy
 // hi lol
-const y = 5; //  traling!
+const y = 5;
+//  traling!
 
 ```
 

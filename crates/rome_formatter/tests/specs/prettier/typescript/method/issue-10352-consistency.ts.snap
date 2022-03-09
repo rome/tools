@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: issue-10352-consistency.ts
 
 ---
@@ -30,14 +30,14 @@ export function loadPlugin(
 export interface Store {
   getRecord(collectionName: string, documentPath: string): TaskEither<
     Error,
-    Option<GenericRecord>,
+    Option<GenericRecord>
   >,
 }
 
 export default class StoreImpl extends Service implements Store {
   getRecord(collectionName: string, documentPath: string): TaskEither<
     Error,
-    Option<GenericRecord>,
+    Option<GenericRecord>
   > {
     // Do some stuff.
   }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 197
 expression: binding_pattern.js
 
 ---
@@ -21,6 +21,6 @@ let [d, ...e] = c;
 let [
 	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
 	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
-	...cccccccccccccccccccccccccccccc,
+	...cccccccccccccccccccccccccccccc
 ] = f;
 

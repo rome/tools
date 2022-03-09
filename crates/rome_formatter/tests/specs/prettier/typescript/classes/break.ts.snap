@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: break.ts
 
 ---
@@ -49,7 +49,7 @@ export class VisTimelineComponent2
 class MyContractSelectionWidget extends React.Component<
   void,
   MyContractSelectionWidgetPropsType,
-  void,
+  void
 > implements SomethingLarge {
   method() {}
 }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 168
+assertion_line: 197
 expression: union_type.ts
 
 ---
@@ -11,6 +11,13 @@ type ShortUnion =
 
 
 type LongUnion = A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z
+
+type Comments =
+    // leading separator
+    |
+    // leading type
+    A | B /*
+trailing type */
 
 =============================
 # Outputs
@@ -48,4 +55,12 @@ type LongUnion =
 	| X
 	| Y
 	| Z;
+
+type Comments =
+	// leading separator
+	|
+	// leading type
+	A
+	| B /*
+trailing type */ ;
 

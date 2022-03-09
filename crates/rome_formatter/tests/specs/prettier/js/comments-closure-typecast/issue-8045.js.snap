@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: issue-8045.js
 
 ---
@@ -32,13 +32,17 @@ function jsdocCastInReturn() {
 
 # Output
 ```js
-const myLongVariableName = (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
+  fooBarBaz
+);
 
 function jsdocCastInReturn() {
   return (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
 }
 
-const myLongVariableName = (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
+  fooBarBaz
+);
 
 function jsdocCastInReturn() {
   return (
@@ -47,7 +51,9 @@ function jsdocCastInReturn() {
   );
 }
 
-const myLongVariableName = (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
+  fooBarBaz
+);
 
 function jsdocCastInReturn() {
   return (

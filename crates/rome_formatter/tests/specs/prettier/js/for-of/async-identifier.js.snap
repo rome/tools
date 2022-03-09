@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: async-identifier.js
 
 ---
@@ -21,14 +21,14 @@ async function f() {
 
 # Output
 ```js
-for ((async) of [])
-for ((foo) of async)
+for ((async) of []);
+for ((foo) of async);
 for ((foo) of []) async;
 
 async function f() {
-  for await (async of [])
-  for await ((async) of [])
-  for await ((foo) of async)
+  for await (async of []);
+  for await ((async) of []);
+  for await ((foo) of async);
   for await ((foo) of []) async;
 }
 

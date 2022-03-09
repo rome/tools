@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: inlining.ts
 
 ---
@@ -55,7 +55,8 @@ type T8 = number | (((((arg: any) => void))));
 interface RelayProps { articles: a | null }
 interface RelayProps { articles: Array<{ __id: string } | null> | null | void }
 
-type UploadState<E, EM, D> // The upload hasnt begun yet
+type UploadState<E, EM, D>
+// The upload hasnt begun yet
 =
   | { type: "Not_begun" }
   // The upload timed out
@@ -65,7 +66,8 @@ type UploadState<E, EM, D> // The upload hasnt begun yet
   // Uploading to aws3 and CreatePostMutation succeeded
   | { type: "Success", data: D };
 
-type UploadState2<E, EM, D> // The upload hasnt begun yet
+type UploadState2<E, EM, D>
+// The upload hasnt begun yet
 =
   | A
   // The upload timed out

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: comments.js
 
 ---
@@ -115,34 +115,41 @@ c */? foo : bar : bar;
 
 # Output
 ```js
-var inspect = 4 === util.inspect.length ? ( // node <= 0.8.x
+var inspect = 4 === util.inspect.length ? (
+  // node <= 0.8.x
   function (v, colors) {
     return util.inspect(v, void 0, void 0, colors);
   }
-) : ( // node > 0.8.x
+) : (
+  // node > 0.8.x
   function (v, colors) {
     return util.inspect(v, { colors: colors });
   }
 );
 
-var inspect = 4 === util.inspect.length ? ( // node <= 0.8.x
+var inspect = 4 === util.inspect.length ? (
+  // node <= 0.8.x
   function (v, colors) {
     return util.inspect(v, void 0, void 0, colors);
   }
-) : ( // node > 0.8.x
+) : (
+  // node > 0.8.x
   function (v, colors) {
     return util.inspect(v, { colors: colors });
   }
 );
 
-const extractTextPluginOptions = shouldUseRelativeAssetPaths // Making sure that the publicPath goes back to to build folder.
+const extractTextPluginOptions = shouldUseRelativeAssetPaths
+// Making sure that the publicPath goes back to to build folder.
 ? { publicPath: Array(cssFilename.split("/").length).join("../") } : {};
 
-const extractTextPluginOptions2 = shouldUseRelativeAssetPaths ? { // Making sure that the publicPath goes back to to build folder.
+const extractTextPluginOptions2 = shouldUseRelativeAssetPaths ? {
+  // Making sure that the publicPath goes back to to build folder.
   publicPath: Array(cssFilename.split("/").length).join("../"),
 } : {};
 
-const extractTextPluginOptions3 = shouldUseRelativeAssetPaths ? { // Making sure that the publicPath goes back to to build folder.
+const extractTextPluginOptions3 = shouldUseRelativeAssetPaths ? {
+  // Making sure that the publicPath goes back to to build folder.
   publicPath: Array(cssFilename.split("/").length).join("../"),
 } : {};
 
@@ -183,7 +190,8 @@ test ? foo : bar; /* comment
 
 test
   ? foo
-  : test /* comment
+  : test
+    /* comment
          comment
      comment
            comment
@@ -197,7 +205,8 @@ test
 test ? foo : /* comment */ bar;
 
 test
-  ? test /* c
+  ? test
+    /* c
 c */
     ? foo
     : bar
