@@ -182,6 +182,14 @@ error[SyntaxError]: expected an expression but instead found ';'
 45 │ </div>;
    │       ^ Expected an expression here
 
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ issues.js:48:1
+   │  
+48 │ ┌ <div
+49 │ │   // comment
+50 │ │ />;
+   │ └──^ Jsx only syntax
+
 
 ```
 

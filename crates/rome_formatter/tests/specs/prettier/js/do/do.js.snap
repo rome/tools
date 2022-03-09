@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: do.js
 
 ---
@@ -215,6 +215,20 @@ error[SyntaxError]: expected `')'` but instead found `{`
    │
 24 │       {
    │       ^ unexpected
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ do.js:27:13
+   │  
+27 │ ┌             <LogoutButton />
+28 │ │           } else {
+   │ └───────────^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ do.js:29:13
+   │  
+29 │ ┌             <LoginButton />
+30 │ │           }
+   │ └───────────^ Jsx only syntax
 
 error[SyntaxError]: expected `while` but instead found `}`
    ┌─ do.js:32:7

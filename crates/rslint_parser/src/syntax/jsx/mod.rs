@@ -1,3 +1,5 @@
+pub mod jsx_parse_errors;
+
 use rslint_lexer::{JsSyntaxKind, T};
 
 use crate::{Checkpoint, Marker, ParsedSyntax, Parser};

@@ -23,10 +23,12 @@ use crate::syntax::js_parse_error::{
     expected_simple_assignment_target, invalid_assignment_error,
     private_names_only_allowed_on_left_side_of_in_expression,
 };
+use crate::syntax::jsx::jsx_parse_errors::jsx_only_syntax_error;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
-use crate::JsSyntaxFeature::{StrictMode, TypeScript};
+use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
+use crate::LanguageVariant;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
@@ -1161,7 +1163,6 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         T!['('] => parse_parenthesized_expression(p, context).unwrap(),
         T!['['] => parse_array_expr(p).unwrap(),
         T!['{'] if context.is_object_expression_allowed() => parse_object_expression(p).unwrap(),
-        T![<] if context.is_object_expression_allowed() => try_parse_jsx_expression(p).unwrap(),
         T![import] => {
             let m = p.start();
             p.bump_any();
@@ -1742,11 +1743,11 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
     // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
-        let jsx = if context.is_object_expression_allowed() {
-            try_parse_jsx_expression(p)
-        } else {
-            Absent
-        };
+        let jsx = Jsx.parse_exclusive_syntax(
+            p,
+            |p| try_parse_jsx_expression(p),
+            |p, assertion| jsx_only_syntax_error(p, "jsx elements", assertion.range(p)),
+        );
 
         return jsx.or_else(|| {
             TypeScript.parse_exclusive_syntax(

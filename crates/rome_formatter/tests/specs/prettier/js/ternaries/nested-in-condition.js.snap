@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: nested-in-condition.js
 
 ---
@@ -102,6 +102,13 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
    │          │ 
    │          This operator requires a right hand side value
 
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested-in-condition.js:25:5
+   │  
+25 │ ┌     <Sub />
+26 │ │     <Sub />
+   │ └─────^ Jsx only syntax
+
 error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
    ┌─ nested-in-condition.js:26:11
    │
@@ -109,6 +116,13 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
    │          -^ But this operator was encountered instead
    │          │ 
    │          This operator requires a right hand side value
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested-in-condition.js:27:5
+   │  
+27 │ ┌     <Sub />
+28 │ │     <Sub />
+   │ └─────^ Jsx only syntax
 
 error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
    ┌─ nested-in-condition.js:28:11
@@ -144,6 +158,13 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
    │          -^ But this operator was encountered instead
    │          │ 
    │          This operator requires a right hand side value
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested-in-condition.js:34:5
+   │  
+34 │ ┌     <Sub />
+35 │ │   </Element2>
+   │ └───^ Jsx only syntax
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
    ┌─ nested-in-condition.js:35:4

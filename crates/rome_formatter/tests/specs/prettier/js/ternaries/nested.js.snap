@@ -137,7 +137,7 @@ const StorybookLoader = ({ match }) => (
         </Content>
       </Message>
     )
-)
+);
 
 const message = i % 3 === 0 && i % 5 === 0
   ? "fizzbuzz"
@@ -196,6 +196,46 @@ a
 
 # Errors
 ```
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested.js:16:7
+   │  
+16 │       ? <ButtonStorybook />
+   │ ┌───────^
+17 │ │     : match.params.storyId === "color"
+   │ └─────^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested.js:18:7
+   │  
+18 │       ? <ColorBook />
+   │ ┌───────^
+19 │ │     : match.params.storyId === "typography"
+   │ └─────^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested.js:20:7
+   │  
+20 │       ? <TypographyBook />
+   │ ┌───────^
+21 │ │     : match.params.storyId === "loading"
+   │ └─────^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested.js:22:7
+   │  
+22 │       ? <LoaderStorybook />
+   │ ┌───────^
+23 │ │     : match.params.storyId === "deal-list"
+   │ └─────^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested.js:24:7
+   │  
+24 │       ? <DealListStory />
+   │ ┌───────^
+25 │ │     : (
+   │ └─────^ Jsx only syntax
+
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ nested.js:26:7
    │  

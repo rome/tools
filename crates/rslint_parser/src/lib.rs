@@ -458,6 +458,7 @@ pub enum JsSyntaxFeature {
     SloppyMode,
     StrictMode,
     TypeScript,
+    Jsx,
 }
 
 impl SyntaxFeature for JsSyntaxFeature {
@@ -466,6 +467,7 @@ impl SyntaxFeature for JsSyntaxFeature {
             JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
             JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
             JsSyntaxFeature::TypeScript => p.source_type.language().is_typescript(),
+            JsSyntaxFeature::Jsx => p.source_type.variant() == LanguageVariant::JSX,
         }
     }
 }
