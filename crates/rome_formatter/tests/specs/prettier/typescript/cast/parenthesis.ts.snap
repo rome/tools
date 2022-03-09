@@ -19,106 +19,14 @@ true || <x>a;
 
 # Output
 ```js
-<DocumentHighlightKind>;
-(a ? b : c);
-<any>;
-(() => {});
+<DocumentHighlightKind>(a ? b : c);
+<any>(() => {});
 
-<x>;
-a || {};
-<x>;
-a && [];
-true || <x>;
-a;
-<x>;
-a + <x>;
-b;
-(<x>
-a;
-) = 1
-
-```
-
-# Errors
-```
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ parenthesis.ts:1:24
-  │
-1 │ <DocumentHighlightKind>(a ? b : c);
-  │ -----------------------^
-  │ │                      │
-  │ │                      An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ parenthesis.ts:2:6
-  │
-2 │ <any>(() => {});
-  │ -----^
-  │ │    │
-  │ │    An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ parenthesis.ts:4:4
-  │
-4 │ <x>a || {};
-  │ ---^
-  │ │  │
-  │ │  An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ parenthesis.ts:5:4
-  │
-5 │ <x>a && [];
-  │ ---^
-  │ │  │
-  │ │  An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ parenthesis.ts:6:12
-  │
-6 │ true || <x>a;
-  │ -----------^
-  │ │          │
-  │ │          An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ parenthesis.ts:7:4
-  │
-7 │ <x>a + <x>b;
-  │ ---^
-  │ │  │
-  │ │  An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ parenthesis.ts:7:11
-  │
-7 │ <x>a + <x>b;
-  │    -------^
-  │    │      │
-  │    │      An explicit or implicit semicolon is expected here...
-  │    ...Which is required to end this statement
-
-error[SyntaxError]: expected `')'` but instead found `a`
-  ┌─ parenthesis.ts:8:5
-  │
-8 │ (<x>a) = 1;
-  │     ^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ parenthesis.ts:8:6
-  │
-8 │ (<x>a) = 1;
-  │     -^
-  │     ││
-  │     │An explicit or implicit semicolon is expected here...
-  │     ...Which is required to end this statement
-
+<x>a || {};
+<x>a && [];
+true || <x>a;
+<x>a + <x>b;
+(<x>a) = 1;
 
 ```
 

@@ -21,26 +21,24 @@ const Component2 = ({
 # Output
 ```js
 const Component1 = ({ props }) => (
-  <Text>
-Test</Text>
-)
+  <Text>Test</Text>
+);
 
 const Component2 = ({
   props
 }) => (
-  <Text>
-Test</Text>
-)
+  <Text>Test</Text>
+);
 
 ```
 
 # Errors
 ```
-error[SyntaxError]: expected `')'` but instead found `Test`
-  ┌─ expand.js:2:9
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ expand.js:2:3
   │
 2 │   <Text>Test</Text>
-  │         ^^^^ unexpected
+  │   ^^^^^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
   ┌─ expand.js:2:14
@@ -56,11 +54,11 @@ error[SyntaxError]: expected an expression but instead found ')'
 3 │ );
   │ ^ Expected an expression here
 
-error[SyntaxError]: expected `')'` but instead found `Test`
-  ┌─ expand.js:8:9
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ expand.js:8:3
   │
 8 │   <Text>Test</Text>
-  │         ^^^^ unexpected
+  │   ^^^^^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
   ┌─ expand.js:8:14

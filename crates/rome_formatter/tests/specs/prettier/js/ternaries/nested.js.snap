@@ -131,13 +131,12 @@ const StorybookLoader = ({ match }) => (
     ? <DealListStory />
     : (
       <Message>
-        <
-Title>{'Missing story book'}</Title>
+        <Title>{'Missing story book'}</Title>
         <Content>
-          <
-BackButton/>
+          <BackButton/>
         </Content>
       </Message>
+<<<<<<< HEAD
 <<<<<<< HEAD
     )
 );
@@ -246,79 +245,68 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
 27 │ │         <Title>{'Missing story book'}</Title>
    │ └─────────────────────────────────────^ TypeScript only syntax
 =======
-)
-)
-
-const message =
-    i % 3 === 0 && i % 5 === 0 ?
-        'fizzbuzz'
-    : i % 3 === 0 ?
-        'fizz'
-    : i % 5 === 0 ?
-        'buzz'
-    :
-        String(i)
-
-const paymentMessage = state == 'success'
-  ? 'Payment completed successfully'
-
-: state == 'processing'
-  ? 'Payment processing'
-
-: state == 'invalid_cvc'
-  ? 'There was an issue with your CVC number'
-
-: state == 'invalid_expiry'
-  ? 'Expiry must be sometime in the past.'
-
-  : 'There was an issue with the payment.  Please contact support.'
-
-const paymentMessage2 = state == 'success'
-  ? 1 //'Payment completed successfully'
-
-: state == 'processing'
-  ? 2 //'Payment processing'
-
-: state == 'invalid_cvc'
-  ? 3 //'There was an issue with your CVC number'
-
-: true //state == 'invalid_expiry'
-  ? 4 //'Expiry must be sometime in the past.'
-
-  : 5 // 'There was an issue with the payment.  Please contact support.'
-
-const foo = <div className=
-{
-  "match-achievement-medal-type type" + (
-    medals[0].record ? "-record" : (
-      medals[0].unique ? "-unique" : medals[0].type
+=======
     )
-  );
-}
->
-{
-  medals[0].record
-    ? (i18n("Record"))
-    : medals[0].unique
-      ? (i18n("Unique"))
-      : medals[0].type === 0
-        ? (i18n("Silver"))
-        : medals[0].type === 1
-          ? (i18n("Gold"))
-          : medals[0].type === 2
-            ? (i18n("Platinum"))
-            : (i18n("Theme"));
-}
-< / div > a
-  ? literalline
-  : { 123: 12 }
+>>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
+)
+
+const message = i % 3 === 0 && i % 5 === 0
+  ? "fizzbuzz"
+  : i % 3 === 0
+    ? "fizz"
+    : i % 5 === 0
+      ? "buzz"
+      : String(i);
+
+const paymentMessage = state == "success"
+  ? "Payment completed successfully"
+  : state == "processing"
+    ? "Payment processing"
+    : state == "invalid_cvc"
+      ? "There was an issue with your CVC number"
+      : state == "invalid_expiry"
+        ? "Expiry must be sometime in the past."
+        : "There was an issue with the payment.  Please contact support.";
+
+const paymentMessage2 = state == "success"
+  ? 1 //'Payment completed successfully'
+  : state == "processing"
+    ? 2 //'Payment processing'
+    : state == "invalid_cvc"
+      ? 3 //'There was an issue with your CVC number'
+      : true //state == 'invalid_expiry'
+        ? 4 //'Expiry must be sometime in the past.'
+        : 5; // 'There was an issue with the payment.  Please contact support.'
+
+const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+	{medals[0].record ? (
+		i18n('Record')
+	) : medals[0].unique ? (
+		i18n('Unique')
+	) : medals[0].type === 0 ? (
+		i18n('Silver')
+	) : medals[0].type === 1 ? (
+		i18n('Gold')
+	) : medals[0].type === 2 ? (
+		i18n('Platinum')
+	) : (
+		i18n('Theme')
+	)}
+</div>
+
+a
+    ? literalline
+    : {
+      123: 12
+    }
     ? line
-    : softline;
+    : softline
 
 ```
 
 # Errors
 ```
+<<<<<<< HEAD
 error[SyntaxError]: expected `')'` but instead found `Title`
    ┌─ nested.js:27:10
    │
@@ -331,6 +319,14 @@ error[SyntaxError]: expected `:` but instead found `}`
 27 │         <Title>{'Missing story book'}</Title>
    │                                     ^ unexpected
 >>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
+=======
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ nested.js:26:7
+   │  
+26 │ ┌       <Message>
+27 │ │         <Title>{'Missing story book'}</Title>
+   │ └─────────────────────────────────────^ TypeScript only syntax
+>>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
    ┌─ nested.js:27:39
@@ -340,13 +336,12 @@ error[SyntaxError]: Expected an expression for the right hand side of a `<`, but
    │                                      │ 
    │                                      This operator requires a right hand side value
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ nested.js:29:12
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ nested.js:28:9
    │  
-27 │           <Title>{'Missing story book'}</Title>
-   │ ┌──────────'
-28 │ │         <Content>
+28 │ ┌         <Content>
 29 │ │           <BackButton/>
+<<<<<<< HEAD
 <<<<<<< HEAD
    │ └───────────────────────^ TypeScript only syntax
 =======
@@ -362,6 +357,10 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
    │                      This operator requires a right hand side value
 >>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 
+=======
+   │ └───────────────────────^ TypeScript only syntax
+
+>>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
    ┌─ nested.js:30:10
    │
@@ -382,17 +381,55 @@ error[SyntaxError]: expected an expression but instead found ')'
 32 │     )
    │     ^ Expected an expression here
 
-error[SyntaxError]: expected a statement but instead found '>'
-   ┌─ nested.js:73:148
+error[SyntaxError]: Invalid assignment to `<div className`
+   ┌─ nested.js:73:13
    │
 73 │ const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-   │                                                                                                                                                    ^ Expected a statement here
+   │             ^^^^^^^^^^^^^^ This expression cannot be assigned to
 
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ nested.js:87:1
+error[SyntaxError]: expected `:` but instead found `+`
+   ┌─ nested.js:73:65
+   │
+73 │ const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+   │                                                                 ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `[`
+   ┌─ nested.js:74:9
+   │
+74 │     {medals[0].record ? (
+   │            ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `.`
+   ┌─ nested.js:74:12
+   │
+74 │     {medals[0].record ? (
+   │               ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `i18n`
+   ┌─ nested.js:75:3
+   │
+75 │         i18n('Record')
+   │         ^^^^ unexpected
+
+error[SyntaxError]: expected a parameter but instead found ''Record''
+   ┌─ nested.js:75:8
+   │
+75 │         i18n('Record')
+   │              ^^^^^^^^ Expected a parameter here
+
+error[SyntaxError]: expected a function body but instead found ')'
+   ┌─ nested.js:76:2
+   │
+76 │     ) : medals[0].unique ? (
+   │     ^ Expected a function body here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+   ┌─ nested.js:87:2
    │
 87 │ </div>
-   │ ^ TypeScript only syntax
+   │ -^ But this operator was encountered instead
+   │ │ 
+   │ This operator requires a right hand side value
 
 
 ```

@@ -39,19 +39,18 @@ function HelloWorld() {
 /** @type {any} */
 const x = (
     <div>
-        <;
-div />
+        <div />
     </div>
-)
+);
 
 /**
  * @type {object}
  */
 () => (
     <div>
-sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
+        sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
     </div>
-)
+);
 
 /**
  * @type {object}
@@ -59,10 +58,9 @@ sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
 function HelloWorld() {
   return (
         <div>
-           <;
-  span>Test</span>
+           <span>Test</span>
         </div>
-  )
+    );
 }
 
 ```
@@ -70,12 +68,16 @@ function HelloWorld() {
 # Errors
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ jsdoc.js:3:5
   │  
 3 │ ┌     <div>
 4 │ │         <div />
   │ └───────────────^ TypeScript only syntax
+<<<<<<< HEAD
 =======
 error[SyntaxError]: expected `')'` but instead found `div`
   ┌─ jsdoc.js:4:10
@@ -83,6 +85,8 @@ error[SyntaxError]: expected `')'` but instead found `div`
 4 │         <div />
   │          ^^^ unexpected
 >>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
+=======
+>>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
   ┌─ jsdoc.js:5:6
@@ -98,11 +102,12 @@ error[SyntaxError]: expected an expression but instead found ')'
 6 │ );
   │ ^ Expected an expression here
 
-error[SyntaxError]: expected `')'` but instead found `sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp`
-   ┌─ jsdoc.js:13:9
-   │
-13 │         sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
-   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ unexpected
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ jsdoc.js:12:5
+   │  
+12 │ ┌     <div>
+13 │ │         sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
+   │ └──────────────────────────────────────────────────────────────────────────────────^ TypeScript only syntax
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
    ┌─ jsdoc.js:14:6
@@ -118,11 +123,12 @@ error[SyntaxError]: expected an expression but instead found ')'
 15 │ );
    │ ^ Expected an expression here
 
-error[SyntaxError]: expected `')'` but instead found `span`
-   ┌─ jsdoc.js:23:13
-   │
-23 │            <span>Test</span>
-   │             ^^^^ unexpected
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ jsdoc.js:22:9
+   │  
+22 │ ┌         <div>
+23 │ │            <span>Test</span>
+   │ └─────────────────────^ TypeScript only syntax
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
    ┌─ jsdoc.js:23:23
