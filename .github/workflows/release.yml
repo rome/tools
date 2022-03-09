@@ -40,9 +40,12 @@ jobs:
       - name: Check prerelease status
         id: prerelease
         if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        working-directory: editors/vscode
         run: |
-          echo "prerelease=true" >> $GITHUB_ENV
-          echo "version=$(date +"pre-release-%F")" >> $GITHUB_ENV
+          CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
+          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")
+          cat package.json | sed "s/"${CURRENT_VERSION}"/"${NEW_VERSION}"/g" >  temp
+          mv temp package.json
 
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
