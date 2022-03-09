@@ -92,7 +92,8 @@ do {
 function foo() {
   return (
     <nav>
-      <Home />
+      <;
+  Home />
       {
         do {
           if (loggedIn) {
@@ -103,7 +104,7 @@ function foo() {
         }
       }
     </nav>
-  );
+  )
 }
 
 (
@@ -203,12 +204,11 @@ error[SyntaxError]: expected `while` but instead found `;`
 18 │ };
    │  ^ unexpected
 
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ do.js:22:5
-   │  
-22 │ ┌     <nav>
-23 │ │       <Home />
-   │ └───────────^ TypeScript only syntax
+error[SyntaxError]: expected `')'` but instead found `Home`
+   ┌─ do.js:23:8
+   │
+23 │       <Home />
+   │        ^^^^ unexpected
 
 error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
    ┌─ do.js:23:14
@@ -223,26 +223,6 @@ error[SyntaxError]: expected `:` but instead found `{`
    │
 25 │         do {
    │            ^ unexpected
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ do.js:27:13
-   │
-27 │             <LogoutButton />
-   │             ^^^^^^^^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ do.js:27:28
-   │
-27 │             <LogoutButton />
-   │                           -^ But this operator was encountered instead
-   │                           │ 
-   │                           This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ do.js:28:11
-   │
-28 │           } else {
-   │           ^ Expected an expression here
 
 error[SyntaxError]: expected `,` but instead found `else`
    ┌─ do.js:28:13

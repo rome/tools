@@ -127,8 +127,10 @@ Observable
   .takeUntil(exit);
 
 // Comments disappear inside of JSX
-<div>
-  {/* Some comment */}
+<div>;
+{
+  /* Some comment */
+}
 </div>;
 
 // Comments in JSX tag are placed in a non optimal way
@@ -162,45 +164,16 @@ foo(
 # Errors
 ```
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ issues.js:43:1
-   │  
-43 │ ┌ <div>
-44 │ │   {/* Some comment */}
-   │ └──────────────────────^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ issues.js:45:2
+   ┌─ issues.js:45:1
    │
 45 │ </div>;
-   │ -^ But this operator was encountered instead
-   │ │ 
-   │ This operator requires a right hand side value
+   │ ^ TypeScript only syntax
 
 error[SyntaxError]: expected an expression but instead found ';'
    ┌─ issues.js:45:7
    │
 45 │ </div>;
    │       ^ Expected an expression here
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ issues.js:48:1
-   │
-48 │ <div
-   │ ^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ issues.js:50:2
-   │
-50 │ />;
-   │ -^ But this operator was encountered instead
-   │ │ 
-   │ This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found ';'
-   ┌─ issues.js:50:3
-   │
-50 │ />;
-   │   ^ Expected an expression here
 
 
 ```

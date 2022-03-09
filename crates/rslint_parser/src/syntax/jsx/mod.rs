@@ -48,6 +48,10 @@ pub(super) fn try_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test jsx jsx_element_on_arrow_function
 // const f = () => <div></div>;
+// const f = () => (<div></div>);
+
+// test jsx jsx_element_as_statements
+// <div />
 fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
     let m = p.parser.start();
 

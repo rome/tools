@@ -81,7 +81,7 @@ function StatelessFunctionalComponent(
     items,
   },
 ) {
-  return <div />
+  return <div />;
 }
 
 function StatelessFunctionalComponent2(
@@ -96,7 +96,7 @@ function StatelessFunctionalComponent2(
     items = [],
   } = {},
 ) {
-  return <div />
+  return <div />;
 }
 
 function StatelessFunctionalComponent3(
@@ -111,7 +111,7 @@ function StatelessFunctionalComponent3(
     items = [],
   } = { isActive: true },
 ) {
-  return <div />
+  return <div />;
 }
 
 class C {
@@ -127,94 +127,9 @@ class C {
       items,
     },
   ) {
-    return <div />
+    return <div />;
   }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ object.js:11:10
-   │
-11 │   return <div />
-   │          ^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ object.js:11:16
-   │
-11 │   return <div />
-   │               -^ But this operator was encountered instead
-   │               │ 
-   │               This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ object.js:12:1
-   │
-12 │ }
-   │ ^ Expected an expression here
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ object.js:24:10
-   │
-24 │   return <div />
-   │          ^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ object.js:24:16
-   │
-24 │   return <div />
-   │               -^ But this operator was encountered instead
-   │               │ 
-   │               This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ object.js:25:1
-   │
-25 │ }
-   │ ^ Expected an expression here
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ object.js:41:10
-   │
-41 │   return <div />
-   │          ^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ object.js:41:16
-   │
-41 │   return <div />
-   │               -^ But this operator was encountered instead
-   │               │ 
-   │               This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ object.js:42:1
-   │
-42 │ }
-   │ ^ Expected an expression here
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ object.js:56:12
-   │
-56 │     return <div />
-   │            ^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ object.js:56:18
-   │
-56 │     return <div />
-   │                 -^ But this operator was encountered instead
-   │                 │ 
-   │                 This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ object.js:57:3
-   │
-57 │   }
-   │   ^ Expected an expression here
-
 
 ```
 

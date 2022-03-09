@@ -114,7 +114,7 @@ x;
 x;
 ({ a: 1 }).entries();
 x;
-<Hello />
+<Hello />;
 x;
 `string`;
 x;
@@ -187,25 +187,6 @@ while (false) (function () {}());
 aReallyLongLine012345678901234567890123456789012345678901234567890123456789 * (
   b + c
 );
-
-```
-
-# Errors
-```
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ no-semi.js:14:4
-   │
-14 │ x; <Hello />
-   │    ^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ no-semi.js:14:12
-   │
-14 │ x; <Hello />
-   │           -^ But this operator was encountered instead
-   │           │ 
-   │           This operator requires a right hand side value
-
 
 ```
 
