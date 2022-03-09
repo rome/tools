@@ -10,9 +10,7 @@ repository = "https://github.com/rslint/rslint"
 [dependencies]
 rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
 rome_js_syntax = { path = "../rome_js_syntax", version = "0.1" }
-rslint_lexer = { path = "../rslint_lexer", version = "0.2", features = [
-    "highlight",
-] }
+rslint_lexer = { path = "../rslint_lexer", version = "0.2" }
 rome_rowan = { path = "../rome_rowan", version = "0.0.0" }
 drop_bomb = "0.1.5"
 bitflags = "1.3.2"
