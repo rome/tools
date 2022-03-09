@@ -59,9 +59,8 @@ ${
 }
 `;
 
-<div>;
-{
-  ExampleStory.getFragment("story"); // $FlowFixMe found when converting React.createClass to ES6
+<div>
+{ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
 }
 </div>;
 
@@ -70,10 +69,20 @@ ${
 # Errors
 ```
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ boundary.js:24:1
+   ┌─ boundary.js:21:1
+   │  
+21 │ ┌ <div>
+22 │ │ {ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
+23 │ │ }
+   │ └─^ TypeScript only syntax
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+   ┌─ boundary.js:24:2
    │
 24 │ </div>;
-   │ ^ TypeScript only syntax
+   │ -^ But this operator was encountered instead
+   │ │ 
+   │ This operator requires a right hand side value
 
 error[SyntaxError]: expected an expression but instead found ';'
    ┌─ boundary.js:24:7

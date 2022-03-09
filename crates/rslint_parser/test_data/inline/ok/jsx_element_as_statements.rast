@@ -10,6 +10,7 @@ JsModule {
                         value_token: JSX_IDENT@1..5 "div" [] [Whitespace(" ")],
                     },
 <<<<<<< HEAD
+<<<<<<< HEAD
                     attributes: JsxAttributeList [],
                     slash_token: SLASH@5..6 "/" [] [],
                     r_angle_token: R_ANGLE@6..7 ">" [] [],
@@ -21,6 +22,10 @@ JsModule {
                     r_angle_token: R_ANGLE@6..7 ">" [] [],
 >>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+                    divide_token: SLASH@5..6 "/" [] [],
+                    r_angle_token: R_ANGLE@6..7 ">" [] [],
+>>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
                 },
             },
             semicolon_token: missing (optional),
@@ -46,12 +51,12 @@ JsModule {
 =======
           1: JSX_REFERENCE_IDENTIFIER@1..5
             0: IDENT@1..5 "div" [] [Whitespace(" ")]
-<<<<<<< HEAD
-          2: SLASH_R_ANGLE@5..7 "/>" [] []
-=======
           2: SLASH@5..6 "/" [] []
           3: R_ANGLE@6..7 ">" [] []
+<<<<<<< HEAD
 >>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+>>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
       1: (empty)
   3: EOF@7..8 "" [Newline("\n")] []
