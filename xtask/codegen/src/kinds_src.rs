@@ -77,6 +77,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         ("??=", "QUESTION2EQ"),
         ("@", "AT"),
         ("`", "BACKTICK"),
+        ("</", "L_ANGLE_SLASH"),
+        ("/>", "SLASH_R_ANGLE"),
     ],
     keywords: &[
         "break",
@@ -643,6 +645,8 @@ impl Field {
                     "??" => "nullish_coalescing",
                     "||" => "logical_or",
                     "&&" => "logical_and",
+                    "</" => "l_angle_slash",
+                    "/>" => "slash_r_angle",
                     _ => name,
                 };
                 format_ident!("{}_token", name)

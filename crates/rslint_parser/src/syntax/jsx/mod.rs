@@ -102,20 +102,14 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
 
     parse_jsx_any_element_name(p);
 
-    let kind = if p.parser.eat(T![/]) {
-        if !p.parser.eat(T![>]) {
-            m.abandon(p.parser);
-            return ParsedSyntax::Absent;
-        }
-
+    let kind = if p.parser.at(T![/]) && p.parser.nth_at(1, T![>]) {
+        p.parser.bump_multiple(2, JsSyntaxKind::SLASH_R_ANGLE);
         JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT
-    } else {
-        if !p.parser.eat(T![>]) {
-            m.abandon(p.parser);
-            return ParsedSyntax::Absent;
-        }
-
+    } else if p.parser.eat(T![>]) {
         JsSyntaxKind::JSX_OPENING_ELEMENT
+    } else {
+        m.abandon(p.parser);
+        return ParsedSyntax::Absent;
     };
 
     ParsedSyntax::Present(m.complete(p.parser, kind))
@@ -130,8 +124,9 @@ fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax
 
     let m = p.parser.start();
 
-    p.parser.bump(T![<]);
-    if !p.parser.eat(T![/]) {
+    if p.parser.at(T![<]) && p.parser.nth_at(1, T![/]) {
+        p.parser.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
+    } else {
         m.abandon(p.parser);
         return ParsedSyntax::Absent;
     }

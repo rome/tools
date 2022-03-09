@@ -2158,8 +2158,7 @@ JsxAnyElement =
 JsxSelfClosingElement = 
 	'<'
 	name: JsxAnyElementName
-	'/'
-	'>'
+	'/>'
 
 // <a>...</a>
 JsxElement = 
@@ -2172,8 +2171,7 @@ JsxOpeningElement =
 	'>'
 	
 JsxClosingElement = 
-	'<'
-	'/'
+	'</'
 	name: JsxAnyElementName
 	'>'
 
