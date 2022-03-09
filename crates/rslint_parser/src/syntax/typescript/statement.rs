@@ -154,11 +154,11 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: TextRange) {
     }
 }
 
-pub(crate) fn is_at_ts_enum_declaration(p: &Parser) -> bool {
+pub(crate) fn is_at_ts_enum_declaration(p: &mut Parser) -> bool {
     is_nth_at_ts_enum_declaration(p, 0)
 }
 
-pub(crate) fn is_nth_at_ts_enum_declaration(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_ts_enum_declaration(p: &mut Parser, n: usize) -> bool {
     match p.nth(n) {
         T![enum] => true,
         T![const] => p.nth_at(n + 1, T![enum]),
@@ -234,8 +234,8 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 #[inline]
-pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
-    if !p.at(T![declare]) || p.has_linebreak_before_n(1) {
+pub(crate) fn is_at_ts_declare_statement(p: &mut Parser) -> bool {
+    if !p.at(T![declare]) || p.has_nth_preceding_line_break(1) {
         return false;
     }
 
@@ -243,8 +243,8 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
 }
 
 #[inline]
-pub(crate) fn is_at_ts_interface_declaration(p: &Parser) -> bool {
-    if !p.at(T![interface]) || p.has_linebreak_before_n(1) {
+pub(crate) fn is_at_ts_interface_declaration(p: &mut Parser) -> bool {
+    if !p.at(T![interface]) || p.has_nth_preceding_line_break(1) {
         return false;
     }
 
@@ -358,8 +358,8 @@ fn parse_ts_extends_clause(p: &mut Parser) -> ParsedSyntax {
 }
 
 #[inline]
-pub(crate) fn is_at_any_ts_namespace_declaration(p: &Parser) -> bool {
-    if p.has_linebreak_before_n(1) {
+pub(crate) fn is_at_any_ts_namespace_declaration(p: &mut Parser) -> bool {
+    if p.has_nth_preceding_line_break(1) {
         return false;
     }
 
@@ -375,8 +375,8 @@ pub(crate) fn is_at_any_ts_namespace_declaration(p: &Parser) -> bool {
 }
 
 #[inline]
-pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &Parser, n: usize) -> bool {
-    if p.has_linebreak_before_n(n + 1) {
+pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &mut Parser, n: usize) -> bool {
+    if p.has_nth_preceding_line_break(n + 1) {
         return false;
     }
 

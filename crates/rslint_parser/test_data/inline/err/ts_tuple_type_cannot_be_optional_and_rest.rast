@@ -16,7 +16,7 @@ JsModule {
                             items: [
                                 JsUnknown {
                                     items: [
-                                        DOT2@11..14 "..." [] [],
+                                        DOT3@11..14 "..." [] [],
                                         JsName {
                                             value_token: IDENT@14..18 "name" [] [],
                                         },
@@ -55,7 +55,7 @@ JsModule {
         0: L_BRACK@9..11 "[" [] [Whitespace(" ")]
         1: JS_UNKNOWN@11..30
           0: JS_UNKNOWN@11..30
-            0: DOT2@11..14 "..." [] []
+            0: DOT3@11..14 "..." [] []
             1: JS_NAME@14..18
               0: IDENT@14..18 "name" [] []
             2: QUESTION@18..19 "?" [] []

@@ -98,7 +98,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         //    return "This is a method and not a getter";
         //   }
         // }
-        T![get] if !p.has_linebreak_before_n(1) && is_nth_at_type_member_name(p, 1) => {
+        T![get] if !p.has_nth_preceding_line_break(1) && is_nth_at_type_member_name(p, 1) => {
             parse_getter_object_member(p)
         }
 
@@ -123,7 +123,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         //     return 5;
         //  }
         // }
-        T![set] if !p.has_linebreak_before_n(1) && is_nth_at_type_member_name(p, 1) => {
+        T![set] if !p.has_nth_preceding_line_break(1) && is_nth_at_type_member_name(p, 1) => {
             parse_setter_object_member(p)
         }
 
@@ -327,7 +327,7 @@ pub(crate) fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-pub(crate) fn is_nth_at_type_member_name(p: &Parser, offset: usize) -> bool {
+pub(crate) fn is_nth_at_type_member_name(p: &mut Parser, offset: usize) -> bool {
     let nth = p.nth(offset);
 
     let start_names = token_set![
@@ -342,7 +342,7 @@ pub(crate) fn is_nth_at_type_member_name(p: &Parser, offset: usize) -> bool {
     nth.is_keyword() || start_names.contains(nth)
 }
 
-pub(crate) fn is_at_object_member_name(p: &Parser) -> bool {
+pub(crate) fn is_at_object_member_name(p: &mut Parser) -> bool {
     is_nth_at_type_member_name(p, 0)
 }
 
@@ -363,7 +363,7 @@ pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }
 
-pub(super) fn is_at_literal_member_name(p: &Parser, offset: usize) -> bool {
+pub(super) fn is_at_literal_member_name(p: &mut Parser, offset: usize) -> bool {
     matches!(
         p.nth(offset),
         JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident]
@@ -445,8 +445,8 @@ fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
     parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_function_body);
 }
 
-fn is_parser_at_async_method_member(p: &Parser) -> bool {
+fn is_parser_at_async_method_member(p: &mut Parser) -> bool {
     p.at(T![async])
-        && !p.has_linebreak_before_n(1)
+        && !p.has_nth_preceding_line_break(1)
         && (is_nth_at_type_member_name(p, 1) || p.nth_at(1, T![*]))
 }

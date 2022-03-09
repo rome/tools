@@ -118,15 +118,6 @@ JsModule {
       1: (empty)
   3: EOF@36..37 "" [Newline("\n")] []
 --
-error[SyntaxError]: Expected an expression for the right hand side of a `??`, but found an operator instead
-  ┌─ logical_expressions_err.js:1:8
-  │
-1 │ foo ?? * 2;
-  │     -- ^ But this operator was encountered instead
-  │     │   
-  │     This operator requires a right hand side value
-
---
 error[SyntaxError]: expected an expression but instead found ')'
   ┌─ logical_expressions_err.js:3:11
   │

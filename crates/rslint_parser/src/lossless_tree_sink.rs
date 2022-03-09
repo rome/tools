@@ -1,10 +1,10 @@
+use crate::token_source::Token;
 use crate::{ParserError, TreeSink};
 use rome_js_syntax::{
     JsSyntaxKind::{self, *},
     SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize,
 };
 use rome_rowan::TriviaPiece;
-use rslint_lexer::Token;
 
 /// Structure for converting events to a syntax tree representation, while preserving whitespace.
 ///
@@ -90,11 +90,11 @@ impl<'a> LosslessTreeSink<'a> {
         let (leading_range, leading_end) = self.get_trivia(false);
 
         let len = if token_count == 1 {
-            self.tokens[self.token_pos].len
+            self.tokens[self.token_pos].len()
         } else {
             self.tokens[self.token_pos..self.token_pos + token_count as usize]
                 .iter()
-                .map(|x| x.len)
+                .map(|x| x.len())
                 .sum()
         };
 
@@ -123,23 +123,23 @@ impl<'a> LosslessTreeSink<'a> {
 
         let mut count = 0;
         for token in &self.tokens[self.token_pos..] {
-            if !token.kind.is_trivia() {
+            if !token.kind().is_trivia() {
                 break;
             }
 
-            if break_on_newline && token.kind == JsSyntaxKind::NEWLINE {
+            if break_on_newline && token.kind() == JsSyntaxKind::NEWLINE {
                 break;
             }
 
             self.token_pos += 1;
-            self.text_pos += token.len;
-            length += token.len;
+            self.text_pos += token.len();
+            length += token.len();
 
-            let current_trivia = match token.kind {
-                NEWLINE => TriviaPiece::Newline(token.len),
-                WHITESPACE => TriviaPiece::Whitespace(token.len),
-                COMMENT => TriviaPiece::Comments(token.len, false),
-                MULTILINE_COMMENT => TriviaPiece::Comments(token.len, true),
+            let current_trivia = match token.kind() {
+                NEWLINE => TriviaPiece::Newline(token.len()),
+                WHITESPACE => TriviaPiece::Whitespace(token.len()),
+                COMMENT => TriviaPiece::Comments(token.len(), false),
+                MULTILINE_COMMENT => TriviaPiece::Comments(token.len(), true),
                 _ => unreachable!("Not Trivia"),
             };
 

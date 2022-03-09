@@ -42,7 +42,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         ("^", "CARET"),
         ("%", "PERCENT"),
         (".", "DOT"),
-        ("...", "DOT2"),
+        ("...", "DOT3"),
         (":", "COLON"),
         ("=", "EQ"),
         ("==", "EQ2"),

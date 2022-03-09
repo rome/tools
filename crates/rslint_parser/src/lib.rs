@@ -66,12 +66,12 @@ mod lossless_tree_sink;
 mod lossy_tree_sink;
 mod parse;
 mod state;
-mod token_source;
 
 #[cfg(test)]
 mod tests;
 
 pub mod syntax;
+mod token_source;
 
 pub use crate::{
     event::{process, Event},
@@ -80,7 +80,6 @@ pub use crate::{
     parse::*,
     parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
     token_set::TokenSet,
-    token_source::TokenSource,
 };
 pub(crate) use state::{ParserState, StrictMode};
 use std::fmt::{Debug, Display};
@@ -94,6 +93,7 @@ pub use crate::ParsedSyntax::{Absent, Present};
 pub use rome_js_syntax::numbers::BigInt;
 use rome_js_syntax::JsSyntaxKind;
 use rslint_errors::Diagnostic;
+pub use rslint_lexer::buffered_lexer::BufferedLexer;
 use std::path::Path;
 
 /// An abstraction for syntax tree implementations

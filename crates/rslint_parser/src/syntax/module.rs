@@ -172,7 +172,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
         return parse_import_bare_clause(p);
     }
 
-    let pos = p.token_pos();
+    let pos = p.cur_token_index();
     let m = p.start();
 
     // test ts ts_import_clause_types
@@ -198,7 +198,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
         _ => {
             // SAFETY: Safe because the parser only eats the "type" keyword if it's followed by
             // either a *, {, or binding
-            debug_assert_eq!(pos, p.token_pos());
+            debug_assert_eq!(pos, p.cur_token_index());
             m.abandon(p);
             return Absent;
         }
@@ -233,9 +233,8 @@ fn parse_import_default_or_named_clause_rest(
 
             if is_typed {
                 let end = p
-                    .tokens
-                    .last_tok()
-                    .map(|t| t.end())
+                    .last_range()
+                    .map(|r| r.end())
                     .unwrap_or_else(|| p.cur_range().start());
 
                 // test_err ts ts_typed_default_import_with_named
@@ -462,7 +461,7 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 // import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
 // import { a } from "a.json" assert
 fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![assert]) || p.has_linebreak_before_n(0) {
+    if !p.at(T![assert]) || p.has_preceding_line_break() {
         return Absent;
     }
 
@@ -637,7 +636,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
                 parse_ts_export_namespace_clause,
                 |p, clause| ts_only_syntax_error(p, "'export as namespace'", clause.range(p)),
             ),
-            T![declare] if !p.has_linebreak_before_n(1) => TypeScript.parse_exclusive_syntax(
+            T![declare] if !p.has_nth_preceding_line_break(1) => TypeScript.parse_exclusive_syntax(
                 p,
                 |p| parse_ts_export_declare_clause(p, stmt_start),
                 |p, clause| ts_only_syntax_error(p, "'export declare'", clause.range(p)),
@@ -820,13 +819,13 @@ struct SpecifierMetadata {
 // export { type as };
 // export { type a as aa };
 fn specifier_metadata<LocalNamePred, AliasPred>(
-    p: &Parser,
+    p: &mut Parser,
     is_nth_name: LocalNamePred,
     is_nth_alias: AliasPred,
 ) -> SpecifierMetadata
 where
-    LocalNamePred: Fn(&Parser, usize) -> bool,
-    AliasPred: Fn(&Parser, usize) -> bool,
+    LocalNamePred: Fn(&mut Parser, usize) -> bool,
+    AliasPred: Fn(&mut Parser, usize) -> bool,
 {
     let mut metadata = SpecifierMetadata::default();
 
@@ -1056,7 +1055,7 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
         T![async] if p.nth_at(2, T![function]) => {
             parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Function)
         }
-        T![interface] if !p.has_linebreak_before_n(2) => {
+        T![interface] if !p.has_nth_preceding_line_break(2) => {
             parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Interface)
         }
         T![enum] => parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Enum),
@@ -1280,7 +1279,7 @@ fn parse_ts_export_declare_clause(p: &mut Parser, stmt_start: TextSize) -> Parse
     Present(m.complete(p, TS_EXPORT_DECLARE_CLAUSE))
 }
 
-fn is_nth_at_literal_export_name(p: &Parser, n: usize) -> bool {
+fn is_nth_at_literal_export_name(p: &mut Parser, n: usize) -> bool {
     match p.nth(n) {
         JS_STRING_LITERAL | T![ident] => true,
         t if t.is_keyword() => true,

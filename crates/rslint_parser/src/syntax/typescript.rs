@@ -110,7 +110,7 @@ fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 
-        if !p.has_linebreak_before_n(0) {
+        if !p.has_preceding_line_break() {
             parse_ts_type_arguments(p).ok();
         }
 
@@ -136,7 +136,7 @@ pub(crate) fn try_parse<T, E>(
 }
 
 /// Must be at `[ident:` or `<modifiers> [ident:`
-pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
+pub(crate) fn is_at_ts_index_signature_member(p: &mut Parser) -> bool {
     let mut offset = 0;
     while is_nth_at_modifier(p, offset, false) {
         offset += 1;

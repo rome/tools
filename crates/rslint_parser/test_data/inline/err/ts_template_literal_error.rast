@@ -172,13 +172,6 @@ JsModule {
       0: ERROR_TOKEN@64..65 "\n" [] []
   3: EOF@65..65 "" [] []
 --
-error: unterminated template literal
-  ┌─ ts_template_literal_error.ts:5:1
-  │
-5 │ 
-  │ ^
-
---
 error[SyntaxError]: expected `'}'` but instead found `B`
   ┌─ ts_template_literal_error.ts:3:15
   │
@@ -191,6 +184,13 @@ error[SyntaxError]: expected `'}'` but instead found `B`
   │
 4 │ type D = `${A B`
   │               ^ unexpected
+
+--
+error: unterminated template literal
+  ┌─ ts_template_literal_error.ts:5:1
+  │
+5 │ 
+  │ ^
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none

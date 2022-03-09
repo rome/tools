@@ -20,7 +20,21 @@ JsModule {
                                         items: [
                                             JsUnknown {
                                                 items: [
-                                                    JS_REGEX_LITERAL@10..17 "/: 6, /" [] [],
+                                                    SLASH@10..11 "/" [] [],
+                                                ],
+                                            },
+                                            COLON@11..13 ":" [] [Whitespace(" ")],
+                                            JsNumberLiteralExpression {
+                                                value_token: JS_NUMBER_LITERAL@13..14 "6" [] [],
+                                            },
+                                        ],
+                                    },
+                                    COMMA@14..16 "," [] [Whitespace(" ")],
+                                    JsUnknownMember {
+                                        items: [
+                                            JsUnknown {
+                                                items: [
+                                                    SLASH@16..17 "/" [] [],
                                                 ],
                                             },
                                             COLON@17..19 ":" [] [Whitespace(" ")],
@@ -92,9 +106,16 @@ JsModule {
               1: JS_OBJECT_EXPRESSION@8..26
                 0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
                 1: JS_OBJECT_MEMBER_LIST@10..25
-                  0: JS_UNKNOWN_MEMBER@10..25
-                    0: JS_UNKNOWN@10..17
-                      0: JS_REGEX_LITERAL@10..17 "/: 6, /" [] []
+                  0: JS_UNKNOWN_MEMBER@10..14
+                    0: JS_UNKNOWN@10..11
+                      0: SLASH@10..11 "/" [] []
+                    1: COLON@11..13 ":" [] [Whitespace(" ")]
+                    2: JS_NUMBER_LITERAL_EXPRESSION@13..14
+                      0: JS_NUMBER_LITERAL@13..14 "6" [] []
+                  1: COMMA@14..16 "," [] [Whitespace(" ")]
+                  2: JS_UNKNOWN_MEMBER@16..25
+                    0: JS_UNKNOWN@16..17
+                      0: SLASH@16..17 "/" [] []
                     1: COLON@17..19 ":" [] [Whitespace(" ")]
                     2: JS_REGEX_LITERAL_EXPRESSION@19..25
                       0: JS_REGEX_LITERAL@19..25 "/foo/" [] [Whitespace(" ")]
@@ -121,11 +142,18 @@ JsModule {
       0: R_CURLY@38..39 "}" [] []
   3: EOF@39..40 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '/: 6, /'
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '/'
   ┌─ object_expr_error_prop_name.js:1:11
   │
 1 │ let a = { /: 6, /: /foo/ }
-  │           ^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
+  │           ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+
+--
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '/'
+  ┌─ object_expr_error_prop_name.js:1:17
+  │
+1 │ let a = { /: 6, /: /foo/ }
+  │                 ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
 --
 error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '{'

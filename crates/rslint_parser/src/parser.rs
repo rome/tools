@@ -25,7 +25,9 @@ pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::state::ParserStateCheckpoint;
+use crate::token_source::{Token, TokenSource, TokenSourceCheckpoint};
 use crate::*;
+use rslint_lexer::LexMode;
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
@@ -37,7 +39,7 @@ impl ParserProgress {
     pub fn has_progressed(&self, p: &Parser) -> bool {
         match self.0 {
             None => true,
-            Some(pos) => pos < p.token_pos(),
+            Some(pos) => pos < p.cur_token_index(),
         }
     }
 
@@ -56,7 +58,7 @@ impl ParserProgress {
             p.cur_range(),
         );
 
-        self.0 = Some(p.token_pos());
+        self.0 = Some(p.cur_token_index());
     }
 }
 
@@ -68,11 +70,10 @@ impl ParserProgress {
 /// ```
 /// use rslint_parser::{
 ///     Parser,
-///     TokenSource,
+///     BufferedLexer,
 ///     LosslessTreeSink,
 ///     process,
 ///     SourceType,
-///     tokenize,
 /// };
 /// use rslint_parser::syntax::expr::parse_expression_snipped;
 /// use rome_js_syntax::{JsExpressionSnipped, AstNode, SyntaxNode, JsParenthesizedExpression, JsAnyExpression};
@@ -81,15 +82,7 @@ impl ParserProgress {
 ///
 /// // File id is used for the labels inside parser errors to report them, the file id
 /// // is used to look up a file's source code and path inside of a codespan `Files` implementation.
-/// let (tokens, lexer_errors) = tokenize(source, 0);
-///
-/// assert!(lexer_errors.is_empty());
-///
-/// // The parser uses a token source which manages yielding non-whitespace tokens,
-/// // and giving raw tokens to allow the parser to turn completed markers into syntax nodes
-/// let token_source = TokenSource::new(source, &tokens);
-///
-/// let mut parser = Parser::new(token_source, 0, SourceType::default());
+/// let mut parser = Parser::new(source, 0, SourceType::default());
 ///
 /// // Use one of the syntax parsing functions to parse an expression.
 /// // This adds node and token events to the parser which are then used to make a node.
@@ -98,14 +91,15 @@ impl ParserProgress {
 /// // Completed markers can be turned into an ast node with parse_marker on the parser
 /// let completed_marker = parse_expression_snipped(&mut parser).unwrap();
 ///
+/// // Consume the parser and get its events, then apply them to a tree sink with `process`.
+/// let (events, tokens, errors) = parser.finish();
+///
 /// // Make a new text tree sink, its job is assembling events into a rowan GreenNode.
 /// // At each point (Start, Token, Finish, Error) it also consumes whitespace.
 /// // Other abstractions can also yield lossy syntax nodes if whitespace is not wanted.
 /// // Swap this for a LossyTreeSink for a lossy AST result.
 /// let mut sink = LosslessTreeSink::new(source, &tokens);
 ///
-/// // Consume the parser and get its events, then apply them to a tree sink with `process`.
-/// let (events, errors) = parser.finish();
 /// process(&mut sink, events, errors);
 ///
 /// let (untyped_node, errors) = sink.finish();
@@ -126,45 +120,48 @@ impl ParserProgress {
 ///
 ///
 /// ```
-pub struct Parser<'t> {
+pub struct Parser<'s> {
     pub file_id: usize,
-    pub(super) tokens: TokenSource<'t>,
+    pub(super) tokens: TokenSource<'s>,
     pub(super) events: Vec<Event>,
     pub(super) state: ParserState,
     pub source_type: SourceType,
     pub errors: Vec<ParserError>,
 }
 
-impl<'t> Parser<'t> {
+impl<'s> Parser<'s> {
     /// Make a new parser
-    pub fn new(tokens: TokenSource<'t>, file_id: usize, source_type: SourceType) -> Parser<'t> {
+    pub fn new(source: &'s str, file_id: usize, source_type: SourceType) -> Parser<'s> {
+        let mut token_source = TokenSource::from_str(source, file_id);
+        let errors = token_source.initialize();
+
         Parser {
             file_id,
-            tokens,
             events: vec![],
             state: ParserState::new(&source_type),
+            tokens: token_source,
             source_type,
-            errors: vec![],
+            errors,
         }
     }
 
     /// Consume the parser and return the list of events it produced
-    pub fn finish(self) -> (Vec<Event>, Vec<ParserError>) {
-        (self.events, self.errors)
+    pub fn finish(self) -> (Vec<Event>, Vec<Token>, Vec<ParserError>) {
+        (self.events, self.tokens.finish(), self.errors)
     }
 
     /// Get the current token kind of the parser
     pub fn cur(&self) -> JsSyntaxKind {
-        self.tokens.current().kind
+        self.tokens.current()
     }
 
     pub fn cur_range(&self) -> TextRange {
-        self.tokens.current().range()
+        self.tokens.current_range()
     }
 
     /// Look ahead at a token and get its kind, **The max lookahead is 4**.
-    pub fn nth(&self, n: usize) -> JsSyntaxKind {
-        self.tokens.lookahead_nth(n).kind
+    pub fn nth(&mut self, n: usize) -> JsSyntaxKind {
+        self.tokens.nth(n)
     }
 
     /// Check if the parser is currently at a specific token
@@ -173,8 +170,16 @@ impl<'t> Parser<'t> {
     }
 
     /// Check if a token lookahead is something, `n` must be smaller or equal to `4`
-    pub fn nth_at(&self, n: usize, kind: JsSyntaxKind) -> bool {
+    pub fn nth_at(&mut self, n: usize, kind: JsSyntaxKind) -> bool {
         self.nth(n) == kind
+    }
+
+    pub fn last(&self) -> Option<JsSyntaxKind> {
+        self.tokens.last_token().map(|t| t.kind())
+    }
+
+    pub fn last_range(&self) -> Option<TextRange> {
+        self.tokens.last_token().map(|t| t.range())
     }
 
     /// Consume the next token if `kind` matches.
@@ -207,13 +212,18 @@ impl<'t> Parser<'t> {
     /// belong to the same node.
     pub fn start(&mut self) -> Marker {
         let pos = self.events.len() as u32;
-        self.push_event(Event::tombstone(self.tokens.cur_pos()));
-        Marker::new(pos, self.tokens.cur_pos())
+        self.push_event(Event::tombstone(self.tokens.position()));
+        Marker::new(pos, self.tokens.position())
     }
 
-    /// Check if there was a linebreak before a lookahead
-    pub fn has_linebreak_before_n(&self, n: usize) -> bool {
-        self.tokens.had_linebreak_before_nth(n)
+    /// Tests if there's a line break before the nth token.
+    pub fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
+        self.tokens.has_nth_preceding_line_break(n)
+    }
+
+    /// Tests if there's a line break before the current token (between the last and current)
+    pub fn has_preceding_line_break(&self) -> bool {
+        self.tokens.has_preceding_line_break()
     }
 
     /// Consume the next token if `kind` matches.
@@ -273,7 +283,8 @@ impl<'t> Parser<'t> {
     }
 
     fn do_bump(&mut self, kind: JsSyntaxKind) {
-        self.tokens.bump();
+        let diagnostics = self.tokens.bump();
+        self.errors.extend(diagnostics);
 
         self.push_event(Event::Token { kind });
     }
@@ -310,15 +321,25 @@ impl<'t> Parser<'t> {
         }
     }
 
+    pub fn re_lex(&mut self, mode: LexMode) -> JsSyntaxKind {
+        let mut lex_return = self.tokens.re_lex(mode);
+
+        if let Some(diagnostic) = lex_return.take_diagnostic() {
+            self.errors.push(*diagnostic);
+        }
+
+        lex_return.kind()
+    }
+
     /// Rewind the parser back to a previous position in time
     pub fn rewind(&mut self, checkpoint: Checkpoint) {
         let Checkpoint {
-            token_pos,
+            token_source,
             event_pos,
             errors_pos,
             state,
         } = checkpoint;
-        self.tokens.rewind(token_pos);
+        self.tokens.rewind(token_source);
         self.drain_events(self.cur_event_pos() - event_pos);
         self.errors.truncate(errors_pos);
         self.state.restore(state)
@@ -328,7 +349,7 @@ impl<'t> Parser<'t> {
     #[must_use]
     pub fn checkpoint(&self) -> Checkpoint {
         Checkpoint {
-            token_pos: self.token_pos(),
+            token_source: self.tokens.checkpoint(),
             event_pos: self.cur_event_pos(),
             errors_pos: self.errors.len(),
             state: self.state.checkpoint(),
@@ -362,8 +383,8 @@ impl<'t> Parser<'t> {
         self.events.truncate(self.events.len() - amount);
     }
 
-    /// Get the current token position
-    pub fn token_pos(&self) -> usize {
+    /// Get the index of the current token (in the final list of tokens)
+    pub fn cur_token_index(&self) -> usize {
         self.tokens.cur_token_idx()
     }
 
@@ -381,15 +402,17 @@ impl<'t> Parser<'t> {
     }
 
     /// Gets the source of a range
-    pub fn source(&self, span: TextRange) -> &'t str {
+    pub fn source(&self, span: TextRange) -> &'s str {
         &self.tokens.source()[span]
     }
 
     pub(crate) fn bump_multiple(&mut self, amount: u8, kind: JsSyntaxKind) {
-        self.push_event(Event::MultipleTokens { amount, kind });
         for _ in 0..amount {
-            self.tokens.bump();
+            let diagnostics = self.tokens.bump();
+            self.errors.extend(diagnostics);
         }
+
+        self.push_event(Event::MultipleTokens { amount, kind });
     }
 
     /// Whether the code we are parsing is a module
@@ -445,7 +468,7 @@ impl Marker {
         }
         let finish_pos = p.events.len() as u32;
         p.push_event(Event::Finish {
-            end: p.tokens.last_tok().map(|t| t.end()).unwrap_or_default(),
+            end: p.last_range().map(|range| range.end()).unwrap_or_default(),
         });
         let new = CompletedMarker::new(self.pos, finish_pos, kind);
         new.old_start(self.old_start)
@@ -612,27 +635,23 @@ impl CompletedMarker {
 /// A structure signifying the Parser progress at one point in time
 #[derive(Debug)]
 pub struct Checkpoint {
-    pub(super) token_pos: usize,
     pub(super) event_pos: usize,
     errors_pos: usize,
     state: ParserStateCheckpoint,
+    pub(super) token_source: TokenSourceCheckpoint,
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::{Parser, SourceType, TokenSource};
+    use crate::{Parser, SourceType};
     use rome_js_syntax::JsSyntaxKind;
-    use rslint_lexer::Token;
 
     #[test]
     #[should_panic(
         expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."
     )]
     fn uncompleted_markers_panic() {
-        let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
-        let token_source = TokenSource::new("'use strict'", tokens.as_slice());
-
-        let mut parser = Parser::new(token_source, 0, SourceType::default());
+        let mut parser = Parser::new("'use strict'", 0, SourceType::default());
 
         let _ = parser.start();
         // drop the marker without calling complete or abandon
@@ -640,10 +659,7 @@ mod tests {
 
     #[test]
     fn completed_marker_doesnt_panic() {
-        let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
-        let token_source = TokenSource::new("'use strict'", tokens.as_slice());
-
-        let mut p = Parser::new(token_source, 0, SourceType::default());
+        let mut p = Parser::new("'use strict'", 0, SourceType::default());
 
         let m = p.start();
         p.expect(JsSyntaxKind::JS_STRING_LITERAL);
@@ -652,10 +668,7 @@ mod tests {
 
     #[test]
     fn abandoned_marker_doesnt_panic() {
-        let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
-        let token_source = TokenSource::new("'use strict'", tokens.as_slice());
-
-        let mut p = Parser::new(token_source, 0, SourceType::default());
+        let mut p = Parser::new("'use strict'", 0, SourceType::default());
 
         let m = p.start();
         m.abandon(&mut p);

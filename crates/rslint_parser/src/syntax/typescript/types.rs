@@ -180,7 +180,7 @@ fn parse_ts_default_type_clause(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_DEFAULT_TYPE_CLAUSE))
 }
 
-fn is_nth_at_ts_type_parameters(p: &Parser, n: usize) -> bool {
+fn is_nth_at_ts_type_parameters(p: &mut Parser, n: usize) -> bool {
     p.nth_at(n, T![<])
 }
 
@@ -219,7 +219,7 @@ fn parse_ts_type_impl(p: &mut Parser, conditional_type: ConditionalType) -> Pars
                 // type A = number;
                 // type B = string extends number ? string : number;
                 // type C = A extends (B extends A ? number : string) ? void : number;
-                if !p.has_linebreak_before_n(0) && p.at(T![extends]) {
+                if !p.has_preceding_line_break() && p.at(T![extends]) {
                     let m = left.precede(p);
                     p.expect_keyword(T![extends], "extends");
                     parse_ts_type_impl(p, ConditionalType::Disallowed)
@@ -373,7 +373,7 @@ fn parse_postfix_type_or_higher(p: &mut Parser) -> ParsedSyntax {
     parse_ts_non_array_type(p).map(|primary_type| {
         let mut left = primary_type;
 
-        while p.at(T!['[']) && !p.has_linebreak_before_n(0) {
+        while p.at(T!['[']) && !p.has_preceding_line_break() {
             let m = left.precede(p);
             p.bump(T!['[']);
 
@@ -476,7 +476,7 @@ fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 
-        if !p.has_linebreak_before_n(0) && p.at(T![<]) {
+        if !p.has_preceding_line_break() && p.at(T![<]) {
             parse_ts_type_arguments(p).ok();
         }
 
@@ -551,7 +551,7 @@ fn parse_ts_parenthesized_type(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_PARENTHESIZED_TYPE))
 }
 
-fn is_at_start_of_mapped_type(p: &Parser) -> bool {
+fn is_at_start_of_mapped_type(p: &mut Parser) -> bool {
     if !p.at(T!['{']) {
         return false;
     }
@@ -979,7 +979,7 @@ impl ParseSeparatedList for TsTupleTypeElementList {
     }
 }
 
-fn is_at_named_tuple_type_element(p: &Parser) -> bool {
+fn is_at_named_tuple_type_element(p: &mut Parser) -> bool {
     let offset = if p.at(T![...]) { 1 } else { 0 };
 
     // a:
@@ -1066,7 +1066,7 @@ fn parse_ts_template_literal_type(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_TEMPLATE_LITERAL_TYPE))
 }
 
-fn is_at_ts_construct_signature_type_member(p: &Parser) -> bool {
+fn is_at_ts_construct_signature_type_member(p: &mut Parser) -> bool {
     p.at(T![new]) && (p.nth_at(1, T!['(']) || is_nth_at_ts_type_parameters(p, 1))
 }
 
@@ -1168,7 +1168,7 @@ fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
         p.at(T![asserts]) && (is_nth_at_identifier(p, 1) || p.nth_at(1, T![this]));
     let is_is_predicate = (is_at_identifier(p) || p.at(T![this])) && p.nth_at(1, T![is]);
 
-    if !p.has_linebreak_before_n(1) && (is_asserts_predicate || is_is_predicate) {
+    if !p.has_nth_preceding_line_break(1) && (is_asserts_predicate || is_is_predicate) {
         parse_ts_type_predicate(p)
     } else {
         parse_ts_type(p)
@@ -1222,9 +1222,7 @@ pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     try_parse(p, |p| {
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.tokens.last_tok().map(|t| t.kind) == Some(T![>])
-            && matches!(p.cur(), T!['('] | BACKTICK)
-        {
+        if p.last() == Some(T![>]) && matches!(p.cur(), T!['('] | BACKTICK) {
             Ok(Present(arguments))
         } else {
             Err(())

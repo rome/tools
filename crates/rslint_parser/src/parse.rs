@@ -1,5 +1,6 @@
 //! Utilities for high level parsing of js code.
 
+use crate::token_source::Token;
 use crate::*;
 use rome_js_syntax::{AstNode, JsAnyRoot, JsExpressionSnipped, JsModule, JsScript, SyntaxNode};
 use rslint_errors::Severity;
@@ -101,34 +102,15 @@ impl<T: AstNode> Parse<T> {
     }
 }
 
-/// Run the rslint_lexer lexer to turn source code into tokens and errors produced by the lexer
-pub fn tokenize(text: &str, file_id: usize) -> (Vec<rslint_lexer::Token>, Vec<ParserError>) {
-    let mut tokens = Vec::new();
-    let mut errors = Vec::new();
-    for (tok, error) in rslint_lexer::Lexer::from_str(text, file_id) {
-        tokens.push(tok);
-        if let Some(err) = error {
-            // waiting for https://github.com/rust-lang/rust/issues/80437
-            errors.push(*err)
-        }
-    }
-    (tokens, errors)
-}
-
 fn parse_common(
     text: &str,
     file_id: usize,
     source_type: SourceType,
-) -> (Vec<Event>, Vec<ParserError>, Vec<rslint_lexer::Token>) {
-    let (tokens, mut errors) = tokenize(text, file_id);
-
-    let tok_source = TokenSource::new(text, &tokens);
-
-    let mut parser = crate::Parser::new(tok_source, file_id, source_type);
+) -> (Vec<Event>, Vec<ParserError>, Vec<Token>) {
+    let mut parser = crate::Parser::new(text, file_id, source_type);
     crate::syntax::program::parse(&mut parser);
 
-    let (events, p_errs) = parser.finish();
-    errors.extend(p_errs);
+    let (events, tokens, errors) = parser.finish();
 
     (events, errors, tokens)
 }
@@ -249,12 +231,10 @@ pub fn parse(text: &str, file_id: usize, source_type: SourceType) -> Parse<JsAny
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
 /// Or turned into a typed [`Expr`](Expr) with [`tree`](Parse::tree).
 pub fn parse_expression(text: &str, file_id: usize) -> Parse<JsExpressionSnipped> {
-    let (tokens, mut errors) = tokenize(text, file_id);
-    let tok_source = TokenSource::new(text, &tokens);
-    let mut parser = crate::Parser::new(tok_source, file_id, SourceType::js_module());
+    let mut parser = crate::Parser::new(text, file_id, SourceType::js_module());
     crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
-    let (events, p_diags) = parser.finish();
-    errors.extend(p_diags);
+    let (events, tokens, errors) = parser.finish();
+
     let mut tree_sink = LosslessTreeSink::new(text, &tokens);
     crate::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();

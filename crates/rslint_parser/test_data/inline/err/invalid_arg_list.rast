@@ -14,7 +14,7 @@ JsModule {
                 l_paren_token: L_PAREN@12..13 "(" [] [],
                 items: JsParameterList [
                     JsRestParameter {
-                        dotdotdot_token: DOT2@13..16 "..." [] [],
+                        dotdotdot_token: DOT3@13..16 "..." [] [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@16..20 "args" [] [],
                         },
@@ -173,7 +173,7 @@ JsModule {
                         },
                         COMMA@77..79 "," [] [Whitespace(" ")],
                         JsSpread {
-                            dotdotdot_token: DOT2@79..82 "..." [] [],
+                            dotdotdot_token: DOT3@79..82 "..." [] [],
                             argument: missing (required),
                         },
                     ],
@@ -201,7 +201,7 @@ JsModule {
         0: L_PAREN@12..13 "(" [] []
         1: JS_PARAMETER_LIST@13..20
           0: JS_REST_PARAMETER@13..20
-            0: DOT2@13..16 "..." [] []
+            0: DOT3@13..16 "..." [] []
             1: JS_IDENTIFIER_BINDING@16..20
               0: IDENT@16..20 "args" [] []
             2: (empty)
@@ -311,7 +311,7 @@ JsModule {
                 0: IDENT@76..77 "a" [] []
             1: COMMA@77..79 "," [] [Whitespace(" ")]
             2: JS_SPREAD@79..82
-              0: DOT2@79..82 "..." [] []
+              0: DOT3@79..82 "..." [] []
               1: (empty)
           2: R_PAREN@82..83 ")" [] []
       1: SEMICOLON@83..84 ";" [] []

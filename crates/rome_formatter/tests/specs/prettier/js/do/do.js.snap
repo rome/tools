@@ -208,15 +208,7 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
    │  
 22 │ ┌     <nav>
 23 │ │       <Home />
-   │ └───────────^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ do.js:23:14
-   │
-23 │       <Home />
-   │             -^ But this operator was encountered instead
-   │             │ 
-   │             This operator requires a right hand side value
+   │ └─────────────^ TypeScript only syntax
 
 error[SyntaxError]: expected `:` but instead found `{`
    ┌─ do.js:25:12
@@ -228,15 +220,7 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
    ┌─ do.js:27:13
    │
 27 │             <LogoutButton />
-   │             ^^^^^^^^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ do.js:27:28
-   │
-27 │             <LogoutButton />
-   │                           -^ But this operator was encountered instead
-   │                           │ 
-   │                           This operator requires a right hand side value
+   │             ^^^^^^^^^^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: expected an expression but instead found '}'
    ┌─ do.js:28:11
@@ -268,13 +252,13 @@ error[SyntaxError]: expected a parenthesis '(' but instead found '}'
 30 │           }
    │           ^ Expected a parenthesis '(' here
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ do.js:33:6
+error: unterminated regex literal
+   ┌─ do.js:33:11
    │
 33 │     </nav>
-   │     -^ But this operator was encountered instead
-   │     │ 
-   │     This operator requires a right hand side value
+   │      -    ^ ...but the line ends here
+   │      │    
+   │      a regex literal starts there...
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ do.js:34:3

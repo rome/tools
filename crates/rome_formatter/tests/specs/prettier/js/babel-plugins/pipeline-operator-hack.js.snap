@@ -30,13 +30,17 @@ return list
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
   ┌─ pipeline-operator-hack.js:5:3
   │
 5 │  |> take(prefix.length, %)
-  │  -^ But this operator was encountered instead
-  │  │ 
-  │  This operator requires a right hand side value
+  │   ^ This operator requires a left hand side value
+
+error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
+  ┌─ pipeline-operator-hack.js:5:25
+  │
+5 │  |> take(prefix.length, %)
+  │                         ^ This operator requires a left hand side value
 
 error[SyntaxError]: expected an expression but instead found ')'
   ┌─ pipeline-operator-hack.js:5:26
@@ -44,13 +48,17 @@ error[SyntaxError]: expected an expression but instead found ')'
 5 │  |> take(prefix.length, %)
   │                          ^ Expected an expression here
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
   ┌─ pipeline-operator-hack.js:6:3
   │
 6 │  |> equals(%, prefix);
-  │  -^ But this operator was encountered instead
-  │  │ 
-  │  This operator requires a right hand side value
+  │   ^ This operator requires a left hand side value
+
+error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
+  ┌─ pipeline-operator-hack.js:6:12
+  │
+6 │  |> equals(%, prefix);
+  │            ^ This operator requires a left hand side value
 
 error[SyntaxError]: expected an expression but instead found ','
   ┌─ pipeline-operator-hack.js:6:13

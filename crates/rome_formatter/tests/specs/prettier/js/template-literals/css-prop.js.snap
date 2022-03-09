@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: css-prop.js
 
 ---
@@ -78,12 +78,6 @@ const TestComponent = ({ children, ...props }) => (
 
 # Errors
 ```
-error: numbers cannot be followed by identifiers directly after
-   ┌─ css-prop.js:17:32
-   │
-17 │       This font size will be 20px
-   │                                ^^ an identifier cannot appear here
-
 error[SyntaxError]: Invalid assignment to `<div css`
   ┌─ css-prop.js:3:11
   │
@@ -207,6 +201,12 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │                      │    An explicit or implicit semicolon is expected here...
    │                      ...Which is required to end this statement
 
+error: numbers cannot be followed by identifiers directly after
+   ┌─ css-prop.js:17:32
+   │
+17 │       This font size will be 20px
+   │                                ^^ an identifier cannot appear here
+
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
    ┌─ css-prop.js:17:30
    │
@@ -228,13 +228,13 @@ error[SyntaxError]: expected a property, a shorthand property, a getter, a sette
 23 │   <div css={`color: white; background: black`}>
    │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ css-prop.js:25:4
+error: unterminated regex literal
+   ┌─ css-prop.js:25:9
    │
 25 │   </div>
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+   │    -    ^ ...but the line ends here
+   │    │    
+   │    a regex literal starts there...
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ css-prop.js:26:1

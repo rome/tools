@@ -56,12 +56,12 @@ use super::typescript::{
 };
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
-    p: &Parser,
+    p: &mut Parser,
     should_check_line_break: LineBreak,
 ) -> bool {
     let tokens = p.at(T![abstract]) && p.nth_at(1, T![class]);
     if should_check_line_break == LineBreak::DoCheck {
-        tokens && !p.has_linebreak_before_n(1)
+        tokens && !p.has_nth_preceding_line_break(1)
     } else {
         tokens
     }
@@ -549,7 +549,7 @@ fn parse_class_member_impl(
     member_marker: Marker,
     modifiers: &mut ClassMemberModifiers,
 ) -> ParsedSyntax {
-    let start_token_pos = p.token_pos();
+    let start_token_pos = p.cur_token_index();
     let generator_range = p.cur_range();
 
     // Seems like we're at a generator method
@@ -575,7 +575,7 @@ fn parse_class_member_impl(
     if p.at(T![async])
         && !p.nth_at(1, T![?])
         && !is_at_method_class_member(p, 1)
-        && !p.has_linebreak_before_n(1)
+        && !p.has_nth_preceding_line_break(1)
     {
         let async_range = p.cur_range();
         p.expect_keyword(T![async], "async");
@@ -810,7 +810,7 @@ fn parse_class_member_impl(
             // test_err block_stmt_in_class
             // class S{{}}
             debug_assert_eq!(
-                p.token_pos(),
+                p.cur_token_index(),
                 start_token_pos,
                 "Parser shouldn't be progressing when returning Absent"
             );
@@ -821,7 +821,7 @@ fn parse_class_member_impl(
     }
 }
 
-fn is_at_static_initialization_block_class_member(p: &Parser) -> bool {
+fn is_at_static_initialization_block_class_member(p: &mut Parser) -> bool {
     p.at(T![static]) && p.nth_at(1, T!['{'])
 }
 
@@ -941,9 +941,8 @@ fn expect_member_semi(p: &mut Parser, member_marker: &Marker, name: &str) {
         };
 
         let end = p
-            .tokens
-            .last_tok()
-            .map(|t| t.end())
+            .last_range()
+            .map(|r| r.end())
             .unwrap_or_else(|| p.cur_range().start());
 
         let err = p
@@ -1504,7 +1503,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
     }
 }
 
-fn is_at_class_member_name(p: &Parser, offset: usize) -> bool {
+fn is_at_class_member_name(p: &mut Parser, offset: usize) -> bool {
     matches!(p.nth(offset), T![#] | T!['[']) || is_at_literal_member_name(p, offset)
 }
 
@@ -1525,7 +1524,7 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
+fn is_at_method_class_member(p: &mut Parser, mut offset: usize) -> bool {
     if p.nth_at(offset, T![?]) {
         offset += 1;
     }
@@ -1533,7 +1532,7 @@ fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
     p.nth_at(offset, T!['(']) || p.nth_at(offset, T![<])
 }
 
-pub(crate) fn is_nth_at_modifier(p: &Parser, n: usize, constructor_parameter: bool) -> bool {
+pub(crate) fn is_nth_at_modifier(p: &mut Parser, n: usize, constructor_parameter: bool) -> bool {
     // Test if this modifier is followed by another modifier, member name or any other token that
     // starts a new member. If that's the case, then this is fairly likely a modifier. If not, then
     // this is probably not a modifier, but the name of the member. For example, all these are valid
@@ -1553,7 +1552,7 @@ pub(crate) fn is_nth_at_modifier(p: &Parser, n: usize, constructor_parameter: bo
         return false;
     }
 
-    if p.has_linebreak_before_n(n + 1) {
+    if p.has_nth_preceding_line_break(n + 1) {
         return false;
     }
 

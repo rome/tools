@@ -13,7 +13,7 @@ JsModule {
                     items: JsParameterList [
                         JsUnknownParameter {
                             items: [
-                                DOT2@6..9 "..." [] [],
+                                DOT3@6..9 "..." [] [],
                                 JsIdentifierBinding {
                                     name_token: IDENT@9..11 "a" [] [Whitespace(" ")],
                                 },
@@ -74,7 +74,7 @@ JsModule {
           0: L_PAREN@5..6 "(" [] []
           1: JS_PARAMETER_LIST@6..22
             0: JS_UNKNOWN_PARAMETER@6..22
-              0: DOT2@6..9 "..." [] []
+              0: DOT3@6..9 "..." [] []
               1: JS_IDENTIFIER_BINDING@9..11
                 0: IDENT@9..11 "a" [] [Whitespace(" ")]
               2: JS_INITIALIZER_CLAUSE@11..22

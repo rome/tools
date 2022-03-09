@@ -109,7 +109,7 @@ pub(crate) fn expression_to_assignment(
 ) -> CompletedMarker {
     try_expression_to_assignment(p, target, checkpoint).unwrap_or_else(|checkpoint| {
         // Doesn't seem to be a valid assignment target. Recover and create an error.
-        let expression_end = p.token_pos();
+        let expression_end = p.cur_token_index();
         p.rewind(checkpoint);
         wrap_expression_in_invalid_assignment(p, expression_end)
     })
@@ -496,7 +496,7 @@ fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) 
     let unknown = p.start();
     // Eat all tokens until we reached the end of the original expression. This is better than
     // any other error recovery because it's already know where the expression ends.
-    while p.token_pos() < expression_end {
+    while p.cur_token_index() < expression_end {
         p.bump_any();
     }
 

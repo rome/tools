@@ -1,7 +1,7 @@
+use crate::token_source::Token;
 use crate::{ParserError, TreeSink};
 use rome_js_syntax::{JsSyntaxKind, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize};
 use rome_rowan::TriviaPiece;
-use rslint_lexer::Token;
 use std::mem;
 
 /// Structure to convert events to a lossy syntax tree which does not preserve whitespace.
@@ -37,7 +37,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 
         let len = self.tokens[self.token_pos..self.token_pos + amount as usize]
             .iter()
-            .map(|x| x.len)
+            .map(|x| x.len())
             .sum::<TextSize>();
 
         self.do_tokens(kind, len, amount)
@@ -50,7 +50,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
             State::Normal => (),
         }
 
-        self.do_token(kind, self.tokens[self.token_pos].len);
+        self.do_token(kind, self.tokens[self.token_pos].len());
     }
 
     fn start_node(&mut self, kind: JsSyntaxKind) {
@@ -116,7 +116,7 @@ impl<'a> LossyTreeSink<'a> {
                     next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
                 };
             }
-            len += tok.len;
+            len += tok.len();
         }
         panic!("Token start does not line up to a token or is out of bounds")
     }
@@ -141,7 +141,7 @@ impl<'a> LossyTreeSink<'a> {
 
     fn is_eof(&self) -> bool {
         match self.tokens.get(self.token_pos) {
-            Some(token) if token.kind == JsSyntaxKind::EOF => true,
+            Some(token) if token.kind() == JsSyntaxKind::EOF => true,
             None => true,
             _ => false,
         }
@@ -194,23 +194,23 @@ impl<'a> LossyTreeSink<'a> {
         let start_text_pos = self.text_pos;
         let mut length = TextSize::of("");
 
-        while let Some(&token) = self.tokens.get(self.token_pos) {
-            if !token.kind.is_trivia() {
+        while let Some(token) = self.tokens.get(self.token_pos) {
+            if !token.kind().is_trivia() {
                 break;
             }
 
-            if break_on_newline && token.kind == JsSyntaxKind::NEWLINE {
+            if break_on_newline && token.kind() == JsSyntaxKind::NEWLINE {
                 break;
             }
 
             self.token_pos += 1;
-            self.text_pos += token.len;
-            length += token.len;
+            self.text_pos += token.len();
+            length += token.len();
 
-            let current_trivia = match token.kind {
+            let current_trivia = match token.kind() {
                 JsSyntaxKind::WHITESPACE | JsSyntaxKind::NEWLINE => continue,
-                JsSyntaxKind::COMMENT => TriviaPiece::Comments(token.len, false),
-                JsSyntaxKind::MULTILINE_COMMENT => TriviaPiece::Comments(token.len, true),
+                JsSyntaxKind::COMMENT => TriviaPiece::Comments(token.len(), false),
+                JsSyntaxKind::MULTILINE_COMMENT => TriviaPiece::Comments(token.len(), true),
                 _ => unreachable!("Not Trivia"),
             };
 

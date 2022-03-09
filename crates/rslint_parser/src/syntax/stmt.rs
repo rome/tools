@@ -115,11 +115,11 @@ pub(crate) fn optional_semi(p: &mut Parser) -> bool {
     is_semi(p, 0)
 }
 
-pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
+pub(super) fn is_semi(p: &mut Parser, offset: usize) -> bool {
     p.nth_at(offset, T![;])
         || p.nth_at(offset, EOF)
         || p.nth_at(offset, T!['}'])
-        || p.has_linebreak_before_n(offset)
+        || p.has_nth_preceding_line_break(offset)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
@@ -242,7 +242,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
         T![let]
             if is_nth_at_let_variable_statement(p, 0)
-                && (p.cur_src() == "let" || !p.has_linebreak_before_n(1)) =>
+                && (p.cur_src() == "let" || !p.has_nth_preceding_line_break(1)) =>
         {
             // test_err let_newline_in_async_function
             // async function f() {
@@ -261,13 +261,16 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             // // SCRIPT
             // L: let
             // [a] = 0;
-            if p.nth_at(1, T!['[']) || context.is_statement_list() || !p.has_linebreak_before_n(1) {
+            if p.nth_at(1, T!['['])
+                || context.is_statement_list()
+                || !p.has_nth_preceding_line_break(1)
+            {
                 parse_variable_statement(p, context)
             } else {
                 parse_expression_statement(p)
             }
         }
-        T![type] if !p.has_linebreak_before_n(1) && is_nth_at_identifier(p, 1) => {
+        T![type] if !p.has_nth_preceding_line_break(1) && is_nth_at_identifier(p, 1) => {
             // test ts ts_type_variable
             // let type;
             // type = getFlowTypeInConstructor(symbol, getDeclaringConstructor(symbol)!);
@@ -341,7 +344,7 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 		let identifier_range = identifier.range(p);
 		let is_valid_identifier = !identifier.kind().is_unknown();
 		let labelled_statement = identifier.undo_completion(p);
-		let label = p.source(identifier_range);
+        let label = p.source(identifier_range);
 
 		let body = match p.state.get_labelled_item(label) {
 			None => {
@@ -456,7 +459,7 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     let start = p.cur_range().start();
     p.expect_keyword(T![throw], "throw"); // throw keyword
-    if p.has_linebreak_before_n(0) {
+    if p.has_preceding_line_break() {
         let mut err = p
             .err_builder(
                 "Linebreaks between a throw statement and the error to be thrown are not allowed",
@@ -499,7 +502,7 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_range();
     p.expect_keyword(T![break], "break"); // break keyword
 
-    let error = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
+    let error = if !p.has_preceding_line_break() && p.at(T![ident]) {
         let label_name = p.cur_src();
 
         let error = match p.state.get_labelled_item(label_name) {
@@ -558,7 +561,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_range();
     p.expect_keyword(T![continue], "continue"); // continue keyword
 
-    let error = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
+    let error = if !p.has_preceding_line_break() && p.at(T![ident]) {
         let label_name = p.cur_src();
 
         let error = match p.state.get_labelled_item(label_name) {
@@ -622,7 +625,7 @@ fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     let start = p.cur_range().start();
     p.expect_keyword(T![return], "return");
-    if !p.has_linebreak_before_n(0) {
+    if !p.has_preceding_line_break() {
         parse_expression(p, ExpressionContext::default()).ok();
     }
 
@@ -700,7 +703,7 @@ impl DirectivesList {
         } else {
             let next = p.nth(1);
 
-            matches!(next, T![;] | EOF | T!['}']) || p.has_linebreak_before_n(1)
+            matches!(next, T![;] | EOF | T!['}']) || p.has_nth_preceding_line_break(1)
         }
     }
 }
@@ -952,7 +955,7 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_WHILE_STATEMENT))
 }
 
-pub(crate) fn is_nth_at_variable_declarations(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_variable_declarations(p: &mut Parser, n: usize) -> bool {
     match p.nth(n) {
         T![var] | T![const] => true,
         T![let] if is_nth_at_let_variable_statement(p, n) => true,
@@ -960,7 +963,7 @@ pub(crate) fn is_nth_at_variable_declarations(p: &Parser, n: usize) -> bool {
     }
 }
 
-pub(crate) fn is_nth_at_let_variable_statement(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_let_variable_statement(p: &mut Parser, n: usize) -> bool {
     if !p.nth_at(n, T![let]) {
         return false;
     }
@@ -1322,7 +1325,7 @@ fn parse_ts_variable_annotation(p: &mut Parser) -> ParsedSyntax {
         return parse_ts_type_annotation(p);
     }
 
-    if p.has_linebreak_before_n(0) {
+    if p.has_preceding_line_break() {
         return Absent;
     }
 

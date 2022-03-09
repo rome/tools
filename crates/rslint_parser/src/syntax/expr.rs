@@ -33,6 +33,7 @@ use crate::{
 };
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rslint_lexer::LexMode;
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
@@ -140,7 +141,13 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
         JsSyntaxKind::TRUE_KW | JsSyntaxKind::FALSE_KW => {
             JsSyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION
         }
-        JsSyntaxKind::JS_REGEX_LITERAL => JsSyntaxKind::JS_REGEX_LITERAL_EXPRESSION,
+        T![/] | T![/=] => {
+            if p.re_lex(LexMode::Regex) == JS_REGEX_LITERAL {
+                JS_REGEX_LITERAL_EXPRESSION
+            } else {
+                return Absent;
+            }
+        }
         _ => return Absent,
     };
 
@@ -414,7 +421,7 @@ fn parse_binary_or_logical_expression_recursive(
             T![in] if !context.is_in_included() => {
                 break;
             }
-            T![as] if p.has_linebreak_before_n(0) => break,
+            T![as] if p.has_preceding_line_break() => break,
             k => k,
         };
 
@@ -473,6 +480,14 @@ fn parse_binary_or_logical_expression_recursive(
                 ));
                 left.change_kind(p, JS_UNKNOWN_EXPRESSION);
             }
+        } else {
+            let err = p
+                .err_builder(&format!(
+                    "Expected an expression for the left hand side of the `{}` operator.",
+                    p.source(op_range)
+                ))
+                .primary(op_range, "This operator requires a left hand side value");
+            p.error(err);
         }
 
         let m = left.precede(p);
@@ -518,33 +533,8 @@ fn parse_binary_or_logical_expression_recursive(
             continue;
         }
 
-        // This is a hack to allow us to effectively recover from `foo + / bar`
-        let right = if OperatorPrecedence::try_from_binary_operator(p.cur()).is_ok()
-            && !p.at_ts(token_set![
-                T![-],
-                T![+],
-                T![<],
-                T![as],
-                T![in],
-                T![instanceof]
-            ]) {
-            let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.source(op_range)))
-				.secondary(op_range, "This operator requires a right hand side value")
-				.primary(p.cur_range(), "But this operator was encountered instead");
-
-            p.error(err);
-
-            parse_binary_or_logical_expression_recursive(
-                p,
-                Absent,
-                OperatorPrecedence::lowest(),
-                context,
-            )
-        } else {
-            parse_binary_or_logical_expression(p, new_precedence, context)
-        };
-
-        right.or_add_diagnostic(p, expected_expression);
+        parse_binary_or_logical_expression(p, new_precedence, context)
+            .or_add_diagnostic(p, expected_expression);
 
         let expression_kind = if is_unknown {
             JS_UNKNOWN_EXPRESSION
@@ -646,7 +636,7 @@ fn parse_member_expression_rest(
                 *in_optional_chain = true;
                 completed
             }
-            T![!] if !p.has_linebreak_before_n(0) => {
+            T![!] if !p.has_preceding_line_break() => {
                 // test ts ts_non_null_assertion_expression
                 // let a = { b: {} };
                 // a!;
@@ -1071,11 +1061,11 @@ fn parse_sequence_expression_recursive(
 }
 
 #[inline]
-pub(crate) fn is_at_expression(p: &Parser) -> bool {
+pub(crate) fn is_at_expression(p: &mut Parser) -> bool {
     is_nth_at_expression(p, 0)
 }
 
-pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_expression(p: &mut Parser, n: usize) -> bool {
     match p.nth(n) {
         T![!]
         | T!['(']
@@ -1102,13 +1092,14 @@ pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
         | T![super]
         | T![#]
         | T![<]
+        | T![/]
+        | T![/=]
         | BACKTICK
         | TRUE_KW
         | FALSE_KW
         | JS_NUMBER_LITERAL
         | JS_STRING_LITERAL
-        | NULL_KW
-        | JS_REGEX_LITERAL => true,
+        | NULL_KW => true,
         t => t.is_contextual_keyword() || t.is_future_reserved_keyword(),
     }
 }
@@ -1295,7 +1286,7 @@ pub(crate) fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax {
     parse_identifier(p, JS_REFERENCE_IDENTIFIER)
 }
 
-pub(crate) fn is_nth_at_reference_identifier(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_reference_identifier(p: &mut Parser, n: usize) -> bool {
     is_nth_at_identifier(p, n)
 }
 
@@ -1378,19 +1369,19 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 }
 
 #[inline]
-pub(crate) fn is_at_identifier(p: &Parser) -> bool {
+pub(crate) fn is_at_identifier(p: &mut Parser) -> bool {
     is_nth_at_identifier(p, 0)
 }
 
 #[inline]
-pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_identifier(p: &mut Parser, n: usize) -> bool {
     p.nth_at(n, T![ident])
         || p.nth(n).is_contextual_keyword()
         || p.nth(n).is_future_reserved_keyword()
 }
 
 #[inline]
-pub(crate) fn is_nth_at_identifier_or_keyword(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_identifier_or_keyword(p: &mut Parser, n: usize) -> bool {
     p.nth(n).is_keyword() || is_nth_at_identifier(p, n)
 }
 
@@ -1424,7 +1415,7 @@ fn parse_template_literal(
     // test_err template_literal_unterminated
     // let a = `${foo} bar
 
-    // The lexer already should throw an error for unterminated template literal
+    // The lexer emits an error for unterminated template literals
     p.eat(BACKTICK);
     let mut completed = marker.complete(p, JS_TEMPLATE);
 
@@ -1448,7 +1439,7 @@ pub(crate) fn parse_template_elements<P>(
     p: &mut Parser,
     chunk_kind: JsSyntaxKind,
     element_kind: JsSyntaxKind,
-    parse_expression: P,
+    parse_element: P,
 ) where
     P: Fn(&mut Parser) -> Option<CompletedMarker>,
 {
@@ -1456,14 +1447,14 @@ pub(crate) fn parse_template_elements<P>(
         match p.cur() {
             TEMPLATE_CHUNK => {
                 let m = p.start();
-                p.bump_any();
+                p.bump(TEMPLATE_CHUNK);
                 m.complete(p, chunk_kind);
             },
             DOLLAR_CURLY => {
                 let e = p.start();
-                p.bump_any();
+                p.bump(DOLLAR_CURLY);
 
-                parse_expression(p);
+                parse_element(p);
 
                 if !p.expect(T!['}']) {
                     // Seems there's more. For example a `${a a}`. We must eat all tokens away to avoid a panic because of an unexpected token
@@ -1594,7 +1585,7 @@ fn parse_call_expression_rest(
         // Cloning here is necessary because parsing out the type arguments may rewind in which
         // case we want to return the `lhs`.
         let m = lhs.clone().precede(p);
-        let start_pos = p.token_pos();
+        let start_pos = p.cur_token_index();
         let optional_chain_call = p.eat(T![?.]);
         in_optional_chain = in_optional_chain || optional_chain_call;
 
@@ -1643,7 +1634,7 @@ fn parse_call_expression_rest(
             // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
             // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
             // * if the parser is at '(': This always parses out as valid arguments.
-            debug_assert_eq!(p.token_pos(), start_pos);
+            debug_assert_eq!(p.cur_token_index(), start_pos);
             m.abandon(p);
         }
 
@@ -1659,7 +1650,7 @@ fn parse_postfix_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSynta
     let checkpoint = p.checkpoint();
     let lhs = parse_lhs_expr(p, context);
     lhs.map(|marker| {
-        if !p.has_linebreak_before_n(0) {
+        if !p.has_preceding_line_break() {
             // test post_update_expr
             // foo++
             // foo--
@@ -1944,14 +1935,14 @@ impl RewriteParseEvents for DeleteExpressionRewriter {
     }
 }
 
-pub(super) fn is_at_name(p: &Parser) -> bool {
+pub(super) fn is_at_name(p: &mut Parser) -> bool {
     is_nth_at_name(p, 0)
 }
 
-pub(super) fn is_nth_at_name(p: &Parser, offset: usize) -> bool {
+pub(super) fn is_nth_at_name(p: &mut Parser, offset: usize) -> bool {
     p.nth_at(offset, T![ident]) || p.nth(offset).is_keyword()
 }
 
-pub(super) fn is_nth_at_any_name(p: &Parser, n: usize) -> bool {
+pub(super) fn is_nth_at_any_name(p: &mut Parser, n: usize) -> bool {
     is_nth_at_name(p, n) || p.nth_at(n, T![#])
 }

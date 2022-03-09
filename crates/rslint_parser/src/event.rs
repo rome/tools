@@ -169,7 +169,7 @@ pub fn rewrite_events<T: RewriteParseEvents>(
     // The current parsed grammar is a super-set of the grammar that gets re-parsed. Thus, any
     // error that applied to the old grammar also applies to the sub-grammar.
     let events: Vec<_> = p.events.split_off(checkpoint.event_pos + 1);
-    p.tokens.rewind(checkpoint.token_pos);
+    p.tokens.rewind(checkpoint.token_source);
 
     let mut sink = RewriteParseEventsTreeSink {
         parser: p,

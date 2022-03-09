@@ -104,6 +104,6 @@ impl ParseRecovery {
 
     #[inline]
     fn recovered(&self, p: &Parser) -> bool {
-        p.at_ts(self.recovery_set) || p.at(EOF) || (self.line_break && p.has_linebreak_before_n(0))
+        p.at_ts(self.recovery_set) || p.at(EOF) || (self.line_break && p.has_preceding_line_break())
     }
 }

@@ -114,8 +114,7 @@ x;
 x;
 ({ a: 1 }).entries();
 x;
-<Hello />
-x;
+<Hello / > x;
 `string`;
 x;
 (x, y) => x;
@@ -196,15 +195,7 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
    ┌─ no-semi.js:14:4
    │
 14 │ x; <Hello />
-   │    ^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ no-semi.js:14:12
-   │
-14 │ x; <Hello />
-   │           -^ But this operator was encountered instead
-   │           │ 
-   │           This operator requires a right hand side value
+   │    ^^^^^^^^ TypeScript only syntax
 
 
 ```

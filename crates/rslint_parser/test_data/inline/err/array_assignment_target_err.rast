@@ -49,7 +49,7 @@ JsModule {
                         COMMA@26..28 "," [] [Whitespace(" ")],
                         JsUnknownAssignment {
                             items: [
-                                DOT2@28..31 "..." [] [],
+                                DOT3@28..31 "..." [] [],
                                 JsIdentifierAssignment {
                                     name_token: IDENT@31..35 "rest" [] [],
                                 },
@@ -211,7 +211,7 @@ JsModule {
               0: IDENT@25..26 "c" [] []
             3: COMMA@26..28 "," [] [Whitespace(" ")]
             4: JS_UNKNOWN_ASSIGNMENT@28..35
-              0: DOT2@28..31 "..." [] []
+              0: DOT3@28..31 "..." [] []
               1: JS_IDENTIFIER_ASSIGNMENT@31..35
                 0: IDENT@31..35 "rest" [] []
             5: COMMA@35..36 "," [] []
