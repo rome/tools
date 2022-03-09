@@ -425,7 +425,7 @@ fn split_binaryish_to_flatten_items(
 /// The logical expression `foo && bar` has higher precedence of `bar || lorem`. This means that
 /// first `foo && bar` is computed and its result is then computed against `|| lorem`.
 ///
-/// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis
+/// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis.
 fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
     previous_operation: Operation,
     node: Node,
@@ -445,8 +445,8 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
                 compare_to > previous_operation
             }
 
-            // Prettier, for some reason, decided that binary expressions with different precedence.
-            // This comments is here for the compatibility reason.
+            // Prettier, for some reason, decided that binary expressions with different precedence don't need parenthesis.
+            // This commented code is here for the compatibility reason.
             // (Operation::Binary(_base), Operation::Binary(_compare_to)) => {
             //     compare_to > base
             // }
