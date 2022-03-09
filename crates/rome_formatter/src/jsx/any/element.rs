@@ -1,12 +1,12 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::JsxAnyElementName;
-impl ToFormatElement for JsxAnyElementName {
+use rome_js_syntax::JsxAnyElement;
+impl ToFormatElement for JsxAnyElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            Self::JsxReferenceIdentifier(node) => node.to_format_element(formatter),
-            Self::JsxMemberExpression(node) => node.to_format_element(formatter),
+            Self::JsxElement(node) => node.to_format_element(formatter),
+            Self::JsxSelfClosingElement(node) => node.to_format_element(formatter),
         }
     }
 }

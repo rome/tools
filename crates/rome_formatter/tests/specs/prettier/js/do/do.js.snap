@@ -216,7 +216,7 @@ error[SyntaxError]: expected `')'` but instead found `{`
 24 │       {
    │       ^ unexpected
 
-error[SyntaxError]: expected `WHILE_KW` but instead found `}`
+error[SyntaxError]: expected `while` but instead found `}`
    ┌─ do.js:32:7
    │
 32 │       }
