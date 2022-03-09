@@ -53,14 +53,10 @@ pub(super) fn try_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 // test jsx jsx_element_as_statements
 // <div />
 fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    let m = p.parser.start();
-
-    if parse_jsx_element(p).is_absent() {
-        m.abandon(p.parser);
-        return ParsedSyntax::Absent;
-    }
-
-    ParsedSyntax::Present(m.complete(p.parser, JsSyntaxKind::JSX_ELEMENT_EXPRESSION))
+    parse_jsx_element(p).map(|element| {
+        let m = element.precede(p.parser);
+        m.complete(p.parser, JsSyntaxKind::JSX_ELEMENT_EXPRESSION)
+    })
 }
 
 // test jsx jsx_element_open_close
