@@ -1225,8 +1225,9 @@ impl FormatElement {
         }
     }
 
+    /// Splits off the leading and trailing trivias (comments) from this [FormatElement]
     pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
-        // If content is a list, split off the leading Comment elements
+        // Non-list elements are returned directly
         if let FormatElement::List(list) = self {
             // Find the index of the first non-comment element in the list
             let content_start = list
