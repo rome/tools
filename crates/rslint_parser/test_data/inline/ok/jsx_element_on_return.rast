@@ -34,6 +34,7 @@ JsModule {
                                 },
                                 children: missing (optional),
                                 closing_element: JsxClosingElement {
+<<<<<<< HEAD
                                     l_angle_token: L_ANGLE@31..32 "<" [] [],
 <<<<<<< HEAD
                                     slash_token: SLASH@32..33 "/" [] [],
@@ -41,6 +42,9 @@ JsModule {
                                         value_token: JSX_IDENT@33..36 "div" [] [],
 =======
                                     divide_token: SLASH@32..33 "/" [] [],
+=======
+                                    l_angle_slash_token: L_ANGLE_SLASH@31..33 "</" [] [],
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
                                     name: JsxReferenceIdentifier {
                                         value_token: IDENT@33..36 "div" [] [],
 >>>>>>> 24fad892de (jsx, open/close and self closing elements)
@@ -101,12 +105,15 @@ JsModule {
                     0: IDENT@27..30 "div" [] []
                   2: R_ANGLE@30..31 ">" [] []
                 1: JSX_CLOSING_ELEMENT@31..37
-                  0: L_ANGLE@31..32 "<" [] []
-                  1: SLASH@32..33 "/" [] []
-                  2: JSX_REFERENCE_IDENTIFIER@33..36
+                  0: L_ANGLE_SLASH@31..33 "</" [] []
+                  1: JSX_REFERENCE_IDENTIFIER@33..36
                     0: IDENT@33..36 "div" [] []
+<<<<<<< HEAD
 >>>>>>> 24fad892de (jsx, open/close and self closing elements)
                   3: R_ANGLE@36..37 ">" [] []
+=======
+                  2: R_ANGLE@36..37 ">" [] []
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
             2: (empty)
         3: R_CURLY@37..39 "}" [Newline("\n")] []
   3: EOF@39..40 "" [Newline("\n")] []

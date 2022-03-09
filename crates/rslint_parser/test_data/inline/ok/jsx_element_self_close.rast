@@ -29,12 +29,16 @@ JsModule {
                                     value_token: JSX_IDENT@27..31 "div" [] [Whitespace(" ")],
                                 },
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 attributes: JsxAttributeList [],
                                 slash_token: SLASH@31..32 "/" [] [],
 =======
                                 divide_token: SLASH@31..32 "/" [] [],
 >>>>>>> 24fad892de (jsx, open/close and self closing elements)
                                 r_angle_token: R_ANGLE@32..33 ">" [] [],
+=======
+                                slash_r_angle_token: SLASH_R_ANGLE@31..33 "/>" [] [],
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
                             },
                         },
                         semicolon_token: missing (optional),
@@ -81,9 +85,13 @@ JsModule {
 =======
                 1: JSX_REFERENCE_IDENTIFIER@27..31
                   0: IDENT@27..31 "div" [] [Whitespace(" ")]
+<<<<<<< HEAD
                 2: SLASH@31..32 "/" [] []
                 3: R_ANGLE@32..33 ">" [] []
 >>>>>>> 24fad892de (jsx, open/close and self closing elements)
+=======
+                2: SLASH_R_ANGLE@31..33 "/>" [] []
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
             2: (empty)
         3: R_CURLY@33..35 "}" [Newline("\n")] []
   3: EOF@35..36 "" [Newline("\n")] []

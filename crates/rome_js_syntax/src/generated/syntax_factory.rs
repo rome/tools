@@ -5357,17 +5357,10 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JSX_CLOSING_ELEMENT => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == T ! [<] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [/] {
+                    if element.kind() == T ! [</] {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5661,7 +5654,7 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JSX_SELF_CLOSING_ELEMENT => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if element.kind() == T ! [<] {
@@ -5678,14 +5671,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if element.kind() == T ! [/] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [>] {
+                    if element.kind() == T ! [/>] {
                         slots.mark_present();
                         current_element = elements.next();
                     }

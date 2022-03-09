@@ -5646,6 +5646,7 @@ impl JsxClosingElement {
         JsxClosingElementFields {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             l_angle_token: self.l_angle_token(),
             slash_token: self.slash_token(),
 =======
@@ -5660,10 +5661,14 @@ impl JsxClosingElement {
             l_angle_token: self.l_angle_token(),
             divide_token: self.divide_token(),
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+            l_angle_slash_token: self.l_angle_slash_token(),
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
             name: self.name(),
             r_angle_token: self.r_angle_token(),
         }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5693,19 +5698,20 @@ pub struct JsxClosingElementFields {
 =======
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+=======
+    pub fn l_angle_slash_token(&self) -> SyntaxResult<SyntaxToken> {
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn divide_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
-    }
     pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 2usize)
     }
 }
 pub struct JsxClosingElementFields {
+<<<<<<< HEAD
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub divide_token: SyntaxResult<SyntaxToken>,
 <<<<<<< HEAD
@@ -5713,6 +5719,9 @@ pub struct JsxClosingElementFields {
 >>>>>>> 24fad892de (jsx, open/close and self closing elements)
 =======
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+    pub l_angle_slash_token: SyntaxResult<SyntaxToken>,
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
     pub name: SyntaxResult<JsxAnyElementName>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
@@ -6027,6 +6036,7 @@ impl JsxSelfClosingElement {
             name: self.name(),
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             attributes: self.attributes(),
             slash_token: self.slash_token(),
             r_angle_token: self.r_angle_token(),
@@ -6042,6 +6052,9 @@ impl JsxSelfClosingElement {
             divide_token: self.divide_token(),
             r_angle_token: self.r_angle_token(),
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+            slash_r_angle_token: self.slash_r_angle_token(),
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
         }
     }
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -6050,6 +6063,7 @@ impl JsxSelfClosingElement {
     pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
         support::required_node(&self.syntax, 1usize)
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     pub fn attributes(&self) -> JsxAttributeList { support::list(&self.syntax, 2usize) }
@@ -6068,15 +6082,16 @@ impl JsxSelfClosingElement {
 =======
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
     pub fn divide_token(&self) -> SyntaxResult<SyntaxToken> {
+=======
+    pub fn slash_r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
         support::required_token(&self.syntax, 2usize)
-    }
-    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
     }
 }
 pub struct JsxSelfClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     pub attributes: JsxAttributeList,
@@ -6199,6 +6214,9 @@ pub struct JsxTextFields {
     pub divide_token: SyntaxResult<SyntaxToken>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+    pub slash_r_angle_token: SyntaxResult<SyntaxToken>,
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -16437,12 +16455,8 @@ impl std::fmt::Debug for JsxAttribute {
 =======
         f.debug_struct("JsxClosingElement")
             .field(
-                "l_angle_token",
-                &support::DebugSyntaxResult(self.l_angle_token()),
-            )
-            .field(
-                "divide_token",
-                &support::DebugSyntaxResult(self.divide_token()),
+                "l_angle_slash_token",
+                &support::DebugSyntaxResult(self.l_angle_slash_token()),
             )
 >>>>>>> 24fad892de (jsx, open/close and self closing elements)
             .field("name", &support::DebugSyntaxResult(self.name()))
@@ -16861,6 +16875,7 @@ impl std::fmt::Debug for JsxSelfClosingElement {
                 &support::DebugSyntaxResult(self.l_angle_token()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
+<<<<<<< HEAD
             .field("attributes", &self.attributes())
             .field(
 <<<<<<< HEAD
@@ -16888,6 +16903,11 @@ impl std::fmt::Debug for JsxSelfClosingElement {
 >>>>>>> 24fad892de (jsx, open/close and self closing elements)
 =======
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+            .field(
+                "slash_r_angle_token",
+                &support::DebugSyntaxResult(self.slash_r_angle_token()),
+>>>>>>> 7dafe9449b (jsx tokens for </ and />)
             )
             .finish()
     }
