@@ -36,9 +36,15 @@ JsModule {
                                         children: missing (optional),
                                         closing_element: JsxClosingElement {
                                             l_angle_token: L_ANGLE@21..22 "<" [] [],
+<<<<<<< HEAD
                                             slash_token: SLASH@22..23 "/" [] [],
                                             name: JsxName {
                                                 value_token: JSX_IDENT@23..26 "div" [] [],
+=======
+                                            divide_token: SLASH@22..23 "/" [] [],
+                                            name: JsxReferenceIdentifier {
+                                                value_token: IDENT@23..26 "div" [] [],
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
                                             },
                                             r_angle_token: R_ANGLE@26..27 ">" [] [],
                                         },
@@ -51,6 +57,7 @@ JsModule {
             },
             semicolon_token: SEMICOLON@27..28 ";" [] [],
         },
+<<<<<<< HEAD
         JsVariableStatement {
             declaration: JsVariableDeclaration {
                 kind: CONST_KW@28..35 "const" [Newline("\n")] [Whitespace(" ")],
@@ -104,14 +111,16 @@ JsModule {
             },
             semicolon_token: SEMICOLON@58..59 ";" [] [],
         },
+=======
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
     ],
-    eof_token: EOF@59..60 "" [Newline("\n")] [],
+    eof_token: EOF@28..29 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..60
+0: JS_MODULE@0..29
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..59
+  2: JS_MODULE_ITEM_LIST@0..28
     0: JS_VARIABLE_STATEMENT@0..28
       0: JS_VARIABLE_DECLARATION@0..27
         0: CONST_KW@0..6 "const" [] [Whitespace(" ")]
@@ -135,6 +144,7 @@ JsModule {
                   0: JSX_ELEMENT@16..27
                     0: JSX_OPENING_ELEMENT@16..21
                       0: L_ANGLE@16..17 "<" [] []
+<<<<<<< HEAD
                       1: JSX_NAME@17..20
                         0: JSX_IDENT@17..20 "div" [] []
                       2: JSX_ATTRIBUTE_LIST@20..20
@@ -186,3 +196,16 @@ JsModule {
                   2: R_PAREN@57..58 ")" [] []
       1: SEMICOLON@58..59 ";" [] []
   3: EOF@59..60 "" [Newline("\n")] []
+=======
+                      1: JSX_REFERENCE_IDENTIFIER@17..20
+                        0: IDENT@17..20 "div" [] []
+                      2: R_ANGLE@20..21 ">" [] []
+                    1: JSX_CLOSING_ELEMENT@21..27
+                      0: L_ANGLE@21..22 "<" [] []
+                      1: SLASH@22..23 "/" [] []
+                      2: JSX_REFERENCE_IDENTIFIER@23..26
+                        0: IDENT@23..26 "div" [] []
+                      3: R_ANGLE@26..27 ">" [] []
+      1: SEMICOLON@27..28 ";" [] []
+  3: EOF@28..29 "" [Newline("\n")] []
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)

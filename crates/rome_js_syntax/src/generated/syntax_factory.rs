@@ -5661,7 +5661,11 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JSX_SELF_CLOSING_ELEMENT => {
                 let mut elements = (&children).into_iter();
+<<<<<<< HEAD
                 let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
+=======
+                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if element.kind() == T ! [<] {
@@ -5678,6 +5682,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
+<<<<<<< HEAD
                     if JsxAttributeList::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
@@ -5685,6 +5690,8 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
+=======
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
                     if element.kind() == T ! [/] {
                         slots.mark_present();
                         current_element = elements.next();

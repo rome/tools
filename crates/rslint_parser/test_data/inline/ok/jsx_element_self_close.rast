@@ -28,8 +28,12 @@ JsModule {
                                 name: JsxName {
                                     value_token: JSX_IDENT@27..31 "div" [] [Whitespace(" ")],
                                 },
+<<<<<<< HEAD
                                 attributes: JsxAttributeList [],
                                 slash_token: SLASH@31..32 "/" [] [],
+=======
+                                divide_token: SLASH@31..32 "/" [] [],
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
                                 r_angle_token: R_ANGLE@32..33 ">" [] [],
                             },
                         },
@@ -68,11 +72,18 @@ JsModule {
             1: JSX_TAG_EXPRESSION@26..33
               0: JSX_SELF_CLOSING_ELEMENT@26..33
                 0: L_ANGLE@26..27 "<" [] []
+<<<<<<< HEAD
                 1: JSX_NAME@27..31
                   0: JSX_IDENT@27..31 "div" [] [Whitespace(" ")]
                 2: JSX_ATTRIBUTE_LIST@31..31
                 3: SLASH@31..32 "/" [] []
                 4: R_ANGLE@32..33 ">" [] []
+=======
+                1: JSX_REFERENCE_IDENTIFIER@27..31
+                  0: IDENT@27..31 "div" [] [Whitespace(" ")]
+                2: SLASH@31..32 "/" [] []
+                3: R_ANGLE@32..33 ">" [] []
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
             2: (empty)
         3: R_CURLY@33..35 "}" [Newline("\n")] []
   3: EOF@35..36 "" [Newline("\n")] []

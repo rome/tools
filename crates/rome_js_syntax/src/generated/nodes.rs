@@ -5110,13 +5110,27 @@ impl JsxClosingElement {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsxClosingElementFields {
         JsxClosingElementFields {
+<<<<<<< HEAD
             l_angle_token: self.l_angle_token(),
             slash_token: self.slash_token(),
+=======
+<<<<<<< HEAD
+            l_angle_slash_token: self.l_angle_slash_token(),
+=======
+            l_angle_token: self.l_angle_token(),
+            divide_token: self.divide_token(),
+>>>>>>> cd10294604 (jsx, open/close and self closing elements)
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
             name: self.name(),
             r_angle_token: self.r_angle_token(),
         }
     }
+<<<<<<< HEAD
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+=======
+<<<<<<< HEAD
+    pub fn l_angle_slash_token(&self) -> SyntaxResult<SyntaxToken> {
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
         support::required_token(&self.syntax, 0usize)
     }
     pub fn slash_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5130,8 +5144,30 @@ impl JsxClosingElement {
     }
 }
 pub struct JsxClosingElementFields {
+<<<<<<< HEAD
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub slash_token: SyntaxResult<SyntaxToken>,
+=======
+    pub l_angle_slash_token: SyntaxResult<SyntaxToken>,
+=======
+    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn divide_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+        support::required_node(&self.syntax, 2usize)
+    }
+    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 3usize)
+    }
+}
+pub struct JsxClosingElementFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
+    pub divide_token: SyntaxResult<SyntaxToken>,
+>>>>>>> cd10294604 (jsx, open/close and self closing elements)
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
     pub name: SyntaxResult<JsxAnyElementName>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
@@ -5413,9 +5449,18 @@ impl JsxSelfClosingElement {
         JsxSelfClosingElementFields {
             l_angle_token: self.l_angle_token(),
             name: self.name(),
+<<<<<<< HEAD
             attributes: self.attributes(),
             slash_token: self.slash_token(),
             r_angle_token: self.r_angle_token(),
+=======
+<<<<<<< HEAD
+            slash_r_angle_token: self.slash_r_angle_token(),
+=======
+            divide_token: self.divide_token(),
+            r_angle_token: self.r_angle_token(),
+>>>>>>> cd10294604 (jsx, open/close and self closing elements)
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
         }
     }
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5424,17 +5469,32 @@ impl JsxSelfClosingElement {
     pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
         support::required_node(&self.syntax, 1usize)
     }
+<<<<<<< HEAD
     pub fn attributes(&self) -> JsxAttributeList { support::list(&self.syntax, 2usize) }
     pub fn slash_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
+=======
+<<<<<<< HEAD
+    pub fn slash_r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
     }
+=======
+    pub fn divide_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 3usize)
+    }
+>>>>>>> cd10294604 (jsx, open/close and self closing elements)
 }
 pub struct JsxSelfClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
+<<<<<<< HEAD
     pub attributes: JsxAttributeList,
     pub slash_token: SyntaxResult<SyntaxToken>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
@@ -5543,6 +5603,14 @@ impl JsxText {
 }
 pub struct JsxTextFields {
     pub value_token: SyntaxResult<SyntaxToken>,
+=======
+<<<<<<< HEAD
+    pub slash_r_angle_token: SyntaxResult<SyntaxToken>,
+=======
+    pub divide_token: SyntaxResult<SyntaxToken>,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
+>>>>>>> cd10294604 (jsx, open/close and self closing elements)
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -14203,7 +14271,24 @@ impl AstNode for JsxAttribute {
 }
 impl std::fmt::Debug for JsxAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+<<<<<<< HEAD
         f.debug_struct("JsxAttribute")
+=======
+        f.debug_struct("JsxClosingElement")
+            .field(
+<<<<<<< HEAD
+                "l_angle_slash_token",
+                &support::DebugSyntaxResult(self.l_angle_slash_token()),
+=======
+                "l_angle_token",
+                &support::DebugSyntaxResult(self.l_angle_token()),
+            )
+            .field(
+                "divide_token",
+                &support::DebugSyntaxResult(self.divide_token()),
+>>>>>>> cd10294604 (jsx, open/close and self closing elements)
+            )
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "initializer",
@@ -14550,12 +14635,25 @@ impl std::fmt::Debug for JsxSelfClosingElement {
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field("attributes", &self.attributes())
             .field(
+<<<<<<< HEAD
                 "slash_token",
                 &support::DebugSyntaxResult(self.slash_token()),
+=======
+<<<<<<< HEAD
+                "slash_r_angle_token",
+                &support::DebugSyntaxResult(self.slash_r_angle_token()),
+=======
+                "divide_token",
+                &support::DebugSyntaxResult(self.divide_token()),
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
             )
             .field(
                 "r_angle_token",
                 &support::DebugSyntaxResult(self.r_angle_token()),
+<<<<<<< HEAD
+=======
+>>>>>>> cd10294604 (jsx, open/close and self closing elements)
+>>>>>>> 24fad892de (jsx, open/close and self closing elements)
             )
             .finish()
     }
