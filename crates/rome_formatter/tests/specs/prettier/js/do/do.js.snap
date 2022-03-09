@@ -286,9 +286,26 @@ error[SyntaxError]: expected `while` but instead found `}`
 =======
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 error[SyntaxError]: expected `WHILE_KW` but instead found `}`
 >>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 =======
+=======
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ do.js:27:13
+   │  
+27 │ ┌             <LogoutButton />
+28 │ │           } else {
+   │ └───────────^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ do.js:29:13
+   │  
+29 │ ┌             <LoginButton />
+30 │ │           }
+   │ └───────────^ Jsx only syntax
+
+>>>>>>> 844f141c04 (jsx parser enabled by language variant)
 error[SyntaxError]: expected `while` but instead found `}`
 >>>>>>> 3f24da8315 (formatter codegen supporting jsx)
    ┌─ do.js:32:7

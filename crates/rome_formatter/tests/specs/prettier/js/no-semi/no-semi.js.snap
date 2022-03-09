@@ -114,7 +114,7 @@ x;
 x;
 ({ a: 1 }).entries();
 x;
-<Hello />;
+<Hello />
 x;
 `string`;
 x;
@@ -187,6 +187,19 @@ while (false) (function () {}());
 aReallyLongLine012345678901234567890123456789012345678901234567890123456789 * (
   b + c
 );
+
+```
+
+# Errors
+```
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ no-semi.js:14:4
+   │  
+14 │   x; <Hello />
+   │ ┌────^
+15 │ │ x; `string`
+   │ └─^ Jsx only syntax
+
 
 ```
 

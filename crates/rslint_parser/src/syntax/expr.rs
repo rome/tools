@@ -31,7 +31,12 @@ use crate::syntax::jsx::jsx_parse_errors::jsx_only_syntax_error;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
+<<<<<<< HEAD
 use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
+=======
+use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
+use crate::LanguageVariant;
+>>>>>>> 844f141c04 (jsx parser enabled by language variant)
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
@@ -1166,7 +1171,6 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         T!['('] => parse_parenthesized_expression(p, context).unwrap(),
         T!['['] => parse_array_expr(p).unwrap(),
         T!['{'] if context.is_object_expression_allowed() => parse_object_expression(p).unwrap(),
-        T![<] if context.is_object_expression_allowed() => try_parse_jsx_expression(p).unwrap(),
         T![import] => {
             let m = p.start();
             p.bump_any();
