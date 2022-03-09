@@ -115,7 +115,13 @@ fn collect_tests(s: &str) -> Vec<Test> {
     let mut res = Vec::new();
     for comment_block in extract_comment_blocks(s, false).into_iter().map(|(_, x)| x) {
         let first_line = &comment_block[0];
-        let (language, name, ok) = if let Some(first_line) = first_line.strip_prefix("test ts ") {
+        let (language, name, ok) = if let Some(first_line) = first_line.strip_prefix("test jsx ") {
+            let name = first_line.to_string();
+            ("jsx", name, true)
+        } else if let Some(first_line) = first_line.strip_prefix("test_err jsx ") {
+            let name = first_line.to_string();
+            ("jsx", name, false)
+        } else if let Some(first_line) = first_line.strip_prefix("test ts ") {
             let name = first_line.to_string();
             ("typescript", name, true)
         } else if let Some(first_line) = first_line.strip_prefix("test_err ts ") {
@@ -177,29 +183,27 @@ fn tests_from_dir(dir: &Path) -> Result<Tests> {
 }
 
 fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test)>> {
+    let exts = ["js", "ts", "jsx"];
     let mut res = HashMap::new();
     for file in fs::read_dir(dir)? {
-        let file = file?;
-        let path = file.path();
-        let exts = ["js", "ts"];
+        let path = file?.path();
         let ext = path
             .extension()
-            .unwrap_or_default()
-            .to_str()
+            .map(|x| x.to_string_lossy().to_string())
             .unwrap_or_default();
-        if !exts.contains(&ext) {
+        if !exts.contains(&ext.as_str()) {
             continue;
         }
-        let name = {
-            let file_name = path.file_name().unwrap().to_str().unwrap();
-            file_name[..file_name.len() - 3].to_string()
-        };
+        let name = path
+            .file_stem()
+            .map(|x| x.to_string_lossy().to_string())
+            .unwrap();
         let text = fs::read_to_string(&path)?;
         let test = Test {
             name: name.clone(),
             text,
             ok,
-            language: ext.to_string(),
+            language: ext,
         };
         if let Some(old) = res.insert(name, (path, test)) {
             println!("Duplicate test: {:?}", old);

@@ -217,13 +217,12 @@ impl<'t> Parser<'t> {
     }
 
     /// Consume the next token if `kind` matches.
+    // #[trace_caller::trace]
     pub fn bump(&mut self, kind: JsSyntaxKind) {
-        assert!(
-            self.eat(kind),
-            "expected {:?} but at {:?}",
-            kind,
-            self.cur()
-        );
+        let r = self.eat(kind);
+        if !r {
+            panic!("expected {:?} but at {:?}", kind, self.cur());
+        }
     }
 
     /// Consume any token but cast it as a different kind

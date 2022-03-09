@@ -474,6 +474,16 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_SETTER_SIGNATURE_CLASS_MEMBER",
         "TS_INDEX_SIGNATURE_CLASS_MEMBER",
         "TS_INDEX_SIGNATURE_MODIFIER_LIST",
+        //JSX
+        "JSX_ELEMENT_EXPRESSION",
+        "JSX_ANY_ELEMENT",
+        "JSX_ELEMENT",
+        "JSX_SELF_CLOSING_ELEMENT",
+        "JSX_OPENING_ELEMENT",
+        "JSX_CLOSING_ELEMENT",
+        "JSX_ANY_ELEMENT_NAME",
+        "JSX_MEMBER_EXPRESSION",
+        "JSX_REFERENCE_IDENTIFIER",
         // unknown nodes JS
         "JS_UNKNOWN",
         "JS_UNKNOWN_EXPRESSION",

@@ -3,6 +3,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
+use super::jsx::try_parse_jsx_expression;
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -33,6 +34,7 @@ use crate::{
 };
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rslint_lexer::T;
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
@@ -1159,6 +1161,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         T!['('] => parse_parenthesized_expression(p, context).unwrap(),
         T!['['] => parse_array_expr(p).unwrap(),
         T!['{'] if context.is_object_expression_allowed() => parse_object_expression(p).unwrap(),
+        T![<] if context.is_object_expression_allowed() => try_parse_jsx_expression(p).unwrap(),
         T![import] => {
             let m = p.start();
             p.bump_any();
@@ -1607,6 +1610,7 @@ fn parse_call_expression_rest(
         // (() => { a }).a<A, B, C>()
         // (() => a)<A, B, C>();
         if TypeScript.is_supported(p) && p.at(T![<]) {
+            println!("HERE");
             // rewinds automatically if not a valid type arguments
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
 
@@ -1737,12 +1741,21 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         return Present(expr);
     }
 
+    // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
-        return TypeScript.parse_exclusive_syntax(
-            p,
-            |p| parse_ts_type_assertion_expression(p, context),
-            |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
-        );
+        let jsx = if context.is_object_expression_allowed() {
+            try_parse_jsx_expression(p)
+        } else {
+            Absent
+        };
+
+        return jsx.or_else(|| {
+            TypeScript.parse_exclusive_syntax(
+                p,
+                |p| parse_ts_type_assertion_expression(p, context),
+                |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
+            );
+        });
     }
 
     // test pre_update_expr
