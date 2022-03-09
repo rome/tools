@@ -3,7 +3,11 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
+<<<<<<< HEAD
 use super::jsx::maybe_parse_jsx_expression;
+=======
+use super::jsx::try_parse_jsx_expression;
+>>>>>>> cd10294604 (jsx, open/close and self closing elements)
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -1162,6 +1166,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         T!['('] => parse_parenthesized_expression(p, context).unwrap(),
         T!['['] => parse_array_expr(p).unwrap(),
         T!['{'] if context.is_object_expression_allowed() => parse_object_expression(p).unwrap(),
+        T![<] if context.is_object_expression_allowed() => try_parse_jsx_expression(p).unwrap(),
         T![import] => {
             let m = p.start();
             p.bump_any();
@@ -1610,6 +1615,7 @@ fn parse_call_expression_rest(
         // (() => { a }).a<A, B, C>()
         // (() => a)<A, B, C>();
         if TypeScript.is_supported(p) && p.at(T![<]) {
+            println!("HERE");
             // rewinds automatically if not a valid type arguments
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
 
@@ -1751,7 +1757,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
                 p,
                 |p| parse_ts_type_assertion_expression(p, context),
                 |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
-            )
+            );
         });
     }
 

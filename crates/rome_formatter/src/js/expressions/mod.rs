@@ -35,5 +35,7 @@ mod template_chunk_element;
 mod template_element;
 mod this_expression;
 mod unary_expression;
+mod x_element_expression;
+mod x_member_expression;
 mod yield_argument;
 mod yield_expression;
