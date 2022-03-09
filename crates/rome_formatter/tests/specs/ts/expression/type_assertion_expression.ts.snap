@@ -20,14 +20,6 @@ Indent style: Tab
 Line width: 80
 -----
 let x = <const>"hello";
-let y = <       string  >;
-x;
-var d = <Error>;
-({ name: "foo", message: "bar" });
-
-
-## Unimplemented nodes/tokens
-
-"<       string  >  " => 42..61
-"<Error>" => 72..79
+let y = <string>x;
+var d = <Error>({ name: "foo", message: "bar" });
 
