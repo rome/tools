@@ -80,7 +80,12 @@ fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
         {
             let element_marker = opening_marker.precede(p.parser);
             let closing_marker = parse_jsx_closing_element(p);
-            ParsedSyntax::Present(element_marker.complete(p.parser, JsSyntaxKind::JSX_ELEMENT))
+            if closing_marker.is_absent() {
+                element_marker.abandon(p.parser);
+                return ParsedSyntax::Absent;
+            } else {
+                ParsedSyntax::Present(element_marker.complete(p.parser, JsSyntaxKind::JSX_ELEMENT))
+            }
         }
         ParsedSyntax::Present(self_closing_marker)
             if self_closing_marker.kind() == JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT =>

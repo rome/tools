@@ -81,54 +81,82 @@ const value = (
     <Sub />
     <Sub />
   </Element2>
-)
+);
 
 ```
 
 # Errors
 ```
-error[SyntaxError]: expected `')'` but instead found `Sub`
-   ┌─ nested-in-condition.js:23:6
-   │
-23 │     <Sub />
-   │      ^^^ unexpected
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ nested-in-condition.js:22:3
+   │  
+22 │ ┌   <Element>
+23 │ │     <Sub />
+   │ └───────────^ TypeScript only syntax
 
 error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ nested-in-condition.js:23:11
+   ┌─ nested-in-condition.js:24:11
    │
-23 │     <Sub />
+24 │     <Sub />
    │          -^ But this operator was encountered instead
    │          │ 
    │          This operator requires a right hand side value
 
 error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ nested-in-condition.js:25:11
+   ┌─ nested-in-condition.js:26:11
    │
-25 │     <Sub />
+26 │     <Sub />
    │          -^ But this operator was encountered instead
    │          │ 
    │          This operator requires a right hand side value
 
 error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ nested-in-condition.js:27:11
+   ┌─ nested-in-condition.js:28:11
    │
-27 │     <Sub />
+28 │     <Sub />
    │          -^ But this operator was encountered instead
    │          │ 
    │          This operator requires a right hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ nested-in-condition.js:29:4
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ nested-in-condition.js:29:3
    │
 29 │   </Element>
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+   │   ^ TypeScript only syntax
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ nested-in-condition.js:30:1
    │
 30 │ ) : (
+   │ ^ Expected an expression here
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ nested-in-condition.js:31:3
+   │  
+31 │ ┌   <Element2>
+32 │ │     <Sub />
+   │ └───────────^ TypeScript only syntax
+
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+   ┌─ nested-in-condition.js:33:11
+   │
+33 │     <Sub />
+   │          -^ But this operator was encountered instead
+   │          │ 
+   │          This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+   ┌─ nested-in-condition.js:35:4
+   │
+35 │   </Element2>
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ nested-in-condition.js:36:1
+   │
+36 │ );
    │ ^ Expected an expression here
 
 

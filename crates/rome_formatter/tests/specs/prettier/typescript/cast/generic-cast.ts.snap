@@ -170,31 +170,39 @@ function y() {
 
 // https://github.com/prettier/prettier/issues/4168
 function x() {
-  const fits = <PermissionsChecker<any> | undefined>(<any>
-  permissions;
-  )[type]
+  const fits = <PermissionsChecker<any> | undefined>(<any>permissions)[type];
   const fitsObjLiteral = <PermissionsChecker<any> | undefined>{ a: "test" };
   const fitsArrayLiteral = <PermissionsChecker<any> | undefined>["t1", "t2"];
 
-  const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>
-  permissions;
-  )[receiverType]
+  const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[receiverType];
 
-  const stillTooLong = <PermissionsChecker<object> | undefined | number | string | boolean>(<any>
-  permissions;
-  )[receiverType]
+  const stillTooLong = <
+    PermissionsChecker<object> | undefined | number | string | boolean
+  >(<any>permissions)[receiverType];
 
-  const stillTooLong2 = <PermissionsChecker<object> | undefined | number | string | boolean | null | never>(<any>
-  permissions;
-  )[receiverType]
+  const stillTooLong2 = <
+      | PermissionsChecker<object>
+      | undefined
+      | number
+      | string
+      | boolean
+      | null
+      | never
+  >(<any>permissions)[receiverType];
 
-  const stillTooLong3 = <PermissionsChecker<object> | undefined>(<any>
-  permissions.someMethodWithLongName(parameter1, parameter2);
-  )[receiverTypeLongName]
+  const stillTooLong3 = <PermissionsChecker<object> | undefined>(
+    <any>permissions.someMethodWithLongName(parameter1, parameter2)
+  )[receiverTypeLongName];
 
-  const stillTooLong4 = <PermissionsChecker<object> | undefined | number | string | boolean | null | never>(<any>
-  permissions.someMethodWithLongName(parameter1, parameter2);
-  )[receiverTypeLongName]
+  const stillTooLong4 = <
+      | PermissionsChecker<object>
+      | undefined
+      | number
+      | string
+      | boolean
+      | null
+      | never
+  >(<any>permissions.someMethodWithLongName(parameter1, parameter2))[receiverTypeLongName];
 
   const testObjLiteral = <PermissionsChecker<any> | undefined>{
     prop1: "myPropVal",
@@ -232,101 +240,6 @@ function x() {
     param3,
   );
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected `')'` but instead found `permissions`
-   ┌─ generic-cast.ts:31:59
-   │
-31 │   const fits = <PermissionsChecker<any> | undefined>(<any>permissions)[type];
-   │                                                           ^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ generic-cast.ts:31:70
-   │
-31 │   const fits = <PermissionsChecker<any> | undefined>(<any>permissions)[type];
-   │                                                           -----------^
-   │                                                           │          │
-   │                                                           │          An explicit or implicit semicolon is expected here...
-   │                                                           ...Which is required to end this statement
-
-error[SyntaxError]: expected `')'` but instead found `permissions`
-   ┌─ generic-cast.ts:35:69
-   │
-35 │   const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[receiverType];
-   │                                                                     ^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ generic-cast.ts:35:80
-   │
-35 │   const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[receiverType];
-   │                                                                     -----------^
-   │                                                                     │          │
-   │                                                                     │          An explicit or implicit semicolon is expected here...
-   │                                                                     ...Which is required to end this statement
-
-error[SyntaxError]: expected `')'` but instead found `permissions`
-   ┌─ generic-cast.ts:37:98
-   │
-37 │   const stillTooLong = <PermissionsChecker<object> | undefined | number | string | boolean>(<any>permissions)[receiverType];
-   │                                                                                                  ^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ generic-cast.ts:37:109
-   │
-37 │   const stillTooLong = <PermissionsChecker<object> | undefined | number | string | boolean>(<any>permissions)[receiverType];
-   │                                                                                                  -----------^
-   │                                                                                                  │          │
-   │                                                                                                  │          An explicit or implicit semicolon is expected here...
-   │                                                                                                  ...Which is required to end this statement
-
-error[SyntaxError]: expected `')'` but instead found `permissions`
-   ┌─ generic-cast.ts:39:114
-   │
-39 │   const stillTooLong2 = <PermissionsChecker<object> | undefined | number | string | boolean | null | never>(<any>permissions)[receiverType];
-   │                                                                                                                  ^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ generic-cast.ts:39:125
-   │
-39 │   const stillTooLong2 = <PermissionsChecker<object> | undefined | number | string | boolean | null | never>(<any>permissions)[receiverType];
-   │                                                                                                                  -----------^
-   │                                                                                                                  │          │
-   │                                                                                                                  │          An explicit or implicit semicolon is expected here...
-   │                                                                                                                  ...Which is required to end this statement
-
-error[SyntaxError]: expected `')'` but instead found `permissions`
-   ┌─ generic-cast.ts:41:71
-   │
-41 │   const stillTooLong3 = <PermissionsChecker<object> | undefined>(<any>permissions.someMethodWithLongName(parameter1, parameter2))[receiverTypeLongName];
-   │                                                                       ^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ generic-cast.ts:41:129
-   │
-41 │   const stillTooLong3 = <PermissionsChecker<object> | undefined>(<any>permissions.someMethodWithLongName(parameter1, parameter2))[receiverTypeLongName];
-   │                                                                       ----------------------------------------------------------^
-   │                                                                       │                                                         │
-   │                                                                       │                                                         An explicit or implicit semicolon is expected here...
-   │                                                                       ...Which is required to end this statement
-
-error[SyntaxError]: expected `')'` but instead found `permissions`
-   ┌─ generic-cast.ts:43:114
-   │
-43 │   const stillTooLong4 = <PermissionsChecker<object> | undefined | number | string | boolean | null | never>(<any>permissions.someMethodWithLongName(parameter1, parameter2))[receiverTypeLongName];
-   │                                                                                                                  ^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ generic-cast.ts:43:172
-   │
-43 │   const stillTooLong4 = <PermissionsChecker<object> | undefined | number | string | boolean | null | never>(<any>permissions.someMethodWithLongName(parameter1, parameter2))[receiverTypeLongName];
-   │                                                                                                                  ----------------------------------------------------------^
-   │                                                                                                                  │                                                         │
-   │                                                                                                                  │                                                         An explicit or implicit semicolon is expected here...
-   │                                                                                                                  ...Which is required to end this statement
-
 
 ```
 

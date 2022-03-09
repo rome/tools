@@ -322,11 +322,11 @@ func(
 
 # Errors
 ```
-error[SyntaxError]: expected `,` but instead found `Content`
-   ┌─ test.js:96:8
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ test.js:96:3
    │
 96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
-   │        ^^^^^^^ unexpected
+   │   ^^^^^^^^^^^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: expected `,` but instead found `much`
    ┌─ test.js:96:20
