@@ -285,8 +285,12 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 error[SyntaxError]: expected `while` but instead found `}`
 =======
 
+<<<<<<< HEAD
 error[SyntaxError]: expected `WHILE_KW` but instead found `}`
 >>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
+=======
+error[SyntaxError]: expected `while` but instead found `}`
+>>>>>>> 3f24da8315 (formatter codegen supporting jsx)
    ┌─ do.js:32:7
    │
 32 │       }
