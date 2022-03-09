@@ -40,8 +40,8 @@ pub(crate) fn format(params: FormatParams) -> Result<Option<Vec<TextEdit>>> {
 
     let parse_result = parse(text, file_id, source_type);
 
-    // can't format, we bail early
-    if !workspace_settings.formatter.format_with_syntax_errors || parse_result.has_errors() {
+    // if we can't format on syntax errors and we have errors, we bail early
+    if !workspace_settings.formatter.format_with_syntax_errors && parse_result.has_errors() {
         return Ok(None);
     }
 
@@ -74,12 +74,12 @@ pub(crate) struct FormatRangeParams<'input> {
 pub(crate) fn format_range(params: FormatRangeParams) -> Result<Option<Vec<TextEdit>>> {
     let parse_result = parse(params.text, params.file_id, params.source_type);
 
-    // can't format, we bail early
-    if params
+    // if we can't format on syntax errors and we have errors, we bail early
+    if !params
         .workspace_settings
         .formatter
         .format_with_syntax_errors
-        || !parse_result.has_errors()
+        && parse_result.has_errors()
     {
         return Ok(None);
     }
@@ -141,12 +141,12 @@ pub(crate) struct FormatOnTypeParams<'input> {
 pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Option<Vec<TextEdit>>> {
     let parse_result = parse(params.text, params.file_id, params.source_type);
 
-    // can't format, we bail early
-    if params
+    // if we can't format on syntax errors and we have errors, we bail early
+    if !params
         .workspace_settings
         .formatter
         .format_with_syntax_errors
-        || !parse_result.has_errors()
+        && parse_result.has_errors()
     {
         return Ok(None);
     }
