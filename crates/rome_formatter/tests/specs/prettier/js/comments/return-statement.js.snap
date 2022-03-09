@@ -264,6 +264,7 @@ function inlineComment() {
 ```
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Errors
 ```
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
@@ -277,4 +278,6 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 
 =======
 >>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
+=======
+>>>>>>> 5f301e8a10 (formatter codegen supporting jsx)
 

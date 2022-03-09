@@ -43,5 +43,3 @@ mod root;
 mod statement;
 mod switch_clause;
 mod template_element;
-mod x_any_element;
-mod x_any_element_name;

@@ -1748,7 +1748,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
                 p,
                 |p| parse_ts_type_assertion_expression(p, context),
                 |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
-            );
+            )
         });
     }
 

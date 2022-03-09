@@ -1500,6 +1500,7 @@ dependencies = [
  "smallvec",
  "tests_macros",
 <<<<<<< HEAD
+<<<<<<< HEAD
  "tracing",
 =======
 <<<<<<< HEAD
@@ -1525,6 +1526,8 @@ dependencies = [
  "rome_rowan",
 >>>>>>> 24f00fb606 (jsx, open/close and self closing elements)
 >>>>>>> b7b5a32c48 (jsx, open/close and self closing elements)
+=======
+>>>>>>> a05a2d25ab (formatter codegen supporting jsx)
 ]
 
 [[package]]
@@ -1908,22 +1911,6 @@ name = "tower-service"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "360dfd1d6d30e05fda32ace2c8c70e9c0a9da713275777f5a4dbb8a1893930c6"
-
-[[package]]
-name = "trace_caller"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95165b4da0519b497f44e085fddc2b826d43aeffd9863c3dc990ed208211f473"
-dependencies = [
- "backtrace",
- "trace_caller_macro",
-]
-
-[[package]]
-name = "trace_caller_macro"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c4abf48b75ee29c01dfa58d6838ea7d65c31268ae8157e73690903a52b496b45"
 
 [[package]]
 name = "tracing"
