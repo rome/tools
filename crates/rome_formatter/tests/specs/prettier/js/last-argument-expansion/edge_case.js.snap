@@ -136,14 +136,26 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
 
 # Errors
 ```
-error[SyntaxError]: Invalid assignment to `<div>
-            <InlineBlock>
+error[SyntaxError]: expected `')'` but instead found `InlineBlock`
+   ┌─ edge_case.js:19:14
+   │
+19 │             <InlineBlock>
+   │              ^^^^^^^^^^^ unexpected
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ edge_case.js:20:15
+   │  
+20 │ ┌               <img
+21 │ │                 src={data[1234567890].image.uri}
+   │ └───────────────────^ TypeScript only syntax
+
+error[SyntaxError]: Invalid assignment to `InlineBlock>
               <img
                 src`
-   ┌─ edge_case.js:18:11
+   ┌─ edge_case.js:19:14
    │  
-18 │ ┌           <div>
-19 │ │             <InlineBlock>
+19 │               <InlineBlock>
+   │ ┌──────────────^
 20 │ │               <img
 21 │ │                 src={data[1234567890].image.uri}
    │ └───────────────────^ This expression cannot be assigned to
@@ -159,12 +171,6 @@ error[SyntaxError]: expected `:` but instead found `.`
    │
 21 │                 src={data[1234567890].image.uri}
    │                                      ^ unexpected
-
-error[SyntaxError]: expected `')'` but instead found `style`
-   ┌─ edge_case.js:22:17
-   │
-22 │                 style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
-   │                 ^^^^^ unexpected
 
 error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '{position'
    ┌─ edge_case.js:22:24

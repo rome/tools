@@ -24,3 +24,4 @@ mod x_closing_element;
 mod x_element;
 mod x_opening_element;
 mod x_reference_identifier;
+mod x_self_closing_element;

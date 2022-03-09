@@ -74,20 +74,24 @@ JsModule {
             semicolon_token: SEMICOLON@62..63 ";" [] [],
         },
         JsExpressionStatement {
+            expression: JsxElementExpression {
+                element: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@63..65 "<" [Newline("\n")] [],
+                        name: JsxReferenceIdentifier {
+                            value_token: IDENT@65..71 "number" [] [],
+                        },
+                        r_angle_token: R_ANGLE@71..73 ">" [] [Whitespace(" ")],
+                    },
+                    closing_element: missing (required),
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
-                    items: [
-                        L_ANGLE@63..65 "<" [Newline("\n")] [],
-                        TsNumberType {
-                            number_token: NUMBER_KW@65..71 "number" [] [],
-                        },
-                        R_ANGLE@71..73 ">" [] [Whitespace(" ")],
-                        JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@73..75 "a" [] [Whitespace(" ")],
-                            },
-                        },
-                    ],
+                left: JsIdentifierAssignment {
+                    name_token: IDENT@73..75 "a" [] [Whitespace(" ")],
                 },
                 operator_token: EQ@75..77 "=" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
@@ -150,16 +154,20 @@ JsModule {
         2: JS_STRING_LITERAL_EXPRESSION@54..62
           0: JS_STRING_LITERAL@54..62 "\"string\"" [] []
       1: SEMICOLON@62..63 ";" [] []
-    3: JS_EXPRESSION_STATEMENT@63..79
-      0: JS_ASSIGNMENT_EXPRESSION@63..78
-        0: JS_UNKNOWN_ASSIGNMENT@63..75
-          0: L_ANGLE@63..65 "<" [Newline("\n")] []
-          1: TS_NUMBER_TYPE@65..71
-            0: NUMBER_KW@65..71 "number" [] []
-          2: R_ANGLE@71..73 ">" [] [Whitespace(" ")]
-          3: JS_IDENTIFIER_EXPRESSION@73..75
-            0: JS_REFERENCE_IDENTIFIER@73..75
-              0: IDENT@73..75 "a" [] [Whitespace(" ")]
+    3: JS_EXPRESSION_STATEMENT@63..73
+      0: JSX_ELEMENT_EXPRESSION@63..73
+        0: JSX_ELEMENT@63..73
+          0: JSX_OPENING_ELEMENT@63..73
+            0: L_ANGLE@63..65 "<" [Newline("\n")] []
+            1: JSX_REFERENCE_IDENTIFIER@65..71
+              0: IDENT@65..71 "number" [] []
+            2: R_ANGLE@71..73 ">" [] [Whitespace(" ")]
+          1: (empty)
+      1: (empty)
+    4: JS_EXPRESSION_STATEMENT@73..79
+      0: JS_ASSIGNMENT_EXPRESSION@73..78
+        0: JS_IDENTIFIER_ASSIGNMENT@73..75
+          0: IDENT@73..75 "a" [] [Whitespace(" ")]
         1: EQ@75..77 "=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@77..78
           0: JS_NUMBER_LITERAL@77..78 "3" [] []
@@ -173,11 +181,14 @@ error[SyntaxError]: Invalid assignment to `a()`
   │  ^^^ This expression cannot be assigned to
 
 --
-error[SyntaxError]: Invalid assignment to `<number> a`
-  ┌─ ts_as_assignment_no_parenthesize.ts:4:1
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ ts_as_assignment_no_parenthesize.ts:4:10
   │
 4 │ <number> a = 3;
-  │ ^^^^^^^^^^ This expression cannot be assigned to
+  │ ---------^
+  │ │        │
+  │ │        An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
 
 --
 let a: any;

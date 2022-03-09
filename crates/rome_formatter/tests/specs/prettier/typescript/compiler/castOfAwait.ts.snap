@@ -21,12 +21,47 @@ async function f() {
 ```js
 // @target: es6
 async function f() {
-  <number>await 0;
+  <number>;
+  await 0;
   typeof await 0;
   void await 0;
-  await void <string>typeof <number>void await 0;
+  await void <string>;
+  typeof <number>;
+  void await 0;
   await await 0;
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ castOfAwait.ts:3:14
+  │
+3 │     <number> await 0;
+  │     ---------^^^^^
+  │     │        │
+  │     │        An explicit or implicit semicolon is expected here...
+  │     ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ castOfAwait.ts:6:25
+  │
+6 │     await void <string> typeof <number> void await 0;
+  │     --------------------^^^^^^
+  │     │                   │
+  │     │                   An explicit or implicit semicolon is expected here...
+  │     ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ castOfAwait.ts:6:41
+  │
+6 │     await void <string> typeof <number> void await 0;
+  │                         ----------------^^^^
+  │                         │               │
+  │                         │               An explicit or implicit semicolon is expected here...
+  │                         ...Which is required to end this statement
+
 
 ```
 

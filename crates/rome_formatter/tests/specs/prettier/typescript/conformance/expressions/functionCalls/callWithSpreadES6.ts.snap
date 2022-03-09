@@ -89,7 +89,9 @@ xa[1].foo(1, 2, "abc");
 xa[1].foo(1, 2, ...a);
 xa[1].foo(1, 2, ...a, "abc");
 
-(<Function>xa[1].foo)(...[1, 2, "abc"]);
+(<Function>
+xa[1].foo;
+)(...[1, 2, "abc"])
 
 class C {
   constructor(x: number, y: number, ...z: string[]) {
@@ -109,6 +111,26 @@ class D extends C {
     super.foo(1, 2, ...a);
   }
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `')'` but instead found `xa`
+   ┌─ callWithSpreadES6.ts:31:12
+   │
+31 │ (<Function>xa[1].foo)(...[1, 2, "abc"]);
+   │            ^^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ callWithSpreadES6.ts:31:21
+   │
+31 │ (<Function>xa[1].foo)(...[1, 2, "abc"]);
+   │            ---------^
+   │            │        │
+   │            │        An explicit or implicit semicolon is expected here...
+   │            ...Which is required to end this statement
+
 
 ```
 

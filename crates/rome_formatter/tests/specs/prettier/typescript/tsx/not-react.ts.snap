@@ -23,10 +23,24 @@ const footer = '<footer></footer>';
 
 type ul = any;
 const somethingElse = 1;
-const thing = <ul>somethingElse;
+const thing = <ul>;
+somethingElse;
 const div = "<div></div>";
 const h1 = `<h1>Hi</h1>`;
 const footer = "<footer></footer>";
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ not-react.ts:5:19
+  │
+5 │ const thing = <ul>somethingElse;
+  │ ------------------^^^^^^^^^^^^^ An explicit or implicit semicolon is expected here...
+  │ │                  
+  │ ...Which is required to end this statement
+
 
 ```
 
