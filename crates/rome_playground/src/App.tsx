@@ -56,7 +56,7 @@ function App() {
   const [indentStyle, setIndentStyle] = useState(
     (searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab
   );
-  const [indentWidth, setIndentWidth] = useState<number | undefined>(
+  const [indentWidth, setIndentWidth] = useState(
     parseInt(searchParams.get("indentWidth") ?? "2")
   );
   const [isTypeScript, setIsTypeScript] = useState(

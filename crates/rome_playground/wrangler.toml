@@ -1,0 +1,10 @@
+name = "rome_playground"
+type = "webpack"
+account_id = "eb8e101547d54013f8e004e8416ec750"
+route = 'play.rome.tools/*'
+zone_id = 'f43c78231b970b765d46d4523f957cf6'
+usage_model = ''
+compatibility_flags = []
+workers_dev = true
+site = {bucket = "./dist", entry-point = "workers-site"}
+compatibility_date = "2022-03-09"
