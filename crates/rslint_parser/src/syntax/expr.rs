@@ -1615,7 +1615,6 @@ fn parse_call_expression_rest(
         // (() => { a }).a<A, B, C>()
         // (() => a)<A, B, C>();
         if TypeScript.is_supported(p) && p.at(T![<]) {
-            println!("HERE");
             // rewinds automatically if not a valid type arguments
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
 
