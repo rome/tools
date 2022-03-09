@@ -75,20 +75,20 @@ pub(crate) fn format(mut session: CliSession) {
         panic!("unexpected argument {arg:?}");
     }
 
-    let (tx_files, rx_files) = channel();
-    let (tx_diags, rx_diags) = channel();
+    let (send_files, recv_files) = channel();
+    let (send_diags, recv_diags) = channel();
 
     let formatted = AtomicUsize::new(0);
     let file_ids = AtomicUsize::new(0);
 
-    let ctx = TraversalContext {
+    let ctx = FormatCommandOptions {
         app: &session.app,
         options,
         is_check,
         file_ids: &file_ids,
         formatted: &formatted,
-        files: tx_files,
-        diagnostics: tx_diags,
+        files: send_files,
+        diagnostics: send_diags,
     };
 
     let start = Instant::now();
@@ -126,24 +126,29 @@ pub(crate) fn format(mut session: CliSession) {
         }
     });
 
-    let duration = start.elapsed();
-    let count = formatted.load(Ordering::Relaxed);
-    println!("Formatted {count} files in {duration:?}");
+    if !is_silent {
+        let duration = start.elapsed();
+        let count = formatted.load(Ordering::Relaxed);
+        println!("Formatted {count} files in {duration:?}");
+    }
 
+    let mut has_errors = false;
     let mut file_ids = HashSet::new();
     let mut diagnostics = Vec::new();
-    while let Ok(diag) = rx_diags.recv() {
+
+    while let Ok(diag) = recv_diags.recv() {
+        has_errors |= diag.is_error();
         file_ids.insert(diag.file_id);
         diagnostics.push(diag);
     }
 
-    if diagnostics.is_empty() {
+    if has_errors {
         return;
     }
 
     if !is_silent {
         let mut files = PathFiles::default();
-        while let Ok((file_id, path)) = rx_files.recv() {
+        while let Ok((file_id, path)) = recv_files.recv() {
             if !file_ids.contains(&file_id) {
                 continue;
             }
@@ -160,6 +165,7 @@ pub(crate) fn format(mut session: CliSession) {
         }
     }
 
+    // Formatting emitted error diagnostics, exit with a non-zero code
     process::exit(1)
 }
 
@@ -167,24 +173,29 @@ fn into_os_string(arg: &OsStr) -> Result<OsString, Infallible> {
     arg.try_into()
 }
 
+/// Implementation of [Files] with pre-allocated file IDs
 #[derive(Default)]
 struct PathFiles {
     storage: HashMap<FileId, SimpleFile>,
 }
 
 impl Files for PathFiles {
+    /// Returns the name of the file identified by the id.
     fn name(&self, id: FileId) -> Option<&str> {
         self.storage.get(&id)?.name(id)
     }
 
+    /// Returns the source of the file identified by the id.
     fn source(&self, id: FileId) -> Option<&str> {
         self.storage.get(&id)?.source(id)
     }
 
+    /// The index of the line at the byte index.
     fn line_index(&self, id: FileId, byte_index: usize) -> Option<usize> {
         self.storage.get(&id)?.line_index(id, byte_index)
     }
 
+    /// The byte range of line in the source of the file.
     fn line_range(&self, file_id: FileId, line_index: usize) -> Option<Range<usize>> {
         self.storage.get(&file_id)?.line_range(file_id, line_index)
     }
@@ -192,27 +203,38 @@ impl Files for PathFiles {
 
 #[derive(Clone)]
 /// Context object shared between directory traversal tasks
-struct TraversalContext<'a> {
+struct FormatCommandOptions<'a> {
+    /// Shared instance of [App]
     app: &'a App,
+    /// Options to use for formatting the discovered files
     options: FormatOptions,
+    /// Boolean flag storing whether the command is being run in check mode
     is_check: bool,
+    /// Shared atomic counter for allocating file IDs
     file_ids: &'a AtomicUsize,
+    /// Shared atomic counter storing the number of formatted files
     formatted: &'a AtomicUsize,
+    /// Channel sending file-id-to-path associations to the display thread
     files: Sender<(FileId, PathBuf)>,
+    /// Channel sending diagnostics to the display thread
     diagnostics: Sender<Diagnostic>,
 }
 
-impl<'a> TraversalContext<'a> {
+impl<'a> FormatCommandOptions<'a> {
+    /// Acquire a new file ID from the atomic counter and send the associated
+    /// path to the display thread
     fn acquire_file_id(&self, path: PathBuf) -> FileId {
         let file_id = self.file_ids.fetch_add(1, Ordering::Relaxed);
         self.files.send((file_id, path)).ok();
         file_id
     }
 
+    /// Increment the formatted files counter
     fn add_formatted(&self) {
         self.formatted.fetch_add(1, Ordering::Relaxed);
     }
 
+    /// Send a diagnostic to the display thread
     fn push_diagnostic(&self, err: Diagnostic) {
         self.diagnostics.send(err).ok();
     }
@@ -224,7 +246,7 @@ const DEFAULT_IGNORE: &[&str] = &[".git", "node_modules"];
 
 /// Traverse a single directory, scheduling any file for formatting and
 /// directories for subsequent traversal
-fn handle_dir<'a>(scope: &Scope<'a>, ctx: TraversalContext<'a>, path: &Path, file_id: FileId) {
+fn handle_dir<'a>(scope: &Scope<'a>, ctx: FormatCommandOptions<'a>, path: &Path, file_id: FileId) {
     if let Some(file_name) = path.file_name().and_then(OsStr::to_str) {
         if DEFAULT_IGNORE.contains(&file_name) {
             return;
@@ -290,7 +312,7 @@ fn handle_dir<'a>(scope: &Scope<'a>, ctx: TraversalContext<'a>, path: &Path, fil
 /// This function wraps the [format_file] function implementing the formatting
 /// in a [catch_unwind] block and emit diagnostics in case of error (either the
 /// formatting function returns Err or panics)
-fn handle_file(ctx: TraversalContext, path: &Path, file_id: FileId) {
+fn handle_file(ctx: FormatCommandOptions, path: &Path, file_id: FileId) {
     let params = FormatFileParams {
         app: ctx.app,
         options: ctx.options,
@@ -315,7 +337,10 @@ fn handle_file(ctx: TraversalContext, path: &Path, file_id: FileId) {
         Err(err) => {
             let msg = match err.downcast::<String>() {
                 Ok(msg) => format!("formatting panicked: {msg}"),
-                Err(_) => String::from("formatting panicked"),
+                Err(err) => match err.downcast::<&'static str>() {
+                    Ok(msg) => format!("formatting panicked: {msg}"),
+                    Err(_) => String::from("formatting panicked"),
+                },
             };
 
             ctx.push_diagnostic(Diagnostic::error(file_id, "Panic", msg));
@@ -332,8 +357,8 @@ struct FormatFileParams<'a> {
 }
 
 /// This function performs the actual formatting: it reads the file from disk
-/// (or mmap it), parse and format it then either write the result back or
-/// compare it to the original content and emit a diagnostic in check mode
+/// (or map it into memory it), parse and format it; then, it either writes the
+/// result back or compares it with the original content and emit a diagnostic
 fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> {
     if !params.app.can_format(&RomePath::new(params.path)) {
         return Err(Diagnostic::error(
@@ -360,7 +385,7 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
     );
 
     if root.has_errors() {
-        return Ok(root.into_errors());
+        return Ok(root.into_diagnostics());
     }
 
     let result = rome_formatter::format(params.options, &root.syntax())

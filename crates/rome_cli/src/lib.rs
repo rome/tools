@@ -14,8 +14,11 @@ Available commands:
 ",
 );
 
+/// Global context for an execution of the CLI
 pub struct CliSession {
+    /// Instance of [App] used by this run of the CLI
     pub app: App,
+    /// List of command line arguments
     pub args: Arguments,
 }
 
