@@ -16,8 +16,8 @@ export default function IndentStyleSelect({
   return (
     <div className="pl-5 flex">
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Indent Type
+        <label htmlFor="indentStyle" className="block text-sm font-medium text-gray-700">
+          Indent Style
         </label>
         <select
           id="location"
@@ -34,7 +34,7 @@ export default function IndentStyleSelect({
       </div>
       {indentStyle === IndentStyle.Space && (
         <div className="pl-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label htmlFor="indentWidth" className="block text-sm font-medium text-gray-700">
             Indent Width
           </label>
           <input

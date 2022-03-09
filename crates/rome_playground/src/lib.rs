@@ -75,8 +75,7 @@ impl WriteColor for ErrorOutput {
 pub fn run(
     code: String,
     line_width: u16,
-    is_tab: bool,
-    indent_width: u8,
+    indent_width: Option<u8>, // If None, we use tabs
     is_typescript: bool,
     is_jsx: bool,
 ) -> PlaygroundResult {
@@ -93,10 +92,10 @@ pub fn run(
     let parse = parse(&code, main_file_id, source_type);
     let syntax = parse.syntax();
 
-    let indent_style = if is_tab {
-        IndentStyle::Tab
+    let indent_style = if let Some(width) = indent_width {
+        IndentStyle::Space(width)
     } else {
-        IndentStyle::Space(indent_width)
+        IndentStyle::Tab
     };
 
     let options = FormatOptions {

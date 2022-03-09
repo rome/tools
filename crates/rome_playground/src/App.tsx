@@ -1,4 +1,3 @@
-import "./App.css";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import "react-tabs/style/react-tabs.css";
 import init, { run } from "../pkg/rome_playground";
@@ -57,7 +56,7 @@ function App() {
   const [indentStyle, setIndentStyle] = useState(
     (searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab
   );
-  const [indentWidth, setIndentWidth] = useState(
+  const [indentWidth, setIndentWidth] = useState<number | undefined>(
     parseInt(searchParams.get("indentWidth") ?? "2")
   );
   const [isTypeScript, setIsTypeScript] = useState(
@@ -87,11 +86,11 @@ function App() {
       const { cst, ast, formatted_code, formatter_ir, errors } = run(
         code,
         lineWidth,
-        indentStyle === IndentStyle.Tab,
-        indentWidth,
+        indentStyle === IndentStyle.Space ? indentWidth : undefined,
         isTypeScript,
         isJsx
       );
+
       return (
         <div className="divide-y divide-slate-300">
           <h1 className="p-4 text-xl">Rome Playground</h1>

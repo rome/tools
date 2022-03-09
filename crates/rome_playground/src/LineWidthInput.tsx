@@ -8,7 +8,7 @@ export default function LineWidthInput({ lineWidth, setLineWidth }: Props) {
     <div className="w-[300px] p-5 flex items-end">
       <div className="pr-4">
         <label
-          htmlFor="number"
+          htmlFor="lineWidth"
           className="block text-sm font-medium text-gray-700"
         >
           Line Width
@@ -27,6 +27,7 @@ export default function LineWidthInput({ lineWidth, setLineWidth }: Props) {
         </div>
       </div>
       <button
+				aria-label="Set line width to 80 characters"
         onClick={() => setLineWidth(80)}
         disabled={lineWidth === 80}
         className="bg-slate-500 m-2 text-sm w-[80px] p-1 rounded text-slate-50 disabled:bg-slate-300 transition"
@@ -34,6 +35,7 @@ export default function LineWidthInput({ lineWidth, setLineWidth }: Props) {
         80
       </button>
       <button
+				aria-label="Set line width to 120 characters"
         onClick={() => setLineWidth(120)}
         disabled={lineWidth === 120}
         className="bg-slate-500 m-2 text-sm w-[80px] p-1 rounded text-slate-50 disabled:bg-slate-300 transition"

@@ -1290,16 +1290,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome-playground"
-version = "0.1.0"
-dependencies = [
- "rome_formatter",
- "rslint_errors",
- "rslint_parser",
- "wasm-bindgen",
-]
-
-[[package]]
 name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
@@ -1387,6 +1377,16 @@ dependencies = [
 [[package]]
 name = "rome_path"
 version = "0.0.0"
+
+[[package]]
+name = "rome_playground"
+version = "0.0.0"
+dependencies = [
+ "rome_formatter",
+ "rslint_errors",
+ "rslint_parser",
+ "wasm-bindgen",
+]
 
 [[package]]
 name = "rome_rowan"
