@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: object.js
 
 ---
@@ -81,7 +81,7 @@ function StatelessFunctionalComponent(
     items,
   },
 ) {
-  return <div />;
+  return <div />
 }
 
 function StatelessFunctionalComponent2(
@@ -96,7 +96,7 @@ function StatelessFunctionalComponent2(
     items = [],
   } = {},
 ) {
-  return <div />;
+  return <div />
 }
 
 function StatelessFunctionalComponent3(
@@ -111,7 +111,7 @@ function StatelessFunctionalComponent3(
     items = [],
   } = { isActive: true },
 ) {
-  return <div />;
+  return <div />
 }
 
 class C {
@@ -127,12 +127,13 @@ class C {
       items,
     },
   ) {
-    return <div />;
+    return <div />
   }
 }
 
 ```
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 # Errors
@@ -160,12 +161,50 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
    │
 56 │     return <div />
    │            ^^^^^^^ JSX only syntax
+=======
+# Errors
+```
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ object.js:11:10
+   │  
+11 │     return <div />
+   │ ┌──────────^
+12 │ │ }
+   │ └─^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ object.js:24:10
+   │  
+24 │     return <div />
+   │ ┌──────────^
+25 │ │ }
+   │ └─^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ object.js:41:10
+   │  
+41 │     return <div />
+   │ ┌──────────^
+42 │ │ }
+   │ └─^ Jsx only syntax
+
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ object.js:56:12
+   │  
+56 │       return <div />
+   │ ┌────────────^
+57 │ │   }
+   │ └───^ Jsx only syntax
+>>>>>>> 1ab4ecffde (jsx parser enabled by language variant)
 
 
 ```
 
+<<<<<<< HEAD
 =======
 >>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
 =======
 >>>>>>> 5f301e8a10 (formatter codegen supporting jsx)
+=======
+>>>>>>> 1ab4ecffde (jsx parser enabled by language variant)
 

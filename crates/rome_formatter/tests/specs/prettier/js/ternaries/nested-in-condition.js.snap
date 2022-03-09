@@ -122,6 +122,13 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
    │          This operator requires a right hand side value
 >>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested-in-condition.js:25:5
+   │  
+25 │ ┌     <Sub />
+26 │ │     <Sub />
+   │ └─────^ Jsx only syntax
+
 error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
    ┌─ nested-in-condition.js:26:11
    │
@@ -130,6 +137,7 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
    │          │ 
    │          This operator requires a right hand side value
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested-in-condition.js:25:5
@@ -145,6 +153,15 @@ error[SyntaxError]: expected an expression but instead found '>'
    │           ^ Expected an expression here
 =======
 =======
+=======
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+   ┌─ nested-in-condition.js:27:5
+   │  
+27 │ ┌     <Sub />
+28 │ │     <Sub />
+   │ └─────^ Jsx only syntax
+
+>>>>>>> 844f141c04 (jsx parser enabled by language variant)
 error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
    ┌─ nested-in-condition.js:28:11
    │
@@ -255,11 +272,26 @@ error[SyntaxError]: expected an expression but instead found '>'
 33 │     <Sub />
    │           ^ Expected an expression here
 
+<<<<<<< HEAD
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+=======
+error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+>>>>>>> 844f141c04 (jsx parser enabled by language variant)
    ┌─ nested-in-condition.js:34:5
+<<<<<<< HEAD
    │
 34 │     <Sub />
    │     ^^^^^^^ JSX only syntax
+=======
+   │  
+34 │ ┌     <Sub />
+35 │ │   </Element2>
+<<<<<<< HEAD
+   │ └───^ JSX only syntax
+=======
+   │ └───^ Jsx only syntax
+>>>>>>> 844f141c04 (jsx parser enabled by language variant)
+>>>>>>> 1ab4ecffde (jsx parser enabled by language variant)
 
 error: unterminated regex literal
    ┌─ nested-in-condition.js:35:14
