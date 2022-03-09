@@ -41,6 +41,16 @@
 						true,
 						false
 					]
+				},
+				"rome.analysis.enableDiagnostics": {
+					"type": "boolean",
+					"default": false,
+					"markdownDescription": "Allows rome to compute and publish diagnostics"
+				},
+				"rome.analysis.enableCodeActions": {
+					"type": "boolean",
+					"default": false,
+					"markdownDescription": "Allows rome to compute and provide code actions"
 				}
 			}
 		}
