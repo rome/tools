@@ -45,7 +45,7 @@ impl ToFormatElement for JsForStatement {
         let body = if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
             format_elements![body.format(formatter)?, token(";")]
         } else {
-            body.format(formatter)?
+            format_elements![space_token(), body.format(formatter)?]
         };
 
         Ok(group_elements(format_elements![
@@ -56,7 +56,6 @@ impl ToFormatElement for JsForStatement {
                 inner,
                 &r_paren_token?,
             )?,
-            space_token(),
             body
         ]))
     }

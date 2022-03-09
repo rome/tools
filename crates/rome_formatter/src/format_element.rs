@@ -676,28 +676,8 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
     let content: FormatElement = content.into();
-
-    // If content is a list, split off the leading Comment elements
-    let (leading, content) = if let FormatElement::List(list) = content {
-        let mut iter = list.content.into_iter().peekable();
-
-        let mut comments = Vec::new();
-        while let Some(FormatElement::Comment(_)) = iter.peek() {
-            // SAFETY: Unwrap guarded by the above call to peek
-            comments.push(iter.next().unwrap());
-        }
-
-        (concat_elements(comments), concat_elements(iter))
-    } else {
-        (empty_element(), content)
-    };
-
-    match (leading.is_empty(), content.is_empty()) {
-        (true, true) => empty_element(),
-        (true, false) => FormatElement::from(Group::new(content)),
-        (false, true) => leading,
-        (false, false) => format_elements![leading, Group::new(content)],
-    }
+    let (leading, content, trailing) = content.split_trivia();
+    format_elements![leading, Group::new(content), trailing]
 }
 
 /// Creates a group that forces all elements inside it to be printed on a
@@ -1243,6 +1223,39 @@ impl FormatElement {
             FormatElement::Comment(content) => content.has_hard_line_breaks(),
             FormatElement::Verbatim(verbatim) => verbatim.element.has_hard_line_breaks(),
         }
+    }
+
+    pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
+        // If content is a list, split off the leading Comment elements
+        if let FormatElement::List(list) = self {
+            // Find the index of the first non-comment element in the list
+            let content_start = list
+                .content
+                .iter()
+                .position(|elem| !matches!(elem, FormatElement::Comment(_)))
+                .unwrap_or(list.content.len());
+
+            // Split the list at the found index
+            let mut leading = list.content;
+            let mut content = leading.split_off(content_start);
+
+            // Find the index of the last non-comment element in the list
+            let content_end = content
+                .iter()
+                .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
+                .map_or(0, |index| index + 1);
+
+            // Split the list at the found index, content now holds the inner elements
+            let trailing = content.split_off(content_end);
+
+            return (
+                concat_elements(leading),
+                concat_elements(content),
+                concat_elements(trailing),
+            );
+        }
+
+        (empty_element(), self, empty_element())
     }
 }
 

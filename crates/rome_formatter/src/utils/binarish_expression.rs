@@ -328,11 +328,12 @@ fn split_binaryish_to_flatten_items(
     let right_kind = &right.syntax().kind();
     let right_expression_should_group = right_expression_should_group(right_kind);
 
+    let operator_has_trailing_comments = operator.has_trailing_comments();
     let formatted_left = format_elements![
         left.format(formatter)?,
         space_token(),
         operator.format(formatter)?,
-        if operator.has_trailing_comments() {
+        if operator_has_trailing_comments {
             hard_line_break()
         } else {
             empty_element()
@@ -341,14 +342,23 @@ fn split_binaryish_to_flatten_items(
     let left_item = FlattenItem::Node(
         left.syntax().clone(),
         formatted_left,
-        operator.has_trailing_comments().into(),
+        operator_has_trailing_comments.into(),
     );
 
     let (previous_operator, has_comments) = if let Some(previous_operator) = previous_operator {
+        let previous_operator_has_trailing_comments = previous_operator.has_trailing_comments();
         (
-            format_elements![space_token(), previous_operator.format(formatter)?],
+            format_elements![
+                space_token(),
+                previous_operator.format(formatter)?,
+                if previous_operator_has_trailing_comments {
+                    hard_line_break()
+                } else {
+                    empty_element()
+                }
+            ],
             // Here we care only about trailing comments that belong to the previous operator
-            previous_operator.has_trailing_comments() || right.syntax().contains_comments(),
+            previous_operator_has_trailing_comments || right.syntax().contains_comments(),
         )
     } else {
         (

@@ -1,13 +1,15 @@
 use rome_core::App;
 use rome_formatter::{format, FormatOptions, Formatted, IndentStyle};
 use rome_path::RomePath;
-use rslint_errors::file::SimpleFiles;
-use rslint_errors::{termcolor, Emitter};
 use rslint_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::fs;
 use std::path::{Path, PathBuf};
+
+mod check_reformat {
+    include!("check_reformat.rs");
+}
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
 pub enum SerializableIndentStyle {
@@ -149,12 +151,13 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let result = formatted_result.unwrap();
 
         if !has_errors {
-            check_reformat(
-                result.as_code(),
-                source_type.clone(),
+            check_reformat::check_reformat(check_reformat::CheckReformatParams {
+                root: &root,
+                text: result.as_code(),
+                source_type: source_type.clone(),
                 file_name,
-                FormatOptions::default(),
-            );
+                format_options: FormatOptions::default(),
+            });
         }
 
         snapshot_content.add_output(result, FormatOptions::default());
@@ -173,12 +176,13 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                     let formatted_result = format(format_options, &root).unwrap();
 
                     if !has_errors {
-                        check_reformat(
-                            formatted_result.as_code(),
-                            source_type.clone(),
+                        check_reformat::check_reformat(check_reformat::CheckReformatParams {
+                            root: &root,
+                            text: formatted_result.as_code(),
+                            source_type: source_type.clone(),
                             file_name,
                             format_options,
-                        );
+                        });
                     }
 
                     snapshot_content.add_output(formatted_result, format_options);
@@ -193,36 +197,4 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
             insta::assert_snapshot!(file_name, snapshot_content.snap_content(), file_name);
         });
     }
-}
-
-fn check_reformat(
-    text: &str,
-    source_type: SourceType,
-    file_name: &str,
-    format_options: FormatOptions,
-) {
-    let re_parse = parse(text, 0, source_type);
-
-    if re_parse.has_errors() {
-        let mut files = SimpleFiles::new();
-        files.add(file_name.into(), text.into());
-
-        let mut buffer = termcolor::Buffer::ansi();
-        let mut emitter = Emitter::new(&files);
-
-        for error in re_parse.errors() {
-            emitter
-                .emit_with_writer(error, &mut buffer)
-                .expect("failed to emit diagnostic");
-        }
-
-        panic!(
-            "formatter output had error diagnostics where input had none:\n{}",
-            std::str::from_utf8(buffer.as_slice()).expect("non utf8 in error buffer")
-        )
-    }
-
-    let re_format = format(format_options, &re_parse.syntax()).unwrap();
-
-    similar_asserts::assert_str_eq!(text, re_format.as_code());
 }

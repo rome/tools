@@ -132,7 +132,7 @@ pub trait ParseSeparatedList {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
         let mut first = true;
-        while !self.is_at_list_end(p) {
+        while !p.at(JsSyntaxKind::EOF) && !self.is_at_list_end(p) {
             if first {
                 first = false;
             } else {

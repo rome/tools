@@ -1,14 +1,14 @@
 use crate::formatter_traits::FormatTokenAndNode;
 
+use crate::utils::is_simple_expression;
 use crate::{
-    empty_element, format_elements, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, group_elements, soft_block_indent, space_token, token, FormatElement,
+    FormatResult, Formatter, ToFormatElement,
 };
 
-use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
 use rome_js_syntax::JsUnaryExpressionFields;
 use rome_js_syntax::T;
-use rslint_parser::token_set;
+use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
 
 impl ToFormatElement for JsUnaryExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -17,23 +17,60 @@ impl ToFormatElement for JsUnaryExpression {
         let operator = operator?;
         let argument = argument?;
 
-        // Insert a space between the operator and argument if its a keyword or
-        // if the inner argument is a binary or pre-update operation
-        let should_space = token_set![T![delete], T![void], T![typeof]].contains(operator.kind())
-            || matches!(
-                &argument,
-                JsAnyExpression::JsUnaryExpression(_) | JsAnyExpression::JsPreUpdateExpression(_)
-            );
+        // Insert a space between the operator and argument if its a keyword
+        let is_keyword_operator = matches!(operator.kind(), T![delete] | T![void] | T![typeof]);
+        if is_keyword_operator {
+            return Ok(format_elements![
+                operator.format(formatter)?,
+                space_token(),
+                argument.format(formatter)?,
+            ]);
+        }
 
-        let space_or_empty = if should_space {
-            space_token()
-        } else {
-            empty_element()
+        // Parenthesize the inner expression if it's a binary or pre-update
+        // operation with an ambiguous operator (+ and ++ or - and --)
+        let is_ambiguous_expression = match &argument {
+            JsAnyExpression::JsUnaryExpression(expr) => {
+                let inner_op = expr.operator()?;
+                matches!(
+                    (operator.kind(), inner_op.kind()),
+                    (T![+], T![+]) | (T![-], T![-])
+                )
+            }
+            JsAnyExpression::JsPreUpdateExpression(expr) => {
+                let inner_op = expr.operator()?;
+                matches!(
+                    (operator.kind(), inner_op.kind()),
+                    (T![+], T![++]) | (T![-], T![--])
+                )
+            }
+            _ => false,
         };
+
+        if is_ambiguous_expression {
+            let parenthesized = if is_simple_expression(argument.clone())? {
+                format_elements![
+                    operator.format(formatter)?,
+                    token("("),
+                    argument.format(formatter)?,
+                    token(")"),
+                ]
+            } else {
+                format_elements![
+                    operator.format(formatter)?,
+                    group_elements(format_elements![
+                        token("("),
+                        soft_block_indent(argument.format(formatter)?),
+                        token(")"),
+                    ]),
+                ]
+            };
+
+            return Ok(parenthesized);
+        }
 
         Ok(format_elements![
             operator.format(formatter)?,
-            space_or_empty,
             argument.format(formatter)?,
         ])
     }

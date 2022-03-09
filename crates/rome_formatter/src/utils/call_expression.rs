@@ -252,7 +252,9 @@ fn compute_groups(flatten_items: impl Iterator<Item = FlattenItem>) -> FormatRes
             FlattenItem::Node(_, _) => groups.continue_group(item),
         }
 
-        // Close the group immediately if the node had any trailing comments
+        // Close the group immediately if the node had any trailing comments to
+        // ensure those are printed in a trailing position for the token they
+        // were originally commenting
         if has_trailing_comments {
             groups.close_group();
         }

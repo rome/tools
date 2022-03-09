@@ -380,13 +380,13 @@ impl Formatter {
 
                 let comment = Token::from(comment);
 
-                let space_before = if prepend_newline && index == first_comment {
+                let element_before_comment = if prepend_newline && index == first_comment {
                     hard_line_break()
                 } else {
                     space_token()
                 };
 
-                let space_after = if is_single_line {
+                let element_after_comment = if is_single_line {
                     match line_count {
                         0 | 1 => hard_line_break(),
                         _ => empty_line(),
@@ -400,9 +400,9 @@ impl Formatter {
                 };
 
                 elements.push(crate::comment(format_elements![
-                    space_before,
+                    element_before_comment,
                     comment,
-                    space_after
+                    element_after_comment,
                 ]));
 
                 line_count = 0;

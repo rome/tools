@@ -14,6 +14,10 @@ use rome_formatter::{FormatOptions, IndentStyle};
 use rslint_errors::{file::SimpleFiles, termcolor, Emitter};
 use rslint_parser::{parse, SourceType};
 
+use crate::check_reformat::CheckReformatParams;
+
+mod check_reformat;
+
 static REPORTER: DiffReport = DiffReport::new();
 
 tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts}", crate::test_snapshot, "script"}
@@ -79,29 +83,13 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             let result = formatted.into_code();
 
             if !has_errors {
-                let re_parse = parse(&result, 0, source_type);
-
-                if re_parse.has_errors() {
-                    let mut files = SimpleFiles::new();
-                    files.add(file_name.into(), result);
-
-                    let mut buffer = termcolor::Buffer::ansi();
-                    let mut emitter = Emitter::new(&files);
-
-                    for error in re_parse.errors() {
-                        emitter
-                            .emit_with_writer(error, &mut buffer)
-                            .expect("failed to emit diagnostic");
-                    }
-
-                    panic!(
-                        "formatter output had error diagnostics where input had none:\n{}",
-                        std::str::from_utf8(buffer.as_slice()).expect("non utf8 in error buffer")
-                    )
-                }
-
-                let re_format = rome_formatter::format(options, &re_parse.syntax()).unwrap();
-                similar_asserts::assert_str_eq!(result, re_format.into_code());
+                check_reformat::check_reformat(CheckReformatParams {
+                    root: &syntax,
+                    text: &result,
+                    source_type,
+                    file_name,
+                    format_options: options,
+                });
             }
 
             result

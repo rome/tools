@@ -46,7 +46,6 @@ impl ToFormatElement for JsForOfStatement {
                     ],
                     &r_paren_token?
                 )?,
-                space_token(),
             ],
             body?,
         )

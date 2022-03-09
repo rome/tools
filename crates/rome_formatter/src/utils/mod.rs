@@ -108,6 +108,7 @@ pub(crate) fn format_head_body_statement(
     if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
         Ok(hard_group_elements(format_elements![
             head,
+            space_token(),
             body.format(formatter)?,
         ]))
     } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
@@ -120,6 +121,7 @@ pub(crate) fn format_head_body_statement(
     } else {
         Ok(format_elements![
             hard_group_elements(head),
+            space_token(),
             body.format(formatter)?,
         ])
     }
