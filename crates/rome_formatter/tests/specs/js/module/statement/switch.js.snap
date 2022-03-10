@@ -1,11 +1,16 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 197
 expression: switch.js
 
 ---
 # Input
 switch (key) {
+	case // comment
+	value:
+		
+	case value:
+		// fallthrough
 
 	case value:
 		break;
@@ -24,6 +29,11 @@ Indent style: Tab
 Line width: 80
 -----
 switch (key) {
+	case value: // comment
+
+	case value:
+	// fallthrough
+
 	case value:
 		break;
 

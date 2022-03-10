@@ -1,18 +1,7 @@
 use pico_args::Arguments;
 use rome_core::App;
-use std::env;
 
 mod commands;
-
-const HELP: &str = concat!(
-    "Rome CLI v",
-    env!("CARGO_PKG_VERSION"),
-    "
-Available commands:
-- format
-- help
-",
-);
 
 /// Global context for an execution of the CLI
 pub struct CliSession {
@@ -37,16 +26,11 @@ pub fn run_cli(mut session: CliSession) {
     let subcommand = session.args.subcommand();
 
     match subcommand.as_ref().map(Option::as_deref) {
-        Ok(Some(_cmd)) if has_help => {
-            // TODO: Print command specific help
-            println!("{HELP}");
-        }
+        Ok(Some(cmd)) if has_help => crate::commands::help::help(Some(cmd)),
 
         Ok(Some("format")) => crate::commands::format::format(session),
 
-        Ok(None | Some("help")) => {
-            println!("{HELP}");
-        }
+        Ok(None | Some("help")) => crate::commands::help::help(None),
 
         Ok(Some(cmd)) => {
             panic!("unknown command {cmd:?}")

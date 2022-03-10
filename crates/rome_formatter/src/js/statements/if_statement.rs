@@ -1,5 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-use crate::{block_indent, concat_elements, hard_group_elements, token};
+use crate::{
+    block_indent, concat_elements, group_elements, hard_group_elements, hard_line_break, token,
+};
 
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -80,12 +82,23 @@ fn format_if_element(
 /// Wraps the statement into a block if its not already a JsBlockStatement
 fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<FormatElement> {
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
-        stmt.format(formatter)
-    } else {
-        Ok(format_elements![
-            token("{"),
-            block_indent(stmt.format(formatter)?),
-            token("}"),
-        ])
+        return stmt.format(formatter);
     }
+
+    // If the body is an empty statement, force a line break to ensure behavior
+    // is coherent with `is_non_collapsable_empty_block`
+    if matches!(stmt, JsAnyStatement::JsEmptyStatement(_)) {
+        return Ok(format_elements![
+            token("{"),
+            stmt.format(formatter)?,
+            hard_line_break(),
+            token("}")
+        ]);
+    }
+
+    Ok(group_elements(format_elements![
+        token("{"),
+        block_indent(stmt.format(formatter)?),
+        token("}"),
+    ]))
 }

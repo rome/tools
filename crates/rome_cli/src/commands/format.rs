@@ -23,6 +23,7 @@ use rome_formatter::{FormatOptions, IndentStyle};
 use rome_path::RomePath;
 use rslint_errors::{
     file::{FileId, Files, SimpleFile},
+    termcolor::{ColorChoice, StandardStream},
     Diagnostic, Emitter,
 };
 use rslint_parser::{parse, SourceType};
@@ -53,8 +54,8 @@ pub(crate) fn format(mut session: CliSession) {
         None => {}
     }
 
-    let is_check = session.args.contains("--check");
-    let is_silent = session.args.contains("--silent");
+    let is_check = session.args.contains("--ci");
+    let ignore_errors = session.args.contains("--skip-errors");
 
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![session
@@ -85,6 +86,7 @@ pub(crate) fn format(mut session: CliSession) {
         app: &session.app,
         options,
         is_check,
+        ignore_errors,
         file_ids: &file_ids,
         formatted: &formatted,
         files: send_files,
@@ -126,11 +128,9 @@ pub(crate) fn format(mut session: CliSession) {
         }
     });
 
-    if !is_silent {
-        let duration = start.elapsed();
-        let count = formatted.load(Ordering::Relaxed);
-        println!("Formatted {count} files in {duration:?}");
-    }
+    let duration = start.elapsed();
+    let count = formatted.load(Ordering::Relaxed);
+    println!("Formatted {count} files in {duration:?}");
 
     let mut has_errors = false;
     let mut file_ids = HashSet::new();
@@ -142,31 +142,33 @@ pub(crate) fn format(mut session: CliSession) {
         diagnostics.push(diag);
     }
 
-    if has_errors {
-        return;
+    let mut files = PathFiles::default();
+    while let Ok((file_id, path)) = recv_files.recv() {
+        if !file_ids.contains(&file_id) {
+            continue;
+        }
+
+        let name = path.display().to_string();
+        let source = fs::read_to_string(path).ok().unwrap_or_else(String::new);
+
+        files.storage.insert(file_id, SimpleFile::new(name, source));
     }
 
-    if !is_silent {
-        let mut files = PathFiles::default();
-        while let Ok((file_id, path)) = recv_files.recv() {
-            if !file_ids.contains(&file_id) {
-                continue;
-            }
-
-            let name = path.display().to_string();
-            let source = fs::read_to_string(path).ok().unwrap_or_else(String::new);
-
-            files.storage.insert(file_id, SimpleFile::new(name, source));
-        }
+    {
+        // Only lock stderr once for printing all the diagnostics
+        let out = StandardStream::stderr(ColorChoice::Always);
+        let mut out = out.lock();
 
         let mut emit = Emitter::new(&files);
         for diag in diagnostics {
-            emit.emit_stderr(&diag, true).unwrap();
+            emit.emit_with_writer(&diag, &mut out).unwrap();
         }
     }
 
     // Formatting emitted error diagnostics, exit with a non-zero code
-    process::exit(1)
+    if has_errors {
+        process::exit(1)
+    }
 }
 
 fn into_os_string(arg: &OsStr) -> Result<OsString, Infallible> {
@@ -210,6 +212,8 @@ struct FormatCommandOptions<'a> {
     options: FormatOptions,
     /// Boolean flag storing whether the command is being run in check mode
     is_check: bool,
+    /// Whether the formatter should silently skip files with errors
+    ignore_errors: bool,
     /// Shared atomic counter for allocating file IDs
     file_ids: &'a AtomicUsize,
     /// Shared atomic counter storing the number of formatted files
@@ -317,6 +321,7 @@ fn handle_file(ctx: FormatCommandOptions, path: &Path, file_id: FileId) {
         app: ctx.app,
         options: ctx.options,
         is_check: ctx.is_check,
+        ignore_errors: ctx.ignore_errors,
         path,
         file_id,
     };
@@ -352,6 +357,7 @@ struct FormatFileParams<'a> {
     app: &'a App,
     options: FormatOptions,
     is_check: bool,
+    ignore_errors: bool,
     path: &'a Path,
     file_id: FileId,
 }
@@ -385,7 +391,15 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
     );
 
     if root.has_errors() {
-        return Ok(root.into_diagnostics());
+        return Ok(if params.ignore_errors {
+            vec![Diagnostic::warning(
+                params.file_id,
+                "IO",
+                "Skipped file with syntax errors",
+            )]
+        } else {
+            root.into_diagnostics()
+        });
     }
 
     let result = rome_formatter::format(params.options, &root.syntax())
@@ -398,7 +412,7 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
         if has_diff {
             return Err(Diagnostic::error(
                 params.file_id,
-                "Diff",
+                "CI",
                 "File content differs from formatting output",
             ));
         }
