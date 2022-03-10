@@ -1744,9 +1744,24 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
     // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
+<<<<<<< HEAD
         let jsx = Jsx.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
             jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
         });
+=======
+<<<<<<< HEAD
+        let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
+            jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
+        });
+=======
+        let jsx = Jsx.parse_exclusive_syntax(
+            p,
+            |p| maybe_parse_jsx_expression(p),
+            |p, assertion| jsx_only_syntax_error(p, "jsx elements", assertion.range(p)),
+        );
+>>>>>>> dbee0cc063 (maybe prefix for checkpointed parsing)
+
+>>>>>>> c53cb537b3 (maybe prefix for checkpointed parsing)
         return jsx.or_else(|| {
             TypeScript.parse_exclusive_syntax(
                 p,
