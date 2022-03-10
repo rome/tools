@@ -104,6 +104,10 @@ impl Session {
     /// them to the client. Called from [`handlers::text_document`] when a file's
     /// contents changes.
     pub(crate) async fn update_diagnostics(&self, url: lsp::Url) -> anyhow::Result<()> {
+        let workspace_settings = self.config.read().get_workspace_settings();
+        if !workspace_settings.analysis.enable_diagnostics {
+            return Ok(());
+        }
         let doc = self.document(&url)?;
 
         let file_id = doc.file_id();

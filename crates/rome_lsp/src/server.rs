@@ -90,6 +90,10 @@ impl LanguageServer for LSPServer {
     }
 
     async fn code_action(&self, params: CodeActionParams) -> LspResult<Option<CodeActionResponse>> {
+        let workspace_settings = self.session.config.read().get_workspace_settings();
+        if !workspace_settings.analysis.enable_code_actions {
+            return Ok(None);
+        }
         let url = params.text_document.uri.clone();
         let doc = self.session.document(&url)?;
 
