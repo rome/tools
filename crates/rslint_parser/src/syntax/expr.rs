@@ -42,9 +42,12 @@ use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
 use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
 =======
 use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
+<<<<<<< HEAD
 >>>>>>> 9a0a0eb738 (changing jsx to uppercase)
 use crate::LanguageVariant;
 >>>>>>> 844f141c04 (jsx parser enabled by language variant)
+=======
+>>>>>>> 60ebca07db (fmt and clippy issues)
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
