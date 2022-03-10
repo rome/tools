@@ -46,7 +46,7 @@ impl<'a, 'b> std::ops::DerefMut for CheckpointedParser<'a, 'b> {
 
 // It is impossible to lookahead and guarantee that we are at a jsx expression,
 // so this function will checkpoint and rewind the parser on failures.
-pub(super) fn try_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![<]) {
         return ParsedSyntax::Absent;
     }

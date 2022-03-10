@@ -3,7 +3,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::jsx::try_parse_jsx_expression;
+use super::jsx::maybe_parse_jsx_expression;
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -1745,7 +1745,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
     if p.at(T![<]) {
         let jsx = Jsx.parse_exclusive_syntax(
             p,
-            |p| try_parse_jsx_expression(p),
+            |p| maybe_parse_jsx_expression(p),
             |p, assertion| jsx_only_syntax_error(p, "jsx elements", assertion.range(p)),
         );
 
