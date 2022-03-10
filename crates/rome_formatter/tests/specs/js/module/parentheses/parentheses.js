@@ -18,3 +18,5 @@ async function *f() {
   await (a || b);
   yield (a && b);
 }
+
+const a = () => ({}?.() && a);

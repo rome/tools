@@ -606,7 +606,7 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"a && c || b && c || s && f
+        let src = r#"a = () => ({}?.() && a);
 "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax);

@@ -89,6 +89,7 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
                 | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
                 | JsSyntaxKind::JS_AWAIT_EXPRESSION
                 | JsSyntaxKind::JS_YIELD_ARGUMENT
+                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
         ) {
             return Ok(false);
         }

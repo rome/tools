@@ -25,6 +25,8 @@ async function *f() {
   await (a || b);
   yield (a && b);
 }
+
+const a = () => ({}?.() && a);
 =============================
 # Outputs
 ## Output 1
@@ -54,4 +56,6 @@ async function* f() {
 	await (a || b);
 	yield (a && b);
 }
+
+const a = () => ({}?.() && a);
 
