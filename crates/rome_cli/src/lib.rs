@@ -1,74 +1,42 @@
-use clap::{crate_version, App as ClapApp, AppSettings, Arg};
+use pico_args::Arguments;
 use rome_core::App;
-use rome_formatter::{format_file_and_save, FormatOptions, IndentStyle};
-use rome_path::RomePath;
-use std::{path::PathBuf, str::FromStr};
+
+mod commands;
+
+/// Global context for an execution of the CLI
+pub struct CliSession {
+    /// Instance of [App] used by this run of the CLI
+    pub app: App,
+    /// List of command line arguments
+    pub args: Arguments,
+}
+
+impl CliSession {
+    pub fn from_env() -> Self {
+        Self {
+            app: App::new(),
+            args: Arguments::from_env(),
+        }
+    }
+}
 
 /// Main function to run Rome CLI
-pub fn run_cli() {
-    let cli_app = ClapApp::new("rome")
-        .about("The official Rome CLI")
-        .version(crate_version!())
-        .setting(AppSettings::SubcommandRequiredElseHelp)
-        .subcommand(
-            ClapApp::new("format")
-                .about("Format a file")
-                .arg(
-                    Arg::new("indent_style")
-                        .long("indent-style")
-                        .help("The style of indentation")
-                        .value_name("tab|space")
-                        .default_value("tab")
-                        .validator(|value| IndentStyle::from_str(value).map(|_| ())),
-                )
-                .arg(
-                    Arg::new("indent_size")
-                        .long("indent-size")
-                        .help("The size of the indent.")
-                        .value_name("NUMBER")
-                        .default_value("2")
-                        .validator(|value| {
-                            value
-                                .parse::<u8>()
-                                .map_err(|_| "Invalid indent-size value. Try using a number")
-                        }),
-                )
-                .arg(
-                    Arg::new("input")
-                        .help("File to format")
-                        .required(true)
-                        .validator(|value| {
-                            let path = PathBuf::from(&value);
-                            if !path.exists() {
-                                return Err(format!("The file \"{}\" doesn't exist.", value));
-                            }
-                            Ok(())
-                        }),
-                ),
-        );
+pub fn run_cli(mut session: CliSession) {
+    let has_help = session.args.contains("--help");
+    let subcommand = session.args.subcommand();
 
-    let rome_app = App::new();
+    match subcommand.as_ref().map(Option::as_deref) {
+        Ok(Some(cmd)) if has_help => crate::commands::help::help(Some(cmd)),
 
-    match cli_app.get_matches().subcommand().unwrap() {
-        ("format", matches) => {
-            let size = matches.value_of("indent_size");
-            let style = matches.value_of("indent_style");
-            let input = matches.value_of("input").unwrap();
-            let options: IndentStyle = style
-                .map(|s| match s {
-                    "tab" => IndentStyle::Tab,
-                    "space" => {
-                        let size = size.unwrap_or("2");
-                        IndentStyle::Space(size.parse::<u8>().unwrap_or(2))
-                    }
-                    _ => IndentStyle::default(),
-                })
-                .unwrap_or_default();
+        Ok(Some("format")) => crate::commands::format::format(session),
 
-            let mut file = RomePath::new(input);
+        Ok(None | Some("help")) => crate::commands::help::help(None),
 
-            format_file_and_save(&mut file, FormatOptions::new(options), &rome_app);
+        Ok(Some(cmd)) => {
+            panic!("unknown command {cmd:?}")
         }
-        _ => unreachable!("clap should ensure we don't get here"),
+        Err(err) => {
+            panic!("failed to parse command: {err}")
+        }
     }
 }

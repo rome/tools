@@ -119,7 +119,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         let mut buffer = termcolor::Buffer::no_color();
         let mut emitter = Emitter::new(&files);
 
-        for error in parsed.errors() {
+        for error in parsed.diagnostics() {
             emitter
                 .emit_with_writer(error, &mut buffer)
                 .expect("failed to emit diagnostic");

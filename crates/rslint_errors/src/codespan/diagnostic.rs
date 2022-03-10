@@ -108,6 +108,8 @@ impl<FileId> Label<FileId> {
 #[derive(Clone, Debug)]
 #[cfg_attr(feature = "serialization", derive(Serialize, Deserialize))]
 pub struct Diagnostic<FileId> {
+    /// The overall file ID of the diagnostic
+    pub file_id: FileId,
     /// The overall severity of the diagnostic
     pub severity: Severity,
     /// An optional code that identifies this diagnostic.
@@ -138,8 +140,9 @@ pub struct Note {
 
 impl<FileId> Diagnostic<FileId> {
     /// Create a new diagnostic.
-    pub fn new(severity: Severity) -> Diagnostic<FileId> {
+    pub fn new(file_id: FileId, severity: Severity) -> Diagnostic<FileId> {
         Diagnostic {
+            file_id,
             severity,
             code: None,
             message: String::new(),
@@ -153,36 +156,36 @@ impl<FileId> Diagnostic<FileId> {
     /// Create a new diagnostic with a severity of [`Severity::Bug`].
     ///
     /// [`Severity::Bug`]: Severity::Bug
-    pub fn bug() -> Diagnostic<FileId> {
-        Diagnostic::new(Severity::Bug)
+    pub fn bug(file_id: FileId) -> Diagnostic<FileId> {
+        Diagnostic::new(file_id, Severity::Bug)
     }
 
     /// Create a new diagnostic with a severity of [`Severity::Error`].
     ///
     /// [`Severity::Error`]: Severity::Error
-    pub fn error() -> Diagnostic<FileId> {
-        Diagnostic::new(Severity::Error)
+    pub fn error(file_id: FileId) -> Diagnostic<FileId> {
+        Diagnostic::new(file_id, Severity::Error)
     }
 
     /// Create a new diagnostic with a severity of [`Severity::Warning`].
     ///
     /// [`Severity::Warning`]: Severity::Warning
-    pub fn warning() -> Diagnostic<FileId> {
-        Diagnostic::new(Severity::Warning)
+    pub fn warning(file_id: FileId) -> Diagnostic<FileId> {
+        Diagnostic::new(file_id, Severity::Warning)
     }
 
     /// Create a new diagnostic with a severity of [`Severity::Note`].
     ///
     /// [`Severity::Note`]: Severity::Note
-    pub fn note() -> Diagnostic<FileId> {
-        Diagnostic::new(Severity::Note)
+    pub fn note(file_id: FileId) -> Diagnostic<FileId> {
+        Diagnostic::new(file_id, Severity::Note)
     }
 
     /// Create a new diagnostic with a severity of [`Severity::Help`].
     ///
     /// [`Severity::Help`]: Severity::Help
-    pub fn help() -> Diagnostic<FileId> {
-        Diagnostic::new(Severity::Help)
+    pub fn help(file_id: FileId) -> Diagnostic<FileId> {
+        Diagnostic::new(file_id, Severity::Help)
     }
 
     /// Add an error code to the diagnostic.

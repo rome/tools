@@ -63,6 +63,7 @@ if (true) {
 
 }
 
+if (true) that(); else;
 
 =============================
 # Outputs
@@ -118,5 +119,10 @@ if (true) {
 	// trailing
 } else {
 	// trailing
+}
+
+if (true) {
+	that();
+} else {
 }
 
