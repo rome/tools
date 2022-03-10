@@ -25,6 +25,20 @@ impl<'a, 'b> CheckpointedParser<'a, 'b> {
     }
 }
 
+impl<'a, 'b> std::ops::Deref for CheckpointedParser<'a, 'b> {
+    type Target = Parser<'b>;
+
+    fn deref(&self) -> &Self::Target {
+        self.parser
+    }
+}
+
+impl<'a, 'b> std::ops::DerefMut for CheckpointedParser<'a, 'b> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        self.parser
+    }
+}
+
 // It is impossible to lookahead and guarantee that we are at a jsx expression,
 // so this function will checkpoint and rewind the parser on failures.
 pub(super) fn try_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
@@ -56,8 +70,8 @@ pub(super) fn try_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 // <div />
 fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
     parse_jsx_element(p).map(|element| {
-        let m = element.precede(p.parser);
-        m.complete(p.parser, JsSyntaxKind::JSX_ELEMENT_EXPRESSION)
+        let m = element.precede(p);
+        m.complete(p, JsSyntaxKind::JSX_ELEMENT_EXPRESSION)
     })
 }
 
@@ -71,18 +85,18 @@ fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
 //     return <div />
 // }
 fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    let m = p.parser.start();
+    let m = p.start();
     match parse_jsx_element_head(p, m) {
         ParsedSyntax::Present(opening_marker)
             if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT =>
         {
-            let element_marker = opening_marker.precede(p.parser);
+            let element_marker = opening_marker.precede(p);
             let closing_marker = parse_jsx_closing_element(p);
             if closing_marker.is_absent() {
-                element_marker.abandon(p.parser);
+                element_marker.abandon(p);
                 return ParsedSyntax::Absent;
             } else {
-                ParsedSyntax::Present(element_marker.complete(p.parser, JsSyntaxKind::JSX_ELEMENT))
+                ParsedSyntax::Present(element_marker.complete(p, JsSyntaxKind::JSX_ELEMENT))
             }
         }
         ParsedSyntax::Present(self_closing_marker)
@@ -104,52 +118,52 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
 
     parse_jsx_any_element_name(p);
 
-    let kind = if p.parser.at(T![/]) && p.parser.nth_at(1, T![>]) {
-        p.parser.bump_multiple(2, JsSyntaxKind::SLASH_R_ANGLE);
+    let kind = if p.at(T![/]) && p.nth_at(1, T![>]) {
+        p.bump_multiple(2, JsSyntaxKind::SLASH_R_ANGLE);
         JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT
-    } else if p.parser.eat(T![>]) {
+    } else if p.eat(T![>]) {
         JsSyntaxKind::JSX_OPENING_ELEMENT
     } else {
-        m.abandon(p.parser);
+        m.abandon(p);
         return ParsedSyntax::Absent;
     };
 
-    ParsedSyntax::Present(m.complete(p.parser, kind))
+    ParsedSyntax::Present(m.complete(p, kind))
 }
 
 // <a/>
 // ^
 fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    if !p.parser.at(T![<]) {
+    if !p.at(T![<]) {
         return ParsedSyntax::Absent;
     }
 
-    let m = p.parser.start();
+    let m = p.start();
 
-    if p.parser.at(T![<]) && p.parser.nth_at(1, T![/]) {
-        p.parser.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
+    if p.at(T![<]) && p.nth_at(1, T![/]) {
+        p.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
     } else {
-        m.abandon(p.parser);
+        m.abandon(p);
         return ParsedSyntax::Absent;
     }
 
     parse_jsx_any_element_name(p);
 
-    if !p.parser.eat(T![>]) {
-        m.abandon(p.parser);
+    if !p.eat(T![>]) {
+        m.abandon(p);
         return ParsedSyntax::Absent;
     }
 
-    ParsedSyntax::Present(m.complete(p.parser, JsSyntaxKind::JSX_CLOSING_ELEMENT))
+    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_CLOSING_ELEMENT))
 }
 
 fn parse_jsx_any_element_name(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    let m = p.parser.start();
+    let m = p.start();
 
-    if !p.parser.eat(T![ident]) {
-        m.abandon(p.parser);
+    if !p.eat(T![ident]) {
+        m.abandon(p);
         return ParsedSyntax::Absent;
     }
 
-    ParsedSyntax::Present(m.complete(p.parser, JsSyntaxKind::JSX_REFERENCE_IDENTIFIER))
+    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_REFERENCE_IDENTIFIER))
 }
