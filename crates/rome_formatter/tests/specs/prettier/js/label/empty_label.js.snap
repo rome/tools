@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: empty_label.js
 
 ---
@@ -13,7 +13,7 @@ b
 
 # Output
 ```js
-a:
+a:;
 b;
 
 ```

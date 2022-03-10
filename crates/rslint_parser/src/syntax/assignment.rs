@@ -109,7 +109,7 @@ pub(crate) fn expression_to_assignment(
 ) -> CompletedMarker {
     try_expression_to_assignment(p, target, checkpoint).unwrap_or_else(|checkpoint| {
         // Doesn't seem to be a valid assignment target. Recover and create an error.
-        let expression_end = p.cur_token_index();
+        let expression_end = p.tokens.position();
         p.rewind(checkpoint);
         wrap_expression_in_invalid_assignment(p, expression_end)
     })
@@ -365,9 +365,6 @@ struct ReparseAssignment {
     result: Option<CompletedMarker>,
     // Tracks if the visitor is still inside an assignment
     inside_assignment: bool,
-    // Tracks if the visitor is inside a member expression or computed expression
-    // for eval/arguments validation
-    inside_member_or_computed_expression: bool,
 }
 
 impl ReparseAssignment {
@@ -376,7 +373,6 @@ impl ReparseAssignment {
             parents: Vec::default(),
             result: None,
             inside_assignment: true,
-            inside_member_or_computed_expression: false,
         }
     }
 }
@@ -398,12 +394,10 @@ impl RewriteParseEvents for ReparseAssignment {
             JS_PARENTHESIZED_EXPRESSION => JS_PARENTHESIZED_ASSIGNMENT,
             JS_STATIC_MEMBER_EXPRESSION => {
                 self.inside_assignment = false;
-                self.inside_member_or_computed_expression = true;
                 JS_STATIC_MEMBER_ASSIGNMENT
             }
             JS_COMPUTED_MEMBER_EXPRESSION => {
                 self.inside_assignment = false;
-                self.inside_member_or_computed_expression = true;
                 JS_COMPUTED_MEMBER_ASSIGNMENT
             }
             JS_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT,
@@ -436,11 +430,32 @@ impl RewriteParseEvents for ReparseAssignment {
         let (kind, m) = self.parents.pop().unwrap();
 
         if let Some(m) = m {
-            let completed = m.complete(p, kind);
+            let mut completed = m.complete(p, kind);
 
-            if kind == JS_UNKNOWN_ASSIGNMENT {
-                p.error(invalid_assignment_error(p, completed.range(p)));
+            match kind {
+                JS_IDENTIFIER_ASSIGNMENT => {
+                    // test_err eval_arguments_assignment
+                    // eval = "test";
+                    // arguments = "test";
+                    let name = p.source(completed.range(p));
+                    if matches!(name, "eval" | "arguments") && p.state.strict().is_some() {
+                        let error = p
+                            .err_builder(&format!(
+                                "Illegal use of `{}` as an identifier in strict mode",
+                                name
+                            ))
+                            .primary(p.cur_range(), "");
+                        p.error(error);
+
+                        completed.change_to_unknown(p);
+                    }
+                }
+                JS_UNKNOWN_ASSIGNMENT => {
+                    p.error(invalid_assignment_error(p, completed.range(p)));
+                }
+                _ => {}
             }
+
             self.result = Some(completed);
         }
 
@@ -454,7 +469,7 @@ impl RewriteParseEvents for ReparseAssignment {
         }
     }
 
-    fn token(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
+    fn token(&mut self, kind: JsSyntaxKind, _p: &mut Parser) -> JsSyntaxKind {
         let parent = self.parents.last_mut();
 
         if let Some((parent_kind, _)) = parent {
@@ -465,38 +480,20 @@ impl RewriteParseEvents for ReparseAssignment {
             {
                 *parent_kind = JS_UNKNOWN_ASSIGNMENT
             }
-
-            let src_str = p.cur_src();
-            if kind == IDENT
-                && (src_str == "eval" || src_str == "arguments")
-                && p.state.strict().is_some()
-                // If we're inside a member or computed expression then we do not error
-                && !self.inside_member_or_computed_expression
-            {
-                // Cloning because cannot keep immutable ref to p
-                // and mutable ref with p.error()
-                let src = src_str.to_string();
-
-                *parent_kind = JS_UNKNOWN;
-                p.error(
-                    p.err_builder(&format!(
-                        "Illegal use of `{}` as an identifier in strict mode",
-                        src
-                    ))
-                    .primary(p.cur_range(), ""),
-                );
-            }
         }
 
-        p.bump_remap(kind);
+        kind
     }
 }
 
-fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) -> CompletedMarker {
+fn wrap_expression_in_invalid_assignment(
+    p: &mut Parser,
+    expression_end: TextSize,
+) -> CompletedMarker {
     let unknown = p.start();
     // Eat all tokens until we reached the end of the original expression. This is better than
     // any other error recovery because it's already know where the expression ends.
-    while p.cur_token_index() < expression_end {
+    while p.tokens.position() < expression_end {
         p.bump_any();
     }
 

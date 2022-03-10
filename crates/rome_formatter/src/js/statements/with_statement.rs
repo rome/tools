@@ -28,7 +28,6 @@ impl ToFormatElement for JsWithStatement {
                     object.format(formatter)?,
                     &r_paren_token?,
                 )?,
-                space_token(),
             ],
             body?,
         )

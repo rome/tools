@@ -33,7 +33,7 @@ use crate::{
 };
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
-use rslint_lexer::LexMode;
+use rslint_lexer::{LexContext, ReLexContext};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
@@ -142,7 +142,7 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
             JsSyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION
         }
         T![/] | T![/=] => {
-            if p.re_lex(LexMode::Regex) == JS_REGEX_LITERAL {
+            if p.re_lex(ReLexContext::Regex) == JS_REGEX_LITERAL {
                 JS_REGEX_LITERAL_EXPRESSION
             } else {
                 return Absent;
@@ -310,7 +310,7 @@ fn is_assign_token(kind: JsSyntaxKind) -> bool {
 // }
 fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> CompletedMarker {
     let m = p.start();
-    p.expect_keyword(T![yield], "yield");
+    p.expect(T![yield]);
 
     if !is_semi(p, 0) && (p.at(T![*]) || is_at_expression(p)) {
         let argument = p.start();
@@ -498,15 +498,6 @@ fn parse_binary_or_logical_expression_recursive(
             T![>>>] => {
                 p.bump_multiple(3, T![>>>]);
             }
-            T![in] => {
-                p.expect_keyword(T![in], "in");
-            }
-            T![as] => {
-                p.expect_keyword(T![as], "as");
-            }
-            T![instanceof] => {
-                p.expect_keyword(T![instanceof], "instanceof");
-            }
             _ => p.bump_remap(op),
         };
 
@@ -627,7 +618,7 @@ fn parse_member_expression_rest(
                     let m = lhs.precede(p);
                     p.bump(T![?.]);
                     let template_literal = p.start();
-                    parse_template_literal(p, template_literal, true);
+                    parse_template_literal(p, template_literal, true, true);
                     m.complete(p, JS_UNKNOWN_EXPRESSION)
                 } else {
                     // '(' or any other unexpected character
@@ -664,7 +655,7 @@ fn parse_member_expression_rest(
                 // test ts ts_optional_chain_call
                 // (<A, B>() => {})?.<A, B>();
                 let m = lhs.precede(p);
-                parse_template_literal(p, m, *in_optional_chain)
+                parse_template_literal(p, m, *in_optional_chain, true)
             }
             _ => break,
         }
@@ -679,7 +670,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![new], "new");
+    p.expect(T![new]);
 
     // new.target
     if p.eat(T![.]) {
@@ -752,7 +743,7 @@ fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let super_marker = p.start();
-    p.expect_keyword(T![super], "super");
+    p.expect(T![super]);
     let mut super_expression = super_marker.complete(p, JS_SUPER_EXPRESSION);
 
     if p.at(T![?.]) {
@@ -1117,7 +1108,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
             // this
             // this.foo
             let m = p.start();
-            p.expect_keyword(T![this], "this");
+            p.expect(T![this]);
             m.complete(p, JS_THIS_EXPRESSION)
         }
         T![class] => {
@@ -1248,7 +1239,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
 
         BACKTICK => {
             let m = p.start();
-            parse_template_literal(p, m, false)
+            parse_template_literal(p, m, false, false)
         }
         ERROR_TOKEN => {
             let m = p.start();
@@ -1400,15 +1391,21 @@ fn parse_template_literal(
     p: &mut Parser,
     marker: Marker,
     in_optional_chain: bool,
+    tagged: bool,
 ) -> CompletedMarker {
-    debug_assert!(p.at(BACKTICK));
+    p.bump_with_context(BACKTICK, LexContext::TemplateElement { tagged });
 
-    p.expect(BACKTICK);
     let elements_list = p.start();
-    parse_template_elements(p, JS_TEMPLATE_CHUNK_ELEMENT, JS_TEMPLATE_ELEMENT, |p| {
-        parse_expression(p, ExpressionContext::default())
-            .or_add_diagnostic(p, js_parse_error::expected_expression)
-    });
+    parse_template_elements(
+        p,
+        JS_TEMPLATE_CHUNK_ELEMENT,
+        JS_TEMPLATE_ELEMENT,
+        tagged,
+        |p| {
+            parse_expression(p, ExpressionContext::default())
+                .or_add_diagnostic(p, js_parse_error::expected_expression)
+        },
+    );
 
     elements_list.complete(p, JS_TEMPLATE_ELEMENT_LIST);
 
@@ -1439,6 +1436,7 @@ pub(crate) fn parse_template_elements<P>(
     p: &mut Parser,
     chunk_kind: JsSyntaxKind,
     element_kind: JsSyntaxKind,
+    tagged: bool,
     parse_element: P,
 ) where
     P: Fn(&mut Parser) -> Option<CompletedMarker>,
@@ -1447,7 +1445,7 @@ pub(crate) fn parse_template_elements<P>(
         match p.cur() {
             TEMPLATE_CHUNK => {
                 let m = p.start();
-                p.bump(TEMPLATE_CHUNK);
+                p.bump_with_context(TEMPLATE_CHUNK, LexContext::TemplateElement { tagged });
                 m.complete(p, chunk_kind);
             },
             DOLLAR_CURLY => {
@@ -1455,22 +1453,26 @@ pub(crate) fn parse_template_elements<P>(
                 p.bump(DOLLAR_CURLY);
 
                 parse_element(p);
-
-                if !p.expect(T!['}']) {
+                if !p.at(T!['}']) {
                     // Seems there's more. For example a `${a a}`. We must eat all tokens away to avoid a panic because of an unexpected token
-                    if ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p).is_ok() {
-                        p.eat(T!['}']); // eat the closing paren if we successfully recovered
+                    let _ =  ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p);
+                    if !p.at(T!['}']) {
+                        // Failed to fully recover, unclear where we are now, exit
+                        break;
                     }
                 }
+
+                p.bump_with_context(T!['}'], LexContext::TemplateElement { tagged });
                 e.complete(p, element_kind);
             }
             ERROR_TOKEN => {
                 let err = p.err_builder("Invalid template literal")
                     .primary(p.cur_range(), "");
-                p.err_and_bump(err, JsSyntaxKind::JS_UNKNOWN);
+                p.error(err);
+                p.bump_with_context(p.cur(), LexContext::TemplateElement { tagged });
             }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
-        }
+        };
     }
 }
 
@@ -1521,6 +1523,9 @@ impl ParseSeparatedList for ArrayElementsList {
 // [foo,];
 // [,,,,,foo,,,,];
 // [...a, ...b];
+
+// test_err array_expr_incomplete
+// let a = [
 fn parse_array_expr(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['[']) {
         return Absent;
@@ -1585,7 +1590,7 @@ fn parse_call_expression_rest(
         // Cloning here is necessary because parsing out the type arguments may rewind in which
         // case we want to return the `lhs`.
         let m = lhs.clone().precede(p);
-        let start_pos = p.cur_token_index();
+        let start_pos = p.tokens.position();
         let optional_chain_call = p.eat(T![?.]);
         in_optional_chain = in_optional_chain || optional_chain_call;
 
@@ -1603,7 +1608,7 @@ fn parse_call_expression_rest(
                     // test ts ts_tagged_template_literal
                     // html<A, B>`abcd`
                     // html<A, B>`abcd`._string
-                    lhs = parse_template_literal(p, m, optional_chain_call);
+                    lhs = parse_template_literal(p, m, optional_chain_call, true);
                     continue;
                 }
 
@@ -1634,7 +1639,7 @@ fn parse_call_expression_rest(
             // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
             // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
             // * if the parser is at '(': This always parses out as valid arguments.
-            debug_assert_eq!(p.cur_token_index(), start_pos);
+            debug_assert_eq!(p.tokens.position(), start_pos);
             m.abandon(p);
         }
 
@@ -1696,7 +1701,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         // async function test() {}
         // await test();
         let m = p.start();
-        p.expect_keyword(T![await], "await");
+        p.expect(T![await]);
 
         parse_unary_expr(p, context)
             .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
@@ -1775,7 +1780,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         let is_delete = op == T![delete];
 
         if is_delete {
-            p.expect_keyword(T![delete], "delete");
+            p.expect(T![delete]);
         } else {
             p.bump_any();
         }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: comment-inside.js
 
 ---
@@ -82,24 +82,48 @@ html`
   </div>
 `;
 
-html`${foo /* comment */ }`;
+html`${
+  foo
+  /* comment */
+}`;
 html`
-${foo /* comment */ }
+${
+  foo
+  /* comment */
+}
 `;
 
-graphql`${foo /* comment */ }`;
+graphql`${
+  foo
+  /* comment */
+}`;
 graphql`
-${foo /* comment */ }
+${
+  foo
+  /* comment */
+}
 `;
 
-css`${foo /* comment */ }`;
+css`${
+  foo
+  /* comment */
+}`;
 css`
-${foo /* comment */ }
+${
+  foo
+  /* comment */
+}
 `;
 
-markdown`${foo /* comment */ }`;
+markdown`${
+  foo
+  /* comment */
+}`;
 markdown`
-${foo /* comment */ }
+${
+  foo
+  /* comment */
+}
 `;
 
 // https://github.com/prettier/prettier/pull/9278#issuecomment-700589195

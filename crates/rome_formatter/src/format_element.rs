@@ -198,6 +198,25 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
     FormatElement::LineSuffix(Box::new(element.into()))
 }
 
+/// Mark a [FormatElement] as being a piece of trivia
+///
+/// This does not directly influence how this content will be printed, but some
+/// parts of the formatter may chose to handle this element in a specific way
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::{FormatOptions, token, format_element, comment, format_elements, group_elements, empty_line, soft_line_break_or_space};
+///
+/// let elements = group_elements(format_elements![comment(empty_line()), token("a"), soft_line_break_or_space(), token("b")]);
+///
+/// assert_eq!("\na b", format_element(&elements, FormatOptions::default()).as_code());
+/// ```
+#[inline]
+pub fn comment(element: impl Into<FormatElement>) -> FormatElement {
+    FormatElement::Comment(Box::new(element.into()))
+}
+
 /// Inserts a single space. Allows to separate different tokens.
 ///
 /// ## Examples
@@ -656,13 +675,9 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
-    let content = content.into();
-
-    if content.is_empty() {
-        content
-    } else {
-        FormatElement::from(Group::new(content))
-    }
+    let content: FormatElement = content.into();
+    let (leading, content, trailing) = content.split_trivia();
+    format_elements![leading, Group::new(content), trailing]
 }
 
 /// Creates a group that forces all elements inside it to be printed on a
@@ -874,7 +889,14 @@ pub enum FormatElement {
     /// A token that should be printed as is, see [token] for documentation and examples.
     Token(Token),
 
+    /// Delay the printing of its content until the next line break
     LineSuffix(Content),
+
+    /// Special semantic element letting the printer and formatter know this is
+    /// a trivia content, and it should only have a limited influence on the
+    /// formatting (for instance line breaks contained within will not cause
+    /// the parent group to break if this element is at the start of it)
+    Comment(Content),
 
     /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](Formatter::format_verbatim) API
     Verbatim(Verbatim),
@@ -929,6 +951,7 @@ impl Debug for FormatElement {
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
+            FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
                 .field(&verbatim.element)
@@ -1196,9 +1219,44 @@ impl FormatElement {
                 list.content.iter().any(FormatElement::has_hard_line_breaks)
             }
             FormatElement::Token(token) => token.contains('\n'),
-            FormatElement::LineSuffix(suffix) => suffix.has_hard_line_breaks(),
+            FormatElement::LineSuffix(_) => true,
+            FormatElement::Comment(content) => content.has_hard_line_breaks(),
             FormatElement::Verbatim(verbatim) => verbatim.element.has_hard_line_breaks(),
         }
+    }
+
+    /// Splits off the leading and trailing trivias (comments) from this [FormatElement]
+    pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
+        // Non-list elements are returned directly
+        if let FormatElement::List(list) = self {
+            // Find the index of the first non-comment element in the list
+            let content_start = list
+                .content
+                .iter()
+                .position(|elem| !matches!(elem, FormatElement::Comment(_)))
+                .unwrap_or(list.content.len());
+
+            // Split the list at the found index
+            let mut leading = list.content;
+            let mut content = leading.split_off(content_start);
+
+            // Find the index of the last non-comment element in the list
+            let content_end = content
+                .iter()
+                .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
+                .map_or(0, |index| index + 1);
+
+            // Split the list at the found index, content now holds the inner elements
+            let trailing = content.split_off(content_end);
+
+            return (
+                concat_elements(leading),
+                concat_elements(content),
+                concat_elements(trailing),
+            );
+        }
+
+        (empty_element(), self, empty_element())
     }
 }
 

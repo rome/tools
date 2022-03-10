@@ -11,7 +11,7 @@ rslint_parser = { path = "../../crates/rslint_parser"}
 rslint_errors = { path = "../../crates/rslint_errors"}
 rome_formatter = { path = "../../crates/rome_formatter"}
 
-pico-args = "0.3.4"
+pico-args = "0.4.2"
 timing = "0.2.3"
 criterion = "0.3.5"
 regex = "1.5.5"

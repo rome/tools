@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: try.js
 
 ---
@@ -28,15 +28,18 @@ finally { // Comment 8
 try {
   // Comment 2
   // Comment 3
-} // Comment 4
+}
+// Comment 4
 catch (e) {
   // Comment 5
   // Comment 6
-} // Comment 7
+}
+// Comment 7
 finally {
   // Comment 8
   // Comment 9
-} // Comment 10
+}
+// Comment 10
 
 ```
 

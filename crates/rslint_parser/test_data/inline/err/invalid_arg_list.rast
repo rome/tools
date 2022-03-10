@@ -120,12 +120,18 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsVariableStatement {
-            declaration: JsVariableDeclaration {
-                kind: VAR_KW@55..58 "var" [] [],
-                declarators: JsVariableDeclaratorList [],
-            },
-            semicolon_token: SEMICOLON@58..59 ";" [] [],
+        JsUnknownStatement {
+            items: [
+                JsUnknown {
+                    items: [
+                        VAR_KW@55..58 "var" [] [],
+                        JsUnknown {
+                            items: [],
+                        },
+                    ],
+                },
+                SEMICOLON@58..59 ";" [] [],
+            ],
         },
         JsExpressionStatement {
             expression: JsCallExpression {
@@ -272,10 +278,10 @@ JsModule {
                 0: IDENT@53..55 "b" [] [Whitespace(" ")]
           2: (empty)
       1: (empty)
-    4: JS_VARIABLE_STATEMENT@55..59
-      0: JS_VARIABLE_DECLARATION@55..58
+    4: JS_UNKNOWN_STATEMENT@55..59
+      0: JS_UNKNOWN@55..58
         0: VAR_KW@55..58 "var" [] []
-        1: JS_VARIABLE_DECLARATOR_LIST@58..58
+        1: JS_UNKNOWN@58..58
       1: SEMICOLON@58..59 ";" [] []
     5: JS_EXPRESSION_STATEMENT@59..70
       0: JS_CALL_EXPRESSION@59..69

@@ -293,7 +293,7 @@ where
                 if !self.diagnostic.anonymous {
                     renderer.render_snippet_start(
                         outer_padding,
-                        &Locus {
+                        &Locus::FileLocation {
                             name: labeled_file.name,
                             location: labeled_file.location,
                         },
@@ -450,7 +450,7 @@ where
             primary_labels_encountered += 1;
 
             renderer.render_header(
-                Some(&Locus {
+                Some(&Locus::FileLocation {
                     name: files.name(label.file_id)?.to_string(),
                     location: files.location(label.file_id, label.range.start)?,
                 }),
@@ -460,14 +460,16 @@ where
             )?;
         }
 
-        // Fallback to printing a non-located header if no primary labels were encountered
+        // Fallback to printing a short-located header if no primary labels were encountered
         //
         // ```text
-        // error[E0002]: Bad config found
+        // test: error[E0002]: Bad config found
         // ```
         if primary_labels_encountered == 0 {
             renderer.render_header(
-                None,
+                Some(&Locus::File {
+                    name: files.name(self.diagnostic.file_id)?.to_string(),
+                }),
                 self.diagnostic.severity,
                 self.diagnostic.code.as_deref(),
                 self.diagnostic.message.as_str(),

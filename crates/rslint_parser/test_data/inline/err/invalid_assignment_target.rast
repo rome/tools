@@ -233,11 +233,11 @@ error[SyntaxError]: Invalid assignment to `++a`
   │ ^^^ This expression cannot be assigned to
 
 --
-error[SyntaxError]: Invalid assignment to `++a`
-  ┌─ invalid_assignment_target.js:2:2
+error[SyntaxError]: Invalid assignment to `=`
+  ┌─ invalid_assignment_target.js:2:7
   │
 2 │ (++a) = b;
-  │  ^^^ This expression cannot be assigned to
+  │       ^ This expression cannot be assigned to
 
 --
 error[SyntaxError]: expected `')'` but instead found `;`
@@ -247,18 +247,18 @@ error[SyntaxError]: expected `')'` but instead found `;`
   │       ^ unexpected
 
 --
-error[SyntaxError]: Invalid assignment to `a?.b`
-  ┌─ invalid_assignment_target.js:4:1
+error[SyntaxError]: Invalid assignment to `=`
+  ┌─ invalid_assignment_target.js:4:6
   │
 4 │ a?.b = b;
-  │ ^^^^ This expression cannot be assigned to
+  │      ^ This expression cannot be assigned to
 
 --
-error[SyntaxError]: Invalid assignment to `a?.["b"]`
-  ┌─ invalid_assignment_target.js:5:1
+error[SyntaxError]: Invalid assignment to `=`
+  ┌─ invalid_assignment_target.js:5:10
   │
 5 │ a?.["b"] = b;
-  │ ^^^^^^^^ This expression cannot be assigned to
+  │          ^ This expression cannot be assigned to
 
 --
 error[SyntaxError]: expected an expression but instead found ')'
@@ -268,11 +268,11 @@ error[SyntaxError]: expected an expression but instead found ')'
   │     ^ Expected an expression here
 
 --
-error[SyntaxError]: Invalid assignment to `a +`
-  ┌─ invalid_assignment_target.js:6:2
+error[SyntaxError]: Invalid assignment to `=`
+  ┌─ invalid_assignment_target.js:6:7
   │
 6 │ (a +) = b;
-  │  ^^^ This expression cannot be assigned to
+  │       ^ This expression cannot be assigned to
 
 --
 ++a = b;

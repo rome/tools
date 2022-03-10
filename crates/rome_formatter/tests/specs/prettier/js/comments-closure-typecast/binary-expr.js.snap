@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: binary-expr.js
 
 ---
@@ -13,7 +13,9 @@ var a = b || /** @type {string} */
 
 # Output
 ```js
-var a = b || /** @type {string} */ (c);
+var a =
+  b || /** @type {string} */
+  (c);
 
 ```
 

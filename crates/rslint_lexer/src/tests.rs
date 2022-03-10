@@ -1,7 +1,7 @@
 #![cfg(test)]
 #![allow(unused_mut, unused_variables, unused_assignments)]
 
-use crate::{Lexer, TextSize};
+use crate::{LexContext, Lexer, TextSize};
 use quickcheck_macros::quickcheck;
 use rome_js_syntax::JsSyntaxKind::{self, EOF};
 use rslint_errors::Span;
@@ -20,7 +20,7 @@ macro_rules! assert_lex {
         let mut new_str = String::with_capacity($src.len());
         let mut tokens = Vec::new();
 
-        while lexer.next().kind() != EOF {
+        while lexer.next_token(LexContext::Regular).kind != EOF {
             tokens.push((lexer.current(), lexer.current_range()));
         }
 
@@ -75,7 +75,7 @@ fn losslessness(string: String) -> bool {
         let mut lexer = Lexer::from_str(&cloned, 0);
         let mut tokens = vec![];
 
-        while lexer.next().kind() != EOF {
+        while lexer.next_token(LexContext::Regular).kind != EOF {
             tokens.push(lexer.current_range());
         }
 
@@ -1010,35 +1010,6 @@ fn division() {
 }
 
 #[test]
-fn template_escape() {
-    assert_lex! {
-        r"`foo \` bar`",
-        BACKTICK:1,
-        TEMPLATE_CHUNK:10,
-        BACKTICK:1
-    }
-}
-
-#[test]
-fn template_invalid_escape() {
-    assert_lex! {
-        r"a`\xg`",
-        IDENT:1,
-        BACKTICK:1,
-        TEMPLATE_CHUNK:3,
-        BACKTICK:1,
-    };
-
-    assert_lex! {
-        r#"a`\u0`"#,
-        IDENT:1,
-        BACKTICK:1,
-        TEMPLATE_CHUNK:3,
-        BACKTICK:1,
-    };
-}
-
-#[test]
 fn fuzz_fail_1() {
     assert_lex! {
         "$\\u",
@@ -1401,7 +1372,7 @@ fn keywords() {
         );
 
         let mut lexer = Lexer::from_str(keyword, 0);
-        lexer.next();
+        lexer.next_token(LexContext::Regular);
 
         let lexed_kind = lexer.current();
         assert_eq!(
@@ -1419,6 +1390,6 @@ fn keywords() {
             lexed_range.len()
         );
 
-        assert_eq!(lexer.next().kind(), EOF);
+        assert_eq!(lexer.next_token(LexContext::Regular).kind, EOF);
     }
 }

@@ -63,6 +63,7 @@ pub(crate) struct ParserState {
     label_set: LabelSet,
     /// Whether we are in strict mode code
     strict: Option<StrictMode>,
+
     /// The exported default item, used for checking duplicate defaults
     pub default_item: Option<ExportDefaultItem>,
     /// If set, the parser reports bindings with identical names. The option stores the name of the

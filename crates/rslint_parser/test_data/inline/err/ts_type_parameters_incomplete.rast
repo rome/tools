@@ -1,0 +1,60 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@5..6 "A" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@6..7 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@7..8 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: missing (required),
+            },
+            eq_token: missing (required),
+            ty: missing (required),
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@8..9 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..9
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..8
+    0: TS_TYPE_ALIAS_DECLARATION@0..8
+      0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@5..6
+        0: IDENT@5..6 "A" [] []
+      2: TS_TYPE_PARAMETERS@6..8
+        0: L_ANGLE@6..7 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@7..8
+          0: TS_TYPE_PARAMETER@7..8
+            0: TS_TYPE_PARAMETER_NAME@7..8
+              0: IDENT@7..8 "T" [] []
+            1: (empty)
+            2: (empty)
+        2: (empty)
+      3: (empty)
+      4: (empty)
+      5: (empty)
+  3: EOF@8..9 "" [Newline("\n")] []
+--
+error[SyntaxError]: expected `>` but instead the file ends
+  ┌─ ts_type_parameters_incomplete.ts:2:1
+  │
+2 │ 
+  │ ^ the file ends here
+
+--
+type A<T

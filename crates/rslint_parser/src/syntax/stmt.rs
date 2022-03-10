@@ -29,8 +29,8 @@ use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    parser, CompletedMarker, JsSyntaxFeature, ModuleKind, ParseRecovery, ParseSeparatedList,
-    Parser, SyntaxFeature, TokenSet,
+    parser, CompletedMarker, JsSyntaxFeature, Marker, ModuleKind, ParseRecovery,
+    ParseSeparatedList, Parser, SyntaxFeature, TokenSet,
 };
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
@@ -439,7 +439,7 @@ fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let range = p.cur_range();
-    p.expect_keyword(T![debugger], "debugger"); // debugger keyword
+    p.expect(T![debugger]); // debugger keyword
     semi(p, range);
     Present(m.complete(p, JS_DEBUGGER_STATEMENT))
 }
@@ -458,7 +458,7 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range().start();
-    p.expect_keyword(T![throw], "throw"); // throw keyword
+    p.expect(T![throw]); // throw keyword
     if p.has_preceding_line_break() {
         let mut err = p
             .err_builder(
@@ -500,7 +500,7 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range();
-    p.expect_keyword(T![break], "break"); // break keyword
+    p.expect(T![break]); // break keyword
 
     let error = if !p.has_preceding_line_break() && p.at(T![ident]) {
         let label_name = p.cur_src();
@@ -559,7 +559,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range();
-    p.expect_keyword(T![continue], "continue"); // continue keyword
+    p.expect(T![continue]); // continue keyword
 
     let error = if !p.has_preceding_line_break() && p.at(T![ident]) {
         let label_name = p.cur_src();
@@ -624,7 +624,7 @@ fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range().start();
-    p.expect_keyword(T![return], "return");
+    p.expect(T![return]);
     if !p.has_preceding_line_break() {
         parse_expression(p, ExpressionContext::default()).ok();
     }
@@ -882,7 +882,7 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![if], "if");
+    p.expect(T![if]);
 
     // (test)
     parenthesized_expression(p);
@@ -893,7 +893,7 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
     // else clause
     if p.at(T![else]) {
         let else_clause = p.start();
-        p.expect_keyword(T![else], "else");
+        p.expect(T![else]);
         parse_statement(p, StatementContext::If).or_add_diagnostic(p, expected_statement);
         else_clause.complete(p, JS_ELSE_CLAUSE);
     }
@@ -915,7 +915,7 @@ fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![with], "with");
+    p.expect(T![with]);
     parenthesized_expression(p);
 
     parse_statement(p, StatementContext::With).or_add_diagnostic(p, expected_statement);
@@ -944,7 +944,7 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    p.expect_keyword(T![while], "while");
+    p.expect(T![while]);
     parenthesized_expression(p);
 
     p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
@@ -1062,14 +1062,14 @@ fn eat_variable_declaration(
 
     match p.cur() {
         T![var] => {
-            p.expect_keyword(T![var], "var");
+            p.bump(T![var]);
         }
         T![const] => {
             context.is_const = Some(p.cur_range());
-            p.expect_keyword(T![const], "const");
+            p.bump(T![const]);
         }
         T![let] => {
-            p.expect_keyword(T![let], "let");
+            p.bump(T![let]);
             context.is_let = true;
         }
         _ => {
@@ -1096,6 +1096,12 @@ struct VariableDeclaratorList {
     remaining_declarator_range: Option<TextRange>,
 }
 
+// test_err variable_declarator_list_incomplete
+// const a = 1,
+//
+// test_err variable_declarator_list_empty
+// const;
+// const
 impl ParseSeparatedList for VariableDeclaratorList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
         parse_variable_declarator(p, &self.declarator_context).map(|declarator| {
@@ -1133,6 +1139,17 @@ impl ParseSeparatedList for VariableDeclaratorList {
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
         T![,]
+    }
+
+    fn finish_list(&mut self, p: &mut Parser, m: Marker) -> CompletedMarker {
+        if self.declarator_context.is_first {
+            let m = m.complete(p, JS_UNKNOWN);
+            let range = m.range(p);
+            p.error(expected_binding(p, range));
+            m
+        } else {
+            m.complete(p, Self::list_kind())
+        }
     }
 }
 
@@ -1369,14 +1386,14 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range().start();
-    p.expect_keyword(T![do], "do");
+    p.expect(T![do]);
 
     p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
         parse_statement(p, StatementContext::Do)
     })
     .or_add_diagnostic(p, expected_statement);
 
-    p.expect_keyword(T![while], "while");
+    p.expect(T![while]);
 
     // test do-while-asi
     // do do do ; while (x) while (x) while (x) x = 39;
@@ -1523,7 +1540,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
 
         JS_FOR_IN_STATEMENT
     } else {
-        p.expect_keyword(T![of], "of");
+        p.expect(T![of]);
 
         parse_assignment_expression_or_higher(p, ExpressionContext::default())
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
@@ -1556,12 +1573,12 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![for], "for");
+    p.expect(T![for]);
 
     let mut await_range = None;
     if p.at(T![await]) {
         await_range = Some(p.cur_range());
-        p.expect_keyword(T![await], "await");
+        p.expect(T![await]);
     }
 
     let has_l_paren = p.expect(T!['(']);
@@ -1629,7 +1646,7 @@ fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) ->
                 discriminant.complete(p, JS_UNKNOWN_EXPRESSION);
                 JS_CASE_CLAUSE
             } else {
-                p.expect_keyword(T![default], "default");
+                p.expect(T![default]);
                 JS_DEFAULT_CLAUSE
             };
 
@@ -1653,7 +1670,7 @@ fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) ->
             Present(default)
         }
         T![case] => {
-            p.expect_keyword(T![case], "case");
+            p.expect(T![case]);
             parse_expression(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression);
             p.expect(T![:]);
@@ -1755,7 +1772,7 @@ fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    p.expect_keyword(T![switch], "switch");
+    p.expect(T![switch]);
     parenthesized_expression(p);
     p.expect(T!['{']);
 
@@ -1773,7 +1790,7 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![catch], "catch");
+    p.expect(T![catch]);
 
     parse_catch_declaration(p).ok();
     parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
@@ -1854,7 +1871,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![try], "try");
+    p.expect(T![try]);
 
     parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
 
@@ -1864,7 +1881,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
         catch.ok();
 
         let finalizer = p.start();
-        p.expect_keyword(T![finally], "finally");
+        p.expect(T![finally]);
         parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
         finalizer.complete(p, JS_FINALLY_CLAUSE);
         Present(m.complete(p, JS_TRY_FINALLY_STATEMENT))

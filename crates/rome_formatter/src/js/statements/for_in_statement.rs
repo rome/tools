@@ -42,7 +42,6 @@ impl ToFormatElement for JsForInStatement {
                     ],
                     &r_paren_token?
                 )?,
-                space_token(),
             ],
             body?,
         )

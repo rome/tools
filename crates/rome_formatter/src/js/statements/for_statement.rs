@@ -1,10 +1,11 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
-    format_elements, group_elements, soft_line_break_or_space, space_token, FormatElement,
+    format_elements, group_elements, soft_line_break_or_space, space_token, token, FormatElement,
     FormatResult, Formatter, ToFormatElement,
 };
 
+use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsForStatement;
 use rome_js_syntax::JsForStatementFields;
 
@@ -39,6 +40,14 @@ impl ToFormatElement for JsForStatement {
             ]
         };
 
+        // Force semicolon insertion for empty bodies
+        let body = body?;
+        let body = if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+            format_elements![body.format(formatter)?, token(";")]
+        } else {
+            format_elements![space_token(), body.format(formatter)?]
+        };
+
         Ok(group_elements(format_elements![
             for_token.format(formatter)?,
             space_token(),
@@ -47,8 +56,7 @@ impl ToFormatElement for JsForStatement {
                 inner,
                 &r_paren_token?,
             )?,
-            space_token(),
-            body.format(formatter)?
+            body
         ]))
     }
 }

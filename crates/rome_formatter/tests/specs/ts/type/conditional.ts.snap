@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 168
+assertion_line: 197
 expression: conditional.ts
 
 ---
@@ -44,11 +44,13 @@ type T2 = test extends string
 		: undefined;
 
 type T3 = test extends string
-	? // something
+	?
+	// something
 	unknown
 	: test extends number
 		? undefined
-		: // else
+		:
+		// else
 		undefined;
 
 type T4 = test extends string
@@ -56,6 +58,7 @@ type T4 = test extends string
 	? unknown
 	: test extends number
 		? undefined
-		: // else
+		:
+		// else
 		undefined;
 

@@ -12,7 +12,11 @@ use std::{
 
 use rome_formatter::{FormatOptions, IndentStyle};
 use rslint_errors::{file::SimpleFiles, termcolor, Emitter};
-use rslint_parser::parse;
+use rslint_parser::{parse, SourceType};
+
+use crate::check_reformat::CheckReformatParams;
+
+mod check_reformat;
 
 static REPORTER: DiffReport = DiffReport::new();
 
@@ -27,15 +31,18 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     }
 
     let input_file = Path::new(input);
+    let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
     let mut input_code = read_to_string(input_file)
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
     let (_, range_start_index, range_end_index) = strip_placeholders(&mut input_code);
     let parse_input = input_code.replace(PRETTIER_IGNORE, ROME_IGNORE);
 
-    let source_type = input_file.try_into().unwrap();
+    let source_type: SourceType = input_file.try_into().unwrap();
 
-    let parsed = parse(&parse_input, 0, source_type);
+    let parsed = parse(&parse_input, 0, source_type.clone());
+
+    let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();
 
     let options = FormatOptions::new(IndentStyle::Space(2));
@@ -72,7 +79,21 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             output_code.replace_range(Range::<usize>::from(range), formatted);
             output_code
         }
-        _ => formatted.into_code(),
+        _ => {
+            let result = formatted.into_code();
+
+            if !has_errors {
+                check_reformat::check_reformat(CheckReformatParams {
+                    root: &syntax,
+                    text: &result,
+                    source_type,
+                    file_name,
+                    format_options: options,
+                });
+            }
+
+            result
+        }
     };
 
     let formatted = formatted.replace(ROME_IGNORE, PRETTIER_IGNORE);
@@ -91,16 +112,14 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     writeln!(snapshot, "```").unwrap();
     writeln!(snapshot).unwrap();
 
-    let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
-
-    if !parsed.errors().is_empty() {
+    if has_errors {
         let mut files = SimpleFiles::new();
         files.add(file_name.into(), parse_input);
 
         let mut buffer = termcolor::Buffer::no_color();
         let mut emitter = Emitter::new(&files);
 
-        for error in parsed.errors() {
+        for error in parsed.diagnostics() {
             emitter
                 .emit_with_writer(error, &mut buffer)
                 .expect("failed to emit diagnostic");

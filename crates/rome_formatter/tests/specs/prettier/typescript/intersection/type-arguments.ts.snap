@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: type-arguments.ts
 
 ---
@@ -25,18 +25,18 @@ export const MyLongNamedReactFunctionalComponent3: FunctionComponent<ALongNamedI
 
 // functional component with ugly linebreak
 export const MyLongNamedReactFunctionalComponent1: FunctionComponent<
-  ALongNamedInterface1 & ALongNamedInterface2,
+  ALongNamedInterface1 & ALongNamedInterface2
 > = (props) => {};
 
 // functional component with valid linebreak
 export const MyLongNamedReactFunctionalComponent2: FunctionComponent<
-  ALongNamedInterface1 | ALongNamedInterface2,
+  ALongNamedInterface1 | ALongNamedInterface2
 > = (props) => {};
 
 // functional component with valid linebreak
 export const MyLongNamedReactFunctionalComponent3: FunctionComponent<
   ALongNamedInterface1,
-  ALongNamedInterface2,
+  ALongNamedInterface2
 > = (props) => {};
 
 ```

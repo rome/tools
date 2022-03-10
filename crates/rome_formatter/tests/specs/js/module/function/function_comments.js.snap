@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
+assertion_line: 197
 expression: function_comments.js
 
 ---
@@ -35,7 +35,8 @@ function a() {
 	/** leading comment **/
 }
 
-function b() { // leading comment
+function b() {
+	// leading comment
 	// trailing
 }
 

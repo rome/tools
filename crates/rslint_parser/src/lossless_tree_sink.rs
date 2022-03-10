@@ -1,4 +1,4 @@
-use crate::token_source::Token;
+use crate::token_source::Trivia;
 use crate::{ParserError, TreeSink};
 use rome_js_syntax::{
     JsSyntaxKind::{self, *},
@@ -12,24 +12,20 @@ use rome_rowan::TriviaPiece;
 #[derive(Debug)]
 pub struct LosslessTreeSink<'a> {
     text: &'a str,
-    tokens: &'a [Token],
+    trivia: &'a [Trivia],
     text_pos: TextSize,
-    token_pos: usize,
+    trivia_pos: usize,
     parents_count: usize,
     errors: Vec<ParserError>,
     inner: SyntaxTreeBuilder,
     /// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
     needs_eof: bool,
-    trivia: Vec<TriviaPiece>,
+    trivia_pieces: Vec<TriviaPiece>,
 }
 
 impl<'a> TreeSink for LosslessTreeSink<'a> {
-    fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
-        self.do_tokens(kind, amount)
-    }
-
-    fn token(&mut self, kind: JsSyntaxKind) {
-        self.do_token(kind);
+    fn token(&mut self, kind: JsSyntaxKind, length: TextSize) {
+        self.do_token(kind, length);
     }
 
     fn start_node(&mut self, kind: JsSyntaxKind) {
@@ -41,7 +37,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
         self.parents_count -= 1;
 
         if self.parents_count == 0 && self.needs_eof {
-            self.do_token(JsSyntaxKind::EOF);
+            self.do_token(JsSyntaxKind::EOF, TextSize::default());
         }
 
         self.inner.finish_node();
@@ -53,17 +49,17 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 }
 
 impl<'a> LosslessTreeSink<'a> {
-    pub fn new(text: &'a str, tokens: &'a [Token]) -> Self {
+    pub fn new(text: &'a str, trivia: &'a [Trivia]) -> Self {
         Self {
             text,
-            tokens,
+            trivia,
             text_pos: 0.into(),
-            token_pos: 0,
+            trivia_pos: 0,
             parents_count: 0,
             inner: SyntaxTreeBuilder::default(),
             errors: vec![],
             needs_eof: true,
-            trivia: Vec::with_capacity(128),
+            trivia_pieces: Vec::with_capacity(128),
         }
     }
 
@@ -76,77 +72,58 @@ impl<'a> LosslessTreeSink<'a> {
     }
 
     #[inline]
-    fn do_token(&mut self, kind: JsSyntaxKind) {
+    fn do_token(&mut self, kind: JsSyntaxKind, length: TextSize) {
         if kind == JsSyntaxKind::EOF {
             self.needs_eof = false;
         }
 
-        self.do_tokens(kind, 1)
-    }
-
-    fn do_tokens(&mut self, kind: JsSyntaxKind, token_count: u8) {
         // Every trivia up to the token (including line breaks) will be the leading trivia
-        self.trivia.clear();
+        self.trivia_pieces.clear();
         let (leading_range, leading_end) = self.get_trivia(false);
 
-        let len = if token_count == 1 {
-            self.tokens[self.token_pos].len()
-        } else {
-            self.tokens[self.token_pos..self.token_pos + token_count as usize]
-                .iter()
-                .map(|x| x.len())
-                .sum()
-        };
-
-        let token_range = TextRange::at(self.text_pos, len);
-
-        self.text_pos += len;
-        self.token_pos += token_count as usize;
+        let token_range = TextRange::at(self.text_pos, length);
+        self.text_pos += length;
 
         // Everything until the next linebreak (but not including it)
         // will be the trailing trivia...
-        let trailing_start = self.trivia.len();
+        let trailing_start = self.trivia_pieces.len();
         let (trailing_range, _) = self.get_trivia(true);
 
         let range = leading_range.cover(token_range).cover(trailing_range);
+
         let text = &self.text[range];
 
-        let leading = &self.trivia[0..leading_end];
-        let trailing = &self.trivia[trailing_start..];
+        let leading = &self.trivia_pieces[0..leading_end];
+        let trailing = &self.trivia_pieces[trailing_start..];
 
         self.inner.token_with_trivia(kind, text, leading, trailing);
     }
 
-    fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, usize) {
+    fn get_trivia(&mut self, trailing: bool) -> (TextRange, usize) {
         let start_text_pos = self.text_pos;
-        let mut length = TextSize::from(0);
 
         let mut count = 0;
-        for token in &self.tokens[self.token_pos..] {
-            if !token.kind().is_trivia() {
+        for trivia in &self.trivia[self.trivia_pos..] {
+            if trailing != trivia.trailing() || self.text_pos != trivia.offset() {
                 break;
             }
 
-            if break_on_newline && token.kind() == JsSyntaxKind::NEWLINE {
-                break;
-            }
+            self.text_pos += trivia.len();
 
-            self.token_pos += 1;
-            self.text_pos += token.len();
-            length += token.len();
-
-            let current_trivia = match token.kind() {
-                NEWLINE => TriviaPiece::Newline(token.len()),
-                WHITESPACE => TriviaPiece::Whitespace(token.len()),
-                COMMENT => TriviaPiece::Comments(token.len(), false),
-                MULTILINE_COMMENT => TriviaPiece::Comments(token.len(), true),
+            let current_trivia = match trivia.kind() {
+                NEWLINE => TriviaPiece::Newline(trivia.len()),
+                WHITESPACE => TriviaPiece::Whitespace(trivia.len()),
+                COMMENT => TriviaPiece::Comments(trivia.len(), false),
+                MULTILINE_COMMENT => TriviaPiece::Comments(trivia.len(), true),
                 _ => unreachable!("Not Trivia"),
             };
 
-            self.trivia.push(current_trivia);
+            self.trivia_pieces.push(current_trivia);
             count += 1;
         }
 
-        (TextRange::at(start_text_pos, length), count)
+        self.trivia_pos += count;
+
+        (TextRange::new(start_text_pos, self.text_pos), count)
     }
 }

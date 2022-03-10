@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: break.ts
 
 ---
@@ -151,7 +151,7 @@ interface ExtendsMany
       Interface4,
       Interface5,
       Interface6,
-      Interface7,
+      Interface7
     >
 { x: string }
 
@@ -166,7 +166,7 @@ interface ExtendsManyWithGenerics
       Interface4,
       Interface5,
       Interface6,
-      Interface7,
+      Interface7
     >,
     InterfaceThree
 { x: string }
@@ -175,7 +175,7 @@ export interface ExtendsLongOneWithGenerics
   extends
     Bar<
       SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
-      ToBreakLineToBreakLineToBreakLine,
+      ToBreakLineToBreakLineToBreakLine
     >
 {}
 

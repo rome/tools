@@ -169,6 +169,7 @@ impl Emitter<'_> {
             .collect::<Vec<_>>();
 
         let mut diagnostic = CodespanDiag {
+            file_id: EmitterFileId::Real(d.file_id),
             severity: d.severity,
             labels,
             code: d.code.clone(),
@@ -214,6 +215,7 @@ impl Emitter<'_> {
                         })
                         .collect();
                     let diag = CodespanDiag {
+                        file_id: EmitterFileId::Real(d.file_id),
                         severity: Severity::Help,
                         message: suggestion.msg.clone(),
                         code: None,
@@ -262,8 +264,15 @@ impl Emitter<'_> {
             real_files: self.files,
             virtual_files,
         };
+
+        // If the diagnostics has no primary label, print it in medium mode instead of rich
+        let mut config = default_config();
+        if d.primary.is_none() {
+            config.display_style = DisplayStyle::Medium;
+        }
+
         for diag in iter {
-            emit(writer, &default_config(), &files, &diag)?;
+            emit(writer, &config, &files, &diag)?;
         }
         writer.write(b"\n").map(|_| ()).map_err(Error::Io)
     }

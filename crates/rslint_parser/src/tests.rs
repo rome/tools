@@ -14,13 +14,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-outer: while(true) {
-    while (true) {
-      continue;
-    continue outer;
-   }
-  continue
-}
+e[`${t} =>`]=n
     "#;
 
     let module = parse(src, 0, SourceType::ts());
@@ -126,7 +120,7 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
         text.to_string(),
     );
     let mut actual = format!("{}\n\n{:#?}", ast, parse.syntax());
-    for diag in parse.errors() {
+    for diag in parse.diagnostics() {
         let mut write = rslint_errors::termcolor::Buffer::no_color();
         let mut emitter = Emitter::new(&files);
         emitter
@@ -156,7 +150,7 @@ mod parser {
 
 fn assert_errors_are_present(program: &Parse<JsAnyRoot>, path: &Path) {
     assert!(
-        !program.errors().is_empty(),
+        !program.diagnostics().is_empty(),
         "There should be errors in the file {:?}\nSyntax Tree: {:#?}",
         path.display(),
         program.syntax()
@@ -180,7 +174,7 @@ fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
     let mut emitter = Emitter::new(&file);
     let mut buffer = Buffer::no_color();
 
-    for diagnostic in program.errors() {
+    for diagnostic in program.diagnostics() {
         emitter.emit_with_writer(diagnostic, &mut buffer).unwrap();
     }
 

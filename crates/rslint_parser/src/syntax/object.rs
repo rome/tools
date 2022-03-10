@@ -29,6 +29,7 @@ use rome_js_syntax::{JsSyntaxKind, T};
 // test_err object_expr_err
 // let a = {, foo}
 // let b = { foo bar }
+// let b = { foo
 
 struct ObjectMembersList;
 
@@ -248,7 +249,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
 
-    p.expect_keyword(T![get], "get");
+    p.expect(T![get]);
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
@@ -280,7 +281,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
 
-    p.expect_keyword(T![set], "set");
+    p.expect(T![set]);
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
@@ -403,7 +404,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
     //  async *foo() {}
     // }
     if is_async {
-        p.eat_keyword(T![async], "async");
+        p.eat(T![async]);
         flags |= SignatureFlags::ASYNC;
     }
 

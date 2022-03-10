@@ -46,11 +46,7 @@ JsModule {
                     BACKTICK@18..19 "`" [] [],
                     JsUnknown {
                         items: [
-                            JsUnknown {
-                                items: [
-                                    ERROR_TOKEN@19..21 "b\n" [] [],
-                                ],
-                            },
+                            ERROR_TOKEN@19..21 "b\n" [] [],
                         ],
                     },
                 ],
@@ -96,8 +92,7 @@ JsModule {
             0: IDENT@14..18 "BAR" [Newline("\n")] []
         1: BACKTICK@18..19 "`" [] []
         2: JS_UNKNOWN@19..21
-          0: JS_UNKNOWN@19..21
-            0: ERROR_TOKEN@19..21 "b\n" [] []
+          0: ERROR_TOKEN@19..21 "b\n" [] []
       1: (empty)
   3: EOF@21..21 "" [] []
 --

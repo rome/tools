@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: ramda_pipe.js
 
 ---
@@ -50,7 +50,7 @@ var getStateCode = R.pipeK(
   R.compose(Maybe.of, R.toUpper),
 );
 
-getStateCode("{"user":{"address":{"state":"ny"}}}");
+getStateCode('{"user":{"address":{"state":"ny"}}}');
 //=> Just('NY')
 getStateCode("[Invalid JSON]");
 //=> Nothing()

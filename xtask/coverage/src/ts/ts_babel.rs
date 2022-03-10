@@ -49,14 +49,14 @@ impl TestCase for BabelTypescriptTestCase {
 
         let result = rslint_parser::parse(&self.code, 0, source_type);
 
-        if self.expected_to_fail && result.errors().is_empty() {
+        if self.expected_to_fail && result.diagnostics().is_empty() {
             TestRunOutcome::IncorrectlyPassed(files)
         } else if self.expected_to_fail {
             TestRunOutcome::Passed(files)
-        } else if !result.errors().is_empty() {
+        } else if !result.diagnostics().is_empty() {
             TestRunOutcome::IncorrectlyErrored {
                 files,
-                errors: result.errors().to_vec(),
+                errors: result.diagnostics().to_vec(),
             }
         } else if let Some(unknown) = result
             .syntax()
