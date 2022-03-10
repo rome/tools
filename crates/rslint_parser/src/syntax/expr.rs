@@ -28,7 +28,6 @@ use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
-use crate::LanguageVariant;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
@@ -1743,11 +1742,9 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
     // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
-        let jsx = JSX.parse_exclusive_syntax(
-            p,
-            |p| maybe_parse_jsx_expression(p),
-            |p, assertion| jsx_only_syntax_error(p, "JSX elements", assertion.range(p)),
-        );
+        let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
+            jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
+        });
 
         return jsx.or_else(|| {
             TypeScript.parse_exclusive_syntax(

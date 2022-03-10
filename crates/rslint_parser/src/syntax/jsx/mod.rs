@@ -20,10 +20,6 @@ impl<'a, 'b> CheckpointedParser<'a, 'b> {
         }
     }
 
-    pub fn accept(self) -> &'a mut Parser<'b> {
-        self.parser
-    }
-
     pub fn rewind(self) -> &'a mut Parser<'b> {
         self.parser.rewind(self.checkpoint);
         self.parser
@@ -98,7 +94,7 @@ fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
             let closing_marker = parse_jsx_closing_element(p);
             if closing_marker.is_absent() {
                 element_marker.abandon(p);
-                return ParsedSyntax::Absent;
+                ParsedSyntax::Absent
             } else {
                 ParsedSyntax::Present(element_marker.complete(p, JsSyntaxKind::JSX_ELEMENT))
             }
@@ -120,7 +116,7 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
         return ParsedSyntax::Absent;
     }
 
-    parse_jsx_any_element_name(p);
+    let _ = parse_jsx_any_element_name(p);
 
     let kind = if p.at(T![/]) && p.nth_at(1, T![>]) {
         p.bump_multiple(2, JsSyntaxKind::SLASH_R_ANGLE);
@@ -151,7 +147,7 @@ fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax
         return ParsedSyntax::Absent;
     }
 
-    parse_jsx_any_element_name(p);
+    let _ = parse_jsx_any_element_name(p);
 
     if !p.eat(T![>]) {
         m.abandon(p);
