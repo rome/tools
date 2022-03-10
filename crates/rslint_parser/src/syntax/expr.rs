@@ -4,10 +4,14 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use super::jsx::maybe_parse_jsx_expression;
 =======
 use super::jsx::try_parse_jsx_expression;
 >>>>>>> cd10294604 (jsx, open/close and self closing elements)
+=======
+use super::jsx::maybe_parse_jsx_expression;
+>>>>>>> dbee0cc063 (maybe prefix for checkpointed parsing)
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -1751,9 +1755,17 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
     // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
+<<<<<<< HEAD
         let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
             jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
         });
+=======
+        let jsx = Jsx.parse_exclusive_syntax(
+            p,
+            |p| maybe_parse_jsx_expression(p),
+            |p, assertion| jsx_only_syntax_error(p, "jsx elements", assertion.range(p)),
+        );
+>>>>>>> dbee0cc063 (maybe prefix for checkpointed parsing)
 
         return jsx.or_else(|| {
             TypeScript.parse_exclusive_syntax(
