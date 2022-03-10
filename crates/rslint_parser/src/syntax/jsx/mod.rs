@@ -20,8 +20,13 @@ impl<'a, 'b> CheckpointedParser<'a, 'b> {
         }
     }
 
-    pub fn unwrap(self) -> (&'a mut Parser<'b>, Checkpoint) {
-        (self.parser, self.checkpoint)
+    pub fn accept(self) -> &'a mut Parser<'b> {
+        self.parser
+    }
+
+    pub fn rewind(self) -> &'a mut Parser<'b> {
+        self.parser.rewind(self.checkpoint);
+        self.parser
     }
 }
 
@@ -48,10 +53,9 @@ pub(super) fn try_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 
     let mut p = CheckpointedParser::new(p);
     let syntax = parse_jsx_expression(&mut p);
-    let (p, checkpoint) = p.unwrap();
 
     if syntax.is_absent() {
-        p.rewind(checkpoint);
+        p.rewind();
     }
 
     syntax
