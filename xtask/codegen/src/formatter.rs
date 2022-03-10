@@ -365,7 +365,7 @@ pub fn generate_formatter() {
 enum NodeLanguage {
     Js,
     Ts,
-    JSX,
+    Jsx,
 }
 
 impl NodeLanguage {
@@ -377,7 +377,7 @@ impl NodeLanguage {
         match self {
             NodeLanguage::Js => "js",
             NodeLanguage::Ts => "ts",
-            NodeLanguage::JSX => "jsx",
+            NodeLanguage::Jsx => "jsx",
         }
     }
 }
@@ -452,7 +452,7 @@ fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
         .expect("Node name malformed");
     let (prefix, mut name) = in_name.split_at(mid_before_second_capital_letter);
     let language = match prefix {
-        "Jsx" => NodeLanguage::JSX,
+        "Jsx" => NodeLanguage::Jsx,
         "Js" => NodeLanguage::Js,
         "Ts" => NodeLanguage::Ts,
         _ => {

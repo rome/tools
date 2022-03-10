@@ -31,6 +31,7 @@ use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax
 use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
 use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
 use crate::LanguageVariant;
+use crate::LanguageVariant;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
