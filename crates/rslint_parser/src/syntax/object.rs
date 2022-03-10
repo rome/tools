@@ -29,6 +29,7 @@ use rome_js_syntax::{JsSyntaxKind, T};
 // test_err object_expr_err
 // let a = {, foo}
 // let b = { foo bar }
+// let b = { foo
 
 struct ObjectMembersList;
 

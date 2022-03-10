@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 144
 expression: no_regression.js
 
 ---
@@ -15,19 +15,6 @@ expression: no_regression.js
 ```js
 // Ensure no regression.
 "use strict";
-
-```
-
-# Errors
-```
-warning[SyntaxError]: Redundant strict mode declaration
-  ┌─ no_regression.js:2:1
-  │
-2 │ "use strict";
-  │ ------------ this declaration is redundant
-  │
-  ╧ note: modules are always strict mode
-
 
 ```
 

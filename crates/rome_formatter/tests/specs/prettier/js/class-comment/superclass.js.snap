@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: superclass.js
 
 ---
@@ -51,10 +51,12 @@ extends Base
 
 # Output
 ```js
-class A // comment 2 // comment 1
+class A // comment 1
+// comment 2
 extends B {}
 
-class A1 extends B // comment2 // comment1
+class A1 extends B // comment1
+// comment2
 // comment3
 {}
 
@@ -63,12 +65,14 @@ class A3 extends B /* a */ {}
 class A4 extends /* a */ B {}
 
 (
-  class A5 // comment 2 // comment 1
+  class A5 // comment 1
+  // comment 2
   extends B {}
 );
 
 (
-  class A6 extends B // comment2 // comment1
+  class A6 extends B // comment1
+  // comment2
   // comment3
   {}
 );
@@ -77,16 +81,19 @@ class A4 extends /* a */ B {}
 (class A8 extends B /* a */ {});
 (class A9 extends /* a */ B {});
 
-class a extends b { // comment
+class a extends b {
+  // comment
   constructor() {}
 }
 
-class c extends d // comment2
+class c extends d
+// comment2
 {
   constructor() {}
 }
 
-class C2 extends Base { // comment
+class C2 extends Base {
+  // comment
   foo() {}
 }
 

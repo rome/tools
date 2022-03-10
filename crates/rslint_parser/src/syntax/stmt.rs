@@ -29,8 +29,8 @@ use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    parser, CompletedMarker, JsSyntaxFeature, ModuleKind, ParseRecovery, ParseSeparatedList,
-    Parser, SyntaxFeature, TokenSet,
+    parser, CompletedMarker, JsSyntaxFeature, Marker, ModuleKind, ParseRecovery,
+    ParseSeparatedList, Parser, SyntaxFeature, TokenSet,
 };
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
@@ -1096,6 +1096,12 @@ struct VariableDeclaratorList {
     remaining_declarator_range: Option<TextRange>,
 }
 
+// test_err variable_declarator_list_incomplete
+// const a = 1,
+//
+// test_err variable_declarator_list_empty
+// const;
+// const
 impl ParseSeparatedList for VariableDeclaratorList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
         parse_variable_declarator(p, &self.declarator_context).map(|declarator| {
@@ -1133,6 +1139,17 @@ impl ParseSeparatedList for VariableDeclaratorList {
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
         T![,]
+    }
+
+    fn finish_list(&mut self, p: &mut Parser, m: Marker) -> CompletedMarker {
+        if self.declarator_context.is_first {
+            let m = m.complete(p, JS_UNKNOWN);
+            let range = m.range(p);
+            p.error(expected_binding(p, range));
+            m
+        } else {
+            m.complete(p, Self::list_kind())
+        }
     }
 }
 

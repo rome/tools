@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: function-declaration.js
 
 ---
@@ -114,12 +114,14 @@ class C4 {
   f /* f */ ( /* args */ ) /* returns */ {}
 }
 
-function foo1() // this is a function
+function foo1()
+// this is a function
 {
   return 42;
 }
 
-function foo2() { // this is a function
+function foo2() {
+  // this is a function
   return 42;
 }
 
@@ -141,7 +143,15 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
   ┌─ function-declaration.js:6:3
   │
 6 │   <div />
-  │   ^^^^^^ TypeScript only syntax
+  │   ^^^^ TypeScript only syntax
+
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+  ┌─ function-declaration.js:6:9
+  │
+6 │   <div />
+  │        -^ But this operator was encountered instead
+  │        │ 
+  │        This operator requires a right hand side value
 
 error[SyntaxError]: expected an expression but instead found ')'
   ┌─ function-declaration.js:7:1

@@ -170,6 +170,9 @@ pub(crate) fn is_nth_at_ts_enum_declaration(p: &mut Parser, n: usize) -> bool {
 // enum A {}
 // enum B { a, b, c }
 // const enum C { A = 1, B = A * 2, ["A"] = 3, }
+//
+// test_err ts typescript_enum_incomplete
+// enum A {
 pub(crate) fn parse_ts_enum_declaration(p: &mut Parser) -> ParsedSyntax {
     if !is_at_ts_enum_declaration(p) {
         return Absent;

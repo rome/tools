@@ -14,8 +14,8 @@ impl ToFormatElement for JsStringLiteralExpression {
         let value_token = value_token?;
         let quoted = value_token.text_trimmed();
 
-        // uses single quotes
-        let content = if quoted.starts_with('\'') {
+        // replace single quotes with double quotes if the string does not contain any
+        let content = if quoted.starts_with('\'') && !quoted.contains('"') {
             let s = &quoted[1..quoted.len() - 1];
             let s = format!("\"{}\"", s);
             match normalize_newlines(&s, ['\r']) {

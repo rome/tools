@@ -56,3 +56,4 @@ if (true) {
 
 }
 
+if (true) that(); else;

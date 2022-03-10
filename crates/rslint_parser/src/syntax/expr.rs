@@ -1521,6 +1521,9 @@ impl ParseSeparatedList for ArrayElementsList {
 // [foo,];
 // [,,,,,foo,,,,];
 // [...a, ...b];
+
+// test_err array_expr_incomplete
+// let a = [
 fn parse_array_expr(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['[']) {
         return Absent;

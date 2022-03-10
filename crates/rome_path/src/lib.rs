@@ -22,9 +22,9 @@ impl Deref for RomePath {
 }
 
 impl RomePath {
-    pub fn new(path_to_file: &str) -> Self {
+    pub fn new(path_to_file: impl Into<PathBuf>) -> Self {
         Self {
-            file: PathBuf::from(path_to_file),
+            file: path_to_file.into(),
             file_id: None,
         }
     }

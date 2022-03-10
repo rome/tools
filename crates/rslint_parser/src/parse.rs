@@ -61,9 +61,14 @@ impl<T> Parse<T> {
         self.root.clone()
     }
 
-    /// Get the errors which occurred when parsing
-    pub fn errors(&self) -> &[Diagnostic] {
+    /// Get the diagnostics which occurred when parsing
+    pub fn diagnostics(&self) -> &[Diagnostic] {
         self.errors.as_slice()
+    }
+
+    /// Get the diagnostics which occurred when parsing
+    pub fn into_diagnostics(self) -> Vec<Diagnostic> {
+        self.errors
     }
 
     /// Returns [true] if the parser encountered some errors during the parsing.

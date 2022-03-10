@@ -27,10 +27,20 @@ impl ToFormatElement for TsUnionType {
             None => if_group_breaks(format_elements![token("|"), space_token()]),
         };
 
-        Ok(group_elements(indent(format_elements![
-            soft_line_break(),
-            leading_separator_token,
-            types.format(formatter)?,
-        ])))
+        let types = types.format(formatter)?;
+
+        // Push trailing comments for the union out of the group (and indent block),
+        // so any potential line break doesn't influence the formatting of the type itself
+        let (leading_comments, types, trailing_comments) = types.split_trivia();
+
+        Ok(format_elements![
+            group_elements(indent(format_elements![
+                soft_line_break(),
+                leading_separator_token,
+                leading_comments,
+                types,
+            ])),
+            trailing_comments
+        ])
     }
 }

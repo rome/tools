@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: method_types.ts
 
 ---
@@ -60,19 +60,25 @@ interface foo2 {
   bar?(bar: /* baz */ string): string, /* foo */ /* bar */ /* bat */
 }
 
-interface foo3 { /* foo */ ( /* bar */ ): /* baz */ string }
+interface foo3 {
+  /* foo */ ( /* bar */ ): string, /* baz */
+}
 
-interface foo4 { /* foo */ (bar: /* bar */ string): /* baz */ string }
+interface foo4 {
+  /* foo */ (bar: /* bar */ string): string, /* baz */
+}
 
 interface foo5 {
   /* foo */ new(a: /* baz */ string): string, /* bar */ /* bat */
 }
 
-interface foo6 { /* foo */ new /* bar */ ( /* baz */ ): /* bat */ string }
+interface foo6 {
+  /* foo */ new( /* baz */ ): string, /* bar */ /* bat */
+}
 
-type foo7 = ( /* bar */ ) /* baz */ => void; /* foo */
+type foo7 = /* foo */ ( /* bar */ ) /* baz */ => void;
 
-type foo8 = (a: /* bar */ string) /* baz */ => void; /* foo */
+type foo8 = /* foo */ (a: /* bar */ string) /* baz */ => void;
 
 let foo9: new /* foo */ ( /* bar */ ) /* baz */ => string;
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: generic-cast.ts
 
 ---
@@ -85,7 +85,7 @@ function y() {
       undefined,
       any,
       void,
-      never,
+      never
     >
   >someExistingConfigMap.mergeDeep(fallbackOptions);
 
@@ -99,7 +99,7 @@ function y() {
         undefined,
         any,
         void,
-        never,
+        never
       >
       | undefined
   >someExistingConfigMap.mergeDeep(fallbackOptions);
@@ -118,7 +118,7 @@ function y() {
         undefined,
         any,
         void,
-        never,
+        never
       >
       | undefined
   >someExistingConfigMap.mergeDeep(
@@ -139,7 +139,7 @@ function y() {
       null,
       undefined,
       never,
-      "extra long",
+      "extra long"
     >
   >{ property1: "myPropertyVal" };
 
@@ -157,7 +157,7 @@ function y() {
       null,
       undefined,
       never,
-      "extra long",
+      "extra long"
     >
   >["first", "second", "third"];
 

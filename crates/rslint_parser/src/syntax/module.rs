@@ -389,6 +389,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 // import { type default } from "./mod";
 // import { "literal-name" } from "./mod";
 // import { type "literal-name" } from "./mod";
+// import {
 fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
     if !is_nth_at_literal_export_name(p, 0) {
         // covers `type` and `as` too
@@ -677,6 +678,8 @@ fn parse_export_named_or_named_from_clause(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_export_type_named
 // type A = string;
 // export type { A };
+//
+// export {
 //
 // test_err ts ts_export_type
 // export type

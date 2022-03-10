@@ -499,6 +499,10 @@ impl<L: Language> Iterator for SyntaxTriviaPiecesIterator<L> {
             _p: PhantomData,
         })
     }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        self.iter.size_hint()
+    }
 }
 
 impl<L: Language> DoubleEndedIterator for SyntaxTriviaPiecesIterator<L> {
@@ -512,6 +516,8 @@ impl<L: Language> DoubleEndedIterator for SyntaxTriviaPiecesIterator<L> {
         })
     }
 }
+
+impl<L: Language> ExactSizeIterator for SyntaxTriviaPiecesIterator<L> {}
 
 impl<L: Language> SyntaxTrivia<L> {
     /// Returns all [SyntaxTriviaPiece] of this trivia.

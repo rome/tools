@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: arrow-with-return-type.ts
 
 ---
@@ -69,8 +69,8 @@ longfunctionWithCall1(
   (thing: string): complex<
     type<
       `
-`,
-    >,
+`
+    >
   > => {
     code();
   },

@@ -467,9 +467,15 @@ impl Marker {
             _ => unreachable!(),
         }
         let finish_pos = p.events.len() as u32;
-        p.push_event(Event::Finish {
-            end: p.last_range().map(|range| range.end()).unwrap_or_default(),
-        });
+
+        let mut end_pos = p.last_range().map(|t| t.end()).unwrap_or_default();
+        if end_pos < self.start {
+            end_pos = p.cur_range().end();
+        }
+
+        assert!(end_pos >= self.start);
+        p.push_event(Event::Finish { end: end_pos });
+
         let new = CompletedMarker::new(self.pos, finish_pos, kind);
         new.old_start(self.old_start)
     }

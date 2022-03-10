@@ -9,11 +9,17 @@ use super::super::term::{Chars, Config, Styles};
 const MAX_LINE_LENGTH: usize = 250;
 
 /// The 'location focus' of a source code snippet.
-pub struct Locus {
-    /// The user-facing name of the file.
-    pub name: String,
-    /// The location.
-    pub location: Location,
+pub enum Locus {
+    File {
+        /// The user-facing name of the file.
+        name: String,
+    },
+    FileLocation {
+        /// The user-facing name of the file.
+        name: String,
+        /// The location.
+        location: Location,
+    },
 }
 
 /// Single-line label, with an optional message.
@@ -869,13 +875,16 @@ impl<'writer, 'config> Renderer<'writer, 'config> {
 
     /// Location focus.
     fn snippet_locus(&mut self, locus: &Locus) -> Result<(), Error> {
-        write!(
-            self,
-            "{name}:{line_number}:{column_number}",
-            name = locus.name,
-            line_number = locus.location.line_number,
-            column_number = locus.location.column_number,
-        )?;
+        match locus {
+            Locus::File { name } => write!(self, "{name}",)?,
+            Locus::FileLocation { name, location } => write!(
+                self,
+                "{name}:{line_number}:{column_number}",
+                name = name,
+                line_number = location.line_number,
+                column_number = location.column_number,
+            )?,
+        }
         Ok(())
     }
 

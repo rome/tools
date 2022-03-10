@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: closure-compiler-type-cast.js
 
 ---
@@ -72,7 +72,9 @@ const style2 =/**
 # Output
 ```js
 // test to make sure comments are attached correctly
-let inlineComment = (someReallyLongFunctionCall(withLots, ofArguments)); /* some comment */
+let inlineComment = /* some comment */ (
+  someReallyLongFunctionCall(withLots, ofArguments)
+);
 
 let object = {
   key: (someReallyLongFunctionCall(withLots, ofArguments)), /* some comment */
@@ -82,7 +84,11 @@ let object = {
 let assignment = /** @type {string} */ (getValue());
 let value = /** @type {string} */ (this.members[0]).functionCall();
 
-functionCall(1 + /** @type {string} */ (value), /** @type {!Foo} */ ({}));
+functionCall(
+  1 + /** @type {string} */
+  (value), /** @type {!Foo} */
+  ({}),
+);
 
 function returnValue() {
   return (["hello", "you"]); /** @type {!Array.<string>} */
@@ -110,20 +116,20 @@ const data = functionCall(
   /** @type {{height: number, width: number}} */ (arg3),
 );
 
-const style = ({ width, height, ...margins }); /** @type {{
+const style = /** @type {{
   width: number,
   height: number,
   marginTop: number,
   marginLeft: number,
   marginRight: number,
   marginBottom: number,
-}} */
+}} */ ({ width, height, ...margins });
 
-const style2 = ({ width }); /**
+const style2 = /**
  * @type {{
  *   width: number,
  * }}
-*/
+*/ ({ width });
 
 ```
 
