@@ -1,6 +1,7 @@
 //! Token definitions for the lexer
 
-use crate::JsSyntaxKind;
+use crate::{JsSyntaxKind, TextSize};
+use rome_js_syntax::TextRange;
 
 /// A single raw token such as `>>` or `||` or `"abc"`.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -10,10 +11,10 @@ pub struct Token {
     /// Indicates if there is a newline between this token and the previous non-trivia token.
     pub after_newline: bool,
     /// Offset from the start of the file, in bytes.
-    pub offset: u32,
+    pub offset: TextSize,
     /// How long the token is in bytes. For tokens with escape sequences
     /// like strings with `\uXXXX` escapes, the length is the raw length, not considering the char backed by the escape.
-    pub len: u32,
+    pub len: TextSize,
 }
 
 impl Token {
@@ -21,8 +22,8 @@ impl Token {
     pub fn single(kind: JsSyntaxKind, offset: usize) -> Self {
         Self {
             kind,
-            len: 1,
-            offset: offset as u32,
+            len: TextSize::from(1),
+            offset: TextSize::from(offset as u32),
             after_newline: false,
         }
     }
@@ -31,29 +32,28 @@ impl Token {
     pub fn new(kind: JsSyntaxKind, len: usize) -> Self {
         Self {
             kind,
-            len: len as u32,
-            offset: 0,
+            len: TextSize::from(len as u32),
+            offset: TextSize::from(0),
             after_newline: false,
         }
     }
 
     /// Range from the start of the file, in bytes.
     #[inline(always)]
-    pub fn range(&self) -> std::ops::Range<usize> {
-        let end = self.offset as usize + self.len as usize;
-        (self.offset as usize)..end
+    pub fn range(&self) -> TextRange {
+        TextRange::at(self.offset, self.len)
     }
 
     /// Same as [Token::range()].start.
     #[inline(always)]
-    pub fn start(&self) -> usize {
-        self.offset as usize
+    pub fn start(&self) -> TextSize {
+        self.offset
     }
 
     /// Same as [Token::range()].end.
     #[inline(always)]
-    pub fn end(&self) -> usize {
-        self.offset as usize + self.len as usize
+    pub fn end(&self) -> TextSize {
+        self.offset + self.len
     }
 }
 

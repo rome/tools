@@ -1,12 +1,12 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::{parse_js_big_int, parse_js_number};
-use crate::JsSyntaxKind::*;
 use crate::{
     AstNode, AstSeparatedList, JsArrayExpression, JsArrayHole, JsAssignmentExpression,
     JsBigIntLiteralExpression, JsBinaryExpression, JsLiteralMemberName, JsLogicalExpression,
     JsNumberLiteralExpression, JsObjectExpression, JsStringLiteralExpression, JsTemplate,
     JsUnaryExpression, SyntaxResult, SyntaxToken,
 };
+use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use num_bigint::BigInt;
 use rome_rowan::{NodeOrToken, SyntaxText, TextRange, TextSize};
 
@@ -216,6 +216,26 @@ impl JsUnaryExpression {
             T![typeof] => JsUnaryOperation::Typeof,
             T![void] => JsUnaryOperation::Void,
             T![delete] => JsUnaryOperation::Delete,
+            _ => unreachable!(),
+        })
+    }
+}
+
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum JsPreUpdateOperation {
+    /// `++`
+    Increment,
+    /// `--`
+    Decrement,
+}
+
+impl JsPreUpdateExpression {
+    pub fn operation(&self) -> SyntaxResult<JsPreUpdateOperation> {
+        let operator = self.operator()?;
+
+        Ok(match operator.kind() {
+            T![++] => JsPreUpdateOperation::Increment,
+            T![--] => JsPreUpdateOperation::Decrement,
             _ => unreachable!(),
         })
     }

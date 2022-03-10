@@ -336,13 +336,57 @@ impl Formatter {
         let mut line_count = 0;
         let mut elements = Vec::new();
 
-        for piece in token.leading_trivia().pieces().rev() {
+        // Checks whether the previous token has any trailing newline
+        let has_trailing_newline = token
+            .prev_token()
+            .and_then(|token| token.trailing_trivia().pieces().next_back())
+            .map_or(false, |trivia| trivia.is_newline());
+
+        // Get the index of the first comment in the trivia pieces list, and
+        // checks whether this token has any leading newline the comment
+        let mut has_leading_newline = false;
+        let mut first_comment = 0;
+
+        // Create an enumerated, peekable iterator over the leading trivia pieces for this token
+        let mut pieces = token.leading_trivia().pieces().enumerate().peekable();
+
+        // Peek at the next trivia piece, stopping at if it is a comment and
+        // advancing the iterator if its not
+        while let Some((index, piece)) = pieces.peek() {
+            if piece.is_comments() {
+                // Save the index and break the loop
+                // without consuming the comment piece
+                first_comment = *index;
+                break;
+            }
+
+            if piece.is_newline() {
+                has_leading_newline = true;
+            }
+
+            // Call to unwrap guarded by the above call to peek
+            pieces.next().unwrap();
+        }
+
+        // If any newline was found between the previous token and the first comment,
+        // it will be prepended with a line break instead of a space
+        let prepend_newline = has_trailing_newline || has_leading_newline;
+
+        // This consumes the previously created iterator from the last trivia piece
+        // towards the first (that was not consumed by the previous loop)
+        for (index, piece) in pieces.rev() {
             if let Some(comment) = piece.as_comments() {
                 let is_single_line = comment.text().trim_start().starts_with("//");
 
                 let comment = Token::from(comment);
 
-                let line_break = if is_single_line {
+                let element_before_comment = if prepend_newline && index == first_comment {
+                    hard_line_break()
+                } else {
+                    space_token()
+                };
+
+                let element_after_comment = if is_single_line {
                     match line_count {
                         0 | 1 => hard_line_break(),
                         _ => empty_line(),
@@ -355,7 +399,11 @@ impl Formatter {
                     }
                 };
 
-                elements.push(format_elements![space_token(), comment, line_break]);
+                elements.push(crate::comment(format_elements![
+                    element_before_comment,
+                    comment,
+                    element_after_comment,
+                ]));
 
                 line_count = 0;
                 trim_mode = TriviaPrintMode::Full;
@@ -376,7 +424,7 @@ impl Formatter {
 
                 let comment = Token::from(comment);
 
-                elements.push(if !is_single_line {
+                let content = if !is_single_line {
                     format_elements![
                         if_group_breaks(line_suffix(format_elements![
                             space_token(),
@@ -391,7 +439,9 @@ impl Formatter {
                     ]
                 } else {
                     line_suffix(format_elements![space_token(), comment, space_token()])
-                });
+                };
+
+                elements.push(crate::comment(content));
             }
         }
 

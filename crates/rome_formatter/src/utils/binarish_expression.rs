@@ -1,9 +1,9 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    concat_elements, empty_element, format_elements, group_elements, hard_group_elements,
-    hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent, join_elements,
-    soft_block_indent, soft_line_break_or_space, space_token, token, FormatElement, FormatResult,
-    Formatter, ToFormatElement,
+    empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
+    if_group_breaks, if_group_fits_on_single_line, indent, join_elements, soft_block_indent,
+    soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use rome_js_syntax::{
@@ -357,23 +357,37 @@ fn split_binaryish_to_flatten_items(
     let right_kind = &right.syntax().kind();
     let right_expression_should_group = right_expression_should_group(right_kind);
 
+    let operator_has_trailing_comments = operator.has_trailing_comments();
     let formatted_left = format_elements![
         format_with_or_without_parenthesis(current_operator, left.clone(), formatter)?,
         space_token(),
         operator.format(formatter)?,
+        if operator_has_trailing_comments {
+            hard_line_break()
+        } else {
+            empty_element()
+        },
     ];
-
     let left_item = FlattenItem::Node(
         left.syntax().clone(),
         formatted_left,
-        operator.has_trailing_comments().into(),
+        operator_has_trailing_comments.into(),
     );
 
     let (previous_operator, has_comments) = if let Some(previous_operator) = previous_operator {
+        let previous_operator_has_trailing_comments = previous_operator.has_trailing_comments();
         (
-            format_elements![space_token(), previous_operator.format(formatter)?],
+            format_elements![
+                space_token(),
+                previous_operator.format(formatter)?,
+                if previous_operator_has_trailing_comments {
+                    hard_line_break()
+                } else {
+                    empty_element()
+                }
+            ],
             // Here we care only about trailing comments that belong to the previous operator
-            previous_operator.has_trailing_comments() || right.syntax().contains_comments(),
+            previous_operator_has_trailing_comments || right.syntax().contains_comments(),
         )
     } else {
         (
@@ -399,10 +413,10 @@ fn split_binaryish_to_flatten_items(
 
         FlattenItem::Group(formatted, has_comments.into())
     } else {
-        let formatted_right = concat_elements([
+        let formatted_right = format_elements![
             format_with_or_without_parenthesis(current_operator, right.clone(), formatter)?,
             previous_operator,
-        ]);
+        ];
         FlattenItem::Node(right.syntax().clone(), formatted_right, has_comments.into())
     };
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: function-declaration.js
 
 ---
@@ -114,12 +114,14 @@ class C4 {
   f /* f */ ( /* args */ ) /* returns */ {}
 }
 
-function foo1() // this is a function
+function foo1()
+// this is a function
 {
   return 42;
 }
 
-function foo2() { // this is a function
+function foo2() {
+  // this is a function
   return 42;
 }
 

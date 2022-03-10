@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: return-statement.js
 
 ---
@@ -254,7 +254,9 @@ function taggedTemplate() {
 }
 
 function inlineComment() {
-  return ( /* hi */ 42) || 42;
+  return (
+    /* hi */ 42
+  ) || 42;
 }
 
 ```

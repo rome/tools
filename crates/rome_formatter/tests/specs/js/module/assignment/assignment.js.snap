@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 168
+assertion_line: 197
 expression: assignment.js
 
 ---
@@ -68,7 +68,7 @@ a[b] = c[d];
 		bbbbbbbbbb = cccccccccc,
 		dddddddddd: eeeeeeeeee,
 		ffffffffff: gggggggggg = hhhhhhhhhh,
-		...jjjjjjjjjj,
+		...jjjjjjjjjj
 	} = x
 );
 

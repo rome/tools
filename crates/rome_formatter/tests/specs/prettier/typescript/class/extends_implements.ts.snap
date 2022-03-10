@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: extends_implements.ts
 
 ---
@@ -116,7 +116,7 @@ class ExtendsAbstractClassAndImplementsInterfaces4 extends AAAAAAAAAAAAAAbstract
   Type4,
   Type5,
   Type6,
-  Type7,
+  Type7
 > {}
 
 class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstractClass<
@@ -126,7 +126,7 @@ class ExtendsAbstractClassAndImplementsInterfaces5 extends AAAAAAAAAAAAAAbstract
   Type4,
   Type5,
   Type6,
-  Type7,
+  Type7
 >
   implements
     Interface1,

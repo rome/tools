@@ -1,7 +1,8 @@
 use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
 use rome_js_syntax::JsInitializerClause;
@@ -15,7 +16,7 @@ impl ToFormatElement for JsInitializerClause {
         } = self.as_fields();
 
         Ok(format_elements![
-            eq_token.format(formatter)?,
+            hard_group_elements(eq_token.format(formatter)?),
             space_token(),
             expression.format(formatter)?
         ])

@@ -243,33 +243,41 @@ impl<'a> VacantNodeEntry<'a> {
     }
 }
 
-#[test]
-fn green_token_hash() {
-    let kind = RawSyntaxKind(0);
-    let text = " let ";
-    let t1 = GreenToken::with_trivia(
-        kind,
-        text,
-        GreenTokenTrivia::Whitespace(1),
-        GreenTokenTrivia::Whitespace(1),
-    );
-    let t2 = GreenToken::with_trivia(
-        kind,
-        text,
-        GreenTokenTrivia::Whitespace(1),
-        GreenTokenTrivia::Whitespace(1),
-    );
+#[cfg(test)]
+mod tests {
+    use crate::green::node_cache::token_hash;
+    use crate::green::token::GreenTokenTrivia;
+    use crate::{GreenToken, RawSyntaxKind};
+    use text_size::TextSize;
 
-    assert_eq!(token_hash(&t1), token_hash(&t2));
+    #[test]
+    fn green_token_hash() {
+        let kind = RawSyntaxKind(0);
+        let text = " let ";
+        let t1 = GreenToken::with_trivia(
+            kind,
+            text,
+            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+        );
+        let t2 = GreenToken::with_trivia(
+            kind,
+            text,
+            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+        );
 
-    let t3 = GreenToken::new(kind, "let");
-    assert_ne!(token_hash(&t1), token_hash(&t3));
+        assert_eq!(token_hash(&t1), token_hash(&t2));
 
-    let t4 = GreenToken::with_trivia(
-        kind,
-        "\tlet ",
-        GreenTokenTrivia::Whitespace(1),
-        GreenTokenTrivia::Whitespace(1),
-    );
-    assert_ne!(token_hash(&t1), token_hash(&t4));
+        let t3 = GreenToken::new(kind, "let");
+        assert_ne!(token_hash(&t1), token_hash(&t3));
+
+        let t4 = GreenToken::with_trivia(
+            kind,
+            "\tlet ",
+            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+        );
+        assert_ne!(token_hash(&t1), token_hash(&t4));
+    }
 }

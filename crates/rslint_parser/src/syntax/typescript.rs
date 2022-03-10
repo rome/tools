@@ -84,12 +84,12 @@ fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
     if parse_ts_name_with_type_arguments(p).is_absent() {
         p.error(
             p.err_builder(&format!("'{}' list cannot be empty.", clause_name))
-                .primary(p.cur_tok().start()..p.cur_tok().start(), ""),
+                .primary(p.cur_range().start()..p.cur_range().start(), ""),
         )
     }
 
     while p.at(T![,]) {
-        let comma_range = p.cur_tok().range();
+        let comma_range = p.cur_range();
         p.bump(T![,]);
         // test_err ts ts_extends_trailing_comma
         // interface A {}
@@ -170,7 +170,7 @@ pub(crate) fn expect_ts_index_signature_member(
         } else {
             p.error(ts_member_cannot_be(
                 p,
-                p.cur_tok().range(),
+                p.cur_range(),
                 "index signature",
                 p.cur_src(),
             ));
@@ -216,7 +216,7 @@ fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
     if !separator_eaten {
         if semi_colon {
             let err = p.err_builder("';' expected'").primary(
-                p.cur_tok().range(),
+                p.cur_range(),
                 "An explicit or implicit semicolon is expected here...",
             );
             p.error(err);

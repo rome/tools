@@ -22,4 +22,5 @@ insta = { version = "1.10.0", features = ["glob"] }
 rslint_errors = { path = "../rslint_errors" }
 parking_lot = "0.12.0"
 similar = "2.1.0"
+similar-asserts = "1.2.0"
 ctor = "0.1.21"

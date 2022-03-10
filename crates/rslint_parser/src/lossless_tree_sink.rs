@@ -89,16 +89,14 @@ impl<'a> LosslessTreeSink<'a> {
         self.trivia.clear();
         let (leading_range, leading_end) = self.get_trivia(false);
 
-        let len = TextSize::from(
-            (if token_count == 1 {
-                self.tokens[self.token_pos].len
-            } else {
-                self.tokens[self.token_pos..self.token_pos + token_count as usize]
-                    .iter()
-                    .map(|x| x.len)
-                    .sum()
-            }) as u32,
-        );
+        let len = if token_count == 1 {
+            self.tokens[self.token_pos].len
+        } else {
+            self.tokens[self.token_pos..self.token_pos + token_count as usize]
+                .iter()
+                .map(|x| x.len)
+                .sum()
+        };
 
         let token_range = TextRange::at(self.text_pos, len);
 
@@ -134,9 +132,8 @@ impl<'a> LosslessTreeSink<'a> {
             }
 
             self.token_pos += 1;
-            let len = TextSize::from(token.len as u32);
-            self.text_pos += len;
-            length += len;
+            self.text_pos += token.len;
+            length += token.len;
 
             let current_trivia = match token.kind {
                 NEWLINE => TriviaPiece::Newline(token.len),

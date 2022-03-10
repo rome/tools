@@ -90,6 +90,9 @@ fn parse_ts_type_parameter_name(p: &mut Parser) -> ParsedSyntax {
 
 // test ts ts_type_parameters
 // type A<X extends string, Y = number, Z extends string | number = number> = { x: X, y: Y, z: Z }
+//
+// test_err ts ts_type_parameters_incomplete
+// type A<T
 pub(crate) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
     if !is_nth_at_ts_type_parameters(p, 0) {
         return Absent;
@@ -98,7 +101,7 @@ pub(crate) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.bump(T![<]);
     if p.at(T![>]) {
-        p.error(expected_ts_type_parameter(p, p.cur_tok().range()));
+        p.error(expected_ts_type_parameter(p, p.cur_range()));
     }
     TsTypeParameterList.parse_list(p);
     p.expect(T![>]);
@@ -765,7 +768,7 @@ fn parse_ts_property_or_method_signature_type_member(p: &mut Parser) -> ParsedSy
 
     let m = p.start();
     let readonly_range = if p.at(T![readonly]) && is_nth_at_type_member_name(p, 1) {
-        let range = p.cur_tok().range();
+        let range = p.cur_range();
         p.expect_keyword(T![readonly], "readonly");
         Some(range)
     } else {
@@ -885,6 +888,9 @@ fn parse_ts_setter_signature_type_member(p: &mut Parser) -> ParsedSyntax {
 // type D = [a?: string]
 // type E = [...string[]]
 // type F = [string?]
+//
+// test_err ts ts_tuple_type_incomplete
+// type A = [string,
 fn parse_ts_tuple_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['[']) {
         return Absent;
@@ -1241,6 +1247,8 @@ pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
     Present(parse_ts_type_arguments_impl(p, true))
 }
 
+// test_err ts type_arguments_incomplete
+// func<T,
 pub(crate) fn parse_ts_type_arguments_impl(
     p: &mut Parser,
     recover_on_errors: bool,
@@ -1249,7 +1257,7 @@ pub(crate) fn parse_ts_type_arguments_impl(
     p.bump(T![<]);
 
     if p.at(T![>]) {
-        p.error(expected_ts_type_parameter(p, p.cur_tok().range()));
+        p.error(expected_ts_type_parameter(p, p.cur_range()));
     }
     TypeArgumentsList { recover_on_errors }.parse_list(p);
     p.expect(T![>]);
@@ -1320,7 +1328,7 @@ fn parse_ts_type_member_semi(p: &mut Parser) {
     // or a semicolon (possibly ASI)
     if !optional_semi(p) {
         let err = p.err_builder("';' expected'").primary(
-            p.cur_tok().range(),
+            p.cur_range(),
             "An explicit or implicit semicolon is expected here...",
         );
 

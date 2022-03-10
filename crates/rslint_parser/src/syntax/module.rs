@@ -27,10 +27,9 @@ use crate::{
     Present, SyntaxFeature,
 };
 use rome_js_syntax::JsSyntaxKind::*;
-use rome_js_syntax::{JsSyntaxKind, T};
-use rslint_errors::Span;
+use rome_js_syntax::{JsSyntaxKind, TextRange, T};
+use rslint_lexer::TextSize;
 use std::collections::HashMap;
-use std::ops::Range;
 
 use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
 
@@ -122,7 +121,7 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> Parse
         return Absent;
     }
 
-    let start = p.cur_tok().start();
+    let start = p.cur_range().start();
     let import = p.start();
     p.expect_keyword(T![import], "import");
 
@@ -154,9 +153,9 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> Parse
             .to_diagnostic(p)
         });
 
-        let end = p.cur_tok().start();
+        let end = p.cur_range().start();
 
-        semi(p, start..end);
+        semi(p, TextRange::new(start, end));
         Present(import.complete(p, JS_IMPORT))
     };
 
@@ -237,12 +236,12 @@ fn parse_import_default_or_named_clause_rest(
                     .tokens
                     .last_tok()
                     .map(|t| t.end())
-                    .unwrap_or_else(|| p.cur_tok().start());
+                    .unwrap_or_else(|| p.cur_range().start());
 
                 // test_err ts ts_typed_default_import_with_named
                 // import type A, { B, C } from './a';
                 p.error(p.err_builder("A type-only import can specify a default import or named bindings, but not both.")
-                    .primary(default_start.into()..end, ""))
+                    .primary(default_start..end, ""))
             }
 
             p.expect_keyword(T![from], "from");
@@ -391,6 +390,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 // import { type default } from "./mod";
 // import { "literal-name" } from "./mod";
 // import { type "literal-name" } from "./mod";
+// import {
 fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
     if !is_nth_at_literal_export_name(p, 0) {
         // covers `type` and `as` too
@@ -416,7 +416,7 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
                 // import { as c } from "test";
                 p.error(expected_literal_export_name(
                     p,
-                    p.cur_tok().start()..p.cur_tok().start(),
+                    TextRange::new(p.cur_range().start(), p.cur_range().start()),
                 ));
             } else {
                 // test import_as_as_as_identifier
@@ -480,7 +480,7 @@ fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax {
 
 #[derive(Default)]
 struct ImportAssertionList {
-    assertion_keys: HashMap<String, Range<usize>>,
+    assertion_keys: HashMap<String, TextRange>,
 }
 
 impl ParseSeparatedList for ImportAssertionList {
@@ -519,10 +519,10 @@ impl ParseSeparatedList for ImportAssertionList {
 
 fn parse_import_assertion_entry(
     p: &mut Parser,
-    seen_assertion_keys: &mut HashMap<String, Range<usize>>,
+    seen_assertion_keys: &mut HashMap<String, TextRange>,
 ) -> ParsedSyntax {
     let m = p.start();
-    let key_range = p.cur_tok().range();
+    let key_range = p.cur_range();
 
     let key = match p.cur() {
         JS_STRING_LITERAL => Some(p.cur_src().trim_matches(&['\'', '"'][..])),
@@ -541,8 +541,7 @@ fn parse_import_assertion_entry(
         }
         T![:] => {
             p.error(
-                expected_any(&["identifier", "string literal"], p.cur_tok().range())
-                    .to_diagnostic(p),
+                expected_any(&["identifier", "string literal"], p.cur_range()).to_diagnostic(p),
             );
         }
         _ => {
@@ -599,7 +598,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let stmt_start = p.cur_tok().start();
+    let stmt_start = p.cur_range().start();
     let m = p.start();
     p.expect_keyword(T![export], "export");
 
@@ -681,6 +680,8 @@ fn parse_export_named_or_named_from_clause(p: &mut Parser) -> ParsedSyntax {
 // type A = string;
 // export type { A };
 //
+// export {
+//
 // test_err ts ts_export_type
 // export type
 fn parse_export_named_clause(p: &mut Parser) -> ParsedSyntax {
@@ -688,7 +689,7 @@ fn parse_export_named_clause(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let start = p.cur_tok().range().start;
+    let start = p.cur_range().start();
     let m = p.start();
 
     let has_type = p.eat_keyword(T![type], "type");
@@ -696,7 +697,7 @@ fn parse_export_named_clause(p: &mut Parser) -> ParsedSyntax {
     ExportNamedSpecifierList.parse_list(p);
     p.expect(T!['}']);
 
-    semi(p, start..p.cur_tok().range().start);
+    semi(p, TextRange::new(start, p.cur_range().start()));
 
     let clause = m.complete(p, JS_EXPORT_NAMED_CLAUSE);
 
@@ -772,7 +773,7 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
     if metadata.is_local_name_missing {
         p.error(expected_identifier(
             p,
-            p.cur_tok().start()..p.cur_tok().start(),
+            TextRange::new(p.cur_range().start(), p.cur_range().start()),
         ));
     } else {
         parse_reference_identifier(p).or_add_diagnostic(p, expected_identifier);
@@ -896,7 +897,7 @@ fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let start = p.cur_tok().range().start;
+    let start = p.cur_range().start();
     let m = p.start();
 
     p.expect(T![*]);
@@ -905,7 +906,7 @@ fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
     p.expect_keyword(T![from], "from");
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
-    semi(p, start..p.cur_tok().range().end);
+    semi(p, TextRange::new(start, p.cur_range().end()));
 
     Present(m.complete(p, JS_EXPORT_FROM_CLAUSE))
 }
@@ -934,7 +935,7 @@ fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let start = p.cur_tok().range().start;
+    let start = p.cur_range().start();
     let m = p.start();
 
     let has_type = p.eat_keyword(T![type], "type");
@@ -948,7 +949,7 @@ fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
 
-    semi(p, start..p.cur_tok().range().start);
+    semi(p, TextRange::new(start, p.cur_range().start()));
 
     let clause = m.complete(p, JS_EXPORT_NAMED_FROM_CLAUSE);
 
@@ -1019,7 +1020,7 @@ fn parse_export_named_from_specifier(p: &mut Parser) -> ParsedSyntax {
     if metadata.is_local_name_missing {
         p.error(expected_literal_export_name(
             p,
-            p.cur_tok().start()..p.cur_tok().start(),
+            TextRange::new(p.cur_range().start(), p.cur_range().start()),
         ));
     } else {
         parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
@@ -1139,7 +1140,7 @@ fn parse_export_default_declaration_clause(
         // export default interface A { }
         ExportDefaultDeclarationKind::Interface => {
             TypeScript.parse_exclusive_syntax(p, parse_ts_interface_declaration, |p, interface| {
-                ts_only_syntax_error(p, "interface", interface.range(p).as_range())
+                ts_only_syntax_error(p, "interface", interface.range(p))
             })
         }
         ExportDefaultDeclarationKind::Enum => {
@@ -1195,14 +1196,14 @@ fn parse_export_default_expression_clause(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let start = p.cur_tok().range().start;
+    let start = p.cur_range().start();
     let m = p.start();
     p.expect_keyword(T![default], "default");
 
     parse_assignment_expression_or_higher(p, ExpressionContext::default())
         .or_add_diagnostic(p, expected_expression);
 
-    semi(p, start..p.cur_tok().range().start);
+    semi(p, TextRange::new(start, p.cur_range().start()));
     Present(m.complete(p, JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE))
 }
 
@@ -1228,11 +1229,11 @@ fn parse_ts_export_namespace_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    let start_pos = p.cur_tok().start();
+    let start_pos = p.cur_range().start();
     p.expect_keyword(T![as], "as");
     p.expect_keyword(T![namespace], "namespace");
     parse_name(p).or_add_diagnostic(p, expected_identifier);
-    semi(p, start_pos..p.cur_tok().end());
+    semi(p, TextRange::new(start_pos, p.cur_range().end()));
 
     Present(m.complete(p, TS_EXPORT_AS_NAMESPACE_CLAUSE))
 }
@@ -1253,11 +1254,11 @@ fn parse_ts_export_assignment_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    let start_pos = p.cur_tok().start();
+    let start_pos = p.cur_range().start();
     p.bump(T![=]);
     parse_assignment_expression_or_higher(p, ExpressionContext::default())
         .or_add_diagnostic(p, expected_expression);
-    semi(p, start_pos..p.cur_tok().end());
+    semi(p, TextRange::new(start_pos, p.cur_range().end()));
     Present(m.complete(p, TS_EXPORT_ASSIGNMENT_CLAUSE))
 }
 
@@ -1268,7 +1269,7 @@ fn parse_ts_export_assignment_clause(p: &mut Parser) -> ParsedSyntax {
 // export declare type C = string;
 // export declare class D {}
 // export declare function e()
-fn parse_ts_export_declare_clause(p: &mut Parser, stmt_start: usize) -> ParsedSyntax {
+fn parse_ts_export_declare_clause(p: &mut Parser, stmt_start: TextSize) -> ParsedSyntax {
     if !p.at(T![declare]) {
         return Absent;
     }

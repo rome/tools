@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: styled-components.js
 
 ---
@@ -21,7 +21,8 @@ top: ${p => p.overlap === 'next' && 0};
 
 # Output
 ```js
-const OverlapWrapper = /** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
+const OverlapWrapper =
+/** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
 (styled.div)`
 position:relative;
     > {

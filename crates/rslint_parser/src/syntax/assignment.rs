@@ -13,8 +13,7 @@ use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDef
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{Checkpoint, CompletedMarker, Marker, Parser};
 use rome_js_syntax::{JsSyntaxKind::*, *};
-use rslint_errors::{Diagnostic, Span};
-use std::ops::Range;
+use rslint_errors::Diagnostic;
 
 // test assignment_target
 // foo += bar = b ??= 3;
@@ -150,7 +149,7 @@ impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+    fn expected_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
         expected_assignment_target(p, range)
     }
 
@@ -208,7 +207,7 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+    fn expected_element_error(p: &Parser, range: TextRange) -> Diagnostic {
         expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
     }
 
@@ -240,7 +239,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
         expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
     }
 
@@ -440,7 +439,7 @@ impl RewriteParseEvents for ReparseAssignment {
             let completed = m.complete(p, kind);
 
             if kind == JS_UNKNOWN_ASSIGNMENT {
-                p.error(invalid_assignment_error(p, completed.range(p).as_range()));
+                p.error(invalid_assignment_error(p, completed.range(p)));
             }
             self.result = Some(completed);
         }
@@ -484,7 +483,7 @@ impl RewriteParseEvents for ReparseAssignment {
                         "Illegal use of `{}` as an identifier in strict mode",
                         src
                     ))
-                    .primary(p.cur_tok().range(), ""),
+                    .primary(p.cur_range(), ""),
                 );
             }
         }
@@ -503,7 +502,7 @@ fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) 
 
     let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT);
 
-    p.error(invalid_assignment_error(p, completed.range(p).as_range()));
+    p.error(invalid_assignment_error(p, completed.range(p)));
 
     completed
 }

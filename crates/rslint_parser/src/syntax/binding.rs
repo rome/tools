@@ -12,7 +12,6 @@ use crate::{ParsedSyntax, Parser, SyntaxFeature};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 use rslint_errors::{Diagnostic, Span};
-use std::ops::Range;
 
 pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     match p.cur() {
@@ -138,7 +137,7 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+    fn expected_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
         expected_binding(p, range)
     }
 
@@ -194,7 +193,7 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+    fn expected_element_error(p: &Parser, range: TextRange) -> Diagnostic {
         expected_any(
             &[
                 "identifier",
@@ -236,7 +235,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
         expected_any(&["identifier", "member name", "rest pattern"], range).to_diagnostic(p)
     }
 

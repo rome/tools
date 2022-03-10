@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: issue-6899.ts
 
 ---
@@ -23,11 +23,11 @@ export const SUPPORTED_VEHICLE_TYPES: Array<
 const getUnusedAuthorizationHoldDocuments = async (): Promise<DocumentData[]> => {};
 
 const firestorePersonallyIdentifiablePaths: Array<
-  keyof Collections.Users.Entity,
+  keyof Collections.Users.Entity
 > = [];
 
 export const SUPPORTED_VEHICLE_TYPES: Array<
-  Collections.VehiclesStates.Entity['type'],
+  Collections.VehiclesStates.Entity['type']
 > = Object.values(Collections.VehiclesStates.Type);
 
 ```

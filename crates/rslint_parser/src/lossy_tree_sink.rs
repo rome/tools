@@ -35,12 +35,10 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
             State::Normal => (),
         }
 
-        let len = TextSize::from(
-            self.tokens[self.token_pos..self.token_pos + amount as usize]
-                .iter()
-                .map(|x| x.len)
-                .sum::<u32>(),
-        );
+        let len = self.tokens[self.token_pos..self.token_pos + amount as usize]
+            .iter()
+            .map(|x| x.len)
+            .sum::<TextSize>();
 
         self.do_tokens(kind, len, amount)
     }
@@ -52,8 +50,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
             State::Normal => (),
         }
 
-        let len = TextSize::from(self.tokens[self.token_pos].len as u32);
-        self.do_token(kind, len);
+        self.do_token(kind, self.tokens[self.token_pos].len);
     }
 
     fn start_node(&mut self, kind: JsSyntaxKind) {
@@ -103,14 +100,14 @@ impl<'a> LossyTreeSink<'a> {
     ///
     /// # Panics
     /// Panics if the token start does not line up to a token's start index or is out of bounds
-    pub fn with_offset(text: &'a str, tokens: &'a [Token], token_start: u32) -> Self {
-        let mut len = 0;
+    pub fn with_offset(text: &'a str, tokens: &'a [Token], token_start: TextSize) -> Self {
+        let mut len = TextSize::from(0);
         for (idx, tok) in tokens.iter().enumerate() {
             if len == token_start {
                 return Self {
                     text,
                     tokens,
-                    text_pos: (len as u32).into(),
+                    text_pos: len,
                     token_pos: idx,
                     state: State::PendingStart,
                     inner: SyntaxTreeBuilder::default(),
@@ -207,9 +204,8 @@ impl<'a> LossyTreeSink<'a> {
             }
 
             self.token_pos += 1;
-            let len = TextSize::from(token.len as u32);
-            self.text_pos += len;
-            length += len;
+            self.text_pos += token.len;
+            length += token.len;
 
             let current_trivia = match token.kind {
                 JsSyntaxKind::WHITESPACE | JsSyntaxKind::NEWLINE => continue,
