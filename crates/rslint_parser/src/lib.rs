@@ -455,7 +455,7 @@ pub enum JsSyntaxFeature {
     SloppyMode,
     StrictMode,
     TypeScript,
-    Jsx,
+    JSX,
 }
 
 impl SyntaxFeature for JsSyntaxFeature {

@@ -28,16 +28,9 @@ use crate::syntax::jsx::jsx_parse_errors::jsx_only_syntax_error;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
-<<<<<<< HEAD
 use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
-=======
-<<<<<<< HEAD
 use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
-=======
-use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
 use crate::LanguageVariant;
->>>>>>> 844f141c04 (jsx parser enabled by language variant)
->>>>>>> 1ab4ecffde (jsx parser enabled by language variant)
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
@@ -1745,6 +1738,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
     // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         let jsx = Jsx.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
             jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
         });
@@ -1762,6 +1756,11 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 >>>>>>> dbee0cc063 (maybe prefix for checkpointed parsing)
 
 >>>>>>> c53cb537b3 (maybe prefix for checkpointed parsing)
+=======
+        let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
+            jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
+        });
+>>>>>>> 0b3abe5349 (changing jsx to uppercase)
         return jsx.or_else(|| {
             TypeScript.parse_exclusive_syntax(
                 p,
