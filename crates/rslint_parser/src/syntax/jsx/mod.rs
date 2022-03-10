@@ -141,6 +141,7 @@ fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax
     let m = p.start();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     if p.at(T![<]) && p.nth_at(1, T![/]) {
         p.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
     } else {
@@ -151,6 +152,12 @@ fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax
     } else {
         m.abandon(p.parser);
 >>>>>>> e32c8e98b2 (jsx tokens for </ and />)
+=======
+    if p.at(T![<]) && p.nth_at(1, T![/]) {
+        p.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
+    } else {
+        m.abandon(p);
+>>>>>>> 4558034533 (deref and derefmut for checkpointedparser)
         return ParsedSyntax::Absent;
     }
 
