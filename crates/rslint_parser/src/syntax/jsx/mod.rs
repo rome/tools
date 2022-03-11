@@ -190,7 +190,7 @@ fn parse_jsx_any_element_name(p: &mut CheckpointedParser<'_, '_>) -> ParsedSynta
 
 struct JsxAttributeList;
 
-// test jsx jsx_element_simple_text_attribute
+// test jsx jsx_element_attributes
 // function f() {
 //     let a = <div id="a" name="b" checked></div>;
 //     return <div id="a" name="b" checked/>;
