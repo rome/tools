@@ -142,12 +142,12 @@ function foo4() {
 
 # Errors
 ```
-error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
   ┌─ function-declaration.js:6:3
   │  
 6 │ ┌   <div />
 7 │ │ ));
-  │ └─^ Jsx only syntax
+  │ └─^ JSX only syntax
 
 
 ```

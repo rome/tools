@@ -202,6 +202,7 @@ a
 # Errors
 ```
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+<<<<<<< HEAD
    ┌─ nested.js:16:7
    │  
 16 │       ? <ButtonStorybook />
@@ -332,44 +333,46 @@ error[SyntaxError]: expected `:` but instead found `}`
 =======
 =======
 error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+=======
+>>>>>>> 1273bfcd13 (jsx is now uppercase)
    ┌─ nested.js:16:7
    │  
 16 │       ? <ButtonStorybook />
    │ ┌───────^
 17 │ │     : match.params.storyId === "color"
-   │ └─────^ Jsx only syntax
+   │ └─────^ JSX only syntax
 
-error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:18:7
    │  
 18 │       ? <ColorBook />
    │ ┌───────^
 19 │ │     : match.params.storyId === "typography"
-   │ └─────^ Jsx only syntax
+   │ └─────^ JSX only syntax
 
-error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:20:7
    │  
 20 │       ? <TypographyBook />
    │ ┌───────^
 21 │ │     : match.params.storyId === "loading"
-   │ └─────^ Jsx only syntax
+   │ └─────^ JSX only syntax
 
-error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:22:7
    │  
 22 │       ? <LoaderStorybook />
    │ ┌───────^
 23 │ │     : match.params.storyId === "deal-list"
-   │ └─────^ Jsx only syntax
+   │ └─────^ JSX only syntax
 
-error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:24:7
    │  
 24 │       ? <DealListStory />
    │ ┌───────^
 25 │ │     : (
-   │ └─────^ Jsx only syntax
+   │ └─────^ JSX only syntax
 
 >>>>>>> 844f141c04 (jsx parser enabled by language variant)
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
