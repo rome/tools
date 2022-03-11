@@ -32,7 +32,7 @@ pub fn check_reformat(params: CheckReformatParams) {
         let mut buffer = termcolor::Buffer::ansi();
         let mut emitter = Emitter::new(&files);
 
-        for error in re_parse.errors() {
+        for error in re_parse.diagnostics() {
             emitter
                 .emit_with_writer(error, &mut buffer)
                 .expect("failed to emit diagnostic");
