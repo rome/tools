@@ -255,6 +255,7 @@ error[SyntaxError]: expected `')'` but instead found `{`
 <<<<<<< HEAD
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ do.js:27:13
    │  
@@ -292,18 +293,21 @@ error[SyntaxError]: expected `WHILE_KW` but instead found `}`
 =======
 =======
 error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+=======
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+>>>>>>> 1273bfcd13 (jsx is now uppercase)
    ┌─ do.js:27:13
    │  
 27 │ ┌             <LogoutButton />
 28 │ │           } else {
-   │ └───────────^ Jsx only syntax
+   │ └───────────^ JSX only syntax
 
-error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ do.js:29:13
    │  
 29 │ ┌             <LoginButton />
 30 │ │           }
-   │ └───────────^ Jsx only syntax
+   │ └───────────^ JSX only syntax
 
 >>>>>>> 844f141c04 (jsx parser enabled by language variant)
 error[SyntaxError]: expected `while` but instead found `}`
