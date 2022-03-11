@@ -2141,10 +2141,24 @@ TsTypeArgumentList = (TsType (',' TsType)* )
 
 /////////////////////////////////////////////////////// JSX
 
+<<<<<<< HEAD
+=======
+JsxName = value: 'ident'
+JsxNamespaceName = 
+	namespace: JsReferenceIdentifier
+	':'
+	name: JsxName
+
+JsxReferenceIdentifier = value: 'ident'
+
+JsxStringLiteral = value: 'js_string_literal'
+
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 // ==================================
 // Tags
 // ==================================
 
+<<<<<<< HEAD
 JsxTagExpression =
 	tag: JsxAnyTag
 
@@ -2163,13 +2177,33 @@ JsxSelfClosingElement =
 
 // <a>...</a>
 JsxElement =
+=======
+JsxElementExpression = 
+	element: JsxAnyElement
+
+JsxAnyElement = 
+	JsxElement 
+	| JsxSelfClosingElement
+
+JsxSelfClosingElement = 
+	'<'
+	name: JsxAnyElementName
+	attributes: JsxAttributeList
+	'/>'
+
+JsxElement = 
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 	opening_element: JsxOpeningElement
 	children: JsxText?
 	closing_element: JsxClosingElement
 
 JsxOpeningElement =
 	'<'
+<<<<<<< HEAD
 	name: JsxAnyElementName
+=======
+	name: JsxAnyElementName	
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 	attributes: JsxAttributeList
 	'>'
 
@@ -2179,6 +2213,7 @@ JsxClosingElement =
 	name: JsxAnyElementName
 	'>'
 
+<<<<<<< HEAD
 // <>content</>
 JsxFragment =
 	opening_l_angle_token: '<'
@@ -2236,10 +2271,26 @@ JsxAttribute =
 	name: JsxAnyAttributeName
 	initializer: JsxAttributeInitializerClause?
 
+=======
+JsxAnyElementName = JsxReferenceIdentifier
+	| JsxNamespaceName
+
+// ==================================
+// Attributes
+// ==================================
+
+JsxAttributeList = JsxAttribute*
+
+JsxAttribute = 
+	name: JsxAnyAttributeName
+	initializer: JsxAttributeInitializerClause?
+	
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 JsxAttributeInitializerClause =
 	'='
 	value: JsxAnyAttributeValue
 
+<<<<<<< HEAD
 JsxAnyAttributeValue =
 	JsxAnyTag
 	| JsxString
@@ -2268,3 +2319,10 @@ JsxSpreadAttribute =
 
 JsxText = value: 'jsx_text_literal'
 JsxString = value: 'jsx_string_literal'
+=======
+JsxAnyAttributeValue = JsxElement
+	| JsxStringLiteral
+
+JsxAnyAttributeName = JsxName
+	| JsxNamespaceName
+>>>>>>> 26e8aafbda (jsx string literals attributes)

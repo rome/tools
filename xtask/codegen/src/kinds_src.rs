@@ -481,12 +481,19 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_NAME",
         "JSX_NAMESPACE_NAME",
         "JSX_REFERENCE_IDENTIFIER",
+<<<<<<< HEAD
         "JSX_TAG_EXPRESSION",
+=======
+        "JSX_STRING_LITERAL",
+        "JSX_ELEMENT_EXPRESSION",
+        "JSX_ANY_ELEMENT",
+>>>>>>> 26e8aafbda (jsx string literals attributes)
         "JSX_ELEMENT",
         "JSX_FRAGMENT",
         "JSX_SELF_CLOSING_ELEMENT",
         "JSX_OPENING_ELEMENT",
         "JSX_CLOSING_ELEMENT",
+<<<<<<< HEAD
         "JSX_MEMBER_NAME",
         "JSX_TEXT",
         "JSX_STRING",
@@ -495,6 +502,15 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_SPREAD_ATTRIBUTE",
         "JSX_ATTRIBUTE_INITIALIZER_CLAUSE",
         "JSX_EXPRESSION_ATTRIBUTE_VALUE",
+=======
+        "JSX_ANY_ELEMENT_NAME",
+        "JSX_MEMBER_EXPRESSION",
+        "JSX_ATTRIBUTE_LIST",
+        "JSX_ATTRIBUTE",
+        "JSX_ATTRIBUTE_INITIALIZER_CLAUSE",
+        "JSX_ANY_ATTRIBUTE_VALUE",
+        "JSX_ANY_ATTRIBUTE_NAME",
+>>>>>>> 26e8aafbda (jsx string literals attributes)
         // unknown nodes JS
         "JS_UNKNOWN",
         "JS_UNKNOWN_EXPRESSION",

@@ -2,7 +2,10 @@
 
 mod attribute;
 mod attribute_name;
+mod attribute_name;
 mod attribute_value;
+mod attribute_value;
+mod element;
 mod element_name;
 mod name;
 mod object_name;

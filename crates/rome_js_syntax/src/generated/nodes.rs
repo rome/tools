@@ -5850,10 +5850,17 @@ pub struct JsxFragmentFields {
     pub closing_r_angle_token_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+<<<<<<< HEAD
 pub struct JsxMemberName {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsxMemberName {
+=======
+pub struct JsxName {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxName {
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -5861,10 +5868,13 @@ impl JsxMemberName {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
 <<<<<<< HEAD
+<<<<<<< HEAD
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsxMemberNameFields {
         JsxMemberNameFields {
 =======
+=======
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
         Self { syntax }
     }
@@ -5889,11 +5899,59 @@ impl JsxMemberName {
     pub fn member(&self) -> SyntaxResult<JsName> {
         support::required_node(&self.syntax, 2usize)
     }
+=======
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxNameFields {
+        JsxNameFields {
+            value_token: self.value_token(),
+        }
+    }
+    pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
 }
+<<<<<<< HEAD
 pub struct JsxMemberNameFields {
     pub object: SyntaxResult<JsxAnyObjectName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub member: SyntaxResult<JsName>,
+=======
+pub struct JsxNameFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxNamespaceName {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxNamespaceName {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxNamespaceNameFields {
+        JsxNamespaceNameFields {
+            namespace: self.namespace(),
+            colon_token: self.colon_token(),
+            name: self.name(),
+        }
+    }
+    pub fn namespace(&self) -> SyntaxResult<JsReferenceIdentifier> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsxName> { support::required_node(&self.syntax, 2usize) }
+>>>>>>> 5f87b7847c (jsx string literals attributes)
+}
+pub struct JsxNamespaceNameFields {
+    pub namespace: SyntaxResult<JsReferenceIdentifier>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsxName>,
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsxName {
@@ -6037,11 +6095,15 @@ impl JsxSelfClosingElement {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             attributes: self.attributes(),
             slash_token: self.slash_token(),
             r_angle_token: self.r_angle_token(),
 =======
 <<<<<<< HEAD
+=======
+            attributes: self.attributes(),
+>>>>>>> 26e8aafbda (jsx string literals attributes)
             slash_r_angle_token: self.slash_r_angle_token(),
 =======
             divide_token: self.divide_token(),
@@ -6066,6 +6128,7 @@ impl JsxSelfClosingElement {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     pub fn attributes(&self) -> JsxAttributeList { support::list(&self.syntax, 2usize) }
     pub fn slash_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
@@ -6086,11 +6149,17 @@ impl JsxSelfClosingElement {
     pub fn slash_r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
 >>>>>>> 7dafe9449b (jsx tokens for </ and />)
         support::required_token(&self.syntax, 2usize)
+=======
+    pub fn attributes(&self) -> JsxAttributeList { support::list(&self.syntax, 2usize) }
+    pub fn slash_r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 3usize)
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     }
 }
 pub struct JsxSelfClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6215,8 +6284,35 @@ pub struct JsxTextFields {
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 =======
+=======
+    pub attributes: JsxAttributeList,
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     pub slash_r_angle_token: SyntaxResult<SyntaxToken>,
 >>>>>>> 7dafe9449b (jsx tokens for </ and />)
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxStringLiteral {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxStringLiteral {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxStringLiteralFields {
+        JsxStringLiteralFields {
+            value_token: self.value_token(),
+        }
+    }
+    pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct JsxStringLiteralFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -10420,17 +10516,21 @@ pub enum JsAnyTemplateElement {
     JsTemplateElement(JsTemplateElement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+<<<<<<< HEAD
 pub enum JsxAnyAttribute {
     JsxAttribute(JsxAttribute),
     JsxSpreadAttribute(JsxSpreadAttribute),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+=======
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 pub enum JsxAnyAttributeName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyAttributeValue {
+<<<<<<< HEAD
     JsxAnyTag(JsxAnyTag),
     JsxExpressionAttributeValue(JsxExpressionAttributeValue),
     JsxString(JsxString),
@@ -10450,6 +10550,18 @@ pub enum JsxAnyName {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyObjectName {
     JsxMemberName(JsxMemberName),
+=======
+    JsxElement(JsxElement),
+    JsxStringLiteral(JsxStringLiteral),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsxAnyElement {
+    JsxElement(JsxElement),
+    JsxSelfClosingElement(JsxSelfClosingElement),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsxAnyElementName {
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     JsxNamespaceName(JsxNamespaceName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
 }
@@ -16429,9 +16541,65 @@ impl From<JsYieldExpression> for SyntaxElement {
     }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 impl AstNode for JsxAttribute {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_ATTRIBUTE }
 =======
+=======
+impl AstNode for JsxAttribute {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_ATTRIBUTE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxAttribute {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxAttribute")
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "initializer",
+                &support::DebugOptionalElement(self.initializer()),
+            )
+            .finish()
+    }
+}
+impl From<JsxAttribute> for SyntaxNode {
+    fn from(n: JsxAttribute) -> SyntaxNode { n.syntax }
+}
+impl From<JsxAttribute> for SyntaxElement {
+    fn from(n: JsxAttribute) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxAttributeInitializerClause {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_ATTRIBUTE_INITIALIZER_CLAUSE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxAttributeInitializerClause {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxAttributeInitializerClause")
+            .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
+            .field("value", &support::DebugSyntaxResult(self.value()))
+            .finish()
+    }
+}
+impl From<JsxAttributeInitializerClause> for SyntaxNode {
+    fn from(n: JsxAttributeInitializerClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsxAttributeInitializerClause> for SyntaxElement {
+    fn from(n: JsxAttributeInitializerClause) -> SyntaxElement { n.syntax.into() }
+}
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 impl AstNode for JsxClosingElement {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         kind == JSX_CLOSING_ELEMENT
@@ -16633,11 +16801,19 @@ impl From<JsxElementExpression> for SyntaxElement {
         n.syntax.into()
     }
 }
+<<<<<<< HEAD
 impl AstNode for JsxMemberExpression {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         kind == JSX_MEMBER_EXPRESSION
     }
+<<<<<<< HEAD
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+=======
+impl AstNode for JsxName {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_NAME }
+>>>>>>> 5f87b7847c (jsx string literals attributes)
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -16649,6 +16825,7 @@ impl AstNode for JsxMemberExpression {
         &self.syntax
     }
 }
+<<<<<<< HEAD
 impl std::fmt::Debug for JsxFragment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsxFragment")
@@ -16699,9 +16876,19 @@ impl std::fmt::Debug for JsxMemberName {
             .field("object", &support::DebugSyntaxResult(self.object()))
             .field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
             .field("member", &support::DebugSyntaxResult(self.member()))
+=======
+impl std::fmt::Debug for JsxName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxName")
+            .field(
+                "value_token",
+                &support::DebugSyntaxResult(self.value_token()),
+            )
+>>>>>>> 26e8aafbda (jsx string literals attributes)
             .finish()
     }
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 impl From<JsxMemberName> for SyntaxNode {
     fn from(n: JsxMemberName) -> SyntaxNode { n.syntax }
@@ -16765,6 +16952,8 @@ impl From<JsxNamespaceName> for SyntaxNode {
 impl From<JsxNamespaceName> for SyntaxElement {
     fn from(n: JsxNamespaceName) -> SyntaxElement { n.syntax.into() }
 =======
+=======
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 impl From<JsxMemberExpression> for SyntaxNode {
     fn from(n: JsxMemberExpression) -> SyntaxNode {
         n.syntax
@@ -16774,7 +16963,46 @@ impl From<JsxMemberExpression> for SyntaxElement {
     fn from(n: JsxMemberExpression) -> SyntaxElement {
         n.syntax.into()
     }
+<<<<<<< HEAD
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
+=======
+=======
+impl From<JsxName> for SyntaxNode {
+    fn from(n: JsxName) -> SyntaxNode { n.syntax }
+}
+impl From<JsxName> for SyntaxElement {
+    fn from(n: JsxName) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxNamespaceName {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_NAMESPACE_NAME }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxNamespaceName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxNamespaceName")
+            .field("namespace", &support::DebugSyntaxResult(self.namespace()))
+            .field(
+                "colon_token",
+                &support::DebugSyntaxResult(self.colon_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .finish()
+    }
+}
+impl From<JsxNamespaceName> for SyntaxNode {
+    fn from(n: JsxNamespaceName) -> SyntaxNode { n.syntax }
+}
+impl From<JsxNamespaceName> for SyntaxElement {
+    fn from(n: JsxNamespaceName) -> SyntaxElement { n.syntax.into() }
+>>>>>>> 5f87b7847c (jsx string literals attributes)
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 }
 impl AstNode for JsxOpeningElement {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -16876,6 +17104,7 @@ impl std::fmt::Debug for JsxSelfClosingElement {
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
 <<<<<<< HEAD
+<<<<<<< HEAD
             .field("attributes", &self.attributes())
             .field(
 <<<<<<< HEAD
@@ -16904,6 +17133,9 @@ impl std::fmt::Debug for JsxSelfClosingElement {
 =======
 >>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 =======
+=======
+            .field("attributes", &self.attributes())
+>>>>>>> 26e8aafbda (jsx string literals attributes)
             .field(
                 "slash_r_angle_token",
                 &support::DebugSyntaxResult(self.slash_r_angle_token()),
@@ -16922,8 +17154,13 @@ impl From<JsxSelfClosingElement> for SyntaxElement {
         n.syntax.into()
     }
 }
+<<<<<<< HEAD
 impl AstNode for JsxSpreadAttribute {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_SPREAD_ATTRIBUTE }
+=======
+impl AstNode for JsxStringLiteral {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_STRING_LITERAL }
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -16933,6 +17170,7 @@ impl AstNode for JsxSpreadAttribute {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+<<<<<<< HEAD
 impl std::fmt::Debug for JsxSpreadAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsxSpreadAttribute")
@@ -17023,6 +17261,11 @@ impl AstNode for JsxText {
 impl std::fmt::Debug for JsxText {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsxText")
+=======
+impl std::fmt::Debug for JsxStringLiteral {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxStringLiteral")
+>>>>>>> 26e8aafbda (jsx string literals attributes)
             .field(
                 "value_token",
                 &support::DebugSyntaxResult(self.value_token()),
@@ -17030,11 +17273,19 @@ impl std::fmt::Debug for JsxText {
             .finish()
     }
 }
+<<<<<<< HEAD
 impl From<JsxText> for SyntaxNode {
     fn from(n: JsxText) -> SyntaxNode { n.syntax }
 }
 impl From<JsxText> for SyntaxElement {
     fn from(n: JsxText) -> SyntaxElement { n.syntax.into() }
+=======
+impl From<JsxStringLiteral> for SyntaxNode {
+    fn from(n: JsxStringLiteral) -> SyntaxNode { n.syntax }
+}
+impl From<JsxStringLiteral> for SyntaxElement {
+    fn from(n: JsxStringLiteral) -> SyntaxElement { n.syntax.into() }
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 }
 impl AstNode for NewTarget {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -25482,9 +25733,110 @@ impl From<JsAnyTemplateElement> for SyntaxElement {
     }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 impl From<JsxAttribute> for JsxAnyAttribute {
     fn from(node: JsxAttribute) -> JsxAnyAttribute { JsxAnyAttribute::JsxAttribute(node) }
 =======
+=======
+impl From<JsxName> for JsxAnyAttributeName {
+    fn from(node: JsxName) -> JsxAnyAttributeName { JsxAnyAttributeName::JsxName(node) }
+}
+impl From<JsxNamespaceName> for JsxAnyAttributeName {
+    fn from(node: JsxNamespaceName) -> JsxAnyAttributeName {
+        JsxAnyAttributeName::JsxNamespaceName(node)
+    }
+}
+impl AstNode for JsxAnyAttributeName {
+    fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, JSX_NAME | JSX_NAMESPACE_NAME) }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSX_NAME => JsxAnyAttributeName::JsxName(JsxName { syntax }),
+            JSX_NAMESPACE_NAME => {
+                JsxAnyAttributeName::JsxNamespaceName(JsxNamespaceName { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsxAnyAttributeName::JsxName(it) => &it.syntax,
+            JsxAnyAttributeName::JsxNamespaceName(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsxAnyAttributeName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsxAnyAttributeName::JsxName(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyAttributeName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsxAnyAttributeName> for SyntaxNode {
+    fn from(n: JsxAnyAttributeName) -> SyntaxNode {
+        match n {
+            JsxAnyAttributeName::JsxName(it) => it.into(),
+            JsxAnyAttributeName::JsxNamespaceName(it) => it.into(),
+        }
+    }
+}
+impl From<JsxAnyAttributeName> for SyntaxElement {
+    fn from(n: JsxAnyAttributeName) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsxElement> for JsxAnyAttributeValue {
+    fn from(node: JsxElement) -> JsxAnyAttributeValue { JsxAnyAttributeValue::JsxElement(node) }
+}
+impl From<JsxStringLiteral> for JsxAnyAttributeValue {
+    fn from(node: JsxStringLiteral) -> JsxAnyAttributeValue {
+        JsxAnyAttributeValue::JsxStringLiteral(node)
+    }
+}
+impl AstNode for JsxAnyAttributeValue {
+    fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, JSX_ELEMENT | JSX_STRING_LITERAL) }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSX_ELEMENT => JsxAnyAttributeValue::JsxElement(JsxElement { syntax }),
+            JSX_STRING_LITERAL => {
+                JsxAnyAttributeValue::JsxStringLiteral(JsxStringLiteral { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsxAnyAttributeValue::JsxElement(it) => &it.syntax,
+            JsxAnyAttributeValue::JsxStringLiteral(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsxAnyAttributeValue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsxAnyAttributeValue::JsxElement(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyAttributeValue::JsxStringLiteral(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsxAnyAttributeValue> for SyntaxNode {
+    fn from(n: JsxAnyAttributeValue) -> SyntaxNode {
+        match n {
+            JsxAnyAttributeValue::JsxElement(it) => it.into(),
+            JsxAnyAttributeValue::JsxStringLiteral(it) => it.into(),
+        }
+    }
+}
+impl From<JsxAnyAttributeValue> for SyntaxElement {
+    fn from(n: JsxAnyAttributeValue) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 impl From<JsxElement> for JsxAnyElement {
     fn from(node: JsxElement) -> JsxAnyElement {
         JsxAnyElement::JsxElement(node)
@@ -25651,12 +26003,15 @@ impl From<JsxAnyAttributeValue> for SyntaxElement {
         node.into()
     }
 }
+<<<<<<< HEAD
 impl From<JsxMemberName> for JsxAnyElementName {
     fn from(node: JsxMemberName) -> JsxAnyElementName { JsxAnyElementName::JsxMemberName(node) }
 }
 impl From<JsxName> for JsxAnyElementName {
     fn from(node: JsxName) -> JsxAnyElementName { JsxAnyElementName::JsxName(node) }
 }
+=======
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 impl From<JsxNamespaceName> for JsxAnyElementName {
     fn from(node: JsxNamespaceName) -> JsxAnyElementName {
         JsxAnyElementName::JsxNamespaceName(node)
@@ -25669,6 +26024,7 @@ impl From<JsxReferenceIdentifier> for JsxAnyElementName {
 }
 impl AstNode for JsxAnyElementName {
     fn can_cast(kind: JsSyntaxKind) -> bool {
+<<<<<<< HEAD
         matches!(
             kind,
             JSX_MEMBER_NAME | JSX_NAME | JSX_NAMESPACE_NAME | JSX_REFERENCE_IDENTIFIER
@@ -25678,6 +26034,12 @@ impl AstNode for JsxAnyElementName {
         let res = match syntax.kind() {
             JSX_MEMBER_NAME => JsxAnyElementName::JsxMemberName(JsxMemberName { syntax }),
             JSX_NAME => JsxAnyElementName::JsxName(JsxName { syntax }),
+=======
+        matches!(kind, JSX_NAMESPACE_NAME | JSX_REFERENCE_IDENTIFIER)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+>>>>>>> 26e8aafbda (jsx string literals attributes)
             JSX_NAMESPACE_NAME => JsxAnyElementName::JsxNamespaceName(JsxNamespaceName { syntax }),
             JSX_REFERENCE_IDENTIFIER => {
                 JsxAnyElementName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
@@ -25688,8 +26050,11 @@ impl AstNode for JsxAnyElementName {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+<<<<<<< HEAD
             JsxAnyElementName::JsxMemberName(it) => &it.syntax,
             JsxAnyElementName::JsxName(it) => &it.syntax,
+=======
+>>>>>>> 26e8aafbda (jsx string literals attributes)
             JsxAnyElementName::JsxNamespaceName(it) => &it.syntax,
             JsxAnyElementName::JsxReferenceIdentifier(it) => &it.syntax,
         }
@@ -25698,8 +26063,11 @@ impl AstNode for JsxAnyElementName {
 impl std::fmt::Debug for JsxAnyElementName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+<<<<<<< HEAD
             JsxAnyElementName::JsxMemberName(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyElementName::JsxName(it) => std::fmt::Debug::fmt(it, f),
+=======
+>>>>>>> 26e8aafbda (jsx string literals attributes)
             JsxAnyElementName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyElementName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
         }
@@ -25708,8 +26076,11 @@ impl std::fmt::Debug for JsxAnyElementName {
 impl From<JsxAnyElementName> for SyntaxNode {
     fn from(n: JsxAnyElementName) -> SyntaxNode {
         match n {
+<<<<<<< HEAD
             JsxAnyElementName::JsxMemberName(it) => it.into(),
             JsxAnyElementName::JsxName(it) => it.into(),
+=======
+>>>>>>> 26e8aafbda (jsx string literals attributes)
             JsxAnyElementName::JsxNamespaceName(it) => it.into(),
             JsxAnyElementName::JsxReferenceIdentifier(it) => it.into(),
         }
@@ -27624,17 +27995,29 @@ impl std::fmt::Display for JsAnyTemplateElement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+<<<<<<< HEAD
 impl std::fmt::Display for JsxAnyAttribute {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
+=======
 impl std::fmt::Display for JsxAnyAttributeName {
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+<<<<<<< HEAD
+impl std::fmt::Display for JsxAnyAttributeName {
+=======
 impl std::fmt::Display for JsxAnyAttributeValue {
+>>>>>>> 26e8aafbda (jsx string literals attributes)
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+<<<<<<< HEAD
+impl std::fmt::Display for JsxAnyAttributeValue {
+=======
+impl std::fmt::Display for JsxAnyElement {
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -28509,11 +28892,14 @@ impl std::fmt::Display for JsxFragment {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+<<<<<<< HEAD
 impl std::fmt::Display for JsxMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+=======
+>>>>>>> 26e8aafbda (jsx string literals attributes)
 impl std::fmt::Display for JsxName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -28539,6 +28925,7 @@ impl std::fmt::Display for JsxSelfClosingElement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+<<<<<<< HEAD
 impl std::fmt::Display for JsxSpreadAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -28555,6 +28942,9 @@ impl std::fmt::Display for JsxTagExpression {
     }
 }
 impl std::fmt::Display for JsxText {
+=======
+impl std::fmt::Display for JsxStringLiteral {
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -30933,7 +31323,11 @@ impl AstNode for JsxAttributeList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
+<<<<<<< HEAD
 impl AstNodeList<JsxAnyAttribute> for JsxAttributeList {
+=======
+impl AstNodeList<JsxAttribute> for JsxAttributeList {
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsxAttributeList {
@@ -30943,6 +31337,7 @@ impl Debug for JsxAttributeList {
     }
 }
 impl IntoIterator for &JsxAttributeList {
+<<<<<<< HEAD
     type Item = JsxAnyAttribute;
     type IntoIter = AstNodeListIterator<JsxAnyAttribute>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
@@ -30950,6 +31345,15 @@ impl IntoIterator for &JsxAttributeList {
 impl IntoIterator for JsxAttributeList {
     type Item = JsxAnyAttribute;
     type IntoIter = AstNodeListIterator<JsxAnyAttribute>;
+=======
+    type Item = JsxAttribute;
+    type IntoIter = AstNodeListIterator<JsxAttribute>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for JsxAttributeList {
+    type Item = JsxAttribute;
+    type IntoIter = AstNodeListIterator<JsxAttribute>;
+>>>>>>> 26e8aafbda (jsx string literals attributes)
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -32308,6 +32712,7 @@ impl Debug for DebugSyntaxElement {
                 JSX_SELF_CLOSING_ELEMENT => {
                     std::fmt::Debug::fmt(&JsxSelfClosingElement::cast(node.clone()).unwrap(), f)
                 }
+<<<<<<< HEAD
                 JSX_SPREAD_ATTRIBUTE => {
                     std::fmt::Debug::fmt(&JsxSpreadAttribute::cast(node.clone()).unwrap(), f)
                 }
@@ -32316,6 +32721,11 @@ impl Debug for DebugSyntaxElement {
                     std::fmt::Debug::fmt(&JsxTagExpression::cast(node.clone()).unwrap(), f)
                 }
                 JSX_TEXT => std::fmt::Debug::fmt(&JsxText::cast(node.clone()).unwrap(), f),
+=======
+                JSX_STRING_LITERAL => {
+                    std::fmt::Debug::fmt(&JsxStringLiteral::cast(node.clone()).unwrap(), f)
+                }
+>>>>>>> 26e8aafbda (jsx string literals attributes)
                 NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
                 TS_ABSTRACT_MODIFIER => {
                     std::fmt::Debug::fmt(&TsAbstractModifier::cast(node.clone()).unwrap(), f)

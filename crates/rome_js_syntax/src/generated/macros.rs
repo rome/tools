@@ -670,8 +670,12 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxElementExpression::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JSX_MEMBER_EXPRESSION => {
-                    let $pattern = unsafe { $crate::JsxMemberExpression::new_unchecked(node) };
+                $crate::JsSyntaxKind::JSX_NAME => {
+                    let $pattern = unsafe { $crate::JsxName::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_NAMESPACE_NAME => {
+                    let $pattern = unsafe { $crate::JsxNamespaceName::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_OPENING_ELEMENT => {
@@ -686,20 +690,8 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxSelfClosingElement::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JSX_SPREAD_ATTRIBUTE => {
-                    let $pattern = unsafe { $crate::JsxSpreadAttribute::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::JSX_STRING => {
-                    let $pattern = unsafe { $crate::JsxString::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::JSX_TAG_EXPRESSION => {
-                    let $pattern = unsafe { $crate::JsxTagExpression::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::JSX_TEXT => {
-                    let $pattern = unsafe { $crate::JsxText::new_unchecked(node) };
+                $crate::JsSyntaxKind::JSX_STRING_LITERAL => {
+                    let $pattern = unsafe { $crate::JsxStringLiteral::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::NEW_TARGET => {

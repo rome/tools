@@ -458,3 +458,39 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
         ParsedSyntax::Absent
     }
 }
+
+// test jsx jsx_element_simple_text_attribute
+// function f() {
+//     let a = <div id="a"></div>;
+//     return <div id="a" />;
+// }
+fn parse_jsx_attributes(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
+    let m = p.start();
+
+    while p.at(JsSyntaxKind::IDENT) {
+        let m = p.start();
+
+        {
+            let m = p.start();
+            p.eat(JsSyntaxKind::IDENT);
+            m.complete(p, JsSyntaxKind::JSX_NAME);
+        }
+
+        {
+            let m = p.start();
+            p.eat(T![=]);
+
+            {
+                let m = p.start();
+                p.eat(JsSyntaxKind::JS_STRING_LITERAL);
+                m.complete(p, JsSyntaxKind::JSX_STRING_LITERAL);
+            }
+
+            m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE);
+        }
+
+        m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE);
+    }
+
+    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_LIST))
+}
