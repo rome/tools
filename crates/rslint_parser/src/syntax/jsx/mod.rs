@@ -469,7 +469,7 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
 
 struct JsxAttributeList;
 
-// test jsx jsx_element_simple_text_attribute
+// test jsx jsx_element_attributes
 // function f() {
 //     let a = <div id="a" name="b" checked></div>;
 //     return <div id="a" name="b" checked/>;
