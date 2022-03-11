@@ -192,8 +192,8 @@ struct JsxAttributeList;
 
 // test jsx jsx_element_simple_text_attribute
 // function f() {
-//     let a = <div id="a" name="b"></div>;
-//     return <div id="a" name="b"/>;
+//     let a = <div id="a" name="b" checked></div>;
+//     return <div id="a" name="b" checked/>;
 // }
 impl ParseNodeList for JsxAttributeList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
