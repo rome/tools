@@ -2,7 +2,11 @@ pub mod jsx_parse_errors;
 
 use rslint_lexer::{JsSyntaxKind, T};
 
-use crate::{Checkpoint, Marker, ParsedSyntax, Parser};
+use crate::{
+    parser::RecoveryResult, Checkpoint, Marker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
+};
+
+use self::jsx_parse_errors::jsx_expected_attribute;
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -118,7 +122,7 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
 
     let _ = parse_jsx_any_element_name(p);
 
-    let _ = parse_jsx_attributes(p);
+    JsxAttributeList.parse_list(p);
 
     let kind = if p.at(T![/]) && p.nth_at(1, T![>]) {
         p.bump_multiple(2, JsSyntaxKind::SLASH_R_ANGLE);
@@ -184,38 +188,66 @@ fn parse_jsx_any_element_name(p: &mut CheckpointedParser<'_, '_>) -> ParsedSynta
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_REFERENCE_IDENTIFIER))
 }
 
+struct JsxAttributeList;
+
 // test jsx jsx_element_simple_text_attribute
 // function f() {
-//     let a = <div id="a"></div>;
-//     return <div id="a" />;
+//     let a = <div id="a" name="b"></div>;
+//     return <div id="a" name="b"/>;
 // }
-fn parse_jsx_attributes(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    let m = p.start();
-
-    while p.at(JsSyntaxKind::IDENT) {
+impl ParseNodeList for JsxAttributeList {
+    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
         let m = p.start();
 
-        {
-            let m = p.start();
-            p.eat(JsSyntaxKind::IDENT);
-            m.complete(p, JsSyntaxKind::JSX_NAME);
+        let _ = expect_jsx_attribute_name(p);
+        if p.at(T![=]) {
+            let _ = expect_jsx_attribute_initializer_clause(p);
         }
 
-        {
-            let m = p.start();
-            p.eat(T![=]);
-
-            {
-                let m = p.start();
-                p.eat(JsSyntaxKind::JS_STRING_LITERAL);
-                m.complete(p, JsSyntaxKind::JSX_STRING_LITERAL);
-            }
-
-            m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE);
-        }
-
-        m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE);
+        ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE))
     }
 
-    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_LIST))
+    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+        p.at(T![>]) || p.at(T![/])
+    }
+
+    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+        parsed_element.or_recover(
+            p,
+            &ParseRecovery::new(
+                JsSyntaxKind::JS_UNKNOWN_MEMBER,
+                token_set![T![/], T![>], T![<], T!['{'], T!['}'],],
+            ),
+            jsx_expected_attribute,
+        )
+    }
+
+    fn list_kind() -> JsSyntaxKind {
+        JsSyntaxKind::JSX_ATTRIBUTE_LIST
+    }
+}
+
+fn expect_jsx_attribute_name(p: &mut Parser) -> ParsedSyntax {
+    let m = p.start();
+
+    p.bump(JsSyntaxKind::IDENT);
+
+    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_NAME))
+}
+
+fn expect_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
+    let m = p.start();
+
+    p.bump(T![=]);
+    let _ = expect_jsx_attribute_value(p);
+
+    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE))
+}
+
+fn expect_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
+    let m = p.start();
+
+    p.bump(JsSyntaxKind::JS_STRING_LITERAL);
+
+    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_STRING_LITERAL))
 }
