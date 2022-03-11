@@ -41,11 +41,7 @@ jobs:
         id: prerelease
         if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
         working-directory: editors/vscode
-        run: |
-          CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
-          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")}
-          cat package.json | sed "s/'"version": "${CURRENT_VERSION}"'/'"version": "${NEW_VERSION}"'/g" >  temp
-          mv temp package.json
+        run: echo "prerelease=true" >> $GITHUB_ENV
 
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
@@ -124,6 +120,16 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Check prerelease status
+        id: prerelease
+        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        working-directory: editors/vscode
+        run: |
+          CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
+          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")}
+          cat package.json | sed "s/'"version": "${CURRENT_VERSION}"'/'"version": "${NEW_VERSION}"'/g" >  temp
+          mv temp package.json
+
       - name: Package extension
         run: |
           npm ci
@@ -163,6 +169,17 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: vscode_packages
+
+      - name: Check prerelease status
+        id: prerelease
+        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        working-directory: editors/vscode
+        run: |
+          CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
+          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")}
+          cat package.json | sed "s/'"version": "${CURRENT_VERSION}"'/'"version": "${NEW_VERSION}"'/g" >  temp
+          mv temp package.json
+        
 
       - name: Publish extension (pre-release)
         run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix
