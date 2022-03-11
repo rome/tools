@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 168
+assertion_line: 197
 expression: template.js
 
 ---
@@ -91,8 +91,7 @@ const bar =`but where will ${this.fanta} wrap ${baz} ${"hello"} template literal
 const foo = `but where will ${(a && b && bar) || (c && d && g)} wrap long long long long long long`;
 
 const foo = `but where will ${
-	(lorem && loremlorem && loremlorem) ||
-	(loremc && lorem && loremlorem)
+	(lorem && loremlorem && loremlorem) || (loremc && lorem && loremlorem)
 } wrap long long long long long long`;
 
 const a = `

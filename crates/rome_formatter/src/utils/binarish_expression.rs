@@ -139,14 +139,15 @@ fn flatten_expressions(
                     formatter,
                     Some(operator),
                 )?;
+                let (formatted, _) = format_with_or_without_parenthesis(
+                    current_operator,
+                    right.clone(),
+                    right.format(formatter)?,
+                )?;
                 flatten_items.items.push(FlattenItem::Binary(
                     binary_expression,
                     FlattenItemFormatted {
-                        node_element: format_with_or_without_parenthesis(
-                            current_operator,
-                            right,
-                            formatter,
-                        )?,
+                        node_element: formatted,
                         operator_element: previous_operator.format_or_empty(formatter)?,
                     },
                     has_comments.into(),
@@ -191,14 +192,15 @@ fn flatten_expressions(
                     Some(operator),
                 )?;
 
+                let (formatted, _) = format_with_or_without_parenthesis(
+                    current_operator,
+                    right.clone(),
+                    right.format(formatter)?,
+                )?;
                 flatten_items.items.push(FlattenItem::Logical(
                     logical_expression,
                     FlattenItemFormatted {
-                        node_element: format_with_or_without_parenthesis(
-                            current_operator,
-                            right,
-                            formatter,
-                        )?,
+                        node_element: formatted,
                         operator_element: previous_operator.format_or_empty(formatter)?,
                     },
                     has_comments.into(),
@@ -358,8 +360,13 @@ fn split_binaryish_to_flatten_items(
     let right_expression_should_group = right_expression_should_group(right_kind);
 
     let operator_has_trailing_comments = operator.has_trailing_comments();
+    let (formatted, _) = format_with_or_without_parenthesis(
+        current_operator,
+        left.clone(),
+        left.format(formatter)?,
+    )?;
     let formatted_left = format_elements![
-        format_with_or_without_parenthesis(current_operator, left.clone(), formatter)?,
+        formatted,
         space_token(),
         operator.format(formatter)?,
         if operator_has_trailing_comments {
@@ -406,17 +413,27 @@ fn split_binaryish_to_flatten_items(
     // logical expression (`||`) is another logical expression.
     // In that case, we call `format_binaryish_expression` from scratch, with its own flatten items.
     let right_item = if right_expression_should_group {
-        let formatted = format_elements![
-            format_with_or_without_parenthesis(current_operator, right, formatter)?,
-            previous_operator
-        ];
+        let (formatted, it_is_now_in_parenthesis) = format_with_or_without_parenthesis(
+            current_operator,
+            right.clone(),
+            format_binaryish_expression(right.syntax(), formatter)?,
+        )?;
+        let formatted = format_elements![formatted, previous_operator];
 
-        FlattenItem::Group(formatted, has_comments.into())
+        // if the expression is eligible of parenthesis, then we should mark
+        // the flatten item as a normal node
+        if it_is_now_in_parenthesis {
+            FlattenItem::Node(right.syntax().clone(), formatted, has_comments.into())
+        } else {
+            FlattenItem::Group(formatted, has_comments.into())
+        }
     } else {
-        let formatted_right = format_elements![
-            format_with_or_without_parenthesis(current_operator, right.clone(), formatter)?,
-            previous_operator,
-        ];
+        let (formatted, _) = format_with_or_without_parenthesis(
+            current_operator,
+            right.clone(),
+            right.format(formatter)?,
+        )?;
+        let formatted_right = format_elements![formatted, previous_operator,];
         FlattenItem::Node(right.syntax().clone(), formatted_right, has_comments.into())
     };
 
@@ -443,8 +460,8 @@ fn split_binaryish_to_flatten_items(
 fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
     previous_operation: Operation,
     node: Node,
-    formatter: &Formatter,
-) -> FormatResult<FormatElement> {
+    formatted_node: FormatElement,
+) -> FormatResult<(FormatElement, bool)> {
     let compare_to = if let Some(logical) = JsLogicalExpression::cast(node.syntax().clone()) {
         Some(Operation::Logical(logical.operator_kind()?))
     } else if let Some(binary) = JsBinaryExpression::cast(node.syntax().clone()) {
@@ -470,18 +487,20 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
         false
     };
 
-    let formatted = if operation_is_higher {
-        format_elements![group_elements(format_elements![
-            token("("),
-            // TODO: wait for #2209, leading comments that belong to `node` should be kicked out from the group
-            soft_block_indent(node.format(formatter)?,),
-            token(")"),
-        ]),]
+    let result = if operation_is_higher {
+        (
+            group_elements(format_elements![
+                token("("),
+                soft_block_indent(formatted_node),
+                token(")"),
+            ]),
+            true,
+        )
     } else {
-        format_elements![node.format(formatter)?,]
+        (formatted_node, false)
     };
 
-    Ok(formatted)
+    Ok(result)
 }
 
 /// This function tells the algorithm if the right part should be a separated group
@@ -489,14 +508,14 @@ fn right_expression_should_group(right_kind: &JsSyntaxKind) -> bool {
     matches!(right_kind, JsSyntaxKind::JS_LOGICAL_EXPRESSION)
 }
 
-/// Dirty a quick check if the group can potentially break
-fn should_break(flatten_nodes: &[FlattenItem]) -> bool {
+/// It tells if the expression can be hard grouped
+fn can_hard_group(flatten_nodes: &[FlattenItem]) -> bool {
     // We don't want to have 1 + 2 to break, for example.
     // If there are any trailing comments, let's break.
-    flatten_nodes.len() > 2
-        || flatten_nodes
+    flatten_nodes.len() <= 2
+        && flatten_nodes
             .iter()
-            .any(|node| node.has_comments() || matches!(node, FlattenItem::Group(..)))
+            .all(|node| !node.has_comments() && !matches!(node, FlattenItem::Group(..)))
 }
 
 fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
@@ -564,7 +583,7 @@ impl FlattenItems {
     }
 
     pub fn into_format_element(self) -> FormatResult<FormatElement> {
-        let should_break = should_break(&self.items);
+        let can_hard_group = can_hard_group(&self.items);
         let len = self.items.len();
 
         let mut groups: Vec<FormatElement> = self
@@ -584,7 +603,7 @@ impl FlattenItems {
             })
             .collect::<Vec<FormatElement>>();
 
-        if !should_break {
+        if can_hard_group {
             // we bail early if group doesn't need to be broken. We don't need to do further checks
             return Ok(hard_group_elements(join_elements(
                 soft_line_break_or_space(),

@@ -1,8 +1,8 @@
 use crate::formatter_traits::FormatOptionalTokenAndNode;
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    empty_element, format_elements, space_token, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    empty_element, format_elements, group_elements, soft_block_indent, space_token, token,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rome_js_syntax::{AstNode, JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
 
@@ -23,9 +23,11 @@ impl ToFormatElement for JsReturnStatement {
             ) {
                 format_elements![
                     space_token(),
-                    token("("),
-                    argument.format(formatter)?,
-                    token(")")
+                    group_elements(format_elements![
+                        token("("),
+                        soft_block_indent(argument.format(formatter)?),
+                        token(")")
+                    ]),
                 ]
             } else {
                 format_elements![space_token(), argument.format(formatter)?]

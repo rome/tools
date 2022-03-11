@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: bind_parens.js
 
 ---
@@ -45,7 +45,7 @@ f[a::b()];
 
 # Output
 ```js
-a || b;
+(a || b);
 ::c
 a || (b
 ::c)

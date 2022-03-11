@@ -598,7 +598,11 @@ function() {
 }
 
 #[cfg(test)]
+mod check_reformat;
+
+#[cfg(test)]
 mod test {
+    use crate::check_reformat::{check_reformat, CheckReformatParams};
     use crate::format;
     use crate::FormatOptions;
     use rslint_parser::{parse, SourceType};
@@ -607,12 +611,19 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"a = () => ({}?.() && a);
+        let src = r#"
+const b = `${(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar)}`;        
 "#;
         let syntax = SourceType::ts();
-        let tree = parse(src, 0, syntax);
-        dbg!(&tree.syntax());
+        let tree = parse(src, 0, syntax.clone());
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
+        check_reformat(CheckReformatParams {
+            root: &tree.syntax(),
+            text: result.as_code(),
+            source_type: syntax,
+            file_name: "quick_test",
+            format_options: FormatOptions::default(),
+        });
         assert_eq!(
             result.as_code(),
             r#"let g = [[], [0, 1], [0, 1]];

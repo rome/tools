@@ -476,8 +476,17 @@ impl TemplateElement {
                     | JsAnyExpression::JsComputedMemberExpression(_)
                     | JsAnyExpression::JsIdentifierExpression(_)
                     | JsAnyExpression::JsAnyLiteralExpression(_)
-                    | JsAnyExpression::JsCallExpression(_)
-                    | JsAnyExpression::JsParenthesizedExpression(_) => Ok(true),
+                    | JsAnyExpression::JsCallExpression(_) => Ok(true),
+
+                    JsAnyExpression::JsParenthesizedExpression(expression) => {
+                        // binary and logical expression have their own grouping inside parenthesis,
+                        // so we mark the current parenthesized expression as not plain
+                        match expression.expression()? {
+                            JsAnyExpression::JsLogicalExpression(_)
+                            | JsAnyExpression::JsBinaryExpression(_) => Ok(false),
+                            _ => Ok(true),
+                        }
+                    }
 
                     _ => {
                         if let Some(function) =

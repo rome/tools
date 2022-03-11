@@ -1,8 +1,8 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::is_simple_expression;
 use crate::{
-    empty_element, format_elements, hard_group_elements, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    empty_element, format_elements, group_elements, hard_group_elements, FormatElement,
+    FormatResult, Formatter, ToFormatElement,
 };
 use rome_js_syntax::{
     AstNode, JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields,
@@ -17,18 +17,29 @@ impl ToFormatElement for JsParenthesizedExpression {
             r_paren_token,
         } = self.as_fields();
 
-        if parenthesis_can_be_omitted(self)? {
+        let parenthesis_can_be_omitted = parenthesis_can_be_omitted(self)?;
+
+        if is_simple_parenthesized_expression(self)? {
             Ok(hard_group_elements(format_elements![
+                if parenthesis_can_be_omitted {
+                    formatter.format_replaced(&l_paren_token?, empty_element())?
+                } else {
+                    l_paren_token.format(formatter)?
+                },
+                expression.format(formatter)?,
+                if parenthesis_can_be_omitted {
+                    formatter.format_replaced(&r_paren_token?, empty_element())?
+                } else {
+                    r_paren_token.format(formatter)?
+                },
+            ]))
+        } else if parenthesis_can_be_omitted {
+            // we mimic the format delimited utility function
+            Ok(format_elements![
                 formatter.format_replaced(&l_paren_token?, empty_element())?,
-                expression.format(formatter)?,
+                group_elements(expression.format(formatter)?),
                 formatter.format_replaced(&r_paren_token?, empty_element())?,
-            ]))
-        } else if is_simple_parenthesized_expression(self)? {
-            Ok(hard_group_elements(format_elements![
-                l_paren_token.format(formatter)?,
-                expression.format(formatter)?,
-                r_paren_token.format(formatter)?,
-            ]))
+            ])
         } else {
             formatter.format_delimited_soft_block_indent(
                 &l_paren_token?,
@@ -90,6 +101,8 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
                 | JsSyntaxKind::JS_AWAIT_EXPRESSION
                 | JsSyntaxKind::JS_YIELD_ARGUMENT
                 | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+                | JsSyntaxKind::JS_EXPRESSION_STATEMENT
+                | JsSyntaxKind::JS_RETURN_STATEMENT
         ) {
             return Ok(false);
         }
