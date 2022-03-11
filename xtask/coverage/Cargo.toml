@@ -10,7 +10,7 @@ rome_rowan = { path = "../../crates/rome_rowan" }
 rome_js_syntax = { path = "../../crates/rome_js_syntax" }
 rslint_parser = { path = "../../crates/rslint_parser"}
 rslint_errors = { path = "../../crates/rslint_errors"}
-pico-args = "0.3.4"
+pico-args = "0.4.2"
 ascii_table = "3.0.2"
 colored = "2.0.0"
 yastl = "0.1.2"

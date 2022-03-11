@@ -14,11 +14,25 @@ pub struct FormatterWorkspaceSettings {
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
+/// Settings for Rome Analysis
+pub struct AnalysisWorkspaceSettings {
+    /// Allows rome to compute and publish diagnostics
+    pub enable_diagnostics: bool,
+    /// Allows rome to compute and provide code actions
+    pub enable_code_actions: bool,
+}
+
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
 /// The settings applied to the workspace by the LSP
 pub struct WorkspaceSettings {
     /// Formatter settings
     #[serde(default)]
     pub formatter: FormatterWorkspaceSettings,
+
+    /// Analysis settings
+    #[serde(default)]
+    pub analysis: AnalysisWorkspaceSettings,
 }
 
 #[derive(Debug)]

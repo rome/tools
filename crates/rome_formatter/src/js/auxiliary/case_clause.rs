@@ -24,13 +24,22 @@ impl ToFormatElement for JsCaseClause {
         let test = test.format(formatter)?;
         let cons = formatter.format_list(consequent);
 
+        let cons = if cons.is_empty() {
+            // Skip inserting an indent block is the consequent is empty to print
+            // the trailing comments for the case clause inline if there is no
+            // block to push them into
+            hard_line_break()
+        } else {
+            // no line break needed after because it is added by the indent in the switch statement
+            indent(format_elements![hard_line_break(), cons])
+        };
+
         Ok(format_elements![
             case_word,
             space_token(),
             test,
             colon,
-            // no line break needed after because it is added by the indent in the switch statement
-            indent(format_elements![hard_line_break(), cons])
+            cons
         ])
     }
 }

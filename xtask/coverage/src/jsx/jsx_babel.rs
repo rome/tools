@@ -43,7 +43,7 @@ impl TestCase for BabelJsxTestCase {
         );
         let result = parse(&self.code, 0, source_type);
 
-        if result.errors().is_empty() {
+        if result.diagnostics().is_empty() {
             if let Some(unknown) = result
                 .syntax()
                 .descendants()
@@ -59,7 +59,7 @@ impl TestCase for BabelJsxTestCase {
         } else {
             TestRunOutcome::IncorrectlyErrored {
                 files,
-                errors: result.errors().to_vec(),
+                errors: result.diagnostics().to_vec(),
             }
         }
     }

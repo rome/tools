@@ -1,3 +1,4 @@
+pub(crate) mod array;
 mod binarish_expression;
 mod call_expression;
 mod format_conditional;

@@ -7,7 +7,7 @@ publish = false
 [dependencies]
 xtask = { path = '../', version = "0.0" }
 anyhow = "1.0.52"
-pico-args = "0.3.4"
+pico-args = "0.4.2"
 quote = "1.0.14"
 proc-macro2 = { version = "1.0.36", features = ["span-locations"] }
 ungrammar = "1.14.9"
