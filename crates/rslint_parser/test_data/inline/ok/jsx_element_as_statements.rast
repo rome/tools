@@ -9,6 +9,7 @@ JsModule {
                     name: JsxReferenceIdentifier {
                         value_token: IDENT@1..5 "div" [] [Whitespace(" ")],
                     },
+                    attributes: JsxAttributeList [],
                     slash_r_angle_token: SLASH_R_ANGLE@5..7 "/>" [] [],
                 },
             },
@@ -28,6 +29,7 @@ JsModule {
           0: L_ANGLE@0..1 "<" [] []
           1: JSX_REFERENCE_IDENTIFIER@1..5
             0: IDENT@1..5 "div" [] [Whitespace(" ")]
-          2: SLASH_R_ANGLE@5..7 "/>" [] []
+          2: JSX_ATTRIBUTE_LIST@5..5
+          3: SLASH_R_ANGLE@5..7 "/>" [] []
       1: (empty)
   3: EOF@7..8 "" [Newline("\n")] []

@@ -118,6 +118,8 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
 
     let _ = parse_jsx_any_element_name(p);
 
+    let _ = parse_jsx_attributes(p);
+
     let kind = if p.at(T![/]) && p.nth_at(1, T![>]) {
         p.bump_multiple(2, JsSyntaxKind::SLASH_R_ANGLE);
         JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT
@@ -180,4 +182,40 @@ fn parse_jsx_any_element_name(p: &mut CheckpointedParser<'_, '_>) -> ParsedSynta
     }
 
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_REFERENCE_IDENTIFIER))
+}
+
+// test jsx jsx_element_simple_text_attribute
+// function f() {
+//     let a = <div id="a"></div>;
+//     return <div id="a" />;
+// }
+fn parse_jsx_attributes(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
+    let m = p.start();
+
+    while p.at(JsSyntaxKind::IDENT) {
+        let m = p.start();
+
+        {
+            let m = p.start();
+            p.eat(JsSyntaxKind::IDENT);
+            m.complete(p, JsSyntaxKind::JSX_NAME);
+        }
+
+        {
+            let m = p.start();
+            p.eat(T![=]);
+
+            {
+                let m = p.start();
+                p.eat(JsSyntaxKind::JS_STRING_LITERAL);
+                m.complete(p, JsSyntaxKind::JSX_STRING_LITERAL);
+            }
+
+            m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE);
+        }
+
+        m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE);
+    }
+
+    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_LIST))
 }

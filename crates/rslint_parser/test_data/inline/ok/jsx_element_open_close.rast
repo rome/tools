@@ -29,6 +29,7 @@ JsModule {
                                     name: JsxReferenceIdentifier {
                                         value_token: IDENT@27..30 "div" [] [],
                                     },
+                                    attributes: JsxAttributeList [],
                                     r_angle_token: R_ANGLE@30..31 ">" [] [],
                                 },
                                 closing_element: JsxClosingElement {
@@ -78,7 +79,8 @@ JsModule {
                   0: L_ANGLE@26..27 "<" [] []
                   1: JSX_REFERENCE_IDENTIFIER@27..30
                     0: IDENT@27..30 "div" [] []
-                  2: R_ANGLE@30..31 ">" [] []
+                  2: JSX_ATTRIBUTE_LIST@30..30
+                  3: R_ANGLE@30..31 ">" [] []
                 1: JSX_CLOSING_ELEMENT@31..37
                   0: L_ANGLE_SLASH@31..33 "</" [] []
                   1: JSX_REFERENCE_IDENTIFIER@33..36

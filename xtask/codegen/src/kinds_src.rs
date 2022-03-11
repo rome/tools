@@ -477,6 +477,10 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_INDEX_SIGNATURE_CLASS_MEMBER",
         "TS_INDEX_SIGNATURE_MODIFIER_LIST",
         //JSX
+        "JSX_NAME",
+        "JSX_NAMESPACE_NAME",
+        "JSX_REFERENCE_IDENTIFIER",
+        "JSX_STRING_LITERAL",
         "JSX_ELEMENT_EXPRESSION",
         "JSX_ANY_ELEMENT",
         "JSX_ELEMENT",
@@ -485,7 +489,11 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_CLOSING_ELEMENT",
         "JSX_ANY_ELEMENT_NAME",
         "JSX_MEMBER_EXPRESSION",
-        "JSX_REFERENCE_IDENTIFIER",
+        "JSX_ATTRIBUTE_LIST",
+        "JSX_ATTRIBUTE",
+        "JSX_ATTRIBUTE_INITIALIZER_CLAUSE",
+        "JSX_ANY_ATTRIBUTE_VALUE",
+        "JSX_ANY_ATTRIBUTE_NAME",
         // unknown nodes JS
         "JS_UNKNOWN",
         "JS_UNKNOWN_EXPRESSION",
