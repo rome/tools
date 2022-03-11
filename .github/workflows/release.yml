@@ -120,9 +120,8 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Check prerelease status
-        id: prerelease
-        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+      - name: Update package.json version
+        if: env.prerelease == 'true'
         working-directory: editors/vscode
         run: |
           CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
@@ -170,9 +169,8 @@ jobs:
         with:
           name: vscode_packages
 
-      - name: Check prerelease status
-        id: prerelease
-        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+      - name: Update package.json version
+        if: env.prerelease == 'true'
         working-directory: editors/vscode
         run: |
           CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
