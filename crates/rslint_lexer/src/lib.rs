@@ -17,7 +17,6 @@
 
 #[macro_use]
 mod token;
-mod state;
 #[rustfmt::skip]
 mod tables;
 mod errors;
@@ -33,15 +32,14 @@ mod highlight;
 pub use highlight::*;
 
 use rslint_errors::Diagnostic;
-use state::LexerState;
 use tables::derived_property::*;
 
 pub use rome_js_syntax::*;
 
 #[derive(Debug)]
 pub struct LexerReturn {
-    kind: JsSyntaxKind,
-    diagnostic: Option<Box<Diagnostic>>,
+    pub kind: JsSyntaxKind,
+    pub diagnostic: Option<Box<Diagnostic>>,
 }
 
 impl LexerReturn {
@@ -55,18 +53,6 @@ impl LexerReturn {
 
     pub fn with_diagnostic(kind: JsSyntaxKind, diagnostic: Box<Diagnostic>) -> Self {
         Self::new(kind, Some(diagnostic))
-    }
-
-    pub fn kind(&self) -> JsSyntaxKind {
-        self.kind
-    }
-
-    pub fn diagnostic(&self) -> Option<&Box<Diagnostic>> {
-        self.diagnostic.as_ref()
-    }
-
-    pub fn take_diagnostic(&mut self) -> Option<Box<Diagnostic>> {
-        self.diagnostic.take()
     }
 }
 
@@ -114,14 +100,26 @@ fn is_id_continue(c: char) -> bool {
     c == '$' || c == '\u{200d}' || c == '\u{200c}' || ID_Continue(c)
 }
 
-#[derive(Debug)]
-pub enum LexMode {
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum LexContext {
+    Regular,
+    TemplateElement { tagged: bool },
+}
+
+impl LexContext {
+    pub fn is_regular(&self) -> bool {
+        matches!(self, LexContext::Regular)
+    }
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum ReLexContext {
+    /// Re-lexes a `/` or `/=` token as a regular expression.
     Regex,
-    Template(bool),
 }
 
 /// An extremely fast, lookup table based, lossless ECMAScript lexer
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug)]
 pub struct Lexer<'src> {
     /// Source text
     source: &'src str,
@@ -129,15 +127,18 @@ pub struct Lexer<'src> {
     /// The start byte position in the source text of the next token.
     position: usize,
 
-    /// The kind of the current token.
+    /// `true` if there has been any line break that hasn't been followed by a non-trivia token.
+    after_newline: bool,
+
+    /// Byte offset of the current token from the start of the source
+    current_start: TextSize,
+
+    /// The kind of the current token
     current_kind: JsSyntaxKind,
 
-    /// The start byte offset of the current token
-    current_start: usize,
+    /// Flags for the current token
+    current_flags: TokenFlags,
 
-    current_after_new_line: bool,
-
-    pub(crate) state: LexerState,
     file_id: usize,
 }
 
@@ -146,12 +147,12 @@ impl<'src> Lexer<'src> {
     pub fn from_str(string: &'src str, file_id: usize) -> Self {
         Self {
             source: string,
-            current_kind: JsSyntaxKind::TOMBSTONE,
-            current_start: 0,
-            current_after_new_line: false,
+            after_newline: false,
+            current_kind: TOMBSTONE,
+            current_start: TextSize::from(0),
+            current_flags: TokenFlags::empty(),
             position: 0,
             file_id,
-            state: LexerState::new(),
         }
     }
 
@@ -162,86 +163,93 @@ impl<'src> Lexer<'src> {
 
     /// Returns the kind of the current token
     #[inline]
-    pub fn current(&self) -> JsSyntaxKind {
+    pub const fn current(&self) -> JsSyntaxKind {
         self.current_kind
     }
 
     /// Returns the range of the current token (The token that was lexed by the last `next` call)
     #[inline]
     pub fn current_range(&self) -> TextRange {
-        TextRange::at(
-            TextSize::from(self.current_start as u32),
-            TextSize::from((self.position - self.current_start) as u32),
-        )
+        TextRange::new(self.current_start, TextSize::from(self.position as u32))
     }
 
     /// Returns true if a line break precedes the current token.
     #[inline]
-    pub fn has_preceding_line_break(&self) -> bool {
-        self.current_after_new_line
+    pub const fn has_preceding_line_break(&self) -> bool {
+        self.current_flags
+            .contains(TokenFlags::PRECEDING_LINE_BREAK)
+    }
+
+    #[inline]
+    pub const fn has_unicode_escape(&self) -> bool {
+        self.current_flags.contains(TokenFlags::UNICODE_ESCAPE)
+    }
+
+    pub fn checkpoint(&self) -> LexerCheckpoint {
+        LexerCheckpoint {
+            position: TextSize::from(self.position as u32),
+            current_start: self.current_start,
+            current_flags: self.current_flags,
+            current_kind: self.current_kind,
+            after_line_break: self.after_newline,
+        }
+    }
+
+    pub fn rewind(&mut self, checkpoint: LexerCheckpoint) {
+        let LexerCheckpoint {
+            position,
+            current_start,
+            current_flags,
+            current_kind,
+            after_line_break,
+        } = checkpoint;
+
+        let new_pos = u32::from(position) as usize;
+
+        self.position = new_pos;
+        self.current_kind = current_kind;
+        self.current_start = current_start;
+        self.current_flags = current_flags;
+        self.after_newline = after_line_break;
     }
 
     /// Lex's the next token. Returns its kind and any potential error
-    pub fn next(&mut self) -> LexerReturn {
-        self.current_start = self.position;
-        self.current_kind = TOMBSTONE;
-        self.current_after_new_line = self.state.after_newline;
+    pub fn next_token(&mut self, context: LexContext) -> LexerReturn {
+        self.current_start = TextSize::from(self.position as u32);
+        self.current_flags = TokenFlags::empty();
 
-        if self.is_eof() {
-            self.current_kind = T![EOF];
-            return lexer_return!(EOF);
-        }
-
-        let result = if let Some(Context::Template { tagged }) = self.state.ctx.last() {
-            let tagged = *tagged;
-            self.lex_template(tagged)
+        let result = if self.is_eof() {
+            lexer_return!(EOF)
         } else {
-            self.lex_token()
+            match context {
+                LexContext::Regular => self.lex_token(),
+                LexContext::TemplateElement { tagged } => self.lex_template(tagged),
+            }
         };
 
+        if !result.kind.is_trivia() {
+            self.current_flags.set(
+                TokenFlags::PRECEDING_LINE_BREAK,
+                std::mem::take(&mut self.after_newline),
+            );
+        }
+
         self.current_kind = result.kind;
-
-        // TODO move to where we lex newline | multline comment and set after new line to true
-        // reset after new line in lex_token_impl
-        if result.kind.is_trivia() {
-            if matches!(
-                result.kind,
-                JsSyntaxKind::NEWLINE | JsSyntaxKind::MULTILINE_COMMENT
-            ) {
-                self.state.after_newline = true;
-            }
-        } else {
-            self.state.after_newline = false;
-        }
-
-        if !matches!(
-            result.kind,
-            JsSyntaxKind::COMMENT
-                | JsSyntaxKind::MULTILINE_COMMENT
-                | JsSyntaxKind::WHITESPACE
-                | JsSyntaxKind::NEWLINE
-                | JsSyntaxKind::TEMPLATE_CHUNK,
-        ) {
-            self.state.update(result.kind);
-        }
 
         result
     }
 
-    /// Re-lexes the current token with the provided [LexMode]
-    pub fn re_lex(&mut self, mode: LexMode) -> LexerReturn {
+    /// Re-lexes the current token with the provided [LexContext]
+    pub fn re_lex(&mut self, context: ReLexContext) -> LexerReturn {
         let old_position = self.position;
-        self.position = self.current_start;
+        self.position = u32::from(self.current_start) as usize;
 
-        let result = match mode {
-            LexMode::Regex if matches!(self.current_kind, T![/] | T![/=]) => self.read_regex(),
-            LexMode::Template(tagged) if matches!(self.current_kind, BACKTICK) => {
-                self.lex_template(tagged)
-            }
+        let result = match context {
+            ReLexContext::Regex if matches!(self.current(), T![/] | T![/=]) => self.read_regex(),
             _ => {
                 // Didn't re-lex anything. Return existing token again
                 self.position = old_position;
-                LexerReturn::ok(self.current_kind)
+                LexerReturn::ok(self.current())
             }
         };
 
@@ -261,7 +269,6 @@ impl<'src> Lexer<'src> {
         if self.current_byte().is_some() {
             let chr = self.current_char_unchecked();
             if is_linebreak(chr) {
-                self.state.had_linebreak = true;
                 self.advance(chr.len_utf8());
                 if chr == '\r' && self.current_byte() == Some(b'\n') {
                     self.advance('\n'.len_utf8());
@@ -292,6 +299,7 @@ impl<'src> Lexer<'src> {
 
     fn consume_newline_or_whitespace(&mut self) -> LexerReturn {
         if self.consume_newlines() {
+            self.after_newline = true;
             lexer_return!(NEWLINE)
         } else {
             self.consume_whitespace_until_newline();
@@ -736,7 +744,11 @@ impl<'src> Lexer<'src> {
         let mut buf = [0u8; 16];
         let len = first.encode_utf8(&mut buf).len();
 
-        let (count, _) = self.consume_and_get_ident(&mut buf[len..]);
+        let (count, escaped) = self.consume_and_get_ident(&mut buf[len..]);
+
+        if escaped {
+            self.current_flags |= TokenFlags::UNICODE_ESCAPE;
+        }
 
         let kind = match &buf[..count + len] {
             // Keywords
@@ -1160,6 +1172,7 @@ impl<'src> Lexer<'src> {
                         b'*' if self.peek_byte() == Some(&b'/') => {
                             self.advance(2);
                             if has_newline {
+                                self.after_newline = true;
                                 return lexer_return!(MULTILINE_COMMENT);
                             } else {
                                 return lexer_return!(COMMENT);
@@ -1583,6 +1596,7 @@ impl<'src> Lexer<'src> {
                     match res {
                         Ok(chr) => {
                             if is_id_start(chr) {
+                                self.current_flags |= TokenFlags::UNICODE_ESCAPE;
                                 self.resolve_identifier(chr)
                             } else {
                                 let err = Diagnostic::error(self.file_id, "", "unexpected unicode escape")
@@ -1739,7 +1753,7 @@ impl Iterator for Lexer<'_> {
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.position <= self.source.as_bytes().len() {
-            Some(self.next())
+            Some(self.next_token(LexContext::Regular))
         } else {
             None
         }
@@ -1751,6 +1765,21 @@ impl FusedIterator for Lexer<'_> {}
 fn lookup_byte(byte: u8) -> Dispatch {
     // Safety: our lookup table maps all values of u8, so its impossible for a u8 to be out of bounds
     unsafe { *DISPATCHER.get_unchecked(byte as usize) }
+}
+
+#[derive(Debug, Clone)]
+pub struct LexerCheckpoint {
+    pub(crate) position: TextSize,
+    pub(crate) current_start: TextSize,
+    pub(crate) current_kind: JsSyntaxKind,
+    pub(crate) current_flags: TokenFlags,
+    pub(crate) after_line_break: bool,
+}
+
+impl LexerCheckpoint {
+    pub fn position(&self) -> TextSize {
+        self.position
+    }
 }
 
 // Every handler a byte coming in could be mapped to
@@ -1798,7 +1827,7 @@ use rome_js_syntax::JsSyntaxKind::{BACKTICK, TOMBSTONE};
 use Dispatch::*;
 
 use crate::errors::invalid_digits_after_unicode_escape_sequence;
-use crate::state::Context;
+use crate::token::TokenFlags;
 
 // A lookup table mapping any incoming byte to a handler function
 // This is taken from the ratel project lexer and modified

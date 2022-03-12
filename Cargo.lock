@@ -1412,6 +1412,7 @@ version = "0.2.0"
 dependencies = [
  "ansi_term",
  "atty",
+ "bitflags",
  "quickcheck",
  "quickcheck_macros",
  "rome_js_syntax",

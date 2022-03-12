@@ -63,7 +63,6 @@ mod parser;
 mod token_set;
 mod event;
 mod lossless_tree_sink;
-mod lossy_tree_sink;
 mod parse;
 mod state;
 
@@ -76,7 +75,6 @@ mod token_source;
 pub use crate::{
     event::{process, Event},
     lossless_tree_sink::LosslessTreeSink,
-    lossy_tree_sink::LossyTreeSink,
     parse::*,
     parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
     token_set::TokenSet,
@@ -92,6 +90,7 @@ pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
 pub use rome_js_syntax::numbers::BigInt;
 use rome_js_syntax::JsSyntaxKind;
+use rome_rowan::TextSize;
 use rslint_errors::Diagnostic;
 pub use rslint_lexer::buffered_lexer::BufferedLexer;
 use std::path::Path;
@@ -99,7 +98,7 @@ use std::path::Path;
 /// An abstraction for syntax tree implementations
 pub trait TreeSink {
     /// Adds new token to the current branch.
-    fn token(&mut self, kind: JsSyntaxKind);
+    fn token(&mut self, kind: JsSyntaxKind, length: TextSize);
 
     /// Start new branch and make it current.
     fn start_node(&mut self, kind: JsSyntaxKind);
@@ -110,9 +109,6 @@ pub trait TreeSink {
 
     /// Emit errors
     fn errors(&mut self, errors: Vec<ParserError>);
-
-    /// Consume multiple tokens and glue them into one kind
-    fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind);
 }
 
 /// Enum of the different ECMAScript standard versions.

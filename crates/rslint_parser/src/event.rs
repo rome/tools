@@ -4,9 +4,11 @@ use std::mem;
 
 use crate::{Parser, ParserError, TreeSink};
 use rome_js_syntax::JsSyntaxKind::{self, *};
+use rome_rowan::TextRange;
 use rslint_lexer::TextSize;
 
 use crate::parser::Checkpoint;
+use crate::token_source::Trivia;
 
 /// Events emitted by the Parser, these events are later
 /// made into a syntax tree with `process` into TreeSink.
@@ -26,9 +28,7 @@ pub enum Event {
     },
 
     /// Complete the previous `Start` event
-    Finish {
-        end: TextSize,
-    },
+    Finish { end: TextSize },
 
     /// Produce a single leaf-element.
     /// `n_raw_tokens` is used to glue complex contextual tokens.
@@ -36,11 +36,7 @@ pub enum Event {
     /// `n_raw_tokens = 2` is used to produced a single `>>`.
     Token {
         kind: JsSyntaxKind,
-    },
-
-    MultipleTokens {
-        amount: u8,
-        kind: JsSyntaxKind,
+        range: TextRange,
     },
 }
 
@@ -104,10 +100,9 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
                 }
             }
             Event::Finish { .. } => sink.finish_node(),
-            Event::Token { kind, .. } => {
-                sink.token(kind);
+            Event::Token { kind, range } => {
+                sink.token(kind, range.len());
             }
-            Event::MultipleTokens { amount, kind } => sink.consume_multiple_tokens(amount, kind),
         }
     }
 }
@@ -115,14 +110,39 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
 struct RewriteParseEventsTreeSink<'r, 'p, T> {
     reparse: &'r mut T,
     parser: &'r mut Parser<'p>,
+    offset: TextSize,
+    trivia: &'r [Trivia],
+}
+
+impl<T> RewriteParseEventsTreeSink<'_, '_, T> {
+    fn skip_trivia(&mut self, trailing: bool) {
+        let mut processed = 0;
+        for trivia in self.trivia {
+            if trailing != trivia.trailing() || self.offset != trivia.offset() {
+                break;
+            }
+
+            processed += 1;
+            self.offset += trivia.len();
+        }
+
+        self.trivia = &self.trivia[processed..];
+    }
 }
 
 impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 'p, T> {
-    fn token(&mut self, kind: JsSyntaxKind) {
-        self.reparse.token(kind, self.parser);
+    fn token(&mut self, kind: JsSyntaxKind, length: TextSize) {
+        self.skip_trivia(false);
+
+        let range = TextRange::at(self.offset, length);
+        let new_kind = self.reparse.token(kind, self.parser);
+        self.parser.push_token(new_kind, range);
+
+        self.skip_trivia(true);
     }
 
     fn start_node(&mut self, kind: JsSyntaxKind) {
+        // ISSUE: `complete` and `start()` use `cur_pos()` of the `tokens` source.
         self.reparse.start_node(kind, self.parser);
     }
 
@@ -131,10 +151,6 @@ impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 
     }
 
     fn errors(&mut self, _errors: Vec<ParserError>) {}
-
-    fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
-        self.reparse.multiple_token(amount, kind, self.parser);
-    }
 }
 
 /// Implement this trait if you want to change the tree structure
@@ -147,8 +163,8 @@ pub trait RewriteParseEvents {
     fn finish_node(&mut self, p: &mut Parser);
 
     /// Called for every token
-    fn token(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
-        p.bump_remap(kind);
+    fn token(&mut self, kind: JsSyntaxKind, _p: &mut Parser) -> JsSyntaxKind {
+        kind
     }
 
     /// Called for tokens spawning multiple lexer tokens
@@ -169,11 +185,16 @@ pub fn rewrite_events<T: RewriteParseEvents>(
     // The current parsed grammar is a super-set of the grammar that gets re-parsed. Thus, any
     // error that applied to the old grammar also applies to the sub-grammar.
     let events: Vec<_> = p.events.split_off(checkpoint.event_pos + 1);
-    p.tokens.rewind(checkpoint.token_source);
+
+    // TODO: Ideally don't rewind. But then difficulty that `push_token` requires range
+    let offset = checkpoint.token_source.offset();
+    let trivia = checkpoint.token_source.trivia(&p.tokens).to_vec();
 
     let mut sink = RewriteParseEventsTreeSink {
         parser: p,
         reparse: rewriter,
+        offset,
+        trivia: &trivia,
     };
     process(&mut sink, events, Vec::default());
 }

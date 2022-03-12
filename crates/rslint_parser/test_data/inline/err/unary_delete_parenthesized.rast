@@ -368,59 +368,59 @@ JsModule {
   3: EOF@185..186 "" [Newline("\n")] []
 --
 error[SyntaxError]: the target for a delete operator cannot be a single identifier
-  ┌─ unary_delete_parenthesized.js:1:9
+  ┌─ unary_delete_parenthesized.js:1:15
   │
 1 │ delete (ident);
-  │         ^^^^^
+  │               ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a single identifier
-  ┌─ unary_delete_parenthesized.js:2:10
+  ┌─ unary_delete_parenthesized.js:2:17
   │
 2 │ delete ((ident));
-  │          ^^^^^
+  │                 ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a single identifier
-  ┌─ unary_delete_parenthesized.js:3:18
+  ┌─ unary_delete_parenthesized.js:3:24
   │
 3 │ delete (obj.key, ident);
-  │                  ^^^^^
+  │                        ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:4:9
+  ┌─ unary_delete_parenthesized.js:4:21
   │
 4 │ delete (obj.#member);
-  │         ^^^^^^^^^^^
+  │                     ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:5:9
+  ┌─ unary_delete_parenthesized.js:5:24
   │
 5 │ delete (func().#member);
-  │         ^^^^^^^^^^^^^^
+  │                        ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:6:9
+  ┌─ unary_delete_parenthesized.js:6:22
   │
 6 │ delete (obj?.#member);
-  │         ^^^^^^^^^^^^
+  │                      ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:7:9
+  ┌─ unary_delete_parenthesized.js:7:28
   │
 7 │ delete (obj?.inner.#member);
-  │         ^^^^^^^^^^^^^^^^^^
+  │                            ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:8:18
+  ┌─ unary_delete_parenthesized.js:8:27
   │
 8 │ delete (obj.key, obj.#key);
-  │                  ^^^^^^^^
+  │                           ^
 
 --
 delete (ident);

@@ -187,38 +187,40 @@ JsModule {
   3: EOF@104..105 "" [Newline("\n")] []
 --
 error[SyntaxError]: the target for a delete operator cannot be a single identifier
-  ┌─ unary_delete.js:1:8
-  │
-1 │ delete ident;
-  │        ^^^^^
+  ┌─ unary_delete.js:1:13
+  │  
+1 │   delete ident;
+  │ ┌─────────────^
+2 │ │ delete obj.#member;
+  │ └───^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete.js:2:8
+  ┌─ unary_delete.js:2:19
   │
 2 │ delete obj.#member;
-  │        ^^^^^^^^^^^
+  │                   ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete.js:3:8
+  ┌─ unary_delete.js:3:22
   │
 3 │ delete func().#member;
-  │        ^^^^^^^^^^^^^^
+  │                      ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete.js:4:8
+  ┌─ unary_delete.js:4:20
   │
 4 │ delete obj?.#member;
-  │        ^^^^^^^^^^^^
+  │                    ^
 
 --
 error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete.js:5:8
+  ┌─ unary_delete.js:5:26
   │
 5 │ delete obj?.inner.#member;
-  │        ^^^^^^^^^^^^^^^^^^
+  │                          ^
 
 --
 delete ident;

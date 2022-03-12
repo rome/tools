@@ -25,13 +25,13 @@ pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::state::ParserStateCheckpoint;
-use crate::token_source::{Token, TokenSource, TokenSourceCheckpoint};
+use crate::token_source::{TokenSource, TokenSourceCheckpoint, Trivia};
 use crate::*;
-use rslint_lexer::LexMode;
+use rslint_lexer::{LexContext, LexerReturn, ReLexContext};
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
-pub struct ParserProgress(Option<usize>);
+pub struct ParserProgress(Option<TextSize>);
 
 impl ParserProgress {
     /// Returns true if the current parser position is passed this position
@@ -39,7 +39,7 @@ impl ParserProgress {
     pub fn has_progressed(&self, p: &Parser) -> bool {
         match self.0 {
             None => true,
-            Some(pos) => pos < p.cur_token_index(),
+            Some(pos) => pos < p.tokens.position(),
         }
     }
 
@@ -58,7 +58,7 @@ impl ParserProgress {
             p.cur_range(),
         );
 
-        self.0 = Some(p.cur_token_index());
+        self.0 = Some(p.tokens.position());
     }
 }
 
@@ -127,6 +127,7 @@ pub struct Parser<'s> {
     pub(super) state: ParserState,
     pub source_type: SourceType,
     pub errors: Vec<ParserError>,
+    last_token_event_pos: Option<usize>,
 }
 
 impl<'s> Parser<'s> {
@@ -140,26 +141,30 @@ impl<'s> Parser<'s> {
             events: vec![],
             state: ParserState::new(&source_type),
             tokens: token_source,
+            last_token_event_pos: None,
             source_type,
             errors,
         }
     }
 
     /// Consume the parser and return the list of events it produced
-    pub fn finish(self) -> (Vec<Event>, Vec<Token>, Vec<ParserError>) {
+    pub fn finish(self) -> (Vec<Event>, Vec<Trivia>, Vec<ParserError>) {
         (self.events, self.tokens.finish(), self.errors)
     }
 
     /// Get the current token kind of the parser
+    #[inline]
     pub fn cur(&self) -> JsSyntaxKind {
         self.tokens.current()
     }
 
+    #[inline]
     pub fn cur_range(&self) -> TextRange {
         self.tokens.current_range()
     }
 
     /// Look ahead at a token and get its kind, **The max lookahead is 4**.
+    #[inline]
     pub fn nth(&mut self, n: usize) -> JsSyntaxKind {
         self.tokens.nth(n)
     }
@@ -170,41 +175,35 @@ impl<'s> Parser<'s> {
     }
 
     /// Check if a token lookahead is something, `n` must be smaller or equal to `4`
+    #[inline]
     pub fn nth_at(&mut self, n: usize, kind: JsSyntaxKind) -> bool {
         self.nth(n) == kind
     }
 
     pub fn last(&self) -> Option<JsSyntaxKind> {
-        self.tokens.last_token().map(|t| t.kind())
+        self.last_token_event_pos.map(|pos| match self.events[pos] {
+            Event::Token { kind, .. } => kind,
+            _ => unreachable!(),
+        })
     }
 
     pub fn last_range(&self) -> Option<TextRange> {
-        self.tokens.last_token().map(|t| t.range())
+        self.last_token_event_pos.map(|pos| match self.events[pos] {
+            Event::Token { range, .. } => range,
+            _ => unreachable!(),
+        })
     }
 
     /// Consume the next token if `kind` matches.
+    #[inline]
     pub fn eat(&mut self, kind: JsSyntaxKind) -> bool {
         if !self.at(kind) {
             return false;
         }
-        self.do_bump(kind);
-        true
-    }
 
-    /// Eats a keyword that doesn't allow unicode escape characters
-    pub fn eat_keyword(&mut self, kind: JsSyntaxKind, name: &str) -> bool {
-        if self.at(kind) && self.cur_src() != name {
-            self.error(
-                self.err_builder(&format!(
-                    "'{name}' keyword cannot contain escape character."
-                ))
-                .primary(self.cur_range(), ""),
-            );
-            self.bump_remap(ERROR_TOKEN);
-            true
-        } else {
-            self.eat(kind)
-        }
+        self.do_bump(kind, LexContext::Regular);
+
+        true
     }
 
     /// Starts a new node in the syntax tree. All nodes and tokens
@@ -217,35 +216,46 @@ impl<'s> Parser<'s> {
     }
 
     /// Tests if there's a line break before the nth token.
+    #[inline]
     pub fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
         self.tokens.has_nth_preceding_line_break(n)
     }
 
     /// Tests if there's a line break before the current token (between the last and current)
+    #[inline]
     pub fn has_preceding_line_break(&self) -> bool {
         self.tokens.has_preceding_line_break()
     }
 
     /// Consume the next token if `kind` matches.
+    #[inline]
     pub fn bump(&mut self, kind: JsSyntaxKind) {
-        assert!(
-            self.eat(kind),
+        self.bump_with_context(kind, LexContext::Regular)
+    }
+
+    #[inline]
+    pub fn bump_with_context(&mut self, kind: JsSyntaxKind, context: LexContext) {
+        assert_eq!(
+            kind,
+            self.cur(),
             "expected {:?} but at {:?}",
             kind,
             self.cur()
         );
+
+        self.do_bump(kind, context);
     }
 
     /// Consume any token but cast it as a different kind
     pub fn bump_remap(&mut self, kind: JsSyntaxKind) {
-        self.do_bump(kind)
+        self.do_bump(kind, LexContext::Regular)
     }
 
     /// Advances the parser by one token
     pub fn bump_any(&mut self) {
         let kind = self.nth(0);
         assert_ne!(kind, EOF);
-        self.do_bump(kind)
+        self.do_bump(kind, LexContext::Regular)
     }
 
     /// Make a new error builder with `error` severity
@@ -282,11 +292,30 @@ impl<'s> Parser<'s> {
         kinds.contains(self.cur())
     }
 
-    fn do_bump(&mut self, kind: JsSyntaxKind) {
-        let diagnostics = self.tokens.bump();
+    pub(super) fn do_bump(&mut self, kind: JsSyntaxKind, context: LexContext) {
+        let kind = if kind.is_keyword() && self.tokens.has_unicode_escape() {
+            self.error(
+                self.err_builder(&format!(
+                    "'{}' keyword cannot contain escape character.",
+                    kind.to_string().expect("to return a value for a keyword")
+                ))
+                .primary(self.cur_range(), ""),
+            );
+            ERROR_TOKEN
+        } else {
+            kind
+        };
+
+        let range = self.cur_range();
+        let diagnostics = self.tokens.bump(context);
         self.errors.extend(diagnostics);
 
-        self.push_event(Event::Token { kind });
+        self.push_token(kind, range);
+    }
+
+    pub(super) fn push_token(&mut self, kind: JsSyntaxKind, range: TextRange) {
+        self.last_token_event_pos = Some(self.events.len());
+        self.push_event(Event::Token { kind, range });
     }
 
     fn push_event(&mut self, event: Event) {
@@ -311,24 +340,14 @@ impl<'s> Parser<'s> {
         }
     }
 
-    /// Expects a keyword (doesn't allow unicode escape sequence).
-    pub fn expect_keyword(&mut self, kind: JsSyntaxKind, name: &str) -> bool {
-        if !self.eat_keyword(kind, name) {
-            self.error(expected_token(kind));
-            false
-        } else {
-            true
-        }
-    }
+    pub fn re_lex(&mut self, mode: ReLexContext) -> JsSyntaxKind {
+        let LexerReturn { kind, diagnostic } = self.tokens.re_lex(mode);
 
-    pub fn re_lex(&mut self, mode: LexMode) -> JsSyntaxKind {
-        let mut lex_return = self.tokens.re_lex(mode);
-
-        if let Some(diagnostic) = lex_return.take_diagnostic() {
+        if let Some(diagnostic) = diagnostic {
             self.errors.push(*diagnostic);
         }
 
-        lex_return.kind()
+        kind
     }
 
     /// Rewind the parser back to a previous position in time
@@ -338,8 +357,10 @@ impl<'s> Parser<'s> {
             event_pos,
             errors_pos,
             state,
+            last_token_pos,
         } = checkpoint;
         self.tokens.rewind(token_source);
+        self.last_token_event_pos = last_token_pos;
         self.drain_events(self.cur_event_pos() - event_pos);
         self.errors.truncate(errors_pos);
         self.state.restore(state)
@@ -350,6 +371,7 @@ impl<'s> Parser<'s> {
     pub fn checkpoint(&self) -> Checkpoint {
         Checkpoint {
             token_source: self.tokens.checkpoint(),
+            last_token_pos: self.last_token_event_pos,
             event_pos: self.cur_event_pos(),
             errors_pos: self.errors.len(),
             state: self.state.checkpoint(),
@@ -383,11 +405,6 @@ impl<'s> Parser<'s> {
         self.events.truncate(self.events.len() - amount);
     }
 
-    /// Get the index of the current token (in the final list of tokens)
-    pub fn cur_token_index(&self) -> usize {
-        self.tokens.cur_token_idx()
-    }
-
     /// Make a new error builder with warning severity
     pub fn warning_builder(&self, message: &str) -> Diagnostic {
         Diagnostic::warning(self.file_id, "SyntaxError", message)
@@ -407,12 +424,14 @@ impl<'s> Parser<'s> {
     }
 
     pub(crate) fn bump_multiple(&mut self, amount: u8, kind: JsSyntaxKind) {
+        let mut range = self.cur_range();
         for _ in 0..amount {
-            let diagnostics = self.tokens.bump();
+            range = range.cover(self.cur_range());
+            let diagnostics = self.tokens.bump(LexContext::Regular);
             self.errors.extend(diagnostics);
         }
 
-        self.push_event(Event::MultipleTokens { amount, kind });
+        self.push_token(kind, range);
     }
 
     /// Whether the code we are parsing is a module
@@ -643,6 +662,7 @@ impl CompletedMarker {
 pub struct Checkpoint {
     pub(super) event_pos: usize,
     errors_pos: usize,
+    last_token_pos: Option<usize>,
     state: ParserStateCheckpoint,
     pub(super) token_source: TokenSourceCheckpoint,
 }

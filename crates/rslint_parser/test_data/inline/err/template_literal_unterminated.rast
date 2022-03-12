@@ -27,11 +27,7 @@ JsModule {
                                                 },
                                                 r_curly_token: R_CURLY@14..15 "}" [] [],
                                             },
-                                            JsUnknown {
-                                                items: [
-                                                    ERROR_TOKEN@15..20 " bar\n" [] [],
-                                                ],
-                                            },
+                                            ERROR_TOKEN@15..20 " bar\n" [] [],
                                         ],
                                     },
                                 ],
@@ -69,8 +65,7 @@ JsModule {
                       0: JS_REFERENCE_IDENTIFIER@11..14
                         0: IDENT@11..14 "foo" [] []
                     2: R_CURLY@14..15 "}" [] []
-                  1: JS_UNKNOWN@15..20
-                    0: ERROR_TOKEN@15..20 " bar\n" [] []
+                  1: ERROR_TOKEN@15..20 " bar\n" [] []
       1: (empty)
   3: EOF@20..20 "" [] []
 --

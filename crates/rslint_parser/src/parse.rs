@@ -1,6 +1,6 @@
 //! Utilities for high level parsing of js code.
 
-use crate::token_source::Token;
+use crate::token_source::Trivia;
 use crate::*;
 use rome_js_syntax::{AstNode, JsAnyRoot, JsExpressionSnipped, JsModule, JsScript, SyntaxNode};
 use rslint_errors::Severity;
@@ -111,7 +111,7 @@ fn parse_common(
     text: &str,
     file_id: usize,
     source_type: SourceType,
-) -> (Vec<Event>, Vec<ParserError>, Vec<Token>) {
+) -> (Vec<Event>, Vec<ParserError>, Vec<Trivia>) {
     let mut parser = crate::Parser::new(text, file_id, source_type);
     crate::syntax::program::parse(&mut parser);
 
@@ -158,63 +158,6 @@ pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
     )
     .cast::<JsScript>()
     .unwrap()
-}
-
-/// Lossly parse text into a [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
-/// Or turned into a typed [`Script`](Script) with [`tree`](Parse::tree).
-///
-/// Unlike [`parse_text`], the final parse result includes no whitespace, it does however include errors.
-///
-/// Note however that the ranges and text of nodes still includes whitespace! Therefore you should trim text before rendering it.
-/// The [`util`](crate::util) module has utility functions for dealing with this easily.
-///
-/// ```
-/// use rslint_parser::parse_script_lossy;
-/// use rome_js_syntax::{JsComputedMemberExpression, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
-///
-/// let parse = parse_script_lossy("foo.bar[2]", 0);
-/// // Parse returns a JS Root with two children, an empty list of directives and the list of statements, let's get the statements
-/// let stmt = parse.syntax().children().nth(1).unwrap();
-/// // The untyped syntax node of `foo.bar[2]`, the root node is `Script`.
-/// let untyped_expr_node = stmt.first_child().unwrap();
-///
-/// // SyntaxNodes can be turned into a nice string representation.
-/// println!("{:#?}", untyped_expr_node);
-///
-/// // You can then cast syntax nodes into a typed AST node.
-/// let typed_ast_node = JsComputedMemberExpression::cast(untyped_expr_node.first_child().unwrap()).unwrap();
-///
-/// // Everything on every ast node is optional because of error recovery.
-/// let prop = typed_ast_node.member().unwrap();
-///
-/// // You can then go back to an untyped SyntaxNode and get its range, text, parents, children, etc.
-/// assert_eq!(prop.syntax().text(), "2");
-///
-/// // Util has a function for yielding all tokens of a node.
-/// let tokens = untyped_expr_node.tokens();
-///
-/// // End result does not include whitespace because the parsing is lossy in this case
-/// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
-/// ```
-pub fn parse_script_lossy(text: &str, file_id: usize) -> Parse<JsScript> {
-    let (events, errors, tokens) = parse_common(
-        text,
-        file_id,
-        SourceType::js_module().with_module_kind(ModuleKind::Script),
-    );
-    let mut tree_sink = LossyTreeSink::new(text, &tokens);
-    crate::process(&mut tree_sink, events, errors);
-    let (green, parse_errors) = tree_sink.finish();
-    Parse::new_script(green, parse_errors)
-}
-
-/// Same as [`parse_text_lossy`] but configures the parser to parse an ECMAScript module instead of a Script
-pub fn parse_module_lossy(text: &str, file_id: usize) -> Parse<JsModule> {
-    let (events, errors, tokens) = parse_common(text, file_id, SourceType::js_module());
-    let mut tree_sink = LossyTreeSink::new(text, &tokens);
-    crate::process(&mut tree_sink, events, errors);
-    let (green, parse_errors) = tree_sink.finish();
-    Parse::new_module(green, parse_errors)
 }
 
 /// Same as [`parse_text`] but configures the parser to parse an ECMAScript module instead of a script

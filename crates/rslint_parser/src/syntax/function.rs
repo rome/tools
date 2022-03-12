@@ -180,11 +180,11 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     if in_async {
         // test_err function_escaped_async
         // void \u0061sync function f(){}
-        p.eat_keyword(T![async], "async");
+        p.eat(T![async]);
         flags |= SignatureFlags::ASYNC;
     }
 
-    p.expect_keyword(T![function], "function");
+    p.expect(T![function]);
     let generator_range = if p.eat(T![*]) {
         flags |= SignatureFlags::GENERATOR;
         p.last_range()
@@ -351,7 +351,7 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
         p.bump(T![async]);
     }
 
-    p.expect_keyword(T![function], "function");
+    p.expect(T![function]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
@@ -450,7 +450,7 @@ fn try_parse_parenthesized_arrow_function_head(
 
     // test_err arrow_escaped_async
     // \u0061sync () => {}
-    let flags = if p.eat_keyword(T![async], "async") {
+    let flags = if p.eat(T![async]) {
         SignatureFlags::ASYNC
     } else {
         SignatureFlags::empty()
@@ -475,7 +475,7 @@ fn try_parse_parenthesized_arrow_function_head(
     )
     .or_add_diagnostic(p, expected_parameters);
 
-    if p.tokens.last_token().map(|t| t.kind()) != Some(T![')']) && ambiguity.is_disallowed() {
+    if p.last() != Some(T![')']) && ambiguity.is_disallowed() {
         return Err(m);
     }
 
@@ -697,7 +697,7 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
     let is_async = p.at(T![async]) && is_nth_at_identifier_binding(p, 1);
 
     let flags = if is_async {
-        p.eat_keyword(T![async], "async");
+        p.eat(T![async]);
         SignatureFlags::ASYNC
     } else {
         SignatureFlags::empty()
@@ -846,7 +846,7 @@ pub(crate) fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
     }
 
     let parameter = p.start();
-    p.expect_keyword(T![this], "this");
+    p.expect(T![this]);
     parse_ts_type_annotation(p).ok();
     Present(parameter.complete(p, TS_THIS_PARAMETER))
 }

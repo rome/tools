@@ -159,41 +159,6 @@ JsModule {
       1: (empty)
   3: EOF@105..106 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:1:1
-  │
-1 │ eval = 0
-  │ ^^^^
-
---
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:2:1
-  │
-2 │ eval ??= 2
-  │ ^^^^
-
---
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:3:1
-  │
-3 │ eval *= 4
-  │ ^^^^
-
---
-error[SyntaxError]: Illegal use of `arguments` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:4:1
-  │
-4 │ arguments = "foo"
-  │ ^^^^^^^^^
-
---
-error[SyntaxError]: Illegal use of `arguments` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:5:1
-  │
-5 │ arguments ||= "baz"
-  │ ^^^^^^^^^
-
---
 error[SyntaxError]: Invalid assignment to `"baz"
 ({ eval } = o)
 ({ foo: { eval }})`

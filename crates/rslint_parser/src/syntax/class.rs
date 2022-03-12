@@ -184,10 +184,10 @@ impl From<ClassKind> for JsSyntaxKind {
 // test ts ts_class_named_abstract_is_valid_in_ts
 // class abstract {}
 fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
-    let is_abstract = p.eat_keyword(T![abstract], "abstract");
+    let is_abstract = p.eat(T![abstract]);
 
     let class_token_range = p.cur_range();
-    p.expect_keyword(T![class], "class");
+    p.expect(T![class]);
 
     let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_range())));
 
@@ -340,7 +340,7 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     let extends_end = p.cur_range().end();
-    p.expect_keyword(T![extends], "extends");
+    p.expect(T![extends]);
 
     if parse_extends_expression(p).is_absent() {
         p.error(
@@ -549,7 +549,7 @@ fn parse_class_member_impl(
     member_marker: Marker,
     modifiers: &mut ClassMemberModifiers,
 ) -> ParsedSyntax {
-    let start_token_pos = p.cur_token_index();
+    let start_token_pos = p.tokens.position();
     let generator_range = p.cur_range();
 
     // Seems like we're at a generator method
@@ -578,7 +578,7 @@ fn parse_class_member_impl(
         && !p.has_nth_preceding_line_break(1)
     {
         let async_range = p.cur_range();
-        p.expect_keyword(T![async], "async");
+        p.expect(T![async]);
 
         let mut flags = SignatureFlags::ASYNC;
 
@@ -649,9 +649,9 @@ fn parse_class_member_impl(
     if matches!(p.cur(), T![get] | T![set]) && is_at_class_member_name(p, 1) {
         let is_getter = p.at(T![get]);
         if is_getter {
-            p.expect_keyword(T![get], "get");
+            p.expect(T![get]);
         } else {
-            p.expect_keyword(T![set], "set");
+            p.expect(T![set]);
         }
 
         // So we've seen a get that now must be followed by a getter/setter name
@@ -810,7 +810,7 @@ fn parse_class_member_impl(
             // test_err block_stmt_in_class
             // class S{{}}
             debug_assert_eq!(
-                p.cur_token_index(),
+                p.tokens.position(),
                 start_token_pos,
                 "Parser shouldn't be progressing when returning Absent"
             );
@@ -852,7 +852,7 @@ fn parse_static_initialization_block_class_member(
         modifiers.validate_and_complete(p, JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER);
     }
 
-    p.expect_keyword(T![static], "static");
+    p.expect(T![static]);
     p.expect(T!['{']);
     p.with_state(EnterClassStaticInitializationBlock, |p| {
         parse_statements(p, true)
@@ -1614,15 +1614,15 @@ fn parse_modifier(p: &mut Parser, constructor_parameter: bool) -> Option<ClassMe
         return None;
     }
 
-    let (modifier_kind, name) = match p.cur() {
-        T![declare] => (ModifierKind::Declare, "declare"),
-        T![public] => (ModifierKind::Public, "public"),
-        T![protected] => (ModifierKind::Protected, "protected"),
-        T![private] => (ModifierKind::Private, "private"),
-        T![override] => (ModifierKind::Override, "override"),
-        T![static] => (ModifierKind::Static, "static"),
-        T![readonly] => (ModifierKind::Readonly, "readonly"),
-        T![abstract] => (ModifierKind::Abstract, "abstract"),
+    let modifier_kind = match p.cur() {
+        T![declare] => ModifierKind::Declare,
+        T![public] => ModifierKind::Public,
+        T![protected] => ModifierKind::Protected,
+        T![private] => ModifierKind::Private,
+        T![override] => ModifierKind::Override,
+        T![static] => ModifierKind::Static,
+        T![readonly] => ModifierKind::Readonly,
+        T![abstract] => ModifierKind::Abstract,
         _ => {
             return None;
         }
@@ -1630,7 +1630,7 @@ fn parse_modifier(p: &mut Parser, constructor_parameter: bool) -> Option<ClassMe
 
     let m = p.start();
     let range = p.cur_range();
-    p.expect_keyword(p.cur(), name);
+    p.bump_any();
     m.complete(p, modifier_kind.as_syntax_kind());
 
     Some(ClassMemberModifier {

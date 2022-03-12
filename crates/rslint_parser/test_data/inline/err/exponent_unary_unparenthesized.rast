@@ -224,7 +224,7 @@ error[SyntaxError]: unparenthesized unary expression can't appear on the left-ha
   ┌─ exponent_unary_unparenthesized.js:1:1
   │
 1 │ delete a.b ** 2;
-  │ ^^^^^^^^^^ --
+  │ ^^^^^^^^^  --
 
 --
 error[SyntaxError]: unparenthesized unary expression can't appear on the left-hand side of '**'

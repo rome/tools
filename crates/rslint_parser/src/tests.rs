@@ -14,13 +14,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-outer: while(true) {
-    while (true) {
-      continue;
-    continue outer;
-   }
-  continue
-}
+e[`${t} =>`]=n
     "#;
 
     let module = parse(src, 0, SourceType::ts());
