@@ -171,10 +171,10 @@ impl<'l> TokenSource<'l> {
             return Some(*lookahead);
         }
 
-        let mut iter = self.lexer.lookahead().skip(self.lookahead_offset);
+        let iter = self.lexer.lookahead().skip(self.lookahead_offset);
 
         let mut remaining = n - self.non_trivia_lookahead.len();
-        while let Some(item) = iter.next() {
+        for item in iter {
             self.lookahead_offset += 1;
 
             if !item.kind().is_trivia() {
@@ -277,7 +277,7 @@ impl TokenSourceCheckpoint {
         self.lexer.current_start()
     }
 
-    pub(crate) fn trivia_position<'s>(&self) -> usize {
+    pub(crate) fn trivia_position(&self) -> usize {
         self.trivia_len as usize
     }
 }

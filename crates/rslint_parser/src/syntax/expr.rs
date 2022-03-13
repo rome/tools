@@ -1460,6 +1460,7 @@ pub(crate) fn parse_template_elements<P>(
                     // Seems there's more. For example a `${a a}`. We must eat all tokens away to avoid a panic because of an unexpected token
                     let _ =  ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p);
                     if !p.at(T!['}']) {
+                        e.complete(p, element_kind);
                         // Failed to fully recover, unclear where we are now, exit
                         break;
                     }
