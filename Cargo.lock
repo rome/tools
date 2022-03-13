@@ -1294,7 +1294,6 @@ name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "once_cell",
  "rome_js_syntax",
  "rslint_errors",
  "rslint_parser",
