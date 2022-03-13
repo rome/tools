@@ -683,7 +683,7 @@ impl<'src> Lexer<'src> {
                     if is_id_continue(c) {
                         Some((c, true))
                     } else {
-                        self.position -= 1;
+                        self.position = start;
                         None
                     }
                 } else {
