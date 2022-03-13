@@ -7,6 +7,7 @@ use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
+use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
 use crate::parser::{ParserProgress, RecoveryResult};
 use crate::syntax::assignment::{
     expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
@@ -1897,7 +1898,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
 #[derive(Default)]
 struct DeleteExpressionRewriter {
-    stack: Vec<(Marker, JsSyntaxKind)>,
+    stack: Vec<(RewriteMarker, JsSyntaxKind)>,
     result: Option<CompletedMarker>,
     /// Set to true immediately after the rewriter exits an identifier expression
     exited_ident_expr: Option<TextRange>,
@@ -1908,14 +1909,14 @@ struct DeleteExpressionRewriter {
 }
 
 impl RewriteParseEvents for DeleteExpressionRewriter {
-    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
+    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut RewriteParser) {
         self.stack.push((p.start(), kind));
         self.exited_ident_expr.take();
         self.exited_private_name = false;
         self.exited_private_member_expr.take();
     }
 
-    fn finish_node(&mut self, p: &mut Parser) {
+    fn finish_node(&mut self, p: &mut RewriteParser) {
         let (m, kind) = self.stack.pop().expect("stack depth mismatch");
         let node = m.complete(p, kind);
 
@@ -1936,7 +1937,7 @@ impl RewriteParseEvents for DeleteExpressionRewriter {
             self.exited_private_name = kind == JS_PRIVATE_NAME;
         }
 
-        self.result = Some(node);
+        self.result = Some(node.into());
     }
 }
 

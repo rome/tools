@@ -7,7 +7,9 @@ pub(crate) mod parse_error;
 mod parse_lists;
 mod parse_recovery;
 mod parsed_syntax;
+pub(crate) mod rewrite_parser;
 pub(crate) mod single_token_parse_recovery;
+
 use rome_js_syntax::{
     JsSyntaxKind::{self, EOF, ERROR_TOKEN},
     TextRange,
@@ -121,7 +123,7 @@ impl ParserProgress {
 ///
 /// ```
 pub struct Parser<'s> {
-    pub file_id: usize,
+    file_id: usize,
     pub(super) tokens: TokenSource<'s>,
     pub(super) events: Vec<Event>,
     pub(super) state: ParserState,
@@ -313,7 +315,7 @@ impl<'s> Parser<'s> {
         self.push_token(kind, range);
     }
 
-    pub(super) fn push_token(&mut self, kind: JsSyntaxKind, range: TextRange) {
+    fn push_token(&mut self, kind: JsSyntaxKind, range: TextRange) {
         self.last_token_event_pos = Some(self.events.len());
         self.push_event(Event::Token { kind, range });
     }
@@ -324,7 +326,7 @@ impl<'s> Parser<'s> {
 
     /// Get the source code of the parser's current token.
     ///
-    /// # Panics
+    /// # pu
     /// This method panics if the token range and source code range mismatch
     pub fn cur_src(&self) -> &str {
         &self.tokens.source()[self.cur_range()]
@@ -474,7 +476,20 @@ impl Marker {
     /// Finishes the syntax tree node and assigns `kind` to it,
     /// and mark the create a `CompletedMarker` for possible future
     /// operation like `.precede()` to deal with forward_parent.
-    pub fn complete(mut self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
+    pub fn complete(self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
+        let mut end_pos = p.last_range().map(|t| t.end()).unwrap_or_default();
+        if end_pos < self.start {
+            end_pos = p.cur_range().end();
+        }
+        self.complete_at(p, kind, end_pos)
+    }
+
+    fn complete_at(
+        mut self,
+        p: &mut Parser,
+        kind: JsSyntaxKind,
+        end_pos: TextSize,
+    ) -> CompletedMarker {
         self.bomb.defuse();
         let idx = self.pos as usize;
         match p.events[idx] {
@@ -486,11 +501,6 @@ impl Marker {
             _ => unreachable!(),
         }
         let finish_pos = p.events.len() as u32;
-
-        let mut end_pos = p.last_range().map(|t| t.end()).unwrap_or_default();
-        if end_pos < self.start {
-            end_pos = p.cur_range().end();
-        }
 
         assert!(end_pos >= self.start);
         p.push_event(Event::Finish { end: end_pos });

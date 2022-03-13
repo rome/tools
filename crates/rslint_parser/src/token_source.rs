@@ -223,6 +223,11 @@ impl<'l> TokenSource<'l> {
         if self.current() == EOF {
             vec![]
         } else {
+            if !context.is_regular() {
+                self.lookahead_offset = 0;
+                self.non_trivia_lookahead.clear();
+            }
+
             self.next_non_trivia_token(context, false)
         }
     }
@@ -268,11 +273,11 @@ pub struct TokenSourceCheckpoint {
 
 impl TokenSourceCheckpoint {
     /// byte offset in the source text
-    pub fn offset(&self) -> TextSize {
-        self.lexer.position()
+    pub(crate) fn current_start(&self) -> TextSize {
+        self.lexer.current_start()
     }
 
-    pub fn trivia<'s>(&self, token_source: &'s TokenSource) -> &'s [Trivia] {
-        &token_source.trivia[self.trivia_len as usize..]
+    pub(crate) fn trivia_position<'s>(&self) -> usize {
+        self.trivia_len as usize
     }
 }

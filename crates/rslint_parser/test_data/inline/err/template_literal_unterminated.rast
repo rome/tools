@@ -70,10 +70,12 @@ JsModule {
   3: EOF@20..20 "" [] []
 --
 error: unterminated template literal
-  ┌─ template_literal_unterminated.js:2:1
-  │
-2 │ 
-  │ ^
+  ┌─ template_literal_unterminated.js:1:16
+  │  
+1 │   let a = `${foo} bar
+  │ ┌────────────────^
+2 │ │ 
+  │ └^
 
 --
 error[SyntaxError]: Invalid template literal

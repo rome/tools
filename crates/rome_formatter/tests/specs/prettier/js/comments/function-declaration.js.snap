@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: function-declaration.js
-
 ---
 # Input
 ```js
@@ -143,15 +141,7 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
   ┌─ function-declaration.js:6:3
   │
 6 │   <div />
-  │   ^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-  ┌─ function-declaration.js:6:9
-  │
-6 │   <div />
-  │        -^ But this operator was encountered instead
-  │        │ 
-  │        This operator requires a right hand side value
+  │   ^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: expected an expression but instead found ')'
   ┌─ function-declaration.js:7:1

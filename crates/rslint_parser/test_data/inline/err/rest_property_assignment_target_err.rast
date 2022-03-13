@@ -286,7 +286,7 @@ error[SyntaxError]: rest element cannot have a default
   ┌─ rest_property_assignment_target_err.js:2:9
   │
 2 │ ({ ...c = "default" } = a);
-  │    -----^^^^^^^^^^^^ Remove the default value here
+  │    ---- ^^^^^^^^^^^^ Remove the default value here
   │    │     
   │    Rest element
 
@@ -302,16 +302,15 @@ error[SyntaxError]: rest element must be the last element
   ┌─ rest_property_assignment_target_err.js:4:4
   │
 4 │ ({ ...rest, other_assignment } = a);
-  │    ^^^^^^^^^^^ Move the rest element to the end of the pattern, right before the closing '}'
+  │    ^^^^^^^ Move the rest element to the end of the pattern, right before the closing '}'
 
 --
 error[SyntaxError]: rest element may not have a trailing comma
   ┌─ rest_property_assignment_target_err.js:5:11
   │
 5 │ ({ ...rest, } = a);
-  │    -------^---
-  │    │      │
-  │    │      Remove the trailing comma here
+  │    -------^ Remove the trailing comma here
+  │    │       
   │    Rest element
 
 --

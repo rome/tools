@@ -261,42 +261,6 @@ fn empty_string() {
 }
 
 #[test]
-fn template_literals() {
-    assert_lex! {
-        "`abcdefg` `abc",
-        BACKTICK:1,
-        TEMPLATE_CHUNK:7,
-        BACKTICK:1,
-        WHITESPACE:1,
-        BACKTICK:1,
-        ERROR_TOKEN:3,
-    }
-
-    assert_lex! {
-        "`${a} a`",
-        BACKTICK:1,
-        DOLLAR_CURLY:2,
-        IDENT:1,
-        R_CURLY:1,
-        TEMPLATE_CHUNK:2,
-        BACKTICK:1
-    }
-
-    assert_lex! {
-        "`${a} b ${b}`",
-        BACKTICK:1,
-        DOLLAR_CURLY:2,
-        IDENT:1,
-        R_CURLY:1,
-        TEMPLATE_CHUNK:3,
-        DOLLAR_CURLY:2,
-        IDENT:1,
-        R_CURLY:1,
-        BACKTICK:1
-    }
-}
-
-#[test]
 fn simple_string() {
     assert_lex! {
         r#"'abcdefghijklmnopqrstuvwxyz123456789\'10🦀'"#,

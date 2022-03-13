@@ -7,8 +7,8 @@ use rome_js_syntax::JsSyntaxKind::{self, *};
 use rome_rowan::TextRange;
 use rslint_lexer::TextSize;
 
+use crate::parser::rewrite_parser::{RewriteParser, RewriteToken};
 use crate::parser::Checkpoint;
-use crate::token_source::Trivia;
 
 /// Events emitted by the Parser, these events are later
 /// made into a syntax tree with `process` into TreeSink.
@@ -109,45 +109,21 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
 
 struct RewriteParseEventsTreeSink<'r, 'p, T> {
     reparse: &'r mut T,
-    parser: &'r mut Parser<'p>,
-    offset: TextSize,
-    trivia: &'r [Trivia],
-}
-
-impl<T> RewriteParseEventsTreeSink<'_, '_, T> {
-    fn skip_trivia(&mut self, trailing: bool) {
-        let mut processed = 0;
-        for trivia in self.trivia {
-            if trailing != trivia.trailing() || self.offset != trivia.offset() {
-                break;
-            }
-
-            processed += 1;
-            self.offset += trivia.len();
-        }
-
-        self.trivia = &self.trivia[processed..];
-    }
+    parser: RewriteParser<'r, 'p>,
 }
 
 impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 'p, T> {
     fn token(&mut self, kind: JsSyntaxKind, length: TextSize) {
-        self.skip_trivia(false);
-
-        let range = TextRange::at(self.offset, length);
-        let new_kind = self.reparse.token(kind, self.parser);
-        self.parser.push_token(new_kind, range);
-
-        self.skip_trivia(true);
+        self.reparse
+            .token(RewriteToken::new(kind, length), &mut self.parser);
     }
 
     fn start_node(&mut self, kind: JsSyntaxKind) {
-        // ISSUE: `complete` and `start()` use `cur_pos()` of the `tokens` source.
-        self.reparse.start_node(kind, self.parser);
+        self.reparse.start_node(kind, &mut self.parser);
     }
 
     fn finish_node(&mut self) {
-        self.reparse.finish_node(self.parser);
+        self.reparse.finish_node(&mut self.parser);
     }
 
     fn errors(&mut self, _errors: Vec<ParserError>) {}
@@ -155,28 +131,23 @@ impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 
 
 /// Implement this trait if you want to change the tree structure
 /// from already parsed events.
-pub trait RewriteParseEvents {
+pub(crate) trait RewriteParseEvents {
     /// Called for a started node in the original tree
-    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut Parser);
+    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut RewriteParser);
 
     /// Called for a finished node in the original tree
-    fn finish_node(&mut self, p: &mut Parser);
+    fn finish_node(&mut self, p: &mut RewriteParser);
 
     /// Called for every token
-    fn token(&mut self, kind: JsSyntaxKind, _p: &mut Parser) -> JsSyntaxKind {
-        kind
-    }
-
-    /// Called for tokens spawning multiple lexer tokens
-    fn multiple_token(&mut self, amount: u8, kind: JsSyntaxKind, p: &mut Parser) {
-        p.bump_multiple(amount, kind)
+    fn token(&mut self, token: RewriteToken, p: &mut RewriteParser) {
+        p.bump(token)
     }
 }
 
 /// Allows rewriting a super grammar to a sub grammar by visiting each event emitted after the checkpoint.
 /// Useful if a node turned out to be of a different kind its subtree must be re-shaped
 /// (adding new nodes, dropping sub nodes, etc.).
-pub fn rewrite_events<T: RewriteParseEvents>(
+pub(crate) fn rewrite_events<T: RewriteParseEvents>(
     rewriter: &mut T,
     checkpoint: Checkpoint,
     p: &mut Parser,
@@ -186,15 +157,10 @@ pub fn rewrite_events<T: RewriteParseEvents>(
     // error that applied to the old grammar also applies to the sub-grammar.
     let events: Vec<_> = p.events.split_off(checkpoint.event_pos + 1);
 
-    // TODO: Ideally don't rewind. But then difficulty that `push_token` requires range
-    let offset = checkpoint.token_source.offset();
-    let trivia = checkpoint.token_source.trivia(&p.tokens).to_vec();
-
     let mut sink = RewriteParseEventsTreeSink {
-        parser: p,
+        parser: RewriteParser::new(p, checkpoint.token_source),
         reparse: rewriter,
-        offset,
-        trivia: &trivia,
     };
     process(&mut sink, events, Vec::default());
+    sink.parser.finish();
 }

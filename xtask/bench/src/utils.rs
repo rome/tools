@@ -1,6 +1,7 @@
 use crate::err_to_string;
 use ansi_rgb::{red, Foreground};
-use std::path::PathBuf;
+use std::env;
+use std::path::Path;
 use std::str::FromStr;
 
 pub fn get_code(lib: &str) -> Result<(String, String), String> {
@@ -12,8 +13,14 @@ pub fn get_code(lib: &str) -> Result<(String, String), String> {
         .last()
         .ok_or_else(|| "lib url has no segments".to_string())?;
 
-    let mut file = PathBuf::from_str("target").map_err(err_to_string)?;
-    file.push(filename);
+    let file = Path::new(
+        &env::var("CARGO_MANIFEST_DIR").unwrap_or_else(|_| env!("CARGO_MANIFEST_DIR").to_owned()),
+    )
+    .ancestors()
+    .nth(2)
+    .unwrap()
+    .join("target")
+    .join(filename);
 
     match std::fs::read_to_string(&file) {
         Ok(code) => {

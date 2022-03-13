@@ -1,4 +1,5 @@
 use crate::event::{rewrite_events, RewriteParseEvents};
+use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser, RewriteToken};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{
@@ -11,7 +12,7 @@ use crate::syntax::js_parse_error::{
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Checkpoint, CompletedMarker, Marker, Parser};
+use crate::{Checkpoint, CompletedMarker, Parser};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rslint_errors::Diagnostic;
 
@@ -360,7 +361,7 @@ struct ReparseAssignment {
     // Index 0: Re-mapped kind of the node
     // Index 1: Started marker. A `None` marker means that this node should be dropped
     //          from the re-written tree
-    parents: Vec<(JsSyntaxKind, Option<Marker>)>,
+    parents: Vec<(JsSyntaxKind, Option<RewriteMarker>)>,
     // Stores the completed assignment node (valid or invalid).
     result: Option<CompletedMarker>,
     // Tracks if the visitor is still inside an assignment
@@ -383,7 +384,7 @@ impl ReparseAssignment {
 ///   Validates that the operator isn't `?.` .
 /// * Converts identifier expressions to identifier assignment, drops the inner reference identifier
 impl RewriteParseEvents for ReparseAssignment {
-    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
+    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut RewriteParser) {
         if !self.inside_assignment {
             self.parents.push((kind, Some(p.start())));
             return;
@@ -426,7 +427,7 @@ impl RewriteParseEvents for ReparseAssignment {
         self.parents.push((mapped_kind, Some(p.start())));
     }
 
-    fn finish_node(&mut self, p: &mut Parser) {
+    fn finish_node(&mut self, p: &mut RewriteParser) {
         let (kind, m) = self.parents.pop().unwrap();
 
         if let Some(m) = m {
@@ -437,26 +438,30 @@ impl RewriteParseEvents for ReparseAssignment {
                     // test_err eval_arguments_assignment
                     // eval = "test";
                     // arguments = "test";
-                    let name = p.source(completed.range(p));
-                    if matches!(name, "eval" | "arguments") && p.state.strict().is_some() {
+                    let name = completed.text(p);
+                    if matches!(name, "eval" | "arguments") && p.is_strict_mode() {
                         let error = p
                             .err_builder(&format!(
                                 "Illegal use of `{}` as an identifier in strict mode",
                                 name
                             ))
-                            .primary(p.cur_range(), "");
+                            .primary(completed.range(p), "");
                         p.error(error);
 
                         completed.change_to_unknown(p);
                     }
                 }
                 JS_UNKNOWN_ASSIGNMENT => {
-                    p.error(invalid_assignment_error(p, completed.range(p)));
+                    let range = completed.range(p);
+                    p.error(
+                        p.err_builder(&format!("Invalid assignment to `{}`", completed.text(p)))
+                            .primary(range, "This expression cannot be assigned to"),
+                    );
                 }
                 _ => {}
             }
 
-            self.result = Some(completed);
+            self.result = Some(completed.into());
         }
 
         if TsType::can_cast(kind)
@@ -469,20 +474,20 @@ impl RewriteParseEvents for ReparseAssignment {
         }
     }
 
-    fn token(&mut self, kind: JsSyntaxKind, _p: &mut Parser) -> JsSyntaxKind {
+    fn token(&mut self, token: RewriteToken, p: &mut RewriteParser) {
         let parent = self.parents.last_mut();
 
         if let Some((parent_kind, _)) = parent {
             if matches!(
                 *parent_kind,
                 JS_COMPUTED_MEMBER_ASSIGNMENT | JS_STATIC_MEMBER_ASSIGNMENT
-            ) && kind == T![?.]
+            ) && token.kind == T![?.]
             {
                 *parent_kind = JS_UNKNOWN_ASSIGNMENT
             }
         }
 
-        kind
+        p.bump(token)
     }
 }
 

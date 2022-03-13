@@ -27,8 +27,6 @@ impl<'t> BufferedLexer<'t> {
 
     #[inline(always)]
     pub fn next_token(&mut self, context: LexContext) -> LexerReturn {
-        self.current = None;
-
         if !context.is_regular() {
             self.reset_lookahead();
         } else if let Some(next) = self.lookahead.pop_front() {
@@ -37,6 +35,7 @@ impl<'t> BufferedLexer<'t> {
             return LexerReturn::new(kind, next.diagnostic);
         }
 
+        self.current = None;
         self.inner.next_token(context)
     }
 

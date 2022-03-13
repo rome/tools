@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: issue-3532.js
-
 ---
 # Input
 ```js
@@ -83,21 +81,23 @@ const AspectRatioBox = ({
 }) => (
   <div
     className={`height: 0;
-  overflow: hidden;
-  padding-top: ${props => 100 / props.aspectRatio}
-%;
-  background: white;
-  position: relative;`}
-  >
-    <div>
+overflow: hidden;
+padding - top;
+: $
 {
-  children;
+  (props) => 100 / props.aspectRatio;
 }
-</div>
+%
+background: white;
+position: relative;
+`}
+  >
+    <div>{children}</div>
   </div>
-)
+);
 
 export default AspectRatioBox;
+;
 
 ```
 
@@ -111,45 +111,64 @@ error[SyntaxError]: Invalid assignment to `<div
 31 │ │     className={`height: 0;
    │ └─────────────^ This expression cannot be assigned to
 
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`height: 0;
-  overflow: hidden;
-  padding-top: ${props => 100 / props.aspectRatio'
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`height'
    ┌─ issue-3532.js:31:16
-   │  
-31 │       className={`height: 0;
-   │ ┌────────────────^
-32 │ │   overflow: hidden;
-33 │ │   padding-top: ${props => 100 / props.aspectRatio}%;
-   │ └─────────────────────────────────────────────────^ Expected a property, a shorthand property, a getter, a setter, or a method here
+   │
+31 │     className={`height: 0;
+   │                ^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
-error[SyntaxError]: expected `')'` but instead found `%;
-  background: white;
-  position: relative;`
+error[SyntaxError]: expected `,` but instead found `:`
+   ┌─ issue-3532.js:31:23
+   │
+31 │     className={`height: 0;
+   │                       ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `;`
+   ┌─ issue-3532.js:31:26
+   │
+31 │     className={`height: 0;
+   │                          ^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ issue-3532.js:33:14
+   │
+33 │   padding-top: ${props => 100 / props.aspectRatio}%;
+   │   -----------^
+   │   │          │
+   │   │          An explicit or implicit semicolon is expected here...
+   │   ...Which is required to end this statement
+
+error[SyntaxError]: expected a statement but instead found '%'
    ┌─ issue-3532.js:33:51
+   │
+33 │   padding-top: ${props => 100 / props.aspectRatio}%;
+   │                                                   ^ Expected a statement here
+
+error: unterminated template literal
+   ┌─ issue-3532.js:35:23
    │  
-33 │     padding-top: ${props => 100 / props.aspectRatio}%;
-   │ ┌───────────────────────────────────────────────────^
-34 │ │   background: white;
-35 │ │   position: relative;`}
-   │ └─────────────────────^ unexpected
+35 │     position: relative;`}
+   │ ┌───────────────────────^
+36 │ │   >
+37 │ │     <div>{children}</div>
+38 │ │   </div>
+   · │
+41 │ │ export default AspectRatioBox;
+42 │ │ 
+   │ └^
 
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ issue-3532.js:37:20
-   │
-37 │     <div>{children}</div>
-   │                    ^^^^^ TypeScript only syntax
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ issue-3532.js:38:3
-   │
-38 │   </div>
-   │   ^^^^^ TypeScript only syntax
-
-error[SyntaxError]: expected an expression but instead found ')'
-   ┌─ issue-3532.js:39:1
-   │
-39 │ );
-   │ ^ Expected an expression here
+error[SyntaxError]: Invalid template literal
+   ┌─ issue-3532.js:35:23
+   │  
+35 │     position: relative;`}
+   │ ┌───────────────────────^
+36 │ │   >
+37 │ │     <div>{children}</div>
+38 │ │   </div>
+   · │
+41 │ │ export default AspectRatioBox;
+42 │ │ 
+   │ └^
 
 
 ```

@@ -1730,7 +1730,7 @@ impl<'src> Lexer<'src> {
         match token {
             None => {
                 let err = Diagnostic::error(self.file_id, "", "unterminated template literal")
-                    .primary(self.position..self.position + 1, "");
+                    .primary(start..self.position + 1, "");
                 LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
             }
             Some(token) => match diagnostic {
@@ -1777,8 +1777,8 @@ pub struct LexerCheckpoint {
 }
 
 impl LexerCheckpoint {
-    pub fn position(&self) -> TextSize {
-        self.position
+    pub fn current_start(&self) -> TextSize {
+        self.current_start
     }
 }
 
