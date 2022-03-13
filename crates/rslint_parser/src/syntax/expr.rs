@@ -8,7 +8,7 @@ use super::util::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
-use crate::parser::{ParserProgress, RecoveryResult};
+use crate::parser::{expected_token, ParserProgress, RecoveryResult};
 use crate::syntax::assignment::{
     expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
     AssignmentExprPrecedence,
@@ -1443,6 +1443,7 @@ pub(crate) fn parse_template_elements<P>(
     P: Fn(&mut Parser) -> Option<CompletedMarker>,
 {
     while !p.at(EOF) && !p.at(BACKTICK) {
+        dbg!(p.cur());
         match p.cur() {
             TEMPLATE_CHUNK => {
                 let m = p.start();
@@ -1455,6 +1456,7 @@ pub(crate) fn parse_template_elements<P>(
 
                 parse_element(p);
                 if !p.at(T!['}']) {
+                    p.error(expected_token(T!['}']));
                     // Seems there's more. For example a `${a a}`. We must eat all tokens away to avoid a panic because of an unexpected token
                     let _ =  ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p);
                     if !p.at(T!['}']) {
