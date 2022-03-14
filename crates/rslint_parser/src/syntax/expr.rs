@@ -29,7 +29,6 @@ use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
-use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
 use crate::LanguageVariant;
 use crate::LanguageVariant;
 use crate::ParsedSyntax::{Absent, Present};
@@ -1740,6 +1739,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
     if p.at(T![<]) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         let jsx = Jsx.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
             jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
         });
@@ -1759,6 +1759,9 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 >>>>>>> c53cb537b3 (maybe prefix for checkpointed parsing)
 =======
         let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
+=======
+        let jsx = Jsx.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
+>>>>>>> c87591329d (fixing rebase problems)
             jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
         });
 >>>>>>> 0b3abe5349 (changing jsx to uppercase)

@@ -2,22 +2,19 @@ pub mod jsx_parse_errors;
 
 use rome_js_syntax::JsSyntaxKind::*;
 
-<<<<<<< HEAD
 use crate::syntax::expr::{parse_expression, parse_name, ExpressionContext};
 use crate::syntax::js_parse_error::{expected_expression, expected_identifier};
 use crate::syntax::jsx::jsx_parse_errors::{jsx_expected_attribute, jsx_expected_attribute_value};
+use crate::{
+    parser::RecoveryResult, Checkpoint, Marker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
+};
 use crate::{
     parser::RecoveryResult, Checkpoint, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
 };
 use crate::{Absent, Present};
 use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
-=======
-use crate::{
-    parser::RecoveryResult, Checkpoint, Marker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
-};
 
 use self::jsx_parse_errors::jsx_expected_attribute;
->>>>>>> 28689a24bd (multiple attributes)
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -471,8 +468,7 @@ struct JsxAttributeList;
 
 // test jsx jsx_element_attributes
 // function f() {
-//     let a = <div id="a" name="b" checked></div>;
-//     return <div id="a" name="b" checked/>;
+//     return <div string_literal="a" expression={1} novalue></div>;
 // }
 impl ParseNodeList for JsxAttributeList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {

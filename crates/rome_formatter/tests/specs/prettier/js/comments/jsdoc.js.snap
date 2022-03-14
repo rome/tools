@@ -68,17 +68,21 @@ function HelloWorld() {
 # Errors
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
+=======
+>>>>>>> c87591329d (fixing rebase problems)
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ jsdoc.js:3:5
   │  
 3 │ ┌     <div>
 4 │ │         <div />
   │ └───────────────^ TypeScript only syntax
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
@@ -93,6 +97,8 @@ error[SyntaxError]: expected `')'` but instead found `div`
 =======
 >>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 >>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
+=======
+>>>>>>> c87591329d (fixing rebase problems)
 
 error: unterminated regex literal
   ┌─ jsdoc.js:5:11
