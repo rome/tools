@@ -20,6 +20,7 @@ readFile(manifestPath, "utf8").then(async (value) => {
     manifest.version = `${currentMajor}.${newMinor}.${newPatch}`;
     try {
         await writeFile(manifestPath, JSON.stringify(manifest, null, "\t"));
+        console.log(manifest.version)
     } catch (_e) {
         console.log("Could not write the package.json file at " + manifestPath)
         process.exit(1);
