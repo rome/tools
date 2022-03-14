@@ -33,7 +33,7 @@ JsModule {
                                             attributes: JsxAttributeList [],
                                             r_angle_token: R_ANGLE@20..21 ">" [] [],
                                         },
-                                        children: missing (optional),
+                                        children: JsxChildList [],
                                         closing_element: JsxClosingElement {
                                             l_angle_slash_token: L_ANGLE_SLASH@21..23 "</" [] [],
                                             name: JsxReferenceIdentifier {
@@ -83,6 +83,7 @@ JsModule {
                                                 attributes: JsxAttributeList [],
                                                 r_angle_token: R_ANGLE@50..51 ">" [] [],
                                             },
+                                            children: JsxChildList [],
                                             closing_element: JsxClosingElement {
                                                 l_angle_slash_token: L_ANGLE_SLASH@51..53 "</" [] [],
                                                 name: JsxReferenceIdentifier {
@@ -136,7 +137,8 @@ JsModule {
                         0: IDENT@17..20 "div" [] []
                       2: JSX_ATTRIBUTE_LIST@20..20
                       3: R_ANGLE@20..21 ">" [] []
-                    1: JSX_CLOSING_ELEMENT@21..27
+                    1: JSX_CHILD_LIST@21..21
+                    2: JSX_CLOSING_ELEMENT@21..27
                       0: L_ANGLE_SLASH@21..23 "</" [] []
                       1: JSX_REFERENCE_IDENTIFIER@23..26
                         0: IDENT@23..26 "div" [] []
@@ -171,7 +173,8 @@ JsModule {
                           0: IDENT@47..50 "div" [] []
                         2: JSX_ATTRIBUTE_LIST@50..50
                         3: R_ANGLE@50..51 ">" [] []
-                      1: JSX_CLOSING_ELEMENT@51..57
+                      1: JSX_CHILD_LIST@51..51
+                      2: JSX_CLOSING_ELEMENT@51..57
                         0: L_ANGLE_SLASH@51..53 "</" [] []
                         1: JSX_REFERENCE_IDENTIFIER@53..56
                           0: IDENT@53..56 "div" [] []

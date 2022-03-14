@@ -98,6 +98,7 @@ function foo() {
 <<<<<<< HEAD
 <<<<<<< HEAD
       <Home />
+<<<<<<< HEAD
   {
     do {
 =======
@@ -120,12 +121,17 @@ function foo() {
   {
     do {
 >>>>>>> c87591329d (fixing rebase problems)
+=======
+      {
+        do {
+>>>>>>> 5e7841b546 (update rast/snap files)
           if (loggedIn) {
             <LogoutButton />
           } else {
             <LoginButton />
           }
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       }
@@ -149,6 +155,11 @@ function foo() {
   </nav>
 >>>>>>> c87591329d (fixing rebase problems)
   )
+=======
+      }
+    </nav>
+  );
+>>>>>>> 5e7841b546 (update rast/snap files)
 }
 
 (
@@ -250,6 +261,7 @@ error[SyntaxError]: expected `while` but instead found `;`
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -258,10 +270,14 @@ error[SyntaxError]: expected `while` but instead found `;`
 =======
 >>>>>>> c87591329d (fixing rebase problems)
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+=======
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+>>>>>>> 5e7841b546 (update rast/snap files)
    ┌─ do.js:22:5
    │  
 22 │ ┌     <nav>
 23 │ │       <Home />
+<<<<<<< HEAD
    │ └──────────────^ TypeScript only syntax
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -366,6 +382,14 @@ error[SyntaxError]: expected an expression but instead found ')'
    │
 34 │   );
    │   ^ Expected an expression here
+=======
+24 │ │       {
+25 │ │         do {
+   · │
+33 │ │     </nav>
+34 │ │   );
+   │ └───^ JSX only syntax
+>>>>>>> 5e7841b546 (update rast/snap files)
 
 error[SyntaxError]: expected `')'` but instead found `do`
    ┌─ do.js:37:2

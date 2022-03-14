@@ -81,6 +81,7 @@ JsModule {
                                     ],
                                     r_angle_token: R_ANGLE@80..81 ">" [] [],
                                 },
+                                children: JsxChildList [],
                                 closing_element: JsxClosingElement {
                                     l_angle_slash_token: L_ANGLE_SLASH@81..83 "</" [] [],
                                     name: JsxReferenceIdentifier {
@@ -162,7 +163,8 @@ JsModule {
                           2: JSX_ATTRIBUTE_LIST@78..78
                           3: SLASH_R_ANGLE@78..80 "/>" [] []
                   3: R_ANGLE@80..81 ">" [] []
-                1: JSX_CLOSING_ELEMENT@81..87
+                1: JSX_CHILD_LIST@81..81
+                2: JSX_CLOSING_ELEMENT@81..87
                   0: L_ANGLE_SLASH@81..83 "</" [] []
                   1: JSX_REFERENCE_IDENTIFIER@83..86
                     0: IDENT@83..86 "div" [] []

@@ -192,12 +192,10 @@ const foo = <div className={'match-achievement-medal-type type' + (medals[0].rec
 </div>
 
 a
-    ? literalline
-    : {
-      123: 12
-    }
+  ? literalline
+  : { 123: 12 }
     ? line
-    : softline
+    : softline;
 
 ```
 
@@ -243,11 +241,12 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 25 │ │     : (
    │ └─────^ JSX only syntax
 
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:26:7
    │  
 26 │ ┌       <Message>
 27 │ │         <Title>{'Missing story book'}</Title>
+<<<<<<< HEAD
    │ └─────────────────────────────────────^ TypeScript only syntax
 <<<<<<< HEAD
 =======
@@ -451,54 +450,27 @@ error[SyntaxError]: expected an expression but instead found ')'
    │     ^ Expected an expression here
 
 error[SyntaxError]: Invalid assignment to `<div className`
+=======
+28 │ │         <Content>
+29 │ │           <BackButton/>
+30 │ │         </Content>
+31 │ │       </Message>
+32 │ │     )
+   │ └─────^ JSX only syntax
+
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+>>>>>>> 5e7841b546 (update rast/snap files)
    ┌─ nested.js:73:13
-   │
-73 │ const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-   │             ^^^^^^^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: expected `:` but instead found `+`
-   ┌─ nested.js:73:65
-   │
-73 │ const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-   │                                                                 ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `[`
-   ┌─ nested.js:74:9
-   │
-74 │     {medals[0].record ? (
-   │            ^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `.`
-   ┌─ nested.js:74:12
-   │
-74 │     {medals[0].record ? (
-   │               ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `i18n`
-   ┌─ nested.js:75:3
-   │
-75 │         i18n('Record')
-   │         ^^^^ unexpected
-
-error[SyntaxError]: expected a parameter but instead found ''Record''
-   ┌─ nested.js:75:8
-   │
-75 │         i18n('Record')
-   │              ^^^^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a function body but instead found ')'
-   ┌─ nested.js:76:2
-   │
-76 │     ) : medals[0].unique ? (
-   │     ^ Expected a function body here
-
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ nested.js:87:2
-   │
-87 │ </div>
-   │ -^ But this operator was encountered instead
-   │ │ 
-   │ This operator requires a right hand side value
+   │  
+73 │   const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+   │ ┌─────────────^
+74 │ │     {medals[0].record ? (
+75 │ │         i18n('Record')
+76 │ │     ) : medals[0].unique ? (
+   · │
+88 │ │ 
+89 │ │ a
+   │ └─^ JSX only syntax
 
 
 ```

@@ -101,13 +101,13 @@ struct JsxChildrenList;
 
 impl ParseNodeList for JsxChildrenList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        dbg!(parse_jsx_element(p))
+        parse_jsx_element(p)
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
         let at_l_angle0 = p.at(T![<]);
         let at_slash1 = p.nth_at(1, T![/]);
-        dbg!(at_l_angle0 && at_slash1)
+        at_l_angle0 && at_slash1
     }
 
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {

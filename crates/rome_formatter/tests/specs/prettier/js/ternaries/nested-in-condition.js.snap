@@ -62,11 +62,11 @@ const value = (
     ? true
     : false;
 
-(bifornCringerMoshedPerplexSawder ? (
-  askTrovenaBeenaDependsRowans
-) : (
-  glimseGlyphsHazardNoopsTieTie
-)) ? (
+(
+  bifornCringerMoshedPerplexSawder ? (askTrovenaBeenaDependsRowans) : (
+    glimseGlyphsHazardNoopsTieTie
+  )
+) ? (
   <Element>
     <Sub />
     <Sub />
@@ -89,6 +89,7 @@ const value = (
 ```
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -97,10 +98,14 @@ const value = (
 =======
 >>>>>>> c87591329d (fixing rebase problems)
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+=======
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+>>>>>>> 5e7841b546 (update rast/snap files)
    ┌─ nested-in-condition.js:22:3
    │  
 22 │ ┌   <Element>
 23 │ │     <Sub />
+<<<<<<< HEAD
    │ └───────────^ TypeScript only syntax
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -141,6 +146,14 @@ error[SyntaxError]: Expected an expression for the right hand side of a `/`, but
    │          -^ But this operator was encountered instead
    │          │ 
    │          This operator requires a right hand side value
+=======
+24 │ │     <Sub />
+25 │ │     <Sub />
+   · │
+29 │ │   </Element>
+30 │ │ ) : (
+   │ └─^ JSX only syntax
+>>>>>>> 5e7841b546 (update rast/snap files)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -166,6 +179,7 @@ error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a 
 =======
 >>>>>>> c87591329d (fixing rebase problems)
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+<<<<<<< HEAD
    ┌─ nested-in-condition.js:27:5
    │  
 27 │ ┌     <Sub />
@@ -214,10 +228,13 @@ error[SyntaxError]: expected an expression but instead found ')'
    │ ^ Expected an expression here
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+=======
+>>>>>>> 5e7841b546 (update rast/snap files)
    ┌─ nested-in-condition.js:31:3
    │  
 31 │ ┌   <Element2>
 32 │ │     <Sub />
+<<<<<<< HEAD
    │ └───────────^ TypeScript only syntax
 
 <<<<<<< HEAD
@@ -325,6 +342,13 @@ error[SyntaxError]: expected an expression but instead found ')'
    │
 36 │ );
    │ ^ Expected an expression here
+=======
+33 │ │     <Sub />
+34 │ │     <Sub />
+35 │ │   </Element2>
+36 │ │ );
+   │ └─^ JSX only syntax
+>>>>>>> 5e7841b546 (update rast/snap files)
 
 
 ```
