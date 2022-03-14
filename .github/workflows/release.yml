@@ -123,11 +123,7 @@ jobs:
       - name: Update package.json version
         if: needs.check.outputs.prerelease == 'true'
         working-directory: editors/vscode
-        run: |
-          CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
-          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")
-          cat package.json | sed "s/'"version": "${CURRENT_VERSION}"'/'"version": "${NEW_VERSION}"'/g" >  temp
-          mv temp package.json
+        run: node ./scripts/updateVersionPrerelease.js
 
       - name: Package extension
         run: |
@@ -169,14 +165,15 @@ jobs:
         with:
           name: vscode_packages
 
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
       - name: Update package.json version
         if: needs.check.outputs.prerelease == 'true'
         working-directory: editors/vscode
-        run: |
-          CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
-          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")
-          cat package.json | sed "s/'"version": "${CURRENT_VERSION}"'/'"version": "${NEW_VERSION}"'/g" >  temp
-          mv temp package.json
+        run: node ./scripts/updateVersionPrerelease.js
         
 
       - name: Publish extension (pre-release)
