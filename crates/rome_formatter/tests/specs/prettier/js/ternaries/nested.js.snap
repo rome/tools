@@ -136,11 +136,8 @@ const StorybookLoader = ({ match }) => (
           <BackButton/>
         </Content>
       </Message>
-<<<<<<< HEAD
-<<<<<<< HEAD
     )
 );
-<<<<<<< HEAD
 
 const message = i % 3 === 0 && i % 5 === 0
   ? "fizzbuzz"
@@ -200,7 +197,6 @@ a
 # Errors
 ```
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-<<<<<<< HEAD
    ┌─ nested.js:16:7
    │  
 16 │       ? <ButtonStorybook />
@@ -246,137 +242,6 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
 26 │ ┌       <Message>
 27 │ │         <Title>{'Missing story book'}</Title>
    │ └─────────────────────────────────────^ TypeScript only syntax
-=======
-=======
-    )
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
-)
-=======
->>>>>>> 844f141c04 (jsx parser enabled by language variant)
-
-const message = i % 3 === 0 && i % 5 === 0
-  ? "fizzbuzz"
-  : i % 3 === 0
-    ? "fizz"
-    : i % 5 === 0
-      ? "buzz"
-      : String(i);
-
-const paymentMessage = state == "success"
-  ? "Payment completed successfully"
-  : state == "processing"
-    ? "Payment processing"
-    : state == "invalid_cvc"
-      ? "There was an issue with your CVC number"
-      : state == "invalid_expiry"
-        ? "Expiry must be sometime in the past."
-        : "There was an issue with the payment.  Please contact support.";
-
-const paymentMessage2 = state == "success"
-  ? 1 //'Payment completed successfully'
-  : state == "processing"
-    ? 2 //'Payment processing'
-    : state == "invalid_cvc"
-      ? 3 //'There was an issue with your CVC number'
-      : true
-        //state == 'invalid_expiry'
-        ? 4 //'Expiry must be sometime in the past.'
-        : 5; // 'There was an issue with the payment.  Please contact support.'
-
-const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-	{medals[0].record ? (
-		i18n('Record')
-	) : medals[0].unique ? (
-		i18n('Unique')
-	) : medals[0].type === 0 ? (
-		i18n('Silver')
-	) : medals[0].type === 1 ? (
-		i18n('Gold')
-	) : medals[0].type === 2 ? (
-		i18n('Platinum')
-	) : (
-		i18n('Theme')
-	)}
-</div>
-
-a
-    ? literalline
-    : {
-      123: 12
-    }
-    ? line
-    : softline
-
-```
-
-# Errors
-```
-<<<<<<< HEAD
-<<<<<<< HEAD
-error[SyntaxError]: expected `')'` but instead found `Title`
-   ┌─ nested.js:27:10
-   │
-27 │         <Title>{'Missing story book'}</Title>
-   │          ^^^^^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ nested.js:27:37
-   │
-27 │         <Title>{'Missing story book'}</Title>
-   │                                     ^ unexpected
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-=======
-=======
-error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
-=======
->>>>>>> 1273bfcd13 (jsx is now uppercase)
-   ┌─ nested.js:16:7
-   │  
-16 │       ? <ButtonStorybook />
-   │ ┌───────^
-17 │ │     : match.params.storyId === "color"
-   │ └─────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:18:7
-   │  
-18 │       ? <ColorBook />
-   │ ┌───────^
-19 │ │     : match.params.storyId === "typography"
-   │ └─────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:20:7
-   │  
-20 │       ? <TypographyBook />
-   │ ┌───────^
-21 │ │     : match.params.storyId === "loading"
-   │ └─────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:22:7
-   │  
-22 │       ? <LoaderStorybook />
-   │ ┌───────^
-23 │ │     : match.params.storyId === "deal-list"
-   │ └─────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:24:7
-   │  
-24 │       ? <DealListStory />
-   │ ┌───────^
-25 │ │     : (
-   │ └─────^ JSX only syntax
-
->>>>>>> 844f141c04 (jsx parser enabled by language variant)
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ nested.js:26:7
-   │  
-26 │ ┌       <Message>
-27 │ │         <Title>{'Missing story book'}</Title>
-   │ └─────────────────────────────────────^ TypeScript only syntax
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
    ┌─ nested.js:27:39
@@ -391,26 +256,8 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
    │  
 28 │ ┌         <Content>
 29 │ │           <BackButton/>
-<<<<<<< HEAD
-<<<<<<< HEAD
-   │ └───────────────────────^ TypeScript only syntax
-=======
-   │ │            ^^^^^^^^^^ An explicit or implicit semicolon is expected here...
-   │ └─────────────────────' ...Which is required to end this statement
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ nested.js:29:23
-   │
-29 │           <BackButton/>
-   │                      -^ But this operator was encountered instead
-   │                      │ 
-   │                      This operator requires a right hand side value
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-
-=======
    │ └───────────────────────^ TypeScript only syntax
 
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
    ┌─ nested.js:30:10
    │

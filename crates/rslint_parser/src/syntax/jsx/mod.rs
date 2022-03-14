@@ -8,6 +8,8 @@ use crate::{
 
 use self::jsx_parse_errors::jsx_expected_attribute;
 
+use super::expr::ExpressionContext;
+
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
 struct CheckpointedParser<'a, 'b> {
@@ -120,7 +122,11 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
         return ParsedSyntax::Absent;
     }
 
-    let _ = parse_jsx_any_element_name(p);
+    let name = parse_jsx_any_element_name(p);
+    if name.is_absent() {
+        m.abandon(p);
+        return ParsedSyntax::Absent;
+    }
 
     JsxAttributeList.parse_list(p);
 
@@ -184,7 +190,12 @@ impl ParseNodeList for JsxAttributeList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
         let m = p.start();
 
-        let _ = expect_jsx_attribute_name(p);
+        let name = parse_jsx_attribute_name(p);
+        if name.is_absent() {
+            m.abandon(p);
+            return ParsedSyntax::Absent;
+        }
+
         if p.at(T![=]) {
             let _ = expect_jsx_attribute_initializer_clause(p);
         }
@@ -212,7 +223,11 @@ impl ParseNodeList for JsxAttributeList {
     }
 }
 
-fn expect_jsx_attribute_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_attribute_name(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(JsSyntaxKind::IDENT) {
+        return ParsedSyntax::Absent;
+    }
+
     let m = p.start();
 
     p.bump(JsSyntaxKind::IDENT);
@@ -232,7 +247,13 @@ fn expect_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 fn expect_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
 
-    p.bump(JsSyntaxKind::JS_STRING_LITERAL);
+    if p.at(JsSyntaxKind::JS_STRING_LITERAL) {
+        p.bump(JsSyntaxKind::JS_STRING_LITERAL);
+    } else if p.at(T!['{']) {
+        p.bump(T!['{']);
+        super::expr::parse_expression(p, ExpressionContext::default());
+        p.bump(T!['}']);
+    }
 
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_STRING_LITERAL))
 }
