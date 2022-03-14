@@ -4,6 +4,7 @@ mod attribute;
 mod attribute_initializer_clause;
 mod closing_element;
 mod element;
+mod expression_attribute_value;
 mod name;
 mod name;
 mod namespace_name;

@@ -670,6 +670,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxElementExpression::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE => {
+                    let $pattern =
+                        unsafe { $crate::JsxExpressionAttributeValue::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JSX_NAME => {
                     let $pattern = unsafe { $crate::JsxName::new_unchecked(node) };
                     $body
