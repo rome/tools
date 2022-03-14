@@ -34,7 +34,7 @@ use crate::syntax::typescript::{
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode, SyntaxFeature,
+    CompletedMarker, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode, SyntaxFeature,
 };
 use bitflags::bitflags;
 use drop_bomb::DebugDropBomb;
@@ -935,11 +935,6 @@ fn parse_property_class_member_body(
 fn expect_member_semi(p: &mut Parser, member_marker: &Marker, name: &str) {
     if !optional_semi(p) {
         // Gets the start of the member
-        let start = match p.events[member_marker.old_start as usize] {
-            Event::Start { start, .. } => start,
-            _ => unreachable!(),
-        };
-
         let end = p
             .last_range()
             .map(|r| r.end())
@@ -949,7 +944,7 @@ fn expect_member_semi(p: &mut Parser, member_marker: &Marker, name: &str) {
             .err_builder(&format!(
                 "expected a semicolon to end the {name}, but found none"
             ))
-            .primary(start..end, "");
+            .primary(member_marker.start()..end, "");
 
         p.error(err);
     }

@@ -1443,7 +1443,6 @@ pub(crate) fn parse_template_elements<P>(
     P: Fn(&mut Parser) -> Option<CompletedMarker>,
 {
     while !p.at(EOF) && !p.at(BACKTICK) {
-        dbg!(p.cur());
         match p.cur() {
             TEMPLATE_CHUNK => {
                 let m = p.start();

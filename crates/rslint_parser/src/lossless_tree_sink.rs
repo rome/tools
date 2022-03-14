@@ -1,9 +1,6 @@
-use crate::token_source::Trivia;
-use crate::{ParserError, TreeSink};
-use rome_js_syntax::{
-    JsSyntaxKind::{self, *},
-    SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize,
-};
+use crate::token_source::{Trivia, TriviaKind};
+use crate::{ParseDiagnostic, TreeSink};
+use rome_js_syntax::{JsSyntaxKind, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize};
 use rome_rowan::TriviaPiece;
 
 /// Structure for converting events to a syntax tree representation, while preserving whitespace.
@@ -16,7 +13,7 @@ pub struct LosslessTreeSink<'a> {
     text_pos: TextSize,
     trivia_pos: usize,
     parents_count: usize,
-    errors: Vec<ParserError>,
+    errors: Vec<ParseDiagnostic>,
     inner: SyntaxTreeBuilder,
     /// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
     needs_eof: bool,
@@ -43,7 +40,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
         self.inner.finish_node();
     }
 
-    fn errors(&mut self, errors: Vec<ParserError>) {
+    fn errors(&mut self, errors: Vec<ParseDiagnostic>) {
         self.errors = errors;
     }
 }
@@ -67,7 +64,7 @@ impl<'a> LosslessTreeSink<'a> {
     ///
     /// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
     /// will be appended to its leading trivia.
-    pub fn finish(self) -> (SyntaxNode, Vec<ParserError>) {
+    pub fn finish(self) -> (SyntaxNode, Vec<ParseDiagnostic>) {
         (self.inner.finish(), self.errors)
     }
 
@@ -111,11 +108,10 @@ impl<'a> LosslessTreeSink<'a> {
             self.text_pos += trivia.len();
 
             let current_trivia = match trivia.kind() {
-                NEWLINE => TriviaPiece::Newline(trivia.len()),
-                WHITESPACE => TriviaPiece::Whitespace(trivia.len()),
-                COMMENT => TriviaPiece::Comments(trivia.len(), false),
-                MULTILINE_COMMENT => TriviaPiece::Comments(trivia.len(), true),
-                _ => unreachable!("Not Trivia"),
+                TriviaKind::Newline => TriviaPiece::Newline(trivia.len()),
+                TriviaKind::Whitespace => TriviaPiece::Whitespace(trivia.len()),
+                TriviaKind::Comment => TriviaPiece::Comments(trivia.len(), false),
+                TriviaKind::MultilineComment => TriviaPiece::Comments(trivia.len(), true),
             };
 
             self.trivia_pieces.push(current_trivia);

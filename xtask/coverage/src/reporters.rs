@@ -5,7 +5,7 @@ use atty::Stream;
 use colored::Colorize;
 use indicatif::ProgressBar;
 use rslint_errors::termcolor::Buffer;
-use rslint_parser::ParserError;
+use rslint_parser::ParseDiagnostic;
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Write;
@@ -274,7 +274,7 @@ impl SummaryReporter {
         table.format(rows)
     }
 
-    fn write_errors(&mut self, errors: &[ParserError], files: &TestCaseFiles) {
+    fn write_errors(&mut self, errors: &[ParseDiagnostic], files: &TestCaseFiles) {
         files.emit_errors(errors, &mut self.buffer);
         self.writeln("");
     }

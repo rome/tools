@@ -84,7 +84,8 @@ use std::fmt::{Debug, Display};
 
 /// The type of error emitted by the parser, this includes warnings, notes, and errors.
 /// It also includes labels and possibly notes
-pub type ParserError = rslint_errors::Diagnostic;
+pub type ParseDiagnostic = rslint_errors::Diagnostic;
+
 use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
@@ -108,7 +109,7 @@ pub trait TreeSink {
     fn finish_node(&mut self);
 
     /// Emit errors
-    fn errors(&mut self, errors: Vec<ParserError>);
+    fn errors(&mut self, errors: Vec<ParseDiagnostic>);
 }
 
 /// Enum of the different ECMAScript standard versions.
@@ -410,9 +411,9 @@ pub trait SyntaxFeature: Sized {
         if self.is_supported(p) {
             parse(p)
         } else {
-            let diagnostics_checkpoint = p.errors.len();
+            let diagnostics_checkpoint = p.diagnostics.len();
             let syntax = parse(p);
-            p.errors.truncate(diagnostics_checkpoint);
+            p.diagnostics.truncate(diagnostics_checkpoint);
 
             match syntax {
                 Present(mut syntax) => {

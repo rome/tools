@@ -7,15 +7,55 @@ use rslint_lexer::buffered_lexer::BufferedLexer;
 use rslint_lexer::{LexContext, Lexer, LexerCheckpoint, LexerReturn, ReLexContext, TextRange};
 use std::collections::VecDeque;
 
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[repr(u8)]
+pub enum TriviaKind {
+    Newline,
+    Whitespace,
+    Comment,
+    MultilineComment,
+}
+
+impl TriviaKind {
+    /// Returns true if this is a new line trivia
+    pub fn is_newline(&self) -> bool {
+        matches!(self, TriviaKind::Newline)
+    }
+}
+
+impl TryFrom<JsSyntaxKind> for TriviaKind {
+    type Error = ();
+
+    fn try_from(value: JsSyntaxKind) -> Result<Self, Self::Error> {
+        if value.is_trivia() {
+            match value {
+                JsSyntaxKind::NEWLINE => Ok(TriviaKind::Newline),
+                JsSyntaxKind::WHITESPACE => Ok(TriviaKind::Whitespace),
+                JsSyntaxKind::COMMENT => Ok(TriviaKind::Comment),
+                JsSyntaxKind::MULTILINE_COMMENT => Ok(TriviaKind::MultilineComment),
+                _ => unreachable!("Not Trivia"),
+            }
+        } else {
+            Err(())
+        }
+    }
+}
+
+/// A comment or a whitespace trivia in the source code.
 #[derive(Debug, Copy, Clone)]
 pub struct Trivia {
-    kind: JsSyntaxKind,
+    /// The kind of the trivia token.
+    kind: TriviaKind,
+
+    /// The range of the trivia in the source text
     range: TextRange,
+
+    /// Whatever this is the trailing or leading trivia of a non-trivia token.
     trailing: bool,
 }
 
 impl Trivia {
-    fn new(kind: JsSyntaxKind, range: TextRange, trailing: bool) -> Self {
+    fn new(kind: TriviaKind, range: TextRange, trailing: bool) -> Self {
         Self {
             kind,
             range,
@@ -23,7 +63,7 @@ impl Trivia {
         }
     }
     /// Returns the kind of the token
-    pub fn kind(&self) -> JsSyntaxKind {
+    pub fn kind(&self) -> TriviaKind {
         self.kind
     }
 
@@ -32,24 +72,35 @@ impl Trivia {
         self.range.len()
     }
 
+    /// Returns the byte offset of the trivia in the source text
     pub fn offset(&self) -> TextSize {
         self.range.start()
     }
 
+    /// Returns `true` if this is the trailing trivia of a non-trivia token or false otherwise.
     pub fn trailing(&self) -> bool {
         self.trailing
     }
 }
 
-// TODO add detached mode. Throw if any operation is called in detached mode in debug build
-/// The source of tokens for the parser
+/// Token source for the parser that skips over any non-trivia token.
 pub struct TokenSource<'l> {
     lexer: BufferedLexer<'l>,
 
-    /// A list of the tokens including whitespace.
+    /// List of the skipped trivia. Needed to construct the CST and compute the non-trivia token offsets.
     pub(super) trivia: Vec<Trivia>,
 
+    /// Cache for the non-trivia token lookahead. For example for the source `let a = 10;` if the
+    /// [TokenSource]'s currently positioned at the start of the file (`let`). The `nth(2)` non-trivia token,
+    /// as returned by the [TokenSource], is the `=` token but retrieving it requires skipping over the
+    /// two whitespace trivia tokens (first between `let` and `a`, second between `a` and `=`).
+    /// The [TokenSource] state then is:
+    ///
+    /// * `non_trivia_lookahead`: [IDENT: 'a', EQ]
+    /// * `lookahead_offset`: 4 (the `=` is the 4th token after the `let` keyword)
     non_trivia_lookahead: VecDeque<Lookahead>,
+
+    /// Offset of the last cached lookahead token from the current [BufferedLexer] token.
     lookahead_offset: usize,
 }
 
@@ -80,7 +131,7 @@ impl<'l> TokenSource<'l> {
     /// Moves the token source to the first non-trivia token. Returns the lexing error
     /// for the skipped trivia and the now current token
     pub fn initialize(&mut self) -> Vec<Diagnostic> {
-        self.next_non_trivia_token(LexContext::Regular, true)
+        self.next_non_trivia_token(LexContext::default(), true)
     }
 
     #[inline]
@@ -89,6 +140,7 @@ impl<'l> TokenSource<'l> {
         let mut processed_tokens = 0;
         let mut trailing = !first_token;
 
+        // Drop the last cached lookahead, we're now moving past it
         self.non_trivia_lookahead.pop_front();
 
         loop {
@@ -99,16 +151,20 @@ impl<'l> TokenSource<'l> {
                 diagnostics.push(*diagnostic);
             }
 
-            if !kind.is_trivia() {
-                break;
-            }
+            let trivia_kind = TriviaKind::try_from(kind);
 
-            if kind == JsSyntaxKind::NEWLINE {
-                trailing = false;
-            }
+            match trivia_kind {
+                Err(_) => break,
+                Ok(trivia_kind) => {
+                    // Trivia after and including the newline is considered the leading trivia of the next token
+                    if trivia_kind.is_newline() {
+                        trailing = false;
+                    }
 
-            self.trivia
-                .push(Trivia::new(kind, self.current_range(), trailing));
+                    self.trivia
+                        .push(Trivia::new(trivia_kind, self.current_range(), trailing));
+                }
+            }
         }
 
         if self.lookahead_offset != 0 {
@@ -167,13 +223,15 @@ impl<'l> TokenSource<'l> {
     fn lookahead(&mut self, n: usize) -> Option<Lookahead> {
         assert_ne!(n, 0);
 
+        // Return the cached token if any
         if let Some(lookahead) = self.non_trivia_lookahead.get(n - 1) {
             return Some(*lookahead);
         }
 
+        // Jump right to where we've left of last time rather than going through all tokens again.
         let iter = self.lexer.lookahead().skip(self.lookahead_offset);
-
         let mut remaining = n - self.non_trivia_lookahead.len();
+
         for item in iter {
             self.lookahead_offset += 1;
 
@@ -233,8 +291,6 @@ impl<'l> TokenSource<'l> {
     }
 
     pub fn re_lex(&mut self, mode: ReLexContext) -> LexerReturn {
-        self.non_trivia_lookahead.clear();
-        self.lookahead_offset = 0;
         let current_kind = self.current();
 
         let LexerReturn {
@@ -257,6 +313,7 @@ impl<'l> TokenSource<'l> {
         self.current_range().start()
     }
 
+    /// Ends this token source and returns the source text's trivia
     pub fn finish(self) -> Vec<Trivia> {
         self.trivia
     }

@@ -3,7 +3,19 @@ use crate::{CompletedMarker, Event, Marker, Parser, TextSize, ToDiagnostic};
 use rome_js_syntax::{JsSyntaxKind, TextRange};
 use rslint_errors::Diagnostic;
 
+/// Simplified parser API for when rewriting the AST structure with `rewrite_events`.
+///
+/// The difference from the regular [Parser] is that the `TokenSource` must be detached during
+/// rewriting to avoid lexing previously lexed tokens in a different context. For example for `a[`test`] = "b"`.
+/// Template literal elements get lexed in the `TemplateElement` context. However, if the rewriter
+/// rewinds the token source then all tokens are lexed in the `LexMode::Regular` which yields
+/// complete different results.
+///
+/// This is why the [RewriteParser] tracks the source offset without relying on the `TokenSource`
+/// and explicitly passes the positions to [Marker] and [CompletedMarker]. This further has the
+/// benefit that rewriting the events doesn't require re-lexing all tokens as well.
 pub(crate) struct RewriteParser<'p, 's> {
+    /// The byte offset of the current token from the start of the source
     offset: TextSize,
     inner: &'p mut Parser<'s>,
     trivia_offset: usize,
@@ -18,12 +30,14 @@ impl<'p, 's> RewriteParser<'p, 's> {
         }
     }
 
+    /// Starts a marker for a new node.
     pub fn start(&mut self) -> RewriteMarker {
         let pos = self.inner.events.len() as u32;
         self.inner.push_event(Event::tombstone(self.offset));
         RewriteMarker(Marker::new(pos, self.offset))
     }
 
+    /// Bumps the passed in token
     pub fn bump(&mut self, token: RewriteToken) {
         self.skip_trivia(false);
         self.inner
@@ -44,6 +58,10 @@ impl<'p, 's> RewriteParser<'p, 's> {
         }
     }
 
+    /// Finishes the rewriter
+    ///
+    /// ## Panics
+    /// If not all tokens have been consumed or if they have been consumed out of order
     pub fn finish(mut self) {
         self.skip_trivia(false); // Skip the leading trivia up to the current token.
         assert_eq!(
@@ -53,6 +71,7 @@ impl<'p, 's> RewriteParser<'p, 's> {
         );
     }
 
+    /// Returns true if the parser is in strict mode
     pub fn is_strict_mode(&self) -> bool {
         self.inner.state.strict().is_some()
     }
@@ -82,6 +101,7 @@ impl RewriteToken {
 pub(crate) struct RewriteMarker(Marker);
 
 impl RewriteMarker {
+    /// Completes the node with the specified kind
     pub fn complete(self, p: &mut RewriteParser, kind: JsSyntaxKind) -> RewriteCompletedMarker {
         let mut end_pos = p.inner.last_range().map(|t| t.end()).unwrap_or_default();
         if end_pos < self.0.start {
@@ -96,10 +116,12 @@ impl RewriteMarker {
 pub(crate) struct RewriteCompletedMarker(CompletedMarker);
 
 impl RewriteCompletedMarker {
+    /// Returns the range of the marker
     pub fn range(&self, p: &RewriteParser) -> TextRange {
         self.0.range(p.inner)
     }
 
+    /// Returns the source text of the marker
     pub fn text<'a>(&self, p: &'a RewriteParser) -> &'a str {
         self.0.text(p.inner)
     }

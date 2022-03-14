@@ -10,20 +10,20 @@ use std::marker::PhantomData;
 #[derive(Debug, Clone)]
 pub struct Parse<T> {
     root: SyntaxNode,
-    errors: Vec<ParserError>,
+    errors: Vec<ParseDiagnostic>,
     _ty: PhantomData<T>,
 }
 
 impl<T> Parse<T> {
-    pub fn new_module(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
+    pub fn new_module(root: SyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
         Self::new(root, errors)
     }
 
-    pub fn new_script(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
+    pub fn new_script(root: SyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
         Self::new(root, errors)
     }
 
-    pub fn new(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
+    pub fn new(root: SyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
         Parse {
             root,
             errors,
@@ -98,7 +98,7 @@ impl<T: AstNode> Parse<T> {
     }
 
     /// Convert this parse into a result
-    pub fn ok(self) -> Result<T, Vec<ParserError>> {
+    pub fn ok(self) -> Result<T, Vec<ParseDiagnostic>> {
         if !self.errors.iter().any(|d| d.severity == Severity::Error) {
             Ok(self.tree())
         } else {
@@ -111,7 +111,7 @@ fn parse_common(
     text: &str,
     file_id: usize,
     source_type: SourceType,
-) -> (Vec<Event>, Vec<ParserError>, Vec<Trivia>) {
+) -> (Vec<Event>, Vec<ParseDiagnostic>, Vec<Trivia>) {
     let mut parser = crate::Parser::new(text, file_id, source_type);
     crate::syntax::program::parse(&mut parser);
 

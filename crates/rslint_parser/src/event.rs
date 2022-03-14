@@ -2,7 +2,7 @@
 
 use std::mem;
 
-use crate::{Parser, ParserError, TreeSink};
+use crate::{ParseDiagnostic, Parser, TreeSink};
 use rome_js_syntax::JsSyntaxKind::{self, *};
 use rome_rowan::TextRange;
 use rslint_lexer::TextSize;
@@ -52,7 +52,7 @@ impl Event {
 
 /// Generate the syntax tree with the control of events.
 #[inline]
-pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<ParserError>) {
+pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<ParseDiagnostic>) {
     sink.errors(errors);
     let mut forward_parents = Vec::new();
 
@@ -126,7 +126,7 @@ impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 
         self.reparse.finish_node(&mut self.parser);
     }
 
-    fn errors(&mut self, _errors: Vec<ParserError>) {}
+    fn errors(&mut self, _errors: Vec<ParseDiagnostic>) {}
 }
 
 /// Implement this trait if you want to change the tree structure
