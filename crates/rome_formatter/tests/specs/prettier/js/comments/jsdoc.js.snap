@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: jsdoc.js
 
 ---
@@ -67,26 +67,12 @@ function HelloWorld() {
 
 # Errors
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ jsdoc.js:3:5
   │  
 3 │ ┌     <div>
 4 │ │         <div />
   │ └───────────────^ TypeScript only syntax
-<<<<<<< HEAD
-=======
-error[SyntaxError]: expected `')'` but instead found `div`
-  ┌─ jsdoc.js:4:10
-  │
-4 │         <div />
-  │          ^^^ unexpected
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-=======
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
 
 error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
   ┌─ jsdoc.js:5:6

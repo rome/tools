@@ -1,4 +1,3 @@
 function f() {
-    let a = <div id="a" name="b" checked></div>;
-    return <div id="a" name="b" checked/>;
+    return <div string_literal="a" expression={1} novalue></div>;
 }

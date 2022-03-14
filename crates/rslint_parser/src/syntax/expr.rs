@@ -3,15 +3,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 use super::jsx::maybe_parse_jsx_expression;
-=======
-use super::jsx::try_parse_jsx_expression;
->>>>>>> cd10294604 (jsx, open/close and self closing elements)
-=======
-use super::jsx::maybe_parse_jsx_expression;
->>>>>>> dbee0cc063 (maybe prefix for checkpointed parsing)
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -35,19 +27,7 @@ use crate::syntax::jsx::jsx_parse_errors::jsx_only_syntax_error;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
-<<<<<<< HEAD
-<<<<<<< HEAD
-use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
-=======
 use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
-=======
-use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
-<<<<<<< HEAD
->>>>>>> 9a0a0eb738 (changing jsx to uppercase)
-use crate::LanguageVariant;
->>>>>>> 844f141c04 (jsx parser enabled by language variant)
-=======
->>>>>>> 60ebca07db (fmt and clippy issues)
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
@@ -1762,7 +1742,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
     // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
-        let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
+        let jsx = Jsx.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
             jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
         });
         return jsx.or_else(|| {

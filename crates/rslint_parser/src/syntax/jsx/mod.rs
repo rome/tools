@@ -146,24 +146,10 @@ fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax
 
     let m = p.start();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     if p.at(T![<]) && p.nth_at(1, T![/]) {
         p.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
     } else {
         m.abandon(p);
-=======
-    if p.parser.at(T![<]) && p.parser.nth_at(1, T![/]) {
-        p.parser.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
-    } else {
-        m.abandon(p.parser);
->>>>>>> e32c8e98b2 (jsx tokens for </ and />)
-=======
-    if p.at(T![<]) && p.nth_at(1, T![/]) {
-        p.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
-    } else {
-        m.abandon(p);
->>>>>>> 4558034533 (deref and derefmut for checkpointedparser)
         return ParsedSyntax::Absent;
     }
 
@@ -192,8 +178,7 @@ struct JsxAttributeList;
 
 // test jsx jsx_element_attributes
 // function f() {
-//     let a = <div id="a" name="b" checked></div>;
-//     return <div id="a" name="b" checked/>;
+//     return <div string_literal="a" expression={1} novalue></div>;
 // }
 impl ParseNodeList for JsxAttributeList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
