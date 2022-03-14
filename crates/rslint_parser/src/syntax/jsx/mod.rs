@@ -90,7 +90,7 @@ fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
 // function f() {
 //     return <div />
 // }
-fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
+fn parse_jsx_element(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     match parse_jsx_element_head(p, m) {
         ParsedSyntax::Present(opening_marker)
@@ -117,8 +117,8 @@ fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
 
 // <a ...> or <a ... />
 // ^          ^
-fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> ParsedSyntax {
-    if !p.parser.eat(T![<]) {
+fn parse_jsx_element_head(p: &mut Parser, m: Marker) -> ParsedSyntax {
+    if !p.eat(T![<]) {
         return ParsedSyntax::Absent;
     }
 
@@ -145,7 +145,7 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
 
 // <a/>
 // ^
-fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
+fn parse_jsx_closing_element(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![<]) {
         return ParsedSyntax::Absent;
     }
@@ -169,7 +169,7 @@ fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_CLOSING_ELEMENT))
 }
 
-fn parse_jsx_any_element_name(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
+fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
 
     if !p.eat(T![ident]) {
@@ -184,7 +184,7 @@ struct JsxAttributeList;
 
 // test jsx jsx_element_attributes
 // function f() {
-//     return <div string_literal="a" expression={1} novalue></div>;
+//     return <div string_literal="a" expression={1} novalue el=<a/>></div>;
 // }
 impl ParseNodeList for JsxAttributeList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
@@ -245,15 +245,25 @@ fn expect_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn expect_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
-    let m = p.start();
-
+    // Possible atribute values:
+    // String Literal for constant values
     if p.at(JsSyntaxKind::JS_STRING_LITERAL) {
+        let m = p.start();
         p.bump(JsSyntaxKind::JS_STRING_LITERAL);
-    } else if p.at(T!['{']) {
+        ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_STRING_LITERAL))
+    }
+    // expression values
+    else if p.at(T!['{']) {
+        let m = p.start();
         p.bump(T!['{']);
         super::expr::parse_expression(p, ExpressionContext::default());
         p.bump(T!['}']);
+        ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE))
     }
-
-    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_STRING_LITERAL))
+    // JSX elements
+    else if p.at(T![<]) {
+        parse_jsx_element(p)
+    } else {
+        ParsedSyntax::Absent
+    }
 }

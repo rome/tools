@@ -2200,8 +2200,14 @@ JsxAttributeInitializerClause =
 	'='
 	value: JsxAnyAttributeValue
 
-JsxAnyAttributeValue = JsxElement
+JsxAnyAttributeValue = JsxAnyElement
 	| JsxStringLiteral
+	| JsxExpressionAttributeValue
+	
+JsxExpressionAttributeValue =
+	'{'
+	expression: JsAnyExpression
+	'}'
 
 JsxAnyAttributeName = JsxName
 	| JsxNamespaceName
