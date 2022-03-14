@@ -1303,6 +1303,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxAttributeList::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JSX_CHILD_LIST => {
+                    let $pattern = unsafe { $crate::JsxChildList::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_ENUM_MEMBER_LIST => {
                     let $pattern = unsafe { $crate::TsEnumMemberList::new_unchecked(node) };
                     $body

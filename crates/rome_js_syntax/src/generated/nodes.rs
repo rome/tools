@@ -5213,14 +5213,22 @@ impl JsxElement {
     pub fn opening_element(&self) -> SyntaxResult<JsxOpeningElement> {
         support::required_node(&self.syntax, 0usize)
     }
+<<<<<<< HEAD
     pub fn children(&self) -> Option<JsxText> { support::node(&self.syntax, 1usize) }
+=======
+    pub fn children(&self) -> JsxChildList { support::list(&self.syntax, 1usize) }
+>>>>>>> e6027ef59b (parsing jsx children)
     pub fn closing_element(&self) -> SyntaxResult<JsxClosingElement> {
         support::required_node(&self.syntax, 2usize)
     }
 }
 pub struct JsxElementFields {
     pub opening_element: SyntaxResult<JsxOpeningElement>,
+<<<<<<< HEAD
     pub children: Option<JsxText>,
+=======
+    pub children: JsxChildList,
+>>>>>>> e6027ef59b (parsing jsx children)
     pub closing_element: SyntaxResult<JsxClosingElement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9665,6 +9673,11 @@ pub enum JsxAnyObjectName {
     JsxExpressionAttributeValue(JsxExpressionAttributeValue),
 >>>>>>> 7ffcdc1f0b (expression and element attributes)
     JsxStringLiteral(JsxStringLiteral),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsxAnyChild {
+    JsxElement(JsxElement),
+    JsxSelfClosingElement(JsxSelfClosingElement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyElement {
@@ -14660,7 +14673,11 @@ impl std::fmt::Debug for JsxElement {
                 "opening_element",
                 &support::DebugSyntaxResult(self.opening_element()),
             )
+<<<<<<< HEAD
             .field("children", &support::DebugOptionalElement(self.children()))
+=======
+            .field("children", &self.children())
+>>>>>>> e6027ef59b (parsing jsx children)
             .field(
                 "closing_element",
                 &support::DebugSyntaxResult(self.closing_element()),
@@ -22821,7 +22838,59 @@ impl From<JsxAnyAttributeValue> for SyntaxElement {
         node.into()
     }
 }
+<<<<<<< HEAD
 >>>>>>> 26e8aafbda (jsx string literals attributes)
+=======
+impl From<JsxElement> for JsxAnyChild {
+    fn from(node: JsxElement) -> JsxAnyChild { JsxAnyChild::JsxElement(node) }
+}
+impl From<JsxSelfClosingElement> for JsxAnyChild {
+    fn from(node: JsxSelfClosingElement) -> JsxAnyChild { JsxAnyChild::JsxSelfClosingElement(node) }
+}
+impl AstNode for JsxAnyChild {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JSX_ELEMENT | JSX_SELF_CLOSING_ELEMENT)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSX_ELEMENT => JsxAnyChild::JsxElement(JsxElement { syntax }),
+            JSX_SELF_CLOSING_ELEMENT => {
+                JsxAnyChild::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsxAnyChild::JsxElement(it) => &it.syntax,
+            JsxAnyChild::JsxSelfClosingElement(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsxAnyChild {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsxAnyChild::JsxElement(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyChild::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsxAnyChild> for SyntaxNode {
+    fn from(n: JsxAnyChild) -> SyntaxNode {
+        match n {
+            JsxAnyChild::JsxElement(it) => it.into(),
+            JsxAnyChild::JsxSelfClosingElement(it) => it.into(),
+        }
+    }
+}
+impl From<JsxAnyChild> for SyntaxElement {
+    fn from(n: JsxAnyChild) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+>>>>>>> e6027ef59b (parsing jsx children)
 impl From<JsxElement> for JsxAnyElement {
     fn from(node: JsxElement) -> JsxAnyElement {
         JsxAnyElement::JsxElement(node)
@@ -24930,8 +24999,16 @@ impl std::fmt::Display for JsxAnyAttributeValue {
     }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 impl std::fmt::Display for JsxAnyAttributeValue {
 =======
+=======
+impl std::fmt::Display for JsxAnyChild {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+>>>>>>> e6027ef59b (parsing jsx children)
 impl std::fmt::Display for JsxAnyElement {
 >>>>>>> 26e8aafbda (jsx string literals attributes)
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -27943,6 +28020,55 @@ impl IntoIterator for JsxAttributeList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
+pub struct JsxChildList {
+    syntax_list: SyntaxList,
+}
+impl JsxChildList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for JsxChildList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_CHILD_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<JsxChildList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(JsxChildList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<JsxAnyChild> for JsxChildList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for JsxChildList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("JsxChildList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &JsxChildList {
+    type Item = JsxAnyChild;
+    type IntoIter = AstNodeListIterator<JsxAnyChild>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for JsxChildList {
+    type Item = JsxAnyChild;
+    type IntoIter = AstNodeListIterator<JsxAnyChild>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsEnumMemberList {
     syntax_list: SyntaxList,
 }
@@ -29142,6 +29268,9 @@ impl Debug for DebugSyntaxElement {
                 ),
                 JSX_ATTRIBUTE_LIST => {
                     std::fmt::Debug::fmt(&JsxAttributeList::cast(node.clone()).unwrap(), f)
+                }
+                JSX_CHILD_LIST => {
+                    std::fmt::Debug::fmt(&JsxChildList::cast(node.clone()).unwrap(), f)
                 }
                 JSX_CLOSING_ELEMENT => {
                     std::fmt::Debug::fmt(&JsxClosingElement::cast(node.clone()).unwrap(), f)

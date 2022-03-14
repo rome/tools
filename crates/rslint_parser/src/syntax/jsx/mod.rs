@@ -14,7 +14,7 @@ use crate::{
 use crate::{Absent, Present};
 use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
-use self::jsx_parse_errors::jsx_expected_attribute;
+use self::jsx_parse_errors::{jsx_expected_attribute, jsx_expected_children};
 
 use super::expr::ExpressionContext;
 
@@ -89,6 +89,40 @@ fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax 
     })
 }
 
+// test jsx jsx_element_children
+// <a>
+//     <b>
+//        <d></d>
+//        <e></e>
+//     </b>
+//     <c></c>
+// </a>
+struct JsxChildrenList;
+
+impl ParseNodeList for JsxChildrenList {
+    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+        dbg!(parse_jsx_element(p))
+    }
+
+    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+        let at_l_angle0 = p.at(T![<]);
+        let at_slash1 = p.nth_at(1, T![/]);
+        dbg!(at_l_angle0 && at_slash1)
+    }
+
+    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+        parsed_element.or_recover(
+            p,
+            &ParseRecovery::new(JsSyntaxKind::JS_UNKNOWN_MEMBER, token_set![T![<]]),
+            jsx_expected_children,
+        )
+    }
+
+    fn list_kind() -> JsSyntaxKind {
+        JsSyntaxKind::JSX_CHILD_LIST
+    }
+}
+
 // test jsx jsx_element_open_close
 // function f() {
 //     return <div></div>
@@ -98,7 +132,6 @@ fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax 
 // function f() {
 //     return <div />
 // }
-<<<<<<< HEAD
 
 // test jsx jsx_closing_token_trivia
 // <closing / /* some comment */ >;
@@ -136,14 +169,6 @@ fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax 
 fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
     match parse_jsx_element_head_or_fragment(p, in_expression) {
         Present(opening_marker) if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT => {
-=======
-fn parse_jsx_element(p: &mut Parser) -> ParsedSyntax {
-    let m = p.start();
-    match parse_jsx_element_head(p, m) {
-        ParsedSyntax::Present(opening_marker)
-            if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT =>
-        {
->>>>>>> 7ffcdc1f0b (expression and element attributes)
             let element_marker = opening_marker.precede(p);
 
             parse_children(p);
@@ -227,11 +252,7 @@ fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> Pa
 
 // <a/>
 // ^
-<<<<<<< HEAD
 fn parse_jsx_closing_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
-=======
-fn parse_jsx_closing_element(p: &mut Parser) -> ParsedSyntax {
->>>>>>> 7ffcdc1f0b (expression and element attributes)
     if !p.at(T![<]) {
         return ParsedSyntax::Absent;
     }
@@ -380,11 +401,7 @@ impl ParseNodeList for JsxAttributeList {
     }
 }
 
-<<<<<<< HEAD
 fn parse_jsx_attribute(p: &mut Parser) -> ParsedSyntax {
-=======
-fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
->>>>>>> 7ffcdc1f0b (expression and element attributes)
     let m = p.start();
 
     let name = parse_jsx_name_or_namespace(p);

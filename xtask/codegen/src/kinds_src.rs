@@ -511,7 +511,12 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_ANY_ATTRIBUTE_VALUE",
         "JSX_EXPRESSION_ATTRIBUTE_VALUE",
         "JSX_ANY_ATTRIBUTE_NAME",
+<<<<<<< HEAD
 >>>>>>> 26e8aafbda (jsx string literals attributes)
+=======
+        "JSX_ANY_CHILD",
+        "JSX_CHILD_LIST",
+>>>>>>> e6027ef59b (parsing jsx children)
         // unknown nodes JS
         "JS_UNKNOWN",
         "JS_UNKNOWN_EXPRESSION",

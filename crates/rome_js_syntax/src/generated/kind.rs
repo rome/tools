@@ -477,6 +477,8 @@ pub enum JsSyntaxKind {
     JSX_ANY_ATTRIBUTE_VALUE,
     JSX_EXPRESSION_ATTRIBUTE_VALUE,
     JSX_ANY_ATTRIBUTE_NAME,
+    JSX_ANY_CHILD,
+    JSX_CHILD_LIST,
     JS_UNKNOWN,
     JS_UNKNOWN_EXPRESSION,
     JS_UNKNOWN_STATEMENT,
@@ -548,7 +550,8 @@ impl JsSyntaxKind {
             | TS_PROPERTY_SIGNATURE_MODIFIER_LIST
             | TS_METHOD_SIGNATURE_MODIFIER_LIST
             | TS_INDEX_SIGNATURE_MODIFIER_LIST
-            | JSX_ATTRIBUTE_LIST => true,
+            | JSX_ATTRIBUTE_LIST
+            | JSX_CHILD_LIST => true,
             _ => false,
         }
     }

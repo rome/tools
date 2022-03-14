@@ -5400,7 +5400,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
+<<<<<<< HEAD
                     if JsxText::can_cast(element.kind()) {
+=======
+                    if JsxChildList::can_cast(element.kind()) {
+>>>>>>> e6027ef59b (parsing jsx children)
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9352,6 +9356,7 @@ impl SyntaxFactory for JsSyntaxFactory {
             JSX_ATTRIBUTE_LIST => {
                 Self::make_node_list_syntax(kind, children, JsxAttribute::can_cast)
             }
+            JSX_CHILD_LIST => Self::make_node_list_syntax(kind, children, JsxAnyChild::can_cast),
             TS_ENUM_MEMBER_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,

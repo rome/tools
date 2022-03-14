@@ -5,6 +5,7 @@ mod attribute_name;
 mod attribute_name;
 mod attribute_value;
 mod attribute_value;
+mod child;
 mod element;
 mod element_name;
 mod name;
