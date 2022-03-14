@@ -3,6 +3,13 @@ import {join, resolve} from "node:path";
 
 const manifestPath = resolve(join("package.json"));
 
+function pad(date) {
+    if (date < 10) {
+        return "0" + date;
+    }
+    return "" + date
+}
+
 // read the package.json file
 readFile(manifestPath, "utf8").then(async (value) => {
     const manifest = JSON.parse(value);
@@ -15,7 +22,7 @@ readFile(manifestPath, "utf8").then(async (value) => {
 
     const date = new Date();
     const newMinor = currentMinor + 1;
-    const newPatch = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("");
+    const newPatch = [pad(date.getFullYear()), pad(date.getMonth() + 1), pad(date.getDate())].join("");
     // update the version field
     manifest.version = `${currentMajor}.${newMinor}.${newPatch}`;
     try {

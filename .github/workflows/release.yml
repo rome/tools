@@ -43,7 +43,7 @@ jobs:
         working-directory: editors/vscode
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
-          echo "version=$(node ./scripts/updateVersionPrerelease.js)" >> $GITHUB_ENV
+          echo "version=$(node ./scripts/updateVersionForPrerelease.js)" >> $GITHUB_ENV
 
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
@@ -125,7 +125,7 @@ jobs:
       - name: Update package.json version
         if: needs.check.outputs.prerelease == 'true'
         working-directory: editors/vscode
-        run: node ./scripts/updateVersionPrerelease.js
+        run: node ./scripts/updateVersionForPrerelease.js
 
       - name: Package extension
         run: |
@@ -175,7 +175,7 @@ jobs:
       - name: Update package.json version
         if: needs.check.outputs.prerelease == 'true'
         working-directory: editors/vscode
-        run: node ./scripts/updateVersionPrerelease.js
+        run: node ./scripts/updateVersionForPrerelease.js
         
 
       - name: Publish extension (pre-release)
