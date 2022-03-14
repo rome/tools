@@ -121,7 +121,7 @@ jobs:
           node-version: 14.x
 
       - name: Update package.json version
-        if: env.prerelease == 'true'
+        if: needs.check.outputs.prerelease == 'true'
         working-directory: editors/vscode
         run: |
           CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
@@ -170,7 +170,7 @@ jobs:
           name: vscode_packages
 
       - name: Update package.json version
-        if: env.prerelease == 'true'
+        if: needs.check.outputs.prerelease == 'true'
         working-directory: editors/vscode
         run: |
           CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
