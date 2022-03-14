@@ -559,7 +559,7 @@ fn expect_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     else if p.at(T!['{']) {
         let m = p.start();
         p.bump(T!['{']);
-        super::expr::parse_expression(p, ExpressionContext::default());
+        let _ = super::expr::parse_expression(p, ExpressionContext::default());
         p.bump(T!['}']);
         ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE))
     }
