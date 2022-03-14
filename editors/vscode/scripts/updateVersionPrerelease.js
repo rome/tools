@@ -6,10 +6,18 @@ const manifestPath = resolve(join("package.json"));
 // read the package.json file
 readFile(manifestPath, "utf8").then(async (value) => {
     const manifest = JSON.parse(value);
+    const currentVersion = manifest.version;
+    const versionAsSemver =  currentVersion.split(".");
+    // first one is the major
+    const currentMajor = parseInt(versionAsSemver[0]);
+    // second one is the minor
+    const currentMinor = parseInt(versionAsSemver[1]);
+
     const date = new Date();
-    const dateParts = [date.getFullYear(), date.getMonth() + 1, date.getDate()];
+    const newMinor = currentMinor + 1;
+    const newPatch = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("") + date.getTime();
     // update the version field
-    manifest.version = `${manifest.version}-prerelease.${dateParts.join(".")}`;
+    manifest.version = `${currentMajor}.${newMinor}.${newPatch}`;
     try {
         await writeFile(manifestPath, JSON.stringify(manifest, null, "\t"));
     } catch (_e) {
