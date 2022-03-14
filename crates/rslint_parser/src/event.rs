@@ -152,10 +152,11 @@ pub(crate) fn rewrite_events<T: RewriteParseEvents>(
     checkpoint: Checkpoint,
     p: &mut Parser,
 ) {
-    // Only rewind the events and token position but do not reset the parser errors nor parser state.
+    // Only rewind the events but do not reset the parser errors nor parser state.
     // The current parsed grammar is a super-set of the grammar that gets re-parsed. Thus, any
     // error that applied to the old grammar also applies to the sub-grammar.
     let events: Vec<_> = p.events.split_off(checkpoint.event_pos + 1);
+    p.last_token_event_pos = checkpoint.last_token_pos;
 
     let mut sink = RewriteParseEventsTreeSink {
         parser: RewriteParser::new(p, checkpoint.token_source),

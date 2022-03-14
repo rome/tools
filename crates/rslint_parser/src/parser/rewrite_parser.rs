@@ -33,6 +33,7 @@ impl<'p, 's> RewriteParser<'p, 's> {
     /// Starts a marker for a new node.
     pub fn start(&mut self) -> RewriteMarker {
         let pos = self.inner.events.len() as u32;
+        self.skip_trivia(false);
         self.inner.push_event(Event::tombstone(self.offset));
         RewriteMarker(Marker::new(pos, self.offset))
     }

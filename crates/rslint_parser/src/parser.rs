@@ -129,7 +129,8 @@ pub struct Parser<'s> {
     pub(super) state: ParserState,
     pub source_type: SourceType,
     pub diagnostics: Vec<ParseDiagnostic>,
-    last_token_event_pos: Option<usize>,
+    // A `u32` is sufficient because the parser only supports files up to `u32` bytes.
+    pub(super) last_token_event_pos: Option<u32>,
 }
 
 impl<'s> Parser<'s> {
@@ -185,18 +186,20 @@ impl<'s> Parser<'s> {
 
     /// Returns the kind of the last bumped token.
     pub fn last(&self) -> Option<JsSyntaxKind> {
-        self.last_token_event_pos.map(|pos| match self.events[pos] {
-            Event::Token { kind, .. } => kind,
-            _ => unreachable!(),
-        })
+        self.last_token_event_pos
+            .map(|pos| match self.events[pos as usize] {
+                Event::Token { kind, .. } => kind,
+                _ => unreachable!(),
+            })
     }
 
     /// Returns the range of the last bumped token.
     pub fn last_range(&self) -> Option<TextRange> {
-        self.last_token_event_pos.map(|pos| match self.events[pos] {
-            Event::Token { range, .. } => range,
-            _ => unreachable!(),
-        })
+        self.last_token_event_pos
+            .map(|pos| match self.events[pos as usize] {
+                Event::Token { range, .. } => range,
+                _ => unreachable!(),
+            })
     }
 
     /// Consume the next token if `kind` matches.
@@ -216,8 +219,9 @@ impl<'s> Parser<'s> {
     /// belong to the same node.
     pub fn start(&mut self) -> Marker {
         let pos = self.events.len() as u32;
-        self.push_event(Event::tombstone(self.tokens.position()));
-        Marker::new(pos, self.tokens.position())
+        let start = self.tokens.position();
+        self.push_event(Event::tombstone(start));
+        Marker::new(pos, start)
     }
 
     /// Tests if there's a line break before the nth token.
@@ -321,7 +325,7 @@ impl<'s> Parser<'s> {
     }
 
     fn push_token(&mut self, kind: JsSyntaxKind, range: TextRange) {
-        self.last_token_event_pos = Some(self.events.len());
+        self.last_token_event_pos = Some(self.events.len() as u32);
         self.push_event(Event::Token { kind, range });
     }
 
@@ -630,9 +634,11 @@ impl CompletedMarker {
         match p.events[idx] {
             Event::Start {
                 ref mut forward_parent,
+                start,
                 ..
             } => {
                 *forward_parent = Some(new_pos.pos - self.start_pos);
+                new_pos.start = start;
             }
             _ => unreachable!(),
         }
@@ -674,7 +680,7 @@ impl CompletedMarker {
 pub struct Checkpoint {
     pub(super) event_pos: usize,
     errors_pos: usize,
-    last_token_pos: Option<usize>,
+    pub(super) last_token_pos: Option<u32>,
     state: ParserStateCheckpoint,
     pub(super) token_source: TokenSourceCheckpoint,
 }
