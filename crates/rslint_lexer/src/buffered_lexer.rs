@@ -178,9 +178,10 @@ impl<'t> BufferedLexer<'t> {
         if new_kind != current_kind {
             // The token has changed, clear the lookahead
             self.lookahead.clear();
-        } else {
+        } else if !self.lookahead.is_empty() {
             // It's still the same kind. So let's move the lexer back to the position it was before re-lexing
             // and keep the lookahead as is.
+            self.current = Some(self.inner.checkpoint());
             self.inner.rewind(current_checkpoint);
         }
 
