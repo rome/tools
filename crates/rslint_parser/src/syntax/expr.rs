@@ -416,15 +416,15 @@ fn parse_binary_or_logical_expression_recursive(
     // current operator has the same or a lower precedence than the left-hand side expression. Thus,
     // the algorithm goes at most `count(OperatorPrecedence)` levels deep.
     loop {
-        let op = match p.cur() {
-            T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
-            T![>] if p.nth_at(1, T![>]) => T![>>],
-            T![in] if !context.is_in_included() => {
-                break;
-            }
-            T![as] if p.has_preceding_line_break() => break,
-            k => k,
-        };
+        // test_err js_right_shift_comments
+        // 1 >> /* a comment */ > 2;
+        let op = p.re_lex(ReLexContext::BinaryOperator);
+
+        if (op == T![as] && p.has_preceding_line_break())
+            || (op == T![in] && !context.is_in_included())
+        {
+            break;
+        }
 
         let new_precedence = match OperatorPrecedence::try_from_binary_operator(op) {
             Ok(precedence) => precedence,
@@ -492,15 +492,7 @@ fn parse_binary_or_logical_expression_recursive(
         }
 
         let m = left.precede(p);
-        match op {
-            T![>>] => {
-                p.bump_multiple(2, T![>>]);
-            }
-            T![>>>] => {
-                p.bump_multiple(3, T![>>>]);
-            }
-            _ => p.bump_remap(op),
-        };
+        p.bump(op);
 
         // test ts ts_as_expression
         // let x: any = "string";
@@ -1586,7 +1578,7 @@ fn parse_call_expression_rest(
 
         if p.at(T![?.]) {}
 
-        if !matches!(p.cur(), T![?.] | T![<] | T!['(']) {
+        if !matches!(p.cur(), T![?.] | T![<] | T![<<] | T!['(']) {
             break lhs;
         }
 
@@ -1602,7 +1594,9 @@ fn parse_call_expression_rest(
         // a<A, B, C>();
         // (() => { a }).a<A, B, C>()
         // (() => a)<A, B, C>();
-        if TypeScript.is_supported(p) && p.at(T![<]) {
+        // type A<T> = T;
+        // a<<T>(arg: T) => number, number, string>();
+        if TypeScript.is_supported(p) && matches!(p.cur(), T![<] | T![<<]) {
             // rewinds automatically if not a valid type arguments
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
 
