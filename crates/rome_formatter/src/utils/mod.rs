@@ -7,12 +7,12 @@ mod simple;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, hard_group_elements, hard_line_break, space_token, token,
-    FormatElement, FormatResult, Formatter, Token,
+    FormatElement, FormatResult, Formatter, ToFormatElement, Token,
 };
 pub use binarish_expression::format_binaryish_expression;
 pub(crate) use call_expression::format_call_expression;
 pub(crate) use format_conditional::{format_conditional, Conditional};
-use rome_js_syntax::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use rome_js_syntax::{AstNode, AstNodeList, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause,
     JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
@@ -513,4 +513,51 @@ impl TemplateElement {
             TemplateElement::Ts(template_element) => template_element.syntax().contains_comments(),
         }
     }
+}
+
+/// This enum is used to extract a precedence from certain nodes. By comparing the precedence
+/// of two nodes, it's possible to change the way certain node should be formatted.
+///
+/// A use case, for example, is when comparing a node with its parent. If the parent has a lower
+/// precedence, then the node can change its formatting.
+#[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
+pub enum FormatPrecedence {
+    /// No precedence given to these nodes  
+    None,
+
+    /// Low priority
+    Low,
+
+    /// High priority
+    High,
+}
+
+pub fn with_precedence(node: Option<&SyntaxNode>) -> FormatPrecedence {
+    node.map_or(FormatPrecedence::None, |node| match node.kind() {
+        JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => FormatPrecedence::Low,
+
+        JsSyntaxKind::TS_AS_EXPRESSION
+        | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION
+        | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
+        | JsSyntaxKind::JS_UNARY_EXPRESSION
+        | JsSyntaxKind::JS_LOGICAL_EXPRESSION
+        | JsSyntaxKind::JS_BINARY_EXPRESSION
+        | JsSyntaxKind::JS_TEMPLATE
+        | JsSyntaxKind::JS_SPREAD
+        | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
+        | JsSyntaxKind::JS_CALL_EXPRESSION
+        | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
+        | JsSyntaxKind::JS_NEW_EXPRESSION
+        | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
+        | JsSyntaxKind::JS_EXTENDS_CLAUSE
+        | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
+        | JsSyntaxKind::JS_AWAIT_EXPRESSION
+        | JsSyntaxKind::JS_YIELD_ARGUMENT
+        | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+        | JsSyntaxKind::JS_EXPRESSION_STATEMENT
+        | JsSyntaxKind::JS_RETURN_STATEMENT
+        | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => FormatPrecedence::High,
+
+        _ => FormatPrecedence::None,
+    })
 }

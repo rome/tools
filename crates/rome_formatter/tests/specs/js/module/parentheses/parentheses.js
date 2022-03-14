@@ -20,3 +20,5 @@ async function *f() {
 }
 
 const a = () => ({}?.() && a);
+
+(list || list2)?.[(list || list2)];

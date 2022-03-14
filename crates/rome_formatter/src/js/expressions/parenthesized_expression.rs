@@ -1,5 +1,5 @@
 use crate::formatter_traits::FormatTokenAndNode;
-use crate::utils::is_simple_expression;
+use crate::utils::{is_simple_expression, with_precedence};
 use crate::{
     empty_element, format_elements, group_elements, hard_group_elements, FormatElement,
     FormatResult, Formatter, ToFormatElement,
@@ -71,6 +71,8 @@ fn is_simple_parenthesized_expression(node: &JsParenthesizedExpression) -> Synta
 fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<bool> {
     let expression = node.expression()?;
     let parent = node.syntax().parent();
+    let parent_precedence = with_precedence(parent.as_ref());
+    let node_precedence = with_precedence(Some(node.syntax()));
 
     if let Some(parent) = parent {
         if matches!(
@@ -103,6 +105,7 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
                 | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
                 | JsSyntaxKind::JS_EXPRESSION_STATEMENT
                 | JsSyntaxKind::JS_RETURN_STATEMENT
+                | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
         ) {
             return Ok(false);
         }

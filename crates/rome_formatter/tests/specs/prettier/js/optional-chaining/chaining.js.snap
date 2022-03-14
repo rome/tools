@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: chaining.js
 
 ---
@@ -119,7 +119,7 @@ a?.b[3].c?.(x).d.e?.f[3].g?.(y).h;
 (a ? b : c)?.d;
 
 (list || list2)?.length;
-list || list2?.[list || list2];
+(list || list2)?.[(list || list2)];
 
 async function HelloWorld() {
   var x = (await foo.bar.blah)?.hi;

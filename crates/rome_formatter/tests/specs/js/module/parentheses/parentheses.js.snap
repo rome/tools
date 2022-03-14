@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 168
+assertion_line: 197
 expression: parentheses.js
 
 ---
@@ -27,6 +27,8 @@ async function *f() {
 }
 
 const a = () => ({}?.() && a);
+
+(list || list2)?.[(list || list2)];
 =============================
 # Outputs
 ## Output 1
@@ -58,4 +60,6 @@ async function* f() {
 }
 
 const a = () => ({}?.() && a);
+
+(list || list2)?.[(list || list2)];
 
