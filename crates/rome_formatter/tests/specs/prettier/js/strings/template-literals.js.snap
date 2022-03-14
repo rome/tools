@@ -179,8 +179,14 @@ const makeBody = (store, assets, html) =>
         content={[
           { id: 'app-container', dangerouslySetInnerHTML: { __html: html } },
         ]}
+<<<<<<< HEAD
       />,
   )}`;
+=======
+      />
+    )
+  }`;
+>>>>>>> 5493445d92 (fixing panic on formatter tests)
 
 // https://github.com/prettier/prettier/issues/1626#issue-229655106
 const Bar = styled.div`
@@ -205,9 +211,15 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 39 │ │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
 40 │ │         bodyScripts={compact([ assets.javascript.body ])}
    · │
+<<<<<<< HEAD
 49 │ │         ]}
 50 │ │       />
    │ └────────^ JSX only syntax
+=======
+50 │ │       />
+51 │ │     )
+   │ └─────^ JSX only syntax
+>>>>>>> 5493445d92 (fixing panic on formatter tests)
 
 
 ```

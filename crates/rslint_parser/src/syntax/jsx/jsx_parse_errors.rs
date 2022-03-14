@@ -2,6 +2,7 @@ use rome_js_syntax::TextRange;
 use rslint_errors::Diagnostic;
 
 use crate::{
+    parser::{expected_any, expected_node, ToDiagnostic},
     parser::{expected_any, ToDiagnostic},
     parser::{expected_node, ToDiagnostic},
     Parser,
