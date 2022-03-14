@@ -2,18 +2,18 @@
 
 pub mod flip_bin_exp;
 
-use once_cell::sync::Lazy;
 use rome_js_syntax::{AstNode, SyntaxNode, SyntaxToken, TextRange, TextSize, TokenAtOffset};
 
 use crate::{ActionCategory, Analysis, AnalysisServer, AnalyzerContext, FileId};
 
-static ALL_ASSIST_PROVIDERS: Lazy<Vec<AssistProvider>> = Lazy::new(|| vec![flip_bin_exp::create()]);
+static ALL_ASSIST_PROVIDERS: &[AssistProvider] = &[flip_bin_exp::ASSIST];
 
 pub struct AssistProvider {
     pub name: &'static str,
-    pub action_categories: Vec<ActionCategory>,
+    pub action_categories: &'static [ActionCategory],
     pub analyze: fn(&AssistContext) -> Option<Analysis>,
 }
+
 pub fn all() -> impl Iterator<Item = &'static AssistProvider> {
     ALL_ASSIST_PROVIDERS.iter()
 }

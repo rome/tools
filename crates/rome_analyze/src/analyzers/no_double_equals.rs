@@ -3,13 +3,11 @@ use rome_js_syntax::{AstNode, JsAnyExpression, JsBinaryExpression, SyntaxResult}
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
-pub fn create() -> Analyzer {
-    Analyzer {
-        name: "noDoubleEquals",
-        action_categories: vec![],
-        analyze,
-    }
-}
+pub const ANALYZER: Analyzer = Analyzer {
+    name: "noDoubleEquals",
+    action_categories: &[],
+    analyze,
+};
 
 fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
     ctx.query_nodes::<JsBinaryExpression>()
