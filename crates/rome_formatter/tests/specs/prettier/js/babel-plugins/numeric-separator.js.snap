@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: numeric-separator.js
 
 ---
@@ -54,7 +54,7 @@ let budget = 1_000_000_000_000;
 // What is the value of `budget`? It's 1 trillion!
 //
 // Let's confirm:
-console.log(budget === 10 ** 12); // true
+console.log(budget === (10 ** 12)); // true
 
 let nibbles = 0b1010_0001_1000_0101;
 

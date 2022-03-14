@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: argument-list.js
 
 ---
@@ -272,8 +272,8 @@ moreArgTypes(
 evenMoreArgTypes(
   doSomething({ name: "Hello World", age: 34 }, true),
   14,
-  1 + 2 - 90 / 80,
-  !98 * 60 - 90,
+  1 + 2 - (90 / 80),
+  (!98 * 60) - 90,
 );
 
 foo.apply(

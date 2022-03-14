@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 144
 expression: equality.js
 
 ---
@@ -21,12 +21,12 @@ x !== y !== z;
 # Output
 ```js
 x == y == z;
-x != y == z;
+(x != y) == z;
 x == y != z;
 x != y != z;
 
 x === y === z;
-x !== y === z;
+(x !== y) === z;
 x === y !== z;
 x !== y !== z;
 

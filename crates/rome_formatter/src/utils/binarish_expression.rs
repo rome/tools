@@ -476,9 +476,9 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
                 compare_to > previous_operation
             }
 
-            // (Operation::Binary(previous_operation), Operation::Binary(compare_to)) => {
-            //     compare_to > previous_operation
-            // }
+            (Operation::Binary(previous_operation), Operation::Binary(compare_to)) => {
+                compare_to > previous_operation
+            }
             _ => false,
         }
     } else {

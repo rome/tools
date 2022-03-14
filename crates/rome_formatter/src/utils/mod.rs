@@ -7,7 +7,7 @@ mod simple;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, hard_group_elements, hard_line_break, space_token, token,
-    FormatElement, FormatResult, Formatter, ToFormatElement, Token,
+    FormatElement, FormatResult, Formatter, Token,
 };
 pub use binarish_expression::format_binaryish_expression;
 pub(crate) use call_expression::format_call_expression;
