@@ -29,7 +29,7 @@ pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryRe
 use crate::state::ParserStateCheckpoint;
 use crate::token_source::{TokenSource, TokenSourceCheckpoint, Trivia};
 use crate::*;
-use rslint_lexer::{LexContext, LexerReturn, ReLexContext};
+use rslint_lexer::{LexContext, LexedToken, ReLexContext};
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
@@ -168,6 +168,7 @@ impl<'s> Parser<'s> {
     }
 
     /// Checks if the parser is currently at a specific token
+    #[inline]
     pub fn at(&self, kind: JsSyntaxKind) -> bool {
         self.cur() == kind
     }
@@ -351,7 +352,7 @@ impl<'s> Parser<'s> {
     /// Re-lexes the current token in the specified context. Returns the kind
     /// of the re-lexed token (can be the same as before if the context doesn't make a difference for the current token)
     pub fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
-        let LexerReturn { kind, diagnostic } = self.tokens.re_lex(context);
+        let LexedToken { kind, diagnostic } = self.tokens.re_lex(context);
 
         if let Some(diagnostic) = diagnostic {
             self.diagnostics.push(*diagnostic);

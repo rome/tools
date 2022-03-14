@@ -1,4 +1,4 @@
-use crate::{LexContext, Lexer, LexerCheckpoint, LexerReturn, ReLexContext, TextRange, TokenFlags};
+use crate::{LexContext, LexedToken, Lexer, LexerCheckpoint, ReLexContext, TextRange, TokenFlags};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxKind::EOF};
 use rslint_errors::Diagnostic;
 use std::collections::VecDeque;
@@ -20,7 +20,7 @@ use std::iter::FusedIterator;
 ///   that any following token may turn out to be different as well, thus, it's necessary to clear the
 ///   lookahead cache.
 #[derive(Debug)]
-pub struct BufferedLexer<'t> {
+pub struct BufferedLexer<'l> {
     /// Cache storing the lookahead tokens. That are, all tokens between the `current` token and
     /// the "current" of the [Lexer]. This is because the [Lexer]'s current token points to the
     /// furthest requested lookahead token.
@@ -41,13 +41,13 @@ pub struct BufferedLexer<'t> {
     current: Option<LexerCheckpoint>,
 
     /// Underlying lexer. May be ahead if iterated with lookahead
-    inner: Lexer<'t>,
+    inner: Lexer<'l>,
 }
 
-impl<'t> BufferedLexer<'t> {
+impl<'l> BufferedLexer<'l> {
     /// Creates a new [BufferedLexer] wrapping the passed in [Lexer].
-    pub fn new(lexer: Lexer<'t>) -> BufferedLexer<'t> {
-        BufferedLexer {
+    pub fn new(lexer: Lexer<'l>) -> Self {
+        Self {
             inner: lexer,
             current: None,
             lookahead: VecDeque::new(),
@@ -58,7 +58,7 @@ impl<'t> BufferedLexer<'t> {
     ///
     /// [See `Lexer.next_token`](Lexer::next_token)
     #[inline(always)]
-    pub fn next_token(&mut self, context: LexContext) -> LexerReturn {
+    pub fn next_token(&mut self, context: LexContext) -> LexedToken {
         // Reset the lookahead if the context isn't the regular context because it's highly likely
         // that the lexer will return a different token.
         if !context.is_regular() {
@@ -77,7 +77,7 @@ impl<'t> BufferedLexer<'t> {
                 self.current = Some(next.checkpoint);
             }
 
-            return LexerReturn::new(kind, next.diagnostic);
+            return LexedToken::new(kind, next.diagnostic);
         }
 
         // The [BufferedLexer] and [Lexer] are now both at the same position. Clear the cached
@@ -128,7 +128,7 @@ impl<'t> BufferedLexer<'t> {
 
     /// Returns the source text
     #[inline]
-    pub fn source(&self) -> &'t str {
+    pub fn source(&self) -> &'l str {
         self.inner.source()
     }
 
@@ -162,7 +162,7 @@ impl<'t> BufferedLexer<'t> {
 
     /// Re-lex the current token in the given context
     /// See [Lexer::re_lex]
-    pub fn re_lex(&mut self, context: ReLexContext) -> LexerReturn {
+    pub fn re_lex(&mut self, context: ReLexContext) -> LexedToken {
         let current_kind = self.current();
         let current_checkpoint = self.inner.checkpoint();
 
@@ -170,7 +170,7 @@ impl<'t> BufferedLexer<'t> {
             self.inner.rewind(current);
         }
 
-        let LexerReturn {
+        let LexedToken {
             kind: new_kind,
             diagnostic,
         } = self.inner.re_lex(context);
@@ -185,13 +185,13 @@ impl<'t> BufferedLexer<'t> {
             self.inner.rewind(current_checkpoint);
         }
 
-        LexerReturn::new(new_kind, diagnostic)
+        LexedToken::new(new_kind, diagnostic)
     }
 
     /// Returns an iterator over the tokens following the current token to perform lookahead.
     /// For example, what's the 3rd token after the current token?
     #[inline(always)]
-    pub fn lookahead<'s>(&'s mut self) -> LookaheadIterator<'s, 't> {
+    pub fn lookahead<'s>(&'s mut self) -> LookaheadIterator<'s, 'l> {
         LookaheadIterator::new(self)
     }
 }
@@ -238,7 +238,7 @@ impl<'l, 't> Iterator for LookaheadIterator<'l, 't> {
             self.buffered.current = Some(lexer.checkpoint());
         }
 
-        let LexerReturn { diagnostic, .. } = lexer.next_token(LexContext::default());
+        let LexedToken { diagnostic, .. } = lexer.next_token(LexContext::default());
 
         // Lex the next token and cache it in the lookahead cache. Needed to cache it right away
         // because of the diagnostic.

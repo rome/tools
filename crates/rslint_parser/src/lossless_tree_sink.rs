@@ -9,7 +9,7 @@ use rome_rowan::TriviaPiece;
 #[derive(Debug)]
 pub struct LosslessTreeSink<'a> {
     text: &'a str,
-    trivia: &'a [Trivia],
+    trivia_list: &'a [Trivia],
     text_pos: TextSize,
     trivia_pos: usize,
     parents_count: usize,
@@ -49,7 +49,7 @@ impl<'a> LosslessTreeSink<'a> {
     pub fn new(text: &'a str, trivia: &'a [Trivia]) -> Self {
         Self {
             text,
-            trivia,
+            trivia_list: trivia,
             text_pos: 0.into(),
             trivia_pos: 0,
             parents_count: 0,
@@ -100,7 +100,7 @@ impl<'a> LosslessTreeSink<'a> {
         let start_text_pos = self.text_pos;
 
         let mut count = 0;
-        for trivia in &self.trivia[self.trivia_pos..] {
+        for trivia in &self.trivia_list[self.trivia_pos..] {
             if trailing != trivia.trailing() || self.text_pos != trivia.offset() {
                 break;
             }
