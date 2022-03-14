@@ -1,5 +1,5 @@
 use crate::formatter_traits::FormatTokenAndNode;
-use crate::utils::{is_simple_expression, with_precedence};
+use crate::utils::{is_simple_expression, FormatPrecedence};
 use crate::{
     empty_element, format_elements, group_elements, hard_group_elements, FormatElement,
     FormatResult, Formatter, ToFormatElement,
@@ -71,46 +71,11 @@ fn is_simple_parenthesized_expression(node: &JsParenthesizedExpression) -> Synta
 fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<bool> {
     let expression = node.expression()?;
     let parent = node.syntax().parent();
-    let parent_precedence = with_precedence(parent.as_ref());
-    let node_precedence = with_precedence(Some(node.syntax()));
+    let parent_precedence = FormatPrecedence::with_precedence_for_parenthesis(parent.as_ref());
+    let node_precedence = FormatPrecedence::with_precedence_for_parenthesis(Some(node.syntax()));
 
-    if let Some(parent) = parent {
-        if matches!(
-            parent.kind(),
-            // these are particular nodes where eliding parenthesis would cause
-            // in the semantic change in the code, this means that we can't remove the parenthesis
-            //
-            // For example:
-            // ```ignore
-            // (hey ? bar() : rebar())`Template literal`
-            // ```
-            // Here, we can't remove the parenthesis.
-            JsSyntaxKind::TS_AS_EXPRESSION
-                | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION
-                | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
-                | JsSyntaxKind::JS_UNARY_EXPRESSION
-                | JsSyntaxKind::JS_LOGICAL_EXPRESSION
-                | JsSyntaxKind::JS_BINARY_EXPRESSION
-                | JsSyntaxKind::JS_TEMPLATE
-                | JsSyntaxKind::JS_SPREAD
-                | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-                | JsSyntaxKind::JS_CALL_EXPRESSION
-                | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
-                | JsSyntaxKind::JS_NEW_EXPRESSION
-                | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
-                | JsSyntaxKind::JS_EXTENDS_CLAUSE
-                | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
-                | JsSyntaxKind::JS_AWAIT_EXPRESSION
-                | JsSyntaxKind::JS_YIELD_ARGUMENT
-                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
-                | JsSyntaxKind::JS_EXPRESSION_STATEMENT
-                | JsSyntaxKind::JS_RETURN_STATEMENT
-                | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
-        ) {
-            return Ok(false);
-        }
-    } else {
-        return Ok(true);
+    if parent_precedence > node_precedence {
+        return Ok(false);
     }
 
     // Here we handle cases where we have binary/logical expressions.

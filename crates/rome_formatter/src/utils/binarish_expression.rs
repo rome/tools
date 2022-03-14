@@ -476,10 +476,8 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
                 compare_to > previous_operation
             }
 
-            // Prettier, for some reason, decided that binary expressions with different precedence don't need parenthesis.
-            // This commented code is here for the compatibility reason.
-            // (Operation::Binary(_base), Operation::Binary(_compare_to)) => {
-            //     compare_to > base
+            // (Operation::Binary(previous_operation), Operation::Binary(compare_to)) => {
+            //     compare_to > previous_operation
             // }
             _ => false,
         }
