@@ -1323,66 +1323,66 @@ impl<'src> Lexer<'src> {
                     if !in_class {
                         let (mut g, mut i, mut m, mut s, mut u, mut y, mut d) = (false, false, false, false, false, false, false);
 
-                        unwind_loop! {
-                            let next = self.next_byte_bounded();
+                        while let Some(next) = self.next_byte_bounded() {
                             let chr_start = self.position;
+
                             match next {
-                                Some(b'g') => {
+                                b'g' => {
                                     if g && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('g'))
                                     }
                                     g = true;
                                 },
-                                Some(b'i') => {
+                                b'i' => {
                                     if i && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('i'))
                                     }
                                     i = true;
                                 },
-                                Some(b'm') => {
+                                b'm' => {
                                     if m && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('m'))
                                     }
                                     m = true;
                                 },
-                                Some(b's') => {
+                                b's' => {
                                     if s && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('s'))
                                     }
                                     s = true;
                                 },
-                                Some(b'u') => {
+                                b'u' => {
                                     if u && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('u'))
                                     }
                                     u = true;
                                 },
-                                Some(b'y') => {
+                                b'y' => {
                                     if y && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('y'))
                                     }
                                     y = true;
                                 },
-                                Some(b'd') => {
+                                b'd' => {
                                     if d && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('d'))
                                     }
                                     d = true;
                                 },
-                                Some(_) if self.cur_ident_part().is_some() => {
+                                _ if self.cur_ident_part().is_some() => {
                                     if diagnostic.is_none() {
                                         diagnostic = Some(Diagnostic::error(self.file_id, "", "invalid regex flag")
                                             .primary(chr_start .. self.position + 1, "this is not a valid regex flag"));
                                     }
-                                },
-                                _ => {
-                                    return LexedToken::new(
-                                        JsSyntaxKind::JS_REGEX_LITERAL,
-                                        diagnostic.map(Box::new)
-                                    )
                                 }
-                            }
+                                _ => {break}
+                            };
                         }
+
+                        return LexedToken::new(
+                            JsSyntaxKind::JS_REGEX_LITERAL,
+                            diagnostic.map(Box::new)
+                        );
                     }
                 },
                 Some(b'\\') => {
