@@ -13,7 +13,7 @@
 //! `>>` and `>>>` are not emitted as single tokens, they are emitted as multiple `>` tokens. This is because of
 //! TypeScript parsing and productions such as `T<U<N>>`
 
-
+#![allow(clippy::or_fun_call)]
 
 #[rustfmt::skip]
 mod tables;
