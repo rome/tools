@@ -242,11 +242,9 @@ view[0];
 //   ^ negative because of overflow
 
 1n + 2;
-(
-  // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
+// ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
-  1n * 2
-)
+(1n * 2)
 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
 + 1n;

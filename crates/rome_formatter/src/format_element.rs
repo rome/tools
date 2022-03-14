@@ -1226,37 +1226,53 @@ impl FormatElement {
     }
 
     /// Splits off the leading and trailing trivias (comments) from this [FormatElement]
+    ///
+    /// For [FormatElement::HardGroup] and [FormatElement::Group], the trailing and leading trivias
+    /// are automatically moved  outside of the group. The group itself is then recreated around the
+    /// content itself.
     pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
-        // Non-list elements are returned directly
-        if let FormatElement::List(list) = self {
-            // Find the index of the first non-comment element in the list
-            let content_start = list
-                .content
-                .iter()
-                .position(|elem| !matches!(elem, FormatElement::Comment(_)))
-                .unwrap_or(list.content.len());
+        match self {
+            FormatElement::List(list) => {
+                // Find the index of the first non-comment element in the list
+                let content_start = list
+                    .content
+                    .iter()
+                    .position(|elem| !matches!(elem, FormatElement::Comment(_)))
+                    .unwrap_or(list.content.len());
 
-            // Split the list at the found index
-            let mut leading = list.content;
-            let mut content = leading.split_off(content_start);
+                // Split the list at the found index
+                let mut leading = list.content;
+                let mut content = leading.split_off(content_start);
 
-            // Find the index of the last non-comment element in the list
-            let content_end = content
-                .iter()
-                .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
-                .map_or(0, |index| index + 1);
+                // Find the index of the last non-comment element in the list
+                let content_end = content
+                    .iter()
+                    .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
+                    .map_or(0, |index| index + 1);
 
-            // Split the list at the found index, content now holds the inner elements
-            let trailing = content.split_off(content_end);
+                // Split the list at the found index, content now holds the inner elements
+                let trailing = content.split_off(content_end);
 
-            return (
-                concat_elements(leading),
-                concat_elements(content),
-                concat_elements(trailing),
-            );
+                (
+                    concat_elements(leading),
+                    concat_elements(content),
+                    concat_elements(trailing),
+                )
+            }
+            FormatElement::HardGroup(group) => {
+                let (leading, content, trailing) = group.content.split_trivia();
+                // re-create the grouping around the content only
+                (leading, hard_group_elements(content), trailing)
+            }
+
+            FormatElement::Group(group) => {
+                let (leading, content, trailing) = group.content.split_trivia();
+                // re-create the grouping around the content only
+                (leading, group_elements(content), trailing)
+            }
+            // Non-list elements are returned directly
+            _ => (empty_element(), self, empty_element()),
         }
-
-        (empty_element(), self, empty_element())
     }
 }
 

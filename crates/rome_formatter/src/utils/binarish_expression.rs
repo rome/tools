@@ -486,14 +486,24 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
     };
 
     let result = if operation_is_higher {
-        (
+        let formatted = if node.syntax().contains_comments() {
+            let (leading, content, trailing) = formatted_node.split_trivia();
+            format_elements![
+                leading,
+                group_elements(format_elements![
+                    token("("),
+                    soft_block_indent(format_elements![content, trailing]),
+                    token(")")
+                ])
+            ]
+        } else {
             group_elements(format_elements![
                 token("("),
                 soft_block_indent(formatted_node),
                 token(")"),
-            ]),
-            true,
-        )
+            ])
+        };
+        (formatted, true)
     } else {
         (formatted_node, false)
     };

@@ -590,7 +590,8 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-(list || list2)?.[(list || list2)];        
+// Implicitly parenthesized && and || requires parens
+foo && bar || baz;     
 "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax.clone());
