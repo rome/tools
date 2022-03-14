@@ -15,7 +15,7 @@ readFile(manifestPath, "utf8").then(async (value) => {
 
     const date = new Date();
     const newMinor = currentMinor + 1;
-    const newPatch = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("") + date.getTime();
+    const newPatch = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("");
     // update the version field
     manifest.version = `${currentMajor}.${newMinor}.${newPatch}`;
     try {
