@@ -5039,6 +5039,215 @@ pub struct JsYieldExpressionFields {
     pub argument: Option<JsYieldArgument>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxClosingElement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxClosingElement {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxClosingElementFields {
+        JsxClosingElementFields {
+            l_angle_slash_token: self.l_angle_slash_token(),
+            name: self.name(),
+            r_angle_token: self.r_angle_token(),
+        }
+    }
+    pub fn l_angle_slash_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+pub struct JsxClosingElementFields {
+    pub l_angle_slash_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsxAnyElementName>,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxElement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxElement {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxElementFields {
+        JsxElementFields {
+            opening_element: self.opening_element(),
+            closing_element: self.closing_element(),
+        }
+    }
+    pub fn opening_element(&self) -> SyntaxResult<JsxOpeningElement> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn closing_element(&self) -> SyntaxResult<JsxClosingElement> {
+        support::required_node(&self.syntax, 1usize)
+    }
+}
+pub struct JsxElementFields {
+    pub opening_element: SyntaxResult<JsxOpeningElement>,
+    pub closing_element: SyntaxResult<JsxClosingElement>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxElementExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxElementExpression {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxElementExpressionFields {
+        JsxElementExpressionFields {
+            element: self.element(),
+        }
+    }
+    pub fn element(&self) -> SyntaxResult<JsxAnyElement> {
+        support::required_node(&self.syntax, 0usize)
+    }
+}
+pub struct JsxElementExpressionFields {
+    pub element: SyntaxResult<JsxAnyElement>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxMemberExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxMemberExpression {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxMemberExpressionFields {
+        JsxMemberExpressionFields {
+            object: self.object(),
+            dot_token: self.dot_token(),
+            member: self.member(),
+        }
+    }
+    pub fn object(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 0usize) }
+    pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn member(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct JsxMemberExpressionFields {
+    pub object: SyntaxResult<JsName>,
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub member: SyntaxResult<JsName>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxOpeningElement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxOpeningElement {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxOpeningElementFields {
+        JsxOpeningElementFields {
+            l_angle_token: self.l_angle_token(),
+            name: self.name(),
+            r_angle_token: self.r_angle_token(),
+        }
+    }
+    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+pub struct JsxOpeningElementFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsxAnyElementName>,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxReferenceIdentifier {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxReferenceIdentifier {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxReferenceIdentifierFields {
+        JsxReferenceIdentifierFields {
+            value_token: self.value_token(),
+        }
+    }
+    pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct JsxReferenceIdentifierFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxSelfClosingElement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxSelfClosingElement {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxSelfClosingElementFields {
+        JsxSelfClosingElementFields {
+            l_angle_token: self.l_angle_token(),
+            name: self.name(),
+            slash_r_angle_token: self.slash_r_angle_token(),
+        }
+    }
+    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn slash_r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+pub struct JsxSelfClosingElementFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsxAnyElementName>,
+    pub slash_r_angle_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
     pub(crate) syntax: SyntaxNode,
 }
@@ -8668,6 +8877,7 @@ pub enum JsAnyExpression {
     JsUnaryExpression(JsUnaryExpression),
     JsUnknownExpression(JsUnknownExpression),
     JsYieldExpression(JsYieldExpression),
+    JsxElementExpression(JsxElementExpression),
     NewTarget(NewTarget),
     TsAsExpression(TsAsExpression),
     TsNonNullAssertionExpression(TsNonNullAssertionExpression),
@@ -8847,6 +9057,16 @@ pub enum JsAnySwitchClause {
 pub enum JsAnyTemplateElement {
     JsTemplateChunkElement(JsTemplateChunkElement),
     JsTemplateElement(JsTemplateElement),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsxAnyElement {
+    JsxElement(JsxElement),
+    JsxSelfClosingElement(JsxSelfClosingElement),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsxAnyElementName {
+    JsxMemberExpression(JsxMemberExpression),
+    JsxReferenceIdentifier(JsxReferenceIdentifier),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyExternalModuleDeclarationBody {
@@ -13642,6 +13862,210 @@ impl From<JsYieldExpression> for SyntaxNode {
 }
 impl From<JsYieldExpression> for SyntaxElement {
     fn from(n: JsYieldExpression) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxClosingElement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_CLOSING_ELEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxClosingElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxClosingElement")
+            .field(
+                "l_angle_slash_token",
+                &support::DebugSyntaxResult(self.l_angle_slash_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "r_angle_token",
+                &support::DebugSyntaxResult(self.r_angle_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxClosingElement> for SyntaxNode {
+    fn from(n: JsxClosingElement) -> SyntaxNode { n.syntax }
+}
+impl From<JsxClosingElement> for SyntaxElement {
+    fn from(n: JsxClosingElement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxElement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_ELEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxElement")
+            .field(
+                "opening_element",
+                &support::DebugSyntaxResult(self.opening_element()),
+            )
+            .field(
+                "closing_element",
+                &support::DebugSyntaxResult(self.closing_element()),
+            )
+            .finish()
+    }
+}
+impl From<JsxElement> for SyntaxNode {
+    fn from(n: JsxElement) -> SyntaxNode { n.syntax }
+}
+impl From<JsxElement> for SyntaxElement {
+    fn from(n: JsxElement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxElementExpression {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_ELEMENT_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxElementExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxElementExpression")
+            .field("element", &support::DebugSyntaxResult(self.element()))
+            .finish()
+    }
+}
+impl From<JsxElementExpression> for SyntaxNode {
+    fn from(n: JsxElementExpression) -> SyntaxNode { n.syntax }
+}
+impl From<JsxElementExpression> for SyntaxElement {
+    fn from(n: JsxElementExpression) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxMemberExpression {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_MEMBER_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxMemberExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxMemberExpression")
+            .field("object", &support::DebugSyntaxResult(self.object()))
+            .field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
+            .field("member", &support::DebugSyntaxResult(self.member()))
+            .finish()
+    }
+}
+impl From<JsxMemberExpression> for SyntaxNode {
+    fn from(n: JsxMemberExpression) -> SyntaxNode { n.syntax }
+}
+impl From<JsxMemberExpression> for SyntaxElement {
+    fn from(n: JsxMemberExpression) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxOpeningElement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_OPENING_ELEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxOpeningElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxOpeningElement")
+            .field(
+                "l_angle_token",
+                &support::DebugSyntaxResult(self.l_angle_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "r_angle_token",
+                &support::DebugSyntaxResult(self.r_angle_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxOpeningElement> for SyntaxNode {
+    fn from(n: JsxOpeningElement) -> SyntaxNode { n.syntax }
+}
+impl From<JsxOpeningElement> for SyntaxElement {
+    fn from(n: JsxOpeningElement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxReferenceIdentifier {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_REFERENCE_IDENTIFIER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxReferenceIdentifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxReferenceIdentifier")
+            .field(
+                "value_token",
+                &support::DebugSyntaxResult(self.value_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxReferenceIdentifier> for SyntaxNode {
+    fn from(n: JsxReferenceIdentifier) -> SyntaxNode { n.syntax }
+}
+impl From<JsxReferenceIdentifier> for SyntaxElement {
+    fn from(n: JsxReferenceIdentifier) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxSelfClosingElement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_SELF_CLOSING_ELEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxSelfClosingElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxSelfClosingElement")
+            .field(
+                "l_angle_token",
+                &support::DebugSyntaxResult(self.l_angle_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "slash_r_angle_token",
+                &support::DebugSyntaxResult(self.slash_r_angle_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxSelfClosingElement> for SyntaxNode {
+    fn from(n: JsxSelfClosingElement) -> SyntaxNode { n.syntax }
+}
+impl From<JsxSelfClosingElement> for SyntaxElement {
+    fn from(n: JsxSelfClosingElement) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for NewTarget {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == NEW_TARGET }
@@ -18870,6 +19294,11 @@ impl From<JsUnknownExpression> for JsAnyExpression {
 impl From<JsYieldExpression> for JsAnyExpression {
     fn from(node: JsYieldExpression) -> JsAnyExpression { JsAnyExpression::JsYieldExpression(node) }
 }
+impl From<JsxElementExpression> for JsAnyExpression {
+    fn from(node: JsxElementExpression) -> JsAnyExpression {
+        JsAnyExpression::JsxElementExpression(node)
+    }
+}
 impl From<NewTarget> for JsAnyExpression {
     fn from(node: NewTarget) -> JsAnyExpression { JsAnyExpression::NewTarget(node) }
 }
@@ -18918,6 +19347,7 @@ impl AstNode for JsAnyExpression {
             | JS_UNARY_EXPRESSION
             | JS_UNKNOWN_EXPRESSION
             | JS_YIELD_EXPRESSION
+            | JSX_ELEMENT_EXPRESSION
             | NEW_TARGET
             | TS_AS_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
@@ -18991,6 +19421,9 @@ impl AstNode for JsAnyExpression {
                 JsAnyExpression::JsUnknownExpression(JsUnknownExpression { syntax })
             }
             JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
+            JSX_ELEMENT_EXPRESSION => {
+                JsAnyExpression::JsxElementExpression(JsxElementExpression { syntax })
+            }
             NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
             TS_AS_EXPRESSION => JsAnyExpression::TsAsExpression(TsAsExpression { syntax }),
             TS_NON_NULL_ASSERTION_EXPRESSION => {
@@ -19043,6 +19476,7 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsUnaryExpression(it) => &it.syntax,
             JsAnyExpression::JsUnknownExpression(it) => &it.syntax,
             JsAnyExpression::JsYieldExpression(it) => &it.syntax,
+            JsAnyExpression::JsxElementExpression(it) => &it.syntax,
             JsAnyExpression::NewTarget(it) => &it.syntax,
             JsAnyExpression::TsAsExpression(it) => &it.syntax,
             JsAnyExpression::TsNonNullAssertionExpression(it) => &it.syntax,
@@ -19084,6 +19518,7 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsUnknownExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::JsxElementExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsNonNullAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -19124,6 +19559,7 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsUnaryExpression(it) => it.into(),
             JsAnyExpression::JsUnknownExpression(it) => it.into(),
             JsAnyExpression::JsYieldExpression(it) => it.into(),
+            JsAnyExpression::JsxElementExpression(it) => it.into(),
             JsAnyExpression::NewTarget(it) => it.into(),
             JsAnyExpression::TsAsExpression(it) => it.into(),
             JsAnyExpression::TsNonNullAssertionExpression(it) => it.into(),
@@ -21106,6 +21542,112 @@ impl From<JsAnyTemplateElement> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsxElement> for JsxAnyElement {
+    fn from(node: JsxElement) -> JsxAnyElement { JsxAnyElement::JsxElement(node) }
+}
+impl From<JsxSelfClosingElement> for JsxAnyElement {
+    fn from(node: JsxSelfClosingElement) -> JsxAnyElement {
+        JsxAnyElement::JsxSelfClosingElement(node)
+    }
+}
+impl AstNode for JsxAnyElement {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JSX_ELEMENT | JSX_SELF_CLOSING_ELEMENT)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSX_ELEMENT => JsxAnyElement::JsxElement(JsxElement { syntax }),
+            JSX_SELF_CLOSING_ELEMENT => {
+                JsxAnyElement::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsxAnyElement::JsxElement(it) => &it.syntax,
+            JsxAnyElement::JsxSelfClosingElement(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsxAnyElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsxAnyElement::JsxElement(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyElement::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsxAnyElement> for SyntaxNode {
+    fn from(n: JsxAnyElement) -> SyntaxNode {
+        match n {
+            JsxAnyElement::JsxElement(it) => it.into(),
+            JsxAnyElement::JsxSelfClosingElement(it) => it.into(),
+        }
+    }
+}
+impl From<JsxAnyElement> for SyntaxElement {
+    fn from(n: JsxAnyElement) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsxMemberExpression> for JsxAnyElementName {
+    fn from(node: JsxMemberExpression) -> JsxAnyElementName {
+        JsxAnyElementName::JsxMemberExpression(node)
+    }
+}
+impl From<JsxReferenceIdentifier> for JsxAnyElementName {
+    fn from(node: JsxReferenceIdentifier) -> JsxAnyElementName {
+        JsxAnyElementName::JsxReferenceIdentifier(node)
+    }
+}
+impl AstNode for JsxAnyElementName {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JSX_MEMBER_EXPRESSION | JSX_REFERENCE_IDENTIFIER)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSX_MEMBER_EXPRESSION => {
+                JsxAnyElementName::JsxMemberExpression(JsxMemberExpression { syntax })
+            }
+            JSX_REFERENCE_IDENTIFIER => {
+                JsxAnyElementName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsxAnyElementName::JsxMemberExpression(it) => &it.syntax,
+            JsxAnyElementName::JsxReferenceIdentifier(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsxAnyElementName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsxAnyElementName::JsxMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyElementName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsxAnyElementName> for SyntaxNode {
+    fn from(n: JsxAnyElementName) -> SyntaxNode {
+        match n {
+            JsxAnyElementName::JsxMemberExpression(it) => it.into(),
+            JsxAnyElementName::JsxReferenceIdentifier(it) => it.into(),
+        }
+    }
+}
+impl From<JsxAnyElementName> for SyntaxElement {
+    fn from(n: JsxAnyElementName) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<TsEmptyExternalModuleDeclarationBody> for TsAnyExternalModuleDeclarationBody {
     fn from(node: TsEmptyExternalModuleDeclarationBody) -> TsAnyExternalModuleDeclarationBody {
         TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node)
@@ -22773,6 +23315,16 @@ impl std::fmt::Display for JsAnyTemplateElement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsxAnyElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxAnyElementName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAnyExternalModuleDeclarationBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -23589,6 +24141,41 @@ impl std::fmt::Display for JsYieldArgument {
     }
 }
 impl std::fmt::Display for JsYieldExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxClosingElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxElementExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxMemberExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxOpeningElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxReferenceIdentifier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxSelfClosingElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -26789,6 +27376,25 @@ impl Debug for DebugSyntaxElement {
                 }
                 JS_YIELD_EXPRESSION => {
                     std::fmt::Debug::fmt(&JsYieldExpression::cast(node.clone()).unwrap(), f)
+                }
+                JSX_CLOSING_ELEMENT => {
+                    std::fmt::Debug::fmt(&JsxClosingElement::cast(node.clone()).unwrap(), f)
+                }
+                JSX_ELEMENT => std::fmt::Debug::fmt(&JsxElement::cast(node.clone()).unwrap(), f),
+                JSX_ELEMENT_EXPRESSION => {
+                    std::fmt::Debug::fmt(&JsxElementExpression::cast(node.clone()).unwrap(), f)
+                }
+                JSX_MEMBER_EXPRESSION => {
+                    std::fmt::Debug::fmt(&JsxMemberExpression::cast(node.clone()).unwrap(), f)
+                }
+                JSX_OPENING_ELEMENT => {
+                    std::fmt::Debug::fmt(&JsxOpeningElement::cast(node.clone()).unwrap(), f)
+                }
+                JSX_REFERENCE_IDENTIFIER => {
+                    std::fmt::Debug::fmt(&JsxReferenceIdentifier::cast(node.clone()).unwrap(), f)
+                }
+                JSX_SELF_CLOSING_ELEMENT => {
+                    std::fmt::Debug::fmt(&JsxSelfClosingElement::cast(node.clone()).unwrap(), f)
                 }
                 NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
                 TS_ABSTRACT_MODIFIER => {

@@ -77,6 +77,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         ("??=", "QUESTION2EQ"),
         ("@", "AT"),
         ("`", "BACKTICK"),
+        ("</", "L_ANGLE_SLASH"),
+        ("/>", "SLASH_R_ANGLE"),
     ],
     keywords: &[
         "break",
@@ -474,6 +476,16 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_SETTER_SIGNATURE_CLASS_MEMBER",
         "TS_INDEX_SIGNATURE_CLASS_MEMBER",
         "TS_INDEX_SIGNATURE_MODIFIER_LIST",
+        //JSX
+        "JSX_ELEMENT_EXPRESSION",
+        "JSX_ANY_ELEMENT",
+        "JSX_ELEMENT",
+        "JSX_SELF_CLOSING_ELEMENT",
+        "JSX_OPENING_ELEMENT",
+        "JSX_CLOSING_ELEMENT",
+        "JSX_ANY_ELEMENT_NAME",
+        "JSX_MEMBER_EXPRESSION",
+        "JSX_REFERENCE_IDENTIFIER",
         // unknown nodes JS
         "JS_UNKNOWN",
         "JS_UNKNOWN_EXPRESSION",
@@ -633,6 +645,8 @@ impl Field {
                     "??" => "nullish_coalescing",
                     "||" => "logical_or",
                     "&&" => "logical_and",
+                    "</" => "l_angle_slash",
+                    "/>" => "slash_r_angle",
                     _ => name,
                 };
                 format_ident!("{}_token", name)
