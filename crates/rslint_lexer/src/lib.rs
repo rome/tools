@@ -143,6 +143,11 @@ impl LexContext {
 pub enum ReLexContext {
     /// Re-lexes a `/` or `/=` token as a regular expression.
     Regex,
+    /// Re-lexes `'>', '>'` as `>>` and `'>', '>', '>'` as `>>>`
+    BinaryOperator,
+    /// Re-lexes `'<', '<'` as `<<` in places where a type argument is expected to support
+    /// `B<<A>()>`
+    TypeArgumentLessThan,
 }
 
 bitflags! {
@@ -314,19 +319,50 @@ impl<'src> Lexer<'src> {
 
         let result = match context {
             ReLexContext::Regex if matches!(self.current(), T![/] | T![/=]) => self.read_regex(),
-            _ => {
-                // Didn't re-lex anything. Return existing token again
-                self.position = old_position;
-                LexedToken::ok(self.current())
-            }
+            ReLexContext::BinaryOperator => self.re_lex_binary_operator(),
+            ReLexContext::TypeArgumentLessThan => self.re_lex_type_argument_less_than(),
+            _ => LexedToken::ok(self.current()),
         };
 
-        self.current_kind = result.kind;
+        if self.current() == result.kind {
+            // Didn't re-lex anything. Return existing token again
+            self.position = old_position;
+        } else {
+            self.current_kind = result.kind;
+        }
 
         result
     }
 
-    /// Bumps the current byte and creates a lexed token of the passed in kind
+    fn re_lex_binary_operator(&mut self) -> LexedToken {
+        if self.current_byte() == Some(b'>') {
+            match self.next_byte() {
+                Some(b'>') => match self.next_byte() {
+                    Some(b'>') => match self.next_byte() {
+                        Some(b'=') => self.eat_byte(T![>>>=]),
+                        _ => LexedToken::ok(T![>>>]),
+                    },
+                    Some(b'=') => self.eat_byte(T![>>=]),
+                    _ => LexedToken::ok(T![>>]),
+                },
+                Some(b'=') => self.eat_byte(T![>=]),
+                _ => LexedToken::ok(T![>]),
+            }
+        } else {
+            LexedToken::ok(self.current_kind)
+        }
+    }
+
+    fn re_lex_type_argument_less_than(&mut self) -> LexedToken {
+        if self.current() == T![<<] {
+            self.advance(1);
+            LexedToken::ok(T![<])
+        } else {
+            LexedToken::ok(self.current())
+        }
+    }
+
+    /// Bumps the current byte and creates a lexer return for a token of the passed in kind
     fn eat_byte(&mut self, tok: JsSyntaxKind) -> LexedToken {
         self.next_byte();
         LexedToken::ok(tok)
@@ -449,14 +485,14 @@ impl<'src> Lexer<'src> {
 
     /// Peeks at the next byte
     #[inline]
-    fn peek_byte(&self) -> Option<&u8> {
+    fn peek_byte(&self) -> Option<u8> {
         self.byte_at(1)
     }
 
     /// Returns the byte at position `self.position + offset` or `None` if it is out of bounds.
     #[inline]
-    fn byte_at(&self, offset: usize) -> Option<&u8> {
-        self.source.as_bytes().get(self.position + offset)
+    fn byte_at(&self, offset: usize) -> Option<u8> {
+        self.source.as_bytes().get(self.position + offset).copied()
     }
 
     /// Advances the current position by `n` bytes.
@@ -616,7 +652,7 @@ impl<'src> Lexer<'src> {
                     self.next_byte();
                     None
                 }
-                b'u' if self.peek_byte() == Some(&b'{') => {
+                b'u' if self.peek_byte() == Some(b'{') => {
                     self.next_byte(); // jump over '{'
                     self.read_codepoint_escape().err()
                 }
@@ -747,10 +783,10 @@ impl<'src> Lexer<'src> {
                     None
                 }
             }
-            BSL if self.peek_byte() == Some(&b'u') => {
+            BSL if self.peek_byte() == Some(b'u') => {
                 let start = self.position;
                 self.next_byte();
-                let res = if self.peek_byte().copied() == Some(b'{') {
+                let res = if self.peek_byte() == Some(b'{') {
                     self.next_byte();
                     self.read_codepoint_escape()
                 } else {
@@ -783,7 +819,7 @@ impl<'src> Lexer<'src> {
         let b = unsafe { self.current_unchecked() };
 
         match lookup_byte(b) {
-            BSL if self.peek_byte() == Some(&b'u') => {
+            BSL if self.peek_byte() == Some(b'u') => {
                 self.next_byte();
                 if let Ok(chr) = self.read_unicode_escape(false) {
                     if is_id_start(chr) {
@@ -922,7 +958,7 @@ impl<'src> Lexer<'src> {
 
     #[inline]
     fn special_number_start<F: Fn(char) -> bool>(&mut self, func: F) -> bool {
-        if self.byte_at(2).map(|b| func(*b as char)).unwrap_or(false) {
+        if self.byte_at(2).map(|b| func(b as char)).unwrap_or(false) {
             self.advance(1);
             true
         } else {
@@ -1027,7 +1063,7 @@ impl<'src> Lexer<'src> {
         )
         .primary(self.position..self.position + 1, "");
 
-        let peeked = self.peek_byte().copied();
+        let peeked = self.peek_byte();
 
         if peeked.is_none() || !char::from(peeked.unwrap()).is_digit(radix as u32) {
             return Some(Box::new(err_diag));
@@ -1247,7 +1283,7 @@ impl<'src> Lexer<'src> {
                 let mut has_newline = false;
                 while let Some(b) = self.next_byte() {
                     match b {
-                        b'*' if self.peek_byte() == Some(&b'/') => {
+                        b'*' if self.peek_byte() == Some(b'/') => {
                             self.advance(2);
                             if has_newline {
                                 self.after_newline = true;
@@ -1511,14 +1547,14 @@ impl<'src> Lexer<'src> {
     fn resolve_greater_than(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'>') => {
-                if let Some(b'>') = self.peek_byte().copied() {
-                    if let Some(b'=') = self.byte_at(2).copied() {
+                if let Some(b'>') = self.peek_byte() {
+                    if let Some(b'=') = self.byte_at(2) {
                         self.advance(3);
                         LexedToken::ok(USHREQ)
                     } else {
                         LexedToken::ok(T![>])
                     }
-                } else if self.peek_byte().copied() == Some(b'=') {
+                } else if self.peek_byte() == Some(b'=') {
                     self.advance(2);
                     LexedToken::ok(SHREQ)
                 } else {
@@ -1648,8 +1684,7 @@ impl<'src> Lexer<'src> {
                 LexedToken::new(kind, diagnostic.or(diag))
             }
             PRD => {
-                if self.peek_byte().copied() == Some(b'.') && self.byte_at(2).copied() == Some(b'.')
-                {
+                if self.peek_byte() == Some(b'.') && self.byte_at(2) == Some(b'.') {
                     self.advance(3);
                     return LexedToken::ok(DOT3);
                 }
@@ -1662,9 +1697,9 @@ impl<'src> Lexer<'src> {
                 }
             }
             BSL => {
-                if self.peek_byte() == Some(&b'u') {
+                if self.peek_byte() == Some(b'u') {
                     self.next_byte();
-                    let res = if self.peek_byte() == Some(&b'{') {
+                    let res = if self.peek_byte() == Some(b'{') {
                         self.next_byte();
                         self.read_codepoint_escape()
                     } else {
@@ -1787,12 +1822,12 @@ impl<'src> Lexer<'src> {
                         }
                     };
                 }
-                Some(b'$') if self.peek_byte() == Some(&b'{') && self.position == start => {
+                Some(b'$') if self.peek_byte() == Some(b'{') && self.position == start => {
                     self.advance(2);
                     token = Some(JsSyntaxKind::DOLLAR_CURLY);
                     break;
                 }
-                Some(b'$') if self.peek_byte() == Some(&b'{') => {
+                Some(b'$') if self.peek_byte() == Some(b'{') => {
                     token = Some(JsSyntaxKind::TEMPLATE_CHUNK);
                     break;
                 }
