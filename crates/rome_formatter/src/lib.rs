@@ -54,6 +54,7 @@ mod formatter;
 pub mod formatter_traits;
 mod intersperse;
 mod js;
+mod jsx;
 mod printer;
 mod ts;
 mod utils;

@@ -3,6 +3,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
+use super::jsx::maybe_parse_jsx_expression;
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -23,10 +24,11 @@ use crate::syntax::js_parse_error::{
     expected_simple_assignment_target, invalid_assignment_error,
     private_names_only_allowed_on_left_side_of_in_expression,
 };
+use crate::syntax::jsx::jsx_parse_errors::jsx_only_syntax_error;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
-use crate::JsSyntaxFeature::{StrictMode, TypeScript};
+use crate::JsSyntaxFeature::{StrictMode, TypeScript, JSX};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
@@ -1733,12 +1735,19 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         return Present(expr);
     }
 
+    // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
-        return TypeScript.parse_exclusive_syntax(
-            p,
-            |p| parse_ts_type_assertion_expression(p, context),
-            |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
-        );
+        let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
+            jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
+        });
+
+        return jsx.or_else(|| {
+            TypeScript.parse_exclusive_syntax(
+                p,
+                |p| parse_ts_type_assertion_expression(p, context),
+                |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
+            )
+        });
     }
 
     // test pre_update_expr
