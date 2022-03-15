@@ -1,7 +1,7 @@
 use crate::{Language, Parser, SourceType};
 use bitflags::bitflags;
 use indexmap::IndexMap;
-use rome_rowan::TextRange;
+use rome_rowan::{TextRange, TextSize};
 use std::collections::HashSet;
 use std::ops::{Deref, DerefMut, Range};
 
@@ -63,6 +63,7 @@ pub(crate) struct ParserState {
     label_set: LabelSet,
     /// Whether we are in strict mode code
     strict: Option<StrictMode>,
+
     /// The exported default item, used for checking duplicate defaults
     pub default_item: Option<ExportDefaultItem>,
     /// If set, the parser reports bindings with identical names. The option stores the name of the
@@ -85,7 +86,7 @@ pub(crate) struct ParserState {
 
     /// Stores the token positions of all syntax that looks like an arrow expressions but aren't one.
     /// Optimization to reduce the back-tracking required when parsing parenthesized and arrow function expressions.
-    pub(crate) not_parenthesized_arrow: HashSet<usize>,
+    pub(crate) not_parenthesized_arrow: HashSet<TextSize>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]

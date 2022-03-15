@@ -1,10 +1,9 @@
 #![cfg(test)]
 #![allow(unused_mut, unused_variables, unused_assignments)]
 
-use crate::{Lexer, TextSize};
+use crate::{LexContext, Lexer, TextSize};
 use quickcheck_macros::quickcheck;
 use rome_js_syntax::JsSyntaxKind::{self, EOF};
-use rome_js_syntax::TextRange;
 use rslint_errors::Span;
 use std::sync::mpsc::channel;
 use std::thread;
@@ -15,46 +14,46 @@ use std::time::Duration;
 macro_rules! assert_lex {
     ($src:expr, $($kind:ident:$len:expr $(,)?)*) => {{
         let mut lexer = Lexer::from_str($src, 0);
-        let mut tokens = lexer.collect::<Vec<_>>();
         let mut idx = 0;
         let mut tok_idx = TextSize::default();
 
         let mut new_str = String::with_capacity($src.len());
-        // remove eof
-        tokens.pop();
+        let mut tokens = Vec::new();
+
+        while lexer.next_token(LexContext::default()).kind != EOF {
+            tokens.push((lexer.current(), lexer.current_range()));
+        }
 
         $(
             assert_eq!(
-                tokens[idx].0.kind,
+                tokens[idx].0,
                 rome_js_syntax::JsSyntaxKind::$kind,
                 "expected token kind {}, but found {:?}",
                 stringify!($kind),
-                tokens[idx].0.kind,
+                tokens[idx].0,
             );
 
             assert_eq!(
-                tokens[idx].0.len,
+                tokens[idx].1.len(),
                 TextSize::from($len),
                 "expected token length of {}, but found {:?} for token {:?}",
                 $len,
-                tokens[idx].0.len,
-                tokens[idx].0.kind,
+                tokens[idx].1.len(),
+                tokens[idx].0,
             );
 
-            let tok_end = tokens[idx].0.len;
-            new_str.push_str($src.get(TextRange::at(tok_idx, tok_end).as_range()).unwrap());
-            tok_idx += tokens[idx].0.len;
+            new_str.push_str($src.get(tokens[idx].1.as_range()).unwrap());
+            tok_idx += tokens[idx].1.len();
 
             idx += 1;
         )*
 
         if idx < tokens.len() {
-            dbg!(&tokens);
             panic!(
                 "expected {} tokens but lexer returned {}, first unexpected token is '{:?}'",
                 idx,
                 tokens.len(),
-                tokens[idx].0.kind
+                tokens[idx].0
             );
         } else {
             assert_eq!(idx, tokens.len());
@@ -73,11 +72,18 @@ fn losslessness(string: String) -> bool {
     let cloned = string.clone();
     let (sender, receiver) = channel();
     thread::spawn(move || {
+        let mut lexer = Lexer::from_str(&cloned, 0);
+        let mut tokens = vec![];
+
+        while lexer.next_token(LexContext::default()).kind != EOF {
+            tokens.push(lexer.current_range());
+        }
+
         sender
-            .send(Lexer::from_str(&cloned, 0).map(|x| x.0).collect::<Vec<_>>())
+            .send(tokens)
             .expect("Could not send tokens to receiver");
     });
-    let tokens = receiver
+    let token_ranges = receiver
         .recv_timeout(Duration::from_secs(2))
         .unwrap_or_else(|_| {
             panic!(
@@ -89,13 +95,9 @@ fn losslessness(string: String) -> bool {
     let mut new_str = String::with_capacity(string.len());
     let mut idx = TextSize::from(0);
 
-    for token in tokens {
-        new_str.push_str(
-            string
-                .get(TextRange::at(idx, token.len).as_range())
-                .unwrap(),
-        );
-        idx += token.len;
+    for range in token_ranges {
+        new_str.push_str(string.get(range.as_range()).unwrap());
+        idx += range.len();
     }
 
     string == new_str
@@ -151,7 +153,9 @@ fn bang() {
     assert_lex!(
         r#"!/a/"#,
         BANG:1,
-        JS_REGEX_LITERAL:3
+        SLASH:1,
+        IDENT:1,
+        SLASH:1
     );
 
     assert_lex!(
@@ -161,26 +165,6 @@ fn bang() {
         SLASH:1,
         IDENT:1,
         SLASH:1
-    );
-
-    assert_lex!(
-        r#"function a() {}/regex/"#,
-        FUNCTION_KW:8,
-        WHITESPACE:1,
-        IDENT:1,
-        L_PAREN:1,
-        R_PAREN:1,
-        WHITESPACE:1,
-        L_CURLY:1,
-        R_CURLY:1,
-        JS_REGEX_LITERAL:7
-    );
-    assert_lex!(
-        "a!;/test/",
-        IDENT:1,
-        BANG:1,
-        SEMICOLON:1
-        JS_REGEX_LITERAL:6
     );
 
     assert_lex!(
@@ -273,42 +257,6 @@ fn empty_string() {
     assert_lex! {
         "''",
         JS_STRING_LITERAL:2
-    }
-}
-
-#[test]
-fn template_literals() {
-    assert_lex! {
-        "`abcdefg` `abc",
-        BACKTICK:1,
-        TEMPLATE_CHUNK:7,
-        BACKTICK:1,
-        WHITESPACE:1,
-        BACKTICK:1,
-        ERROR_TOKEN:3,
-    }
-
-    assert_lex! {
-        "`${a} a`",
-        BACKTICK:1,
-        DOLLAR_CURLY:2,
-        IDENT:1,
-        R_CURLY:1,
-        TEMPLATE_CHUNK:2,
-        BACKTICK:1
-    }
-
-    assert_lex! {
-        "`${a} b ${b}`",
-        BACKTICK:1,
-        DOLLAR_CURLY:2,
-        IDENT:1,
-        R_CURLY:1,
-        TEMPLATE_CHUNK:3,
-        DOLLAR_CURLY:2,
-        IDENT:1,
-        R_CURLY:1,
-        BACKTICK:1
     }
 }
 
@@ -1008,48 +956,6 @@ fn block_comment() {
 }
 
 #[test]
-fn regex() {
-    assert_lex! {
-        "var a = /aa/gim",
-        VAR_KW:3,
-        WHITESPACE:1,
-        IDENT:1,
-        WHITESPACE:1,
-        EQ:1,
-        WHITESPACE:1,
-        JS_REGEX_LITERAL:7
-    }
-}
-
-#[test]
-fn regex_after_fn() {
-    assert_lex! {
-        "function fn() {}/1/;",
-        FUNCTION_KW:8,
-        WHITESPACE:1,
-        IDENT:2,
-        L_PAREN:1,
-        R_PAREN:1,
-        WHITESPACE:1,
-        L_CURLY:1,
-        R_CURLY:1,
-        JS_REGEX_LITERAL:3,
-        SEMICOLON:1
-    };
-}
-
-#[test]
-fn regex_await() {
-    assert_lex! {
-        "await /x.y/g;",
-        AWAIT_KW:5,
-        WHITESPACE:1,
-        JS_REGEX_LITERAL:6,
-        SEMICOLON:1,
-    }
-}
-
-#[test]
 fn division() {
     assert_lex! {
         "var a = 5 / 6",
@@ -1065,35 +971,6 @@ fn division() {
         WHITESPACE:1,
         JS_NUMBER_LITERAL:1
     }
-}
-
-#[test]
-fn template_escape() {
-    assert_lex! {
-        r"`foo \` bar`",
-        BACKTICK:1,
-        TEMPLATE_CHUNK:10,
-        BACKTICK:1
-    }
-}
-
-#[test]
-fn template_invalid_escape() {
-    assert_lex! {
-        r"a`\xg`",
-        IDENT:1,
-        BACKTICK:1,
-        TEMPLATE_CHUNK:3,
-        BACKTICK:1,
-    };
-
-    assert_lex! {
-        r#"a`\u0`"#,
-        IDENT:1,
-        BACKTICK:1,
-        TEMPLATE_CHUNK:3,
-        BACKTICK:1,
-    };
 }
 
 #[test]
@@ -1189,16 +1066,6 @@ fn issue_30() {
         R_CURLY:1
     }
 }
-
-#[test]
-fn fuzz_fail_7() {
-    assert_lex! {
-        "/\u{0}/ª\u{80}",
-        JS_REGEX_LITERAL:5,
-        ERROR_TOKEN:2
-    }
-}
-
 #[test]
 fn at_token() {
     assert_lex! {
@@ -1469,29 +1336,24 @@ fn keywords() {
         );
 
         let mut lexer = Lexer::from_str(keyword, 0);
-        let mut tokens = lexer.collect::<Vec<_>>();
+        lexer.next_token(LexContext::default());
 
-        assert_eq!(
-            tokens.len(),
-            2,
-            "Expected exactly two lexed token for keyword {keyword}, the keyword and EOF"
-        );
-        let token = &tokens[0];
-
-        let lexed_kind = token.0.kind;
+        let lexed_kind = lexer.current();
         assert_eq!(
             lexed_kind, kind,
             "Expected token '{keyword}' to be of kind {:?} but is {:?}.",
             kind, lexed_kind
         );
+
+        let lexed_range = lexer.current_range();
         assert_eq!(
-            token.0.len,
+            lexed_range.len(),
             TextSize::from(keyword.len() as u32),
             "Expected lexed keyword to be of len {} but has length {:?}",
             keyword.len(),
-            token.0.len
+            lexed_range.len()
         );
 
-        assert_eq!(tokens[1].0.kind, EOF);
+        assert_eq!(lexer.next_token(LexContext::default()).kind, EOF);
     }
 }

@@ -123,7 +123,7 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> Parse
 
     let start = p.cur_range().start();
     let import = p.start();
-    p.expect_keyword(T![import], "import");
+    p.expect(T![import]);
 
     debug_assert!(p.state.name_map.is_empty());
     p.state.duplicate_binding_parent = Some("import");
@@ -172,7 +172,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
         return parse_import_bare_clause(p);
     }
 
-    let pos = p.token_pos();
+    let pos = p.tokens.position();
     let m = p.start();
 
     // test ts ts_import_clause_types
@@ -185,7 +185,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
             || (is_nth_at_identifier_binding(p, 1) && !p.nth_at(1, T![from])));
 
     if is_typed {
-        p.eat_keyword(T![type], "type");
+        p.eat(T![type]);
     }
 
     let clause = match p.cur() {
@@ -198,7 +198,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
         _ => {
             // SAFETY: Safe because the parser only eats the "type" keyword if it's followed by
             // either a *, {, or binding
-            debug_assert_eq!(pos, p.token_pos());
+            debug_assert_eq!(pos, p.tokens.position());
             m.abandon(p);
             return Absent;
         }
@@ -233,9 +233,8 @@ fn parse_import_default_or_named_clause_rest(
 
             if is_typed {
                 let end = p
-                    .tokens
-                    .last_tok()
-                    .map(|t| t.end())
+                    .last_range()
+                    .map(|r| r.end())
                     .unwrap_or_else(|| p.cur_range().start());
 
                 // test_err ts ts_typed_default_import_with_named
@@ -244,14 +243,14 @@ fn parse_import_default_or_named_clause_rest(
                     .primary(default_start..end, ""))
             }
 
-            p.expect_keyword(T![from], "from");
+            p.expect(T![from]);
             parse_module_source(p).or_add_diagnostic(p, expected_module_source);
             parse_import_assertion(p).ok();
 
             named_clause.complete(p, JS_IMPORT_NAMED_CLAUSE)
         }
         _ => {
-            p.expect_keyword(T![from], "from");
+            p.expect(T![from]);
             parse_module_source(p).or_add_diagnostic(p, expected_module_source);
             parse_import_assertion(p).ok();
 
@@ -276,9 +275,9 @@ fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax {
 fn parse_import_namespace_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker {
     p.expect(T![*]);
 
-    p.expect_keyword(T![as], "as");
+    p.expect(T![as]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
-    p.expect_keyword(T![from], "from");
+    p.expect(T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
 
@@ -294,7 +293,7 @@ fn parse_import_namespace_clause_rest(p: &mut Parser, m: Marker) -> CompletedMar
 fn parse_import_named_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker {
     parse_default_import_specifier(p).ok();
     parse_named_import(p).or_add_diagnostic(p, expected_named_import);
-    p.expect_keyword(T![from], "from");
+    p.expect(T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
 
@@ -323,7 +322,7 @@ fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump_any();
-    p.expect_keyword(T![as], "as");
+    p.expect(T![as]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
 
     Present(m.complete(p, JS_NAMESPACE_IMPORT_SPECIFIER))
@@ -406,7 +405,7 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
     );
 
     if metadata.is_type {
-        p.expect_keyword(T![type], "type");
+        p.expect(T![type]);
     }
 
     let specifier =
@@ -424,7 +423,7 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
                 parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
             }
 
-            p.expect_keyword(T![as], "as");
+            p.expect(T![as]);
             parse_binding(p).or_add_diagnostic(p, expected_binding);
             m.complete(p, JS_NAMED_IMPORT_SPECIFIER)
         } else {
@@ -463,12 +462,12 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 // import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
 // import { a } from "a.json" assert
 fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![assert]) || p.has_linebreak_before_n(0) {
+    if !p.at(T![assert]) || p.has_preceding_line_break() {
         return Absent;
     }
 
     let m = p.start();
-    p.expect_keyword(T![assert], "assert");
+    p.expect(T![assert]);
     p.expect(T!['{']);
 
     ImportAssertionList::default().parse_list(p);
@@ -600,7 +599,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
 
     let stmt_start = p.cur_range().start();
     let m = p.start();
-    p.expect_keyword(T![export], "export");
+    p.expect(T![export]);
 
     let clause = if p.at(T![type]) && p.nth_at(1, T!['{']) {
         parse_export_named_or_named_from_clause(p)
@@ -638,7 +637,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
                 parse_ts_export_namespace_clause,
                 |p, clause| ts_only_syntax_error(p, "'export as namespace'", clause.range(p)),
             ),
-            T![declare] if !p.has_linebreak_before_n(1) => TypeScript.parse_exclusive_syntax(
+            T![declare] if !p.has_nth_preceding_line_break(1) => TypeScript.parse_exclusive_syntax(
                 p,
                 |p| parse_ts_export_declare_clause(p, stmt_start),
                 |p, clause| ts_only_syntax_error(p, "'export declare'", clause.range(p)),
@@ -692,7 +691,7 @@ fn parse_export_named_clause(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_range().start();
     let m = p.start();
 
-    let has_type = p.eat_keyword(T![type], "type");
+    let has_type = p.eat(T![type]);
     p.bump(T!['{']);
     ExportNamedSpecifierList.parse_list(p);
     p.expect(T!['}']);
@@ -764,7 +763,7 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
     // export { type type }
     // export { type as somethingElse }
     if metadata.is_type {
-        p.expect_keyword(T![type], "type");
+        p.expect(T![type]);
     }
 
     // test_err export_as_identifier_err
@@ -784,7 +783,7 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
     // export { as as as }
     //
     let specifier = if metadata.has_alias {
-        p.expect_keyword(T![as], "as");
+        p.expect(T![as]);
         parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
 
         m.complete(p, JS_EXPORT_NAMED_SPECIFIER)
@@ -823,13 +822,13 @@ struct SpecifierMetadata {
 // export { type as };
 // export { type a as aa };
 fn specifier_metadata<LocalNamePred, AliasPred>(
-    p: &Parser,
+    p: &mut Parser,
     is_nth_name: LocalNamePred,
     is_nth_alias: AliasPred,
 ) -> SpecifierMetadata
 where
-    LocalNamePred: Fn(&Parser, usize) -> bool,
-    AliasPred: Fn(&Parser, usize) -> bool,
+    LocalNamePred: Fn(&mut Parser, usize) -> bool,
+    AliasPred: Fn(&mut Parser, usize) -> bool,
 {
     let mut metadata = SpecifierMetadata::default();
 
@@ -903,7 +902,7 @@ fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
     p.expect(T![*]);
 
     parse_export_as_clause(p).ok();
-    p.expect_keyword(T![from], "from");
+    p.expect(T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
     semi(p, TextRange::new(start, p.cur_range().end()));
@@ -938,13 +937,13 @@ fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_range().start();
     let m = p.start();
 
-    let has_type = p.eat_keyword(T![type], "type");
+    let has_type = p.eat(T![type]);
 
     p.bump(T!['{']);
     ExportNamedFromSpecifierList.parse_list(p);
     p.expect(T!['}']);
 
-    p.expect_keyword(T![from], "from");
+    p.expect(T![from]);
 
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
@@ -1014,7 +1013,7 @@ fn parse_export_named_from_specifier(p: &mut Parser) -> ParsedSyntax {
     );
 
     if metadata.is_type {
-        p.expect_keyword(T![type], "type");
+        p.expect(T![type]);
     }
 
     if metadata.is_local_name_missing {
@@ -1059,7 +1058,7 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
         T![async] if p.nth_at(2, T![function]) => {
             parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Function)
         }
-        T![interface] if !p.has_linebreak_before_n(2) => {
+        T![interface] if !p.has_nth_preceding_line_break(2) => {
             parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Interface)
         }
         T![enum] => parse_export_default_declaration_clause(p, ExportDefaultDeclarationKind::Enum),
@@ -1130,7 +1129,7 @@ fn parse_export_default_declaration_clause(
     }
 
     let m = p.start();
-    p.expect_keyword(T![default], "default");
+    p.expect(T![default]);
 
     let declaration = match kind {
         ExportDefaultDeclarationKind::Function => parse_function_export_default_declaration(p),
@@ -1198,7 +1197,7 @@ fn parse_export_default_expression_clause(p: &mut Parser) -> ParsedSyntax {
 
     let start = p.cur_range().start();
     let m = p.start();
-    p.expect_keyword(T![default], "default");
+    p.expect(T![default]);
 
     parse_assignment_expression_or_higher(p, ExpressionContext::default())
         .or_add_diagnostic(p, expected_expression);
@@ -1213,7 +1212,7 @@ fn parse_export_as_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![as], "as");
+    p.expect(T![as]);
 
     parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
 
@@ -1230,8 +1229,8 @@ fn parse_ts_export_namespace_clause(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     let start_pos = p.cur_range().start();
-    p.expect_keyword(T![as], "as");
-    p.expect_keyword(T![namespace], "namespace");
+    p.expect(T![as]);
+    p.expect(T![namespace]);
     parse_name(p).or_add_diagnostic(p, expected_identifier);
     semi(p, TextRange::new(start_pos, p.cur_range().end()));
 
@@ -1275,7 +1274,7 @@ fn parse_ts_export_declare_clause(p: &mut Parser, stmt_start: TextSize) -> Parse
     }
 
     let m = p.start();
-    p.expect_keyword(T![declare], "declare");
+    p.expect(T![declare]);
     p.with_state(EnterAmbientContext, |p| {
         parse_declaration_clause(p, stmt_start).or_add_diagnostic(p, expected_declaration)
     });
@@ -1283,7 +1282,7 @@ fn parse_ts_export_declare_clause(p: &mut Parser, stmt_start: TextSize) -> Parse
     Present(m.complete(p, TS_EXPORT_DECLARE_CLAUSE))
 }
 
-fn is_nth_at_literal_export_name(p: &Parser, n: usize) -> bool {
+fn is_nth_at_literal_export_name(p: &mut Parser, n: usize) -> bool {
     match p.nth(n) {
         JS_STRING_LITERAL | T![ident] => true,
         t if t.is_keyword() => true,

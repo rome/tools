@@ -32,8 +32,8 @@ mod tests {
     fn test_size_of() {
         use std::mem::size_of;
 
-        eprintln!("GreenNode          {}", size_of::<GreenNode>());
-        eprintln!("GreenToken         {}", size_of::<GreenToken>());
-        eprintln!("GreenElement       {}", size_of::<GreenElement>());
+        assert_eq!(8, size_of::<GreenNode>());
+        assert_eq!(8, size_of::<GreenToken>());
+        assert_eq!(16, size_of::<GreenElement>());
     }
 }

@@ -46,11 +46,7 @@ JsModule {
                     BACKTICK@18..19 "`" [] [],
                     JsUnknown {
                         items: [
-                            JsUnknown {
-                                items: [
-                                    ERROR_TOKEN@19..21 "b\n" [] [],
-                                ],
-                            },
+                            ERROR_TOKEN@19..21 "b\n" [] [],
                         ],
                     },
                 ],
@@ -96,17 +92,9 @@ JsModule {
             0: IDENT@14..18 "BAR" [Newline("\n")] []
         1: BACKTICK@18..19 "`" [] []
         2: JS_UNKNOWN@19..21
-          0: JS_UNKNOWN@19..21
-            0: ERROR_TOKEN@19..21 "b\n" [] []
+          0: ERROR_TOKEN@19..21 "b\n" [] []
       1: (empty)
   3: EOF@21..21 "" [] []
---
-error: unterminated template literal
-  ┌─ subscripts_err.js:3:1
-  │
-3 │ 
-  │ ^
-
 --
 error[SyntaxError]: expected an expression but instead found ']'
   ┌─ subscripts_err.js:1:12
@@ -120,6 +108,15 @@ error[SyntaxError]: expected an identifier but instead found ';'
   │
 1 │ foo()?.baz[].;
   │              ^ Expected an identifier here
+
+--
+error: unterminated template literal
+  ┌─ subscripts_err.js:2:5
+  │  
+2 │   BAR`b
+  │ ┌─────^
+3 │ │ 
+  │ └^
 
 --
 error[SyntaxError]: Invalid template literal

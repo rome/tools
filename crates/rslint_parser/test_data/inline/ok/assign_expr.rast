@@ -102,7 +102,7 @@ JsModule {
                         },
                         COMMA@86..88 "," [] [Whitespace(" ")],
                         JsArrayAssignmentPatternRestElement {
-                            dotdotdot_token: DOT2@88..91 "..." [] [],
+                            dotdotdot_token: DOT3@88..91 "..." [] [],
                             pattern: JsIdentifierAssignment {
                                 name_token: IDENT@91..95 "rest" [] [],
                             },
@@ -226,7 +226,7 @@ JsModule {
                             },
                             COMMA@179..181 "," [] [Whitespace(" ")],
                             JsObjectAssignmentPatternRest {
-                                dotdotdot_token: DOT2@181..184 "..." [] [],
+                                dotdotdot_token: DOT3@181..184 "..." [] [],
                                 target: JsIdentifierAssignment {
                                     name_token: IDENT@184..189 "rest" [] [Whitespace(" ")],
                                 },
@@ -322,7 +322,7 @@ JsModule {
                 0: JS_STRING_LITERAL@77..86 "\"default\"" [] []
             3: COMMA@86..88 "," [] [Whitespace(" ")]
             4: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@88..95
-              0: DOT2@88..91 "..." [] []
+              0: DOT3@88..91 "..." [] []
               1: JS_IDENTIFIER_ASSIGNMENT@91..95
                 0: IDENT@91..95 "rest" [] []
           2: R_BRACK@95..97 "]" [] [Whitespace(" ")]
@@ -409,7 +409,7 @@ JsModule {
                     0: JS_STRING_LITERAL@174..179 "\"foo\"" [] []
               3: COMMA@179..181 "," [] [Whitespace(" ")]
               4: JS_OBJECT_ASSIGNMENT_PATTERN_REST@181..189
-                0: DOT2@181..184 "..." [] []
+                0: DOT3@181..184 "..." [] []
                 1: JS_IDENTIFIER_ASSIGNMENT@184..189
                   0: IDENT@184..189 "rest" [] [Whitespace(" ")]
             2: R_CURLY@189..191 "}" [] [Whitespace(" ")]

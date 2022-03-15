@@ -779,8 +779,6 @@ two lines`,
         let element =
             create_array_element(vec![token("'a'"), token("'b'"), token("'c'"), token("'d'")]);
 
-        println!("{element:#?}");
-
         let result = printer.print(&element);
 
         assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.as_code());

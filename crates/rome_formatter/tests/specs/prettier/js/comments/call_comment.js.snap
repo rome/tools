@@ -68,13 +68,11 @@ error[SyntaxError]: expected `:` but instead found `}`
 2 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
   │                                                        ^ unexpected
 
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+error[SyntaxError]: expected an expression but instead found '>'
   ┌─ call_comment.js:2:59
   │
 2 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
-  │                                                          -^ But this operator was encountered instead
-  │                                                          │ 
-  │                                                          This operator requires a right hand side value
+  │                                                           ^ Expected an expression here
 
 error[SyntaxError]: expected an expression but instead found ','
   ┌─ call_comment.js:2:60
@@ -106,13 +104,11 @@ error[SyntaxError]: expected `:` but instead found `}`
 7 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
   │                                                        ^ unexpected
 
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+error[SyntaxError]: expected an expression but instead found '>'
   ┌─ call_comment.js:7:59
   │
 7 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
-  │                                                          -^ But this operator was encountered instead
-  │                                                          │ 
-  │                                                          This operator requires a right hand side value
+  │                                                           ^ Expected an expression here
 
 error[SyntaxError]: expected an expression but instead found ','
   ┌─ call_comment.js:7:60
@@ -144,13 +140,11 @@ error[SyntaxError]: expected `:` but instead found `}`
 12 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
    │                                                        ^ unexpected
 
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+error[SyntaxError]: expected an expression but instead found '>'
    ┌─ call_comment.js:12:59
    │
 12 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
-   │                                                          -^ But this operator was encountered instead
-   │                                                          │ 
-   │                                                          This operator requires a right hand side value
+   │                                                           ^ Expected an expression here
 
 error[SyntaxError]: expected an expression but instead found ','
    ┌─ call_comment.js:12:60

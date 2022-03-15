@@ -33,7 +33,7 @@ pub(crate) fn parse_variable_declaration_clause(p: &mut Parser) -> ParsedSyntax 
     })
 }
 
-pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_declaration_clause(p: &mut Parser, n: usize) -> bool {
     if matches!(
         p.nth(n),
         T![function] | T![const] | T![enum] | T![class] | T![import]
@@ -45,7 +45,7 @@ pub(crate) fn is_nth_at_declaration_clause(p: &Parser, n: usize) -> bool {
         return true;
     }
 
-    if p.has_linebreak_before_n(n + 1) {
+    if p.has_nth_preceding_line_break(n + 1) {
         return false;
     }
 

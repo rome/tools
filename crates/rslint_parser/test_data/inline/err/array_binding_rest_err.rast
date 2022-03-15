@@ -11,7 +11,7 @@ JsModule {
                             l_brack_token: L_BRACK@4..6 "[" [] [Whitespace(" ")],
                             elements: JsArrayBindingPatternElementList [
                                 JsArrayBindingPatternRestElement {
-                                    dotdotdot_token: DOT2@6..10 "..." [] [Whitespace(" ")],
+                                    dotdotdot_token: DOT3@6..10 "..." [] [Whitespace(" ")],
                                     pattern: missing (required),
                                 },
                             ],
@@ -41,7 +41,7 @@ JsModule {
                             elements: JsArrayBindingPatternElementList [
                                 JsUnknownBinding {
                                     items: [
-                                        DOT2@23..26 "..." [] [],
+                                        DOT3@23..26 "..." [] [],
                                         JsIdentifierBinding {
                                             name_token: IDENT@26..28 "c" [] [Whitespace(" ")],
                                         },
@@ -76,7 +76,7 @@ JsModule {
                             elements: JsArrayBindingPatternElementList [
                                 JsUnknownBinding {
                                     items: [
-                                        DOT2@53..56 "..." [] [],
+                                        DOT3@53..56 "..." [] [],
                                         JsIdentifierBinding {
                                             name_token: IDENT@56..60 "rest" [] [],
                                         },
@@ -120,7 +120,7 @@ JsModule {
               0: L_BRACK@4..6 "[" [] [Whitespace(" ")]
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@6..10
                 0: JS_ARRAY_BINDING_PATTERN_REST_ELEMENT@6..10
-                  0: DOT2@6..10 "..." [] [Whitespace(" ")]
+                  0: DOT3@6..10 "..." [] [Whitespace(" ")]
                   1: (empty)
               2: R_BRACK@10..12 "]" [] [Whitespace(" ")]
             1: (empty)
@@ -139,7 +139,7 @@ JsModule {
               0: L_BRACK@21..23 "[" [] [Whitespace(" ")]
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@23..40
                 0: JS_UNKNOWN_BINDING@23..40
-                  0: DOT2@23..26 "..." [] []
+                  0: DOT3@23..26 "..." [] []
                   1: JS_IDENTIFIER_BINDING@26..28
                     0: IDENT@26..28 "c" [] [Whitespace(" ")]
                   2: EQ@28..30 "=" [] [Whitespace(" ")]
@@ -161,7 +161,7 @@ JsModule {
               0: L_BRACK@51..53 "[" [] [Whitespace(" ")]
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@53..79
                 0: JS_UNKNOWN_BINDING@53..60
-                  0: DOT2@53..56 "..." [] []
+                  0: DOT3@53..56 "..." [] []
                   1: JS_IDENTIFIER_BINDING@56..60
                     0: IDENT@56..60 "rest" [] []
                 1: COMMA@60..62 "," [] [Whitespace(" ")]

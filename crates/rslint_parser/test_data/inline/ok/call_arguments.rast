@@ -14,7 +14,7 @@ JsModule {
                 l_paren_token: L_PAREN@12..13 "(" [] [],
                 items: JsParameterList [
                     JsRestParameter {
-                        dotdotdot_token: DOT2@13..16 "..." [] [],
+                        dotdotdot_token: DOT3@13..16 "..." [] [],
                         binding: JsIdentifierBinding {
                             name_token: IDENT@16..20 "args" [] [],
                         },
@@ -148,7 +148,7 @@ JsModule {
                         },
                         COMMA@69..71 "," [] [Whitespace(" ")],
                         JsSpread {
-                            dotdotdot_token: DOT2@71..74 "..." [] [],
+                            dotdotdot_token: DOT3@71..74 "..." [] [],
                             argument: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@74..75 "c" [] [],
@@ -174,7 +174,7 @@ JsModule {
                     l_paren_token: L_PAREN@81..82 "(" [] [],
                     args: JsCallArgumentList [
                         JsSpread {
-                            dotdotdot_token: DOT2@82..85 "..." [] [],
+                            dotdotdot_token: DOT3@82..85 "..." [] [],
                             argument: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@85..86 "a" [] [],
@@ -183,7 +183,7 @@ JsModule {
                         },
                         COMMA@86..88 "," [] [Whitespace(" ")],
                         JsSpread {
-                            dotdotdot_token: DOT2@88..91 "..." [] [],
+                            dotdotdot_token: DOT3@88..91 "..." [] [],
                             argument: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@91..92 "b" [] [],
@@ -198,7 +198,7 @@ JsModule {
                         },
                         COMMA@95..97 "," [] [Whitespace(" ")],
                         JsSpread {
-                            dotdotdot_token: DOT2@97..100 "..." [] [],
+                            dotdotdot_token: DOT3@97..100 "..." [] [],
                             argument: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@100..101 "d" [] [],
@@ -231,7 +231,7 @@ JsModule {
         0: L_PAREN@12..13 "(" [] []
         1: JS_PARAMETER_LIST@13..20
           0: JS_REST_PARAMETER@13..20
-            0: DOT2@13..16 "..." [] []
+            0: DOT3@13..16 "..." [] []
             1: JS_IDENTIFIER_BINDING@16..20
               0: IDENT@16..20 "args" [] []
             2: (empty)
@@ -324,7 +324,7 @@ JsModule {
                 0: IDENT@68..69 "b" [] []
             3: COMMA@69..71 "," [] [Whitespace(" ")]
             4: JS_SPREAD@71..75
-              0: DOT2@71..74 "..." [] []
+              0: DOT3@71..74 "..." [] []
               1: JS_IDENTIFIER_EXPRESSION@74..75
                 0: JS_REFERENCE_IDENTIFIER@74..75
                   0: IDENT@74..75 "c" [] []
@@ -341,13 +341,13 @@ JsModule {
           0: L_PAREN@81..82 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@82..102
             0: JS_SPREAD@82..86
-              0: DOT2@82..85 "..." [] []
+              0: DOT3@82..85 "..." [] []
               1: JS_IDENTIFIER_EXPRESSION@85..86
                 0: JS_REFERENCE_IDENTIFIER@85..86
                   0: IDENT@85..86 "a" [] []
             1: COMMA@86..88 "," [] [Whitespace(" ")]
             2: JS_SPREAD@88..92
-              0: DOT2@88..91 "..." [] []
+              0: DOT3@88..91 "..." [] []
               1: JS_IDENTIFIER_EXPRESSION@91..92
                 0: JS_REFERENCE_IDENTIFIER@91..92
                   0: IDENT@91..92 "b" [] []
@@ -357,7 +357,7 @@ JsModule {
                 0: IDENT@94..95 "c" [] []
             5: COMMA@95..97 "," [] [Whitespace(" ")]
             6: JS_SPREAD@97..101
-              0: DOT2@97..100 "..." [] []
+              0: DOT3@97..100 "..." [] []
               1: JS_IDENTIFIER_EXPRESSION@100..101
                 0: JS_REFERENCE_IDENTIFIER@100..101
                   0: IDENT@100..101 "d" [] []

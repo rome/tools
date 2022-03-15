@@ -7,7 +7,7 @@ JsModule {
                 l_brack_token: L_BRACK@0..1 "[" [] [],
                 elements: JsArrayElementList [
                     JsSpread {
-                        dotdotdot_token: DOT2@1..4 "..." [] [],
+                        dotdotdot_token: DOT3@1..4 "..." [] [],
                         argument: missing (required),
                     },
                 ],
@@ -28,7 +28,7 @@ JsModule {
         0: L_BRACK@0..1 "[" [] []
         1: JS_ARRAY_ELEMENT_LIST@1..4
           0: JS_SPREAD@1..4
-            0: DOT2@1..4 "..." [] []
+            0: DOT3@1..4 "..." [] []
             1: (empty)
         2: R_BRACK@4..5 "]" [] []
       1: (empty)

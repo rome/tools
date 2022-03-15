@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: angular.ts
-
 ---
 # Input
 ```js
@@ -21,10 +19,9 @@ export class HeroButtonComponent {
 ```js
 @Component(
 {
-  selector: "toh-hero-button", template;
-  : `<button>{{label}}</button>`
-}
-)
+  selector: 'toh-hero-button',
+  template: `<button>{{label}}</button>`
+})
 export class HeroButtonComponent {
   @Output() change = new EventEmitter<any>();
   @Input() label: string;
@@ -49,35 +46,51 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │           ^ An explicit or implicit semicolon is expected here...
   │ └───────────' ...Which is required to end this statement
 
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ angular.ts:4:2
+error[SyntaxError]: expected a type but instead found '/'
+  ┌─ angular.ts:3:32
   │
-4 │ })
-  │  ^ Expected a statement here
+3 │   template: `<button>{{label}}</button>`
+  │                                ^ Expected a type here
 
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ angular.ts:6:3
+error: unterminated regex literal
+  ┌─ angular.ts:3:41
   │
-6 │   @Output() change = new EventEmitter<any>();
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+3 │   template: `<button>{{label}}</button>`
+  │                                -        ^ ...but the line ends here
+  │                                │        
+  │                                a regex literal starts there...
 
-error[SyntaxError]: expected a class method body but instead found 'change'
-  ┌─ angular.ts:6:13
-  │
-6 │   @Output() change = new EventEmitter<any>();
-  │             ^^^^^^ Expected a class method body here
+error: unterminated template literal
+  ┌─ angular.ts:3:41
+  │  
+3 │     template: `<button>{{label}}</button>`
+  │ ┌────────────────────────────────────────^
+4 │ │ })
+5 │ │ export class HeroButtonComponent {
+6 │ │   @Output() change = new EventEmitter<any>();
+7 │ │   @Input() label: string;
+8 │ │ }
+9 │ │ 
+  │ └^
 
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ angular.ts:7:3
-  │
-7 │   @Input() label: string;
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+error[SyntaxError]: Invalid template literal
+  ┌─ angular.ts:3:41
+  │  
+3 │     template: `<button>{{label}}</button>`
+  │ ┌────────────────────────────────────────^
+4 │ │ })
+5 │ │ export class HeroButtonComponent {
+6 │ │   @Output() change = new EventEmitter<any>();
+7 │ │   @Input() label: string;
+8 │ │ }
+9 │ │ 
+  │ └^
 
-error[SyntaxError]: expected a class method body but instead found 'label'
-  ┌─ angular.ts:7:12
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ angular.ts:9:1
   │
-7 │   @Input() label: string;
-  │            ^^^^^ Expected a class method body here
+9 │ 
+  │ ^ the file ends here
 
 
 ```

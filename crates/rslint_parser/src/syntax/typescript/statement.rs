@@ -154,11 +154,11 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: TextRange) {
     }
 }
 
-pub(crate) fn is_at_ts_enum_declaration(p: &Parser) -> bool {
+pub(crate) fn is_at_ts_enum_declaration(p: &mut Parser) -> bool {
     is_nth_at_ts_enum_declaration(p, 0)
 }
 
-pub(crate) fn is_nth_at_ts_enum_declaration(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_ts_enum_declaration(p: &mut Parser, n: usize) -> bool {
     match p.nth(n) {
         T![enum] => true,
         T![const] => p.nth_at(n + 1, T![enum]),
@@ -179,10 +179,10 @@ pub(crate) fn parse_ts_enum_declaration(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.eat_keyword(T![const], "const");
+    p.eat(T![const]);
 
     let enum_token_range = p.cur_range();
-    p.expect_keyword(T![enum], "enum");
+    p.expect(T![enum]);
     parse_ts_enum_id(p, enum_token_range);
 
     // test_err ts enum_no_l_curly
@@ -206,7 +206,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
 
     let start = p.cur_range().start();
     let m = p.start();
-    p.expect_keyword(T![type], "type");
+    p.expect(T![type]);
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_parameters(p).ok();
     p.expect(T![=]);
@@ -226,7 +226,7 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
 
     let stmt_start_pos = p.cur_range().start();
     let m = p.start();
-    p.expect_keyword(T![declare], "declare");
+    p.expect(T![declare]);
 
     p.with_state(EnterAmbientContext, |p| {
         parse_declaration_clause(p, stmt_start_pos)
@@ -237,8 +237,8 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 #[inline]
-pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
-    if !p.at(T![declare]) || p.has_linebreak_before_n(1) {
+pub(crate) fn is_at_ts_declare_statement(p: &mut Parser) -> bool {
+    if !p.at(T![declare]) || p.has_nth_preceding_line_break(1) {
         return false;
     }
 
@@ -246,8 +246,8 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
 }
 
 #[inline]
-pub(crate) fn is_at_ts_interface_declaration(p: &Parser) -> bool {
-    if !p.at(T![interface]) || p.has_linebreak_before_n(1) {
+pub(crate) fn is_at_ts_interface_declaration(p: &mut Parser) -> bool {
+    if !p.at(T![interface]) || p.has_nth_preceding_line_break(1) {
         return false;
     }
 
@@ -296,7 +296,7 @@ pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![interface], "interface");
+    p.expect(T![interface]);
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
     parse_ts_type_parameters(p).ok();
     eat_interface_heritage_clause(p);
@@ -355,14 +355,14 @@ fn parse_ts_extends_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![extends], "extends");
+    p.expect(T![extends]);
     expect_ts_type_list(p, "extends");
     Present(m.complete(p, TS_EXTENDS_CLAUSE))
 }
 
 #[inline]
-pub(crate) fn is_at_any_ts_namespace_declaration(p: &Parser) -> bool {
-    if p.has_linebreak_before_n(1) {
+pub(crate) fn is_at_any_ts_namespace_declaration(p: &mut Parser) -> bool {
+    if p.has_nth_preceding_line_break(1) {
         return false;
     }
 
@@ -378,8 +378,8 @@ pub(crate) fn is_at_any_ts_namespace_declaration(p: &Parser) -> bool {
 }
 
 #[inline]
-pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &Parser, n: usize) -> bool {
-    if p.has_linebreak_before_n(n + 1) {
+pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &mut Parser, n: usize) -> bool {
+    if p.has_nth_preceding_line_break(n + 1) {
         return false;
     }
 
@@ -440,8 +440,8 @@ fn parse_ts_namespace_or_module_declaration_clause(
 
     let m = p.start();
 
-    if !p.eat_keyword(T![namespace], "namespace") {
-        p.expect_keyword(T![module], "module");
+    if !p.eat(T![namespace]) {
+        p.expect(T![module]);
 
         if p.at(JS_STRING_LITERAL) {
             parse_module_source(p).expect("expected module source to be present because parser is positioned at a string literal");
@@ -507,7 +507,7 @@ fn parse_ts_global_declaration(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![global], "global");
+    p.expect(T![global]);
     parse_ts_module_block(p).or_add_diagnostic(p, |_, _| expected_token(T!['{']));
     Present(m.complete(p, TS_GLOBAL_DECLARATION))
 }
@@ -527,7 +527,7 @@ pub(crate) fn parse_ts_import_equals_declaration_rest(
     stmt_start_pos: TextSize,
 ) -> CompletedMarker {
     if is_nth_at_identifier_binding(p, 1) {
-        p.eat_keyword(T![type], "type");
+        p.eat(T![type]);
     }
 
     parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
@@ -551,7 +551,7 @@ fn parse_ts_external_module_reference(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![require], "require");
+    p.expect(T![require]);
     p.expect(T!['(']);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     p.expect(T![')']);

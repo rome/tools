@@ -34,7 +34,7 @@ use crate::syntax::typescript::{
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode, SyntaxFeature,
+    CompletedMarker, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode, SyntaxFeature,
 };
 use bitflags::bitflags;
 use drop_bomb::DebugDropBomb;
@@ -56,12 +56,12 @@ use super::typescript::{
 };
 
 pub(crate) fn is_at_ts_abstract_class_declaration(
-    p: &Parser,
+    p: &mut Parser,
     should_check_line_break: LineBreak,
 ) -> bool {
     let tokens = p.at(T![abstract]) && p.nth_at(1, T![class]);
     if should_check_line_break == LineBreak::DoCheck {
-        tokens && !p.has_linebreak_before_n(1)
+        tokens && !p.has_nth_preceding_line_break(1)
     } else {
         tokens
     }
@@ -184,10 +184,10 @@ impl From<ClassKind> for JsSyntaxKind {
 // test ts ts_class_named_abstract_is_valid_in_ts
 // class abstract {}
 fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
-    let is_abstract = p.eat_keyword(T![abstract], "abstract");
+    let is_abstract = p.eat(T![abstract]);
 
     let class_token_range = p.cur_range();
-    p.expect_keyword(T![class], "class");
+    p.expect(T![class]);
 
     let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_range())));
 
@@ -340,7 +340,7 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     let extends_end = p.cur_range().end();
-    p.expect_keyword(T![extends], "extends");
+    p.expect(T![extends]);
 
     if parse_extends_expression(p).is_absent() {
         p.error(
@@ -549,7 +549,7 @@ fn parse_class_member_impl(
     member_marker: Marker,
     modifiers: &mut ClassMemberModifiers,
 ) -> ParsedSyntax {
-    let start_token_pos = p.token_pos();
+    let start_token_pos = p.tokens.position();
     let generator_range = p.cur_range();
 
     // Seems like we're at a generator method
@@ -575,10 +575,10 @@ fn parse_class_member_impl(
     if p.at(T![async])
         && !p.nth_at(1, T![?])
         && !is_at_method_class_member(p, 1)
-        && !p.has_linebreak_before_n(1)
+        && !p.has_nth_preceding_line_break(1)
     {
         let async_range = p.cur_range();
-        p.expect_keyword(T![async], "async");
+        p.expect(T![async]);
 
         let mut flags = SignatureFlags::ASYNC;
 
@@ -649,9 +649,9 @@ fn parse_class_member_impl(
     if matches!(p.cur(), T![get] | T![set]) && is_at_class_member_name(p, 1) {
         let is_getter = p.at(T![get]);
         if is_getter {
-            p.expect_keyword(T![get], "get");
+            p.expect(T![get]);
         } else {
-            p.expect_keyword(T![set], "set");
+            p.expect(T![set]);
         }
 
         // So we've seen a get that now must be followed by a getter/setter name
@@ -810,7 +810,7 @@ fn parse_class_member_impl(
             // test_err block_stmt_in_class
             // class S{{}}
             debug_assert_eq!(
-                p.token_pos(),
+                p.tokens.position(),
                 start_token_pos,
                 "Parser shouldn't be progressing when returning Absent"
             );
@@ -821,7 +821,7 @@ fn parse_class_member_impl(
     }
 }
 
-fn is_at_static_initialization_block_class_member(p: &Parser) -> bool {
+fn is_at_static_initialization_block_class_member(p: &mut Parser) -> bool {
     p.at(T![static]) && p.nth_at(1, T!['{'])
 }
 
@@ -852,7 +852,7 @@ fn parse_static_initialization_block_class_member(
         modifiers.validate_and_complete(p, JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER);
     }
 
-    p.expect_keyword(T![static], "static");
+    p.expect(T![static]);
     p.expect(T!['{']);
     p.with_state(EnterClassStaticInitializationBlock, |p| {
         parse_statements(p, true)
@@ -935,22 +935,16 @@ fn parse_property_class_member_body(
 fn expect_member_semi(p: &mut Parser, member_marker: &Marker, name: &str) {
     if !optional_semi(p) {
         // Gets the start of the member
-        let start = match p.events[member_marker.old_start as usize] {
-            Event::Start { start, .. } => start,
-            _ => unreachable!(),
-        };
-
         let end = p
-            .tokens
-            .last_tok()
-            .map(|t| t.end())
+            .last_range()
+            .map(|r| r.end())
             .unwrap_or_else(|| p.cur_range().start());
 
         let err = p
             .err_builder(&format!(
                 "expected a semicolon to end the {name}, but found none"
             ))
-            .primary(start..end, "");
+            .primary(member_marker.start()..end, "");
 
         p.error(err);
     }
@@ -1504,7 +1498,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
     }
 }
 
-fn is_at_class_member_name(p: &Parser, offset: usize) -> bool {
+fn is_at_class_member_name(p: &mut Parser, offset: usize) -> bool {
     matches!(p.nth(offset), T![#] | T!['[']) || is_at_literal_member_name(p, offset)
 }
 
@@ -1525,7 +1519,7 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
+fn is_at_method_class_member(p: &mut Parser, mut offset: usize) -> bool {
     if p.nth_at(offset, T![?]) {
         offset += 1;
     }
@@ -1533,7 +1527,7 @@ fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
     p.nth_at(offset, T!['(']) || p.nth_at(offset, T![<])
 }
 
-pub(crate) fn is_nth_at_modifier(p: &Parser, n: usize, constructor_parameter: bool) -> bool {
+pub(crate) fn is_nth_at_modifier(p: &mut Parser, n: usize, constructor_parameter: bool) -> bool {
     // Test if this modifier is followed by another modifier, member name or any other token that
     // starts a new member. If that's the case, then this is fairly likely a modifier. If not, then
     // this is probably not a modifier, but the name of the member. For example, all these are valid
@@ -1553,7 +1547,7 @@ pub(crate) fn is_nth_at_modifier(p: &Parser, n: usize, constructor_parameter: bo
         return false;
     }
 
-    if p.has_linebreak_before_n(n + 1) {
+    if p.has_nth_preceding_line_break(n + 1) {
         return false;
     }
 
@@ -1615,15 +1609,15 @@ fn parse_modifier(p: &mut Parser, constructor_parameter: bool) -> Option<ClassMe
         return None;
     }
 
-    let (modifier_kind, name) = match p.cur() {
-        T![declare] => (ModifierKind::Declare, "declare"),
-        T![public] => (ModifierKind::Public, "public"),
-        T![protected] => (ModifierKind::Protected, "protected"),
-        T![private] => (ModifierKind::Private, "private"),
-        T![override] => (ModifierKind::Override, "override"),
-        T![static] => (ModifierKind::Static, "static"),
-        T![readonly] => (ModifierKind::Readonly, "readonly"),
-        T![abstract] => (ModifierKind::Abstract, "abstract"),
+    let modifier_kind = match p.cur() {
+        T![declare] => ModifierKind::Declare,
+        T![public] => ModifierKind::Public,
+        T![protected] => ModifierKind::Protected,
+        T![private] => ModifierKind::Private,
+        T![override] => ModifierKind::Override,
+        T![static] => ModifierKind::Static,
+        T![readonly] => ModifierKind::Readonly,
+        T![abstract] => ModifierKind::Abstract,
         _ => {
             return None;
         }
@@ -1631,7 +1625,7 @@ fn parse_modifier(p: &mut Parser, constructor_parameter: bool) -> Option<ClassMe
 
     let m = p.start();
     let range = p.cur_range();
-    p.expect_keyword(p.cur(), name);
+    p.bump_any();
     m.complete(p, modifier_kind.as_syntax_kind());
 
     Some(ClassMemberModifier {

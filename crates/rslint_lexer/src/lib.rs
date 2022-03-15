@@ -15,27 +15,60 @@
 
 #![allow(clippy::or_fun_call)]
 
-#[macro_use]
-mod token;
-mod state;
 #[rustfmt::skip]
 mod tables;
 mod errors;
 mod tests;
 
-pub use token::Token;
-
+pub mod buffered_lexer;
+mod bytes;
 #[cfg(feature = "highlight")]
 mod highlight;
+
+use bitflags::bitflags;
 #[cfg(feature = "highlight")]
 pub use highlight::*;
 
 use rslint_errors::Diagnostic;
-use state::LexerState;
 use tables::derived_property::*;
 
 pub use rome_js_syntax::*;
-pub type LexerReturn = (Token, Option<Box<Diagnostic>>);
+
+use crate::bytes::{
+    lookup_byte,
+    Dispatch::{self, *},
+};
+use rome_js_syntax::JsSyntaxKind::*;
+use rslint_errors::file::FileId;
+
+use crate::errors::invalid_digits_after_unicode_escape_sequence;
+
+/// A lexed token as returned by [Lexer::next_token].
+/// Holds information about the kind of the token and any potential diagnostics.
+#[derive(Debug)]
+pub struct LexedToken {
+    /// The token kind
+    pub kind: JsSyntaxKind,
+
+    /// Diagnostics associated with the current token, if any.
+    pub diagnostic: Option<Box<Diagnostic>>,
+}
+
+impl LexedToken {
+    /// Creates a lexed token of the given kind but without any diagnostic
+    pub fn ok(kind: JsSyntaxKind) -> Self {
+        Self::new(kind, None)
+    }
+
+    pub fn new(kind: JsSyntaxKind, diagnostic: Option<Box<Diagnostic>>) -> Self {
+        Self { kind, diagnostic }
+    }
+
+    /// Creates a lexed token of the given kind and with the given diagnostic
+    pub fn with_diagnostic(kind: JsSyntaxKind, diagnostic: Box<Diagnostic>) -> Self {
+        Self::new(kind, Some(diagnostic))
+    }
+}
 
 // Simple macro for unwinding a loop
 macro_rules! unwind_loop {
@@ -81,100 +114,276 @@ fn is_id_continue(c: char) -> bool {
     c == '$' || c == '\u{200d}' || c == '\u{200c}' || ID_Continue(c)
 }
 
+/// Context in which the lexer should lex the next token
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum LexContext {
+    /// Default context for if the lexer isn't in any specific other context
+    Regular,
+
+    /// For lexing the elements of a JS template literal or TS template type.
+    /// Doesn't skip whitespace trivia.
+    TemplateElement { tagged: bool },
+}
+
+impl Default for LexContext {
+    fn default() -> Self {
+        LexContext::Regular
+    }
+}
+
+impl LexContext {
+    /// Returns true if this is [LexContext::Regular]
+    pub fn is_regular(&self) -> bool {
+        matches!(self, LexContext::Regular)
+    }
+}
+
+/// Context in which the [Lexer]'s current should be re-lexed.
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum ReLexContext {
+    /// Re-lexes a `/` or `/=` token as a regular expression.
+    Regex,
+}
+
+bitflags! {
+    /// Flags for a lexed token.
+    pub(crate) struct TokenFlags: u8 {
+        /// Indicates that there has been a line break between the last non-trivia token
+        const PRECEDING_LINE_BREAK = 1 << 0;
+
+        /// Indicates that an identifier contains an unicode escape sequence
+        const UNICODE_ESCAPE = 1 << 1;
+    }
+}
+
+impl TokenFlags {
+    pub const fn has_preceding_line_break(&self) -> bool {
+        self.contains(TokenFlags::PRECEDING_LINE_BREAK)
+    }
+
+    pub const fn has_unicode_escape(&self) -> bool {
+        self.contains(TokenFlags::UNICODE_ESCAPE)
+    }
+}
+
 /// An extremely fast, lookup table based, lossless ECMAScript lexer
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug)]
 pub struct Lexer<'src> {
-    bytes: &'src [u8],
-    cur: usize,
-    state: LexerState,
-    pub file_id: usize,
-    returned_eof: bool,
+    /// Source text
+    source: &'src str,
+
+    /// The start byte position in the source text of the next token.
+    position: usize,
+
+    /// `true` if there has been a line break between the last non-trivia token and the next non-trivia token.
+    after_newline: bool,
+
+    /// Byte offset of the current token from the start of the source
+    /// The range of the current token can be computed by `self.position - self.current_start`
+    current_start: TextSize,
+
+    /// The kind of the current token
+    current_kind: JsSyntaxKind,
+
+    /// Flags for the current token
+    current_flags: TokenFlags,
+
+    /// The id of the file, used for diagnostics
+    file_id: FileId,
 }
 
 impl<'src> Lexer<'src> {
-    /// Make a new lexer from raw bytes.
-    ///
-    /// # Safety
-    /// You must make sure the bytes are valid utf8, failure to do so is undefined behavior.
-    pub unsafe fn from_bytes(bytes: &'src [u8], file_id: usize) -> Self {
-        Self {
-            bytes,
-            cur: 0,
-            file_id,
-            state: LexerState::new(),
-            returned_eof: false,
-        }
-    }
-
     /// Make a new lexer from a str, this is safe because strs are valid utf8
-    pub fn from_str(string: &'src str, file_id: usize) -> Self {
+    pub fn from_str(string: &'src str, file_id: FileId) -> Self {
         Self {
-            bytes: string.as_bytes(),
-            cur: 0,
+            source: string,
+            after_newline: false,
+            current_kind: TOMBSTONE,
+            current_start: TextSize::from(0),
+            current_flags: TokenFlags::empty(),
+            position: 0,
             file_id,
-            state: LexerState::new(),
-            returned_eof: false,
         }
     }
 
-    // Bump the lexer and return the token given in
-    fn eat(&mut self, tok: LexerReturn) -> LexerReturn {
-        self.next();
-        tok
+    /// Returns the source code
+    pub fn source(&self) -> &'src str {
+        self.source
     }
 
-    fn consume_newlines(&mut self) -> usize {
-        let start = self.cur;
-        if self.current().is_some() {
-            let chr = self.get_unicode_char();
+    /// Returns the kind of the current token
+    #[inline]
+    pub const fn current(&self) -> JsSyntaxKind {
+        self.current_kind
+    }
+
+    /// Returns the range of the current token (The token that was lexed by the last `next` call)
+    #[inline]
+    pub fn current_range(&self) -> TextRange {
+        TextRange::new(self.current_start, TextSize::from(self.position as u32))
+    }
+
+    /// Returns true if a line break precedes the current token.
+    #[inline]
+    pub const fn has_preceding_line_break(&self) -> bool {
+        self.current_flags.has_preceding_line_break()
+    }
+
+    /// Returns `true` if the current token is an identifier and it contains a unicode escape sequence (`\u...`).
+    #[inline]
+    pub const fn has_unicode_escape(&self) -> bool {
+        self.current_flags.has_unicode_escape()
+    }
+
+    /// Creates a checkpoint storing the current lexer state.
+    ///
+    /// Use `rewind` to restore the lexer to the state stored in the checkpoint.
+    pub fn checkpoint(&self) -> LexerCheckpoint {
+        LexerCheckpoint {
+            position: TextSize::from(self.position as u32),
+            current_start: self.current_start,
+            current_flags: self.current_flags,
+            current_kind: self.current_kind,
+            after_line_break: self.after_newline,
+        }
+    }
+
+    /// Rewinds the lexer to the same state as when the passed in `checkpoint` was created.
+    pub fn rewind(&mut self, checkpoint: LexerCheckpoint) {
+        let LexerCheckpoint {
+            position,
+            current_start,
+            current_flags,
+            current_kind,
+            after_line_break,
+        } = checkpoint;
+
+        let new_pos = u32::from(position) as usize;
+
+        self.position = new_pos;
+        self.current_kind = current_kind;
+        self.current_start = current_start;
+        self.current_flags = current_flags;
+        self.after_newline = after_line_break;
+    }
+
+    /// Lexes the next token.
+    ///
+    /// ## Return
+    /// Returns its kind and any potential error.
+    pub fn next_token(&mut self, context: LexContext) -> LexedToken {
+        self.current_start = TextSize::from(self.position as u32);
+        self.current_flags = TokenFlags::empty();
+
+        let result = if self.is_eof() {
+            LexedToken::ok(EOF)
+        } else {
+            match context {
+                LexContext::Regular => self.lex_token(),
+                LexContext::TemplateElement { tagged } => self.lex_template(tagged),
+            }
+        };
+
+        self.current_flags
+            .set(TokenFlags::PRECEDING_LINE_BREAK, self.after_newline);
+        self.current_kind = result.kind;
+
+        if !result.kind.is_trivia() {
+            self.after_newline = false;
+        }
+
+        result
+    }
+
+    /// Lexes the current token again under the passed [ReLexContext].
+    /// Useful in case a token can have different meaning depending on the context.
+    ///
+    /// For example, a `/` must either be lexed as a `/` token or as a regular expression if it
+    /// appears at the start of an expression. Re-lexing allows to always lex the `/` as a `/` token and
+    /// call into `re_lex` when the parser is at a valid regular expression position, to see if the
+    /// current token can be lexed out as a regular expression literal.
+    ///
+    /// ## Returns
+    /// The new token kind and any associated diagnostic if current token has a different meaning under
+    /// the passed [ReLexContext].
+    ///
+    /// Returns the current kind without any diagnostic if not. Any cached lookahead remains valid in that case.
+    pub fn re_lex(&mut self, context: ReLexContext) -> LexedToken {
+        let old_position = self.position;
+        self.position = u32::from(self.current_start) as usize;
+
+        let result = match context {
+            ReLexContext::Regex if matches!(self.current(), T![/] | T![/=]) => self.read_regex(),
+            _ => {
+                // Didn't re-lex anything. Return existing token again
+                self.position = old_position;
+                LexedToken::ok(self.current())
+            }
+        };
+
+        self.current_kind = result.kind;
+
+        result
+    }
+
+    /// Bumps the current byte and creates a lexed token of the passed in kind
+    fn eat_byte(&mut self, tok: JsSyntaxKind) -> LexedToken {
+        self.next_byte();
+        LexedToken::ok(tok)
+    }
+
+    fn consume_newlines(&mut self) -> bool {
+        let start = self.position;
+        if self.current_byte().is_some() {
+            let chr = self.current_char_unchecked();
             if is_linebreak(chr) {
-                self.state.had_linebreak = true;
-                self.cur += chr.len_utf8();
-                if chr == '\r' && self.current() == Some(&b'\n') {
-                    self.cur += '\n'.len_utf8();
+                self.advance(chr.len_utf8());
+                if chr == '\r' && self.current_byte() == Some(b'\n') {
+                    self.advance('\n'.len_utf8());
                 }
             }
         }
-        self.cur - start
+        self.position != start
     }
 
-    fn consume_whitespace_until_newline(&mut self) -> usize {
-        let start = self.cur;
-        while let Some(current) = self.current().copied() {
-            let chr = self.get_unicode_char();
+    fn consume_whitespace_until_newline(&mut self) {
+        while let Some(current) = self.current_byte() {
+            let chr = self.current_char_unchecked();
 
             if is_linebreak(chr) {
                 break;
             }
 
-            let dispatcher = DISPATCHER[current as usize];
-            if dispatcher == Dispatch::WHS
+            let dispatcher = lookup_byte(current);
+            if dispatcher == crate::bytes::Dispatch::WHS
                 || (UNICODE_WHITESPACE_STARTS.contains(&current) && UNICODE_SPACES.contains(&chr))
             {
-                self.cur += chr.len_utf8();
+                self.advance(chr.len_utf8());
             } else {
                 break;
             }
         }
-        self.cur - start
     }
 
-    fn consume_newline_or_whitespace(&mut self) -> LexerReturn {
-        let count = self.consume_newlines();
-        if count > 0 {
-            tok!(NEWLINE, count)
+    fn consume_newline_or_whitespace(&mut self) -> LexedToken {
+        if self.consume_newlines() {
+            self.after_newline = true;
+            LexedToken::ok(NEWLINE)
         } else {
-            tok!(WHITESPACE, self.consume_whitespace_until_newline())
+            self.consume_whitespace_until_newline();
+            LexedToken::ok(WHITESPACE)
         }
     }
 
-    // Get the unicode char which starts at the current byte and advance the lexer's cursor
-    fn get_unicode_char(&self) -> char {
+    /// Get the unicode char which starts at the current byte
+    fn current_char_unchecked(&self) -> char {
         // This is unreachable for all intents and purposes, but this is just a precautionary measure
-        debug_assert!(self.cur < self.bytes.len());
+        debug_assert!(!self.is_eof());
 
         // Safety: We know this is safe because we require the input to the lexer to be valid utf8 and we always call this when we are at a char
-        let string = unsafe { std::str::from_utf8_unchecked(self.bytes.get_unchecked(self.cur..)) };
+        let string = unsafe {
+            std::str::from_utf8_unchecked(self.source.as_bytes().get_unchecked(self.position..))
+        };
         let chr = if let Some(chr) = string.chars().next() {
             chr
         } else {
@@ -187,55 +396,93 @@ impl<'src> Lexer<'src> {
         chr
     }
 
-    // Get the current byte
+    /// Gets the current byte.
+    ///
+    /// ## Returns
+    /// The current byte if the lexer isn't at the end of the file.
     #[inline]
-    fn current(&mut self) -> Option<&u8> {
-        self.bytes.get(self.cur)
-    }
-
-    // Get the next byte and advance the index
-    #[inline]
-    fn next(&mut self) -> Option<&u8> {
-        self.cur += 1;
-        self.bytes.get(self.cur)
-    }
-
-    // Get the next byte but only advance the index if there is a next byte
-    // This is really just a hack for certain methods like escapes
-    #[inline]
-    fn next_bounded(&mut self) -> Option<&u8> {
-        if let Some(b) = self.bytes.get(self.cur + 1) {
-            self.cur += 1;
-            Some(b)
+    fn current_byte(&self) -> Option<u8> {
+        if self.is_eof() {
+            None
         } else {
-            if self.cur != self.bytes.len() {
-                self.cur += 1;
+            Some(self.source.as_bytes()[self.position])
+        }
+    }
+
+    /// Asserts that the lexer is currently positioned at `byte`
+    #[inline]
+    fn assert_byte(&self, byte: u8) {
+        debug_assert_eq!(self.source.as_bytes()[self.position], byte);
+    }
+
+    /// Returns the current byte without checking if the lexer is at the end of the file.
+    ///
+    /// ## Safety
+    /// Calling this function if the lexer is at or passed the end of file is undefined behaviour.
+    #[inline]
+    unsafe fn current_unchecked(&self) -> u8 {
+        *self.source.as_bytes().get_unchecked(self.position)
+    }
+
+    /// Advances the position by one and returns the next byte value
+    #[inline]
+    fn next_byte(&mut self) -> Option<u8> {
+        self.advance(1);
+        self.current_byte()
+    }
+
+    /// Get the next byte but only advance the index if there is a next byte.
+    /// This is really just a hack for certain methods like escapes
+    #[inline]
+    fn next_byte_bounded(&mut self) -> Option<u8> {
+        if let Some(b) = self.source.as_bytes().get(self.position + 1) {
+            self.advance(1);
+            Some(*b)
+        } else {
+            if !self.is_eof() {
+                // Move the cursor by one to position the Lexer at the EOF token
+                self.advance(1);
             }
             None
         }
     }
 
-    fn advance(&mut self, amount: usize) {
-        self.cur += amount;
+    /// Peeks at the next byte
+    #[inline]
+    fn peek_byte(&self) -> Option<&u8> {
+        self.byte_at(1)
     }
 
-    fn lookup(byte: u8) -> Dispatch {
-        // Safety: our lookup table maps all values of u8, so its impossible for a u8 to be out of bounds
-        unsafe { *DISPATCHER.get_unchecked(byte as usize) }
+    /// Returns the byte at position `self.position + offset` or `None` if it is out of bounds.
+    #[inline]
+    fn byte_at(&self, offset: usize) -> Option<&u8> {
+        self.source.as_bytes().get(self.position + offset)
+    }
+
+    /// Advances the current position by `n` bytes.
+    #[inline]
+    fn advance(&mut self, n: usize) {
+        self.position += n;
+    }
+
+    /// Returns `true` if the parser is at or passed the end of the file.
+    #[inline]
+    fn is_eof(&self) -> bool {
+        self.position >= self.source.len()
     }
 
     // Read a `\u{000...}` escape sequence, this expects the cur char to be the `{`
     fn read_codepoint_escape(&mut self) -> Result<char, Box<Diagnostic>> {
-        let start = self.cur + 1;
+        let start = self.position + 1;
         self.read_hexnumber();
 
-        if self.bytes.get(self.cur) != Some(&b'}') {
+        if self.current_byte() != Some(b'}') {
             // We should not yield diagnostics on a unicode char boundary. That wont make codespan panic
             // but it may cause a panic for other crates which just consume the diagnostics
-            let invalid = self.get_unicode_char();
+            let invalid = self.current_char_unchecked();
             let err = Diagnostic::error(self.file_id, "", "expected hex digits for a unicode code point escape, but encountered an invalid character")
-                .primary(self.cur .. self.cur + invalid.len_utf8(), "");
-            self.cur -= 1;
+                .primary(self.position.. self.position + invalid.len_utf8(), "");
+            self.position -= 1;
             return Err(Box::new(err));
         }
 
@@ -245,10 +492,15 @@ impl<'src> Lexer<'src> {
         // would have triggered the if statement above. We also know this must be valid utf8, both because of read_hexnumber's behavior
         // and because input to the lexer must be valid utf8
         let digits_str = unsafe {
-            debug_assert!(self.bytes.get(start..self.cur).is_some());
-            debug_assert!(std::str::from_utf8(self.bytes.get_unchecked(start..self.cur)).is_ok());
+            debug_assert!(self.source.as_bytes().get(start..self.position).is_some());
+            debug_assert!(std::str::from_utf8(
+                self.source.as_bytes().get_unchecked(start..self.position)
+            )
+            .is_ok());
 
-            std::str::from_utf8_unchecked(self.bytes.get_unchecked(start..self.cur))
+            std::str::from_utf8_unchecked(
+                self.source.as_bytes().get_unchecked(start..self.position),
+            )
         };
 
         match u32::from_str_radix(digits_str, 16) {
@@ -259,7 +511,7 @@ impl<'src> Lexer<'src> {
                 } else {
                     let err =
                         Diagnostic::error(self.file_id, "", "invalid codepoint for unicode escape")
-                            .primary(start..self.cur, "");
+                            .primary(start..self.position, "");
                     Err(Box::new(err))
                 }
             }
@@ -270,7 +522,7 @@ impl<'src> Lexer<'src> {
                     "",
                     "out of bounds codepoint for unicode codepoint escape sequence",
                 )
-                .primary(start..self.cur, "")
+                .primary(start..self.position, "")
                 .footer_note("Codepoints range from 0 to 0x10FFFF (1114111)");
                 Err(Box::new(err))
             }
@@ -280,29 +532,29 @@ impl<'src> Lexer<'src> {
     // Read a `\u0000` escape sequence, this expects the current char to be the `u`, it also does not skip over the escape sequence
     // The pos after this method is the last hex digit
     fn read_unicode_escape(&mut self, advance: bool) -> Result<char, Box<Diagnostic>> {
-        debug_assert_eq!(self.bytes[self.cur], b'u');
+        self.assert_byte(b'u');
 
         for idx in 0..4 {
-            match self.next_bounded() {
+            match self.next_byte_bounded() {
                 None => {
                     if !advance {
-                        self.cur -= idx + 1;
+                        self.position -= idx + 1;
                     }
                     let err = invalid_digits_after_unicode_escape_sequence(
                         self.file_id,
-                        self.cur - 1,
-                        self.cur + 1,
+                        self.position - 1,
+                        self.position + 1,
                     );
                     return Err(err);
                 }
                 Some(b) if !b.is_ascii_hexdigit() => {
                     let err = invalid_digits_after_unicode_escape_sequence(
                         self.file_id,
-                        self.cur - 1,
-                        self.cur + 1,
+                        self.position - 1,
+                        self.position + 1,
                     );
                     if !advance {
-                        self.cur -= idx + 1;
+                        self.position -= idx + 1;
                     }
                     return Err(err);
                 }
@@ -313,11 +565,13 @@ impl<'src> Lexer<'src> {
         unsafe {
             // Safety: input to the lexer is guaranteed to be valid utf8 and so is the range since we return if there is a wrong amount of digits beforehand
             let digits_str = std::str::from_utf8_unchecked(
-                self.bytes.get_unchecked((self.cur - 3)..(self.cur + 1)),
+                self.source
+                    .as_bytes()
+                    .get_unchecked((self.position - 3)..(self.position + 1)),
             );
             if let Ok(digits) = u32::from_str_radix(digits_str, 16) {
                 if !advance {
-                    self.cur -= 4;
+                    self.position -= 4;
                 }
                 Ok(std::char::from_u32_unchecked(digits))
             } else {
@@ -331,19 +585,19 @@ impl<'src> Lexer<'src> {
     // Validate a `\x00 escape sequence, this expects the current char to be the `x`, it also does not skip over the escape sequence
     // The pos after this method is the last hex digit
     fn validate_hex_escape(&mut self) -> Option<Box<Diagnostic>> {
-        debug_assert_eq!(self.bytes[self.cur], b'x');
+        self.assert_byte(b'x');
 
         let diagnostic =
             Diagnostic::error(self.file_id, "", "invalid digits after hex escape sequence")
                 .primary(
-                    (self.cur - 1)..(self.cur + 1),
+                    (self.position - 1)..(self.position + 1),
                     "Expected 2 hex digits following this",
                 );
 
         for _ in 0..2 {
-            match self.next_bounded() {
+            match self.next_byte_bounded() {
                 None => return Some(Box::new(diagnostic)),
-                Some(b) if !(*b as u8).is_ascii_hexdigit() => return Some(Box::new(diagnostic)),
+                Some(b) if !(b as u8).is_ascii_hexdigit() => return Some(Box::new(diagnostic)),
                 _ => {}
             }
         }
@@ -352,18 +606,18 @@ impl<'src> Lexer<'src> {
 
     // Validate a `\..` escape sequence and advance the lexer based on it
     fn validate_escape_sequence(&mut self) -> Option<Box<Diagnostic>> {
-        debug_assert_eq!(self.current().unwrap(), &b'\\');
-        let cur = self.cur;
-        self.next(); // eat over the \
-        if let Some(escape) = self.bytes.get(self.cur) {
+        self.assert_byte(b'\\');
+        let cur = self.position;
+        self.next_byte(); // eat over the \
+        if let Some(escape) = self.current_byte() {
             match escape {
                 // Single escape character
                 b'\\' | b'n' | b'r' | b't' | b'b' | b'v' | b'f' | b'\'' | b'"' => {
-                    self.next();
+                    self.next_byte();
                     None
                 }
-                b'u' if self.bytes.get(self.cur + 1) == Some(&b'{') => {
-                    self.next(); // jump over '{'
+                b'u' if self.peek_byte() == Some(&b'{') => {
+                    self.next_byte(); // jump over '{'
                     self.read_codepoint_escape().err()
                 }
                 b'u' => self.read_unicode_escape(true).err(),
@@ -371,8 +625,8 @@ impl<'src> Lexer<'src> {
                 b'x' => self.validate_hex_escape(),
                 _ => {
                     // We use get_unicode_char to account for escaped source characters which are unicode
-                    let chr = self.get_unicode_char();
-                    self.cur += chr.len_utf8();
+                    let chr = self.current_char_unchecked();
+                    self.advance(chr.len_utf8());
                     None
                 }
             }
@@ -388,7 +642,7 @@ impl<'src> Lexer<'src> {
     #[inline]
     fn consume_ident(&mut self) {
         unwind_loop! {
-            if self.next_bounded().is_some() {
+            if self.next_byte_bounded().is_some() {
                 if self.cur_ident_part().is_none() {
                     return;
                 }
@@ -409,7 +663,7 @@ impl<'src> Lexer<'src> {
         let mut idx = 0;
         let mut any_escaped = false;
         unwind_loop! {
-            if self.next_bounded().is_some() {
+            if self.next_byte_bounded().is_some() {
                 if let Some((c, escaped)) = self.cur_ident_part() {
                     if let Some(buf) = buf.get_mut(idx..idx + 4) {
                         let res = c.encode_utf8(buf);
@@ -429,13 +683,13 @@ impl<'src> Lexer<'src> {
     // This could include unterminated string and invalid escape sequences
     fn read_str_literal(&mut self) -> Option<Box<Diagnostic>> {
         // Safety: this is only ever called from lex_token, which is guaranteed to be called on a char position
-        let quote = unsafe { *self.bytes.get_unchecked(self.cur) };
-        let start = self.cur;
+        let quote = unsafe { self.current_unchecked() };
+        let start = self.position;
         let mut diagnostic = None;
 
-        self.next(); // skip quote;
+        self.next_byte(); // skip quote;
 
-        while let Some(byte) = self.current().copied() {
+        while let Some(byte) = self.current_byte() {
             match byte {
                 b'\\' => {
                     let r = self.validate_escape_sequence();
@@ -450,17 +704,17 @@ impl<'src> Lexer<'src> {
                     }
                 }
                 b if b == quote => {
-                    self.next();
+                    self.next_byte();
                     return diagnostic;
                 }
                 _ => {
-                    self.next();
+                    self.next_byte();
                 }
             }
         }
 
         let unterminated = Diagnostic::error(self.file_id, "", "unterminated string literal")
-            .primary(self.cur..self.cur, "input ends here")
+            .primary(self.position..self.position, "input ends here")
             .secondary(start..start + 1, "string literal starts here");
 
         Some(Box::new(unterminated))
@@ -475,29 +729,29 @@ impl<'src> Lexer<'src> {
     /// e.g. `t` is returned, the actual source code is `\u{74}`
     #[inline]
     fn cur_ident_part(&mut self) -> Option<(char, bool)> {
-        debug_assert!(self.cur < self.bytes.len());
+        debug_assert!(!self.is_eof());
 
         // Safety: we always call this method on a char
-        let b = unsafe { self.bytes.get_unchecked(self.cur) };
+        let b = unsafe { self.current_unchecked() };
 
-        match Self::lookup(*b) {
-            IDT | DIG | ZER => Some((*b as char, false)),
+        match lookup_byte(b) {
+            IDT | DIG | ZER => Some((b as char, false)),
             // FIXME: This should use ID_Continue, not XID_Continue
             UNI => {
-                let chr = self.get_unicode_char();
+                let chr = self.current_char_unchecked();
                 let res = is_id_continue(chr);
                 if res {
-                    self.cur += chr.len_utf8() - 1;
+                    self.advance(chr.len_utf8() - 1);
                     Some((chr, false))
                 } else {
                     None
                 }
             }
-            BSL if self.bytes.get(self.cur + 1) == Some(&b'u') => {
-                let start = self.cur;
-                self.next();
-                let res = if self.bytes.get(self.cur + 1).copied() == Some(b'{') {
-                    self.next();
+            BSL if self.peek_byte() == Some(&b'u') => {
+                let start = self.position;
+                self.next_byte();
+                let res = if self.peek_byte().copied() == Some(b'{') {
+                    self.next_byte();
                     self.read_codepoint_escape()
                 } else {
                     self.read_unicode_escape(true)
@@ -507,11 +761,11 @@ impl<'src> Lexer<'src> {
                     if is_id_continue(c) {
                         Some((c, true))
                     } else {
-                        self.cur -= 1;
+                        self.position = start;
                         None
                     }
                 } else {
-                    self.cur = start;
+                    self.position = start;
                     None
                 }
             }
@@ -523,27 +777,27 @@ impl<'src> Lexer<'src> {
     // is a `\uxxxx` sequence which is an identifier start, or if the char is a unicode char which is an identifier start
     #[inline]
     fn cur_is_ident_start(&mut self) -> bool {
-        debug_assert!(self.cur < self.bytes.len());
+        debug_assert!(!self.is_eof());
 
         // Safety: we always call this method on a char
-        let b = unsafe { self.bytes.get_unchecked(self.cur) };
+        let b = unsafe { self.current_unchecked() };
 
-        match Self::lookup(*b) {
-            BSL if self.bytes.get(self.cur + 1) == Some(&b'u') => {
-                self.next();
+        match lookup_byte(b) {
+            BSL if self.peek_byte() == Some(&b'u') => {
+                self.next_byte();
                 if let Ok(chr) = self.read_unicode_escape(false) {
                     if is_id_start(chr) {
                         self.advance(5);
                         return true;
                     }
                 }
-                self.cur -= 1;
+                self.position -= 1;
                 false
             }
             UNI => {
-                let chr = self.get_unicode_char();
+                let chr = self.current_char_unchecked();
                 if is_id_start(chr) {
-                    self.cur += chr.len_utf8() - 1;
+                    self.advance(chr.len_utf8() - 1);
                     true
                 } else {
                     false
@@ -560,15 +814,19 @@ impl<'src> Lexer<'src> {
     /// `first` is a pair of a character that was already consumed,
     /// but is still part of the identifier, and the characters position.
     #[inline]
-    fn resolve_identifier(&mut self, first: (char, usize)) -> LexerReturn {
+    fn resolve_identifier(&mut self, first: char) -> LexedToken {
         use JsSyntaxKind::*;
 
         // Note to keep the buffer large enough to fit every possible keyword that
         // the lexer can return
         let mut buf = [0u8; 16];
-        let (len, start) = (first.0.encode_utf8(&mut buf).len(), first.1);
+        let len = first.encode_utf8(&mut buf).len();
 
-        let (count, _) = self.consume_and_get_ident(&mut buf[len..]);
+        let (count, escaped) = self.consume_and_get_ident(&mut buf[len..]);
+
+        if escaped {
+            self.current_flags |= TokenFlags::UNICODE_ESCAPE;
+        }
 
         let kind = match &buf[..count + len] {
             // Keywords
@@ -656,21 +914,16 @@ impl<'src> Lexer<'src> {
         };
 
         if let Some(kind) = kind {
-            (Token::new(kind, self.cur - start), None)
+            LexedToken::ok(kind)
         } else {
-            (Token::new(T![ident], self.cur - start), None)
+            LexedToken::ok(T![ident])
         }
     }
 
     #[inline]
     fn special_number_start<F: Fn(char) -> bool>(&mut self, func: F) -> bool {
-        if self
-            .bytes
-            .get(self.cur + 2)
-            .map(|b| func(*b as char))
-            .unwrap_or(false)
-        {
-            self.cur += 1;
+        if self.byte_at(2).map(|b| func(*b as char)).unwrap_or(false) {
+            self.advance(1);
             true
         } else {
             false
@@ -679,21 +932,21 @@ impl<'src> Lexer<'src> {
 
     #[inline]
     fn maybe_bigint(&mut self) {
-        if let Some(b'n') = self.bytes.get(self.cur) {
-            self.next();
+        if let Some(b'n') = self.current_byte() {
+            self.next_byte();
         }
     }
 
     #[inline]
     fn read_zero(&mut self) -> Option<Box<Diagnostic>> {
-        match self.bytes.get(self.cur + 1) {
+        match self.peek_byte() {
             Some(b'x') | Some(b'X') => {
                 if self.special_number_start(|c| c.is_ascii_hexdigit()) {
                     let diag = self.read_hexnumber();
                     self.maybe_bigint();
                     diag
                 } else {
-                    self.next();
+                    self.next_byte();
                     None
                 }
             }
@@ -703,7 +956,7 @@ impl<'src> Lexer<'src> {
                     self.maybe_bigint();
                     diag
                 } else {
-                    self.next();
+                    self.next_byte();
                     None
                 }
             }
@@ -713,36 +966,36 @@ impl<'src> Lexer<'src> {
                     self.maybe_bigint();
                     diag
                 } else {
-                    self.next();
+                    self.next_byte();
                     None
                 }
             }
             Some(b'n') => {
-                self.cur += 2;
+                self.advance(2);
                 None
             }
             Some(b'.') => {
-                self.cur += 1;
+                self.advance(1);
                 self.read_float()
             }
             Some(b'e') | Some(b'E') => {
                 // At least one digit is required
-                match self.bytes.get(self.cur + 2) {
+                match self.byte_at(2) {
                     Some(b'-') | Some(b'+') => {
-                        if let Some(b'0'..=b'9') = self.bytes.get(self.cur + 3) {
-                            self.next();
+                        if let Some(b'0'..=b'9') = self.byte_at(3) {
+                            self.next_byte();
                             self.read_exponent()
                         } else {
-                            self.next();
+                            self.next_byte();
                             None
                         }
                     }
                     Some(b'0'..=b'9') => {
-                        self.next();
+                        self.next_byte();
                         self.read_exponent()
                     }
                     _ => {
-                        self.next();
+                        self.next_byte();
                         None
                     }
                 }
@@ -755,9 +1008,9 @@ impl<'src> Lexer<'src> {
     fn read_hexnumber(&mut self) -> Option<Box<Diagnostic>> {
         let mut diag = None;
         unwind_loop! {
-            match self.next() {
-                Some(b'_') => diag = diag.or(self.handle_numeric_separator(16)),
-                Some(b) if char::from(*b).is_ascii_hexdigit() => {},
+            match self.next_byte() {
+                Some(b'_') => diag = diag.or_else(|| self.handle_numeric_separator(16)),
+                Some(b) if char::from(b).is_ascii_hexdigit() => {},
                 _ => return diag,
             }
         }
@@ -765,16 +1018,16 @@ impl<'src> Lexer<'src> {
 
     #[inline]
     fn handle_numeric_separator(&mut self, radix: u8) -> Option<Box<Diagnostic>> {
-        debug_assert_eq!(self.bytes[self.cur], b'_');
+        self.assert_byte(b'_');
 
         let err_diag = Diagnostic::error(
             self.file_id,
             "",
             "numeric separators are only allowed between two digits",
         )
-        .primary(self.cur..self.cur + 1, "");
+        .primary(self.position..self.position + 1, "");
 
-        let peeked = self.bytes.get(self.cur + 1).copied();
+        let peeked = self.peek_byte().copied();
 
         if peeked.is_none() || !char::from(peeked.unwrap()).is_digit(radix as u32) {
             return Some(Box::new(err_diag));
@@ -793,22 +1046,22 @@ impl<'src> Lexer<'src> {
             }
         };
 
-        let prev = self.bytes.get(self.cur - 1).copied();
+        let prev = self.source.as_bytes().get(self.position - 1).copied();
 
         if forbidden(prev) || forbidden(peeked) {
             return Some(Box::new(err_diag));
         }
 
-        self.next_bounded();
+        self.next_byte_bounded();
         None
     }
 
     #[inline]
     fn read_number(&mut self, leading_zero: bool) -> Option<Box<Diagnostic>> {
-        let start = self.cur;
+        let start = self.position;
         let mut diag = None;
         unwind_loop! {
-            match self.next_bounded() {
+            match self.next_byte_bounded() {
                 Some(b'_') => {
                     if leading_zero {
                         diag = Some(Box::new(
@@ -817,7 +1070,7 @@ impl<'src> Lexer<'src> {
                                 "",
                                 "numeric separator can not be used after leading 0",
                             )
-                            .primary(self.cur..self.cur, ""),
+                            .primary(self.position..self.position, ""),
                         ));
                     }
                     diag = diag.or(self.handle_numeric_separator(10))
@@ -827,7 +1080,7 @@ impl<'src> Lexer<'src> {
                     if leading_zero {
                         diag = Some(Box::new(
                                 Diagnostic::error(self.file_id, "", "unexpected number")
-                                .primary(start..self.cur + 1, ""),
+                                .primary(start..self.position + 1, ""),
                         ));
                     }
                     return diag.or(self.read_float());
@@ -835,10 +1088,10 @@ impl<'src> Lexer<'src> {
                 // TODO: merge this, and read_float's implementation into one so we dont duplicate exponent code
                 Some(b'e') | Some(b'E') => {
                     // At least one digit is required
-                    match self.bytes.get(self.cur + 1) {
+                    match self.peek_byte() {
                         Some(b'-') | Some(b'+') => {
-                            if let Some(b'0'..=b'9') = self.bytes.get(self.cur + 2) {
-                                self.next();
+                            if let Some(b'0'..=b'9') = self.byte_at(2) {
+                                self.next_byte();
                                 return self.read_exponent();
                             } else {
                                 return diag;
@@ -856,10 +1109,10 @@ impl<'src> Lexer<'src> {
                                     "",
                                     "Octal literals are not allowed for BigInts.",
                                 )
-                                .primary(start..self.cur + 1, ""),
+                                .primary(start..self.position + 1, ""),
                         ));
                     }
-                    self.next();
+                    self.next_byte();
                     return diag;
                 }
                 _ => return diag,
@@ -872,17 +1125,17 @@ impl<'src> Lexer<'src> {
         let mut diag = None;
 
         unwind_loop! {
-            match self.next_bounded() {
+            match self.next_byte_bounded() {
                 Some(b'_') => diag = diag.or(self.handle_numeric_separator(10)),
                 // LLVM has a hard time optimizing inclusive patterns, perhaps we should check if it makes llvm sad,
                 // and optimize this into a lookup table
                 Some(b'0'..=b'9') => {},
                 Some(b'e') | Some(b'E') => {
                     // At least one digit is required
-                    match self.bytes.get(self.cur + 1) {
+                    match self.peek_byte() {
                         Some(b'-') | Some(b'+') => {
-                            if let Some(b'0'..=b'9') = self.bytes.get(self.cur + 2) {
-                                self.next();
+                            if let Some(b'0'..=b'9') = self.byte_at(2) {
+                                self.next_byte();
                                 return self.read_exponent().or(diag);
                             } else {
                                 return diag;
@@ -899,13 +1152,13 @@ impl<'src> Lexer<'src> {
 
     #[inline]
     fn read_exponent(&mut self) -> Option<Box<Diagnostic>> {
-        if let Some(b'-') | Some(b'+') = self.bytes.get(self.cur + 1) {
-            self.next();
+        if let Some(b'-') | Some(b'+') = self.peek_byte() {
+            self.next_byte();
         }
 
         let mut diag = None;
         unwind_loop! {
-            match self.next() {
+            match self.next_byte() {
                 Some(b'_') => diag = diag.or(self.handle_numeric_separator(10)),
                 Some(b'0'..=b'9') => {},
                 _ => return diag,
@@ -917,7 +1170,7 @@ impl<'src> Lexer<'src> {
     fn read_bindigits(&mut self) -> Option<Box<Diagnostic>> {
         let mut diag = None;
         unwind_loop! {
-            match self.next() {
+            match self.next_byte() {
                 Some(b'_') => diag = diag.or(self.handle_numeric_separator(2)),
                 Some(b'0') | Some(b'1') => {},
                 _ => return diag,
@@ -929,7 +1182,7 @@ impl<'src> Lexer<'src> {
     fn read_octaldigits(&mut self) -> Option<Box<Diagnostic>> {
         let mut diag = None;
         unwind_loop! {
-            match self.next() {
+            match self.next_byte() {
                 Some(b'_') => diag = diag.or(self.handle_numeric_separator(8)),
                 Some(b'0'..=b'7') => {},
                 _ => return diag,
@@ -938,44 +1191,41 @@ impl<'src> Lexer<'src> {
     }
 
     #[inline]
-    fn verify_number_end(&mut self, start: usize) -> LexerReturn {
-        let err_start = self.cur;
-        if self.cur < self.bytes.len() && self.cur_is_ident_start() {
+    fn verify_number_end(&mut self) -> LexedToken {
+        let err_start = self.position;
+        if !self.is_eof() && self.cur_is_ident_start() {
             self.consume_ident();
             let err = Diagnostic::error(
                 self.file_id,
                 "",
                 "numbers cannot be followed by identifiers directly after",
             )
-            .primary(err_start..self.cur, "an identifier cannot appear here");
+            .primary(err_start..self.position, "an identifier cannot appear here");
 
-            (
-                Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                Some(Box::new(err)),
-            )
+            LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
         } else {
-            tok!(JS_NUMBER_LITERAL, self.cur - start)
+            LexedToken::ok(JS_NUMBER_LITERAL)
         }
     }
 
     #[inline]
-    fn read_shebang(&mut self) -> LexerReturn {
-        let start = self.cur;
-        self.next();
+    fn read_shebang(&mut self) -> LexedToken {
+        let start = self.position;
+        self.next_byte();
         if start != 0 {
-            return (Token::new(T![#], 1), None);
+            return LexedToken::ok(T![#]);
         }
 
-        if let Some(b'!') = self.bytes.get(1) {
-            while self.next().is_some() {
-                let chr = self.get_unicode_char();
+        if let Some(b'!') = self.current_byte() {
+            while self.next_byte().is_some() {
+                let chr = self.current_char_unchecked();
 
                 if is_linebreak(chr) {
-                    return tok!(JS_SHEBANG, self.cur);
+                    return LexedToken::ok(JS_SHEBANG);
                 }
-                self.cur += chr.len_utf8() - 1;
+                self.advance(chr.len_utf8() - 1);
             }
-            tok!(JS_SHEBANG, self.cur)
+            LexedToken::ok(JS_SHEBANG)
         } else {
             let err = Diagnostic::error(
                 self.file_id,
@@ -984,35 +1234,33 @@ impl<'src> Lexer<'src> {
             )
             .primary(0usize..1usize, "");
 
-            (
-                Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
-                Some(Box::new(err)),
-            )
+            LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
         }
     }
 
     #[inline]
-    fn read_slash(&mut self) -> LexerReturn {
-        let start = self.cur;
-        match self.bytes.get(self.cur + 1) {
+    fn read_slash(&mut self) -> LexedToken {
+        let start = self.position;
+        match self.peek_byte() {
             Some(b'*') => {
-                self.next();
+                self.next_byte();
                 let mut has_newline = false;
-                while let Some(b) = self.next().copied() {
+                while let Some(b) = self.next_byte() {
                     match b {
-                        b'*' if self.bytes.get(self.cur + 1) == Some(&b'/') => {
+                        b'*' if self.peek_byte() == Some(&b'/') => {
                             self.advance(2);
                             if has_newline {
-                                return tok!(MULTILINE_COMMENT, self.cur - start);
+                                self.after_newline = true;
+                                return LexedToken::ok(MULTILINE_COMMENT);
                             } else {
-                                return tok!(COMMENT, self.cur - start);
+                                return LexedToken::ok(COMMENT);
                             }
                         }
                         x => {
                             if is_linebreak(x as char) {
                                 has_newline = true;
                             } else if UNICODE_WHITESPACE_STARTS.contains(&x) {
-                                let x = self.get_unicode_char();
+                                let x = self.current_char_unchecked();
                                 has_newline |= is_linebreak(x as char);
                             }
                         }
@@ -1020,60 +1268,63 @@ impl<'src> Lexer<'src> {
                 }
 
                 let err = Diagnostic::error(self.file_id, "", "unterminated block comment")
-                    .primary(self.cur..self.cur + 1, "... but the file ends here")
+                    .primary(
+                        self.position..self.position + 1,
+                        "... but the file ends here",
+                    )
                     .secondary(start..start + 2, "A block comment starts here");
 
-                (
-                    Token::new(JsSyntaxKind::COMMENT, self.cur - start),
-                    Some(Box::new(err)),
-                )
+                LexedToken::with_diagnostic(JsSyntaxKind::COMMENT, Box::new(err))
             }
             Some(b'/') => {
-                self.next();
-                while self.next().is_some() {
-                    let chr = self.get_unicode_char();
+                self.next_byte();
+                while self.next_byte().is_some() {
+                    let chr = self.current_char_unchecked();
 
                     if is_linebreak(chr) {
-                        return tok!(COMMENT, self.cur - start);
+                        return LexedToken::ok(COMMENT);
                     }
-                    self.cur += chr.len_utf8() - 1;
+                    self.advance(chr.len_utf8() - 1);
                 }
-                tok!(COMMENT, self.cur - start)
+                LexedToken::ok(COMMENT)
             }
-            _ if self.state.expr_allowed => self.read_regex(),
+            // _ if self.state.expr_allowed => self.read_regex(),
             Some(b'=') => {
                 self.advance(2);
-                tok!(SLASHEQ, self.cur - start)
+                LexedToken::ok(SLASHEQ)
             }
-            _ => self.eat(tok![/]),
+            _ => self.eat_byte(T![/]),
         }
     }
 
     #[inline]
     fn flag_err(&self, flag: char) -> Diagnostic {
-        Diagnostic::error(self.file_id, "", format!("duplicate flag `{}`", flag))
-            .primary(self.cur..self.cur + 1, "this flag was already used")
+        Diagnostic::error(self.file_id, "", format!("duplicate flag `{}`", flag)).primary(
+            self.position..self.position + 1,
+            "this flag was already used",
+        )
     }
 
     // TODO: Due to our return of (Token, Option<Error>) we cant issue more than one regex error
     // This is not a huge issue but it would be helpful to users
     #[inline]
     #[allow(clippy::many_single_char_names)]
-    fn read_regex(&mut self) -> LexerReturn {
-        let start = self.cur;
+    fn read_regex(&mut self) -> LexedToken {
+        self.assert_byte(b'/');
+        let start = self.position;
         let mut in_class = false;
         let mut diagnostic = None;
 
         unwind_loop! {
-            match self.next() {
+            match self.next_byte() {
                 Some(b'[') => in_class = true,
                 Some(b']') => in_class = false,
                 Some(b'/') => {
                     if !in_class {
                         let (mut g, mut i, mut m, mut s, mut u, mut y, mut d) = (false, false, false, false, false, false, false);
 
-                        while let Some(next) = self.next_bounded().copied() {
-                            let chr_start = self.cur;
+                        while let Some(next) = self.next_byte_bounded() {
+                            let chr_start = self.position;
 
                             match next {
                                 b'g' => {
@@ -1121,34 +1372,42 @@ impl<'src> Lexer<'src> {
                                 _ if self.cur_ident_part().is_some() => {
                                     if diagnostic.is_none() {
                                         diagnostic = Some(Diagnostic::error(self.file_id, "", "invalid regex flag")
-                                            .primary(chr_start .. self.cur + 1, "this is not a valid regex flag"));
+                                            .primary(chr_start .. self.position + 1, "this is not a valid regex flag"));
                                     }
                                 }
                                 _ => {break}
                             };
                         }
 
-                        return (
-                            Token::new(
-                                JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start),
-                                diagnostic.map(Box::new)
-                            );
-                        }
+                        return LexedToken::new(
+                            JsSyntaxKind::JS_REGEX_LITERAL,
+                            diagnostic.map(Box::new)
+                        );
+                    }
                 },
                 Some(b'\\') => {
-                    if self.next_bounded().is_none() {
+                    if self.next_byte_bounded().is_none() {
                         let err = Diagnostic::error(self.file_id, "", "expected a character after a regex escape, but found none")
-                            .primary(self.cur..self.cur + 1, "expected a character following this");
+                            .primary(self.position..self.position + 1, "expected a character following this");
 
-                        return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(Box::new(err)));
+                        return LexedToken::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
                     }
+                },
+                Some(_) if is_linebreak(self.current_char_unchecked()) => {
+                    let err = Diagnostic::error(self.file_id, "", "unterminated regex literal")
+                        .primary(self.position..self.position, "...but the line ends here")
+                        .secondary(start..start + 1, "a regex literal starts there...");
+
+                    // Undo the read of the new line trivia
+                    self.position -= 1;
+                    return LexedToken::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
                 },
                 None => {
                     let err = Diagnostic::error(self.file_id, "", "unterminated regex literal")
-                        .primary(self.cur..self.cur, "...but the file ends here")
+                        .primary(self.position..self.position, "...but the file ends here")
                         .secondary(start..start + 1, "a regex literal starts there...");
 
-                    return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(Box::new(err)));
+                    return LexedToken::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
                 },
                 _ => {},
             }
@@ -1156,256 +1415,257 @@ impl<'src> Lexer<'src> {
     }
 
     #[inline]
-    fn bin_or_assign(&mut self, bin: JsSyntaxKind, assign: JsSyntaxKind) -> LexerReturn {
-        if let Some(b'=') = self.next() {
-            self.next();
-            (Token::new(assign, 2), None)
+    fn bin_or_assign(&mut self, bin: JsSyntaxKind, assign: JsSyntaxKind) -> LexedToken {
+        if let Some(b'=') = self.next_byte() {
+            self.next_byte();
+            LexedToken::ok(assign)
         } else {
-            (Token::new(bin, 1), None)
+            LexedToken::ok(bin)
         }
     }
 
     #[inline]
-    fn resolve_bang(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_bang(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'=') => {
-                if let Some(b'=') = self.next() {
-                    self.next();
-                    tok!(NEQ2, 3)
+                if let Some(b'=') = self.next_byte() {
+                    self.next_byte();
+                    LexedToken::ok(NEQ2)
                 } else {
-                    tok!(NEQ, 2)
+                    LexedToken::ok(NEQ)
                 }
             }
-            _ => tok!(!),
+            _ => LexedToken::ok(T![!]),
         }
     }
 
     #[inline]
-    fn resolve_amp(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_amp(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'&') => {
-                if let Some(b'=') = self.next() {
-                    self.next();
-                    tok!(AMP2EQ, 3)
+                if let Some(b'=') = self.next_byte() {
+                    self.next_byte();
+                    LexedToken::ok(AMP2EQ)
                 } else {
-                    tok!(AMP2, 2)
+                    LexedToken::ok(AMP2)
                 }
             }
             Some(b'=') => {
-                self.next();
-                tok!(AMPEQ, 2)
+                self.next_byte();
+                LexedToken::ok(AMPEQ)
             }
-            _ => tok!(&),
+            _ => LexedToken::ok(T![&]),
         }
     }
 
     #[inline]
-    fn resolve_plus(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_plus(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'+') => {
-                self.next();
-                tok!(PLUS2, 2)
+                self.next_byte();
+                LexedToken::ok(PLUS2)
             }
             Some(b'=') => {
-                self.next();
-                tok!(PLUSEQ, 2)
+                self.next_byte();
+                LexedToken::ok(PLUSEQ)
             }
-            _ => tok!(+),
+            _ => LexedToken::ok(T![+]),
         }
     }
 
     #[inline]
-    fn resolve_minus(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_minus(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'-') => {
-                self.next();
-                tok!(MINUS2, 2)
+                self.next_byte();
+                LexedToken::ok(MINUS2)
             }
             Some(b'=') => {
-                self.next();
-                tok!(MINUSEQ, 2)
+                self.next_byte();
+                LexedToken::ok(MINUSEQ)
             }
-            _ => tok!(-),
+            _ => LexedToken::ok(T![-]),
         }
     }
 
     #[inline]
-    fn resolve_less_than(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_less_than(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'<') => {
-                if let Some(b'=') = self.next() {
-                    self.next();
-                    tok!(SHLEQ, 3)
+                if let Some(b'=') = self.next_byte() {
+                    self.next_byte();
+                    LexedToken::ok(SHLEQ)
                 } else {
-                    tok!(SHL, 2)
+                    LexedToken::ok(SHL)
                 }
             }
             Some(b'=') => {
-                self.next();
-                tok!(LTEQ, 2)
+                self.next_byte();
+                LexedToken::ok(LTEQ)
             }
-            _ => tok!(<),
+            _ => LexedToken::ok(T![<]),
         }
     }
 
     #[inline]
-    fn resolve_greater_than(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_greater_than(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'>') => {
-                if let Some(b'>') = self.bytes.get(self.cur + 1).copied() {
-                    if let Some(b'=') = self.bytes.get(self.cur + 2).copied() {
+                if let Some(b'>') = self.peek_byte().copied() {
+                    if let Some(b'=') = self.byte_at(2).copied() {
                         self.advance(3);
-                        tok!(USHREQ, 4)
+                        LexedToken::ok(USHREQ)
                     } else {
-                        tok!(>)
+                        LexedToken::ok(T![>])
                     }
-                } else if self.bytes.get(self.cur + 1).copied() == Some(b'=') {
+                } else if self.peek_byte().copied() == Some(b'=') {
                     self.advance(2);
-                    tok!(SHREQ, 3)
+                    LexedToken::ok(SHREQ)
                 } else {
-                    tok!(>)
+                    LexedToken::ok(T![>])
                 }
             }
             Some(b'=') => {
-                self.next();
-                tok!(GTEQ, 2)
+                self.next_byte();
+                LexedToken::ok(GTEQ)
             }
-            _ => tok!(>),
+            _ => LexedToken::ok(T![>]),
         }
     }
 
     #[inline]
-    fn resolve_eq(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_eq(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'=') => {
-                if let Some(b'=') = self.next() {
-                    self.next();
-                    tok!(EQ3, 3)
+                if let Some(b'=') = self.next_byte() {
+                    self.next_byte();
+                    LexedToken::ok(EQ3)
                 } else {
-                    tok!(EQ2, 2)
+                    LexedToken::ok(EQ2)
                 }
             }
             Some(b'>') => {
-                self.next();
-                tok!(FAT_ARROW, 2)
+                self.next_byte();
+                LexedToken::ok(FAT_ARROW)
             }
-            _ => tok!(=),
+            _ => LexedToken::ok(T![=]),
         }
     }
 
     #[inline]
-    fn resolve_pipe(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_pipe(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'|') => {
-                if let Some(b'=') = self.next() {
-                    self.next();
-                    tok!(PIPE2EQ, 3)
+                if let Some(b'=') = self.next_byte() {
+                    self.next_byte();
+                    LexedToken::ok(PIPE2EQ)
                 } else {
-                    tok!(PIPE2, 2)
+                    LexedToken::ok(PIPE2)
                 }
             }
             Some(b'=') => {
-                self.next();
-                tok!(PIPEEQ, 2)
+                self.next_byte();
+                LexedToken::ok(PIPEEQ)
             }
-            _ => tok!(|),
+            _ => LexedToken::ok(T![|]),
         }
     }
 
-    // Dont ask it to resolve the question of life's meaning because you'll be dissapointed
+    // Dont ask it to resolve the question of life's meaning because you'll be disappointed
     #[inline]
-    fn resolve_question(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_question(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'?') => {
-                if let Some(b'=') = self.next() {
-                    self.next();
-                    tok!(QUESTION2EQ, 3)
+                if let Some(b'=') = self.next_byte() {
+                    self.next_byte();
+                    LexedToken::ok(QUESTION2EQ)
                 } else {
-                    tok!(QUESTION2, 2)
+                    LexedToken::ok(QUESTION2)
                 }
             }
             Some(b'.') => {
                 // 11.7 Optional chaining punctuator
-                if let Some(b'0'..=b'9') = self.bytes.get(self.cur + 1) {
-                    tok!(?)
+                if let Some(b'0'..=b'9') = self.peek_byte() {
+                    LexedToken::ok(T![?])
                 } else {
-                    self.next();
-                    tok!(QUESTIONDOT, 2)
+                    self.next_byte();
+                    LexedToken::ok(QUESTIONDOT)
                 }
             }
-            _ => tok!(?),
+            _ => LexedToken::ok(T![?]),
         }
     }
 
     #[inline]
-    fn resolve_star(&mut self) -> LexerReturn {
-        match self.next() {
+    fn resolve_star(&mut self) -> LexedToken {
+        match self.next_byte() {
             Some(b'*') => {
-                if let Some(b'=') = self.next() {
-                    self.next();
-                    tok!(STAR2EQ, 3)
+                if let Some(b'=') = self.next_byte() {
+                    self.next_byte();
+                    LexedToken::ok(STAR2EQ)
                 } else {
-                    tok!(STAR2, 2)
+                    LexedToken::ok(STAR2)
                 }
             }
             Some(b'=') => {
-                self.next();
-                tok!(STAREQ, 2)
+                self.next_byte();
+                LexedToken::ok(STAREQ)
             }
-            _ => tok!(*),
+            _ => LexedToken::ok(T![*]),
         }
     }
 
     /// Lex the next token
-    fn lex_token(&mut self) -> LexerReturn {
+    fn lex_token(&mut self) -> LexedToken {
         // Safety: we always call lex_token when we are at a valid char
-        let byte = unsafe { *self.bytes.get_unchecked(self.cur) };
-        let start = self.cur;
+        let byte = unsafe { self.current_unchecked() };
+        let start = self.position;
 
         // A lookup table of `byte -> fn(l: &mut Lexer) -> Token` is exponentially slower than this approach
         // The speed difference comes from the difference in table size, a 2kb table is easily fit into cpu cache
         // While a 16kb table will be ejected from cache very often leading to slowdowns, this also allows LLVM
         // to do more aggressive optimizations on the match regarding how to map it to instructions
-        let dispatched = Self::lookup(byte);
+        let dispatched = lookup_byte(byte);
 
         match dispatched {
             WHS => self.consume_newline_or_whitespace(),
             EXL => self.resolve_bang(),
             HAS => self.read_shebang(),
             PRC => self.bin_or_assign(T![%], T![%=]),
-            AMP => self.resolve_amp(),
-            PNO => self.eat(tok!(L_PAREN, 1)),
-            PNC => self.eat(tok!(R_PAREN, 1)),
+            Dispatch::AMP => self.resolve_amp(),
+            PNO => self.eat_byte(T!['(']),
+            PNC => self.eat_byte(T![')']),
             MUL => self.resolve_star(),
             PLS => self.resolve_plus(),
-            COM => self.eat(tok![,]),
+            COM => self.eat_byte(T![,]),
             MIN => self.resolve_minus(),
             SLH => self.read_slash(),
             // This simply changes state on the start
-            TPL => self.eat(tok!(BACKTICK, 1)),
+            TPL => self.eat_byte(T!['`']),
             ZER => {
                 let diag = self.read_zero();
-                let (token, err) = self.verify_number_end(start);
-                (token, err.or(diag))
+                let LexedToken { kind, diagnostic } = self.verify_number_end();
+                LexedToken::new(kind, diagnostic.or(diag))
             }
             PRD => {
-                if let Some(b"..") = self.bytes.get(self.cur + 1..self.cur + 3) {
-                    self.cur += 3;
-                    return tok!(DOT2, 3);
+                if self.peek_byte().copied() == Some(b'.') && self.byte_at(2).copied() == Some(b'.')
+                {
+                    self.advance(3);
+                    return LexedToken::ok(DOT3);
                 }
-                if let Some(b'0'..=b'9') = self.bytes.get(self.cur + 1) {
+                if let Some(b'0'..=b'9') = self.peek_byte() {
                     let diag = self.read_float();
-                    let (token, err) = self.verify_number_end(start);
-                    (token, err.or(diag))
+                    let LexedToken { kind, diagnostic } = self.verify_number_end();
+                    LexedToken::new(kind, diagnostic.or(diag))
                 } else {
-                    self.eat(tok![.])
+                    self.eat_byte(T![.])
                 }
             }
             BSL => {
-                if self.bytes.get(self.cur + 1) == Some(&b'u') {
-                    self.next();
-                    let res = if self.bytes.get(self.cur + 1) == Some(&b'{') {
-                        self.next();
+                if self.peek_byte() == Some(&b'u') {
+                    self.next_byte();
+                    let res = if self.peek_byte() == Some(&b'{') {
+                        self.next_byte();
                         self.read_codepoint_escape()
                     } else {
                         self.read_unicode_escape(true)
@@ -1414,21 +1674,19 @@ impl<'src> Lexer<'src> {
                     match res {
                         Ok(chr) => {
                             if is_id_start(chr) {
-                                self.resolve_identifier((chr, start))
+                                self.current_flags |= TokenFlags::UNICODE_ESCAPE;
+                                self.resolve_identifier(chr)
                             } else {
                                 let err = Diagnostic::error(self.file_id, "", "unexpected unicode escape")
-                                    .primary(start..self.cur, "this escape is unexpected, as it does not designate the start of an identifier");
-                                self.next();
-                                (
-                                    Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                                    Some(Box::new(err)),
+                                    .primary(start..self.position, "this escape is unexpected, as it does not designate the start of an identifier");
+                                self.next_byte();
+                                LexedToken::with_diagnostic(
+                                    JsSyntaxKind::ERROR_TOKEN,
+                                    Box::new(err),
                                 )
                             }
                         }
-                        Err(err) => (
-                            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                            Some(err),
-                        ),
+                        Err(err) => LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, err),
                     }
                 } else {
                     let err = Diagnostic::error(
@@ -1436,101 +1694,89 @@ impl<'src> Lexer<'src> {
                         "",
                         format!("unexpected token `{}`", byte as char),
                     )
-                    .primary(start..self.cur + 1, "");
-                    self.next();
-                    (
-                        Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
-                        Some(Box::new(err)),
-                    )
+                    .primary(start..self.position + 1, "");
+                    self.next_byte();
+                    LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
                 }
             }
             QOT => {
                 if let Some(err) = self.read_str_literal() {
-                    (
-                        Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                        Some(err),
-                    )
+                    LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, err)
                 } else {
-                    tok!(JS_STRING_LITERAL, self.cur - start)
+                    LexedToken::ok(JS_STRING_LITERAL)
                 }
             }
-            IDT => self.resolve_identifier((byte as char, start)),
+            IDT => self.resolve_identifier(byte as char),
             DIG => {
                 let diag = self.read_number(false);
-                let (token, err) = self.verify_number_end(start);
-                (token, err.or(diag))
+                let LexedToken { kind, diagnostic } = self.verify_number_end();
+                LexedToken::new(kind, diagnostic.or(diag))
             }
-            COL => self.eat(tok![:]),
-            SEM => self.eat(tok![;]),
+            COL => self.eat_byte(T![:]),
+            SEM => self.eat_byte(T![;]),
             LSS => self.resolve_less_than(),
             EQL => self.resolve_eq(),
             MOR => self.resolve_greater_than(),
             QST => self.resolve_question(),
-            BTO => self.eat(tok!(L_BRACK, 1)),
-            BTC => self.eat(tok![R_BRACK, 1]),
+            BTO => self.eat_byte(T!('[')),
+            BTC => self.eat_byte(T![']']),
             CRT => self.bin_or_assign(T![^], T![^=]),
-            BEO => self.eat(tok![L_CURLY, 1]),
-            BEC => self.eat(tok![R_CURLY, 1]),
+            BEO => self.eat_byte(T!['{']),
+            BEC => self.eat_byte(T!['}']),
             PIP => self.resolve_pipe(),
-            TLD => self.eat(tok![~]),
+            TLD => self.eat_byte(T![~]),
             UNI => {
-                let chr = self.get_unicode_char();
+                let chr = self.current_char_unchecked();
                 if is_linebreak(chr)
                     || (UNICODE_WHITESPACE_STARTS.contains(&byte) && UNICODE_SPACES.contains(&chr))
                 {
                     self.consume_newline_or_whitespace()
                 } else {
-                    self.cur += chr.len_utf8() - 1;
+                    self.advance(chr.len_utf8() - 1);
                     if is_id_start(chr) {
-                        self.resolve_identifier((chr, start))
+                        self.resolve_identifier(chr)
                     } else {
                         let err = Diagnostic::error(
                             self.file_id,
                             "",
                             format!("Unexpected token `{}`", chr as char),
                         )
-                        .primary(start..self.cur + 1, "");
-                        self.next();
+                        .primary(start..self.position + 1, "");
+                        self.next_byte();
 
-                        (
-                            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                            Some(Box::new(err)),
-                        )
+                        LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
                     }
                 }
             }
-            AT_ => self.eat(tok![@]),
+            AT_ => self.eat_byte(T![@]),
             _ => {
                 let err = Diagnostic::error(
                     self.file_id,
                     "",
                     format!("unexpected token `{}`", byte as char),
                 )
-                .primary(start..self.cur + 1, "");
-                self.next();
+                .primary(start..self.position + 1, "");
+                self.next_byte();
 
-                (
-                    Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
-                    Some(Box::new(err)),
-                )
+                LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
             }
         }
     }
 
-    fn lex_template(&mut self, tagged: bool) -> LexerReturn {
-        let start = self.cur;
+    fn lex_template(&mut self, tagged: bool) -> LexedToken {
         let mut diagnostic: Option<Box<Diagnostic>> = None;
-        let mut token: Option<Token> = None;
+        let mut token: Option<JsSyntaxKind> = None;
+        let start = self.position;
 
         loop {
-            match self.bytes.get(self.cur).copied() {
-                Some(b'`') if self.cur == start => {
-                    self.next();
-                    token = Some(Token::new(BACKTICK, 1));
+            match self.current_byte() {
+                Some(b'`') if self.position == start => {
+                    self.next_byte();
+                    token = Some(BACKTICK);
                     break;
                 }
                 Some(b'`') => {
-                    token = Some(Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start));
+                    token = Some(JsSyntaxKind::TEMPLATE_CHUNK);
                     break;
                 }
                 Some(b'\\') => {
@@ -1541,17 +1787,17 @@ impl<'src> Lexer<'src> {
                         }
                     };
                 }
-                Some(b'$') if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
+                Some(b'$') if self.peek_byte() == Some(&b'{') && self.position == start => {
                     self.advance(2);
-                    token = Some(Token::new(JsSyntaxKind::DOLLAR_CURLY, 2));
+                    token = Some(JsSyntaxKind::DOLLAR_CURLY);
                     break;
                 }
-                Some(b'$') if self.bytes.get(self.cur + 1) == Some(&b'{') => {
-                    token = Some(Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start));
+                Some(b'$') if self.peek_byte() == Some(&b'{') => {
+                    token = Some(JsSyntaxKind::TEMPLATE_CHUNK);
                     break;
                 }
                 Some(_) => {
-                    let _ = self.next();
+                    let _ = self.next_byte();
                 }
                 None => {
                     break;
@@ -1562,139 +1808,45 @@ impl<'src> Lexer<'src> {
         match token {
             None => {
                 let err = Diagnostic::error(self.file_id, "", "unterminated template literal")
-                    .primary(self.cur..self.cur + 1, "");
-                (
-                    Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                    Some(Box::new(err)),
-                )
+                    .primary(start..self.position + 1, "");
+                LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
             }
             Some(token) => match diagnostic {
-                None => (token, None),
-                Some(diagnostic) => (
-                    Token::new(JsSyntaxKind::ERROR_TOKEN, token.len.into()),
-                    Some(diagnostic),
-                ),
+                None => LexedToken::ok(token),
+                Some(diagnostic) => {
+                    LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, diagnostic)
+                }
             },
         }
     }
 }
 
 /// Check if a char is a JS linebreak
-pub fn is_linebreak(chr: char) -> bool {
-    ['\n', '\r', '\u{2028}', '\u{2029}'].contains(&chr)
+fn is_linebreak(chr: char) -> bool {
+    matches!(chr, '\n' | '\r' | '\u{2028}' | '\u{2029}')
 }
 
-impl Iterator for Lexer<'_> {
-    type Item = LexerReturn;
+/// Stores the state of the lexer so that it may later be restored to that position.
+#[derive(Debug, Clone)]
+pub struct LexerCheckpoint {
+    pub(crate) position: TextSize,
+    pub(crate) current_start: TextSize,
+    pub(crate) current_kind: JsSyntaxKind,
+    pub(crate) current_flags: TokenFlags,
+    pub(crate) after_line_break: bool,
+}
 
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.cur >= self.bytes.len() {
-            if !self.returned_eof {
-                self.returned_eof = true;
-                let mut token = tok!(EOF, 0);
-                token.0.offset = TextSize::from(self.cur as u32);
-                token.0.after_newline = self.state.after_newline;
-                return Some(token);
-            }
-            return None;
-        }
+impl LexerCheckpoint {
+    /// Returns the byte offset of the current token.
+    pub fn current_start(&self) -> TextSize {
+        self.current_start
+    }
 
-        let mut token = if let Some(Context::Template { tagged }) = self.state.ctx.last() {
-            let tagged = *tagged;
-            self.lex_template(tagged)
-        } else {
-            self.lex_token()
-        };
+    pub(crate) fn has_preceding_line_break(&self) -> bool {
+        self.current_flags.has_preceding_line_break()
+    }
 
-        let after_newline = match token.0.kind {
-            JsSyntaxKind::NEWLINE | JsSyntaxKind::MULTILINE_COMMENT => true,
-            JsSyntaxKind::WHITESPACE | JsSyntaxKind::COMMENT => self.state.after_newline,
-            _ => false,
-        };
-
-        token.0.offset = TextSize::from(self.cur as u32) - token.0.len;
-        token.0.after_newline = std::mem::replace(&mut self.state.after_newline, after_newline);
-
-        if !matches!(
-            &token.0.kind,
-            JsSyntaxKind::COMMENT
-                | JsSyntaxKind::MULTILINE_COMMENT
-                | JsSyntaxKind::WHITESPACE
-                | JsSyntaxKind::NEWLINE
-                | JsSyntaxKind::TEMPLATE_CHUNK,
-        ) {
-            self.state.update(token.0.kind);
-        }
-        Some(token)
+    pub(crate) fn has_unicode_escape(&self) -> bool {
+        self.current_flags.has_unicode_escape()
     }
 }
-
-// Every handler a byte coming in could be mapped to
-#[allow(non_camel_case_types, clippy::upper_case_acronyms)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-#[repr(u8)]
-enum Dispatch {
-    ERR,
-    WHS,
-    EXL,
-    QOT,
-    IDT,
-    HAS,
-    PRC,
-    AMP,
-    PNO,
-    PNC,
-    MUL,
-    PLS,
-    COM,
-    MIN,
-    PRD,
-    SLH,
-    ZER,
-    DIG,
-    COL,
-    SEM,
-    LSS,
-    EQL,
-    MOR,
-    QST,
-    AT_,
-    BTO,
-    BSL,
-    BTC,
-    CRT,
-    TPL,
-    BEO,
-    PIP,
-    BEC,
-    TLD,
-    UNI,
-}
-use rome_js_syntax::JsSyntaxKind::BACKTICK;
-use Dispatch::*;
-
-use crate::errors::invalid_digits_after_unicode_escape_sequence;
-use crate::state::Context;
-
-// A lookup table mapping any incoming byte to a handler function
-// This is taken from the ratel project lexer and modified
-// FIXME: Should we ignore the first ascii control chars which are nearly never seen instead of returning Err?
-static DISPATCHER: [Dispatch; 256] = [
-    //0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F   //
-    ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, WHS, WHS, WHS, WHS, WHS, ERR, ERR, // 0
-    ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, // 1
-    WHS, EXL, QOT, HAS, IDT, PRC, AMP, QOT, PNO, PNC, MUL, PLS, COM, MIN, PRD, SLH, // 2
-    ZER, DIG, DIG, DIG, DIG, DIG, DIG, DIG, DIG, DIG, COL, SEM, LSS, EQL, MOR, QST, // 3
-    AT_, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, // 4
-    IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, BTO, BSL, BTC, CRT, IDT, // 5
-    TPL, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, // 6
-    IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, IDT, BEO, PIP, BEC, TLD, ERR, // 7
-    UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, // 8
-    UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, // 9
-    UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, // A
-    UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, // B
-    UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, // C
-    UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, // D
-    UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, // E
-    UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, UNI, // F
-];

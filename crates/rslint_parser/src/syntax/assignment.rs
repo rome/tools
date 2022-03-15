@@ -1,4 +1,5 @@
 use crate::event::{rewrite_events, RewriteParseEvents};
+use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser, RewriteToken};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{
@@ -11,7 +12,7 @@ use crate::syntax::js_parse_error::{
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Checkpoint, CompletedMarker, Marker, Parser};
+use crate::{Checkpoint, CompletedMarker, Parser};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rslint_errors::Diagnostic;
 
@@ -109,7 +110,7 @@ pub(crate) fn expression_to_assignment(
 ) -> CompletedMarker {
     try_expression_to_assignment(p, target, checkpoint).unwrap_or_else(|checkpoint| {
         // Doesn't seem to be a valid assignment target. Recover and create an error.
-        let expression_end = p.token_pos();
+        let expression_end = p.tokens.position();
         p.rewind(checkpoint);
         wrap_expression_in_invalid_assignment(p, expression_end)
     })
@@ -360,14 +361,11 @@ struct ReparseAssignment {
     // Index 0: Re-mapped kind of the node
     // Index 1: Started marker. A `None` marker means that this node should be dropped
     //          from the re-written tree
-    parents: Vec<(JsSyntaxKind, Option<Marker>)>,
+    parents: Vec<(JsSyntaxKind, Option<RewriteMarker>)>,
     // Stores the completed assignment node (valid or invalid).
     result: Option<CompletedMarker>,
     // Tracks if the visitor is still inside an assignment
     inside_assignment: bool,
-    // Tracks if the visitor is inside a member expression or computed expression
-    // for eval/arguments validation
-    inside_member_or_computed_expression: bool,
 }
 
 impl ReparseAssignment {
@@ -376,7 +374,6 @@ impl ReparseAssignment {
             parents: Vec::default(),
             result: None,
             inside_assignment: true,
-            inside_member_or_computed_expression: false,
         }
     }
 }
@@ -387,7 +384,7 @@ impl ReparseAssignment {
 ///   Validates that the operator isn't `?.` .
 /// * Converts identifier expressions to identifier assignment, drops the inner reference identifier
 impl RewriteParseEvents for ReparseAssignment {
-    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
+    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut RewriteParser) {
         if !self.inside_assignment {
             self.parents.push((kind, Some(p.start())));
             return;
@@ -398,12 +395,10 @@ impl RewriteParseEvents for ReparseAssignment {
             JS_PARENTHESIZED_EXPRESSION => JS_PARENTHESIZED_ASSIGNMENT,
             JS_STATIC_MEMBER_EXPRESSION => {
                 self.inside_assignment = false;
-                self.inside_member_or_computed_expression = true;
                 JS_STATIC_MEMBER_ASSIGNMENT
             }
             JS_COMPUTED_MEMBER_EXPRESSION => {
                 self.inside_assignment = false;
-                self.inside_member_or_computed_expression = true;
                 JS_COMPUTED_MEMBER_ASSIGNMENT
             }
             JS_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT,
@@ -432,16 +427,41 @@ impl RewriteParseEvents for ReparseAssignment {
         self.parents.push((mapped_kind, Some(p.start())));
     }
 
-    fn finish_node(&mut self, p: &mut Parser) {
+    fn finish_node(&mut self, p: &mut RewriteParser) {
         let (kind, m) = self.parents.pop().unwrap();
 
         if let Some(m) = m {
-            let completed = m.complete(p, kind);
+            let mut completed = m.complete(p, kind);
 
-            if kind == JS_UNKNOWN_ASSIGNMENT {
-                p.error(invalid_assignment_error(p, completed.range(p)));
+            match kind {
+                JS_IDENTIFIER_ASSIGNMENT => {
+                    // test_err eval_arguments_assignment
+                    // eval = "test";
+                    // arguments = "test";
+                    let name = completed.text(p);
+                    if matches!(name, "eval" | "arguments") && p.is_strict_mode() {
+                        let error = p
+                            .err_builder(&format!(
+                                "Illegal use of `{}` as an identifier in strict mode",
+                                name
+                            ))
+                            .primary(completed.range(p), "");
+                        p.error(error);
+
+                        completed.change_to_unknown(p);
+                    }
+                }
+                JS_UNKNOWN_ASSIGNMENT => {
+                    let range = completed.range(p);
+                    p.error(
+                        p.err_builder(&format!("Invalid assignment to `{}`", completed.text(p)))
+                            .primary(range, "This expression cannot be assigned to"),
+                    );
+                }
+                _ => {}
             }
-            self.result = Some(completed);
+
+            self.result = Some(completed.into());
         }
 
         if TsType::can_cast(kind)
@@ -454,49 +474,31 @@ impl RewriteParseEvents for ReparseAssignment {
         }
     }
 
-    fn token(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
+    fn token(&mut self, token: RewriteToken, p: &mut RewriteParser) {
         let parent = self.parents.last_mut();
 
         if let Some((parent_kind, _)) = parent {
             if matches!(
                 *parent_kind,
                 JS_COMPUTED_MEMBER_ASSIGNMENT | JS_STATIC_MEMBER_ASSIGNMENT
-            ) && kind == T![?.]
+            ) && token.kind == T![?.]
             {
                 *parent_kind = JS_UNKNOWN_ASSIGNMENT
             }
-
-            let src_str = p.cur_src();
-            if kind == IDENT
-                && (src_str == "eval" || src_str == "arguments")
-                && p.state.strict().is_some()
-                // If we're inside a member or computed expression then we do not error
-                && !self.inside_member_or_computed_expression
-            {
-                // Cloning because cannot keep immutable ref to p
-                // and mutable ref with p.error()
-                let src = src_str.to_string();
-
-                *parent_kind = JS_UNKNOWN;
-                p.error(
-                    p.err_builder(&format!(
-                        "Illegal use of `{}` as an identifier in strict mode",
-                        src
-                    ))
-                    .primary(p.cur_range(), ""),
-                );
-            }
         }
 
-        p.bump_remap(kind);
+        p.bump(token)
     }
 }
 
-fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) -> CompletedMarker {
+fn wrap_expression_in_invalid_assignment(
+    p: &mut Parser,
+    expression_end: TextSize,
+) -> CompletedMarker {
     let unknown = p.start();
     // Eat all tokens until we reached the end of the original expression. This is better than
     // any other error recovery because it's already know where the expression ends.
-    while p.token_pos() < expression_end {
+    while p.tokens.position() < expression_end {
         p.bump_any();
     }
 

@@ -92,27 +92,6 @@ JsModule {
       1: (empty)
   3: EOF@70..71 "" [Newline("\n")] []
 --
-error: Octal literals are not allowed for BigInts.
-  ┌─ literals.js:2:1
-  │
-2 │ 01n, 0_0, 01.2 // lexer errors
-  │ ^^^
-
---
-error: numeric separator can not be used after leading 0
-  ┌─ literals.js:2:7
-  │
-2 │ 01n, 0_0, 01.2 // lexer errors
-  │       ^
-
---
-error: unexpected number
-  ┌─ literals.js:2:11
-  │
-2 │ 01n, 0_0, 01.2 // lexer errors
-  │           ^^^
-
---
 error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" prefix instead.
   ┌─ literals.js:1:1
   │
@@ -146,6 +125,27 @@ error[SyntaxError]: Decimals with leading zeros are not allowed in strict mode.
   │
 1 │ 00, 012, 08, 091, 0789 // parser errors
   │                   ^^^^
+
+--
+error: Octal literals are not allowed for BigInts.
+  ┌─ literals.js:2:1
+  │
+2 │ 01n, 0_0, 01.2 // lexer errors
+  │ ^^^
+
+--
+error: numeric separator can not be used after leading 0
+  ┌─ literals.js:2:7
+  │
+2 │ 01n, 0_0, 01.2 // lexer errors
+  │       ^
+
+--
+error: unexpected number
+  ┌─ literals.js:2:11
+  │
+2 │ 01n, 0_0, 01.2 // lexer errors
+  │           ^^^
 
 --
 error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" prefix instead.
