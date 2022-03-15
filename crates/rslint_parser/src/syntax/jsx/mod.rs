@@ -544,13 +544,13 @@ impl ParseNodeList for JsxAttributeList {
 }
 
 fn parse_jsx_attribute_name(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(JsSyntaxKind::IDENT) {
+    if !p.at(T![ident]) {
         return ParsedSyntax::Absent;
     }
 
     let m = p.start();
 
-    p.bump(JsSyntaxKind::IDENT);
+    p.bump(T![ident]);
 
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_NAME))
 }
