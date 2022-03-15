@@ -1,8 +1,11 @@
 pub mod jsx_parse_errors;
 
-use rslint_lexer::{JsSyntaxKind, T};
+use rome_js_syntax::JsSyntaxKind::*;
+use rslint_lexer::{JsSyntaxKind, ReLexContext, T};
 
-use crate::{Absent, Checkpoint, Marker, ParsedSyntax, Parser};
+use crate::syntax::expr::parse_name;
+use crate::syntax::js_parse_error::expected_identifier;
+use crate::{Absent, Checkpoint, Marker, ParsedSyntax, Parser, Present};
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -158,16 +161,79 @@ fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax
         return ParsedSyntax::Absent;
     }
 
-    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_CLOSING_ELEMENT))
+    ParsedSyntax::Present(m.complete(p, JSX_CLOSING_ELEMENT))
 }
 
+// test jsx jsx_member_element_name
+// <a.b.c.d></a.b.c.d>;
+// <a-b.c></a-b.c>
+//
+// test_err jsx jsx_namespace_member_element_name
+// <namespace:a.b></namespace:a.b>
 fn parse_jsx_any_element_name(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    let m = p.start();
+    let left = parse_jsx_any_name(p);
 
-    if !p.eat(T![ident]) {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
+    if let Present(mut left) = left {
+        if left.kind() == JSX_NAMESPACE_NAME && p.at(T![.]) {
+            let error = p
+                .err_builder("JSX property access expressions cannot include JSX namespace names.")
+                .primary(left.range(p), "");
+            p.error(error)
+        }
+
+        while p.at(T![.]) {
+            let m = left.precede(p);
+            p.bump(T![.]);
+            parse_name(p).or_add_diagnostic(p, expected_identifier);
+            left = m.complete(p, JSX_MEMBER_NAME)
+        }
+
+        Present(left)
+    } else {
+        left
+    }
+}
+
+// test jsx jsx_any_name
+// <a-b-c-d-e></a-b-c-d-e>;
+// <a-b-c-d-e />;
+// <if />;
+// <namespace:name></namespace:name>;
+// <dashed-namespaced:dashed-name />;
+fn parse_jsx_any_name(p: &mut Parser) -> ParsedSyntax {
+    parse_jsx_reference_identifier(p).map(|identifier| {
+        if p.at(T![:]) {
+            let m = identifier.precede(p);
+            p.bump(T![:]);
+            parse_jsx_name(p).or_add_diagnostic(p, expected_identifier);
+            m.complete(p, JSX_NAMESPACE_NAME)
+        } else {
+            identifier
+        }
+    })
+}
+
+fn parse_jsx_name(p: &mut Parser) -> ParsedSyntax {
+    p.re_lex(ReLexContext::JsxIdentifier);
+
+    if p.at(JSX_IDENT) {
+        let name = p.start();
+        p.bump(JSX_IDENT);
+        Present(name.complete(p, JSX_NAME))
+    } else {
+        Absent
+    }
+}
+
+fn parse_jsx_reference_identifier(p: &mut Parser) -> ParsedSyntax {
+    p.re_lex(ReLexContext::JsxIdentifier);
+
+    if !p.at(JSX_IDENT) {
+        return Absent;
     }
 
-    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_REFERENCE_IDENTIFIER))
+    let m = p.start();
+    p.bump(JSX_IDENT);
+
+    Present(m.complete(p, JSX_REFERENCE_IDENTIFIER))
 }

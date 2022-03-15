@@ -27,7 +27,7 @@ JsModule {
                                 opening_element: JsxOpeningElement {
                                     l_angle_token: L_ANGLE@26..27 "<" [] [],
                                     name: JsxReferenceIdentifier {
-                                        value_token: IDENT@27..30 "div" [] [],
+                                        value_token: JSX_IDENT@27..30 "div" [] [],
                                     },
                                     r_angle_token: R_ANGLE@30..31 ">" [] [],
                                 },
@@ -35,7 +35,7 @@ JsModule {
                                     l_angle_token: L_ANGLE@31..32 "<" [] [],
                                     slash_token: SLASH@32..33 "/" [] [],
                                     name: JsxReferenceIdentifier {
-                                        value_token: IDENT@33..36 "div" [] [],
+                                        value_token: JSX_IDENT@33..36 "div" [] [],
                                     },
                                     r_angle_token: R_ANGLE@36..37 ">" [] [],
                                 },
@@ -78,13 +78,13 @@ JsModule {
                 0: JSX_OPENING_ELEMENT@26..31
                   0: L_ANGLE@26..27 "<" [] []
                   1: JSX_REFERENCE_IDENTIFIER@27..30
-                    0: IDENT@27..30 "div" [] []
+                    0: JSX_IDENT@27..30 "div" [] []
                   2: R_ANGLE@30..31 ">" [] []
                 1: JSX_CLOSING_ELEMENT@31..37
                   0: L_ANGLE@31..32 "<" [] []
                   1: SLASH@32..33 "/" [] []
                   2: JSX_REFERENCE_IDENTIFIER@33..36
-                    0: IDENT@33..36 "div" [] []
+                    0: JSX_IDENT@33..36 "div" [] []
                   3: R_ANGLE@36..37 ">" [] []
             2: (empty)
         3: R_CURLY@37..39 "}" [Newline("\n")] []

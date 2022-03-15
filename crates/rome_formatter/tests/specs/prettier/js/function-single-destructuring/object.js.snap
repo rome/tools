@@ -81,7 +81,7 @@ function StatelessFunctionalComponent(
     items,
   },
 ) {
-  return <div />
+  return <div />;
 }
 
 function StatelessFunctionalComponent2(
@@ -96,7 +96,7 @@ function StatelessFunctionalComponent2(
     items = [],
   } = {},
 ) {
-  return <div />
+  return <div />;
 }
 
 function StatelessFunctionalComponent3(
@@ -111,7 +111,7 @@ function StatelessFunctionalComponent3(
     items = [],
   } = { isActive: true },
 ) {
-  return <div />
+  return <div />;
 }
 
 class C {
@@ -127,7 +127,7 @@ class C {
       items,
     },
   ) {
-    return <div />
+    return <div />;
   }
 }
 

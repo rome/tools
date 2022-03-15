@@ -2179,12 +2179,33 @@ JsxClosingElement =
 
 JsxAnyElementName =
 	JsxReferenceIdentifier
-	| JsxMemberExpression
+	| JsxMemberName
+	| JsxNamespaceName
 
-JsxReferenceIdentifier = value: 'ident'
+JsxAnyObjectName =
+	JsxReferenceIdentifier
+	| JsxMemberName
 
 // <a.test>
-JsxMemberExpression =
-	object: JsName
+JsxMemberName =
+	object: JsxAnyObjectName
 	'.'
 	member: JsName
+
+// ==================================
+// Auxiliary
+// ==================================
+
+JsxReferenceIdentifier = value: 'jsx_ident'
+
+JsxName = value: 'jsx_ident'
+
+// <a:test>
+JsxNamespaceName =
+	namespace: JsxReferenceIdentifier
+	':'
+	name: JsxName
+
+JsxAnyName =
+	JsxName
+	| JsxNamespaceName

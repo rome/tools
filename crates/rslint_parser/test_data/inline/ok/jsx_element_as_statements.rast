@@ -7,7 +7,7 @@ JsModule {
                 element: JsxSelfClosingElement {
                     l_angle_token: L_ANGLE@0..1 "<" [] [],
                     name: JsxReferenceIdentifier {
-                        value_token: IDENT@1..5 "div" [] [Whitespace(" ")],
+                        value_token: JSX_IDENT@1..5 "div" [] [Whitespace(" ")],
                     },
                     slash_token: SLASH@5..6 "/" [] [],
                     r_angle_token: R_ANGLE@6..7 ">" [] [],
@@ -28,7 +28,7 @@ JsModule {
         0: JSX_SELF_CLOSING_ELEMENT@0..7
           0: L_ANGLE@0..1 "<" [] []
           1: JSX_REFERENCE_IDENTIFIER@1..5
-            0: IDENT@1..5 "div" [] [Whitespace(" ")]
+            0: JSX_IDENT@1..5 "div" [] [Whitespace(" ")]
           2: SLASH@5..6 "/" [] []
           3: R_ANGLE@6..7 ">" [] []
       1: (empty)

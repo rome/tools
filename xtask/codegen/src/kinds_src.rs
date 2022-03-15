@@ -174,6 +174,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "DOLLAR_CURLY", // ${
         "ERROR_TOKEN",
         "IDENT",
+        "JSX_IDENT",
         "NEWLINE",
         "WHITESPACE",
         "COMMENT",
@@ -476,14 +477,14 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_INDEX_SIGNATURE_MODIFIER_LIST",
         //JSX
         "JSX_ELEMENT_EXPRESSION",
-        "JSX_ANY_ELEMENT",
         "JSX_ELEMENT",
         "JSX_SELF_CLOSING_ELEMENT",
         "JSX_OPENING_ELEMENT",
         "JSX_CLOSING_ELEMENT",
-        "JSX_ANY_ELEMENT_NAME",
-        "JSX_MEMBER_EXPRESSION",
+        "JSX_NAME",
+        "JSX_MEMBER_NAME",
         "JSX_REFERENCE_IDENTIFIER",
+        "JSX_NAMESPACE_NAME",
         // unknown nodes JS
         "JS_UNKNOWN",
         "JS_UNKNOWN_EXPRESSION",

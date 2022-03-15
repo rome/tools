@@ -148,6 +148,8 @@ pub enum ReLexContext {
     /// Re-lexes `'<', '<'` as `<<` in places where a type argument is expected to support
     /// `B<<A>()>`
     TypeArgumentLessThan,
+    /// Re-lexes an identifier or keyword as a JSX identifier (that allows `-` tokens)
+    JsxIdentifier,
 }
 
 bitflags! {
@@ -321,6 +323,7 @@ impl<'src> Lexer<'src> {
             ReLexContext::Regex if matches!(self.current(), T![/] | T![/=]) => self.read_regex(),
             ReLexContext::BinaryOperator => self.re_lex_binary_operator(),
             ReLexContext::TypeArgumentLessThan => self.re_lex_type_argument_less_than(),
+            ReLexContext::JsxIdentifier => self.re_lex_jsx_identifier(old_position),
             _ => LexedToken::ok(self.current()),
         };
 
@@ -362,7 +365,41 @@ impl<'src> Lexer<'src> {
         }
     }
 
-    /// Bumps the current byte and creates a lexer return for a token of the passed in kind
+    fn re_lex_jsx_identifier(&mut self, current_end: usize) -> LexedToken {
+        if self.current_kind.is_keyword() || self.current_kind == T![ident] {
+            self.position = current_end;
+
+            while let Some(current_byte) = self.current_byte() {
+                match current_byte {
+                    b'-' => {
+                        self.advance(1);
+                    }
+                    b':' => {
+                        break;
+                    }
+                    _ => {
+                        let start = self.position;
+
+                        // consume ident advances by one position, so move back by one
+                        self.position -= 1;
+                        self.consume_ident();
+
+                        // Didn't eat any identifier parts, break out
+                        if start == self.position {
+                            self.position = start;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            LexedToken::ok(JSX_IDENT)
+        } else {
+            LexedToken::ok(self.current_kind)
+        }
+    }
+
+    /// Bumps the current byte and creates a lexed token of the passed in kind
     fn eat_byte(&mut self, tok: JsSyntaxKind) -> LexedToken {
         self.next_byte();
         LexedToken::ok(tok)
