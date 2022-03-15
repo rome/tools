@@ -14,10 +14,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-type ReleaseToolConfig2 = {
-  get(key: "changelog"): `
-  `
-};
+type B = A<<C>(c: C) => undefined>;
     "#;
 
     let module = parse(src, 0, SourceType::ts());

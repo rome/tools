@@ -29,7 +29,7 @@ use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rome_js_syntax::T;
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rslint_errors::Span;
-use rslint_lexer::LexContext;
+use rslint_lexer::{LexContext, ReLexContext};
 
 use super::{expect_ts_index_signature_member, is_at_ts_index_signature_member, MemberParent};
 
@@ -480,7 +480,7 @@ fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 
-        if !p.has_preceding_line_break() && p.at(T![<]) {
+        if !p.has_preceding_line_break() {
             parse_ts_type_arguments(p).ok();
         }
 
@@ -1226,11 +1226,12 @@ pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     // test type_arguments_like_expression
     // ((0)<5>(6))
 
-    if TypeScript.is_unsupported(p) || !p.at(T![<]) {
+    if TypeScript.is_unsupported(p) || !matches!(p.cur(), T![<] | T![<<]) {
         return Absent;
     }
 
     try_parse(p, |p| {
+        p.re_lex(ReLexContext::TypeArgumentLessThan);
         let arguments = parse_ts_type_arguments_impl(p, false);
 
         if p.last() == Some(T![>]) && matches!(p.cur(), T!['('] | BACKTICK) {
@@ -1243,7 +1244,11 @@ pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
 }
 
 pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![<]) {
+    // test ts ts_type_arguments_left_shift
+    // type A<T> = T;
+    // type B = A<<C>(c: C) => undefined>;
+    let current = p.re_lex(ReLexContext::TypeArgumentLessThan);
+    if current != T![<] {
         return Absent;
     }
 

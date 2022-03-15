@@ -434,17 +434,6 @@ impl<'s> Parser<'s> {
         &self.tokens.source()[span]
     }
 
-    pub(crate) fn bump_multiple(&mut self, amount: u8, kind: JsSyntaxKind) {
-        let mut range = self.cur_range();
-        for _ in 0..amount {
-            range = range.cover(self.cur_range());
-            let diagnostics = self.tokens.bump(LexContext::default());
-            self.diagnostics.extend(diagnostics);
-        }
-
-        self.push_token(kind, range);
-    }
-
     /// Whether the code we are parsing is a module
     pub fn is_module(&self) -> bool {
         self.source_type.module_kind.is_module()
