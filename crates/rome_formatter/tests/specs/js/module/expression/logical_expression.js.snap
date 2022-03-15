@@ -108,6 +108,8 @@ let foo = one && two || three && four || five && six;
 
 // Implicitly parenthesized && and || requires parens
 foo && bar || baz;
+
+
 =============================
 # Outputs
 ## Output 1
@@ -273,8 +275,6 @@ let a = a || (b && c);
 
 let foo = (one && two) || (three && four) || (five && six);
 
-(
-	// Implicitly parenthesized && and || requires parens
-	foo && bar
-) || baz;
+// Implicitly parenthesized && and || requires parens
+(foo && bar) || baz;
 

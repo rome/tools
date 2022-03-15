@@ -115,10 +115,6 @@ pub enum JsBinaryOperation {
     BitwiseOr,
     /// `^`
     BitwiseXor,
-    /// `in`
-    In,
-    /// `instanceof`
-    Instanceof,
 }
 
 impl JsBinaryOperation {
@@ -149,10 +145,6 @@ impl JsBinaryOperation {
         matches!(self, JsBinaryOperation::Exponent)
     }
 
-    pub fn is_instanceof_or_in_operator(&self) -> bool {
-        matches!(self, JsBinaryOperation::In | JsBinaryOperation::Instanceof)
-    }
-
     pub fn is_comparison_operator(&self) -> bool {
         matches!(
             self,
@@ -170,9 +162,7 @@ impl JsBinaryOperation {
     // The numbers returned by this function are arbitrary, the most important thing
     // is that, given the current implementation, they should be ordered from bigger (top) to smaller (bottom)
     pub fn get_precedence(&self) -> u8 {
-        if self.is_instanceof_or_in_operator() {
-            6
-        } else if self.is_bit_wise_operator() {
+        if self.is_bit_wise_operator() {
             5
         } else if self.is_times_or_div_operator() {
             4
@@ -272,8 +262,6 @@ impl JsBinaryExpression {
             T![&] => JsBinaryOperation::BitwiseAnd,
             T![|] => JsBinaryOperation::BitwiseOr,
             T![^] => JsBinaryOperation::BitwiseXor,
-            T![in] => JsBinaryOperation::In,
-            T![instanceof] => JsBinaryOperation::Instanceof,
             _ => unreachable!(),
         };
 
