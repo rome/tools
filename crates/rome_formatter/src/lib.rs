@@ -261,6 +261,7 @@ impl Formatted {
 /// Formats a JavaScript (and its super languages) file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
+#[tracing::instrument(level = "trace", skip_all)]
 pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Formatted> {
     let element = Formatter::new(options).format_root(syntax)?;
     Ok(Printer::new(options).print(&element))

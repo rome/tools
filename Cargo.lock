@@ -148,6 +148,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "439989e6b8c38d1b6570a384ef1e49c8848128f5a97f3914baef02920842712f"
 
 [[package]]
+name = "byteorder"
+version = "1.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "14c189c53d098945499cdfa7ecc63567cf3886b3332b312a5b4585d8d3a6a610"
+
+[[package]]
 name = "bytes"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -611,6 +617,16 @@ name = "hashbrown"
 version = "0.11.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
+
+[[package]]
+name = "hdrhistogram"
+version = "7.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "31672b7011be2c4f7456c4ddbcb40e7e9a4a9fad8efe49a6ebaf5f307d0109c0"
+dependencies = [
+ "byteorder",
+ "num-traits",
+]
 
 [[package]]
 name = "heck"
@@ -1304,7 +1320,10 @@ dependencies = [
 name = "rome_cli"
 version = "0.0.0"
 dependencies = [
+ "hdrhistogram",
+ "lazy_static",
  "memmap2",
+ "parking_lot 0.12.0",
  "pico-args",
  "rayon",
  "rome_core",
@@ -1312,6 +1331,8 @@ dependencies = [
  "rome_path",
  "rslint_errors",
  "rslint_parser",
+ "tracing",
+ "tracing-subscriber",
 ]
 
 [[package]]
@@ -1341,6 +1362,7 @@ dependencies = [
  "similar-asserts",
  "tests_macros",
  "thiserror",
+ "tracing",
 ]
 
 [[package]]
@@ -1443,6 +1465,7 @@ dependencies = [
  "rslint_lexer",
  "smallvec",
  "tests_macros",
+ "tracing",
 ]
 
 [[package]]

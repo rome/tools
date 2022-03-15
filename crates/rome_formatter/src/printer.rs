@@ -101,6 +101,7 @@ impl<'a> Printer<'a> {
     }
 
     /// Prints the passed in element as well as all its content
+    #[tracing::instrument(level = "debug", skip_all)]
     pub fn print(self, element: &'a FormatElement) -> Formatted {
         self.print_with_indent(element, 0)
     }

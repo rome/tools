@@ -365,6 +365,7 @@ struct FormatFileParams<'a> {
 /// This function performs the actual formatting: it reads the file from disk
 /// (or map it into memory it), parse and format it; then, it either writes the
 /// result back or compares it with the original content and emit a diagnostic
+#[tracing::instrument(level = "trace", skip_all, fields(path = ?params.path))]
 fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> {
     if !params.app.can_format(&RomePath::new(params.path)) {
         return Err(Diagnostic::error(
@@ -376,10 +377,8 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
 
     let source_type = SourceType::try_from(params.path).unwrap_or_else(|_| SourceType::js_module());
 
-    let mut file = fs::File::options()
-        .read(true)
-        .write(true)
-        .open(params.path)
+    let mut file = tracing::debug_span!("open")
+        .in_scope(|| fs::File::options().read(true).write(true).open(params.path))
         .with_file_id(params.file_id)?;
 
     let input = FileBuffer::read(&mut file, !params.is_check).with_file_id(params.file_id)?;
