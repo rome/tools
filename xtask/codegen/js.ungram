@@ -2142,47 +2142,49 @@ TsTypeArgumentList = (TsType (',' TsType)* )
 /////////////////////////////////////////////////////// JSX
 
 
-JsxElementExpression = 
+JsxElementExpression =
 	element: JsxAnyElement
 
 // ==================================
 // Elements
 // ==================================
 
-JsxAnyElement = 
-	JsxElement 
+JsxAnyElement =
+	JsxElement
 	| JsxSelfClosingElement
 
 
 // <a />
-JsxSelfClosingElement = 
+JsxSelfClosingElement =
 	'<'
 	name: JsxAnyElementName
-	'/>'
+	'/'
+	'>'
 
 // <a>...</a>
-JsxElement = 
+JsxElement =
 	opening_element: JsxOpeningElement
 	closing_element: JsxClosingElement
 
-JsxOpeningElement = 
+JsxOpeningElement =
 	'<'
-	name: JsxAnyElementName	
-	'>'
-	
-JsxClosingElement = 
-	'</'
 	name: JsxAnyElementName
 	'>'
 
-JsxAnyElementName = 
+JsxClosingElement =
+	'<'
+	'/'
+	name: JsxAnyElementName
+	'>'
+
+JsxAnyElementName =
 	JsxReferenceIdentifier
-	| JsxMemberExpression 
+	| JsxMemberExpression
 
 JsxReferenceIdentifier = value: 'ident'
 
-// <a.test>	
-JsxMemberExpression = 
+// <a.test>
+JsxMemberExpression =
 	object: JsName
 	'.'
 	member: JsName
