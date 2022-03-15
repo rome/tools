@@ -1,6 +1,6 @@
 use rome_core::App;
 use rome_formatter::{format, FormatOptions, Formatted, IndentStyle};
-use rome_path::RomePath;
+use rome_fs::RomePath;
 use rslint_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;

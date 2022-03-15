@@ -10,7 +10,7 @@ rome_formatter = { path = "../rome_formatter" }
 rslint_parser = { path = "../rslint_parser" }
 rslint_errors = { path = "../rslint_errors" }
 rome_core = { path = "../rome_core", version = "0.0.0" }
-rome_path = { path = "../rome_path", version = "0.0.0" }
+rome_fs = { path = "../rome_fs", version = "0.0.0" }
 pico-args = "0.4.2"
 rayon = "1.5.1"
 memmap2 = "0.3.0"

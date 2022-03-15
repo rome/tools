@@ -1,7 +1,7 @@
 use crate::file_handlers::unknown::UnknownFileHandler;
 use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
 use file_handlers::json::JsonFileHandler;
-use rome_path::RomePath;
+use rome_fs::RomePath;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 

@@ -20,7 +20,7 @@ use std::{
 use rayon::{self, scope, Scope};
 use rome_core::App;
 use rome_formatter::{FormatOptions, IndentStyle};
-use rome_path::RomePath;
+use rome_fs::RomePath;
 use rslint_errors::{
     file::{FileId, Files, SimpleFile},
     termcolor::{ColorChoice, StandardStream},

@@ -1,5 +1,5 @@
 use anyhow::bail;
-use rome_path::RomePath;
+use rome_fs::RomePath;
 use rslint_parser::SourceType;
 use std::sync::Arc;
 
