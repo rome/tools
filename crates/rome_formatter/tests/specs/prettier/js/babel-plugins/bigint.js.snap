@@ -232,7 +232,7 @@ view[0];
 
 // Highest possible BigInt value that can be represented as a
 // signed 64-bit integer.
-const max = (2n ** (64n - 1n)) - 1n;
+const max = 2n ** (64n - 1n) - 1n;
 view[0] = max;
 view[0];
 // ↪ 9_223_372_036_854_775_807n

@@ -34,12 +34,8 @@ foo(obj.property * new Class() && obj instanceof Class && longVariable ? number 
 // break them all at the same time.
 
 const x = longVariable + longVariable + longVariable;
-const x1 = (
-  longVariable + longVariable + longVariable + longVariable - longVariable
-) + longVariable;
-const x2 = (
-  longVariable + (longVariable * longVariable) + longVariable - longVariable
-) + longVariable;
+const x1 = longVariable + longVariable + longVariable + longVariable - longVariable + longVariable;
+const x2 = longVariable + (longVariable * longVariable) + longVariable - longVariable + longVariable;
 const x3 =
   longVariable +
   (longVariable * longVariable * longVariable / longVariable) +

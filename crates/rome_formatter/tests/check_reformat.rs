@@ -60,7 +60,7 @@ pub fn check_reformat(params: CheckReformatParams) {
             "output",
         );
 
-        // println!("{diff}");
+        println!("{diff}");
 
         similar_asserts::assert_str_eq!(text, output_formatted.as_code());
     }

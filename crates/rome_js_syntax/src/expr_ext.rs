@@ -9,6 +9,7 @@ use crate::{
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use num_bigint::BigInt;
 use rome_rowan::{NodeOrToken, SyntaxText, TextRange, TextSize};
+use std::cmp::Ordering;
 
 impl JsLiteralMemberName {
     /// Returns the name of the member as a syntax text
@@ -70,7 +71,9 @@ impl JsLiteralMemberName {
 }
 
 /// A binary operation applied to two expressions
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Ord, PartialOrd)]
+///
+/// The variants are ordered based on their precedence
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum JsBinaryOperation {
     /// `<`
     LessThan,
@@ -116,6 +119,134 @@ pub enum JsBinaryOperation {
     In,
     /// `instanceof`
     Instanceof,
+}
+
+impl JsBinaryOperation {
+    pub fn is_bit_wise_operator(&self) -> bool {
+        matches!(
+            self,
+            JsBinaryOperation::LeftShift
+                | JsBinaryOperation::RightShift
+                | JsBinaryOperation::UnsignedRightShift
+                | JsBinaryOperation::BitwiseAnd
+                | JsBinaryOperation::BitwiseOr
+                | JsBinaryOperation::BitwiseXor
+        )
+    }
+
+    pub fn is_plus_or_minus_operator(&self) -> bool {
+        matches!(self, JsBinaryOperation::Plus | JsBinaryOperation::Minus)
+    }
+
+    pub fn is_times_or_div_operator(&self) -> bool {
+        matches!(
+            self,
+            JsBinaryOperation::Divide | JsBinaryOperation::Times | JsBinaryOperation::Remainder
+        )
+    }
+
+    pub fn is_exponent_operator(&self) -> bool {
+        matches!(self, JsBinaryOperation::Exponent)
+    }
+
+    pub fn is_instanceof_or_in_operator(&self) -> bool {
+        matches!(self, JsBinaryOperation::In | JsBinaryOperation::Instanceof)
+    }
+
+    pub fn is_comparison_operator(&self) -> bool {
+        matches!(
+            self,
+            JsBinaryOperation::LessThan
+                | JsBinaryOperation::GreaterThan
+                | JsBinaryOperation::LessThanOrEqual
+                | JsBinaryOperation::GreaterThanOrEqual
+                | JsBinaryOperation::Equality
+                | JsBinaryOperation::StrictEquality
+                | JsBinaryOperation::Inequality
+                | JsBinaryOperation::StrictInequality
+        )
+    }
+
+    // The numbers returned by this function are arbitrary, the most important thing
+    // is that, given the current implementation, they should be ordered from bigger (top) to smaller (bottom)
+    pub fn get_precedence(&self) -> u8 {
+        if self.is_instanceof_or_in_operator() {
+            6
+        } else if self.is_bit_wise_operator() {
+            5
+        } else if self.is_times_or_div_operator() {
+            4
+        } else if self.is_plus_or_minus_operator() {
+            3
+        } else if self.is_comparison_operator() {
+            2
+        } else {
+            1
+        }
+    }
+}
+
+impl PartialOrd for JsBinaryOperation {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        if self.gt(other) {
+            Some(Ordering::Greater)
+        } else if self.lt(other) {
+            Some(Ordering::Less)
+        } else {
+            Some(Ordering::Equal)
+        }
+    }
+    fn lt(&self, other: &Self) -> bool {
+        self.get_precedence() < other.get_precedence()
+    }
+    fn le(&self, other: &Self) -> bool {
+        self.get_precedence() <= other.get_precedence()
+    }
+    fn gt(&self, other: &Self) -> bool {
+        self.get_precedence() > other.get_precedence()
+    }
+
+    fn ge(&self, other: &Self) -> bool {
+        self.get_precedence() >= other.get_precedence()
+    }
+}
+
+impl Ord for JsBinaryOperation {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.partial_cmp(other).unwrap_or(Ordering::Equal)
+    }
+    fn max(self, other: Self) -> Self
+    where
+        Self: Sized,
+    {
+        if self.gt(&other) {
+            self
+        } else {
+            other
+        }
+    }
+    fn min(self, other: Self) -> Self
+    where
+        Self: Sized,
+    {
+        if self.lt(&other) {
+            self
+        } else {
+            other
+        }
+    }
+    fn clamp(self, min: Self, max: Self) -> Self
+    where
+        Self: Sized,
+    {
+        if self.gt(&max) {
+            max
+        } else if self.lt(&min) {
+            min
+        } else {
+            self
+        }
+    }
 }
 
 impl JsBinaryExpression {

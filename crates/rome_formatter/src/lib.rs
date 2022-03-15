@@ -590,8 +590,7 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-// Implicitly parenthesized && and || requires parens
-foo && bar || baz;     
+3 + 3 === 7   
 "#;
         let syntax = SourceType::ts();
         let tree = parse(src, 0, syntax.clone());
