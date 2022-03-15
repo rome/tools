@@ -1,0 +1,22 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy Playground
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@master
+      - uses: jetli/wasm-pack-action@v0.3.0
+      - run: wasm-pack build crates/rome_playground --target web
+      - name: Publish
+        uses: cloudflare/wrangler-action@1.3.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+
