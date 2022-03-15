@@ -82,6 +82,15 @@ pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test jsx jsx_element_as_statements
 // <div />
+
+// test_err jsx_or_type_assertion
+// function f() {
+//     let a = <div>a</div>; // JSX
+//     let b = <string>b; //type assertion
+//     let c = <string>b<a>d; // type assertion
+//     let d = <div>a</div>/; // ambigous: JSX or "type assertion a less than regex /div>/". Probably JSX.
+//     let d = <string>a</string>/;
+// }
 fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
     parse_jsx_element(p, true).map(|element| {
         let m = element.precede(p);
@@ -89,19 +98,31 @@ fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax 
     })
 }
 
-// test jsx jsx_element_children
-// <a>
-//     <b>
-//        <d></d>
-//        <e></e>
-//     </b>
-//     <c></c>
-// </a>
 struct JsxChildrenList;
 
 impl ParseNodeList for JsxChildrenList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_jsx_element(p)
+        // test jsx jsx_element_children
+        // <a>
+        //     <b>
+        //        <d></d>
+        //        <e></e>
+        //     </b>
+        //     <c></c>
+        // </a>
+        if p.at(T![<]) {
+            parse_jsx_element(p)
+        }
+        // test jsx jsx_expression_children
+        // <a>
+        //     {something}
+        //     {x => something}
+        // </a>
+        else if p.at(T!['{']) {
+            parse_jsx_expression_block(p, JsSyntaxKind::JSX_EXPRESSION_CHILD)
+        } else {
+            ParsedSyntax::Absent
+        }
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -574,11 +595,7 @@ fn expect_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     }
     // expression values
     else if p.at(T!['{']) {
-        let m = p.start();
-        p.bump(T!['{']);
-        let _ = super::expr::parse_expression(p, ExpressionContext::default());
-        p.bump(T!['}']);
-        ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE))
+        parse_jsx_expression_block(p, JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE)
     }
     // JSX elements
     else if p.at(T![<]) {
@@ -586,4 +603,26 @@ fn expect_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     } else {
         ParsedSyntax::Absent
     }
+}
+
+fn parse_jsx_expression_block(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
+    let m = p.start();
+
+    if !p.eat(T!['{']) {
+        m.abandon(p);
+        return ParsedSyntax::Absent;
+    }
+
+    let expr = super::expr::parse_expression(p, ExpressionContext::default());
+    if expr.is_absent() {
+        m.abandon(p);
+        return ParsedSyntax::Absent;
+    }
+
+    if !p.eat(T!['}']) {
+        m.abandon(p);
+        return ParsedSyntax::Absent;
+    }
+
+    ParsedSyntax::Present(m.complete(p, kind))
 }

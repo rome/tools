@@ -7,6 +7,7 @@ impl ToFormatElement for JsxAnyChild {
         match self {
             Self::JsxElement(node) => node.to_format_element(formatter),
             Self::JsxSelfClosingElement(node) => node.to_format_element(formatter),
+            Self::JsxExpressionChild(node) => node.to_format_element(formatter),
         }
     }
 }

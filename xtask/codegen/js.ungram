@@ -2262,6 +2262,12 @@ JsxAnyChild =
 	JsxElement
 	| JsxSelfClosingElement
 	| JsxText
+	| JsxExpressionChild
+
+JsxExpressionChild =
+	'{'
+	expression: JsAnyExpression
+	'}'
 
 JsxChildList = JsxAnyChild*
 
