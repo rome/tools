@@ -116,7 +116,7 @@ pub fn run(
     let mut errors = ErrorOutput(Vec::new());
     let mut error_formatter = LongFormatter;
     error_formatter
-        .emit_with_writer(parse.errors(), &simple_files, &mut errors)
+        .emit_with_writer(parse.diagnostics(), &simple_files, &mut errors)
         .unwrap();
 
     PlaygroundResult {
