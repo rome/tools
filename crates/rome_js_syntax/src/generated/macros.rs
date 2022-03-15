@@ -685,6 +685,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxSelfClosingElement::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JSX_TEXT_LITERAL => {
+                    let $pattern = unsafe { $crate::JsxTextLiteral::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::NEW_TARGET => {
                     let $pattern = unsafe { $crate::NewTarget::new_unchecked(node) };
                     $body

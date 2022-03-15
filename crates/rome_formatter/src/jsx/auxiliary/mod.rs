@@ -7,3 +7,4 @@ mod namespace_name;
 mod opening_element;
 mod reference_identifier;
 mod self_closing_element;
+mod text_literal;
