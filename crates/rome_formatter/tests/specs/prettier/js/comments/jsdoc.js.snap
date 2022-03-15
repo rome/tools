@@ -38,7 +38,7 @@ function HelloWorld() {
 ```js
 /** @type {any} */
 const x = (
-    <div>
+  <div>
         <div />
     </div>
 );
@@ -46,9 +46,8 @@ const x = (
 /**
  * @type {object}
  */
-() =>
-  (
-    <div>
+() => (
+  <div>
         sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
     </div>
 );
@@ -58,10 +57,10 @@ const x = (
  */
 function HelloWorld() {
   return (
-        <div>
+    <div>
            <span>Test</span>
         </div>
-    );
+  );
 }
 
 ```

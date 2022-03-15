@@ -179,9 +179,8 @@ const makeBody = (store, assets, html) =>
         content={[
           { id: 'app-container', dangerouslySetInnerHTML: { __html: html } },
         ]}
-      />
-    )
-  }`;
+      />,
+  )}`;
 
 // https://github.com/prettier/prettier/issues/1626#issue-229655106
 const Bar = styled.div`

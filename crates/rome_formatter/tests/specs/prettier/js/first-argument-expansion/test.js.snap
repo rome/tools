@@ -293,11 +293,15 @@ compose(
 
 renderThing(
 <<<<<<< HEAD
+<<<<<<< HEAD
   (a) => <div>Content. So much to say. Oh my. Are we done yet?</div>,
 =======
   a =>
   <div>Content. So much to say. Oh my. Are we done yet?</div>,
 >>>>>>> 5e7841b546 (update rast/snap files)
+=======
+  (a) => <div>Content. So much to say. Oh my. Are we done yet?</div>,
+>>>>>>> 12f088c540 (correctly unknown expression for jsx elements)
   args,
 );
 

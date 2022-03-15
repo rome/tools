@@ -77,10 +77,10 @@ function b() {} // comment
 function c( /* comment */ argA, argB, argC) {} // comment
 call(( /*object*/ row) => {});
 KEYPAD_NUMBERS.map(
-  (num) =>
-    ( // Buttons 0-9
-  <div />
-),
+  (num) => (
+    // Buttons 0-9
+    <div />
+  ),
 );
 
 function f1 /* f */ () {}

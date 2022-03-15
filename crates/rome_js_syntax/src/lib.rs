@@ -164,7 +164,11 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | TS_AS_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
+<<<<<<< HEAD
             | JSX_TAG_EXPRESSION
+=======
+            | JSX_ELEMENT_EXPRESSION
+>>>>>>> 12f088c540 (correctly unknown expression for jsx elements)
             | JS_UNKNOWN_EXPRESSION => JS_UNKNOWN_EXPRESSION,
 
             JS_OBJECT_BINDING_PATTERN

@@ -76,8 +76,7 @@ const AspectRatioBox = styled.div`
 `;
 */
 
-const AspectRatioBox = ({ aspectRatio, children, ...props }) =>
-  (
+const AspectRatioBox = ({ aspectRatio, children, ...props }) => (
   <div
     className={`height: 0;
 <<<<<<< HEAD
