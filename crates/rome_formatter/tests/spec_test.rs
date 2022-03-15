@@ -1,6 +1,6 @@
 use rome_core::App;
 use rome_formatter::{format, FormatOptions, Formatted, IndentStyle};
-use rome_fs::RomePath;
+use rome_fs::{MemoryFileSystem, RomePath};
 use rslint_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
@@ -118,7 +118,7 @@ impl SnapshotContent {
 /// * `json/null` -> input: `tests/specs/json/null.json`, expected output: `tests/specs/json/null.json.snap`
 /// * `null` -> input: `tests/specs/null.json`, expected output: `tests/specs/null.json.snap`
 pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, file_type: &str) {
-    let app = App::new();
+    let app = App::with_filesystem(MemoryFileSystem::default());
     let file_path = &spec_input_file;
     let spec_input_file = Path::new(spec_input_file);
 

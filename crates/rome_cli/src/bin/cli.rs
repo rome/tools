@@ -1,4 +1,4 @@
-use rome_cli::{run_cli, CliSession};
+use rome_cli::{run_cli, CliSession, Termination};
 
 ///
 /// To run this example, run:
@@ -19,6 +19,6 @@ use rome_cli::{run_cli, CliSession};
 ///  cargo run --example run_cli format examples/input.json
 /// ```
 ///
-fn main() {
-    run_cli(CliSession::from_env());
+fn main() -> Result<(), Termination> {
+    run_cli(CliSession::from_env())
 }

@@ -1,36 +1,32 @@
-use std::{env, path::PathBuf, process::Command};
+use std::{ffi::OsString, path::Path, sync::Arc};
 
-fn cargo_bin(name: &str) -> PathBuf {
-    env::current_exe()
-        .ok()
-        .map(|mut path| {
-            path.pop();
-            if path.ends_with("deps") {
-                path.pop();
-            }
-            path.join(name)
-        })
-        .expect("cannot get current exe")
-}
+use pico_args::Arguments;
+use rome_cli::{run_cli, CliSession};
+use rome_core::App;
+use rome_fs::{FileSystem, MemoryFileSystem};
 
 #[test]
-#[ignore = "The CLI for now, doesn't print anything"]
 fn test_format_cli() {
-    let res = Command::new(cargo_bin("cli"))
-        .args(&["format", "fixtures/input.json"])
-        .output()
-        .expect("fail to run cli format");
+    let mut fs = MemoryFileSystem::default();
 
-    assert!(res.status.success(), "cli format command failed");
-    let output = String::from_utf8(res.stdout).expect("cannot read stdout, not utf8 compliant");
+    let file_path = Path::new("format.js");
+    fs.insert(file_path.into(), b"statement()".as_slice());
 
-    assert_eq!(
-        output,
-        r#"Running formatter to:
-- file "fixtures/input.json"
-- with options Tab
-{"string": "foo", "boolean": false, "number": 15, "object": {"something": 15}}
+    let fs = Arc::new(fs);
+    let result = run_cli(CliSession {
+        app: App::with_filesystem(fs.clone()),
+        args: Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+    });
 
-"#
-    );
+    assert_eq!(result, Ok(()));
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, "statement();\n");
 }
