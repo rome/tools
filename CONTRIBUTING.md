@@ -275,3 +275,10 @@ Use the `"rome.lspBin"` VS Code setting to set the path to the executable:
 ```
 
 When performing any benchmarks for the language server, be sure to use a release build.
+
+### Versioning
+
+We follow the specs suggested by [the official documentation](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prerelease-extensions):
+
+Odd minor versions are dedicated to pre-releases, e.g. `*.5.*` . 
+Even minor versions are dedicated to official releases, e.g. `*.6.*`.  
