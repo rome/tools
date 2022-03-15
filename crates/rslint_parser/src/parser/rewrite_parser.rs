@@ -5,24 +5,27 @@ use rslint_errors::Diagnostic;
 
 /// Simplified parser API for when rewriting the AST structure with `rewrite_events`.
 ///
-/// The difference from the regular [Parser] is that the `TokenSource` must be detached during
+/// The difference from the regular [Parser] is that the [TokenSource] must be detached during
 /// rewriting to avoid lexing previously lexed tokens in a different context. For example for `a[`test`] = "b"`.
-/// Template literal elements get lexed in the `TemplateElement` context. However, if the rewriter
-/// rewinds the token source then all tokens are lexed in the `LexMode::Regular` which yields
+/// Template literal elements get lexed in the [TemplateElement] context. However, if the rewriter
+/// rewinds the token source then all tokens are lexed in the [LexContext::Regular] which yields
 /// complete different results.
 ///
 /// This is why the [RewriteParser] tracks the source offset without relying on the `TokenSource`
 /// and explicitly passes the positions to [Marker] and [CompletedMarker]. This further has the
 /// benefit that rewriting the events doesn't require re-lexing all tokens as well.
-pub(crate) struct RewriteParser<'p, 's> {
+pub(crate) struct RewriteParser<'parser, 'source> {
     /// The byte offset of the current token from the start of the source
     offset: TextSize,
-    inner: &'p mut Parser<'s>,
+
+    inner: &'parser mut Parser<'source>,
+
+    /// Offset to the next not yet processed trivia in [TokenSource::trivia_list].
     trivia_offset: usize,
 }
 
-impl<'p, 's> RewriteParser<'p, 's> {
-    pub fn new(p: &'p mut Parser<'s>, checkpoint: TokenSourceCheckpoint) -> Self {
+impl<'parser, 'source> RewriteParser<'parser, 'source> {
+    pub fn new(p: &'parser mut Parser<'source>, checkpoint: TokenSourceCheckpoint) -> Self {
         Self {
             inner: p,
             offset: checkpoint.current_start(),
@@ -48,7 +51,7 @@ impl<'p, 's> RewriteParser<'p, 's> {
     }
 
     fn skip_trivia(&mut self, trailing: bool) {
-        let remaining_trivia = &self.inner.tokens.trivia[self.trivia_offset..];
+        let remaining_trivia = &self.inner.tokens.trivia_list[self.trivia_offset..];
         for trivia in remaining_trivia {
             if trailing != trivia.trailing() || self.offset != trivia.offset() {
                 break;

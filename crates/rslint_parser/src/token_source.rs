@@ -4,7 +4,7 @@ use rome_rowan::TextSize;
 use rslint_errors::file::FileId;
 use rslint_errors::Diagnostic;
 use rslint_lexer::buffered_lexer::BufferedLexer;
-use rslint_lexer::{LexContext, Lexer, LexerCheckpoint, LexerReturn, ReLexContext, TextRange};
+use rslint_lexer::{LexContext, LexedToken, Lexer, LexerCheckpoint, ReLexContext, TextRange};
 use std::collections::VecDeque;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -88,7 +88,7 @@ pub struct TokenSource<'l> {
     lexer: BufferedLexer<'l>,
 
     /// List of the skipped trivia. Needed to construct the CST and compute the non-trivia token offsets.
-    pub(super) trivia: Vec<Trivia>,
+    pub(super) trivia_list: Vec<Trivia>,
 
     /// Cache for the non-trivia token lookahead. For example for the source `let a = 10;` if the
     /// [TokenSource]'s currently positioned at the start of the file (`let`). The `nth(2)` non-trivia token,
@@ -115,7 +115,7 @@ impl<'l> TokenSource<'l> {
     pub fn new(lexer: BufferedLexer<'l>) -> TokenSource<'l> {
         TokenSource {
             lexer,
-            trivia: vec![],
+            trivia_list: vec![],
             lookahead_offset: 0,
             non_trivia_lookahead: VecDeque::new(),
         }
@@ -144,7 +144,7 @@ impl<'l> TokenSource<'l> {
         self.non_trivia_lookahead.pop_front();
 
         loop {
-            let LexerReturn { kind, diagnostic } = self.lexer.next_token(context);
+            let LexedToken { kind, diagnostic } = self.lexer.next_token(context);
             processed_tokens += 1;
 
             if let Some(diagnostic) = diagnostic {
@@ -161,7 +161,7 @@ impl<'l> TokenSource<'l> {
                         trailing = false;
                     }
 
-                    self.trivia
+                    self.trivia_list
                         .push(Trivia::new(trivia_kind, self.current_range(), trailing));
                 }
             }
@@ -222,6 +222,10 @@ impl<'l> TokenSource<'l> {
     #[inline(always)]
     fn lookahead(&mut self, n: usize) -> Option<Lookahead> {
         assert_ne!(n, 0);
+        debug_assert!(
+            n < 6,
+            "Lookahead is expensive, that's why it's limited to at most 5 tokens at a time."
+        );
 
         // Return the cached token if any
         if let Some(lookahead) = self.non_trivia_lookahead.get(n - 1) {
@@ -255,8 +259,8 @@ impl<'l> TokenSource<'l> {
     }
 
     pub fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
-        assert!(self.trivia.len() >= checkpoint.trivia_len as usize);
-        self.trivia.truncate(checkpoint.trivia_len as usize);
+        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
+        self.trivia_list.truncate(checkpoint.trivia_len as usize);
         self.lexer.rewind(checkpoint.lexer);
         self.non_trivia_lookahead.clear();
         self.lookahead_offset = 0;
@@ -264,7 +268,7 @@ impl<'l> TokenSource<'l> {
 
     pub fn checkpoint(&self) -> TokenSourceCheckpoint {
         TokenSourceCheckpoint {
-            trivia_len: self.trivia.len() as u32,
+            trivia_len: self.trivia_list.len() as u32,
             lexer: self.lexer.checkpoint(),
         }
     }
@@ -290,10 +294,10 @@ impl<'l> TokenSource<'l> {
         }
     }
 
-    pub fn re_lex(&mut self, mode: ReLexContext) -> LexerReturn {
+    pub fn re_lex(&mut self, mode: ReLexContext) -> LexedToken {
         let current_kind = self.current();
 
-        let LexerReturn {
+        let LexedToken {
             kind: new_kind,
             diagnostic,
         } = self.lexer.re_lex(mode);
@@ -304,7 +308,7 @@ impl<'l> TokenSource<'l> {
             self.lookahead_offset = 0;
         }
 
-        LexerReturn::new(new_kind, diagnostic)
+        LexedToken::new(new_kind, diagnostic)
     }
 
     /// Returns the byte offset of the current token from the start of the source document
@@ -315,7 +319,7 @@ impl<'l> TokenSource<'l> {
 
     /// Ends this token source and returns the source text's trivia
     pub fn finish(self) -> Vec<Trivia> {
-        self.trivia
+        self.trivia_list
     }
 }
 

@@ -312,9 +312,12 @@ JsAnyExpression =
 	| JsYieldExpression
 	| NewTarget
 	| JsTemplate
+	// Typescript
 	| TsTypeAssertionExpression
 	| TsAsExpression
 	| TsNonNullAssertionExpression
+	// JSX
+	| JsxElementExpression
 
 
 JsTemplate =
@@ -2136,3 +2139,50 @@ TsTypeArguments =
 
 TsTypeArgumentList = (TsType (',' TsType)* )
 
+/////////////////////////////////////////////////////// JSX
+
+
+JsxElementExpression = 
+	element: JsxAnyElement
+
+// ==================================
+// Elements
+// ==================================
+
+JsxAnyElement = 
+	JsxElement 
+	| JsxSelfClosingElement
+
+
+// <a />
+JsxSelfClosingElement = 
+	'<'
+	name: JsxAnyElementName
+	'/>'
+
+// <a>...</a>
+JsxElement = 
+	opening_element: JsxOpeningElement
+	closing_element: JsxClosingElement
+
+JsxOpeningElement = 
+	'<'
+	name: JsxAnyElementName	
+	'>'
+	
+JsxClosingElement = 
+	'</'
+	name: JsxAnyElementName
+	'>'
+
+JsxAnyElementName = 
+	JsxReferenceIdentifier
+	| JsxMemberExpression 
+
+JsxReferenceIdentifier = value: 'ident'
+
+// <a.test>	
+JsxMemberExpression = 
+	object: JsName
+	'.'
+	member: JsName

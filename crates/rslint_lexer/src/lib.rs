@@ -43,8 +43,10 @@ use rslint_errors::file::FileId;
 
 use crate::errors::invalid_digits_after_unicode_escape_sequence;
 
+/// A lexed token as returned by [Lexer::next_token].
+/// Holds information about the kind of the token and any potential diagnostics.
 #[derive(Debug)]
-pub struct LexerReturn {
+pub struct LexedToken {
     /// The token kind
     pub kind: JsSyntaxKind,
 
@@ -52,8 +54,8 @@ pub struct LexerReturn {
     pub diagnostic: Option<Box<Diagnostic>>,
 }
 
-impl LexerReturn {
-    /// Creates a lexer return for a token with the given kind but without any diagnostic
+impl LexedToken {
+    /// Creates a lexed token of the given kind but without any diagnostic
     pub fn ok(kind: JsSyntaxKind) -> Self {
         Self::new(kind, None)
     }
@@ -62,7 +64,7 @@ impl LexerReturn {
         Self { kind, diagnostic }
     }
 
-    /// Creates a lexer return for a token of the given kind and with the given diagnostic
+    /// Creates a lexed token of the given kind and with the given diagnostic
     pub fn with_diagnostic(kind: JsSyntaxKind, diagnostic: Box<Diagnostic>) -> Self {
         Self::new(kind, Some(diagnostic))
     }
@@ -130,12 +132,13 @@ impl Default for LexContext {
 }
 
 impl LexContext {
-    /// Returns true if this is [LexContext:Regular]
+    /// Returns true if this is [LexContext::Regular]
     pub fn is_regular(&self) -> bool {
         matches!(self, LexContext::Regular)
     }
 }
 
+/// Context in which the [Lexer]'s current should be re-lexed.
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum ReLexContext {
     /// Re-lexes a `/` or `/=` token as a regular expression.
@@ -269,16 +272,16 @@ impl<'src> Lexer<'src> {
         self.after_newline = after_line_break;
     }
 
-    /// Lex's the next token.
+    /// Lexes the next token.
     ///
     /// ## Return
     /// Returns its kind and any potential error.
-    pub fn next_token(&mut self, context: LexContext) -> LexerReturn {
+    pub fn next_token(&mut self, context: LexContext) -> LexedToken {
         self.current_start = TextSize::from(self.position as u32);
         self.current_flags = TokenFlags::empty();
 
         let result = if self.is_eof() {
-            LexerReturn::ok(EOF)
+            LexedToken::ok(EOF)
         } else {
             match context {
                 LexContext::Regular => self.lex_token(),
@@ -310,7 +313,7 @@ impl<'src> Lexer<'src> {
     /// the passed [ReLexContext].
     ///
     /// Returns the current kind without any diagnostic if not. Any cached lookahead remains valid in that case.
-    pub fn re_lex(&mut self, context: ReLexContext) -> LexerReturn {
+    pub fn re_lex(&mut self, context: ReLexContext) -> LexedToken {
         let old_position = self.position;
         self.position = u32::from(self.current_start) as usize;
 
@@ -318,7 +321,7 @@ impl<'src> Lexer<'src> {
             ReLexContext::Regex if matches!(self.current(), T![/] | T![/=]) => self.read_regex(),
             ReLexContext::BinaryOperator => self.re_lex_binary_operator(),
             ReLexContext::TypeArgumentLessThan => self.re_lex_type_argument_less_than(),
-            _ => LexerReturn::ok(self.current()),
+            _ => LexedToken::ok(self.current()),
         };
 
         if self.current() == result.kind {
@@ -331,38 +334,38 @@ impl<'src> Lexer<'src> {
         result
     }
 
-    fn re_lex_binary_operator(&mut self) -> LexerReturn {
+    fn re_lex_binary_operator(&mut self) -> LexedToken {
         if self.current_byte() == Some(b'>') {
             match self.next_byte() {
                 Some(b'>') => match self.next_byte() {
                     Some(b'>') => match self.next_byte() {
                         Some(b'=') => self.eat_byte(T![>>>=]),
-                        _ => LexerReturn::ok(T![>>>]),
+                        _ => LexedToken::ok(T![>>>]),
                     },
                     Some(b'=') => self.eat_byte(T![>>=]),
-                    _ => LexerReturn::ok(T![>>]),
+                    _ => LexedToken::ok(T![>>]),
                 },
                 Some(b'=') => self.eat_byte(T![>=]),
-                _ => LexerReturn::ok(T![>]),
+                _ => LexedToken::ok(T![>]),
             }
         } else {
-            LexerReturn::ok(self.current_kind)
+            LexedToken::ok(self.current_kind)
         }
     }
 
-    fn re_lex_type_argument_less_than(&mut self) -> LexerReturn {
+    fn re_lex_type_argument_less_than(&mut self) -> LexedToken {
         if self.current() == T![<<] {
             self.advance(1);
-            LexerReturn::ok(T![<])
+            LexedToken::ok(T![<])
         } else {
-            LexerReturn::ok(self.current())
+            LexedToken::ok(self.current())
         }
     }
 
-    /// Bumps the current byte and creates a lexer return for a token of the passed in kind
-    fn eat_byte(&mut self, tok: JsSyntaxKind) -> LexerReturn {
+    /// Bumps the current byte and creates a lexed token of the passed in kind
+    fn eat_byte(&mut self, tok: JsSyntaxKind) -> LexedToken {
         self.next_byte();
-        LexerReturn::ok(tok)
+        LexedToken::ok(tok)
     }
 
     fn consume_newlines(&mut self) -> bool {
@@ -398,13 +401,13 @@ impl<'src> Lexer<'src> {
         }
     }
 
-    fn consume_newline_or_whitespace(&mut self) -> LexerReturn {
+    fn consume_newline_or_whitespace(&mut self) -> LexedToken {
         if self.consume_newlines() {
             self.after_newline = true;
-            LexerReturn::ok(NEWLINE)
+            LexedToken::ok(NEWLINE)
         } else {
             self.consume_whitespace_until_newline();
-            LexerReturn::ok(WHITESPACE)
+            LexedToken::ok(WHITESPACE)
         }
     }
 
@@ -449,6 +452,9 @@ impl<'src> Lexer<'src> {
     }
 
     /// Returns the current byte without checking if the lexer is at the end of the file.
+    ///
+    /// ## Safety
+    /// Calling this function if the lexer is at or passed the end of file is undefined behaviour.
     #[inline]
     unsafe fn current_unchecked(&self) -> u8 {
         *self.source.as_bytes().get_unchecked(self.position)
@@ -844,7 +850,7 @@ impl<'src> Lexer<'src> {
     /// `first` is a pair of a character that was already consumed,
     /// but is still part of the identifier, and the characters position.
     #[inline]
-    fn resolve_identifier(&mut self, first: char) -> LexerReturn {
+    fn resolve_identifier(&mut self, first: char) -> LexedToken {
         use JsSyntaxKind::*;
 
         // Note to keep the buffer large enough to fit every possible keyword that
@@ -944,9 +950,9 @@ impl<'src> Lexer<'src> {
         };
 
         if let Some(kind) = kind {
-            LexerReturn::ok(kind)
+            LexedToken::ok(kind)
         } else {
-            LexerReturn::ok(T![ident])
+            LexedToken::ok(T![ident])
         }
     }
 
@@ -1221,7 +1227,7 @@ impl<'src> Lexer<'src> {
     }
 
     #[inline]
-    fn verify_number_end(&mut self) -> LexerReturn {
+    fn verify_number_end(&mut self) -> LexedToken {
         let err_start = self.position;
         if !self.is_eof() && self.cur_is_ident_start() {
             self.consume_ident();
@@ -1232,18 +1238,18 @@ impl<'src> Lexer<'src> {
             )
             .primary(err_start..self.position, "an identifier cannot appear here");
 
-            LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
+            LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
         } else {
-            LexerReturn::ok(JS_NUMBER_LITERAL)
+            LexedToken::ok(JS_NUMBER_LITERAL)
         }
     }
 
     #[inline]
-    fn read_shebang(&mut self) -> LexerReturn {
+    fn read_shebang(&mut self) -> LexedToken {
         let start = self.position;
         self.next_byte();
         if start != 0 {
-            return LexerReturn::ok(T![#]);
+            return LexedToken::ok(T![#]);
         }
 
         if let Some(b'!') = self.current_byte() {
@@ -1251,11 +1257,11 @@ impl<'src> Lexer<'src> {
                 let chr = self.current_char_unchecked();
 
                 if is_linebreak(chr) {
-                    return LexerReturn::ok(JS_SHEBANG);
+                    return LexedToken::ok(JS_SHEBANG);
                 }
                 self.advance(chr.len_utf8() - 1);
             }
-            LexerReturn::ok(JS_SHEBANG)
+            LexedToken::ok(JS_SHEBANG)
         } else {
             let err = Diagnostic::error(
                 self.file_id,
@@ -1264,12 +1270,12 @@ impl<'src> Lexer<'src> {
             )
             .primary(0usize..1usize, "");
 
-            LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
+            LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
         }
     }
 
     #[inline]
-    fn read_slash(&mut self) -> LexerReturn {
+    fn read_slash(&mut self) -> LexedToken {
         let start = self.position;
         match self.peek_byte() {
             Some(b'*') => {
@@ -1281,9 +1287,9 @@ impl<'src> Lexer<'src> {
                             self.advance(2);
                             if has_newline {
                                 self.after_newline = true;
-                                return LexerReturn::ok(MULTILINE_COMMENT);
+                                return LexedToken::ok(MULTILINE_COMMENT);
                             } else {
-                                return LexerReturn::ok(COMMENT);
+                                return LexedToken::ok(COMMENT);
                             }
                         }
                         x => {
@@ -1304,7 +1310,7 @@ impl<'src> Lexer<'src> {
                     )
                     .secondary(start..start + 2, "A block comment starts here");
 
-                LexerReturn::with_diagnostic(JsSyntaxKind::COMMENT, Box::new(err))
+                LexedToken::with_diagnostic(JsSyntaxKind::COMMENT, Box::new(err))
             }
             Some(b'/') => {
                 self.next_byte();
@@ -1312,16 +1318,16 @@ impl<'src> Lexer<'src> {
                     let chr = self.current_char_unchecked();
 
                     if is_linebreak(chr) {
-                        return LexerReturn::ok(COMMENT);
+                        return LexedToken::ok(COMMENT);
                     }
                     self.advance(chr.len_utf8() - 1);
                 }
-                LexerReturn::ok(COMMENT)
+                LexedToken::ok(COMMENT)
             }
             // _ if self.state.expr_allowed => self.read_regex(),
             Some(b'=') => {
                 self.advance(2);
-                LexerReturn::ok(SLASHEQ)
+                LexedToken::ok(SLASHEQ)
             }
             _ => self.eat_byte(T![/]),
         }
@@ -1339,7 +1345,7 @@ impl<'src> Lexer<'src> {
     // This is not a huge issue but it would be helpful to users
     #[inline]
     #[allow(clippy::many_single_char_names)]
-    fn read_regex(&mut self) -> LexerReturn {
+    fn read_regex(&mut self) -> LexedToken {
         self.assert_byte(b'/');
         let start = self.position;
         let mut in_class = false;
@@ -1353,66 +1359,66 @@ impl<'src> Lexer<'src> {
                     if !in_class {
                         let (mut g, mut i, mut m, mut s, mut u, mut y, mut d) = (false, false, false, false, false, false, false);
 
-                        unwind_loop! {
-                            let next = self.next_byte_bounded();
+                        while let Some(next) = self.next_byte_bounded() {
                             let chr_start = self.position;
+
                             match next {
-                                Some(b'g') => {
+                                b'g' => {
                                     if g && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('g'))
                                     }
                                     g = true;
                                 },
-                                Some(b'i') => {
+                                b'i' => {
                                     if i && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('i'))
                                     }
                                     i = true;
                                 },
-                                Some(b'm') => {
+                                b'm' => {
                                     if m && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('m'))
                                     }
                                     m = true;
                                 },
-                                Some(b's') => {
+                                b's' => {
                                     if s && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('s'))
                                     }
                                     s = true;
                                 },
-                                Some(b'u') => {
+                                b'u' => {
                                     if u && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('u'))
                                     }
                                     u = true;
                                 },
-                                Some(b'y') => {
+                                b'y' => {
                                     if y && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('y'))
                                     }
                                     y = true;
                                 },
-                                Some(b'd') => {
+                                b'd' => {
                                     if d && diagnostic.is_none() {
                                         diagnostic = Some(self.flag_err('d'))
                                     }
                                     d = true;
                                 },
-                                Some(_) if self.cur_ident_part().is_some() => {
+                                _ if self.cur_ident_part().is_some() => {
                                     if diagnostic.is_none() {
                                         diagnostic = Some(Diagnostic::error(self.file_id, "", "invalid regex flag")
                                             .primary(chr_start .. self.position + 1, "this is not a valid regex flag"));
                                     }
-                                },
-                                _ => {
-                                    return LexerReturn::new(
-                                        JsSyntaxKind::JS_REGEX_LITERAL,
-                                        diagnostic.map(Box::new)
-                                    )
                                 }
-                            }
+                                _ => {break}
+                            };
                         }
+
+                        return LexedToken::new(
+                            JsSyntaxKind::JS_REGEX_LITERAL,
+                            diagnostic.map(Box::new)
+                        );
                     }
                 },
                 Some(b'\\') => {
@@ -1420,7 +1426,7 @@ impl<'src> Lexer<'src> {
                         let err = Diagnostic::error(self.file_id, "", "expected a character after a regex escape, but found none")
                             .primary(self.position..self.position + 1, "expected a character following this");
 
-                        return LexerReturn::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
+                        return LexedToken::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
                     }
                 },
                 Some(_) if is_linebreak(self.current_char_unchecked()) => {
@@ -1430,14 +1436,14 @@ impl<'src> Lexer<'src> {
 
                     // Undo the read of the new line trivia
                     self.position -= 1;
-                    return LexerReturn::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
+                    return LexedToken::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
                 },
                 None => {
                     let err = Diagnostic::error(self.file_id, "", "unterminated regex literal")
                         .primary(self.position..self.position, "...but the file ends here")
                         .secondary(start..start + 1, "a regex literal starts there...");
 
-                    return LexerReturn::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
+                    return LexedToken::with_diagnostic(JsSyntaxKind::JS_REGEX_LITERAL, Box::new(err));
                 },
                 _ => {},
             }
@@ -1445,208 +1451,208 @@ impl<'src> Lexer<'src> {
     }
 
     #[inline]
-    fn bin_or_assign(&mut self, bin: JsSyntaxKind, assign: JsSyntaxKind) -> LexerReturn {
+    fn bin_or_assign(&mut self, bin: JsSyntaxKind, assign: JsSyntaxKind) -> LexedToken {
         if let Some(b'=') = self.next_byte() {
             self.next_byte();
-            LexerReturn::ok(assign)
+            LexedToken::ok(assign)
         } else {
-            LexerReturn::ok(bin)
+            LexedToken::ok(bin)
         }
     }
 
     #[inline]
-    fn resolve_bang(&mut self) -> LexerReturn {
+    fn resolve_bang(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'=') => {
                 if let Some(b'=') = self.next_byte() {
                     self.next_byte();
-                    LexerReturn::ok(NEQ2)
+                    LexedToken::ok(NEQ2)
                 } else {
-                    LexerReturn::ok(NEQ)
+                    LexedToken::ok(NEQ)
                 }
             }
-            _ => LexerReturn::ok(T![!]),
+            _ => LexedToken::ok(T![!]),
         }
     }
 
     #[inline]
-    fn resolve_amp(&mut self) -> LexerReturn {
+    fn resolve_amp(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'&') => {
                 if let Some(b'=') = self.next_byte() {
                     self.next_byte();
-                    LexerReturn::ok(AMP2EQ)
+                    LexedToken::ok(AMP2EQ)
                 } else {
-                    LexerReturn::ok(AMP2)
+                    LexedToken::ok(AMP2)
                 }
             }
             Some(b'=') => {
                 self.next_byte();
-                LexerReturn::ok(AMPEQ)
+                LexedToken::ok(AMPEQ)
             }
-            _ => LexerReturn::ok(T![&]),
+            _ => LexedToken::ok(T![&]),
         }
     }
 
     #[inline]
-    fn resolve_plus(&mut self) -> LexerReturn {
+    fn resolve_plus(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'+') => {
                 self.next_byte();
-                LexerReturn::ok(PLUS2)
+                LexedToken::ok(PLUS2)
             }
             Some(b'=') => {
                 self.next_byte();
-                LexerReturn::ok(PLUSEQ)
+                LexedToken::ok(PLUSEQ)
             }
-            _ => LexerReturn::ok(T![+]),
+            _ => LexedToken::ok(T![+]),
         }
     }
 
     #[inline]
-    fn resolve_minus(&mut self) -> LexerReturn {
+    fn resolve_minus(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'-') => {
                 self.next_byte();
-                LexerReturn::ok(MINUS2)
+                LexedToken::ok(MINUS2)
             }
             Some(b'=') => {
                 self.next_byte();
-                LexerReturn::ok(MINUSEQ)
+                LexedToken::ok(MINUSEQ)
             }
-            _ => LexerReturn::ok(T![-]),
+            _ => LexedToken::ok(T![-]),
         }
     }
 
     #[inline]
-    fn resolve_less_than(&mut self) -> LexerReturn {
+    fn resolve_less_than(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'<') => {
                 if let Some(b'=') = self.next_byte() {
                     self.next_byte();
-                    LexerReturn::ok(SHLEQ)
+                    LexedToken::ok(SHLEQ)
                 } else {
-                    LexerReturn::ok(SHL)
+                    LexedToken::ok(SHL)
                 }
             }
             Some(b'=') => {
                 self.next_byte();
-                LexerReturn::ok(LTEQ)
+                LexedToken::ok(LTEQ)
             }
-            _ => LexerReturn::ok(T![<]),
+            _ => LexedToken::ok(T![<]),
         }
     }
 
     #[inline]
-    fn resolve_greater_than(&mut self) -> LexerReturn {
+    fn resolve_greater_than(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'>') => {
                 if let Some(b'>') = self.peek_byte() {
                     if let Some(b'=') = self.byte_at(2) {
                         self.advance(3);
-                        LexerReturn::ok(USHREQ)
+                        LexedToken::ok(USHREQ)
                     } else {
-                        LexerReturn::ok(T![>])
+                        LexedToken::ok(T![>])
                     }
                 } else if self.peek_byte() == Some(b'=') {
                     self.advance(2);
-                    LexerReturn::ok(SHREQ)
+                    LexedToken::ok(SHREQ)
                 } else {
-                    LexerReturn::ok(T![>])
+                    LexedToken::ok(T![>])
                 }
             }
             Some(b'=') => {
                 self.next_byte();
-                LexerReturn::ok(GTEQ)
+                LexedToken::ok(GTEQ)
             }
-            _ => LexerReturn::ok(T![>]),
+            _ => LexedToken::ok(T![>]),
         }
     }
 
     #[inline]
-    fn resolve_eq(&mut self) -> LexerReturn {
+    fn resolve_eq(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'=') => {
                 if let Some(b'=') = self.next_byte() {
                     self.next_byte();
-                    LexerReturn::ok(EQ3)
+                    LexedToken::ok(EQ3)
                 } else {
-                    LexerReturn::ok(EQ2)
+                    LexedToken::ok(EQ2)
                 }
             }
             Some(b'>') => {
                 self.next_byte();
-                LexerReturn::ok(FAT_ARROW)
+                LexedToken::ok(FAT_ARROW)
             }
-            _ => LexerReturn::ok(T![=]),
+            _ => LexedToken::ok(T![=]),
         }
     }
 
     #[inline]
-    fn resolve_pipe(&mut self) -> LexerReturn {
+    fn resolve_pipe(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'|') => {
                 if let Some(b'=') = self.next_byte() {
                     self.next_byte();
-                    LexerReturn::ok(PIPE2EQ)
+                    LexedToken::ok(PIPE2EQ)
                 } else {
-                    LexerReturn::ok(PIPE2)
+                    LexedToken::ok(PIPE2)
                 }
             }
             Some(b'=') => {
                 self.next_byte();
-                LexerReturn::ok(PIPEEQ)
+                LexedToken::ok(PIPEEQ)
             }
-            _ => LexerReturn::ok(T![|]),
+            _ => LexedToken::ok(T![|]),
         }
     }
 
     // Dont ask it to resolve the question of life's meaning because you'll be disappointed
     #[inline]
-    fn resolve_question(&mut self) -> LexerReturn {
+    fn resolve_question(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'?') => {
                 if let Some(b'=') = self.next_byte() {
                     self.next_byte();
-                    LexerReturn::ok(QUESTION2EQ)
+                    LexedToken::ok(QUESTION2EQ)
                 } else {
-                    LexerReturn::ok(QUESTION2)
+                    LexedToken::ok(QUESTION2)
                 }
             }
             Some(b'.') => {
                 // 11.7 Optional chaining punctuator
                 if let Some(b'0'..=b'9') = self.peek_byte() {
-                    LexerReturn::ok(T![?])
+                    LexedToken::ok(T![?])
                 } else {
                     self.next_byte();
-                    LexerReturn::ok(QUESTIONDOT)
+                    LexedToken::ok(QUESTIONDOT)
                 }
             }
-            _ => LexerReturn::ok(T![?]),
+            _ => LexedToken::ok(T![?]),
         }
     }
 
     #[inline]
-    fn resolve_star(&mut self) -> LexerReturn {
+    fn resolve_star(&mut self) -> LexedToken {
         match self.next_byte() {
             Some(b'*') => {
                 if let Some(b'=') = self.next_byte() {
                     self.next_byte();
-                    LexerReturn::ok(STAR2EQ)
+                    LexedToken::ok(STAR2EQ)
                 } else {
-                    LexerReturn::ok(STAR2)
+                    LexedToken::ok(STAR2)
                 }
             }
             Some(b'=') => {
                 self.next_byte();
-                LexerReturn::ok(STAREQ)
+                LexedToken::ok(STAREQ)
             }
-            _ => LexerReturn::ok(T![*]),
+            _ => LexedToken::ok(T![*]),
         }
     }
 
     /// Lex the next token
-    fn lex_token(&mut self) -> LexerReturn {
+    fn lex_token(&mut self) -> LexedToken {
         // Safety: we always call lex_token when we are at a valid char
         let byte = unsafe { self.current_unchecked() };
         let start = self.position;
@@ -1674,18 +1680,18 @@ impl<'src> Lexer<'src> {
             TPL => self.eat_byte(T!['`']),
             ZER => {
                 let diag = self.read_zero();
-                let LexerReturn { kind, diagnostic } = self.verify_number_end();
-                LexerReturn::new(kind, diagnostic.or(diag))
+                let LexedToken { kind, diagnostic } = self.verify_number_end();
+                LexedToken::new(kind, diagnostic.or(diag))
             }
             PRD => {
                 if self.peek_byte() == Some(b'.') && self.byte_at(2) == Some(b'.') {
                     self.advance(3);
-                    return LexerReturn::ok(DOT3);
+                    return LexedToken::ok(DOT3);
                 }
                 if let Some(b'0'..=b'9') = self.peek_byte() {
                     let diag = self.read_float();
-                    let LexerReturn { kind, diagnostic } = self.verify_number_end();
-                    LexerReturn::new(kind, diagnostic.or(diag))
+                    let LexedToken { kind, diagnostic } = self.verify_number_end();
+                    LexedToken::new(kind, diagnostic.or(diag))
                 } else {
                     self.eat_byte(T![.])
                 }
@@ -1709,13 +1715,13 @@ impl<'src> Lexer<'src> {
                                 let err = Diagnostic::error(self.file_id, "", "unexpected unicode escape")
                                     .primary(start..self.position, "this escape is unexpected, as it does not designate the start of an identifier");
                                 self.next_byte();
-                                LexerReturn::with_diagnostic(
+                                LexedToken::with_diagnostic(
                                     JsSyntaxKind::ERROR_TOKEN,
                                     Box::new(err),
                                 )
                             }
                         }
-                        Err(err) => LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, err),
+                        Err(err) => LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, err),
                     }
                 } else {
                     let err = Diagnostic::error(
@@ -1725,21 +1731,21 @@ impl<'src> Lexer<'src> {
                     )
                     .primary(start..self.position + 1, "");
                     self.next_byte();
-                    LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
+                    LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
                 }
             }
             QOT => {
                 if let Some(err) = self.read_str_literal() {
-                    LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, err)
+                    LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, err)
                 } else {
-                    LexerReturn::ok(JS_STRING_LITERAL)
+                    LexedToken::ok(JS_STRING_LITERAL)
                 }
             }
             IDT => self.resolve_identifier(byte as char),
             DIG => {
                 let diag = self.read_number(false);
-                let LexerReturn { kind, diagnostic } = self.verify_number_end();
-                LexerReturn::new(kind, diagnostic.or(diag))
+                let LexedToken { kind, diagnostic } = self.verify_number_end();
+                LexedToken::new(kind, diagnostic.or(diag))
             }
             COL => self.eat_byte(T![:]),
             SEM => self.eat_byte(T![;]),
@@ -1773,7 +1779,7 @@ impl<'src> Lexer<'src> {
                         .primary(start..self.position + 1, "");
                         self.next_byte();
 
-                        LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
+                        LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
                     }
                 }
             }
@@ -1787,12 +1793,12 @@ impl<'src> Lexer<'src> {
                 .primary(start..self.position + 1, "");
                 self.next_byte();
 
-                LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
+                LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
             }
         }
     }
 
-    fn lex_template(&mut self, tagged: bool) -> LexerReturn {
+    fn lex_template(&mut self, tagged: bool) -> LexedToken {
         let mut diagnostic: Option<Box<Diagnostic>> = None;
         let mut token: Option<JsSyntaxKind> = None;
         let start = self.position;
@@ -1838,12 +1844,12 @@ impl<'src> Lexer<'src> {
             None => {
                 let err = Diagnostic::error(self.file_id, "", "unterminated template literal")
                     .primary(start..self.position + 1, "");
-                LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
+                LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, Box::new(err))
             }
             Some(token) => match diagnostic {
-                None => LexerReturn::ok(token),
+                None => LexedToken::ok(token),
                 Some(diagnostic) => {
-                    LexerReturn::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, diagnostic)
+                    LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, diagnostic)
                 }
             },
         }

@@ -10,7 +10,7 @@
 //! is completely represented in the final syntax nodes.
 //!
 //! You probably do not want to use the parser struct, unless you want to parse fragments of Js source code or make your own productions.
-//! Instead use functions such as [`parse_text`] and [`parse_text_lossy`] which offer abstracted versions for parsing.
+//! Instead use functions such as [parse_script], [parse_module], and [] which offer abstracted versions for parsing.
 //!
 //! Notable features of the parser are:
 //! - Extremely fast parsing and lexing through the extremely fast [`rslint_lexer`].
@@ -455,6 +455,7 @@ pub enum JsSyntaxFeature {
     SloppyMode,
     StrictMode,
     TypeScript,
+    JSX,
 }
 
 impl SyntaxFeature for JsSyntaxFeature {
@@ -463,6 +464,7 @@ impl SyntaxFeature for JsSyntaxFeature {
             JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
             JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
             JsSyntaxFeature::TypeScript => p.source_type.language().is_typescript(),
+            JsSyntaxFeature::JSX => p.source_type.variant() == LanguageVariant::JSX,
         }
     }
 }

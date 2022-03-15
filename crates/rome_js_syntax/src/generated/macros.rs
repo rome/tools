@@ -649,6 +649,34 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsYieldExpression::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JSX_CLOSING_ELEMENT => {
+                    let $pattern = unsafe { $crate::JsxClosingElement::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_ELEMENT => {
+                    let $pattern = unsafe { $crate::JsxElement::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_ELEMENT_EXPRESSION => {
+                    let $pattern = unsafe { $crate::JsxElementExpression::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_MEMBER_EXPRESSION => {
+                    let $pattern = unsafe { $crate::JsxMemberExpression::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_OPENING_ELEMENT => {
+                    let $pattern = unsafe { $crate::JsxOpeningElement::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_REFERENCE_IDENTIFIER => {
+                    let $pattern = unsafe { $crate::JsxReferenceIdentifier::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT => {
+                    let $pattern = unsafe { $crate::JsxSelfClosingElement::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::NEW_TARGET => {
                     let $pattern = unsafe { $crate::NewTarget::new_unchecked(node) };
                     $body
