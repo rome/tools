@@ -143,11 +143,16 @@ impl LexContext {
 pub enum ReLexContext {
     /// Re-lexes a `/` or `/=` token as a regular expression.
     Regex,
+
     /// Re-lexes `'>', '>'` as `>>` and `'>', '>', '>'` as `>>>`
     BinaryOperator,
+
     /// Re-lexes `'<', '<'` as `<<` in places where a type argument is expected to support
     /// `B<<A>()>`
     TypeArgumentLessThan,
+
+    /// Re-lexes the current token as a JSX token
+    JsxToken,
 }
 
 bitflags! {
@@ -321,6 +326,7 @@ impl<'src> Lexer<'src> {
             ReLexContext::Regex if matches!(self.current(), T![/] | T![/=]) => self.read_regex(),
             ReLexContext::BinaryOperator => self.re_lex_binary_operator(),
             ReLexContext::TypeArgumentLessThan => self.re_lex_type_argument_less_than(),
+            ReLexContext::JsxToken => self.lex_jsx_token(),
             _ => LexedToken::ok(self.current()),
         };
 
@@ -359,6 +365,21 @@ impl<'src> Lexer<'src> {
             LexedToken::ok(T![<])
         } else {
             LexedToken::ok(self.current())
+        }
+    }
+
+    fn lex_jsx_token(&mut self) -> LexedToken {
+        match self.current_byte() {
+            Some(b'<') if self.peek_byte() == Some(b'/') => {
+                self.advance(2);
+                LexedToken::ok(T![</])
+            }
+            Some(b'/') if self.peek_byte() == Some(b'>') => {
+                self.advance(2);
+                LexedToken::ok(T![/>])
+            }
+            // TODO 2153 add parsing of JSX text
+            _ => LexedToken::ok(self.current()),
         }
     }
 

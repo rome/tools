@@ -1,8 +1,8 @@
 pub mod jsx_parse_errors;
 
-use rslint_lexer::{JsSyntaxKind, T};
+use rslint_lexer::{JsSyntaxKind, ReLexContext, T};
 
-use crate::{Checkpoint, Marker, ParsedSyntax, Parser};
+use crate::{Absent, Checkpoint, Marker, ParsedSyntax, Parser};
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -113,13 +113,19 @@ fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
 // ^          ^
 fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> ParsedSyntax {
     if !p.eat(T![<]) {
+        m.abandon(p);
         return ParsedSyntax::Absent;
     }
 
-    let _ = parse_jsx_any_element_name(p);
+    if parse_jsx_any_element_name(p).is_absent() {
+        m.abandon(p);
+        return Absent;
+    }
 
-    let kind = if p.at(T![/]) && p.nth_at(1, T![>]) {
-        p.bump_multiple(2, JsSyntaxKind::SLASH_R_ANGLE);
+    p.re_lex(ReLexContext::JsxToken);
+
+    let kind = if matches!(p.cur(), T![/>] | T![/]) {
+        p.bump_any();
         JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT
     } else if p.eat(T![>]) {
         JsSyntaxKind::JSX_OPENING_ELEMENT
@@ -134,24 +140,24 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
 // <a/>
 // ^
 fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    if !p.at(T![<]) {
-        return ParsedSyntax::Absent;
+    p.re_lex(ReLexContext::JsxToken);
+
+    if !p.at(T![</]) {
+        return Absent;
     }
 
     let m = p.start();
 
-    if p.at(T![<]) && p.nth_at(1, T![/]) {
-        p.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
-    } else {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
-    }
+    p.bump(T![</]);
 
-    let _ = parse_jsx_any_element_name(p);
+    if parse_jsx_any_element_name(p).is_absent() {
+        m.abandon(p);
+        return Absent;
+    }
 
     if !p.eat(T![>]) {
         m.abandon(p);
-        return ParsedSyntax::Absent;
+        return Absent;
     }
 
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_CLOSING_ELEMENT))
