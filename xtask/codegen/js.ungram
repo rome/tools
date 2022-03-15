@@ -2178,11 +2178,7 @@ JsxSelfClosingElement =
 
 JsxElement = 
 	opening_element: JsxOpeningElement
-<<<<<<< HEAD
-	children: JsxText?
-=======
 	children: JsxChildList
->>>>>>> e6027ef59b (parsing jsx children)
 	closing_element: JsxClosingElement
 
 JsxOpeningElement =
@@ -2254,15 +2250,18 @@ JsxAttribute =
 	name: JsxAnyAttributeName
 	initializer: JsxAttributeInitializerClause?
 
-JsxAnyElementName = JsxReferenceIdentifier
+JsxAnyElementName = 
+	JsxReferenceIdentifier
 	| JsxNamespaceName
 
 // ==================================
 // Children
 // ==================================
 
-JsxAnyChild = JsxElement
+JsxAnyChild = 
+	JsxElement
 	| JsxSelfClosingElement
+	| JsxText
 
 JsxChildList = JsxAnyChild*
 
