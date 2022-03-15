@@ -2,11 +2,6 @@
 
 This list includes general ethos the project should abide by. This list is not comprehensive. Some of these are obvious but are stated for completeness.
 
-### Project Management
-
-- **Set clear expectations.** Make project intent and decisions known well in advance. Nothing should be a surprise.
-- **Transparency.** No back-channel project management. Project conversation and decisions will take place only on public forums such as GitHub, the Rome Discord, and Twitter. The only exception to this is moderation decisions which will be strictly done in private.
-
 ### Technical
 
 - **Errors should suggest fixes and hints where possible.** These should be inferred and filtered from usage to reduce surfacing irrelevant and unhelpful messages.
