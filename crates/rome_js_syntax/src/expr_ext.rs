@@ -174,17 +174,25 @@ impl JsBinaryOperation {
             1
         }
     }
+
+    pub fn compare_precedence(&self, other: &Self) -> Ordering {
+        let self_precedence = self.get_precedence();
+        let other_precedence = other.get_precedence();
+
+        #[allow(clippy::comparison_chain)]
+        if self_precedence == other_precedence {
+            Ordering::Equal
+        } else if self_precedence < other_precedence {
+            Ordering::Less
+        } else {
+            Ordering::Greater
+        }
+    }
 }
 
 impl PartialOrd for JsBinaryOperation {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        if self.gt(other) {
-            Some(Ordering::Greater)
-        } else if self.lt(other) {
-            Some(Ordering::Less)
-        } else {
-            Some(Ordering::Equal)
-        }
+        Some(self.compare_precedence(other))
     }
     fn lt(&self, other: &Self) -> bool {
         self.get_precedence() < other.get_precedence()
@@ -195,7 +203,6 @@ impl PartialOrd for JsBinaryOperation {
     fn gt(&self, other: &Self) -> bool {
         self.get_precedence() > other.get_precedence()
     }
-
     fn ge(&self, other: &Self) -> bool {
         self.get_precedence() >= other.get_precedence()
     }
@@ -203,7 +210,7 @@ impl PartialOrd for JsBinaryOperation {
 
 impl Ord for JsBinaryOperation {
     fn cmp(&self, other: &Self) -> Ordering {
-        self.partial_cmp(other).unwrap_or(Ordering::Equal)
+        self.compare_precedence(other)
     }
     fn max(self, other: Self) -> Self
     where
