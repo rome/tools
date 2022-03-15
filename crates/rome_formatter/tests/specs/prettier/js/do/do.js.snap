@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: do.js
 
 ---
@@ -93,17 +93,17 @@ function foo() {
   return (
     <nav>
       <Home />
-      {
-        do {
+  {
+    do {
           if (loggedIn) {
             <LogoutButton />
           } else {
             <LoginButton />
           }
         }
-      }
-    </nav>
-  );
+  }
+  </nav>
+  )
 }
 
 (
@@ -208,73 +208,37 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
    │  
 22 │ ┌     <nav>
 23 │ │       <Home />
-   │ └───────────^ TypeScript only syntax
+   │ └──────────────^ TypeScript only syntax
 
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ do.js:23:14
+error[SyntaxError]: expected `')'` but instead found `{`
+   ┌─ do.js:24:7
    │
-23 │       <Home />
-   │             -^ But this operator was encountered instead
-   │             │ 
-   │             This operator requires a right hand side value
+24 │       {
+   │       ^ unexpected
 
-error[SyntaxError]: expected `:` but instead found `{`
-   ┌─ do.js:25:12
-   │
-25 │         do {
-   │            ^ unexpected
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ do.js:27:13
    │
 27 │             <LogoutButton />
-   │             ^^^^^^^^^^^^^ TypeScript only syntax
+   │             ^^^^^^^^^^^^^^^^ JSX only syntax
 
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-   ┌─ do.js:27:28
-   │
-27 │             <LogoutButton />
-   │                           -^ But this operator was encountered instead
-   │                           │ 
-   │                           This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ do.js:28:11
-   │
-28 │           } else {
-   │           ^ Expected an expression here
-
-error[SyntaxError]: expected `,` but instead found `else`
-   ┌─ do.js:28:13
-   │
-28 │           } else {
-   │             ^^^^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `{`
-   ┌─ do.js:28:18
-   │
-28 │           } else {
-   │                  ^ unexpected
-
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '<'
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ do.js:29:13
    │
 29 │             <LoginButton />
-   │             ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+   │             ^^^^^^^^^^^^^^^ JSX only syntax
 
-error[SyntaxError]: expected a parenthesis '(' but instead found '}'
-   ┌─ do.js:30:11
+error[SyntaxError]: expected `while` but instead found `}`
+   ┌─ do.js:32:7
    │
-30 │           }
-   │           ^ Expected a parenthesis '(' here
+32 │       }
+   │       ^ unexpected
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ do.js:33:6
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ do.js:33:5
    │
 33 │     </nav>
-   │     -^ But this operator was encountered instead
-   │     │ 
-   │     This operator requires a right hand side value
+   │     ^^^^^ TypeScript only syntax
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ do.js:34:3

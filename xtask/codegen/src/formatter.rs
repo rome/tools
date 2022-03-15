@@ -131,6 +131,7 @@ impl ModuleIndex {
 
         queue.push_back(root.join("js"));
         queue.push_back(root.join("ts"));
+        queue.push_back(root.join("jsx"));
 
         while let Some(dir) = queue.pop_front() {
             let iter = read_dir(&dir)
@@ -364,6 +365,7 @@ pub fn generate_formatter() {
 enum NodeLanguage {
     Js,
     Ts,
+    Jsx,
 }
 
 impl NodeLanguage {
@@ -371,6 +373,7 @@ impl NodeLanguage {
         match self {
             NodeLanguage::Js => "js",
             NodeLanguage::Ts => "ts",
+            NodeLanguage::Jsx => "jsx",
         }
     }
 }
@@ -429,8 +432,19 @@ impl NodeConcept {
 /// - auxiliary (everything else)
 fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
     // Detect language prefix
-    let (prefix, mut name) = in_name.split_at(2);
+    let mid_before_second_capital_letter = in_name
+        .chars()
+        .position({
+            let mut uppercases = 0;
+            move |c| {
+                uppercases += if c.is_uppercase() { 1 } else { 0 };
+                uppercases >= 2
+            }
+        })
+        .expect("Node name malformed");
+    let (prefix, mut name) = in_name.split_at(mid_before_second_capital_letter);
     let language = match prefix {
+        "Jsx" => NodeLanguage::Jsx,
         "Js" => NodeLanguage::Js,
         "Ts" => NodeLanguage::Ts,
         _ => {

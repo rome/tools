@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: test.component.ts
-
 ---
 # Input
 ```js
@@ -30,8 +28,8 @@ class     TestComponent {}
 ```js
 @Component(
 {
-  selector: "app-test", template;
-  : `<ul>   <li>test</li>
+       selector: 'app-test',
+  template: `<ul>   <li>test</li>
   </ul>
   `,
   styles: [   `
@@ -44,9 +42,8 @@ class     TestComponent {}
 `
 
 ]
-}
-)
-class TestComponent {}
+})
+class     TestComponent {}
 
 ```
 
@@ -67,11 +64,44 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │           ^ An explicit or implicit semicolon is expected here...
   │ └───────────' ...Which is required to end this statement
 
-error[SyntaxError]: expected a statement but instead found ')'
-   ┌─ test.component.ts:16:2
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ test.component.ts:11:6
    │
-16 │ })
-   │  ^ Expected a statement here
+11 │  div { background: blue
+   │  ----^
+   │  │   │
+   │  │   An explicit or implicit semicolon is expected here...
+   │  ...Which is required to end this statement
+
+error: unterminated template literal
+   ┌─ test.component.ts:13:2
+   │  
+13 │   `
+   │ ┌─^
+14 │ │ 
+15 │ │ ]
+16 │ │ })
+17 │ │ class     TestComponent {}
+18 │ │ 
+   │ └^
+
+error[SyntaxError]: Invalid template literal
+   ┌─ test.component.ts:13:2
+   │  
+13 │   `
+   │ ┌─^
+14 │ │ 
+15 │ │ ]
+16 │ │ })
+17 │ │ class     TestComponent {}
+18 │ │ 
+   │ └^
+
+error[SyntaxError]: expected `'}'` but instead the file ends
+   ┌─ test.component.ts:18:1
+   │
+18 │ 
+   │ ^ the file ends here
 
 
 ```

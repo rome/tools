@@ -115,11 +115,11 @@ pub(crate) fn optional_semi(p: &mut Parser) -> bool {
     is_semi(p, 0)
 }
 
-pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
+pub(super) fn is_semi(p: &mut Parser, offset: usize) -> bool {
     p.nth_at(offset, T![;])
         || p.nth_at(offset, EOF)
         || p.nth_at(offset, T!['}'])
-        || p.has_linebreak_before_n(offset)
+        || p.has_nth_preceding_line_break(offset)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
@@ -242,7 +242,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
         T![let]
             if is_nth_at_let_variable_statement(p, 0)
-                && (p.cur_src() == "let" || !p.has_linebreak_before_n(1)) =>
+                && (p.cur_src() == "let" || !p.has_nth_preceding_line_break(1)) =>
         {
             // test_err let_newline_in_async_function
             // async function f() {
@@ -261,13 +261,16 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             // // SCRIPT
             // L: let
             // [a] = 0;
-            if p.nth_at(1, T!['[']) || context.is_statement_list() || !p.has_linebreak_before_n(1) {
+            if p.nth_at(1, T!['['])
+                || context.is_statement_list()
+                || !p.has_nth_preceding_line_break(1)
+            {
                 parse_variable_statement(p, context)
             } else {
                 parse_expression_statement(p)
             }
         }
-        T![type] if !p.has_linebreak_before_n(1) && is_nth_at_identifier(p, 1) => {
+        T![type] if !p.has_nth_preceding_line_break(1) && is_nth_at_identifier(p, 1) => {
             // test ts ts_type_variable
             // let type;
             // type = getFlowTypeInConstructor(symbol, getDeclaringConstructor(symbol)!);
@@ -341,7 +344,7 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 		let identifier_range = identifier.range(p);
 		let is_valid_identifier = !identifier.kind().is_unknown();
 		let labelled_statement = identifier.undo_completion(p);
-		let label = p.source(identifier_range);
+        let label = p.source(identifier_range);
 
 		let body = match p.state.get_labelled_item(label) {
 			None => {
@@ -436,7 +439,7 @@ fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let range = p.cur_range();
-    p.expect_keyword(T![debugger], "debugger"); // debugger keyword
+    p.expect(T![debugger]); // debugger keyword
     semi(p, range);
     Present(m.complete(p, JS_DEBUGGER_STATEMENT))
 }
@@ -455,8 +458,8 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range().start();
-    p.expect_keyword(T![throw], "throw"); // throw keyword
-    if p.has_linebreak_before_n(0) {
+    p.expect(T![throw]); // throw keyword
+    if p.has_preceding_line_break() {
         let mut err = p
             .err_builder(
                 "Linebreaks between a throw statement and the error to be thrown are not allowed",
@@ -497,9 +500,9 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range();
-    p.expect_keyword(T![break], "break"); // break keyword
+    p.expect(T![break]); // break keyword
 
-    let error = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
+    let error = if !p.has_preceding_line_break() && p.at(T![ident]) {
         let label_name = p.cur_src();
 
         let error = match p.state.get_labelled_item(label_name) {
@@ -556,9 +559,9 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range();
-    p.expect_keyword(T![continue], "continue"); // continue keyword
+    p.expect(T![continue]); // continue keyword
 
-    let error = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
+    let error = if !p.has_preceding_line_break() && p.at(T![ident]) {
         let label_name = p.cur_src();
 
         let error = match p.state.get_labelled_item(label_name) {
@@ -621,8 +624,8 @@ fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range().start();
-    p.expect_keyword(T![return], "return");
-    if !p.has_linebreak_before_n(0) {
+    p.expect(T![return]);
+    if !p.has_preceding_line_break() {
         parse_expression(p, ExpressionContext::default()).ok();
     }
 
@@ -700,7 +703,7 @@ impl DirectivesList {
         } else {
             let next = p.nth(1);
 
-            matches!(next, T![;] | EOF | T!['}']) || p.has_linebreak_before_n(1)
+            matches!(next, T![;] | EOF | T!['}']) || p.has_nth_preceding_line_break(1)
         }
     }
 }
@@ -879,7 +882,7 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![if], "if");
+    p.expect(T![if]);
 
     // (test)
     parenthesized_expression(p);
@@ -890,7 +893,7 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
     // else clause
     if p.at(T![else]) {
         let else_clause = p.start();
-        p.expect_keyword(T![else], "else");
+        p.expect(T![else]);
         parse_statement(p, StatementContext::If).or_add_diagnostic(p, expected_statement);
         else_clause.complete(p, JS_ELSE_CLAUSE);
     }
@@ -912,7 +915,7 @@ fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![with], "with");
+    p.expect(T![with]);
     parenthesized_expression(p);
 
     parse_statement(p, StatementContext::With).or_add_diagnostic(p, expected_statement);
@@ -941,7 +944,7 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    p.expect_keyword(T![while], "while");
+    p.expect(T![while]);
     parenthesized_expression(p);
 
     p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
@@ -952,7 +955,7 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_WHILE_STATEMENT))
 }
 
-pub(crate) fn is_nth_at_variable_declarations(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_variable_declarations(p: &mut Parser, n: usize) -> bool {
     match p.nth(n) {
         T![var] | T![const] => true,
         T![let] if is_nth_at_let_variable_statement(p, n) => true,
@@ -960,7 +963,7 @@ pub(crate) fn is_nth_at_variable_declarations(p: &Parser, n: usize) -> bool {
     }
 }
 
-pub(crate) fn is_nth_at_let_variable_statement(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_let_variable_statement(p: &mut Parser, n: usize) -> bool {
     if !p.nth_at(n, T![let]) {
         return false;
     }
@@ -1059,14 +1062,14 @@ fn eat_variable_declaration(
 
     match p.cur() {
         T![var] => {
-            p.expect_keyword(T![var], "var");
+            p.bump(T![var]);
         }
         T![const] => {
             context.is_const = Some(p.cur_range());
-            p.expect_keyword(T![const], "const");
+            p.bump(T![const]);
         }
         T![let] => {
-            p.expect_keyword(T![let], "let");
+            p.bump(T![let]);
             context.is_let = true;
         }
         _ => {
@@ -1339,7 +1342,7 @@ fn parse_ts_variable_annotation(p: &mut Parser) -> ParsedSyntax {
         return parse_ts_type_annotation(p);
     }
 
-    if p.has_linebreak_before_n(0) {
+    if p.has_preceding_line_break() {
         return Absent;
     }
 
@@ -1383,14 +1386,14 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     let start = p.cur_range().start();
-    p.expect_keyword(T![do], "do");
+    p.expect(T![do]);
 
     p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
         parse_statement(p, StatementContext::Do)
     })
     .or_add_diagnostic(p, expected_statement);
 
-    p.expect_keyword(T![while], "while");
+    p.expect(T![while]);
 
     // test do-while-asi
     // do do do ; while (x) while (x) while (x) x = 39;
@@ -1537,7 +1540,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
 
         JS_FOR_IN_STATEMENT
     } else {
-        p.expect_keyword(T![of], "of");
+        p.expect(T![of]);
 
         parse_assignment_expression_or_higher(p, ExpressionContext::default())
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
@@ -1570,12 +1573,12 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![for], "for");
+    p.expect(T![for]);
 
     let mut await_range = None;
     if p.at(T![await]) {
         await_range = Some(p.cur_range());
-        p.expect_keyword(T![await], "await");
+        p.expect(T![await]);
     }
 
     let has_l_paren = p.expect(T!['(']);
@@ -1643,7 +1646,7 @@ fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) ->
                 discriminant.complete(p, JS_UNKNOWN_EXPRESSION);
                 JS_CASE_CLAUSE
             } else {
-                p.expect_keyword(T![default], "default");
+                p.expect(T![default]);
                 JS_DEFAULT_CLAUSE
             };
 
@@ -1667,7 +1670,7 @@ fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) ->
             Present(default)
         }
         T![case] => {
-            p.expect_keyword(T![case], "case");
+            p.expect(T![case]);
             parse_expression(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression);
             p.expect(T![:]);
@@ -1769,7 +1772,7 @@ fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
-    p.expect_keyword(T![switch], "switch");
+    p.expect(T![switch]);
     parenthesized_expression(p);
     p.expect(T!['{']);
 
@@ -1787,7 +1790,7 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![catch], "catch");
+    p.expect(T![catch]);
 
     parse_catch_declaration(p).ok();
     parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
@@ -1868,7 +1871,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![try], "try");
+    p.expect(T![try]);
 
     parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
 
@@ -1878,7 +1881,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
         catch.ok();
 
         let finalizer = p.start();
-        p.expect_keyword(T![finally], "finally");
+        p.expect(T![finally]);
         parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
         finalizer.complete(p, JS_FINALLY_CLAUSE);
         Present(m.complete(p, JS_TRY_FINALLY_STATEMENT))

@@ -3,24 +3,21 @@ pub(crate) mod no_var;
 pub(crate) mod use_single_case_statement;
 pub(crate) mod use_while;
 
-use once_cell::sync::Lazy;
 use rome_js_syntax::{AstNode, SyntaxNode, TextRange};
 use rslint_errors::{Diagnostic, Span};
 
 use crate::{analysis_server::AnalysisServer, ActionCategory, Analysis, FileId};
 
-static ALL_ANALYZERS: Lazy<Vec<Analyzer>> = Lazy::new(|| {
-    vec![
-        no_double_equals::create(),
-        no_var::create(),
-        use_while::create(),
-        use_single_case_statement::create(),
-    ]
-});
+const ALL_ANALYZERS: &[Analyzer] = &[
+    no_double_equals::ANALYZER,
+    no_var::ANALYZER,
+    use_while::ANALYZER,
+    use_single_case_statement::ANALYZER,
+];
 
 pub struct Analyzer {
     pub name: &'static str,
-    pub action_categories: Vec<ActionCategory>,
+    pub action_categories: &'static [ActionCategory],
     pub(crate) analyze: fn(&AnalyzerContext) -> Option<Analysis>,
 }
 

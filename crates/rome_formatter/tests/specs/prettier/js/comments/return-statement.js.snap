@@ -265,25 +265,11 @@ function inlineComment() {
 
 # Errors
 ```
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
   ┌─ return-statement.js:4:5
   │
 4 │     <div />
-  │     ^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-  ┌─ return-statement.js:4:11
-  │
-4 │     <div />
-  │          -^ But this operator was encountered instead
-  │          │ 
-  │          This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found ')'
-  ┌─ return-statement.js:5:3
-  │
-5 │   );
-  │   ^ Expected an expression here
+  │     ^^^^^^^ JSX only syntax
 
 
 ```

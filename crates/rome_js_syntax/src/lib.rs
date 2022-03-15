@@ -17,7 +17,7 @@ pub use self::generated::*;
 pub use ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult};
 pub use expr_ext::*;
 pub use modifier_ext::*;
-pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
+pub use rome_rowan::{SyntaxText, TextLen, TextRange, TextSize, TokenAtOffset, WalkEvent};
 pub use stmt_ext::*;
 pub use syntax_node::*;
 pub use util::{SyntaxNodeExt, SyntaxTokenExt};

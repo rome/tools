@@ -22,7 +22,7 @@ pub(crate) enum TestRunOutcome {
     IncorrectlyPassed(TestCaseFiles),
     IncorrectlyErrored {
         files: TestCaseFiles,
-        errors: Vec<ParserError>,
+        errors: Vec<ParseDiagnostic>,
     },
     Panicked(Box<dyn Any + Send + 'static>),
 }
@@ -141,7 +141,7 @@ impl TestCaseFiles {
         self.files.is_empty()
     }
 
-    pub(crate) fn emit_errors(&self, errors: &[ParserError], buffer: &mut Buffer) {
+    pub(crate) fn emit_errors(&self, errors: &[ParseDiagnostic], buffer: &mut Buffer) {
         let mut diag_files = SimpleFiles::new();
 
         for file in &self.files {

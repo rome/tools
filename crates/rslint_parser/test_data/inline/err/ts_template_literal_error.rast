@@ -100,19 +100,14 @@ JsModule {
                 },
             ],
         },
-        JsUnknownStatement {
-            items: [
-                ERROR_TOKEN@64..65 "\n" [] [],
-            ],
-        },
     ],
-    eof_token: EOF@65..65 "" [] [],
+    eof_token: EOF@64..65 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..65
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..65
+  2: JS_MODULE_ITEM_LIST@0..64
     0: TS_TYPE_ALIAS_DECLARATION@0..13
       0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@5..7
@@ -168,16 +163,7 @@ JsModule {
             2: JS_UNKNOWN@62..63
               0: IDENT@62..63 "B" [] []
         2: BACKTICK@63..64 "`" [] []
-    4: JS_UNKNOWN_STATEMENT@64..65
-      0: ERROR_TOKEN@64..65 "\n" [] []
-  3: EOF@65..65 "" [] []
---
-error: unterminated template literal
-  ┌─ ts_template_literal_error.ts:5:1
-  │
-5 │ 
-  │ ^
-
+  3: EOF@64..65 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `'}'` but instead found `B`
   ┌─ ts_template_literal_error.ts:3:15
@@ -191,16 +177,6 @@ error[SyntaxError]: expected `'}'` but instead found `B`
   │
 4 │ type D = `${A B`
   │               ^ unexpected
-
---
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ ts_template_literal_error.ts:4:17
-  │    
-4 │ ┌   type D = `${A B`
-  │ │ ┌────────────────^
-5 │ │ │ 
-  │ └─│' ...Which is required to end this statement
-  │   └^ An explicit or implicit semicolon is expected here...
 
 --
 type A = "a";

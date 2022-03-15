@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: partial-application.js
 
 ---
@@ -72,13 +72,11 @@ error[SyntaxError]: expected an expression but instead found '?, 10'
 8 │ const addTen = add(?, 10); // apply from the right
   │                    ^^^^^ Expected an expression here
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
    ┌─ partial-application.js:12:4
    │
 12 │   |> add(7, ?)
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+   │    ^ This operator requires a left hand side value
 
 error[SyntaxError]: expected an expression but instead found '?'
    ┌─ partial-application.js:12:13
@@ -86,13 +84,11 @@ error[SyntaxError]: expected an expression but instead found '?'
 12 │   |> add(7, ?)
    │             ^ Expected an expression here
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
    ┌─ partial-application.js:13:4
    │
 13 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+   │    ^ This operator requires a left hand side value
 
 error[SyntaxError]: expected an expression but instead found '?'
    ┌─ partial-application.js:13:20

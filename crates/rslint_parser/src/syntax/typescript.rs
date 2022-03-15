@@ -72,7 +72,7 @@ pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
     // class B implements C {}
 
     let m = p.start();
-    p.expect_keyword(T![implements], "implements");
+    p.expect(T![implements]);
     expect_ts_type_list(p, "implements");
 
     Present(m.complete(p, TS_IMPLEMENTS_CLAUSE))
@@ -110,7 +110,7 @@ fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 
-        if !p.has_linebreak_before_n(0) {
+        if !p.has_preceding_line_break() {
             parse_ts_type_arguments(p).ok();
         }
 
@@ -136,7 +136,7 @@ pub(crate) fn try_parse<T, E>(
 }
 
 /// Must be at `[ident:` or `<modifiers> [ident:`
-pub(crate) fn is_at_ts_index_signature_member(p: &Parser) -> bool {
+pub(crate) fn is_at_ts_index_signature_member(p: &mut Parser) -> bool {
     let mut offset = 0;
     while is_nth_at_modifier(p, offset, false) {
         offset += 1;
@@ -165,7 +165,7 @@ pub(crate) fn expect_ts_index_signature_member(
     parent: MemberParent,
 ) -> CompletedMarker {
     while is_nth_at_modifier(p, 0, false) {
-        if p.eat_keyword(T![readonly], "readonly") {
+        if p.eat(T![readonly]) {
             continue;
         } else {
             p.error(ts_member_cannot_be(

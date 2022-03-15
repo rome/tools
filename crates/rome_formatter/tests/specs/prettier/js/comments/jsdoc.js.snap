@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 144
 expression: jsdoc.js
 
 ---
@@ -72,21 +72,15 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
   │  
 3 │ ┌     <div>
 4 │ │         <div />
-  │ └────────────^ TypeScript only syntax
+  │ └───────────────^ TypeScript only syntax
 
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
-  ┌─ jsdoc.js:4:15
-  │
-4 │         <div />
-  │              -^ But this operator was encountered instead
-  │              │ 
-  │              This operator requires a right hand side value
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ jsdoc.js:5:5
+error: unterminated regex literal
+  ┌─ jsdoc.js:5:11
   │
 5 │     </div>
-  │     ^ TypeScript only syntax
+  │      -    ^ ...but the line ends here
+  │      │    
+  │      a regex literal starts there...
 
 error[SyntaxError]: expected an expression but instead found ')'
   ┌─ jsdoc.js:6:1
@@ -101,13 +95,13 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
 13 │ │         sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
    │ └──────────────────────────────────────────────────────────────────────────────────^ TypeScript only syntax
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ jsdoc.js:14:6
+error: unterminated regex literal
+   ┌─ jsdoc.js:14:11
    │
 14 │     </div>
-   │     -^ But this operator was encountered instead
-   │     │ 
-   │     This operator requires a right hand side value
+   │      -    ^ ...but the line ends here
+   │      │    
+   │      a regex literal starts there...
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ jsdoc.js:15:1
@@ -122,19 +116,19 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
 23 │ │            <span>Test</span>
    │ └─────────────────────^ TypeScript only syntax
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ jsdoc.js:23:23
+error: unterminated regex literal
+   ┌─ jsdoc.js:23:29
    │
 23 │            <span>Test</span>
-   │                      -^ But this operator was encountered instead
-   │                      │ 
-   │                      This operator requires a right hand side value
+   │                       -     ^ ...but the line ends here
+   │                       │     
+   │                       a regex literal starts there...
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ jsdoc.js:24:9
    │
 24 │         </div>
-   │         ^ TypeScript only syntax
+   │         ^^^^^ TypeScript only syntax
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ jsdoc.js:25:5

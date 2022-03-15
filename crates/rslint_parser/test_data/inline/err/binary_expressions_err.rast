@@ -125,13 +125,11 @@ error[SyntaxError]: expected an expression but instead found ')'
   │          ^ Expected an expression here
 
 --
-error[SyntaxError]: Expected an expression for the right hand side of a `+`, but found an operator instead
+error[SyntaxError]: Expected an expression for the left hand side of the `*` operator.
   ┌─ binary_expressions_err.js:2:7
   │
 2 │ foo + * 2;
-  │     - ^ But this operator was encountered instead
-  │     │  
-  │     This operator requires a right hand side value
+  │       ^ This operator requires a left hand side value
 
 --
 foo(foo +);

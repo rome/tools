@@ -14,7 +14,10 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-type Constructor<T> = new(...args: any[]) => T;
+type ReleaseToolConfig2 = {
+  get(key: "changelog"): `
+  `
+};
     "#;
 
     let module = parse(src, 0, SourceType::ts());
@@ -141,10 +144,12 @@ mod parser {
     mod ok {
         tests_macros::gen_tests! {"test_data/inline/ok/**/*.js", crate::tests::run_and_expect_no_errors, ""}
         tests_macros::gen_tests! {"test_data/inline/ok/**/*.ts", crate::tests::run_and_expect_no_errors, ""}
+        tests_macros::gen_tests! {"test_data/inline/ok/**/*.jsx", crate::tests::run_and_expect_no_errors, ""}
     }
     mod err {
         tests_macros::gen_tests! {"test_data/inline/err/**/*.js", crate::tests::run_and_expect_errors, ""}
         tests_macros::gen_tests! {"test_data/inline/err/**/*.ts", crate::tests::run_and_expect_errors, ""}
+        tests_macros::gen_tests! {"test_data/inline/err/**/*.jsx", crate::tests::run_and_expect_errors, ""}
     }
 }
 

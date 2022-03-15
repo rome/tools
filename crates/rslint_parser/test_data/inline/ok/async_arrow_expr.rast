@@ -103,7 +103,7 @@ JsModule {
                         },
                         COMMA@65..67 "," [] [Whitespace(" ")],
                         JsRestParameter {
-                            dotdotdot_token: DOT2@67..70 "..." [] [],
+                            dotdotdot_token: DOT3@67..70 "..." [] [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@70..73 "baz" [] [],
                             },
@@ -206,7 +206,7 @@ JsModule {
               3: (empty)
             3: COMMA@65..67 "," [] [Whitespace(" ")]
             4: JS_REST_PARAMETER@67..73
-              0: DOT2@67..70 "..." [] []
+              0: DOT3@67..70 "..." [] []
               1: JS_IDENTIFIER_BINDING@70..73
                 0: IDENT@70..73 "baz" [] []
               2: (empty)

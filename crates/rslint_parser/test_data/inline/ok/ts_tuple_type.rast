@@ -113,7 +113,7 @@ JsModule {
                     },
                     COMMA@101..103 "," [] [Whitespace(" ")],
                     TsNamedTupleTypeElement {
-                        dotdotdot_token: DOT2@103..106 "..." [] [],
+                        dotdotdot_token: DOT3@103..106 "..." [] [],
                         name: JsName {
                             value_token: IDENT@106..107 "c" [] [],
                         },
@@ -169,7 +169,7 @@ JsModule {
                 l_brack_token: L_BRACK@147..148 "[" [] [],
                 elements: TsTupleTypeElementList [
                     TsRestTupleTypeElement {
-                        dotdotdot_token: DOT2@148..151 "..." [] [],
+                        dotdotdot_token: DOT3@148..151 "..." [] [],
                         ty: TsArrayType {
                             element_type: TsStringType {
                                 string_token: STRING_KW@151..157 "string" [] [],
@@ -296,7 +296,7 @@ JsModule {
               0: NUMBER_KW@95..101 "number" [] []
           3: COMMA@101..103 "," [] [Whitespace(" ")]
           4: TS_NAMED_TUPLE_TYPE_ELEMENT@103..114
-            0: DOT2@103..106 "..." [] []
+            0: DOT3@103..106 "..." [] []
             1: JS_NAME@106..107
               0: IDENT@106..107 "c" [] []
             2: (empty)
@@ -337,7 +337,7 @@ JsModule {
         0: L_BRACK@147..148 "[" [] []
         1: TS_TUPLE_TYPE_ELEMENT_LIST@148..159
           0: TS_REST_TUPLE_TYPE_ELEMENT@148..159
-            0: DOT2@148..151 "..." [] []
+            0: DOT3@148..151 "..." [] []
             1: TS_ARRAY_TYPE@151..159
               0: TS_STRING_TYPE@151..157
                 0: STRING_KW@151..157 "string" [] []

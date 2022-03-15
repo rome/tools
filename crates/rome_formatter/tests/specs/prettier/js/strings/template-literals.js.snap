@@ -315,13 +315,11 @@ error[SyntaxError]: expected `:` but instead found `}`
 49 │         ]}
    │          ^ unexpected
 
-error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+error[SyntaxError]: expected an expression but instead found '>'
    ┌─ template-literals.js:50:8
    │
 50 │       />
-   │       -^ But this operator was encountered instead
-   │       │ 
-   │       This operator requires a right hand side value
+   │        ^ Expected an expression here
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ template-literals.js:51:5

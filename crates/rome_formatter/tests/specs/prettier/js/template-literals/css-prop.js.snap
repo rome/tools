@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: css-prop.js
 
 ---
@@ -37,7 +37,7 @@ const TestComponent = ({ children, ...props }) => (
 
 # Output
 ```js
-function SomeComponent(props) {
+function SomeComponent (props) {
   // Create styles as if you're calling css and the class will be applied to the component
   return (<div css={`
     color: blue;
@@ -51,19 +51,9 @@ function SomeComponent(props) {
       font-size: 20px;
     }
   `}>
-    This
-  will;
-  be;
-  blue;
-  until;
-  hovered.
-    <div
-  className = "some-class" > This;
-  font;
-  size;
-  will;
-  be;
-  20px
+    This will be blue until hovered.
+    <div className="some-class">
+      This font size will be 20px
     </div>
   </div>)
 }
@@ -78,169 +68,127 @@ const TestComponent = ({ children, ...props }) => (
 
 # Errors
 ```
-error: numbers cannot be followed by identifiers directly after
-   ┌─ css-prop.js:17:32
-   │
-17 │       This font size will be 20px
-   │                                ^^ an identifier cannot appear here
-
 error[SyntaxError]: Invalid assignment to `<div css`
   ┌─ css-prop.js:3:11
   │
 3 │   return (<div css={`
   │           ^^^^^^^^ This expression cannot be assigned to
 
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`
-    color: blue;
-    font-size: 17 px;
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`'
+  ┌─ css-prop.js:3:21
+  │
+3 │   return (<div css={`
+  │                     ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
-    &:hover {
-      color: green;
-    }
+error[SyntaxError]: expected `,` but instead found `color`
+  ┌─ css-prop.js:4:5
+  │
+4 │     color: blue;
+  │     ^^^^^ unexpected
 
-    & .some-class {
-      font-size: 20px;
-    }
-  `'
-   ┌─ css-prop.js:3:21
+error[SyntaxError]: expected `,` but instead found `;`
+  ┌─ css-prop.js:4:16
+  │
+4 │     color: blue;
+  │                ^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ css-prop.js:5:14
+  │
+5 │     font-size: 17 px;
+  │     ---------^
+  │     │        │
+  │     │        An explicit or implicit semicolon is expected here...
+  │     ...Which is required to end this statement
+
+error[SyntaxError]: expected a statement but instead found '&:hover'
+  ┌─ css-prop.js:7:5
+  │
+7 │     &:hover {
+  │     ^^^^^^^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found '& .some-'
+   ┌─ css-prop.js:11:5
+   │
+11 │     & .some-class {
+   │     ^^^^^^^^ Expected a statement here
+
+error[SyntaxError]: class declarations must have a name
+   ┌─ css-prop.js:11:13
+   │
+11 │     & .some-class {
+   │             ^^^^^^
+
+error[SyntaxError]: expected a semicolon to end the class property, but found none
+   ┌─ css-prop.js:12:7
+   │
+12 │       font-size: 20px;
+   │       ^^^^
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '-'
+   ┌─ css-prop.js:12:11
+   │
+12 │       font-size: 20px;
+   │           ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: return types can only be used in TypeScript files
+   ┌─ css-prop.js:12:16
+   │
+12 │       font-size: 20px;
+   │                ^ remove this type annotation
+
+error[SyntaxError]: expected a semicolon to end the class property, but found none
+   ┌─ css-prop.js:12:12
+   │
+12 │       font-size: 20px;
+   │            ^^^^^
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '20px'
+   ┌─ css-prop.js:12:18
+   │
+12 │       font-size: 20px;
+   │                  ^^^^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ css-prop.js:23:14
    │  
- 3 │     return (<div css={`
-   │ ┌─────────────────────^
- 4 │ │     color: blue;
- 5 │ │     font-size: 17 px;
- 6 │ │ 
-   · │
-13 │ │     }
-14 │ │   `}>
-   │ └───^ Expected a property, a shorthand property, a getter, a setter, or a method here
-
-error[SyntaxError]: expected `')'` but instead found `will`
-   ┌─ css-prop.js:15:10
-   │
-15 │     This will be blue until hovered.
-   │          ^^^^ unexpected
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:15:15
-   │
-15 │     This will be blue until hovered.
-   │          -----^^
-   │          │    │
-   │          │    An explicit or implicit semicolon is expected here...
-   │          ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:15:18
-   │
-15 │     This will be blue until hovered.
-   │               ---^^^^
-   │               │  │
-   │               │  An explicit or implicit semicolon is expected here...
-   │               ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:15:23
-   │
-15 │     This will be blue until hovered.
-   │                  -----^^^^^
-   │                  │    │
-   │                  │    An explicit or implicit semicolon is expected here...
-   │                  ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:15:29
-   │
-15 │     This will be blue until hovered.
-   │                       ------^^^^^^^
-   │                       │     │
-   │                       │     An explicit or implicit semicolon is expected here...
-   │                       ...Which is required to end this statement
-
-error[SyntaxError]: expected an identifier but instead found '<'
-   ┌─ css-prop.js:16:5
-   │
-16 │     <div className="some-class">
-   │     ^ Expected an identifier here
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:16:10
-   │  
-15 │       This will be blue until hovered.
-   │ ┌─────────────────────────────'
+14 │ ┌   `}>
+15 │ │     This will be blue until hovered.
 16 │ │     <div className="some-class">
-   │ │          ^^^^^^^^^ An explicit or implicit semicolon is expected here...
+17 │ │       This font size will be 20px
+   · │
+22 │ │ const TestComponent = ({ children, ...props }) => (
+23 │ │   <div css={`color: white; background: black`}>
+   │ │              ^^^^^ An explicit or implicit semicolon is expected here...
    │ └──────────────────' ...Which is required to end this statement
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:17:12
+error: unterminated template literal
+   ┌─ css-prop.js:23:46
    │  
-16 │       <div className="some-class">
-   │ ┌──────────'
-17 │ │       This font size will be 20px
-   │ │            ^^^^ An explicit or implicit semicolon is expected here...
-   │ └───────────────' ...Which is required to end this statement
+23 │     <div css={`color: white; background: black`}>
+   │ ┌──────────────────────────────────────────────^
+24 │ │     {children}
+25 │ │   </div>
+26 │ │ );
+27 │ │ 
+   │ └^
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:17:17
-   │
-17 │       This font size will be 20px
-   │            -----^^^^
-   │            │    │
-   │            │    An explicit or implicit semicolon is expected here...
-   │            ...Which is required to end this statement
+error[SyntaxError]: Invalid template literal
+   ┌─ css-prop.js:23:46
+   │  
+23 │     <div css={`color: white; background: black`}>
+   │ ┌──────────────────────────────────────────────^
+24 │ │     {children}
+25 │ │   </div>
+26 │ │ );
+27 │ │ 
+   │ └^
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:17:22
+error[SyntaxError]: expected `'}'` but instead the file ends
+   ┌─ css-prop.js:27:1
    │
-17 │       This font size will be 20px
-   │                 -----^^^^
-   │                 │    │
-   │                 │    An explicit or implicit semicolon is expected here...
-   │                 ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:17:27
-   │
-17 │       This font size will be 20px
-   │                      -----^^
-   │                      │    │
-   │                      │    An explicit or implicit semicolon is expected here...
-   │                      ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ css-prop.js:17:30
-   │
-17 │       This font size will be 20px
-   │                           ---^^^^
-   │                           │  │
-   │                           │  An explicit or implicit semicolon is expected here...
-   │                           ...Which is required to end this statement
-
-error[SyntaxError]: Invalid assignment to `<div css`
-   ┌─ css-prop.js:23:3
-   │
-23 │   <div css={`color: white; background: black`}>
-   │   ^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '`color: white; background: black`'
-   ┌─ css-prop.js:23:13
-   │
-23 │   <div css={`color: white; background: black`}>
-   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
-
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ css-prop.js:25:4
-   │
-25 │   </div>
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found ')'
-   ┌─ css-prop.js:26:1
-   │
-26 │ );
-   │ ^ Expected an expression here
+27 │ 
+   │ ^ the file ends here
 
 
 ```

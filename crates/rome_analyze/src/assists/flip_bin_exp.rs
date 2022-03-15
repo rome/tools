@@ -4,13 +4,11 @@ use crate::{Action, ActionCategory, Analysis, AssistContext, SyntaxEdit};
 
 use super::AssistProvider;
 
-pub fn create() -> AssistProvider {
-    AssistProvider {
-        name: "flipBinExp",
-        action_categories: vec![ActionCategory::Refactor],
-        analyze,
-    }
-}
+pub const ASSIST: AssistProvider = AssistProvider {
+    name: "flipBinExp",
+    action_categories: &[ActionCategory::Refactor],
+    analyze,
+};
 
 fn analyze(ctx: &AssistContext) -> Option<Analysis> {
     let node = ctx.find_node_at_cursor_range::<JsBinaryExpression>()?;

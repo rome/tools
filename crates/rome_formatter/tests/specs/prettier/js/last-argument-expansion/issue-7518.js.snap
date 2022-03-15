@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 125
 expression: issue-7518.js
 
 ---
@@ -46,13 +46,13 @@ error[SyntaxError]: Invalid assignment to `<div ref`
 9 │     <div ref={ref}>
   │     ^^^^^^^^ This expression cannot be assigned to
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ issue-7518.js:11:3
+error: unterminated regex literal
+   ┌─ issue-7518.js:11:8
    │
 11 │     </div>
-   │     -^ But this operator was encountered instead
-   │     │ 
-   │     This operator requires a right hand side value
+   │      -    ^ ...but the line ends here
+   │      │    
+   │      a regex literal starts there...
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ issue-7518.js:12:1

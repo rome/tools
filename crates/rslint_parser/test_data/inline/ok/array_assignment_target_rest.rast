@@ -10,7 +10,7 @@ JsModule {
                         l_brack_token: L_BRACK@1..3 "[" [] [Whitespace(" ")],
                         elements: JsArrayAssignmentPatternElementList [
                             JsArrayAssignmentPatternRestElement {
-                                dotdotdot_token: DOT2@3..6 "..." [] [],
+                                dotdotdot_token: DOT3@3..6 "..." [] [],
                                 pattern: JsIdentifierAssignment {
                                     name_token: IDENT@6..11 "abcd" [] [Whitespace(" ")],
                                 },
@@ -37,7 +37,7 @@ JsModule {
                         l_brack_token: L_BRACK@20..22 "[" [] [Whitespace(" ")],
                         elements: JsArrayAssignmentPatternElementList [
                             JsArrayAssignmentPatternRestElement {
-                                dotdotdot_token: DOT2@22..25 "..." [] [],
+                                dotdotdot_token: DOT3@22..25 "..." [] [],
                                 pattern: JsParenthesizedAssignment {
                                     l_paren_token: L_PAREN@25..26 "(" [] [],
                                     assignment: JsIdentifierAssignment {
@@ -68,7 +68,7 @@ JsModule {
                         l_brack_token: L_BRACK@41..43 "[" [] [Whitespace(" ")],
                         elements: JsArrayAssignmentPatternElementList [
                             JsArrayAssignmentPatternRestElement {
-                                dotdotdot_token: DOT2@43..46 "..." [] [],
+                                dotdotdot_token: DOT3@43..46 "..." [] [],
                                 pattern: JsStaticMemberAssignment {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
@@ -103,7 +103,7 @@ JsModule {
                         l_brack_token: L_BRACK@62..64 "[" [] [Whitespace(" ")],
                         elements: JsArrayAssignmentPatternElementList [
                             JsArrayAssignmentPatternRestElement {
-                                dotdotdot_token: DOT2@64..67 "..." [] [],
+                                dotdotdot_token: DOT3@64..67 "..." [] [],
                                 pattern: JsComputedMemberAssignment {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
@@ -150,7 +150,7 @@ JsModule {
                         l_brack_token: L_BRACK@86..88 "[" [] [Whitespace(" ")],
                         elements: JsArrayAssignmentPatternElementList [
                             JsArrayAssignmentPatternRestElement {
-                                dotdotdot_token: DOT2@88..91 "..." [] [],
+                                dotdotdot_token: DOT3@88..91 "..." [] [],
                                 pattern: JsStaticMemberAssignment {
                                     object: JsCallExpression {
                                         callee: JsStaticMemberExpression {
@@ -200,7 +200,7 @@ JsModule {
                         l_brack_token: L_BRACK@119..121 "[" [] [Whitespace(" ")],
                         elements: JsArrayAssignmentPatternElementList [
                             JsArrayAssignmentPatternRestElement {
-                                dotdotdot_token: DOT2@121..124 "..." [] [],
+                                dotdotdot_token: DOT3@121..124 "..." [] [],
                                 pattern: JsArrayAssignmentPattern {
                                     l_brack_token: L_BRACK@124..125 "[" [] [],
                                     elements: JsArrayAssignmentPatternElementList [
@@ -237,12 +237,12 @@ JsModule {
                         l_brack_token: L_BRACK@140..142 "[" [] [Whitespace(" ")],
                         elements: JsArrayAssignmentPatternElementList [
                             JsArrayAssignmentPatternRestElement {
-                                dotdotdot_token: DOT2@142..145 "..." [] [],
+                                dotdotdot_token: DOT3@142..145 "..." [] [],
                                 pattern: JsArrayAssignmentPattern {
                                     l_brack_token: L_BRACK@145..147 "[" [] [Whitespace(" ")],
                                     elements: JsArrayAssignmentPatternElementList [
                                         JsArrayAssignmentPatternRestElement {
-                                            dotdotdot_token: DOT2@147..150 "..." [] [],
+                                            dotdotdot_token: DOT3@147..150 "..." [] [],
                                             pattern: JsIdentifierAssignment {
                                                 name_token: IDENT@150..152 "a" [] [Whitespace(" ")],
                                             },
@@ -281,7 +281,7 @@ JsModule {
             0: L_BRACK@1..3 "[" [] [Whitespace(" ")]
             1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@3..11
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@3..11
-                0: DOT2@3..6 "..." [] []
+                0: DOT3@3..6 "..." [] []
                 1: JS_IDENTIFIER_ASSIGNMENT@6..11
                   0: IDENT@6..11 "abcd" [] [Whitespace(" ")]
             2: R_BRACK@11..13 "]" [] [Whitespace(" ")]
@@ -299,7 +299,7 @@ JsModule {
             0: L_BRACK@20..22 "[" [] [Whitespace(" ")]
             1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@22..32
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@22..32
-                0: DOT2@22..25 "..." [] []
+                0: DOT3@22..25 "..." [] []
                 1: JS_PARENTHESIZED_ASSIGNMENT@25..32
                   0: L_PAREN@25..26 "(" [] []
                   1: JS_IDENTIFIER_ASSIGNMENT@26..30
@@ -320,7 +320,7 @@ JsModule {
             0: L_BRACK@41..43 "[" [] [Whitespace(" ")]
             1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@43..53
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@43..53
-                0: DOT2@43..46 "..." [] []
+                0: DOT3@43..46 "..." [] []
                 1: JS_STATIC_MEMBER_ASSIGNMENT@46..53
                   0: JS_IDENTIFIER_EXPRESSION@46..47
                     0: JS_REFERENCE_IDENTIFIER@46..47
@@ -343,7 +343,7 @@ JsModule {
             0: L_BRACK@62..64 "[" [] [Whitespace(" ")]
             1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@64..77
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@64..77
-                0: DOT2@64..67 "..." [] []
+                0: DOT3@64..67 "..." [] []
                 1: JS_COMPUTED_MEMBER_ASSIGNMENT@67..77
                   0: JS_IDENTIFIER_EXPRESSION@67..68
                     0: JS_REFERENCE_IDENTIFIER@67..68
@@ -375,7 +375,7 @@ JsModule {
             0: L_BRACK@86..88 "[" [] [Whitespace(" ")]
             1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@88..110
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@88..110
-                0: DOT2@88..91 "..." [] []
+                0: DOT3@88..91 "..." [] []
                 1: JS_STATIC_MEMBER_ASSIGNMENT@91..110
                   0: JS_CALL_EXPRESSION@91..107
                     0: JS_STATIC_MEMBER_EXPRESSION@91..105
@@ -409,7 +409,7 @@ JsModule {
             0: L_BRACK@119..121 "[" [] [Whitespace(" ")]
             1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@121..131
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@121..131
-                0: DOT2@121..124 "..." [] []
+                0: DOT3@121..124 "..." [] []
                 1: JS_ARRAY_ASSIGNMENT_PATTERN@124..131
                   0: L_BRACK@124..125 "[" [] []
                   1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@125..129
@@ -434,12 +434,12 @@ JsModule {
             0: L_BRACK@140..142 "[" [] [Whitespace(" ")]
             1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@142..154
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@142..154
-                0: DOT2@142..145 "..." [] []
+                0: DOT3@142..145 "..." [] []
                 1: JS_ARRAY_ASSIGNMENT_PATTERN@145..154
                   0: L_BRACK@145..147 "[" [] [Whitespace(" ")]
                   1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@147..152
                     0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@147..152
-                      0: DOT2@147..150 "..." [] []
+                      0: DOT3@147..150 "..." [] []
                       1: JS_IDENTIFIER_ASSIGNMENT@150..152
                         0: IDENT@150..152 "a" [] [Whitespace(" ")]
                   2: R_BRACK@152..154 "]" [] [Whitespace(" ")]

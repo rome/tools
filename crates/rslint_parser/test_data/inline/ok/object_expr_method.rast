@@ -136,7 +136,7 @@ JsModule {
                                             l_paren_token: L_PAREN@71..72 "(" [] [],
                                             items: JsParameterList [
                                                 JsRestParameter {
-                                                    dotdotdot_token: DOT2@72..75 "..." [] [],
+                                                    dotdotdot_token: DOT3@72..75 "..." [] [],
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@75..79 "rest" [] [],
                                                     },
@@ -277,7 +277,7 @@ JsModule {
                       0: L_PAREN@71..72 "(" [] []
                       1: JS_PARAMETER_LIST@72..79
                         0: JS_REST_PARAMETER@72..79
-                          0: DOT2@72..75 "..." [] []
+                          0: DOT3@72..75 "..." [] []
                           1: JS_IDENTIFIER_BINDING@75..79
                             0: IDENT@75..79 "rest" [] []
                           2: (empty)

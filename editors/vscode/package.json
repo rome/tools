@@ -5,6 +5,7 @@
 	"description": "Rome LSP VS Code Extension",
 	"version": "0.0.4",
 	"icon": "icon.png",
+	"type": "module",
 	"activationEvents": [
 		"onLanguage:javascript",
 		"onLanguage:typescript"
