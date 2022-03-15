@@ -1,4 +1,4 @@
-use crate::config::WorkspaceSettings;
+use crate::config::{FormatterWorkspaceSettings, WorkspaceSettings};
 use crate::line_index::{self, LineCol};
 use anyhow::{bail, Result};
 use lspower::lsp::*;
@@ -6,19 +6,51 @@ use rome_analyze::FileId;
 use rome_formatter::{FormatOptions, IndentStyle};
 use rome_js_syntax::{TextRange, TokenAtOffset};
 use rslint_parser::{parse, SourceType};
+use std::str::FromStr;
+use tracing::{info, trace};
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
 /// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand
-pub(crate) fn to_format_options(params: &FormattingOptions) -> FormatOptions {
+pub(crate) fn to_format_options(
+    params: &FormattingOptions,
+    workspace_settings: &FormatterWorkspaceSettings,
+) -> FormatOptions {
     let indent_style = if params.insert_spaces {
         IndentStyle::Space(params.tab_size as u8)
     } else {
         IndentStyle::Tab
     };
-    FormatOptions {
+    let mut default_options = FormatOptions {
         indent_style,
         ..FormatOptions::default()
+    };
+
+    let custom_ident_style =
+        IndentStyle::from_str(workspace_settings.indent_style.as_str()).unwrap_or(IndentStyle::Tab);
+
+    if custom_ident_style != default_options.indent_style {
+        // merge settings with the ones provided by the editor
+        if workspace_settings.indent_style == "Spaces" {
+            default_options.indent_style = IndentStyle::Space(workspace_settings.space_quantity);
+        } else if workspace_settings.indent_style == "Tabs" {
+            default_options.indent_style = IndentStyle::Tab;
+        }
+        info!(
+            "Using user setting indent style: {}",
+            default_options.indent_style
+        );
     }
+
+    // apply the new line width only if they are different
+    if default_options.line_width != workspace_settings.line_width {
+        default_options.line_width = workspace_settings.line_width;
+        info!(
+            "Using user setting line width: {}",
+            default_options.line_width
+        );
+    }
+
+    default_options
 }
 
 pub(crate) struct FormatParams<'input> {

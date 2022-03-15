@@ -139,6 +139,8 @@ impl FromStr for IndentStyle {
         match s {
             "tab" => Ok(Self::Tab),
             "space" => Ok(Self::Space(2)),
+            "Tabs" => Ok(Self::Tab),
+            "Spaces" => Ok(Self::Space(2)),
             // TODO: replace this error with a diagnostic
             _ => Err("Value not supported for IndentStyle"),
         }

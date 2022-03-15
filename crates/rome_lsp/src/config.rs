@@ -10,6 +10,12 @@ pub const CONFIGURATION_SECTION: &str = "rome";
 pub struct FormatterWorkspaceSettings {
     /// Allows to format code that might contain syntax errors
     pub format_with_syntax_errors: bool,
+    /// The width of a single line, specified by the user
+    pub line_width: u16,
+    /// The indent style, specified by the user
+    pub indent_style: String,
+    /// The number of spaces, specified by the user and applied only when using Spaces
+    pub space_quantity: u8,
 }
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
