@@ -10,6 +10,7 @@ use rome_js_syntax::{
     JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperation,
     JsLogicalExpression, JsLogicalExpressionFields, JsLogicalOperation,
 };
+use std::cmp::Ordering;
 use std::fmt::Debug;
 
 /// This function is charge to flat binaryish expressions that have the same precedence of their operators
@@ -299,7 +300,7 @@ fn should_flatten_logical_expression(node: &JsLogicalExpression) -> FormatResult
     Ok(should_flatten)
 }
 
-#[derive(Debug, Clone, Copy, PartialOrd, Ord, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
 enum Operation {
     Logical(JsLogicalOperation),
     Binary(JsBinaryOperation),
@@ -477,7 +478,7 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
             }
 
             (Operation::Binary(previous_operation), Operation::Binary(compare_to)) => {
-                compare_to > previous_operation
+                compare_to.compare_precedence(&previous_operation) == Ordering::Greater
             }
             _ => false,
         }

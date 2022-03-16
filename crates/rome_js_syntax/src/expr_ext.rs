@@ -179,70 +179,7 @@ impl JsBinaryOperation {
         let self_precedence = self.get_precedence();
         let other_precedence = other.get_precedence();
 
-        #[allow(clippy::comparison_chain)]
-        if self_precedence == other_precedence {
-            Ordering::Equal
-        } else if self_precedence < other_precedence {
-            Ordering::Less
-        } else {
-            Ordering::Greater
-        }
-    }
-}
-
-impl PartialOrd for JsBinaryOperation {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.compare_precedence(other))
-    }
-    fn lt(&self, other: &Self) -> bool {
-        self.get_precedence() < other.get_precedence()
-    }
-    fn le(&self, other: &Self) -> bool {
-        self.get_precedence() <= other.get_precedence()
-    }
-    fn gt(&self, other: &Self) -> bool {
-        self.get_precedence() > other.get_precedence()
-    }
-    fn ge(&self, other: &Self) -> bool {
-        self.get_precedence() >= other.get_precedence()
-    }
-}
-
-impl Ord for JsBinaryOperation {
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.compare_precedence(other)
-    }
-    fn max(self, other: Self) -> Self
-    where
-        Self: Sized,
-    {
-        if self.gt(&other) {
-            self
-        } else {
-            other
-        }
-    }
-    fn min(self, other: Self) -> Self
-    where
-        Self: Sized,
-    {
-        if self.lt(&other) {
-            self
-        } else {
-            other
-        }
-    }
-    fn clamp(self, min: Self, max: Self) -> Self
-    where
-        Self: Sized,
-    {
-        if self.gt(&max) {
-            max
-        } else if self.lt(&min) {
-            min
-        } else {
-            self
-        }
+        self_precedence.cmp(&other_precedence)
     }
 }
 
