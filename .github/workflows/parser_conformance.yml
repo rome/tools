@@ -4,6 +4,10 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'crates/rslint_**/'
+      - 'crates/rome_js_syntax/'
+      - 'xtask/codegen'
 
 env:
   RUST_LOG: info
