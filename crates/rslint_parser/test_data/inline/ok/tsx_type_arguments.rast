@@ -119,14 +119,65 @@ JsModule {
             },
             semicolon_token: SEMICOLON@91..92 ";" [] [],
         },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: TsTypeParameters {
+                    l_angle_token: L_ANGLE@92..94 "<" [Newline("\n")] [],
+                    items: TsTypeParameterList [
+                        TsTypeParameter {
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@94..96 "A" [] [Whitespace(" ")],
+                            },
+                            constraint: TsTypeConstraintClause {
+                                extends_token: EXTENDS_KW@96..104 "extends" [] [Whitespace(" ")],
+                                ty: TsReferenceType {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@104..105 "B" [] [],
+                                    },
+                                    type_arguments: TsTypeArguments {
+                                        l_angle_token: L_ANGLE@105..106 "<" [] [],
+                                        ts_type_argument_list: TsTypeArgumentList [
+                                            TsReferenceType {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@106..107 "C" [] [],
+                                                },
+                                                type_arguments: missing (optional),
+                                            },
+                                        ],
+                                        r_angle_token: R_ANGLE@107..108 ">" [] [],
+                                    },
+                                },
+                            },
+                            default: missing (optional),
+                        },
+                    ],
+                    r_angle_token: R_ANGLE@108..109 ">" [] [],
+                },
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@109..110 "(" [] [],
+                    items: JsParameterList [],
+                    r_paren_token: R_PAREN@110..112 ")" [] [Whitespace(" ")],
+                },
+                return_type_annotation: missing (optional),
+                fat_arrow_token: FAT_ARROW@112..115 "=>" [] [Whitespace(" ")],
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@115..116 "{" [] [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
+                    r_curly_token: R_CURLY@116..117 "}" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@92..93 "" [Newline("\n")] [],
+    eof_token: EOF@117..118 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..93
+0: JS_MODULE@0..118
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..92
+  2: JS_MODULE_ITEM_LIST@0..117
     0: JS_EXPRESSION_STATEMENT@0..56
       0: JS_ARROW_FUNCTION_EXPRESSION@0..55
         0: (empty)
@@ -213,4 +264,40 @@ JsModule {
           2: JS_STATEMENT_LIST@90..90
           3: R_CURLY@90..91 "}" [] []
       1: SEMICOLON@91..92 ";" [] []
-  3: EOF@92..93 "" [Newline("\n")] []
+    3: JS_EXPRESSION_STATEMENT@92..117
+      0: JS_ARROW_FUNCTION_EXPRESSION@92..117
+        0: (empty)
+        1: TS_TYPE_PARAMETERS@92..109
+          0: L_ANGLE@92..94 "<" [Newline("\n")] []
+          1: TS_TYPE_PARAMETER_LIST@94..108
+            0: TS_TYPE_PARAMETER@94..108
+              0: TS_TYPE_PARAMETER_NAME@94..96
+                0: IDENT@94..96 "A" [] [Whitespace(" ")]
+              1: TS_TYPE_CONSTRAINT_CLAUSE@96..108
+                0: EXTENDS_KW@96..104 "extends" [] [Whitespace(" ")]
+                1: TS_REFERENCE_TYPE@104..108
+                  0: JS_REFERENCE_IDENTIFIER@104..105
+                    0: IDENT@104..105 "B" [] []
+                  1: TS_TYPE_ARGUMENTS@105..108
+                    0: L_ANGLE@105..106 "<" [] []
+                    1: TS_TYPE_ARGUMENT_LIST@106..107
+                      0: TS_REFERENCE_TYPE@106..107
+                        0: JS_REFERENCE_IDENTIFIER@106..107
+                          0: IDENT@106..107 "C" [] []
+                        1: (empty)
+                    2: R_ANGLE@107..108 ">" [] []
+              2: (empty)
+          2: R_ANGLE@108..109 ">" [] []
+        2: JS_PARAMETERS@109..112
+          0: L_PAREN@109..110 "(" [] []
+          1: JS_PARAMETER_LIST@110..110
+          2: R_PAREN@110..112 ")" [] [Whitespace(" ")]
+        3: (empty)
+        4: FAT_ARROW@112..115 "=>" [] [Whitespace(" ")]
+        5: JS_FUNCTION_BODY@115..117
+          0: L_CURLY@115..116 "{" [] []
+          1: JS_DIRECTIVE_LIST@116..116
+          2: JS_STATEMENT_LIST@116..116
+          3: R_CURLY@116..117 "}" [] []
+      1: (empty)
+  3: EOF@117..118 "" [Newline("\n")] []

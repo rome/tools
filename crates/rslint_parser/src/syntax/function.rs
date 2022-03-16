@@ -667,6 +667,7 @@ fn is_parenthesized_arrow_function_expression_impl(
             // <A extends B>() => {};
             // <A=string>() => {};
             // <A, B>() => {};
+            // <A extends B<C>>() => {}
 
             // <a... JSX override
             else if JsSyntaxFeature::Jsx.is_supported(p) {
