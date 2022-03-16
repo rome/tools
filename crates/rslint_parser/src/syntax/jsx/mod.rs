@@ -159,7 +159,11 @@ fn parse_jsx_closing_element(p: &mut Parser) -> ParsedSyntax {
         return ParsedSyntax::Absent;
     }
 
-    let _ = parse_jsx_any_element_name(p);
+    let closing_name = parse_jsx_any_element_name(p);
+    if closing_name.is_absent() {
+        m.abandon(p);
+        return ParsedSyntax::Absent;
+    }
 
     if !p.eat(T![>]) {
         m.abandon(p);
@@ -170,13 +174,12 @@ fn parse_jsx_closing_element(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
-    let m = p.start();
-
     if !p.eat(T![ident]) {
-        m.abandon(p);
         return ParsedSyntax::Absent;
     }
 
+    let m = p.start();
+    p.bump(T![ident]);
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_REFERENCE_IDENTIFIER))
 }
 
@@ -196,9 +199,7 @@ impl ParseNodeList for JsxAttributeList {
             return ParsedSyntax::Absent;
         }
 
-        if p.at(T![=]) {
-            let _ = expect_jsx_attribute_initializer_clause(p);
-        }
+        let _ = parse_jsx_attribute_initializer_clause(p);
 
         ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE))
     }
@@ -212,7 +213,7 @@ impl ParseNodeList for JsxAttributeList {
             p,
             &ParseRecovery::new(
                 JsSyntaxKind::JS_UNKNOWN_MEMBER,
-                token_set![T![/], T![>], T![<], T!['{'], T!['}'],],
+                token_set![T![/], T![>], T![<], T!['{'], T!['}'], T![ident]],
             ),
             jsx_expected_attribute,
         )
@@ -229,22 +230,24 @@ fn parse_jsx_attribute_name(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-
     p.bump(JsSyntaxKind::IDENT);
-
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_NAME))
 }
 
-fn expect_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
+    if p.at(T![=]) {
+        ParsedSyntax::Absent
+    }
+
     let m = p.start();
 
     p.bump(T![=]);
-    let _ = expect_jsx_attribute_value(p);
+    let _ = parse_jsx_attribute_value(p);
 
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE))
 }
 
-fn expect_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     // Possible atribute values:
     // String Literal for constant values
     if p.at(JsSyntaxKind::JS_STRING_LITERAL) {
