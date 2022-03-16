@@ -77,10 +77,10 @@ function b() {} // comment
 function c( /* comment */ argA, argB, argC) {} // comment
 call(( /*object*/ row) => {});
 KEYPAD_NUMBERS.map(
-  (num) =>
-    ( // Buttons 0-9
-  <div />
-),
+  (num) => (
+    // Buttons 0-9
+    <div />
+  ),
 );
 
 function f1 /* f */ () {}
@@ -144,10 +144,9 @@ function foo4() {
 ```
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
   ┌─ function-declaration.js:6:3
-  │  
-6 │ ┌   <div />
-7 │ │ ));
-  │ └─^ JSX only syntax
+  │
+6 │   <div />
+  │   ^^^^^^^ JSX only syntax
 
 
 ```

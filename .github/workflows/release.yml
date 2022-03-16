@@ -41,7 +41,9 @@ jobs:
         id: prerelease
         if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
         working-directory: editors/vscode
-        run: echo "prerelease=true" >> $GITHUB_ENV
+        run: |
+          echo "prerelease=true" >> $GITHUB_ENV
+          echo "version=$(node ./scripts/updateVersionForPrerelease.js)" >> $GITHUB_ENV
 
       - name: Check version status
         if: steps.version.outputs.changed == 'true'
@@ -98,18 +100,42 @@ jobs:
         if: matrix.code-target == 'linux-x64'
         run: cargo audit
 
-      - name: Build LSP
-        run: cargo build -p rome_lsp --release --target ${{ matrix.target }}
+      # Build the LSP and CLI binaries
+      - name: Build binaries
+        run: cargo build -p rome_lsp -p rome_cli --release --target ${{ matrix.target }}
         env:
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
-          CARGO_PROFILE_RELEASE_LTO: thin
+          # Perform full Link-Time Optimizations
+          CARGO_PROFILE_RELEASE_LTO: "true"
+          # Strip all debug symbols from the resulting binaries
+          RUSTFLAGS: "-C strip=symbols"
 
-      - name: Copy binary
+      # Copy the CLI binary and rename it to include the name of the target platform
+      - name: Copy CLI binary
+        if: matrix.os == 'windows-2022'
+        run: |
+          mkdir dist
+          cp target/${{ matrix.target }}/release/cli.exe ./dist/rome_cli-${{ matrix.code-target }}.exe
+      - name: Copy CLI binary
+        if: matrix.os != 'windows-2022'
+        run: |
+          mkdir dist
+          cp target/${{ matrix.target }}/release/cli ./dist/rome_cli-${{ matrix.code-target }}
+
+      # Upload the CLI binary as a build artifact
+      - name: Upload CLI artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: cli
+          path: ./dist/rome_cli-*
+          if-no-files-found: error
+
+      - name: Copy LSP binary
         if: matrix.os == 'windows-2022'
         run: |
           mkdir editors/vscode/server
           cp target/${{ matrix.target }}/release/rome_lsp.exe editors/vscode/server/rome_lsp.exe
-      - name: Copy binary
+      - name: Copy LSP binary
         if: matrix.os != 'windows-2022'
         run: |
           mkdir editors/vscode/server
@@ -120,21 +146,22 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Check prerelease status
-        id: prerelease
-        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+      - name: Update package.json version
+        if: needs.check.outputs.prerelease == 'true'
         working-directory: editors/vscode
         run: |
-          CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
-          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")}
-          cat package.json | sed "s/'"version": "${CURRENT_VERSION}"'/'"version": "${NEW_VERSION}"'/g" >  temp
-          mv temp package.json
+          node ./scripts/updateVersionForPrerelease.mjs >> $GITHUB_ENV
+          echo "prerelease=true" >> $GITHUB_ENV
+      - name: Set release infos
+        if: needs.check.outputs.prerelease != 'true'
+        run: |
+          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
+          echo "prerelease=${{ needs.check.outputs.prerelease }}" >> $GITHUB_ENV
 
       - name: Package extension
         run: |
           npm ci
           npm run compile
-          mkdir ../../dist
           npx vsce package -o "../../dist/rome_lsp-${{ matrix.code-target }}.vsix" --target ${{ matrix.code-target }}
         working-directory: editors/vscode
         if: needs.check.outputs.prerelease != 'true'
@@ -142,22 +169,16 @@ jobs:
         run: |
           npm ci
           npm run compile
-          mkdir ../../dist
           npx vsce package --pre-release -o "../../dist/rome_lsp-${{ matrix.code-target }}.vsix" --target ${{ matrix.code-target }}
         working-directory: editors/vscode
         if: needs.check.outputs.prerelease == 'true'
 
-      - name: Upload artifacts
+      - name: Upload VSCode extension artifact
         uses: actions/upload-artifact@v2
         with:
           name: vscode_packages
           path: ./dist/rome_lsp-${{ matrix.code-target }}.vsix
           if-no-files-found: error
-
-      - name: Set release infos
-        run: |
-          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
-          echo "prerelease=${{ needs.check.outputs.prerelease }}" >> $GITHUB_ENV
 
   publish:
     name: Publish
@@ -165,21 +186,19 @@ jobs:
     needs: build
     environment: marketplace
     steps:
-      - name: Download artifacts
+      - name: Download CLI artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: cli
+      - name: Download extension artifacts
         uses: actions/download-artifact@v2
         with:
           name: vscode_packages
 
-      - name: Check prerelease status
-        id: prerelease
-        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
-        working-directory: editors/vscode
-        run: |
-          CURRENT_VERSION=$(cat package.json | grep version |  awk '{print $2}' | sed 's/"//g' | sed 's/,//g')
-          NEW_VERSION=${{ steps.version.outputs.version }}-$(date +"pre-release-%F-%s")}
-          cat package.json | sed "s/'"version": "${CURRENT_VERSION}"'/'"version": "${NEW_VERSION}"'/g" >  temp
-          mv temp package.json
-        
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
 
       - name: Publish extension (pre-release)
         run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix
@@ -201,5 +220,7 @@ jobs:
           tag_name: v${{ needs.build.outputs.version }}
           draft: false
           prerelease: ${{ needs.build.outputs.prerelease == 'true' }}
-          files: rome_lsp-*.vsix
+          files: |
+            rome_lsp-*.vsix
+            rome_cli-*
           fail_on_unmatched_files: true

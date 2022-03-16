@@ -14,10 +14,10 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-type Constructor<T> = new(...args: any[]) => T;
+<a-b-c></a-b-c>
     "#;
 
-    let module = parse(src, 0, SourceType::ts());
+    let module = parse(src, 0, SourceType::jsx());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 

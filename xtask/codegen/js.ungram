@@ -2141,16 +2141,6 @@ TsTypeArgumentList = (TsType (',' TsType)* )
 
 /////////////////////////////////////////////////////// JSX
 
-JsxName = value: 'ident'
-JsxNamespaceName = 
-	namespace: JsReferenceIdentifier
-	':'
-	name: JsxName
-
-JsxReferenceIdentifier = value: 'ident'
-
-JsxStringLiteral = value: 'js_string_literal'
-
 // ==================================
 // Elements
 // ==================================
@@ -2158,32 +2148,65 @@ JsxStringLiteral = value: 'js_string_literal'
 JsxElementExpression = 
 	element: JsxAnyElement
 
-JsxAnyElement = 
-	JsxElement 
+JsxAnyElement =
+	JsxElement
 	| JsxSelfClosingElement
 
-JsxSelfClosingElement = 
+
+// <a />
+JsxSelfClosingElement =
 	'<'
 	name: JsxAnyElementName
 	attributes: JsxAttributeList
-	'/>'
+	'/'
+	'>'
 
-JsxElement = 
+// <a>...</a>
+JsxElement =
 	opening_element: JsxOpeningElement
+	children: JsxTextLiteral?
 	closing_element: JsxClosingElement
 
-JsxOpeningElement = 
+JsxOpeningElement =
 	'<'
 	name: JsxAnyElementName	
 	attributes: JsxAttributeList
 	'>'
-	
-JsxClosingElement = 
-	'</'
+
+JsxClosingElement =
+	'<'
+	'/'
 	name: JsxAnyElementName
 	'>'
 
-JsxAnyElementName = JsxReferenceIdentifier
+// ==================================
+// Names
+// ==================================
+
+JsxName = value: 'ident'
+
+JsxNamespaceName = 
+	namespace: JsReferenceIdentifier
+	':'
+	name: JsxName
+
+JsxAnyElementName =
+	JsxReferenceIdentifier
+	| JsxMemberName
+	| JsxNamespaceName
+
+JsxAnyObjectName =
+	JsxReferenceIdentifier
+	| JsxMemberName
+
+// <a.test>
+JsxMemberName =
+	object: JsxAnyObjectName
+	'.'
+	member: JsName
+
+JsxAnyName =
+	JsxName
 	| JsxNamespaceName
 
 // ==================================
@@ -2211,3 +2234,13 @@ JsxExpressionAttributeValue =
 
 JsxAnyAttributeName = JsxName
 	| JsxNamespaceName
+
+// ==================================
+// Auxiliary
+// ==================================
+
+JsxReferenceIdentifier = value: 'jsx_ident'
+
+JsxTextLiteral = value: 'jsx_text'
+
+JsxStringLiteral = value: 'js_string_literal'

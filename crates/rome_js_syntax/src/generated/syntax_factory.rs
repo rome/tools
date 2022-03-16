@@ -5357,10 +5357,17 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JSX_CLOSING_ELEMENT => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == T ! [</] {
+                    if element.kind() == T ! [<] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [/] {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5390,10 +5397,17 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JSX_ELEMENT => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if JsxOpeningElement::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if JsxTextLiteral::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5433,12 +5447,20 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(JSX_ELEMENT_EXPRESSION, children)
             }
+<<<<<<< HEAD
             JSX_EXPRESSION_ATTRIBUTE_VALUE => {
+=======
+            JSX_MEMBER_NAME => {
+>>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
+<<<<<<< HEAD
                     if element.kind() == T!['{'] {
+=======
+                    if JsxAnyObjectName::can_cast(element.kind()) {
+>>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5460,11 +5482,71 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
+<<<<<<< HEAD
                         JSX_EXPRESSION_ATTRIBUTE_VALUE.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
                 slots.into_node(JSX_EXPRESSION_ATTRIBUTE_VALUE, children)
+=======
+                        JSX_MEMBER_NAME.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSX_MEMBER_NAME, children)
+            }
+            JSX_NAME => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == JSX_IDENT {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JSX_NAME.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSX_NAME, children)
+            }
+            JSX_NAMESPACE_NAME => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if JsxReferenceIdentifier::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [:] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if JsxName::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JSX_NAMESPACE_NAME.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSX_NAMESPACE_NAME, children)
+>>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
             }
             JSX_NAME => {
                 let mut elements = (&children).into_iter();
@@ -5563,7 +5645,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == IDENT {
+                    if element.kind() == JSX_IDENT {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5596,14 +5678,22 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
+<<<<<<< HEAD
                     if JsxAttributeList::can_cast(element.kind()) {
+=======
+                    if element.kind() == T ! [/] {
+>>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
                         slots.mark_present();
                         current_element = elements.next();
                     }
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
+<<<<<<< HEAD
                     if element.kind() == T ! [/>] {
+=======
+                    if element.kind() == T ! [>] {
+>>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5617,12 +5707,20 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(JSX_SELF_CLOSING_ELEMENT, children)
             }
+<<<<<<< HEAD
             JSX_STRING_LITERAL => {
+=======
+            JSX_TEXT_LITERAL => {
+>>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
+<<<<<<< HEAD
                     if element.kind() == JS_STRING_LITERAL {
+=======
+                    if element.kind() == JSX_TEXT {
+>>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5630,11 +5728,19 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
+<<<<<<< HEAD
                         JSX_STRING_LITERAL.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
                 slots.into_node(JSX_STRING_LITERAL, children)
+=======
+                        JSX_TEXT_LITERAL.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSX_TEXT_LITERAL, children)
+>>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
             }
             NEW_TARGET => {
                 let mut elements = (&children).into_iter();

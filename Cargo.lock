@@ -1379,6 +1379,16 @@ name = "rome_path"
 version = "0.0.0"
 
 [[package]]
+name = "rome_playground"
+version = "0.0.0"
+dependencies = [
+ "rome_formatter",
+ "rslint_errors",
+ "rslint_parser",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "rome_rowan"
 version = "0.0.0"
 dependencies = [
@@ -1411,6 +1421,7 @@ version = "0.2.0"
 dependencies = [
  "ansi_term",
  "atty",
+ "bitflags",
  "quickcheck",
  "quickcheck_macros",
  "rome_js_syntax",

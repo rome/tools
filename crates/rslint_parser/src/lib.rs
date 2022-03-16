@@ -10,7 +10,7 @@
 //! is completely represented in the final syntax nodes.
 //!
 //! You probably do not want to use the parser struct, unless you want to parse fragments of Js source code or make your own productions.
-//! Instead use functions such as [`parse_text`] and [`parse_text_lossy`] which offer abstracted versions for parsing.
+//! Instead use functions such as [parse_script], [parse_module], and [] which offer abstracted versions for parsing.
 //!
 //! Notable features of the parser are:
 //! - Extremely fast parsing and lexing through the extremely fast [`rslint_lexer`].
@@ -63,43 +63,43 @@ mod parser;
 mod token_set;
 mod event;
 mod lossless_tree_sink;
-mod lossy_tree_sink;
 mod parse;
 mod state;
-mod token_source;
 
 #[cfg(test)]
 mod tests;
 
 pub mod syntax;
+mod token_source;
 
 pub use crate::{
     event::{process, Event},
     lossless_tree_sink::LosslessTreeSink,
-    lossy_tree_sink::LossyTreeSink,
     parse::*,
     parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
     token_set::TokenSet,
-    token_source::TokenSource,
 };
 pub(crate) use state::{ParserState, StrictMode};
 use std::fmt::{Debug, Display};
 
 /// The type of error emitted by the parser, this includes warnings, notes, and errors.
 /// It also includes labels and possibly notes
-pub type ParserError = rslint_errors::Diagnostic;
+pub type ParseDiagnostic = rslint_errors::Diagnostic;
+
 use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
 pub use rome_js_syntax::numbers::BigInt;
 use rome_js_syntax::JsSyntaxKind;
+use rome_rowan::TextSize;
 use rslint_errors::Diagnostic;
+pub use rslint_lexer::buffered_lexer::BufferedLexer;
 use std::path::Path;
 
 /// An abstraction for syntax tree implementations
 pub trait TreeSink {
     /// Adds new token to the current branch.
-    fn token(&mut self, kind: JsSyntaxKind);
+    fn token(&mut self, kind: JsSyntaxKind, length: TextSize);
 
     /// Start new branch and make it current.
     fn start_node(&mut self, kind: JsSyntaxKind);
@@ -109,10 +109,7 @@ pub trait TreeSink {
     fn finish_node(&mut self);
 
     /// Emit errors
-    fn errors(&mut self, errors: Vec<ParserError>);
-
-    /// Consume multiple tokens and glue them into one kind
-    fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind);
+    fn errors(&mut self, errors: Vec<ParseDiagnostic>);
 }
 
 /// Enum of the different ECMAScript standard versions.
@@ -414,9 +411,9 @@ pub trait SyntaxFeature: Sized {
         if self.is_supported(p) {
             parse(p)
         } else {
-            let diagnostics_checkpoint = p.errors.len();
+            let diagnostics_checkpoint = p.diagnostics.len();
             let syntax = parse(p);
-            p.errors.truncate(diagnostics_checkpoint);
+            p.diagnostics.truncate(diagnostics_checkpoint);
 
             match syntax {
                 Present(mut syntax) => {

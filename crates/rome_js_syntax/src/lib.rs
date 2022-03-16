@@ -17,7 +17,7 @@ pub use self::generated::*;
 pub use ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult};
 pub use expr_ext::*;
 pub use modifier_ext::*;
-pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
+pub use rome_rowan::{SyntaxText, TextLen, TextRange, TextSize, TokenAtOffset, WalkEvent};
 pub use stmt_ext::*;
 pub use syntax_node::*;
 pub use util::{SyntaxNodeExt, SyntaxTokenExt};
@@ -164,6 +164,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | TS_AS_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
+            | JSX_ELEMENT_EXPRESSION
             | JS_UNKNOWN_EXPRESSION => JS_UNKNOWN_EXPRESSION,
 
             JS_OBJECT_BINDING_PATTERN

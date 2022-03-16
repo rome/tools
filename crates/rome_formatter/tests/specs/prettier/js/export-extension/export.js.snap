@@ -84,6 +84,12 @@ error[SyntaxError]: expected a class, a function, or a variable declaration but 
 3 │ export a, * as b from 'mod';
   │        ^ Expected a class, a function, or a variable declaration here
 
+error[SyntaxError]: Expected an expression for the left hand side of the `*` operator.
+  ┌─ export.js:3:11
+  │
+3 │ export a, * as b from 'mod';
+  │           ^ This operator requires a left hand side value
+
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ export.js:3:16
   │

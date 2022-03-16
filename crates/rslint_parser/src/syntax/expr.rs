@@ -8,7 +8,8 @@ use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
-use crate::parser::{ParserProgress, RecoveryResult};
+use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
+use crate::parser::{expected_token, ParserProgress, RecoveryResult};
 use crate::syntax::assignment::{
     expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
     AssignmentExprPrecedence,
@@ -35,7 +36,7 @@ use crate::{
 };
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
-use rslint_lexer::T;
+use rslint_lexer::{LexContext, ReLexContext};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
@@ -143,7 +144,13 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
         JsSyntaxKind::TRUE_KW | JsSyntaxKind::FALSE_KW => {
             JsSyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION
         }
-        JsSyntaxKind::JS_REGEX_LITERAL => JsSyntaxKind::JS_REGEX_LITERAL_EXPRESSION,
+        T![/] | T![/=] => {
+            if p.re_lex(ReLexContext::Regex) == JS_REGEX_LITERAL {
+                JS_REGEX_LITERAL_EXPRESSION
+            } else {
+                return Absent;
+            }
+        }
         _ => return Absent,
     };
 
@@ -306,7 +313,7 @@ fn is_assign_token(kind: JsSyntaxKind) -> bool {
 // }
 fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> CompletedMarker {
     let m = p.start();
-    p.expect_keyword(T![yield], "yield");
+    p.expect(T![yield]);
 
     if !is_semi(p, 0) && (p.at(T![*]) || is_at_expression(p)) {
         let argument = p.start();
@@ -411,15 +418,15 @@ fn parse_binary_or_logical_expression_recursive(
     // current operator has the same or a lower precedence than the left-hand side expression. Thus,
     // the algorithm goes at most `count(OperatorPrecedence)` levels deep.
     loop {
-        let op = match p.cur() {
-            T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
-            T![>] if p.nth_at(1, T![>]) => T![>>],
-            T![in] if !context.is_in_included() => {
-                break;
-            }
-            T![as] if p.has_linebreak_before_n(0) => break,
-            k => k,
-        };
+        // test_err js_right_shift_comments
+        // 1 >> /* a comment */ > 2;
+        let op = p.re_lex(ReLexContext::BinaryOperator);
+
+        if (op == T![as] && p.has_preceding_line_break())
+            || (op == T![in] && !context.is_in_included())
+        {
+            break;
+        }
 
         let new_precedence = match OperatorPrecedence::try_from_binary_operator(op) {
             Ok(precedence) => precedence,
@@ -476,27 +483,18 @@ fn parse_binary_or_logical_expression_recursive(
                 ));
                 left.change_kind(p, JS_UNKNOWN_EXPRESSION);
             }
+        } else {
+            let err = p
+                .err_builder(&format!(
+                    "Expected an expression for the left hand side of the `{}` operator.",
+                    p.source(op_range)
+                ))
+                .primary(op_range, "This operator requires a left hand side value");
+            p.error(err);
         }
 
         let m = left.precede(p);
-        match op {
-            T![>>] => {
-                p.bump_multiple(2, T![>>]);
-            }
-            T![>>>] => {
-                p.bump_multiple(3, T![>>>]);
-            }
-            T![in] => {
-                p.expect_keyword(T![in], "in");
-            }
-            T![as] => {
-                p.expect_keyword(T![as], "as");
-            }
-            T![instanceof] => {
-                p.expect_keyword(T![instanceof], "instanceof");
-            }
-            _ => p.bump_remap(op),
-        };
+        p.bump(op);
 
         // test ts ts_as_expression
         // let x: any = "string";
@@ -521,33 +519,8 @@ fn parse_binary_or_logical_expression_recursive(
             continue;
         }
 
-        // This is a hack to allow us to effectively recover from `foo + / bar`
-        let right = if OperatorPrecedence::try_from_binary_operator(p.cur()).is_ok()
-            && !p.at_ts(token_set![
-                T![-],
-                T![+],
-                T![<],
-                T![as],
-                T![in],
-                T![instanceof]
-            ]) {
-            let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.source(op_range)))
-				.secondary(op_range, "This operator requires a right hand side value")
-				.primary(p.cur_range(), "But this operator was encountered instead");
-
-            p.error(err);
-
-            parse_binary_or_logical_expression_recursive(
-                p,
-                Absent,
-                OperatorPrecedence::lowest(),
-                context,
-            )
-        } else {
-            parse_binary_or_logical_expression(p, new_precedence, context)
-        };
-
-        right.or_add_diagnostic(p, expected_expression);
+        parse_binary_or_logical_expression(p, new_precedence, context)
+            .or_add_diagnostic(p, expected_expression);
 
         let expression_kind = if is_unknown {
             JS_UNKNOWN_EXPRESSION
@@ -640,7 +613,7 @@ fn parse_member_expression_rest(
                     let m = lhs.precede(p);
                     p.bump(T![?.]);
                     let template_literal = p.start();
-                    parse_template_literal(p, template_literal, true);
+                    parse_template_literal(p, template_literal, true, true);
                     m.complete(p, JS_UNKNOWN_EXPRESSION)
                 } else {
                     // '(' or any other unexpected character
@@ -649,7 +622,7 @@ fn parse_member_expression_rest(
                 *in_optional_chain = true;
                 completed
             }
-            T![!] if !p.has_linebreak_before_n(0) => {
+            T![!] if !p.has_preceding_line_break() => {
                 // test ts ts_non_null_assertion_expression
                 // let a = { b: {} };
                 // a!;
@@ -677,7 +650,7 @@ fn parse_member_expression_rest(
                 // test ts ts_optional_chain_call
                 // (<A, B>() => {})?.<A, B>();
                 let m = lhs.precede(p);
-                parse_template_literal(p, m, *in_optional_chain)
+                parse_template_literal(p, m, *in_optional_chain, true)
             }
             _ => break,
         }
@@ -692,7 +665,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     }
 
     let m = p.start();
-    p.expect_keyword(T![new], "new");
+    p.expect(T![new]);
 
     // new.target
     if p.eat(T![.]) {
@@ -765,7 +738,7 @@ fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let super_marker = p.start();
-    p.expect_keyword(T![super], "super");
+    p.expect(T![super]);
     let mut super_expression = super_marker.complete(p, JS_SUPER_EXPRESSION);
 
     if p.at(T![?.]) {
@@ -1074,11 +1047,11 @@ fn parse_sequence_expression_recursive(
 }
 
 #[inline]
-pub(crate) fn is_at_expression(p: &Parser) -> bool {
+pub(crate) fn is_at_expression(p: &mut Parser) -> bool {
     is_nth_at_expression(p, 0)
 }
 
-pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_expression(p: &mut Parser, n: usize) -> bool {
     match p.nth(n) {
         T![!]
         | T!['(']
@@ -1105,13 +1078,14 @@ pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
         | T![super]
         | T![#]
         | T![<]
+        | T![/]
+        | T![/=]
         | BACKTICK
         | TRUE_KW
         | FALSE_KW
         | JS_NUMBER_LITERAL
         | JS_STRING_LITERAL
-        | NULL_KW
-        | JS_REGEX_LITERAL => true,
+        | NULL_KW => true,
         t => t.is_contextual_keyword() || t.is_future_reserved_keyword(),
     }
 }
@@ -1129,7 +1103,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
             // this
             // this.foo
             let m = p.start();
-            p.expect_keyword(T![this], "this");
+            p.expect(T![this]);
             m.complete(p, JS_THIS_EXPRESSION)
         }
         T![class] => {
@@ -1260,7 +1234,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
 
         BACKTICK => {
             let m = p.start();
-            parse_template_literal(p, m, false)
+            parse_template_literal(p, m, false, false)
         }
         ERROR_TOKEN => {
             let m = p.start();
@@ -1298,7 +1272,7 @@ pub(crate) fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax {
     parse_identifier(p, JS_REFERENCE_IDENTIFIER)
 }
 
-pub(crate) fn is_nth_at_reference_identifier(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_reference_identifier(p: &mut Parser, n: usize) -> bool {
     is_nth_at_identifier(p, n)
 }
 
@@ -1381,19 +1355,19 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 }
 
 #[inline]
-pub(crate) fn is_at_identifier(p: &Parser) -> bool {
+pub(crate) fn is_at_identifier(p: &mut Parser) -> bool {
     is_nth_at_identifier(p, 0)
 }
 
 #[inline]
-pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_identifier(p: &mut Parser, n: usize) -> bool {
     p.nth_at(n, T![ident])
         || p.nth(n).is_contextual_keyword()
         || p.nth(n).is_future_reserved_keyword()
 }
 
 #[inline]
-pub(crate) fn is_nth_at_identifier_or_keyword(p: &Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_identifier_or_keyword(p: &mut Parser, n: usize) -> bool {
     p.nth(n).is_keyword() || is_nth_at_identifier(p, n)
 }
 
@@ -1412,22 +1386,28 @@ fn parse_template_literal(
     p: &mut Parser,
     marker: Marker,
     in_optional_chain: bool,
+    tagged: bool,
 ) -> CompletedMarker {
-    debug_assert!(p.at(BACKTICK));
+    p.bump_with_context(BACKTICK, LexContext::TemplateElement { tagged });
 
-    p.expect(BACKTICK);
     let elements_list = p.start();
-    parse_template_elements(p, JS_TEMPLATE_CHUNK_ELEMENT, JS_TEMPLATE_ELEMENT, |p| {
-        parse_expression(p, ExpressionContext::default())
-            .or_add_diagnostic(p, js_parse_error::expected_expression)
-    });
+    parse_template_elements(
+        p,
+        JS_TEMPLATE_CHUNK_ELEMENT,
+        JS_TEMPLATE_ELEMENT,
+        tagged,
+        |p| {
+            parse_expression(p, ExpressionContext::default())
+                .or_add_diagnostic(p, js_parse_error::expected_expression)
+        },
+    );
 
     elements_list.complete(p, JS_TEMPLATE_ELEMENT_LIST);
 
     // test_err template_literal_unterminated
     // let a = `${foo} bar
 
-    // The lexer already should throw an error for unterminated template literal
+    // The lexer emits an error for unterminated template literals
     p.eat(BACKTICK);
     let mut completed = marker.complete(p, JS_TEMPLATE);
 
@@ -1451,7 +1431,8 @@ pub(crate) fn parse_template_elements<P>(
     p: &mut Parser,
     chunk_kind: JsSyntaxKind,
     element_kind: JsSyntaxKind,
-    parse_expression: P,
+    tagged: bool,
+    parse_element: P,
 ) where
     P: Fn(&mut Parser) -> Option<CompletedMarker>,
 {
@@ -1459,30 +1440,36 @@ pub(crate) fn parse_template_elements<P>(
         match p.cur() {
             TEMPLATE_CHUNK => {
                 let m = p.start();
-                p.bump_any();
+                p.bump_with_context(TEMPLATE_CHUNK, LexContext::TemplateElement { tagged });
                 m.complete(p, chunk_kind);
             },
             DOLLAR_CURLY => {
                 let e = p.start();
-                p.bump_any();
+                p.bump(DOLLAR_CURLY);
 
-                parse_expression(p);
-
-                if !p.expect(T!['}']) {
+                parse_element(p);
+                if !p.at(T!['}']) {
+                    p.error(expected_token(T!['}']));
                     // Seems there's more. For example a `${a a}`. We must eat all tokens away to avoid a panic because of an unexpected token
-                    if ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p).is_ok() {
-                        p.eat(T!['}']); // eat the closing paren if we successfully recovered
+                    let _ =  ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p);
+                    if !p.at(T!['}']) {
+                        e.complete(p, element_kind);
+                        // Failed to fully recover, unclear where we are now, exit
+                        break;
                     }
                 }
+
+                p.bump_with_context(T!['}'], LexContext::TemplateElement { tagged });
                 e.complete(p, element_kind);
             }
             ERROR_TOKEN => {
                 let err = p.err_builder("Invalid template literal")
                     .primary(p.cur_range(), "");
-                p.err_and_bump(err, JsSyntaxKind::JS_UNKNOWN);
+                p.error(err);
+                p.bump_with_context(p.cur(), LexContext::TemplateElement { tagged });
             }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
-        }
+        };
     }
 }
 
@@ -1593,14 +1580,14 @@ fn parse_call_expression_rest(
 
         if p.at(T![?.]) {}
 
-        if !matches!(p.cur(), T![?.] | T![<] | T!['(']) {
+        if !matches!(p.cur(), T![?.] | T![<] | T![<<] | T!['(']) {
             break lhs;
         }
 
         // Cloning here is necessary because parsing out the type arguments may rewind in which
         // case we want to return the `lhs`.
         let m = lhs.clone().precede(p);
-        let start_pos = p.token_pos();
+        let start_pos = p.tokens.position();
         let optional_chain_call = p.eat(T![?.]);
         in_optional_chain = in_optional_chain || optional_chain_call;
 
@@ -1609,7 +1596,9 @@ fn parse_call_expression_rest(
         // a<A, B, C>();
         // (() => { a }).a<A, B, C>()
         // (() => a)<A, B, C>();
-        if TypeScript.is_supported(p) && p.at(T![<]) {
+        // type A<T> = T;
+        // a<<T>(arg: T) => number, number, string>();
+        if TypeScript.is_supported(p) && matches!(p.cur(), T![<] | T![<<]) {
             // rewinds automatically if not a valid type arguments
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
 
@@ -1618,7 +1607,7 @@ fn parse_call_expression_rest(
                     // test ts ts_tagged_template_literal
                     // html<A, B>`abcd`
                     // html<A, B>`abcd`._string
-                    lhs = parse_template_literal(p, m, optional_chain_call);
+                    lhs = parse_template_literal(p, m, optional_chain_call, true);
                     continue;
                 }
 
@@ -1649,7 +1638,7 @@ fn parse_call_expression_rest(
             // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
             // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
             // * if the parser is at '(': This always parses out as valid arguments.
-            debug_assert_eq!(p.token_pos(), start_pos);
+            debug_assert_eq!(p.tokens.position(), start_pos);
             m.abandon(p);
         }
 
@@ -1665,7 +1654,7 @@ fn parse_postfix_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSynta
     let checkpoint = p.checkpoint();
     let lhs = parse_lhs_expr(p, context);
     lhs.map(|marker| {
-        if !p.has_linebreak_before_n(0) {
+        if !p.has_preceding_line_break() {
             // test post_update_expr
             // foo++
             // foo--
@@ -1711,7 +1700,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         // async function test() {}
         // await test();
         let m = p.start();
-        p.expect_keyword(T![await], "await");
+        p.expect(T![await]);
 
         parse_unary_expr(p, context)
             .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
@@ -1796,7 +1785,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         let is_delete = op == T![delete];
 
         if is_delete {
-            p.expect_keyword(T![delete], "delete");
+            p.expect(T![delete]);
         } else {
             p.bump_any();
         }
@@ -1913,7 +1902,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
 #[derive(Default)]
 struct DeleteExpressionRewriter {
-    stack: Vec<(Marker, JsSyntaxKind)>,
+    stack: Vec<(RewriteMarker, JsSyntaxKind)>,
     result: Option<CompletedMarker>,
     /// Set to true immediately after the rewriter exits an identifier expression
     exited_ident_expr: Option<TextRange>,
@@ -1924,14 +1913,14 @@ struct DeleteExpressionRewriter {
 }
 
 impl RewriteParseEvents for DeleteExpressionRewriter {
-    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
+    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut RewriteParser) {
         self.stack.push((p.start(), kind));
         self.exited_ident_expr.take();
         self.exited_private_name = false;
         self.exited_private_member_expr.take();
     }
 
-    fn finish_node(&mut self, p: &mut Parser) {
+    fn finish_node(&mut self, p: &mut RewriteParser) {
         let (m, kind) = self.stack.pop().expect("stack depth mismatch");
         let node = m.complete(p, kind);
 
@@ -1952,18 +1941,18 @@ impl RewriteParseEvents for DeleteExpressionRewriter {
             self.exited_private_name = kind == JS_PRIVATE_NAME;
         }
 
-        self.result = Some(node);
+        self.result = Some(node.into());
     }
 }
 
-pub(super) fn is_at_name(p: &Parser) -> bool {
+pub(super) fn is_at_name(p: &mut Parser) -> bool {
     is_nth_at_name(p, 0)
 }
 
-pub(super) fn is_nth_at_name(p: &Parser, offset: usize) -> bool {
+pub(super) fn is_nth_at_name(p: &mut Parser, offset: usize) -> bool {
     p.nth_at(offset, T![ident]) || p.nth(offset).is_keyword()
 }
 
-pub(super) fn is_nth_at_any_name(p: &Parser, n: usize) -> bool {
+pub(super) fn is_nth_at_any_name(p: &mut Parser, n: usize) -> bool {
     is_nth_at_name(p, n) || p.nth_at(n, T![#])
 }

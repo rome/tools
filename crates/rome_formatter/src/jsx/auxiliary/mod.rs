@@ -11,3 +11,4 @@ mod opening_element;
 mod reference_identifier;
 mod self_closing_element;
 mod string_literal;
+mod text_literal;

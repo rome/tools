@@ -168,7 +168,7 @@ impl From<FunctionKind> for JsSyntaxKind {
     }
 }
 
-fn is_at_function(p: &Parser) -> bool {
+fn is_at_function(p: &mut Parser) -> bool {
     p.at_ts(token_set![T![async], T![function]]) || is_at_async_function(p, LineBreak::DoNotCheck)
 }
 
@@ -180,14 +180,14 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     if in_async {
         // test_err function_escaped_async
         // void \u0061sync function f(){}
-        p.eat_keyword(T![async], "async");
+        p.eat(T![async]);
         flags |= SignatureFlags::ASYNC;
     }
 
-    p.expect_keyword(T![function], "function");
+    p.expect(T![function]);
     let generator_range = if p.eat(T![*]) {
         flags |= SignatureFlags::GENERATOR;
-        p.tokens.last_tok().map(|t| t.range())
+        p.last_range()
     } else {
         None
     };
@@ -351,7 +351,7 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
         p.bump(T![async]);
     }
 
-    p.expect_keyword(T![function], "function");
+    p.expect(T![function]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
@@ -393,10 +393,10 @@ pub(crate) enum LineBreak {
 
 #[inline]
 /// Checks if the parser is inside a "async function"
-pub(super) fn is_at_async_function(p: &Parser, should_check_line_break: LineBreak) -> bool {
+pub(super) fn is_at_async_function(p: &mut Parser, should_check_line_break: LineBreak) -> bool {
     let async_function_tokens = p.at(T![async]) && p.nth_at(1, T![function]);
     if should_check_line_break == LineBreak::DoCheck {
-        async_function_tokens && !p.has_linebreak_before_n(1)
+        async_function_tokens && !p.has_nth_preceding_line_break(1)
     } else {
         async_function_tokens
     }
@@ -450,7 +450,7 @@ fn try_parse_parenthesized_arrow_function_head(
 
     // test_err arrow_escaped_async
     // \u0061sync () => {}
-    let flags = if p.eat_keyword(T![async], "async") {
+    let flags = if p.eat(T![async]) {
         SignatureFlags::ASYNC
     } else {
         SignatureFlags::empty()
@@ -459,7 +459,7 @@ fn try_parse_parenthesized_arrow_function_head(
     if p.at(T![<]) {
         parse_ts_type_parameters(p).ok();
 
-        if ambiguity.is_disallowed() && p.tokens.last_tok().map(|t| t.kind) != Some(T![>]) {
+        if ambiguity.is_disallowed() && p.last() != Some(T![>]) {
             return Err(m);
         }
     }
@@ -475,7 +475,7 @@ fn try_parse_parenthesized_arrow_function_head(
     )
     .or_add_diagnostic(p, expected_parameters);
 
-    if p.tokens.last_tok().map(|t| t.kind) != Some(T![')']) && ambiguity.is_disallowed() {
+    if p.last() != Some(T![')']) && ambiguity.is_disallowed() {
         return Err(m);
     }
 
@@ -485,7 +485,7 @@ fn try_parse_parenthesized_arrow_function_head(
         })
         .ok();
 
-    if p.has_linebreak_before_n(0) {
+    if p.has_preceding_line_break() {
         p.error(
             p.err_builder("Line terminator not permitted before arrow.")
                 .primary(p.cur_range(), ""),
@@ -503,7 +503,7 @@ fn try_parse_parenthesized_arrow_function_head(
 // let a = <A, B extends A, C = string>(a: A, b: B, c: C) => "hello";
 // let b = async <A, B>(a: A, b: B): Promise<string> => "hello";
 fn parse_possible_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
-    let start_pos = p.token_pos();
+    let start_pos = p.cur_range().start();
 
     // Test if we already tried to parse this position as an arrow function and failed.
     // If so, bail out immediately.
@@ -569,7 +569,7 @@ enum IsParenthesizedArrowFunctionExpression {
 //  => {}
 
 fn is_parenthesized_arrow_function_expression(
-    p: &Parser,
+    p: &mut Parser,
 ) -> IsParenthesizedArrowFunctionExpression {
     match p.cur() {
         // These could be the start of a parenthesized arrow function expression but needs further verification
@@ -581,7 +581,7 @@ fn is_parenthesized_arrow_function_expression(
             // let a = async foo => {}
             // let b = async (bar) => {}
             // async (foo, bar, ...baz) => foo
-            if p.has_linebreak_before_n(1) {
+            if p.has_nth_preceding_line_break(1) {
                 IsParenthesizedArrowFunctionExpression::False
             } else if matches!(p.nth(1), T!['('] | T![<]) {
                 is_parenthesized_arrow_function_expression_impl(p, SignatureFlags::ASYNC)
@@ -598,7 +598,7 @@ fn is_parenthesized_arrow_function_expression(
 
 // Tests if the parser is at an arrow function expression
 fn is_parenthesized_arrow_function_expression_impl(
-    p: &Parser,
+    p: &mut Parser,
     flags: SignatureFlags,
 ) -> IsParenthesizedArrowFunctionExpression {
     let n = if flags.contains(SignatureFlags::ASYNC) {
@@ -697,7 +697,7 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
     let is_async = p.at(T![async]) && is_nth_at_identifier_binding(p, 1);
 
     let flags = if is_async {
-        p.eat_keyword(T![async], "async");
+        p.eat(T![async]);
         SignatureFlags::ASYNC
     } else {
         SignatureFlags::empty()
@@ -715,11 +715,13 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
 }
 
-fn is_arrow_function_with_single_parameter(p: &Parser) -> bool {
-    if p.at(T![async]) && !p.has_linebreak_before_n(1) {
-        is_nth_at_identifier_binding(p, 1) && p.nth_at(2, T![=>]) && !p.has_linebreak_before_n(2)
+fn is_arrow_function_with_single_parameter(p: &mut Parser) -> bool {
+    if p.at(T![async]) && !p.has_nth_preceding_line_break(1) {
+        is_nth_at_identifier_binding(p, 1)
+            && p.nth_at(2, T![=>])
+            && !p.has_nth_preceding_line_break(2)
     } else {
-        is_at_identifier_binding(p) && p.nth_at(1, T![=>]) && !p.has_linebreak_before_n(1)
+        is_at_identifier_binding(p) && p.nth_at(1, T![=>]) && !p.has_nth_preceding_line_break(1)
     }
 }
 
@@ -844,7 +846,7 @@ pub(crate) fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
     }
 
     let parameter = p.start();
-    p.expect_keyword(T![this], "this");
+    p.expect(T![this]);
     parse_ts_type_annotation(p).ok();
     Present(parameter.complete(p, TS_THIS_PARAMETER))
 }
@@ -999,12 +1001,12 @@ pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
 
     if p.at(T!['[']) || p.at(T!['{']) {
         // Array or object pattern. Try to parse it and return true if there were no parsing errors
-        let previous_error_count = p.errors.len();
+        let previous_error_count = p.diagnostics.len();
         let pattern = parse_binding_pattern(
             p,
             ExpressionContext::default().and_object_expression_allowed(true),
         );
-        pattern.is_present() && p.errors.len() == previous_error_count
+        pattern.is_present() && p.diagnostics.len() == previous_error_count
     } else {
         false
     }

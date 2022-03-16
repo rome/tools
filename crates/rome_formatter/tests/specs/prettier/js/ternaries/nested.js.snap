@@ -137,7 +137,7 @@ const StorybookLoader = ({ match }) => (
         </Content>
       </Message>
     )
-);
+)
 
 const message = i % 3 === 0 && i % 5 === 0
   ? "fizzbuzz"
@@ -198,43 +198,33 @@ a
 ```
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:16:7
-   │  
-16 │       ? <ButtonStorybook />
-   │ ┌───────^
-17 │ │     : match.params.storyId === "color"
-   │ └─────^ JSX only syntax
+   │
+16 │     ? <ButtonStorybook />
+   │       ^^^^^^^^^^^^^^^^^^^ JSX only syntax
 
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:18:7
-   │  
-18 │       ? <ColorBook />
-   │ ┌───────^
-19 │ │     : match.params.storyId === "typography"
-   │ └─────^ JSX only syntax
+   │
+18 │     ? <ColorBook />
+   │       ^^^^^^^^^^^^^ JSX only syntax
 
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:20:7
-   │  
-20 │       ? <TypographyBook />
-   │ ┌───────^
-21 │ │     : match.params.storyId === "loading"
-   │ └─────^ JSX only syntax
+   │
+20 │     ? <TypographyBook />
+   │       ^^^^^^^^^^^^^^^^^^ JSX only syntax
 
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:22:7
-   │  
-22 │       ? <LoaderStorybook />
-   │ ┌───────^
-23 │ │     : match.params.storyId === "deal-list"
-   │ └─────^ JSX only syntax
+   │
+22 │     ? <LoaderStorybook />
+   │       ^^^^^^^^^^^^^^^^^^^ JSX only syntax
 
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:24:7
-   │  
-24 │       ? <DealListStory />
-   │ ┌───────^
-25 │ │     : (
-   │ └─────^ JSX only syntax
+   │
+24 │     ? <DealListStory />
+   │       ^^^^^^^^^^^^^^^^^ JSX only syntax
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ nested.js:26:7
@@ -243,13 +233,13 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
 27 │ │         <Title>{'Missing story book'}</Title>
    │ └─────────────────────────────────────^ TypeScript only syntax
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ nested.js:27:39
+error: unterminated regex literal
+   ┌─ nested.js:27:46
    │
 27 │         <Title>{'Missing story book'}</Title>
-   │                                      -^ But this operator was encountered instead
-   │                                      │ 
-   │                                      This operator requires a right hand side value
+   │                                       -      ^ ...but the line ends here
+   │                                       │      
+   │                                       a regex literal starts there...
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ nested.js:28:9
@@ -258,19 +248,19 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
 29 │ │           <BackButton/>
    │ └───────────────────────^ TypeScript only syntax
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ nested.js:30:10
+error: unterminated regex literal
+   ┌─ nested.js:30:19
    │
 30 │         </Content>
-   │         -^ But this operator was encountered instead
-   │         │ 
-   │         This operator requires a right hand side value
+   │          -        ^ ...but the line ends here
+   │          │        
+   │          a regex literal starts there...
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ nested.js:31:7
    │
 31 │       </Message>
-   │       ^ TypeScript only syntax
+   │       ^^^^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: expected an expression but instead found ')'
    ┌─ nested.js:32:5
@@ -320,13 +310,13 @@ error[SyntaxError]: expected a function body but instead found ')'
 76 │     ) : medals[0].unique ? (
    │     ^ Expected a function body here
 
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ nested.js:87:2
+error: unterminated regex literal
+   ┌─ nested.js:87:7
    │
 87 │ </div>
-   │ -^ But this operator was encountered instead
-   │ │ 
-   │ This operator requires a right hand side value
+   │  -    ^ ...but the line ends here
+   │  │    
+   │  a regex literal starts there...
 
 
 ```

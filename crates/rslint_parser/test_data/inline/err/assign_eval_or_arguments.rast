@@ -4,8 +4,10 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsIdentifierAssignment {
-                    name_token: IDENT@0..5 "eval" [] [Whitespace(" ")],
+                left: JsUnknownAssignment {
+                    items: [
+                        IDENT@0..5 "eval" [] [Whitespace(" ")],
+                    ],
                 },
                 operator_token: EQ@5..7 "=" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
@@ -16,8 +18,10 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsIdentifierAssignment {
-                    name_token: IDENT@8..14 "eval" [Newline("\n")] [Whitespace(" ")],
+                left: JsUnknownAssignment {
+                    items: [
+                        IDENT@8..14 "eval" [Newline("\n")] [Whitespace(" ")],
+                    ],
                 },
                 operator_token: QUESTION2EQ@14..18 "??=" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
@@ -28,8 +32,10 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsIdentifierAssignment {
-                    name_token: IDENT@19..25 "eval" [Newline("\n")] [Whitespace(" ")],
+                left: JsUnknownAssignment {
+                    items: [
+                        IDENT@19..25 "eval" [Newline("\n")] [Whitespace(" ")],
+                    ],
                 },
                 operator_token: STAREQ@25..28 "*=" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
@@ -40,8 +46,10 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsIdentifierAssignment {
-                    name_token: IDENT@29..40 "arguments" [Newline("\n")] [Whitespace(" ")],
+                left: JsUnknownAssignment {
+                    items: [
+                        IDENT@29..40 "arguments" [Newline("\n")] [Whitespace(" ")],
+                    ],
                 },
                 operator_token: EQ@40..42 "=" [] [Whitespace(" ")],
                 right: JsStringLiteralExpression {
@@ -52,8 +60,10 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsIdentifierAssignment {
-                    name_token: IDENT@47..58 "arguments" [Newline("\n")] [Whitespace(" ")],
+                left: JsUnknownAssignment {
+                    items: [
+                        IDENT@47..58 "arguments" [Newline("\n")] [Whitespace(" ")],
+                    ],
                 },
                 operator_token: PIPE2EQ@58..62 "||=" [] [Whitespace(" ")],
                 right: JsAssignmentExpression {
@@ -98,7 +108,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..105
     0: JS_EXPRESSION_STATEMENT@0..8
       0: JS_ASSIGNMENT_EXPRESSION@0..8
-        0: JS_IDENTIFIER_ASSIGNMENT@0..5
+        0: JS_UNKNOWN_ASSIGNMENT@0..5
           0: IDENT@0..5 "eval" [] [Whitespace(" ")]
         1: EQ@5..7 "=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@7..8
@@ -106,7 +116,7 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..19
       0: JS_ASSIGNMENT_EXPRESSION@8..19
-        0: JS_IDENTIFIER_ASSIGNMENT@8..14
+        0: JS_UNKNOWN_ASSIGNMENT@8..14
           0: IDENT@8..14 "eval" [Newline("\n")] [Whitespace(" ")]
         1: QUESTION2EQ@14..18 "??=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@18..19
@@ -114,7 +124,7 @@ JsModule {
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@19..29
       0: JS_ASSIGNMENT_EXPRESSION@19..29
-        0: JS_IDENTIFIER_ASSIGNMENT@19..25
+        0: JS_UNKNOWN_ASSIGNMENT@19..25
           0: IDENT@19..25 "eval" [Newline("\n")] [Whitespace(" ")]
         1: STAREQ@25..28 "*=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@28..29
@@ -122,7 +132,7 @@ JsModule {
       1: (empty)
     3: JS_EXPRESSION_STATEMENT@29..47
       0: JS_ASSIGNMENT_EXPRESSION@29..47
-        0: JS_IDENTIFIER_ASSIGNMENT@29..40
+        0: JS_UNKNOWN_ASSIGNMENT@29..40
           0: IDENT@29..40 "arguments" [Newline("\n")] [Whitespace(" ")]
         1: EQ@40..42 "=" [] [Whitespace(" ")]
         2: JS_STRING_LITERAL_EXPRESSION@42..47
@@ -130,7 +140,7 @@ JsModule {
       1: (empty)
     4: JS_EXPRESSION_STATEMENT@47..105
       0: JS_ASSIGNMENT_EXPRESSION@47..105
-        0: JS_IDENTIFIER_ASSIGNMENT@47..58
+        0: JS_UNKNOWN_ASSIGNMENT@47..58
           0: IDENT@47..58 "arguments" [Newline("\n")] [Whitespace(" ")]
         1: PIPE2EQ@58..62 "||=" [] [Whitespace(" ")]
         2: JS_ASSIGNMENT_EXPRESSION@62..105

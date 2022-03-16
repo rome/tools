@@ -50,17 +50,101 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 2 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
   │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ JSX only syntax
 
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+error[SyntaxError]: expected `:` but instead found `}`
+  ┌─ call_comment.js:2:35
+  │
+2 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                   ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `anchorClassOn`
+  ┌─ call_comment.js:2:37
+  │
+2 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                     ^^^^^^^^^^^^^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+  ┌─ call_comment.js:2:56
+  │
+2 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                                        ^ unexpected
+
+error[SyntaxError]: expected an expression but instead found '>'
+  ┌─ call_comment.js:2:59
+  │
+2 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                                           ^ Expected an expression here
+
+error[SyntaxError]: expected an expression but instead found ','
+  ┌─ call_comment.js:2:60
+  │
+2 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                                            ^ Expected an expression here
+
+error[SyntaxError]: Invalid assignment to `<ChildUpdates renderAnchor`
   ┌─ call_comment.js:7:3
   │
 7 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
   │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ JSX only syntax
 
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+error[SyntaxError]: expected `,` but instead found `anchorClassOn`
+  ┌─ call_comment.js:7:37
+  │
+7 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                     ^^^^^^^^^^^^^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+  ┌─ call_comment.js:7:56
+  │
+7 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                                        ^ unexpected
+
+error[SyntaxError]: expected an expression but instead found '>'
+  ┌─ call_comment.js:7:59
+  │
+7 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                                           ^ Expected an expression here
+
+error[SyntaxError]: expected an expression but instead found ','
+  ┌─ call_comment.js:7:60
+  │
+7 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  │                                                            ^ Expected an expression here
+
+error[SyntaxError]: Invalid assignment to `<ChildUpdates renderAnchor`
    ┌─ call_comment.js:12:3
    │
 12 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
-   │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ JSX only syntax
+   │   ^^^^^^^^^^^^^^^^^^^^^^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ call_comment.js:12:35
+   │
+12 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+   │                                   ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `anchorClassOn`
+   ┌─ call_comment.js:12:37
+   │
+12 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+   │                                     ^^^^^^^^^^^^^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ call_comment.js:12:56
+   │
+12 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+   │                                                        ^ unexpected
+
+error[SyntaxError]: expected an expression but instead found '>'
+   ┌─ call_comment.js:12:59
+   │
+12 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+   │                                                           ^ Expected an expression here
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ call_comment.js:12:60
+   │
+12 │   <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+   │                                                            ^ Expected an expression here
 
 
 ```

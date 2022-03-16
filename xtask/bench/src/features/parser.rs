@@ -12,7 +12,6 @@ use std::time::Duration;
 pub struct ParseMeasurement {
     id: String,
     code: String,
-    tokenization: Duration,
     parsing: Duration,
     tree_sink: Duration,
     diagnostics: Vec<Diagnostic>,
@@ -55,22 +54,13 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
     #[cfg(feature = "dhat-on")]
     let stats = dhat::get_stats().unwrap();
 
-    let tokenizer_timer = timing::start();
-    let (tokens, mut diagnostics) = rslint_parser::tokenize(code, 0);
-    let tok_source = rslint_parser::TokenSource::new(code, &tokens);
-    let tokenization_duration = tokenizer_timer.stop();
-
-    #[cfg(feature = "dhat-on")]
-    println!("Tokenizer");
-    #[cfg(feature = "dhat-on")]
-    let stats = print_diff(stats, dhat::get_stats().unwrap());
-
     let parser_timer = timing::start();
-    let (events, parsing_diags, tokens) = {
-        let mut parser = rslint_parser::Parser::new(tok_source, 0, source_type);
+
+    let (events, diagnostics, tokens) = {
+        let mut parser = rslint_parser::Parser::new(code, 0, source_type);
         rslint_parser::syntax::program::parse(&mut parser);
-        let (events, parsing_diags) = parser.finish();
-        (events, parsing_diags, tokens)
+        let (events, tokens, diagnostics) = parser.finish();
+        (events, diagnostics, tokens)
     };
     let parse_duration = parser_timer.stop();
 
@@ -81,8 +71,8 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
 
     let tree_sink_timer = timing::start();
     let mut tree_sink = rslint_parser::LosslessTreeSink::new(code, &tokens);
-    rslint_parser::process(&mut tree_sink, events, parsing_diags);
-    let (_green, sink_diags) = tree_sink.finish();
+    rslint_parser::process(&mut tree_sink, events, diagnostics);
+    let (_green, diagnostics) = tree_sink.finish();
     let tree_sink_duration = tree_sink_timer.stop();
 
     #[cfg(feature = "dhat-on")]
@@ -90,12 +80,9 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
     #[cfg(feature = "dhat-on")]
     print_diff(stats, dhat::get_stats().unwrap());
 
-    diagnostics.extend(sink_diags);
-
     BenchmarkSummary::Parser(ParseMeasurement {
         id: id.to_string(),
         code: code.to_string(),
-        tokenization: tokenization_duration,
         parsing: parse_duration,
         tree_sink: tree_sink_duration,
         diagnostics,
@@ -108,15 +95,14 @@ pub fn run_parse(code: &str, source_type: SourceType) -> Parse<JsAnyRoot> {
 
 impl ParseMeasurement {
     fn total(&self) -> Duration {
-        self.tokenization.add(self.parsing).add(self.tree_sink)
+        self.parsing.add(self.tree_sink)
     }
 
     pub(crate) fn summary(&self) -> String {
         format!(
-            "{}, Total Time: {:?}, tokenization: {:?}, parsing: {:?}, tree_sink: {:?}",
+            "{}, Total Time: {:?}, parsing: {:?}, tree_sink: {:?}",
             self.id,
             self.total(),
-            self.tokenization,
             self.parsing,
             self.tree_sink,
         )
@@ -125,7 +111,6 @@ impl ParseMeasurement {
 
 impl Display for ParseMeasurement {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let _ = writeln!(f, "\tTokenization: {:>10?}", self.tokenization);
         let _ = writeln!(f, "\tParsing:      {:>10?}", self.parsing);
         let _ = writeln!(f, "\tTree_sink:    {:>10?}", self.tree_sink);
         let _ = writeln!(f, "\t              ----------");

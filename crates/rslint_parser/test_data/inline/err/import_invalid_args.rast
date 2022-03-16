@@ -27,7 +27,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsUnknownExpression {
                 items: [
-                    DOT2@16..19 "..." [] [],
+                    DOT3@16..19 "..." [] [],
                     L_BRACK@19..20 "[" [] [],
                     JS_STRING_LITERAL@20..25 "\"foo\"" [] [],
                     R_BRACK@25..26 "]" [] [],
@@ -109,7 +109,7 @@ JsModule {
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@16..27
       0: JS_UNKNOWN_EXPRESSION@16..27
-        0: DOT2@16..19 "..." [] []
+        0: DOT3@16..19 "..." [] []
         1: L_BRACK@19..20 "[" [] []
         2: JS_STRING_LITERAL@20..25 "\"foo\"" [] []
         3: R_BRACK@25..26 "]" [] []

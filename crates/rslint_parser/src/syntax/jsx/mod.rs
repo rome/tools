@@ -1,14 +1,17 @@
 pub mod jsx_parse_errors;
 
-use rslint_lexer::{JsSyntaxKind, T};
+use rome_js_syntax::JsSyntaxKind::*;
+use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
 use crate::{
     parser::RecoveryResult, Checkpoint, Marker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
 };
 
 use self::jsx_parse_errors::jsx_expected_attribute;
-
 use super::expr::ExpressionContext;
+use crate::syntax::expr::parse_name;
+use crate::syntax::js_parse_error::expected_identifier;
+use crate::{Absent, Checkpoint, Marker, ParsedSyntax, Parser, Present};
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -75,7 +78,7 @@ pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 // test jsx jsx_element_as_statements
 // <div />
 fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    parse_jsx_element(p).map(|element| {
+    parse_jsx_element(p, true).map(|element| {
         let m = element.precede(p);
         m.complete(p, JsSyntaxKind::JSX_ELEMENT_EXPRESSION)
     })
@@ -90,14 +93,44 @@ fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
 // function f() {
 //     return <div />
 // }
-fn parse_jsx_element(p: &mut Parser) -> ParsedSyntax {
+
+// test jsx jsx_closing_token_trivia
+// <closing / /* some comment */ >;
+// <open><
+// /* some comment */ / open>;
+
+// test jsx jsx_text
+// <a>test</a>;
+// <a>   whitespace handling </a>;
+// <a> multi
+//    line
+//          node
+// </a>;
+// <test>\u3333</test> // no error for invalid unicode escape
+
+// test_err jsx jsx_invalid_text
+// <a> test ></a>;
+// <b> invalid }</b>;
+
+/// Parses a JSX element
+///
+/// `in_expression` must be `true` if this element is a direct child of the `JsxElementExpression` (root of an expression).
+/// It should be false when parsing any child node.
+fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
     let m = p.start();
-    match parse_jsx_element_head(p, m) {
+    match parse_jsx_element_head(p, m, in_expression) {
         ParsedSyntax::Present(opening_marker)
             if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT =>
         {
             let element_marker = opening_marker.precede(p);
-            let closing_marker = parse_jsx_closing_element(p);
+
+            if p.at(JSX_TEXT) {
+                let m = p.start();
+                p.bump(JSX_TEXT);
+                m.complete(p, JSX_TEXT_LITERAL);
+            }
+
+            let closing_marker = parse_jsx_closing_element(p, in_expression);
             if closing_marker.is_absent() {
                 element_marker.abandon(p);
                 ParsedSyntax::Absent
@@ -117,7 +150,7 @@ fn parse_jsx_element(p: &mut Parser) -> ParsedSyntax {
 
 // <a ...> or <a ... />
 // ^          ^
-fn parse_jsx_element_head(p: &mut Parser, m: Marker) -> ParsedSyntax {
+fn parse_jsx_element_head(p: &mut Parser, m: Marker, in_expression: bool) -> ParsedSyntax {
     if !p.eat(T![<]) {
         return ParsedSyntax::Absent;
     }
@@ -130,33 +163,36 @@ fn parse_jsx_element_head(p: &mut Parser, m: Marker) -> ParsedSyntax {
 
     JsxAttributeList.parse_list(p);
 
-    let kind = if p.at(T![/]) && p.nth_at(1, T![>]) {
-        p.bump_multiple(2, JsSyntaxKind::SLASH_R_ANGLE);
+    let kind = if p.eat(T![/]) {
         JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT
-    } else if p.eat(T![>]) {
-        JsSyntaxKind::JSX_OPENING_ELEMENT
     } else {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
+        JsSyntaxKind::JSX_OPENING_ELEMENT
     };
+
+    if !p.at(T![>]) {
+        m.abandon(p);
+        return Absent;
+    } else if in_expression && kind == JSX_SELF_CLOSING_ELEMENT {
+        p.bump(T![>]);
+    } else {
+        p.bump_with_context(T![>], LexContext::JsxChild);
+    }
 
     ParsedSyntax::Present(m.complete(p, kind))
 }
 
 // <a/>
 // ^
-fn parse_jsx_closing_element(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_closing_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
     if !p.at(T![<]) {
         return ParsedSyntax::Absent;
     }
 
     let m = p.start();
 
-    if p.at(T![<]) && p.nth_at(1, T![/]) {
-        p.bump_multiple(2, JsSyntaxKind::L_ANGLE_SLASH);
-    } else {
+    if !p.expect(T![<]) || !p.expect(T![/]) {
         m.abandon(p);
-        return ParsedSyntax::Absent;
+        return Absent;
     }
 
     let closing_name = parse_jsx_any_element_name(p);
@@ -165,22 +201,92 @@ fn parse_jsx_closing_element(p: &mut Parser) -> ParsedSyntax {
         return ParsedSyntax::Absent;
     }
 
-    if !p.eat(T![>]) {
+    if !p.at(T![>]) {
         m.abandon(p);
         return ParsedSyntax::Absent;
     }
 
-    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_CLOSING_ELEMENT))
+    if in_expression {
+        p.bump(T![>]);
+    } else {
+        p.bump_with_context(T![>], LexContext::JsxChild);
+    }
+
+    ParsedSyntax::Present(m.complete(p, JSX_CLOSING_ELEMENT))
 }
 
+// test jsx jsx_member_element_name
+// <a.b.c.d></a.b.c.d>;
+// <a-b.c></a-b.c>
+//
+// test_err jsx jsx_namespace_member_element_name
+// <namespace:a.b></namespace:a.b>
 fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
-    if !p.eat(T![ident]) {
-        return ParsedSyntax::Absent;
+    let left = parse_jsx_any_name(p);
+
+    if let Present(mut left) = left {
+        if left.kind() == JSX_NAMESPACE_NAME && p.at(T![.]) {
+            let error = p
+                .err_builder("JSX property access expressions cannot include JSX namespace names.")
+                .primary(left.range(p), "");
+            p.error(error)
+        }
+
+        while p.at(T![.]) {
+            let m = left.precede(p);
+            p.bump(T![.]);
+            parse_name(p).or_add_diagnostic(p, expected_identifier);
+            left = m.complete(p, JSX_MEMBER_NAME)
+        }
+
+        Present(left)
+    } else {
+        left
+    }
+}
+
+// test jsx jsx_any_name
+// <a-b-c-d-e></a-b-c-d-e>;
+// <a-b-c-d-e />;
+// <if />;
+// <namespace:name></namespace:name>;
+// <dashed-namespaced:dashed-name />;
+fn parse_jsx_any_name(p: &mut Parser) -> ParsedSyntax {
+    parse_jsx_reference_identifier(p).map(|identifier| {
+        if p.at(T![:]) {
+            let m = identifier.precede(p);
+            p.bump(T![:]);
+            parse_jsx_name(p).or_add_diagnostic(p, expected_identifier);
+            m.complete(p, JSX_NAMESPACE_NAME)
+        } else {
+            identifier
+        }
+    })
+}
+
+fn parse_jsx_name(p: &mut Parser) -> ParsedSyntax {
+    p.re_lex(ReLexContext::JsxIdentifier);
+
+    if p.at(JSX_IDENT) {
+        let name = p.start();
+        p.bump(JSX_IDENT);
+        Present(name.complete(p, JSX_NAME))
+    } else {
+        Absent
+    }
+}
+
+fn parse_jsx_reference_identifier(p: &mut Parser) -> ParsedSyntax {
+    p.re_lex(ReLexContext::JsxIdentifier);
+
+    if !p.at(JSX_IDENT) {
+        return Absent;
     }
 
     let m = p.start();
-    p.bump(T![ident]);
-    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_REFERENCE_IDENTIFIER))
+    p.bump(JSX_IDENT);
+
+    Present(m.complete(p, JSX_REFERENCE_IDENTIFIER))
 }
 
 struct JsxAttributeList;

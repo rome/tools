@@ -1,4 +1,4 @@
-use crate::{Parser, ParserError, TokenSet};
+use crate::{ParseDiagnostic, Parser, TokenSet};
 use rslint_errors::Diagnostic;
 use rslint_lexer::{JsSyntaxKind, T};
 
@@ -9,7 +9,7 @@ use rslint_lexer::{JsSyntaxKind, T};
 #[deprecated(note = "Use ParsedSyntax with ParseRecovery instead")]
 pub struct SingleTokenParseRecovery {
     /// The [Diagnostic] to emit
-    error: Option<ParserError>,
+    error: Option<ParseDiagnostic>,
     /// It tells the parser to recover if the position is inside a set of [tokens](TokenSet)
     recovery: TokenSet,
     /// It tells the parser to recover if the current token is a curly brace

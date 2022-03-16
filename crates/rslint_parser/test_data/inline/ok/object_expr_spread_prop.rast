@@ -17,7 +17,7 @@ JsModule {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
                                 members: JsObjectMemberList [
                                     JsSpread {
-                                        dotdotdot_token: DOT2@9..12 "..." [] [],
+                                        dotdotdot_token: DOT3@9..12 "..." [] [],
                                         argument: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@12..15 "foo" [] [],
@@ -55,7 +55,7 @@ JsModule {
                 0: L_CURLY@8..9 "{" [] []
                 1: JS_OBJECT_MEMBER_LIST@9..15
                   0: JS_SPREAD@9..15
-                    0: DOT2@9..12 "..." [] []
+                    0: DOT3@9..12 "..." [] []
                     1: JS_IDENTIFIER_EXPRESSION@12..15
                       0: JS_REFERENCE_IDENTIFIER@12..15
                         0: IDENT@12..15 "foo" [] []

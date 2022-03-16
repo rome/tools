@@ -7,3 +7,4 @@ layout: layouts/homepage.liquid
 {% include docs/intro.md %}
 {% include docs/status.md %}
 {% include docs/formatter.md %}
+{% include docs/philosophy.md %}

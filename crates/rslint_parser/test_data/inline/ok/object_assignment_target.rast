@@ -99,7 +99,7 @@ JsModule {
                             },
                             COMMA@66..68 "," [] [Whitespace(" ")],
                             JsObjectAssignmentPatternRest {
-                                dotdotdot_token: DOT2@68..71 "..." [] [],
+                                dotdotdot_token: DOT3@68..71 "..." [] [],
                                 target: JsIdentifierAssignment {
                                     name_token: IDENT@71..76 "rest" [] [Whitespace(" ")],
                                 },
@@ -197,7 +197,7 @@ JsModule {
                     0: JS_STRING_LITERAL@61..66 "\"foo\"" [] []
               3: COMMA@66..68 "," [] [Whitespace(" ")]
               4: JS_OBJECT_ASSIGNMENT_PATTERN_REST@68..76
-                0: DOT2@68..71 "..." [] []
+                0: DOT3@68..71 "..." [] []
                 1: JS_IDENTIFIER_ASSIGNMENT@71..76
                   0: IDENT@71..76 "rest" [] [Whitespace(" ")]
             2: R_CURLY@76..78 "}" [] [Whitespace(" ")]

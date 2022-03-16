@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 125
 expression: pipeline-operator-minimal.js
 
 ---
@@ -40,29 +40,23 @@ result; //=> "Hello, hello!"
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
   ┌─ pipeline-operator-minimal.js:8:4
   │
 8 │   |> doubleSay
-  │   -^ But this operator was encountered instead
-  │   │ 
-  │   This operator requires a right hand side value
+  │    ^ This operator requires a left hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
   ┌─ pipeline-operator-minimal.js:9:4
   │
 9 │   |> capitalize
-  │   -^ But this operator was encountered instead
-  │   │ 
-  │   This operator requires a right hand side value
+  │    ^ This operator requires a left hand side value
 
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
    ┌─ pipeline-operator-minimal.js:10:4
    │
 10 │   |> exclaim;
-   │   -^ But this operator was encountered instead
-   │   │ 
-   │   This operator requires a right hand side value
+   │    ^ This operator requires a left hand side value
 
 
 ```
