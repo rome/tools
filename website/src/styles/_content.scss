@@ -163,6 +163,10 @@
 		&:focus .header-anchor{
 			@extend .not-sr-only;
 		}
+
+		@include mobile-only() {
+			line-height: 1.2em;
+		}
 	}
 
 	pre {
