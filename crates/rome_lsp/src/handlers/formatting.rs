@@ -30,10 +30,11 @@ pub(crate) fn to_format_options(
 
     if custom_ident_style != default_options.indent_style {
         // merge settings with the ones provided by the editor
-        if workspace_settings.indent_style == "Spaces" {
+        // We use 2 because that's the default value that we assign to the space
+        if custom_ident_style == IndentStyle::Space(2) {
             default_options.indent_style = IndentStyle::Space(workspace_settings.space_quantity);
-        } else if workspace_settings.indent_style == "Tabs" {
-            default_options.indent_style = IndentStyle::Tab;
+        } else if custom_ident_style == IndentStyle::Tab {
+            default_options.indent_style = custom_ident_style;
         }
         info!(
             "Using user setting indent style: {}",
