@@ -255,7 +255,7 @@ fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
     let left = parse_jsx_name_or_namespace(p);
 
     left.map(|mut left| {
-        if left.kind() == JSX_NAME && (p.at(T![.]) || !is_html_element(left.text(p))) {
+        if left.kind() == JSX_NAME && (p.at(T![.]) || !is_intrinsic_element(left.text(p))) {
             left.change_kind(p, JSX_REFERENCE_IDENTIFIER)
         } else if left.kind() == JSX_NAMESPACE_NAME && p.at(T![.]) {
             let error = p
@@ -276,7 +276,13 @@ fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-fn is_html_element(element_name: &str) -> bool {
+/// Tests if this is an intrinsic element name. Intrinsic elements are such elements
+/// that are built in, for example HTML elements. This implementation uses React's semantic
+/// and assumes that anything starting with a lower case character is an intrinsic element, and
+/// that custom components start with an uper case character.
+///
+/// Resources: [TypeScript's documentation on intrinsic elements](https://www.typescriptlang.org/docs/handbook/jsx.html#intrinsic-elements)
+fn is_intrinsic_element(element_name: &str) -> bool {
     if let Some(first) = element_name.chars().next() {
         first.is_lowercase()
     } else {
@@ -321,6 +327,7 @@ struct JsxAttributeList;
 //     return <div string_literal="a" expression={1} novalue el=<a/>></div>;
 // }
 // <div dashed-name='test' use:validate="abcd" />;
+// <div use-dashed_underscore:validate="ahaha" />;
 // <div multiline-string='test
 //   continues here' />;
 // <div invalid-unicode-escape="\u10000\u20000" />;

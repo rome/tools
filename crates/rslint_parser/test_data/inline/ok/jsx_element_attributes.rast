@@ -151,57 +151,89 @@ JsModule {
                     },
                     attributes: JsxAttributeList [
                         JsxAttribute {
-                            name: JsxName {
-                                value_token: JSX_IDENT@144..160 "multiline-string" [] [],
+                            name: JsxNamespaceName {
+                                namespace: JsxName {
+                                    value_token: JSX_IDENT@144..165 "use-dashed_underscore" [] [],
+                                },
+                                colon_token: COLON@165..166 ":" [] [],
+                                name: JsxName {
+                                    value_token: JSX_IDENT@166..174 "validate" [] [],
+                                },
                             },
                             initializer: JsxAttributeInitializerClause {
-                                eq_token: EQ@160..161 "=" [] [],
+                                eq_token: EQ@174..175 "=" [] [],
                                 value: JsxString {
-                                    value_token: JSX_STRING_LITERAL@161..185 "'test\n  continues here'" [] [Whitespace(" ")],
+                                    value_token: JSX_STRING_LITERAL@175..183 "\"ahaha\"" [] [Whitespace(" ")],
                                 },
                             },
                         },
                     ],
-                    slash_token: SLASH@185..186 "/" [] [],
-                    r_angle_token: R_ANGLE@186..187 ">" [] [],
+                    slash_token: SLASH@183..184 "/" [] [],
+                    r_angle_token: R_ANGLE@184..185 ">" [] [],
                 },
             },
-            semicolon_token: SEMICOLON@187..188 ";" [] [],
+            semicolon_token: SEMICOLON@185..186 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsxTagExpression {
                 tag: JsxSelfClosingElement {
-                    l_angle_token: L_ANGLE@188..190 "<" [Newline("\n")] [],
+                    l_angle_token: L_ANGLE@186..188 "<" [Newline("\n")] [],
                     name: JsxName {
-                        value_token: JSX_IDENT@190..194 "div" [] [Whitespace(" ")],
+                        value_token: JSX_IDENT@188..192 "div" [] [Whitespace(" ")],
                     },
                     attributes: JsxAttributeList [
                         JsxAttribute {
                             name: JsxName {
-                                value_token: JSX_IDENT@194..216 "invalid-unicode-escape" [] [],
+                                value_token: JSX_IDENT@192..208 "multiline-string" [] [],
                             },
                             initializer: JsxAttributeInitializerClause {
-                                eq_token: EQ@216..217 "=" [] [],
+                                eq_token: EQ@208..209 "=" [] [],
                                 value: JsxString {
-                                    value_token: JSX_STRING_LITERAL@217..234 "\"\\u10000\\u20000\"" [] [Whitespace(" ")],
+                                    value_token: JSX_STRING_LITERAL@209..233 "'test\n  continues here'" [] [Whitespace(" ")],
                                 },
                             },
                         },
                     ],
-                    slash_token: SLASH@234..235 "/" [] [],
-                    r_angle_token: R_ANGLE@235..236 ">" [] [],
+                    slash_token: SLASH@233..234 "/" [] [],
+                    r_angle_token: R_ANGLE@234..235 ">" [] [],
                 },
             },
-            semicolon_token: SEMICOLON@236..237 ";" [] [],
+            semicolon_token: SEMICOLON@235..236 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxSelfClosingElement {
+                    l_angle_token: L_ANGLE@236..238 "<" [Newline("\n")] [],
+                    name: JsxName {
+                        value_token: JSX_IDENT@238..242 "div" [] [Whitespace(" ")],
+                    },
+                    attributes: JsxAttributeList [
+                        JsxAttribute {
+                            name: JsxName {
+                                value_token: JSX_IDENT@242..264 "invalid-unicode-escape" [] [],
+                            },
+                            initializer: JsxAttributeInitializerClause {
+                                eq_token: EQ@264..265 "=" [] [],
+                                value: JsxString {
+                                    value_token: JSX_STRING_LITERAL@265..282 "\"\\u10000\\u20000\"" [] [Whitespace(" ")],
+                                },
+                            },
+                        },
+                    ],
+                    slash_token: SLASH@282..283 "/" [] [],
+                    r_angle_token: R_ANGLE@283..284 ">" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@284..285 ";" [] [],
         },
     ],
-    eof_token: EOF@237..238 "" [Newline("\n")] [],
+    eof_token: EOF@285..286 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..238
+0: JS_MODULE@0..286
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..237
+  2: JS_MODULE_ITEM_LIST@0..285
     0: JS_FUNCTION_DECLARATION@0..90
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
@@ -298,38 +330,59 @@ JsModule {
           3: SLASH@135..136 "/" [] []
           4: R_ANGLE@136..137 ">" [] []
       1: SEMICOLON@137..138 ";" [] []
-    2: JS_EXPRESSION_STATEMENT@138..188
-      0: JSX_TAG_EXPRESSION@138..187
-        0: JSX_SELF_CLOSING_ELEMENT@138..187
+    2: JS_EXPRESSION_STATEMENT@138..186
+      0: JSX_TAG_EXPRESSION@138..185
+        0: JSX_SELF_CLOSING_ELEMENT@138..185
           0: L_ANGLE@138..140 "<" [Newline("\n")] []
           1: JSX_NAME@140..144
             0: JSX_IDENT@140..144 "div" [] [Whitespace(" ")]
-          2: JSX_ATTRIBUTE_LIST@144..185
-            0: JSX_ATTRIBUTE@144..185
-              0: JSX_NAME@144..160
-                0: JSX_IDENT@144..160 "multiline-string" [] []
-              1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@160..185
-                0: EQ@160..161 "=" [] []
-                1: JSX_STRING@161..185
-                  0: JSX_STRING_LITERAL@161..185 "'test\n  continues here'" [] [Whitespace(" ")]
-          3: SLASH@185..186 "/" [] []
-          4: R_ANGLE@186..187 ">" [] []
-      1: SEMICOLON@187..188 ";" [] []
-    3: JS_EXPRESSION_STATEMENT@188..237
-      0: JSX_TAG_EXPRESSION@188..236
-        0: JSX_SELF_CLOSING_ELEMENT@188..236
-          0: L_ANGLE@188..190 "<" [Newline("\n")] []
-          1: JSX_NAME@190..194
-            0: JSX_IDENT@190..194 "div" [] [Whitespace(" ")]
-          2: JSX_ATTRIBUTE_LIST@194..234
-            0: JSX_ATTRIBUTE@194..234
-              0: JSX_NAME@194..216
-                0: JSX_IDENT@194..216 "invalid-unicode-escape" [] []
-              1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@216..234
-                0: EQ@216..217 "=" [] []
-                1: JSX_STRING@217..234
-                  0: JSX_STRING_LITERAL@217..234 "\"\\u10000\\u20000\"" [] [Whitespace(" ")]
-          3: SLASH@234..235 "/" [] []
-          4: R_ANGLE@235..236 ">" [] []
-      1: SEMICOLON@236..237 ";" [] []
-  3: EOF@237..238 "" [Newline("\n")] []
+          2: JSX_ATTRIBUTE_LIST@144..183
+            0: JSX_ATTRIBUTE@144..183
+              0: JSX_NAMESPACE_NAME@144..174
+                0: JSX_NAME@144..165
+                  0: JSX_IDENT@144..165 "use-dashed_underscore" [] []
+                1: COLON@165..166 ":" [] []
+                2: JSX_NAME@166..174
+                  0: JSX_IDENT@166..174 "validate" [] []
+              1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@174..183
+                0: EQ@174..175 "=" [] []
+                1: JSX_STRING@175..183
+                  0: JSX_STRING_LITERAL@175..183 "\"ahaha\"" [] [Whitespace(" ")]
+          3: SLASH@183..184 "/" [] []
+          4: R_ANGLE@184..185 ">" [] []
+      1: SEMICOLON@185..186 ";" [] []
+    3: JS_EXPRESSION_STATEMENT@186..236
+      0: JSX_TAG_EXPRESSION@186..235
+        0: JSX_SELF_CLOSING_ELEMENT@186..235
+          0: L_ANGLE@186..188 "<" [Newline("\n")] []
+          1: JSX_NAME@188..192
+            0: JSX_IDENT@188..192 "div" [] [Whitespace(" ")]
+          2: JSX_ATTRIBUTE_LIST@192..233
+            0: JSX_ATTRIBUTE@192..233
+              0: JSX_NAME@192..208
+                0: JSX_IDENT@192..208 "multiline-string" [] []
+              1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@208..233
+                0: EQ@208..209 "=" [] []
+                1: JSX_STRING@209..233
+                  0: JSX_STRING_LITERAL@209..233 "'test\n  continues here'" [] [Whitespace(" ")]
+          3: SLASH@233..234 "/" [] []
+          4: R_ANGLE@234..235 ">" [] []
+      1: SEMICOLON@235..236 ";" [] []
+    4: JS_EXPRESSION_STATEMENT@236..285
+      0: JSX_TAG_EXPRESSION@236..284
+        0: JSX_SELF_CLOSING_ELEMENT@236..284
+          0: L_ANGLE@236..238 "<" [Newline("\n")] []
+          1: JSX_NAME@238..242
+            0: JSX_IDENT@238..242 "div" [] [Whitespace(" ")]
+          2: JSX_ATTRIBUTE_LIST@242..282
+            0: JSX_ATTRIBUTE@242..282
+              0: JSX_NAME@242..264
+                0: JSX_IDENT@242..264 "invalid-unicode-escape" [] []
+              1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@264..282
+                0: EQ@264..265 "=" [] []
+                1: JSX_STRING@265..282
+                  0: JSX_STRING_LITERAL@265..282 "\"\\u10000\\u20000\"" [] [Whitespace(" ")]
+          3: SLASH@282..283 "/" [] []
+          4: R_ANGLE@283..284 ">" [] []
+      1: SEMICOLON@284..285 ";" [] []
+  3: EOF@285..286 "" [Newline("\n")] []
