@@ -68,14 +68,20 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsExpressionStatement {
+            expression: JsStringLiteralExpression {
+                value_token: JS_STRING_LITERAL@49..66 "\"test\\\nnew-line\"" [Newline("\n")] [],
+            },
+            semicolon_token: SEMICOLON@66..67 ";" [] [],
+        },
     ],
-    eof_token: EOF@49..50 "" [Newline("\n")] [],
+    eof_token: EOF@67..68 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..50
+0: JS_MODULE@0..68
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..49
+  2: JS_MODULE_ITEM_LIST@0..67
     0: JS_EXPRESSION_STATEMENT@0..1
       0: JS_NUMBER_LITERAL_EXPRESSION@0..1
         0: JS_NUMBER_LITERAL@0..1 "5" [] []
@@ -120,4 +126,8 @@ JsModule {
         2: JS_NUMBER_LITERAL_EXPRESSION@45..49
           0: JS_NUMBER_LITERAL@45..49 "0e00" [] []
       1: (empty)
-  3: EOF@49..50 "" [Newline("\n")] []
+    8: JS_EXPRESSION_STATEMENT@49..67
+      0: JS_STRING_LITERAL_EXPRESSION@49..66
+        0: JS_STRING_LITERAL@49..66 "\"test\\\nnew-line\"" [Newline("\n")] []
+      1: SEMICOLON@66..67 ";" [] []
+  3: EOF@67..68 "" [Newline("\n")] []

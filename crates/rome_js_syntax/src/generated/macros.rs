@@ -699,16 +699,16 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxSelfClosingElement::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JSX_STRING_LITERAL => {
-                    let $pattern = unsafe { $crate::JsxStringLiteral::new_unchecked(node) };
+                $crate::JsSyntaxKind::JSX_STRING => {
+                    let $pattern = unsafe { $crate::JsxString::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_TAG_EXPRESSION => {
                     let $pattern = unsafe { $crate::JsxTagExpression::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JSX_TEXT_LITERAL => {
-                    let $pattern = unsafe { $crate::JsxTextLiteral::new_unchecked(node) };
+                $crate::JsSyntaxKind::JSX_TEXT => {
+                    let $pattern = unsafe { $crate::JsxText::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::NEW_TARGET => {

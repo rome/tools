@@ -5407,7 +5407,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsxTextLiteral::can_cast(element.kind()) {
+                    if JsxText::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5480,7 +5480,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsxTextLiteral::can_cast(element.kind()) {
+                    if JsxText::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5572,7 +5572,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsxReferenceIdentifier::can_cast(element.kind()) {
+                    if JsxName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5706,12 +5706,12 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(JSX_SELF_CLOSING_ELEMENT, children)
             }
-            JSX_STRING_LITERAL => {
+            JSX_STRING => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == JS_STRING_LITERAL {
+                    if element.kind() == JSX_STRING_LITERAL {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5719,11 +5719,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_STRING_LITERAL.to_unknown(),
+                        JSX_STRING.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSX_STRING_LITERAL, children)
+                slots.into_node(JSX_STRING, children)
             }
             JSX_TAG_EXPRESSION => {
                 let mut elements = (&children).into_iter();
@@ -5744,12 +5744,12 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(JSX_TAG_EXPRESSION, children)
             }
-            JSX_TEXT_LITERAL => {
+            JSX_TEXT => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == JSX_TEXT {
+                    if element.kind() == JSX_TEXT_LITERAL {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5757,11 +5757,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_TEXT_LITERAL.to_unknown(),
+                        JSX_TEXT.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSX_TEXT_LITERAL, children)
+                slots.into_node(JSX_TEXT, children)
             }
             NEW_TARGET => {
                 let mut elements = (&children).into_iter();

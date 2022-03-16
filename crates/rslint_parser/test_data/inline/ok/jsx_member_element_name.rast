@@ -98,14 +98,38 @@ JsModule {
             },
             semicolon_token: SEMICOLON@36..37 ";" [] [],
         },
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@37..39 "<" [Newline("\n")] [],
+                        name: JsxReferenceIdentifier {
+                            value_token: JSX_IDENT@39..43 "Abcd" [] [],
+                        },
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@43..44 ">" [] [],
+                    },
+                    children: missing (optional),
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@44..45 "<" [] [],
+                        slash_token: SLASH@45..46 "/" [] [],
+                        name: JsxReferenceIdentifier {
+                            value_token: JSX_IDENT@46..50 "Abcd" [] [],
+                        },
+                        r_angle_token: R_ANGLE@50..51 ">" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@51..52 ";" [] [],
+        },
     ],
-    eof_token: EOF@37..38 "" [Newline("\n")] [],
+    eof_token: EOF@52..53 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..38
+0: JS_MODULE@0..53
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..37
+  2: JS_MODULE_ITEM_LIST@0..52
     0: JS_EXPRESSION_STATEMENT@0..20
       0: JSX_TAG_EXPRESSION@0..19
         0: JSX_ELEMENT@0..19
@@ -172,4 +196,21 @@ JsModule {
                 0: IDENT@34..35 "c" [] []
             3: R_ANGLE@35..36 ">" [] []
       1: SEMICOLON@36..37 ";" [] []
-  3: EOF@37..38 "" [Newline("\n")] []
+    2: JS_EXPRESSION_STATEMENT@37..52
+      0: JSX_TAG_EXPRESSION@37..51
+        0: JSX_ELEMENT@37..51
+          0: JSX_OPENING_ELEMENT@37..44
+            0: L_ANGLE@37..39 "<" [Newline("\n")] []
+            1: JSX_REFERENCE_IDENTIFIER@39..43
+              0: JSX_IDENT@39..43 "Abcd" [] []
+            2: JSX_ATTRIBUTE_LIST@43..43
+            3: R_ANGLE@43..44 ">" [] []
+          1: (empty)
+          2: JSX_CLOSING_ELEMENT@44..51
+            0: L_ANGLE@44..45 "<" [] []
+            1: SLASH@45..46 "/" [] []
+            2: JSX_REFERENCE_IDENTIFIER@46..50
+              0: JSX_IDENT@46..50 "Abcd" [] []
+            3: R_ANGLE@50..51 ">" [] []
+      1: SEMICOLON@51..52 ";" [] []
+  3: EOF@52..53 "" [Newline("\n")] []

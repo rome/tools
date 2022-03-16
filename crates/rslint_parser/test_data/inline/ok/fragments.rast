@@ -7,8 +7,8 @@ JsModule {
                 tag: JsxFragment {
                     opening_l_angle_token_token: L_ANGLE@0..1 "<" [] [],
                     opening_r_angle_token_token: R_ANGLE@1..2 ">" [] [],
-                    children: JsxTextLiteral {
-                        value_token: JSX_TEXT@2..6 "abcd" [] [],
+                    children: JsxText {
+                        value_token: JSX_TEXT_LITERAL@2..6 "abcd" [] [],
                     },
                     closing_l_angle_token_token: L_ANGLE@6..7 "<" [] [],
                     closing_slash_token_token: SLASH@7..8 "/" [] [],
@@ -22,8 +22,8 @@ JsModule {
                 tag: JsxFragment {
                     opening_l_angle_token_token: L_ANGLE@10..12 "<" [Newline("\n")] [],
                     opening_r_angle_token_token: R_ANGLE@12..13 ">" [] [],
-                    children: JsxTextLiteral {
-                        value_token: JSX_TEXT@13..27 "   whitespace\n" [] [],
+                    children: JsxText {
+                        value_token: JSX_TEXT_LITERAL@13..27 "   whitespace\n" [] [],
                     },
                     closing_l_angle_token_token: L_ANGLE@27..28 "<" [] [],
                     closing_slash_token_token: SLASH@28..29 "/" [] [],
@@ -37,8 +37,8 @@ JsModule {
                 tag: JsxFragment {
                     opening_l_angle_token_token: L_ANGLE@31..33 "<" [Newline("\n")] [],
                     opening_r_angle_token_token: R_ANGLE@33..52 ">" [Newline("\n"), Whitespace("  "), Comments("/*comment */"), Newline("\n"), Whitespace("  ")] [],
-                    children: JsxTextLiteral {
-                        value_token: JSX_TEXT@52..55 "\n  " [] [],
+                    children: JsxText {
+                        value_token: JSX_TEXT_LITERAL@52..55 "\n  " [] [],
                     },
                     closing_l_angle_token_token: L_ANGLE@55..56 "<" [] [],
                     closing_slash_token_token: SLASH@56..60 "/" [Newline("\n"), Whitespace("  ")] [],
@@ -60,8 +60,8 @@ JsModule {
         0: JSX_FRAGMENT@0..9
           0: L_ANGLE@0..1 "<" [] []
           1: R_ANGLE@1..2 ">" [] []
-          2: JSX_TEXT_LITERAL@2..6
-            0: JSX_TEXT@2..6 "abcd" [] []
+          2: JSX_TEXT@2..6
+            0: JSX_TEXT_LITERAL@2..6 "abcd" [] []
           3: L_ANGLE@6..7 "<" [] []
           4: SLASH@7..8 "/" [] []
           5: R_ANGLE@8..9 ">" [] []
@@ -71,8 +71,8 @@ JsModule {
         0: JSX_FRAGMENT@10..30
           0: L_ANGLE@10..12 "<" [Newline("\n")] []
           1: R_ANGLE@12..13 ">" [] []
-          2: JSX_TEXT_LITERAL@13..27
-            0: JSX_TEXT@13..27 "   whitespace\n" [] []
+          2: JSX_TEXT@13..27
+            0: JSX_TEXT_LITERAL@13..27 "   whitespace\n" [] []
           3: L_ANGLE@27..28 "<" [] []
           4: SLASH@28..29 "/" [] []
           5: R_ANGLE@29..30 ">" [] []
@@ -82,8 +82,8 @@ JsModule {
         0: JSX_FRAGMENT@31..62
           0: L_ANGLE@31..33 "<" [Newline("\n")] []
           1: R_ANGLE@33..52 ">" [Newline("\n"), Whitespace("  "), Comments("/*comment */"), Newline("\n"), Whitespace("  ")] []
-          2: JSX_TEXT_LITERAL@52..55
-            0: JSX_TEXT@52..55 "\n  " [] []
+          2: JSX_TEXT@52..55
+            0: JSX_TEXT_LITERAL@52..55 "\n  " [] []
           3: L_ANGLE@55..56 "<" [] []
           4: SLASH@56..60 "/" [Newline("\n"), Whitespace("  ")] []
           5: R_ANGLE@60..62 ">" [Newline("\n")] []

@@ -3,8 +3,8 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@0..51 "<" [Comments("// These may look lik ..."), Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -20,8 +20,8 @@ JsModule {
                         ],
                         r_angle_token: R_ANGLE@60..61 ">" [] [],
                     },
-                    children: JsxTextLiteral {
-                        value_token: JSX_TEXT@61..65 "() =" [] [],
+                    children: JsxText {
+                        value_token: JSX_TEXT_LITERAL@61..65 "() =" [] [],
                     },
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@65..66 "<" [] [],
@@ -36,8 +36,8 @@ JsModule {
             semicolon_token: SEMICOLON@69..70 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@70..72 "<" [Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -50,16 +50,16 @@ JsModule {
                                 },
                                 initializer: JsxAttributeInitializerClause {
                                     eq_token: EQ@81..82 "=" [] [],
-                                    value: JsxStringLiteral {
-                                        value_token: JS_STRING_LITERAL@82..85 "\"B\"" [] [],
+                                    value: JsxString {
+                                        value_token: JSX_STRING_LITERAL@82..85 "\"B\"" [] [],
                                     },
                                 },
                             },
                         ],
                         r_angle_token: R_ANGLE@85..86 ">" [] [],
                     },
-                    children: JsxTextLiteral {
-                        value_token: JSX_TEXT@86..90 "() =" [] [],
+                    children: JsxText {
+                        value_token: JSX_TEXT_LITERAL@86..90 "() =" [] [],
                     },
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@90..91 "<" [] [],
@@ -74,8 +74,8 @@ JsModule {
             semicolon_token: SEMICOLON@94..95 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@95..97 "<" [Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -97,8 +97,8 @@ JsModule {
                         ],
                         r_angle_token: R_ANGLE@109..110 ">" [] [],
                     },
-                    children: JsxTextLiteral {
-                        value_token: JSX_TEXT@110..114 "() =" [] [],
+                    children: JsxText {
+                        value_token: JSX_TEXT_LITERAL@110..114 "() =" [] [],
                     },
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@114..115 "<" [] [],
@@ -121,7 +121,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..119
     0: JS_EXPRESSION_STATEMENT@0..70
-      0: JSX_ELEMENT_EXPRESSION@0..69
+      0: JSX_TAG_EXPRESSION@0..69
         0: JSX_ELEMENT@0..69
           0: JSX_OPENING_ELEMENT@0..61
             0: L_ANGLE@0..51 "<" [Comments("// These may look lik ..."), Newline("\n")] []
@@ -133,8 +133,8 @@ JsModule {
                   0: JSX_IDENT@53..60 "extends" [] []
                 1: (empty)
             3: R_ANGLE@60..61 ">" [] []
-          1: JSX_TEXT_LITERAL@61..65
-            0: JSX_TEXT@61..65 "() =" [] []
+          1: JSX_TEXT@61..65
+            0: JSX_TEXT_LITERAL@61..65 "() =" [] []
           2: JSX_CLOSING_ELEMENT@65..69
             0: L_ANGLE@65..66 "<" [] []
             1: SLASH@66..67 "/" [] []
@@ -143,7 +143,7 @@ JsModule {
             3: R_ANGLE@68..69 ">" [] []
       1: SEMICOLON@69..70 ";" [] []
     1: JS_EXPRESSION_STATEMENT@70..95
-      0: JSX_ELEMENT_EXPRESSION@70..94
+      0: JSX_TAG_EXPRESSION@70..94
         0: JSX_ELEMENT@70..94
           0: JSX_OPENING_ELEMENT@70..86
             0: L_ANGLE@70..72 "<" [Newline("\n")] []
@@ -155,11 +155,11 @@ JsModule {
                   0: JSX_IDENT@74..81 "extends" [] []
                 1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@81..85
                   0: EQ@81..82 "=" [] []
-                  1: JSX_STRING_LITERAL@82..85
-                    0: JS_STRING_LITERAL@82..85 "\"B\"" [] []
+                  1: JSX_STRING@82..85
+                    0: JSX_STRING_LITERAL@82..85 "\"B\"" [] []
             3: R_ANGLE@85..86 ">" [] []
-          1: JSX_TEXT_LITERAL@86..90
-            0: JSX_TEXT@86..90 "() =" [] []
+          1: JSX_TEXT@86..90
+            0: JSX_TEXT_LITERAL@86..90 "() =" [] []
           2: JSX_CLOSING_ELEMENT@90..94
             0: L_ANGLE@90..91 "<" [] []
             1: SLASH@91..92 "/" [] []
@@ -168,7 +168,7 @@ JsModule {
             3: R_ANGLE@93..94 ">" [] []
       1: SEMICOLON@94..95 ";" [] []
     2: JS_EXPRESSION_STATEMENT@95..119
-      0: JSX_ELEMENT_EXPRESSION@95..118
+      0: JSX_TAG_EXPRESSION@95..118
         0: JSX_ELEMENT@95..118
           0: JSX_OPENING_ELEMENT@95..110
             0: L_ANGLE@95..97 "<" [Newline("\n")] []
@@ -184,8 +184,8 @@ JsModule {
                   0: JSX_IDENT@107..109 "ok" [] []
                 1: (empty)
             3: R_ANGLE@109..110 ">" [] []
-          1: JSX_TEXT_LITERAL@110..114
-            0: JSX_TEXT@110..114 "() =" [] []
+          1: JSX_TEXT@110..114
+            0: JSX_TEXT_LITERAL@110..114 "() =" [] []
           2: JSX_CLOSING_ELEMENT@114..118
             0: L_ANGLE@114..115 "<" [] []
             1: SLASH@115..116 "/" [] []

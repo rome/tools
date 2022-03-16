@@ -129,10 +129,14 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
 // 'bar'
 // null
 // 0, 0.0, 0n, 0e00
+// "test\
+// new-line";
 
 // test_err literals
 // 00, 012, 08, 091, 0789 // parser errors
 // 01n, 0_0, 01.2 // lexer errors
+// "test
+// continues" // unterminated string literal
 pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     let literal_kind = match p.cur() {
         JsSyntaxKind::JS_NUMBER_LITERAL => {

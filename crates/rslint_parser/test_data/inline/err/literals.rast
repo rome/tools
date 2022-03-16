@@ -50,14 +50,21 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsUnknownStatement {
+            items: [
+                ERROR_TOKEN@70..76 "\"test" [Newline("\n")] [],
+                IDENT@76..86 "continues" [Newline("\n")] [],
+                ERROR_TOKEN@86..118 "\" // unterminated string literal" [] [],
+            ],
+        },
     ],
-    eof_token: EOF@70..71 "" [Newline("\n")] [],
+    eof_token: EOF@118..119 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..71
+0: JS_MODULE@0..119
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..70
+  2: JS_MODULE_ITEM_LIST@0..118
     0: JS_EXPRESSION_STATEMENT@0..39
       0: JS_SEQUENCE_EXPRESSION@0..39
         0: JS_SEQUENCE_EXPRESSION@0..16
@@ -90,7 +97,11 @@ JsModule {
         2: JS_NUMBER_LITERAL_EXPRESSION@50..70
           0: JS_NUMBER_LITERAL@50..70 "01.2" [] [Whitespace(" "), Comments("// lexer errors")]
       1: (empty)
-  3: EOF@70..71 "" [Newline("\n")] []
+    2: JS_UNKNOWN_STATEMENT@70..118
+      0: ERROR_TOKEN@70..76 "\"test" [Newline("\n")] []
+      1: IDENT@76..86 "continues" [Newline("\n")] []
+      2: ERROR_TOKEN@86..118 "\" // unterminated string literal" [] []
+  3: EOF@118..119 "" [Newline("\n")] []
 --
 error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" prefix instead.
   ┌─ literals.js:1:1
@@ -155,5 +166,36 @@ error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" pre
   │           ^^^^
 
 --
+error: unterminated string literal
+  ┌─ literals.js:3:1
+  │  
+3 │   "test
+  │   ^^^^^
+  │ ┌─────'
+4 │ │ continues" // unterminated string literal
+  │ └─' line breaks here
+
+--
+error: unterminated string literal
+  ┌─ literals.js:4:10
+  │  
+4 │   continues" // unterminated string literal
+  │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  │ ┌─────────────────────────────────────────'
+5 │ │ 
+  │ └' line breaks here
+
+--
+error[SyntaxError]: expected a statement but instead found '"test
+continues" // unterminated string literal'
+  ┌─ literals.js:3:1
+  │  
+3 │ ┌ "test
+4 │ │ continues" // unterminated string literal
+  │ └─────────────────────────────────────────^ Expected a statement here
+
+--
 00, 012, 08, 091, 0789 // parser errors
 01n, 0_0, 01.2 // lexer errors
+"test
+continues" // unterminated string literal
