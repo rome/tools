@@ -3,242 +3,170 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsBinaryExpression {
-                left: JsxElementExpression {
-                    element: JsxElement {
-                        opening_element: JsxOpeningElement {
-                            l_angle_token: L_ANGLE@0..1 "<" [] [],
-                            name: JsxNamespaceName {
-                                namespace: JsxReferenceIdentifier {
-                                    value_token: JSX_IDENT@1..10 "namespace" [] [],
-                                },
-                                colon_token: COLON@10..11 ":" [] [],
-                                name: JsxName {
-                                    value_token: JSX_IDENT@11..12 "a" [] [],
-                                },
+            expression: JsxElementExpression {
+                element: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@0..1 "<" [] [],
+                        name: JsxNamespaceName {
+                            namespace: JsxReferenceIdentifier {
+                                value_token: JSX_IDENT@1..10 "namespace" [] [],
                             },
-                            attributes: JsxAttributeList [],
-                            r_angle_token: R_ANGLE@12..13 ">" [] [],
-                        },
-                        children: missing (optional),
-                        closing_element: JsxClosingElement {
-                            l_angle_token: L_ANGLE@13..14 "<" [] [],
-                            slash_token: SLASH@14..15 "/" [] [],
-                            name: JsxNamespaceName {
-                                namespace: JsxReferenceIdentifier {
-                                    value_token: JSX_IDENT@15..24 "namespace" [] [],
-                                },
-                                colon_token: COLON@24..25 ":" [] [],
-                                name: JsxName {
-                                    value_token: JSX_IDENT@25..26 "a" [] [],
-                                },
+                            colon_token: COLON@10..11 ":" [] [],
+                            name: JsxName {
+                                value_token: JSX_IDENT@11..12 "a" [] [],
                             },
-                            r_angle_token: R_ANGLE@26..27 ">" [] [],
                         },
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@12..13 ">" [] [],
                     },
-                },
-                operator: L_ANGLE@27..29 "<" [Newline("\n")] [],
-                right: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@29..38 "namespace" [] [],
+                    children: missing (optional),
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@13..14 "<" [] [],
+                        slash_token: SLASH@14..15 "/" [] [],
+                        name: JsxNamespaceName {
+                            namespace: JsxReferenceIdentifier {
+                                value_token: JSX_IDENT@15..24 "namespace" [] [],
+                            },
+                            colon_token: COLON@24..25 ":" [] [],
+                            name: JsxName {
+                                value_token: JSX_IDENT@25..26 "a" [] [],
+                            },
+                        },
+                        r_angle_token: R_ANGLE@26..27 ">" [] [],
                     },
                 },
             },
-            semicolon_token: missing (optional),
+            semicolon_token: SEMICOLON@27..28 ";" [] [],
         },
-        JsUnknownStatement {
-            items: [
-                COLON@38..39 ":" [] [],
-                IDENT@39..40 "a" [] [],
-                DOT@40..41 "." [] [],
-                IDENT@41..42 "b" [] [],
-                R_ANGLE@42..43 ">" [] [],
-                L_ANGLE@43..44 "<" [] [],
-                SLASH@44..45 "/" [] [],
-            ],
-        },
-        JsLabeledStatement {
-            label_token: IDENT@45..54 "namespace" [] [],
-            colon_token: COLON@54..55 ":" [] [],
-            body: JsExpressionStatement {
-                expression: JsBinaryExpression {
-                    left: JsStaticMemberExpression {
-                        object: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@55..56 "a" [] [],
+        JsExpressionStatement {
+            expression: JsxElementExpression {
+                element: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@28..30 "<" [Newline("\n")] [],
+                        name: JsxMemberName {
+                            object: JsxNamespaceName {
+                                namespace: JsxReferenceIdentifier {
+                                    value_token: JSX_IDENT@30..39 "namespace" [] [],
+                                },
+                                colon_token: COLON@39..40 ":" [] [],
+                                name: JsxName {
+                                    value_token: JSX_IDENT@40..41 "a" [] [],
+                                },
+                            },
+                            dot_token: DOT@41..42 "." [] [],
+                            member: JsName {
+                                value_token: IDENT@42..43 "b" [] [],
                             },
                         },
-                        operator: DOT@56..57 "." [] [],
-                        member: JsName {
-                            value_token: IDENT@57..58 "b" [] [],
-                        },
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@43..44 ">" [] [],
                     },
-                    operator: R_ANGLE@58..59 ">" [] [],
-                    right: JsxElementExpression {
-                        element: JsxElement {
-                            opening_element: JsxOpeningElement {
-                                l_angle_token: L_ANGLE@59..61 "<" [Newline("\n")] [],
-                                name: JsxMemberName {
-                                    object: JsxNamespaceName {
-                                        namespace: JsxReferenceIdentifier {
-                                            value_token: JSX_IDENT@61..77 "dashed-namespace" [] [],
-                                        },
-                                        colon_token: COLON@77..78 ":" [] [],
-                                        name: JsxName {
-                                            value_token: JSX_IDENT@78..79 "a" [] [],
-                                        },
-                                    },
-                                    dot_token: DOT@79..80 "." [] [],
-                                    member: JsName {
-                                        value_token: IDENT@80..81 "b" [] [],
-                                    },
+                    children: missing (optional),
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@44..45 "<" [] [],
+                        slash_token: SLASH@45..46 "/" [] [],
+                        name: JsxMemberName {
+                            object: JsxNamespaceName {
+                                namespace: JsxReferenceIdentifier {
+                                    value_token: JSX_IDENT@46..55 "namespace" [] [],
                                 },
-                                attributes: JsxAttributeList [],
-                                r_angle_token: R_ANGLE@81..82 ">" [] [],
+                                colon_token: COLON@55..56 ":" [] [],
+                                name: JsxName {
+                                    value_token: JSX_IDENT@56..57 "a" [] [],
+                                },
                             },
-                            children: missing (optional),
-                            closing_element: JsxClosingElement {
-                                l_angle_token: L_ANGLE@82..83 "<" [] [],
-                                slash_token: SLASH@83..84 "/" [] [],
-                                name: JsxMemberName {
-                                    object: JsxNamespaceName {
-                                        namespace: JsxReferenceIdentifier {
-                                            value_token: JSX_IDENT@84..100 "dashed-namespace" [] [],
-                                        },
-                                        colon_token: COLON@100..101 ":" [] [],
-                                        name: JsxName {
-                                            value_token: JSX_IDENT@101..102 "a" [] [],
-                                        },
-                                    },
-                                    dot_token: DOT@102..103 "." [] [],
-                                    member: JsName {
-                                        value_token: IDENT@103..104 "b" [] [],
-                                    },
-                                },
-                                r_angle_token: R_ANGLE@104..105 ">" [] [],
+                            dot_token: DOT@57..58 "." [] [],
+                            member: JsName {
+                                value_token: IDENT@58..59 "b" [] [],
                             },
                         },
+                        r_angle_token: R_ANGLE@59..60 ">" [] [],
                     },
                 },
-                semicolon_token: missing (optional),
             },
+            semicolon_token: SEMICOLON@60..61 ";" [] [],
         },
     ],
-    eof_token: EOF@105..106 "" [Newline("\n")] [],
+    eof_token: EOF@61..62 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..106
+0: JS_MODULE@0..62
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..105
-    0: JS_EXPRESSION_STATEMENT@0..38
-      0: JS_BINARY_EXPRESSION@0..38
-        0: JSX_ELEMENT_EXPRESSION@0..27
-          0: JSX_ELEMENT@0..27
-            0: JSX_OPENING_ELEMENT@0..13
-              0: L_ANGLE@0..1 "<" [] []
-              1: JSX_NAMESPACE_NAME@1..12
-                0: JSX_REFERENCE_IDENTIFIER@1..10
-                  0: JSX_IDENT@1..10 "namespace" [] []
-                1: COLON@10..11 ":" [] []
-                2: JSX_NAME@11..12
-                  0: JSX_IDENT@11..12 "a" [] []
-              2: JSX_ATTRIBUTE_LIST@12..12
-              3: R_ANGLE@12..13 ">" [] []
-            1: (empty)
-            2: JSX_CLOSING_ELEMENT@13..27
-              0: L_ANGLE@13..14 "<" [] []
-              1: SLASH@14..15 "/" [] []
-              2: JSX_NAMESPACE_NAME@15..26
-                0: JSX_REFERENCE_IDENTIFIER@15..24
-                  0: JSX_IDENT@15..24 "namespace" [] []
-                1: COLON@24..25 ":" [] []
-                2: JSX_NAME@25..26
-                  0: JSX_IDENT@25..26 "a" [] []
-              3: R_ANGLE@26..27 ">" [] []
-        1: L_ANGLE@27..29 "<" [Newline("\n")] []
-        2: JS_IDENTIFIER_EXPRESSION@29..38
-          0: JS_REFERENCE_IDENTIFIER@29..38
-            0: IDENT@29..38 "namespace" [] []
-      1: (empty)
-    1: JS_UNKNOWN_STATEMENT@38..45
-      0: COLON@38..39 ":" [] []
-      1: IDENT@39..40 "a" [] []
-      2: DOT@40..41 "." [] []
-      3: IDENT@41..42 "b" [] []
-      4: R_ANGLE@42..43 ">" [] []
-      5: L_ANGLE@43..44 "<" [] []
-      6: SLASH@44..45 "/" [] []
-    2: JS_LABELED_STATEMENT@45..105
-      0: IDENT@45..54 "namespace" [] []
-      1: COLON@54..55 ":" [] []
-      2: JS_EXPRESSION_STATEMENT@55..105
-        0: JS_BINARY_EXPRESSION@55..105
-          0: JS_STATIC_MEMBER_EXPRESSION@55..58
-            0: JS_IDENTIFIER_EXPRESSION@55..56
-              0: JS_REFERENCE_IDENTIFIER@55..56
-                0: IDENT@55..56 "a" [] []
-            1: DOT@56..57 "." [] []
-            2: JS_NAME@57..58
-              0: IDENT@57..58 "b" [] []
-          1: R_ANGLE@58..59 ">" [] []
-          2: JSX_ELEMENT_EXPRESSION@59..105
-            0: JSX_ELEMENT@59..105
-              0: JSX_OPENING_ELEMENT@59..82
-                0: L_ANGLE@59..61 "<" [Newline("\n")] []
-                1: JSX_MEMBER_NAME@61..81
-                  0: JSX_NAMESPACE_NAME@61..79
-                    0: JSX_REFERENCE_IDENTIFIER@61..77
-                      0: JSX_IDENT@61..77 "dashed-namespace" [] []
-                    1: COLON@77..78 ":" [] []
-                    2: JSX_NAME@78..79
-                      0: JSX_IDENT@78..79 "a" [] []
-                  1: DOT@79..80 "." [] []
-                  2: JS_NAME@80..81
-                    0: IDENT@80..81 "b" [] []
-                2: JSX_ATTRIBUTE_LIST@81..81
-                3: R_ANGLE@81..82 ">" [] []
-              1: (empty)
-              2: JSX_CLOSING_ELEMENT@82..105
-                0: L_ANGLE@82..83 "<" [] []
-                1: SLASH@83..84 "/" [] []
-                2: JSX_MEMBER_NAME@84..104
-                  0: JSX_NAMESPACE_NAME@84..102
-                    0: JSX_REFERENCE_IDENTIFIER@84..100
-                      0: JSX_IDENT@84..100 "dashed-namespace" [] []
-                    1: COLON@100..101 ":" [] []
-                    2: JSX_NAME@101..102
-                      0: JSX_IDENT@101..102 "a" [] []
-                  1: DOT@102..103 "." [] []
-                  2: JS_NAME@103..104
-                    0: IDENT@103..104 "b" [] []
-                3: R_ANGLE@104..105 ">" [] []
-        1: (empty)
-  3: EOF@105..106 "" [Newline("\n")] []
+  2: JS_MODULE_ITEM_LIST@0..61
+    0: JS_EXPRESSION_STATEMENT@0..28
+      0: JSX_ELEMENT_EXPRESSION@0..27
+        0: JSX_ELEMENT@0..27
+          0: JSX_OPENING_ELEMENT@0..13
+            0: L_ANGLE@0..1 "<" [] []
+            1: JSX_NAMESPACE_NAME@1..12
+              0: JSX_REFERENCE_IDENTIFIER@1..10
+                0: JSX_IDENT@1..10 "namespace" [] []
+              1: COLON@10..11 ":" [] []
+              2: JSX_NAME@11..12
+                0: JSX_IDENT@11..12 "a" [] []
+            2: JSX_ATTRIBUTE_LIST@12..12
+            3: R_ANGLE@12..13 ">" [] []
+          1: (empty)
+          2: JSX_CLOSING_ELEMENT@13..27
+            0: L_ANGLE@13..14 "<" [] []
+            1: SLASH@14..15 "/" [] []
+            2: JSX_NAMESPACE_NAME@15..26
+              0: JSX_REFERENCE_IDENTIFIER@15..24
+                0: JSX_IDENT@15..24 "namespace" [] []
+              1: COLON@24..25 ":" [] []
+              2: JSX_NAME@25..26
+                0: JSX_IDENT@25..26 "a" [] []
+            3: R_ANGLE@26..27 ">" [] []
+      1: SEMICOLON@27..28 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@28..61
+      0: JSX_ELEMENT_EXPRESSION@28..60
+        0: JSX_ELEMENT@28..60
+          0: JSX_OPENING_ELEMENT@28..44
+            0: L_ANGLE@28..30 "<" [Newline("\n")] []
+            1: JSX_MEMBER_NAME@30..43
+              0: JSX_NAMESPACE_NAME@30..41
+                0: JSX_REFERENCE_IDENTIFIER@30..39
+                  0: JSX_IDENT@30..39 "namespace" [] []
+                1: COLON@39..40 ":" [] []
+                2: JSX_NAME@40..41
+                  0: JSX_IDENT@40..41 "a" [] []
+              1: DOT@41..42 "." [] []
+              2: JS_NAME@42..43
+                0: IDENT@42..43 "b" [] []
+            2: JSX_ATTRIBUTE_LIST@43..43
+            3: R_ANGLE@43..44 ">" [] []
+          1: (empty)
+          2: JSX_CLOSING_ELEMENT@44..60
+            0: L_ANGLE@44..45 "<" [] []
+            1: SLASH@45..46 "/" [] []
+            2: JSX_MEMBER_NAME@46..59
+              0: JSX_NAMESPACE_NAME@46..57
+                0: JSX_REFERENCE_IDENTIFIER@46..55
+                  0: JSX_IDENT@46..55 "namespace" [] []
+                1: COLON@55..56 ":" [] []
+                2: JSX_NAME@56..57
+                  0: JSX_IDENT@56..57 "a" [] []
+              1: DOT@57..58 "." [] []
+              2: JS_NAME@58..59
+                0: IDENT@58..59 "b" [] []
+            3: R_ANGLE@59..60 ">" [] []
+      1: SEMICOLON@60..61 ";" [] []
+  3: EOF@61..62 "" [Newline("\n")] []
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ jsx_namespace_member_element_name.jsx:2:11
-  │  
-1 │ ┌ <namespace:a></namespace:a>
-2 │ │ <namespace:a.b></namespace:a.b>
-  │ │           ^ An explicit or implicit semicolon is expected here...
-  │ └───────────' ...Which is required to end this statement
+error[SyntaxError]: JSX property access expressions cannot include JSX namespace names.
+  ┌─ jsx_namespace_member_element_name.jsx:2:2
+  │
+2 │ <namespace:a.b></namespace:a.b>;
+  │  ^^^^^^^^^^^
 
 --
 error[SyntaxError]: JSX property access expressions cannot include JSX namespace names.
-  ┌─ jsx_namespace_member_element_name.jsx:3:2
+  ┌─ jsx_namespace_member_element_name.jsx:2:18
   │
-3 │ <dashed-namespace:a.b></dashed-namespace:a.b>
-  │  ^^^^^^^^^^^^^^^^^^
+2 │ <namespace:a.b></namespace:a.b>;
+  │                  ^^^^^^^^^^^
 
 --
-error[SyntaxError]: JSX property access expressions cannot include JSX namespace names.
-  ┌─ jsx_namespace_member_element_name.jsx:3:25
-  │
-3 │ <dashed-namespace:a.b></dashed-namespace:a.b>
-  │                         ^^^^^^^^^^^^^^^^^^
-
---
-<namespace:a></namespace:a>
-<namespace:a.b></namespace:a.b>
-<dashed-namespace:a.b></dashed-namespace:a.b>
+<namespace:a></namespace:a>;
+<namespace:a.b></namespace:a.b>;

@@ -1,6 +1,6 @@
 pub mod jsx_parse_errors;
 
-use self::jsx_parse_errors::jsx_expected_attribute;
+use self::jsx_parse_errors::{jsx_expected_attribute, jsx_expected_attribute_value};
 use super::expr::ExpressionContext;
 use crate::syntax::expr::parse_name;
 use crate::syntax::js_parse_error::expected_identifier;
@@ -154,7 +154,6 @@ fn parse_jsx_element_head(p: &mut Parser, m: Marker, in_expression: bool) -> Par
     }
 
     let name = parse_jsx_any_element_name(p);
-    dbg!(&name);
     if name.is_absent() {
         m.abandon(p);
         return ParsedSyntax::Absent;
@@ -216,12 +215,11 @@ fn parse_jsx_closing_element(p: &mut Parser, in_expression: bool) -> ParsedSynta
 
 // test jsx jsx_member_element_name
 // <a.b.c.d></a.b.c.d>;
-// <a-b.c></a-b.c>
+// <a-b.c></a-b.c>;
 //
 // test_err jsx jsx_namespace_member_element_name
-// <namespace:a></namespace:a>
-// <namespace:a.b></namespace:a.b>
-// <dashed-namespace:a.b></dashed-namespace:a.b>
+// <namespace:a></namespace:a>;
+// <namespace:a.b></namespace:a.b>;
 fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
     let left = parse_jsx_any_name(p);
 
@@ -251,12 +249,13 @@ fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
 // <a-b-c-d-e />;
 // <if />;
 // <namespace:name></namespace:name>;
+// <dashed-namespace:name></dashed-namespace:name>;
 fn parse_jsx_any_name(p: &mut Parser) -> ParsedSyntax {
     parse_jsx_reference_identifier(p).map(|identifier| {
         if p.at(T![:]) {
             let m = identifier.precede(p);
             p.bump(T![:]);
-            dbg!(parse_jsx_name(p)).or_add_diagnostic(p, expected_identifier);
+            parse_jsx_name(p).or_add_diagnostic(p, expected_identifier);
             m.complete(p, JSX_NAMESPACE_NAME)
         } else {
             identifier
@@ -345,7 +344,12 @@ fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
 
     p.bump(T![=]);
-    let _ = parse_jsx_attribute_value(p);
+
+    // test_err jsx jsx_element_attribute_missing_value
+    // function f() {
+    //     return <div string_literal= ></div>;
+    // }
+    parse_jsx_attribute_value(p).or_add_diagnostic(p, jsx_expected_attribute_value);
 
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE))
 }

@@ -96,16 +96,16 @@ JsModule {
                     },
                 },
             },
-            semicolon_token: missing (optional),
+            semicolon_token: SEMICOLON@36..37 ";" [] [],
         },
     ],
-    eof_token: EOF@36..37 "" [Newline("\n")] [],
+    eof_token: EOF@37..38 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..37
+0: JS_MODULE@0..38
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..36
+  2: JS_MODULE_ITEM_LIST@0..37
     0: JS_EXPRESSION_STATEMENT@0..20
       0: JSX_ELEMENT_EXPRESSION@0..19
         0: JSX_ELEMENT@0..19
@@ -147,7 +147,7 @@ JsModule {
                 0: IDENT@17..18 "d" [] []
             3: R_ANGLE@18..19 ">" [] []
       1: SEMICOLON@19..20 ";" [] []
-    1: JS_EXPRESSION_STATEMENT@20..36
+    1: JS_EXPRESSION_STATEMENT@20..37
       0: JSX_ELEMENT_EXPRESSION@20..36
         0: JSX_ELEMENT@20..36
           0: JSX_OPENING_ELEMENT@20..28
@@ -171,5 +171,5 @@ JsModule {
               2: JS_NAME@34..35
                 0: IDENT@34..35 "c" [] []
             3: R_ANGLE@35..36 ">" [] []
-      1: (empty)
-  3: EOF@36..37 "" [Newline("\n")] []
+      1: SEMICOLON@36..37 ";" [] []
+  3: EOF@37..38 "" [Newline("\n")] []
