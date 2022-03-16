@@ -1,17 +1,15 @@
 pub mod jsx_parse_errors;
 
-use rome_js_syntax::JsSyntaxKind::*;
-use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
-
-use crate::{
-    parser::RecoveryResult, Checkpoint, Marker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
-};
-
 use self::jsx_parse_errors::jsx_expected_attribute;
 use super::expr::ExpressionContext;
 use crate::syntax::expr::parse_name;
 use crate::syntax::js_parse_error::expected_identifier;
-use crate::{Absent, Checkpoint, Marker, ParsedSyntax, Parser, Present};
+use crate::{
+    parser::RecoveryResult, Checkpoint, Marker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
+};
+use crate::{Absent, Present};
+use rome_js_syntax::JsSyntaxKind::*;
+use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -342,7 +340,7 @@ fn parse_jsx_attribute_name(p: &mut Parser) -> ParsedSyntax {
 
 fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![=]) {
-        ParsedSyntax::Absent
+        return ParsedSyntax::Absent;
     }
 
     let m = p.start();
@@ -371,7 +369,7 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     }
     // JSX elements
     else if p.at(T![<]) {
-        parse_jsx_element(p)
+        parse_jsx_element(p, false)
     } else {
         ParsedSyntax::Absent
     }

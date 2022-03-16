@@ -73,14 +73,6 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 17 │     : <div
    │ ┌─────^
 18 │ │       a={123412342314}
-<<<<<<< HEAD
-19 │ │       b={123412341234}
-20 │ │       c={123412341234}
-   · │
-24 │ │       g={123412341234}
-25 │ │     />;
-   │ └──────^ JSX only syntax
-=======
    │ └───────^ This expression cannot be assigned to
 
 error[SyntaxError]: expected `:` but instead found `}`
@@ -136,7 +128,6 @@ error[SyntaxError]: expected an expression but instead found ';'
    │
 25 │     />;
    │       ^ Expected an expression here
->>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
 
 
 ```

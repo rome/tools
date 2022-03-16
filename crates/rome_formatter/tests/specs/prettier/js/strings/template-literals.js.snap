@@ -204,14 +204,6 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
    │  
 37 │ ┌       <Html
 38 │ │         headScripts={compact([ assets.javascript.head ])}
-<<<<<<< HEAD
-39 │ │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
-40 │ │         bodyScripts={compact([ assets.javascript.body ])}
-   · │
-50 │ │       />
-51 │ │     )
-   │ └─────^ JSX only syntax
-=======
    │ └───────────────────^ This expression cannot be assigned to
 
 error[SyntaxError]: expected `,` but instead found `.`
@@ -333,7 +325,6 @@ error[SyntaxError]: expected an expression but instead found ')'
    │
 51 │     )
    │     ^ Expected an expression here
->>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
 
 
 ```

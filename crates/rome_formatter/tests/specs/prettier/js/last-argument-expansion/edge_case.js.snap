@@ -148,15 +148,6 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
 23 │ │               />
    │ └────────────────^ TypeScript only syntax
 
-<<<<<<< HEAD
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-   ┌─ edge_case.js:24:14
-   │
-24 │             </InlineBlock>
-   │             -^ But this operator was encountered instead
-   │             │ 
-   │             This operator requires a right hand side value
-=======
 error[SyntaxError]: expected `:` but instead found `.`
    ┌─ edge_case.js:21:38
    │
@@ -192,7 +183,6 @@ error[SyntaxError]: type assertion are a TypeScript only feature. Convert your f
    │
 24 │             </InlineBlock>
    │             ^^^^^^^^^^^^^ TypeScript only syntax
->>>>>>> 408dcd197df3a39964878660447b8154b594bbcb
 
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ edge_case.js:25:11

@@ -494,10 +494,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_ANY_ATTRIBUTE_VALUE",
         "JSX_EXPRESSION_ATTRIBUTE_VALUE",
         "JSX_ANY_ATTRIBUTE_NAME",
-        "JSX_NAME",
         "JSX_MEMBER_NAME",
-        "JSX_REFERENCE_IDENTIFIER",
-        "JSX_NAMESPACE_NAME",
         "JSX_TEXT_LITERAL",
         // unknown nodes JS
         "JS_UNKNOWN",
