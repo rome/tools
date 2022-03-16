@@ -52,7 +52,7 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
         // ok is never actually read, but it needs to be specified to create a Test in existing_tests
         let existing = existing_tests(&tests_dir, true)?;
         for t in existing.keys().filter(|&t| !tests.contains_key(t)) {
-            panic!("Test is deleted: {}", t);
+            panic!("Test is deleted: '{}'", t);
         }
 
         let mut some_file_was_updated = false;
@@ -60,15 +60,9 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
         for (name, test) in tests {
             let path = match existing.get(name) {
                 Some((path, _test)) => path.clone(),
-                None => {
-                    let ext = match test.language.as_str() {
-                        "javascript" => "js",
-                        "typescript" => "ts",
-                        ext => ext,
-                    };
-                    let file_name = format!("{}.{}", name, ext);
-                    tests_dir.join(file_name)
-                }
+                None => tests_dir
+                    .join(name)
+                    .with_extension(test.language.extension()),
             };
             if let crate::UpdateResult::Updated = update(&path, &test.text, mode)? {
                 some_file_was_updated = true;
@@ -102,7 +96,40 @@ struct Test {
     pub name: String,
     pub text: String,
     pub ok: bool,
-    pub language: String,
+    pub language: Language,
+}
+
+#[derive(Debug)]
+enum Language {
+    JavaScript,
+    TypeScript,
+    Jsx,
+    Tsx,
+}
+
+impl Language {
+    const fn extension(&self) -> &'static str {
+        match self {
+            Language::JavaScript => "js",
+            Language::TypeScript => "ts",
+            Language::Jsx => "jsx",
+            Language::Tsx => "tsx",
+        }
+    }
+
+    fn from_extension(extension: &str) -> Option<Language> {
+        let language = match extension {
+            "js" => Language::JavaScript,
+            "ts" => Language::TypeScript,
+            "jsx" => Language::Jsx,
+            "tsx" => Language::Tsx,
+            _ => {
+                return None;
+            }
+        };
+
+        Some(language)
+    }
 }
 
 #[derive(Default, Debug)]
@@ -115,39 +142,35 @@ fn collect_tests(s: &str) -> Vec<Test> {
     let mut res = Vec::new();
     for comment_block in extract_comment_blocks(s, false).into_iter().map(|(_, x)| x) {
         let first_line = &comment_block[0];
-        let (language, name, ok) = if let Some(first_line) = first_line.strip_prefix("test jsx ") {
-            let name = first_line.to_string();
-            ("jsx", name, true)
-        } else if let Some(first_line) = first_line.strip_prefix("test_err jsx ") {
-            let name = first_line.to_string();
-            ("jsx", name, false)
-        } else if let Some(first_line) = first_line.strip_prefix("test ts ") {
-            let name = first_line.to_string();
-            ("typescript", name, true)
-        } else if let Some(first_line) = first_line.strip_prefix("test_err ts ") {
-            let name = first_line.to_string();
-            ("typescript", name, false)
-        } else if let Some(first_line) = first_line.strip_prefix("test ") {
-            let name = first_line.to_string();
-            ("javascript", name, true)
-        } else if let Some(first_line) = first_line.strip_prefix("test_err ") {
-            let name = first_line.to_string();
-            ("javascript", name, false)
-        } else {
-            continue;
+
+        let (ok, suffix) = match first_line.split_once(' ') {
+            Some(("test", suffix)) => (true, suffix),
+            Some(("test_err", suffix)) => (false, suffix),
+            _ => continue,
         };
+
+        let (language, name) = match suffix.split_once(' ') {
+            Some(("jsx", name)) => (Language::Jsx, name),
+            Some(("js", name)) => (Language::JavaScript, name),
+            Some(("ts", name)) => (Language::TypeScript, name),
+            Some(("tsx", name)) => (Language::Tsx, name),
+            Some((name, _)) => (Language::JavaScript, name),
+            _ => (Language::JavaScript, suffix),
+        };
+
         let text: String = comment_block[1..]
             .iter()
             .cloned()
             .chain(iter::once(String::new()))
             .collect::<Vec<_>>()
             .join("\n");
+
         assert!(!text.trim().is_empty() && text.ends_with('\n'));
         res.push(Test {
-            name,
+            name: name.to_string(),
             text,
             ok,
-            language: language.to_string(),
+            language,
         })
     }
     res
@@ -183,30 +206,29 @@ fn tests_from_dir(dir: &Path) -> Result<Tests> {
 }
 
 fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test)>> {
-    let exts = ["js", "ts", "jsx"];
     let mut res = HashMap::new();
     for file in fs::read_dir(dir)? {
         let path = file?.path();
-        let ext = path
+        let language = path
             .extension()
-            .map(|x| x.to_string_lossy().to_string())
-            .unwrap_or_default();
-        if !exts.contains(&ext.as_str()) {
-            continue;
-        }
-        let name = path
-            .file_stem()
-            .map(|x| x.to_string_lossy().to_string())
-            .unwrap();
-        let text = fs::read_to_string(&path)?;
-        let test = Test {
-            name: name.clone(),
-            text,
-            ok,
-            language: ext,
-        };
-        if let Some(old) = res.insert(name, (path, test)) {
-            println!("Duplicate test: {:?}", old);
+            .and_then(|ext| ext.to_str())
+            .and_then(Language::from_extension);
+
+        if let Some(language) = language {
+            let name = path
+                .file_stem()
+                .map(|x| x.to_string_lossy().to_string())
+                .unwrap();
+            let text = fs::read_to_string(&path)?;
+            let test = Test {
+                name: name.clone(),
+                text,
+                ok,
+                language,
+            };
+            if let Some(old) = res.insert(name, (path, test)) {
+                println!("Duplicate test: {:?}", old);
+            }
         }
     }
     Ok(res)

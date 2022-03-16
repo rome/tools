@@ -532,7 +532,6 @@ fn parse_possible_parenthesized_arrow_function_expression(p: &mut Parser) -> Par
 
 fn parse_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
     let is_parenthesized = is_parenthesized_arrow_function_expression(p);
-
     match is_parenthesized {
         IsParenthesizedArrowFunctionExpression::True => {
             let (m, flags) = try_parse_parenthesized_arrow_function_head(p, Ambiguity::Allowed).expect("'CompletedMarker' because function should never return 'Err' if called with 'Ambiguity::Allowed'.");
@@ -653,11 +652,46 @@ fn is_parenthesized_arrow_function_expression_impl(
         }
         // potential start of type parameters
         T![<] => {
-            // <a...
-            if is_nth_at_identifier(p, n + 1) {
-                IsParenthesizedArrowFunctionExpression::Unknown
-            } else {
+            if !is_nth_at_identifier(p, n + 1) {
+                // <5...
                 IsParenthesizedArrowFunctionExpression::False
+            }
+            // test jsx type_arguments
+            // // These may look like a valid arrows but are JSX
+            // <A extends>() =</A>;
+            // <A extends="B">() =</A>;
+            // <A extends ok>() =</A>;
+
+            // test tsx tsx_type_arguments
+            // // These are valid type arguments
+            // <A extends B>() => {};
+            // <A=string>() => {};
+            // <A, B>() => {};
+
+            // <a... JSX override
+            else if JsSyntaxFeature::Jsx.is_supported(p) {
+                match p.nth(n + 2) {
+                    T![extends] => {
+                        // `<a extends=` OR `<a extends>` is a JSX start element
+                        // and a `extends` type refinement: `<A extends string>`
+                        if matches!(p.nth(n + 3), T![=] | T![>]) {
+                            IsParenthesizedArrowFunctionExpression::False
+                        }
+                        // `<A extends B>` Could be either
+                        else if is_nth_at_identifier(p, n + 3) {
+                            IsParenthesizedArrowFunctionExpression::Unknown
+                        } else {
+                            // <A extends B> must be type arguments
+                            IsParenthesizedArrowFunctionExpression::True
+                        }
+                    }
+                    // `<A=` or `<A,` or always type arguments and never JSX tags
+                    T![=] | T![,] => IsParenthesizedArrowFunctionExpression::True,
+                    _ => IsParenthesizedArrowFunctionExpression::False,
+                }
+            } else {
+                // <a...
+                IsParenthesizedArrowFunctionExpression::Unknown
             }
         }
         _ => IsParenthesizedArrowFunctionExpression::False,
