@@ -5,7 +5,7 @@ use super::expr::ExpressionContext;
 use crate::syntax::expr::parse_name;
 use crate::syntax::js_parse_error::expected_identifier;
 use crate::{
-    parser::RecoveryResult, Checkpoint, Marker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
+    parser::RecoveryResult, Checkpoint, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
 };
 use crate::{Absent, Present};
 use rome_js_syntax::JsSyntaxKind::*;
@@ -110,58 +110,88 @@ fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax 
 // <a> test ></a>;
 // <b> invalid }</b>;
 
+// test jsx fragments
+// <>abcd</>;
+// <>   whitespace
+// </>;
+// <
+//   /*comment */
+//   >
+//   <
+//   /
+// >;
+
 /// Parses a JSX element
 ///
 /// `in_expression` must be `true` if this element is a direct child of the `JsxElementExpression` (root of an expression).
 /// It should be false when parsing any child node.
 fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
-    let m = p.start();
-    match parse_jsx_element_head(p, m, in_expression) {
-        ParsedSyntax::Present(opening_marker)
-            if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT =>
-        {
+    match parse_jsx_element_head_or_fragment(p, in_expression) {
+        Present(opening_marker) if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT => {
             let element_marker = opening_marker.precede(p);
 
-            if p.at(JSX_TEXT) {
-                let m = p.start();
-                p.bump(JSX_TEXT);
-                m.complete(p, JSX_TEXT_LITERAL);
-            }
+            parse_children(p);
 
             let closing_marker = parse_jsx_closing_element(p, in_expression);
             if closing_marker.is_absent() {
                 element_marker.abandon(p);
-                ParsedSyntax::Absent
+                Absent
             } else {
-                ParsedSyntax::Present(element_marker.complete(p, JsSyntaxKind::JSX_ELEMENT))
+                Present(element_marker.complete(p, JsSyntaxKind::JSX_ELEMENT))
             }
         }
-        ParsedSyntax::Present(self_closing_marker)
+        Present(self_closing_marker)
             if self_closing_marker.kind() == JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT =>
         {
-            ParsedSyntax::Present(self_closing_marker)
+            Present(self_closing_marker)
         }
-        ParsedSyntax::Absent => ParsedSyntax::Absent,
+        Present(fragment) if fragment.kind() == JSX_FRAGMENT => Present(fragment),
+        Absent => Absent,
         _ => unreachable!("Unexpected present node returned"),
+    }
+}
+
+fn parse_children(p: &mut Parser) {
+    if p.at(JSX_TEXT) {
+        let m = p.start();
+        p.bump(JSX_TEXT);
+        m.complete(p, JSX_TEXT_LITERAL);
     }
 }
 
 // <a ...> or <a ... />
 // ^          ^
-fn parse_jsx_element_head(p: &mut Parser, m: Marker, in_expression: bool) -> ParsedSyntax {
-    if !p.eat(T![<]) {
+fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
+    if !p.at(T![<]) {
         return ParsedSyntax::Absent;
     }
 
+    let m = p.start();
+    p.bump(T![<]);
     let name = parse_jsx_any_element_name(p);
+
     if name.is_absent() {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
+        if !p.at(T![>]) {
+            m.abandon(p);
+            return Absent;
+        }
+
+        p.bump_with_context(T![>], LexContext::JsxChild);
+
+        parse_children(p);
+
+        if !p.expect(T![<]) || !p.expect(T![/]) || !p.expect(T![>]) {
+            m.abandon(p);
+            return Absent;
+        }
+
+        return Present(m.complete(p, JSX_FRAGMENT));
     }
 
     JsxAttributeList.parse_list(p);
 
-    let kind = if p.eat(T![/]) {
+    let kind = if p.at(T![/]) {
+        p.bump(T![/]);
         JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT
     } else {
         JsSyntaxKind::JSX_OPENING_ELEMENT

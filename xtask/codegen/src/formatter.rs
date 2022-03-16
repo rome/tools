@@ -534,7 +534,6 @@ fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
         {
             NodeConcept::Tag
         }
-
         _ if language.is_jsx() && name.contains("Attribute") => NodeConcept::Attribute,
 
         // Default to auxiliary
