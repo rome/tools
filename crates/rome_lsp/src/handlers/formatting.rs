@@ -7,7 +7,7 @@ use rome_formatter::{FormatOptions, IndentStyle};
 use rome_js_syntax::{TextRange, TokenAtOffset};
 use rslint_parser::{parse, SourceType};
 use std::str::FromStr;
-use tracing::{info, trace};
+use tracing::info;
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
 /// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand
