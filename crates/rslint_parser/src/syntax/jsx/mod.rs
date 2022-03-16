@@ -1,14 +1,14 @@
 pub mod jsx_parse_errors;
 
-use self::jsx_parse_errors::{jsx_expected_attribute, jsx_expected_attribute_value};
-use super::expr::ExpressionContext;
-use crate::syntax::expr::parse_name;
-use crate::syntax::js_parse_error::expected_identifier;
+use rome_js_syntax::JsSyntaxKind::*;
+
+use crate::syntax::expr::{parse_expression, parse_name, ExpressionContext};
+use crate::syntax::js_parse_error::{expected_expression, expected_identifier};
+use crate::syntax::jsx::jsx_parse_errors::{jsx_expected_attribute, jsx_expected_attribute_value};
 use crate::{
     parser::RecoveryResult, Checkpoint, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
 };
 use crate::{Absent, Present};
-use rome_js_syntax::JsSyntaxKind::*;
 use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
 // Constraints function to be inside a checkpointed parser
@@ -333,17 +333,11 @@ struct JsxAttributeList;
 // <div invalid-unicode-escape="\u10000\u20000" />;
 impl ParseNodeList for JsxAttributeList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        let m = p.start();
-
-        let name = parse_jsx_name_or_namespace(p);
-        if name.is_absent() {
-            m.abandon(p);
-            return ParsedSyntax::Absent;
+        if matches!(p.cur(), T!['{'] | T![...]) {
+            parse_jsx_spread_attribute(p)
+        } else {
+            parse_jsx_attribute(p)
         }
-
-        let _ = parse_jsx_attribute_initializer_clause(p);
-
-        ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE))
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -355,7 +349,7 @@ impl ParseNodeList for JsxAttributeList {
             p,
             &ParseRecovery::new(
                 JsSyntaxKind::JS_UNKNOWN_MEMBER,
-                token_set![T![/], T![>], T![<], T!['{'], T!['}'], T![ident]],
+                token_set![T![/], T![>], T![<], T!['{'], T!['}'], T![...], T![ident]],
             ),
             jsx_expected_attribute,
         )
@@ -366,9 +360,66 @@ impl ParseNodeList for JsxAttributeList {
     }
 }
 
+fn parse_jsx_attribute(p: &mut Parser) -> ParsedSyntax {
+    let m = p.start();
+
+    let name = parse_jsx_name_or_namespace(p);
+    if name.is_absent() {
+        m.abandon(p);
+        return ParsedSyntax::Absent;
+    }
+
+    let _ = parse_jsx_attribute_initializer_clause(p);
+
+    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE))
+}
+
+// test jsx spread_attribute
+// let obj = {};
+// <a {...obj} />;
+//
+// test_err jsx spread_attribute_error
+// let obj = {};
+// <a {...obj, other} />;
+// <a ...obj} />;
+// <a {obj} />;
+// <div
+//       {...{} /*
+//       // @ts-ignore */ /* prettier-ignore */
+//       invalidProp="HelloWorld"
+//     />;
+fn parse_jsx_spread_attribute(p: &mut Parser) -> ParsedSyntax {
+    if !matches!(p.cur(), T![...] | T!['{']) {
+        return Absent;
+    }
+
+    let m = p.start();
+
+    p.expect(T!['{']);
+    p.expect(T![...]);
+
+    let argument = parse_expression(p, ExpressionContext::default()).map(|mut expr| {
+        if expr.kind() == JS_SEQUENCE_EXPRESSION {
+            p.error(
+                p.err_builder("Comma operator isn't a valid value for a JSX spread argument.")
+                    .primary(expr.range(p), ""),
+            );
+            expr.change_to_unknown(p);
+        }
+
+        expr
+    });
+
+    argument.or_add_diagnostic(p, expected_expression);
+
+    p.expect(T!['}']);
+
+    Present(m.complete(p, JSX_SPREAD_ATTRIBUTE))
+}
+
 fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![=]) {
-        return ParsedSyntax::Absent;
+        return Absent;
     }
 
     let m = p.start();

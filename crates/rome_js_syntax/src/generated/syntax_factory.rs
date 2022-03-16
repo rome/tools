@@ -5706,6 +5706,46 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(JSX_SELF_CLOSING_ELEMENT, children)
             }
+            JSX_SPREAD_ATTRIBUTE => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T!['{'] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [...] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if JsAnyExpression::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T!['}'] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JSX_SPREAD_ATTRIBUTE.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSX_SPREAD_ATTRIBUTE, children)
+            }
             JSX_STRING => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
@@ -9404,7 +9444,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 false,
             ),
             JSX_ATTRIBUTE_LIST => {
-                Self::make_node_list_syntax(kind, children, JsxAttribute::can_cast)
+                Self::make_node_list_syntax(kind, children, JsxAnyAttribute::can_cast)
             }
             TS_ENUM_MEMBER_LIST => Self::make_separated_list_syntax(
                 kind,
