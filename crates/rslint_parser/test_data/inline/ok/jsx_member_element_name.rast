@@ -3,8 +3,8 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@0..1 "<" [] [],
                         name: JsxMemberName {
@@ -63,8 +63,8 @@ JsModule {
             semicolon_token: SEMICOLON@19..20 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@20..22 "<" [Newline("\n")] [],
                         name: JsxMemberName {
@@ -107,7 +107,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..37
     0: JS_EXPRESSION_STATEMENT@0..20
-      0: JSX_ELEMENT_EXPRESSION@0..19
+      0: JSX_TAG_EXPRESSION@0..19
         0: JSX_ELEMENT@0..19
           0: JSX_OPENING_ELEMENT@0..9
             0: L_ANGLE@0..1 "<" [] []
@@ -148,7 +148,7 @@ JsModule {
             3: R_ANGLE@18..19 ">" [] []
       1: SEMICOLON@19..20 ";" [] []
     1: JS_EXPRESSION_STATEMENT@20..37
-      0: JSX_ELEMENT_EXPRESSION@20..36
+      0: JSX_TAG_EXPRESSION@20..36
         0: JSX_ELEMENT@20..36
           0: JSX_OPENING_ELEMENT@20..28
             0: L_ANGLE@20..22 "<" [Newline("\n")] []

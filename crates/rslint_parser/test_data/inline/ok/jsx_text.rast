@@ -3,8 +3,8 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@0..1 "<" [] [],
                         name: JsxReferenceIdentifier {
@@ -29,8 +29,8 @@ JsModule {
             semicolon_token: SEMICOLON@11..12 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@12..14 "<" [Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -55,8 +55,8 @@ JsModule {
             semicolon_token: SEMICOLON@43..44 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@44..46 "<" [Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -81,8 +81,8 @@ JsModule {
             semicolon_token: SEMICOLON@81..82 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@82..84 "<" [Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -115,7 +115,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..141
     0: JS_EXPRESSION_STATEMENT@0..12
-      0: JSX_ELEMENT_EXPRESSION@0..11
+      0: JSX_TAG_EXPRESSION@0..11
         0: JSX_ELEMENT@0..11
           0: JSX_OPENING_ELEMENT@0..3
             0: L_ANGLE@0..1 "<" [] []
@@ -133,7 +133,7 @@ JsModule {
             3: R_ANGLE@10..11 ">" [] []
       1: SEMICOLON@11..12 ";" [] []
     1: JS_EXPRESSION_STATEMENT@12..44
-      0: JSX_ELEMENT_EXPRESSION@12..43
+      0: JSX_TAG_EXPRESSION@12..43
         0: JSX_ELEMENT@12..43
           0: JSX_OPENING_ELEMENT@12..16
             0: L_ANGLE@12..14 "<" [Newline("\n")] []
@@ -151,7 +151,7 @@ JsModule {
             3: R_ANGLE@42..43 ">" [] []
       1: SEMICOLON@43..44 ";" [] []
     2: JS_EXPRESSION_STATEMENT@44..82
-      0: JSX_ELEMENT_EXPRESSION@44..81
+      0: JSX_TAG_EXPRESSION@44..81
         0: JSX_ELEMENT@44..81
           0: JSX_OPENING_ELEMENT@44..48
             0: L_ANGLE@44..46 "<" [Newline("\n")] []
@@ -169,7 +169,7 @@ JsModule {
             3: R_ANGLE@80..81 ">" [] []
       1: SEMICOLON@81..82 ";" [] []
     3: JS_EXPRESSION_STATEMENT@82..141
-      0: JSX_ELEMENT_EXPRESSION@82..141
+      0: JSX_TAG_EXPRESSION@82..141
         0: JSX_ELEMENT@82..141
           0: JSX_OPENING_ELEMENT@82..89
             0: L_ANGLE@82..84 "<" [Newline("\n")] []

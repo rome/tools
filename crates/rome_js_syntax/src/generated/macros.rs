@@ -666,13 +666,13 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxElement::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JSX_ELEMENT_EXPRESSION => {
-                    let $pattern = unsafe { $crate::JsxElementExpression::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE => {
                     let $pattern =
                         unsafe { $crate::JsxExpressionAttributeValue::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_FRAGMENT => {
+                    let $pattern = unsafe { $crate::JsxFragment::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_MEMBER_NAME => {
@@ -701,6 +701,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JSX_STRING_LITERAL => {
                     let $pattern = unsafe { $crate::JsxStringLiteral::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_TAG_EXPRESSION => {
+                    let $pattern = unsafe { $crate::JsxTagExpression::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_TEXT_LITERAL => {

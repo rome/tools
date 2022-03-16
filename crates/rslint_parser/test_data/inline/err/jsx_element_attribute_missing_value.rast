@@ -22,8 +22,8 @@ JsModule {
                 statements: JsStatementList [
                     JsReturnStatement {
                         return_token: RETURN_KW@14..26 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
-                        argument: JsxElementExpression {
-                            element: JsxElement {
+                        argument: JsxTagExpression {
+                            tag: JsxElement {
                                 opening_element: JsxOpeningElement {
                                     l_angle_token: L_ANGLE@26..27 "<" [] [],
                                     name: JsxReferenceIdentifier {
@@ -85,7 +85,7 @@ JsModule {
         2: JS_STATEMENT_LIST@14..55
           0: JS_RETURN_STATEMENT@14..55
             0: RETURN_KW@14..26 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-            1: JSX_ELEMENT_EXPRESSION@26..54
+            1: JSX_TAG_EXPRESSION@26..54
               0: JSX_ELEMENT@26..54
                 0: JSX_OPENING_ELEMENT@26..48
                   0: L_ANGLE@26..27 "<" [] []

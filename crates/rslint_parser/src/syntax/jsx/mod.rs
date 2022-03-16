@@ -55,7 +55,7 @@ pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
     }
 
     let mut p = CheckpointedParser::new(p);
-    let syntax = parse_jsx_expression(&mut p);
+    let syntax = parse_jsx_tag_expression(&mut p);
 
     if syntax.is_absent() {
         p.rewind();
@@ -75,10 +75,10 @@ pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test jsx jsx_element_as_statements
 // <div />
-fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
+fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
     parse_jsx_element(p, true).map(|element| {
         let m = element.precede(p);
-        m.complete(p, JsSyntaxKind::JSX_ELEMENT_EXPRESSION)
+        m.complete(p, JSX_TAG_EXPRESSION)
     })
 }
 

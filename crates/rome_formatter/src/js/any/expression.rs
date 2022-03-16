@@ -39,7 +39,7 @@ impl ToFormatElement for JsAnyExpression {
             Self::TsTypeAssertionExpression(node) => node.to_format_element(formatter),
             Self::TsAsExpression(node) => node.to_format_element(formatter),
             Self::TsNonNullAssertionExpression(node) => node.to_format_element(formatter),
-            Self::JsxElementExpression(node) => node.to_format_element(formatter),
+            Self::JsxTagExpression(node) => node.to_format_element(formatter),
         }
     }
 }

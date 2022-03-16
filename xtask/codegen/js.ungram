@@ -317,7 +317,7 @@ JsAnyExpression =
 	| TsAsExpression
 	| TsNonNullAssertionExpression
 	// JSX
-	| JsxElementExpression
+	| JsxTagExpression
 
 
 JsTemplate =
@@ -2142,15 +2142,16 @@ TsTypeArgumentList = (TsType (',' TsType)* )
 /////////////////////////////////////////////////////// JSX
 
 // ==================================
-// Elements
+// Tags
 // ==================================
 
-JsxElementExpression = 
-	element: JsxAnyElement
+JsxTagExpression =
+	tag: JsxAnyTag
 
-JsxAnyElement =
+JsxAnyTag =
 	JsxElement
 	| JsxSelfClosingElement
+	| JsxFragment
 
 // <a />
 JsxSelfClosingElement =
@@ -2168,7 +2169,7 @@ JsxElement =
 
 JsxOpeningElement =
 	'<'
-	name: JsxAnyElementName	
+	name: JsxAnyElementName
 	attributes: JsxAttributeList
 	'>'
 
@@ -2178,13 +2179,22 @@ JsxClosingElement =
 	name: JsxAnyElementName
 	'>'
 
+// <>content</>
+JsxFragment =
+	opening_l_angle_token: '<'
+	opening_r_angle_token: '>'
+	children: JsxTextLiteral?
+	closing_l_angle_token: '<'
+	closing_slash_token: '/'
+	closing_r_angle_token: '>'
+
 // ==================================
 // Names
 // ==================================
 
 JsxName = value: 'jsx_ident'
 
-JsxNamespaceName = 
+JsxNamespaceName =
 	namespace: JsxReferenceIdentifier
 	':'
 	name: JsxName
@@ -2215,25 +2225,25 @@ JsxAnyName =
 
 JsxAttributeList = JsxAttribute*
 
-JsxAttribute = 
+JsxAttribute =
 	name: JsxAnyAttributeName
 	initializer: JsxAttributeInitializerClause?
-	
+
 JsxAttributeInitializerClause =
 	'='
 	value: JsxAnyAttributeValue
 
-JsxAnyAttributeValue = 
-	JsxAnyElement
+JsxAnyAttributeValue =
+	JsxAnyTag
 	| JsxStringLiteral
 	| JsxExpressionAttributeValue
-	
+
 JsxExpressionAttributeValue =
 	'{'
 	expression: JsAnyExpression
 	'}'
 
-JsxAnyAttributeName = 
+JsxAnyAttributeName =
 	JsxName
 	| JsxNamespaceName
 

@@ -3,8 +3,8 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxSelfClosingElement {
+            expression: JsxTagExpression {
+                tag: JsxSelfClosingElement {
                     l_angle_token: L_ANGLE@0..1 "<" [] [],
                     name: JsxReferenceIdentifier {
                         value_token: JSX_IDENT@1..5 "div" [] [Whitespace(" ")],
@@ -25,7 +25,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..7
     0: JS_EXPRESSION_STATEMENT@0..7
-      0: JSX_ELEMENT_EXPRESSION@0..7
+      0: JSX_TAG_EXPRESSION@0..7
         0: JSX_SELF_CLOSING_ELEMENT@0..7
           0: L_ANGLE@0..1 "<" [] []
           1: JSX_REFERENCE_IDENTIFIER@1..5
