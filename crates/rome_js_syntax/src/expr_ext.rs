@@ -9,6 +9,7 @@ use crate::{
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use num_bigint::BigInt;
 use rome_rowan::{NodeOrToken, SyntaxText, TextRange, TextSize};
+use std::cmp::Ordering;
 
 impl JsLiteralMemberName {
     /// Returns the name of the member as a syntax text
@@ -70,6 +71,8 @@ impl JsLiteralMemberName {
 }
 
 /// A binary operation applied to two expressions
+///
+/// The variants are ordered based on their precedence
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum JsBinaryOperation {
     /// `<`
@@ -112,10 +115,72 @@ pub enum JsBinaryOperation {
     BitwiseOr,
     /// `^`
     BitwiseXor,
-    /// `in`
-    In,
-    /// `instanceof`
-    Instanceof,
+}
+
+impl JsBinaryOperation {
+    pub fn is_bit_wise_operator(&self) -> bool {
+        matches!(
+            self,
+            JsBinaryOperation::LeftShift
+                | JsBinaryOperation::RightShift
+                | JsBinaryOperation::UnsignedRightShift
+                | JsBinaryOperation::BitwiseAnd
+                | JsBinaryOperation::BitwiseOr
+                | JsBinaryOperation::BitwiseXor
+        )
+    }
+
+    pub fn is_plus_or_minus_operator(&self) -> bool {
+        matches!(self, JsBinaryOperation::Plus | JsBinaryOperation::Minus)
+    }
+
+    pub fn is_times_or_div_operator(&self) -> bool {
+        matches!(
+            self,
+            JsBinaryOperation::Divide | JsBinaryOperation::Times | JsBinaryOperation::Remainder
+        )
+    }
+
+    pub fn is_exponent_operator(&self) -> bool {
+        matches!(self, JsBinaryOperation::Exponent)
+    }
+
+    pub fn is_comparison_operator(&self) -> bool {
+        matches!(
+            self,
+            JsBinaryOperation::LessThan
+                | JsBinaryOperation::GreaterThan
+                | JsBinaryOperation::LessThanOrEqual
+                | JsBinaryOperation::GreaterThanOrEqual
+                | JsBinaryOperation::Equality
+                | JsBinaryOperation::StrictEquality
+                | JsBinaryOperation::Inequality
+                | JsBinaryOperation::StrictInequality
+        )
+    }
+
+    // The numbers returned by this function are arbitrary, the most important thing
+    // is that, given the current implementation, they should be ordered from bigger (top) to smaller (bottom)
+    pub fn get_precedence(&self) -> u8 {
+        if self.is_bit_wise_operator() {
+            5
+        } else if self.is_times_or_div_operator() {
+            4
+        } else if self.is_plus_or_minus_operator() {
+            3
+        } else if self.is_comparison_operator() {
+            2
+        } else {
+            1
+        }
+    }
+
+    pub fn compare_precedence(&self, other: &Self) -> Ordering {
+        let self_precedence = self.get_precedence();
+        let other_precedence = other.get_precedence();
+
+        self_precedence.cmp(&other_precedence)
+    }
 }
 
 impl JsBinaryExpression {
@@ -141,8 +206,6 @@ impl JsBinaryExpression {
             T![&] => JsBinaryOperation::BitwiseAnd,
             T![|] => JsBinaryOperation::BitwiseOr,
             T![^] => JsBinaryOperation::BitwiseXor,
-            T![in] => JsBinaryOperation::In,
-            T![instanceof] => JsBinaryOperation::Instanceof,
             _ => unreachable!(),
         };
 
@@ -157,7 +220,7 @@ impl JsBinaryExpression {
     }
 }
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Ord, PartialOrd)]
 pub enum JsLogicalOperation {
     /// `??`
     NullishCoalescing,

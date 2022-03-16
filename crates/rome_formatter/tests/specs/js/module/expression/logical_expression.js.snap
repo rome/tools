@@ -100,6 +100,16 @@ const a =
     // foo
     (3 + 6 == 9)
 );
+
+
+let a = a  ||  b  && c;
+
+let foo = one && two || three && four || five && six;
+
+// Implicitly parenthesized && and || requires parens
+foo && bar || baz;
+
+
 =============================
 # Outputs
 ## Output 1
@@ -214,8 +224,9 @@ const a = x + y;
 }
 
 if (
-	somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin ||
-	somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
+	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin) || (
+		somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
+	)
 ) {
 }
 
@@ -223,25 +234,27 @@ undefined === function () {
 	throw undefined;
 };
 
-const b = `${(
+const b = `${
 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
-)}`;
+}`;
 
-const a =
+const a = (
 	aa &&
 		bb &&
 		something &&
 		elsewhere &&
 		happy &&
 		thoughts &&
-		somethingsomethingsomethingsomething ||
+		somethingsomethingsomethingsomething
+) || (
 	aa &&
 		bb &&
 		something &&
 		elsewhere &&
 		happy &&
 		thoughts &&
-		somethingsomethingsomethingsomething;
+		somethingsomethingsomethingsomething
+);
 
 (
 	lorem && // foo
@@ -255,6 +268,13 @@ const a =
 (
 	lorem &&
 		// foo
-		(3 + 6 == 9)
+		((3 + 6) == 9)
 );
+
+let a = a || (b && c);
+
+let foo = (one && two) || (three && four) || (five && six);
+
+// Implicitly parenthesized && and || requires parens
+(foo && bar) || baz;
 

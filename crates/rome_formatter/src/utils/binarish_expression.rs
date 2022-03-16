@@ -1,14 +1,16 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
-    if_group_breaks, if_group_fits_on_single_line, indent, join_elements, soft_line_break_or_space,
-    space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    if_group_breaks, if_group_fits_on_single_line, indent, join_elements, soft_block_indent,
+    soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use rome_js_syntax::{
-    JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsLogicalExpression,
-    JsLogicalExpressionFields,
+    JsAnyExpression, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperation,
+    JsLogicalExpression, JsLogicalExpressionFields, JsLogicalOperation,
 };
+use std::cmp::Ordering;
 use std::fmt::Debug;
 
 /// This function is charge to flat binaryish expressions that have the same precedence of their operators
@@ -130,6 +132,7 @@ fn flatten_expressions(
             // In order to flatten the expression, we have to check if the left node
             // is a binary expression with the same operator.
             // If the two operators are not the same, we stop the flattening.
+            let current_operator = Operation::Binary(binary_expression.operator_kind()?);
             if should_flatten_binary_expression(&binary_expression)? {
                 flatten_expressions(
                     flatten_items,
@@ -137,10 +140,15 @@ fn flatten_expressions(
                     formatter,
                     Some(operator),
                 )?;
+                let (formatted, _) = format_with_or_without_parenthesis(
+                    current_operator,
+                    right.clone(),
+                    right.format(formatter)?,
+                )?;
                 flatten_items.items.push(FlattenItem::Binary(
                     binary_expression,
                     FlattenItemFormatted {
-                        node_element: right.format(formatter)?,
+                        node_element: formatted,
                         operator_element: previous_operator.format_or_empty(formatter)?,
                     },
                     has_comments.into(),
@@ -153,6 +161,7 @@ fn flatten_expressions(
                         previous_operator,
                         right,
                         operator,
+                        current_operator,
                     })?;
                 flatten_items.items.push(left_item);
                 flatten_items.items.push(right_item);
@@ -175,6 +184,7 @@ fn flatten_expressions(
             // In order to flatten the expression, we have to check if the left node
             // is a binary expression with the same operator.
             // If the two operators are not the same, we stop the flattening.
+            let current_operator = Operation::Logical(logical_expression.operator_kind()?);
             if should_flatten_logical_expression(&logical_expression)? {
                 flatten_expressions(
                     flatten_items,
@@ -182,10 +192,16 @@ fn flatten_expressions(
                     formatter,
                     Some(operator),
                 )?;
+
+                let (formatted, _) = format_with_or_without_parenthesis(
+                    current_operator,
+                    right.clone(),
+                    right.format(formatter)?,
+                )?;
                 flatten_items.items.push(FlattenItem::Logical(
                     logical_expression,
                     FlattenItemFormatted {
-                        node_element: right.format(formatter)?,
+                        node_element: formatted,
                         operator_element: previous_operator.format_or_empty(formatter)?,
                     },
                     has_comments.into(),
@@ -198,6 +214,7 @@ fn flatten_expressions(
                         previous_operator,
                         right,
                         operator,
+                        current_operator,
                     })?;
                 flatten_items.items.push(left_item);
                 flatten_items.items.push(right_item);
@@ -283,15 +300,29 @@ fn should_flatten_logical_expression(node: &JsLogicalExpression) -> FormatResult
     Ok(should_flatten)
 }
 
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+enum Operation {
+    Logical(JsLogicalOperation),
+    Binary(JsBinaryOperation),
+}
+
 /// Parameters needed for [split_node_to_flatten_items].
 ///
 /// Check the documentation of  [split_node_to_flatten_items] for a better explanation of the payload
 struct SplitToElementParams<'a> {
+    /// Current instance of the formatter
     formatter: &'a Formatter,
+    /// The left property of the current binaryish expression
     left: JsAnyExpression,
+    /// The right property of the current binaryish expression
     right: JsAnyExpression,
+    /// The token of the operator of the current binaryish expression
     operator: SyntaxToken,
+    /// The  token of the operator of the previous binaryish expression, if it exists
     previous_operator: Option<SyntaxToken>,
+
+    /// The current operator of the node
+    current_operator: Operation,
 }
 
 /// This function is usually code on the last binary/logical expression of the stack.
@@ -323,14 +354,20 @@ fn split_binaryish_to_flatten_items(
         operator,
         previous_operator,
         right,
+        current_operator,
     } = params;
 
     let right_kind = &right.syntax().kind();
     let right_expression_should_group = right_expression_should_group(right_kind);
 
     let operator_has_trailing_comments = operator.has_trailing_comments();
-    let formatted_left = format_elements![
+    let (formatted, _) = format_with_or_without_parenthesis(
+        current_operator,
+        left.clone(),
         left.format(formatter)?,
+    )?;
+    let formatted_left = format_elements![
+        formatted,
         space_token(),
         operator.format(formatter)?,
         if operator_has_trailing_comments {
@@ -377,18 +414,102 @@ fn split_binaryish_to_flatten_items(
     // logical expression (`||`) is another logical expression.
     // In that case, we call `format_binaryish_expression` from scratch, with its own flatten items.
     let right_item = if right_expression_should_group {
-        let formatted = format_elements![
+        let (formatted, it_is_now_in_parenthesis) = format_with_or_without_parenthesis(
+            current_operator,
+            right.clone(),
             format_binaryish_expression(right.syntax(), formatter)?,
-            previous_operator
-        ];
+        )?;
+        let formatted = format_elements![formatted, previous_operator];
 
-        FlattenItem::Group(formatted, has_comments.into())
+        // if the expression is eligible of parenthesis, then we should mark
+        // the flatten item as a normal node
+        if it_is_now_in_parenthesis {
+            FlattenItem::Node(right.syntax().clone(), formatted, has_comments.into())
+        } else {
+            FlattenItem::Group(formatted, has_comments.into())
+        }
     } else {
-        let formatted_right = format_elements![right.format(formatter)?, previous_operator];
+        let (formatted, _) = format_with_or_without_parenthesis(
+            current_operator,
+            right.clone(),
+            right.format(formatter)?,
+        )?;
+        let formatted_right = format_elements![formatted, previous_operator,];
         FlattenItem::Node(right.syntax().clone(), formatted_right, has_comments.into())
     };
 
     Ok((left_item, right_item))
+}
+
+/// This function is in charge of formatting a node inside a binaryish expression with parenthesis or not
+///
+/// At the moment this logic is applied only to logical expressions.
+///
+/// A logical expressions should be decorated with parenthesis only if its previous operation has a lower
+/// precedence.
+///
+/// For example:
+///
+/// ```ignore
+/// foo && bar || lorem
+/// ```
+///
+/// The logical expression `foo && bar` has higher precedence of `bar || lorem`. This means that
+/// first `foo && bar` is computed and its result is then computed against `|| lorem`.
+///
+/// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis.
+fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
+    previous_operation: Operation,
+    node: Node,
+    formatted_node: FormatElement,
+) -> FormatResult<(FormatElement, bool)> {
+    let compare_to = if let Some(logical) = JsLogicalExpression::cast(node.syntax().clone()) {
+        Some(Operation::Logical(logical.operator_kind()?))
+    } else if let Some(binary) = JsBinaryExpression::cast(node.syntax().clone()) {
+        Some(Operation::Binary(binary.operator_kind()?))
+    } else {
+        None
+    };
+
+    let operation_is_higher = if let Some(compare_to) = compare_to {
+        match (previous_operation, compare_to) {
+            (Operation::Logical(previous_operation), Operation::Logical(compare_to)) => {
+                compare_to > previous_operation
+            }
+
+            (Operation::Binary(previous_operation), Operation::Binary(compare_to)) => {
+                compare_to.compare_precedence(&previous_operation) == Ordering::Greater
+            }
+            _ => false,
+        }
+    } else {
+        false
+    };
+
+    let result = if operation_is_higher {
+        let formatted = if node.syntax().contains_comments() {
+            let (leading, content, trailing) = formatted_node.split_trivia();
+            format_elements![
+                leading,
+                group_elements(format_elements![
+                    token("("),
+                    soft_block_indent(format_elements![content, trailing]),
+                    token(")")
+                ])
+            ]
+        } else {
+            group_elements(format_elements![
+                token("("),
+                soft_block_indent(formatted_node),
+                token(")"),
+            ])
+        };
+        (formatted, true)
+    } else {
+        (formatted_node, false)
+    };
+
+    Ok(result)
 }
 
 /// This function tells the algorithm if the right part should be a separated group
@@ -396,14 +517,14 @@ fn right_expression_should_group(right_kind: &JsSyntaxKind) -> bool {
     matches!(right_kind, JsSyntaxKind::JS_LOGICAL_EXPRESSION)
 }
 
-/// Dirty a quick check if the group can potentially break
-fn should_break(flatten_nodes: &[FlattenItem]) -> bool {
+/// It tells if the expression can be hard grouped
+fn can_hard_group(flatten_nodes: &[FlattenItem]) -> bool {
     // We don't want to have 1 + 2 to break, for example.
     // If there are any trailing comments, let's break.
-    flatten_nodes.len() > 2
-        || flatten_nodes
+    flatten_nodes.len() <= 2
+        && flatten_nodes
             .iter()
-            .any(|node| node.has_comments() || matches!(node, FlattenItem::Group(..)))
+            .all(|node| !node.has_comments() && !matches!(node, FlattenItem::Group(..)))
 }
 
 fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
@@ -471,7 +592,7 @@ impl FlattenItems {
     }
 
     pub fn into_format_element(self) -> FormatResult<FormatElement> {
-        let should_break = should_break(&self.items);
+        let can_hard_group = can_hard_group(&self.items);
         let len = self.items.len();
 
         let mut groups: Vec<FormatElement> = self
@@ -491,7 +612,7 @@ impl FlattenItems {
             })
             .collect::<Vec<FormatElement>>();
 
-        if !should_break {
+        if can_hard_group {
             // we bail early if group doesn't need to be broken. We don't need to do further checks
             return Ok(hard_group_elements(join_elements(
                 soft_line_break_or_space(),
@@ -503,18 +624,15 @@ impl FlattenItems {
         let should_not_indent = should_not_indent_if_parent_indents(&self.current_node);
         let should_ident_if_parent_inlines = should_indent_if_parent_inlines(&self.current_node);
 
-        if is_inside_parenthesis {
-            Ok(join_elements(soft_line_break_or_space(), groups))
+        let formatted = if is_inside_parenthesis {
+            join_elements(soft_line_break_or_space(), groups)
         } else if should_not_indent {
-            Ok(group_elements(join_elements(
-                soft_line_break_or_space(),
-                groups,
-            )))
+            group_elements(join_elements(soft_line_break_or_space(), groups))
         } else if should_ident_if_parent_inlines {
             // in order to correctly break, we need to check if the parent created a group
             // that breaks or not. In order to do that , we need to create two conditional groups
             // that behave differently depending on the situation
-            Ok(format_elements![
+            format_elements![
                 // the parent has created a group that breaks, then we create an indentation
                 if_group_breaks(indent(format_elements![
                     hard_line_break(),
@@ -525,7 +643,7 @@ impl FlattenItems {
                     soft_line_break_or_space(),
                     groups,
                 )))
-            ])
+            ]
         } else {
             // if none of the previous conditions is met,
             // we take take out the first element from the rest of group, then we hard group the "head"
@@ -533,7 +651,7 @@ impl FlattenItems {
             let rest = groups.split_off(1);
             let head = groups;
 
-            Ok(format_elements![
+            format_elements![
                 hard_group_elements(join_elements(soft_line_break_or_space(), head,)),
                 group_elements(format_elements![
                     if_group_breaks(indent(format_elements![
@@ -545,8 +663,10 @@ impl FlattenItems {
                         rest,
                     )),)
                 ])
-            ])
-        }
+            ]
+        };
+
+        Ok(formatted)
     }
 }
 

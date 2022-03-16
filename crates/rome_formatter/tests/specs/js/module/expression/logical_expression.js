@@ -93,3 +93,12 @@ const a =
     // foo
     (3 + 6 == 9)
 );
+
+
+let a = a  ||  b  && c;
+
+let foo = one && two || three && four || five && six;
+
+// Implicitly parenthesized && and || requires parens
+foo && bar || baz;
+

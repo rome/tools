@@ -49,7 +49,7 @@ const value = (bifornCringerMoshedPerplexSawder
 ```js
 $var =
   (
-    $number % 10 >= 2 && ($number % 100 < 10 || $number % 100 >= 20) ? kochabCooieGameOnOboleUnweave : annularCooeedSplicesWalksWayWay
+    ($number % 10) >= 2 && (($number % 100) < 10 || ($number % 100) >= 20) ? kochabCooieGameOnOboleUnweave : annularCooeedSplicesWalksWayWay
   ) ? anodyneCondosMalateOverateRetinol : averredBathersBoxroomBuggyNurl;
 
 const value = (

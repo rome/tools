@@ -12,7 +12,7 @@ use crate::{
 pub use binarish_expression::format_binaryish_expression;
 pub(crate) use call_expression::format_call_expression;
 pub(crate) use format_conditional::{format_conditional, Conditional};
-use rome_js_syntax::{AstNode, AstNodeList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use rome_js_syntax::{AstNode, AstNodeList, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause,
     JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
@@ -477,8 +477,17 @@ impl TemplateElement {
                     | JsAnyExpression::JsComputedMemberExpression(_)
                     | JsAnyExpression::JsIdentifierExpression(_)
                     | JsAnyExpression::JsAnyLiteralExpression(_)
-                    | JsAnyExpression::JsCallExpression(_)
-                    | JsAnyExpression::JsParenthesizedExpression(_) => Ok(true),
+                    | JsAnyExpression::JsCallExpression(_) => Ok(true),
+
+                    JsAnyExpression::JsParenthesizedExpression(expression) => {
+                        // binary and logical expression have their own grouping inside parenthesis,
+                        // so we mark the current parenthesized expression as not plain
+                        match expression.expression()? {
+                            JsAnyExpression::JsLogicalExpression(_)
+                            | JsAnyExpression::JsBinaryExpression(_) => Ok(false),
+                            _ => Ok(true),
+                        }
+                    }
 
                     _ => {
                         if let Some(function) =
@@ -503,5 +512,69 @@ impl TemplateElement {
             TemplateElement::Js(template_element) => template_element.syntax().contains_comments(),
             TemplateElement::Ts(template_element) => template_element.syntax().contains_comments(),
         }
+    }
+}
+
+/// This enum is used to extract a precedence from certain nodes. By comparing the precedence
+/// of two nodes, it's possible to change the way certain node should be formatted.
+///
+/// A use case, for example, is when comparing a node with its parent. If the parent has a lower
+/// precedence, then the node can change its formatting.
+#[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
+pub(crate) enum FormatPrecedence {
+    /// No precedence given to these nodes  
+    None,
+
+    /// Low priority
+    Low,
+
+    /// High priority
+    High,
+}
+
+impl FormatPrecedence {
+    /// Use this function when you want to extract the precedence of the current node
+    /// based on whether it can parenthesised or not.
+    ///
+    /// This function is useful when we want to compare a node against its parent. If the parent has
+    /// lower precedence, it means that we can remove the parenthesis from the current node.
+    ///
+    /// An example can be:
+    ///
+    /// ```js
+    /// ("simple expression") + " or not"
+    /// ```
+    ///
+    /// In this case, we have a parenthesised expression and its parent is a binary expression.
+    /// The first one will have [FormatPrecedence::Low] as priority and the second has
+    /// [FormatPrecedence::None] as priority. In this case, the parenthesis can be omitted.
+    pub fn with_precedence_for_parenthesis(node: Option<&SyntaxNode>) -> Self {
+        node.map_or(FormatPrecedence::None, |node| match node.kind() {
+            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => FormatPrecedence::Low,
+
+            JsSyntaxKind::TS_AS_EXPRESSION
+            | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION
+            | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
+            | JsSyntaxKind::JS_UNARY_EXPRESSION
+            | JsSyntaxKind::JS_LOGICAL_EXPRESSION
+            | JsSyntaxKind::JS_BINARY_EXPRESSION
+            | JsSyntaxKind::JS_TEMPLATE
+            | JsSyntaxKind::JS_SPREAD
+            | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
+            | JsSyntaxKind::JS_CALL_EXPRESSION
+            | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
+            | JsSyntaxKind::JS_NEW_EXPRESSION
+            | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
+            | JsSyntaxKind::JS_EXTENDS_CLAUSE
+            | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
+            | JsSyntaxKind::JS_AWAIT_EXPRESSION
+            | JsSyntaxKind::JS_YIELD_ARGUMENT
+            | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+            | JsSyntaxKind::JS_EXPRESSION_STATEMENT
+            | JsSyntaxKind::JS_RETURN_STATEMENT
+            | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => FormatPrecedence::High,
+
+            _ => FormatPrecedence::None,
+        })
     }
 }

@@ -577,7 +577,11 @@ function() {
 }
 
 #[cfg(test)]
+mod check_reformat;
+
+#[cfg(test)]
 mod test {
+    use crate::check_reformat::{check_reformat, CheckReformatParams};
     use crate::format;
     use crate::FormatOptions;
     use rslint_parser::{parse, SourceType};
@@ -587,11 +591,19 @@ mod test {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        `something ${ () => { var hey; const looooooooooong_expression = "loooooooooong_expression" }} something else ${ ehy }`;
+3 + 3 === 7   
 "#;
         let syntax = SourceType::ts();
-        let tree = parse(src, 0, syntax);
+        let tree = parse(src, 0, syntax.clone());
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
+        dbg!(&tree.syntax());
+        check_reformat(CheckReformatParams {
+            root: &tree.syntax(),
+            text: result.as_code(),
+            source_type: syntax,
+            file_name: "quick_test",
+            format_options: FormatOptions::default(),
+        });
         assert_eq!(
             result.as_code(),
             r#"let g = [[], [0, 1], [0, 1]];
