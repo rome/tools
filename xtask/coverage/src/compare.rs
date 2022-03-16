@@ -47,7 +47,13 @@ pub fn coverage_compare(
         );
     }
 
-    let base_results = read_test_results(base_result_dir.as_path(), "base");
+    let mut base_results = read_test_results(base_result_dir.as_path(), "base")
+        .into_iter()
+        .collect::<Vec<_>>();
+
+    // Sort suite names to get a stable result in CI comments
+    base_results.sort_unstable_by(|(suite_a, _), (suite_b, _)| suite_a.cmp(suite_b));
+
     let mut new_results = read_test_results(new_result_dir.as_path(), "new");
 
     for (suite, base) in base_results.into_iter() {
