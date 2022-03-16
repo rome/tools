@@ -1,10 +1,15 @@
 use crate::config::Config;
+use crate::config::CONFIGURATION_SECTION;
+
 use crate::{documents::Document, handlers, url_interner::UrlInterner};
+use futures::stream::futures_unordered::FuturesUnordered;
+use futures::StreamExt;
 use lspower::jsonrpc::Error as LspError;
 use lspower::lsp;
 use parking_lot::RwLock;
 use rome_analyze::{AnalysisServer, FileId};
 use std::{collections::HashMap, error::Error, fmt::Display};
+use tracing::{error, trace};
 
 /// Represents the state of an LSP server session.
 pub(crate) struct Session {
@@ -104,21 +109,24 @@ impl Session {
     /// them to the client. Called from [`handlers::text_document`] when a file's
     /// contents changes.
     pub(crate) async fn update_diagnostics(&self, url: lsp::Url) -> anyhow::Result<()> {
-        let workspace_settings = self.config.read().get_workspace_settings();
-        if !workspace_settings.analysis.enable_diagnostics {
-            return Ok(());
-        }
         let doc = self.document(&url)?;
 
-        let file_id = doc.file_id();
-        let mut analysis_server = AnalysisServer::default();
-        analysis_server.set_file_text(file_id, doc.text);
+        let workspace_settings = self.config.read().get_workspace_settings();
 
-        let handle = tokio::task::spawn_blocking(move || {
-            handlers::analysis::diagnostics(analysis_server, file_id)
-        });
+        let diagnostics = if workspace_settings.analysis.enable_diagnostics {
+            let file_id = doc.file_id();
+            let mut analysis_server = AnalysisServer::default();
+            analysis_server.set_file_text(file_id, doc.text);
 
-        let diagnostics = handle.await??;
+            let handle = tokio::task::spawn_blocking(move || {
+                handlers::analysis::diagnostics(analysis_server, file_id)
+            });
+
+            handle.await??
+        } else {
+            // Sending empty vector clears published diagnostics
+            vec![]
+        };
 
         let version = self.document_version(&url)?;
 
@@ -128,5 +136,66 @@ impl Session {
                 .await;
         }
         Ok(())
+    }
+
+    /// Updates diagnostics for every [`Document`] in this [`Session`]
+    pub(crate) async fn update_all_diagnostics(&self) {
+        let mut futures: FuturesUnordered<_> = self
+            .documents
+            .read()
+            .keys()
+            .cloned()
+            .map(|url| self.update_diagnostics(url))
+            .collect();
+
+        while let Some(result) = futures.next().await {
+            if let Err(e) = result {
+                error!("Error while updating diagnostics: {}", e);
+            }
+        }
+    }
+
+    /// True if the client supports dynamic registration of "workspace/didChangeConfiguration" requests
+    pub(crate) fn can_register_did_change_configuration(&self) -> bool {
+        self.client_capabilities
+            .read()
+            .as_ref()
+            .and_then(|c| c.workspace.as_ref())
+            .and_then(|c| c.did_change_configuration)
+            .and_then(|c| c.dynamic_registration)
+            == Some(true)
+    }
+
+    /// Checks `analysis.enable_diagnostics` in this session's workspace settings`
+    pub(crate) fn diagnostics_enabled(&self) -> bool {
+        self.config
+            .read()
+            .get_workspace_settings()
+            .analysis
+            .enable_diagnostics
+    }
+
+    /// Requests "workspace/configuration" from client and updates Session config
+    pub(crate) async fn fetch_client_configuration(&self) {
+        let item = lsp::ConfigurationItem {
+            scope_uri: None,
+            section: Some(String::from(CONFIGURATION_SECTION)),
+        };
+        let items = vec![item];
+        let configurations = self.client.configuration(items).await;
+
+        if let Ok(configurations) = configurations {
+            configurations.into_iter().next().and_then(|configuration| {
+                self.config
+                    .write()
+                    .set_workspace_settings(configuration)
+                    .map_err(|err| {
+                        error!("Cannot set workspace settings: {}", err);
+                    })
+                    .ok()
+            });
+        } else {
+            trace!("Cannot read configuration from the client");
+        }
     }
 }
