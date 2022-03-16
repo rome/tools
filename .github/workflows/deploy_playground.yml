@@ -5,7 +5,7 @@ name: Deploy Playground
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
