@@ -5,7 +5,7 @@ use rome_js_syntax::JsxAnyAttributeValue;
 impl ToFormatElement for JsxAnyAttributeValue {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            Self::JsxAnyElement(node) => node.to_format_element(formatter),
+            Self::JsxAnyTag(node) => node.to_format_element(formatter),
             Self::JsxStringLiteral(node) => node.to_format_element(formatter),
             Self::JsxExpressionAttributeValue(node) => node.to_format_element(formatter),
         }

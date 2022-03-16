@@ -23,8 +23,8 @@ JsModule {
                                 },
                                 return_type_annotation: missing (optional),
                                 fat_arrow_token: FAT_ARROW@13..16 "=>" [] [Whitespace(" ")],
-                                body: JsxElementExpression {
-                                    element: JsxElement {
+                                body: JsxTagExpression {
+                                    tag: JsxElement {
                                         opening_element: JsxOpeningElement {
                                             l_angle_token: L_ANGLE@16..17 "<" [] [],
                                             name: JsxReferenceIdentifier {
@@ -74,8 +74,8 @@ JsModule {
                                 fat_arrow_token: FAT_ARROW@42..45 "=>" [] [Whitespace(" ")],
                                 body: JsParenthesizedExpression {
                                     l_paren_token: L_PAREN@45..46 "(" [] [],
-                                    expression: JsxElementExpression {
-                                        element: JsxElement {
+                                    expression: JsxTagExpression {
+                                        tag: JsxElement {
                                             opening_element: JsxOpeningElement {
                                                 l_angle_token: L_ANGLE@46..47 "<" [] [],
                                                 name: JsxReferenceIdentifier {
@@ -131,7 +131,7 @@ JsModule {
                   2: R_PAREN@11..13 ")" [] [Whitespace(" ")]
                 3: (empty)
                 4: FAT_ARROW@13..16 "=>" [] [Whitespace(" ")]
-                5: JSX_ELEMENT_EXPRESSION@16..27
+                5: JSX_TAG_EXPRESSION@16..27
                   0: JSX_ELEMENT@16..27
                     0: JSX_OPENING_ELEMENT@16..21
                       0: L_ANGLE@16..17 "<" [] []
@@ -168,7 +168,7 @@ JsModule {
                 4: FAT_ARROW@42..45 "=>" [] [Whitespace(" ")]
                 5: JS_PARENTHESIZED_EXPRESSION@45..58
                   0: L_PAREN@45..46 "(" [] []
-                  1: JSX_ELEMENT_EXPRESSION@46..57
+                  1: JSX_TAG_EXPRESSION@46..57
                     0: JSX_ELEMENT@46..57
                       0: JSX_OPENING_ELEMENT@46..51
                         0: L_ANGLE@46..47 "<" [] []

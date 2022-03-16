@@ -3,8 +3,8 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxSelfClosingElement {
+            expression: JsxTagExpression {
+                tag: JsxSelfClosingElement {
                     l_angle_token: L_ANGLE@0..1 "<" [] [],
                     name: JsxReferenceIdentifier {
                         value_token: JSX_IDENT@1..9 "closing" [] [Whitespace(" ")],
@@ -17,8 +17,8 @@ JsModule {
             semicolon_token: SEMICOLON@31..32 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@32..34 "<" [Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -49,7 +49,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..68
     0: JS_EXPRESSION_STATEMENT@0..32
-      0: JSX_ELEMENT_EXPRESSION@0..31
+      0: JSX_TAG_EXPRESSION@0..31
         0: JSX_SELF_CLOSING_ELEMENT@0..31
           0: L_ANGLE@0..1 "<" [] []
           1: JSX_REFERENCE_IDENTIFIER@1..9
@@ -59,7 +59,7 @@ JsModule {
           4: R_ANGLE@30..31 ">" [] []
       1: SEMICOLON@31..32 ";" [] []
     1: JS_EXPRESSION_STATEMENT@32..68
-      0: JSX_ELEMENT_EXPRESSION@32..67
+      0: JSX_TAG_EXPRESSION@32..67
         0: JSX_ELEMENT@32..67
           0: JSX_OPENING_ELEMENT@32..39
             0: L_ANGLE@32..34 "<" [Newline("\n")] []

@@ -22,8 +22,8 @@ JsModule {
                 statements: JsStatementList [
                     JsReturnStatement {
                         return_token: RETURN_KW@14..26 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
-                        argument: JsxElementExpression {
-                            element: JsxSelfClosingElement {
+                        argument: JsxTagExpression {
+                            tag: JsxSelfClosingElement {
                                 l_angle_token: L_ANGLE@26..27 "<" [] [],
                                 name: JsxReferenceIdentifier {
                                     value_token: JSX_IDENT@27..31 "div" [] [Whitespace(" ")],
@@ -65,7 +65,7 @@ JsModule {
         2: JS_STATEMENT_LIST@14..33
           0: JS_RETURN_STATEMENT@14..33
             0: RETURN_KW@14..26 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-            1: JSX_ELEMENT_EXPRESSION@26..33
+            1: JSX_TAG_EXPRESSION@26..33
               0: JSX_SELF_CLOSING_ELEMENT@26..33
                 0: L_ANGLE@26..27 "<" [] []
                 1: JSX_REFERENCE_IDENTIFIER@27..31

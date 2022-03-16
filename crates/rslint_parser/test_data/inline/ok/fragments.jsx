@@ -1,0 +1,9 @@
+<>abcd</>;
+<>   whitespace
+</>;
+<
+  /*comment */
+  >
+  <
+  /
+>;
