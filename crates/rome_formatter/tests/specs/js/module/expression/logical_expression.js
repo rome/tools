@@ -102,3 +102,7 @@ let foo = one && two || three && four || five && six;
 // Implicitly parenthesized && and || requires parens
 foo && bar || baz;
 
+
+a instanceof Number instanceof String instanceof Boolean instanceof Number instanceof String instanceof Boolean instanceof Number instanceof String instanceof Boolean;
+
+a in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName;
