@@ -6,7 +6,7 @@ JsModule {
             expression: JsxTagExpression {
                 tag: JsxSelfClosingElement {
                     l_angle_token: L_ANGLE@0..1 "<" [] [],
-                    name: JsxReferenceIdentifier {
+                    name: JsxName {
                         value_token: JSX_IDENT@1..9 "closing" [] [Whitespace(" ")],
                     },
                     attributes: JsxAttributeList [],
@@ -21,7 +21,7 @@ JsModule {
                 tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@32..34 "<" [Newline("\n")] [],
-                        name: JsxReferenceIdentifier {
+                        name: JsxName {
                             value_token: JSX_IDENT@34..38 "open" [] [],
                         },
                         attributes: JsxAttributeList [],
@@ -31,7 +31,7 @@ JsModule {
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@39..40 "<" [] [],
                         slash_token: SLASH@40..62 "/" [Newline("\n"), Comments("/* some comment */"), Whitespace(" ")] [Whitespace(" ")],
-                        name: JsxReferenceIdentifier {
+                        name: JsxName {
                             value_token: JSX_IDENT@62..66 "open" [] [],
                         },
                         r_angle_token: R_ANGLE@66..67 ">" [] [],
@@ -52,7 +52,7 @@ JsModule {
       0: JSX_TAG_EXPRESSION@0..31
         0: JSX_SELF_CLOSING_ELEMENT@0..31
           0: L_ANGLE@0..1 "<" [] []
-          1: JSX_REFERENCE_IDENTIFIER@1..9
+          1: JSX_NAME@1..9
             0: JSX_IDENT@1..9 "closing" [] [Whitespace(" ")]
           2: JSX_ATTRIBUTE_LIST@9..9
           3: SLASH@9..30 "/" [] [Whitespace(" "), Comments("/* some comment */"), Whitespace(" ")]
@@ -63,7 +63,7 @@ JsModule {
         0: JSX_ELEMENT@32..67
           0: JSX_OPENING_ELEMENT@32..39
             0: L_ANGLE@32..34 "<" [Newline("\n")] []
-            1: JSX_REFERENCE_IDENTIFIER@34..38
+            1: JSX_NAME@34..38
               0: JSX_IDENT@34..38 "open" [] []
             2: JSX_ATTRIBUTE_LIST@38..38
             3: R_ANGLE@38..39 ">" [] []
@@ -71,7 +71,7 @@ JsModule {
           2: JSX_CLOSING_ELEMENT@39..67
             0: L_ANGLE@39..40 "<" [] []
             1: SLASH@40..62 "/" [Newline("\n"), Comments("/* some comment */"), Whitespace(" ")] [Whitespace(" ")]
-            2: JSX_REFERENCE_IDENTIFIER@62..66
+            2: JSX_NAME@62..66
               0: JSX_IDENT@62..66 "open" [] []
             3: R_ANGLE@66..67 ">" [] []
       1: SEMICOLON@67..68 ";" [] []

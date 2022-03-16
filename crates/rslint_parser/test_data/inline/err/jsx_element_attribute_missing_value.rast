@@ -26,7 +26,7 @@ JsModule {
                             tag: JsxElement {
                                 opening_element: JsxOpeningElement {
                                     l_angle_token: L_ANGLE@26..27 "<" [] [],
-                                    name: JsxReferenceIdentifier {
+                                    name: JsxName {
                                         value_token: JSX_IDENT@27..31 "div" [] [Whitespace(" ")],
                                     },
                                     attributes: JsxAttributeList [
@@ -46,7 +46,7 @@ JsModule {
                                 closing_element: JsxClosingElement {
                                     l_angle_token: L_ANGLE@48..49 "<" [] [],
                                     slash_token: SLASH@49..50 "/" [] [],
-                                    name: JsxReferenceIdentifier {
+                                    name: JsxName {
                                         value_token: JSX_IDENT@50..53 "div" [] [],
                                     },
                                     r_angle_token: R_ANGLE@53..54 ">" [] [],
@@ -89,7 +89,7 @@ JsModule {
               0: JSX_ELEMENT@26..54
                 0: JSX_OPENING_ELEMENT@26..48
                   0: L_ANGLE@26..27 "<" [] []
-                  1: JSX_REFERENCE_IDENTIFIER@27..31
+                  1: JSX_NAME@27..31
                     0: JSX_IDENT@27..31 "div" [] [Whitespace(" ")]
                   2: JSX_ATTRIBUTE_LIST@31..47
                     0: JSX_ATTRIBUTE@31..47
@@ -103,7 +103,7 @@ JsModule {
                 2: JSX_CLOSING_ELEMENT@48..54
                   0: L_ANGLE@48..49 "<" [] []
                   1: SLASH@49..50 "/" [] []
-                  2: JSX_REFERENCE_IDENTIFIER@50..53
+                  2: JSX_NAME@50..53
                     0: JSX_IDENT@50..53 "div" [] []
                   3: R_ANGLE@53..54 ">" [] []
             2: SEMICOLON@54..55 ";" [] []

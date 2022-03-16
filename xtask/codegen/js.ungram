@@ -2164,7 +2164,7 @@ JsxSelfClosingElement =
 // <a>...</a>
 JsxElement =
 	opening_element: JsxOpeningElement
-	children: JsxTextLiteral?
+	children: JsxText?
 	closing_element: JsxClosingElement
 
 JsxOpeningElement =
@@ -2183,7 +2183,7 @@ JsxClosingElement =
 JsxFragment =
 	opening_l_angle_token: '<'
 	opening_r_angle_token: '>'
-	children: JsxTextLiteral?
+	children: JsxText?
 	closing_l_angle_token: '<'
 	closing_slash_token: '/'
 	closing_r_angle_token: '>'
@@ -2193,14 +2193,17 @@ JsxFragment =
 // ==================================
 
 JsxName = value: 'jsx_ident'
+JsxReferenceIdentifier = value: 'jsx_ident'
 
+// <a:test>
 JsxNamespaceName =
-	namespace: JsxReferenceIdentifier
+	namespace: JsxName
 	':'
 	name: JsxName
 
 JsxAnyElementName =
-	JsxReferenceIdentifier
+	JsxName
+	| JsxReferenceIdentifier
 	| JsxMemberName
 	| JsxNamespaceName
 
@@ -2235,7 +2238,7 @@ JsxAttributeInitializerClause =
 
 JsxAnyAttributeValue =
 	JsxAnyTag
-	| JsxStringLiteral
+	| JsxString
 	| JsxExpressionAttributeValue
 
 JsxExpressionAttributeValue =
@@ -2251,8 +2254,5 @@ JsxAnyAttributeName =
 // Auxiliary
 // ==================================
 
-JsxReferenceIdentifier = value: 'jsx_ident'
-
-JsxTextLiteral = value: 'jsx_text'
-
-JsxStringLiteral = value: 'js_string_literal'
+JsxText = value: 'jsx_text_literal'
+JsxString = value: 'jsx_string_literal'

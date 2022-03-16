@@ -25,7 +25,7 @@ JsModule {
                         argument: JsxTagExpression {
                             tag: JsxSelfClosingElement {
                                 l_angle_token: L_ANGLE@26..27 "<" [] [],
-                                name: JsxReferenceIdentifier {
+                                name: JsxName {
                                     value_token: JSX_IDENT@27..31 "div" [] [Whitespace(" ")],
                                 },
                                 attributes: JsxAttributeList [],
@@ -68,7 +68,7 @@ JsModule {
             1: JSX_TAG_EXPRESSION@26..33
               0: JSX_SELF_CLOSING_ELEMENT@26..33
                 0: L_ANGLE@26..27 "<" [] []
-                1: JSX_REFERENCE_IDENTIFIER@27..31
+                1: JSX_NAME@27..31
                   0: JSX_IDENT@27..31 "div" [] [Whitespace(" ")]
                 2: JSX_ATTRIBUTE_LIST@31..31
                 3: SLASH@31..32 "/" [] []

@@ -132,6 +132,10 @@ pub enum LexContext {
     /// - expression start: `{`
     /// - EOF
     JsxChild,
+
+    /// Lexes a JSX Attribute value. Calls into normal lex token if positioned at anything
+    /// that isn't `'` or `"`.
+    JsxAttributeValue,
 }
 
 impl Default for LexContext {
@@ -298,6 +302,7 @@ impl<'src> Lexer<'src> {
                 LexContext::Regular => self.lex_token(),
                 LexContext::TemplateElement { tagged } => self.lex_template(tagged),
                 LexContext::JsxChild => self.lex_jsx_child_token(),
+                LexContext::JsxAttributeValue => self.lex_jsx_attribute_value(),
             }
         };
 
@@ -457,8 +462,24 @@ impl<'src> Lexer<'src> {
                     }
                 }
 
-                LexedToken::new(JSX_TEXT, diagnostic)
+                LexedToken::new(JSX_TEXT_LITERAL, diagnostic)
             }
+        }
+    }
+
+    fn lex_jsx_attribute_value(&mut self) -> LexedToken {
+        debug_assert!(!self.is_eof());
+
+        // Safety: Guaranteed because we aren't at the end of the file
+        let byte = unsafe { self.current_unchecked() };
+
+        match byte {
+            b'\'' | b'"' => {
+                self.read_str_literal(true);
+
+                LexedToken::ok(JSX_STRING_LITERAL)
+            }
+            _ => self.lex_token(),
         }
     }
 
@@ -759,6 +780,17 @@ impl<'src> Lexer<'src> {
                 b'u' => self.read_unicode_escape(true).err(),
                 // hexadecimal escape sequence
                 b'x' => self.validate_hex_escape(),
+                b'\r' => {
+                    if self.next_byte() == Some(b'\n') {
+                        self.advance(1);
+                    }
+
+                    None
+                }
+                b if is_linebreak(b as char) => {
+                    self.next_byte();
+                    None
+                }
                 _ => {
                     // We use get_unicode_char to account for escaped source characters which are unicode
                     let chr = self.current_char_unchecked();
@@ -817,7 +849,7 @@ impl<'src> Lexer<'src> {
 
     // Consume a string literal and advance the lexer, and returning a list of errors that occurred when reading the string
     // This could include unterminated string and invalid escape sequences
-    fn read_str_literal(&mut self) -> Option<Box<Diagnostic>> {
+    fn read_str_literal(&mut self, jsx_attribute: bool) -> Option<Box<Diagnostic>> {
         // Safety: this is only ever called from lex_token, which is guaranteed to be called on a char position
         let quote = unsafe { self.current_unchecked() };
         let start = self.position;
@@ -827,7 +859,7 @@ impl<'src> Lexer<'src> {
 
         while let Some(byte) = self.current_byte() {
             match byte {
-                b'\\' => {
+                b'\\' if !jsx_attribute => {
                     let r = self.validate_escape_sequence();
                     diagnostic = match (diagnostic, r) {
                         (None, new) => new,
@@ -842,6 +874,13 @@ impl<'src> Lexer<'src> {
                 b if b == quote => {
                     self.next_byte();
                     return diagnostic;
+                }
+                b if is_linebreak(b as char) && !jsx_attribute => {
+                    let unterminated =
+                        Diagnostic::error(self.file_id, "", "unterminated string literal")
+                            .primary(start..self.position, "")
+                            .secondary(self.position..self.position + 2, "line breaks here");
+                    return Some(Box::new(unterminated));
                 }
                 _ => {
                     self.next_byte();
@@ -1835,7 +1874,7 @@ impl<'src> Lexer<'src> {
                 }
             }
             QOT => {
-                if let Some(err) = self.read_str_literal() {
+                if let Some(err) = self.read_str_literal(false) {
                     LexedToken::with_diagnostic(JsSyntaxKind::ERROR_TOKEN, err)
                 } else {
                     LexedToken::ok(JS_STRING_LITERAL)
