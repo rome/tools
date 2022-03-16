@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: template-literals.js
 
 ---
@@ -165,9 +165,8 @@ f(`${{ a: 4, b: 9 }}`);
 
 // https://github.com/prettier/prettier/issues/1183#issue-220863505
 const makeBody = (store, assets, html) =>
-  `<!doctype html>${
-    ReactDOMServer.renderToStaticMarkup(
-      <Html
+  `<!doctype html>${ReactDOMServer.renderToStaticMarkup(
+    <Html
         headScripts={compact([ assets.javascript.head ])}
         headStyles={compact([ assets.styles.body, assets.styles.head ])}
         bodyScripts={compact([ assets.javascript.body ])}
@@ -180,9 +179,8 @@ const makeBody = (store, assets, html) =>
         content={[
           { id: 'app-container', dangerouslySetInnerHTML: { __html: html } },
         ]}
-      />
-    )
-  }`
+      />,
+  )}`;
 
 // https://github.com/prettier/prettier/issues/1626#issue-229655106
 const Bar = styled.div`
@@ -199,133 +197,17 @@ const Bar = styled.div`
 
 # Errors
 ```
-error[SyntaxError]: Invalid assignment to `<Html
-        headScripts`
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ template-literals.js:37:7
    │  
 37 │ ┌       <Html
 38 │ │         headScripts={compact([ assets.javascript.head ])}
-   │ └───────────────────^ This expression cannot be assigned to
-
-error[SyntaxError]: expected `,` but instead found `.`
-   ┌─ template-literals.js:38:38
-   │
-38 │         headScripts={compact([ assets.javascript.head ])}
-   │                                      ^ unexpected
-
-error[SyntaxError]: expected a function body but instead found '}'
-   ┌─ template-literals.js:38:57
-   │
-38 │         headScripts={compact([ assets.javascript.head ])}
-   │                                                         ^ Expected a function body here
-
-error[SyntaxError]: expected `,` but instead found `headStyles`
-   ┌─ template-literals.js:39:9
-   │
-39 │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
-   │         ^^^^^^^^^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `.`
-   ┌─ template-literals.js:39:37
-   │
-39 │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
-   │                                     ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `.`
-   ┌─ template-literals.js:39:57
-   │
-39 │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
-   │                                                         ^ unexpected
-
-error[SyntaxError]: expected a function body but instead found '}'
-   ┌─ template-literals.js:39:72
-   │
-39 │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
-   │                                                                        ^ Expected a function body here
-
-error[SyntaxError]: expected `,` but instead found `bodyScripts`
-   ┌─ template-literals.js:40:9
-   │
-40 │         bodyScripts={compact([ assets.javascript.body ])}
-   │         ^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `.`
-   ┌─ template-literals.js:40:38
-   │
-40 │         bodyScripts={compact([ assets.javascript.body ])}
-   │                                      ^ unexpected
-
-error[SyntaxError]: expected a function body but instead found '}'
-   ┌─ template-literals.js:40:57
-   │
-40 │         bodyScripts={compact([ assets.javascript.body ])}
-   │                                                         ^ Expected a function body here
-
-error[SyntaxError]: expected `,` but instead found `bodyStyles`
-   ┌─ template-literals.js:41:9
-   │
-41 │         bodyStyles={[]}
-   │         ^^^^^^^^^^ unexpected
-
-error[SyntaxError]: expected an expression but instead found ']'
-   ┌─ template-literals.js:41:22
-   │
-41 │         bodyStyles={[]}
-   │                      ^ Expected an expression here
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ template-literals.js:41:23
-   │
-41 │         bodyStyles={[]}
-   │                       ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `stringScripts`
-   ┌─ template-literals.js:42:9
-   │
-42 │         stringScripts={[
-   │         ^^^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: expected an expression but instead found ']'
-   ┌─ template-literals.js:46:9
-   │
-46 │         ]}
-   │         ^ Expected an expression here
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ template-literals.js:46:10
-   │
-46 │         ]}
-   │          ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `content`
-   ┌─ template-literals.js:47:9
-   │
-47 │         content={[
-   │         ^^^^^^^ unexpected
-
-error[SyntaxError]: expected an expression but instead found ']'
-   ┌─ template-literals.js:49:9
-   │
-49 │         ]}
-   │         ^ Expected an expression here
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ template-literals.js:49:10
-   │
-49 │         ]}
-   │          ^ unexpected
-
-error[SyntaxError]: expected an expression but instead found '>'
-   ┌─ template-literals.js:50:8
-   │
-50 │       />
-   │        ^ Expected an expression here
-
-error[SyntaxError]: expected an expression but instead found ')'
-   ┌─ template-literals.js:51:5
-   │
-51 │     )
-   │     ^ Expected an expression here
+39 │ │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
+40 │ │         bodyScripts={compact([ assets.javascript.body ])}
+   · │
+49 │ │         ]}
+50 │ │       />
+   │ └────────^ JSX only syntax
 
 
 ```

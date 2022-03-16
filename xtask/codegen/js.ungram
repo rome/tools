@@ -2141,23 +2141,22 @@ TsTypeArgumentList = (TsType (',' TsType)* )
 
 /////////////////////////////////////////////////////// JSX
 
-
-JsxElementExpression =
-	element: JsxAnyElement
-
 // ==================================
 // Elements
 // ==================================
+
+JsxElementExpression = 
+	element: JsxAnyElement
 
 JsxAnyElement =
 	JsxElement
 	| JsxSelfClosingElement
 
-
 // <a />
 JsxSelfClosingElement =
 	'<'
 	name: JsxAnyElementName
+	attributes: JsxAttributeList
 	'/'
 	'>'
 
@@ -2169,7 +2168,8 @@ JsxElement =
 
 JsxOpeningElement =
 	'<'
-	name: JsxAnyElementName
+	name: JsxAnyElementName	
+	attributes: JsxAttributeList
 	'>'
 
 JsxClosingElement =
@@ -2177,6 +2177,17 @@ JsxClosingElement =
 	'/'
 	name: JsxAnyElementName
 	'>'
+
+// ==================================
+// Names
+// ==================================
+
+JsxName = value: 'jsx_ident'
+
+JsxNamespaceName = 
+	namespace: JsxReferenceIdentifier
+	':'
+	name: JsxName
 
 JsxAnyElementName =
 	JsxReferenceIdentifier
@@ -2186,6 +2197,7 @@ JsxAnyElementName =
 JsxAnyObjectName =
 	JsxReferenceIdentifier
 	| JsxMemberName
+	| JsxNamespaceName
 
 // <a.test>
 JsxMemberName =
@@ -2193,22 +2205,44 @@ JsxMemberName =
 	'.'
 	member: JsName
 
+JsxAnyName =
+	JsxName
+	| JsxNamespaceName
+
+// ==================================
+// Attributes
+// ==================================
+
+JsxAttributeList = JsxAttribute*
+
+JsxAttribute = 
+	name: JsxAnyAttributeName
+	initializer: JsxAttributeInitializerClause?
+	
+JsxAttributeInitializerClause =
+	'='
+	value: JsxAnyAttributeValue
+
+JsxAnyAttributeValue = 
+	JsxAnyElement
+	| JsxStringLiteral
+	| JsxExpressionAttributeValue
+	
+JsxExpressionAttributeValue =
+	'{'
+	expression: JsAnyExpression
+	'}'
+
+JsxAnyAttributeName = 
+	JsxName
+	| JsxNamespaceName
+
 // ==================================
 // Auxiliary
 // ==================================
 
 JsxReferenceIdentifier = value: 'jsx_ident'
 
-JsxName = value: 'jsx_ident'
-
-// <a:test>
-JsxNamespaceName =
-	namespace: JsxReferenceIdentifier
-	':'
-	name: JsxName
-
-JsxAnyName =
-	JsxName
-	| JsxNamespaceName
-
 JsxTextLiteral = value: 'jsx_text'
+
+JsxStringLiteral = value: 'js_string_literal'

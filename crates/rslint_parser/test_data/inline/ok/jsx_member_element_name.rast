@@ -28,6 +28,7 @@ JsModule {
                                 value_token: IDENT@7..8 "d" [] [],
                             },
                         },
+                        attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@8..9 ">" [] [],
                     },
                     children: missing (optional),
@@ -75,6 +76,7 @@ JsModule {
                                 value_token: IDENT@26..27 "c" [] [],
                             },
                         },
+                        attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@27..28 ">" [] [],
                     },
                     children: missing (optional),
@@ -94,16 +96,16 @@ JsModule {
                     },
                 },
             },
-            semicolon_token: missing (optional),
+            semicolon_token: SEMICOLON@36..37 ";" [] [],
         },
     ],
-    eof_token: EOF@36..37 "" [Newline("\n")] [],
+    eof_token: EOF@37..38 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..37
+0: JS_MODULE@0..38
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..36
+  2: JS_MODULE_ITEM_LIST@0..37
     0: JS_EXPRESSION_STATEMENT@0..20
       0: JSX_ELEMENT_EXPRESSION@0..19
         0: JSX_ELEMENT@0..19
@@ -123,7 +125,8 @@ JsModule {
               1: DOT@6..7 "." [] []
               2: JS_NAME@7..8
                 0: IDENT@7..8 "d" [] []
-            2: R_ANGLE@8..9 ">" [] []
+            2: JSX_ATTRIBUTE_LIST@8..8
+            3: R_ANGLE@8..9 ">" [] []
           1: (empty)
           2: JSX_CLOSING_ELEMENT@9..19
             0: L_ANGLE@9..10 "<" [] []
@@ -144,7 +147,7 @@ JsModule {
                 0: IDENT@17..18 "d" [] []
             3: R_ANGLE@18..19 ">" [] []
       1: SEMICOLON@19..20 ";" [] []
-    1: JS_EXPRESSION_STATEMENT@20..36
+    1: JS_EXPRESSION_STATEMENT@20..37
       0: JSX_ELEMENT_EXPRESSION@20..36
         0: JSX_ELEMENT@20..36
           0: JSX_OPENING_ELEMENT@20..28
@@ -155,7 +158,8 @@ JsModule {
               1: DOT@25..26 "." [] []
               2: JS_NAME@26..27
                 0: IDENT@26..27 "c" [] []
-            2: R_ANGLE@27..28 ">" [] []
+            2: JSX_ATTRIBUTE_LIST@27..27
+            3: R_ANGLE@27..28 ">" [] []
           1: (empty)
           2: JSX_CLOSING_ELEMENT@28..36
             0: L_ANGLE@28..29 "<" [] []
@@ -167,5 +171,5 @@ JsModule {
               2: JS_NAME@34..35
                 0: IDENT@34..35 "c" [] []
             3: R_ANGLE@35..36 ">" [] []
-      1: (empty)
-  3: EOF@36..37 "" [Newline("\n")] []
+      1: SEMICOLON@36..37 ";" [] []
+  3: EOF@37..38 "" [Newline("\n")] []

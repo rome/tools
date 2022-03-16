@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: binary.js
 
 ---
@@ -23,12 +23,11 @@ room = room.map((row, rowIndex) => (
 
 # Output
 ```js
-const funnelSnapshotCard = (report === MY_OVERVIEW &&
-  !ReportGK.xar_metrics_active_capitol_v2) ||
-  (report === COMPANY_OVERVIEW &&
-    !ReportGK.xar_metrics_active_capitol_v2_company_metrics)
-  ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
-  : null;
+const funnelSnapshotCard = (
+  report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2
+) || (
+  report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
+) ? <ReportMetricsFunnelSnapshotCard metrics={metrics} /> : null;
 
 room =
   room.map(
@@ -50,23 +49,11 @@ room =
 
 # Errors
 ```
-error[SyntaxError]: Invalid assignment to `<ReportMetricsFunnelSnapshotCard metrics`
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
   ┌─ binary.js:5:5
   │
 5 │   ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
-  │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: expected an expression but instead found '>'
-  ┌─ binary.js:5:57
-  │
-5 │   ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
-  │                                                         ^ Expected an expression here
-
-error[SyntaxError]: expected an expression but instead found ':'
-  ┌─ binary.js:6:3
-  │
-6 │   : null;
-  │   ^ Expected an expression here
+  │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ JSX only syntax
 
 
 ```

@@ -169,7 +169,7 @@ pub enum LanguageVariant {
     Standard,
 
     /// Allows JSX syntax inside a JavaScript or TypeScript file
-    JSX,
+    Jsx,
 }
 
 impl LanguageVariant {
@@ -177,7 +177,7 @@ impl LanguageVariant {
         matches!(self, LanguageVariant::Standard)
     }
     pub fn is_jsx(&self) -> bool {
-        matches!(self, LanguageVariant::JSX)
+        matches!(self, LanguageVariant::Jsx)
     }
 }
 
@@ -234,7 +234,7 @@ impl SourceType {
 
     /// language: JS, variant: JSX, module_kind: Module, version: Latest
     pub fn jsx() -> SourceType {
-        Self::js_module().with_variant(LanguageVariant::JSX)
+        Self::js_module().with_variant(LanguageVariant::Jsx)
     }
 
     /// language: TS, variant: Standard, module_kind: Module, version: Latest
@@ -249,7 +249,7 @@ impl SourceType {
 
     /// language: TS, variant: JSX, module_kind: Module, version: Latest
     pub fn tsx() -> SourceType {
-        Self::ts().with_variant(LanguageVariant::JSX)
+        Self::ts().with_variant(LanguageVariant::Jsx)
     }
 
     /// TypeScript definition file
@@ -455,7 +455,7 @@ pub enum JsSyntaxFeature {
     SloppyMode,
     StrictMode,
     TypeScript,
-    JSX,
+    Jsx,
 }
 
 impl SyntaxFeature for JsSyntaxFeature {
@@ -464,7 +464,7 @@ impl SyntaxFeature for JsSyntaxFeature {
             JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
             JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
             JsSyntaxFeature::TypeScript => p.source_type.language().is_typescript(),
-            JsSyntaxFeature::JSX => p.source_type.variant() == LanguageVariant::JSX,
+            JsSyntaxFeature::Jsx => p.source_type.variant() == LanguageVariant::Jsx,
         }
     }
 }

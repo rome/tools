@@ -649,6 +649,15 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsYieldExpression::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JSX_ATTRIBUTE => {
+                    let $pattern = unsafe { $crate::JsxAttribute::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE => {
+                    let $pattern =
+                        unsafe { $crate::JsxAttributeInitializerClause::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JSX_CLOSING_ELEMENT => {
                     let $pattern = unsafe { $crate::JsxClosingElement::new_unchecked(node) };
                     $body
@@ -659,6 +668,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JSX_ELEMENT_EXPRESSION => {
                     let $pattern = unsafe { $crate::JsxElementExpression::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE => {
+                    let $pattern =
+                        unsafe { $crate::JsxExpressionAttributeValue::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_MEMBER_NAME => {
@@ -683,6 +697,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT => {
                     let $pattern = unsafe { $crate::JsxSelfClosingElement::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_STRING_LITERAL => {
+                    let $pattern = unsafe { $crate::JsxStringLiteral::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_TEXT_LITERAL => {
@@ -1287,6 +1305,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JS_VARIABLE_DECLARATOR_LIST => {
                     let $pattern = unsafe { $crate::JsVariableDeclaratorList::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_ATTRIBUTE_LIST => {
+                    let $pattern = unsafe { $crate::JsxAttributeList::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_ENUM_MEMBER_LIST => {

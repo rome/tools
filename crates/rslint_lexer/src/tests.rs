@@ -1221,8 +1221,10 @@ fn newline_space_must_be_two_tokens() {
 #[test]
 fn are_we_jsx() {
     assert_lex! {
-        r#"<div>{"Hey" + 1 + fn()}</div>"#,
+        r#"<some-div>{"Hey" + 1 + fn()}</some-div>"#,
         L_ANGLE:1
+        IDENT:4
+        MINUS:1
         IDENT:3
         R_ANGLE:1
         L_CURLY:1
@@ -1240,6 +1242,8 @@ fn are_we_jsx() {
         R_CURLY:1
         L_ANGLE:1
         SLASH:1
+        IDENT:4
+        MINUS:1
         IDENT:3
         R_ANGLE:1
     }

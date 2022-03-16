@@ -10,6 +10,7 @@ JsModule {
                         name: JsxReferenceIdentifier {
                             value_token: JSX_IDENT@1..10 "a-b-c-d-e" [] [],
                         },
+                        attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@10..11 ">" [] [],
                     },
                     children: missing (optional),
@@ -32,6 +33,7 @@ JsModule {
                     name: JsxReferenceIdentifier {
                         value_token: JSX_IDENT@26..36 "a-b-c-d-e" [] [Whitespace(" ")],
                     },
+                    attributes: JsxAttributeList [],
                     slash_token: SLASH@36..37 "/" [] [],
                     r_angle_token: R_ANGLE@37..38 ">" [] [],
                 },
@@ -45,6 +47,7 @@ JsModule {
                     name: JsxReferenceIdentifier {
                         value_token: JSX_IDENT@41..44 "if" [] [Whitespace(" ")],
                     },
+                    attributes: JsxAttributeList [],
                     slash_token: SLASH@44..45 "/" [] [],
                     r_angle_token: R_ANGLE@45..46 ">" [] [],
                 },
@@ -65,6 +68,7 @@ JsModule {
                                 value_token: JSX_IDENT@59..63 "name" [] [],
                             },
                         },
+                        attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@63..64 ">" [] [],
                     },
                     children: missing (optional),
@@ -88,31 +92,48 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsxElementExpression {
-                element: JsxSelfClosingElement {
-                    l_angle_token: L_ANGLE@82..84 "<" [Newline("\n")] [],
-                    name: JsxNamespaceName {
-                        namespace: JsxReferenceIdentifier {
-                            value_token: JSX_IDENT@84..101 "dashed-namespaced" [] [],
+                element: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@82..84 "<" [Newline("\n")] [],
+                        name: JsxNamespaceName {
+                            namespace: JsxReferenceIdentifier {
+                                value_token: JSX_IDENT@84..100 "dashed-namespace" [] [],
+                            },
+                            colon_token: COLON@100..101 ":" [] [],
+                            name: JsxName {
+                                value_token: JSX_IDENT@101..105 "name" [] [],
+                            },
                         },
-                        colon_token: COLON@101..102 ":" [] [],
-                        name: JsxName {
-                            value_token: JSX_IDENT@102..114 "dashed-name" [] [Whitespace(" ")],
-                        },
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@105..106 ">" [] [],
                     },
-                    slash_token: SLASH@114..115 "/" [] [],
-                    r_angle_token: R_ANGLE@115..116 ">" [] [],
+                    children: missing (optional),
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@106..107 "<" [] [],
+                        slash_token: SLASH@107..108 "/" [] [],
+                        name: JsxNamespaceName {
+                            namespace: JsxReferenceIdentifier {
+                                value_token: JSX_IDENT@108..124 "dashed-namespace" [] [],
+                            },
+                            colon_token: COLON@124..125 ":" [] [],
+                            name: JsxName {
+                                value_token: JSX_IDENT@125..129 "name" [] [],
+                            },
+                        },
+                        r_angle_token: R_ANGLE@129..130 ">" [] [],
+                    },
                 },
             },
-            semicolon_token: SEMICOLON@116..117 ";" [] [],
+            semicolon_token: SEMICOLON@130..131 ";" [] [],
         },
     ],
-    eof_token: EOF@117..118 "" [Newline("\n")] [],
+    eof_token: EOF@131..132 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..118
+0: JS_MODULE@0..132
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..117
+  2: JS_MODULE_ITEM_LIST@0..131
     0: JS_EXPRESSION_STATEMENT@0..24
       0: JSX_ELEMENT_EXPRESSION@0..23
         0: JSX_ELEMENT@0..23
@@ -120,7 +141,8 @@ JsModule {
             0: L_ANGLE@0..1 "<" [] []
             1: JSX_REFERENCE_IDENTIFIER@1..10
               0: JSX_IDENT@1..10 "a-b-c-d-e" [] []
-            2: R_ANGLE@10..11 ">" [] []
+            2: JSX_ATTRIBUTE_LIST@10..10
+            3: R_ANGLE@10..11 ">" [] []
           1: (empty)
           2: JSX_CLOSING_ELEMENT@11..23
             0: L_ANGLE@11..12 "<" [] []
@@ -135,8 +157,9 @@ JsModule {
           0: L_ANGLE@24..26 "<" [Newline("\n")] []
           1: JSX_REFERENCE_IDENTIFIER@26..36
             0: JSX_IDENT@26..36 "a-b-c-d-e" [] [Whitespace(" ")]
-          2: SLASH@36..37 "/" [] []
-          3: R_ANGLE@37..38 ">" [] []
+          2: JSX_ATTRIBUTE_LIST@36..36
+          3: SLASH@36..37 "/" [] []
+          4: R_ANGLE@37..38 ">" [] []
       1: SEMICOLON@38..39 ";" [] []
     2: JS_EXPRESSION_STATEMENT@39..47
       0: JSX_ELEMENT_EXPRESSION@39..46
@@ -144,8 +167,9 @@ JsModule {
           0: L_ANGLE@39..41 "<" [Newline("\n")] []
           1: JSX_REFERENCE_IDENTIFIER@41..44
             0: JSX_IDENT@41..44 "if" [] [Whitespace(" ")]
-          2: SLASH@44..45 "/" [] []
-          3: R_ANGLE@45..46 ">" [] []
+          2: JSX_ATTRIBUTE_LIST@44..44
+          3: SLASH@44..45 "/" [] []
+          4: R_ANGLE@45..46 ">" [] []
       1: SEMICOLON@46..47 ";" [] []
     3: JS_EXPRESSION_STATEMENT@47..82
       0: JSX_ELEMENT_EXPRESSION@47..81
@@ -158,7 +182,8 @@ JsModule {
               1: COLON@58..59 ":" [] []
               2: JSX_NAME@59..63
                 0: JSX_IDENT@59..63 "name" [] []
-            2: R_ANGLE@63..64 ">" [] []
+            2: JSX_ATTRIBUTE_LIST@63..63
+            3: R_ANGLE@63..64 ">" [] []
           1: (empty)
           2: JSX_CLOSING_ELEMENT@64..81
             0: L_ANGLE@64..65 "<" [] []
@@ -171,17 +196,29 @@ JsModule {
                 0: JSX_IDENT@76..80 "name" [] []
             3: R_ANGLE@80..81 ">" [] []
       1: SEMICOLON@81..82 ";" [] []
-    4: JS_EXPRESSION_STATEMENT@82..117
-      0: JSX_ELEMENT_EXPRESSION@82..116
-        0: JSX_SELF_CLOSING_ELEMENT@82..116
-          0: L_ANGLE@82..84 "<" [Newline("\n")] []
-          1: JSX_NAMESPACE_NAME@84..114
-            0: JSX_REFERENCE_IDENTIFIER@84..101
-              0: JSX_IDENT@84..101 "dashed-namespaced" [] []
-            1: COLON@101..102 ":" [] []
-            2: JSX_NAME@102..114
-              0: JSX_IDENT@102..114 "dashed-name" [] [Whitespace(" ")]
-          2: SLASH@114..115 "/" [] []
-          3: R_ANGLE@115..116 ">" [] []
-      1: SEMICOLON@116..117 ";" [] []
-  3: EOF@117..118 "" [Newline("\n")] []
+    4: JS_EXPRESSION_STATEMENT@82..131
+      0: JSX_ELEMENT_EXPRESSION@82..130
+        0: JSX_ELEMENT@82..130
+          0: JSX_OPENING_ELEMENT@82..106
+            0: L_ANGLE@82..84 "<" [Newline("\n")] []
+            1: JSX_NAMESPACE_NAME@84..105
+              0: JSX_REFERENCE_IDENTIFIER@84..100
+                0: JSX_IDENT@84..100 "dashed-namespace" [] []
+              1: COLON@100..101 ":" [] []
+              2: JSX_NAME@101..105
+                0: JSX_IDENT@101..105 "name" [] []
+            2: JSX_ATTRIBUTE_LIST@105..105
+            3: R_ANGLE@105..106 ">" [] []
+          1: (empty)
+          2: JSX_CLOSING_ELEMENT@106..130
+            0: L_ANGLE@106..107 "<" [] []
+            1: SLASH@107..108 "/" [] []
+            2: JSX_NAMESPACE_NAME@108..129
+              0: JSX_REFERENCE_IDENTIFIER@108..124
+                0: JSX_IDENT@108..124 "dashed-namespace" [] []
+              1: COLON@124..125 ":" [] []
+              2: JSX_NAME@125..129
+                0: JSX_IDENT@125..129 "name" [] []
+            3: R_ANGLE@129..130 ">" [] []
+      1: SEMICOLON@130..131 ";" [] []
+  3: EOF@131..132 "" [Newline("\n")] []
