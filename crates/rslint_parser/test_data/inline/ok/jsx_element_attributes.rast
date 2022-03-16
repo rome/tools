@@ -27,12 +27,12 @@ JsModule {
                                 opening_element: JsxOpeningElement {
                                     l_angle_token: L_ANGLE@26..27 "<" [] [],
                                     name: JsxReferenceIdentifier {
-                                        value_token: IDENT@27..31 "div" [] [Whitespace(" ")],
+                                        value_token: JSX_IDENT@27..31 "div" [] [Whitespace(" ")],
                                     },
                                     attributes: JsxAttributeList [
                                         JsxAttribute {
                                             name: JsxName {
-                                                value_token: IDENT@31..45 "string_literal" [] [],
+                                                value_token: JSX_IDENT@31..45 "string_literal" [] [],
                                             },
                                             initializer: JsxAttributeInitializerClause {
                                                 eq_token: EQ@45..46 "=" [] [],
@@ -43,7 +43,7 @@ JsModule {
                                         },
                                         JsxAttribute {
                                             name: JsxName {
-                                                value_token: IDENT@50..60 "expression" [] [],
+                                                value_token: JSX_IDENT@50..60 "expression" [] [],
                                             },
                                             initializer: JsxAttributeInitializerClause {
                                                 eq_token: EQ@60..61 "=" [] [],
@@ -58,33 +58,36 @@ JsModule {
                                         },
                                         JsxAttribute {
                                             name: JsxName {
-                                                value_token: IDENT@65..73 "novalue" [] [Whitespace(" ")],
+                                                value_token: JSX_IDENT@65..73 "novalue" [] [Whitespace(" ")],
                                             },
                                             initializer: missing (optional),
                                         },
                                         JsxAttribute {
                                             name: JsxName {
-                                                value_token: IDENT@73..75 "el" [] [],
+                                                value_token: JSX_IDENT@73..75 "el" [] [],
                                             },
                                             initializer: JsxAttributeInitializerClause {
                                                 eq_token: EQ@75..76 "=" [] [],
                                                 value: JsxSelfClosingElement {
                                                     l_angle_token: L_ANGLE@76..77 "<" [] [],
                                                     name: JsxReferenceIdentifier {
-                                                        value_token: IDENT@77..78 "a" [] [],
+                                                        value_token: JSX_IDENT@77..78 "a" [] [],
                                                     },
                                                     attributes: JsxAttributeList [],
-                                                    slash_r_angle_token: SLASH_R_ANGLE@78..80 "/>" [] [],
+                                                    slash_token: SLASH@78..79 "/" [] [],
+                                                    r_angle_token: R_ANGLE@79..80 ">" [] [],
                                                 },
                                             },
                                         },
                                     ],
                                     r_angle_token: R_ANGLE@80..81 ">" [] [],
                                 },
+                                children: missing (optional),
                                 closing_element: JsxClosingElement {
-                                    l_angle_slash_token: L_ANGLE_SLASH@81..83 "</" [] [],
+                                    l_angle_token: L_ANGLE@81..82 "<" [] [],
+                                    slash_token: SLASH@82..83 "/" [] [],
                                     name: JsxReferenceIdentifier {
-                                        value_token: IDENT@83..86 "div" [] [],
+                                        value_token: JSX_IDENT@83..86 "div" [] [],
                                     },
                                     r_angle_token: R_ANGLE@86..87 ">" [] [],
                                 },
@@ -127,18 +130,18 @@ JsModule {
                 0: JSX_OPENING_ELEMENT@26..81
                   0: L_ANGLE@26..27 "<" [] []
                   1: JSX_REFERENCE_IDENTIFIER@27..31
-                    0: IDENT@27..31 "div" [] [Whitespace(" ")]
+                    0: JSX_IDENT@27..31 "div" [] [Whitespace(" ")]
                   2: JSX_ATTRIBUTE_LIST@31..80
                     0: JSX_ATTRIBUTE@31..50
                       0: JSX_NAME@31..45
-                        0: IDENT@31..45 "string_literal" [] []
+                        0: JSX_IDENT@31..45 "string_literal" [] []
                       1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@45..50
                         0: EQ@45..46 "=" [] []
                         1: JSX_STRING_LITERAL@46..50
                           0: JS_STRING_LITERAL@46..50 "\"a\"" [] [Whitespace(" ")]
                     1: JSX_ATTRIBUTE@50..65
                       0: JSX_NAME@50..60
-                        0: IDENT@50..60 "expression" [] []
+                        0: JSX_IDENT@50..60 "expression" [] []
                       1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@60..65
                         0: EQ@60..61 "=" [] []
                         1: JSX_EXPRESSION_ATTRIBUTE_VALUE@61..65
@@ -148,25 +151,28 @@ JsModule {
                           2: R_CURLY@63..65 "}" [] [Whitespace(" ")]
                     2: JSX_ATTRIBUTE@65..73
                       0: JSX_NAME@65..73
-                        0: IDENT@65..73 "novalue" [] [Whitespace(" ")]
+                        0: JSX_IDENT@65..73 "novalue" [] [Whitespace(" ")]
                       1: (empty)
                     3: JSX_ATTRIBUTE@73..80
                       0: JSX_NAME@73..75
-                        0: IDENT@73..75 "el" [] []
+                        0: JSX_IDENT@73..75 "el" [] []
                       1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@75..80
                         0: EQ@75..76 "=" [] []
                         1: JSX_SELF_CLOSING_ELEMENT@76..80
                           0: L_ANGLE@76..77 "<" [] []
                           1: JSX_REFERENCE_IDENTIFIER@77..78
-                            0: IDENT@77..78 "a" [] []
+                            0: JSX_IDENT@77..78 "a" [] []
                           2: JSX_ATTRIBUTE_LIST@78..78
-                          3: SLASH_R_ANGLE@78..80 "/>" [] []
+                          3: SLASH@78..79 "/" [] []
+                          4: R_ANGLE@79..80 ">" [] []
                   3: R_ANGLE@80..81 ">" [] []
-                1: JSX_CLOSING_ELEMENT@81..87
-                  0: L_ANGLE_SLASH@81..83 "</" [] []
-                  1: JSX_REFERENCE_IDENTIFIER@83..86
-                    0: IDENT@83..86 "div" [] []
-                  2: R_ANGLE@86..87 ">" [] []
+                1: (empty)
+                2: JSX_CLOSING_ELEMENT@81..87
+                  0: L_ANGLE@81..82 "<" [] []
+                  1: SLASH@82..83 "/" [] []
+                  2: JSX_REFERENCE_IDENTIFIER@83..86
+                    0: JSX_IDENT@83..86 "div" [] []
+                  3: R_ANGLE@86..87 ">" [] []
             2: SEMICOLON@87..88 ";" [] []
         3: R_CURLY@88..90 "}" [Newline("\n")] []
   3: EOF@90..91 "" [Newline("\n")] []

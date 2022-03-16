@@ -49,11 +49,7 @@ true
   ],
 });
 
-true
-  ? test({
-      a: 1
-    })
-  : <div
+true ? test({ a: 1 }) : <div
       a={123412342314}
       b={123412341234}
       c={123412341234}
@@ -73,61 +69,12 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 17 │     : <div
    │ ┌─────^
 18 │ │       a={123412342314}
-   │ └───────^ This expression cannot be assigned to
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ break-parent.js:18:22
-   │
-18 │       a={123412342314}
-   │                      ^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ break-parent.js:19:22
-   │
-19 │       b={123412341234}
-   │                      ^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ break-parent.js:20:22
-   │
-20 │       c={123412341234}
-   │                      ^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ break-parent.js:21:22
-   │
-21 │       d={123412341234}
-   │                      ^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ break-parent.js:22:22
-   │
-22 │       e={123412341234}
-   │                      ^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ break-parent.js:23:22
-   │
-23 │       f={123412341234}
-   │                      ^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `}`
-   ┌─ break-parent.js:24:22
-   │
-24 │       g={123412341234}
-   │                      ^ unexpected
-
-error[SyntaxError]: expected an expression but instead found '>'
-   ┌─ break-parent.js:25:6
-   │
-25 │     />;
-   │      ^ Expected an expression here
-
-error[SyntaxError]: expected an expression but instead found ';'
-   ┌─ break-parent.js:25:7
-   │
-25 │     />;
-   │       ^ Expected an expression here
+19 │ │       b={123412341234}
+20 │ │       c={123412341234}
+   · │
+24 │ │       g={123412341234}
+25 │ │     />;
+   │ └──────^ JSX only syntax
 
 
 ```

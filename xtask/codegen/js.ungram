@@ -2152,7 +2152,6 @@ JsxAnyElement =
 	JsxElement
 	| JsxSelfClosingElement
 
-
 // <a />
 JsxSelfClosingElement =
 	'<'
@@ -2183,10 +2182,10 @@ JsxClosingElement =
 // Names
 // ==================================
 
-JsxName = value: 'ident'
+JsxName = value: 'jsx_ident'
 
 JsxNamespaceName = 
-	namespace: JsReferenceIdentifier
+	namespace: JsxReferenceIdentifier
 	':'
 	name: JsxName
 
@@ -2198,6 +2197,7 @@ JsxAnyElementName =
 JsxAnyObjectName =
 	JsxReferenceIdentifier
 	| JsxMemberName
+	| JsxNamespaceName
 
 // <a.test>
 JsxMemberName =
@@ -2223,7 +2223,8 @@ JsxAttributeInitializerClause =
 	'='
 	value: JsxAnyAttributeValue
 
-JsxAnyAttributeValue = JsxAnyElement
+JsxAnyAttributeValue = 
+	JsxAnyElement
 	| JsxStringLiteral
 	| JsxExpressionAttributeValue
 	
@@ -2232,7 +2233,8 @@ JsxExpressionAttributeValue =
 	expression: JsAnyExpression
 	'}'
 
-JsxAnyAttributeName = JsxName
+JsxAnyAttributeName = 
+	JsxName
 	| JsxNamespaceName
 
 // ==================================

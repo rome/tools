@@ -5518,7 +5518,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == IDENT {
+                    if element.kind() == JSX_IDENT {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5537,7 +5537,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsReferenceIdentifier::can_cast(element.kind()) {
+                    if JsxReferenceIdentifier::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

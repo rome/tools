@@ -9,6 +9,7 @@ JsModule {
                     name: JsxReferenceIdentifier {
                         value_token: JSX_IDENT@1..9 "closing" [] [Whitespace(" ")],
                     },
+                    attributes: JsxAttributeList [],
                     slash_token: SLASH@9..30 "/" [] [Whitespace(" "), Comments("/* some comment */"), Whitespace(" ")],
                     r_angle_token: R_ANGLE@30..31 ">" [] [],
                 },
@@ -23,6 +24,7 @@ JsModule {
                         name: JsxReferenceIdentifier {
                             value_token: JSX_IDENT@34..38 "open" [] [],
                         },
+                        attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@38..39 ">" [] [],
                     },
                     children: missing (optional),
@@ -52,8 +54,9 @@ JsModule {
           0: L_ANGLE@0..1 "<" [] []
           1: JSX_REFERENCE_IDENTIFIER@1..9
             0: JSX_IDENT@1..9 "closing" [] [Whitespace(" ")]
-          2: SLASH@9..30 "/" [] [Whitespace(" "), Comments("/* some comment */"), Whitespace(" ")]
-          3: R_ANGLE@30..31 ">" [] []
+          2: JSX_ATTRIBUTE_LIST@9..9
+          3: SLASH@9..30 "/" [] [Whitespace(" "), Comments("/* some comment */"), Whitespace(" ")]
+          4: R_ANGLE@30..31 ">" [] []
       1: SEMICOLON@31..32 ";" [] []
     1: JS_EXPRESSION_STATEMENT@32..68
       0: JSX_ELEMENT_EXPRESSION@32..67
@@ -62,7 +65,8 @@ JsModule {
             0: L_ANGLE@32..34 "<" [Newline("\n")] []
             1: JSX_REFERENCE_IDENTIFIER@34..38
               0: JSX_IDENT@34..38 "open" [] []
-            2: R_ANGLE@38..39 ">" [] []
+            2: JSX_ATTRIBUTE_LIST@38..38
+            3: R_ANGLE@38..39 ">" [] []
           1: (empty)
           2: JSX_CLOSING_ELEMENT@39..67
             0: L_ANGLE@39..40 "<" [] []

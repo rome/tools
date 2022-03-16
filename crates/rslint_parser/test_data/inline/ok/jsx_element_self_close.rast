@@ -28,6 +28,7 @@ JsModule {
                                 name: JsxReferenceIdentifier {
                                     value_token: JSX_IDENT@27..31 "div" [] [Whitespace(" ")],
                                 },
+                                attributes: JsxAttributeList [],
                                 slash_token: SLASH@31..32 "/" [] [],
                                 r_angle_token: R_ANGLE@32..33 ">" [] [],
                             },
@@ -69,8 +70,9 @@ JsModule {
                 0: L_ANGLE@26..27 "<" [] []
                 1: JSX_REFERENCE_IDENTIFIER@27..31
                   0: JSX_IDENT@27..31 "div" [] [Whitespace(" ")]
-                2: SLASH@31..32 "/" [] []
-                3: R_ANGLE@32..33 ">" [] []
+                2: JSX_ATTRIBUTE_LIST@31..31
+                3: SLASH@31..32 "/" [] []
+                4: R_ANGLE@32..33 ">" [] []
             2: (empty)
         3: R_CURLY@33..35 "}" [Newline("\n")] []
   3: EOF@35..36 "" [Newline("\n")] []

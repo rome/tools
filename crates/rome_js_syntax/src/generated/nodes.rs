@@ -5300,7 +5300,7 @@ impl JsxNamespaceName {
             name: self.name(),
         }
     }
-    pub fn namespace(&self) -> SyntaxResult<JsReferenceIdentifier> {
+    pub fn namespace(&self) -> SyntaxResult<JsxReferenceIdentifier> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5309,7 +5309,7 @@ impl JsxNamespaceName {
     pub fn name(&self) -> SyntaxResult<JsxName> { support::required_node(&self.syntax, 2usize) }
 }
 pub struct JsxNamespaceNameFields {
-    pub namespace: SyntaxResult<JsReferenceIdentifier>,
+    pub namespace: SyntaxResult<JsxReferenceIdentifier>,
     pub colon_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxName>,
 }
@@ -9305,6 +9305,7 @@ pub enum JsxAnyName {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyObjectName {
     JsxMemberName(JsxMemberName),
+    JsxNamespaceName(JsxNamespaceName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -22267,6 +22268,9 @@ impl From<JsxAnyName> for SyntaxElement {
 impl From<JsxMemberName> for JsxAnyObjectName {
     fn from(node: JsxMemberName) -> JsxAnyObjectName { JsxAnyObjectName::JsxMemberName(node) }
 }
+impl From<JsxNamespaceName> for JsxAnyObjectName {
+    fn from(node: JsxNamespaceName) -> JsxAnyObjectName { JsxAnyObjectName::JsxNamespaceName(node) }
+}
 impl From<JsxReferenceIdentifier> for JsxAnyObjectName {
     fn from(node: JsxReferenceIdentifier) -> JsxAnyObjectName {
         JsxAnyObjectName::JsxReferenceIdentifier(node)
@@ -22274,11 +22278,15 @@ impl From<JsxReferenceIdentifier> for JsxAnyObjectName {
 }
 impl AstNode for JsxAnyObjectName {
     fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(kind, JSX_MEMBER_NAME | JSX_REFERENCE_IDENTIFIER)
+        matches!(
+            kind,
+            JSX_MEMBER_NAME | JSX_NAMESPACE_NAME | JSX_REFERENCE_IDENTIFIER
+        )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JSX_MEMBER_NAME => JsxAnyObjectName::JsxMemberName(JsxMemberName { syntax }),
+            JSX_NAMESPACE_NAME => JsxAnyObjectName::JsxNamespaceName(JsxNamespaceName { syntax }),
             JSX_REFERENCE_IDENTIFIER => {
                 JsxAnyObjectName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
             }
@@ -22289,6 +22297,7 @@ impl AstNode for JsxAnyObjectName {
     fn syntax(&self) -> &SyntaxNode {
         match self {
             JsxAnyObjectName::JsxMemberName(it) => &it.syntax,
+            JsxAnyObjectName::JsxNamespaceName(it) => &it.syntax,
             JsxAnyObjectName::JsxReferenceIdentifier(it) => &it.syntax,
         }
     }
@@ -22297,6 +22306,7 @@ impl std::fmt::Debug for JsxAnyObjectName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             JsxAnyObjectName::JsxMemberName(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyObjectName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyObjectName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -22305,6 +22315,7 @@ impl From<JsxAnyObjectName> for SyntaxNode {
     fn from(n: JsxAnyObjectName) -> SyntaxNode {
         match n {
             JsxAnyObjectName::JsxMemberName(it) => it.into(),
+            JsxAnyObjectName::JsxNamespaceName(it) => it.into(),
             JsxAnyObjectName::JsxReferenceIdentifier(it) => it.into(),
         }
     }

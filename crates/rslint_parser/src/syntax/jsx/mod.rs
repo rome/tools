@@ -154,6 +154,7 @@ fn parse_jsx_element_head(p: &mut Parser, m: Marker, in_expression: bool) -> Par
     }
 
     let name = parse_jsx_any_element_name(p);
+    dbg!(&name);
     if name.is_absent() {
         m.abandon(p);
         return ParsedSyntax::Absent;
@@ -218,7 +219,9 @@ fn parse_jsx_closing_element(p: &mut Parser, in_expression: bool) -> ParsedSynta
 // <a-b.c></a-b.c>
 //
 // test_err jsx jsx_namespace_member_element_name
+// <namespace:a></namespace:a>
 // <namespace:a.b></namespace:a.b>
+// <dashed-namespace:a.b></dashed-namespace:a.b>
 fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
     let left = parse_jsx_any_name(p);
 
@@ -248,13 +251,12 @@ fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
 // <a-b-c-d-e />;
 // <if />;
 // <namespace:name></namespace:name>;
-// <dashed-namespaced:dashed-name />;
 fn parse_jsx_any_name(p: &mut Parser) -> ParsedSyntax {
     parse_jsx_reference_identifier(p).map(|identifier| {
         if p.at(T![:]) {
             let m = identifier.precede(p);
             p.bump(T![:]);
-            parse_jsx_name(p).or_add_diagnostic(p, expected_identifier);
+            dbg!(parse_jsx_name(p)).or_add_diagnostic(p, expected_identifier);
             m.complete(p, JSX_NAMESPACE_NAME)
         } else {
             identifier
@@ -288,7 +290,6 @@ fn parse_jsx_reference_identifier(p: &mut Parser) -> ParsedSyntax {
 }
 
 struct JsxAttributeList;
-
 // test jsx jsx_element_attributes
 // function f() {
 //     return <div string_literal="a" expression={1} novalue el=<a/>></div>;
@@ -333,13 +334,11 @@ fn parse_jsx_attribute_name(p: &mut Parser) -> ParsedSyntax {
         return ParsedSyntax::Absent;
     }
 
-    let m = p.start();
-    p.bump(JsSyntaxKind::IDENT);
-    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_NAME))
+    parse_jsx_name(p)
 }
 
 fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
-    if p.at(T![=]) {
+    if !p.at(T![=]) {
         return ParsedSyntax::Absent;
     }
 
@@ -369,7 +368,7 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     }
     // JSX elements
     else if p.at(T![<]) {
-        parse_jsx_element(p, false)
+        parse_jsx_element(p, true)
     } else {
         ParsedSyntax::Absent
     }
