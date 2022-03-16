@@ -3,8 +3,8 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@0..51 "<" [Comments("// These may look lik ..."), Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -36,8 +36,8 @@ JsModule {
             semicolon_token: SEMICOLON@69..70 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@70..72 "<" [Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -74,8 +74,8 @@ JsModule {
             semicolon_token: SEMICOLON@94..95 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxElementExpression {
-                element: JsxElement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@95..97 "<" [Newline("\n")] [],
                         name: JsxReferenceIdentifier {
@@ -121,7 +121,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..119
     0: JS_EXPRESSION_STATEMENT@0..70
-      0: JSX_ELEMENT_EXPRESSION@0..69
+      0: JSX_TAG_EXPRESSION@0..69
         0: JSX_ELEMENT@0..69
           0: JSX_OPENING_ELEMENT@0..61
             0: L_ANGLE@0..51 "<" [Comments("// These may look lik ..."), Newline("\n")] []
@@ -143,7 +143,7 @@ JsModule {
             3: R_ANGLE@68..69 ">" [] []
       1: SEMICOLON@69..70 ";" [] []
     1: JS_EXPRESSION_STATEMENT@70..95
-      0: JSX_ELEMENT_EXPRESSION@70..94
+      0: JSX_TAG_EXPRESSION@70..94
         0: JSX_ELEMENT@70..94
           0: JSX_OPENING_ELEMENT@70..86
             0: L_ANGLE@70..72 "<" [Newline("\n")] []
@@ -168,7 +168,7 @@ JsModule {
             3: R_ANGLE@93..94 ">" [] []
       1: SEMICOLON@94..95 ";" [] []
     2: JS_EXPRESSION_STATEMENT@95..119
-      0: JSX_ELEMENT_EXPRESSION@95..118
+      0: JSX_TAG_EXPRESSION@95..118
         0: JSX_ELEMENT@95..118
           0: JSX_OPENING_ELEMENT@95..110
             0: L_ANGLE@95..97 "<" [Newline("\n")] []
