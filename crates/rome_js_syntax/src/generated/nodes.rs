@@ -5131,10 +5131,10 @@ pub struct JsxElementExpressionFields {
     pub element: SyntaxResult<JsxAnyElement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsxMemberExpression {
+pub struct JsxMemberName {
     pub(crate) syntax: SyntaxNode,
 }
-impl JsxMemberExpression {
+impl JsxMemberName {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -5142,23 +5142,81 @@ impl JsxMemberExpression {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> JsxMemberExpressionFields {
-        JsxMemberExpressionFields {
+    pub fn as_fields(&self) -> JsxMemberNameFields {
+        JsxMemberNameFields {
             object: self.object(),
             dot_token: self.dot_token(),
             member: self.member(),
         }
     }
-    pub fn object(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 0usize) }
+    pub fn object(&self) -> SyntaxResult<JsxAnyObjectName> {
+        support::required_node(&self.syntax, 0usize)
+    }
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn member(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
 }
-pub struct JsxMemberExpressionFields {
-    pub object: SyntaxResult<JsName>,
+pub struct JsxMemberNameFields {
+    pub object: SyntaxResult<JsxAnyObjectName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub member: SyntaxResult<JsName>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxName {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxName {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxNameFields {
+        JsxNameFields {
+            value_token: self.value_token(),
+        }
+    }
+    pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct JsxNameFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxNamespaceName {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxNamespaceName {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxNamespaceNameFields {
+        JsxNamespaceNameFields {
+            namespace: self.namespace(),
+            colon_token: self.colon_token(),
+            name: self.name(),
+        }
+    }
+    pub fn namespace(&self) -> SyntaxResult<JsxReferenceIdentifier> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn name(&self) -> SyntaxResult<JsxName> { support::required_node(&self.syntax, 2usize) }
+}
+pub struct JsxNamespaceNameFields {
+    pub namespace: SyntaxResult<JsxReferenceIdentifier>,
+    pub colon_token: SyntaxResult<SyntaxToken>,
+    pub name: SyntaxResult<JsxName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsxOpeningElement {
@@ -9075,7 +9133,18 @@ pub enum JsxAnyElement {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyElementName {
-    JsxMemberExpression(JsxMemberExpression),
+    JsxMemberName(JsxMemberName),
+    JsxNamespaceName(JsxNamespaceName),
+    JsxReferenceIdentifier(JsxReferenceIdentifier),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsxAnyName {
+    JsxName(JsxName),
+    JsxNamespaceName(JsxNamespaceName),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsxAnyObjectName {
+    JsxMemberName(JsxMemberName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -13964,8 +14033,8 @@ impl From<JsxElementExpression> for SyntaxNode {
 impl From<JsxElementExpression> for SyntaxElement {
     fn from(n: JsxElementExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for JsxMemberExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_MEMBER_EXPRESSION }
+impl AstNode for JsxMemberName {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_MEMBER_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -13975,20 +14044,76 @@ impl AstNode for JsxMemberExpression {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsxMemberExpression {
+impl std::fmt::Debug for JsxMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsxMemberExpression")
+        f.debug_struct("JsxMemberName")
             .field("object", &support::DebugSyntaxResult(self.object()))
             .field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
             .field("member", &support::DebugSyntaxResult(self.member()))
             .finish()
     }
 }
-impl From<JsxMemberExpression> for SyntaxNode {
-    fn from(n: JsxMemberExpression) -> SyntaxNode { n.syntax }
+impl From<JsxMemberName> for SyntaxNode {
+    fn from(n: JsxMemberName) -> SyntaxNode { n.syntax }
 }
-impl From<JsxMemberExpression> for SyntaxElement {
-    fn from(n: JsxMemberExpression) -> SyntaxElement { n.syntax.into() }
+impl From<JsxMemberName> for SyntaxElement {
+    fn from(n: JsxMemberName) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxName {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_NAME }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxName")
+            .field(
+                "value_token",
+                &support::DebugSyntaxResult(self.value_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxName> for SyntaxNode {
+    fn from(n: JsxName) -> SyntaxNode { n.syntax }
+}
+impl From<JsxName> for SyntaxElement {
+    fn from(n: JsxName) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxNamespaceName {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_NAMESPACE_NAME }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxNamespaceName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxNamespaceName")
+            .field("namespace", &support::DebugSyntaxResult(self.namespace()))
+            .field(
+                "colon_token",
+                &support::DebugSyntaxResult(self.colon_token()),
+            )
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .finish()
+    }
+}
+impl From<JsxNamespaceName> for SyntaxNode {
+    fn from(n: JsxNamespaceName) -> SyntaxNode { n.syntax }
+}
+impl From<JsxNamespaceName> for SyntaxElement {
+    fn from(n: JsxNamespaceName) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsxOpeningElement {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_OPENING_ELEMENT }
@@ -21611,9 +21736,12 @@ impl From<JsxAnyElement> for SyntaxElement {
         node.into()
     }
 }
-impl From<JsxMemberExpression> for JsxAnyElementName {
-    fn from(node: JsxMemberExpression) -> JsxAnyElementName {
-        JsxAnyElementName::JsxMemberExpression(node)
+impl From<JsxMemberName> for JsxAnyElementName {
+    fn from(node: JsxMemberName) -> JsxAnyElementName { JsxAnyElementName::JsxMemberName(node) }
+}
+impl From<JsxNamespaceName> for JsxAnyElementName {
+    fn from(node: JsxNamespaceName) -> JsxAnyElementName {
+        JsxAnyElementName::JsxNamespaceName(node)
     }
 }
 impl From<JsxReferenceIdentifier> for JsxAnyElementName {
@@ -21623,13 +21751,15 @@ impl From<JsxReferenceIdentifier> for JsxAnyElementName {
 }
 impl AstNode for JsxAnyElementName {
     fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(kind, JSX_MEMBER_EXPRESSION | JSX_REFERENCE_IDENTIFIER)
+        matches!(
+            kind,
+            JSX_MEMBER_NAME | JSX_NAMESPACE_NAME | JSX_REFERENCE_IDENTIFIER
+        )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSX_MEMBER_EXPRESSION => {
-                JsxAnyElementName::JsxMemberExpression(JsxMemberExpression { syntax })
-            }
+            JSX_MEMBER_NAME => JsxAnyElementName::JsxMemberName(JsxMemberName { syntax }),
+            JSX_NAMESPACE_NAME => JsxAnyElementName::JsxNamespaceName(JsxNamespaceName { syntax }),
             JSX_REFERENCE_IDENTIFIER => {
                 JsxAnyElementName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
             }
@@ -21639,7 +21769,8 @@ impl AstNode for JsxAnyElementName {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyElementName::JsxMemberExpression(it) => &it.syntax,
+            JsxAnyElementName::JsxMemberName(it) => &it.syntax,
+            JsxAnyElementName::JsxNamespaceName(it) => &it.syntax,
             JsxAnyElementName::JsxReferenceIdentifier(it) => &it.syntax,
         }
     }
@@ -21647,7 +21778,8 @@ impl AstNode for JsxAnyElementName {
 impl std::fmt::Debug for JsxAnyElementName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyElementName::JsxMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyElementName::JsxMemberName(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyElementName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyElementName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -21655,13 +21787,110 @@ impl std::fmt::Debug for JsxAnyElementName {
 impl From<JsxAnyElementName> for SyntaxNode {
     fn from(n: JsxAnyElementName) -> SyntaxNode {
         match n {
-            JsxAnyElementName::JsxMemberExpression(it) => it.into(),
+            JsxAnyElementName::JsxMemberName(it) => it.into(),
+            JsxAnyElementName::JsxNamespaceName(it) => it.into(),
             JsxAnyElementName::JsxReferenceIdentifier(it) => it.into(),
         }
     }
 }
 impl From<JsxAnyElementName> for SyntaxElement {
     fn from(n: JsxAnyElementName) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsxName> for JsxAnyName {
+    fn from(node: JsxName) -> JsxAnyName { JsxAnyName::JsxName(node) }
+}
+impl From<JsxNamespaceName> for JsxAnyName {
+    fn from(node: JsxNamespaceName) -> JsxAnyName { JsxAnyName::JsxNamespaceName(node) }
+}
+impl AstNode for JsxAnyName {
+    fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, JSX_NAME | JSX_NAMESPACE_NAME) }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSX_NAME => JsxAnyName::JsxName(JsxName { syntax }),
+            JSX_NAMESPACE_NAME => JsxAnyName::JsxNamespaceName(JsxNamespaceName { syntax }),
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsxAnyName::JsxName(it) => &it.syntax,
+            JsxAnyName::JsxNamespaceName(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsxAnyName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsxAnyName::JsxName(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsxAnyName> for SyntaxNode {
+    fn from(n: JsxAnyName) -> SyntaxNode {
+        match n {
+            JsxAnyName::JsxName(it) => it.into(),
+            JsxAnyName::JsxNamespaceName(it) => it.into(),
+        }
+    }
+}
+impl From<JsxAnyName> for SyntaxElement {
+    fn from(n: JsxAnyName) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsxMemberName> for JsxAnyObjectName {
+    fn from(node: JsxMemberName) -> JsxAnyObjectName { JsxAnyObjectName::JsxMemberName(node) }
+}
+impl From<JsxReferenceIdentifier> for JsxAnyObjectName {
+    fn from(node: JsxReferenceIdentifier) -> JsxAnyObjectName {
+        JsxAnyObjectName::JsxReferenceIdentifier(node)
+    }
+}
+impl AstNode for JsxAnyObjectName {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JSX_MEMBER_NAME | JSX_REFERENCE_IDENTIFIER)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSX_MEMBER_NAME => JsxAnyObjectName::JsxMemberName(JsxMemberName { syntax }),
+            JSX_REFERENCE_IDENTIFIER => {
+                JsxAnyObjectName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsxAnyObjectName::JsxMemberName(it) => &it.syntax,
+            JsxAnyObjectName::JsxReferenceIdentifier(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsxAnyObjectName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsxAnyObjectName::JsxMemberName(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyObjectName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsxAnyObjectName> for SyntaxNode {
+    fn from(n: JsxAnyObjectName) -> SyntaxNode {
+        match n {
+            JsxAnyObjectName::JsxMemberName(it) => it.into(),
+            JsxAnyObjectName::JsxReferenceIdentifier(it) => it.into(),
+        }
+    }
+}
+impl From<JsxAnyObjectName> for SyntaxElement {
+    fn from(n: JsxAnyObjectName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -23343,6 +23572,16 @@ impl std::fmt::Display for JsxAnyElementName {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsxAnyName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxAnyObjectName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAnyExternalModuleDeclarationBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -24178,7 +24417,17 @@ impl std::fmt::Display for JsxElementExpression {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxMemberExpression {
+impl std::fmt::Display for JsxMemberName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxNamespaceName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -27402,8 +27651,12 @@ impl Debug for DebugSyntaxElement {
                 JSX_ELEMENT_EXPRESSION => {
                     std::fmt::Debug::fmt(&JsxElementExpression::cast(node.clone()).unwrap(), f)
                 }
-                JSX_MEMBER_EXPRESSION => {
-                    std::fmt::Debug::fmt(&JsxMemberExpression::cast(node.clone()).unwrap(), f)
+                JSX_MEMBER_NAME => {
+                    std::fmt::Debug::fmt(&JsxMemberName::cast(node.clone()).unwrap(), f)
+                }
+                JSX_NAME => std::fmt::Debug::fmt(&JsxName::cast(node.clone()).unwrap(), f),
+                JSX_NAMESPACE_NAME => {
+                    std::fmt::Debug::fmt(&JsxNamespaceName::cast(node.clone()).unwrap(), f)
                 }
                 JSX_OPENING_ELEMENT => {
                     std::fmt::Debug::fmt(&JsxOpeningElement::cast(node.clone()).unwrap(), f)

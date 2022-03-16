@@ -661,8 +661,16 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxElementExpression::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JSX_MEMBER_EXPRESSION => {
-                    let $pattern = unsafe { $crate::JsxMemberExpression::new_unchecked(node) };
+                $crate::JsSyntaxKind::JSX_MEMBER_NAME => {
+                    let $pattern = unsafe { $crate::JsxMemberName::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_NAME => {
+                    let $pattern = unsafe { $crate::JsxName::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_NAMESPACE_NAME => {
+                    let $pattern = unsafe { $crate::JsxNamespaceName::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_OPENING_ELEMENT => {
