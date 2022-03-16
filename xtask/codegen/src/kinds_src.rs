@@ -175,6 +175,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "ERROR_TOKEN",
         "IDENT",
         "JSX_IDENT",
+        "JSX_TEXT",
         "NEWLINE",
         "WHITESPACE",
         "COMMENT",
@@ -485,6 +486,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_MEMBER_NAME",
         "JSX_REFERENCE_IDENTIFIER",
         "JSX_NAMESPACE_NAME",
+        "JSX_TEXT_LITERAL",
         // unknown nodes JS
         "JS_UNKNOWN",
         "JS_UNKNOWN_EXPRESSION",

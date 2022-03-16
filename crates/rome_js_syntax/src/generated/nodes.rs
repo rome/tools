@@ -5092,18 +5092,21 @@ impl JsxElement {
     pub fn as_fields(&self) -> JsxElementFields {
         JsxElementFields {
             opening_element: self.opening_element(),
+            children: self.children(),
             closing_element: self.closing_element(),
         }
     }
     pub fn opening_element(&self) -> SyntaxResult<JsxOpeningElement> {
         support::required_node(&self.syntax, 0usize)
     }
+    pub fn children(&self) -> Option<JsxTextLiteral> { support::node(&self.syntax, 1usize) }
     pub fn closing_element(&self) -> SyntaxResult<JsxClosingElement> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
 }
 pub struct JsxElementFields {
     pub opening_element: SyntaxResult<JsxOpeningElement>,
+    pub children: Option<JsxTextLiteral>,
     pub closing_element: SyntaxResult<JsxClosingElement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5314,6 +5317,30 @@ pub struct JsxSelfClosingElementFields {
     pub name: SyntaxResult<JsxAnyElementName>,
     pub slash_token: SyntaxResult<SyntaxToken>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxTextLiteral {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxTextLiteral {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxTextLiteralFields {
+        JsxTextLiteralFields {
+            value_token: self.value_token(),
+        }
+    }
+    pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+pub struct JsxTextLiteralFields {
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -13996,6 +14023,7 @@ impl std::fmt::Debug for JsxElement {
                 "opening_element",
                 &support::DebugSyntaxResult(self.opening_element()),
             )
+            .field("children", &support::DebugOptionalElement(self.children()))
             .field(
                 "closing_element",
                 &support::DebugSyntaxResult(self.closing_element()),
@@ -14209,6 +14237,33 @@ impl From<JsxSelfClosingElement> for SyntaxNode {
 }
 impl From<JsxSelfClosingElement> for SyntaxElement {
     fn from(n: JsxSelfClosingElement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxTextLiteral {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_TEXT_LITERAL }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxTextLiteral {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxTextLiteral")
+            .field(
+                "value_token",
+                &support::DebugSyntaxResult(self.value_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxTextLiteral> for SyntaxNode {
+    fn from(n: JsxTextLiteral) -> SyntaxNode { n.syntax }
+}
+impl From<JsxTextLiteral> for SyntaxElement {
+    fn from(n: JsxTextLiteral) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for NewTarget {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == NEW_TARGET }
@@ -24447,6 +24502,11 @@ impl std::fmt::Display for JsxSelfClosingElement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsxTextLiteral {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for NewTarget {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -27666,6 +27726,9 @@ impl Debug for DebugSyntaxElement {
                 }
                 JSX_SELF_CLOSING_ELEMENT => {
                     std::fmt::Debug::fmt(&JsxSelfClosingElement::cast(node.clone()).unwrap(), f)
+                }
+                JSX_TEXT_LITERAL => {
+                    std::fmt::Debug::fmt(&JsxTextLiteral::cast(node.clone()).unwrap(), f)
                 }
                 NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
                 TS_ABSTRACT_MODIFIER => {

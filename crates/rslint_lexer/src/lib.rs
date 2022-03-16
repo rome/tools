@@ -123,6 +123,15 @@ pub enum LexContext {
     /// For lexing the elements of a JS template literal or TS template type.
     /// Doesn't skip whitespace trivia.
     TemplateElement { tagged: bool },
+
+    /// Lexes a token in a JSX children context.
+    /// Returns one of
+    /// - Whitespace trivia
+    /// - JsxText
+    /// - `<` end of the current element, or start of a new element
+    /// - expression start: `{`
+    /// - EOF
+    JsxChild,
 }
 
 impl Default for LexContext {
@@ -288,6 +297,7 @@ impl<'src> Lexer<'src> {
             match context {
                 LexContext::Regular => self.lex_token(),
                 LexContext::TemplateElement { tagged } => self.lex_template(tagged),
+                LexContext::JsxChild => self.lex_jsx_child_token(),
             }
         };
 
@@ -396,6 +406,59 @@ impl<'src> Lexer<'src> {
             LexedToken::ok(JSX_IDENT)
         } else {
             LexedToken::ok(self.current_kind)
+        }
+    }
+
+    fn lex_jsx_child_token(&mut self) -> LexedToken {
+        debug_assert!(!self.is_eof());
+
+        // SAFETY: `lex_token` only calls this method if it isn't passed the EOF
+        let byte = unsafe { self.current_unchecked() };
+
+        match byte {
+            // `<`: empty jsx text, directly followed by another element or closing element
+            b'<' => self.eat_byte(T![<]),
+            // `{`: empty jsx text, directly followed by an expression
+            b'{' => self.eat_byte(T!['{']),
+            _ => {
+                let mut diagnostic: Option<Box<Diagnostic>> = None;
+                while let Some(byte) = self.current_byte() {
+                    // but not one of: { or < or > or }
+                    match byte {
+                        // Start of a new element, the closing tag, or an expression
+                        b'<' | b'{' => {
+                            break;
+                        }
+                        b'>' => {
+                            diagnostic = Some(Box::new(
+                                Diagnostic::error(
+                                    self.file_id,
+                                    "",
+                                    "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+                                )
+                                .primary(self.position..self.position + 1, ""),
+                            ));
+                            self.next_byte();
+                        }
+                        b'}' => {
+                            diagnostic = Some(Box::new(
+                                Diagnostic::error(
+                                    self.file_id,
+                                    "",
+                                    "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+                                )
+                                .primary(self.position..self.position + 1, ""),
+                            ));
+                            self.next_byte();
+                        }
+                        _ => {
+                            self.next_byte();
+                        }
+                    }
+                }
+
+                LexedToken::new(JSX_TEXT, diagnostic)
+            }
         }
     }
 

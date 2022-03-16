@@ -1,7 +1,7 @@
 pub mod jsx_parse_errors;
 
 use rome_js_syntax::JsSyntaxKind::*;
-use rslint_lexer::{JsSyntaxKind, ReLexContext, T};
+use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
 use crate::syntax::expr::parse_name;
 use crate::syntax::js_parse_error::expected_identifier;
@@ -72,7 +72,7 @@ pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 // test jsx jsx_element_as_statements
 // <div />
 fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    parse_jsx_element(p).map(|element| {
+    parse_jsx_element(p, true).map(|element| {
         let m = element.precede(p);
         m.complete(p, JsSyntaxKind::JSX_ELEMENT_EXPRESSION)
     })
@@ -92,14 +92,39 @@ fn parse_jsx_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
 // <closing / /* some comment */ >;
 // <open><
 // /* some comment */ / open>;
-fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
+
+// test jsx jsx_text
+// <a>test</a>;
+// <a>   whitespace handling </a>;
+// <a> multi
+//    line
+//          node
+// </a>;
+// <test>\u3333</test> // no error for invalid unicode escape
+
+// test_err jsx jsx_invalid_text
+// <a> test ></a>;
+// <b> invalid }</b>;
+
+/// Parses a JSX element
+///
+/// `in_expression` must be `true` if this element is a direct child of the `JsxElementExpression` (root of an expression).
+/// It should be false when parsing any child node.
+fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>, in_expression: bool) -> ParsedSyntax {
     let m = p.start();
-    match parse_jsx_element_head(p, m) {
+    match parse_jsx_element_head(p, m, in_expression) {
         ParsedSyntax::Present(opening_marker)
             if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT =>
         {
             let element_marker = opening_marker.precede(p);
-            let closing_marker = parse_jsx_closing_element(p);
+
+            if p.at(JSX_TEXT) {
+                let m = p.start();
+                p.bump(JSX_TEXT);
+                m.complete(p, JSX_TEXT_LITERAL);
+            }
+
+            let closing_marker = parse_jsx_closing_element(p, in_expression);
             if closing_marker.is_absent() {
                 element_marker.abandon(p);
                 ParsedSyntax::Absent
@@ -119,7 +144,11 @@ fn parse_jsx_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
 
 // <a ...> or <a ... />
 // ^          ^
-fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> ParsedSyntax {
+fn parse_jsx_element_head(
+    p: &mut CheckpointedParser<'_, '_>,
+    m: Marker,
+    in_expression: bool,
+) -> ParsedSyntax {
     if !p.eat(T![<]) {
         return ParsedSyntax::Absent;
     }
@@ -132,9 +161,13 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
         JsSyntaxKind::JSX_OPENING_ELEMENT
     };
 
-    if !p.expect(T![>]) {
+    if !p.at(T![>]) {
         m.abandon(p);
         return Absent;
+    } else if in_expression && kind == JSX_SELF_CLOSING_ELEMENT {
+        p.bump(T![>]);
+    } else {
+        p.bump_with_context(T![>], LexContext::JsxChild);
     }
 
     ParsedSyntax::Present(m.complete(p, kind))
@@ -142,7 +175,10 @@ fn parse_jsx_element_head(p: &mut CheckpointedParser<'_, '_>, m: Marker) -> Pars
 
 // <a/>
 // ^
-fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
+fn parse_jsx_closing_element(
+    p: &mut CheckpointedParser<'_, '_>,
+    in_expression: bool,
+) -> ParsedSyntax {
     if !p.at(T![<]) {
         return ParsedSyntax::Absent;
     }
@@ -156,9 +192,15 @@ fn parse_jsx_closing_element(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax
 
     let _ = parse_jsx_any_element_name(p);
 
-    if !p.eat(T![>]) {
+    if !p.at(T![>]) {
         m.abandon(p);
         return ParsedSyntax::Absent;
+    }
+
+    if in_expression {
+        p.bump(T![>]);
+    } else {
+        p.bump_with_context(T![>], LexContext::JsxChild);
     }
 
     ParsedSyntax::Present(m.complete(p, JSX_CLOSING_ELEMENT))

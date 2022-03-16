@@ -2164,6 +2164,7 @@ JsxSelfClosingElement =
 // <a>...</a>
 JsxElement =
 	opening_element: JsxOpeningElement
+	children: JsxTextLiteral?
 	closing_element: JsxClosingElement
 
 JsxOpeningElement =
@@ -2209,3 +2210,5 @@ JsxNamespaceName =
 JsxAnyName =
 	JsxName
 	| JsxNamespaceName
+
+JsxTextLiteral = value: 'jsx_text'

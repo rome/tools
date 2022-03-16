@@ -1,0 +1,114 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsxElementExpression {
+                element: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@0..1 "<" [] [],
+                        name: JsxReferenceIdentifier {
+                            value_token: JSX_IDENT@1..2 "a" [] [],
+                        },
+                        r_angle_token: R_ANGLE@2..3 ">" [] [],
+                    },
+                    children: JsxTextLiteral {
+                        value_token: JSX_TEXT@3..10 " test >" [] [],
+                    },
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@10..11 "<" [] [],
+                        slash_token: SLASH@11..12 "/" [] [],
+                        name: JsxReferenceIdentifier {
+                            value_token: JSX_IDENT@12..13 "a" [] [],
+                        },
+                        r_angle_token: R_ANGLE@13..14 ">" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@14..15 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsxElementExpression {
+                element: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@15..17 "<" [Newline("\n")] [],
+                        name: JsxReferenceIdentifier {
+                            value_token: JSX_IDENT@17..18 "b" [] [],
+                        },
+                        r_angle_token: R_ANGLE@18..19 ">" [] [],
+                    },
+                    children: JsxTextLiteral {
+                        value_token: JSX_TEXT@19..29 " invalid }" [] [],
+                    },
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@29..30 "<" [] [],
+                        slash_token: SLASH@30..31 "/" [] [],
+                        name: JsxReferenceIdentifier {
+                            value_token: JSX_IDENT@31..32 "b" [] [],
+                        },
+                        r_angle_token: R_ANGLE@32..33 ">" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@33..34 ";" [] [],
+        },
+    ],
+    eof_token: EOF@34..35 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..35
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..34
+    0: JS_EXPRESSION_STATEMENT@0..15
+      0: JSX_ELEMENT_EXPRESSION@0..14
+        0: JSX_ELEMENT@0..14
+          0: JSX_OPENING_ELEMENT@0..3
+            0: L_ANGLE@0..1 "<" [] []
+            1: JSX_REFERENCE_IDENTIFIER@1..2
+              0: JSX_IDENT@1..2 "a" [] []
+            2: R_ANGLE@2..3 ">" [] []
+          1: JSX_TEXT_LITERAL@3..10
+            0: JSX_TEXT@3..10 " test >" [] []
+          2: JSX_CLOSING_ELEMENT@10..14
+            0: L_ANGLE@10..11 "<" [] []
+            1: SLASH@11..12 "/" [] []
+            2: JSX_REFERENCE_IDENTIFIER@12..13
+              0: JSX_IDENT@12..13 "a" [] []
+            3: R_ANGLE@13..14 ">" [] []
+      1: SEMICOLON@14..15 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@15..34
+      0: JSX_ELEMENT_EXPRESSION@15..33
+        0: JSX_ELEMENT@15..33
+          0: JSX_OPENING_ELEMENT@15..19
+            0: L_ANGLE@15..17 "<" [Newline("\n")] []
+            1: JSX_REFERENCE_IDENTIFIER@17..18
+              0: JSX_IDENT@17..18 "b" [] []
+            2: R_ANGLE@18..19 ">" [] []
+          1: JSX_TEXT_LITERAL@19..29
+            0: JSX_TEXT@19..29 " invalid }" [] []
+          2: JSX_CLOSING_ELEMENT@29..33
+            0: L_ANGLE@29..30 "<" [] []
+            1: SLASH@30..31 "/" [] []
+            2: JSX_REFERENCE_IDENTIFIER@31..32
+              0: JSX_IDENT@31..32 "b" [] []
+            3: R_ANGLE@32..33 ">" [] []
+      1: SEMICOLON@33..34 ";" [] []
+  3: EOF@34..35 "" [Newline("\n")] []
+--
+error: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+  ┌─ jsx_invalid_text.jsx:1:10
+  │
+1 │ <a> test ></a>;
+  │          ^
+
+--
+error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  ┌─ jsx_invalid_text.jsx:2:13
+  │
+2 │ <b> invalid }</b>;
+  │             ^
+
+--
+<a> test ></a>;
+<b> invalid }</b>;
