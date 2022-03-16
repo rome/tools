@@ -369,6 +369,10 @@ enum NodeLanguage {
 }
 
 impl NodeLanguage {
+    fn is_jsx(&self) -> bool {
+        matches!(self, NodeLanguage::Jsx)
+    }
+
     fn as_str(&self) -> &'static str {
         match self {
             NodeLanguage::Js => "js",
@@ -391,6 +395,8 @@ enum NodeConcept {
     Unknown,
     List,
     Union,
+    Tag,
+    Attribute,
     Auxiliary,
 }
 
@@ -409,6 +415,8 @@ impl NodeConcept {
             NodeConcept::Unknown => "unknown",
             NodeConcept::List => "lists",
             NodeConcept::Union => "any",
+            NodeConcept::Tag => "tag",
+            NodeConcept::Attribute => "attribute",
             NodeConcept::Auxiliary => "auxiliary",
         }
     }
@@ -518,6 +526,16 @@ fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
         "ExternalModuleRef" | "ModuleRef" => NodeConcept::Module,
 
         _ if name.ends_with("Type") => NodeConcept::Type,
+
+        _ if language.is_jsx()
+            && (name.ends_with("Element")
+                || name.ends_with("Tag")
+                || name.ends_with("Fragment")) =>
+        {
+            NodeConcept::Tag
+        }
+
+        _ if language.is_jsx() && name.contains("Attribute") => NodeConcept::Attribute,
 
         // Default to auxiliary
         _ => NodeConcept::Auxiliary,
