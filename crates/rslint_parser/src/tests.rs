@@ -14,7 +14,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-<a-b-c></a-b-c>
+ <A extends B>() => {};
     "#;
 
     let module = parse(src, 0, SourceType::jsx());
@@ -139,14 +139,10 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
 
 mod parser {
     mod ok {
-        tests_macros::gen_tests! {"test_data/inline/ok/**/*.js", crate::tests::run_and_expect_no_errors, ""}
-        tests_macros::gen_tests! {"test_data/inline/ok/**/*.ts", crate::tests::run_and_expect_no_errors, ""}
-        tests_macros::gen_tests! {"test_data/inline/ok/**/*.jsx", crate::tests::run_and_expect_no_errors, ""}
+        tests_macros::gen_tests! {"test_data/inline/ok/**/*.{js,ts,jsx,tsx}", crate::tests::run_and_expect_no_errors, ""}
     }
     mod err {
-        tests_macros::gen_tests! {"test_data/inline/err/**/*.js", crate::tests::run_and_expect_errors, ""}
-        tests_macros::gen_tests! {"test_data/inline/err/**/*.ts", crate::tests::run_and_expect_errors, ""}
-        tests_macros::gen_tests! {"test_data/inline/err/**/*.jsx", crate::tests::run_and_expect_errors, ""}
+        tests_macros::gen_tests! {"test_data/inline/err/**/*.{js, ts, jsx, tsx}", crate::tests::run_and_expect_errors, ""}
     }
 }
 

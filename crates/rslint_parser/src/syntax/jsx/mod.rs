@@ -359,10 +359,6 @@ impl ParseNodeList for JsxAttributeList {
 }
 
 fn parse_jsx_attribute_name(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(JsSyntaxKind::IDENT) {
-        return ParsedSyntax::Absent;
-    }
-
     parse_jsx_name(p)
 }
 
