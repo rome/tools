@@ -4,3 +4,4 @@
 mod attribute;
 mod attribute_initializer_clause;
 mod expression_attribute_value;
+mod spread_attribute;

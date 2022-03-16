@@ -2226,7 +2226,11 @@ JsxAnyName =
 // Attributes
 // ==================================
 
-JsxAttributeList = JsxAttribute*
+JsxAttributeList = JsxAnyAttribute*
+
+JsxAnyAttribute =
+	JsxAttribute
+	| JsxSpreadAttribute
 
 JsxAttribute =
 	name: JsxAnyAttributeName
@@ -2249,6 +2253,14 @@ JsxExpressionAttributeValue =
 JsxAnyAttributeName =
 	JsxName
 	| JsxNamespaceName
+
+// <a {...b} />
+//    ^^^^^^
+JsxSpreadAttribute =
+	'{'
+	'...'
+	argument: JsAnyExpression // parse_assignment_expression_or_higher
+	'}'
 
 // ==================================
 // Auxiliary
