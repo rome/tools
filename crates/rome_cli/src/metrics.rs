@@ -9,7 +9,12 @@ use std::{
 use hdrhistogram::Histogram;
 use parking_lot::{Mutex, RwLock};
 use tracing::{span, subscriber::Interest, Level, Metadata, Subscriber};
-use tracing_subscriber::{layer::Context, prelude::*, registry::LookupSpan, Layer};
+use tracing_subscriber::{
+    layer::Context,
+    prelude::*,
+    registry::{LookupSpan, SpanRef},
+    Layer,
+};
 
 /// Implementation of a tracing [Layer] that collects timing information for spans into [Histogram]s
 struct MetricsLayer;
@@ -51,6 +56,37 @@ enum CallsiteEntry {
     },
 }
 
+impl CallsiteEntry {
+    fn from_level(level: &Level) -> Self {
+        /// Number of significant figures retained by the histogram
+        const SIGNIFICANT_FIGURES: u8 = 3;
+
+        match level {
+            &Level::TRACE => Self::Trace {
+                // SAFETY: Histogram::new only returns an error if the value of
+                // SIGNIFICANT_FIGURES is invalid, 3 is statically known to work
+                total: Histogram::new(SIGNIFICANT_FIGURES).unwrap(),
+                busy: Histogram::new(SIGNIFICANT_FIGURES).unwrap(),
+                idle: Histogram::new(SIGNIFICANT_FIGURES).unwrap(),
+            },
+            _ => Self::Debug {
+                total: Histogram::new(SIGNIFICANT_FIGURES).unwrap(),
+            },
+        }
+    }
+
+    fn into_histograms(self, name: &str) -> Vec<(Cow<str>, Histogram<u64>)> {
+        match self {
+            CallsiteEntry::Debug { total } => vec![(Cow::Borrowed(name), total)],
+            CallsiteEntry::Trace { total, busy, idle } => vec![
+                (Cow::Borrowed(name), total),
+                (Cow::Owned(format!("{name}.busy")), busy),
+                (Cow::Owned(format!("{name}.idle")), idle),
+            ],
+        }
+    }
+}
+
 /// Extension data attached to tracing spans to keep track of their idle and busy time
 ///
 /// Most of the associated code is based on the similar logic found in `tracing-subscriber`
@@ -70,6 +106,42 @@ impl Timings {
             last: Instant::now(),
         }
     }
+
+    /// Count the time between the last update and now as idle
+    fn enter(&mut self, now: Instant) {
+        self.idle += (now - self.last).as_nanos() as u64;
+        self.last = now;
+    }
+
+    /// Count the time between the last update and now as busy
+    fn exit(&mut self, now: Instant) {
+        self.busy += (now - self.last).as_nanos() as u64;
+        self.last = now;
+    }
+
+    /// Exit the timing for this span, and record it into a callsite entry
+    fn record(mut self, now: Instant, entry: &mut CallsiteEntry) {
+        self.exit(now);
+
+        match entry {
+            CallsiteEntry::Debug { total } => {
+                total.record(self.busy + self.idle).unwrap();
+            }
+            CallsiteEntry::Trace { total, busy, idle } => {
+                busy.record(self.busy).unwrap();
+                idle.record(self.idle).unwrap();
+                total.record(self.busy + self.idle).unwrap();
+            }
+        }
+    }
+}
+
+fn read_span<'ctx, S>(ctx: &'ctx Context<'_, S>, id: &span::Id) -> SpanRef<'ctx, S>
+where
+    S: Subscriber + for<'a> LookupSpan<'a>,
+{
+    ctx.span(id)
+        .expect("Span not found, it should have been stored in the registry")
 }
 
 impl<S> Layer<S> for MetricsLayer
@@ -83,16 +155,7 @@ where
             return Interest::never();
         }
 
-        let entry = match metadata.level() {
-            &Level::TRACE => CallsiteEntry::Trace {
-                total: Histogram::new(3).unwrap(),
-                busy: Histogram::new(3).unwrap(),
-                idle: Histogram::new(3).unwrap(),
-            },
-            _ => CallsiteEntry::Debug {
-                total: Histogram::new(3).unwrap(),
-            },
-        };
+        let entry = CallsiteEntry::from_level(metadata.level());
 
         METRICS
             .write()
@@ -103,7 +166,7 @@ where
 
     /// When a new span is created, attach the timing data extension to it
     fn on_new_span(&self, _attrs: &span::Attributes<'_>, id: &span::Id, ctx: Context<'_, S>) {
-        let span = ctx.span(id).expect("Span not found, this is a bug");
+        let span = read_span(&ctx, id);
         let mut extensions = span.extensions_mut();
 
         if extensions.get_mut::<Timings>().is_none() {
@@ -114,37 +177,34 @@ where
     /// When a span is entered, start counting idle time for the parent span if
     /// it exists and busy time for the entered span itself
     fn on_enter(&self, id: &span::Id, ctx: Context<'_, S>) {
-        let span = ctx.span(id).expect("Span not found, this is a bug");
+        let span = read_span(&ctx, id);
 
         let now = Instant::now();
         if let Some(parent) = span.parent() {
             let mut extensions = parent.extensions_mut();
             if let Some(timings) = extensions.get_mut::<Timings>() {
                 // The parent span was busy until now
-                timings.busy += (now - timings.last).as_nanos() as u64;
-                timings.last = now;
+                timings.exit(now);
             }
         }
 
         let mut extensions = span.extensions_mut();
         if let Some(timings) = extensions.get_mut::<Timings>() {
             // The child span was idle until now
-            timings.idle += (now - timings.last).as_nanos() as u64;
-            timings.last = now;
+            timings.enter(now);
         }
     }
 
     /// When a span is exited, stop it from counting busy time and start
     /// counting the parent as busy instead
     fn on_exit(&self, id: &span::Id, ctx: Context<'_, S>) {
-        let span = ctx.span(id).expect("Span not found, this is a bug");
+        let span = read_span(&ctx, id);
 
         let now = Instant::now();
         let mut extensions = span.extensions_mut();
         if let Some(timings) = extensions.get_mut::<Timings>() {
             // Child span was busy until now
-            timings.busy += (now - timings.last).as_nanos() as u64;
-            timings.last = now;
+            timings.exit(now);
         }
 
         // Re-enter parent
@@ -152,8 +212,7 @@ where
             let mut extensions = parent.extensions_mut();
             if let Some(timings) = extensions.get_mut::<Timings>() {
                 // Parent span was idle until now
-                timings.idle += (now - timings.last).as_nanos() as u64;
-                timings.last = now;
+                timings.enter(now);
             }
         }
     }
@@ -161,34 +220,20 @@ where
     /// When a span is closed, extract its timing information and write it to
     /// the associated histograms
     fn on_close(&self, id: span::Id, ctx: Context<'_, S>) {
-        let span = ctx.span(&id).expect("Span not found, this is a bug");
-        let extensions = span.extensions();
-        if let Some(timing) = extensions.get::<Timings>() {
-            let Timings {
-                busy: time_busy,
-                idle: mut time_idle,
-                last,
-            } = *timing;
-
-            // Count the time between the span being exited and it being closed as idle
-            time_idle += (Instant::now() - last).as_nanos() as u64;
+        let span = read_span(&ctx, &id);
+        let mut extensions = span.extensions_mut();
+        if let Some(timing) = extensions.remove::<Timings>() {
+            let now = Instant::now();
 
             // Acquire a read lock on the metrics storage, access the metrics entry
             // associated with this call site and acquire a write lock on it
             let metrics = METRICS.read();
-            let entry = metrics.get(&CallsiteKey(span.metadata())).unwrap();
-            let mut entry = entry.lock();
+            let entry = metrics
+                .get(&CallsiteKey(span.metadata()))
+                .expect("callsite not found, it should have been registered in register_callsite");
 
-            match &mut *entry {
-                CallsiteEntry::Debug { total } => {
-                    total.record(time_busy + time_idle).unwrap();
-                }
-                CallsiteEntry::Trace { total, busy, idle } => {
-                    busy.record(time_busy).unwrap();
-                    idle.record(time_idle).unwrap();
-                    total.record(time_busy + time_idle).unwrap();
-                }
-            }
+            let mut entry = entry.lock();
+            timing.record(now, &mut entry);
         }
     }
 }
@@ -204,17 +249,7 @@ pub fn print_metrics() {
     let mut histograms: Vec<_> = METRICS
         .write()
         .drain()
-        .flat_map(|(key, entry)| {
-            let name = key.0.name();
-            match entry.into_inner() {
-                CallsiteEntry::Debug { total } => vec![(Cow::Borrowed(name), total)],
-                CallsiteEntry::Trace { total, busy, idle } => vec![
-                    (Cow::Borrowed(name), total),
-                    (Cow::Owned(format!("{name}.busy")), busy),
-                    (Cow::Owned(format!("{name}.idle")), idle),
-                ],
-            }
-        })
+        .flat_map(|(key, entry)| entry.into_inner().into_histograms(key.0.name()))
         .collect();
 
     histograms.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
@@ -250,5 +285,100 @@ pub fn print_metrics() {
 
         // Print an empty line after each histogram
         println!();
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::{thread, time::Duration};
+
+    use tracing::Level;
+    use tracing_subscriber::prelude::*;
+
+    use super::{CallsiteEntry, CallsiteKey, MetricsLayer, Timings, METRICS};
+
+    #[test]
+    fn test_timing() {
+        let mut entry = CallsiteEntry::from_level(&Level::TRACE);
+
+        for i in 1..=5 {
+            let mut timing = Timings::new();
+
+            let start = timing.last;
+            timing.enter(start + Duration::from_nanos(i));
+
+            timing.record(start + Duration::from_nanos(i * 2), &mut entry);
+        }
+
+        let histograms = entry.into_histograms("test");
+        for (name, histogram) in histograms {
+            let scale = match name.as_ref() {
+                "test" => 2.0,
+                "test.idle" | "test.busy" => 1.0,
+                _ => unreachable!(),
+            };
+
+            let sample_count = 5;
+            assert_eq!(histogram.len(), sample_count);
+
+            let mean = 3.0 * scale;
+            assert_eq!(histogram.mean(), mean);
+
+            let sum = (1..=5).fold(0.0, |sum, i| {
+                let sample = i as f64 * scale;
+                sum + (sample - mean).powi(2)
+            });
+
+            let stddev = (sum / sample_count as f64).sqrt();
+            assert_eq!(histogram.stdev(), stddev);
+
+            let s = scale as u64 - 1;
+            let expected_buckets = [
+                (0, s, 0.0),
+                (1, 2 * s + 1, 0.2),
+                (1, 3 * s + 2, 0.4),
+                (1, 4 * s + 3, 0.6),
+                (1, 5 * s + 4, 0.8),
+                (1, 6 * s + 5, 1.0),
+            ];
+
+            for (bucket, expected) in histogram.iter_linear(scale as u64).zip(&expected_buckets) {
+                let (count, value, quantile) = *expected;
+
+                assert_eq!(bucket.count_since_last_iteration(), count);
+                assert_eq!(bucket.value_iterated_to(), value);
+                assert_eq!(bucket.quantile_iterated_to(), quantile);
+            }
+        }
+    }
+
+    #[test]
+    fn test_layer() {
+        let _guard = tracing_subscriber::registry()
+            .with(MetricsLayer)
+            .set_default();
+
+        let key = {
+            let span = tracing::trace_span!("test_layer");
+            span.in_scope(|| {
+                thread::sleep(Duration::from_millis(1));
+            });
+
+            span.metadata().expect("span is disabled")
+        };
+
+        let entry = {
+            let mut metrics = METRICS.write();
+            metrics.remove(&CallsiteKey(key))
+        };
+
+        let entry = entry.expect("callsite does not exist in metrics storage");
+
+        let entry = entry.into_inner();
+        let histograms = entry.into_histograms(key.name());
+
+        for (_, histogram) in histograms {
+            assert_eq!(histogram.len(), 1);
+        }
     }
 }
