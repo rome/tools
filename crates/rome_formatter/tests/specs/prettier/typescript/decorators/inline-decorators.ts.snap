@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: inline-decorators.ts
 
 ---
@@ -129,18 +129,6 @@ class MyContainerComponent {
 
 # Errors
 ```
-error[SyntaxError]: expected a statement but instead found '@d1
-@d2(foo)
-@d3.bar
-@d4.baz()'
-  ┌─ inline-decorators.ts:2:1
-  │  
-2 │ ┌ @d1
-3 │ │ @d2(foo)
-4 │ │ @d3.bar
-5 │ │ @d4.baz()
-  │ └─────────^ Expected a statement here
-
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
   ┌─ inline-decorators.ts:9:5
   │
@@ -357,15 +345,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 37 │         }) private a: string,
    │                             ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a statement but instead found '}
-
-@decorated'
+error[SyntaxError]: expected a statement but instead found '}'
    ┌─ inline-decorators.ts:39:1
-   │  
-39 │ ┌ }
-40 │ │ 
-41 │ │ @decorated class Foo {}
-   │ └──────────^ Expected a statement here
+   │
+39 │ }
+   │ ^ Expected a statement here
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ inline-decorators.ts:44:5

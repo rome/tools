@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: mobx.js
 
 ---
@@ -49,84 +49,50 @@ import {observable} from "mobx";
 ```js
 import { observable } from "mobx";
 
-@observer
-class OrderLine {
-  @
-  observable;
-  price:number = 0;
-  @
-  observable;
-  amount:number = 1;
+@observer class OrderLine {
+  @observable price:number = 0;
+  @observable amount:number = 1;
 
   constructor(price) {
     this.price = price;
   }
 
-  @
-  computed;
-  get total() {
+  @computed get total() {
     return this.price * this.amount;
   }
 
-  @
-  action;
-  .
-  bound;
-  setPrice(price) {
+  @action.bound setPrice(price) {
     this.price = price;
   }
 
-  @
-  computed;
+  @computed
   get total() {
     return this.price * this.amount;
   }
 
-  @
-  action;
-  .
-  bound;
+  @action.bound
   setPrice(price) {
     this.price = price;
   }
-
-  @
-  computed;
-  @
-  computed;
-  @
-  computed;
-  @
-  computed;
-  @
-  computed;
-  @
-  computed;
-  @
-  computed;
-  get total() {
+  
+  @computed @computed @computed @computed @computed @computed @computed get total() {
     return this.price * this.amount;
   }
 
-  @
-  action;
-  handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-
-  @
-  action;
-  handleSomething = (event: React.ChangeEvent<HTMLInputElement>) =>
-    doSomething();
+  @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
+  
+  @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
 }
 
 ```
 
 # Errors
 ```
-error[SyntaxError]: expected a statement but instead found '@observer'
+error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ mobx.js:3:1
   │
 3 │ @observer class OrderLine {
-  │ ^^^^^^^^^ Expected a statement here
+  │ ^^^^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
   ┌─ mobx.js:4:3

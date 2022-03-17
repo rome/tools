@@ -4,12 +4,16 @@ mod statement;
 pub mod ts_parse_error;
 mod types;
 
-use crate::parser::expected_token_any;
-use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
+use crate::parser::{expected_token, expected_token_any};
+use crate::syntax::expr::{parse_identifier, parse_lhs_expr, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error::expected_expression;
 
-use crate::syntax::typescript::ts_parse_error::expected_ts_type;
-use crate::{Absent, CompletedMarker, Marker, ParsedSyntax, Parser, Present};
+use crate::syntax::auxiliary::parse_declaration_clause;
+use crate::syntax::module::parse_export;
+use crate::syntax::stmt::parse_non_top_level_export;
+use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
+use crate::JsSyntaxFeature::TypeScript;
+use crate::{Absent, CompletedMarker, Marker, ParsedSyntax, Parser, Present, SyntaxFeature};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
@@ -230,5 +234,90 @@ fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
             }
             p.error(expected_token_any(&tokens));
         }
+    }
+}
+
+// test ts ts_class_decorator
+// function test() {}
+// @test
+// class Test {}
+// @test.a?.c @test @test
+// class Test2{}
+pub(crate) fn parse_ts_decorated_statement(p: &mut Parser, top_level: bool) -> ParsedSyntax {
+    if !p.at(T![@]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    let start = p.cur_range().start();
+    let decorators = parse_ts_decorators(p);
+
+    if p.at(T![export]) {
+        let is_class =
+            p.nth_at(1, T![class]) || (p.nth_at(1, T![default]) && p.nth_at(2, T![class]));
+
+        let mut export = if top_level {
+            parse_export(p)
+        } else {
+            parse_non_top_level_export(p)
+        }
+        .expect("Expect export clause because parser is positioned at 'export' token.");
+
+        if !is_class && !export.kind().is_unknown() {
+            p.error(
+                p.err_builder("Decorators are only valid on class declarations.")
+                    .primary(export.range(p), "")
+                    .secondary(decorators.range(p), "decorators"),
+            );
+            export.change_to_unknown(p);
+        }
+
+        Present(m.complete(p, TS_DECORATED_EXPORT))
+    } else {
+        let declaration = parse_declaration_clause(p, start)
+            .or_add_diagnostic(p, |_, _| expected_token(T![class]));
+
+        if let Some(mut declaration) = declaration {
+            if declaration.kind() != JS_CLASS_DECLARATION {
+                p.error(
+                    p.err_builder("Decorators are only valid on class declarations.")
+                        .primary(declaration.range(p), "")
+                        .secondary(decorators.range(p), "decorators"),
+                );
+                declaration.change_to_unknown(p);
+            }
+        }
+
+        Present(m.complete(p, TS_DECORATED_CLASS_DECLARATION))
+    }
+}
+
+pub(crate) fn parse_ts_decorators(p: &mut Parser) -> CompletedMarker {
+    let list = p.start();
+
+    loop {
+        let decorator = TypeScript.parse_exclusive_syntax(p, parse_decorator, |p, decorator| {
+            ts_only_syntax_error(p, "decorator", decorator.range(p))
+        });
+
+        if decorator.is_absent() {
+            break;
+        }
+    }
+
+    list.complete(p, TS_DECORATOR_LIST)
+}
+
+fn parse_decorator(p: &mut Parser) -> ParsedSyntax {
+    if p.at(T![@]) {
+        let m = p.start();
+        p.bump(T![@]);
+
+        parse_lhs_expr(p, ExpressionContext::default().and_in_ts_decorator(true))
+            .or_add_diagnostic(p, expected_expression);
+
+        Present(m.complete(p, TS_DECORATOR))
+    } else {
+        Absent
     }
 }

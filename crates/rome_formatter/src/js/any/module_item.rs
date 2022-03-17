@@ -8,6 +8,7 @@ impl ToFormatElement for JsAnyModuleItem {
             Self::JsAnyStatement(node) => node.to_format_element(formatter),
             Self::JsExport(node) => node.to_format_element(formatter),
             Self::JsImport(node) => node.to_format_element(formatter),
+            Self::TsDecoratedExport(node) => node.to_format_element(formatter),
         }
     }
 }

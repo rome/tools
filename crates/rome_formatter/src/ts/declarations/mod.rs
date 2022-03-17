@@ -1,6 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 mod declare_function_declaration;
+mod decorated_class_declaration;
 mod enum_declaration;
 mod external_module_declaration;
 mod global_declaration;

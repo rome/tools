@@ -55,6 +55,10 @@ bitflags! {
         ///
         /// Also applies for object patterns
         const ALLOW_OBJECT_EXPRESSION = 1 << 1;
+
+        /// If `true` then, don't parse computed member expressions because they can as well indicate
+        /// the start of a computed class member.
+        const IN_TS_DECORATOR = 1 << 2;
     }
 }
 
@@ -67,15 +71,24 @@ impl ExpressionContext {
         self.and(ExpressionContextFlags::ALLOW_OBJECT_EXPRESSION, allowed)
     }
 
+    pub(crate) fn and_in_ts_decorator(self, in_decorator: bool) -> Self {
+        self.and(ExpressionContextFlags::IN_TS_DECORATOR, in_decorator)
+    }
+
     /// Returns true if object expressions or object patterns are valid in this context
-    pub(crate) fn is_object_expression_allowed(&self) -> bool {
+    pub(crate) const fn is_object_expression_allowed(&self) -> bool {
         self.0
             .contains(ExpressionContextFlags::ALLOW_OBJECT_EXPRESSION)
     }
 
     /// Returns `true` if the expression parsing includes binary in expressions.
-    pub(crate) fn is_in_included(&self) -> bool {
+    pub(crate) const fn is_in_included(&self) -> bool {
         self.0.contains(ExpressionContextFlags::INCLUDE_IN)
+    }
+
+    /// Returns `true` if currently parsing a decorator expression `@<expr>`.
+    pub(crate) const fn is_in_ts_decorator(&self) -> bool {
+        self.0.contains(ExpressionContextFlags::IN_TS_DECORATOR)
     }
 
     /// Adds the `flag` if `set` is `true`, otherwise removes the `flag`
@@ -359,7 +372,7 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
             let m = marker.precede(p);
             p.bump(T![?]);
 
-            parse_assignment_expression_or_higher(p, context.and_include_in(true))
+            parse_assignment_expression_or_higher(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
             p.expect(T![:]);
@@ -607,10 +620,13 @@ fn parse_member_expression_rest(
         progress.assert_progressing(p);
         lhs = match p.cur() {
             T![.] => parse_static_member_expression(p, lhs, T![.]).unwrap(),
-            T!['['] => parse_computed_member_expression(p, lhs, false, context).unwrap(),
+            // Don't parse out `[` as a member expression because it may as well be the start of a computed class member
+            T!['['] if !context.is_in_ts_decorator() => {
+                parse_computed_member_expression(p, lhs, false).unwrap()
+            }
             T![?.] if allow_optional_chain => {
                 let completed = if p.nth_at(1, T!['[']) {
-                    parse_computed_member_expression(p, lhs, true, context).unwrap()
+                    parse_computed_member_expression(p, lhs, true).unwrap()
                 } else if is_nth_at_any_name(p, 1) {
                     parse_static_member_expression(p, lhs, T![?.]).unwrap()
                 } else if p.nth_at(1, BACKTICK) {
@@ -709,7 +725,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     };
 
     if p.at(T!['(']) {
-        parse_call_arguments(p, context).unwrap();
+        parse_call_arguments(p).unwrap();
     } else if let Present(type_arguments) = type_arguments {
         let error = p.err_builder("A 'new' expression with type arguments must always be followed by a parenthesized argument list.").primary(type_arguments.range(p), "");
         p.error(error);
@@ -848,7 +864,6 @@ fn parse_computed_member_expression(
     p: &mut Parser,
     lhs: CompletedMarker,
     optional_chain: bool,
-    context: ExpressionContext,
 ) -> ParsedSyntax {
     // test_err bracket_expr_err
     // foo[]
@@ -862,7 +877,7 @@ fn parse_computed_member_expression(
     p.expect(T!['[']);
     // test computed_member_in
     // for ({}["x" in {}];;) {}
-    parse_expression(p, context.and_include_in(true)).or_add_diagnostic(p, expected_expression);
+    parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, expected_expression);
 
     p.expect(T![']']);
 
@@ -899,7 +914,7 @@ pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax {
 // foo(a,b var;
 // foo (,,b);
 // foo (a, ...);
-fn parse_call_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_call_arguments(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
@@ -929,9 +944,9 @@ fn parse_call_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyn
 
         let argument = if p.at(T![...]) {
             // already do a check on "..." so it's safe to unwrap
-            parse_spread_element(p, context.and_include_in(true))
+            parse_spread_element(p, ExpressionContext::default())
         } else {
-            parse_assignment_expression_or_higher(p, context.and_include_in(true))
+            parse_assignment_expression_or_higher(p, ExpressionContext::default())
         };
 
         if argument.is_absent() && p.at(T![,]) {
@@ -992,8 +1007,7 @@ fn parse_parenthesized_expression(p: &mut Parser, context: ExpressionContext) ->
                 .primary(p.cur_range(), "Expected an expression here"),
         );
     } else {
-        let first =
-            parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true));
+        let first = parse_assignment_expression_or_higher(p, ExpressionContext::default());
 
         if p.at(T![,]) {
             parse_sequence_expression_recursive(p, first, context)
@@ -1203,13 +1217,8 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                             .primary(p.cur_range(), "");
                         p.error(err);
                     } else {
-                        parse_assignment_expression_or_higher(
-                            p,
-                            context
-                                .and_include_in(true)
-                                .and_object_expression_allowed(true),
-                        )
-                        .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+                        parse_assignment_expression_or_higher(p, ExpressionContext::default())
+                            .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
                     }
 
                     if p.at(T![,]) {
@@ -1615,12 +1624,12 @@ fn parse_call_expression_rest(
                     continue;
                 }
 
-                parse_call_arguments(p, context).or_add_diagnostic(p, expected_parameters);
+                parse_call_arguments(p).or_add_diagnostic(p, expected_parameters);
                 lhs = m.complete(p, JS_CALL_EXPRESSION);
                 continue;
             }
         } else if p.at(T!['(']) {
-            parse_call_arguments(p, context)
+            parse_call_arguments(p)
                 .expect("Expected parsed out arguments because the parser is positioned at '('");
             lhs = m.complete(p, JS_CALL_EXPRESSION);
             continue;

@@ -126,6 +126,8 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | TS_GLOBAL_DECLARATION
             | TS_EXTERNAL_MODULE_DECLARATION
             | TS_IMPORT_EQUALS_DECLARATION
+            | TS_DECORATED_CLASS_DECLARATION
+            | TS_DECORATED_EXPORT
             | JS_UNKNOWN_STATEMENT => JS_UNKNOWN_STATEMENT,
 
             IMPORT_META

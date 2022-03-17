@@ -1,5 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+mod decorator_list;
 mod enum_member_list;
 mod index_signature_modifier_list;
 mod intersection_type_element_list;

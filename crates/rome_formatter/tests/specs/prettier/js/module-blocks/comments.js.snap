@@ -48,13 +48,13 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │                               
   │ ...Which is required to end this statement
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
   ┌─ comments.js:3:3
   │
 3 │   export const foo = "foo";
   │   ^^^^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
   ┌─ comments.js:4:3
   │
 4 │   export { foo }; /*A5*/

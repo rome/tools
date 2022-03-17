@@ -6221,6 +6221,87 @@ pub struct TsDeclareStatementFields {
     pub declaration: SyntaxResult<JsAnyDeclarationClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsDecoratedClassDeclaration {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsDecoratedClassDeclaration {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDecoratedClassDeclarationFields {
+        TsDecoratedClassDeclarationFields {
+            decorators: self.decorators(),
+            declaration: self.declaration(),
+        }
+    }
+    pub fn decorators(&self) -> TsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn declaration(&self) -> SyntaxResult<JsClassDeclaration> {
+        support::required_node(&self.syntax, 1usize)
+    }
+}
+pub struct TsDecoratedClassDeclarationFields {
+    pub decorators: TsDecoratorList,
+    pub declaration: SyntaxResult<JsClassDeclaration>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsDecoratedExport {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsDecoratedExport {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDecoratedExportFields {
+        TsDecoratedExportFields {
+            decorators: self.decorators(),
+            export: self.export(),
+        }
+    }
+    pub fn decorators(&self) -> TsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn export(&self) -> SyntaxResult<JsExport> { support::required_node(&self.syntax, 1usize) }
+}
+pub struct TsDecoratedExportFields {
+    pub decorators: TsDecoratorList,
+    pub export: SyntaxResult<JsExport>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsDecorator {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsDecorator {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDecoratorFields {
+        TsDecoratorFields {
+            at_token: self.at_token(),
+            expression: self.expression(),
+        }
+    }
+    pub fn at_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 1usize)
+    }
+}
+pub struct TsDecoratorFields {
+    pub at_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDefaultTypeClause {
     pub(crate) syntax: SyntaxNode,
 }
@@ -9244,6 +9325,7 @@ pub enum JsAnyModuleItem {
     JsAnyStatement(JsAnyStatement),
     JsExport(JsExport),
     JsImport(JsImport),
+    TsDecoratedExport(TsDecoratedExport),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyName {
@@ -9337,6 +9419,7 @@ pub enum JsAnyStatement {
     JsWithStatement(JsWithStatement),
     TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration),
     TsDeclareStatement(TsDeclareStatement),
+    TsDecoratedClassDeclaration(TsDecoratedClassDeclaration),
     TsEnumDeclaration(TsEnumDeclaration),
     TsExternalModuleDeclaration(TsExternalModuleDeclaration),
     TsGlobalDeclaration(TsGlobalDeclaration),
@@ -15332,6 +15415,84 @@ impl From<TsDeclareStatement> for SyntaxNode {
 impl From<TsDeclareStatement> for SyntaxElement {
     fn from(n: TsDeclareStatement) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsDecoratedClassDeclaration {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DECORATED_CLASS_DECLARATION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsDecoratedClassDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsDecoratedClassDeclaration")
+            .field("decorators", &self.decorators())
+            .field(
+                "declaration",
+                &support::DebugSyntaxResult(self.declaration()),
+            )
+            .finish()
+    }
+}
+impl From<TsDecoratedClassDeclaration> for SyntaxNode {
+    fn from(n: TsDecoratedClassDeclaration) -> SyntaxNode { n.syntax }
+}
+impl From<TsDecoratedClassDeclaration> for SyntaxElement {
+    fn from(n: TsDecoratedClassDeclaration) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsDecoratedExport {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DECORATED_EXPORT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsDecoratedExport {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsDecoratedExport")
+            .field("decorators", &self.decorators())
+            .field("export", &support::DebugSyntaxResult(self.export()))
+            .finish()
+    }
+}
+impl From<TsDecoratedExport> for SyntaxNode {
+    fn from(n: TsDecoratedExport) -> SyntaxNode { n.syntax }
+}
+impl From<TsDecoratedExport> for SyntaxElement {
+    fn from(n: TsDecoratedExport) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsDecorator {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DECORATOR }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsDecorator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsDecorator")
+            .field("at_token", &support::DebugSyntaxResult(self.at_token()))
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .finish()
+    }
+}
+impl From<TsDecorator> for SyntaxNode {
+    fn from(n: TsDecorator) -> SyntaxNode { n.syntax }
+}
+impl From<TsDecorator> for SyntaxElement {
+    fn from(n: TsDecorator) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsDefaultTypeClause {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DEFAULT_TYPE_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -20879,10 +21040,13 @@ impl From<JsExport> for JsAnyModuleItem {
 impl From<JsImport> for JsAnyModuleItem {
     fn from(node: JsImport) -> JsAnyModuleItem { JsAnyModuleItem::JsImport(node) }
 }
+impl From<TsDecoratedExport> for JsAnyModuleItem {
+    fn from(node: TsDecoratedExport) -> JsAnyModuleItem { JsAnyModuleItem::TsDecoratedExport(node) }
+}
 impl AstNode for JsAnyModuleItem {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         match kind {
-            JS_EXPORT | JS_IMPORT => true,
+            JS_EXPORT | JS_IMPORT | TS_DECORATED_EXPORT => true,
             k if JsAnyStatement::can_cast(k) => true,
             _ => false,
         }
@@ -20891,6 +21055,7 @@ impl AstNode for JsAnyModuleItem {
         let res = match syntax.kind() {
             JS_EXPORT => JsAnyModuleItem::JsExport(JsExport { syntax }),
             JS_IMPORT => JsAnyModuleItem::JsImport(JsImport { syntax }),
+            TS_DECORATED_EXPORT => JsAnyModuleItem::TsDecoratedExport(TsDecoratedExport { syntax }),
             _ => {
                 if let Some(js_any_statement) = JsAnyStatement::cast(syntax) {
                     return Some(JsAnyModuleItem::JsAnyStatement(js_any_statement));
@@ -20904,6 +21069,7 @@ impl AstNode for JsAnyModuleItem {
         match self {
             JsAnyModuleItem::JsExport(it) => &it.syntax,
             JsAnyModuleItem::JsImport(it) => &it.syntax,
+            JsAnyModuleItem::TsDecoratedExport(it) => &it.syntax,
             JsAnyModuleItem::JsAnyStatement(it) => it.syntax(),
         }
     }
@@ -20914,6 +21080,7 @@ impl std::fmt::Debug for JsAnyModuleItem {
             JsAnyModuleItem::JsAnyStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyModuleItem::JsExport(it) => std::fmt::Debug::fmt(it, f),
             JsAnyModuleItem::JsImport(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyModuleItem::TsDecoratedExport(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -20923,6 +21090,7 @@ impl From<JsAnyModuleItem> for SyntaxNode {
             JsAnyModuleItem::JsAnyStatement(it) => it.into(),
             JsAnyModuleItem::JsExport(it) => it.into(),
             JsAnyModuleItem::JsImport(it) => it.into(),
+            JsAnyModuleItem::TsDecoratedExport(it) => it.into(),
         }
     }
 }
@@ -21785,6 +21953,11 @@ impl From<TsDeclareFunctionDeclaration> for JsAnyStatement {
 impl From<TsDeclareStatement> for JsAnyStatement {
     fn from(node: TsDeclareStatement) -> JsAnyStatement { JsAnyStatement::TsDeclareStatement(node) }
 }
+impl From<TsDecoratedClassDeclaration> for JsAnyStatement {
+    fn from(node: TsDecoratedClassDeclaration) -> JsAnyStatement {
+        JsAnyStatement::TsDecoratedClassDeclaration(node)
+    }
+}
 impl From<TsEnumDeclaration> for JsAnyStatement {
     fn from(node: TsEnumDeclaration) -> JsAnyStatement { JsAnyStatement::TsEnumDeclaration(node) }
 }
@@ -21847,6 +22020,7 @@ impl AstNode for JsAnyStatement {
                 | JS_WITH_STATEMENT
                 | TS_DECLARE_FUNCTION_DECLARATION
                 | TS_DECLARE_STATEMENT
+                | TS_DECORATED_CLASS_DECLARATION
                 | TS_ENUM_DECLARATION
                 | TS_EXTERNAL_MODULE_DECLARATION
                 | TS_GLOBAL_DECLARATION
@@ -21909,6 +22083,9 @@ impl AstNode for JsAnyStatement {
             TS_DECLARE_STATEMENT => {
                 JsAnyStatement::TsDeclareStatement(TsDeclareStatement { syntax })
             }
+            TS_DECORATED_CLASS_DECLARATION => {
+                JsAnyStatement::TsDecoratedClassDeclaration(TsDecoratedClassDeclaration { syntax })
+            }
             TS_ENUM_DECLARATION => JsAnyStatement::TsEnumDeclaration(TsEnumDeclaration { syntax }),
             TS_EXTERNAL_MODULE_DECLARATION => {
                 JsAnyStatement::TsExternalModuleDeclaration(TsExternalModuleDeclaration { syntax })
@@ -21959,6 +22136,7 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::JsWithStatement(it) => &it.syntax,
             JsAnyStatement::TsDeclareFunctionDeclaration(it) => &it.syntax,
             JsAnyStatement::TsDeclareStatement(it) => &it.syntax,
+            JsAnyStatement::TsDecoratedClassDeclaration(it) => &it.syntax,
             JsAnyStatement::TsEnumDeclaration(it) => &it.syntax,
             JsAnyStatement::TsExternalModuleDeclaration(it) => &it.syntax,
             JsAnyStatement::TsGlobalDeclaration(it) => &it.syntax,
@@ -21997,6 +22175,7 @@ impl std::fmt::Debug for JsAnyStatement {
             JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsDeclareStatement(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::TsDecoratedClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
@@ -22035,6 +22214,7 @@ impl From<JsAnyStatement> for SyntaxNode {
             JsAnyStatement::JsWithStatement(it) => it.into(),
             JsAnyStatement::TsDeclareFunctionDeclaration(it) => it.into(),
             JsAnyStatement::TsDeclareStatement(it) => it.into(),
+            JsAnyStatement::TsDecoratedClassDeclaration(it) => it.into(),
             JsAnyStatement::TsEnumDeclaration(it) => it.into(),
             JsAnyStatement::TsExternalModuleDeclaration(it) => it.into(),
             JsAnyStatement::TsGlobalDeclaration(it) => it.into(),
@@ -25253,6 +25433,21 @@ impl std::fmt::Display for TsDeclareStatement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsDecoratedClassDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsDecoratedExport {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsDecorator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsDefaultTypeClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -27204,6 +27399,55 @@ impl IntoIterator for JsxAttributeList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
+pub struct TsDecoratorList {
+    syntax_list: SyntaxList,
+}
+impl TsDecoratorList {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+        Self {
+            syntax_list: syntax.into_list(),
+        }
+    }
+}
+impl AstNode for TsDecoratorList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DECORATOR_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<TsDecoratorList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(TsDecoratorList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<TsDecorator> for TsDecoratorList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for TsDecoratorList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("TsDecoratorList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &TsDecoratorList {
+    type Item = TsDecorator;
+    type IntoIter = AstNodeListIterator<TsDecorator>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for TsDecoratorList {
+    type Item = TsDecorator;
+    type IntoIter = AstNodeListIterator<TsDecorator>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsEnumMemberList {
     syntax_list: SyntaxList,
 }
@@ -28496,6 +28740,17 @@ impl Debug for DebugSyntaxElement {
                 }
                 TS_DECLARE_STATEMENT => {
                     std::fmt::Debug::fmt(&TsDeclareStatement::cast(node.clone()).unwrap(), f)
+                }
+                TS_DECORATED_CLASS_DECLARATION => std::fmt::Debug::fmt(
+                    &TsDecoratedClassDeclaration::cast(node.clone()).unwrap(),
+                    f,
+                ),
+                TS_DECORATED_EXPORT => {
+                    std::fmt::Debug::fmt(&TsDecoratedExport::cast(node.clone()).unwrap(), f)
+                }
+                TS_DECORATOR => std::fmt::Debug::fmt(&TsDecorator::cast(node.clone()).unwrap(), f),
+                TS_DECORATOR_LIST => {
+                    std::fmt::Debug::fmt(&TsDecoratorList::cast(node.clone()).unwrap(), f)
                 }
                 TS_DEFAULT_TYPE_CLAUSE => {
                     std::fmt::Debug::fmt(&TsDefaultTypeClause::cast(node.clone()).unwrap(), f)

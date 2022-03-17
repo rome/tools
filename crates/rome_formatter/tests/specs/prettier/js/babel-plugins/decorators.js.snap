@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: decorators.js
 
 ---
@@ -43,14 +43,14 @@ function enumerable(value) {
 // https://babeljs.io/docs/en/babel-plugin-proposal-decorators
 
 @annotation
-class MyClass {}
+class MyClass { }
 
 function annotation(target) {
   target.annotated = true;
 }
 
 @isTestable(true)
-class MyClass {}
+class MyClass { }
 
 function isTestable(value) {
   return function decorator(target) {
@@ -74,17 +74,17 @@ function enumerable(value) {
 
 # Errors
 ```
-error[SyntaxError]: expected a statement but instead found '@annotation'
+error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ decorators.js:3:1
   │
 3 │ @annotation
-  │ ^^^^^^^^^^^ Expected a statement here
+  │ ^^^^^^^^^^^ TypeScript only syntax
 
-error[SyntaxError]: expected a statement but instead found '@isTestable(true)'
+error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ decorators.js:10:1
    │
 10 │ @isTestable(true)
-   │ ^^^^^^^^^^^^^^^^^ Expected a statement here
+   │ ^^^^^^^^^^^^^^^^^ TypeScript only syntax
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ decorators.js:20:3

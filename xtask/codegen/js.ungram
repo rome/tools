@@ -110,6 +110,7 @@ JsAnyStatement =
 	| TsExternalModuleDeclaration
 	| TsGlobalDeclaration
 	| TsImportEqualsDeclaration
+	| TsDecoratedClassDeclaration
 
 
 JsBlockStatement =
@@ -1181,6 +1182,8 @@ JsAnyModuleItem =
 	JsAnyStatement
 	| JsExport
 	| JsImport
+	| TsDecoratedExport
+
 JsModuleItemList = JsAnyModuleItem*
 
 JsImport =
@@ -2138,6 +2141,20 @@ TsTypeArguments =
 	'>'
 
 TsTypeArgumentList = (TsType (',' TsType)* )
+
+TsDecorator =
+	'@'
+	expression: JsAnyExpression
+
+TsDecoratorList = TsDecorator*
+
+TsDecoratedClassDeclaration =
+	decorators: TsDecoratorList
+	declaration: JsClassDeclaration
+
+TsDecoratedExport =
+	decorators: TsDecoratorList
+	export: JsExport
 
 /////////////////////////////////////////////////////// JSX
 

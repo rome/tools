@@ -6,6 +6,8 @@ mod asserts_condition;
 mod call_signature_type_member;
 mod construct_signature_type_member;
 mod declare_modifier;
+mod decorated_export;
+mod decorator;
 mod default_type_clause;
 mod definite_property_annotation;
 mod definite_variable_annotation;

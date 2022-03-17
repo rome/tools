@@ -59,11 +59,11 @@ pub(crate) fn is_at_ts_abstract_class_declaration(
     p: &mut Parser,
     should_check_line_break: LineBreak,
 ) -> bool {
-    let tokens = p.at(T![abstract]) && p.nth_at(1, T![class]);
+    let is_abstract = p.at(T![abstract]) && p.nth_at(1, T![class]);
     if should_check_line_break == LineBreak::DoCheck {
-        tokens && !p.has_nth_preceding_line_break(1)
+        is_abstract && !p.has_nth_preceding_line_break(1)
     } else {
-        tokens
+        is_abstract
     }
 }
 
@@ -73,8 +73,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let m = p.start();
-    Present(parse_class(p, m, ClassKind::Expression))
+    Present(parse_class(p, ClassKind::Expression))
 }
 
 // test class_declaration
@@ -116,14 +115,11 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
-    let is_abstract_class = p.at(T![abstract]) && p.nth_at(1, T![class]);
-
-    if !p.at(T![class]) && !is_abstract_class {
+    if !matches!(p.cur(), T![abstract] | T![class]) {
         return Absent;
     }
 
-    let m = p.start();
-    let mut class = parse_class(p, m, ClassKind::Declaration);
+    let mut class = parse_class(p, ClassKind::Declaration);
 
     if !class.kind().is_unknown() && context.is_single_statement() {
         // test_err class_in_single_statement_context
@@ -144,15 +140,11 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
 // test ts typescript_export_default_abstract_class_case
 // export default abstract class {}
 pub(super) fn parse_class_export_default_declaration(p: &mut Parser) -> ParsedSyntax {
-    let is_abstract_class = p.at(T![abstract]) && p.nth_at(1, T![class]);
-
-    if !p.at(T![class]) && !is_abstract_class {
+    if !matches!(p.cur(), T![abstract] | T![class]) {
         return Absent;
     }
 
-    let m = p.start();
-
-    Present(parse_class(p, m, ClassKind::ExportDefault))
+    Present(parse_class(p, ClassKind::ExportDefault))
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -183,7 +175,9 @@ impl From<ClassKind> for JsSyntaxKind {
 
 // test ts ts_class_named_abstract_is_valid_in_ts
 // class abstract {}
-fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
+#[inline]
+fn parse_class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
+    let m = p.start();
     let is_abstract = p.eat(T![abstract]);
 
     let class_token_range = p.cur_range();

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: decorators.ts
 
 ---
@@ -98,11 +98,9 @@ export class TestTextFileService {
 @commonEditorContribution
 export class TabCompletionController {}
 
-@Component(
-{
+@Component({
   selector: 'angular-component',
-}
-)
+})
 class AngularComponent {
   @Input() myInput: string;
 }
@@ -169,8 +167,7 @@ class Class6 {
   ) {}
 method(
 @Decorator(
-{}
-)
+      {})
 {
   prop1;
 }
@@ -224,33 +221,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
 3 │         @ILifecycleService lifecycleService,
   │                                            ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
-error[SyntaxError]: expected a statement but instead found '}
-
-@commonEditorContribution'
+error[SyntaxError]: expected a statement but instead found '}'
   ┌─ decorators.ts:6:1
-  │  
-6 │ ┌ }
-7 │ │ 
-8 │ │ @commonEditorContribution
-  │ └─────────────────────────^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '@Component('
-   ┌─ decorators.ts:12:1
-   │
-12 │ @Component({
-   │ ^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ decorators.ts:14:1
-   │
-14 │ })
-   │ ^ Expected an expression here
-
-error[SyntaxError]: expected a statement but instead found ')'
-   ┌─ decorators.ts:14:2
-   │
-14 │ })
-   │  ^ Expected a statement here
+  │
+6 │ }
+  │ ^ Expected a statement here
 
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
    ┌─ decorators.ts:16:3
@@ -489,11 +464,11 @@ error[SyntaxError]: expected an expression but instead found '@'
 67 │     @Decorator(
    │     ^ Expected an expression here
 
-error[SyntaxError]: expected a statement but instead found ')'
-   ┌─ decorators.ts:68:9
+error[SyntaxError]: expected `class` but instead found `{`
+   ┌─ decorators.ts:68:11
    │
 68 │       {}) { prop1 }: Type
-   │         ^ Expected a statement here
+   │           ^ unexpected
 
 error[SyntaxError]: expected a statement but instead found ': Type
   )'
@@ -510,6 +485,12 @@ error[SyntaxError]: expected an expression but instead found '@'
 71 │     @Decorator([]) { prop1 }: Type
    │     ^ Expected an expression here
 
+error[SyntaxError]: expected `class` but instead found `{`
+   ┌─ decorators.ts:71:20
+   │
+71 │     @Decorator([]) { prop1 }: Type
+   │                    ^ unexpected
+
 error[SyntaxError]: expected a statement but instead found ': Type
   )'
    ┌─ decorators.ts:71:29
@@ -524,6 +505,12 @@ error[SyntaxError]: expected an expression but instead found '@'
    │
 74 │     @Decorator(
    │     ^ Expected an expression here
+
+error[SyntaxError]: expected `class` but instead found `{`
+   ┌─ decorators.ts:75:11
+   │
+75 │       []) { prop1 }: Type
+   │           ^ unexpected
 
 error[SyntaxError]: expected a statement but instead found ': Type
   )'

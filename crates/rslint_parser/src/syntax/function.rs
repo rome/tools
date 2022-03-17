@@ -1037,10 +1037,7 @@ pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
     if p.at(T!['[']) || p.at(T!['{']) {
         // Array or object pattern. Try to parse it and return true if there were no parsing errors
         let previous_error_count = p.diagnostics.len();
-        let pattern = parse_binding_pattern(
-            p,
-            ExpressionContext::default().and_object_expression_allowed(true),
-        );
+        let pattern = parse_binding_pattern(p, ExpressionContext::default());
         pattern.is_present() && p.diagnostics.len() == previous_error_count
     } else {
         false

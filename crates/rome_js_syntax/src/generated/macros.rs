@@ -803,6 +803,19 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::TsDeclareStatement::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_DECORATED_CLASS_DECLARATION => {
+                    let $pattern =
+                        unsafe { $crate::TsDecoratedClassDeclaration::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_DECORATED_EXPORT => {
+                    let $pattern = unsafe { $crate::TsDecoratedExport::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_DECORATOR => {
+                    let $pattern = unsafe { $crate::TsDecorator::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_DEFAULT_TYPE_CLAUSE => {
                     let $pattern = unsafe { $crate::TsDefaultTypeClause::new_unchecked(node) };
                     $body
@@ -1317,6 +1330,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JSX_ATTRIBUTE_LIST => {
                     let $pattern = unsafe { $crate::JsxAttributeList::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_DECORATOR_LIST => {
+                    let $pattern = unsafe { $crate::TsDecoratorList::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_ENUM_MEMBER_LIST => {
