@@ -483,7 +483,6 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_REFERENCE_IDENTIFIER",
         "JSX_TAG_EXPRESSION",
         "JSX_ELEMENT_EXPRESSION",
-        "JSX_ANY_ELEMENT",
         "JSX_ELEMENT",
         "JSX_FRAGMENT",
         "JSX_SELF_CLOSING_ELEMENT",

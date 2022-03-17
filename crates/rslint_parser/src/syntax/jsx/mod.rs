@@ -95,30 +95,36 @@ struct JsxChildrenList;
 
 impl ParseNodeList for JsxChildrenList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        // test jsx jsx_element_children
-        // <a>
-        //     <b>
-        //        <d></d>
-        //        <e></e>
-        //     </b>
-        //     <c></c>
-        // </a>
-        if p.at(T![<]) {
-            parse_jsx_element(p, false)
-        }
-        // test jsx jsx_expression_children
-        // <a>
-        //     {something}
-        //     {x => something}
-        // </a>
-        else if p.at(T!['{']) {
-            parse_jsx_expression_block(p, JsSyntaxKind::JSX_EXPRESSION_CHILD)
-        } else if p.at(JSX_TEXT_LITERAL) {
-            let m = p.start();
-            p.bump(JSX_TEXT_LITERAL);
-            ParsedSyntax::Present(m.complete(p, JSX_TEXT))
-        } else {
-            ParsedSyntax::Absent
+        match p.cur() {
+            // test jsx jsx_element_children
+            // <a>
+            //     <b>
+            //        <d></d>
+            //        <e></e>
+            //     </b>
+            //     <c></c>
+            // </a>
+            T![<] => parse_jsx_element(p, false),
+            // test jsx jsx_expression_children
+            // <a>
+            //     {something}
+            //     {x => something}
+            // </a>
+            T!['{'] => parse_jsx_expression_block(p, JsSyntaxKind::JSX_EXPRESSION_CHILD),
+            // test jsx jsx_text
+            // <a>test</a>;
+            // <a>   whitespace handling </a>;
+            // <a> multi
+            //    line
+            //          node
+            // </a>;
+            // <test>\u3333</test> // no error for invalid unicode escape
+            JsSyntaxKind::JSX_TEXT_LITERAL => {
+                let m = p.start();
+                p.bump(JSX_TEXT_LITERAL);
+                ParsedSyntax::Present(m.complete(p, JSX_TEXT))
+            }
+            _ => ParsedSyntax::Absent,
         }
     }
 
@@ -159,15 +165,6 @@ impl ParseNodeList for JsxChildrenList {
 // <open><
 // /* some comment */ / open>;
 
-// test jsx jsx_text
-// <a>test</a>;
-// <a>   whitespace handling </a>;
-// <a> multi
-//    line
-//          node
-// </a>;
-// <test>\u3333</test> // no error for invalid unicode escape
-
 // test_err jsx jsx_invalid_text
 // <a> test ></a>;
 // <b> invalid }</b>;
@@ -181,7 +178,7 @@ fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
         Present(opening_marker) if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT => {
             let element_marker = opening_marker.precede(p);
 
-            parse_children(p);
+            parse_jsx_element_children(p);
 
             let closing_marker = parse_jsx_closing_element(p, in_expression);
             if closing_marker.is_absent() {
@@ -202,7 +199,8 @@ fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
     }
 }
 
-fn parse_children(p: &mut Parser) {
+#[inline]
+fn parse_jsx_element_children(p: &mut Parser) {
     JsxChildrenList.parse_list(p);
 }
 
@@ -236,7 +234,7 @@ fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> Pa
         }
 
         p.bump_with_context(T![>], LexContext::JsxChild);
-        parse_children(p);
+        parse_jsx_element_children(p);
 
         if !p.expect(T![<]) || !p.expect(T![/]) || !p.expect(T![>]) {
             m.abandon(p);
@@ -494,36 +492,32 @@ fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
-    // Possible attribute values:
-    // String Literal for constant values
-    if p.at(JSX_STRING_LITERAL) {
-        let m = p.start();
-        p.bump(JSX_STRING_LITERAL);
-        ParsedSyntax::Present(m.complete(p, JSX_STRING))
-    }
-    // expression values
-    else if p.at(T!['{']) {
-        let m = p.start();
-        p.bump(T!['{']);
-        let _ = super::expr::parse_expression(p, ExpressionContext::default());
-        p.bump(T!['}']);
-        ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE))
-    }
-    // JSX elements
-    else if p.at(T![<]) {
-        parse_jsx_element(p, true)
-    } else {
-        ParsedSyntax::Absent
+    match p.cur() {
+        // test jsx jsx_element_attribute_expression
+        // <div id={1} />
+        T!['{'] => parse_jsx_expression_block(p, JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE),
+        // test jsx jsx_element_attribute_element
+        // <div id=<a/> />;
+        T![<] => parse_jsx_element(p, true),
+        // test jsx jsx_element_attribute_string_literal
+        // <div id="a" />;
+        JsSyntaxKind::JSX_STRING_LITERAL => {
+            let m = p.start();
+            p.bump(JSX_STRING_LITERAL);
+            ParsedSyntax::Present(m.complete(p, JSX_STRING))
+        }
+        _ => ParsedSyntax::Absent,
     }
 }
 
 fn parse_jsx_expression_block(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
-    let m = p.start();
-
-    if !p.eat(T!['{']) {
-        m.abandon(p);
+    if !p.at(T!['{']) {
         return ParsedSyntax::Absent;
     }
+
+    let m = p.start();
+
+    p.bump(T!['{']);
 
     let expr = super::expr::parse_expression(p, ExpressionContext::default());
     if expr.is_absent() {

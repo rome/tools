@@ -20,44 +20,410 @@ JsModule {
                 l_curly_token: L_CURLY@13..14 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
+                    JsVariableStatement {
+                        declaration: JsVariableDeclaration {
+                            kind: LET_KW@14..23 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            declarators: JsVariableDeclaratorList [
+                                JsVariableDeclarator {
+                                    id: JsArrayBindingPattern {
+                                        l_brack_token: L_BRACK@23..24 "[" [] [],
+                                        elements: JsArrayBindingPatternElementList [
+                                            JsIdentifierBinding {
+                                                name_token: IDENT@24..30 "errors" [] [],
+                                            },
+                                            COMMA@30..32 "," [] [Whitespace(" ")],
+                                            JsIdentifierBinding {
+                                                name_token: IDENT@32..40 "setError" [] [],
+                                            },
+                                        ],
+                                        r_brack_token: R_BRACK@40..42 "]" [] [Whitespace(" ")],
+                                    },
+                                    variable_annotation: missing (optional),
+                                    initializer: JsInitializerClause {
+                                        eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
+                                        expression: JsCallExpression {
+                                            callee: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@44..52 "useState" [] [],
+                                                },
+                                            },
+                                            optional_chain_token: missing (optional),
+                                            type_arguments: missing (optional),
+                                            arguments: JsCallArguments {
+                                                l_paren_token: L_PAREN@52..53 "(" [] [],
+                                                args: JsCallArgumentList [
+                                                    JsArrayExpression {
+                                                        l_brack_token: L_BRACK@53..54 "[" [] [],
+                                                        elements: JsArrayElementList [],
+                                                        r_brack_token: R_BRACK@54..55 "]" [] [],
+                                                    },
+                                                ],
+                                                r_paren_token: R_PAREN@55..56 ")" [] [],
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@56..57 ";" [] [],
+                    },
+                    JsVariableStatement {
+                        declaration: JsVariableDeclaration {
+                            kind: LET_KW@57..66 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            declarators: JsVariableDeclaratorList [
+                                JsVariableDeclarator {
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@66..72 "color" [] [Whitespace(" ")],
+                                    },
+                                    variable_annotation: missing (optional),
+                                    initializer: JsInitializerClause {
+                                        eq_token: EQ@72..74 "=" [] [Whitespace(" ")],
+                                        expression: JsCallExpression {
+                                            callee: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@74..88 "get_text_color" [] [],
+                                                },
+                                            },
+                                            optional_chain_token: missing (optional),
+                                            type_arguments: missing (optional),
+                                            arguments: JsCallArguments {
+                                                l_paren_token: L_PAREN@88..89 "(" [] [],
+                                                args: JsCallArgumentList [],
+                                                r_paren_token: R_PAREN@89..90 ")" [] [],
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@90..91 ";" [] [],
+                    },
+                    JsVariableStatement {
+                        declaration: JsVariableDeclaration {
+                            kind: LET_KW@91..100 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            declarators: JsVariableDeclaratorList [
+                                JsVariableDeclarator {
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@100..106 "style" [] [Whitespace(" ")],
+                                    },
+                                    variable_annotation: missing (optional),
+                                    initializer: JsInitializerClause {
+                                        eq_token: EQ@106..108 "=" [] [Whitespace(" ")],
+                                        expression: JsCallExpression {
+                                            callee: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@108..117 "get_style" [] [],
+                                                },
+                                            },
+                                            optional_chain_token: missing (optional),
+                                            type_arguments: missing (optional),
+                                            arguments: JsCallArguments {
+                                                l_paren_token: L_PAREN@117..118 "(" [] [],
+                                                args: JsCallArgumentList [],
+                                                r_paren_token: R_PAREN@118..119 ")" [] [],
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@119..120 ";" [] [],
+                    },
                     JsReturnStatement {
-                        return_token: RETURN_KW@14..26 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        return_token: RETURN_KW@120..132 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                         argument: JsxTagExpression {
-                            tag: JsxElement {
-                                opening_element: JsxOpeningElement {
-                                    l_angle_token: L_ANGLE@26..27 "<" [] [],
-                                    name: JsxName {
-                                        value_token: JSX_IDENT@27..30 "div" [] [],
+                            tag: JsxFragment {
+                                opening_l_angle_token_token: L_ANGLE@132..133 "<" [] [],
+                                opening_r_angle_token_token: R_ANGLE@133..134 ">" [] [],
+                                children: JsxChildList [
+                                    JsxText {
+                                        value_token: JSX_TEXT_LITERAL@134..143 "\n        " [] [],
                                     },
-                                    attributes: JsxAttributeList [],
-                                    r_angle_token: R_ANGLE@30..31 ">" [] [],
-                                },
-                                children: JsxChildList [],
-                                closing_element: JsxClosingElement {
-                                    l_angle_token: L_ANGLE@31..32 "<" [] [],
-                                    slash_token: SLASH@32..33 "/" [] [],
-                                    name: JsxName {
-                                        value_token: JSX_IDENT@33..36 "div" [] [],
+                                    JsxElement {
+                                        opening_element: JsxOpeningElement {
+                                            l_angle_token: L_ANGLE@143..144 "<" [] [],
+                                            name: JsxName {
+                                                value_token: JSX_IDENT@144..151 "button" [] [Whitespace(" ")],
+                                            },
+                                            attributes: JsxAttributeList [
+                                                JsxAttribute {
+                                                    name: JsxName {
+                                                        value_token: JSX_IDENT@151..153 "id" [] [],
+                                                    },
+                                                    initializer: JsxAttributeInitializerClause {
+                                                        eq_token: EQ@153..154 "=" [] [],
+                                                        value: JsxString {
+                                                            value_token: JSX_STRING_LITERAL@154..160 "\"btn\"" [] [Whitespace(" ")],
+                                                        },
+                                                    },
+                                                },
+                                                JsxAttribute {
+                                                    name: JsxName {
+                                                        value_token: JSX_IDENT@160..167 "onClick" [] [],
+                                                    },
+                                                    initializer: JsxAttributeInitializerClause {
+                                                        eq_token: EQ@167..168 "=" [] [],
+                                                        value: JsxExpressionAttributeValue {
+                                                            l_curly_token: L_CURLY@168..169 "{" [] [],
+                                                            expression: JsArrowFunctionExpression {
+                                                                async_token: missing (optional),
+                                                                type_parameters: missing (optional),
+                                                                parameters: JsIdentifierBinding {
+                                                                    name_token: IDENT@169..171 "x" [] [Whitespace(" ")],
+                                                                },
+                                                                return_type_annotation: missing (optional),
+                                                                fat_arrow_token: FAT_ARROW@171..174 "=>" [] [Whitespace(" ")],
+                                                                body: JsCallExpression {
+                                                                    callee: JsStaticMemberExpression {
+                                                                        object: JsIdentifierExpression {
+                                                                            name: JsReferenceIdentifier {
+                                                                                value_token: IDENT@174..181 "console" [] [],
+                                                                            },
+                                                                        },
+                                                                        operator: DOT@181..182 "." [] [],
+                                                                        member: JsName {
+                                                                            value_token: IDENT@182..185 "log" [] [],
+                                                                        },
+                                                                    },
+                                                                    optional_chain_token: missing (optional),
+                                                                    type_arguments: missing (optional),
+                                                                    arguments: JsCallArguments {
+                                                                        l_paren_token: L_PAREN@185..186 "(" [] [],
+                                                                        args: JsCallArgumentList [
+                                                                            JsIdentifierExpression {
+                                                                                name: JsReferenceIdentifier {
+                                                                                    value_token: IDENT@186..187 "x" [] [],
+                                                                                },
+                                                                            },
+                                                                        ],
+                                                                        r_paren_token: R_PAREN@187..188 ")" [] [],
+                                                                    },
+                                                                },
+                                                            },
+                                                            r_curly_token: R_CURLY@188..190 "}" [] [Whitespace(" ")],
+                                                        },
+                                                    },
+                                                },
+                                                JsxSpreadAttribute {
+                                                    l_curly_token: L_CURLY@190..191 "{" [] [],
+                                                    dotdotdot_token: DOT3@191..194 "..." [] [],
+                                                    argument: JsIdentifierExpression {
+                                                        name: JsReferenceIdentifier {
+                                                            value_token: IDENT@194..199 "style" [] [],
+                                                        },
+                                                    },
+                                                    r_curly_token: R_CURLY@199..200 "}" [] [],
+                                                },
+                                            ],
+                                            r_angle_token: R_ANGLE@200..201 ">" [] [],
+                                        },
+                                        children: JsxChildList [
+                                            JsxText {
+                                                value_token: JSX_TEXT_LITERAL@201..214 "\n            " [] [],
+                                            },
+                                            JsxSelfClosingElement {
+                                                l_angle_token: L_ANGLE@214..215 "<" [] [],
+                                                name: JsxReferenceIdentifier {
+                                                    value_token: JSX_IDENT@215..227 "ColoredText" [] [Whitespace(" ")],
+                                                },
+                                                attributes: JsxAttributeList [
+                                                    JsxAttribute {
+                                                        name: JsxName {
+                                                            value_token: JSX_IDENT@227..229 "el" [] [],
+                                                        },
+                                                        initializer: JsxAttributeInitializerClause {
+                                                            eq_token: EQ@229..230 "=" [] [],
+                                                            value: JsxElement {
+                                                                opening_element: JsxOpeningElement {
+                                                                    l_angle_token: L_ANGLE@230..231 "<" [] [],
+                                                                    name: JsxName {
+                                                                        value_token: JSX_IDENT@231..235 "span" [] [],
+                                                                    },
+                                                                    attributes: JsxAttributeList [],
+                                                                    r_angle_token: R_ANGLE@235..236 ">" [] [],
+                                                                },
+                                                                children: JsxChildList [
+                                                                    JsxText {
+                                                                        value_token: JSX_TEXT_LITERAL@236..246 "Click Here" [] [],
+                                                                    },
+                                                                ],
+                                                                closing_element: JsxClosingElement {
+                                                                    l_angle_token: L_ANGLE@246..247 "<" [] [],
+                                                                    slash_token: SLASH@247..248 "/" [] [],
+                                                                    name: JsxName {
+                                                                        value_token: JSX_IDENT@248..252 "span" [] [],
+                                                                    },
+                                                                    r_angle_token: R_ANGLE@252..254 ">" [] [Whitespace(" ")],
+                                                                },
+                                                            },
+                                                        },
+                                                    },
+                                                    JsxAttribute {
+                                                        name: JsxName {
+                                                            value_token: JSX_IDENT@254..259 "color" [] [],
+                                                        },
+                                                        initializer: JsxAttributeInitializerClause {
+                                                            eq_token: EQ@259..260 "=" [] [],
+                                                            value: JsxExpressionAttributeValue {
+                                                                l_curly_token: L_CURLY@260..261 "{" [] [],
+                                                                expression: JsIdentifierExpression {
+                                                                    name: JsReferenceIdentifier {
+                                                                        value_token: IDENT@261..266 "color" [] [],
+                                                                    },
+                                                                },
+                                                                r_curly_token: R_CURLY@266..268 "}" [] [Whitespace(" ")],
+                                                            },
+                                                        },
+                                                    },
+                                                    JsxAttribute {
+                                                        name: JsxName {
+                                                            value_token: JSX_IDENT@268..277 "underline" [] [],
+                                                        },
+                                                        initializer: JsxAttributeInitializerClause {
+                                                            eq_token: EQ@277..278 "=" [] [],
+                                                            value: JsxExpressionAttributeValue {
+                                                                l_curly_token: L_CURLY@278..279 "{" [] [],
+                                                                expression: JsStaticMemberExpression {
+                                                                    object: JsIdentifierExpression {
+                                                                        name: JsReferenceIdentifier {
+                                                                            value_token: IDENT@279..284 "style" [] [],
+                                                                        },
+                                                                    },
+                                                                    operator: DOT@284..285 "." [] [],
+                                                                    member: JsName {
+                                                                        value_token: IDENT@285..295 "underlined" [] [],
+                                                                    },
+                                                                },
+                                                                r_curly_token: R_CURLY@295..296 "}" [] [],
+                                                            },
+                                                        },
+                                                    },
+                                                ],
+                                                slash_token: SLASH@296..297 "/" [] [],
+                                                r_angle_token: R_ANGLE@297..298 ">" [] [],
+                                            },
+                                            JsxText {
+                                                value_token: JSX_TEXT_LITERAL@298..307 "\n        " [] [],
+                                            },
+                                        ],
+                                        closing_element: JsxClosingElement {
+                                            l_angle_token: L_ANGLE@307..308 "<" [] [],
+                                            slash_token: SLASH@308..309 "/" [] [],
+                                            name: JsxName {
+                                                value_token: JSX_IDENT@309..315 "button" [] [],
+                                            },
+                                            r_angle_token: R_ANGLE@315..316 ">" [] [],
+                                        },
                                     },
-                                    r_angle_token: R_ANGLE@36..37 ">" [] [],
-                                },
+                                    JsxText {
+                                        value_token: JSX_TEXT_LITERAL@316..325 "\n        " [] [],
+                                    },
+                                    JsxExpressionChild {
+                                        l_curly_token: L_CURLY@325..326 "{" [] [],
+                                        expression: JsLogicalExpression {
+                                            left: JsBinaryExpression {
+                                                left: JsStaticMemberExpression {
+                                                    object: JsIdentifierExpression {
+                                                        name: JsReferenceIdentifier {
+                                                            value_token: IDENT@326..332 "errors" [] [],
+                                                        },
+                                                    },
+                                                    operator: DOT@332..333 "." [] [],
+                                                    member: JsName {
+                                                        value_token: IDENT@333..340 "length" [] [Whitespace(" ")],
+                                                    },
+                                                },
+                                                operator: EQ2@340..343 "==" [] [Whitespace(" ")],
+                                                right: JsNumberLiteralExpression {
+                                                    value_token: JS_NUMBER_LITERAL@343..345 "0" [] [Whitespace(" ")],
+                                                },
+                                            },
+                                            operator: AMP2@345..348 "&&" [] [Whitespace(" ")],
+                                            right: JsCallExpression {
+                                                callee: JsStaticMemberExpression {
+                                                    object: JsIdentifierExpression {
+                                                        name: JsReferenceIdentifier {
+                                                            value_token: IDENT@348..354 "errors" [] [],
+                                                        },
+                                                    },
+                                                    operator: DOT@354..355 "." [] [],
+                                                    member: JsName {
+                                                        value_token: IDENT@355..358 "map" [] [],
+                                                    },
+                                                },
+                                                optional_chain_token: missing (optional),
+                                                type_arguments: missing (optional),
+                                                arguments: JsCallArguments {
+                                                    l_paren_token: L_PAREN@358..359 "(" [] [],
+                                                    args: JsCallArgumentList [
+                                                        JsArrowFunctionExpression {
+                                                            async_token: missing (optional),
+                                                            type_parameters: missing (optional),
+                                                            parameters: JsIdentifierBinding {
+                                                                name_token: IDENT@359..361 "x" [] [Whitespace(" ")],
+                                                            },
+                                                            return_type_annotation: missing (optional),
+                                                            fat_arrow_token: FAT_ARROW@361..364 "=>" [] [Whitespace(" ")],
+                                                            body: JsxTagExpression {
+                                                                tag: JsxElement {
+                                                                    opening_element: JsxOpeningElement {
+                                                                        l_angle_token: L_ANGLE@364..365 "<" [] [],
+                                                                        name: JsxName {
+                                                                            value_token: JSX_IDENT@365..368 "div" [] [],
+                                                                        },
+                                                                        attributes: JsxAttributeList [],
+                                                                        r_angle_token: R_ANGLE@368..369 ">" [] [],
+                                                                    },
+                                                                    children: JsxChildList [
+                                                                        JsxExpressionChild {
+                                                                            l_curly_token: L_CURLY@369..370 "{" [] [],
+                                                                            expression: JsIdentifierExpression {
+                                                                                name: JsReferenceIdentifier {
+                                                                                    value_token: IDENT@370..371 "x" [] [],
+                                                                                },
+                                                                            },
+                                                                            r_curly_token: R_CURLY@371..372 "}" [] [],
+                                                                        },
+                                                                    ],
+                                                                    closing_element: JsxClosingElement {
+                                                                        l_angle_token: L_ANGLE@372..373 "<" [] [],
+                                                                        slash_token: SLASH@373..374 "/" [] [],
+                                                                        name: JsxName {
+                                                                            value_token: JSX_IDENT@374..377 "div" [] [],
+                                                                        },
+                                                                        r_angle_token: R_ANGLE@377..378 ">" [] [],
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    ],
+                                                    r_paren_token: R_PAREN@378..379 ")" [] [],
+                                                },
+                                            },
+                                        },
+                                        r_curly_token: R_CURLY@379..380 "}" [] [],
+                                    },
+                                ],
+                                closing_l_angle_token_token: L_ANGLE@380..386 "<" [Newline("\n"), Whitespace("    ")] [],
+                                closing_slash_token_token: SLASH@386..387 "/" [] [],
+                                closing_r_angle_token_token: R_ANGLE@387..388 ">" [] [],
                             },
                         },
-                        semicolon_token: missing (optional),
+                        semicolon_token: SEMICOLON@388..389 ";" [] [],
                     },
                 ],
-                r_curly_token: R_CURLY@37..39 "}" [Newline("\n")] [],
+                r_curly_token: R_CURLY@389..391 "}" [Newline("\n")] [],
             },
         },
     ],
-    eof_token: EOF@39..40 "" [Newline("\n")] [],
+    eof_token: EOF@391..392 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..40
+0: JS_MODULE@0..392
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..39
-    0: JS_FUNCTION_DECLARATION@0..39
+  2: JS_MODULE_ITEM_LIST@0..391
+    0: JS_FUNCTION_DECLARATION@0..391
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       2: (empty)
@@ -69,27 +435,274 @@ JsModule {
         1: JS_PARAMETER_LIST@11..11
         2: R_PAREN@11..13 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@13..39
+      7: JS_FUNCTION_BODY@13..391
         0: L_CURLY@13..14 "{" [] []
         1: JS_DIRECTIVE_LIST@14..14
-        2: JS_STATEMENT_LIST@14..37
-          0: JS_RETURN_STATEMENT@14..37
-            0: RETURN_KW@14..26 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-            1: JSX_TAG_EXPRESSION@26..37
-              0: JSX_ELEMENT@26..37
-                0: JSX_OPENING_ELEMENT@26..31
-                  0: L_ANGLE@26..27 "<" [] []
-                  1: JSX_NAME@27..30
-                    0: JSX_IDENT@27..30 "div" [] []
-                  2: JSX_ATTRIBUTE_LIST@30..30
-                  3: R_ANGLE@30..31 ">" [] []
-                1: JSX_CHILD_LIST@31..31
-                2: JSX_CLOSING_ELEMENT@31..37
-                  0: L_ANGLE@31..32 "<" [] []
-                  1: SLASH@32..33 "/" [] []
-                  2: JSX_NAME@33..36
-                    0: JSX_IDENT@33..36 "div" [] []
-                  3: R_ANGLE@36..37 ">" [] []
-            2: (empty)
-        3: R_CURLY@37..39 "}" [Newline("\n")] []
-  3: EOF@39..40 "" [Newline("\n")] []
+        2: JS_STATEMENT_LIST@14..389
+          0: JS_VARIABLE_STATEMENT@14..57
+            0: JS_VARIABLE_DECLARATION@14..56
+              0: LET_KW@14..23 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATOR_LIST@23..56
+                0: JS_VARIABLE_DECLARATOR@23..56
+                  0: JS_ARRAY_BINDING_PATTERN@23..42
+                    0: L_BRACK@23..24 "[" [] []
+                    1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@24..40
+                      0: JS_IDENTIFIER_BINDING@24..30
+                        0: IDENT@24..30 "errors" [] []
+                      1: COMMA@30..32 "," [] [Whitespace(" ")]
+                      2: JS_IDENTIFIER_BINDING@32..40
+                        0: IDENT@32..40 "setError" [] []
+                    2: R_BRACK@40..42 "]" [] [Whitespace(" ")]
+                  1: (empty)
+                  2: JS_INITIALIZER_CLAUSE@42..56
+                    0: EQ@42..44 "=" [] [Whitespace(" ")]
+                    1: JS_CALL_EXPRESSION@44..56
+                      0: JS_IDENTIFIER_EXPRESSION@44..52
+                        0: JS_REFERENCE_IDENTIFIER@44..52
+                          0: IDENT@44..52 "useState" [] []
+                      1: (empty)
+                      2: (empty)
+                      3: JS_CALL_ARGUMENTS@52..56
+                        0: L_PAREN@52..53 "(" [] []
+                        1: JS_CALL_ARGUMENT_LIST@53..55
+                          0: JS_ARRAY_EXPRESSION@53..55
+                            0: L_BRACK@53..54 "[" [] []
+                            1: JS_ARRAY_ELEMENT_LIST@54..54
+                            2: R_BRACK@54..55 "]" [] []
+                        2: R_PAREN@55..56 ")" [] []
+            1: SEMICOLON@56..57 ";" [] []
+          1: JS_VARIABLE_STATEMENT@57..91
+            0: JS_VARIABLE_DECLARATION@57..90
+              0: LET_KW@57..66 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATOR_LIST@66..90
+                0: JS_VARIABLE_DECLARATOR@66..90
+                  0: JS_IDENTIFIER_BINDING@66..72
+                    0: IDENT@66..72 "color" [] [Whitespace(" ")]
+                  1: (empty)
+                  2: JS_INITIALIZER_CLAUSE@72..90
+                    0: EQ@72..74 "=" [] [Whitespace(" ")]
+                    1: JS_CALL_EXPRESSION@74..90
+                      0: JS_IDENTIFIER_EXPRESSION@74..88
+                        0: JS_REFERENCE_IDENTIFIER@74..88
+                          0: IDENT@74..88 "get_text_color" [] []
+                      1: (empty)
+                      2: (empty)
+                      3: JS_CALL_ARGUMENTS@88..90
+                        0: L_PAREN@88..89 "(" [] []
+                        1: JS_CALL_ARGUMENT_LIST@89..89
+                        2: R_PAREN@89..90 ")" [] []
+            1: SEMICOLON@90..91 ";" [] []
+          2: JS_VARIABLE_STATEMENT@91..120
+            0: JS_VARIABLE_DECLARATION@91..119
+              0: LET_KW@91..100 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATOR_LIST@100..119
+                0: JS_VARIABLE_DECLARATOR@100..119
+                  0: JS_IDENTIFIER_BINDING@100..106
+                    0: IDENT@100..106 "style" [] [Whitespace(" ")]
+                  1: (empty)
+                  2: JS_INITIALIZER_CLAUSE@106..119
+                    0: EQ@106..108 "=" [] [Whitespace(" ")]
+                    1: JS_CALL_EXPRESSION@108..119
+                      0: JS_IDENTIFIER_EXPRESSION@108..117
+                        0: JS_REFERENCE_IDENTIFIER@108..117
+                          0: IDENT@108..117 "get_style" [] []
+                      1: (empty)
+                      2: (empty)
+                      3: JS_CALL_ARGUMENTS@117..119
+                        0: L_PAREN@117..118 "(" [] []
+                        1: JS_CALL_ARGUMENT_LIST@118..118
+                        2: R_PAREN@118..119 ")" [] []
+            1: SEMICOLON@119..120 ";" [] []
+          3: JS_RETURN_STATEMENT@120..389
+            0: RETURN_KW@120..132 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: JSX_TAG_EXPRESSION@132..388
+              0: JSX_FRAGMENT@132..388
+                0: L_ANGLE@132..133 "<" [] []
+                1: R_ANGLE@133..134 ">" [] []
+                2: JSX_CHILD_LIST@134..380
+                  0: JSX_TEXT@134..143
+                    0: JSX_TEXT_LITERAL@134..143 "\n        " [] []
+                  1: JSX_ELEMENT@143..316
+                    0: JSX_OPENING_ELEMENT@143..201
+                      0: L_ANGLE@143..144 "<" [] []
+                      1: JSX_NAME@144..151
+                        0: JSX_IDENT@144..151 "button" [] [Whitespace(" ")]
+                      2: JSX_ATTRIBUTE_LIST@151..200
+                        0: JSX_ATTRIBUTE@151..160
+                          0: JSX_NAME@151..153
+                            0: JSX_IDENT@151..153 "id" [] []
+                          1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@153..160
+                            0: EQ@153..154 "=" [] []
+                            1: JSX_STRING@154..160
+                              0: JSX_STRING_LITERAL@154..160 "\"btn\"" [] [Whitespace(" ")]
+                        1: JSX_ATTRIBUTE@160..190
+                          0: JSX_NAME@160..167
+                            0: JSX_IDENT@160..167 "onClick" [] []
+                          1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@167..190
+                            0: EQ@167..168 "=" [] []
+                            1: JSX_EXPRESSION_ATTRIBUTE_VALUE@168..190
+                              0: L_CURLY@168..169 "{" [] []
+                              1: JS_ARROW_FUNCTION_EXPRESSION@169..188
+                                0: (empty)
+                                1: (empty)
+                                2: JS_IDENTIFIER_BINDING@169..171
+                                  0: IDENT@169..171 "x" [] [Whitespace(" ")]
+                                3: (empty)
+                                4: FAT_ARROW@171..174 "=>" [] [Whitespace(" ")]
+                                5: JS_CALL_EXPRESSION@174..188
+                                  0: JS_STATIC_MEMBER_EXPRESSION@174..185
+                                    0: JS_IDENTIFIER_EXPRESSION@174..181
+                                      0: JS_REFERENCE_IDENTIFIER@174..181
+                                        0: IDENT@174..181 "console" [] []
+                                    1: DOT@181..182 "." [] []
+                                    2: JS_NAME@182..185
+                                      0: IDENT@182..185 "log" [] []
+                                  1: (empty)
+                                  2: (empty)
+                                  3: JS_CALL_ARGUMENTS@185..188
+                                    0: L_PAREN@185..186 "(" [] []
+                                    1: JS_CALL_ARGUMENT_LIST@186..187
+                                      0: JS_IDENTIFIER_EXPRESSION@186..187
+                                        0: JS_REFERENCE_IDENTIFIER@186..187
+                                          0: IDENT@186..187 "x" [] []
+                                    2: R_PAREN@187..188 ")" [] []
+                              2: R_CURLY@188..190 "}" [] [Whitespace(" ")]
+                        2: JSX_SPREAD_ATTRIBUTE@190..200
+                          0: L_CURLY@190..191 "{" [] []
+                          1: DOT3@191..194 "..." [] []
+                          2: JS_IDENTIFIER_EXPRESSION@194..199
+                            0: JS_REFERENCE_IDENTIFIER@194..199
+                              0: IDENT@194..199 "style" [] []
+                          3: R_CURLY@199..200 "}" [] []
+                      3: R_ANGLE@200..201 ">" [] []
+                    1: JSX_CHILD_LIST@201..307
+                      0: JSX_TEXT@201..214
+                        0: JSX_TEXT_LITERAL@201..214 "\n            " [] []
+                      1: JSX_SELF_CLOSING_ELEMENT@214..298
+                        0: L_ANGLE@214..215 "<" [] []
+                        1: JSX_REFERENCE_IDENTIFIER@215..227
+                          0: JSX_IDENT@215..227 "ColoredText" [] [Whitespace(" ")]
+                        2: JSX_ATTRIBUTE_LIST@227..296
+                          0: JSX_ATTRIBUTE@227..254
+                            0: JSX_NAME@227..229
+                              0: JSX_IDENT@227..229 "el" [] []
+                            1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@229..254
+                              0: EQ@229..230 "=" [] []
+                              1: JSX_ELEMENT@230..254
+                                0: JSX_OPENING_ELEMENT@230..236
+                                  0: L_ANGLE@230..231 "<" [] []
+                                  1: JSX_NAME@231..235
+                                    0: JSX_IDENT@231..235 "span" [] []
+                                  2: JSX_ATTRIBUTE_LIST@235..235
+                                  3: R_ANGLE@235..236 ">" [] []
+                                1: JSX_CHILD_LIST@236..246
+                                  0: JSX_TEXT@236..246
+                                    0: JSX_TEXT_LITERAL@236..246 "Click Here" [] []
+                                2: JSX_CLOSING_ELEMENT@246..254
+                                  0: L_ANGLE@246..247 "<" [] []
+                                  1: SLASH@247..248 "/" [] []
+                                  2: JSX_NAME@248..252
+                                    0: JSX_IDENT@248..252 "span" [] []
+                                  3: R_ANGLE@252..254 ">" [] [Whitespace(" ")]
+                          1: JSX_ATTRIBUTE@254..268
+                            0: JSX_NAME@254..259
+                              0: JSX_IDENT@254..259 "color" [] []
+                            1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@259..268
+                              0: EQ@259..260 "=" [] []
+                              1: JSX_EXPRESSION_ATTRIBUTE_VALUE@260..268
+                                0: L_CURLY@260..261 "{" [] []
+                                1: JS_IDENTIFIER_EXPRESSION@261..266
+                                  0: JS_REFERENCE_IDENTIFIER@261..266
+                                    0: IDENT@261..266 "color" [] []
+                                2: R_CURLY@266..268 "}" [] [Whitespace(" ")]
+                          2: JSX_ATTRIBUTE@268..296
+                            0: JSX_NAME@268..277
+                              0: JSX_IDENT@268..277 "underline" [] []
+                            1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@277..296
+                              0: EQ@277..278 "=" [] []
+                              1: JSX_EXPRESSION_ATTRIBUTE_VALUE@278..296
+                                0: L_CURLY@278..279 "{" [] []
+                                1: JS_STATIC_MEMBER_EXPRESSION@279..295
+                                  0: JS_IDENTIFIER_EXPRESSION@279..284
+                                    0: JS_REFERENCE_IDENTIFIER@279..284
+                                      0: IDENT@279..284 "style" [] []
+                                  1: DOT@284..285 "." [] []
+                                  2: JS_NAME@285..295
+                                    0: IDENT@285..295 "underlined" [] []
+                                2: R_CURLY@295..296 "}" [] []
+                        3: SLASH@296..297 "/" [] []
+                        4: R_ANGLE@297..298 ">" [] []
+                      2: JSX_TEXT@298..307
+                        0: JSX_TEXT_LITERAL@298..307 "\n        " [] []
+                    2: JSX_CLOSING_ELEMENT@307..316
+                      0: L_ANGLE@307..308 "<" [] []
+                      1: SLASH@308..309 "/" [] []
+                      2: JSX_NAME@309..315
+                        0: JSX_IDENT@309..315 "button" [] []
+                      3: R_ANGLE@315..316 ">" [] []
+                  2: JSX_TEXT@316..325
+                    0: JSX_TEXT_LITERAL@316..325 "\n        " [] []
+                  3: JSX_EXPRESSION_CHILD@325..380
+                    0: L_CURLY@325..326 "{" [] []
+                    1: JS_LOGICAL_EXPRESSION@326..379
+                      0: JS_BINARY_EXPRESSION@326..345
+                        0: JS_STATIC_MEMBER_EXPRESSION@326..340
+                          0: JS_IDENTIFIER_EXPRESSION@326..332
+                            0: JS_REFERENCE_IDENTIFIER@326..332
+                              0: IDENT@326..332 "errors" [] []
+                          1: DOT@332..333 "." [] []
+                          2: JS_NAME@333..340
+                            0: IDENT@333..340 "length" [] [Whitespace(" ")]
+                        1: EQ2@340..343 "==" [] [Whitespace(" ")]
+                        2: JS_NUMBER_LITERAL_EXPRESSION@343..345
+                          0: JS_NUMBER_LITERAL@343..345 "0" [] [Whitespace(" ")]
+                      1: AMP2@345..348 "&&" [] [Whitespace(" ")]
+                      2: JS_CALL_EXPRESSION@348..379
+                        0: JS_STATIC_MEMBER_EXPRESSION@348..358
+                          0: JS_IDENTIFIER_EXPRESSION@348..354
+                            0: JS_REFERENCE_IDENTIFIER@348..354
+                              0: IDENT@348..354 "errors" [] []
+                          1: DOT@354..355 "." [] []
+                          2: JS_NAME@355..358
+                            0: IDENT@355..358 "map" [] []
+                        1: (empty)
+                        2: (empty)
+                        3: JS_CALL_ARGUMENTS@358..379
+                          0: L_PAREN@358..359 "(" [] []
+                          1: JS_CALL_ARGUMENT_LIST@359..378
+                            0: JS_ARROW_FUNCTION_EXPRESSION@359..378
+                              0: (empty)
+                              1: (empty)
+                              2: JS_IDENTIFIER_BINDING@359..361
+                                0: IDENT@359..361 "x" [] [Whitespace(" ")]
+                              3: (empty)
+                              4: FAT_ARROW@361..364 "=>" [] [Whitespace(" ")]
+                              5: JSX_TAG_EXPRESSION@364..378
+                                0: JSX_ELEMENT@364..378
+                                  0: JSX_OPENING_ELEMENT@364..369
+                                    0: L_ANGLE@364..365 "<" [] []
+                                    1: JSX_NAME@365..368
+                                      0: JSX_IDENT@365..368 "div" [] []
+                                    2: JSX_ATTRIBUTE_LIST@368..368
+                                    3: R_ANGLE@368..369 ">" [] []
+                                  1: JSX_CHILD_LIST@369..372
+                                    0: JSX_EXPRESSION_CHILD@369..372
+                                      0: L_CURLY@369..370 "{" [] []
+                                      1: JS_IDENTIFIER_EXPRESSION@370..371
+                                        0: JS_REFERENCE_IDENTIFIER@370..371
+                                          0: IDENT@370..371 "x" [] []
+                                      2: R_CURLY@371..372 "}" [] []
+                                  2: JSX_CLOSING_ELEMENT@372..378
+                                    0: L_ANGLE@372..373 "<" [] []
+                                    1: SLASH@373..374 "/" [] []
+                                    2: JSX_NAME@374..377
+                                      0: JSX_IDENT@374..377 "div" [] []
+                                    3: R_ANGLE@377..378 ">" [] []
+                          2: R_PAREN@378..379 ")" [] []
+                    2: R_CURLY@379..380 "}" [] []
+                3: L_ANGLE@380..386 "<" [Newline("\n"), Whitespace("    ")] []
+                4: SLASH@386..387 "/" [] []
+                5: R_ANGLE@387..388 ">" [] []
+            2: SEMICOLON@388..389 ";" [] []
+        3: R_CURLY@389..391 "}" [Newline("\n")] []
+  3: EOF@391..392 "" [Newline("\n")] []
