@@ -1,5 +1,5 @@
 use crate::{
-    parser::{expected_node, ToDiagnostic},
+    parser::{expected_any, expected_node, ToDiagnostic},
     Parser,
 };
 use rome_js_syntax::TextRange;
@@ -22,5 +22,5 @@ pub(crate) fn jsx_expected_attribute_value(p: &Parser, range: TextRange) -> Diag
 }
 
 pub(crate) fn jsx_expected_children(p: &Parser, range: TextRange) -> Diagnostic {
-    expected_node("JSX child", range).to_diagnostic(p)
+    expected_any(&["JSX Expression", "Element", "text"], range).to_diagnostic(p)
 }
