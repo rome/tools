@@ -17,6 +17,7 @@ JsModule {
                 members: JsClassMemberList [
                     JsUnknownMember {
                         items: [
+                            TsDecoratorList [],
                             TsPropertySignatureModifierList [],
                             JsLiteralMemberName {
                                 value: IDENT@18..22 "prop" [] [],
@@ -49,6 +50,7 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         TsPropertySignatureModifierList [
                             TsDeclareModifier {
                                 modifier_token: DECLARE_KW@44..52 "declare" [] [Whitespace(" ")],
@@ -92,10 +94,11 @@ JsModule {
         6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
         7: JS_CLASS_MEMBER_LIST@18..32
           0: JS_UNKNOWN_MEMBER@18..32
-            0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@18..18
-            1: JS_LITERAL_MEMBER_NAME@18..22
+            0: TS_DECORATOR_LIST@18..18
+            1: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@18..18
+            2: JS_LITERAL_MEMBER_NAME@18..22
               0: IDENT@18..22 "prop" [] []
-            2: TS_DEFINITE_PROPERTY_ANNOTATION@22..32
+            3: TS_DEFINITE_PROPERTY_ANNOTATION@22..32
               0: BANG@22..23 "!" [] []
               1: TS_TYPE_ANNOTATION@23..32
                 0: COLON@23..25 ":" [] [Whitespace(" ")]
@@ -113,12 +116,13 @@ JsModule {
       6: L_CURLY@42..44 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@44..66
         0: JS_UNKNOWN_MEMBER@44..66
-          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@44..52
+          0: TS_DECORATOR_LIST@44..44
+          1: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@44..52
             0: TS_DECLARE_MODIFIER@44..52
               0: DECLARE_KW@44..52 "declare" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@52..56
+          2: JS_LITERAL_MEMBER_NAME@52..56
             0: IDENT@52..56 "prop" [] []
-          2: TS_DEFINITE_PROPERTY_ANNOTATION@56..66
+          3: TS_DEFINITE_PROPERTY_ANNOTATION@56..66
             0: BANG@56..57 "!" [] []
             1: TS_TYPE_ANNOTATION@57..66
               0: COLON@57..59 ":" [] [Whitespace(" ")]

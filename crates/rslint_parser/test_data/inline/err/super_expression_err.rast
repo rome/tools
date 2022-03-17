@@ -22,6 +22,7 @@ JsModule {
             l_curly_token: L_CURLY@21..22 "{" [] [],
             members: JsClassMemberList [
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -128,19 +129,20 @@ JsModule {
       6: L_CURLY@21..22 "{" [] []
       7: JS_CLASS_MEMBER_LIST@22..69
         0: JS_METHOD_CLASS_MEMBER@22..69
-          0: JS_METHOD_MODIFIER_LIST@22..22
-          1: (empty)
+          0: TS_DECORATOR_LIST@22..22
+          1: JS_METHOD_MODIFIER_LIST@22..22
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@22..29
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@22..29
             0: IDENT@22..29 "test" [Newline("\n"), Whitespace("  ")] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@29..32
+          6: (empty)
+          7: JS_PARAMETERS@29..32
             0: L_PAREN@29..30 "(" [] []
             1: JS_PARAMETER_LIST@30..30
             2: R_PAREN@30..32 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@32..69
+          8: (empty)
+          9: JS_FUNCTION_BODY@32..69
             0: L_CURLY@32..33 "{" [] []
             1: JS_DIRECTIVE_LIST@33..33
             2: JS_STATEMENT_LIST@33..65

@@ -226,6 +226,7 @@ JsModule {
             l_curly_token: L_CURLY@169..171 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -457,14 +458,15 @@ JsModule {
       6: L_CURLY@169..171 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@171..226
         0: JS_METHOD_CLASS_MEMBER@171..226
-          0: JS_METHOD_MODIFIER_LIST@171..171
-          1: (empty)
+          0: TS_DECORATOR_LIST@171..171
+          1: JS_METHOD_MODIFIER_LIST@171..171
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@171..175
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@171..175
             0: IDENT@171..175 "test" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@175..178
+          6: (empty)
+          7: JS_PARAMETERS@175..178
             0: L_PAREN@175..176 "(" [] []
             1: JS_PARAMETER_LIST@176..177
               0: JS_FORMAL_PARAMETER@176..177
@@ -474,7 +476,7 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_PAREN@177..178 ")" [] []
-          7: TS_RETURN_TYPE_ANNOTATION@178..192
+          8: TS_RETURN_TYPE_ANNOTATION@178..192
             0: COLON@178..180 ":" [] [Whitespace(" ")]
             1: TS_PREDICATE_RETURN_TYPE@180..192
               0: JS_REFERENCE_IDENTIFIER@180..182
@@ -482,7 +484,7 @@ JsModule {
               1: IS_KW@182..185 "is" [] [Whitespace(" ")]
               2: TS_STRING_TYPE@185..192
                 0: STRING_KW@185..192 "string" [] [Whitespace(" ")]
-          8: JS_FUNCTION_BODY@192..226
+          9: JS_FUNCTION_BODY@192..226
             0: L_CURLY@192..194 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@194..194
             2: JS_STATEMENT_LIST@194..224

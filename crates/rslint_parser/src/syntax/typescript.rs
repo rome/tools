@@ -243,6 +243,8 @@ fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
 // class Test {}
 // @test.a?.c @test @test
 // class Test2{}
+// @test export class Test {}
+// @test export default class Test {}
 pub(crate) fn parse_ts_decorated_statement(p: &mut Parser, top_level: bool) -> ParsedSyntax {
     if !p.at(T![@]) {
         return Absent;
@@ -297,7 +299,7 @@ pub(crate) fn parse_ts_decorators(p: &mut Parser) -> CompletedMarker {
 
     loop {
         let decorator = TypeScript.parse_exclusive_syntax(p, parse_decorator, |p, decorator| {
-            ts_only_syntax_error(p, "decorator", decorator.range(p))
+            ts_only_syntax_error(p, "decorators", decorator.range(p))
         });
 
         if decorator.is_absent() {

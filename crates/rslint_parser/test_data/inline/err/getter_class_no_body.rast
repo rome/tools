@@ -14,6 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@14..15 "{" [] [],
             members: JsClassMemberList [
                 JsGetterClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     get_token: GET_KW@15..22 "get" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
@@ -46,14 +47,15 @@ JsModule {
       6: L_CURLY@14..15 "{" [] []
       7: JS_CLASS_MEMBER_LIST@15..27
         0: JS_GETTER_CLASS_MEMBER@15..27
-          0: JS_METHOD_MODIFIER_LIST@15..15
-          1: GET_KW@15..22 "get" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@22..25
+          0: TS_DECORATOR_LIST@15..15
+          1: JS_METHOD_MODIFIER_LIST@15..15
+          2: GET_KW@15..22 "get" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
-          3: L_PAREN@25..26 "(" [] []
-          4: R_PAREN@26..27 ")" [] []
-          5: (empty)
+          4: L_PAREN@25..26 "(" [] []
+          5: R_PAREN@26..27 ")" [] []
           6: (empty)
+          7: (empty)
       8: R_CURLY@27..29 "}" [Newline("\n")] []
   3: EOF@29..30 "" [Newline("\n")] []
 --

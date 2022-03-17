@@ -1,6 +1,7 @@
 pub(crate) mod array;
 mod binarish_expression;
 mod call_expression;
+mod decorators;
 mod format_conditional;
 mod simple;
 
@@ -11,6 +12,7 @@ use crate::{
 };
 pub use binarish_expression::format_binaryish_expression;
 pub(crate) use call_expression::format_call_expression;
+pub(crate) use decorators::format_decorators;
 pub(crate) use format_conditional::{format_conditional, Conditional};
 use rome_js_syntax::{AstNode, AstNodeList, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use rome_js_syntax::{
@@ -522,7 +524,7 @@ impl TemplateElement {
 /// precedence, then the node can change its formatting.
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
 pub(crate) enum FormatPrecedence {
-    /// No precedence given to these nodes  
+    /// No precedence given to these nodes
     None,
 
     /// Low priority

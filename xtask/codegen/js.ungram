@@ -661,6 +661,7 @@ JsStaticInitializationBlockClassMember =
 // class Test { 'constructor'() {} }
 //              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
+	ts_decorators: TsDecoratorList
 	modifiers: JsConstructorModifierList
 	name: JsLiteralMemberName
 	parameters: JsConstructorParameters
@@ -702,6 +703,7 @@ TsConstructorSignatureClassMember =
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
+	ts_decorators: TsDecoratorList
 	modifiers: JsPropertyModifierList
 	name: JsAnyClassMemberName
 	property_annotation: TsAnyPropertyAnnotation?
@@ -717,6 +719,7 @@ JsAnyPropertyModifier =
 JsPropertyModifierList = JsAnyPropertyModifier*
 
 TsPropertySignatureClassMember =
+	ts_decorators: TsDecoratorList?
 	modifiers: TsPropertySignatureModifierList
 	name: JsAnyClassMemberName
 	property_annotation: TsAnyPropertySignatureAnnotation?
@@ -752,6 +755,7 @@ TsDefinitePropertyAnnotation =
 // class Test { a() {} }
 //              ^^^^^^
 JsMethodClassMember =
+	ts_decorators: TsDecoratorList
 	modifiers: JsMethodModifierList
 	'async'?
 	'*'?
@@ -789,6 +793,7 @@ TsAnyMethodSignatureModifier =
 // class Test { get a() {} }
 //              ^^^^^^^^^^
 JsGetterClassMember =
+	ts_decorators: TsDecoratorList
 	modifiers: JsMethodModifierList
 	'get'
 	name: JsAnyClassMemberName
@@ -807,6 +812,7 @@ TsGetterSignatureClassMember =
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
 JsSetterClassMember =
+	ts_decorators: TsDecoratorList
 	modifiers: JsMethodModifierList
 	'set'
 	name: JsAnyClassMemberName

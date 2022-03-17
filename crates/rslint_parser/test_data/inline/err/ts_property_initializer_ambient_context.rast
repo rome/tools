@@ -17,6 +17,7 @@ JsModule {
                 members: JsClassMemberList [
                     JsUnknownMember {
                         items: [
+                            TsDecoratorList [],
                             TsPropertySignatureModifierList [],
                             JsLiteralMemberName {
                                 value: IDENT@18..23 "prop" [] [Whitespace(" ")],
@@ -46,6 +47,7 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         TsPropertySignatureModifierList [
                             TsDeclareModifier {
                                 modifier_token: DECLARE_KW@44..52 "declare" [] [Whitespace(" ")],
@@ -86,10 +88,11 @@ JsModule {
         6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
         7: JS_CLASS_MEMBER_LIST@18..32
           0: JS_UNKNOWN_MEMBER@18..32
-            0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@18..18
-            1: JS_LITERAL_MEMBER_NAME@18..23
+            0: TS_DECORATOR_LIST@18..18
+            1: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@18..18
+            2: JS_LITERAL_MEMBER_NAME@18..23
               0: IDENT@18..23 "prop" [] [Whitespace(" ")]
-            2: JS_INITIALIZER_CLAUSE@23..32
+            3: JS_INITIALIZER_CLAUSE@23..32
               0: EQ@23..25 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@25..32
                 0: JS_STRING_LITERAL@25..32 "\"test\"" [] [Whitespace(" ")]
@@ -105,12 +108,13 @@ JsModule {
       6: L_CURLY@42..44 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@44..66
         0: JS_UNKNOWN_MEMBER@44..66
-          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@44..52
+          0: TS_DECORATOR_LIST@44..44
+          1: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@44..52
             0: TS_DECLARE_MODIFIER@44..52
               0: DECLARE_KW@44..52 "declare" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@52..57
+          2: JS_LITERAL_MEMBER_NAME@52..57
             0: IDENT@52..57 "prop" [] [Whitespace(" ")]
-          2: JS_INITIALIZER_CLAUSE@57..66
+          3: JS_INITIALIZER_CLAUSE@57..66
             0: EQ@57..59 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@59..66
               0: JS_STRING_LITERAL@59..66 "\"test\"" [] [Whitespace(" ")]

@@ -14,6 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@11..13 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@13..17 "name" [] [],
@@ -31,6 +32,7 @@ JsModule {
                     semicolon_token: SEMICOLON@26..28 ";" [] [Whitespace(" ")],
                 },
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@28..33 "other" [] [],
@@ -70,6 +72,7 @@ JsModule {
             l_curly_token: L_CURLY@68..69 "{" [] [],
             members: JsClassMemberList [
                 JsConstructorClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@69..82 "constructor" [Newline("\n"), Whitespace(" ")] [],
@@ -256,29 +259,31 @@ JsModule {
       6: L_CURLY@11..13 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@13..43
         0: JS_PROPERTY_CLASS_MEMBER@13..28
-          0: JS_PROPERTY_MODIFIER_LIST@13..13
-          1: JS_LITERAL_MEMBER_NAME@13..17
+          0: TS_DECORATOR_LIST@13..13
+          1: JS_PROPERTY_MODIFIER_LIST@13..13
+          2: JS_LITERAL_MEMBER_NAME@13..17
             0: IDENT@13..17 "name" [] []
-          2: TS_DEFINITE_PROPERTY_ANNOTATION@17..26
+          3: TS_DEFINITE_PROPERTY_ANNOTATION@17..26
             0: BANG@17..18 "!" [] []
             1: TS_TYPE_ANNOTATION@18..26
               0: COLON@18..20 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@20..26
                 0: STRING_KW@20..26 "string" [] []
-          3: (empty)
-          4: SEMICOLON@26..28 ";" [] [Whitespace(" ")]
+          4: (empty)
+          5: SEMICOLON@26..28 ";" [] [Whitespace(" ")]
         1: JS_PROPERTY_CLASS_MEMBER@28..43
-          0: JS_PROPERTY_MODIFIER_LIST@28..28
-          1: JS_LITERAL_MEMBER_NAME@28..33
+          0: TS_DECORATOR_LIST@28..28
+          1: JS_PROPERTY_MODIFIER_LIST@28..28
+          2: JS_LITERAL_MEMBER_NAME@28..33
             0: IDENT@28..33 "other" [] []
-          2: TS_DEFINITE_PROPERTY_ANNOTATION@33..43
+          3: TS_DEFINITE_PROPERTY_ANNOTATION@33..43
             0: BANG@33..34 "!" [] []
             1: TS_TYPE_ANNOTATION@34..43
               0: COLON@34..36 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@36..43
                 0: STRING_KW@36..43 "string" [] [Whitespace(" ")]
-          3: (empty)
           4: (empty)
+          5: (empty)
       8: R_CURLY@43..44 "}" [] []
     1: JS_CLASS_DECLARATION@44..258
       0: (empty)
@@ -296,10 +301,11 @@ JsModule {
       6: L_CURLY@68..69 "{" [] []
       7: JS_CLASS_MEMBER_LIST@69..256
         0: JS_CONSTRUCTOR_CLASS_MEMBER@69..256
-          0: JS_CONSTRUCTOR_MODIFIER_LIST@69..69
-          1: JS_LITERAL_MEMBER_NAME@69..82
+          0: TS_DECORATOR_LIST@69..69
+          1: JS_CONSTRUCTOR_MODIFIER_LIST@69..69
+          2: JS_LITERAL_MEMBER_NAME@69..82
             0: IDENT@69..82 "constructor" [Newline("\n"), Whitespace(" ")] []
-          2: JS_CONSTRUCTOR_PARAMETERS@82..238
+          3: JS_CONSTRUCTOR_PARAMETERS@82..238
             0: L_PAREN@82..83 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@83..236
               0: TS_PROPERTY_PARAMETER@83..103
@@ -390,7 +396,7 @@ JsModule {
                       0: STRING_KW@230..236 "string" [] []
                   3: (empty)
             2: R_PAREN@236..238 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@238..256
+          4: JS_FUNCTION_BODY@238..256
             0: L_CURLY@238..239 "{" [] []
             1: JS_DIRECTIVE_LIST@239..239
             2: JS_STATEMENT_LIST@239..253

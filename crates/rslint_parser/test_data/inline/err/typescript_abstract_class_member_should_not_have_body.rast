@@ -15,6 +15,7 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         JsUnknown {
                             items: [
                                 TsAbstractModifier {
@@ -163,16 +164,17 @@ JsModule {
       6: L_CURLY@31..32 "{" [] []
       7: JS_CLASS_MEMBER_LIST@32..195
         0: JS_UNKNOWN_MEMBER@32..63
-          0: JS_UNKNOWN@32..46
+          0: TS_DECORATOR_LIST@32..32
+          1: JS_UNKNOWN@32..46
             0: TS_ABSTRACT_MODIFIER@32..46
               0: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@46..57
+          2: JS_LITERAL_MEMBER_NAME@46..57
             0: IDENT@46..57 "constructor" [] []
-          2: JS_CONSTRUCTOR_PARAMETERS@57..60
+          3: JS_CONSTRUCTOR_PARAMETERS@57..60
             0: L_PAREN@57..58 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@58..58
             2: R_PAREN@58..60 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@60..63
+          4: JS_FUNCTION_BODY@60..63
             0: L_CURLY@60..62 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@62..62
             2: JS_STATEMENT_LIST@62..62

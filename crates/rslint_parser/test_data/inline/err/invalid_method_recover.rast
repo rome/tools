@@ -12,6 +12,7 @@ JsModule {
             l_curly_token: L_CURLY@6..7 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsComputedMemberName {
                         l_brack_token: L_BRACK@7..11 "[" [Newline("\n"), Whitespace("  ")] [],
@@ -92,8 +93,9 @@ JsModule {
       6: L_CURLY@6..7 "{" [] []
       7: JS_CLASS_MEMBER_LIST@7..44
         0: JS_PROPERTY_CLASS_MEMBER@7..44
-          0: JS_PROPERTY_MODIFIER_LIST@7..7
-          1: JS_COMPUTED_MEMBER_NAME@7..18
+          0: TS_DECORATOR_LIST@7..7
+          1: JS_PROPERTY_MODIFIER_LIST@7..7
+          2: JS_COMPUTED_MEMBER_NAME@7..18
             0: L_BRACK@7..11 "[" [Newline("\n"), Whitespace("  ")] []
             1: JS_BINARY_EXPRESSION@11..16
               0: JS_NUMBER_LITERAL_EXPRESSION@11..13
@@ -102,8 +104,8 @@ JsModule {
               2: JS_NUMBER_LITERAL_EXPRESSION@15..16
                 0: JS_NUMBER_LITERAL@15..16 "1" [] []
             2: R_BRACK@16..18 "]" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@18..43
+          3: (empty)
+          4: JS_INITIALIZER_CLAUSE@18..43
             0: EQ@18..20 "=" [] [Whitespace(" ")]
             1: JS_ARROW_FUNCTION_EXPRESSION@20..43
               0: (empty)
@@ -131,7 +133,7 @@ JsModule {
                             1: (empty)
                     1: SEMICOLON@38..39 ";" [] []
                 3: R_CURLY@39..43 "}" [Newline("\n"), Whitespace("  ")] []
-          4: SEMICOLON@43..44 ";" [] []
+          5: SEMICOLON@43..44 ";" [] []
       8: R_CURLY@44..46 "}" [Newline("\n")] []
     1: JS_EMPTY_STATEMENT@46..47
       0: SEMICOLON@46..47 ";" [] []

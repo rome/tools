@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: parameter-decorator.ts
 
 ---
@@ -50,12 +50,6 @@ class Greeter {
 
 # Errors
 ```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ parameter-decorator.ts:8:3
-  │
-8 │   @validate
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
 error[SyntaxError]: expected a parameter but instead found '@'
   ┌─ parameter-decorator.ts:9:9
   │
@@ -73,12 +67,6 @@ error[SyntaxError]: expected `,` but instead found `name`
   │
 9 │   greet(@required name: string) {
   │                   ^^^^ unexpected
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ parameter-decorator.ts:13:3
-   │
-13 │   @validate
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
 error[SyntaxError]: expected a parameter but instead found '@'
    ┌─ parameter-decorator.ts:14:16

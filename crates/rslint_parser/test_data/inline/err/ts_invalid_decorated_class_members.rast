@@ -1,0 +1,298 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassDeclaration {
+            abstract_token: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")],
+            class_token: CLASS_KW@9..15 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@15..20 "Test" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@20..21 "{" [] [],
+            members: JsClassMemberList [
+                JsUnknownMember {
+                    items: [
+                        TsDecorator {
+                            at_token: AT@21..25 "@" [Newline("\n"), Whitespace("  ")] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@25..30 "test" [] [Whitespace(" ")],
+                                },
+                            },
+                        },
+                        TsMethodSignatureModifierList [],
+                        JsLiteralMemberName {
+                            value: IDENT@30..36 "method" [] [],
+                        },
+                        JsParameters {
+                            l_paren_token: L_PAREN@36..37 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@37..38 ")" [] [],
+                        },
+                        SEMICOLON@38..39 ";" [] [],
+                    ],
+                },
+                JsUnknownMember {
+                    items: [
+                        TsDecorator {
+                            at_token: AT@39..43 "@" [Newline("\n"), Whitespace("  ")] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@43..48 "test" [] [Whitespace(" ")],
+                                },
+                            },
+                        },
+                        TsIndexSignatureModifierList [],
+                        L_BRACK@48..49 "[" [] [],
+                        TsIndexSignatureParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@49..54 "index" [] [],
+                            },
+                            type_annotation: TsTypeAnnotation {
+                                colon_token: COLON@54..56 ":" [] [Whitespace(" ")],
+                                ty: TsStringType {
+                                    string_token: STRING_KW@56..62 "string" [] [],
+                                },
+                            },
+                        },
+                        R_BRACK@62..63 "]" [] [],
+                        TsTypeAnnotation {
+                            colon_token: COLON@63..65 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@65..71 "string" [] [],
+                            },
+                        },
+                        SEMICOLON@71..72 ";" [] [],
+                    ],
+                },
+                JsUnknownMember {
+                    items: [
+                        TsDecorator {
+                            at_token: AT@72..76 "@" [Newline("\n"), Whitespace("  ")] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@76..81 "test" [] [Whitespace(" ")],
+                                },
+                            },
+                        },
+                        TsMethodSignatureModifierList [
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@81..90 "abstract" [] [Whitespace(" ")],
+                            },
+                        ],
+                        JsLiteralMemberName {
+                            value: IDENT@90..97 "method2" [] [],
+                        },
+                        JsParameters {
+                            l_paren_token: L_PAREN@97..98 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@98..99 ")" [] [],
+                        },
+                        SEMICOLON@99..100 ";" [] [],
+                    ],
+                },
+                JsUnknownMember {
+                    items: [
+                        TsDecorator {
+                            at_token: AT@100..104 "@" [Newline("\n"), Whitespace("  ")] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@104..109 "test" [] [Whitespace(" ")],
+                                },
+                            },
+                        },
+                        TsMethodSignatureModifierList [
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@109..118 "abstract" [] [Whitespace(" ")],
+                            },
+                        ],
+                        GET_KW@118..122 "get" [] [Whitespace(" ")],
+                        JsLiteralMemberName {
+                            value: IDENT@122..128 "getter" [] [],
+                        },
+                        L_PAREN@128..129 "(" [] [],
+                        R_PAREN@129..130 ")" [] [],
+                        SEMICOLON@130..131 ";" [] [],
+                    ],
+                },
+                JsUnknownMember {
+                    items: [
+                        TsDecorator {
+                            at_token: AT@131..135 "@" [Newline("\n"), Whitespace("  ")] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@135..140 "test" [] [Whitespace(" ")],
+                                },
+                            },
+                        },
+                        TsMethodSignatureModifierList [
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@140..149 "abstract" [] [Whitespace(" ")],
+                            },
+                        ],
+                        SET_KW@149..153 "set" [] [Whitespace(" ")],
+                        JsLiteralMemberName {
+                            value: IDENT@153..159 "setter" [] [],
+                        },
+                        L_PAREN@159..160 "(" [] [],
+                        R_PAREN@160..161 ")" [] [],
+                        SEMICOLON@161..162 ";" [] [],
+                    ],
+                },
+            ],
+            r_curly_token: R_CURLY@162..164 "}" [Newline("\n")] [],
+        },
+    ],
+    eof_token: EOF@164..165 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..165
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..164
+    0: JS_CLASS_DECLARATION@0..164
+      0: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
+      1: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@15..20
+        0: IDENT@15..20 "Test" [] [Whitespace(" ")]
+      3: (empty)
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@20..21 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@21..162
+        0: JS_UNKNOWN_MEMBER@21..39
+          0: TS_DECORATOR@21..30
+            0: AT@21..25 "@" [Newline("\n"), Whitespace("  ")] []
+            1: JS_IDENTIFIER_EXPRESSION@25..30
+              0: JS_REFERENCE_IDENTIFIER@25..30
+                0: IDENT@25..30 "test" [] [Whitespace(" ")]
+          1: TS_METHOD_SIGNATURE_MODIFIER_LIST@30..30
+          2: JS_LITERAL_MEMBER_NAME@30..36
+            0: IDENT@30..36 "method" [] []
+          3: JS_PARAMETERS@36..38
+            0: L_PAREN@36..37 "(" [] []
+            1: JS_PARAMETER_LIST@37..37
+            2: R_PAREN@37..38 ")" [] []
+          4: SEMICOLON@38..39 ";" [] []
+        1: JS_UNKNOWN_MEMBER@39..72
+          0: TS_DECORATOR@39..48
+            0: AT@39..43 "@" [Newline("\n"), Whitespace("  ")] []
+            1: JS_IDENTIFIER_EXPRESSION@43..48
+              0: JS_REFERENCE_IDENTIFIER@43..48
+                0: IDENT@43..48 "test" [] [Whitespace(" ")]
+          1: TS_INDEX_SIGNATURE_MODIFIER_LIST@48..48
+          2: L_BRACK@48..49 "[" [] []
+          3: TS_INDEX_SIGNATURE_PARAMETER@49..62
+            0: JS_IDENTIFIER_BINDING@49..54
+              0: IDENT@49..54 "index" [] []
+            1: TS_TYPE_ANNOTATION@54..62
+              0: COLON@54..56 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@56..62
+                0: STRING_KW@56..62 "string" [] []
+          4: R_BRACK@62..63 "]" [] []
+          5: TS_TYPE_ANNOTATION@63..71
+            0: COLON@63..65 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@65..71
+              0: STRING_KW@65..71 "string" [] []
+          6: SEMICOLON@71..72 ";" [] []
+        2: JS_UNKNOWN_MEMBER@72..100
+          0: TS_DECORATOR@72..81
+            0: AT@72..76 "@" [Newline("\n"), Whitespace("  ")] []
+            1: JS_IDENTIFIER_EXPRESSION@76..81
+              0: JS_REFERENCE_IDENTIFIER@76..81
+                0: IDENT@76..81 "test" [] [Whitespace(" ")]
+          1: TS_METHOD_SIGNATURE_MODIFIER_LIST@81..90
+            0: TS_ABSTRACT_MODIFIER@81..90
+              0: ABSTRACT_KW@81..90 "abstract" [] [Whitespace(" ")]
+          2: JS_LITERAL_MEMBER_NAME@90..97
+            0: IDENT@90..97 "method2" [] []
+          3: JS_PARAMETERS@97..99
+            0: L_PAREN@97..98 "(" [] []
+            1: JS_PARAMETER_LIST@98..98
+            2: R_PAREN@98..99 ")" [] []
+          4: SEMICOLON@99..100 ";" [] []
+        3: JS_UNKNOWN_MEMBER@100..131
+          0: TS_DECORATOR@100..109
+            0: AT@100..104 "@" [Newline("\n"), Whitespace("  ")] []
+            1: JS_IDENTIFIER_EXPRESSION@104..109
+              0: JS_REFERENCE_IDENTIFIER@104..109
+                0: IDENT@104..109 "test" [] [Whitespace(" ")]
+          1: TS_METHOD_SIGNATURE_MODIFIER_LIST@109..118
+            0: TS_ABSTRACT_MODIFIER@109..118
+              0: ABSTRACT_KW@109..118 "abstract" [] [Whitespace(" ")]
+          2: GET_KW@118..122 "get" [] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@122..128
+            0: IDENT@122..128 "getter" [] []
+          4: L_PAREN@128..129 "(" [] []
+          5: R_PAREN@129..130 ")" [] []
+          6: SEMICOLON@130..131 ";" [] []
+        4: JS_UNKNOWN_MEMBER@131..162
+          0: TS_DECORATOR@131..140
+            0: AT@131..135 "@" [Newline("\n"), Whitespace("  ")] []
+            1: JS_IDENTIFIER_EXPRESSION@135..140
+              0: JS_REFERENCE_IDENTIFIER@135..140
+                0: IDENT@135..140 "test" [] [Whitespace(" ")]
+          1: TS_METHOD_SIGNATURE_MODIFIER_LIST@140..149
+            0: TS_ABSTRACT_MODIFIER@140..149
+              0: ABSTRACT_KW@140..149 "abstract" [] [Whitespace(" ")]
+          2: SET_KW@149..153 "set" [] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@153..159
+            0: IDENT@153..159 "setter" [] []
+          4: L_PAREN@159..160 "(" [] []
+          5: R_PAREN@160..161 ")" [] []
+          6: SEMICOLON@161..162 ";" [] []
+      8: R_CURLY@162..164 "}" [Newline("\n")] []
+  3: EOF@164..165 "" [Newline("\n")] []
+--
+error[SyntaxError]: Decorator not valid here.
+  ┌─ ts_invalid_decorated_class_members.ts:2:3
+  │
+2 │   @test method();
+  │   ^^^^^
+
+--
+error[SyntaxError]: Decorator not valid here.
+  ┌─ ts_invalid_decorated_class_members.ts:3:3
+  │
+3 │   @test [index: string]: string;
+  │   ^^^^^
+
+--
+error[SyntaxError]: Decorator not valid here.
+  ┌─ ts_invalid_decorated_class_members.ts:4:3
+  │
+4 │   @test abstract method2();
+  │   ^^^^^
+
+--
+error[SyntaxError]: Decorator not valid here.
+  ┌─ ts_invalid_decorated_class_members.ts:5:3
+  │
+5 │   @test abstract get getter();
+  │   ^^^^^
+
+--
+error[SyntaxError]: expected a parameter but instead found ')'
+  ┌─ ts_invalid_decorated_class_members.ts:6:29
+  │
+6 │   @test abstract set setter();
+  │                             ^ Expected a parameter here
+
+--
+error[SyntaxError]: Decorator not valid here.
+  ┌─ ts_invalid_decorated_class_members.ts:6:3
+  │
+6 │   @test abstract set setter();
+  │   ^^^^^
+
+--
+abstract class Test {
+  @test method();
+  @test [index: string]: string;
+  @test abstract method2();
+  @test abstract get getter();
+  @test abstract set setter();
+}

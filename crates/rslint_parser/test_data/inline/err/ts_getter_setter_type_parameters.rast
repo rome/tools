@@ -15,6 +15,7 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         JsMethodModifierList [],
                         GET_KW@12..18 "get" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                         JsLiteralMemberName {
@@ -54,6 +55,7 @@ JsModule {
                 },
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         JsMethodModifierList [],
                         SET_KW@30..36 "set" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                         JsLiteralMemberName {
@@ -120,11 +122,12 @@ JsModule {
       6: L_CURLY@11..12 "{" [] []
       7: JS_CLASS_MEMBER_LIST@12..53
         0: JS_UNKNOWN_MEMBER@12..30
-          0: JS_METHOD_MODIFIER_LIST@12..12
-          1: GET_KW@12..18 "get" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@18..19
+          0: TS_DECORATOR_LIST@12..12
+          1: JS_METHOD_MODIFIER_LIST@12..12
+          2: GET_KW@12..18 "get" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@18..19
             0: IDENT@18..19 "a" [] []
-          3: TS_TYPE_PARAMETERS@19..22
+          4: TS_TYPE_PARAMETERS@19..22
             0: L_ANGLE@19..20 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@20..21
               0: TS_TYPE_PARAMETER@20..21
@@ -133,25 +136,26 @@ JsModule {
                 1: (empty)
                 2: (empty)
             2: R_ANGLE@21..22 ">" [] []
-          4: L_PAREN@22..23 "(" [] []
-          5: R_PAREN@23..24 ")" [] []
-          6: TS_TYPE_ANNOTATION@24..28
+          5: L_PAREN@22..23 "(" [] []
+          6: R_PAREN@23..24 ")" [] []
+          7: TS_TYPE_ANNOTATION@24..28
             0: COLON@24..26 ":" [] [Whitespace(" ")]
             1: TS_REFERENCE_TYPE@26..28
               0: JS_REFERENCE_IDENTIFIER@26..28
                 0: IDENT@26..28 "A" [] [Whitespace(" ")]
               1: (empty)
-          7: JS_FUNCTION_BODY@28..30
+          8: JS_FUNCTION_BODY@28..30
             0: L_CURLY@28..29 "{" [] []
             1: JS_DIRECTIVE_LIST@29..29
             2: JS_STATEMENT_LIST@29..29
             3: R_CURLY@29..30 "}" [] []
         1: JS_UNKNOWN_MEMBER@30..53
-          0: JS_METHOD_MODIFIER_LIST@30..30
-          1: SET_KW@30..36 "set" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@36..37
+          0: TS_DECORATOR_LIST@30..30
+          1: JS_METHOD_MODIFIER_LIST@30..30
+          2: SET_KW@30..36 "set" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@36..37
             0: IDENT@36..37 "a" [] []
-          3: TS_TYPE_PARAMETERS@37..40
+          4: TS_TYPE_PARAMETERS@37..40
             0: L_ANGLE@37..38 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@38..39
               0: TS_TYPE_PARAMETER@38..39
@@ -160,8 +164,8 @@ JsModule {
                 1: (empty)
                 2: (empty)
             2: R_ANGLE@39..40 ">" [] []
-          4: L_PAREN@40..41 "(" [] []
-          5: JS_FORMAL_PARAMETER@41..49
+          5: L_PAREN@40..41 "(" [] []
+          6: JS_FORMAL_PARAMETER@41..49
             0: JS_IDENTIFIER_BINDING@41..46
               0: IDENT@41..46 "value" [] []
             1: (empty)
@@ -172,8 +176,8 @@ JsModule {
                   0: IDENT@48..49 "A" [] []
                 1: (empty)
             3: (empty)
-          6: R_PAREN@49..51 ")" [] [Whitespace(" ")]
-          7: JS_FUNCTION_BODY@51..53
+          7: R_PAREN@49..51 ")" [] [Whitespace(" ")]
+          8: JS_FUNCTION_BODY@51..53
             0: L_CURLY@51..52 "{" [] []
             1: JS_DIRECTIVE_LIST@52..52
             2: JS_STATEMENT_LIST@52..52

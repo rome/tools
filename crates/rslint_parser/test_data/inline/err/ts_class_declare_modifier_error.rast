@@ -41,6 +41,7 @@ JsModule {
                 },
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         JsUnknown {
                             items: [
                                 TsDeclareModifier {
@@ -89,6 +90,7 @@ JsModule {
                 },
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         JsUnknown {
                             items: [
                                 TsDeclareModifier {
@@ -120,6 +122,7 @@ JsModule {
                 },
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         JsUnknown {
                             items: [
                                 TsDeclareModifier {
@@ -222,12 +225,13 @@ JsModule {
               0: STRING_KW@35..41 "string" [] []
           4: SEMICOLON@41..42 ";" [] []
         1: JS_UNKNOWN_MEMBER@42..92
-          0: JS_UNKNOWN@42..55
+          0: TS_DECORATOR_LIST@42..42
+          1: JS_UNKNOWN@42..55
             0: TS_DECLARE_MODIFIER@42..55
               0: DECLARE_KW@42..55 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@55..66
+          2: JS_LITERAL_MEMBER_NAME@55..66
             0: IDENT@55..66 "constructor" [] []
-          2: JS_CONSTRUCTOR_PARAMETERS@66..90
+          3: JS_CONSTRUCTOR_PARAMETERS@66..90
             0: L_PAREN@66..67 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@67..88
               0: JS_UNKNOWN_PARAMETER@67..88
@@ -243,21 +247,22 @@ JsModule {
                   2: (empty)
                   3: (empty)
             2: R_PAREN@88..90 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@90..92
+          4: JS_FUNCTION_BODY@90..92
             0: L_CURLY@90..91 "{" [] []
             1: JS_DIRECTIVE_LIST@91..91
             2: JS_STATEMENT_LIST@91..91
             3: R_CURLY@91..92 "}" [] []
         2: JS_UNKNOWN_MEMBER@92..130
-          0: JS_UNKNOWN@92..105
+          0: TS_DECORATOR_LIST@92..92
+          1: JS_UNKNOWN@92..105
             0: TS_DECLARE_MODIFIER@92..105
               0: DECLARE_KW@92..105 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-          1: GET_KW@105..109 "get" [] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@109..113
+          2: GET_KW@105..109 "get" [] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@109..113
             0: IDENT@109..113 "test" [] []
-          3: L_PAREN@113..114 "(" [] []
-          4: R_PAREN@114..116 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@116..130
+          4: L_PAREN@113..114 "(" [] []
+          5: R_PAREN@114..116 ")" [] [Whitespace(" ")]
+          6: JS_FUNCTION_BODY@116..130
             0: L_CURLY@116..118 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@118..118
             2: JS_STATEMENT_LIST@118..129
@@ -268,14 +273,15 @@ JsModule {
                 2: (empty)
             3: R_CURLY@129..130 "}" [] []
         3: JS_UNKNOWN_MEMBER@130..169
-          0: JS_UNKNOWN@130..143
+          0: TS_DECORATOR_LIST@130..130
+          1: JS_UNKNOWN@130..143
             0: TS_DECLARE_MODIFIER@130..143
               0: DECLARE_KW@130..143 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-          1: SET_KW@143..147 "set" [] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@147..151
+          2: SET_KW@143..147 "set" [] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@147..151
             0: IDENT@147..151 "test" [] []
-          3: L_PAREN@151..152 "(" [] []
-          4: JS_FORMAL_PARAMETER@152..165
+          4: L_PAREN@151..152 "(" [] []
+          5: JS_FORMAL_PARAMETER@152..165
             0: JS_IDENTIFIER_BINDING@152..157
               0: IDENT@152..157 "value" [] []
             1: (empty)
@@ -284,8 +290,8 @@ JsModule {
               1: TS_STRING_TYPE@159..165
                 0: STRING_KW@159..165 "string" [] []
             3: (empty)
-          5: R_PAREN@165..167 ")" [] [Whitespace(" ")]
-          6: JS_FUNCTION_BODY@167..169
+          6: R_PAREN@165..167 ")" [] [Whitespace(" ")]
+          7: JS_FUNCTION_BODY@167..169
             0: L_CURLY@167..168 "{" [] []
             1: JS_DIRECTIVE_LIST@168..168
             2: JS_STATEMENT_LIST@168..168

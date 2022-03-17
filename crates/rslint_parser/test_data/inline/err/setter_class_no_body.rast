@@ -14,6 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@14..15 "{" [] [],
             members: JsClassMemberList [
                 JsSetterClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     set_token: SET_KW@15..22 "set" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
@@ -53,19 +54,20 @@ JsModule {
       6: L_CURLY@14..15 "{" [] []
       7: JS_CLASS_MEMBER_LIST@15..28
         0: JS_SETTER_CLASS_MEMBER@15..28
-          0: JS_METHOD_MODIFIER_LIST@15..15
-          1: SET_KW@15..22 "set" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@22..25
+          0: TS_DECORATOR_LIST@15..15
+          1: JS_METHOD_MODIFIER_LIST@15..15
+          2: SET_KW@15..22 "set" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
-          3: L_PAREN@25..26 "(" [] []
-          4: JS_FORMAL_PARAMETER@26..27
+          4: L_PAREN@25..26 "(" [] []
+          5: JS_FORMAL_PARAMETER@26..27
             0: JS_IDENTIFIER_BINDING@26..27
               0: IDENT@26..27 "a" [] []
             1: (empty)
             2: (empty)
             3: (empty)
-          5: R_PAREN@27..28 ")" [] []
-          6: (empty)
+          6: R_PAREN@27..28 ")" [] []
+          7: (empty)
       8: R_CURLY@28..30 "}" [Newline("\n")] []
   3: EOF@30..31 "" [Newline("\n")] []
 --

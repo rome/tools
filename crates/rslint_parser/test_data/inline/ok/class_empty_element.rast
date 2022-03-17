@@ -44,6 +44,7 @@ JsModule {
                     semicolon_token: SEMICOLON@21..23 ";" [] [Whitespace(" ")],
                 },
                 JsGetterClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     get_token: GET_KW@23..27 "get" [] [Whitespace(" ")],
                     name: JsLiteralMemberName {
@@ -113,14 +114,15 @@ JsModule {
         9: JS_EMPTY_CLASS_MEMBER@21..23
           0: SEMICOLON@21..23 ";" [] [Whitespace(" ")]
         10: JS_GETTER_CLASS_MEMBER@23..35
-          0: JS_METHOD_MODIFIER_LIST@23..23
-          1: GET_KW@23..27 "get" [] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@27..30
+          0: TS_DECORATOR_LIST@23..23
+          1: JS_METHOD_MODIFIER_LIST@23..23
+          2: GET_KW@23..27 "get" [] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@27..30
             0: IDENT@27..30 "foo" [] []
-          3: L_PAREN@30..31 "(" [] []
-          4: R_PAREN@31..33 ")" [] [Whitespace(" ")]
-          5: (empty)
-          6: JS_FUNCTION_BODY@33..35
+          4: L_PAREN@30..31 "(" [] []
+          5: R_PAREN@31..33 ")" [] [Whitespace(" ")]
+          6: (empty)
+          7: JS_FUNCTION_BODY@33..35
             0: L_CURLY@33..34 "{" [] []
             1: JS_DIRECTIVE_LIST@34..34
             2: JS_STATEMENT_LIST@34..34

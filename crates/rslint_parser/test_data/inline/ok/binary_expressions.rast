@@ -237,6 +237,7 @@ JsModule {
             l_curly_token: L_CURLY@151..153 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@153..154 "#" [] [],
@@ -247,6 +248,7 @@ JsModule {
                     semicolon_token: SEMICOLON@158..160 ";" [] [Whitespace(" ")],
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -458,27 +460,29 @@ JsModule {
       6: L_CURLY@151..153 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@153..191
         0: JS_PROPERTY_CLASS_MEMBER@153..160
-          0: JS_PROPERTY_MODIFIER_LIST@153..153
-          1: JS_PRIVATE_CLASS_MEMBER_NAME@153..158
+          0: TS_DECORATOR_LIST@153..153
+          1: JS_PROPERTY_MODIFIER_LIST@153..153
+          2: JS_PRIVATE_CLASS_MEMBER_NAME@153..158
             0: HASH@153..154 "#" [] []
             1: IDENT@154..158 "name" [] []
+          3: (empty)
+          4: (empty)
+          5: SEMICOLON@158..160 ";" [] [Whitespace(" ")]
+        1: JS_METHOD_CLASS_MEMBER@160..191
+          0: TS_DECORATOR_LIST@160..160
+          1: JS_METHOD_MODIFIER_LIST@160..160
           2: (empty)
           3: (empty)
-          4: SEMICOLON@158..160 ";" [] [Whitespace(" ")]
-        1: JS_METHOD_CLASS_MEMBER@160..191
-          0: JS_METHOD_MODIFIER_LIST@160..160
-          1: (empty)
-          2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@160..164
+          4: JS_LITERAL_MEMBER_NAME@160..164
             0: IDENT@160..164 "test" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@164..167
+          6: (empty)
+          7: JS_PARAMETERS@164..167
             0: L_PAREN@164..165 "(" [] []
             1: JS_PARAMETER_LIST@165..165
             2: R_PAREN@165..167 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@167..191
+          8: (empty)
+          9: JS_FUNCTION_BODY@167..191
             0: L_CURLY@167..169 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@169..169
             2: JS_STATEMENT_LIST@169..189

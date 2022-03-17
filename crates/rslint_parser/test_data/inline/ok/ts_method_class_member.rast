@@ -14,6 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@11..12 "{" [] [],
             members: JsClassMemberList [
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -135,13 +136,14 @@ JsModule {
       6: L_CURLY@11..12 "{" [] []
       7: JS_CLASS_MEMBER_LIST@12..56
         0: JS_METHOD_CLASS_MEMBER@12..56
-          0: JS_METHOD_MODIFIER_LIST@12..12
-          1: (empty)
+          0: TS_DECORATOR_LIST@12..12
+          1: JS_METHOD_MODIFIER_LIST@12..12
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@12..19
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@12..19
             0: IDENT@12..19 "test" [Newline("\n"), Whitespace("  ")] []
-          4: (empty)
-          5: TS_TYPE_PARAMETERS@19..38
+          5: (empty)
+          6: TS_TYPE_PARAMETERS@19..38
             0: L_ANGLE@19..20 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@20..37
               0: TS_TYPE_PARAMETER@20..21
@@ -167,7 +169,7 @@ JsModule {
                 1: (empty)
                 2: (empty)
             2: R_ANGLE@37..38 ">" [] []
-          6: JS_PARAMETERS@38..50
+          7: JS_PARAMETERS@38..50
             0: L_PAREN@38..39 "(" [] []
             1: JS_PARAMETER_LIST@39..49
               0: JS_FORMAL_PARAMETER@39..43
@@ -194,13 +196,13 @@ JsModule {
                     1: (empty)
                 3: (empty)
             2: R_PAREN@49..50 ")" [] []
-          7: TS_RETURN_TYPE_ANNOTATION@50..54
+          8: TS_RETURN_TYPE_ANNOTATION@50..54
             0: COLON@50..52 ":" [] [Whitespace(" ")]
             1: TS_REFERENCE_TYPE@52..54
               0: JS_REFERENCE_IDENTIFIER@52..54
                 0: IDENT@52..54 "R" [] [Whitespace(" ")]
               1: (empty)
-          8: JS_FUNCTION_BODY@54..56
+          9: JS_FUNCTION_BODY@54..56
             0: L_CURLY@54..55 "{" [] []
             1: JS_DIRECTIVE_LIST@55..55
             2: JS_STATEMENT_LIST@55..55

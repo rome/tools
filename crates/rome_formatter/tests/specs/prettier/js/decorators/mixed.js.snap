@@ -31,17 +31,17 @@ export default class MyComponent {
 
 # Errors
 ```
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ mixed.js:3:1
   │
 3 │ @foo
   │ ^^^^ TypeScript only syntax
 
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ mixed.js:5:3
   │
 5 │   @task
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  │   ^^^^^ TypeScript only syntax
 
 
 ```

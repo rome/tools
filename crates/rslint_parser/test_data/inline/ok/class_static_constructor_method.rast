@@ -14,6 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [
                         JsStaticModifier {
                             modifier_token: STATIC_KW@10..17 "static" [] [Whitespace(" ")],
@@ -61,21 +62,22 @@ JsModule {
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..34
         0: JS_METHOD_CLASS_MEMBER@10..34
-          0: JS_METHOD_MODIFIER_LIST@10..17
+          0: TS_DECORATOR_LIST@10..10
+          1: JS_METHOD_MODIFIER_LIST@10..17
             0: JS_STATIC_MODIFIER@10..17
               0: STATIC_KW@10..17 "static" [] [Whitespace(" ")]
-          1: (empty)
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@17..28
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@17..28
             0: IDENT@17..28 "constructor" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@28..31
+          6: (empty)
+          7: JS_PARAMETERS@28..31
             0: L_PAREN@28..29 "(" [] []
             1: JS_PARAMETER_LIST@29..29
             2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@31..34
+          8: (empty)
+          9: JS_FUNCTION_BODY@31..34
             0: L_CURLY@31..32 "{" [] []
             1: JS_DIRECTIVE_LIST@32..32
             2: JS_STATEMENT_LIST@32..32

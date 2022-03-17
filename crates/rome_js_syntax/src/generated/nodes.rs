@@ -1055,24 +1055,27 @@ impl JsConstructorClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsConstructorClassMemberFields {
         JsConstructorClassMemberFields {
+            ts_decorators: self.ts_decorators(),
             modifiers: self.modifiers(),
             name: self.name(),
             parameters: self.parameters(),
             body: self.body(),
         }
     }
-    pub fn modifiers(&self) -> JsConstructorModifierList { support::list(&self.syntax, 0usize) }
+    pub fn ts_decorators(&self) -> TsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn modifiers(&self) -> JsConstructorModifierList { support::list(&self.syntax, 1usize) }
     pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> {
-        support::required_node(&self.syntax, 1usize)
-    }
-    pub fn parameters(&self) -> SyntaxResult<JsConstructorParameters> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
+    pub fn parameters(&self) -> SyntaxResult<JsConstructorParameters> {
         support::required_node(&self.syntax, 3usize)
+    }
+    pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
+        support::required_node(&self.syntax, 4usize)
     }
 }
 pub struct JsConstructorClassMemberFields {
+    pub ts_decorators: TsDecoratorList,
     pub modifiers: JsConstructorModifierList,
     pub name: SyntaxResult<JsLiteralMemberName>,
     pub parameters: SyntaxResult<JsConstructorParameters>,
@@ -2294,6 +2297,7 @@ impl JsGetterClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsGetterClassMemberFields {
         JsGetterClassMemberFields {
+            ts_decorators: self.ts_decorators(),
             modifiers: self.modifiers(),
             get_token: self.get_token(),
             name: self.name(),
@@ -2303,25 +2307,27 @@ impl JsGetterClassMember {
             body: self.body(),
         }
     }
-    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 0usize) }
+    pub fn ts_decorators(&self) -> TsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 1usize) }
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 3usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
-    }
-    pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 5usize) }
+    pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 5usize)
+    }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 6usize)
+        support::required_node(&self.syntax, 7usize)
     }
 }
 pub struct JsGetterClassMemberFields {
+    pub ts_decorators: TsDecoratorList,
     pub modifiers: JsMethodModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -3013,6 +3019,7 @@ impl JsMethodClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsMethodClassMemberFields {
         JsMethodClassMemberFields {
+            ts_decorators: self.ts_decorators(),
             modifiers: self.modifiers(),
             async_token: self.async_token(),
             star_token: self.star_token(),
@@ -3024,29 +3031,31 @@ impl JsMethodClassMember {
             body: self.body(),
         }
     }
-    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 0usize) }
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn ts_decorators(&self) -> TsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 1usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 4usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 4usize)
+        support::token(&self.syntax, 5usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 5usize)
+        support::node(&self.syntax, 6usize)
     }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
-        support::required_node(&self.syntax, 6usize)
+        support::required_node(&self.syntax, 7usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
-        support::node(&self.syntax, 7usize)
+        support::node(&self.syntax, 8usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 8usize)
+        support::required_node(&self.syntax, 9usize)
     }
 }
 pub struct JsMethodClassMemberFields {
+    pub ts_decorators: TsDecoratorList,
     pub modifiers: JsMethodModifierList,
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
@@ -3890,6 +3899,7 @@ impl JsPropertyClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsPropertyClassMemberFields {
         JsPropertyClassMemberFields {
+            ts_decorators: self.ts_decorators(),
             modifiers: self.modifiers(),
             name: self.name(),
             property_annotation: self.property_annotation(),
@@ -3897,17 +3907,19 @@ impl JsPropertyClassMember {
             semicolon_token: self.semicolon_token(),
         }
     }
-    pub fn modifiers(&self) -> JsPropertyModifierList { support::list(&self.syntax, 0usize) }
+    pub fn ts_decorators(&self) -> TsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn modifiers(&self) -> JsPropertyModifierList { support::list(&self.syntax, 1usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
-        support::node(&self.syntax, 2usize)
+        support::node(&self.syntax, 3usize)
     }
-    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 4usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 pub struct JsPropertyClassMemberFields {
+    pub ts_decorators: TsDecoratorList,
     pub modifiers: JsPropertyModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub property_annotation: Option<TsAnyPropertyAnnotation>,
@@ -4141,6 +4153,7 @@ impl JsSetterClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsSetterClassMemberFields {
         JsSetterClassMemberFields {
+            ts_decorators: self.ts_decorators(),
             modifiers: self.modifiers(),
             set_token: self.set_token(),
             name: self.name(),
@@ -4150,27 +4163,29 @@ impl JsSetterClassMember {
             body: self.body(),
         }
     }
-    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 0usize) }
+    pub fn ts_decorators(&self) -> TsDecoratorList { support::list(&self.syntax, 0usize) }
+    pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 1usize) }
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 3usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
     pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 5usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+        support::required_token(&self.syntax, 6usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 6usize)
+        support::required_node(&self.syntax, 7usize)
     }
 }
 pub struct JsSetterClassMemberFields {
+    pub ts_decorators: TsDecoratorList,
     pub modifiers: JsMethodModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsAnyClassMemberName>,
@@ -8057,24 +8072,27 @@ impl TsPropertySignatureClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsPropertySignatureClassMemberFields {
         TsPropertySignatureClassMemberFields {
+            ts_decorators: self.ts_decorators(),
             modifiers: self.modifiers(),
             name: self.name(),
             property_annotation: self.property_annotation(),
             semicolon_token: self.semicolon_token(),
         }
     }
+    pub fn ts_decorators(&self) -> TsDecoratorList { support::list(&self.syntax, 0usize) }
     pub fn modifiers(&self) -> TsPropertySignatureModifierList {
-        support::list(&self.syntax, 0usize)
+        support::list(&self.syntax, 1usize)
     }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 1usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn property_annotation(&self) -> Option<TsAnyPropertySignatureAnnotation> {
-        support::node(&self.syntax, 2usize)
+        support::node(&self.syntax, 3usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
 pub struct TsPropertySignatureClassMemberFields {
+    pub ts_decorators: TsDecoratorList,
     pub modifiers: TsPropertySignatureModifierList,
     pub name: SyntaxResult<JsAnyClassMemberName>,
     pub property_annotation: Option<TsAnyPropertySignatureAnnotation>,
@@ -10580,6 +10598,7 @@ impl AstNode for JsConstructorClassMember {
 impl std::fmt::Debug for JsConstructorClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsConstructorClassMember")
+            .field("ts_decorators", &self.ts_decorators())
             .field("modifiers", &self.modifiers())
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
@@ -11740,6 +11759,7 @@ impl AstNode for JsGetterClassMember {
 impl std::fmt::Debug for JsGetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsGetterClassMember")
+            .field("ts_decorators", &self.ts_decorators())
             .field("modifiers", &self.modifiers())
             .field("get_token", &support::DebugSyntaxResult(self.get_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
@@ -12383,6 +12403,7 @@ impl AstNode for JsMethodClassMember {
 impl std::fmt::Debug for JsMethodClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsMethodClassMember")
+            .field("ts_decorators", &self.ts_decorators())
             .field("modifiers", &self.modifiers())
             .field(
                 "async_token",
@@ -13194,6 +13215,7 @@ impl AstNode for JsPropertyClassMember {
 impl std::fmt::Debug for JsPropertyClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsPropertyClassMember")
+            .field("ts_decorators", &self.ts_decorators())
             .field("modifiers", &self.modifiers())
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
@@ -13434,6 +13456,7 @@ impl AstNode for JsSetterClassMember {
 impl std::fmt::Debug for JsSetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsSetterClassMember")
+            .field("ts_decorators", &self.ts_decorators())
             .field("modifiers", &self.modifiers())
             .field("set_token", &support::DebugSyntaxResult(self.set_token()))
             .field("name", &support::DebugSyntaxResult(self.name()))
@@ -17197,6 +17220,7 @@ impl AstNode for TsPropertySignatureClassMember {
 impl std::fmt::Debug for TsPropertySignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsPropertySignatureClassMember")
+            .field("ts_decorators", &self.ts_decorators())
             .field("modifiers", &self.modifiers())
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(

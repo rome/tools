@@ -14,6 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [
                         JsStaticModifier {
                             modifier_token: STATIC_KW@9..19 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
@@ -73,14 +74,15 @@ JsModule {
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..57
         0: JS_PROPERTY_CLASS_MEMBER@9..21
-          0: JS_PROPERTY_MODIFIER_LIST@9..19
+          0: TS_DECORATOR_LIST@9..9
+          1: JS_PROPERTY_MODIFIER_LIST@9..19
             0: JS_STATIC_MODIFIER@9..19
               0: STATIC_KW@9..19 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@19..20
+          2: JS_LITERAL_MEMBER_NAME@19..20
             0: IDENT@19..20 "a" [] []
-          2: (empty)
           3: (empty)
-          4: SEMICOLON@20..21 ";" [] []
+          4: (empty)
+          5: SEMICOLON@20..21 ";" [] []
         1: JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER@21..57
           0: STATIC_KW@21..31 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: L_CURLY@31..32 "{" [] []

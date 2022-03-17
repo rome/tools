@@ -15,6 +15,7 @@ JsModule {
             members: JsClassMemberList [
                 JsUnknownMember {
                     items: [
+                        TsDecoratorList [],
                         TsPropertySignatureModifierList [
                             TsDeclareModifier {
                                 modifier_token: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")],
@@ -47,10 +48,11 @@ JsModule {
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..22
         0: JS_UNKNOWN_MEMBER@10..22
-          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@10..18
+          0: TS_DECORATOR_LIST@10..10
+          1: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@10..18
             0: TS_DECLARE_MODIFIER@10..18
               0: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@18..22
+          2: JS_LITERAL_MEMBER_NAME@18..22
             0: IDENT@18..22 "foo" [] [Whitespace(" ")]
       8: R_CURLY@22..23 "}" [] []
   3: EOF@23..24 "" [Newline("\n")] []

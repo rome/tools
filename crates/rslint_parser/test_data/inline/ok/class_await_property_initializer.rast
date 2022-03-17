@@ -32,6 +32,7 @@ JsScript {
                         l_curly_token: L_CURLY@45..46 "{" [] [],
                         members: JsClassMemberList [
                             JsPropertyClassMember {
+                                ts_decorators: TsDecoratorList [],
                                 modifiers: JsPropertyModifierList [],
                                 name: JsLiteralMemberName {
                                     value: IDENT@46..56 "prop" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -89,16 +90,17 @@ JsScript {
             6: L_CURLY@45..46 "{" [] []
             7: JS_CLASS_MEMBER_LIST@46..64
               0: JS_PROPERTY_CLASS_MEMBER@46..64
-                0: JS_PROPERTY_MODIFIER_LIST@46..46
-                1: JS_LITERAL_MEMBER_NAME@46..56
+                0: TS_DECORATOR_LIST@46..46
+                1: JS_PROPERTY_MODIFIER_LIST@46..46
+                2: JS_LITERAL_MEMBER_NAME@46..56
                   0: IDENT@46..56 "prop" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-                2: (empty)
-                3: JS_INITIALIZER_CLAUSE@56..63
+                3: (empty)
+                4: JS_INITIALIZER_CLAUSE@56..63
                   0: EQ@56..58 "=" [] [Whitespace(" ")]
                   1: JS_IDENTIFIER_EXPRESSION@58..63
                     0: JS_REFERENCE_IDENTIFIER@58..63
                       0: IDENT@58..63 "await" [] []
-                4: SEMICOLON@63..64 ";" [] []
+                5: SEMICOLON@63..64 ";" [] []
             8: R_CURLY@64..68 "}" [Newline("\n"), Whitespace("  ")] []
         3: R_CURLY@68..70 "}" [Newline("\n")] []
   3: EOF@70..71 "" [Newline("\n")] []

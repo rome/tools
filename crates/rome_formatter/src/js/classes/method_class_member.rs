@@ -2,7 +2,8 @@ use crate::format_element::hard_group_elements;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, utils::format_decorators, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
 use rome_js_syntax::JsMethodClassMember;
@@ -11,6 +12,7 @@ use rome_js_syntax::JsMethodClassMemberFields;
 impl ToFormatElement for JsMethodClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsMethodClassMemberFields {
+            ts_decorators,
             modifiers,
             async_token,
             star_token,
@@ -34,6 +36,7 @@ impl ToFormatElement for JsMethodClassMember {
         let body = body.format(formatter)?;
 
         Ok(hard_group_elements(format_elements![
+            format_decorators(ts_decorators, &formatter)?,
             modifiers.format(formatter)?,
             space_token(),
             async_token,

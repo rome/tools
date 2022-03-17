@@ -26,13 +26,13 @@ export default class {}
 
 # Errors
 ```
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ before_export.js:1:1
   │
 1 │ @decorator
   │ ^^^^^^^^^^ TypeScript only syntax
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ before_export.js:4:1
   │
 4 │ @decorator

@@ -94,6 +94,7 @@ JsModule {
                     ],
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: STAR@102..110 "*" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")],
@@ -193,19 +194,20 @@ JsModule {
             2: R_PAREN@100..101 ")" [] []
           4: SEMICOLON@101..102 ";" [] []
         1: JS_METHOD_CLASS_MEMBER@102..123
-          0: JS_METHOD_MODIFIER_LIST@102..102
-          1: (empty)
-          2: STAR@102..110 "*" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
-          3: JS_LITERAL_MEMBER_NAME@110..118
+          0: TS_DECORATOR_LIST@102..102
+          1: JS_METHOD_MODIFIER_LIST@102..102
+          2: (empty)
+          3: STAR@102..110 "*" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@110..118
             0: IDENT@110..118 "overload" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@118..121
+          6: (empty)
+          7: JS_PARAMETERS@118..121
             0: L_PAREN@118..119 "(" [] []
             1: JS_PARAMETER_LIST@119..119
             2: R_PAREN@119..121 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@121..123
+          8: (empty)
+          9: JS_FUNCTION_BODY@121..123
             0: L_CURLY@121..122 "{" [] []
             1: JS_DIRECTIVE_LIST@122..122
             2: JS_STATEMENT_LIST@122..122

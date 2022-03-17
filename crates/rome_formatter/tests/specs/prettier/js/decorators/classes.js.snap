@@ -47,19 +47,19 @@ const bar =
 
 # Errors
 ```
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ classes.js:1:1
   │
 1 │ @deco class Foo {}
   │ ^^^^^ TypeScript only syntax
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ classes.js:3:1
   │
 3 │ @deco export class Bar {}
   │ ^^^^^ TypeScript only syntax
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ classes.js:5:1
   │
 5 │ @deco export default class Baz {}

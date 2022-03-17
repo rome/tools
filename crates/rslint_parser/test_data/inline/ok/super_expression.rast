@@ -22,6 +22,7 @@ JsModule {
             l_curly_token: L_CURLY@21..22 "{" [] [],
             members: JsClassMemberList [
                 JsConstructorClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@22..36 "constructor" [Newline("\n"), Whitespace("  ")] [],
@@ -55,6 +56,7 @@ JsModule {
                     },
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -151,14 +153,15 @@ JsModule {
       6: L_CURLY@21..22 "{" [] []
       7: JS_CLASS_MEMBER_LIST@22..108
         0: JS_CONSTRUCTOR_CLASS_MEMBER@22..57
-          0: JS_CONSTRUCTOR_MODIFIER_LIST@22..22
-          1: JS_LITERAL_MEMBER_NAME@22..36
+          0: TS_DECORATOR_LIST@22..22
+          1: JS_CONSTRUCTOR_MODIFIER_LIST@22..22
+          2: JS_LITERAL_MEMBER_NAME@22..36
             0: IDENT@22..36 "constructor" [Newline("\n"), Whitespace("  ")] []
-          2: JS_CONSTRUCTOR_PARAMETERS@36..39
+          3: JS_CONSTRUCTOR_PARAMETERS@36..39
             0: L_PAREN@36..37 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@37..37
             2: R_PAREN@37..39 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@39..57
+          4: JS_FUNCTION_BODY@39..57
             0: L_CURLY@39..40 "{" [] []
             1: JS_DIRECTIVE_LIST@40..40
             2: JS_STATEMENT_LIST@40..53
@@ -175,19 +178,20 @@ JsModule {
                 1: SEMICOLON@52..53 ";" [] []
             3: R_CURLY@53..57 "}" [Newline("\n"), Whitespace("  ")] []
         1: JS_METHOD_CLASS_MEMBER@57..108
-          0: JS_METHOD_MODIFIER_LIST@57..57
-          1: (empty)
+          0: TS_DECORATOR_LIST@57..57
+          1: JS_METHOD_MODIFIER_LIST@57..57
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@57..64
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@57..64
             0: IDENT@57..64 "test" [Newline("\n"), Whitespace("  ")] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@64..67
+          6: (empty)
+          7: JS_PARAMETERS@64..67
             0: L_PAREN@64..65 "(" [] []
             1: JS_PARAMETER_LIST@65..65
             2: R_PAREN@65..67 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@67..108
+          8: (empty)
+          9: JS_FUNCTION_BODY@67..108
             0: L_CURLY@67..68 "{" [] []
             1: JS_DIRECTIVE_LIST@68..68
             2: JS_STATEMENT_LIST@68..104

@@ -14,6 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@16..18 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@18..19 "#" [] [],
@@ -29,6 +30,7 @@ JsModule {
                     semicolon_token: SEMICOLON@32..34 ";" [] [Whitespace(" ")],
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -97,6 +99,7 @@ JsModule {
             l_curly_token: L_CURLY@91..93 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@93..94 "#" [] [],
@@ -112,6 +115,7 @@ JsModule {
                     semicolon_token: SEMICOLON@107..109 ";" [] [Whitespace(" ")],
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -171,6 +175,7 @@ JsModule {
             l_curly_token: L_CURLY@162..164 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@164..165 "#" [] [],
@@ -186,6 +191,7 @@ JsModule {
                     semicolon_token: SEMICOLON@178..180 ";" [] [Whitespace(" ")],
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -251,6 +257,7 @@ JsModule {
             l_curly_token: L_CURLY@240..242 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@242..243 "#" [] [],
@@ -266,6 +273,7 @@ JsModule {
                     semicolon_token: SEMICOLON@256..258 ";" [] [Whitespace(" ")],
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -344,6 +352,7 @@ JsModule {
             l_curly_token: L_CURLY@322..324 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@324..325 "#" [] [],
@@ -359,6 +368,7 @@ JsModule {
                     semicolon_token: SEMICOLON@338..340 ";" [] [Whitespace(" ")],
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -435,6 +445,7 @@ JsModule {
             l_curly_token: L_CURLY@407..409 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsPropertyModifierList [],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@409..410 "#" [] [],
@@ -450,6 +461,7 @@ JsModule {
                     semicolon_token: SEMICOLON@423..425 ";" [] [Whitespace(" ")],
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -535,30 +547,32 @@ JsModule {
       6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@18..73
         0: JS_PROPERTY_CLASS_MEMBER@18..34
-          0: JS_PROPERTY_MODIFIER_LIST@18..18
-          1: JS_PRIVATE_CLASS_MEMBER_NAME@18..26
+          0: TS_DECORATOR_LIST@18..18
+          1: JS_PROPERTY_MODIFIER_LIST@18..18
+          2: JS_PRIVATE_CLASS_MEMBER_NAME@18..26
             0: HASH@18..19 "#" [] []
             1: IDENT@19..26 "member" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@26..32
+          3: (empty)
+          4: JS_INITIALIZER_CLAUSE@26..32
             0: EQ@26..28 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@28..32
               0: TRUE_KW@28..32 "true" [] []
-          4: SEMICOLON@32..34 ";" [] [Whitespace(" ")]
+          5: SEMICOLON@32..34 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@34..73
-          0: JS_METHOD_MODIFIER_LIST@34..34
-          1: (empty)
+          0: TS_DECORATOR_LIST@34..34
+          1: JS_METHOD_MODIFIER_LIST@34..34
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@34..40
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@34..40
             0: IDENT@34..40 "method" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@40..43
+          6: (empty)
+          7: JS_PARAMETERS@40..43
             0: L_PAREN@40..41 "(" [] []
             1: JS_PARAMETER_LIST@41..41
             2: R_PAREN@41..43 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@43..73
+          8: (empty)
+          9: JS_FUNCTION_BODY@43..73
             0: L_CURLY@43..45 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@45..45
             2: JS_STATEMENT_LIST@45..71
@@ -596,30 +610,32 @@ JsModule {
       6: L_CURLY@91..93 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@93..144
         0: JS_PROPERTY_CLASS_MEMBER@93..109
-          0: JS_PROPERTY_MODIFIER_LIST@93..93
-          1: JS_PRIVATE_CLASS_MEMBER_NAME@93..101
+          0: TS_DECORATOR_LIST@93..93
+          1: JS_PROPERTY_MODIFIER_LIST@93..93
+          2: JS_PRIVATE_CLASS_MEMBER_NAME@93..101
             0: HASH@93..94 "#" [] []
             1: IDENT@94..101 "member" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@101..107
+          3: (empty)
+          4: JS_INITIALIZER_CLAUSE@101..107
             0: EQ@101..103 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@103..107
               0: TRUE_KW@103..107 "true" [] []
-          4: SEMICOLON@107..109 ";" [] [Whitespace(" ")]
+          5: SEMICOLON@107..109 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@109..144
-          0: JS_METHOD_MODIFIER_LIST@109..109
-          1: (empty)
+          0: TS_DECORATOR_LIST@109..109
+          1: JS_METHOD_MODIFIER_LIST@109..109
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@109..115
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@109..115
             0: IDENT@109..115 "method" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@115..118
+          6: (empty)
+          7: JS_PARAMETERS@115..118
             0: L_PAREN@115..116 "(" [] []
             1: JS_PARAMETER_LIST@116..116
             2: R_PAREN@116..118 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@118..144
+          8: (empty)
+          9: JS_FUNCTION_BODY@118..144
             0: L_CURLY@118..120 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@120..120
             2: JS_STATEMENT_LIST@120..142
@@ -651,30 +667,32 @@ JsModule {
       6: L_CURLY@162..164 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@164..222
         0: JS_PROPERTY_CLASS_MEMBER@164..180
-          0: JS_PROPERTY_MODIFIER_LIST@164..164
-          1: JS_PRIVATE_CLASS_MEMBER_NAME@164..172
+          0: TS_DECORATOR_LIST@164..164
+          1: JS_PROPERTY_MODIFIER_LIST@164..164
+          2: JS_PRIVATE_CLASS_MEMBER_NAME@164..172
             0: HASH@164..165 "#" [] []
             1: IDENT@165..172 "member" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@172..178
+          3: (empty)
+          4: JS_INITIALIZER_CLAUSE@172..178
             0: EQ@172..174 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@174..178
               0: TRUE_KW@174..178 "true" [] []
-          4: SEMICOLON@178..180 ";" [] [Whitespace(" ")]
+          5: SEMICOLON@178..180 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@180..222
-          0: JS_METHOD_MODIFIER_LIST@180..180
-          1: (empty)
+          0: TS_DECORATOR_LIST@180..180
+          1: JS_METHOD_MODIFIER_LIST@180..180
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@180..186
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@180..186
             0: IDENT@180..186 "method" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@186..189
+          6: (empty)
+          7: JS_PARAMETERS@186..189
             0: L_PAREN@186..187 "(" [] []
             1: JS_PARAMETER_LIST@187..187
             2: R_PAREN@187..189 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@189..222
+          8: (empty)
+          9: JS_FUNCTION_BODY@189..222
             0: L_CURLY@189..191 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@191..191
             2: JS_STATEMENT_LIST@191..220
@@ -710,30 +728,32 @@ JsModule {
       6: L_CURLY@240..242 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@242..304
         0: JS_PROPERTY_CLASS_MEMBER@242..258
-          0: JS_PROPERTY_MODIFIER_LIST@242..242
-          1: JS_PRIVATE_CLASS_MEMBER_NAME@242..250
+          0: TS_DECORATOR_LIST@242..242
+          1: JS_PROPERTY_MODIFIER_LIST@242..242
+          2: JS_PRIVATE_CLASS_MEMBER_NAME@242..250
             0: HASH@242..243 "#" [] []
             1: IDENT@243..250 "member" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@250..256
+          3: (empty)
+          4: JS_INITIALIZER_CLAUSE@250..256
             0: EQ@250..252 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@252..256
               0: TRUE_KW@252..256 "true" [] []
-          4: SEMICOLON@256..258 ";" [] [Whitespace(" ")]
+          5: SEMICOLON@256..258 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@258..304
-          0: JS_METHOD_MODIFIER_LIST@258..258
-          1: (empty)
+          0: TS_DECORATOR_LIST@258..258
+          1: JS_METHOD_MODIFIER_LIST@258..258
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@258..264
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@258..264
             0: IDENT@258..264 "method" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@264..267
+          6: (empty)
+          7: JS_PARAMETERS@264..267
             0: L_PAREN@264..265 "(" [] []
             1: JS_PARAMETER_LIST@265..265
             2: R_PAREN@265..267 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@267..304
+          8: (empty)
+          9: JS_FUNCTION_BODY@267..304
             0: L_CURLY@267..269 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@269..269
             2: JS_STATEMENT_LIST@269..302
@@ -780,30 +800,32 @@ JsModule {
       6: L_CURLY@322..324 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@324..389
         0: JS_PROPERTY_CLASS_MEMBER@324..340
-          0: JS_PROPERTY_MODIFIER_LIST@324..324
-          1: JS_PRIVATE_CLASS_MEMBER_NAME@324..332
+          0: TS_DECORATOR_LIST@324..324
+          1: JS_PROPERTY_MODIFIER_LIST@324..324
+          2: JS_PRIVATE_CLASS_MEMBER_NAME@324..332
             0: HASH@324..325 "#" [] []
             1: IDENT@325..332 "member" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@332..338
+          3: (empty)
+          4: JS_INITIALIZER_CLAUSE@332..338
             0: EQ@332..334 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@334..338
               0: TRUE_KW@334..338 "true" [] []
-          4: SEMICOLON@338..340 ";" [] [Whitespace(" ")]
+          5: SEMICOLON@338..340 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@340..389
-          0: JS_METHOD_MODIFIER_LIST@340..340
-          1: (empty)
+          0: TS_DECORATOR_LIST@340..340
+          1: JS_METHOD_MODIFIER_LIST@340..340
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@340..346
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@340..346
             0: IDENT@340..346 "method" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@346..349
+          6: (empty)
+          7: JS_PARAMETERS@346..349
             0: L_PAREN@346..347 "(" [] []
             1: JS_PARAMETER_LIST@347..347
             2: R_PAREN@347..349 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@349..389
+          8: (empty)
+          9: JS_FUNCTION_BODY@349..389
             0: L_CURLY@349..351 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@351..351
             2: JS_STATEMENT_LIST@351..387
@@ -848,30 +870,32 @@ JsModule {
       6: L_CURLY@407..409 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@409..477
         0: JS_PROPERTY_CLASS_MEMBER@409..425
-          0: JS_PROPERTY_MODIFIER_LIST@409..409
-          1: JS_PRIVATE_CLASS_MEMBER_NAME@409..417
+          0: TS_DECORATOR_LIST@409..409
+          1: JS_PROPERTY_MODIFIER_LIST@409..409
+          2: JS_PRIVATE_CLASS_MEMBER_NAME@409..417
             0: HASH@409..410 "#" [] []
             1: IDENT@410..417 "member" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@417..423
+          3: (empty)
+          4: JS_INITIALIZER_CLAUSE@417..423
             0: EQ@417..419 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@419..423
               0: TRUE_KW@419..423 "true" [] []
-          4: SEMICOLON@423..425 ";" [] [Whitespace(" ")]
+          5: SEMICOLON@423..425 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@425..477
-          0: JS_METHOD_MODIFIER_LIST@425..425
-          1: (empty)
+          0: TS_DECORATOR_LIST@425..425
+          1: JS_METHOD_MODIFIER_LIST@425..425
           2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@425..431
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@425..431
             0: IDENT@425..431 "method" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@431..434
+          6: (empty)
+          7: JS_PARAMETERS@431..434
             0: L_PAREN@431..432 "(" [] []
             1: JS_PARAMETER_LIST@432..432
             2: R_PAREN@432..434 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@434..477
+          8: (empty)
+          9: JS_FUNCTION_BODY@434..477
             0: L_CURLY@434..436 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@436..436
             2: JS_STATEMENT_LIST@436..475

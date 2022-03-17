@@ -14,10 +14,12 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
- <A extends B>() => {};
+class A {
+    [a: number]: string;
+}
     "#;
 
-    let module = parse(src, 0, SourceType::jsx());
+    let module = parse(src, 0, SourceType::ts());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 
@@ -142,7 +144,7 @@ mod parser {
         tests_macros::gen_tests! {"test_data/inline/ok/**/*.{js,ts,jsx,tsx}", crate::tests::run_and_expect_no_errors, ""}
     }
     mod err {
-        tests_macros::gen_tests! {"test_data/inline/err/**/*.{js, ts, jsx, tsx}", crate::tests::run_and_expect_errors, ""}
+        tests_macros::gen_tests! {"test_data/inline/err/**/*.{js,ts,jsx,tsx}", crate::tests::run_and_expect_errors, ""}
     }
 }
 

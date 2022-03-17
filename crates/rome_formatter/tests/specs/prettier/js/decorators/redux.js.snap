@@ -26,13 +26,13 @@ export class Home extends React.Component {}
 
 # Errors
 ```
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ redux.js:1:1
   │
 1 │ @connect(mapStateToProps, mapDispatchToProps)
   │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ redux.js:4:1
   │
 4 │ @connect(state => ({ todos: state.todos }))

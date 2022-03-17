@@ -14,6 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@11..12 "{" [] [],
             members: JsClassMemberList [
                 JsConstructorClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@12..29 "constructor" [Newline("\n"), Whitespace("     ")] [],
@@ -26,6 +27,7 @@ JsModule {
                     body: missing (required),
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -43,6 +45,7 @@ JsModule {
                     body: missing (required),
                 },
                 JsGetterClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     get_token: GET_KW@41..45 "get" [] [Whitespace(" ")],
                     name: JsLiteralMemberName {
@@ -54,6 +57,7 @@ JsModule {
                     body: missing (required),
                 },
                 JsSetterClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     set_token: SET_KW@51..61 "set" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
@@ -93,51 +97,55 @@ JsModule {
       6: L_CURLY@11..12 "{" [] []
       7: JS_CLASS_MEMBER_LIST@12..72
         0: JS_CONSTRUCTOR_CLASS_MEMBER@12..32
-          0: JS_CONSTRUCTOR_MODIFIER_LIST@12..12
-          1: JS_LITERAL_MEMBER_NAME@12..29
+          0: TS_DECORATOR_LIST@12..12
+          1: JS_CONSTRUCTOR_MODIFIER_LIST@12..12
+          2: JS_LITERAL_MEMBER_NAME@12..29
             0: IDENT@12..29 "constructor" [Newline("\n"), Whitespace("     ")] []
-          2: JS_CONSTRUCTOR_PARAMETERS@29..32
+          3: JS_CONSTRUCTOR_PARAMETERS@29..32
             0: L_PAREN@29..30 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@30..30
             2: R_PAREN@30..32 ")" [] [Whitespace(" ")]
-          3: (empty)
-        1: JS_METHOD_CLASS_MEMBER@32..41
-          0: JS_METHOD_MODIFIER_LIST@32..32
-          1: (empty)
-          2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@32..38
-            0: IDENT@32..38 "method" [] []
           4: (empty)
+        1: JS_METHOD_CLASS_MEMBER@32..41
+          0: TS_DECORATOR_LIST@32..32
+          1: JS_METHOD_MODIFIER_LIST@32..32
+          2: (empty)
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@32..38
+            0: IDENT@32..38 "method" [] []
           5: (empty)
-          6: JS_PARAMETERS@38..41
+          6: (empty)
+          7: JS_PARAMETERS@38..41
             0: L_PAREN@38..39 "(" [] []
             1: JS_PARAMETER_LIST@39..39
             2: R_PAREN@39..41 ")" [] [Whitespace(" ")]
-          7: (empty)
           8: (empty)
+          9: (empty)
         2: JS_GETTER_CLASS_MEMBER@41..51
-          0: JS_METHOD_MODIFIER_LIST@41..41
-          1: GET_KW@41..45 "get" [] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@45..49
+          0: TS_DECORATOR_LIST@41..41
+          1: JS_METHOD_MODIFIER_LIST@41..41
+          2: GET_KW@41..45 "get" [] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@45..49
             0: IDENT@45..49 "test" [] []
-          3: L_PAREN@49..50 "(" [] []
-          4: R_PAREN@50..51 ")" [] []
-          5: (empty)
+          4: L_PAREN@49..50 "(" [] []
+          5: R_PAREN@50..51 ")" [] []
           6: (empty)
+          7: (empty)
         3: JS_SETTER_CLASS_MEMBER@51..72
-          0: JS_METHOD_MODIFIER_LIST@51..51
-          1: SET_KW@51..61 "set" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@61..65
+          0: TS_DECORATOR_LIST@51..51
+          1: JS_METHOD_MODIFIER_LIST@51..51
+          2: SET_KW@51..61 "set" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@61..65
             0: IDENT@61..65 "test" [] []
-          3: L_PAREN@65..66 "(" [] []
-          4: JS_FORMAL_PARAMETER@66..71
+          4: L_PAREN@65..66 "(" [] []
+          5: JS_FORMAL_PARAMETER@66..71
             0: JS_IDENTIFIER_BINDING@66..71
               0: IDENT@66..71 "value" [] []
             1: (empty)
             2: (empty)
             3: (empty)
-          5: R_PAREN@71..72 ")" [] []
-          6: (empty)
+          6: R_PAREN@71..72 ")" [] []
+          7: (empty)
       8: R_CURLY@72..74 "}" [Newline("\n")] []
   3: EOF@74..75 "" [Newline("\n")] []
 --

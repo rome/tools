@@ -13,8 +13,8 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    expected_binding, modifier_already_seen, modifier_cannot_be_used_with_modifier,
-    modifier_must_precede_modifier,
+    expected_binding, expected_identifier, modifier_already_seen,
+    modifier_cannot_be_used_with_modifier, modifier_must_precede_modifier,
 };
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
@@ -27,8 +27,9 @@ use crate::syntax::typescript::ts_parse_error::{
     ts_set_accessor_return_type_error,
 };
 use crate::syntax::typescript::{
-    is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
-    parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
+    is_reserved_type_name, parse_ts_decorators, parse_ts_implements_clause,
+    parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_arguments,
+    parse_ts_type_parameters,
 };
 
 use crate::JsSyntaxFeature::TypeScript;
@@ -109,6 +110,31 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test_err ts typescript_abstract_classes_invalid_abstract_constructor
 // abstract class A { abstract constructor();};
+
+// test ts ts_decorate_computed_member
+// class Test {
+// @test
+// ['a']: string;
+// }
+
+// test ts ts_decorated_class_members
+// class Test {
+//   @test prop: string;
+//   @test method() {}
+//   @test get getter() {}
+//   @test set setter(a) {}
+//   @test constructor() {}
+//   @test declare prop;
+// }
+
+// test_err ts ts_invalid_decorated_class_members
+// abstract class Test {
+//   @test method();
+//   @test [index: string]: string;
+//   @test abstract method2();
+//   @test abstract get getter();
+//   @test abstract set setter();
+// }
 
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
 ///
@@ -427,7 +453,8 @@ impl ParseNodeList for ClassMembersList {
                     T![async],
                     T![yield],
                     T!['}'],
-                    T![#]
+                    T![#],
+                    T![@],
                 ],
             ),
             js_parse_error::expected_class_member,
@@ -458,6 +485,7 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
         return Present(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER));
     }
 
+    let decorators = parse_ts_decorators(p);
     let mut modifiers = parse_class_member_modifiers(p, false);
 
     if is_at_static_initialization_block_class_member(p) {
@@ -465,10 +493,11 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
             p,
             member_marker,
             modifiers,
+            decorators,
         ));
     }
 
-    let member = parse_class_member_impl(p, member_marker, &mut modifiers);
+    let member = parse_class_member_impl(p, member_marker, &mut modifiers, &decorators);
 
     match member {
         Present(mut member) => {
@@ -493,8 +522,9 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
             }
 
             let modifiers_valid = modifiers.validate_and_complete(p, member.kind());
+            let decorators_valid = validate_decorators(p, decorators, member.kind());
 
-            if !valid || !modifiers_valid {
+            if !valid || !modifiers_valid || !decorators_valid {
                 member.change_to_unknown(p);
             }
 
@@ -502,7 +532,9 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
         }
         Absent => {
             debug_assert!(modifiers.is_empty());
+            debug_assert!(decorators.range(p).is_empty());
             modifiers.abandon(p);
+            decorators.undo_completion(p).abandon(p);
             Absent
         }
     }
@@ -542,6 +574,7 @@ fn parse_class_member_impl(
     p: &mut Parser,
     member_marker: Marker,
     modifiers: &mut ClassMemberModifiers,
+    decorators: &CompletedMarker,
 ) -> ParsedSyntax {
     let start_token_pos = p.tokens.position();
     let generator_range = p.cur_range();
@@ -801,16 +834,21 @@ fn parse_class_member_impl(
             Present(property)
         }
         None => {
-            // test_err block_stmt_in_class
-            // class S{{}}
-            debug_assert_eq!(
-                p.tokens.position(),
-                start_token_pos,
-                "Parser shouldn't be progressing when returning Absent"
-            );
+            if decorators.range(p).is_empty() {
+                // test_err block_stmt_in_class
+                // class S{{}}
+                debug_assert_eq!(
+                    p.tokens.position(),
+                    start_token_pos,
+                    "Parser shouldn't be progressing when returning Absent"
+                );
 
-            member_marker.abandon(p);
-            Absent
+                member_marker.abandon(p);
+                Absent
+            } else {
+                p.error(expected_identifier(p, p.cur_range()));
+                Present(member_marker.complete(p, JS_UNKNOWN_MEMBER))
+            }
         }
     }
 }
@@ -831,6 +869,7 @@ fn parse_static_initialization_block_class_member(
     p: &mut Parser,
     member_marker: Marker,
     modifiers: ClassMemberModifiers,
+    decorators: CompletedMarker,
 ) -> CompletedMarker {
     if modifiers.is_empty() {
         modifiers.abandon(p);
@@ -845,6 +884,14 @@ fn parse_static_initialization_block_class_member(
         );
         modifiers.validate_and_complete(p, JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER);
     }
+
+    if !decorators.range(p).is_empty() {
+        p.error(
+            p.err_builder("Decorators are not valid on static initializer blocks.")
+                .primary(decorators.range(p), "Invalid decorator"),
+        );
+    }
+    decorators.undo_completion(p).abandon(p);
 
     p.expect(T![static]);
     p.expect(T!['{']);
@@ -2217,5 +2264,36 @@ impl ClassMemberModifiers {
         }
 
         None
+    }
+}
+
+fn validate_decorators(
+    p: &mut Parser,
+    decorators: CompletedMarker,
+    member_kind: JsSyntaxKind,
+) -> bool {
+    if matches!(
+        member_kind,
+        JS_PROPERTY_CLASS_MEMBER
+            | JS_METHOD_CLASS_MEMBER
+            | JS_GETTER_CLASS_MEMBER
+            | JS_SETTER_CLASS_MEMBER
+            | JS_CONSTRUCTOR_CLASS_MEMBER
+            | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
+    ) {
+        true
+    } else {
+        let valid = decorators.range(p).is_empty();
+
+        if !valid {
+            p.error(
+                p.err_builder("Decorator not valid here.")
+                    .primary(decorators.range(p), ""),
+            );
+        }
+
+        decorators.undo_completion(p).abandon(p);
+
+        valid
     }
 }

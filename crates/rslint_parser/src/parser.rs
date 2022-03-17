@@ -475,10 +475,11 @@ impl Marker {
     /// and mark the create a `CompletedMarker` for possible future
     /// operation like `.precede()` to deal with forward_parent.
     pub fn complete(self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
-        let mut end_pos = p.last_range().map(|t| t.end()).unwrap_or_default();
-        if end_pos < self.start {
-            end_pos = p.cur_range().end();
-        }
+        let end_pos = TextSize::max(
+            p.last_range().map(|t| t.end()).unwrap_or(self.start),
+            self.start,
+        );
+
         self.complete_at(p, kind, end_pos)
     }
 

@@ -55,6 +55,7 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsConstructorClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsConstructorModifierList [],
                     name: JsLiteralMemberName {
                         value: IDENT@67..84 "constructor" [Newline("\n"), Whitespace("     ")] [],
@@ -176,6 +177,7 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsMethodClassMember {
+                    ts_decorators: TsDecoratorList [],
                     modifiers: JsMethodModifierList [],
                     async_token: ASYNC_KW@184..196 "async" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")],
                     star_token: missing (optional),
@@ -292,10 +294,11 @@ JsModule {
             2: R_PAREN@59..67 ")" [] [Whitespace(" "), Comments("// ASI")]
           3: (empty)
         2: JS_CONSTRUCTOR_CLASS_MEMBER@67..99
-          0: JS_CONSTRUCTOR_MODIFIER_LIST@67..67
-          1: JS_LITERAL_MEMBER_NAME@67..84
+          0: TS_DECORATOR_LIST@67..67
+          1: JS_CONSTRUCTOR_MODIFIER_LIST@67..67
+          2: JS_LITERAL_MEMBER_NAME@67..84
             0: IDENT@67..84 "constructor" [Newline("\n"), Whitespace("     ")] []
-          2: JS_CONSTRUCTOR_PARAMETERS@84..97
+          3: JS_CONSTRUCTOR_PARAMETERS@84..97
             0: L_PAREN@84..85 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@85..95
               0: JS_FORMAL_PARAMETER@85..95
@@ -310,7 +313,7 @@ JsModule {
                     1: (empty)
                 3: (empty)
             2: R_PAREN@95..97 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@97..99
+          4: JS_FUNCTION_BODY@97..99
             0: L_CURLY@97..98 "{" [] []
             1: JS_DIRECTIVE_LIST@98..98
             2: JS_STATEMENT_LIST@98..98
@@ -377,14 +380,15 @@ JsModule {
                 2: R_ANGLE@176..184 ">" [] [Whitespace(" "), Comments("// ASI")]
           7: (empty)
         5: JS_METHOD_CLASS_MEMBER@184..249
-          0: JS_METHOD_MODIFIER_LIST@184..184
-          1: ASYNC_KW@184..196 "async" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
-          2: (empty)
-          3: JS_LITERAL_MEMBER_NAME@196..202
+          0: TS_DECORATOR_LIST@184..184
+          1: JS_METHOD_MODIFIER_LIST@184..184
+          2: ASYNC_KW@184..196 "async" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@196..202
             0: IDENT@196..202 "method" [] []
-          4: (empty)
           5: (empty)
-          6: JS_PARAMETERS@202..214
+          6: (empty)
+          7: JS_PARAMETERS@202..214
             0: L_PAREN@202..203 "(" [] []
             1: JS_PARAMETER_LIST@203..213
               0: JS_FORMAL_PARAMETER@203..213
@@ -399,7 +403,7 @@ JsModule {
                     1: (empty)
                 3: (empty)
             2: R_PAREN@213..214 ")" [] []
-          7: TS_RETURN_TYPE_ANNOTATION@214..232
+          8: TS_RETURN_TYPE_ANNOTATION@214..232
             0: COLON@214..216 ":" [] [Whitespace(" ")]
             1: TS_REFERENCE_TYPE@216..232
               0: JS_REFERENCE_IDENTIFIER@216..223
@@ -412,7 +416,7 @@ JsModule {
                       0: IDENT@224..230 "String" [] []
                     1: (empty)
                 2: R_ANGLE@230..232 ">" [] [Whitespace(" ")]
-          8: JS_FUNCTION_BODY@232..249
+          9: JS_FUNCTION_BODY@232..249
             0: L_CURLY@232..234 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@234..234
             2: JS_STATEMENT_LIST@234..248

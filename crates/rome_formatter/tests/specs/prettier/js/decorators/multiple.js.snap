@@ -53,13 +53,13 @@ error[SyntaxError]: expected a property, a shorthand property, a getter, a sette
 2 │   @readonly
   │   ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ multiple.js:3:3
   │
 3 │   @nonenumerable
   │   ^^^^^^^^^^^^^^ TypeScript only syntax
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ multiple.js:4:3
   │
 4 │   @doubledValue
@@ -77,13 +77,13 @@ error[SyntaxError]: expected an expression but instead found '@'
 7 │   @readonly
   │   ^ Expected an expression here
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ multiple.js:8:3
   │
 8 │   @nonenumerable
   │   ^^^^^^^^^^^^^^ TypeScript only syntax
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ multiple.js:9:3
   │
 9 │   @doubledValue
@@ -107,13 +107,13 @@ error[SyntaxError]: expected a property, a shorthand property, a getter, a sette
 14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
    │   ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ multiple.js:14:23
    │
 14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
    │                       ^^^^^^^ TypeScript only syntax
 
-error[SyntaxError]: decorator are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: decorators are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ multiple.js:14:31
    │
 14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
