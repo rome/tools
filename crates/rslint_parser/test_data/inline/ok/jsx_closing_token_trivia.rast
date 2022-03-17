@@ -27,7 +27,7 @@ JsModule {
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@38..39 ">" [] [],
                     },
-                    children: missing (optional),
+                    children: JsxChildList [],
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@39..40 "<" [] [],
                         slash_token: SLASH@40..62 "/" [Newline("\n"), Comments("/* some comment */"), Whitespace(" ")] [Whitespace(" ")],
@@ -67,7 +67,7 @@ JsModule {
               0: JSX_IDENT@34..38 "open" [] []
             2: JSX_ATTRIBUTE_LIST@38..38
             3: R_ANGLE@38..39 ">" [] []
-          1: (empty)
+          1: JSX_CHILD_LIST@39..39
           2: JSX_CLOSING_ELEMENT@39..67
             0: L_ANGLE@39..40 "<" [] []
             1: SLASH@40..62 "/" [Newline("\n"), Comments("/* some comment */"), Whitespace(" ")] [Whitespace(" ")]

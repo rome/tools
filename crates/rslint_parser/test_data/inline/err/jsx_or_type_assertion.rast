@@ -33,28 +33,28 @@ JsModule {
                                         eq_token: EQ@25..27 "=" [] [Whitespace(" ")],
                                         expression: JsUnknownExpression {
                                             items: [
-                                                JsUnknown {
-                                                    items: [
-                                                        JsxOpeningElement {
-                                                            l_angle_token: L_ANGLE@27..28 "<" [] [],
-                                                            name: JsxName {
-                                                                value_token: JSX_IDENT@28..31 "div" [] [],
-                                                            },
-                                                            attributes: JsxAttributeList [],
-                                                            r_angle_token: R_ANGLE@31..32 ">" [] [],
+                                                JsxElement {
+                                                    opening_element: JsxOpeningElement {
+                                                        l_angle_token: L_ANGLE@27..28 "<" [] [],
+                                                        name: JsxName {
+                                                            value_token: JSX_IDENT@28..31 "div" [] [],
                                                         },
+                                                        attributes: JsxAttributeList [],
+                                                        r_angle_token: R_ANGLE@31..32 ">" [] [],
+                                                    },
+                                                    children: JsxChildList [
                                                         JsxText {
                                                             value_token: JSX_TEXT_LITERAL@32..33 "a" [] [],
                                                         },
-                                                        JsxClosingElement {
-                                                            l_angle_token: L_ANGLE@33..34 "<" [] [],
-                                                            slash_token: SLASH@34..35 "/" [] [],
-                                                            name: JsxName {
-                                                                value_token: JSX_IDENT@35..38 "div" [] [],
-                                                            },
-                                                            r_angle_token: R_ANGLE@38..39 ">" [] [],
-                                                        },
                                                     ],
+                                                    closing_element: JsxClosingElement {
+                                                        l_angle_token: L_ANGLE@33..34 "<" [] [],
+                                                        slash_token: SLASH@34..35 "/" [] [],
+                                                        name: JsxName {
+                                                            value_token: JSX_IDENT@35..38 "div" [] [],
+                                                        },
+                                                        r_angle_token: R_ANGLE@38..39 ">" [] [],
+                                                    },
                                                 },
                                             ],
                                         },
@@ -156,28 +156,28 @@ JsModule {
                                         expression: JsBinaryExpression {
                                             left: JsUnknownExpression {
                                                 items: [
-                                                    JsUnknown {
-                                                        items: [
-                                                            JsxOpeningElement {
-                                                                l_angle_token: L_ANGLE@145..146 "<" [] [],
-                                                                name: JsxName {
-                                                                    value_token: JSX_IDENT@146..149 "div" [] [],
-                                                                },
-                                                                attributes: JsxAttributeList [],
-                                                                r_angle_token: R_ANGLE@149..150 ">" [] [],
+                                                    JsxElement {
+                                                        opening_element: JsxOpeningElement {
+                                                            l_angle_token: L_ANGLE@145..146 "<" [] [],
+                                                            name: JsxName {
+                                                                value_token: JSX_IDENT@146..149 "div" [] [],
                                                             },
+                                                            attributes: JsxAttributeList [],
+                                                            r_angle_token: R_ANGLE@149..150 ">" [] [],
+                                                        },
+                                                        children: JsxChildList [
                                                             JsxText {
                                                                 value_token: JSX_TEXT_LITERAL@150..151 "a" [] [],
                                                             },
-                                                            JsxClosingElement {
-                                                                l_angle_token: L_ANGLE@151..152 "<" [] [],
-                                                                slash_token: SLASH@152..153 "/" [] [],
-                                                                name: JsxName {
-                                                                    value_token: JSX_IDENT@153..156 "div" [] [],
-                                                                },
-                                                                r_angle_token: R_ANGLE@156..157 ">" [] [],
-                                                            },
                                                         ],
+                                                        closing_element: JsxClosingElement {
+                                                            l_angle_token: L_ANGLE@151..152 "<" [] [],
+                                                            slash_token: SLASH@152..153 "/" [] [],
+                                                            name: JsxName {
+                                                                value_token: JSX_IDENT@153..156 "div" [] [],
+                                                            },
+                                                            r_angle_token: R_ANGLE@156..157 ">" [] [],
+                                                        },
                                                     },
                                                 ],
                                             },
@@ -204,28 +204,28 @@ JsModule {
                                         expression: JsBinaryExpression {
                                             left: JsUnknownExpression {
                                                 items: [
-                                                    JsUnknown {
-                                                        items: [
-                                                            JsxOpeningElement {
-                                                                l_angle_token: L_ANGLE@249..250 "<" [] [],
-                                                                name: JsxName {
-                                                                    value_token: JSX_IDENT@250..256 "string" [] [],
-                                                                },
-                                                                attributes: JsxAttributeList [],
-                                                                r_angle_token: R_ANGLE@256..257 ">" [] [],
+                                                    JsxElement {
+                                                        opening_element: JsxOpeningElement {
+                                                            l_angle_token: L_ANGLE@249..250 "<" [] [],
+                                                            name: JsxName {
+                                                                value_token: JSX_IDENT@250..256 "string" [] [],
                                                             },
+                                                            attributes: JsxAttributeList [],
+                                                            r_angle_token: R_ANGLE@256..257 ">" [] [],
+                                                        },
+                                                        children: JsxChildList [
                                                             JsxText {
                                                                 value_token: JSX_TEXT_LITERAL@257..258 "a" [] [],
                                                             },
-                                                            JsxClosingElement {
-                                                                l_angle_token: L_ANGLE@258..259 "<" [] [],
-                                                                slash_token: SLASH@259..260 "/" [] [],
-                                                                name: JsxName {
-                                                                    value_token: JSX_IDENT@260..266 "string" [] [],
-                                                                },
-                                                                r_angle_token: R_ANGLE@266..267 ">" [] [],
-                                                            },
                                                         ],
+                                                        closing_element: JsxClosingElement {
+                                                            l_angle_token: L_ANGLE@258..259 "<" [] [],
+                                                            slash_token: SLASH@259..260 "/" [] [],
+                                                            name: JsxName {
+                                                                value_token: JSX_IDENT@260..266 "string" [] [],
+                                                            },
+                                                            r_angle_token: R_ANGLE@266..267 ">" [] [],
+                                                        },
                                                     },
                                                 ],
                                             },
@@ -277,15 +277,16 @@ JsModule {
                   2: JS_INITIALIZER_CLAUSE@25..39
                     0: EQ@25..27 "=" [] [Whitespace(" ")]
                     1: JS_UNKNOWN_EXPRESSION@27..39
-                      0: JS_UNKNOWN@27..39
+                      0: JSX_ELEMENT@27..39
                         0: JSX_OPENING_ELEMENT@27..32
                           0: L_ANGLE@27..28 "<" [] []
                           1: JSX_NAME@28..31
                             0: JSX_IDENT@28..31 "div" [] []
                           2: JSX_ATTRIBUTE_LIST@31..31
                           3: R_ANGLE@31..32 ">" [] []
-                        1: JSX_TEXT@32..33
-                          0: JSX_TEXT_LITERAL@32..33 "a" [] []
+                        1: JSX_CHILD_LIST@32..33
+                          0: JSX_TEXT@32..33
+                            0: JSX_TEXT_LITERAL@32..33 "a" [] []
                         2: JSX_CLOSING_ELEMENT@33..39
                           0: L_ANGLE@33..34 "<" [] []
                           1: SLASH@34..35 "/" [] []
@@ -353,15 +354,16 @@ JsModule {
                     0: EQ@143..145 "=" [] [Whitespace(" ")]
                     1: JS_BINARY_EXPRESSION@145..158
                       0: JS_UNKNOWN_EXPRESSION@145..157
-                        0: JS_UNKNOWN@145..157
+                        0: JSX_ELEMENT@145..157
                           0: JSX_OPENING_ELEMENT@145..150
                             0: L_ANGLE@145..146 "<" [] []
                             1: JSX_NAME@146..149
                               0: JSX_IDENT@146..149 "div" [] []
                             2: JSX_ATTRIBUTE_LIST@149..149
                             3: R_ANGLE@149..150 ">" [] []
-                          1: JSX_TEXT@150..151
-                            0: JSX_TEXT_LITERAL@150..151 "a" [] []
+                          1: JSX_CHILD_LIST@150..151
+                            0: JSX_TEXT@150..151
+                              0: JSX_TEXT_LITERAL@150..151 "a" [] []
                           2: JSX_CLOSING_ELEMENT@151..157
                             0: L_ANGLE@151..152 "<" [] []
                             1: SLASH@152..153 "/" [] []
@@ -383,15 +385,16 @@ JsModule {
                     0: EQ@247..249 "=" [] [Whitespace(" ")]
                     1: JS_BINARY_EXPRESSION@249..268
                       0: JS_UNKNOWN_EXPRESSION@249..267
-                        0: JS_UNKNOWN@249..267
+                        0: JSX_ELEMENT@249..267
                           0: JSX_OPENING_ELEMENT@249..257
                             0: L_ANGLE@249..250 "<" [] []
                             1: JSX_NAME@250..256
                               0: JSX_IDENT@250..256 "string" [] []
                             2: JSX_ATTRIBUTE_LIST@256..256
                             3: R_ANGLE@256..257 ">" [] []
-                          1: JSX_TEXT@257..258
-                            0: JSX_TEXT_LITERAL@257..258 "a" [] []
+                          1: JSX_CHILD_LIST@257..258
+                            0: JSX_TEXT@257..258
+                              0: JSX_TEXT_LITERAL@257..258 "a" [] []
                           2: JSX_CLOSING_ELEMENT@258..267
                             0: L_ANGLE@258..259 "<" [] []
                             1: SLASH@259..260 "/" [] []

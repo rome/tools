@@ -13,9 +13,11 @@ JsModule {
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@2..3 ">" [] [],
                     },
-                    children: JsxText {
-                        value_token: JSX_TEXT_LITERAL@3..7 "test" [] [],
-                    },
+                    children: JsxChildList [
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@3..7 "test" [] [],
+                        },
+                    ],
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@7..8 "<" [] [],
                         slash_token: SLASH@8..9 "/" [] [],
@@ -39,9 +41,11 @@ JsModule {
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@15..16 ">" [] [],
                     },
-                    children: JsxText {
-                        value_token: JSX_TEXT_LITERAL@16..39 "   whitespace handling " [] [],
-                    },
+                    children: JsxChildList [
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@16..39 "   whitespace handling " [] [],
+                        },
+                    ],
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@39..40 "<" [] [],
                         slash_token: SLASH@40..41 "/" [] [],
@@ -65,9 +69,11 @@ JsModule {
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@47..48 ">" [] [],
                     },
-                    children: JsxText {
-                        value_token: JSX_TEXT_LITERAL@48..77 " multi\n   line\n         node\n" [] [],
-                    },
+                    children: JsxChildList [
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@48..77 " multi\n   line\n         node\n" [] [],
+                        },
+                    ],
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@77..78 "<" [] [],
                         slash_token: SLASH@78..79 "/" [] [],
@@ -91,9 +97,11 @@ JsModule {
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@88..89 ">" [] [],
                     },
-                    children: JsxText {
-                        value_token: JSX_TEXT_LITERAL@89..95 "\\u3333" [] [],
-                    },
+                    children: JsxChildList [
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@89..95 "\\u3333" [] [],
+                        },
+                    ],
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@95..96 "<" [] [],
                         slash_token: SLASH@96..97 "/" [] [],
@@ -123,8 +131,9 @@ JsModule {
               0: JSX_IDENT@1..2 "a" [] []
             2: JSX_ATTRIBUTE_LIST@2..2
             3: R_ANGLE@2..3 ">" [] []
-          1: JSX_TEXT@3..7
-            0: JSX_TEXT_LITERAL@3..7 "test" [] []
+          1: JSX_CHILD_LIST@3..7
+            0: JSX_TEXT@3..7
+              0: JSX_TEXT_LITERAL@3..7 "test" [] []
           2: JSX_CLOSING_ELEMENT@7..11
             0: L_ANGLE@7..8 "<" [] []
             1: SLASH@8..9 "/" [] []
@@ -141,8 +150,9 @@ JsModule {
               0: JSX_IDENT@14..15 "a" [] []
             2: JSX_ATTRIBUTE_LIST@15..15
             3: R_ANGLE@15..16 ">" [] []
-          1: JSX_TEXT@16..39
-            0: JSX_TEXT_LITERAL@16..39 "   whitespace handling " [] []
+          1: JSX_CHILD_LIST@16..39
+            0: JSX_TEXT@16..39
+              0: JSX_TEXT_LITERAL@16..39 "   whitespace handling " [] []
           2: JSX_CLOSING_ELEMENT@39..43
             0: L_ANGLE@39..40 "<" [] []
             1: SLASH@40..41 "/" [] []
@@ -159,8 +169,9 @@ JsModule {
               0: JSX_IDENT@46..47 "a" [] []
             2: JSX_ATTRIBUTE_LIST@47..47
             3: R_ANGLE@47..48 ">" [] []
-          1: JSX_TEXT@48..77
-            0: JSX_TEXT_LITERAL@48..77 " multi\n   line\n         node\n" [] []
+          1: JSX_CHILD_LIST@48..77
+            0: JSX_TEXT@48..77
+              0: JSX_TEXT_LITERAL@48..77 " multi\n   line\n         node\n" [] []
           2: JSX_CLOSING_ELEMENT@77..81
             0: L_ANGLE@77..78 "<" [] []
             1: SLASH@78..79 "/" [] []
@@ -177,8 +188,9 @@ JsModule {
               0: JSX_IDENT@84..88 "test" [] []
             2: JSX_ATTRIBUTE_LIST@88..88
             3: R_ANGLE@88..89 ">" [] []
-          1: JSX_TEXT@89..95
-            0: JSX_TEXT_LITERAL@89..95 "\\u3333" [] []
+          1: JSX_CHILD_LIST@89..95
+            0: JSX_TEXT@89..95
+              0: JSX_TEXT_LITERAL@89..95 "\\u3333" [] []
           2: JSX_CLOSING_ELEMENT@95..141
             0: L_ANGLE@95..96 "<" [] []
             1: SLASH@96..97 "/" [] []

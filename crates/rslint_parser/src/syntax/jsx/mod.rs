@@ -113,6 +113,10 @@ impl ParseNodeList for JsxChildrenList {
         // </a>
         else if p.at(T!['{']) {
             parse_jsx_expression_block(p, JsSyntaxKind::JSX_EXPRESSION_CHILD)
+        } else if p.at(JSX_TEXT_LITERAL) {
+            let m = p.start();
+            p.bump(JSX_TEXT_LITERAL);
+            ParsedSyntax::Present(m.complete(p, JSX_TEXT))
         } else {
             ParsedSyntax::Absent
         }
@@ -207,11 +211,7 @@ fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
 }
 
 fn parse_children(p: &mut Parser) {
-    if p.at(JSX_TEXT_LITERAL) {
-        let m = p.start();
-        p.bump(JSX_TEXT_LITERAL);
-        m.complete(p, JSX_TEXT);
-    }
+    JsxChildrenList.parse_list(p);
 }
 
 // <a ...> or <a ... />
@@ -231,7 +231,6 @@ fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> Pa
             return Absent;
         }
 
-        //JsxAttributeList.parse_list(p);
         p.bump_with_context(T![>], LexContext::JsxChild);
         parse_children(p);
 
