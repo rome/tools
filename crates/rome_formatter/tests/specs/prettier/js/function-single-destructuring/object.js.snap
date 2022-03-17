@@ -133,9 +133,6 @@ class C {
 
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Errors
 ```
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
@@ -161,54 +158,8 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
    │
 56 │     return <div />
    │            ^^^^^^^ JSX only syntax
-=======
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ object.js:11:10
-   │  
-11 │     return <div />
-   │ ┌──────────^
-12 │ │ }
-   │ └─^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ object.js:24:10
-   │  
-24 │     return <div />
-   │ ┌──────────^
-25 │ │ }
-   │ └─^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ object.js:41:10
-   │  
-41 │     return <div />
-   │ ┌──────────^
-42 │ │ }
-   │ └─^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ object.js:56:12
-   │  
-56 │       return <div />
-   │ ┌────────────^
-57 │ │   }
-<<<<<<< HEAD
-   │ └───^ Jsx only syntax
->>>>>>> 1ab4ecffde (jsx parser enabled by language variant)
-=======
-   │ └───^ JSX only syntax
->>>>>>> 5fae734162 (jsx is now uppercase)
 
 
 ```
 
-<<<<<<< HEAD
-=======
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-=======
->>>>>>> 5f301e8a10 (formatter codegen supporting jsx)
-=======
->>>>>>> 1ab4ecffde (jsx parser enabled by language variant)
 

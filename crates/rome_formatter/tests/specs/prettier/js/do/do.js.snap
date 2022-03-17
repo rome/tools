@@ -92,74 +92,18 @@ do {
 function foo() {
   return (
     <nav>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <Home />
-<<<<<<< HEAD
-  {
-    do {
-=======
->>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
-      <;
-  Home />
-      {
-        do {
-<<<<<<< HEAD
-=======
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-=======
       <Home />
   {
     do {
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
->>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
-=======
-      <Home />
-  {
-    do {
->>>>>>> c87591329d (fixing rebase problems)
-=======
-      {
-        do {
->>>>>>> 5e7841b546 (update rast/snap files)
           if (loggedIn) {
             <LogoutButton />
           } else {
             <LoginButton />
           }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      }
-    </nav>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
   }
   </nav>
-=======
-      }
-    </nav>
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-=======
-  }
-  </nav>
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
->>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
-=======
-  }
-  </nav>
->>>>>>> c87591329d (fixing rebase problems)
   )
-=======
-      }
-    </nav>
-  );
->>>>>>> 5e7841b546 (update rast/snap files)
 }
 
 (
@@ -259,43 +203,12 @@ error[SyntaxError]: expected `while` but instead found `;`
 18 │ };
    │  ^ unexpected
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
-=======
->>>>>>> c87591329d (fixing rebase problems)
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-=======
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
->>>>>>> 5e7841b546 (update rast/snap files)
    ┌─ do.js:22:5
    │  
 22 │ ┌     <nav>
 23 │ │       <Home />
-<<<<<<< HEAD
    │ └──────────────^ TypeScript only syntax
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
-error[SyntaxError]: expected `')'` but instead found `Home`
-   ┌─ do.js:23:8
-   │
-23 │       <Home />
-   │        ^^^^ unexpected
-<<<<<<< HEAD
-=======
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-=======
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
->>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
-=======
->>>>>>> c87591329d (fixing rebase problems)
 
 error[SyntaxError]: expected `')'` but instead found `{`
    ┌─ do.js:24:7
@@ -303,67 +216,17 @@ error[SyntaxError]: expected `')'` but instead found `{`
 24 │       {
    │       ^ unexpected
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ do.js:27:13
-<<<<<<< HEAD
    │
 27 │             <LogoutButton />
    │             ^^^^^^^^^^^^^^^^ JSX only syntax
-=======
-   │  
-27 │ ┌             <LogoutButton />
-28 │ │           } else {
-   │ └───────────^ JSX only syntax
-=======
-error[SyntaxError]: expected `,` but instead found `else`
-   ┌─ do.js:28:13
-   │
-28 │           } else {
-   │             ^^^^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `{`
-   ┌─ do.js:28:18
-   │
-28 │           } else {
-   │                  ^ unexpected
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
->>>>>>> ed0e4b6d04 (jsx in arrow functions and as statements)
 
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ do.js:29:13
    │
 29 │             <LoginButton />
    │             ^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: expected `while` but instead found `}`
-=======
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-error[SyntaxError]: expected `WHILE_KW` but instead found `}`
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
-=======
-=======
-error[SyntaxError]: jsx elements are a Jsx only feature. Convert your file to a Jsx file or remove the syntax.
-=======
-=======
->>>>>>> c87591329d (fixing rebase problems)
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ do.js:27:13
-   │  
-27 │ ┌             <LogoutButton />
-28 │ │           } else {
-   │ └───────────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ do.js:29:13
-   │  
-29 │ ┌             <LoginButton />
-30 │ │           }
-   │ └───────────^ JSX only syntax
 
 error[SyntaxError]: expected `while` but instead found `}`
    ┌─ do.js:32:7
@@ -382,14 +245,6 @@ error[SyntaxError]: expected an expression but instead found ')'
    │
 34 │   );
    │   ^ Expected an expression here
-=======
-24 │ │       {
-25 │ │         do {
-   · │
-33 │ │     </nav>
-34 │ │   );
-   │ └───^ JSX only syntax
->>>>>>> 5e7841b546 (update rast/snap files)
 
 error[SyntaxError]: expected `')'` but instead found `do`
    ┌─ do.js:37:2

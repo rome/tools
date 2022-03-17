@@ -1,12 +1,9 @@
-use rome_js_syntax::TextRange;
-use rslint_errors::Diagnostic;
-
 use crate::{
-    parser::{expected_any, expected_node, ToDiagnostic},
-    parser::{expected_any, ToDiagnostic},
     parser::{expected_node, ToDiagnostic},
     Parser,
 };
+use rome_js_syntax::TextRange;
+use rslint_errors::Diagnostic;
 
 pub(crate) fn jsx_only_syntax_error(p: &Parser, syntax: &str, range: TextRange) -> Diagnostic {
     p.err_builder(&format!(

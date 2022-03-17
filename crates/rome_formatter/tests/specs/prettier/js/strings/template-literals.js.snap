@@ -205,9 +205,9 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 39 │ │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
 40 │ │         bodyScripts={compact([ assets.javascript.body ])}
    · │
+49 │ │         ]}
 50 │ │       />
-51 │ │     )
-   │ └─────^ JSX only syntax
+   │ └────────^ JSX only syntax
 
 
 ```

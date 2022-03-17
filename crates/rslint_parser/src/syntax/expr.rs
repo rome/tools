@@ -3,38 +3,38 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::jsx::maybe_parse_jsx_expression;
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
 use crate::parser::{expected_token, ParserProgress, RecoveryResult};
-use crate::syntax::assignment::{
-    expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
-    AssignmentExprPrecedence,
-};
+use crate::syntax::assignment::parse_assignment;
+use crate::syntax::assignment::AssignmentExprPrecedence;
+use crate::syntax::assignment::{expression_to_assignment, expression_to_assignment_pattern};
 use crate::syntax::class::parse_class_expression;
 use crate::syntax::function::{
     is_at_async_function, parse_arrow_function_expression, parse_function_expression, LineBreak,
 };
 use crate::syntax::js_parse_error;
+use crate::syntax::js_parse_error::expected_simple_assignment_target;
 use crate::syntax::js_parse_error::{
-    expected_expression, expected_identifier, expected_parameters,
-    expected_simple_assignment_target, invalid_assignment_error,
+    expected_expression, expected_identifier, expected_parameters, invalid_assignment_error,
     private_names_only_allowed_on_left_side_of_in_expression,
 };
 use crate::syntax::jsx::jsx_parse_errors::jsx_only_syntax_error;
+use crate::syntax::jsx::maybe_parse_jsx_expression;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
-use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
-use crate::LanguageVariant;
-use crate::LanguageVariant;
+use crate::Checkpoint;
+use crate::CompletedMarker;
+use crate::JsSyntaxFeature;
+use crate::JsSyntaxFeature::{StrictMode, TypeScript};
+use crate::Marker;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    syntax, Checkpoint, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
-    Parser, SyntaxFeature, TokenSet,
+    syntax, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser, SyntaxFeature, TokenSet,
 };
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
@@ -1737,34 +1737,11 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
     // if we are at "<"; or we have JSX or Typescript type assertions
     if p.at(T![<]) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        let jsx = Jsx.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
-            jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
-        });
-=======
-<<<<<<< HEAD
-        let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
-            jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
-        });
-=======
-        let jsx = Jsx.parse_exclusive_syntax(
+        let jsx = JsSyntaxFeature::Jsx.parse_exclusive_syntax(
             p,
-            |p| maybe_parse_jsx_expression(p),
-            |p, assertion| jsx_only_syntax_error(p, "jsx elements", assertion.range(p)),
+            maybe_parse_jsx_expression,
+            |p, assertion| jsx_only_syntax_error(p, "JSX elements", assertion.range(p)),
         );
->>>>>>> dbee0cc063 (maybe prefix for checkpointed parsing)
-
->>>>>>> c53cb537b3 (maybe prefix for checkpointed parsing)
-=======
-        let jsx = JSX.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
-=======
-        let jsx = Jsx.parse_exclusive_syntax(p, maybe_parse_jsx_expression, |p, assertion| {
->>>>>>> c87591329d (fixing rebase problems)
-            jsx_only_syntax_error(p, "JSX elements", assertion.range(p))
-        });
->>>>>>> 0b3abe5349 (changing jsx to uppercase)
         return jsx.or_else(|| {
             TypeScript.parse_exclusive_syntax(
                 p,

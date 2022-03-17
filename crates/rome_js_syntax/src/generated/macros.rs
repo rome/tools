@@ -666,10 +666,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxElement::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JSX_ELEMENT_EXPRESSION => {
-                    let $pattern = unsafe { $crate::JsxElementExpression::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE => {
                     let $pattern =
                         unsafe { $crate::JsxExpressionAttributeValue::new_unchecked(node) };
@@ -677,6 +673,14 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JSX_EXPRESSION_CHILD => {
                     let $pattern = unsafe { $crate::JsxExpressionChild::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_FRAGMENT => {
+                    let $pattern = unsafe { $crate::JsxFragment::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_MEMBER_NAME => {
+                    let $pattern = unsafe { $crate::JsxMemberName::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_NAME => {
@@ -699,8 +703,20 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxSelfClosingElement::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JSX_STRING_LITERAL => {
-                    let $pattern = unsafe { $crate::JsxStringLiteral::new_unchecked(node) };
+                $crate::JsSyntaxKind::JSX_SPREAD_ATTRIBUTE => {
+                    let $pattern = unsafe { $crate::JsxSpreadAttribute::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_STRING => {
+                    let $pattern = unsafe { $crate::JsxString::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_TAG_EXPRESSION => {
+                    let $pattern = unsafe { $crate::JsxTagExpression::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_TEXT => {
+                    let $pattern = unsafe { $crate::JsxText::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::NEW_TARGET => {

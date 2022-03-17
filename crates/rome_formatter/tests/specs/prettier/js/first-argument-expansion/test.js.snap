@@ -292,16 +292,7 @@ compose(
 );
 
 renderThing(
-<<<<<<< HEAD
-<<<<<<< HEAD
   (a) => <div>Content. So much to say. Oh my. Are we done yet?</div>,
-=======
-  a =>
-  <div>Content. So much to say. Oh my. Are we done yet?</div>,
->>>>>>> 5e7841b546 (update rast/snap files)
-=======
-  (a) => <div>Content. So much to say. Oh my. Are we done yet?</div>,
->>>>>>> 12f088c540 (correctly unknown expression for jsx elements)
   args,
 );
 
@@ -334,10 +325,9 @@ func(
 ```
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ test.js:96:3
-   │  
-96 │ ┌   <div>Content. So much to say. Oh my. Are we done yet?</div>
-97 │ │ ,args);
-   │ └─^ JSX only syntax
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ JSX only syntax
 
 
 ```

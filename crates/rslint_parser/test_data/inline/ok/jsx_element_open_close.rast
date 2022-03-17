@@ -32,11 +32,7 @@ JsModule {
                                     attributes: JsxAttributeList [],
                                     r_angle_token: R_ANGLE@30..31 ">" [] [],
                                 },
-<<<<<<< HEAD
-                                children: missing (optional),
-=======
                                 children: JsxChildList [],
->>>>>>> 5e7841b546 (update rast/snap files)
                                 closing_element: JsxClosingElement {
 <<<<<<< HEAD
                                     l_angle_token: L_ANGLE@31..32 "<" [] [],

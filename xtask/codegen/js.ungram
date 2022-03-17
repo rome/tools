@@ -2161,21 +2161,6 @@ JsxSelfClosingElement =
 	'/'
 	'>'
 
-// <a>...</a>
-JsxElement =
-JsxElementExpression = 
-	element: JsxAnyElement
-
-JsxAnyElement = 
-	JsxElement 
-	| JsxSelfClosingElement
-
-JsxSelfClosingElement = 
-	'<'
-	name: JsxAnyElementName
-	attributes: JsxAttributeList
-	'/>'
-
 JsxElement = 
 	opening_element: JsxOpeningElement
 	children: JsxChildList
@@ -2240,41 +2225,6 @@ JsxAnyName =
 // Attributes
 // ==================================
 
-JsxAttributeList = JsxAnyAttribute*
-
-JsxAnyAttribute =
-	JsxAttribute
-	| JsxSpreadAttribute
-
-JsxAttribute =
-	name: JsxAnyAttributeName
-	initializer: JsxAttributeInitializerClause?
-
-JsxAnyElementName = 
-	JsxReferenceIdentifier
-	| JsxNamespaceName
-
-// ==================================
-// Children
-// ==================================
-
-JsxAnyChild = 
-	JsxElement
-	| JsxSelfClosingElement
-	| JsxText
-	| JsxExpressionChild
-
-JsxExpressionChild =
-	'{'
-	expression: JsAnyExpression
-	'}'
-
-JsxChildList = JsxAnyChild*
-
-// ==================================
-// Attributes
-// ==================================
-
 JsxAttributeList = JsxAttribute*
 
 JsxAttribute = 
@@ -2306,6 +2256,23 @@ JsxSpreadAttribute =
 	'...'
 	argument: JsAnyExpression // parse_assignment_expression_or_higher
 	'}'
+
+// ==================================
+// Children
+// ==================================
+
+JsxAnyChild = 
+	JsxElement
+	| JsxSelfClosingElement
+	| JsxText
+	| JsxExpressionChild
+
+JsxExpressionChild =
+	'{'
+	expression: JsAnyExpression
+	'}'
+
+JsxChildList = JsxAnyChild*
 
 // ==================================
 // Auxiliary

@@ -23,29 +23,23 @@ const Broken = React.forwardRef(({
 
 # Output
 ```js
-const Broken = React.forwardRef(
-  (
-    {
-      children,
-      // 1
-      // 2
-      title,
-      hidden,
-      // 3
-    },
-    ref,
-  ) => (
-    <div ref={ref}>
+const Broken = React.forwardRef(({
+	children,
+	// 1
+	// 2
+	title,
+	hidden,
+	// 3
+}, ref) => (
+	<div ref={ref}>
 		{children}
 	</div>
-  ),
-);
+))
 
 ```
 
 # Errors
 ```
-<<<<<<< HEAD
 error[SyntaxError]: Invalid assignment to `<div ref`
   ┌─ issue-7518.js:9:2
   │
@@ -65,16 +59,6 @@ error[SyntaxError]: expected an expression but instead found ')'
    │
 12 │ ))
    │ ^ Expected an expression here
-=======
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ issue-7518.js:9:2
-   │  
- 9 │ ┌     <div ref={ref}>
-10 │ │         {children}
-11 │ │     </div>
-12 │ │ ))
-   │ └─^ JSX only syntax
->>>>>>> 5e7841b546 (update rast/snap files)
 
 
 ```

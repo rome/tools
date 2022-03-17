@@ -8,10 +8,6 @@ impl ToFormatElement for JsxAnyAttributeValue {
             Self::JsxAnyTag(node) => node.to_format_element(formatter),
             Self::JsxString(node) => node.to_format_element(formatter),
             Self::JsxExpressionAttributeValue(node) => node.to_format_element(formatter),
-            Self::JsxElement(node) => node.to_format_element(formatter),
-            Self::JsxAnyElement(node) => node.to_format_element(formatter),
-            Self::JsxStringLiteral(node) => node.to_format_element(formatter),
-            Self::JsxExpressionAttributeValue(node) => node.to_format_element(formatter),
         }
     }
 }

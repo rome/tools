@@ -263,9 +263,6 @@ function inlineComment() {
 
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Errors
 ```
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
@@ -273,29 +270,8 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
   │
 4 │     <div />
   │     ^^^^^^^ JSX only syntax
-=======
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ return-statement.js:4:5
-  │  
-4 │ ┌     <div />
-5 │ │   );
-<<<<<<< HEAD
-  │ └───^ Jsx only syntax
->>>>>>> 1ab4ecffde (jsx parser enabled by language variant)
-=======
-  │ └───^ JSX only syntax
->>>>>>> 5fae734162 (jsx is now uppercase)
 
 
 ```
 
-<<<<<<< HEAD
-=======
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-=======
->>>>>>> 5f301e8a10 (formatter codegen supporting jsx)
-=======
->>>>>>> 1ab4ecffde (jsx parser enabled by language variant)
 

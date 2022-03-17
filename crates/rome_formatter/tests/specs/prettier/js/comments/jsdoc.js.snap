@@ -38,7 +38,7 @@ function HelloWorld() {
 ```js
 /** @type {any} */
 const x = (
-  <div>
+    <div>
         <div />
     </div>
 );
@@ -57,53 +57,22 @@ const x = (
  */
 function HelloWorld() {
   return (
-    <div>
+        <div>
            <span>Test</span>
         </div>
-  );
+    );
 }
 
 ```
 
 # Errors
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
-=======
->>>>>>> c87591329d (fixing rebase problems)
 error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-=======
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
->>>>>>> 5e7841b546 (update rast/snap files)
   ┌─ jsdoc.js:3:5
   │  
 3 │ ┌     <div>
 4 │ │         <div />
-<<<<<<< HEAD
   │ └───────────────^ TypeScript only syntax
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
-error[SyntaxError]: expected `')'` but instead found `div`
-  ┌─ jsdoc.js:4:10
-  │
-4 │         <div />
-  │          ^^^ unexpected
-<<<<<<< HEAD
-=======
->>>>>>> 0ae10e4634 (jsx in arrow functions and as statements)
-=======
->>>>>>> 9259ba1f51 (abandoning jsx if no closing element is found)
->>>>>>> a23ec66cbf (abandoning jsx if no closing element is found)
-=======
->>>>>>> c87591329d (fixing rebase problems)
 
 error: unterminated regex literal
   ┌─ jsdoc.js:5:11
@@ -112,11 +81,12 @@ error: unterminated regex literal
   │      -    ^ ...but the line ends here
   │      │    
   │      a regex literal starts there...
-=======
-5 │ │     </div>
-6 │ │ );
-  │ └─^ JSX only syntax
->>>>>>> 5e7841b546 (update rast/snap files)
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ jsdoc.js:6:1
+  │
+6 │ );
+  │ ^ Expected an expression here
 
 error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ jsdoc.js:12:5
@@ -124,16 +94,14 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 12 │ ┌     <div>
 13 │ │         sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
 14 │ │     </div>
-15 │ │ );
-   │ └─^ JSX only syntax
+   │ └──────────^ JSX only syntax
 
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
    ┌─ jsdoc.js:22:9
    │  
 22 │ ┌         <div>
 23 │ │            <span>Test</span>
-<<<<<<< HEAD
-   │ └─────────────────────^ TypeScript only syntax
+   │ └────────────────────────────^ TypeScript only syntax
 
 error: unterminated regex literal
    ┌─ jsdoc.js:24:15
@@ -148,11 +116,6 @@ error[SyntaxError]: expected an expression but instead found ')'
    │
 25 │     );
    │     ^ Expected an expression here
-=======
-24 │ │         </div>
-25 │ │     );
-   │ └─────^ JSX only syntax
->>>>>>> 5e7841b546 (update rast/snap files)
 
 
 ```
