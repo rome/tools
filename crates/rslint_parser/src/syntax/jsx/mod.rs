@@ -169,7 +169,7 @@ impl ParseNodeList for JsxChildrenList {
 // <a> test ></a>;
 // <b> invalid }</b>;
 
-// test jsx fragments
+// test jsx jsx_fragments
 // <>abcd</>;
 // <>   whitespace
 // </>;
