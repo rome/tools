@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: after_export.js
 
 ---
@@ -15,12 +15,10 @@ export default @decorator class {}
 # Output
 ```js
 export
-@decorator
-class Foo {}
+@decorator class Foo {}
 
 export default
-@decorator
-class {}
+@decorator class {}
 
 ```
 

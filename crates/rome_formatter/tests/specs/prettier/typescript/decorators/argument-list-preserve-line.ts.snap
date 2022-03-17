@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: argument-list-preserve-line.ts
 
 ---
@@ -25,83 +25,15 @@ class Foo {
 # Output
 ```js
 class Foo {
-    constructor(
-        @inject(Bar)
-        private readonly bar: IBar,
-
-        @inject(MyProcessor)
-        private readonly myProcessor: IMyProcessor,
-
-        @inject(InjectionTypes.AnotherThing)
-
-        private readonly anotherThing: IAnotherThing | undefined,
-    ) { }
+  constructor(
+    @inject(Bar)
+    private readonly bar: IBar,
+    @inject(MyProcessor)
+    private readonly myProcessor: IMyProcessor,
+    @inject(InjectionTypes.AnotherThing)
+    private readonly anotherThing: IAnotherThing | undefined,
+  ) {}
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a parameter but instead found '@'
-  ┌─ argument-list-preserve-line.ts:3:9
-  │
-3 │         @inject(Bar)
-  │         ^ Expected a parameter here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ argument-list-preserve-line.ts:4:9
-  │
-4 │         private readonly bar: IBar,
-  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-  ┌─ argument-list-preserve-line.ts:4:35
-  │
-4 │         private readonly bar: IBar,
-  │                                   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ argument-list-preserve-line.ts:7:9
-  │
-7 │         private readonly myProcessor: IMyProcessor,
-  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-  ┌─ argument-list-preserve-line.ts:7:51
-  │
-7 │         private readonly myProcessor: IMyProcessor,
-  │                                                   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected `,` but instead found `.`
-  ┌─ argument-list-preserve-line.ts:9:31
-  │
-9 │         @inject(InjectionTypes.AnotherThing)
-  │                               ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `AnotherThing`
-  ┌─ argument-list-preserve-line.ts:9:32
-  │
-9 │         @inject(InjectionTypes.AnotherThing)
-  │                                ^^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ argument-list-preserve-line.ts:11:9
-   │
-11 │         private readonly anotherThing: IAnotherThing | undefined,
-   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ argument-list-preserve-line.ts:11:65
-   │
-11 │         private readonly anotherThing: IAnotherThing | undefined,
-   │                                                                 ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ argument-list-preserve-line.ts:13:1
-   │
-13 │ }
-   │ ^ Expected a statement here
-
 
 ```
 

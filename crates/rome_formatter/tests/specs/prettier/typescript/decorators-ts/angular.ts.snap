@@ -19,8 +19,7 @@ export class HeroButtonComponent {
 
 # Output
 ```js
-@Component(
-{
+@Component({
   selector: 'toh-hero-button',
   template: `<button>{{label}}</button>`
 })
@@ -28,59 +27,6 @@ export class HeroButtonComponent {
   @Output() change = new EventEmitter<any>();
   @Input() label: string;
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@Component('
-  ┌─ angular.ts:1:1
-  │
-1 │ @Component({
-  │ ^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ angular.ts:3:11
-  │  
-2 │     selector: 'toh-hero-button',
-  │ ┌─────────────'
-3 │ │   template: `<button>{{label}}</button>`
-  │ │           ^ An explicit or implicit semicolon is expected here...
-  │ └───────────' ...Which is required to end this statement
-
-error[SyntaxError]: expected a type but instead found '/'
-  ┌─ angular.ts:3:32
-  │
-3 │   template: `<button>{{label}}</button>`
-  │                                ^ Expected a type here
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-  ┌─ angular.ts:9:1
-  │
-9 │ 
-  │ ^ the file ends here
-
-error: unterminated regex literal
-  ┌─ angular.ts:3:41
-  │
-3 │   template: `<button>{{label}}</button>`
-  │                                -        ^ ...but the line ends here
-  │                                │        
-  │                                a regex literal starts there...
-
-error: unterminated template literal
-  ┌─ angular.ts:3:41
-  │  
-3 │     template: `<button>{{label}}</button>`
-  │ ┌────────────────────────────────────────^
-4 │ │ })
-5 │ │ export class HeroButtonComponent {
-6 │ │   @Output() change = new EventEmitter<any>();
-7 │ │   @Input() label: string;
-8 │ │ }
-9 │ │ 
-  │ └^
-
 
 ```
 

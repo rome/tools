@@ -131,6 +131,8 @@ pub struct Parser<'s> {
     pub diagnostics: Vec<ParseDiagnostic>,
     // A `u32` is sufficient because the parser only supports files up to `u32` bytes.
     pub(super) last_token_event_pos: Option<u32>,
+    // If the parser should skip tokens as trivia
+    skipping: bool,
 }
 
 impl<'s> Parser<'s> {
@@ -146,6 +148,7 @@ impl<'s> Parser<'s> {
             last_token_event_pos: None,
             source_type,
             diagnostics: vec![],
+            skipping: false,
         }
     }
 
@@ -319,10 +322,13 @@ impl<'s> Parser<'s> {
             kind
         };
 
-        let range = self.cur_range();
-        self.tokens.bump(context);
-
-        self.push_token(kind, range);
+        if self.skipping {
+            self.tokens.skip_as_trivia(context);
+        } else {
+            let range = self.cur_range();
+            self.tokens.bump(context);
+            self.push_token(kind, range);
+        }
     }
 
     fn push_token(&mut self, kind: JsSyntaxKind, range: TextRange) {
@@ -381,6 +387,20 @@ impl<'s> Parser<'s> {
             errors_pos: self.diagnostics.len() as u32,
             state: self.state.checkpoint(),
         }
+    }
+
+    /// Allows parsing an unsupported syntax as skipped token trivia.
+    pub fn parse_as_skipped_trivia<P>(&mut self, parse: P)
+    where
+        P: FnOnce(&mut Parser),
+    {
+        let events_pos = self.events.len();
+        self.skipping = true;
+        parse(self);
+        self.skipping = false;
+
+        // Truncate any start/finish events
+        self.events.truncate(events_pos);
     }
 
     /// Stores the parser state and position before calling the function and restores the state
@@ -469,10 +489,11 @@ impl Marker {
     /// and mark the create a `CompletedMarker` for possible future
     /// operation like `.precede()` to deal with forward_parent.
     pub fn complete(self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
-        let mut end_pos = p.last_range().map(|t| t.end()).unwrap_or_default();
-        if end_pos < self.start {
-            end_pos = p.cur_range().end();
-        }
+        let end_pos = TextSize::max(
+            p.last_range().map(|t| t.end()).unwrap_or(self.start),
+            self.start,
+        );
+
         self.complete_at(p, kind, end_pos)
     }
 

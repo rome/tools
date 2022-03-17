@@ -28,8 +28,7 @@ class     TestComponent {}
 
 # Output
 ```js
-@Component(
-{
+@Component({
        selector: 'app-test',
   template: `<ul>   <li>test</li>
   </ul>
@@ -45,54 +44,7 @@ class     TestComponent {}
 
 ]
 })
-class     TestComponent {}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@Component('
-  ┌─ test.component.ts:1:1
-  │
-1 │ @Component({
-  │ ^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ test.component.ts:3:11
-  │  
-2 │          selector: 'app-test',
-  │ ┌──────────────────'
-3 │ │   template: `<ul>   <li>test</li>
-  │ │           ^ An explicit or implicit semicolon is expected here...
-  │ └───────────' ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ test.component.ts:11:6
-   │
-11 │  div { background: blue
-   │  ----^
-   │  │   │
-   │  │   An explicit or implicit semicolon is expected here...
-   │  ...Which is required to end this statement
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-   ┌─ test.component.ts:18:1
-   │
-18 │ 
-   │ ^ the file ends here
-
-error: unterminated template literal
-   ┌─ test.component.ts:13:2
-   │  
-13 │   `
-   │ ┌─^
-14 │ │ 
-15 │ │ ]
-16 │ │ })
-17 │ │ class     TestComponent {}
-18 │ │ 
-   │ └^
-
+class TestComponent {}
 
 ```
 

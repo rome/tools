@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: module-blocks.js
 
 ---
@@ -139,13 +139,13 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ │                 
    │ ...Which is required to end this statement
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
    ┌─ module-blocks.js:12:3
    │
 12 │   export const foo = "foo";
    │   ^^^^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
    ┌─ module-blocks.js:13:3
    │
 13 │   export { foo };
@@ -160,7 +160,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ │      An explicit or implicit semicolon is expected here...
    │ ...Which is required to end this statement
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
    ┌─ module-blocks.js:17:3
    │
 17 │   export { foo }
@@ -221,7 +221,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │   │      An explicit or implicit semicolon is expected here...
    │   ...Which is required to end this statement
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
    ┌─ module-blocks.js:28:5
    │
 28 │     export let foo = "foo";
@@ -235,7 +235,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ │                 
    │ ...Which is required to end this statement
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
    ┌─ module-blocks.js:32:20
    │
 32 │ const m = module { export const foo = "foo" };
@@ -249,7 +249,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │ │                         
    │ ...Which is required to end this statement
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
    ┌─ module-blocks.js:34:28
    │
 34 │ let moduleBlock = module { export let y = 1; };

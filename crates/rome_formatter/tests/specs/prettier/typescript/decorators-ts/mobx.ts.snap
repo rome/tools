@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: mobx.ts
 
 ---
@@ -20,46 +20,13 @@ class X {
 # Output
 ```js
 class X {
-  @
-  deco;
-  x() {
+  @deco x() {
     return this.count * 2;
   }
-  @
-  deco;
-  get x() {
+  @deco get x() {
     return this.count * 2;
   }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ mobx.ts:2:2
-  │
-2 │     @deco x() {
-  │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ mobx.ts:2:3
-  │
-2 │     @deco x() {
-  │      ^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ mobx.ts:5:2
-  │
-5 │     @deco get x() {
-  │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ mobx.ts:5:3
-  │
-5 │     @deco get x() {
-  │      ^^^^
-
 
 ```
 

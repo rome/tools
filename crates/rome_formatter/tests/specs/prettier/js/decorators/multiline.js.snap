@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: multiline.js
 
 ---
@@ -43,71 +43,6 @@ class Foo {
   @decorator({
   }) method() {}
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ multiline.js:2:3
-  │
-2 │   @deco([
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'prop'
-  ┌─ multiline.js:5:6
-  │
-5 │   ]) prop = value;
-  │      ^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ multiline.js:7:3
-  │
-7 │   @decorator([]) method() {}
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'method'
-  ┌─ multiline.js:7:18
-  │
-7 │   @decorator([]) method() {}
-  │                  ^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ multiline.js:9:3
-  │
-9 │   @decorator([
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'method'
-   ┌─ multiline.js:10:6
-   │
-10 │   ]) method() {}
-   │      ^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ multiline.js:12:3
-   │
-12 │   @decorator({}) method() {}
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'method'
-   ┌─ multiline.js:12:18
-   │
-12 │   @decorator({}) method() {}
-   │                  ^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ multiline.js:14:3
-   │
-14 │   @decorator({
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'method'
-   ┌─ multiline.js:15:6
-   │
-15 │   }) method() {}
-   │      ^^^^^^ Expected a class method body here
-
 
 ```
 

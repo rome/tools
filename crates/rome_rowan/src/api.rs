@@ -38,23 +38,29 @@ pub enum TriviaPieceKind {
     SingleLineComment,
     /// Comment that contains at least one line break
     MultiLineComment,
+    /// Token that the parser skipped for some reason.
+    Skipped,
 }
 
 impl TriviaPieceKind {
-    pub fn is_newline(&self) -> bool {
+    pub const fn is_newline(&self) -> bool {
         matches!(self, TriviaPieceKind::Newline)
     }
 
-    pub fn is_whitespace(&self) -> bool {
+    pub const fn is_whitespace(&self) -> bool {
         matches!(self, TriviaPieceKind::Whitespace)
     }
 
-    pub fn is_single_line_comment(&self) -> bool {
+    pub const fn is_single_line_comment(&self) -> bool {
         matches!(self, TriviaPieceKind::SingleLineComment)
     }
 
-    pub fn is_multiline_comment(&self) -> bool {
+    pub const fn is_multiline_comment(&self) -> bool {
         matches!(self, TriviaPieceKind::MultiLineComment)
+    }
+
+    pub const fn is_skipped(&self) -> bool {
+        matches!(self, TriviaPieceKind::Skipped)
     }
 }
 
@@ -109,6 +115,7 @@ impl TriviaPiece {
 pub struct SyntaxTriviaPieceNewline<L: Language>(SyntaxTriviaPiece<L>);
 pub struct SyntaxTriviaPieceWhitespace<L: Language>(SyntaxTriviaPiece<L>);
 pub struct SyntaxTriviaPieceComments<L: Language>(SyntaxTriviaPiece<L>);
+pub struct SyntaxTriviaPieceSkipped<L: Language>(SyntaxTriviaPiece<L>);
 
 impl<L: Language> SyntaxTriviaPieceNewline<L> {
     pub fn text(&self) -> &str {
@@ -153,6 +160,20 @@ impl<L: Language> SyntaxTriviaPieceComments<L> {
 
     pub fn has_newline(&self) -> bool {
         self.0.trivia.kind.is_multiline_comment()
+    }
+}
+
+impl<L: Language> SyntaxTriviaPieceSkipped<L> {
+    pub fn text(&self) -> &str {
+        self.0.text()
+    }
+
+    pub fn text_len(&self) -> TextSize {
+        self.0.text_len()
+    }
+
+    pub fn text_range(&self) -> TextRange {
+        self.0.text_range()
     }
 }
 
@@ -318,6 +339,11 @@ impl<L: Language> SyntaxTriviaPiece<L> {
         )
     }
 
+    /// Returns true if this trivia piece is a [SyntaxTriviaPieceSkipped].
+    pub fn is_skipped(&self) -> bool {
+        self.trivia.kind.is_skipped()
+    }
+
     /// Cast this trivia piece to [SyntaxTriviaPieceNewline].
     ///
     /// ```
@@ -400,6 +426,29 @@ impl<L: Language> SyntaxTriviaPiece<L> {
             _ => None,
         }
     }
+
+    /// Casts this piece to a skipped trivia piece.
+    pub fn as_skipped(&self) -> Option<SyntaxTriviaPieceSkipped<L>> {
+        match &self.trivia.kind {
+            TriviaPieceKind::Skipped => Some(SyntaxTriviaPieceSkipped(self.clone())),
+            _ => None,
+        }
+    }
+}
+
+impl<L: Language> fmt::Debug for SyntaxTriviaPiece<L> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self.trivia.kind {
+            TriviaPieceKind::Newline => write!(f, "Newline(")?,
+            TriviaPieceKind::Whitespace => write!(f, "Whitespace(")?,
+            TriviaPieceKind::SingleLineComment | TriviaPieceKind::MultiLineComment => {
+                write!(f, "Comments(")?
+            }
+            TriviaPieceKind::Skipped => write!(f, "Skipped(")?,
+        }
+        print_debug_str(self.text(), f)?;
+        write!(f, ")")
+    }
 }
 
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -480,21 +529,6 @@ fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::R
     };
 }
 
-fn print_debug_trivia_piece<L: Language>(
-    piece: SyntaxTriviaPiece<L>,
-    f: &mut fmt::Formatter<'_>,
-) -> fmt::Result {
-    match piece.trivia.kind {
-        TriviaPieceKind::Newline => write!(f, "Newline(")?,
-        TriviaPieceKind::Whitespace => write!(f, "Whitespace(")?,
-        TriviaPieceKind::SingleLineComment | TriviaPieceKind::MultiLineComment => {
-            write!(f, "Comments(")?
-        }
-    }
-    print_debug_str(piece.text(), f)?;
-    write!(f, ")")
-}
-
 impl<L: Language> fmt::Debug for SyntaxToken<L> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
@@ -512,7 +546,7 @@ impl<L: Language> fmt::Debug for SyntaxToken<L> {
                 write!(f, ", ")?;
             }
             first_piece = false;
-            print_debug_trivia_piece(piece, f)?;
+            write!(f, "{:?}", piece)?;
         }
         write!(f, "] [")?;
 
@@ -522,7 +556,7 @@ impl<L: Language> fmt::Debug for SyntaxToken<L> {
                 write!(f, ", ")?;
             }
             first_piece = false;
-            print_debug_trivia_piece(piece, f)?;
+            write!(f, "{:?}", piece)?;
         }
         write!(f, "]")
     }

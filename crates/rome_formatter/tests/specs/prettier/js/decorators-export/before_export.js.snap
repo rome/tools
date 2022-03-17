@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: before_export.js
 
 ---
@@ -21,23 +21,6 @@ export class Foo {}
 
 @decorator
 export default class {}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@decorator'
-  ┌─ before_export.js:1:1
-  │
-1 │ @decorator
-  │ ^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '@decorator'
-  ┌─ before_export.js:4:1
-  │
-4 │ @decorator
-  │ ^^^^^^^^^^ Expected a statement here
-
 
 ```
 

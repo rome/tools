@@ -15,7 +15,7 @@ use crate::{
     soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult,
     ToFormatElement,
 };
-use rome_js_syntax::{AstNode, AstNodeList, AstSeparatedList, SyntaxNode, SyntaxToken};
+use rome_js_syntax::{AstNode, AstNodeList, AstSeparatedList, JsLanguage, SyntaxNode, SyntaxToken};
 use rome_rowan::api::SyntaxTriviaPiece;
 use rome_rowan::Language;
 
@@ -330,27 +330,161 @@ impl Formatter {
     pub(super) fn print_leading_trivia(
         &self,
         token: &SyntaxToken,
-        mut trim_mode: TriviaPrintMode,
+        trim_mode: TriviaPrintMode,
     ) -> FormatElement {
-        let mut line_count = 0;
-        let mut elements = Vec::new();
-
         // Checks whether the previous token has any trailing newline
         let has_trailing_newline = token
             .prev_token()
-            .and_then(|token| token.trailing_trivia().pieces().next_back())
+            .and_then(|token| token.trailing_trivia().pieces().last())
             .map_or(false, |trivia| trivia.is_newline());
+
+        self.format_leading_trivia_pieces(
+            token.leading_trivia().pieces(),
+            trim_mode,
+            has_trailing_newline,
+        )
+        .unwrap_or_else(|_| {
+            self.format_leading_with_skipped(token, trim_mode, has_trailing_newline)
+        })
+    }
+
+    /// Formats the leading trivia of a token that has leading skipped trivia.
+    ///
+    /// It splits the leading trivia piece into four parts, so that it behaves as if it is a regular token:
+    /// * Skipped leading trivia: All pieces that come before the skipped trivia token
+    /// * Skipped Trivia: All the skipped trivia pieces. Formatted verbatim
+    /// * Skipped trailing trivia: Any trivia after last skipped token up to, but not including, the first line break
+    /// * Token leading trivia: The leading trivia of the token
+    ///
+    /// ## Returns
+    /// The format element for the tokens leading trivia.
+    ///
+    /// ## Panics
+    ///
+    /// If called on a token that does not have skipped trivia
+    fn format_leading_with_skipped(
+        &self,
+        token: &SyntaxToken,
+        trim_mode: TriviaPrintMode,
+        has_trailing_newline: bool,
+    ) -> FormatElement {
+        let mut pieces = token.leading_trivia().pieces().peekable();
+
+        // Collect the leading trivia up to the first skipped token trivia
+        let mut skipped_leading_pieces = vec![];
+        while let Some(piece) = pieces.peek() {
+            if piece.is_skipped() {
+                break;
+            }
+
+            // SAFETY: Safe because of the peek in the while condition.
+            skipped_leading_pieces.push(pieces.next().unwrap());
+        }
+
+        // Format the leading of the skipped tokens
+        let skipped_leading = self
+            .format_leading_trivia_pieces(
+                skipped_leading_pieces.into_iter(),
+                trim_mode,
+                has_trailing_newline,
+            )
+            .expect("All skipped trivia pieces should have been filtered out");
+
+        let first_skipped = pieces.next().expect("Expected at least one skipped trivia. Don't call this method for tokens that don't have skipped trivia.");
+
+        let mut skipped_range = first_skipped.text_range();
+        let mut skipped_trailing = vec![];
+        let mut token_leading = vec![];
+        let mut after_newline = false;
+
+        for piece in pieces {
+            if piece.is_skipped() {
+                // pieces have been between to skipped trivia, thus, it's neither leading nor trailing trivia.
+                // Reset any so far accumulated state.
+                token_leading.clear();
+                skipped_trailing.clear();
+                after_newline = false;
+
+                skipped_range = skipped_range.cover(piece.text_range());
+                continue;
+            }
+
+            // Everything coming after a new line (including the new line) is the leading trivia of the token and no longer
+            // the trailing trivia of the last skipped token. Switch the trivia mode to trailing
+            if piece.is_newline() {
+                after_newline = true;
+            }
+
+            if after_newline {
+                token_leading.push(piece);
+            } else {
+                skipped_trailing.push(piece);
+            }
+        }
+
+        // Compute the offsets relative to the tokens text
+        let relative_skipped_range = skipped_range - token.text_range().start();
+        let text = &token.text()[relative_skipped_range];
+        let skipped_content = Token::new_dynamic(text.to_string(), skipped_range);
+
+        let skipped = FormatElement::Verbatim(Verbatim::new(
+            FormatElement::from(skipped_content),
+            text.to_string(),
+            skipped_range,
+        ));
+
+        // `print_trailing_trivia_pieces` and `format_leading_trivia_pieces` remove any whitespace except
+        // if there's a comment but removing all whitespace may have a different semantic meaning.
+        // Insert a:
+        // * space if the skipped token has no trailing trivia (`skipped\n`, also works for `skipped//comment` because the comment must either be followed by a line break or the token is the EOF).
+        // * new line if the token has any leading trivia. This can only be the case if there was any new line between the skipped trivia and the token
+        // * empty: There's literally nothing between skipped and token, so don't insert anything
+        let skipped_separator = if !skipped_trailing.is_empty() {
+            space_token()
+        } else if !token_leading.is_empty() {
+            hard_line_break()
+        } else {
+            empty_element()
+        };
+
+        format_elements![
+            skipped_leading,
+            skipped,
+            skipped_separator,
+            self.print_trailing_trivia_pieces(skipped_trailing.into_iter()),
+            self.format_leading_trivia_pieces(token_leading.into_iter(), trim_mode, true)
+                .expect("All skipped trivia pieces should have been filtered out")
+        ]
+    }
+
+    /// Formats the leading trivia pieces of a token.
+    ///
+    /// ## Returns
+    ///
+    /// Returns [Err] if the leading trivia contains any skipped trivia. Returns the formatted
+    /// leading trivia otherwise.
+    ///
+    fn format_leading_trivia_pieces<I>(
+        &self,
+        pieces: I,
+        mut trim_mode: TriviaPrintMode,
+        has_trailing_newline: bool,
+    ) -> Result<FormatElement, ()>
+    where
+        I: Iterator<Item = SyntaxTriviaPiece<JsLanguage>> + DoubleEndedIterator + ExactSizeIterator,
+    {
+        let mut line_count = 0;
+        let mut elements = Vec::new();
 
         // Get the index of the first comment in the trivia pieces list, and
         // checks whether this token has any leading newline the comment
         let mut has_leading_newline = false;
         let mut first_comment = 0;
 
-        // Create an enumerated, peekable iterator over the leading trivia pieces for this token
-        let mut pieces = token.leading_trivia().pieces().enumerate().peekable();
+        let mut pieces = pieces.enumerate().peekable();
 
-        // Peek at the next trivia piece, stopping at if it is a comment and
-        // advancing the iterator if its not
+        // Peek at the next trivia piece, stopping if it is a comment and
+        // advancing the iterator if it's not
         while let Some((index, piece)) = pieces.peek() {
             if piece.is_comments() {
                 // Save the index and break the loop
@@ -359,12 +493,15 @@ impl Formatter {
                 break;
             }
 
+            if piece.is_skipped() {
+                return Err(());
+            }
+
             if piece.is_newline() {
                 has_leading_newline = true;
             }
 
-            // Call to unwrap guarded by the above call to peek
-            pieces.next().unwrap();
+            pieces.next();
         }
 
         // If any newline was found between the previous token and the first comment,
@@ -408,16 +545,25 @@ impl Formatter {
                 trim_mode = TriviaPrintMode::Full;
             } else if piece.is_newline() && trim_mode == TriviaPrintMode::Full {
                 line_count += 1;
+            } else if piece.is_skipped() {
+                return Err(());
             }
         }
 
-        concat_elements(elements.into_iter().rev())
+        Ok(concat_elements(elements.into_iter().rev()))
     }
 
     pub(super) fn print_trailing_trivia(&self, token: &SyntaxToken) -> FormatElement {
+        self.print_trailing_trivia_pieces(token.trailing_trivia().pieces())
+    }
+
+    fn print_trailing_trivia_pieces<I>(&self, pieces: I) -> FormatElement
+    where
+        I: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
+    {
         let mut elements = Vec::new();
 
-        for piece in token.trailing_trivia().pieces() {
+        for piece in pieces {
             if let Some(comment) = piece.as_comments() {
                 let is_single_line = comment.text().trim_start().starts_with("//");
 

@@ -1181,6 +1181,7 @@ JsAnyModuleItem =
 	JsAnyStatement
 	| JsExport
 	| JsImport
+
 JsModuleItemList = JsAnyModuleItem*
 
 JsImport =
@@ -2138,6 +2139,7 @@ TsTypeArguments =
 	'>'
 
 TsTypeArgumentList = (TsType (',' TsType)* )
+
 
 /////////////////////////////////////////////////////// JSX
 

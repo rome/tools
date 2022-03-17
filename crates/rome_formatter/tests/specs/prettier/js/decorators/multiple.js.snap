@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: multiple.js
 
 ---
@@ -27,19 +27,20 @@ const foo = {
 # Output
 ```js
 const dog = {
+
 @readonly
   @nonenumerable
   @doubledValue
   legs: 4,
 
-  @readonly
+@readonly
   @nonenumerable
   @doubledValue
-  eyes: 2
+eyes: 2;
 }
 
 const foo = {
-@multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
+@multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 }
 
 ```
@@ -52,11 +53,29 @@ error[SyntaxError]: expected a property, a shorthand property, a getter, a sette
 2 │   @readonly
   │   ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
+error[SyntaxError]: expected an expression but instead found '@'
+  ┌─ multiple.js:7:3
+  │
+7 │   @readonly
+  │   ^ Expected an expression here
+
+error[SyntaxError]: expected a statement but instead found '}'
+   ┌─ multiple.js:11:1
+   │
+11 │ };
+   │ ^ Expected a statement here
+
 error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '@'
    ┌─ multiple.js:14:3
    │
 14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
    │   ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+
+error[SyntaxError]: expected a statement but instead found '}'
+   ┌─ multiple.js:15:1
+   │
+15 │ };
+   │ ^ Expected a statement here
 
 
 ```

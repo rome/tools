@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: multiple.ts
 
 ---
@@ -17,29 +17,10 @@ class C {
 # Output
 ```js
 class C {
-  @
-  f();
-  @
-  g();
+  @f()
+  @g()
   method() {}
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ multiple.ts:2:3
-  │
-2 │   @f()
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ multiple.ts:3:3
-  │
-3 │   @g()
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
 
 ```
 

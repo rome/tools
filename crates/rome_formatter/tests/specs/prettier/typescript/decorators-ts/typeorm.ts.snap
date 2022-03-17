@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: typeorm.ts
 
 ---
@@ -35,109 +35,24 @@ export class Board {
 ```js
 @Entity()
 export class Board {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  slug: string;
 
-    @Column()
-    slug: string;
+  @Column()
+  name: string;
 
-    @Column()
-    name: string;
+  @Column()
+  theme: string;
 
-    @Column()
-    theme: string;
+  @Column()
+  description: string;
 
-    @Column()
-    description: string;
-
-    @OneToMany(type => Topic, topic => topic.board)
-    topics: Topic[]
-
+  @OneToMany(type => Topic, topic => topic.board)
+  topics: Topic[];
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@Entity()'
-  ┌─ typeorm.ts:1:1
-  │
-1 │ @Entity()
-  │ ^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ typeorm.ts:4:5
-  │
-4 │     @PrimaryGeneratedColumn()
-  │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ typeorm.ts:7:5
-  │
-7 │     @Column()
-  │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ typeorm.ts:10:5
-   │
-10 │     @Column()
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ typeorm.ts:13:5
-   │
-13 │     @Column()
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ typeorm.ts:16:5
-   │
-16 │     @Column()
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ typeorm.ts:19:5
-   │
-19 │     @OneToMany(type => Topic, topic => topic.board)
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected `,` but instead found `=>`
-   ┌─ typeorm.ts:19:21
-   │
-19 │     @OneToMany(type => Topic, topic => topic.board)
-   │                     ^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `Topic`
-   ┌─ typeorm.ts:19:24
-   │
-19 │     @OneToMany(type => Topic, topic => topic.board)
-   │                        ^^^^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `=>`
-   ┌─ typeorm.ts:19:37
-   │
-19 │     @OneToMany(type => Topic, topic => topic.board)
-   │                                     ^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `topic`
-   ┌─ typeorm.ts:19:40
-   │
-19 │     @OneToMany(type => Topic, topic => topic.board)
-   │                                        ^^^^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `.`
-   ┌─ typeorm.ts:19:45
-   │
-19 │     @OneToMany(type => Topic, topic => topic.board)
-   │                                             ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `board`
-   ┌─ typeorm.ts:19:46
-   │
-19 │     @OneToMany(type => Topic, topic => topic.board)
-   │                                              ^^^^^ unexpected
-
 
 ```
 

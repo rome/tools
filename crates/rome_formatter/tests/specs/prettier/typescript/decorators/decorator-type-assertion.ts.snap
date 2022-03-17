@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: decorator-type-assertion.ts
 
 ---
@@ -25,23 +25,6 @@ class Decorated {}
 
 @(<ClassDecorator>bind)
 class Decorated {}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@(bind as ClassDecorator)'
-  ┌─ decorator-type-assertion.ts:1:1
-  │
-1 │ @(bind as ClassDecorator)
-  │ ^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '@(<ClassDecorator>bind)'
-  ┌─ decorator-type-assertion.ts:6:1
-  │
-6 │ @(<ClassDecorator>bind)
-  │ ^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
-
 
 ```
 

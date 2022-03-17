@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: decorators.ts
 
 ---
@@ -89,20 +89,15 @@ class Class6 {
 # Output
 ```js
 export class TestTextFileService {
-	constructor(
-		@ILifecycleService lifecycleService,
-	) {
-	}
+  constructor(@ILifecycleService lifecycleService) {}
 }
 
 @commonEditorContribution
 export class TabCompletionController {}
 
-@Component(
-{
+@Component({
   selector: 'angular-component',
-}
-)
+})
 class AngularComponent {
   @Input() myInput: string;
 }
@@ -110,436 +105,56 @@ class AngularComponent {
 class Class {
   method(
     @Decorator
-    { prop1, prop2 }
-: Type
-  )
-{
-  doSomething();
-}
+    { prop1, prop2 }: Type,
+  ) {
+    doSomething();
+  }
 }
 
 class Class2 {
   method(
     @Decorator1
     @Decorator2
-    { prop1, prop2 }
-: Type
-  )
-{
-  doSomething();
-}
+    { prop1, prop2 }: Type,
+  ) {
+    doSomething();
+  }
 }
 
 class Class3 {
   method(
     @Decorator
-    { prop1_1, prop1_2 }
-: Type,
-{
-  prop2_1, prop2_2;
-}
-: Type
-  )
-{
-  doSomething();
-}
+    { prop1_1, prop1_2 }: Type,
+    { prop2_1, prop2_2 }: Type,
+  ) {
+    doSomething();
+  }
 }
 
 class Class4 {
   method(
     param1,
     @Decorator
-    { prop1, prop2 }
-: Type
-  )
-{}
+    { prop1, prop2 }: Type,
+  ) {}
 }
 
 class Class5 {
-  method(
-    @Decorator { prop1 }
-: Type
-  )
-{}
+  method(@Decorator { prop1 }: Type) {}
 }
 
 class Class6 {
+  method(@Decorator({}) { prop1 }: Type) {}
   method(
-    @Decorator({}) { prop1 }: Type
+    @Decorator(
+      {}) { prop1 }: Type,
   ) {}
-method(
-@Decorator(
-{}
-)
-{
-  prop1;
+  method(@Decorator([]) { prop1 }: Type) {}
+  method(
+    @Decorator(
+      []) { prop1 }: Type,
+  ) {}
 }
-: Type
-  )
-{}
-method(
-@Decorator([])
-{
-  prop1;
-}
-: Type
-  )
-{}
-method(
-@Decorator(
-      [])
-{
-  prop1;
-}
-: Type
-  )
-{}
-}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a parameter but instead found '@'
-  ┌─ decorators.ts:3:3
-  │
-3 │         @ILifecycleService lifecycleService,
-  │         ^ Expected a parameter here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ decorators.ts:3:4
-  │
-3 │         @ILifecycleService lifecycleService,
-  │          ^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ decorators.ts:3:22
-  │
-3 │         @ILifecycleService lifecycleService,
-  │                            ^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-  ┌─ decorators.ts:3:38
-  │
-3 │         @ILifecycleService lifecycleService,
-  │                                            ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a statement but instead found '}
-
-@commonEditorContribution'
-  ┌─ decorators.ts:6:1
-  │  
-6 │ ┌ }
-7 │ │ 
-8 │ │ @commonEditorContribution
-  │ └─────────────────────────^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '@Component('
-   ┌─ decorators.ts:12:1
-   │
-12 │ @Component({
-   │ ^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected an expression but instead found '}'
-   ┌─ decorators.ts:14:1
-   │
-14 │ })
-   │ ^ Expected an expression here
-
-error[SyntaxError]: expected a statement but instead found ')'
-   ┌─ decorators.ts:14:2
-   │
-14 │ })
-   │  ^ Expected a statement here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ decorators.ts:16:3
-   │
-16 │   @Input() myInput: string;
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'myInput'
-   ┌─ decorators.ts:16:12
-   │
-16 │   @Input() myInput: string;
-   │            ^^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-   ┌─ decorators.ts:21:5
-   │
-21 │     @Decorator
-   │     ^ Expected a parameter here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-   ┌─ decorators.ts:22:5
-   │
-22 │     { prop1, prop2 }: Type
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ decorators.ts:22:7
-   │
-22 │     { prop1, prop2 }: Type
-   │       ^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ decorators.ts:22:12
-   │
-22 │     { prop1, prop2 }: Type
-   │            ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a statement but instead found ': Type
-  )'
-   ┌─ decorators.ts:22:21
-   │  
-22 │       { prop1, prop2 }: Type
-   │ ┌─────────────────────^
-23 │ │   ) {
-   │ └───^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ decorators.ts:26:1
-   │
-26 │ }
-   │ ^ Expected a statement here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-   ┌─ decorators.ts:30:5
-   │
-30 │     @Decorator1
-   │     ^ Expected a parameter here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ decorators.ts:31:5
-   │
-31 │     @Decorator2
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-   ┌─ decorators.ts:32:5
-   │
-32 │     { prop1, prop2 }: Type
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ decorators.ts:32:7
-   │
-32 │     { prop1, prop2 }: Type
-   │       ^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ decorators.ts:32:12
-   │
-32 │     { prop1, prop2 }: Type
-   │            ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a statement but instead found ': Type
-  )'
-   ┌─ decorators.ts:32:21
-   │  
-32 │       { prop1, prop2 }: Type
-   │ ┌─────────────────────^
-33 │ │   ) {
-   │ └───^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ decorators.ts:36:1
-   │
-36 │ }
-   │ ^ Expected a statement here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-   ┌─ decorators.ts:40:5
-   │
-40 │     @Decorator
-   │     ^ Expected a parameter here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-   ┌─ decorators.ts:41:5
-   │
-41 │     { prop1_1, prop1_2 }: Type,
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ decorators.ts:41:7
-   │
-41 │     { prop1_1, prop1_2 }: Type,
-   │       ^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ decorators.ts:41:14
-   │
-41 │     { prop1_1, prop1_2 }: Type,
-   │              ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a statement but instead found ': Type,'
-   ┌─ decorators.ts:41:25
-   │
-41 │     { prop1_1, prop1_2 }: Type,
-   │                         ^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found ': Type
-  )'
-   ┌─ decorators.ts:42:25
-   │  
-42 │       { prop2_1, prop2_2 }: Type
-   │ ┌─────────────────────────^
-43 │ │   ) {
-   │ └───^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ decorators.ts:46:1
-   │
-46 │ }
-   │ ^ Expected a statement here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-   ┌─ decorators.ts:51:5
-   │
-51 │     @Decorator
-   │     ^ Expected a parameter here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-   ┌─ decorators.ts:52:5
-   │
-52 │     { prop1, prop2 }: Type
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ decorators.ts:52:7
-   │
-52 │     { prop1, prop2 }: Type
-   │       ^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ decorators.ts:52:12
-   │
-52 │     { prop1, prop2 }: Type
-   │            ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a statement but instead found ': Type
-  )'
-   ┌─ decorators.ts:52:21
-   │  
-52 │       { prop1, prop2 }: Type
-   │ ┌─────────────────────^
-53 │ │   ) {}
-   │ └───^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ decorators.ts:54:1
-   │
-54 │ }
-   │ ^ Expected a statement here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-   ┌─ decorators.ts:58:5
-   │
-58 │     @Decorator { prop1 }: Type
-   │     ^ Expected a parameter here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ decorators.ts:58:6
-   │
-58 │     @Decorator { prop1 }: Type
-   │      ^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-   ┌─ decorators.ts:58:16
-   │
-58 │     @Decorator { prop1 }: Type
-   │                ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a statement but instead found ': Type
-  )'
-   ┌─ decorators.ts:58:25
-   │  
-58 │       @Decorator { prop1 }: Type
-   │ ┌─────────────────────────^
-59 │ │   ) {}
-   │ └───^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ decorators.ts:60:1
-   │
-60 │ }
-   │ ^ Expected a statement here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-   ┌─ decorators.ts:64:5
-   │
-64 │     @Decorator({}) { prop1 }: Type
-   │     ^ Expected a parameter here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ':'
-   ┌─ decorators.ts:64:29
-   │
-64 │     @Decorator({}) { prop1 }: Type
-   │                             ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ')'
-   ┌─ decorators.ts:65:3
-   │
-65 │   ) {}
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an expression but instead found '@'
-   ┌─ decorators.ts:67:5
-   │
-67 │     @Decorator(
-   │     ^ Expected an expression here
-
-error[SyntaxError]: expected a statement but instead found ')'
-   ┌─ decorators.ts:68:9
-   │
-68 │       {}) { prop1 }: Type
-   │         ^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found ': Type
-  )'
-   ┌─ decorators.ts:68:20
-   │  
-68 │         {}) { prop1 }: Type
-   │ ┌────────────────────^
-69 │ │   ) {}
-   │ └───^ Expected a statement here
-
-error[SyntaxError]: expected an expression but instead found '@'
-   ┌─ decorators.ts:71:5
-   │
-71 │     @Decorator([]) { prop1 }: Type
-   │     ^ Expected an expression here
-
-error[SyntaxError]: expected a statement but instead found ': Type
-  )'
-   ┌─ decorators.ts:71:29
-   │  
-71 │       @Decorator([]) { prop1 }: Type
-   │ ┌─────────────────────────────^
-72 │ │   ) {}
-   │ └───^ Expected a statement here
-
-error[SyntaxError]: expected an expression but instead found '@'
-   ┌─ decorators.ts:74:5
-   │
-74 │     @Decorator(
-   │     ^ Expected an expression here
-
-error[SyntaxError]: expected a statement but instead found ': Type
-  )'
-   ┌─ decorators.ts:75:20
-   │  
-75 │         []) { prop1 }: Type
-   │ ┌────────────────────^
-76 │ │   ) {}
-   │ └───^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ decorators.ts:77:1
-   │
-77 │ }
-   │ ^ Expected a statement here
-
 
 ```
 

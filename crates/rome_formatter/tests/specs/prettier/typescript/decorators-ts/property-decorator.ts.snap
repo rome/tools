@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: property-decorator.ts
 
 ---
@@ -33,29 +33,6 @@ class Greeter {
     return formatString.replace("%s", this.greeting);
   }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ property-decorator.ts:2:3
-  │
-2 │   @format("Hello, %s") greeting: string;
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found '"Hello, %s"'
-  ┌─ property-decorator.ts:2:11
-  │
-2 │   @format("Hello, %s") greeting: string;
-  │           ^^^^^^^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a class method body but instead found 'greeting'
-  ┌─ property-decorator.ts:2:24
-  │
-2 │   @format("Hello, %s") greeting: string;
-  │                        ^^^^^^^^ Expected a class method body here
-
 
 ```
 
