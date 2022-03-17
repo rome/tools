@@ -131,7 +131,10 @@ impl ParseNodeList for JsxChildrenList {
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
-            &ParseRecovery::new(JsSyntaxKind::JS_UNKNOWN_MEMBER, token_set![T![<]]),
+            &ParseRecovery::new(
+                JsSyntaxKind::JS_UNKNOWN_MEMBER,
+                token_set![T![<], T![>], T!['{']],
+            ),
             jsx_expected_children,
         )
     }
@@ -169,17 +172,6 @@ impl ParseNodeList for JsxChildrenList {
 // <a> test ></a>;
 // <b> invalid }</b>;
 
-// test jsx jsx_fragments
-// <>abcd</>;
-// <>   whitespace
-// </>;
-// <
-//   /*comment */
-//   >
-//   <
-//   /
-// >;
-
 /// Parses a JSX element
 ///
 /// `in_expression` must be `true` if this element is a direct child of the `JsxElementExpression` (root of an expression).
@@ -216,6 +208,18 @@ fn parse_children(p: &mut Parser) {
 
 // <a ...> or <a ... />
 // ^          ^
+
+// test jsx jsx_fragments
+// <></>;
+// <>abcd</>;
+// <>   whitespace
+// </>;
+// <
+//   /*comment */
+//   >
+//   <
+//   /
+// >;
 fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
     if !p.at(T![<]) {
         return ParsedSyntax::Absent;
