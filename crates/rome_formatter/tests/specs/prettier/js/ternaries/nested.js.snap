@@ -122,22 +122,22 @@ const StorybookLoader = ({ match }) => (
   match.params.storyId === "button"
     ? <ButtonStorybook />
     : match.params.storyId === "color"
-    ? <ColorBook />
-    : match.params.storyId === "typography"
-    ? <TypographyBook />
-    : match.params.storyId === "loading"
-    ? <LoaderStorybook />
-    : match.params.storyId === "deal-list"
-    ? <DealListStory />
-    : (
-      <Message>
+      ? <ColorBook />
+      : match.params.storyId === "typography"
+        ? <TypographyBook />
+        : match.params.storyId === "loading"
+          ? <LoaderStorybook />
+          : match.params.storyId === "deal-list"
+            ? <DealListStory />
+            : (
+              <Message>
         <Title>{'Missing story book'}</Title>
         <Content>
           <BackButton/>
         </Content>
       </Message>
-    )
-)
+            )
+);
 
 const message = (i % 3) === 0 && (i % 5) === 0
   ? "fizzbuzz"
@@ -182,15 +182,13 @@ const foo = <div className={'match-achievement-medal-type type' + (medals[0].rec
 	) : (
 		i18n('Theme')
 	)}
-</div>
+</div>;
 
 a
-    ? literalline
-    : {
-      123: 12
-    }
+  ? literalline
+  : { 123: 12 }
     ? line
-    : softline
+    : softline;
 
 ```
 
@@ -226,97 +224,29 @@ error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a 
 24 │     ? <DealListStory />
    │       ^^^^^^^^^^^^^^^^^ JSX only syntax
 
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:26:7
    │  
 26 │ ┌       <Message>
 27 │ │         <Title>{'Missing story book'}</Title>
-   │ └─────────────────────────────────────^ TypeScript only syntax
-
-error: unterminated regex literal
-   ┌─ nested.js:27:46
-   │
-27 │         <Title>{'Missing story book'}</Title>
-   │                                       -      ^ ...but the line ends here
-   │                                       │      
-   │                                       a regex literal starts there...
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ nested.js:28:9
-   │  
-28 │ ┌         <Content>
+28 │ │         <Content>
 29 │ │           <BackButton/>
-   │ └───────────────────────^ TypeScript only syntax
+30 │ │         </Content>
+31 │ │       </Message>
+   │ └────────────────^ JSX only syntax
 
-error: unterminated regex literal
-   ┌─ nested.js:30:19
-   │
-30 │         </Content>
-   │          -        ^ ...but the line ends here
-   │          │        
-   │          a regex literal starts there...
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ nested.js:31:7
-   │
-31 │       </Message>
-   │       ^^^^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: expected an expression but instead found ')'
-   ┌─ nested.js:32:5
-   │
-32 │     )
-   │     ^ Expected an expression here
-
-error[SyntaxError]: Invalid assignment to `<div className`
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
    ┌─ nested.js:73:13
-   │
-73 │ const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-   │             ^^^^^^^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: expected `:` but instead found `+`
-   ┌─ nested.js:73:65
-   │
-73 │ const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-   │                                                                 ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `[`
-   ┌─ nested.js:74:9
-   │
-74 │     {medals[0].record ? (
-   │            ^ unexpected
-
-error[SyntaxError]: expected `:` but instead found `.`
-   ┌─ nested.js:74:12
-   │
-74 │     {medals[0].record ? (
-   │               ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `i18n`
-   ┌─ nested.js:75:3
-   │
-75 │         i18n('Record')
-   │         ^^^^ unexpected
-
-error[SyntaxError]: expected a parameter but instead found ''Record''
-   ┌─ nested.js:75:8
-   │
-75 │         i18n('Record')
-   │              ^^^^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a function body but instead found ')'
-   ┌─ nested.js:76:2
-   │
-76 │     ) : medals[0].unique ? (
-   │     ^ Expected a function body here
-
-error: unterminated regex literal
-   ┌─ nested.js:87:7
-   │
-87 │ </div>
-   │  -    ^ ...but the line ends here
-   │  │    
-   │  a regex literal starts there...
+   │  
+73 │   const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+   │ ┌─────────────^
+74 │ │     {medals[0].record ? (
+75 │ │         i18n('Record')
+76 │ │     ) : medals[0].unique ? (
+   · │
+86 │ │     )}
+87 │ │ </div>
+   │ └──────^ JSX only syntax
 
 
 ```

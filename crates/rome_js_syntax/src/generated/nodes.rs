@@ -9390,6 +9390,11 @@ pub enum JsAnyTemplateElement {
     JsTemplateElement(JsTemplateElement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsxAnyAttribute {
+    JsxAttribute(JsxAttribute),
+    JsxSpreadAttribute(JsxSpreadAttribute),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyAttributeName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
@@ -22219,6 +22224,55 @@ impl From<JsAnyTemplateElement> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsxAttribute> for JsxAnyAttribute {
+    fn from(node: JsxAttribute) -> JsxAnyAttribute { JsxAnyAttribute::JsxAttribute(node) }
+}
+impl From<JsxSpreadAttribute> for JsxAnyAttribute {
+    fn from(node: JsxSpreadAttribute) -> JsxAnyAttribute {
+        JsxAnyAttribute::JsxSpreadAttribute(node)
+    }
+}
+impl AstNode for JsxAnyAttribute {
+    fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, JSX_ATTRIBUTE | JSX_SPREAD_ATTRIBUTE) }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSX_ATTRIBUTE => JsxAnyAttribute::JsxAttribute(JsxAttribute { syntax }),
+            JSX_SPREAD_ATTRIBUTE => {
+                JsxAnyAttribute::JsxSpreadAttribute(JsxSpreadAttribute { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsxAnyAttribute::JsxAttribute(it) => &it.syntax,
+            JsxAnyAttribute::JsxSpreadAttribute(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsxAnyAttribute {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsxAnyAttribute::JsxAttribute(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyAttribute::JsxSpreadAttribute(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsxAnyAttribute> for SyntaxNode {
+    fn from(n: JsxAnyAttribute) -> SyntaxNode {
+        match n {
+            JsxAnyAttribute::JsxAttribute(it) => it.into(),
+            JsxAnyAttribute::JsxSpreadAttribute(it) => it.into(),
+        }
+    }
+}
+impl From<JsxAnyAttribute> for SyntaxElement {
+    fn from(n: JsxAnyAttribute) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsxName> for JsxAnyAttributeName {
     fn from(node: JsxName) -> JsxAnyAttributeName { JsxAnyAttributeName::JsxName(node) }
 }
@@ -24294,6 +24348,11 @@ impl std::fmt::Display for JsAnySwitchClause {
     }
 }
 impl std::fmt::Display for JsAnyTemplateElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxAnyAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -27274,7 +27333,7 @@ impl AstNode for JsxAttributeList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<JsxAttribute> for JsxAttributeList {
+impl AstNodeList<JsxAnyAttribute> for JsxAttributeList {
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsxAttributeList {
@@ -27284,13 +27343,13 @@ impl Debug for JsxAttributeList {
     }
 }
 impl IntoIterator for &JsxAttributeList {
-    type Item = JsxAttribute;
-    type IntoIter = AstNodeListIterator<JsxAttribute>;
+    type Item = JsxAnyAttribute;
+    type IntoIter = AstNodeListIterator<JsxAnyAttribute>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsxAttributeList {
-    type Item = JsxAttribute;
-    type IntoIter = AstNodeListIterator<JsxAttribute>;
+    type Item = JsxAnyAttribute;
+    type IntoIter = AstNodeListIterator<JsxAnyAttribute>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]

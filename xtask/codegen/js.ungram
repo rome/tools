@@ -2225,7 +2225,11 @@ JsxAnyName =
 // Attributes
 // ==================================
 
-JsxAttributeList = JsxAttribute*
+JsxAttributeList = JsxAnyAttribute*
+
+JsxAnyAttribute =
+	JsxAttribute
+	| JsxSpreadAttribute
 
 JsxAttribute = 
 	name: JsxAnyAttributeName

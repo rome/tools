@@ -23,42 +23,35 @@ const Broken = React.forwardRef(({
 
 # Output
 ```js
-const Broken = React.forwardRef(({
-	children,
-	// 1
-	// 2
-	title,
-	hidden,
-	// 3
-}, ref) => (
-	<div ref={ref}>
+const Broken = React.forwardRef(
+  (
+    {
+      children,
+      // 1
+      // 2
+      title,
+      hidden,
+      // 3
+    },
+    ref,
+  ) => (
+    <div ref={ref}>
 		{children}
 	</div>
-))
+  ),
+);
 
 ```
 
 # Errors
 ```
-error[SyntaxError]: Invalid assignment to `<div ref`
-  ┌─ issue-7518.js:9:2
-  │
-9 │     <div ref={ref}>
-  │     ^^^^^^^^ This expression cannot be assigned to
-
-error: unterminated regex literal
-   ┌─ issue-7518.js:11:8
-   │
-11 │     </div>
-   │      -    ^ ...but the line ends here
-   │      │    
-   │      a regex literal starts there...
-
-error[SyntaxError]: expected an expression but instead found ')'
-   ┌─ issue-7518.js:12:1
-   │
-12 │ ))
-   │ ^ Expected an expression here
+error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
+   ┌─ issue-7518.js:9:2
+   │  
+ 9 │ ┌     <div ref={ref}>
+10 │ │         {children}
+11 │ │     </div>
+   │ └──────────^ JSX only syntax
 
 
 ```

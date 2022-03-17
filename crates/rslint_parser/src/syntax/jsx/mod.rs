@@ -428,11 +428,11 @@ fn parse_jsx_attribute(p: &mut Parser) -> ParsedSyntax {
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE))
 }
 
-// test jsx spread_attribute
+// test jsx jsx_spread_attribute
 // let obj = {};
 // <a {...obj} />;
 //
-// test_err jsx spread_attribute_error
+// test_err jsx jsx_spread_attribute_error
 // let obj = {};
 // <a {...obj, other} />;
 // <a ...obj} />;

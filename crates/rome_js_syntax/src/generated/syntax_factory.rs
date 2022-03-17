@@ -9477,7 +9477,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 false,
             ),
             JSX_ATTRIBUTE_LIST => {
-                Self::make_node_list_syntax(kind, children, JsxAttribute::can_cast)
+                Self::make_node_list_syntax(kind, children, JsxAnyAttribute::can_cast)
             }
             JSX_CHILD_LIST => Self::make_node_list_syntax(kind, children, JsxAnyChild::can_cast),
             TS_ENUM_MEMBER_LIST => Self::make_separated_list_syntax(
