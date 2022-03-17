@@ -525,7 +525,7 @@ fn parse_jsx_expression_block(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynta
         return ParsedSyntax::Absent;
     }
 
-    if !p.eat(T!['}']) {
+    if !p.expect(T!['}']) {
         m.abandon(p);
         return ParsedSyntax::Absent;
     }
