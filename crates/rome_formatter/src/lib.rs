@@ -126,6 +126,10 @@ pub enum IndentStyle {
     Space(u8),
 }
 
+impl IndentStyle {
+    pub const DEFAULT_SPACES: u8 = 2;
+}
+
 impl Default for IndentStyle {
     fn default() -> Self {
         Self::Tab
@@ -137,8 +141,8 @@ impl FromStr for IndentStyle {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "tab" => Ok(Self::Tab),
-            "space" => Ok(Self::Space(2)),
+            "tab" | "Tabs" => Ok(Self::Tab),
+            "space" | "Spaces" => Ok(Self::Space(IndentStyle::DEFAULT_SPACES)),
             // TODO: replace this error with a diagnostic
             _ => Err("Value not supported for IndentStyle"),
         }

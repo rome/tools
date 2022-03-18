@@ -36,11 +36,34 @@
 				"rome.formatter.formatWithSyntaxErrors": {
 					"type": "boolean",
 					"default": false,
-					"markdownDescription": "Allows the formatter to format code that contains syntax errors",
+					"markdownDescription": "**BETA**: allows the formatter to format code that contains syntax errors",
 					"examples": [
 						true,
 						false
 					]
+				},
+				"rome.formatter.lineWidth": {
+					"type": "number",
+					"default": 80,
+					"markdownDescription": "**BETA**: the max width of a single line, the code will have to fit in it",
+					"minimum": 40,
+					"maximum": 320
+				},
+				"rome.formatter.indentStyle": {
+					"type": "string",
+					"enum": ["Tabs", "Spaces"],
+					"default": "Tabs",
+					"markdownEnumDescriptions": [
+						"**BETA**: applies **tabs** while formatting",
+						"**BETA**: applies **spaces** while formatting"
+					]
+				},
+				"rome.formatter.spaceQuantity": {
+					"type": "number",
+					"default": 2,
+					"markdownDescription": "**BETA**: applied **only** when choosing **Spaces**, it's the number of spaces applied when printing.",
+					"minimum": 1,
+					"maximum": 12
 				},
 				"rome.analysis.enableDiagnostics": {
 					"type": "boolean",
@@ -70,12 +93,12 @@
 		"install-extension": "code --install-extension rome_lsp.vsix"
 	},
 	"dependencies": {
-		"vscode-languageclient": "8.0.0-next.12"
+		"vscode-languageclient": "^8.0.0-next.13"
 	},
 	"devDependencies": {
 		"@types/node": "^16.11.9",
 		"@types/vscode": "^1.52.0",
 		"typescript": "^4.5.2",
-		"vsce": "^2.6.7"
+		"vsce": "^2.7.0"
 	}
 }

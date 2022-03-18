@@ -105,7 +105,7 @@ impl LanguageServer for LSPServer {
             handlers::formatting::format(FormatParams {
                 text: &doc.text,
                 source_type: doc.get_source_type(),
-                format_options: to_format_options(&params.options),
+                format_options: to_format_options(&params.options, &workspace_settings.formatter),
                 workspace_settings,
                 file_id: doc.file_id(),
             })
@@ -126,7 +126,7 @@ impl LanguageServer for LSPServer {
             handlers::formatting::format_range(FormatRangeParams {
                 text: doc.text.as_ref(),
                 file_id: doc.file_id(),
-                format_options: to_format_options(&params.options),
+                format_options: to_format_options(&params.options, &workspace_settings.formatter),
                 range: params.range,
                 workspace_settings,
                 source_type: doc.get_source_type(),
@@ -148,7 +148,7 @@ impl LanguageServer for LSPServer {
             handlers::formatting::format_on_type(FormatOnTypeParams {
                 text: doc.text.as_ref(),
                 file_id: doc.file_id(),
-                format_options: to_format_options(&params.options),
+                format_options: to_format_options(&params.options, &workspace_settings.formatter),
                 position: params.text_document_position.position,
                 workspace_settings,
                 source_type: doc.get_source_type(),
