@@ -2265,18 +2265,59 @@ JsxSpreadAttribute =
 // Children
 // ==================================
 
+JsxChildList = JsxAnyChild*
+
 JsxAnyChild = 
 	JsxElement
 	| JsxSelfClosingElement
 	| JsxText
 	| JsxExpressionChild
 
+
 JsxExpressionChild =
 	'{'
 	expression: JsAnyExpression
 	'}'
 
-JsxChildList = JsxAnyChild*
+JsxAnyChildExpression = 
+	JsAnyLiteralExpression
+	| ImportMeta
+	| JsArrayExpression
+	| JsArrowFunctionExpression
+	| JsAssignmentExpression
+	| JsAwaitExpression
+	| JsBinaryExpression
+	| JsCallExpression
+	| JsClassExpression
+	| JsComputedMemberExpression
+	| JsConditionalExpression
+	| JsFunctionExpression
+	| JsIdentifierExpression
+	| JsImportCallExpression
+	| JsInExpression
+	| JsInstanceofExpression
+	| JsLogicalExpression
+	| JsNewExpression
+	| JsObjectExpression
+	| JsParenthesizedExpression
+	| JsPostUpdateExpression
+	| JsPreUpdateExpression
+	| JsSequenceExpression
+	| JsStaticMemberExpression
+	| JsSuperExpression
+	| JsThisExpression
+	| JsUnaryExpression
+	| JsUnknownExpression
+	| JsYieldExpression
+	| NewTarget
+	| JsTemplate
+	// Typescript
+	| TsTypeAssertionExpression
+	| TsAsExpression
+	| TsNonNullAssertionExpression
+	// JSX
+	| JsxTagExpression
+
 
 // ==================================
 // Auxiliary

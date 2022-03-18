@@ -105,12 +105,7 @@ impl ParseNodeList for JsxChildrenList {
             //     <c></c>
             // </a>
             T![<] => parse_jsx_element(p, false),
-            // test jsx jsx_expression_children
-            // <a>
-            //     {something}
-            //     {x => something}
-            // </a>
-            T!['{'] => parse_jsx_expression_block(p, JsSyntaxKind::JSX_EXPRESSION_CHILD),
+            T!['{'] => parse_jsx_expression_block(p, ExpressionBlock::Children),
             // test jsx jsx_text
             // <a>test</a>;
             // <a>   whitespace handling </a>;
@@ -495,7 +490,7 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     match p.cur() {
         // test jsx jsx_element_attribute_expression
         // <div id={1} />
-        T!['{'] => parse_jsx_expression_block(p, JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE),
+        T!['{'] => parse_jsx_expression_block(p, ExpressionBlock::Attribute),
         // test jsx jsx_element_attribute_element
         // <div id=<a/> />;
         T![<] => parse_jsx_element(p, true),
@@ -510,7 +505,72 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-fn parse_jsx_expression_block(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
+enum ExpressionBlock {
+    Attribute,
+    Children,
+}
+
+// test jsx jsx_children_expression
+// let x;
+// let a;
+// let b;
+// let key;
+// let f = () => {};
+// <div>
+//   {1}
+//   {9007199254740991n}
+//   {""}
+//   {true}
+//   {null}
+//   {undefined}
+//   {/a/}
+//   {[]}
+//   {x => console.log(x)}
+//   {x = 1}
+//   {await x}
+//   {1 + 1}
+//   {f()}
+//   {a[b]}
+//   {a?1:2}
+//   {function f() {}}
+//   {function () {}}
+//   {a}
+//   {import("a.js")}
+//   {key in a}
+//   {a instanceof Object}
+//   {a && b}
+//   {new f()}
+//   {{}}
+//   {(a)}
+//   {a++}
+//   {++a}
+//   {a,b}
+//   {a.b}
+//   {super.a()}
+//   {this}
+//   {delete a.a}
+//   {void a}
+//   {typeof a}
+//   {+a}
+//   {-a}
+//   {!a}
+//   {~a}
+//   {``}
+// </div>
+// function *f() {
+//     return <div>
+//         {yield a}
+//     </div>;
+// }
+
+// test_err jsx jsx_children_expressions_not_accepted
+// <div>
+//   {import.meta}
+//   {class A{}}
+//   {super()}
+//   {new.target}
+// </div>
+fn parse_jsx_expression_block(p: &mut Parser, kind: ExpressionBlock) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return ParsedSyntax::Absent;
     }
@@ -520,15 +580,40 @@ fn parse_jsx_expression_block(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynta
     p.bump(T!['{']);
 
     let expr = super::expr::parse_expression(p, ExpressionContext::default());
-    if expr.is_absent() {
+    let _ = expr.map(|mut m| match m.kind() {
+        JsSyntaxKind::IMPORT_META
+        | JsSyntaxKind::NEW_TARGET
+        | JsSyntaxKind::JS_CLASS_EXPRESSION => {
+            let err = p
+                .err_builder("This expression is not valid as a JSX expression.")
+                .primary(m.range(p), "");
+            p.error(err);
+            m.change_to_unknown(p);
+            m
+        }
+        _ => m,
+    });
+
+    // test jsx jsx_children_expression_then_text
+    // <test>
+    //     {/* comment */}
+    //      some
+    //      text
+    // </text>
+    if p.at(T!['}']) {
+        let context = match kind {
+            ExpressionBlock::Attribute => LexContext::JsxAttributeValue,
+            ExpressionBlock::Children => LexContext::JsxChild,
+        };
+        p.bump_with_context(T!['}'], context);
+    } else {
         m.abandon(p);
         return ParsedSyntax::Absent;
     }
 
-    if !p.expect(T!['}']) {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
-    }
-
+    let kind = match kind {
+        ExpressionBlock::Attribute => JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE,
+        ExpressionBlock::Children => JsSyntaxKind::JSX_EXPRESSION_CHILD,
+    };
     ParsedSyntax::Present(m.complete(p, kind))
 }
