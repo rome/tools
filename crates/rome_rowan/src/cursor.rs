@@ -914,8 +914,7 @@ impl SyntaxNode {
 
     pub fn first_token(&self) -> Option<SyntaxToken> {
         self.descendants_with_tokens()
-            .filter_map(|x| x.as_token().cloned())
-            .next()
+            .find_map(|x| x.as_token().cloned())
     }
 
     pub fn last_token(&self) -> Option<SyntaxToken> {

@@ -15,8 +15,6 @@ use crate::{
     soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult,
     ToFormatElement,
 };
-#[cfg(debug_assertions)]
-use rome_js_syntax::SyntaxNodeExt;
 use rome_js_syntax::{AstNode, AstNodeList, AstSeparatedList, SyntaxNode, SyntaxToken};
 use rome_rowan::api::SyntaxTriviaPiece;
 use rome_rowan::Language;
@@ -75,7 +73,7 @@ impl Formatter {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 let printed_tokens = self.printed_tokens.into_inner();
-                for token in root.tokens() {
+                for token in root.descendants_tokens() {
                     assert!(
                         printed_tokens.contains(&token),
                         "token was not seen by the formatter: {:?}",
@@ -377,7 +375,7 @@ impl Formatter {
         // towards the first (that was not consumed by the previous loop)
         for (index, piece) in pieces.rev() {
             if let Some(comment) = piece.as_comments() {
-                let is_single_line = comment.text().trim_start().starts_with("//");
+                let is_single_line = comment.text().starts_with("//");
 
                 let comment = Token::from(comment);
 
@@ -483,7 +481,7 @@ impl Formatter {
     fn format_verbatim_node_or_token(&self, node: &SyntaxNode) -> FormatElement {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                for token in node.tokens() {
+                for token in node.descendants_tokens() {
                     assert!(self.printed_tokens.borrow_mut().insert(token.clone()));
                 }
             }

@@ -8,7 +8,7 @@ JsModule {
                     opening_element: JsxOpeningElement {
                         l_angle_token: L_ANGLE@0..1 "<" [] [],
                         name: JsxNamespaceName {
-                            namespace: JsxReferenceIdentifier {
+                            namespace: JsxName {
                                 value_token: JSX_IDENT@1..10 "namespace" [] [],
                             },
                             colon_token: COLON@10..11 ":" [] [],
@@ -24,7 +24,7 @@ JsModule {
                         l_angle_token: L_ANGLE@13..14 "<" [] [],
                         slash_token: SLASH@14..15 "/" [] [],
                         name: JsxNamespaceName {
-                            namespace: JsxReferenceIdentifier {
+                            namespace: JsxName {
                                 value_token: JSX_IDENT@15..24 "namespace" [] [],
                             },
                             colon_token: COLON@24..25 ":" [] [],
@@ -39,50 +39,65 @@ JsModule {
             semicolon_token: SEMICOLON@27..28 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsxTagExpression {
-                tag: JsxElement {
-                    opening_element: JsxOpeningElement {
-                        l_angle_token: L_ANGLE@28..30 "<" [Newline("\n")] [],
-                        name: JsxMemberName {
-                            object: JsxNamespaceName {
-                                namespace: JsxReferenceIdentifier {
-                                    value_token: JSX_IDENT@30..39 "namespace" [] [],
-                                },
-                                colon_token: COLON@39..40 ":" [] [],
-                                name: JsxName {
-                                    value_token: JSX_IDENT@40..41 "a" [] [],
-                                },
+            expression: JsUnknownExpression {
+                items: [
+                    JsUnknown {
+                        items: [
+                            JsUnknown {
+                                items: [
+                                    L_ANGLE@28..30 "<" [Newline("\n")] [],
+                                    JsUnknown {
+                                        items: [
+                                            JsUnknown {
+                                                items: [
+                                                    JsxName {
+                                                        value_token: JSX_IDENT@30..39 "namespace" [] [],
+                                                    },
+                                                    COLON@39..40 ":" [] [],
+                                                    JsxName {
+                                                        value_token: JSX_IDENT@40..41 "a" [] [],
+                                                    },
+                                                ],
+                                            },
+                                            DOT@41..42 "." [] [],
+                                            JsName {
+                                                value_token: IDENT@42..43 "b" [] [],
+                                            },
+                                        ],
+                                    },
+                                    JsxAttributeList [],
+                                    R_ANGLE@43..44 ">" [] [],
+                                ],
                             },
-                            dot_token: DOT@41..42 "." [] [],
-                            member: JsName {
-                                value_token: IDENT@42..43 "b" [] [],
+                            JsUnknown {
+                                items: [
+                                    L_ANGLE@44..45 "<" [] [],
+                                    SLASH@45..46 "/" [] [],
+                                    JsUnknown {
+                                        items: [
+                                            JsUnknown {
+                                                items: [
+                                                    JsxName {
+                                                        value_token: JSX_IDENT@46..55 "namespace" [] [],
+                                                    },
+                                                    COLON@55..56 ":" [] [],
+                                                    JsxName {
+                                                        value_token: JSX_IDENT@56..57 "a" [] [],
+                                                    },
+                                                ],
+                                            },
+                                            DOT@57..58 "." [] [],
+                                            JsName {
+                                                value_token: IDENT@58..59 "b" [] [],
+                                            },
+                                        ],
+                                    },
+                                    R_ANGLE@59..60 ">" [] [],
+                                ],
                             },
-                        },
-                        attributes: JsxAttributeList [],
-                        r_angle_token: R_ANGLE@43..44 ">" [] [],
+                        ],
                     },
-                    children: missing (optional),
-                    closing_element: JsxClosingElement {
-                        l_angle_token: L_ANGLE@44..45 "<" [] [],
-                        slash_token: SLASH@45..46 "/" [] [],
-                        name: JsxMemberName {
-                            object: JsxNamespaceName {
-                                namespace: JsxReferenceIdentifier {
-                                    value_token: JSX_IDENT@46..55 "namespace" [] [],
-                                },
-                                colon_token: COLON@55..56 ":" [] [],
-                                name: JsxName {
-                                    value_token: JSX_IDENT@56..57 "a" [] [],
-                                },
-                            },
-                            dot_token: DOT@57..58 "." [] [],
-                            member: JsName {
-                                value_token: IDENT@58..59 "b" [] [],
-                            },
-                        },
-                        r_angle_token: R_ANGLE@59..60 ">" [] [],
-                    },
-                },
+                ],
             },
             semicolon_token: SEMICOLON@60..61 ";" [] [],
         },
@@ -100,7 +115,7 @@ JsModule {
           0: JSX_OPENING_ELEMENT@0..13
             0: L_ANGLE@0..1 "<" [] []
             1: JSX_NAMESPACE_NAME@1..12
-              0: JSX_REFERENCE_IDENTIFIER@1..10
+              0: JSX_NAME@1..10
                 0: JSX_IDENT@1..10 "namespace" [] []
               1: COLON@10..11 ":" [] []
               2: JSX_NAME@11..12
@@ -112,7 +127,7 @@ JsModule {
             0: L_ANGLE@13..14 "<" [] []
             1: SLASH@14..15 "/" [] []
             2: JSX_NAMESPACE_NAME@15..26
-              0: JSX_REFERENCE_IDENTIFIER@15..24
+              0: JSX_NAME@15..24
                 0: JSX_IDENT@15..24 "namespace" [] []
               1: COLON@24..25 ":" [] []
               2: JSX_NAME@25..26
@@ -120,13 +135,13 @@ JsModule {
             3: R_ANGLE@26..27 ">" [] []
       1: SEMICOLON@27..28 ";" [] []
     1: JS_EXPRESSION_STATEMENT@28..61
-      0: JSX_TAG_EXPRESSION@28..60
-        0: JSX_ELEMENT@28..60
-          0: JSX_OPENING_ELEMENT@28..44
+      0: JS_UNKNOWN_EXPRESSION@28..60
+        0: JS_UNKNOWN@28..60
+          0: JS_UNKNOWN@28..44
             0: L_ANGLE@28..30 "<" [Newline("\n")] []
-            1: JSX_MEMBER_NAME@30..43
-              0: JSX_NAMESPACE_NAME@30..41
-                0: JSX_REFERENCE_IDENTIFIER@30..39
+            1: JS_UNKNOWN@30..43
+              0: JS_UNKNOWN@30..41
+                0: JSX_NAME@30..39
                   0: JSX_IDENT@30..39 "namespace" [] []
                 1: COLON@39..40 ":" [] []
                 2: JSX_NAME@40..41
@@ -136,13 +151,12 @@ JsModule {
                 0: IDENT@42..43 "b" [] []
             2: JSX_ATTRIBUTE_LIST@43..43
             3: R_ANGLE@43..44 ">" [] []
-          1: (empty)
-          2: JSX_CLOSING_ELEMENT@44..60
+          1: JS_UNKNOWN@44..60
             0: L_ANGLE@44..45 "<" [] []
             1: SLASH@45..46 "/" [] []
-            2: JSX_MEMBER_NAME@46..59
-              0: JSX_NAMESPACE_NAME@46..57
-                0: JSX_REFERENCE_IDENTIFIER@46..55
+            2: JS_UNKNOWN@46..59
+              0: JS_UNKNOWN@46..57
+                0: JSX_NAME@46..55
                   0: JSX_IDENT@46..55 "namespace" [] []
                 1: COLON@55..56 ":" [] []
                 2: JSX_NAME@56..57

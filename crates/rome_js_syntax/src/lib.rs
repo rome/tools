@@ -20,7 +20,7 @@ pub use modifier_ext::*;
 pub use rome_rowan::{SyntaxText, TextLen, TextRange, TextSize, TokenAtOffset, WalkEvent};
 pub use stmt_ext::*;
 pub use syntax_node::*;
-pub use util::{SyntaxNodeExt, SyntaxTokenExt};
+pub use util::SyntaxNodeExt;
 
 use crate::JsSyntaxKind::*;
 use rome_rowan::RawSyntaxKind;
