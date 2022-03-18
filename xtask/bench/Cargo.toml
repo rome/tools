@@ -6,23 +6,10 @@ publish = false
 
 [dependencies]
 xtask = { path = '../', version = "0.0" }
-rome_js_syntax = { path = "../../crates/rome_js_syntax" }
-rslint_parser = { path = "../../crates/rslint_parser"}
-rslint_errors = { path = "../../crates/rslint_errors"}
-rome_formatter = { path = "../../crates/rome_formatter"}
+rome_benchmarker = { path = "../../crates/rome_benchmarker", version = "0.0.0" }
 
 pico-args = "0.4.2"
-timing = "0.2.3"
-criterion = "0.3.5"
 regex = "1.5.5"
 ureq = "2.4.0"
 url = "2.2.2"
-itertools = "0.10.3"
 ansi_rgb = "0.2.0"
-
-# dhat-on
-dhat = { version = "0.2.4", optional = true }
-humansize = {version = "1.1.1", optional = true }
-
-[features]
-dhat-on = ["dhat", "humansize"]

@@ -1,13 +1,9 @@
+mod utils;
+
+use crate::utils::fetch_suites;
 use pico_args::Arguments;
+use rome_benchmarker::{Benchmarker, FeatureToBenchmark};
 use xtask::{project_root, pushd, Result};
-use xtask_bench::{run, FeatureToBenchmark, RunArgs};
-
-#[cfg(feature = "dhat-on")]
-use dhat::DhatAlloc;
-
-#[cfg(feature = "dhat-on")]
-#[global_allocator]
-static ALLOCATOR: DhatAlloc = DhatAlloc;
 
 fn main() -> Result<(), pico_args::Error> {
     #[cfg(feature = "dhat-on")]
@@ -27,7 +23,7 @@ OPTIONS
     --save-baseline     Allows different runs to be compared.
     --feature           Possible values: parser, formatter
     --criterion=[true/false]  Run a series of statistical test to assess with the this run is faster or slower than previous runs.
-    --suites=<IDS>      Runs the specified benchmarks. Use comma as separator. 
+    --suites=<IDS>      Runs the specified benchmarks. Use comma as separator.
                         Valid values are:
                             *: will run all benchmarks;
                             js: will benchmark all javascript libraries;
@@ -63,13 +59,28 @@ OPTIONS
     // "feature" is a mandatory option and will throw an error if it's missing or incorrect
     let feature: FeatureToBenchmark = args.value_from_str("--feature")?;
 
-    run(RunArgs {
-        filter,
+    let code = match fetch_suites(filter, suites) {
+        Ok(code) => code,
+        Err(err) => {
+            println!("{:?}", err);
+            return Ok(());
+        }
+    };
+
+    let benchmarker = Benchmarker {
         criterion,
         baseline,
         feature,
-        suites,
-    });
+        code,
+    };
+
+    let summaries = benchmarker.benchmark();
+
+    println!("Summary");
+    println!("-------");
+    for l in summaries {
+        println!("{}", l.summary());
+    }
 
     Ok(())
 }

@@ -4,16 +4,19 @@ use rome_js_syntax::JsAnyRoot;
 use rslint_errors::file::SimpleFile;
 use rslint_errors::{Diagnostic, Emitter, Severity};
 use rslint_parser::{Parse, SourceType};
+use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
 use std::time::Duration;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ParseMeasurement {
     id: String,
+    #[serde(skip_serializing)]
     code: String,
     parsing: Duration,
     tree_sink: Duration,
+    #[serde(skip_serializing)]
     diagnostics: Vec<Diagnostic>,
 }
 

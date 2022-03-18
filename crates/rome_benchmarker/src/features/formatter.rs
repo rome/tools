@@ -1,10 +1,11 @@
 use crate::BenchmarkSummary;
 use rome_formatter::{format, FormatOptions, Formatted};
 use rome_js_syntax::SyntaxNode;
+use serde::Serialize;
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct FormatterMeasurement {
     id: String,
     formatting: Duration,
