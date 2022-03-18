@@ -29,7 +29,7 @@ use crate::{
     state::ParserStateCheckpoint,
     token_source::{TokenSource, TokenSourceCheckpoint, Trivia},
 };
-use rslint_lexer::{LexContext, LexedToken, ReLexContext};
+use rslint_lexer::{LexContext, ReLexContext};
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
@@ -136,8 +136,7 @@ pub struct Parser<'s> {
 impl<'s> Parser<'s> {
     /// Creates a new parser that parses the `source`.
     pub fn new(source: &'s str, file_id: usize, source_type: SourceType) -> Parser<'s> {
-        let mut token_source = TokenSource::from_str(source, file_id);
-        let errors = token_source.initialize();
+        let token_source = TokenSource::from_str(source, file_id);
 
         Parser {
             file_id,
@@ -146,13 +145,15 @@ impl<'s> Parser<'s> {
             tokens: token_source,
             last_token_event_pos: None,
             source_type,
-            diagnostics: errors,
+            diagnostics: vec![],
         }
     }
 
     /// Consume the parser and returns the list of events, the source text's trivia, and the diagnostics.
-    pub fn finish(self) -> (Vec<Event>, Vec<Trivia>, Vec<ParseDiagnostic>) {
-        (self.events, self.tokens.finish(), self.diagnostics)
+    pub fn finish(mut self) -> (Vec<Event>, Vec<Trivia>, Vec<ParseDiagnostic>) {
+        let (trivia, source_diagnostics) = self.tokens.finish();
+        self.diagnostics.extend(source_diagnostics);
+        (self.events, trivia, self.diagnostics)
     }
 
     /// Gets the current token kind of the parser
@@ -319,8 +320,7 @@ impl<'s> Parser<'s> {
         };
 
         let range = self.cur_range();
-        let diagnostics = self.tokens.bump(context);
-        self.diagnostics.extend(diagnostics);
+        self.tokens.bump(context);
 
         self.push_token(kind, range);
     }
@@ -352,13 +352,7 @@ impl<'s> Parser<'s> {
     /// Re-lexes the current token in the specified context. Returns the kind
     /// of the re-lexed token (can be the same as before if the context doesn't make a difference for the current token)
     pub fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
-        let LexedToken { kind, diagnostic } = self.tokens.re_lex(context);
-
-        if let Some(diagnostic) = diagnostic {
-            self.diagnostics.push(*diagnostic);
-        }
-
-        kind
+        self.tokens.re_lex(context)
     }
 
     /// Rewind the parser back to a previous position in time
@@ -373,7 +367,7 @@ impl<'s> Parser<'s> {
         self.tokens.rewind(token_source);
         self.last_token_event_pos = last_token_pos;
         self.drain_events(self.cur_event_pos() - event_pos);
-        self.diagnostics.truncate(errors_pos);
+        self.diagnostics.truncate(errors_pos as usize);
         self.state.restore(state)
     }
 
@@ -384,7 +378,7 @@ impl<'s> Parser<'s> {
             token_source: self.tokens.checkpoint(),
             last_token_pos: self.last_token_event_pos,
             event_pos: self.cur_event_pos(),
-            errors_pos: self.diagnostics.len(),
+            errors_pos: self.diagnostics.len() as u32,
             state: self.state.checkpoint(),
         }
     }
@@ -460,7 +454,7 @@ impl Marker {
             start,
             old_start: pos,
             child_idx: None,
-            bomb: DebugDropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
+            bomb: DebugDropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a marker's parent."),
         }
     }
 
@@ -669,7 +663,10 @@ impl CompletedMarker {
 #[derive(Debug)]
 pub struct Checkpoint {
     pub(super) event_pos: usize,
-    errors_pos: usize,
+    /// The length of the errors list at the time the checkpoint was created.
+    /// Safety: The parser only supports files <= 4Gb. Storing a `u32` is sufficient to store one error
+    /// for each single character in the file, which should be sufficient for any realistic file.
+    errors_pos: u32,
     pub(super) last_token_pos: Option<u32>,
     state: ParserStateCheckpoint,
     pub(super) token_source: TokenSourceCheckpoint,
@@ -682,7 +679,7 @@ mod tests {
 
     #[test]
     #[should_panic(
-        expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."
+        expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a marker's parent."
     )]
     fn uncompleted_markers_panic() {
         let mut parser = Parser::new("'use strict'", 0, SourceType::default());

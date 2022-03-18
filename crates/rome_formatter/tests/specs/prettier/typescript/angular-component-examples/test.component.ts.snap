@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 144
 expression: test.component.ts
+
 ---
 # Input
 ```js
@@ -73,6 +75,12 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
    │  │   An explicit or implicit semicolon is expected here...
    │  ...Which is required to end this statement
 
+error[SyntaxError]: expected `'}'` but instead the file ends
+   ┌─ test.component.ts:18:1
+   │
+18 │ 
+   │ ^ the file ends here
+
 error: unterminated template literal
    ┌─ test.component.ts:13:2
    │  
@@ -84,24 +92,6 @@ error: unterminated template literal
 17 │ │ class     TestComponent {}
 18 │ │ 
    │ └^
-
-error[SyntaxError]: Invalid template literal
-   ┌─ test.component.ts:13:2
-   │  
-13 │   `
-   │ ┌─^
-14 │ │ 
-15 │ │ ]
-16 │ │ })
-17 │ │ class     TestComponent {}
-18 │ │ 
-   │ └^
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-   ┌─ test.component.ts:18:1
-   │
-18 │ 
-   │ ^ the file ends here
 
 
 ```

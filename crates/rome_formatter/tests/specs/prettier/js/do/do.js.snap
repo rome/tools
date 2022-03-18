@@ -287,6 +287,18 @@ error[SyntaxError]: expected `while` but instead found `;`
 54 │ };
    │  ^ unexpected
 
+error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+   ┌─ do.js:31:9
+   │
+31 │         }
+   │         ^
+
+error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+   ┌─ do.js:32:7
+   │
+32 │       }
+   │       ^
+
 
 ```
 
