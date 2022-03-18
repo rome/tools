@@ -69,7 +69,7 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
 
         parse
     });
-    assert!(!res.is_err(), "Trying to parse `{}` panicked", path);
+    assert!(res.is_ok(), "Trying to parse `{}` panicked", path);
     res.unwrap()
 }
 

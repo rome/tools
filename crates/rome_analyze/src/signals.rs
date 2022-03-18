@@ -156,13 +156,12 @@ pub struct Analysis {
 impl Analysis {
     pub fn into_actions(self) -> impl Iterator<Item = Action> {
         self.signals
-            .into_iter()
             // TODO: There must be a better way to do this.
-            .map(|s| match s {
+            .into_iter()
+            .flat_map(|s| match s {
                 Signal::Action(a) => vec![a].into_iter(),
                 Signal::Diagnostic(d) => d.actions.into_iter(),
             })
-            .flatten()
     }
 
     pub fn into_diagnostics(self) -> impl Iterator<Item = AnalyzeDiagnostic> {

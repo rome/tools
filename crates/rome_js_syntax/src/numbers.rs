@@ -6,10 +6,10 @@ pub use num_bigint::BigInt;
 
 fn split_into_radix_and_number(num: &str) -> (u32, String) {
     match num.get(0..2) {
-        Some("0x") | Some("0X") => (16, num.get(2..).unwrap().replace("_", "")),
-        Some("0b") | Some("0B") => (2, num.get(2..).unwrap().replace("_", "")),
-        Some("0o") | Some("0O") => (8, num.get(2..).unwrap().replace("_", "")),
-        _ => (10, num.replace("_", "")),
+        Some("0x") | Some("0X") => (16, num.get(2..).unwrap().replace('_', "")),
+        Some("0b") | Some("0B") => (2, num.get(2..).unwrap().replace('_', "")),
+        Some("0o") | Some("0O") => (8, num.get(2..).unwrap().replace('_', "")),
+        _ => (10, num.replace('_', "")),
     }
 }
 
