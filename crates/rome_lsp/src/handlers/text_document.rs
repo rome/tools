@@ -1,5 +1,5 @@
 use lspower::lsp;
-use rome_path::RomePath;
+use rome_fs::RomePath;
 use std::sync::Arc;
 use tracing::error;
 

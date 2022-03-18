@@ -283,6 +283,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "crossbeam"
+version = "0.8.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4ae5588f6b3c3cb05239e90bd110f257254aecd01e4635400391aeae07497845"
+dependencies = [
+ "cfg-if",
+ "crossbeam-channel",
+ "crossbeam-deque",
+ "crossbeam-epoch",
+ "crossbeam-queue",
+ "crossbeam-utils",
+]
+
+[[package]]
 name = "crossbeam-channel"
 version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -314,6 +328,16 @@ dependencies = [
  "lazy_static",
  "memoffset",
  "scopeguard",
+]
+
+[[package]]
+name = "crossbeam-queue"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1f25d8400f4a7a5778f0e4e52384a48cbd9b5c495d110786187fc750075277a2"
+dependencies = [
+ "cfg-if",
+ "crossbeam-utils",
 ]
 
 [[package]]
@@ -923,15 +947,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "308cc39be01b73d0d18f82a0e7b2a3df85245f84af96fdddc5d202d27e47b86a"
 
 [[package]]
-name = "memmap2"
-version = "0.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "00b6c2ebff6180198788f5db08d7ce3bc1d0b617176678831a7510825973e357"
-dependencies = [
- "libc",
-]
-
-[[package]]
 name = "memoffset"
 version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1332,15 +1347,14 @@ dependencies = [
 name = "rome_cli"
 version = "0.0.0"
 dependencies = [
+ "crossbeam",
  "hdrhistogram",
  "lazy_static",
- "memmap2",
  "parking_lot 0.12.0",
  "pico-args",
- "rayon",
  "rome_core",
  "rome_formatter",
- "rome_path",
+ "rome_fs",
  "rslint_errors",
  "rslint_parser",
  "tracing",
@@ -1351,7 +1365,7 @@ dependencies = [
 name = "rome_core"
 version = "0.0.0"
 dependencies = [
- "rome_path",
+ "rome_fs",
 ]
 
 [[package]]
@@ -1363,8 +1377,8 @@ dependencies = [
  "insta",
  "parking_lot 0.12.0",
  "rome_core",
+ "rome_fs",
  "rome_js_syntax",
- "rome_path",
  "rome_rowan",
  "rslint_errors",
  "rslint_parser",
@@ -1374,6 +1388,17 @@ dependencies = [
  "similar-asserts",
  "tests_macros",
  "thiserror",
+ "tracing",
+]
+
+[[package]]
+name = "rome_fs"
+version = "0.0.0"
+dependencies = [
+ "crossbeam",
+ "indexmap",
+ "parking_lot 0.12.0",
+ "rayon",
  "tracing",
 ]
 
@@ -1397,8 +1422,8 @@ dependencies = [
  "parking_lot 0.12.0",
  "rome_analyze",
  "rome_formatter",
+ "rome_fs",
  "rome_js_syntax",
- "rome_path",
  "rslint_errors",
  "rslint_parser",
  "serde",
@@ -1408,10 +1433,6 @@ dependencies = [
  "tracing-subscriber",
  "tracing-tree",
 ]
-
-[[package]]
-name = "rome_path"
-version = "0.0.0"
 
 [[package]]
 name = "rome_playground"

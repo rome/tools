@@ -1,7 +1,7 @@
 use crate::file_handlers::unknown::UnknownFileHandler;
 use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
 use file_handlers::json::JsonFileHandler;
-use rome_path::RomePath;
+use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 
@@ -15,20 +15,9 @@ struct Features {
 }
 
 pub struct App {
+    pub fs: Box<dyn FileSystem>,
     /// features available throughout the application
     features: Features,
-}
-
-impl Default for App {
-    fn default() -> Self {
-        Self {
-            features: Features {
-                js: JsFileHandler {},
-                json: JsonFileHandler {},
-                unknown: UnknownFileHandler::default(),
-            },
-        }
-    }
 }
 
 /// Generic errors thrown during rome operations
@@ -65,8 +54,21 @@ impl Display for RomeError {
 impl Error for RomeError {}
 
 impl App {
-    pub fn new() -> Self {
-        Default::default()
+    /// Create a new instance of the app using the [OsFileSystem]
+    pub fn from_env() -> Self {
+        Self::with_filesystem(OsFileSystem)
+    }
+
+    /// Create a new instance of the app using the specified [FileSystem] implementation
+    pub fn with_filesystem(fs: impl FileSystem + 'static) -> Self {
+        Self {
+            fs: Box::new(fs),
+            features: Features {
+                js: JsFileHandler {},
+                json: JsonFileHandler {},
+                unknown: UnknownFileHandler::default(),
+            },
+        }
     }
 
     /// Return a [Language] from a string

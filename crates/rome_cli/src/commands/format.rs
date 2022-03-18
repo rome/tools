@@ -3,24 +3,19 @@ use std::{
     convert::Infallible,
     ffi::{OsStr, OsString},
     fmt::Display,
-    fs::{self, read_dir},
-    io::{self, Read, Seek, SeekFrom, Write},
+    io,
     ops::Range,
     panic::catch_unwind,
     path::{Path, PathBuf},
-    process,
-    str::Utf8Error,
-    sync::{
-        atomic::{AtomicUsize, Ordering},
-        mpsc::{channel, Sender},
-    },
+    sync::atomic::{AtomicUsize, Ordering},
     time::Instant,
 };
 
-use rayon::{self, scope, Scope};
+use crossbeam::channel::{unbounded, Sender};
 use rome_core::App;
 use rome_formatter::{FormatOptions, IndentStyle};
-use rome_path::RomePath;
+use rome_fs::{AtomicInterner, PathInterner, RomePath};
+use rome_fs::{TraversalContext, TraversalScope};
 use rslint_errors::{
     file::{FileId, Files, SimpleFile},
     termcolor::{ColorChoice, StandardStream},
@@ -28,10 +23,10 @@ use rslint_errors::{
 };
 use rslint_parser::{parse, SourceType};
 
-use crate::CliSession;
+use crate::{CliSession, Termination};
 
 /// Handler for the "format" command of the Rome CLI
-pub(crate) fn format(mut session: CliSession) {
+pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let mut options = FormatOptions::default();
 
     let size = session
@@ -76,57 +71,36 @@ pub(crate) fn format(mut session: CliSession) {
         panic!("unexpected argument {arg:?}");
     }
 
-    let (send_files, recv_files) = channel();
-    let (send_diags, recv_diags) = channel();
+    let (interner, recv_files) = AtomicInterner::new();
+    let (send_diags, recv_diags) = unbounded();
 
     let formatted = AtomicUsize::new(0);
-    let file_ids = AtomicUsize::new(0);
-
-    let ctx = FormatCommandOptions {
-        app: &session.app,
-        options,
-        is_check,
-        ignore_errors,
-        file_ids: &file_ids,
-        formatted: &formatted,
-        files: send_files,
-        diagnostics: send_diags,
-    };
 
     let start = Instant::now();
 
-    scope(move |scope| {
-        for input in inputs {
-            let path = PathBuf::from(input);
-            let file_id = ctx.acquire_file_id(path.clone());
+    {
+        // The traversal context is scoped to ensure all the channels it
+        // contains are properly closed once the traversal finishes
+        let ctx = FormatCommandOptions {
+            app: &session.app,
+            options,
+            is_check,
+            ignore_errors,
+            interner,
+            formatted: &formatted,
+            diagnostics: send_diags,
+        };
 
-            let file_type = match path.metadata().with_file_id(file_id) {
-                Ok(meta) => meta.file_type(),
-                Err(err) => {
-                    ctx.push_diagnostic(err);
-                    return;
+        let ctx = &ctx;
+        session
+            .app
+            .fs
+            .traversal(Box::new(move |scope: &dyn TraversalScope| {
+                for input in inputs {
+                    scope.spawn(ctx, PathBuf::from(input));
                 }
-            };
-
-            if file_type.is_file() {
-                let ctx = ctx.clone();
-                scope.spawn(move |_| {
-                    handle_file(ctx, &path, file_id);
-                });
-                continue;
-            }
-
-            if file_type.is_dir() {
-                let ctx = ctx.clone();
-                scope.spawn(move |scope| {
-                    handle_dir(scope, ctx, &path, file_id);
-                });
-                continue;
-            }
-
-            ctx.push_diagnostic(Diagnostic::error(file_id, "IO", "unhandled file type"));
-        }
-    });
+            }));
+    }
 
     let duration = start.elapsed();
     let count = formatted.load(Ordering::Relaxed);
@@ -149,7 +123,33 @@ pub(crate) fn format(mut session: CliSession) {
         }
 
         let name = path.display().to_string();
-        let source = fs::read_to_string(path).ok().unwrap_or_default();
+        let mut source = String::new();
+        session
+            .app
+            .fs
+            .open(&path)
+            .and_then(|mut file| file.read_to_string(&mut source))
+            // Any potential read error is ignored for two reasons:
+            // - The first is that if this code is reached this means an error
+            // diagnostic was emitted for this path, we can't really know what
+            // it was at this stage since its an opaque diagnostic but it could
+            // be that the file doesn't exist, is a directory, or the process
+            // doesn't have the permission to read it. There's a fairly high
+            // chance the same error will happen again when the file is loaded
+            // a second time, in which case we don't want to do anything with
+            // it since we're already in the process of printing the error
+            // diagnostic to the console anyway and we don't want to show the
+            // same error twice
+            // - The second scenario is that the filesystem could be in an
+            // inconsistent state, for instance the file got deleted between
+            // the moment the diagnostic was emitted and the moment it gets
+            // printed. The probability of this happening is very low so for
+            // now the diagnostics just gets printed in "degraded mode" with no
+            // code span information, and not print any additional error.
+            // Eventually this will go away when the virtual filesystem can
+            // cache the content of files in memory and we don't have to load
+            // the file a second time to print diagnostics
+            .ok();
 
         files.storage.insert(file_id, SimpleFile::new(name, source));
     }
@@ -166,8 +166,10 @@ pub(crate) fn format(mut session: CliSession) {
     }
 
     // Formatting emitted error diagnostics, exit with a non-zero code
-    if has_errors {
-        process::exit(1)
+    if !has_errors {
+        Ok(())
+    } else {
+        Err(Termination::from("errors where emitted while formatting"))
     }
 }
 
@@ -203,7 +205,6 @@ impl Files for PathFiles {
     }
 }
 
-#[derive(Clone)]
 /// Context object shared between directory traversal tasks
 struct FormatCommandOptions<'a> {
     /// Shared instance of [App]
@@ -214,25 +215,15 @@ struct FormatCommandOptions<'a> {
     is_check: bool,
     /// Whether the formatter should silently skip files with errors
     ignore_errors: bool,
-    /// Shared atomic counter for allocating file IDs
-    file_ids: &'a AtomicUsize,
+    /// File paths interner used by the filesystem traversal
+    interner: AtomicInterner,
     /// Shared atomic counter storing the number of formatted files
     formatted: &'a AtomicUsize,
-    /// Channel sending file-id-to-path associations to the display thread
-    files: Sender<(FileId, PathBuf)>,
     /// Channel sending diagnostics to the display thread
     diagnostics: Sender<Diagnostic>,
 }
 
 impl<'a> FormatCommandOptions<'a> {
-    /// Acquire a new file ID from the atomic counter and send the associated
-    /// path to the display thread
-    fn acquire_file_id(&self, path: PathBuf) -> FileId {
-        let file_id = self.file_ids.fetch_add(1, Ordering::Relaxed);
-        self.files.send((file_id, path)).ok();
-        file_id
-    }
-
     /// Increment the formatted files counter
     fn add_formatted(&self) {
         self.formatted.fetch_add(1, Ordering::Relaxed);
@@ -244,79 +235,28 @@ impl<'a> FormatCommandOptions<'a> {
     }
 }
 
-/// Default list of ignored directories, in the future will be supplanted by
-/// detecting and parsing .ignore files
-const DEFAULT_IGNORE: &[&str] = &[".git", "node_modules"];
-
-/// Traverse a single directory, scheduling any file for formatting and
-/// directories for subsequent traversal
-fn handle_dir<'a>(scope: &Scope<'a>, ctx: FormatCommandOptions<'a>, path: &Path, file_id: FileId) {
-    if let Some(file_name) = path.file_name().and_then(OsStr::to_str) {
-        if DEFAULT_IGNORE.contains(&file_name) {
-            return;
-        }
+impl<'a> TraversalContext for FormatCommandOptions<'a> {
+    fn interner(&self) -> &dyn PathInterner {
+        &self.interner
     }
 
-    let iter = match read_dir(path).with_file_id(file_id) {
-        Ok(iter) => iter,
-        Err(err) => {
-            ctx.push_diagnostic(err);
-            return;
-        }
-    };
+    fn push_diagnostic(&self, file_id: FileId, code: &'static str, title: String) {
+        self.push_diagnostic(Diagnostic::error(file_id, code, title));
+    }
 
-    for entry in iter {
-        let entry = match entry.with_file_id(file_id) {
-            Ok(entry) => entry,
-            Err(err) => {
-                ctx.push_diagnostic(err);
-                continue;
-            }
-        };
+    fn can_handle(&self, rome_path: &RomePath) -> bool {
+        self.app.can_format(rome_path)
+    }
 
-        let path = entry.path();
-        let file_id = ctx.acquire_file_id(path.clone());
-
-        let file_type = match entry.file_type().with_file_id(file_id) {
-            Ok(file_type) => file_type,
-            Err(err) => {
-                ctx.push_diagnostic(err);
-                continue;
-            }
-        };
-
-        if file_type.is_dir() {
-            let ctx = ctx.clone();
-            scope.spawn(move |scope| {
-                handle_dir(scope, ctx, &path, file_id);
-            });
-            continue;
-        }
-
-        if file_type.is_file() {
-            // Performing this check here lets us skip scheduling unsupported
-            // files entirely as well as silently ignore unsupported files when
-            // doing a directory traversal but printing an error message if the
-            // user explicitly requests an unsupported file to be formatted
-            if !ctx.app.can_format(&RomePath::new(&path)) {
-                continue;
-            }
-
-            let ctx = ctx.clone();
-            scope.spawn(move |_| {
-                handle_file(ctx, &path, file_id);
-            });
-            continue;
-        }
-
-        ctx.push_diagnostic(Diagnostic::error(file_id, "IO", "unhandled file type"));
+    fn handle_file(&self, path: &Path, file_id: FileId) {
+        handle_file(self, path, file_id)
     }
 }
 
 /// This function wraps the [format_file] function implementing the formatting
 /// in a [catch_unwind] block and emit diagnostics in case of error (either the
 /// formatting function returns Err or panics)
-fn handle_file(ctx: FormatCommandOptions, path: &Path, file_id: FileId) {
+fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
     let params = FormatFileParams {
         app: ctx.app,
         options: ctx.options,
@@ -377,17 +317,17 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
 
     let source_type = SourceType::try_from(params.path).unwrap_or_else(|_| SourceType::js_module());
 
-    let mut file = tracing::debug_span!("open")
-        .in_scope(|| fs::File::options().read(true).write(true).open(params.path))
+    let mut file = params
+        .app
+        .fs
+        .open(params.path)
         .with_file_id(params.file_id)?;
 
-    let input = FileBuffer::read(&mut file, !params.is_check).with_file_id(params.file_id)?;
+    let mut input = String::new();
+    file.read_to_string(&mut input)
+        .with_file_id(params.file_id)?;
 
-    let root = parse(
-        input.to_str().with_file_id_and_code(params.file_id, "IO")?,
-        params.file_id,
-        source_type,
-    );
+    let root = parse(&input, params.file_id, source_type);
 
     if root.has_errors() {
         return Ok(if params.ignore_errors {
@@ -416,57 +356,10 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
             ));
         }
     } else {
-        // Release the mmap / buffer
-        drop(input);
-
-        // Truncate the file
-        file.set_len(0).with_file_id(params.file_id)?;
-
-        // Reset the write cursor
-        file.seek(SeekFrom::Start(0)).with_file_id(params.file_id)?;
-
-        // Write the new content
-        file.write_all(output).with_file_id(params.file_id)?;
+        file.set_content(output).with_file_id(params.file_id)?;
     }
 
     Ok(Vec::new())
-}
-
-/// Content of a file loaded into memory, internal representation can be either
-/// a memory-map or a string buffer
-enum FileBuffer {
-    Mmap(memmap2::Mmap),
-    String(String),
-}
-
-impl FileBuffer {
-    fn read(file: &mut fs::File, allow_mmap: bool) -> io::Result<Self> {
-        // TODO: figure out on which platforms this is useful
-        if allow_mmap {
-            if let Ok(mmap) = unsafe { memmap2::Mmap::map(&*file) } {
-                return Ok(Self::Mmap(mmap));
-            }
-        }
-
-        let mut buffer = String::new();
-        file.read_to_string(&mut buffer)?;
-
-        Ok(Self::String(buffer))
-    }
-
-    fn as_bytes(&self) -> &[u8] {
-        match self {
-            FileBuffer::Mmap(mmap) => mmap.as_ref(),
-            FileBuffer::String(buffer) => buffer.as_ref(),
-        }
-    }
-
-    fn to_str(&self) -> Result<&str, Utf8Error> {
-        match self {
-            FileBuffer::Mmap(mmap) => Ok(std::str::from_utf8(mmap)?),
-            FileBuffer::String(buffer) => Ok(buffer),
-        }
-    }
 }
 
 /// Extension trait for turning [Display]-able error types into [Diagnostic]
