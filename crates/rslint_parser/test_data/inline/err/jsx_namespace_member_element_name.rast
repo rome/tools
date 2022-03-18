@@ -19,7 +19,7 @@ JsModule {
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@12..13 ">" [] [],
                     },
-                    children: missing (optional),
+                    children: JsxChildList [],
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@13..14 "<" [] [],
                         slash_token: SLASH@14..15 "/" [] [],
@@ -69,6 +69,7 @@ JsModule {
                                     R_ANGLE@43..44 ">" [] [],
                                 ],
                             },
+                            JsxChildList [],
                             JsUnknown {
                                 items: [
                                     L_ANGLE@44..45 "<" [] [],
@@ -122,7 +123,7 @@ JsModule {
                 0: JSX_IDENT@11..12 "a" [] []
             2: JSX_ATTRIBUTE_LIST@12..12
             3: R_ANGLE@12..13 ">" [] []
-          1: (empty)
+          1: JSX_CHILD_LIST@13..13
           2: JSX_CLOSING_ELEMENT@13..27
             0: L_ANGLE@13..14 "<" [] []
             1: SLASH@14..15 "/" [] []
@@ -151,7 +152,8 @@ JsModule {
                 0: IDENT@42..43 "b" [] []
             2: JSX_ATTRIBUTE_LIST@43..43
             3: R_ANGLE@43..44 ">" [] []
-          1: JS_UNKNOWN@44..60
+          1: JSX_CHILD_LIST@44..44
+          2: JS_UNKNOWN@44..60
             0: L_ANGLE@44..45 "<" [] []
             1: SLASH@45..46 "/" [] []
             2: JS_UNKNOWN@46..59

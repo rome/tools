@@ -13,9 +13,11 @@ JsModule {
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@2..3 ">" [] [],
                     },
-                    children: JsxText {
-                        value_token: JSX_TEXT_LITERAL@3..10 " test >" [] [],
-                    },
+                    children: JsxChildList [
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@3..10 " test >" [] [],
+                        },
+                    ],
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@10..11 "<" [] [],
                         slash_token: SLASH@11..12 "/" [] [],
@@ -39,9 +41,11 @@ JsModule {
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@18..19 ">" [] [],
                     },
-                    children: JsxText {
-                        value_token: JSX_TEXT_LITERAL@19..29 " invalid }" [] [],
-                    },
+                    children: JsxChildList [
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@19..29 " invalid }" [] [],
+                        },
+                    ],
                     closing_element: JsxClosingElement {
                         l_angle_token: L_ANGLE@29..30 "<" [] [],
                         slash_token: SLASH@30..31 "/" [] [],
@@ -71,8 +75,9 @@ JsModule {
               0: JSX_IDENT@1..2 "a" [] []
             2: JSX_ATTRIBUTE_LIST@2..2
             3: R_ANGLE@2..3 ">" [] []
-          1: JSX_TEXT@3..10
-            0: JSX_TEXT_LITERAL@3..10 " test >" [] []
+          1: JSX_CHILD_LIST@3..10
+            0: JSX_TEXT@3..10
+              0: JSX_TEXT_LITERAL@3..10 " test >" [] []
           2: JSX_CLOSING_ELEMENT@10..14
             0: L_ANGLE@10..11 "<" [] []
             1: SLASH@11..12 "/" [] []
@@ -89,8 +94,9 @@ JsModule {
               0: JSX_IDENT@17..18 "b" [] []
             2: JSX_ATTRIBUTE_LIST@18..18
             3: R_ANGLE@18..19 ">" [] []
-          1: JSX_TEXT@19..29
-            0: JSX_TEXT_LITERAL@19..29 " invalid }" [] []
+          1: JSX_CHILD_LIST@19..29
+            0: JSX_TEXT@19..29
+              0: JSX_TEXT_LITERAL@19..29 " invalid }" [] []
           2: JSX_CLOSING_ELEMENT@29..33
             0: L_ANGLE@29..30 "<" [] []
             1: SLASH@30..31 "/" [] []
