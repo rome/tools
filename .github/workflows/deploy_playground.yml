@@ -14,6 +14,11 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@master
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install --prefix crates/rome_playground
+      - run: npm run build --prefix crates/rome_playground
       - uses: jetli/wasm-pack-action@v0.3.0
       - run: wasm-pack build crates/rome_playground --target web
       - name: Publish
@@ -21,4 +26,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_KEY }}
           workingDirectory: 'crates/rome_playground'
+          environment: 'production'
 
