@@ -65,7 +65,7 @@ pub(crate) fn format_interpreter(
 pub(crate) fn has_formatter_trivia(node: &SyntaxNode) -> bool {
     let mut line_count = 0;
 
-    for token in node.tokens() {
+    for token in node.descendants_tokens() {
         for trivia in token.leading_trivia().pieces() {
             if trivia.is_comments() {
                 return true;
@@ -522,7 +522,7 @@ impl TemplateElement {
 /// precedence, then the node can change its formatting.
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
 pub(crate) enum FormatPrecedence {
-    /// No precedence given to these nodes  
+    /// No precedence given to these nodes
     None,
 
     /// Low priority

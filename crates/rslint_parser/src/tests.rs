@@ -142,7 +142,7 @@ mod parser {
         tests_macros::gen_tests! {"test_data/inline/ok/**/*.{js,ts,jsx,tsx}", crate::tests::run_and_expect_no_errors, ""}
     }
     mod err {
-        tests_macros::gen_tests! {"test_data/inline/err/**/*.{js, ts, jsx, tsx}", crate::tests::run_and_expect_errors, ""}
+        tests_macros::gen_tests! {"test_data/inline/err/**/*.{js,ts,jsx,tsx}", crate::tests::run_and_expect_errors, ""}
     }
 }
 
@@ -185,14 +185,12 @@ fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
 
 #[test]
 pub fn test_trivia_attached_to_tokens() {
-    use rome_js_syntax::SyntaxNodeExt;
-
     let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
     let m = parse_module(text, 0);
-    let tokens = m.syntax().tokens();
+    let mut tokens = m.syntax().descendants_tokens();
 
-    let is_let = |x: &&SyntaxToken| x.text_trimmed() == "let";
-    let first_let = tokens.iter().find(is_let).unwrap();
+    let is_let = |x: &SyntaxToken| x.text_trimmed() == "let";
+    let first_let = tokens.find(is_let).unwrap();
 
     // first let leading trivia asserts
     let pieces: Vec<_> = first_let.leading_trivia().pieces().collect();
@@ -205,7 +203,7 @@ pub fn test_trivia_attached_to_tokens() {
     assert!(matches!(pieces.get(1), None));
 
     // second let leading trivia asserts
-    let second_let = tokens.iter().filter(is_let).nth(1).unwrap();
+    let second_let = tokens.find(is_let).unwrap();
     let pieces: Vec<_> = second_let.leading_trivia().pieces().collect();
     assert_eq!(4, pieces.len());
     assert!(matches!(pieces.get(0).map(|x| x.text()), Some("\n")));

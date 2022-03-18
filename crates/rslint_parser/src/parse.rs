@@ -146,7 +146,7 @@ fn parse_common(
 /// assert_eq!(prop.syntax().text(), "2");
 ///
 /// // Util has a function for yielding all tokens of a node.
-/// let tokens = untyped_expr_node.tokens();
+/// let tokens = untyped_expr_node.descendants_tokens().collect::<Vec<_>>();
 ///
 /// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
 /// ```
