@@ -10,25 +10,25 @@ mod parsed_syntax;
 pub(crate) mod rewrite_parser;
 pub(crate) mod single_token_parse_recovery;
 
+use drop_bomb::DebugDropBomb;
 use rome_js_syntax::{
-    JsSyntaxKind::{self, EOF, ERROR_TOKEN},
+    JsSyntaxKind::{self},
     TextRange,
 };
-
-use drop_bomb::DebugDropBomb;
-use rslint_errors::Diagnostic;
 
 pub use parse_error::*;
 pub use parse_lists::{ParseNodeList, ParseSeparatedList};
 pub use parsed_syntax::ParsedSyntax;
-use rome_rowan::{SyntaxKind as SyntaxKindTrait, TextSize};
+use rome_rowan::{SyntaxKind, TextSize};
 #[allow(deprecated)]
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
-use crate::state::ParserStateCheckpoint;
-use crate::token_source::{TokenSource, TokenSourceCheckpoint, Trivia};
 use crate::*;
+use crate::{
+    state::ParserStateCheckpoint,
+    token_source::{TokenSource, TokenSourceCheckpoint, Trivia},
+};
 use rslint_lexer::{LexContext, LexedToken, ReLexContext};
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
@@ -266,7 +266,7 @@ impl<'s> Parser<'s> {
     /// Bumps the current token regardless of its kind and advances to the next token.
     pub fn bump_any(&mut self) {
         let kind = self.nth(0);
-        assert_ne!(kind, EOF);
+        assert_ne!(kind, JsSyntaxKind::EOF);
         self.do_bump(kind, LexContext::default())
     }
 
@@ -313,7 +313,7 @@ impl<'s> Parser<'s> {
                 ))
                 .primary(self.cur_range(), ""),
             );
-            ERROR_TOKEN
+            JsSyntaxKind::ERROR_TOKEN
         } else {
             kind
         };

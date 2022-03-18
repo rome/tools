@@ -1,0 +1,63 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxSelfClosingElement {
+                    l_angle_token: L_ANGLE@0..1 "<" [] [],
+                    name: JsxName {
+                        value_token: JSX_IDENT@1..5 "div" [] [Whitespace(" ")],
+                    },
+                    attributes: JsxAttributeList [
+                        JsxAttribute {
+                            name: JsxName {
+                                value_token: JSX_IDENT@5..7 "id" [] [],
+                            },
+                            initializer: JsxAttributeInitializerClause {
+                                eq_token: EQ@7..8 "=" [] [],
+                                value: JsxExpressionAttributeValue {
+                                    l_curly_token: L_CURLY@8..9 "{" [] [],
+                                    expression: JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@9..10 "1" [] [],
+                                    },
+                                    r_curly_token: R_CURLY@10..12 "}" [] [Whitespace(" ")],
+                                },
+                            },
+                        },
+                    ],
+                    slash_token: SLASH@12..13 "/" [] [],
+                    r_angle_token: R_ANGLE@13..14 ">" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@14..15 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..15
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..14
+    0: JS_EXPRESSION_STATEMENT@0..14
+      0: JSX_TAG_EXPRESSION@0..14
+        0: JSX_SELF_CLOSING_ELEMENT@0..14
+          0: L_ANGLE@0..1 "<" [] []
+          1: JSX_NAME@1..5
+            0: JSX_IDENT@1..5 "div" [] [Whitespace(" ")]
+          2: JSX_ATTRIBUTE_LIST@5..12
+            0: JSX_ATTRIBUTE@5..12
+              0: JSX_NAME@5..7
+                0: JSX_IDENT@5..7 "id" [] []
+              1: JSX_ATTRIBUTE_INITIALIZER_CLAUSE@7..12
+                0: EQ@7..8 "=" [] []
+                1: JSX_EXPRESSION_ATTRIBUTE_VALUE@8..12
+                  0: L_CURLY@8..9 "{" [] []
+                  1: JS_NUMBER_LITERAL_EXPRESSION@9..10
+                    0: JS_NUMBER_LITERAL@9..10 "1" [] []
+                  2: R_CURLY@10..12 "}" [] [Whitespace(" ")]
+          3: SLASH@12..13 "/" [] []
+          4: R_ANGLE@13..14 ">" [] []
+      1: (empty)
+  3: EOF@14..15 "" [Newline("\n")] []

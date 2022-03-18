@@ -4,11 +4,11 @@ use rome_js_syntax::JsSyntaxKind::*;
 
 use crate::syntax::expr::{parse_expression, parse_name, ExpressionContext};
 use crate::syntax::js_parse_error::{expected_expression, expected_identifier};
-use crate::syntax::jsx::jsx_parse_errors::{jsx_expected_attribute, jsx_expected_attribute_value};
-use crate::{
-    parser::RecoveryResult, Checkpoint, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
+use crate::syntax::jsx::jsx_parse_errors::{
+    jsx_expected_attribute, jsx_expected_attribute_value, jsx_expected_children,
 };
-use crate::{Absent, Present};
+use crate::{parser::RecoveryResult, ParseNodeList, ParseRecovery, ParsedSyntax, Parser};
+use crate::{Absent, Checkpoint, Present};
 use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
 // Constraints function to be inside a checkpointed parser
@@ -75,11 +75,74 @@ pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test jsx jsx_element_as_statements
 // <div />
+
+// test_err jsx_or_type_assertion
+// function f() {
+//     let a = <div>a</div>; // JSX
+//     let b = <string>b; //type assertion
+//     let c = <string>b<a>d; // type assertion
+//     let d = <div>a</div>/; // ambigous: JSX or "type assertion a less than regex /div>/". Probably JSX.
+//     let d = <string>a</string>/;
+// }
 fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
     parse_jsx_element(p, true).map(|element| {
         let m = element.precede(p);
         m.complete(p, JSX_TAG_EXPRESSION)
     })
+}
+
+struct JsxChildrenList;
+
+impl ParseNodeList for JsxChildrenList {
+    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+        match p.cur() {
+            // test jsx jsx_element_children
+            // <a>
+            //     <b>
+            //        <d></d>
+            //        <e></e>
+            //     </b>
+            //     <c></c>
+            // </a>
+            T![<] => parse_jsx_element(p, false),
+            T!['{'] => parse_jsx_expression_block(p, ExpressionBlock::Children),
+            // test jsx jsx_text
+            // <a>test</a>;
+            // <a>   whitespace handling </a>;
+            // <a> multi
+            //    line
+            //          node
+            // </a>;
+            // <test>\u3333</test> // no error for invalid unicode escape
+            JsSyntaxKind::JSX_TEXT_LITERAL => {
+                let m = p.start();
+                p.bump(JSX_TEXT_LITERAL);
+                ParsedSyntax::Present(m.complete(p, JSX_TEXT))
+            }
+            _ => ParsedSyntax::Absent,
+        }
+    }
+
+    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+        let at_l_angle0 = p.at(T![<]);
+        let at_slash1 = p.nth_at(1, T![/]);
+        at_l_angle0 && at_slash1
+    }
+
+    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+        parsed_element.or_recover(
+            p,
+            &ParseRecovery::new(
+                JsSyntaxKind::JS_UNKNOWN,
+                token_set![T![<], T![>], T!['{'], T!['}']],
+            ),
+            jsx_expected_children,
+        )
+    }
+
+    fn list_kind() -> JsSyntaxKind {
+        JsSyntaxKind::JSX_CHILD_LIST
+    }
 }
 
 // test jsx jsx_element_open_close
@@ -97,29 +160,9 @@ fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax 
 // <open><
 // /* some comment */ / open>;
 
-// test jsx jsx_text
-// <a>test</a>;
-// <a>   whitespace handling </a>;
-// <a> multi
-//    line
-//          node
-// </a>;
-// <test>\u3333</test> // no error for invalid unicode escape
-
 // test_err jsx jsx_invalid_text
 // <a> test ></a>;
 // <b> invalid }</b>;
-
-// test jsx fragments
-// <>abcd</>;
-// <>   whitespace
-// </>;
-// <
-//   /*comment */
-//   >
-//   <
-//   /
-// >;
 
 /// Parses a JSX element
 ///
@@ -130,7 +173,7 @@ fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
         Present(opening_marker) if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT => {
             let element_marker = opening_marker.precede(p);
 
-            parse_children(p);
+            parse_jsx_element_children(p);
 
             let closing_marker = parse_jsx_closing_element(p, in_expression);
             if closing_marker.is_absent() {
@@ -151,16 +194,25 @@ fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
     }
 }
 
-fn parse_children(p: &mut Parser) {
-    if p.at(JSX_TEXT_LITERAL) {
-        let m = p.start();
-        p.bump(JSX_TEXT_LITERAL);
-        m.complete(p, JSX_TEXT);
-    }
+#[inline]
+fn parse_jsx_element_children(p: &mut Parser) {
+    JsxChildrenList.parse_list(p);
 }
 
 // <a ...> or <a ... />
 // ^          ^
+
+// test jsx jsx_fragments
+// <></>;
+// <>abcd</>;
+// <>   whitespace
+// </>;
+// <
+//   /*comment */
+//   >
+//   <
+//   /
+// >;
 fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
     if !p.at(T![<]) {
         return ParsedSyntax::Absent;
@@ -177,8 +229,7 @@ fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> Pa
         }
 
         p.bump_with_context(T![>], LexContext::JsxChild);
-
-        parse_children(p);
+        parse_jsx_element_children(p);
 
         if !p.expect(T![<]) || !p.expect(T![/]) || !p.expect(T![>]) {
             m.abandon(p);
@@ -374,11 +425,11 @@ fn parse_jsx_attribute(p: &mut Parser) -> ParsedSyntax {
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE))
 }
 
-// test jsx spread_attribute
+// test jsx jsx_spread_attribute
 // let obj = {};
 // <a {...obj} />;
 //
-// test_err jsx spread_attribute_error
+// test_err jsx jsx_spread_attribute_error
 // let obj = {};
 // <a {...obj, other} />;
 // <a ...obj} />;
@@ -436,25 +487,137 @@ fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
-    // Possible attribute values:
-    // String Literal for constant values
-    if p.at(JSX_STRING_LITERAL) {
-        let m = p.start();
-        p.bump(JSX_STRING_LITERAL);
-        ParsedSyntax::Present(m.complete(p, JSX_STRING))
+    match p.cur() {
+        // test jsx jsx_element_attribute_expression
+        // <div id={1} />
+        T!['{'] => parse_jsx_expression_block(p, ExpressionBlock::Attribute),
+        // test jsx jsx_element_attribute_element
+        // <div id=<a/> />;
+        T![<] => parse_jsx_element(p, true),
+        // test jsx jsx_element_attribute_string_literal
+        // <div id="a" />;
+        JsSyntaxKind::JSX_STRING_LITERAL => {
+            let m = p.start();
+            p.bump(JSX_STRING_LITERAL);
+            ParsedSyntax::Present(m.complete(p, JSX_STRING))
+        }
+        _ => ParsedSyntax::Absent,
     }
-    // expression values
-    else if p.at(T!['{']) {
-        let m = p.start();
-        p.bump(T!['{']);
-        let _ = super::expr::parse_expression(p, ExpressionContext::default());
-        p.bump(T!['}']);
-        ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE))
+}
+
+enum ExpressionBlock {
+    Attribute,
+    Children,
+}
+
+// test jsx jsx_children_expression
+// let x;
+// let a;
+// let b;
+// let key;
+// let f = () => {};
+// <div>
+//   {1}
+//   {9007199254740991n}
+//   {""}
+//   {true}
+//   {null}
+//   {undefined}
+//   {/a/}
+//   {[]}
+//   {x => console.log(x)}
+//   {x = 1}
+//   {await x}
+//   {1 + 1}
+//   {f()}
+//   {a[b]}
+//   {a?1:2}
+//   {function f() {}}
+//   {function () {}}
+//   {a}
+//   {import("a.js")}
+//   {key in a}
+//   {a instanceof Object}
+//   {a && b}
+//   {new f()}
+//   {{}}
+//   {(a)}
+//   {a++}
+//   {++a}
+//   {a,b}
+//   {a.b}
+//   {super.a()}
+//   {this}
+//   {delete a.a}
+//   {void a}
+//   {typeof a}
+//   {+a}
+//   {-a}
+//   {!a}
+//   {~a}
+//   {``}
+//   {/* A JSX comment */}
+//   {/* Multi
+//       line
+//   */}
+// </div>
+// function *f() {
+//     return <div>
+//         {yield a}
+//     </div>;
+// }
+
+// test_err jsx jsx_children_expressions_not_accepted
+// <div>
+//   {import.meta}
+//   {class A{}}
+//   {super()}
+//   {new.target}
+// </div>
+fn parse_jsx_expression_block(p: &mut Parser, kind: ExpressionBlock) -> ParsedSyntax {
+    if !p.at(T!['{']) {
+        return ParsedSyntax::Absent;
     }
-    // JSX elements
-    else if p.at(T![<]) {
-        parse_jsx_element(p, true)
+
+    let m = p.start();
+
+    p.bump(T!['{']);
+
+    let expr = super::expr::parse_expression(p, ExpressionContext::default());
+    let _ = expr.map(|mut m| match m.kind() {
+        JsSyntaxKind::IMPORT_META
+        | JsSyntaxKind::NEW_TARGET
+        | JsSyntaxKind::JS_CLASS_EXPRESSION => {
+            let err = p
+                .err_builder("This expression is not valid as a JSX expression.")
+                .primary(m.range(p), "");
+            p.error(err);
+            m.change_to_unknown(p);
+            m
+        }
+        _ => m,
+    });
+
+    // test jsx jsx_children_expression_then_text
+    // <test>
+    //     {/* comment */}
+    //      some
+    //      text
+    // </text>
+    if p.at(T!['}']) {
+        let context = match kind {
+            ExpressionBlock::Attribute => LexContext::Regular,
+            ExpressionBlock::Children => LexContext::JsxChild,
+        };
+        p.bump_with_context(T!['}'], context);
     } else {
-        ParsedSyntax::Absent
+        m.abandon(p);
+        return ParsedSyntax::Absent;
     }
+
+    let kind = match kind {
+        ExpressionBlock::Attribute => JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE,
+        ExpressionBlock::Children => JsSyntaxKind::JSX_EXPRESSION_CHILD,
+    };
+    ParsedSyntax::Present(m.complete(p, kind))
 }

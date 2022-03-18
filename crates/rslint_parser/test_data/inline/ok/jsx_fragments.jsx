@@ -1,3 +1,4 @@
+<></>;
 <>abcd</>;
 <>   whitespace
 </>;

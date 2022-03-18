@@ -2161,10 +2161,9 @@ JsxSelfClosingElement =
 	'/'
 	'>'
 
-// <a>...</a>
-JsxElement =
+JsxElement = 
 	opening_element: JsxOpeningElement
-	children: JsxText?
+	children: JsxChildList
 	closing_element: JsxClosingElement
 
 JsxOpeningElement =
@@ -2183,7 +2182,7 @@ JsxClosingElement =
 JsxFragment =
 	opening_l_angle_token: '<'
 	opening_r_angle_token: '>'
-	children: JsxText?
+	children: JsxChildList
 	closing_l_angle_token: '<'
 	closing_slash_token: '/'
 	closing_r_angle_token: '>'
@@ -2232,10 +2231,10 @@ JsxAnyAttribute =
 	JsxAttribute
 	| JsxSpreadAttribute
 
-JsxAttribute =
+JsxAttribute = 
 	name: JsxAnyAttributeName
 	initializer: JsxAttributeInitializerClause?
-
+	
 JsxAttributeInitializerClause =
 	'='
 	value: JsxAnyAttributeValue
@@ -2263,8 +2262,26 @@ JsxSpreadAttribute =
 	'}'
 
 // ==================================
+// Children
+// ==================================
+
+JsxChildList = JsxAnyChild*
+
+JsxAnyChild = 
+	JsxElement
+	| JsxSelfClosingElement
+	| JsxText
+	| JsxExpressionChild
+
+JsxExpressionChild =
+	'{'
+	expression: JsAnyExpression
+	'}'
+
+// ==================================
 // Auxiliary
 // ==================================
 
 JsxText = value: 'jsx_text_literal'
+
 JsxString = value: 'jsx_string_literal'

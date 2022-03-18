@@ -671,6 +671,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::JsxExpressionAttributeValue::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JSX_EXPRESSION_CHILD => {
+                    let $pattern = unsafe { $crate::JsxExpressionChild::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JSX_FRAGMENT => {
                     let $pattern = unsafe { $crate::JsxFragment::new_unchecked(node) };
                     $body
@@ -1317,6 +1321,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JSX_ATTRIBUTE_LIST => {
                     let $pattern = unsafe { $crate::JsxAttributeList::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_CHILD_LIST => {
+                    let $pattern = unsafe { $crate::JsxChildList::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_ENUM_MEMBER_LIST => {

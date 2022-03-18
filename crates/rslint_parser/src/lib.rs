@@ -362,7 +362,6 @@ fn compute_source_type_from_path_or_extension(
 }
 
 /// A syntax feature that may or may not be supported depending on the file type and parser configuration
-/// A syntax feature that may or may not be supported depending on the file type and parser configuration
 pub trait SyntaxFeature: Sized {
     /// Returns `true` if the current parsing context supports this syntax feature.
     fn is_supported(&self, p: &Parser) -> bool;

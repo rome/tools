@@ -1,10 +1,9 @@
-use rome_js_syntax::TextRange;
-use rslint_errors::Diagnostic;
-
 use crate::{
-    parser::{expected_node, ToDiagnostic},
+    parser::{expected_any, expected_node, ToDiagnostic},
     Parser,
 };
+use rome_js_syntax::TextRange;
+use rslint_errors::Diagnostic;
 
 pub(crate) fn jsx_only_syntax_error(p: &Parser, syntax: &str, range: TextRange) -> Diagnostic {
     p.err_builder(&format!(
@@ -20,4 +19,8 @@ pub(crate) fn jsx_expected_attribute(p: &Parser, range: TextRange) -> Diagnostic
 
 pub(crate) fn jsx_expected_attribute_value(p: &Parser, range: TextRange) -> Diagnostic {
     expected_node("JSX attribute value", range).to_diagnostic(p)
+}
+
+pub(crate) fn jsx_expected_children(p: &Parser, range: TextRange) -> Diagnostic {
+    expected_any(&["JSX Expression", "Element", "text"], range).to_diagnostic(p)
 }
