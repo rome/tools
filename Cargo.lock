@@ -1352,6 +1352,7 @@ dependencies = [
  "lazy_static",
  "parking_lot 0.12.0",
  "pico-args",
+ "rome_console",
  "rome_core",
  "rome_diagnostics",
  "rome_formatter",
@@ -1363,9 +1364,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_console"
+version = "0.0.0"
+dependencies = [
+ "lazy_static",
+ "rome_diagnostics",
+ "rome_markup",
+]
+
+[[package]]
 name = "rome_core"
 version = "0.0.0"
 dependencies = [
+ "rome_console",
  "rome_fs",
 ]
 
@@ -1465,6 +1476,15 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "tracing-tree",
+]
+
+[[package]]
+name = "rome_markup"
+version = "0.0.0"
+dependencies = [
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
 ]
 
 [[package]]

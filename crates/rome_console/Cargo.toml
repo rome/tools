@@ -1,10 +1,11 @@
 [package]
-name = "rome_core"
+name = "rome_console"
 version = "0.0.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_fs = { version = "0.0.0", path = "../rome_fs" }
-rome_console = { version = "0.0.0", path = "../rome_console" }
+rome_diagnostics = { path = "../rome_diagnostics" }
+rome_markup = { path = "../rome_markup" }
+lazy_static = "1.4.0"

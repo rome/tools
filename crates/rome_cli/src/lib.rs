@@ -10,14 +10,14 @@ pub use panic::setup_panic_handler;
 pub use termination::Termination;
 
 /// Global context for an execution of the CLI
-pub struct CliSession {
+pub struct CliSession<'app> {
     /// Instance of [App] used by this run of the CLI
-    pub app: App,
+    pub app: App<'app>,
     /// List of command line arguments
     pub args: Arguments,
 }
 
-impl CliSession {
+impl CliSession<'static> {
     pub fn from_env() -> Self {
         Self {
             app: App::from_env(),
