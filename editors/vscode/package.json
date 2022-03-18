@@ -36,7 +36,7 @@
 				"rome.formatter.formatWithSyntaxErrors": {
 					"type": "boolean",
 					"default": false,
-					"markdownDescription": "Allows the formatter to format code that contains syntax errors",
+					"markdownDescription": "**BETA**: allows the formatter to format code that contains syntax errors",
 					"examples": [
 						true,
 						false
@@ -45,7 +45,7 @@
 				"rome.formatter.lineWidth": {
 					"type": "number",
 					"default": 80,
-					"markdownDescription": "The max width of a single line, the code will have to fit in it",
+					"markdownDescription": "**BETA**: the max width of a single line, the code will have to fit in it",
 					"minimum": 40,
 					"maximum": 320
 				},
@@ -54,14 +54,14 @@
 					"enum": ["Tabs", "Spaces"],
 					"default": "Tabs",
 					"markdownEnumDescriptions": [
-						"Applies **tabs** while formatting",
-						"Applies **spaces** while formatting"
+						"**BETA**: applies **tabs** while formatting",
+						"**BETA**: applies **spaces** while formatting"
 					]
 				},
 				"rome.formatter.spaceQuantity": {
 					"type": "number",
 					"default": 2,
-					"markdownDescription": "Applied **only** when choosing **Spaces**, it's the number of spaces applied when printing.",
+					"markdownDescription": "**BETA**: applied **only** when choosing **Spaces**, it's the number of spaces applied when printing.",
 					"minimum": 1,
 					"maximum": 12
 				},

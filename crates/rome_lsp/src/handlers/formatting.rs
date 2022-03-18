@@ -10,7 +10,10 @@ use std::str::FromStr;
 use tracing::info;
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
-/// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand
+/// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand.
+///
+/// It also read information from the workspace settings and use their values, which will override
+/// the defaults passed from the client.
 pub(crate) fn to_format_options(
     params: &FormattingOptions,
     workspace_settings: &FormatterWorkspaceSettings,
@@ -30,8 +33,7 @@ pub(crate) fn to_format_options(
 
     if custom_ident_style != default_options.indent_style {
         // merge settings with the ones provided by the editor
-        // We use 2 because that's the default value that we assign to the space
-        if custom_ident_style == IndentStyle::Space(2) {
+        if matches!(custom_ident_style, IndentStyle::Space(_)) {
             default_options.indent_style = IndentStyle::Space(workspace_settings.space_quantity);
         } else if custom_ident_style == IndentStyle::Tab {
             default_options.indent_style = custom_ident_style;
