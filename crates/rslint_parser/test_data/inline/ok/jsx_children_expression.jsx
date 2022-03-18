@@ -43,6 +43,10 @@ let f = () => {};
   {!a}
   {~a}
   {``}
+  {/* A JSX comment */}
+  {/* Multi
+      line
+  */}
 </div>
 function *f() {
     return <div>
