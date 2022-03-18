@@ -606,7 +606,7 @@ fn parse_jsx_expression_block(p: &mut Parser, kind: ExpressionBlock) -> ParsedSy
     // </text>
     if p.at(T!['}']) {
         let context = match kind {
-            ExpressionBlock::Attribute => LexContext::JsxAttributeValue,
+            ExpressionBlock::Attribute => LexContext::Regular,
             ExpressionBlock::Children => LexContext::JsxChild,
         };
         p.bump_with_context(T!['}'], context);
