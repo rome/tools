@@ -133,7 +133,7 @@ impl ParseNodeList for JsxChildrenList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JsSyntaxKind::JS_UNKNOWN_MEMBER,
+                JsSyntaxKind::JS_UNKNOWN,
                 token_set![T![<], T![>], T!['{'], T!['}']],
             ),
             jsx_expected_children,
