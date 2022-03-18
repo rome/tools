@@ -1,3 +1,7 @@
+//! This module declares the [PathInterner] trait, a utility for creating
+//! de-duplicated [FileId]s from instances of [PathBuf]. It also provides a few
+//! implementations of that trait tailored for different use-cases, namely
+//! [IndexSetInterner] and [AtomicInterner]
 use std::{
     path::PathBuf,
     sync::atomic::{AtomicUsize, Ordering},

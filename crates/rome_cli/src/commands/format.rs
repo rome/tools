@@ -129,9 +129,26 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             .fs
             .open(&path)
             .and_then(|mut file| file.read_to_string(&mut source))
-            // Because the diagnostics include IO errors, path could be a
-            // directory or a non-existent file so any error that may happen
-            // while reading the file is ignored
+            // Any potential read error is ignored for two reasons:
+            // - The first is that if this code is reached this means an error
+            // diagnostic was emitted for this path, we can't really know what
+            // it was at this stage since its an opaque diagnostic but it could
+            // be that the file doesn't exist, is a directory, or the process
+            // doesn't have the permission to read it. There's a fairly high
+            // chance the same error will happen again when the file is loaded
+            // a second time, in which case we don't want to do anything with
+            // it since we're already in the process of printing the error
+            // diagnostic to the console anyway and we don't want to show the
+            // same error twice
+            // - The second scenario is that the filesystem could be in an
+            // inconsistent state, for instance the file got deleted between
+            // the moment the diagnostic was emitted and the moment it gets
+            // printed. The probability of this happening is very low so for
+            // now the diagnostics just gets printed in "degraded mode" with no
+            // code span information, and not print any additional error.
+            // Eventually this will go away when the virtual filesystem can
+            // cache the content of files in memory and we don't have to load
+            // the file a second time to print diagnostics
             .ok();
 
         files.storage.insert(file_id, SimpleFile::new(name, source));
@@ -198,6 +215,7 @@ struct FormatCommandOptions<'a> {
     is_check: bool,
     /// Whether the formatter should silently skip files with errors
     ignore_errors: bool,
+    /// File paths interner used by the filesystem traversal
     interner: AtomicInterner,
     /// Shared atomic counter storing the number of formatted files
     formatted: &'a AtomicUsize,

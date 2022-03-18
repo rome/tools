@@ -101,3 +101,125 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::{
+        io,
+        mem::swap,
+        path::{Path, PathBuf},
+    };
+
+    use parking_lot::Mutex;
+
+    use crate::{
+        interner::FileId, AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath,
+        TraversalContext,
+    };
+
+    #[test]
+    fn file_read_write() {
+        let mut fs = MemoryFileSystem::default();
+
+        let path = Path::new("file.js");
+        let content_1 = "content 1";
+        let content_2 = "content 2";
+
+        fs.insert(path.into(), content_1.as_bytes());
+
+        let mut file = fs
+            .open(path)
+            .expect("the file should exist in the memory file system");
+
+        let mut buffer = String::new();
+        file.read_to_string(&mut buffer)
+            .expect("the file should be read without error");
+
+        assert_eq!(buffer, content_1);
+
+        file.set_content(content_2.as_bytes())
+            .expect("the file should be written without error");
+
+        let mut buffer = String::new();
+        file.read_to_string(&mut buffer)
+            .expect("the file should be read without error");
+
+        assert_eq!(buffer, content_2);
+    }
+
+    #[test]
+    fn missing_file() {
+        let fs = MemoryFileSystem::default();
+
+        let result = fs.open(Path::new("non_existing"));
+
+        match result {
+            Ok(_) => panic!("opening a non-existing file should return an error"),
+            Err(error) => {
+                assert_eq!(error.kind(), io::ErrorKind::NotFound);
+            }
+        }
+    }
+
+    #[test]
+    fn traversal() {
+        let mut fs = MemoryFileSystem::default();
+
+        fs.insert(PathBuf::from("dir1/file1"), "dir1/file1".as_bytes());
+        fs.insert(PathBuf::from("dir1/file2"), "dir1/file1".as_bytes());
+        fs.insert(PathBuf::from("dir2/file1"), "dir2/file1".as_bytes());
+        fs.insert(PathBuf::from("dir2/file2"), "dir2/file1".as_bytes());
+
+        struct TestContext {
+            interner: AtomicInterner,
+            visited: Mutex<Vec<PathBuf>>,
+        }
+
+        impl TraversalContext for TestContext {
+            fn interner(&self) -> &dyn PathInterner {
+                &self.interner
+            }
+
+            fn push_diagnostic(&self, file_id: FileId, code: &'static str, message: String) {
+                panic!("unexpected error {code:?} in file {file_id}: {message}")
+            }
+
+            fn can_handle(&self, _: &RomePath) -> bool {
+                true
+            }
+
+            fn handle_file(&self, path: &Path, _: FileId) {
+                self.visited.lock().push(path.into())
+            }
+        }
+
+        let (interner, _) = AtomicInterner::new();
+        let mut ctx = TestContext {
+            interner,
+            visited: Mutex::default(),
+        };
+
+        // Traverse a directory
+        fs.traversal(Box::new(|scope| {
+            scope.spawn(&ctx, PathBuf::from("dir1"));
+        }));
+
+        let mut visited = Vec::new();
+        swap(&mut visited, ctx.visited.get_mut());
+
+        assert_eq!(visited.len(), 2);
+        assert!(visited.contains(&PathBuf::from("dir1/file1")));
+        assert!(visited.contains(&PathBuf::from("dir1/file2")));
+
+        // Traverse a single file
+        fs.traversal(Box::new(|scope| {
+            scope.spawn(&ctx, PathBuf::from("dir2/file2"));
+        }));
+
+        let mut visited = Vec::new();
+        swap(&mut visited, ctx.visited.get_mut());
+
+        assert_eq!(visited.len(), 1);
+        assert!(visited.contains(&PathBuf::from("dir2/file2")));
+    }
+}
