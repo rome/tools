@@ -46,8 +46,7 @@ impl<'a> codespan::files::Files<'a> for EmitterFiles<'_> {
             EmitterFileId::Virtual(id) => self
                 .virtual_files
                 .get(&id)
-                .map(|x| x.source(id))
-                .flatten()
+                .and_then(|x| x.source(id))
                 .ok_or(Error::FileMissing),
         }
     }
@@ -65,8 +64,7 @@ impl<'a> codespan::files::Files<'a> for EmitterFiles<'_> {
             EmitterFileId::Virtual(id) => self
                 .virtual_files
                 .get(&id)
-                .map(|x| x.line_index(id, byte_index))
-                .flatten()
+                .and_then(|x| x.line_index(id, byte_index))
                 .ok_or(Error::IndexTooLarge {
                     given: byte_index,
                     max: usize::MAX,
@@ -87,8 +85,7 @@ impl<'a> codespan::files::Files<'a> for EmitterFiles<'_> {
             EmitterFileId::Virtual(id) => self
                 .virtual_files
                 .get(&id)
-                .map(|x| x.line_range(id, line_index))
-                .flatten()
+                .and_then(|x| x.line_range(id, line_index))
                 .ok_or(Error::IndexTooLarge {
                     given: line_index,
                     max: usize::MAX,

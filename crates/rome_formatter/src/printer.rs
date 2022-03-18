@@ -29,12 +29,11 @@ pub struct PrinterOptions {
 
 impl From<FormatOptions> for PrinterOptions {
     fn from(options: FormatOptions) -> Self {
-        let indent_string: String;
         let tab_width = 2;
 
-        match options.indent_style {
-            IndentStyle::Tab => indent_string = String::from("\t"),
-            IndentStyle::Space(width) => indent_string = " ".repeat(width as usize),
+        let indent_string = match options.indent_style {
+            IndentStyle::Tab => String::from("\t"),
+            IndentStyle::Space(width) => " ".repeat(width as usize),
         };
 
         PrinterOptions {

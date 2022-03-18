@@ -149,7 +149,7 @@ pub(crate) fn format(mut session: CliSession) {
         }
 
         let name = path.display().to_string();
-        let source = fs::read_to_string(path).ok().unwrap_or_else(String::new);
+        let source = fs::read_to_string(path).ok().unwrap_or_default();
 
         files.storage.insert(file_id, SimpleFile::new(name, source));
     }
