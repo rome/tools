@@ -68,6 +68,7 @@ impl Formatter {
     }
 
     /// Formats a CST
+    #[tracing::instrument(level = "debug", skip_all)]
     pub(crate) fn format_root(self, root: &SyntaxNode) -> FormatResult<FormatElement> {
         let element = self.format_syntax_node(root)?;
 

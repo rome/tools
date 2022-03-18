@@ -13,6 +13,7 @@ rome_path = { version = "0.0.0", path = "../rome_path" }
 rome_core = { version = "0.0.0", path = "../rome_core" }
 cfg-if = "1.0.0"
 thiserror = "1.0.30"
+tracing = "0.1.31"
 
 [dev-dependencies]
 serde = { version = "1", features = ["derive"] }

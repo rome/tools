@@ -14,3 +14,8 @@ rome_path = { path = "../rome_path", version = "0.0.0" }
 pico-args = "0.4.2"
 rayon = "1.5.1"
 memmap2 = "0.3.0"
+tracing = "0.1.31"
+tracing-subscriber = "0.3.6"
+parking_lot = "0.12.0"
+lazy_static = "1.4.0"
+hdrhistogram = { version = "7.5.0", default-features = false }

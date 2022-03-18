@@ -168,6 +168,7 @@ pub fn parse_module(text: &str, file_id: usize) -> Parse<JsModule> {
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features.
+#[tracing::instrument(level = "debug", skip_all, fields(file_id = file_id))]
 pub fn parse(text: &str, file_id: usize, source_type: SourceType) -> Parse<JsAnyRoot> {
     let (events, errors, tokens) = parse_common(text, file_id, source_type);
     let mut tree_sink = LosslessTreeSink::new(text, &tokens);

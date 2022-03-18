@@ -2,6 +2,7 @@ use pico_args::Arguments;
 use rome_core::App;
 
 mod commands;
+mod metrics;
 
 /// Global context for an execution of the CLI
 pub struct CliSession {
@@ -22,13 +23,23 @@ impl CliSession {
 
 /// Main function to run Rome CLI
 pub fn run_cli(mut session: CliSession) {
+    let has_metrics = session.args.contains("--show-metrics");
+    if has_metrics {
+        crate::metrics::init_metrics();
+    }
+
     let has_help = session.args.contains("--help");
     let subcommand = session.args.subcommand();
 
     match subcommand.as_ref().map(Option::as_deref) {
         Ok(Some(cmd)) if has_help => crate::commands::help::help(Some(cmd)),
 
-        Ok(Some("format")) => crate::commands::format::format(session),
+        Ok(Some("format")) => {
+            crate::commands::format::format(session);
+            if has_metrics {
+                crate::metrics::print_metrics();
+            }
+        }
 
         Ok(None | Some("help")) => crate::commands::help::help(None),
 
