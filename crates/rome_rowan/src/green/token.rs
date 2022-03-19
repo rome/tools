@@ -7,6 +7,7 @@ use std::{
 
 use countme::Count;
 
+use crate::api::TriviaPieceKind;
 use crate::{
     api::TriviaPiece,
     arc::{Arc, HeaderSlice, ThinArc},
@@ -18,17 +19,23 @@ use crate::{
 #[allow(clippy::box_collection)]
 pub enum GreenTokenTrivia {
     None,
-    Whitespace(TextSize),
-    Comment(TextSize, bool),
+    Single(TriviaPieceKind, TextSize),
     Many(Box<Vec<TriviaPiece>>),
 }
 
 impl GreenTokenTrivia {
+    pub fn whitespace<L: Into<TextSize>>(len: L) -> GreenTokenTrivia {
+        GreenTokenTrivia::Single(TriviaPieceKind::Whitespace, len.into())
+    }
+
+    pub fn single_line_comment<L: Into<TextSize>>(len: L) -> GreenTokenTrivia {
+        GreenTokenTrivia::Single(TriviaPieceKind::SingleLineComment, len.into())
+    }
+
     pub fn text_len(&self) -> TextSize {
         match self {
             GreenTokenTrivia::None => 0.into(),
-            GreenTokenTrivia::Whitespace(len) => *len,
-            GreenTokenTrivia::Comment(len, _) => *len,
+            GreenTokenTrivia::Single(_, len) => *len,
             GreenTokenTrivia::Many(v) => {
                 let r = v.iter().fold(Some(TextSize::from(0)), |len, trivia| {
                     len.and_then(|x| x.checked_add(trivia.text_len()))
@@ -43,18 +50,22 @@ impl GreenTokenTrivia {
     pub(crate) fn len(&self) -> usize {
         match self {
             GreenTokenTrivia::None => 0,
-            GreenTokenTrivia::Whitespace(_) => 1,
-            GreenTokenTrivia::Comment(..) => 1,
+            GreenTokenTrivia::Single(..) => 1,
             GreenTokenTrivia::Many(v) => v.len(),
         }
     }
 
     pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
         match self {
-            GreenTokenTrivia::Whitespace(l) if index == 0 => Some(TriviaPiece::Whitespace(*l)),
-            GreenTokenTrivia::Comment(l, h) if index == 0 => Some(TriviaPiece::Comments(*l, *h)),
+            GreenTokenTrivia::Single(kind, len) => {
+                if index == 0 {
+                    Some(TriviaPiece::new(*kind, *len))
+                } else {
+                    None
+                }
+            }
             GreenTokenTrivia::Many(v) => v.get(index).copied(),
-            _ => None,
+            GreenTokenTrivia::None => None,
         }
     }
 }
@@ -63,10 +74,7 @@ impl From<&[TriviaPiece]> for GreenTokenTrivia {
     fn from(trivias: &[TriviaPiece]) -> Self {
         match trivias {
             [] => GreenTokenTrivia::None,
-            [TriviaPiece::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
-            [TriviaPiece::Comments(len, has_newline)] => {
-                GreenTokenTrivia::Comment(*len, *has_newline)
-            }
+            [TriviaPiece { kind, length }] => GreenTokenTrivia::Single(*kind, *length),
             _ => GreenTokenTrivia::Many(Box::new(trivias.to_vec())),
         }
     }
@@ -281,8 +289,8 @@ mod tests {
         let t = GreenToken::with_trivia(
             RawSyntaxKind(0),
             "\n\t let \t\t",
-            GreenTokenTrivia::Whitespace(TextSize::from(3)),
-            GreenTokenTrivia::Whitespace(TextSize::from(3)),
+            GreenTokenTrivia::whitespace(3),
+            GreenTokenTrivia::whitespace(3),
         );
 
         assert_eq!("\n\t let \t\t", t.text());
@@ -304,15 +312,15 @@ mod tests {
     #[quickcheck]
     fn whitespace_and_comments_text_len(len: u32) {
         let len = TextSize::from(len);
-        assert_eq!(len, GreenTokenTrivia::Whitespace(len).text_len());
-        assert_eq!(len, GreenTokenTrivia::Comment(len, false).text_len());
+        assert_eq!(len, GreenTokenTrivia::whitespace(len).text_len());
+        assert_eq!(len, GreenTokenTrivia::single_line_comment(len).text_len());
     }
 
     #[test]
     fn many_text_len_dont_panic() {
         let trivia = GreenTokenTrivia::Many(Box::new(vec![
-            TriviaPiece::Whitespace(TextSize::from(u32::MAX)),
-            TriviaPiece::Comments(TextSize::from(1), false),
+            TriviaPiece::whitespace(u32::MAX),
+            TriviaPiece::single_line_comment(1),
         ]));
         assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
     }
@@ -321,11 +329,17 @@ mod tests {
     fn many_text_len(lengths: Vec<u32>) {
         let trivia: Vec<_> = lengths
             .iter()
-            .map(|x| TriviaPiece::Whitespace(TextSize::from(*x)))
+            .map(|x| TriviaPiece::whitespace(*x))
             .collect();
         let trivia = GreenTokenTrivia::Many(Box::new(trivia));
 
         let total_len = lengths.iter().fold(0u32, |acc, x| acc.saturating_add(*x));
         assert_eq!(TextSize::from(total_len), trivia.text_len());
+    }
+
+    #[test]
+    fn sizes() {
+        assert_eq!(16, std::mem::size_of::<GreenTokenTrivia>());
+        assert_eq!(8, std::mem::size_of::<GreenToken>());
     }
 }

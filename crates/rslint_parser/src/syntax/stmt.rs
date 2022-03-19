@@ -1035,7 +1035,6 @@ pub(super) fn parse_variable_declaration(
 }
 
 /// What's the parent node of the variable declaration
-#[repr(u8)]
 #[derive(Clone, Debug, Copy, Eq, PartialEq)]
 pub(super) enum VariableDeclarationParent {
     /// Declaration inside a `for...of` or `for...in` or `for (;;)` loop

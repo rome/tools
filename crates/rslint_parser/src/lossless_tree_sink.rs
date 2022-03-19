@@ -1,4 +1,4 @@
-use crate::token_source::{Trivia, TriviaKind};
+use crate::token_source::Trivia;
 use crate::{ParseDiagnostic, TreeSink};
 use rome_js_syntax::{JsSyntaxKind, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize};
 use rome_rowan::TriviaPiece;
@@ -107,14 +107,8 @@ impl<'a> LosslessTreeSink<'a> {
 
             self.text_pos += trivia.len();
 
-            let current_trivia = match trivia.kind() {
-                TriviaKind::Newline => TriviaPiece::Newline(trivia.len()),
-                TriviaKind::Whitespace => TriviaPiece::Whitespace(trivia.len()),
-                TriviaKind::Comment => TriviaPiece::Comments(trivia.len(), false),
-                TriviaKind::MultilineComment => TriviaPiece::Comments(trivia.len(), true),
-            };
-
-            self.trivia_pieces.push(current_trivia);
+            let trivia_piece = TriviaPiece::new(trivia.kind(), trivia.len());
+            self.trivia_pieces.push(trivia_piece);
             count += 1;
         }
 

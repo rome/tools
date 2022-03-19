@@ -382,8 +382,7 @@ pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax 
 }
 
 /// Tells [is_at_async_function] if it needs to check line breaks
-#[derive(PartialEq)]
-#[repr(u8)]
+#[derive(PartialEq, Eq)]
 pub(crate) enum LineBreak {
     // check line breaks
     DoCheck,

@@ -5,7 +5,6 @@ use crate::{
 
 /// Helpful data structure to make the order modifiers predictable inside the formatter
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
-#[repr(u8)]
 pub enum Modifiers {
     // modifiers must be sorted by precedence.
     Accessibility,

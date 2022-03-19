@@ -257,14 +257,14 @@ mod tests {
         let t1 = GreenToken::with_trivia(
             kind,
             text,
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTokenTrivia::whitespace(TextSize::from(1)),
+            GreenTokenTrivia::whitespace(TextSize::from(1)),
         );
         let t2 = GreenToken::with_trivia(
             kind,
             text,
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTokenTrivia::whitespace(1),
+            GreenTokenTrivia::whitespace(1),
         );
 
         assert_eq!(token_hash(&t1), token_hash(&t2));
@@ -275,8 +275,8 @@ mod tests {
         let t4 = GreenToken::with_trivia(
             kind,
             "\tlet ",
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTokenTrivia::whitespace(1),
+            GreenTokenTrivia::whitespace(1),
         );
         assert_ne!(token_hash(&t1), token_hash(&t4));
     }

@@ -5,7 +5,6 @@ use rome_js_syntax::{JsSyntaxKind, T};
 /// See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#table
 #[allow(dead_code)]
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Copy, Clone)]
-#[repr(u8)]
 pub(crate) enum OperatorPrecedence {
     Comma = 0,
     Yield = 1,
