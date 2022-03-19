@@ -74,46 +74,39 @@ impl<'a> LosslessTreeSink<'a> {
             self.needs_eof = false;
         }
 
-        // Every trivia up to the token (including line breaks) will be the leading trivia
-        self.trivia_pieces.clear();
-        let (leading_range, leading_end) = self.get_trivia(false);
+        let token_start = self.text_pos;
 
-        let token_range = TextRange::at(self.text_pos, length);
+        // Every trivia up to the token (including line breaks) will be the leading trivia
+        self.eat_trivia(false);
+        let trailing_start = self.trivia_pieces.len();
+
         self.text_pos += length;
 
         // Everything until the next linebreak (but not including it)
         // will be the trailing trivia...
-        let trailing_start = self.trivia_pieces.len();
-        let (trailing_range, _) = self.get_trivia(true);
+        self.eat_trivia(true);
 
-        let range = leading_range.cover(token_range).cover(trailing_range);
+        let token_range = TextRange::new(token_start, self.text_pos);
 
-        let text = &self.text[range];
-
-        let leading = &self.trivia_pieces[0..leading_end];
+        let text = &self.text[token_range];
+        let leading = &self.trivia_pieces[0..trailing_start];
         let trailing = &self.trivia_pieces[trailing_start..];
 
         self.inner.token_with_trivia(kind, text, leading, trailing);
+        self.trivia_pieces.clear();
     }
 
-    fn get_trivia(&mut self, trailing: bool) -> (TextRange, usize) {
-        let start_text_pos = self.text_pos;
-
-        let mut count = 0;
+    fn eat_trivia(&mut self, trailing: bool) {
         for trivia in &self.trivia_list[self.trivia_pos..] {
             if trailing != trivia.trailing() || self.text_pos != trivia.offset() {
                 break;
             }
 
-            self.text_pos += trivia.len();
-
             let trivia_piece = TriviaPiece::new(trivia.kind(), trivia.len());
             self.trivia_pieces.push(trivia_piece);
-            count += 1;
+
+            self.text_pos += trivia.len();
+            self.trivia_pos += 1;
         }
-
-        self.trivia_pos += count;
-
-        (TextRange::new(start_text_pos, self.text_pos), count)
     }
 }

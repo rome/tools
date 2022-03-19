@@ -7,84 +7,18 @@ use std::{
 
 use countme::Count;
 
-use crate::api::TriviaPieceKind;
+use crate::green::trivia::GreenTrivia;
 use crate::{
-    api::TriviaPiece,
     arc::{Arc, HeaderSlice, ThinArc},
     green::RawSyntaxKind,
     TextSize,
 };
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-#[allow(clippy::box_collection)]
-pub enum GreenTokenTrivia {
-    None,
-    Single(TriviaPieceKind, TextSize),
-    Many(Box<Vec<TriviaPiece>>),
-}
-
-impl GreenTokenTrivia {
-    pub fn whitespace<L: Into<TextSize>>(len: L) -> GreenTokenTrivia {
-        GreenTokenTrivia::Single(TriviaPieceKind::Whitespace, len.into())
-    }
-
-    pub fn single_line_comment<L: Into<TextSize>>(len: L) -> GreenTokenTrivia {
-        GreenTokenTrivia::Single(TriviaPieceKind::SingleLineComment, len.into())
-    }
-
-    pub fn text_len(&self) -> TextSize {
-        match self {
-            GreenTokenTrivia::None => 0.into(),
-            GreenTokenTrivia::Single(_, len) => *len,
-            GreenTokenTrivia::Many(v) => {
-                let r = v.iter().fold(Some(TextSize::from(0)), |len, trivia| {
-                    len.and_then(|x| x.checked_add(trivia.text_len()))
-                });
-
-                // Realistically we will never have files bigger than usize::MAX, nor u32::MAX
-                r.unwrap_or_else(|| TextSize::from(u32::MAX))
-            }
-        }
-    }
-
-    pub(crate) fn len(&self) -> usize {
-        match self {
-            GreenTokenTrivia::None => 0,
-            GreenTokenTrivia::Single(..) => 1,
-            GreenTokenTrivia::Many(v) => v.len(),
-        }
-    }
-
-    pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
-        match self {
-            GreenTokenTrivia::Single(kind, len) => {
-                if index == 0 {
-                    Some(TriviaPiece::new(*kind, *len))
-                } else {
-                    None
-                }
-            }
-            GreenTokenTrivia::Many(v) => v.get(index).copied(),
-            GreenTokenTrivia::None => None,
-        }
-    }
-}
-
-impl From<&[TriviaPiece]> for GreenTokenTrivia {
-    fn from(trivias: &[TriviaPiece]) -> Self {
-        match trivias {
-            [] => GreenTokenTrivia::None,
-            [TriviaPiece { kind, length }] => GreenTokenTrivia::Single(*kind, *length),
-            _ => GreenTokenTrivia::Many(Box::new(trivias.to_vec())),
-        }
-    }
-}
-
 #[derive(PartialEq, Eq, Hash)]
 struct GreenTokenHead {
     kind: RawSyntaxKind,
-    leading: GreenTokenTrivia,
-    trailing: GreenTokenTrivia,
+    leading: GreenTrivia,
+    trailing: GreenTrivia,
     _c: Count<GreenToken>,
 }
 
@@ -215,12 +149,12 @@ impl GreenTokenData {
     }
 
     #[inline]
-    pub fn leading_trivia(&self) -> &GreenTokenTrivia {
+    pub fn leading_trivia(&self) -> &GreenTrivia {
         &self.data.header.leading
     }
 
     #[inline]
-    pub fn trailing_trivia(&self) -> &GreenTokenTrivia {
+    pub fn trailing_trivia(&self) -> &GreenTrivia {
         &self.data.header.trailing
     }
 }
@@ -229,15 +163,18 @@ impl GreenToken {
     #[inline]
     #[cfg(test)]
     pub fn new(kind: RawSyntaxKind, text: &str) -> GreenToken {
-        Self::with_trivia(kind, text, GreenTokenTrivia::None, GreenTokenTrivia::None)
+        let leading = GreenTrivia::empty();
+        let trailing = leading.clone();
+
+        Self::with_trivia(kind, text, leading, trailing)
     }
 
     #[inline]
     pub fn with_trivia(
         kind: RawSyntaxKind,
         text: &str,
-        leading: GreenTokenTrivia,
-        trailing: GreenTokenTrivia,
+        leading: GreenTrivia,
+        trailing: GreenTrivia,
     ) -> GreenToken {
         let head = GreenTokenHead {
             kind,
@@ -289,8 +226,8 @@ mod tests {
         let t = GreenToken::with_trivia(
             RawSyntaxKind(0),
             "\n\t let \t\t",
-            GreenTokenTrivia::whitespace(3),
-            GreenTokenTrivia::whitespace(3),
+            GreenTrivia::whitespace(3),
+            GreenTrivia::whitespace(3),
         );
 
         assert_eq!("\n\t let \t\t", t.text());
@@ -305,23 +242,23 @@ mod tests {
     }
 
     #[test]
-    fn none_text_len() {
-        assert_eq!(TextSize::from(0), GreenTokenTrivia::None.text_len());
+    fn empty_text_len() {
+        assert_eq!(TextSize::from(0), GreenTrivia::empty().text_len());
     }
 
     #[quickcheck]
     fn whitespace_and_comments_text_len(len: u32) {
         let len = TextSize::from(len);
-        assert_eq!(len, GreenTokenTrivia::whitespace(len).text_len());
-        assert_eq!(len, GreenTokenTrivia::single_line_comment(len).text_len());
+        assert_eq!(len, GreenTrivia::whitespace(len).text_len());
+        assert_eq!(len, GreenTrivia::single_line_comment(len).text_len());
     }
 
     #[test]
     fn many_text_len_dont_panic() {
-        let trivia = GreenTokenTrivia::Many(Box::new(vec![
+        let trivia = GreenTrivia::new(vec![
             TriviaPiece::whitespace(u32::MAX),
             TriviaPiece::single_line_comment(1),
-        ]));
+        ]);
         assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
     }
 
@@ -331,7 +268,7 @@ mod tests {
             .iter()
             .map(|x| TriviaPiece::whitespace(*x))
             .collect();
-        let trivia = GreenTokenTrivia::Many(Box::new(trivia));
+        let trivia = GreenTrivia::new(trivia);
 
         let total_len = lengths.iter().fold(0u32, |acc, x| acc.saturating_add(*x));
         assert_eq!(TextSize::from(total_len), trivia.text_len());
@@ -339,7 +276,7 @@ mod tests {
 
     #[test]
     fn sizes() {
-        assert_eq!(16, std::mem::size_of::<GreenTokenTrivia>());
+        assert_eq!(24, std::mem::size_of::<GreenTokenHead>());
         assert_eq!(8, std::mem::size_of::<GreenToken>());
     }
 }

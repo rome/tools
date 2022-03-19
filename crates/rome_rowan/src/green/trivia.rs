@@ -1,0 +1,157 @@
+use crate::arc::{HeaderSlice, ThinArc};
+use crate::TriviaPiece;
+use countme::Count;
+use std::borrow::Borrow;
+use std::fmt::Formatter;
+use std::{fmt, mem, ops};
+use text_size::TextSize;
+
+#[derive(PartialEq, Eq, Hash)]
+pub(crate) struct GreenTriviaHead {
+    _c: Count<GreenTrivia>,
+}
+
+type Repr = HeaderSlice<GreenTriviaHead, [TriviaPiece]>;
+type ReprThin = HeaderSlice<GreenTriviaHead, [TriviaPiece; 0]>;
+
+#[repr(transparent)]
+pub(crate) struct GreenTriviaData {
+    data: ReprThin,
+}
+
+impl GreenTriviaData {
+    #[allow(unused)]
+    #[inline]
+    pub fn header(&self) -> &GreenTriviaHead {
+        &self.data.header
+    }
+
+    #[inline]
+    pub fn pieces(&self) -> &[TriviaPiece] {
+        self.data.slice()
+    }
+}
+
+impl PartialEq for GreenTriviaData {
+    fn eq(&self, other: &Self) -> bool {
+        self.pieces() == other.pieces()
+    }
+}
+
+impl fmt::Debug for GreenTriviaData {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        f.debug_list().entries(self.pieces().iter()).finish()
+    }
+}
+
+/// List of trivia. Used to store either the leading or trailing trivia of a token.
+/// The identity of a trivia is defined by the kinds and lengths of its items but not by
+/// the texts of an individual piece. That means, that `\r` and `\n` can both be represented
+/// by the same trivia, a trivia with a single `LINEBREAK` piece with the length 1.
+/// This is safe because the text is stored on the token to which the trivia belongs and
+/// `a\n` and `a\r` never resolve to the same tokens. Thus, they only share the trivia but are
+/// otherwise two different tokens.
+#[derive(Eq, PartialEq, Hash, Clone)]
+#[repr(transparent)]
+pub(crate) struct GreenTrivia {
+    ptr: ThinArc<GreenTriviaHead, TriviaPiece>,
+}
+
+impl Borrow<GreenTriviaData> for GreenTrivia {
+    #[inline]
+    fn borrow(&self) -> &GreenTriviaData {
+        &*self
+    }
+}
+
+impl fmt::Debug for GreenTrivia {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        let data: &GreenTriviaData = &*self;
+        fmt::Debug::fmt(data, f)
+    }
+}
+
+impl ops::Deref for GreenTrivia {
+    type Target = GreenTriviaData;
+
+    #[inline]
+    fn deref(&self) -> &Self::Target {
+        unsafe {
+            let repr: &Repr = &self.ptr;
+            let repr: &ReprThin = &*(repr as *const Repr as *const ReprThin);
+            mem::transmute::<&ReprThin, &GreenTriviaData>(repr)
+        }
+    }
+}
+
+impl GreenTrivia {
+    /// Creates a new trivia containing the passed in pieces
+    pub fn new<I>(pieces: I) -> Self
+    where
+        I: IntoIterator<Item = TriviaPiece>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let data =
+            ThinArc::from_header_and_iter(GreenTriviaHead { _c: Count::new() }, pieces.into_iter());
+
+        GreenTrivia { ptr: data }
+    }
+
+    /// Returns the total length of all pieces
+    pub fn text_len(&self) -> TextSize {
+        let mut len: Option<TextSize> = Some(TextSize::default());
+
+        for piece in self.pieces() {
+            len = len.and_then(|len| len.checked_add(piece.length))
+        }
+
+        // Realistically we will never have files bigger than usize::MAX, nor u32::MAX
+        len.unwrap_or_else(|| TextSize::from(u32::MAX))
+    }
+
+    /// Returns the pieces count
+    pub fn len(&self) -> usize {
+        self.pieces().len()
+    }
+
+    /// Returns the piece at the given index.
+    pub fn get_piece(&self, index: usize) -> Option<&TriviaPiece> {
+        self.pieces().get(index)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::api::TriviaPieceKind;
+    use crate::green::trivia::{GreenTrivia, GreenTriviaHead};
+    use crate::TriviaPiece;
+    use text_size::TextSize;
+
+    impl GreenTrivia {
+        /// Creates a trivia with a single whitespace piece
+        pub fn whitespace<L: Into<TextSize>>(len: L) -> Self {
+            Self::single(TriviaPieceKind::Whitespace, len.into())
+        }
+
+        /// Creates a trivia with one single line comment piece
+        pub fn single_line_comment<L: Into<TextSize>>(len: L) -> Self {
+            Self::single(TriviaPieceKind::SingleLineComment, len.into())
+        }
+
+        /// Creates a trivia containing a single piece
+        pub fn single<L: Into<TextSize>>(kind: TriviaPieceKind, len: L) -> Self {
+            Self::new(std::iter::once(TriviaPiece::new(kind, len)))
+        }
+
+        /// Creates a trivia that contains no pieces
+        pub fn empty() -> Self {
+            Self::new(std::iter::empty())
+        }
+    }
+
+    #[test]
+    fn sizes() {
+        assert_eq!(0, std::mem::size_of::<GreenTriviaHead>());
+        assert_eq!(8, std::mem::size_of::<GreenTrivia>());
+    }
+}

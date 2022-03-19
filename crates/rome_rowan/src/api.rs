@@ -30,7 +30,7 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
 
 #[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
 pub enum TriviaPieceKind {
-    /// A newline character
+    /// A line break (`\n`, `\r`, `\r\n`, ...)
     Newline,
     /// Any whitespace character
     Whitespace,
@@ -65,18 +65,22 @@ pub struct TriviaPiece {
 }
 
 impl TriviaPiece {
+    /// Creates a new whitespace trivia piece with the given length
     pub fn whitespace<L: Into<TextSize>>(len: L) -> TriviaPiece {
         Self::new(TriviaPieceKind::Whitespace, len)
     }
 
+    /// Creates a new newline trivia piece with the given text length
     pub fn newline<L: Into<TextSize>>(len: L) -> TriviaPiece {
         Self::new(TriviaPieceKind::Newline, len)
     }
 
+    /// Creates a new comment trivia piece that does not contain any line breaks
     pub fn single_line_comment<L: Into<TextSize>>(len: L) -> TriviaPiece {
         Self::new(TriviaPieceKind::SingleLineComment, len)
     }
 
+    /// Creates a new comment trivia piece that contains at least one line breaks
     pub fn multi_line_comment<L: Into<TextSize>>(len: L) -> TriviaPiece {
         Self::new(TriviaPieceKind::MultiLineComment, len)
     }
@@ -88,11 +92,12 @@ impl TriviaPiece {
         }
     }
 
-    #[inline]
+    /// Returns the trivia's length
     pub fn text_len(&self) -> TextSize {
         self.length
     }
 
+    /// Returns the trivia's kind
     pub fn kind(&self) -> TriviaPieceKind {
         self.kind
     }
@@ -144,10 +149,7 @@ impl<L: Language> SyntaxTriviaPieceComments<L> {
     }
 
     pub fn has_newline(&self) -> bool {
-        match self.0.trivia.kind {
-            TriviaPieceKind::MultiLineComment => true,
-            _ => false,
-        }
+        self.0.trivia.kind.is_multiline_comment()
     }
 }
 
@@ -265,7 +267,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// assert!(pieces[0].is_newline())
     /// ```
     pub fn is_newline(&self) -> bool {
-        matches!(self.trivia.kind, TriviaPieceKind::Newline)
+        self.trivia.kind.is_newline()
     }
 
     /// Returns true if this trivia piece is a [SyntaxTriviaPieceWhitespace].
@@ -286,7 +288,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// assert!(pieces[1].is_whitespace())
     /// ```
     pub fn is_whitespace(&self) -> bool {
-        matches!(self.trivia.kind, TriviaPieceKind::Whitespace)
+        self.trivia.kind.is_whitespace()
     }
 
     /// Returns true if this trivia piece is a [SyntaxTriviaPieceComments].
