@@ -6,15 +6,51 @@ Our [Discord server](https://discord.gg/rome) is open for help and more adhoc di
 
 ## Getting Started
 
-Getting started with developing Rome takes three commands. You will only need Node v14 or above.
+Building this project requires a `stable` Rust toolchain, which can be installed using [rustup](https://www.rust-lang.org/tools/install).
 
+Clone the repository and navigate to the `tools` directory:
 ```bash
 git clone https://github.com/rome/tools
 cd tools
-# TBD
+```
+Compile all packages and dependencies:
+```bash
+cargo build
+```
+Rome can be used via the `cli` bin in the `rome_cli` package:
+```bash
+cargo run --bin cli -- --help
 ```
 
-No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
+Rome can be used as a language server by following the instructions below.
+
+## Language Server and VS Code Extension Development
+
+The Rome language server is the binary crate `rome_lsp` which can be built using:
+```
+cargo build --bin rome_lsp
+```
+If benchmarking the language server, be sure to build with the `--release` flag.
+
+The VS Code extension can be installed from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=rome.rome) and can be used with a development build of the language server by setting the `"rome.lspBin"` VS Code setting to the path of the binary:
+```json
+	"rome.lspBin": "/path/to/rome/target/debug/rome_lsp"
+```
+
+To instead build the VS Code extension from source, navigate to the `editors/vscode` directory and run:
+
+```bash
+npm install
+npm run build
+```
+
+This will create a `rome_lsp.vsix` which you can install into VS Code by running:
+
+```bash
+npm run install-extension
+```
+
+The `"rome.lspBin"` VS Code setting will still need to be set as described above.
 
 ### User files
 
@@ -63,6 +99,11 @@ It's strongly advised to **run this command before committing new changes**.
 This command will check and report parser conformance against different test suites.
 We currently target the [Official ECMAScript Conformance Test Suite](https://github.com/tc39/test262) and
 the [Typescript Test Suite](https://github.com/microsoft/TypeScript/tree/main/tests)
+
+The test suites are included as git submodules and can be pulled using:
+```bash
+git submodule update --init --recursive
+```
 
 ## Commit messages
 
@@ -251,30 +292,6 @@ the cases you need to verify. If we needed to follow the previous example:
 5. then each object of the array will contain the matrix of options you'd want to test.
    In this case the test suite will run a **second test case** with `line_width` to 120 and `ident_style` with  4 spaces
 6. when the test suite is run, you will have two outputs in your snapshot: the default one and the custom one
-
-## VS Code Extension Development
-
-To build the VS Code extension from source, navigate to the `editors/vscode` directory and run:
-
-```bash
-npm install
-npm run build
-```
-
-This will create a `rome_lsp.vsix` which you can install into VS Code by running:
-
-```bash
-npm run install-extension
-```
-
-The Rome language server is the binary crate `rome_lsp` which can be built using `cargo build`.
-
-Use the `"rome.lspBin"` VS Code setting to set the path to the executable:
-```json
-	"rome.lspBin": "/path/to/rome/target/debug/rome_lsp"
-```
-
-When performing any benchmarks for the language server, be sure to use a release build.
 
 ### Versioning
 
