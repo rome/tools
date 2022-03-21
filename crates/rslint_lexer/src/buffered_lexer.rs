@@ -1,4 +1,4 @@
-use crate::{LexContext, LexedToken, Lexer, LexerCheckpoint, ReLexContext, TextRange, TokenFlags};
+use crate::{LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange, TokenFlags};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxKind::EOF};
 use rslint_errors::Diagnostic;
 use std::collections::VecDeque;
@@ -35,7 +35,7 @@ pub struct BufferedLexer<'l> {
     /// * `lookahead`: [WHITESPACE, IDENT: 'a', WHITESPACE]. The tokens that have been lexed to
     ///    answer the "lookahead 4" request but haven't been returned yet.
     /// * [Lexer::current]: Points to `=`
-    lookahead: VecDeque<Lookahead>,
+    lookahead: VecDeque<LexerCheckpoint>,
 
     /// Stores the information of the current token in case the `lexer` is at least one token ahead.
     current: Option<LexerCheckpoint>,
@@ -58,7 +58,7 @@ impl<'l> BufferedLexer<'l> {
     ///
     /// [See `Lexer.next_token`](Lexer::next_token)
     #[inline(always)]
-    pub fn next_token(&mut self, context: LexContext) -> LexedToken {
+    pub fn next_token(&mut self, context: LexContext) -> JsSyntaxKind {
         // Reset the lookahead if the context isn't the regular context because it's highly likely
         // that the lexer will return a different token.
         if !context.is_regular() {
@@ -66,7 +66,7 @@ impl<'l> BufferedLexer<'l> {
         }
         // Retrieve the next token from the lookahead cache if it isn't empty
         else if let Some(next) = self.lookahead.pop_front() {
-            let kind = next.checkpoint.current_kind;
+            let kind = next.current_kind;
 
             // Store the lookahead as the current token if the lookahead isn't empty (in which case,
             // the lexer is still at least one token ahead).
@@ -74,10 +74,10 @@ impl<'l> BufferedLexer<'l> {
             if self.lookahead.is_empty() {
                 self.current = None;
             } else {
-                self.current = Some(next.checkpoint);
+                self.current = Some(next);
             }
 
-            return LexedToken::new(kind, next.diagnostic);
+            return kind;
         }
 
         // The [BufferedLexer] and [Lexer] are now both at the same position. Clear the cached
@@ -162,7 +162,7 @@ impl<'l> BufferedLexer<'l> {
 
     /// Re-lex the current token in the given context
     /// See [Lexer::re_lex]
-    pub fn re_lex(&mut self, context: ReLexContext) -> LexedToken {
+    pub fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
         let current_kind = self.current();
         let current_checkpoint = self.inner.checkpoint();
 
@@ -170,10 +170,7 @@ impl<'l> BufferedLexer<'l> {
             self.inner.rewind(current);
         }
 
-        let LexedToken {
-            kind: new_kind,
-            diagnostic,
-        } = self.inner.re_lex(context);
+        let new_kind = self.inner.re_lex(context);
 
         if new_kind != current_kind {
             // The token has changed, clear the lookahead
@@ -185,7 +182,7 @@ impl<'l> BufferedLexer<'l> {
             self.inner.rewind(current_checkpoint);
         }
 
-        LexedToken::new(new_kind, diagnostic)
+        new_kind
     }
 
     /// Returns an iterator over the tokens following the current token to perform lookahead.
@@ -193,6 +190,11 @@ impl<'l> BufferedLexer<'l> {
     #[inline(always)]
     pub fn lookahead<'s>(&'s mut self) -> LookaheadIterator<'s, 'l> {
         LookaheadIterator::new(self)
+    }
+
+    /// Consumes the buffered lexer and returns the lexing diagnostics
+    pub fn finish(self) -> Vec<Diagnostic> {
+        self.inner.finish()
     }
 }
 
@@ -238,18 +240,14 @@ impl<'l, 't> Iterator for LookaheadIterator<'l, 't> {
             self.buffered.current = Some(lexer.checkpoint());
         }
 
-        let LexedToken { diagnostic, .. } = lexer.next_token(LexContext::default());
-
+        let kind = lexer.next_token(LexContext::default());
         // Lex the next token and cache it in the lookahead cache. Needed to cache it right away
         // because of the diagnostic.
         let checkpoint = lexer.checkpoint();
-        self.buffered.lookahead.push_back(Lookahead {
-            checkpoint,
-            diagnostic,
-        });
+        self.buffered.lookahead.push_back(checkpoint);
 
         Some(LookaheadToken {
-            kind: lexer.current(),
+            kind,
             range: lexer.current_range(),
             flags: lexer.current_flags,
         })
@@ -257,28 +255,6 @@ impl<'l, 't> Iterator for LookaheadIterator<'l, 't> {
 }
 
 impl<'l, 't> FusedIterator for LookaheadIterator<'l, 't> {}
-
-#[derive(Debug)]
-pub struct Lookahead {
-    /// Checkpoint containing the information about the token.
-    checkpoint: LexerCheckpoint,
-    /// Associated diagnostic for this lookahead token
-    diagnostic: Option<Box<Diagnostic>>,
-}
-
-impl Lookahead {
-    fn kind(&self) -> JsSyntaxKind {
-        self.checkpoint.current_kind
-    }
-
-    fn range(&self) -> TextRange {
-        TextRange::new(self.checkpoint.current_start, self.checkpoint.position)
-    }
-
-    fn flags(&self) -> TokenFlags {
-        self.checkpoint.current_flags
-    }
-}
 
 #[derive(Debug)]
 pub struct LookaheadToken {
@@ -301,12 +277,12 @@ impl LookaheadToken {
     }
 }
 
-impl From<&Lookahead> for LookaheadToken {
-    fn from(ahead: &Lookahead) -> Self {
+impl From<&LexerCheckpoint> for LookaheadToken {
+    fn from(checkpoint: &LexerCheckpoint) -> Self {
         LookaheadToken {
-            kind: ahead.kind(),
-            range: ahead.range(),
-            flags: ahead.flags(),
+            kind: checkpoint.current_kind,
+            range: TextRange::new(checkpoint.current_start, checkpoint.position),
+            flags: checkpoint.current_flags,
         }
     }
 }
@@ -331,18 +307,18 @@ mod tests {
             TextRange::at(TextSize::from(0), TextSize::from(3))
         );
 
-        assert_eq!(buffered.next_token(LexContext::default()).kind, WHITESPACE);
-        assert_eq!(buffered.next_token(LexContext::default()).kind, T![ident]);
-        assert_eq!(buffered.next_token(LexContext::default()).kind, NEWLINE);
-        assert_eq!(buffered.next_token(LexContext::default()).kind, WHITESPACE);
-        assert_eq!(buffered.next_token(LexContext::default()).kind, T![=]);
+        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        assert_eq!(buffered.next_token(LexContext::default()), T![ident]);
+        assert_eq!(buffered.next_token(LexContext::default()), NEWLINE);
+        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        assert_eq!(buffered.next_token(LexContext::default()), T![=]);
         assert!(buffered.has_preceding_line_break());
-        assert_eq!(buffered.next_token(LexContext::default()).kind, WHITESPACE);
+        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
         assert_eq!(
-            buffered.next_token(LexContext::default()).kind,
+            buffered.next_token(LexContext::default()),
             JS_NUMBER_LITERAL
         );
-        assert_eq!(buffered.next_token(LexContext::default()).kind, T![EOF]);
+        assert_eq!(buffered.next_token(LexContext::default()), T![EOF]);
     }
 
     #[test]
@@ -377,7 +353,7 @@ mod tests {
         }
 
         assert_eq!(buffered.current(), T![let]);
-        assert_eq!(buffered.next_token(LexContext::default()).kind, WHITESPACE);
+        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
 
         {
             let mut lookahead = buffered.lookahead();
@@ -395,16 +371,16 @@ mod tests {
             assert!(nth4.has_preceding_line_break());
         }
 
-        assert_eq!(buffered.next_token(LexContext::default()).kind, T![ident]);
-        assert_eq!(buffered.next_token(LexContext::default()).kind, NEWLINE);
-        assert_eq!(buffered.next_token(LexContext::default()).kind, WHITESPACE);
-        assert_eq!(buffered.next_token(LexContext::default()).kind, T![=]);
+        assert_eq!(buffered.next_token(LexContext::default()), T![ident]);
+        assert_eq!(buffered.next_token(LexContext::default()), NEWLINE);
+        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        assert_eq!(buffered.next_token(LexContext::default()), T![=]);
         assert!(buffered.has_preceding_line_break());
-        assert_eq!(buffered.next_token(LexContext::default()).kind, WHITESPACE);
+        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
         assert_eq!(
-            buffered.next_token(LexContext::default()).kind,
+            buffered.next_token(LexContext::default()),
             JS_NUMBER_LITERAL
         );
-        assert_eq!(buffered.next_token(LexContext::default()).kind, T![EOF]);
+        assert_eq!(buffered.next_token(LexContext::default()), T![EOF]);
     }
 }

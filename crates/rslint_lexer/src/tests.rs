@@ -18,9 +18,9 @@ macro_rules! assert_lex {
         let mut tok_idx = TextSize::default();
 
         let mut new_str = String::with_capacity($src.len());
-        let mut tokens = Vec::new();
+        let mut tokens = vec![];
 
-        while lexer.next_token(LexContext::default()).kind != EOF {
+        while lexer.next_token(LexContext::default()) != EOF {
             tokens.push((lexer.current(), lexer.current_range()));
         }
 
@@ -75,7 +75,7 @@ fn losslessness(string: String) -> bool {
         let mut lexer = Lexer::from_str(&cloned, 0);
         let mut tokens = vec![];
 
-        while lexer.next_token(LexContext::default()).kind != EOF {
+        while lexer.next_token(LexContext::default()) != EOF {
             tokens.push(lexer.current_range());
         }
 
@@ -1358,6 +1358,6 @@ fn keywords() {
             lexed_range.len()
         );
 
-        assert_eq!(lexer.next_token(LexContext::default()).kind, EOF);
+        assert_eq!(lexer.next_token(LexContext::default()), EOF);
     }
 }

@@ -36,20 +36,20 @@ JsModule {
             semicolon_token: SEMICOLON@13..14 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@14..18 "BAR" [Newline("\n")] [],
-                        },
+            expression: JsTemplate {
+                tag: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@14..18 "BAR" [Newline("\n")] [],
                     },
-                    BACKTICK@18..19 "`" [] [],
-                    JsUnknown {
-                        items: [
-                            ERROR_TOKEN@19..21 "b\n" [] [],
-                        ],
+                },
+                type_arguments: missing (optional),
+                l_tick_token: BACKTICK@18..19 "`" [] [],
+                elements: JsTemplateElementList [
+                    JsTemplateChunkElement {
+                        template_chunk_token: TEMPLATE_CHUNK@19..21 "b\n" [] [],
                     },
                 ],
+                r_tick_token: missing (required),
             },
             semicolon_token: missing (optional),
         },
@@ -86,13 +86,16 @@ JsModule {
         2: (empty)
       1: SEMICOLON@13..14 ";" [] []
     1: JS_EXPRESSION_STATEMENT@14..21
-      0: JS_UNKNOWN_EXPRESSION@14..21
+      0: JS_TEMPLATE@14..21
         0: JS_IDENTIFIER_EXPRESSION@14..18
           0: JS_REFERENCE_IDENTIFIER@14..18
             0: IDENT@14..18 "BAR" [Newline("\n")] []
-        1: BACKTICK@18..19 "`" [] []
-        2: JS_UNKNOWN@19..21
-          0: ERROR_TOKEN@19..21 "b\n" [] []
+        1: (empty)
+        2: BACKTICK@18..19 "`" [] []
+        3: JS_TEMPLATE_ELEMENT_LIST@19..21
+          0: JS_TEMPLATE_CHUNK_ELEMENT@19..21
+            0: TEMPLATE_CHUNK@19..21 "b\n" [] []
+        4: (empty)
       1: (empty)
   3: EOF@21..21 "" [] []
 --
@@ -111,15 +114,6 @@ error[SyntaxError]: expected an identifier but instead found ';'
 
 --
 error: unterminated template literal
-  ┌─ subscripts_err.js:2:5
-  │  
-2 │   BAR`b
-  │ ┌─────^
-3 │ │ 
-  │ └^
-
---
-error[SyntaxError]: Invalid template literal
   ┌─ subscripts_err.js:2:5
   │  
 2 │   BAR`b

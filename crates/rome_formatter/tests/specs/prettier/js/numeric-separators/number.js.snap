@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: number.js
 
 ---
@@ -30,17 +30,17 @@ error[SyntaxError]: Decimals with leading zeros are not allowed in strict mode.
 3 │ a = 09e1_1;
   │     ^^^^^^
 
-error: unexpected number
-  ┌─ number.js:4:5
-  │
-4 │ a = 09.1_1;
-  │     ^^^
-
 error[SyntaxError]: Decimals with leading zeros are not allowed in strict mode.
   ┌─ number.js:4:5
   │
 4 │ a = 09.1_1;
   │     ^^^^^^
+
+error: unexpected number
+  ┌─ number.js:4:5
+  │
+4 │ a = 09.1_1;
+  │     ^^^
 
 
 ```

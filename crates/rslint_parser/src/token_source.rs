@@ -4,7 +4,7 @@ use rome_rowan::TextSize;
 use rslint_errors::file::FileId;
 use rslint_errors::Diagnostic;
 use rslint_lexer::buffered_lexer::BufferedLexer;
-use rslint_lexer::{LexContext, LexedToken, Lexer, LexerCheckpoint, ReLexContext, TextRange};
+use rslint_lexer::{LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
 use std::collections::VecDeque;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -125,18 +125,14 @@ impl<'l> TokenSource<'l> {
     pub fn from_str(source: &'l str, file_id: FileId) -> TokenSource<'l> {
         let lexer = Lexer::from_str(source, file_id);
         let buffered = BufferedLexer::new(lexer);
-        TokenSource::new(buffered)
-    }
+        let mut source = TokenSource::new(buffered);
 
-    /// Moves the token source to the first non-trivia token. Returns the lexing error
-    /// for the skipped trivia and the now current token
-    pub fn initialize(&mut self) -> Vec<Diagnostic> {
-        self.next_non_trivia_token(LexContext::default(), true)
+        source.next_non_trivia_token(LexContext::default(), true);
+        source
     }
 
     #[inline]
-    fn next_non_trivia_token(&mut self, context: LexContext, first_token: bool) -> Vec<Diagnostic> {
-        let mut diagnostics = vec![];
+    fn next_non_trivia_token(&mut self, context: LexContext, first_token: bool) {
         let mut processed_tokens = 0;
         let mut trailing = !first_token;
 
@@ -144,12 +140,8 @@ impl<'l> TokenSource<'l> {
         self.non_trivia_lookahead.pop_front();
 
         loop {
-            let LexedToken { kind, diagnostic } = self.lexer.next_token(context);
+            let kind = self.lexer.next_token(context);
             processed_tokens += 1;
-
-            if let Some(diagnostic) = diagnostic {
-                diagnostics.push(*diagnostic);
-            }
 
             let trivia_kind = TriviaKind::try_from(kind);
 
@@ -171,8 +163,6 @@ impl<'l> TokenSource<'l> {
             debug_assert!(self.lookahead_offset >= processed_tokens);
             self.lookahead_offset -= processed_tokens;
         }
-
-        diagnostics
     }
 
     /// Returns the kind of the current non-trivia token
@@ -222,10 +212,6 @@ impl<'l> TokenSource<'l> {
     #[inline(always)]
     fn lookahead(&mut self, n: usize) -> Option<Lookahead> {
         assert_ne!(n, 0);
-        debug_assert!(
-            n < 6,
-            "Lookahead is expensive, that's why it's limited to at most 5 tokens at a time."
-        );
 
         // Return the cached token if any
         if let Some(lookahead) = self.non_trivia_lookahead.get(n - 1) {
@@ -281,26 +267,21 @@ impl<'l> TokenSource<'l> {
 
     /// Bumps the current token and moves the parser to the next non-trivia token
     #[inline(always)]
-    pub fn bump(&mut self, context: LexContext) -> Vec<Diagnostic> {
-        if self.current() == EOF {
-            vec![]
-        } else {
+    pub fn bump(&mut self, context: LexContext) {
+        if self.current() != EOF {
             if !context.is_regular() {
                 self.lookahead_offset = 0;
                 self.non_trivia_lookahead.clear();
             }
 
-            self.next_non_trivia_token(context, false)
+            self.next_non_trivia_token(context, false);
         }
     }
 
-    pub fn re_lex(&mut self, mode: ReLexContext) -> LexedToken {
+    pub fn re_lex(&mut self, mode: ReLexContext) -> JsSyntaxKind {
         let current_kind = self.current();
 
-        let LexedToken {
-            kind: new_kind,
-            diagnostic,
-        } = self.lexer.re_lex(mode);
+        let new_kind = self.lexer.re_lex(mode);
 
         // Only need to clear the lookahead cache when the token did change
         if current_kind != new_kind {
@@ -308,7 +289,7 @@ impl<'l> TokenSource<'l> {
             self.lookahead_offset = 0;
         }
 
-        LexedToken::new(new_kind, diagnostic)
+        new_kind
     }
 
     /// Returns the byte offset of the current token from the start of the source document
@@ -318,8 +299,8 @@ impl<'l> TokenSource<'l> {
     }
 
     /// Ends this token source and returns the source text's trivia
-    pub fn finish(self) -> Vec<Trivia> {
-        self.trivia_list
+    pub fn finish(self) -> (Vec<Trivia>, Vec<Diagnostic>) {
+        (self.trivia_list, self.lexer.finish())
     }
 }
 

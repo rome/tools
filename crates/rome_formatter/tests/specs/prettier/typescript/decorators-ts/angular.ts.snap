@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 144
 expression: angular.ts
+
 ---
 # Input
 ```js
@@ -52,6 +54,12 @@ error[SyntaxError]: expected a type but instead found '/'
 3 │   template: `<button>{{label}}</button>`
   │                                ^ Expected a type here
 
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ angular.ts:9:1
+  │
+9 │ 
+  │ ^ the file ends here
+
 error: unterminated regex literal
   ┌─ angular.ts:3:41
   │
@@ -72,25 +80,6 @@ error: unterminated template literal
 8 │ │ }
 9 │ │ 
   │ └^
-
-error[SyntaxError]: Invalid template literal
-  ┌─ angular.ts:3:41
-  │  
-3 │     template: `<button>{{label}}</button>`
-  │ ┌────────────────────────────────────────^
-4 │ │ })
-5 │ │ export class HeroButtonComponent {
-6 │ │   @Output() change = new EventEmitter<any>();
-7 │ │   @Input() label: string;
-8 │ │ }
-9 │ │ 
-  │ └^
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-  ┌─ angular.ts:9:1
-  │
-9 │ 
-  │ ^ the file ends here
 
 
 ```
