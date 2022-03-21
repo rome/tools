@@ -13,4 +13,11 @@ mod formatter {
     mod ts_module {
         tests_macros::gen_tests! {"tests/specs/ts/**/*.ts", crate::spec_test::run, "module"}
     }
+    mod jsx_module {
+        tests_macros::gen_tests! {"tests/specs/jsx/**/*.jsx", crate::spec_test::run, "module"}
+    }
+
+    mod tsx_module {
+        tests_macros::gen_tests! {"tests/specs/tsx/**/*.tsx", crate::spec_test::run, "module"}
+    }
 }
