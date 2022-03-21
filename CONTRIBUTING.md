@@ -245,6 +245,13 @@ folder don't emit, the whole test suite will fail.
 We use [insta.rs](https://insta.rs/docs) for our snapshot tests, please make sure you read its documentation to learn the basics of snapshot testing.
 You should install the companion [`cargo-insta`](https://insta.rs/docs/cli/) command to assist with snapshot reviewing.
 
+Directories are divided by language, so when creating a new test file, make sure to have the correct file
+under the correct folder:
+- `JavaScript` => `js/` directory
+- `TypeScript` => `ts/` directory
+- `JSX` => `jsx/` directory
+- `TSX` => `ts/` directory
+
 To create a new snapshot test for JavaScript, create a new file to `crates/rome_formatter/tests/specs/js/`, e.g. `arrow_with_spaces.js`
 
 ```javascript
