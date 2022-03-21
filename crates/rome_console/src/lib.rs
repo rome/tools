@@ -1,13 +1,16 @@
 use std::panic::RefUnwindSafe;
 
+use markup::MarkupPrinter;
 use rome_diagnostics::{file::Files, Diagnostic, Emitter};
-use rome_diagnostics::termcolor::{ColorChoice, NoColor, StandardStream, StandardStreamLock, WriteColor};
+use termcolor::{ColorChoice, NoColor, StandardStream, StandardStreamLock, WriteColor};
 
 mod markup;
 
 pub use self::markup::{MarkupElement, MarkupNode};
 pub use rome_markup::markup;
 
+/// Generic abstraction over printing markup and diagnostics to an output,
+/// which can be a terminal, a file, a memory buffer ...
 pub trait Console: Sync + RefUnwindSafe {
     /// Prints a message (formatted using [markup]) to the console
     fn message(&mut self, args: MarkupNode);

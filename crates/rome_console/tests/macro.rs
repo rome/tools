@@ -6,7 +6,7 @@ fn test_macro() {
 
     match
     // Due to how MarkupNode is implemented, the result of the markup macro
-    // cannot be stored a binding and must be matched upon immediately
+    // cannot be stored in a binding and must be matched upon immediately
     rome_markup::markup! {
         <Emphasis>"{category} Commands"</Emphasis>
     }
@@ -25,4 +25,10 @@ fn test_macro() {
         }
         markup => panic!("unexpected MarkupNode {markup:?}"),
     }
+}
+
+#[test]
+fn test_macro_errors() {
+    let t = trybuild::TestCases::new();
+    t.compile_fail("tests/markup/*.rs");
 }

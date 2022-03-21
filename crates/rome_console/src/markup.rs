@@ -1,7 +1,7 @@
 use core::fmt;
 use std::io;
 
-use rslint_errors::termcolor::{Color, ColorSpec, WriteColor};
+use termcolor::{Color, ColorSpec, WriteColor};
 
 /// Manages the state of an object implementing [WriteColor], tracking the
 /// successive styles being applied to the printer, and restoring the previous
@@ -66,6 +66,53 @@ pub enum MarkupElement {
     Info,
 }
 
+impl MarkupElement {
+    fn push_style<W: WriteColor>(&self, fmt: &mut MarkupPrinter<W>) -> io::Result<()> {
+        match self {
+            // Text Styles
+            MarkupElement::Emphasis => fmt.push_color(|color| {
+                color.set_bold(true);
+            }),
+            MarkupElement::Dim => fmt.push_color(|color| {
+                color.set_dimmed(true);
+            }),
+            MarkupElement::Italic => fmt.push_color(|color| {
+                color.set_italic(true);
+            }),
+            MarkupElement::Underline => fmt.push_color(|color| {
+                color.set_underline(true);
+            }),
+
+            // Text Colors
+            MarkupElement::Error => fmt.push_color(|color| {
+                color.set_fg(Some(Color::Red));
+            }),
+            MarkupElement::Success => fmt.push_color(|color| {
+                color.set_fg(Some(Color::Green));
+            }),
+            MarkupElement::Warn => fmt.push_color(|color| {
+                color.set_fg(Some(Color::Yellow));
+            }),
+            MarkupElement::Info => fmt.push_color(|color| {
+                color.set_fg(Some(Color::Blue));
+            }),
+        }
+    }
+
+    fn pop_style<W: WriteColor>(&self, fmt: &mut MarkupPrinter<W>) -> io::Result<()> {
+        match self {
+            MarkupElement::Emphasis
+            | MarkupElement::Dim
+            | MarkupElement::Italic
+            | MarkupElement::Underline
+            | MarkupElement::Error
+            | MarkupElement::Success
+            | MarkupElement::Warn
+            | MarkupElement::Info => fmt.pop_color(),
+        }
+    }
+}
+
 /// Implementation of a single "markup node": can be either a piece of text, or
 /// an element containing zero or more other nodes
 ///
@@ -96,51 +143,7 @@ impl<'fmt> MarkupNode<'fmt> {
 
             // If the node is a MarkupElement, apply the associated style before printing the children
             MarkupNode::Element { kind, children } => {
-                match kind {
-                    // Text Styles
-                    MarkupElement::Emphasis => {
-                        fmt.push_color(|color| {
-                            color.set_bold(true);
-                        })?;
-                    }
-                    MarkupElement::Dim => {
-                        fmt.push_color(|color| {
-                            color.set_dimmed(true);
-                        })?;
-                    }
-                    MarkupElement::Italic => {
-                        fmt.push_color(|color| {
-                            color.set_italic(true);
-                        })?;
-                    }
-                    MarkupElement::Underline => {
-                        fmt.push_color(|color| {
-                            color.set_underline(true);
-                        })?;
-                    }
-
-                    // Text Colors
-                    MarkupElement::Error => {
-                        fmt.push_color(|color| {
-                            color.set_fg(Some(Color::Red));
-                        })?;
-                    }
-                    MarkupElement::Success => {
-                        fmt.push_color(|color| {
-                            color.set_fg(Some(Color::Green));
-                        })?;
-                    }
-                    MarkupElement::Warn => {
-                        fmt.push_color(|color| {
-                            color.set_fg(Some(Color::Yellow));
-                        })?;
-                    }
-                    MarkupElement::Info => {
-                        fmt.push_color(|color| {
-                            color.set_fg(Some(Color::Blue));
-                        })?;
-                    }
-                }
+                kind.push_style(fmt)?;
 
                 // If a child node returns an error while printing, we want to
                 // abort immediately and return the error (like if we had
@@ -162,18 +165,7 @@ impl<'fmt> MarkupNode<'fmt> {
                     }
                 };
 
-                match kind {
-                    MarkupElement::Emphasis
-                    | MarkupElement::Dim
-                    | MarkupElement::Italic
-                    | MarkupElement::Underline
-                    | MarkupElement::Error
-                    | MarkupElement::Success
-                    | MarkupElement::Warn
-                    | MarkupElement::Info => {
-                        fmt.pop_color()?;
-                    }
-                }
+                kind.pop_style(fmt)?;
 
                 result
             }
