@@ -1,0 +1,98 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 197
+expression: self_closing.jsx
+
+---
+# Input
+<Foo />;
+
+<Foo           />;
+
+<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />;
+<IndentStyleSelect indentWidth={indentWidth} setIndentWidth={setIndentWidth} indentStyle={indentStyle} setIndentStyle={setIndentStyle}
+/>;
+<SourceTypeSelect
+	isTypeScript={isTypeScript}
+
+	setIsTypeScript={setIsTypeScript}
+
+	isJsx={isJsx}
+
+	setIsJsx={setIsJsx}
+/>;
+
+<CodeEditor
+	value={code}
+	language="js"
+	placeholder="Enter JS here"
+	onChange={(evn) => {
+		setCode(evn.target.value);
+	}}
+	style={{ fontSize: 12, height: "100vh", fontFamily:
+			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+	}}
+/>
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+<Foo />;
+
+<Foo />;
+
+<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />;
+<IndentStyleSelect
+	indentWidth={indentWidth}
+	setIndentWidth={setIndentWidth}
+	indentStyle={indentStyle}
+	setIndentStyle={setIndentStyle}
+/>;
+<SourceTypeSelect
+	isTypeScript={isTypeScript}
+	setIsTypeScript={setIsTypeScript}
+	isJsx={isJsx}
+	setIsJsx={setIsJsx}
+/>;
+
+<CodeEditor
+	value={code}
+	language="js"
+	placeholder="Enter JS here"
+	onChange={(evn) => {
+		setCode(evn.target.value);
+	}}
+	style={{ fontSize: 12, height: "100vh", fontFamily:
+			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+	}}
+/>;
+
+
+## Unimplemented nodes/tokens
+
+"Foo " => 1..5
+"Foo           " => 11..25
+"LineWidthInput " => 31..46
+"lineWidth={lineWidth} " => 46..68
+"setLineWidth={setLineWidth} " => 68..96
+"IndentStyleSelect " => 101..119
+"indentWidth={indentWidth} " => 119..145
+"setIndentWidth={setIndentWidth} " => 145..177
+"indentStyle={indentStyle} " => 177..203
+"setIndentStyle={setIndentStyle}" => 203..234
+"SourceTypeSelect" => 240..256
+"\n\tisTypeScript={isTypeScript}" => 256..285
+"\n\n\tsetIsTypeScript={setIsTypeScript}" => 285..321
+"\n\n\tisJsx={isJsx}" => 321..337
+"\n\n\tsetIsJsx={setIsJsx}" => 337..359
+"CodeEditor" => 366..376
+"\n\tvalue={code}" => 376..390
+"\n\tlanguage=\"js\"" => 390..405
+"\n\tplaceholder=\"Enter JS here\"" => 405..434
+"\n\tonChange={(evn) => {\n\t\tsetCode(evn.target.value);\n\t}}" => 434..489
+"\n\tstyle={{ fontSize: 12, height: \"100vh\", fontFamily:\n\t\t\t\"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace\",\n\t}}" => 489..629
+
