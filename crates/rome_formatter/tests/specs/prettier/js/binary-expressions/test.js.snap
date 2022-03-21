@@ -73,7 +73,7 @@ const x10 = longVariable > longint && longVariable === (
 );
 
 foo(
-  obj.property * new Class() && obj instanceof Class && longVariable ? number + 5 : false,
+  obj.property * new Class() && (obj instanceof Class) && longVariable ? number + 5 : false,
 );
 
 ```
