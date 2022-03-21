@@ -48,7 +48,10 @@ jobs:
         run: cargo bench_formatter --save-baseline pr
 
       - name: Checkout Main Branch
-        run: git checkout main
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+          ref: main
 
       - name: Run Bench on Main Branch
         run: cargo bench_formatter --save-baseline main
