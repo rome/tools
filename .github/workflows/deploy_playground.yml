@@ -2,10 +2,12 @@
 
 name: Deploy Playground
 
-on:
+on: [workflow_dispatch]
   push:
     branches:
       - main
+
+
 
 jobs:
   deploy:
