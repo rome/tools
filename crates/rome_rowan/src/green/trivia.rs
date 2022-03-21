@@ -1,9 +1,8 @@
 use crate::arc::{HeaderSlice, ThinArc};
 use crate::TriviaPiece;
 use countme::Count;
-use std::borrow::Borrow;
 use std::fmt::Formatter;
-use std::{fmt, mem, ops};
+use std::{fmt, mem};
 use text_size::TextSize;
 
 #[derive(PartialEq, Eq, Hash)]
@@ -54,33 +53,12 @@ impl fmt::Debug for GreenTriviaData {
 #[derive(Eq, PartialEq, Hash, Clone)]
 #[repr(transparent)]
 pub(crate) struct GreenTrivia {
-    ptr: ThinArc<GreenTriviaHead, TriviaPiece>,
-}
-
-impl Borrow<GreenTriviaData> for GreenTrivia {
-    #[inline]
-    fn borrow(&self) -> &GreenTriviaData {
-        &*self
-    }
+    ptr: Option<ThinArc<GreenTriviaHead, TriviaPiece>>,
 }
 
 impl fmt::Debug for GreenTrivia {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        let data: &GreenTriviaData = &*self;
-        fmt::Debug::fmt(data, f)
-    }
-}
-
-impl ops::Deref for GreenTrivia {
-    type Target = GreenTriviaData;
-
-    #[inline]
-    fn deref(&self) -> &Self::Target {
-        unsafe {
-            let repr: &Repr = &self.ptr;
-            let repr: &ReprThin = &*(repr as *const Repr as *const ReprThin);
-            mem::transmute::<&ReprThin, &GreenTriviaData>(repr)
-        }
+        fmt::Debug::fmt(self.pieces(), f)
     }
 }
 
@@ -94,7 +72,12 @@ impl GreenTrivia {
         let data =
             ThinArc::from_header_and_iter(GreenTriviaHead { _c: Count::new() }, pieces.into_iter());
 
-        GreenTrivia { ptr: data }
+        GreenTrivia { ptr: Some(data) }
+    }
+
+    /// Creates an empty trivia
+    pub fn empty() -> Self {
+        GreenTrivia { ptr: None }
     }
 
     /// Returns the total length of all pieces
@@ -112,6 +95,30 @@ impl GreenTrivia {
     /// Returns the pieces count
     pub fn len(&self) -> usize {
         self.pieces().len()
+    }
+
+    /// Returns the pieces of the trivia
+    pub fn pieces(&self) -> &[TriviaPiece] {
+        static EMPTY: [TriviaPiece; 0] = [];
+
+        match self.data() {
+            None => &EMPTY,
+            Some(data) => data.pieces(),
+        }
+    }
+
+    fn data(&self) -> Option<&GreenTriviaData> {
+        match &self.ptr {
+            None => None,
+            Some(ptr) => {
+                let repr: &Repr = ptr;
+                let data = unsafe {
+                    let repr: &ReprThin = &*(repr as *const Repr as *const ReprThin);
+                    mem::transmute::<&ReprThin, &GreenTriviaData>(repr)
+                };
+                Some(data)
+            }
+        }
     }
 
     /// Returns the piece at the given index.
@@ -141,11 +148,6 @@ mod tests {
         /// Creates a trivia containing a single piece
         pub fn single<L: Into<TextSize>>(kind: TriviaPieceKind, len: L) -> Self {
             Self::new(std::iter::once(TriviaPiece::new(kind, len)))
-        }
-
-        /// Creates a trivia that contains no pieces
-        pub fn empty() -> Self {
-            Self::new(std::iter::empty())
         }
     }
 

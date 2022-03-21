@@ -256,10 +256,6 @@ struct TriviaCache {
     /// Generic cache for trivia
     cache: HashMap<CachedTrivia, ()>,
 
-    /// Cached empty trivia. Almost every program has empty trivia attached to at least one token.
-    /// Even empty text files where the empty trivia is attached to the EOF token.
-    empty: GreenTrivia,
-
     /// Cached single whitespace trivia.
     whitespace: GreenTrivia,
 }
@@ -268,7 +264,6 @@ impl Default for TriviaCache {
     fn default() -> Self {
         Self {
             cache: Default::default(),
-            empty: GreenTrivia::new([]),
             whitespace: GreenTrivia::new([TriviaPiece::whitespace(1)]),
         }
     }
@@ -279,7 +274,7 @@ impl TriviaCache {
     /// it for further calls.
     fn get(&mut self, pieces: &[TriviaPiece]) -> GreenTrivia {
         match pieces {
-            [] => self.empty.clone(),
+            [] => GreenTrivia::empty(),
             [TriviaPiece {
                 kind: TriviaPieceKind::Whitespace,
                 length,
