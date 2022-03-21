@@ -2,6 +2,7 @@ use std::{
     borrow::Cow,
     collections::HashMap,
     hash::Hash,
+    ops::Sub,
     ptr,
     time::{Duration, Instant},
 };
@@ -92,35 +93,45 @@ impl CallsiteEntry {
 /// Most of the associated code is based on the similar logic found in `tracing-subscriber`
 /// for printing span timings to the console:
 /// https://github.com/tokio-rs/tracing/blob/6f23c128fced6409008838a3223d76d7332d79e9/tracing-subscriber/src/fmt/fmt_subscriber.rs#L973
-struct Timings {
+struct Timings<I = Instant> {
     idle: u64,
     busy: u64,
-    last: Instant,
+    last: I,
 }
 
-impl Timings {
+trait Timepoint: Sub<Self, Output = Duration> + Copy + Sized {
+    fn now() -> Self;
+}
+
+impl Timepoint for Instant {
+    fn now() -> Self {
+        Instant::now()
+    }
+}
+
+impl<I: Timepoint> Timings<I> {
     fn new() -> Self {
         Self {
             idle: 0,
             busy: 0,
-            last: Instant::now(),
+            last: I::now(),
         }
     }
 
     /// Count the time between the last update and now as idle
-    fn enter(&mut self, now: Instant) {
+    fn enter(&mut self, now: I) {
         self.idle += (now - self.last).as_nanos() as u64;
         self.last = now;
     }
 
     /// Count the time between the last update and now as busy
-    fn exit(&mut self, now: Instant) {
+    fn exit(&mut self, now: I) {
         self.busy += (now - self.last).as_nanos() as u64;
         self.last = now;
     }
 
     /// Exit the timing for this span, and record it into a callsite entry
-    fn record(mut self, now: Instant, entry: &mut CallsiteEntry) {
+    fn record(mut self, now: I, entry: &mut CallsiteEntry) {
         self.exit(now);
 
         match entry {
@@ -170,7 +181,7 @@ where
         let mut extensions = span.extensions_mut();
 
         if extensions.get_mut::<Timings>().is_none() {
-            extensions.insert(Timings::new());
+            extensions.insert(Timings::<Instant>::new());
         }
     }
 
@@ -290,24 +301,40 @@ pub fn print_metrics() {
 
 #[cfg(test)]
 mod tests {
-    use std::{thread, time::Duration};
+    use std::{ops::Sub, thread, time::Duration};
 
     use tracing::Level;
     use tracing_subscriber::prelude::*;
 
-    use super::{CallsiteEntry, CallsiteKey, MetricsLayer, Timings, METRICS};
+    use super::{CallsiteEntry, CallsiteKey, MetricsLayer, Timepoint, Timings, METRICS};
+
+    #[derive(Clone, Copy)]
+    struct TestTime(u64);
+
+    impl Sub for TestTime {
+        type Output = Duration;
+
+        fn sub(self, rhs: Self) -> Self::Output {
+            Duration::from_nanos(self.0 - rhs.0)
+        }
+    }
+
+    impl Timepoint for TestTime {
+        fn now() -> Self {
+            Self(0)
+        }
+    }
 
     #[test]
     fn test_timing() {
         let mut entry = CallsiteEntry::from_level(&Level::TRACE);
 
         for i in 1..=5 {
-            let mut timing = Timings::new();
+            let mut timing = Timings::<TestTime>::new();
 
-            let start = timing.last;
-            timing.enter(start + Duration::from_nanos(i));
+            timing.enter(TestTime(i));
 
-            timing.record(start + Duration::from_nanos(i * 2), &mut entry);
+            timing.record(TestTime(i * 2), &mut entry);
         }
 
         let histograms = entry.into_histograms("test");
