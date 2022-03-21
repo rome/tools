@@ -50,17 +50,17 @@ jobs:
       - name: Checkout Main Branch
         uses: actions/checkout@v2
         with:
-          submodules: false
+          clean: false
           ref: main
 
       - name: Run Bench on Main Branch
         run: cargo bench_formatter --save-baseline main
 
-      - name: Compare Bench Results on ${{ matrix.os }}
+      - name: Compare Bench Results
         id: bench_comparison
         shell: bash
         run: |
-          echo "### Bench results on ${{ matrix.os }}" > output
+          echo "### Formatter Benchmark Results" > output
           echo "\`\`\`"  >> output
           critcmp main pr >> output
           echo "\`\`\`" >> output
