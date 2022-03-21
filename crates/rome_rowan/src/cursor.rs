@@ -913,14 +913,16 @@ impl SyntaxNode {
     }
 
     pub fn first_token(&self) -> Option<SyntaxToken> {
-        self.descendants_with_tokens()
-            .find_map(|x| x.as_token().cloned())
+        self.descendants_with_tokens().find_map(|x| x.into_token())
     }
 
     pub fn last_token(&self) -> Option<SyntaxToken> {
-        self.descendants_with_tokens()
-            .filter_map(|x| x.as_token().cloned())
-            .last()
+        PreorderWithTokens::reverse(self.clone())
+            .filter_map(|event| match event {
+                WalkEvent::Enter(it) => Some(it),
+                WalkEvent::Leave(_) => None,
+            })
+            .find_map(|x| x.into_token())
     }
 
     #[inline]
@@ -1520,6 +1522,7 @@ pub(crate) struct PreorderWithTokens {
     start: SyntaxElement,
     next: Option<WalkEvent<SyntaxElement>>,
     skip_subtree: bool,
+    direction: Direction,
 }
 
 impl PreorderWithTokens {
@@ -1528,6 +1531,17 @@ impl PreorderWithTokens {
         PreorderWithTokens {
             start: start.into(),
             next,
+            direction: Direction::Next,
+            skip_subtree: false,
+        }
+    }
+
+    fn reverse(start: SyntaxNode) -> PreorderWithTokens {
+        let next = Some(WalkEvent::Enter(start.clone().into()));
+        PreorderWithTokens {
+            start: start.into(),
+            next,
+            direction: Direction::Prev,
             skip_subtree: false,
         }
     }
@@ -1557,17 +1571,30 @@ impl Iterator for PreorderWithTokens {
         self.next = next.as_ref().and_then(|next| {
             Some(match next {
                 WalkEvent::Enter(el) => match el {
-                    NodeOrToken::Node(node) => match node.first_child_or_token() {
-                        Some(child) => WalkEvent::Enter(child),
-                        None => WalkEvent::Leave(node.clone().into()),
-                    },
+                    NodeOrToken::Node(node) => {
+                        let next = match self.direction {
+                            Direction::Next => node.first_child_or_token(),
+                            Direction::Prev => node.last_child_or_token(),
+                        };
+                        match next {
+                            Some(child) => WalkEvent::Enter(child),
+                            None => WalkEvent::Leave(node.clone().into()),
+                        }
+                    }
                     NodeOrToken::Token(token) => WalkEvent::Leave(token.clone().into()),
                 },
                 WalkEvent::Leave(el) if el == &self.start => return None,
-                WalkEvent::Leave(el) => match el.next_sibling_or_token() {
-                    Some(sibling) => WalkEvent::Enter(sibling),
-                    None => WalkEvent::Leave(el.parent()?.into()),
-                },
+                WalkEvent::Leave(el) => {
+                    let next = match self.direction {
+                        Direction::Next => el.next_sibling_or_token(),
+                        Direction::Prev => el.prev_sibling_or_token(),
+                    };
+
+                    match next {
+                        Some(sibling) => WalkEvent::Enter(sibling),
+                        None => WalkEvent::Leave(el.parent()?.into()),
+                    }
+                }
             })
         });
         next
