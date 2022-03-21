@@ -489,6 +489,10 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
         Some(Operation::Logical(logical.operator_kind()?))
     } else if let Some(binary) = JsBinaryExpression::cast(node.syntax().clone()) {
         Some(Operation::Binary(binary.operator_kind()?))
+    } else if JsInstanceofExpression::can_cast(node.syntax().kind()) {
+        Some(Operation::Instanceof)
+    } else if JsInExpression::can_cast(node.syntax().kind()) {
+        Some(Operation::In)
     } else {
         None
     };
@@ -502,6 +506,10 @@ fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
             (Operation::Binary(previous_operation), Operation::Binary(compare_to)) => {
                 compare_to.compare_precedence(&previous_operation) == Ordering::Greater
             }
+            // `instanceof` operator has higher precedence than `in` operator, so we apply parenthesis here
+            (Operation::In, Operation::Instanceof) => true,
+            // any other case where we have `instanceof` or `in` on the right, we apply parenthesis
+            (_, Operation::Instanceof) | (_, Operation::In) => true,
             _ => false,
         }
     } else {

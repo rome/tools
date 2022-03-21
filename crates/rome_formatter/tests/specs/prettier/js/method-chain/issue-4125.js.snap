@@ -206,7 +206,7 @@ d3.select("body").selectAll("p").data([1, 2, 3]).enter().style("color", "white")
 
 Object
   .keys(props)
-  .filter((key) => key in own === false)
+  .filter((key) => (key in own) === false)
   .reduce(
     (a, key) => {
       a[key] = props[key];

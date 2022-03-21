@@ -106,3 +106,7 @@ foo && bar || baz;
 a instanceof Number instanceof String instanceof Boolean instanceof Number instanceof String instanceof Boolean instanceof Number instanceof String instanceof Boolean;
 
 a in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName in LongClassName;
+
+
+veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String && veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number || veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean
+
