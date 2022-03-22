@@ -750,12 +750,17 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn is_arrow_function_with_single_parameter(p: &mut Parser) -> bool {
-    if p.at(T![async]) && !p.has_nth_preceding_line_break(1) {
-        is_nth_at_identifier_binding(p, 1)
-            && p.nth_at(2, T![=>])
+    // a => ...
+    if p.nth_at(1, T![=>]) {
+        is_at_identifier_binding(p) && !p.has_nth_preceding_line_break(1)
+    }
+    // async ident => ...
+    else {
+        p.at(T![async])
+            && !p.has_nth_preceding_line_break(1)
+            && is_nth_at_identifier_binding(p, 1)
             && !p.has_nth_preceding_line_break(2)
-    } else {
-        is_at_identifier_binding(p) && p.nth_at(1, T![=>]) && !p.has_nth_preceding_line_break(1)
+            && p.nth_at(2, T![=>])
     }
 }
 
