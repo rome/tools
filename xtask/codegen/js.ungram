@@ -2157,6 +2157,7 @@ JsxAnyTag =
 JsxSelfClosingElement =
 	'<'
 	name: JsxAnyElementName
+	type_arguments: TsTypeArguments?
 	attributes: JsxAttributeList
 	'/'
 	'>'
@@ -2169,6 +2170,7 @@ JsxElement =
 JsxOpeningElement =
 	'<'
 	name: JsxAnyElementName
+	type_arguments: TsTypeArguments?
 	attributes: JsxAttributeList
 	'>'
 
@@ -2205,7 +2207,6 @@ JsxAnyElementName =
 	| JsxReferenceIdentifier
 	| JsxMemberName
 	| JsxNamespaceName
-	| TsReferenceType
 
 JsxAnyObjectName =
 	JsxReferenceIdentifier

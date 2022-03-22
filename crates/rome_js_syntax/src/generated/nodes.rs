@@ -5386,6 +5386,7 @@ impl JsxOpeningElement {
         JsxOpeningElementFields {
             l_angle_token: self.l_angle_token(),
             name: self.name(),
+            type_arguments: self.type_arguments(),
             attributes: self.attributes(),
             r_angle_token: self.r_angle_token(),
         }
@@ -5396,14 +5397,16 @@ impl JsxOpeningElement {
     pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn attributes(&self) -> JsxAttributeList { support::list(&self.syntax, 2usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
+    pub fn attributes(&self) -> JsxAttributeList { support::list(&self.syntax, 3usize) }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
 }
 pub struct JsxOpeningElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
+    pub type_arguments: Option<TsTypeArguments>,
     pub attributes: JsxAttributeList,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
@@ -5447,6 +5450,7 @@ impl JsxSelfClosingElement {
         JsxSelfClosingElementFields {
             l_angle_token: self.l_angle_token(),
             name: self.name(),
+            type_arguments: self.type_arguments(),
             attributes: self.attributes(),
             slash_token: self.slash_token(),
             r_angle_token: self.r_angle_token(),
@@ -5458,17 +5462,19 @@ impl JsxSelfClosingElement {
     pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn attributes(&self) -> JsxAttributeList { support::list(&self.syntax, 2usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
+    pub fn attributes(&self) -> JsxAttributeList { support::list(&self.syntax, 3usize) }
     pub fn slash_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 5usize)
     }
 }
 pub struct JsxSelfClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub name: SyntaxResult<JsxAnyElementName>,
+    pub type_arguments: Option<TsTypeArguments>,
     pub attributes: JsxAttributeList,
     pub slash_token: SyntaxResult<SyntaxToken>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
@@ -9418,7 +9424,6 @@ pub enum JsxAnyElementName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
-    TsReferenceType(TsReferenceType),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyName {
@@ -14562,6 +14567,10 @@ impl std::fmt::Debug for JsxOpeningElement {
                 &support::DebugSyntaxResult(self.l_angle_token()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
+            )
             .field("attributes", &self.attributes())
             .field(
                 "r_angle_token",
@@ -14622,6 +14631,10 @@ impl std::fmt::Debug for JsxSelfClosingElement {
                 &support::DebugSyntaxResult(self.l_angle_token()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
+            )
             .field("attributes", &self.attributes())
             .field(
                 "slash_token",
@@ -22470,18 +22483,11 @@ impl From<JsxReferenceIdentifier> for JsxAnyElementName {
         JsxAnyElementName::JsxReferenceIdentifier(node)
     }
 }
-impl From<TsReferenceType> for JsxAnyElementName {
-    fn from(node: TsReferenceType) -> JsxAnyElementName { JsxAnyElementName::TsReferenceType(node) }
-}
 impl AstNode for JsxAnyElementName {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         matches!(
             kind,
-            JSX_MEMBER_NAME
-                | JSX_NAME
-                | JSX_NAMESPACE_NAME
-                | JSX_REFERENCE_IDENTIFIER
-                | TS_REFERENCE_TYPE
+            JSX_MEMBER_NAME | JSX_NAME | JSX_NAMESPACE_NAME | JSX_REFERENCE_IDENTIFIER
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -22492,7 +22498,6 @@ impl AstNode for JsxAnyElementName {
             JSX_REFERENCE_IDENTIFIER => {
                 JsxAnyElementName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
             }
-            TS_REFERENCE_TYPE => JsxAnyElementName::TsReferenceType(TsReferenceType { syntax }),
             _ => return None,
         };
         Some(res)
@@ -22503,7 +22508,6 @@ impl AstNode for JsxAnyElementName {
             JsxAnyElementName::JsxName(it) => &it.syntax,
             JsxAnyElementName::JsxNamespaceName(it) => &it.syntax,
             JsxAnyElementName::JsxReferenceIdentifier(it) => &it.syntax,
-            JsxAnyElementName::TsReferenceType(it) => &it.syntax,
         }
     }
 }
@@ -22514,7 +22518,6 @@ impl std::fmt::Debug for JsxAnyElementName {
             JsxAnyElementName::JsxName(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyElementName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyElementName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyElementName::TsReferenceType(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -22525,7 +22528,6 @@ impl From<JsxAnyElementName> for SyntaxNode {
             JsxAnyElementName::JsxName(it) => it.into(),
             JsxAnyElementName::JsxNamespaceName(it) => it.into(),
             JsxAnyElementName::JsxReferenceIdentifier(it) => it.into(),
-            JsxAnyElementName::TsReferenceType(it) => it.into(),
         }
     }
 }
