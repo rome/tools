@@ -255,6 +255,11 @@ impl<H, T> HeaderSlice<H, [T]> {
     pub(crate) fn slice(&self) -> &[T] {
         &self.slice
     }
+
+    /// Returns the number of items
+    pub(crate) fn len(&self) -> usize {
+        self.length
+    }
 }
 
 impl<H, T> Deref for HeaderSlice<H, [T; 0]> {

@@ -1,8 +1,8 @@
 use crate::arc::{HeaderSlice, ThinArc};
 use crate::TriviaPiece;
 use countme::Count;
+use std::fmt;
 use std::fmt::Formatter;
-use std::{fmt, mem};
 use text_size::TextSize;
 
 #[derive(PartialEq, Eq, Hash)]
@@ -10,7 +10,6 @@ pub(crate) struct GreenTriviaHead {
     _c: Count<GreenTrivia>,
 }
 
-type Repr = HeaderSlice<GreenTriviaHead, [TriviaPiece]>;
 type ReprThin = HeaderSlice<GreenTriviaHead, [TriviaPiece; 0]>;
 
 #[repr(transparent)]
@@ -94,30 +93,19 @@ impl GreenTrivia {
 
     /// Returns the pieces count
     pub fn len(&self) -> usize {
-        self.pieces().len()
+        match &self.ptr {
+            None => 0,
+            Some(ptr) => ptr.len(),
+        }
     }
 
     /// Returns the pieces of the trivia
     pub fn pieces(&self) -> &[TriviaPiece] {
         static EMPTY: [TriviaPiece; 0] = [];
 
-        match self.data() {
-            None => &EMPTY,
-            Some(data) => data.pieces(),
-        }
-    }
-
-    fn data(&self) -> Option<&GreenTriviaData> {
         match &self.ptr {
-            None => None,
-            Some(ptr) => {
-                let repr: &Repr = ptr;
-                let data = unsafe {
-                    let repr: &ReprThin = &*(repr as *const Repr as *const ReprThin);
-                    mem::transmute::<&ReprThin, &GreenTriviaData>(repr)
-                };
-                Some(data)
-            }
+            None => &EMPTY,
+            Some(ptr) => ptr.slice(),
         }
     }
 

@@ -66,22 +66,25 @@ pub struct TriviaPiece {
 
 impl TriviaPiece {
     /// Creates a new whitespace trivia piece with the given length
-    pub fn whitespace<L: Into<TextSize>>(len: L) -> TriviaPiece {
+    pub fn whitespace<L: Into<TextSize>>(len: L) -> Self {
         Self::new(TriviaPieceKind::Whitespace, len)
     }
 
     /// Creates a new newline trivia piece with the given text length
-    pub fn newline<L: Into<TextSize>>(len: L) -> TriviaPiece {
+    pub fn newline<L: Into<TextSize>>(len: L) -> Self {
         Self::new(TriviaPieceKind::Newline, len)
     }
 
-    /// Creates a new comment trivia piece that does not contain any line breaks
-    pub fn single_line_comment<L: Into<TextSize>>(len: L) -> TriviaPiece {
+    /// Creates a new comment trivia piece that does not contain any line breaks.
+    /// For example, JavaScript's `//` comments are guaranteed to not spawn multiple lines. However,
+    /// this can also be a `/* ... */` comment if it doesn't contain any line break characters.
+    pub fn single_line_comment<L: Into<TextSize>>(len: L) -> Self {
         Self::new(TriviaPieceKind::SingleLineComment, len)
     }
 
-    /// Creates a new comment trivia piece that contains at least one line breaks
-    pub fn multi_line_comment<L: Into<TextSize>>(len: L) -> TriviaPiece {
+    /// Creates a new comment trivia piece that contains at least one line breaks.
+    /// For example, a JavaScript `/* ... */` comment that spawns at least two lines (contains at least one line break character).
+    pub fn multi_line_comment<L: Into<TextSize>>(len: L) -> Self {
         Self::new(TriviaPieceKind::MultiLineComment, len)
     }
 
