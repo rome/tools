@@ -1,3 +1,61 @@
 ## Formatter
 
-You can use the formatter via [our VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome).
+You try rome formatter in two ways:
+
+- you can use the formatter via [our VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome).
+- you can download a small CLI directly from our [release page](https://github.com/rome/tools/releases)
+
+> WARNING: both CLI and VSCode extensions are packaged with separated binaries, which means that if you don't 
+> use our default options, you will have to make sure to **pass them to both the extension AND the CLI**.
+> 
+> This might be the case where you want to try to use the CLI in a CI environment.
+> 
+> This is a temporary choice to allow people to play with our formatter. This will change in the near future.
+
+
+### Formatter options
+
+Our formatter is really strict and has support for few options:
+
+- ident style, you can choose between tabs or spaces; **rome's default is tabs**
+- quantity of spaces, applied only you choose spaces as indent style; 
+- line width, it's how long is a single line; **rome's default is `80`**
+
+### Use the formatter with the VSCode extension
+
+The extension allows to change the default [formatter options](#formatter-options). 
+
+To easy access to the available options, to the settings menu of the VSCode extension and type: `@ext:rome.rome`.
+
+Plus, you can try an additional feature that allows you to format partial broken code (code with syntax errors).
+This is an **opt-in feature** that allows the developers to experiment how a formatter can work with an error resilient parser.
+
+> WARNING: all options are marked as **BETA** because this might change, once we will add support of a configuration file
+
+### Use the formatter with the CLI
+
+The only command that is supported is `format`.
+
+You can start by running the CLI with the `--help` flag:
+
+```shell
+rome format --help
+```
+
+Which will show you the options available at the moment:
+
+```shell
+Rome Formatter
+
+USAGE:
+    rome format [OPTIONS] <INPUTS...>
+
+    INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
+
+OPTIONS:
+    --ci                        Enable CI mode, lock files and exit with an error if the formatter would modify them
+    --skip-errors               Skip over files containing syntax errors instead of returning an error
+    --indent-style <tabs|space> Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
+    --indent-size <number>      If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
+
+```
