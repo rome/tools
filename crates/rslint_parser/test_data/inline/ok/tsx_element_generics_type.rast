@@ -1,0 +1,79 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxSelfClosingElement {
+                    l_angle_token: L_ANGLE@0..1 "<" [] [],
+                    name: JsxReferenceIdentifier {
+                        value_token: JSX_IDENT@1..12 "NonGeneric" [] [Whitespace(" ")],
+                    },
+                    attributes: JsxAttributeList [],
+                    slash_token: SLASH@12..13 "/" [] [],
+                    r_angle_token: R_ANGLE@13..14 ">" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@14..15 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxSelfClosingElement {
+                    l_angle_token: L_ANGLE@15..17 "<" [Newline("\n")] [],
+                    name: TsReferenceType {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@17..24 "Generic" [] [],
+                        },
+                        type_arguments: TsTypeArguments {
+                            l_angle_token: L_ANGLE@24..25 "<" [] [],
+                            ts_type_argument_list: TsTypeArgumentList [
+                                TsBooleanLiteralType {
+                                    literal: TRUE_KW@25..29 "true" [] [],
+                                },
+                            ],
+                            r_angle_token: R_ANGLE@29..31 ">" [] [Whitespace(" ")],
+                        },
+                    },
+                    attributes: JsxAttributeList [],
+                    slash_token: SLASH@31..32 "/" [] [],
+                    r_angle_token: R_ANGLE@32..33 ">" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@33..34 ";" [] [],
+        },
+    ],
+    eof_token: EOF@34..35 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..35
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..34
+    0: JS_EXPRESSION_STATEMENT@0..15
+      0: JSX_TAG_EXPRESSION@0..14
+        0: JSX_SELF_CLOSING_ELEMENT@0..14
+          0: L_ANGLE@0..1 "<" [] []
+          1: JSX_REFERENCE_IDENTIFIER@1..12
+            0: JSX_IDENT@1..12 "NonGeneric" [] [Whitespace(" ")]
+          2: JSX_ATTRIBUTE_LIST@12..12
+          3: SLASH@12..13 "/" [] []
+          4: R_ANGLE@13..14 ">" [] []
+      1: SEMICOLON@14..15 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@15..34
+      0: JSX_TAG_EXPRESSION@15..33
+        0: JSX_SELF_CLOSING_ELEMENT@15..33
+          0: L_ANGLE@15..17 "<" [Newline("\n")] []
+          1: TS_REFERENCE_TYPE@17..31
+            0: JS_REFERENCE_IDENTIFIER@17..24
+              0: IDENT@17..24 "Generic" [] []
+            1: TS_TYPE_ARGUMENTS@24..31
+              0: L_ANGLE@24..25 "<" [] []
+              1: TS_TYPE_ARGUMENT_LIST@25..29
+                0: TS_BOOLEAN_LITERAL_TYPE@25..29
+                  0: TRUE_KW@25..29 "true" [] []
+              2: R_ANGLE@29..31 ">" [] [Whitespace(" ")]
+          2: JSX_ATTRIBUTE_LIST@31..31
+          3: SLASH@31..32 "/" [] []
+          4: R_ANGLE@32..33 ">" [] []
+      1: SEMICOLON@33..34 ";" [] []
+  3: EOF@34..35 "" [Newline("\n")] []

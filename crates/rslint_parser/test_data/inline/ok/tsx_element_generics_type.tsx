@@ -1,0 +1,2 @@
+<NonGeneric />;
+<Generic<true> />;

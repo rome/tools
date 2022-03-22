@@ -477,7 +477,7 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
 // type C = A;
 // type D = B.a;
 // type E = D.c.b.a;
-pub(crate) fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 

@@ -11,7 +11,7 @@ use crate::{parser::RecoveryResult, ParseNodeList, ParseRecovery, ParsedSyntax, 
 use crate::{Absent, Checkpoint, LanguageVariant, Present};
 use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
-use super::typescript::parse_ts_reference_type;
+use super::typescript::{parse_ts_name, parse_ts_type_arguments};
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -296,6 +296,28 @@ fn parse_jsx_closing_element(p: &mut Parser, in_expression: bool) -> ParsedSynta
     ParsedSyntax::Present(m.complete(p, JSX_CLOSING_ELEMENT))
 }
 
+/// Returns [ParsedSyntax::Present] only if we parse a [JsSyntaxKind::TS_REFERENCE_TYPE] with type arguments,
+/// otherwise returns [ParsedSyntax::Absent].
+/// Little bit different from [crate::syntax::typescript::types::parse_ts_reference_type].
+fn parse_tsx_generics_type(p: &mut Parser) -> ParsedSyntax {
+    let checkpoint = p.checkpoint();
+
+    parse_ts_name(p).and_then(|name| {
+        let m = name.precede(p);
+
+        if !p.has_preceding_line_break() {
+            let arguments = parse_ts_type_arguments(p);
+            if arguments.is_present() {
+                return ParsedSyntax::Present(m.complete(p, TS_REFERENCE_TYPE));
+            }
+        }
+
+        m.abandon(p);
+        p.rewind(checkpoint);
+        ParsedSyntax::Absent
+    })
+}
+
 // test jsx jsx_member_element_name
 // <a.b.c.d></a.b.c.d>;
 // <a-b.c></a-b.c>;
@@ -307,10 +329,17 @@ fn parse_jsx_closing_element(p: &mut Parser, in_expression: bool) -> ParsedSynta
 fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
     let is_ts = p.source_type.language.is_typescript();
     let is_jsx = p.source_type.variant().is_jsx();
-    if is_ts && is_jsx {
-        // test tsx tsx_element_generic_type
-        // <Button<true> />
-        return parse_ts_reference_type(p);
+    let name = if is_ts && is_jsx {
+        // test tsx tsx_element_generics_type
+        // <NonGeneric />;
+        // <Generic<true> />;
+        parse_tsx_generics_type(p)
+    } else {
+        ParsedSyntax::Absent
+    };
+
+    if name.is_present() {
+        return name;
     }
 
     let name = parse_jsx_name_or_namespace(p);
