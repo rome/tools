@@ -101,10 +101,8 @@ impl GreenTrivia {
 
     /// Returns the pieces of the trivia
     pub fn pieces(&self) -> &[TriviaPiece] {
-        static EMPTY: [TriviaPiece; 0] = [];
-
         match &self.ptr {
-            None => &EMPTY,
+            None => &[],
             Some(ptr) => ptr.slice(),
         }
     }
