@@ -9,6 +9,7 @@ impl ToFormatElement for JsxAnyElementName {
             Self::JsxReferenceIdentifier(node) => node.to_format_element(formatter),
             Self::JsxMemberName(node) => node.to_format_element(formatter),
             Self::JsxNamespaceName(node) => node.to_format_element(formatter),
+            Self::TsReferenceType(node) => node.to_format_element(formatter),
         }
     }
 }

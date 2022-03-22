@@ -9413,49 +9413,12 @@ pub enum JsxAnyChild {
     JsxText(JsxText),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsxAnyChildExpression {
-    ImportMeta(ImportMeta),
-    JsAnyLiteralExpression(JsAnyLiteralExpression),
-    JsArrayExpression(JsArrayExpression),
-    JsArrowFunctionExpression(JsArrowFunctionExpression),
-    JsAssignmentExpression(JsAssignmentExpression),
-    JsAwaitExpression(JsAwaitExpression),
-    JsBinaryExpression(JsBinaryExpression),
-    JsCallExpression(JsCallExpression),
-    JsClassExpression(JsClassExpression),
-    JsComputedMemberExpression(JsComputedMemberExpression),
-    JsConditionalExpression(JsConditionalExpression),
-    JsFunctionExpression(JsFunctionExpression),
-    JsIdentifierExpression(JsIdentifierExpression),
-    JsImportCallExpression(JsImportCallExpression),
-    JsInExpression(JsInExpression),
-    JsInstanceofExpression(JsInstanceofExpression),
-    JsLogicalExpression(JsLogicalExpression),
-    JsNewExpression(JsNewExpression),
-    JsObjectExpression(JsObjectExpression),
-    JsParenthesizedExpression(JsParenthesizedExpression),
-    JsPostUpdateExpression(JsPostUpdateExpression),
-    JsPreUpdateExpression(JsPreUpdateExpression),
-    JsSequenceExpression(JsSequenceExpression),
-    JsStaticMemberExpression(JsStaticMemberExpression),
-    JsSuperExpression(JsSuperExpression),
-    JsTemplate(JsTemplate),
-    JsThisExpression(JsThisExpression),
-    JsUnaryExpression(JsUnaryExpression),
-    JsUnknownExpression(JsUnknownExpression),
-    JsYieldExpression(JsYieldExpression),
-    JsxTagExpression(JsxTagExpression),
-    NewTarget(NewTarget),
-    TsAsExpression(TsAsExpression),
-    TsNonNullAssertionExpression(TsNonNullAssertionExpression),
-    TsTypeAssertionExpression(TsTypeAssertionExpression),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyElementName {
     JsxMemberName(JsxMemberName),
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
+    TsReferenceType(TsReferenceType),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyName {
@@ -22491,452 +22454,6 @@ impl From<JsxAnyChild> for SyntaxElement {
         node.into()
     }
 }
-impl From<ImportMeta> for JsxAnyChildExpression {
-    fn from(node: ImportMeta) -> JsxAnyChildExpression { JsxAnyChildExpression::ImportMeta(node) }
-}
-impl From<JsArrayExpression> for JsxAnyChildExpression {
-    fn from(node: JsArrayExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsArrayExpression(node)
-    }
-}
-impl From<JsArrowFunctionExpression> for JsxAnyChildExpression {
-    fn from(node: JsArrowFunctionExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsArrowFunctionExpression(node)
-    }
-}
-impl From<JsAssignmentExpression> for JsxAnyChildExpression {
-    fn from(node: JsAssignmentExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsAssignmentExpression(node)
-    }
-}
-impl From<JsAwaitExpression> for JsxAnyChildExpression {
-    fn from(node: JsAwaitExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsAwaitExpression(node)
-    }
-}
-impl From<JsBinaryExpression> for JsxAnyChildExpression {
-    fn from(node: JsBinaryExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsBinaryExpression(node)
-    }
-}
-impl From<JsCallExpression> for JsxAnyChildExpression {
-    fn from(node: JsCallExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsCallExpression(node)
-    }
-}
-impl From<JsClassExpression> for JsxAnyChildExpression {
-    fn from(node: JsClassExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsClassExpression(node)
-    }
-}
-impl From<JsComputedMemberExpression> for JsxAnyChildExpression {
-    fn from(node: JsComputedMemberExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsComputedMemberExpression(node)
-    }
-}
-impl From<JsConditionalExpression> for JsxAnyChildExpression {
-    fn from(node: JsConditionalExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsConditionalExpression(node)
-    }
-}
-impl From<JsFunctionExpression> for JsxAnyChildExpression {
-    fn from(node: JsFunctionExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsFunctionExpression(node)
-    }
-}
-impl From<JsIdentifierExpression> for JsxAnyChildExpression {
-    fn from(node: JsIdentifierExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsIdentifierExpression(node)
-    }
-}
-impl From<JsImportCallExpression> for JsxAnyChildExpression {
-    fn from(node: JsImportCallExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsImportCallExpression(node)
-    }
-}
-impl From<JsInExpression> for JsxAnyChildExpression {
-    fn from(node: JsInExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsInExpression(node)
-    }
-}
-impl From<JsInstanceofExpression> for JsxAnyChildExpression {
-    fn from(node: JsInstanceofExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsInstanceofExpression(node)
-    }
-}
-impl From<JsLogicalExpression> for JsxAnyChildExpression {
-    fn from(node: JsLogicalExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsLogicalExpression(node)
-    }
-}
-impl From<JsNewExpression> for JsxAnyChildExpression {
-    fn from(node: JsNewExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsNewExpression(node)
-    }
-}
-impl From<JsObjectExpression> for JsxAnyChildExpression {
-    fn from(node: JsObjectExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsObjectExpression(node)
-    }
-}
-impl From<JsParenthesizedExpression> for JsxAnyChildExpression {
-    fn from(node: JsParenthesizedExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsParenthesizedExpression(node)
-    }
-}
-impl From<JsPostUpdateExpression> for JsxAnyChildExpression {
-    fn from(node: JsPostUpdateExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsPostUpdateExpression(node)
-    }
-}
-impl From<JsPreUpdateExpression> for JsxAnyChildExpression {
-    fn from(node: JsPreUpdateExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsPreUpdateExpression(node)
-    }
-}
-impl From<JsSequenceExpression> for JsxAnyChildExpression {
-    fn from(node: JsSequenceExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsSequenceExpression(node)
-    }
-}
-impl From<JsStaticMemberExpression> for JsxAnyChildExpression {
-    fn from(node: JsStaticMemberExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsStaticMemberExpression(node)
-    }
-}
-impl From<JsSuperExpression> for JsxAnyChildExpression {
-    fn from(node: JsSuperExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsSuperExpression(node)
-    }
-}
-impl From<JsTemplate> for JsxAnyChildExpression {
-    fn from(node: JsTemplate) -> JsxAnyChildExpression { JsxAnyChildExpression::JsTemplate(node) }
-}
-impl From<JsThisExpression> for JsxAnyChildExpression {
-    fn from(node: JsThisExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsThisExpression(node)
-    }
-}
-impl From<JsUnaryExpression> for JsxAnyChildExpression {
-    fn from(node: JsUnaryExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsUnaryExpression(node)
-    }
-}
-impl From<JsUnknownExpression> for JsxAnyChildExpression {
-    fn from(node: JsUnknownExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsUnknownExpression(node)
-    }
-}
-impl From<JsYieldExpression> for JsxAnyChildExpression {
-    fn from(node: JsYieldExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsYieldExpression(node)
-    }
-}
-impl From<JsxTagExpression> for JsxAnyChildExpression {
-    fn from(node: JsxTagExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::JsxTagExpression(node)
-    }
-}
-impl From<NewTarget> for JsxAnyChildExpression {
-    fn from(node: NewTarget) -> JsxAnyChildExpression { JsxAnyChildExpression::NewTarget(node) }
-}
-impl From<TsAsExpression> for JsxAnyChildExpression {
-    fn from(node: TsAsExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::TsAsExpression(node)
-    }
-}
-impl From<TsNonNullAssertionExpression> for JsxAnyChildExpression {
-    fn from(node: TsNonNullAssertionExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::TsNonNullAssertionExpression(node)
-    }
-}
-impl From<TsTypeAssertionExpression> for JsxAnyChildExpression {
-    fn from(node: TsTypeAssertionExpression) -> JsxAnyChildExpression {
-        JsxAnyChildExpression::TsTypeAssertionExpression(node)
-    }
-}
-impl AstNode for JsxAnyChildExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool {
-        match kind {
-            IMPORT_META
-            | JS_ARRAY_EXPRESSION
-            | JS_ARROW_FUNCTION_EXPRESSION
-            | JS_ASSIGNMENT_EXPRESSION
-            | JS_AWAIT_EXPRESSION
-            | JS_BINARY_EXPRESSION
-            | JS_CALL_EXPRESSION
-            | JS_CLASS_EXPRESSION
-            | JS_COMPUTED_MEMBER_EXPRESSION
-            | JS_CONDITIONAL_EXPRESSION
-            | JS_FUNCTION_EXPRESSION
-            | JS_IDENTIFIER_EXPRESSION
-            | JS_IMPORT_CALL_EXPRESSION
-            | JS_IN_EXPRESSION
-            | JS_INSTANCEOF_EXPRESSION
-            | JS_LOGICAL_EXPRESSION
-            | JS_NEW_EXPRESSION
-            | JS_OBJECT_EXPRESSION
-            | JS_PARENTHESIZED_EXPRESSION
-            | JS_POST_UPDATE_EXPRESSION
-            | JS_PRE_UPDATE_EXPRESSION
-            | JS_SEQUENCE_EXPRESSION
-            | JS_STATIC_MEMBER_EXPRESSION
-            | JS_SUPER_EXPRESSION
-            | JS_TEMPLATE
-            | JS_THIS_EXPRESSION
-            | JS_UNARY_EXPRESSION
-            | JS_UNKNOWN_EXPRESSION
-            | JS_YIELD_EXPRESSION
-            | JSX_TAG_EXPRESSION
-            | NEW_TARGET
-            | TS_AS_EXPRESSION
-            | TS_NON_NULL_ASSERTION_EXPRESSION
-            | TS_TYPE_ASSERTION_EXPRESSION => true,
-            k if JsAnyLiteralExpression::can_cast(k) => true,
-            _ => false,
-        }
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            IMPORT_META => JsxAnyChildExpression::ImportMeta(ImportMeta { syntax }),
-            JS_ARRAY_EXPRESSION => {
-                JsxAnyChildExpression::JsArrayExpression(JsArrayExpression { syntax })
-            }
-            JS_ARROW_FUNCTION_EXPRESSION => {
-                JsxAnyChildExpression::JsArrowFunctionExpression(JsArrowFunctionExpression {
-                    syntax,
-                })
-            }
-            JS_ASSIGNMENT_EXPRESSION => {
-                JsxAnyChildExpression::JsAssignmentExpression(JsAssignmentExpression { syntax })
-            }
-            JS_AWAIT_EXPRESSION => {
-                JsxAnyChildExpression::JsAwaitExpression(JsAwaitExpression { syntax })
-            }
-            JS_BINARY_EXPRESSION => {
-                JsxAnyChildExpression::JsBinaryExpression(JsBinaryExpression { syntax })
-            }
-            JS_CALL_EXPRESSION => {
-                JsxAnyChildExpression::JsCallExpression(JsCallExpression { syntax })
-            }
-            JS_CLASS_EXPRESSION => {
-                JsxAnyChildExpression::JsClassExpression(JsClassExpression { syntax })
-            }
-            JS_COMPUTED_MEMBER_EXPRESSION => {
-                JsxAnyChildExpression::JsComputedMemberExpression(JsComputedMemberExpression {
-                    syntax,
-                })
-            }
-            JS_CONDITIONAL_EXPRESSION => {
-                JsxAnyChildExpression::JsConditionalExpression(JsConditionalExpression { syntax })
-            }
-            JS_FUNCTION_EXPRESSION => {
-                JsxAnyChildExpression::JsFunctionExpression(JsFunctionExpression { syntax })
-            }
-            JS_IDENTIFIER_EXPRESSION => {
-                JsxAnyChildExpression::JsIdentifierExpression(JsIdentifierExpression { syntax })
-            }
-            JS_IMPORT_CALL_EXPRESSION => {
-                JsxAnyChildExpression::JsImportCallExpression(JsImportCallExpression { syntax })
-            }
-            JS_IN_EXPRESSION => JsxAnyChildExpression::JsInExpression(JsInExpression { syntax }),
-            JS_INSTANCEOF_EXPRESSION => {
-                JsxAnyChildExpression::JsInstanceofExpression(JsInstanceofExpression { syntax })
-            }
-            JS_LOGICAL_EXPRESSION => {
-                JsxAnyChildExpression::JsLogicalExpression(JsLogicalExpression { syntax })
-            }
-            JS_NEW_EXPRESSION => JsxAnyChildExpression::JsNewExpression(JsNewExpression { syntax }),
-            JS_OBJECT_EXPRESSION => {
-                JsxAnyChildExpression::JsObjectExpression(JsObjectExpression { syntax })
-            }
-            JS_PARENTHESIZED_EXPRESSION => {
-                JsxAnyChildExpression::JsParenthesizedExpression(JsParenthesizedExpression {
-                    syntax,
-                })
-            }
-            JS_POST_UPDATE_EXPRESSION => {
-                JsxAnyChildExpression::JsPostUpdateExpression(JsPostUpdateExpression { syntax })
-            }
-            JS_PRE_UPDATE_EXPRESSION => {
-                JsxAnyChildExpression::JsPreUpdateExpression(JsPreUpdateExpression { syntax })
-            }
-            JS_SEQUENCE_EXPRESSION => {
-                JsxAnyChildExpression::JsSequenceExpression(JsSequenceExpression { syntax })
-            }
-            JS_STATIC_MEMBER_EXPRESSION => {
-                JsxAnyChildExpression::JsStaticMemberExpression(JsStaticMemberExpression { syntax })
-            }
-            JS_SUPER_EXPRESSION => {
-                JsxAnyChildExpression::JsSuperExpression(JsSuperExpression { syntax })
-            }
-            JS_TEMPLATE => JsxAnyChildExpression::JsTemplate(JsTemplate { syntax }),
-            JS_THIS_EXPRESSION => {
-                JsxAnyChildExpression::JsThisExpression(JsThisExpression { syntax })
-            }
-            JS_UNARY_EXPRESSION => {
-                JsxAnyChildExpression::JsUnaryExpression(JsUnaryExpression { syntax })
-            }
-            JS_UNKNOWN_EXPRESSION => {
-                JsxAnyChildExpression::JsUnknownExpression(JsUnknownExpression { syntax })
-            }
-            JS_YIELD_EXPRESSION => {
-                JsxAnyChildExpression::JsYieldExpression(JsYieldExpression { syntax })
-            }
-            JSX_TAG_EXPRESSION => {
-                JsxAnyChildExpression::JsxTagExpression(JsxTagExpression { syntax })
-            }
-            NEW_TARGET => JsxAnyChildExpression::NewTarget(NewTarget { syntax }),
-            TS_AS_EXPRESSION => JsxAnyChildExpression::TsAsExpression(TsAsExpression { syntax }),
-            TS_NON_NULL_ASSERTION_EXPRESSION => {
-                JsxAnyChildExpression::TsNonNullAssertionExpression(TsNonNullAssertionExpression {
-                    syntax,
-                })
-            }
-            TS_TYPE_ASSERTION_EXPRESSION => {
-                JsxAnyChildExpression::TsTypeAssertionExpression(TsTypeAssertionExpression {
-                    syntax,
-                })
-            }
-            _ => {
-                if let Some(js_any_literal_expression) = JsAnyLiteralExpression::cast(syntax) {
-                    return Some(JsxAnyChildExpression::JsAnyLiteralExpression(
-                        js_any_literal_expression,
-                    ));
-                }
-                return None;
-            }
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            JsxAnyChildExpression::ImportMeta(it) => &it.syntax,
-            JsxAnyChildExpression::JsArrayExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsArrowFunctionExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsAssignmentExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsAwaitExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsBinaryExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsCallExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsClassExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsComputedMemberExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsConditionalExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsFunctionExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsIdentifierExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsImportCallExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsInExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsInstanceofExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsLogicalExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsNewExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsObjectExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsParenthesizedExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsPostUpdateExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsPreUpdateExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsSequenceExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsStaticMemberExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsSuperExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsTemplate(it) => &it.syntax,
-            JsxAnyChildExpression::JsThisExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsUnaryExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsUnknownExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsYieldExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsxTagExpression(it) => &it.syntax,
-            JsxAnyChildExpression::NewTarget(it) => &it.syntax,
-            JsxAnyChildExpression::TsAsExpression(it) => &it.syntax,
-            JsxAnyChildExpression::TsNonNullAssertionExpression(it) => &it.syntax,
-            JsxAnyChildExpression::TsTypeAssertionExpression(it) => &it.syntax,
-            JsxAnyChildExpression::JsAnyLiteralExpression(it) => it.syntax(),
-        }
-    }
-}
-impl std::fmt::Debug for JsxAnyChildExpression {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            JsxAnyChildExpression::ImportMeta(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsAnyLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsArrayExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsAssignmentExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsAwaitExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsBinaryExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsCallExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsComputedMemberExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsConditionalExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsImportCallExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsInExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsInstanceofExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsLogicalExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsNewExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsObjectExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsPostUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsPreUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsSequenceExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsSuperExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsTemplate(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsThisExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsUnknownExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::JsxTagExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::TsNonNullAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChildExpression::TsTypeAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
-        }
-    }
-}
-impl From<JsxAnyChildExpression> for SyntaxNode {
-    fn from(n: JsxAnyChildExpression) -> SyntaxNode {
-        match n {
-            JsxAnyChildExpression::ImportMeta(it) => it.into(),
-            JsxAnyChildExpression::JsAnyLiteralExpression(it) => it.into(),
-            JsxAnyChildExpression::JsArrayExpression(it) => it.into(),
-            JsxAnyChildExpression::JsArrowFunctionExpression(it) => it.into(),
-            JsxAnyChildExpression::JsAssignmentExpression(it) => it.into(),
-            JsxAnyChildExpression::JsAwaitExpression(it) => it.into(),
-            JsxAnyChildExpression::JsBinaryExpression(it) => it.into(),
-            JsxAnyChildExpression::JsCallExpression(it) => it.into(),
-            JsxAnyChildExpression::JsClassExpression(it) => it.into(),
-            JsxAnyChildExpression::JsComputedMemberExpression(it) => it.into(),
-            JsxAnyChildExpression::JsConditionalExpression(it) => it.into(),
-            JsxAnyChildExpression::JsFunctionExpression(it) => it.into(),
-            JsxAnyChildExpression::JsIdentifierExpression(it) => it.into(),
-            JsxAnyChildExpression::JsImportCallExpression(it) => it.into(),
-            JsxAnyChildExpression::JsInExpression(it) => it.into(),
-            JsxAnyChildExpression::JsInstanceofExpression(it) => it.into(),
-            JsxAnyChildExpression::JsLogicalExpression(it) => it.into(),
-            JsxAnyChildExpression::JsNewExpression(it) => it.into(),
-            JsxAnyChildExpression::JsObjectExpression(it) => it.into(),
-            JsxAnyChildExpression::JsParenthesizedExpression(it) => it.into(),
-            JsxAnyChildExpression::JsPostUpdateExpression(it) => it.into(),
-            JsxAnyChildExpression::JsPreUpdateExpression(it) => it.into(),
-            JsxAnyChildExpression::JsSequenceExpression(it) => it.into(),
-            JsxAnyChildExpression::JsStaticMemberExpression(it) => it.into(),
-            JsxAnyChildExpression::JsSuperExpression(it) => it.into(),
-            JsxAnyChildExpression::JsTemplate(it) => it.into(),
-            JsxAnyChildExpression::JsThisExpression(it) => it.into(),
-            JsxAnyChildExpression::JsUnaryExpression(it) => it.into(),
-            JsxAnyChildExpression::JsUnknownExpression(it) => it.into(),
-            JsxAnyChildExpression::JsYieldExpression(it) => it.into(),
-            JsxAnyChildExpression::JsxTagExpression(it) => it.into(),
-            JsxAnyChildExpression::NewTarget(it) => it.into(),
-            JsxAnyChildExpression::TsAsExpression(it) => it.into(),
-            JsxAnyChildExpression::TsNonNullAssertionExpression(it) => it.into(),
-            JsxAnyChildExpression::TsTypeAssertionExpression(it) => it.into(),
-        }
-    }
-}
-impl From<JsxAnyChildExpression> for SyntaxElement {
-    fn from(n: JsxAnyChildExpression) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
-}
 impl From<JsxMemberName> for JsxAnyElementName {
     fn from(node: JsxMemberName) -> JsxAnyElementName { JsxAnyElementName::JsxMemberName(node) }
 }
@@ -22953,11 +22470,18 @@ impl From<JsxReferenceIdentifier> for JsxAnyElementName {
         JsxAnyElementName::JsxReferenceIdentifier(node)
     }
 }
+impl From<TsReferenceType> for JsxAnyElementName {
+    fn from(node: TsReferenceType) -> JsxAnyElementName { JsxAnyElementName::TsReferenceType(node) }
+}
 impl AstNode for JsxAnyElementName {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         matches!(
             kind,
-            JSX_MEMBER_NAME | JSX_NAME | JSX_NAMESPACE_NAME | JSX_REFERENCE_IDENTIFIER
+            JSX_MEMBER_NAME
+                | JSX_NAME
+                | JSX_NAMESPACE_NAME
+                | JSX_REFERENCE_IDENTIFIER
+                | TS_REFERENCE_TYPE
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -22968,6 +22492,7 @@ impl AstNode for JsxAnyElementName {
             JSX_REFERENCE_IDENTIFIER => {
                 JsxAnyElementName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
             }
+            TS_REFERENCE_TYPE => JsxAnyElementName::TsReferenceType(TsReferenceType { syntax }),
             _ => return None,
         };
         Some(res)
@@ -22978,6 +22503,7 @@ impl AstNode for JsxAnyElementName {
             JsxAnyElementName::JsxName(it) => &it.syntax,
             JsxAnyElementName::JsxNamespaceName(it) => &it.syntax,
             JsxAnyElementName::JsxReferenceIdentifier(it) => &it.syntax,
+            JsxAnyElementName::TsReferenceType(it) => &it.syntax,
         }
     }
 }
@@ -22988,6 +22514,7 @@ impl std::fmt::Debug for JsxAnyElementName {
             JsxAnyElementName::JsxName(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyElementName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyElementName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyElementName::TsReferenceType(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -22998,6 +22525,7 @@ impl From<JsxAnyElementName> for SyntaxNode {
             JsxAnyElementName::JsxName(it) => it.into(),
             JsxAnyElementName::JsxNamespaceName(it) => it.into(),
             JsxAnyElementName::JsxReferenceIdentifier(it) => it.into(),
+            JsxAnyElementName::TsReferenceType(it) => it.into(),
         }
     }
 }
@@ -24852,11 +24380,6 @@ impl std::fmt::Display for JsxAnyAttributeValue {
     }
 }
 impl std::fmt::Display for JsxAnyChild {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for JsxAnyChildExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

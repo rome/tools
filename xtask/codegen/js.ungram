@@ -2205,6 +2205,7 @@ JsxAnyElementName =
 	| JsxReferenceIdentifier
 	| JsxMemberName
 	| JsxNamespaceName
+	| TsReferenceType
 
 JsxAnyObjectName =
 	JsxReferenceIdentifier

@@ -8,8 +8,10 @@ use crate::syntax::jsx::jsx_parse_errors::{
     jsx_expected_attribute, jsx_expected_attribute_value, jsx_expected_children,
 };
 use crate::{parser::RecoveryResult, ParseNodeList, ParseRecovery, ParsedSyntax, Parser};
-use crate::{Absent, Checkpoint, Present};
+use crate::{Absent, Checkpoint, LanguageVariant, Present};
 use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
+
+use super::typescript::parse_ts_reference_type;
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -303,27 +305,34 @@ fn parse_jsx_closing_element(p: &mut Parser, in_expression: bool) -> ParsedSynta
 // <namespace:a></namespace:a>;
 // <namespace:a.b></namespace:a.b>;
 fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
-    let left = parse_jsx_name_or_namespace(p);
+    let is_ts = p.source_type.language.is_typescript();
+    let is_jsx = p.source_type.variant().is_jsx();
+    if is_ts && is_jsx {
+        // test tsx tsx_element_generic_type
+        // <Button<true> />
+        return parse_ts_reference_type(p);
+    }
 
-    left.map(|mut left| {
-        if left.kind() == JSX_NAME && (p.at(T![.]) || !is_intrinsic_element(left.text(p))) {
-            left.change_kind(p, JSX_REFERENCE_IDENTIFIER)
-        } else if left.kind() == JSX_NAMESPACE_NAME && p.at(T![.]) {
+    let name = parse_jsx_name_or_namespace(p);
+    name.map(|mut name| {
+        if name.kind() == JSX_NAME && (p.at(T![.]) || !is_intrinsic_element(name.text(p))) {
+            name.change_kind(p, JSX_REFERENCE_IDENTIFIER)
+        } else if name.kind() == JSX_NAMESPACE_NAME && p.at(T![.]) {
             let error = p
                 .err_builder("JSX property access expressions cannot include JSX namespace names.")
-                .primary(left.range(p), "");
+                .primary(name.range(p), "");
             p.error(error);
-            left.change_to_unknown(p);
+            name.change_to_unknown(p);
         }
 
         while p.at(T![.]) {
-            let m = left.precede(p);
+            let m = name.precede(p);
             p.bump(T![.]);
             parse_name(p).or_add_diagnostic(p, expected_identifier);
-            left = m.complete(p, JSX_MEMBER_NAME)
+            name = m.complete(p, JSX_MEMBER_NAME)
         }
 
-        left
+        name
     })
 }
 
@@ -489,7 +498,8 @@ fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     match p.cur() {
         // test jsx jsx_element_attribute_expression
-        // <div id={1} />
+        // <div id={1} />;
+        // <div className={prefix`none`} />;
         T!['{'] => parse_jsx_expression_block(p, ExpressionBlock::Attribute),
         // test jsx jsx_element_attribute_element
         // <div id=<a/> />;

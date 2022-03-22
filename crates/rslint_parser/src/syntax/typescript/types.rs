@@ -188,6 +188,7 @@ fn is_nth_at_ts_type_parameters(p: &mut Parser, n: usize) -> bool {
     p.nth_at(n, T![<])
 }
 
+#[inline(always)]
 pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_type_impl(p, ConditionalType::Allowed)
 }
@@ -476,7 +477,7 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
 // type C = A;
 // type D = B.a;
 // type E = D.c.b.a;
-fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 
