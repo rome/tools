@@ -4,7 +4,7 @@
 //!
 //! The formatter relies on an [IR], which allows to format any kind of data structure.
 //!
-//! In order to implement the formatting logic, you need to implement the trait [FormatValue] for
+//! In order to implement the formatting logic, you need to implement the trait [ToFormatElement] for
 //! the data structure you want to format.
 //!
 //! Let's say, for example that you have a small data structure that represents a key/value data:

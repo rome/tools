@@ -18,13 +18,13 @@ pub fn empty_element() -> FormatElement {
     FormatElement::Empty
 }
 
-/// A line break that only gets printed if the enclosing [Group] doesn't fit on a single line.
-/// It's omitted if the enclosing [Group] fits on a single line.
-/// A soft line break is identical to a hard line break when not enclosed inside of a [Group].
+/// A line break that only gets printed if the enclosing `Group` doesn't fit on a single line.
+/// It's omitted if the enclosing `Group` fits on a single line.
+/// A soft line break is identical to a hard line break when not enclosed inside of a `Group`.
 ///
 /// ## Examples
 ///
-/// Soft line breaks are omitted if the enclosing [Group] fits on a single line
+/// Soft line breaks are omitted if the enclosing `Group` fits on a single line
 ///
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
@@ -38,9 +38,9 @@ pub fn empty_element() -> FormatElement {
 /// assert_eq!("a,b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 /// See [soft_line_break_or_space] if you want to insert a space between the elements if the enclosing
-/// [Group] fits on a single line.
+/// `Group` fits on a single line.
 ///
-/// Soft line breaks are emitted if the enclosing [Group] doesn't fit on a single line
+/// Soft line breaks are emitted if the enclosing `Group` doesn't fit on a single line
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
 ///
@@ -62,12 +62,12 @@ pub const fn soft_line_break() -> FormatElement {
     FormatElement::Line(Line::new(LineMode::Soft))
 }
 
-/// A forced line break that are always printed. A hard line break forces any enclosing [Group]
+/// A forced line break that are always printed. A hard line break forces any enclosing `Group`
 /// to be printed over multiple lines.
 ///
 /// ## Examples
 ///
-/// It forces a line break, even if the enclosing [Group] would otherwise fit on a single line.
+/// It forces a line break, even if the enclosing `Group` would otherwise fit on a single line.
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, FormatOptions, hard_line_break};
 ///
@@ -107,11 +107,11 @@ pub const fn empty_line() -> FormatElement {
     FormatElement::Line(Line::new(LineMode::Empty))
 }
 
-/// A line break if the enclosing [Group] doesn't fit on a single line, a space otherwise.
+/// A line break if the enclosing `Group` doesn't fit on a single line, a space otherwise.
 ///
 /// ## Examples
 ///
-/// The line breaks are emitted as spaces if the enclosing [Group] fits on a a single line:
+/// The line breaks are emitted as spaces if the enclosing `Group` fits on a a single line:
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
 ///
@@ -124,7 +124,7 @@ pub const fn empty_line() -> FormatElement {
 /// assert_eq!("a, b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
-/// The printer breaks the lines if the enclosing [Group] doesn't fit on a single line:
+/// The printer breaks the lines if the enclosing `Group` doesn't fit on a single line:
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
 ///
@@ -151,7 +151,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 ///
 /// ## Line feeds
 /// Tokens may contain line breaks but they must use the line feeds (`\n`).
-/// The [Printer] converts the line feed characters to the character specified in the [PrinterOptions].
+/// The [crate::Printer] converts the line feed characters to the character specified in the [crate::PrinterOptions].
 ///
 /// ## Examples
 ///
@@ -234,7 +234,7 @@ pub const fn space_token() -> FormatElement {
     FormatElement::Space
 }
 
-/// Concatenates the content of multiple [FormatToken]s.
+/// Concatenates the content of multiple [FormatElement]s.
 ///
 /// ## Examples
 ///
@@ -413,7 +413,7 @@ where
 /// the line breaks have to be manually added.
 ///
 /// This helper should be used only in rare cases, instead you should rely more on
-/// [indent_block] and [soft_block_indent]
+/// [block_indent] and [soft_block_indent]
 ///
 /// ## Examples
 ///
@@ -494,7 +494,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// ## Examples
 ///
-/// Indents the content by one level and puts in new lines if the enclosing [Group] doesn't fit on a single line
+/// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't fit on a single line
 ///
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
@@ -517,7 +517,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// assert_eq!("[\n\t'First string',\n\t'second string',\n]", format_element(&elements, options).as_code());
 /// ```
 ///
-/// Doesn't change the formatting if the enclosing [Group] fits on a single line
+/// Doesn't change the formatting if the enclosing `Group` fits on a single line
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
@@ -551,7 +551,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
     }
 }
 
-/// If the enclosing [Group] doesn't fit on a single line, inserts a line break and indent.
+/// If the enclosing `Group` doesn't fit on a single line, inserts a line break and indent.
 /// Otherwise, just inserts a space.
 ///
 /// Line indents are used to break a single line of code, and therefore only insert a line
@@ -559,7 +559,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// ## Examples
 ///
-/// Indents the content by one level and puts in new lines if the enclosing [Group] doesn't
+/// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't
 /// fit on a single line. Otherwise, just inserts a space.
 ///
 /// ```
@@ -586,7 +586,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// assert_eq!("name =\n\tfirstName + lastName", format_element(&elements, options).as_code());
 /// ```
 ///
-/// Only adds a space if the enclosing [Group] fits on a single line
+/// Only adds a space if the enclosing `Group` fits on a single line
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
 ///
@@ -619,18 +619,18 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
     }
 }
 
-/// Creates a logical [Group] around the content that should either consistently be printed on a single line
+/// Creates a logical `Group` around the content that should either consistently be printed on a single line
 /// or broken across multiple lines.
 ///
-/// The printer will try to print the content of the [Group] on a single line, ignoring all soft line breaks and
+/// The printer will try to print the content of the `Group` on a single line, ignoring all soft line breaks and
 /// emitting spaces for soft line breaks or spaces. The printer tracks back if it isn't successful either
-/// because it encountered a hard line break, or because printing the [Group] on a single line exceeds
+/// because it encountered a hard line break, or because printing the `Group` on a single line exceeds
 /// the configured line width, and thus it must print all its content on multiple lines,
 /// emitting line breaks for all line break kinds.
 ///
 /// ## Examples
 ///
-/// [Group] that fits on a single line
+/// `Group` that fits on a single line
 ///
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
@@ -650,7 +650,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
-/// The printer breaks the [Group] over multiple lines if its content doesn't fit on a single line
+/// The printer breaks the `Group` over multiple lines if its content doesn't fit on a single line
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
@@ -682,7 +682,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 
 /// Creates a group that forces all elements inside it to be printed on a
 /// single line. This behavior can in turn be escaped by introducing an inner
-/// [Group] element that will resume the normal breaking behavior of the printer.
+/// `Group` element that will resume the normal breaking behavior of the printer.
 ///
 /// This is useful for constructs that have a non-breaking head and a breaking
 /// body, such class declarations:
@@ -719,17 +719,17 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
     }
 }
 
-/// Adds a conditional content that is emitted only if it isn't inside an enclosing [Group] that
+/// Adds a conditional content that is emitted only if it isn't inside an enclosing `Group` that
 /// is printed on a single line. The element allows, for example, to insert a trailing comma after the last
 /// array element only if the array doesn't fit on a single line.
 ///
-/// The element has no special meaning if used outside of a [Group]. In that case, the content is always emitted.
+/// The element has no special meaning if used outside of a `Group`. In that case, the content is always emitted.
 ///
-/// If you're looking for a way to only print something if the [Group] fits on a single line see [if_group_fits_on_single_line].
+/// If you're looking for a way to only print something if the `Group` fits on a single line see [if_group_fits_on_single_line].
 ///
 /// ## Examples
 ///
-/// Omits the trailing comma for the last array element if the [Group] fits on a single line
+/// Omits the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
 ///
@@ -748,7 +748,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 /// assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
-/// Prints the trailing comma for the last array element if the [Group] doesn't fit on a single line
+/// Prints the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
 ///
@@ -785,14 +785,14 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
     }
 }
 
-/// Adds a conditional content specific for [Group]s that fit on a single line. The content isn't
-/// emitted for [Group]s spanning multiple lines.
+/// Adds a conditional content specific for `Group`s that fit on a single line. The content isn't
+/// emitted for `Group`s spanning multiple lines.
 ///
 /// See [if_group_breaks] if you're looking for a way to print content only for groups spanning multiple lines.
 ///
 /// ## Examples
 ///
-/// Adds the trailing comma for the last array element if the [Group] fits on a single line
+/// Adds the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
 ///
@@ -811,7 +811,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// assert_eq!("[1, 2, 3,]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
-/// Omits the trailing comma for the last array element if the [Group] doesn't fit on a single line
+/// Omits the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
 /// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
 ///
@@ -853,31 +853,32 @@ where
 
 /// Language agnostic IR for formatting source code.
 ///
-/// Use the helper functions like [space], [soft_line_break] etc. defined in this file to create elements.
+/// Use the helper functions like [crate::space_token], [crate::soft_line_break] etc. defined in this file to create elements.
 #[derive(Clone, Eq, PartialEq)]
 pub enum FormatElement {
     Empty,
 
-    /// A space token, see [space] for documentation.
+    /// A space token, see [crate::space_token] for documentation.
     Space,
 
-    /// A new line, see [soft_line_break], [hard_line_break], and [soft_line_break_or_space] for documentation.
+    /// A new line, see [crate::soft_line_break], [crate::hard_line_break], and [crate::soft_line_break_or_space] for documentation.
     Line(Line),
 
-    /// Indents the content one level deeper, see [indent] for documentation and examples.
+    /// Indents the content one level deeper, see [crate::indent] for documentation and examples.
     Indent(Indent),
 
     /// Creates a logical group where its content is either consistently printed:
-    /// * on a single line: Omitting [LineMode::Soft] line breaks and printing spaces for [LineMode::SoftOrSpace]
+    /// * on a single line: Omitting `LineMode::Soft` line breaks and printing spaces for `LineMode::SoftOrSpace`
     /// * on multiple lines: Printing all line breaks
     ///
-    /// See [group] for documentation and examples.
+    /// See [crate::group_elements] for documentation and examples.
     Group(Group),
 
+    /// See [crate::hard_group_elements] for documentation and examples.
     HardGroup(Group),
 
     /// Allows to specify content that gets printed depending on whatever the enclosing group
-    /// is printed on a single line or multiple lines. See [if_group_breaks] for examples.
+    /// is printed on a single line or multiple lines. See [crate::if_group_breaks] for examples.
     ConditionalGroupContent(ConditionalGroupContent),
 
     /// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
@@ -898,7 +899,7 @@ pub enum FormatElement {
     /// the parent group to break if this element is at the start of it)
     Comment(Content),
 
-    /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](Formatter::format_verbatim) API
+    /// A token that tracks tokens/nodes that are printed using [`format_verbatim`](crate::Formatter::format_verbatim) API
     Verbatim(Verbatim),
 }
 
