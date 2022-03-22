@@ -62,8 +62,11 @@ the cases you need to verify. If we needed to follow the previous example:
 
 There are four cases when a test is not correct:
 - you try to print/format the same token multiple times; the formatter will check at runtime when a test is run;
-- you some tokens haven't been printed; usually you will have this information inside the snapshot, under a section
+- some tokens haven't been printed; usually you will have this information inside the snapshot, under a section
 called `"Unimplemeted tokens/nodes"`; a test, in order to be valid, can't have that section;
+
+   If removing a token is the actual behaviour (removing some parenthesis or a semicolon), then the correct way 
+   to do it by using the formatter API `formatter.format_replaced(token, empty_element())`;
 - the emitted code is not a valid program anymore, the test suite will parse again the emitted code and it will
 fail if there are syntax errors;
 - the emitted code, when formatted again, differs from the original; this usually happens when removing/adding new

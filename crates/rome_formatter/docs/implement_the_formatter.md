@@ -3,9 +3,9 @@
 Our formatter is node based. Meaning that each AST node knows how to format itself. In order to implement
 the formatting, a node has to implement the trait `ToFormatElement`.
 
-Usually the developer doesn't have to manually write it, `rome` has an automatic code generation that does 
-everything for us when the grammar is actually implemented. By default, all nodes will format verbatim,
-meaning that the formatter will print tokens and trivia as they are.
+`rome` has an automatic code generation that creates automatically the files out of the grammar. 
+By default, all implementations will format verbatim,
+meaning that the formatter will print tokens and trivia as they are (`format_verbatim`).
 
 Our formatter has its own [internal IR](https://en.wikipedia.org/wiki/Intermediate_representation), it creates its own abstraction from an AST.
 
