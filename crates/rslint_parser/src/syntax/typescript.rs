@@ -248,7 +248,7 @@ pub(crate) fn skip_ts_decorators(p: &mut Parser) {
         return;
     }
 
-    p.parse_as_skipped_trivia(|p| {
+    p.parse_as_skipped_trivia_tokens(|p| {
         while p.at(T![@]) {
             parse_decorator(p).ok();
         }

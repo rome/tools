@@ -97,18 +97,3 @@ class Test2 {
 	prop: string;
 }
 
-
-## Unimplemented nodes/tokens
-
-"@sealed" => 0..7
-"@readonly" => 22..31
-"@param" => 61..67
-"@readonly" => 74..83
-"@aVeryLongDecoratorNameLetsSeeWhatHappensWithIt" => 99..146
-"@param" => 165..171
-"@param" => 209..215
-"@sealed" => 229..236
-"@sealed" => 262..269
-"@test" => 328..333
-"@test /* trailing multiline comment\n\t for decorator */ @anotherDecorator()" => 447..521
-

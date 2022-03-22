@@ -95,7 +95,7 @@ use std::{
 
 use countme::Count;
 
-use crate::green::Slot;
+use crate::green::{GreenTrivia, Slot};
 use crate::{
     green::{Child, Children},
     TriviaPiece,
@@ -576,6 +576,15 @@ impl Iterator for SyntaxTriviaPiecesIterator {
         Some(piece)
     }
 
+    fn last(self) -> Option<Self::Item>
+    where
+        Self: Sized,
+    {
+        let last = self.raw.last()?;
+
+        Some((self.raw.token.text_range().end() - last.length, *last))
+    }
+
     fn size_hint(&self) -> (usize, Option<usize>) {
         let len = self.end_index.saturating_sub(self.next_index);
         (len, Some(len))
@@ -621,33 +630,30 @@ impl SyntaxTrivia {
 
     /// Get the number of TriviaPiece inside this trivia
     fn len(&self) -> usize {
-        let green_token = self.token.green();
-        if self.is_leading {
-            green_token.leading_trivia().len()
-        } else {
-            green_token.trailing_trivia().len()
-        }
+        self.green_trivia().len()
     }
 
     /// Get the total length of text of the TriviaPieces inside this trivia
     fn text_len(&self) -> TextSize {
-        let green_token = self.token.green();
-        if self.is_leading {
-            green_token.leading_trivia().text_len()
-        } else {
-            green_token.trailing_trivia().text_len()
-        }
+        self.green_trivia().text_len()
     }
 
     /// Gets index-th trivia piece when the token associated with this trivia was created.
     /// See [SyntaxTriviaPiece].
     pub(crate) fn get_piece(&self, index: usize) -> Option<&TriviaPiece> {
-        let green_token = self.token.green();
-        if self.is_leading {
-            green_token.leading_trivia().get_piece(index)
-        } else {
-            green_token.trailing_trivia().get_piece(index)
+        self.green_trivia().get_piece(index)
+    }
+
+    fn green_trivia(&self) -> &GreenTrivia {
+        match self.is_leading {
+            true => self.token.green().leading_trivia(),
+            false => self.token.green().trailing_trivia(),
         }
+    }
+
+    /// Returns the last trivia piece element
+    pub(crate) fn last(&self) -> Option<&TriviaPiece> {
+        self.green_trivia().pieces().last()
     }
 
     /// Iterate over all pieces of the trivia. The iterator returns the offset

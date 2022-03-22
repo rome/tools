@@ -335,7 +335,7 @@ impl Formatter {
         // Checks whether the previous token has any trailing newline
         let has_trailing_newline = token
             .prev_token()
-            .and_then(|token| token.trailing_trivia().pieces().last())
+            .and_then(|token| token.trailing_trivia().last())
             .map_or(false, |trivia| trivia.is_newline());
 
         self.format_leading_trivia_pieces(
@@ -370,7 +370,7 @@ impl Formatter {
     ) -> FormatElement {
         let mut pieces = token.leading_trivia().pieces().peekable();
 
-        // Collect the leading trivia up to the first skipped token trivia
+        // Collect the leading trivia up to the first skipped token trivia (not included)
         let mut skipped_leading_pieces = vec![];
         while let Some(piece) = pieces.peek() {
             if piece.is_skipped() {
@@ -392,20 +392,20 @@ impl Formatter {
 
         let first_skipped = pieces.next().expect("Expected at least one skipped trivia. Don't call this method for tokens that don't have skipped trivia.");
 
-        let mut skipped_range = first_skipped.text_range();
-        let mut skipped_trailing = vec![];
-        let mut token_leading = vec![];
+        let mut skipped_trivia_range = first_skipped.text_range();
+        let mut skipped_trivia_trailing_pieces = vec![];
+        let mut skipped_trivia_leading_pieces = vec![];
         let mut after_newline = false;
 
         for piece in pieces {
             if piece.is_skipped() {
-                // pieces have been between to skipped trivia, thus, it's neither leading nor trailing trivia.
+                // pieces is  between to skipped token trivia, thus, it's neither leading nor trailing trivia.
                 // Reset any so far accumulated state.
-                token_leading.clear();
-                skipped_trailing.clear();
+                skipped_trivia_leading_pieces.clear();
+                skipped_trivia_trailing_pieces.clear();
                 after_newline = false;
 
-                skipped_range = skipped_range.cover(piece.text_range());
+                skipped_trivia_range = skipped_trivia_range.cover(piece.text_range());
                 continue;
             }
 
@@ -416,22 +416,16 @@ impl Formatter {
             }
 
             if after_newline {
-                token_leading.push(piece);
+                skipped_trivia_leading_pieces.push(piece);
             } else {
-                skipped_trailing.push(piece);
+                skipped_trivia_trailing_pieces.push(piece);
             }
         }
 
         // Compute the offsets relative to the tokens text
-        let relative_skipped_range = skipped_range - token.text_range().start();
+        let relative_skipped_range = skipped_trivia_range - token.text_range().start();
         let text = &token.text()[relative_skipped_range];
-        let skipped_content = Token::new_dynamic(text.to_string(), skipped_range);
-
-        let skipped = FormatElement::Verbatim(Verbatim::new(
-            FormatElement::from(skipped_content),
-            text.to_string(),
-            skipped_range,
-        ));
+        let skipped_trivia = Token::new_dynamic(text.to_string(), skipped_trivia_range);
 
         // `print_trailing_trivia_pieces` and `format_leading_trivia_pieces` remove any whitespace except
         // if there's a comment but removing all whitespace may have a different semantic meaning.
@@ -439,9 +433,9 @@ impl Formatter {
         // * space if the skipped token has no trailing trivia (`skipped\n`, also works for `skipped//comment` because the comment must either be followed by a line break or the token is the EOF).
         // * new line if the token has any leading trivia. This can only be the case if there was any new line between the skipped trivia and the token
         // * empty: There's literally nothing between skipped and token, so don't insert anything
-        let skipped_separator = if !skipped_trailing.is_empty() {
+        let skipped_separator = if !skipped_trivia_trailing_pieces.is_empty() {
             space_token()
-        } else if !token_leading.is_empty() {
+        } else if !skipped_trivia_leading_pieces.is_empty() {
             hard_line_break()
         } else {
             empty_element()
@@ -449,11 +443,15 @@ impl Formatter {
 
         format_elements![
             skipped_leading,
-            skipped,
+            skipped_trivia,
             skipped_separator,
-            self.print_trailing_trivia_pieces(skipped_trailing.into_iter()),
-            self.format_leading_trivia_pieces(token_leading.into_iter(), trim_mode, true)
-                .expect("All skipped trivia pieces should have been filtered out")
+            self.print_trailing_trivia_pieces(skipped_trivia_trailing_pieces.into_iter()),
+            self.format_leading_trivia_pieces(
+                skipped_trivia_leading_pieces.into_iter(),
+                trim_mode,
+                true
+            )
+            .expect("All skipped trivia pieces should have been filtered out")
         ]
     }
 

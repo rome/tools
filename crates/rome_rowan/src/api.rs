@@ -598,6 +598,19 @@ impl<L: Language> Iterator for SyntaxTriviaPiecesIterator<L> {
         })
     }
 
+    fn last(self) -> Option<Self::Item>
+    where
+        Self: Sized,
+    {
+        let raw = self.iter.raw.clone();
+        self.iter.last().map(|(offset, trivia)| SyntaxTriviaPiece {
+            raw,
+            offset,
+            trivia,
+            _p: PhantomData,
+        })
+    }
+
     fn size_hint(&self) -> (usize, Option<usize>) {
         self.iter.size_hint()
     }
@@ -643,6 +656,17 @@ impl<L: Language> SyntaxTrivia<L> {
             iter: self.raw.pieces(),
             _p: PhantomData,
         }
+    }
+
+    pub fn last(&self) -> Option<SyntaxTriviaPiece<L>> {
+        let piece = self.raw.last()?;
+
+        Some(SyntaxTriviaPiece {
+            raw: self.raw.clone(),
+            offset: self.raw.text_range().end() - piece.length,
+            trivia: *piece,
+            _p: Default::default(),
+        })
     }
 
     pub fn text(&self) -> &str {

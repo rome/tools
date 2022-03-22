@@ -389,8 +389,8 @@ impl<'s> Parser<'s> {
         }
     }
 
-    /// Allows parsing an unsupported syntax as skipped token trivia.
-    pub fn parse_as_skipped_trivia<P>(&mut self, parse: P)
+    /// Allows parsing an unsupported syntax as skipped trivia tokens.
+    pub fn parse_as_skipped_trivia_tokens<P>(&mut self, parse: P)
     where
         P: FnOnce(&mut Parser),
     {
