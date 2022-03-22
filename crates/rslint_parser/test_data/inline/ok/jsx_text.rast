@@ -10,6 +10,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@1..2 "a" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@2..3 ">" [] [],
                     },
@@ -38,6 +39,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@14..15 "a" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@15..16 ">" [] [],
                     },
@@ -66,6 +68,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@46..47 "a" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@47..48 ">" [] [],
                     },
@@ -94,6 +97,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@84..88 "test" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@88..89 ">" [] [],
                     },
@@ -129,8 +133,9 @@ JsModule {
             0: L_ANGLE@0..1 "<" [] []
             1: JSX_NAME@1..2
               0: JSX_IDENT@1..2 "a" [] []
-            2: JSX_ATTRIBUTE_LIST@2..2
-            3: R_ANGLE@2..3 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@2..2
+            4: R_ANGLE@2..3 ">" [] []
           1: JSX_CHILD_LIST@3..7
             0: JSX_TEXT@3..7
               0: JSX_TEXT_LITERAL@3..7 "test" [] []
@@ -148,8 +153,9 @@ JsModule {
             0: L_ANGLE@12..14 "<" [Newline("\n")] []
             1: JSX_NAME@14..15
               0: JSX_IDENT@14..15 "a" [] []
-            2: JSX_ATTRIBUTE_LIST@15..15
-            3: R_ANGLE@15..16 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@15..15
+            4: R_ANGLE@15..16 ">" [] []
           1: JSX_CHILD_LIST@16..39
             0: JSX_TEXT@16..39
               0: JSX_TEXT_LITERAL@16..39 "   whitespace handling " [] []
@@ -167,8 +173,9 @@ JsModule {
             0: L_ANGLE@44..46 "<" [Newline("\n")] []
             1: JSX_NAME@46..47
               0: JSX_IDENT@46..47 "a" [] []
-            2: JSX_ATTRIBUTE_LIST@47..47
-            3: R_ANGLE@47..48 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@47..47
+            4: R_ANGLE@47..48 ">" [] []
           1: JSX_CHILD_LIST@48..77
             0: JSX_TEXT@48..77
               0: JSX_TEXT_LITERAL@48..77 " multi\n   line\n         node\n" [] []
@@ -186,8 +193,9 @@ JsModule {
             0: L_ANGLE@82..84 "<" [Newline("\n")] []
             1: JSX_NAME@84..88
               0: JSX_IDENT@84..88 "test" [] []
-            2: JSX_ATTRIBUTE_LIST@88..88
-            3: R_ANGLE@88..89 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@88..88
+            4: R_ANGLE@88..89 ">" [] []
           1: JSX_CHILD_LIST@89..95
             0: JSX_TEXT@89..95
               0: JSX_TEXT_LITERAL@89..95 "\\u3333" [] []

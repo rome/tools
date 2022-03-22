@@ -104,6 +104,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@49..52 "div" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@52..53 ">" [] [],
                     },
@@ -823,6 +824,7 @@ JsModule {
                                     name: JsxName {
                                         value_token: JSX_IDENT@575..578 "div" [] [],
                                     },
+                                    type_arguments: missing (optional),
                                     attributes: JsxAttributeList [],
                                     r_angle_token: R_ANGLE@578..579 ">" [] [],
                                 },
@@ -945,8 +947,9 @@ JsModule {
             0: L_ANGLE@47..49 "<" [Newline("\n")] []
             1: JSX_NAME@49..52
               0: JSX_IDENT@49..52 "div" [] []
-            2: JSX_ATTRIBUTE_LIST@52..52
-            3: R_ANGLE@52..53 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@52..52
+            4: R_ANGLE@52..53 ">" [] []
           1: JSX_CHILD_LIST@53..540
             0: JSX_TEXT@53..56
               0: JSX_TEXT_LITERAL@53..56 "\n  " [] []
@@ -1449,8 +1452,9 @@ JsModule {
                   0: L_ANGLE@574..575 "<" [] []
                   1: JSX_NAME@575..578
                     0: JSX_IDENT@575..578 "div" [] []
-                  2: JSX_ATTRIBUTE_LIST@578..578
-                  3: R_ANGLE@578..579 ">" [] []
+                  2: (empty)
+                  3: JSX_ATTRIBUTE_LIST@578..578
+                  4: R_ANGLE@578..579 ">" [] []
                 1: JSX_CHILD_LIST@579..602
                   0: JSX_TEXT@579..588
                     0: JSX_TEXT_LITERAL@579..588 "\n        " [] []

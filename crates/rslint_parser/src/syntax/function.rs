@@ -656,7 +656,7 @@ fn is_parenthesized_arrow_function_expression_impl(
                 // <5...
                 IsParenthesizedArrowFunctionExpression::False
             }
-            // test jsx type_arguments
+            // test jsx jsx_type_arguments
             // // These may look like a valid arrows but are JSX
             // <A extends>() =</A>;
             // <A extends="B">() =</A>;

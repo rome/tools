@@ -10,6 +10,7 @@ JsModule {
                         name: JsxReferenceIdentifier {
                             value_token: JSX_IDENT@51..53 "A" [] [Whitespace(" ")],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [
                             JsxAttribute {
                                 name: JsxName {
@@ -45,6 +46,7 @@ JsModule {
                         name: JsxReferenceIdentifier {
                             value_token: JSX_IDENT@72..74 "A" [] [Whitespace(" ")],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [
                             JsxAttribute {
                                 name: JsxName {
@@ -85,6 +87,7 @@ JsModule {
                         name: JsxReferenceIdentifier {
                             value_token: JSX_IDENT@97..99 "A" [] [Whitespace(" ")],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [
                             JsxAttribute {
                                 name: JsxName {
@@ -133,12 +136,13 @@ JsModule {
             0: L_ANGLE@0..51 "<" [Comments("// These may look lik ..."), Newline("\n")] []
             1: JSX_REFERENCE_IDENTIFIER@51..53
               0: JSX_IDENT@51..53 "A" [] [Whitespace(" ")]
-            2: JSX_ATTRIBUTE_LIST@53..60
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@53..60
               0: JSX_ATTRIBUTE@53..60
                 0: JSX_NAME@53..60
                   0: JSX_IDENT@53..60 "extends" [] []
                 1: (empty)
-            3: R_ANGLE@60..61 ">" [] []
+            4: R_ANGLE@60..61 ">" [] []
           1: JSX_CHILD_LIST@61..65
             0: JSX_TEXT@61..65
               0: JSX_TEXT_LITERAL@61..65 "() =" [] []
@@ -156,7 +160,8 @@ JsModule {
             0: L_ANGLE@70..72 "<" [Newline("\n")] []
             1: JSX_REFERENCE_IDENTIFIER@72..74
               0: JSX_IDENT@72..74 "A" [] [Whitespace(" ")]
-            2: JSX_ATTRIBUTE_LIST@74..85
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@74..85
               0: JSX_ATTRIBUTE@74..85
                 0: JSX_NAME@74..81
                   0: JSX_IDENT@74..81 "extends" [] []
@@ -164,7 +169,7 @@ JsModule {
                   0: EQ@81..82 "=" [] []
                   1: JSX_STRING@82..85
                     0: JSX_STRING_LITERAL@82..85 "\"B\"" [] []
-            3: R_ANGLE@85..86 ">" [] []
+            4: R_ANGLE@85..86 ">" [] []
           1: JSX_CHILD_LIST@86..90
             0: JSX_TEXT@86..90
               0: JSX_TEXT_LITERAL@86..90 "() =" [] []
@@ -182,7 +187,8 @@ JsModule {
             0: L_ANGLE@95..97 "<" [Newline("\n")] []
             1: JSX_REFERENCE_IDENTIFIER@97..99
               0: JSX_IDENT@97..99 "A" [] [Whitespace(" ")]
-            2: JSX_ATTRIBUTE_LIST@99..109
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@99..109
               0: JSX_ATTRIBUTE@99..107
                 0: JSX_NAME@99..107
                   0: JSX_IDENT@99..107 "extends" [] [Whitespace(" ")]
@@ -191,7 +197,7 @@ JsModule {
                 0: JSX_NAME@107..109
                   0: JSX_IDENT@107..109 "ok" [] []
                 1: (empty)
-            3: R_ANGLE@109..110 ">" [] []
+            4: R_ANGLE@109..110 ">" [] []
           1: JSX_CHILD_LIST@110..114
             0: JSX_TEXT@110..114
               0: JSX_TEXT_LITERAL@110..114 "() =" [] []

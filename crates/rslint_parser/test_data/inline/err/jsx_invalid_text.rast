@@ -10,6 +10,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@1..2 "a" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@2..3 ">" [] [],
                     },
@@ -38,6 +39,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@17..18 "b" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@18..19 ">" [] [],
                     },
@@ -73,8 +75,9 @@ JsModule {
             0: L_ANGLE@0..1 "<" [] []
             1: JSX_NAME@1..2
               0: JSX_IDENT@1..2 "a" [] []
-            2: JSX_ATTRIBUTE_LIST@2..2
-            3: R_ANGLE@2..3 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@2..2
+            4: R_ANGLE@2..3 ">" [] []
           1: JSX_CHILD_LIST@3..10
             0: JSX_TEXT@3..10
               0: JSX_TEXT_LITERAL@3..10 " test >" [] []
@@ -92,8 +95,9 @@ JsModule {
             0: L_ANGLE@15..17 "<" [Newline("\n")] []
             1: JSX_NAME@17..18
               0: JSX_IDENT@17..18 "b" [] []
-            2: JSX_ATTRIBUTE_LIST@18..18
-            3: R_ANGLE@18..19 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@18..18
+            4: R_ANGLE@18..19 ">" [] []
           1: JSX_CHILD_LIST@19..29
             0: JSX_TEXT@19..29
               0: JSX_TEXT_LITERAL@19..29 " invalid }" [] []

@@ -28,6 +28,7 @@ JsModule {
                                 value_token: IDENT@7..8 "d" [] [],
                             },
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@8..9 ">" [] [],
                     },
@@ -76,6 +77,7 @@ JsModule {
                                 value_token: IDENT@26..27 "c" [] [],
                             },
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@27..28 ">" [] [],
                     },
@@ -106,6 +108,7 @@ JsModule {
                         name: JsxReferenceIdentifier {
                             value_token: JSX_IDENT@39..43 "Abcd" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@43..44 ">" [] [],
                     },
@@ -149,8 +152,9 @@ JsModule {
               1: DOT@6..7 "." [] []
               2: JS_NAME@7..8
                 0: IDENT@7..8 "d" [] []
-            2: JSX_ATTRIBUTE_LIST@8..8
-            3: R_ANGLE@8..9 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@8..8
+            4: R_ANGLE@8..9 ">" [] []
           1: JSX_CHILD_LIST@9..9
           2: JSX_CLOSING_ELEMENT@9..19
             0: L_ANGLE@9..10 "<" [] []
@@ -182,8 +186,9 @@ JsModule {
               1: DOT@25..26 "." [] []
               2: JS_NAME@26..27
                 0: IDENT@26..27 "c" [] []
-            2: JSX_ATTRIBUTE_LIST@27..27
-            3: R_ANGLE@27..28 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@27..27
+            4: R_ANGLE@27..28 ">" [] []
           1: JSX_CHILD_LIST@28..28
           2: JSX_CLOSING_ELEMENT@28..36
             0: L_ANGLE@28..29 "<" [] []
@@ -203,8 +208,9 @@ JsModule {
             0: L_ANGLE@37..39 "<" [Newline("\n")] []
             1: JSX_REFERENCE_IDENTIFIER@39..43
               0: JSX_IDENT@39..43 "Abcd" [] []
-            2: JSX_ATTRIBUTE_LIST@43..43
-            3: R_ANGLE@43..44 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@43..43
+            4: R_ANGLE@43..44 ">" [] []
           1: JSX_CHILD_LIST@44..44
           2: JSX_CLOSING_ELEMENT@44..51
             0: L_ANGLE@44..45 "<" [] []
