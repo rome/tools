@@ -752,6 +752,8 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
 fn is_arrow_function_with_single_parameter(p: &mut Parser) -> bool {
     // a => ...
     if p.nth_at(1, T![=>]) {
+        // test single_parameter_arrow_function_with_parameter_named_async
+        // let id = async => async;
         is_at_identifier_binding(p) && !p.has_nth_preceding_line_break(1)
     }
     // async ident => ...
