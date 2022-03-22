@@ -39,6 +39,6 @@ Rome supports ES2022 version of the language.
 
 #### TypeScript support
 
-Rome doesn't support decorators (the old proposal). Rome's parser will ignore them as they were comments.
+Rome doesn't support decorators (the old proposal). Rome's parser will ignore them as if they were comments.
 This means that programs with decorators are still valid, but they won't 
-benefit all the underling features such as formatter, analyzers, etc.
+benefit all the underlying features such as formatter, analyzers, etc.
