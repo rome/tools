@@ -248,20 +248,40 @@ pub fn concat_elements<I>(elements: I) -> FormatElement
 where
     I: IntoIterator<Item = FormatElement>,
 {
-    let elements = elements.into_iter();
+    let mut elements = elements.into_iter();
 
-    let mut concatenated: Vec<FormatElement> = if let (_, Some(upper_bound)) = elements.size_hint()
-    {
-        Vec::with_capacity(upper_bound)
+    let mut size_hint = if let (_, Some(upper_bound)) = elements.size_hint() {
+        upper_bound
     } else {
-        vec![]
+        0
     };
 
-    for element in elements {
-        match element {
-            FormatElement::List(list) => concatenated.extend(list.content),
-            FormatElement::Empty => (),
-            _ => concatenated.push(element),
+    // If the first non empty element is a vec, use it,
+    // otherwise create a new one with the current element
+    let mut concatenated = loop {
+        match elements.next() {
+            Some(FormatElement::List(list)) => {
+                let mut v = list.content;
+                v.reserve(size_hint);
+                break v;
+            }
+            Some(FormatElement::Empty) => continue,
+            Some(element) => {
+                let mut v = Vec::with_capacity(size_hint);
+                v.push(element);
+                break v;
+            }
+            None => return empty_element(),
+        }
+    };
+
+    // continue to the rest of the list
+    loop {
+        match elements.next() {
+            Some(FormatElement::List(list)) => concatenated.extend(list.content),
+            Some(FormatElement::Empty) => {}
+            Some(element) => concatenated.push(element),
+            None => break,
         }
     }
 
