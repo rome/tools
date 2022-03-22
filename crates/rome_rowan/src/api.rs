@@ -28,16 +28,23 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
     type Kind: SyntaxKind;
 }
 
+// This enum must be `repr(u8)`, and has specially chosen discriminant values
+// with the least significant bit set to 1 to allow further optimizations in
+// the memory representation of trivia pieces
+#[repr(u8)]
+// Allow inefficient arithmetic operations to make what's going on more explicit,
+// these are all const-expressions that get executed at compilation anyway
+#[allow(clippy::identity_op)]
 #[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
 pub enum TriviaPieceKind {
     /// A line break (`\n`, `\r`, `\r\n`, ...)
-    Newline,
+    Newline = (0 << 1) | 1,
     /// Any whitespace character
-    Whitespace,
+    Whitespace = (1 << 1) | 1,
     /// Comment that does not contain any line breaks
-    SingleLineComment,
+    SingleLineComment = (2 << 1) | 1,
     /// Comment that contains at least one line break
-    MultiLineComment,
+    MultiLineComment = (3 << 1) | 1,
 }
 
 impl TriviaPieceKind {
@@ -58,6 +65,9 @@ impl TriviaPieceKind {
     }
 }
 
+// This struct is `repr(C)` as optimizations on the representation of trivia
+// pieces in memory rely on it having a specific layout
+#[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub struct TriviaPiece {
     pub(crate) kind: TriviaPieceKind,
