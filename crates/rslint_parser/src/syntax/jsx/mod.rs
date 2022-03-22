@@ -8,7 +8,7 @@ use crate::syntax::jsx::jsx_parse_errors::{
     jsx_expected_attribute, jsx_expected_attribute_value, jsx_expected_children,
 };
 use crate::{parser::RecoveryResult, ParseNodeList, ParseRecovery, ParsedSyntax, Parser};
-use crate::{Absent, Checkpoint, LanguageVariant, Present};
+use crate::{Absent, Checkpoint, Present};
 use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
 use super::typescript::{parse_ts_name, parse_ts_type_arguments};
