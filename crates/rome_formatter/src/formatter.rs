@@ -338,13 +338,13 @@ impl Formatter {
             .and_then(|token| token.trailing_trivia().last())
             .map_or(false, |trivia| trivia.is_newline());
 
-        self.format_leading_trivia_pieces(
+        self.print_leading_trivia_pieces(
             token.leading_trivia().pieces(),
             trim_mode,
             has_trailing_newline,
         )
         .unwrap_or_else(|_| {
-            self.format_leading_with_skipped(token, trim_mode, has_trailing_newline)
+            self.print_leading_trivia_with_skipped_tokens(token, trim_mode, has_trailing_newline)
         })
     }
 
@@ -362,7 +362,7 @@ impl Formatter {
     /// ## Panics
     ///
     /// If called on a token that does not have skipped trivia
-    fn format_leading_with_skipped(
+    fn print_leading_trivia_with_skipped_tokens(
         &self,
         token: &SyntaxToken,
         trim_mode: TriviaPrintMode,
@@ -392,7 +392,7 @@ impl Formatter {
                     // Format the  collected leading trivia as the leading trivia of this "skipped token trivia"
                     skipped_trivia_range = Some(piece.text_range());
                     elements.push(
-                        self.format_leading_trivia_pieces(
+                        self.print_leading_trivia_pieces(
                             leading_trivia.drain(..),
                             trim_mode,
                             has_trailing_newline,
@@ -447,7 +447,7 @@ impl Formatter {
         elements.push(self.print_trailing_trivia_pieces(trailing_trivia.into_iter()));
 
         elements.push(
-            self.format_leading_trivia_pieces(leading_trivia.into_iter(), trim_mode, after_newline)
+            self.print_leading_trivia_pieces(leading_trivia.into_iter(), trim_mode, after_newline)
                 .expect("All skipped trivia pieces should have been filtered out"),
         );
 
@@ -461,7 +461,7 @@ impl Formatter {
     /// Returns [Err] if the leading trivia contains any skipped trivia. Returns the formatted
     /// leading trivia otherwise.
     ///
-    fn format_leading_trivia_pieces<I>(
+    fn print_leading_trivia_pieces<I>(
         &self,
         pieces: I,
         mut trim_mode: TriviaPrintMode,

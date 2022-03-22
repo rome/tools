@@ -598,19 +598,6 @@ impl<L: Language> Iterator for SyntaxTriviaPiecesIterator<L> {
         })
     }
 
-    fn last(self) -> Option<Self::Item>
-    where
-        Self: Sized,
-    {
-        let raw = self.iter.raw.clone();
-        self.iter.last().map(|(offset, trivia)| SyntaxTriviaPiece {
-            raw,
-            offset,
-            trivia,
-            _p: PhantomData,
-        })
-    }
-
     fn size_hint(&self) -> (usize, Option<usize>) {
         self.iter.size_hint()
     }

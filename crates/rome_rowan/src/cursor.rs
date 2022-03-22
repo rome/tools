@@ -576,15 +576,6 @@ impl Iterator for SyntaxTriviaPiecesIterator {
         Some(piece)
     }
 
-    fn last(self) -> Option<Self::Item>
-    where
-        Self: Sized,
-    {
-        let last = self.raw.last()?;
-
-        Some((self.raw.token.text_range().end() - last.length, *last))
-    }
-
     fn size_hint(&self) -> (usize, Option<usize>) {
         let len = self.end_index.saturating_sub(self.next_index);
         (len, Some(len))
