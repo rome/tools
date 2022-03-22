@@ -11,7 +11,7 @@ use crate::{parser::RecoveryResult, ParseNodeList, ParseRecovery, ParsedSyntax, 
 use crate::{Absent, Checkpoint, Present};
 use rslint_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
-use super::typescript::{parse_ts_name, parse_ts_type_arguments};
+use super::typescript::parse_ts_type_arguments;
 
 // Constraints function to be inside a checkpointed parser
 // allowing them advancing and abandoning the parser.
@@ -245,7 +245,7 @@ fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> Pa
     // <NonGeneric />;
     // <Generic<true> />;
     // <Generic<true>></Generic>;
-    let type_arguments = parse_ts_type_arguments(p);
+    let _ = parse_ts_type_arguments(p);
 
     JsxAttributeList.parse_list(p);
 
