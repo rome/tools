@@ -1,14 +1,10 @@
 ## Formatter
 
-You try rome formatter in two ways:
+You can use the Rome formatter via our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome)
+or by downloading our CLI directly from our  [release page](https://github.com/rome/tools/releases).
 
-- you can use the formatter via [our VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome).
-- you can download a small CLI directly from our [release page](https://github.com/rome/tools/releases)
-
-> WARNING: both CLI and VSCode extensions are packaged with separated binaries, which means that if you don't 
+> WARNING: both the CLI and the VS Code extension are packaged with separated binaries, which means that if you don't 
 > use our default options, you will have to make sure to **pass them to both the extension AND the CLI**.
-> 
-> This might be the case where you want to try to use the CLI in a CI environment.
 > 
 > This is a temporary choice to allow people to play with our formatter. This will change in the near future.
 
@@ -17,9 +13,9 @@ You try rome formatter in two ways:
 
 Our formatter is really strict and has support for few options:
 
-- ident style, you can choose between tabs or spaces; **rome's default is tabs**
-- quantity of spaces, applied only you choose spaces as indent style; 
-- line width, it's how long is a single line; **rome's default is `80`**
+- indent style, you can choose between tabs or spaces; **rome's default is tabs**
+- quantity of spaces, applied only if you choose spaces as indent style; 
+- line width, which is the number of characters that fit in a single line; **rome's default is `80`**
 
 ### Use the formatter with the VSCode extension
 
