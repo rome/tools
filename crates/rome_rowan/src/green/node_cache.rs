@@ -1,8 +1,9 @@
 use hashbrown::hash_map::{RawEntryMut, RawOccupiedEntryMut, RawVacantEntryMut};
 use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
+use text_size::TextSize;
 
-use crate::api::TriviaPiece;
+use crate::api::{TriviaPiece, TriviaPieceKind};
 use crate::green::Slot;
 use crate::{
     green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
@@ -10,7 +11,7 @@ use crate::{
 };
 
 use super::element::GreenElement;
-use super::token::GreenTokenTrivia;
+use super::trivia::GreenTrivia;
 
 type HashMap<K, V> = hashbrown::HashMap<K, V, BuildHasherDefault<FxHasher>>;
 
@@ -58,6 +59,7 @@ struct CachedNode {
 pub struct NodeCache {
     nodes: HashMap<CachedNode, ()>,
     tokens: HashMap<CachedToken, ()>,
+    trivia: TriviaCache,
 }
 
 fn token_hash_of(kind: RawSyntaxKind, text: &str) -> u64 {
@@ -166,8 +168,8 @@ impl NodeCache {
         let token = match entry {
             RawEntryMut::Occupied(entry) => entry.key().0.clone(),
             RawEntryMut::Vacant(entry) => {
-                let leading = GreenTokenTrivia::from(leading);
-                let trailing = GreenTokenTrivia::from(trailing);
+                let leading = self.trivia.get(leading);
+                let trailing = self.trivia.get(trailing);
 
                 let token = GreenToken::with_trivia(kind, text, leading, trailing);
                 entry
@@ -243,10 +245,83 @@ impl<'a> VacantNodeEntry<'a> {
     }
 }
 
+/// A cached [GreenTrivia].
+/// Deliberately doesn't implement `Hash` to make sure all
+/// usages go through the custom `FxHasher`.
+#[derive(Debug)]
+struct CachedTrivia(GreenTrivia);
+
+#[derive(Debug)]
+struct TriviaCache {
+    /// Generic cache for trivia
+    cache: HashMap<CachedTrivia, ()>,
+
+    /// Cached single whitespace trivia.
+    whitespace: GreenTrivia,
+}
+
+impl Default for TriviaCache {
+    fn default() -> Self {
+        Self {
+            cache: Default::default(),
+            whitespace: GreenTrivia::new([TriviaPiece::whitespace(1)]),
+        }
+    }
+}
+
+impl TriviaCache {
+    /// Tries to retrieve a [GreenTrivia] with the given pieces from the cache or creates a new one and caches
+    /// it for further calls.
+    fn get(&mut self, pieces: &[TriviaPiece]) -> GreenTrivia {
+        match pieces {
+            [] => GreenTrivia::empty(),
+            [TriviaPiece {
+                kind: TriviaPieceKind::Whitespace,
+                length,
+            }] if *length == TextSize::from(1) => self.whitespace.clone(),
+
+            _ => {
+                let hash = Self::trivia_hash_of(pieces);
+
+                let entry = self
+                    .cache
+                    .raw_entry_mut()
+                    .from_hash(hash, |trivia| trivia.0.pieces() == pieces);
+
+                match entry {
+                    RawEntryMut::Occupied(entry) => entry.key().0.clone(),
+                    RawEntryMut::Vacant(entry) => {
+                        let trivia = GreenTrivia::new(pieces.iter().copied());
+                        entry.insert_with_hasher(
+                            hash,
+                            CachedTrivia(trivia.clone()),
+                            (),
+                            |cached| Self::trivia_hash_of(cached.0.pieces()),
+                        );
+                        trivia
+                    }
+                }
+            }
+        }
+    }
+
+    fn trivia_hash_of(pieces: &[TriviaPiece]) -> u64 {
+        let mut h = FxHasher::default();
+
+        pieces.len().hash(&mut h);
+
+        for piece in pieces {
+            piece.hash(&mut h);
+        }
+
+        h.finish()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::green::node_cache::token_hash;
-    use crate::green::token::GreenTokenTrivia;
+    use crate::green::trivia::GreenTrivia;
     use crate::{GreenToken, RawSyntaxKind};
     use text_size::TextSize;
 
@@ -257,14 +332,14 @@ mod tests {
         let t1 = GreenToken::with_trivia(
             kind,
             text,
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTrivia::whitespace(TextSize::from(1)),
+            GreenTrivia::whitespace(TextSize::from(1)),
         );
         let t2 = GreenToken::with_trivia(
             kind,
             text,
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTrivia::whitespace(1),
+            GreenTrivia::whitespace(1),
         );
 
         assert_eq!(token_hash(&t1), token_hash(&t2));
@@ -275,8 +350,8 @@ mod tests {
         let t4 = GreenToken::with_trivia(
             kind,
             "\tlet ",
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
-            GreenTokenTrivia::Whitespace(TextSize::from(1)),
+            GreenTrivia::whitespace(1),
+            GreenTrivia::whitespace(1),
         );
         assert_ne!(token_hash(&t1), token_hash(&t4));
     }

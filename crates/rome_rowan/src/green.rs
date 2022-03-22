@@ -2,6 +2,7 @@ mod element;
 mod node;
 mod node_cache;
 mod token;
+mod trivia;
 
 pub(crate) use self::{
     element::{GreenElement, GreenElementRef},
@@ -19,6 +20,7 @@ pub struct RawSyntaxKind(pub u16);
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::green::trivia::GreenTrivia;
 
     #[test]
     fn assert_send_sync() {
@@ -34,6 +36,7 @@ mod tests {
 
         assert_eq!(8, size_of::<GreenNode>());
         assert_eq!(8, size_of::<GreenToken>());
+        assert_eq!(8, size_of::<GreenTrivia>());
         assert_eq!(16, size_of::<GreenElement>());
     }
 }

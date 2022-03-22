@@ -568,7 +568,7 @@ impl Iterator for SyntaxTriviaPiecesIterator {
 
     fn next(&mut self) -> Option<Self::Item> {
         let trivia = self.raw.get_piece(self.next_index)?;
-        let piece = (self.next_offset, trivia);
+        let piece = (self.next_offset, *trivia);
 
         self.next_index += 1;
         self.next_offset += trivia.text_len();
@@ -593,7 +593,7 @@ impl DoubleEndedIterator for SyntaxTriviaPiecesIterator {
         let trivia = self.raw.get_piece(self.end_index)?;
         self.end_offset -= trivia.text_len();
 
-        Some((self.end_offset, trivia))
+        Some((self.end_offset, *trivia))
     }
 }
 
@@ -641,7 +641,7 @@ impl SyntaxTrivia {
 
     /// Gets index-th trivia piece when the token associated with this trivia was created.
     /// See [SyntaxTriviaPiece].
-    pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
+    pub(crate) fn get_piece(&self, index: usize) -> Option<&TriviaPiece> {
         let green_token = self.token.green();
         if self.is_leading {
             green_token.leading_trivia().get_piece(index)

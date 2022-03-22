@@ -1,5 +1,6 @@
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
+use rome_rowan::api::TriviaPieceKind;
 use rome_rowan::TextSize;
 use rslint_errors::file::FileId;
 use rslint_errors::Diagnostic;
@@ -7,45 +8,11 @@ use rslint_lexer::buffered_lexer::BufferedLexer;
 use rslint_lexer::{LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
 use std::collections::VecDeque;
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-#[repr(u8)]
-pub enum TriviaKind {
-    Newline,
-    Whitespace,
-    Comment,
-    MultilineComment,
-}
-
-impl TriviaKind {
-    /// Returns true if this is a new line trivia
-    pub fn is_newline(&self) -> bool {
-        matches!(self, TriviaKind::Newline)
-    }
-}
-
-impl TryFrom<JsSyntaxKind> for TriviaKind {
-    type Error = ();
-
-    fn try_from(value: JsSyntaxKind) -> Result<Self, Self::Error> {
-        if value.is_trivia() {
-            match value {
-                JsSyntaxKind::NEWLINE => Ok(TriviaKind::Newline),
-                JsSyntaxKind::WHITESPACE => Ok(TriviaKind::Whitespace),
-                JsSyntaxKind::COMMENT => Ok(TriviaKind::Comment),
-                JsSyntaxKind::MULTILINE_COMMENT => Ok(TriviaKind::MultilineComment),
-                _ => unreachable!("Not Trivia"),
-            }
-        } else {
-            Err(())
-        }
-    }
-}
-
 /// A comment or a whitespace trivia in the source code.
 #[derive(Debug, Copy, Clone)]
 pub struct Trivia {
     /// The kind of the trivia token.
-    kind: TriviaKind,
+    kind: TriviaPieceKind,
 
     /// The range of the trivia in the source text
     range: TextRange,
@@ -55,7 +22,7 @@ pub struct Trivia {
 }
 
 impl Trivia {
-    fn new(kind: TriviaKind, range: TextRange, trailing: bool) -> Self {
+    fn new(kind: TriviaPieceKind, range: TextRange, trailing: bool) -> Self {
         Self {
             kind,
             range,
@@ -63,7 +30,7 @@ impl Trivia {
         }
     }
     /// Returns the kind of the token
-    pub fn kind(&self) -> TriviaKind {
+    pub fn kind(&self) -> TriviaPieceKind {
         self.kind
     }
 
@@ -143,7 +110,7 @@ impl<'l> TokenSource<'l> {
             let kind = self.lexer.next_token(context);
             processed_tokens += 1;
 
-            let trivia_kind = TriviaKind::try_from(kind);
+            let trivia_kind = TriviaPieceKind::try_from(kind);
 
             match trivia_kind {
                 Err(_) => break,

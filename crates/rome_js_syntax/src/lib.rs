@@ -17,6 +17,7 @@ pub use self::generated::*;
 pub use ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult};
 pub use expr_ext::*;
 pub use modifier_ext::*;
+use rome_rowan::api::TriviaPieceKind;
 pub use rome_rowan::{SyntaxText, TextLen, TextRange, TextSize, TokenAtOffset, WalkEvent};
 pub use stmt_ext::*;
 pub use syntax_node::*;
@@ -239,5 +240,23 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
     #[inline]
     fn from_raw(raw: RawSyntaxKind) -> Self {
         Self::from(raw.0)
+    }
+}
+
+impl TryFrom<JsSyntaxKind> for TriviaPieceKind {
+    type Error = ();
+
+    fn try_from(value: JsSyntaxKind) -> Result<Self, Self::Error> {
+        if value.is_trivia() {
+            match value {
+                JsSyntaxKind::NEWLINE => Ok(TriviaPieceKind::Newline),
+                JsSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
+                JsSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
+                JsSyntaxKind::MULTILINE_COMMENT => Ok(TriviaPieceKind::MultiLineComment),
+                _ => unreachable!("Not Trivia"),
+            }
+        } else {
+            Err(())
+        }
     }
 }
