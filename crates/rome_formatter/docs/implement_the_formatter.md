@@ -55,7 +55,7 @@ This will automatically build and open a browser tab to the documentation.
    }
    ```
    The reason why we want to promote this pattern is because we want to make explicit when a token/node is excluded;
-3. use the APIs provided by `format_element.rs` and `formatter` and `formatter_traits.rs`. 
+3. Use the APIs provided by `format_element.rs` and `formatter` and `formatter_traits.rs`. 
    1. `formatter_element.rs` exposes a series of utilities to craft the formatter IR; please refer to their internal
    documentation to understand what the utilities are for;
    2. `formatter` exposes a set of functions to help to format some recurring patterns; please refer to their internal
@@ -82,3 +82,9 @@ This will automatically build and open a browser tab to the documentation.
         }
    }
    ```
+4. Use our [playground](https://play.rome.tools) to inspect the code that you want to format. You can inspect
+the AST given by a certain snippet. This will help you to understand which nodes need to be implemented/modified
+in order to correctly implement the formatter.
+5. Use the [`quick_test()`](https://github.com/rome/tools/blob/main/crates/rome_formatter/src/lib.rs#L597-L616) 
+function to test you snippet straight from your IDE, without running the whole test suite. The test 
+is ignored on purpose, so you won't need to worry about the CI breaking.
