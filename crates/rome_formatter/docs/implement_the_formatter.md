@@ -10,9 +10,22 @@ meaning that the formatter will print tokens and trivia as they are (`format_ver
 Our formatter has its own [internal IR](https://en.wikipedia.org/wiki/Intermediate_representation), it creates its own abstraction from an AST.
 
 The developer won't be creating directly this IR, but they will use a series of utilities that will help
-to create this IR. The whole IR is represented by the `enum` `FormatElement`. Please refer to its internal
-documentation to understand the meaning of each variant.
+to create this IR. The whole IR is represented by the `enum` `FormatElement`. Please refer to [its internal
+documentation](#build-the-documentation) to understand the meaning of each variant.
 
+
+## Build the documentation
+
+Lot of examples and documentation are inside the Rust code. In order to avoid inspecting the code and 
+read it, you can build it yourself and open it inside the browser:
+
+From the root of the project: 
+
+```shell
+cargo doc -p rome_formatter --no-deps --open
+```
+
+This will automatically build and open a browser tab to the documentation.
 
 ## Rules to follow when implementing a formatter
 
