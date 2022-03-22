@@ -19,12 +19,26 @@ We plan on covering the following areas:
 
 ### Language Support
 
-| Language | Parsing                                                 | Formatting                                              | Linting                                                 |
-| -------- |---------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------|
-| JavaScript | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Not in Progress" role="img">🚫</span>       |
-| &mdash; TypeScript | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Not in Progress" role="img">🚫</span> |
-| &mdash; JSX  | <span aria-label="In Progress" role="img">⌛️</span>     | <span aria-label="Not in Progress" role="img">🚫</span>  | <span aria-label="Not in Progress" role="img">🚫</span> |
-| JSON | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
-| HTML | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
-| CSS | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
-| Markdown | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
+| Language                           | Parsing                                                 | Formatting                                              | Linting                                                 |
+|------------------------------------|---------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------|
+| [JavaScript](/#javascript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Not in Progress" role="img">🚫</span>       |
+| [TypeScript](/#typescript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Not in Progress" role="img">🚫</span> |
+| JSX                                | <span aria-label="In Progress" role="img">⌛️</span>     | <span aria-label="In Progress" role="img">⌛️</span>     | <span aria-label="Not in Progress" role="img">🚫</span> |
+| JSON                               | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
+| HTML                               | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
+| CSS                                | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
+| Markdown                           | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
+
+
+#### JavaScript support
+
+Rome supports only the official syntax. The team starts developments of the new syntax when a proposal reaches
+[Stage 3](https://github.com/tc39/proposals#stage-3). 
+
+Rome supports ES2022 version of the language.
+
+#### TypeScript support
+
+Rome doesn't support decorators (the old proposal). Rome's parser will ignore them as if they were comments.
+This means that programs with decorators are still valid, but they won't 
+benefit all the underlying features such as formatter, analyzers, etc.
