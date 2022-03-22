@@ -1,0 +1,68 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: missing (required),
+                        },
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsImport {
+            import_token: IMPORT_KW@8..14 "import" [] [],
+            import_clause: missing (required),
+            semicolon_token: SEMICOLON@14..15 ";" [] [],
+        },
+    ],
+    eof_token: EOF@15..16 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..16
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..15
+    0: JS_VARIABLE_STATEMENT@0..8
+      0: JS_VARIABLE_DECLARATION@0..8
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@4..8
+          0: JS_VARIABLE_DECLARATOR@4..8
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@6..8
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: (empty)
+      1: (empty)
+    1: JS_IMPORT@8..15
+      0: IMPORT_KW@8..14 "import" [] []
+      1: (empty)
+      2: SEMICOLON@14..15 ";" [] []
+  3: EOF@15..16 "" [Newline("\n")] []
+--
+error[SyntaxError]: expected an expression, or an assignment but instead found 'import'
+  ┌─ import_keyword_in_expression_position.js:1:9
+  │
+1 │ let a = import;
+  │         ^^^^^^ Expected an expression, or an assignment here
+
+--
+error[SyntaxError]: expected a default import, a namespace import, or a named import but instead found ';'
+  ┌─ import_keyword_in_expression_position.js:1:15
+  │
+1 │ let a = import;
+  │               ^ Expected a default import, a namespace import, or a named import here
+
+--
+let a = import;

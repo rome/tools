@@ -1142,7 +1142,10 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         T!['('] => parse_parenthesized_expression(p, context).unwrap(),
         T!['['] => parse_array_expr(p).unwrap(),
         T!['{'] if context.is_object_expression_allowed() => parse_object_expression(p).unwrap(),
-        T![import] => {
+
+        // test_err import_keyword_in_expression_position
+        // let a = import;
+        T![import] if matches!(p.nth(1), T![.] | T!['(']) => {
             let m = p.start();
             p.bump_any();
 
@@ -1173,7 +1176,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                     p.error(err);
                     m.complete(p, JS_UNKNOWN)
                 }
-            } else if p.at(T!['(']) {
+            } else {
                 // test import_call
                 // import("foo")
                 // import("foo", { assert: { type: 'json' } })
@@ -1232,8 +1235,6 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                 p.expect(T![')']);
                 args.complete(p, JS_CALL_ARGUMENTS);
                 m.complete(p, JS_IMPORT_CALL_EXPRESSION)
-            } else {
-                return Absent;
             }
         }
         T![new] => parse_new_expr(p, context).unwrap(),
