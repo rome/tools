@@ -137,7 +137,7 @@ fn flatten_expressions(
                 current_operator,
                 should_flatten,
             },
-            |formatted, has_comments| FlattenItem::Binary(formatted, has_comments),
+            FlattenItem::Binary,
         )?;
     } else if let Some(logical_expression) = JsLogicalExpression::cast(syntax_node.clone()) {
         let JsLogicalExpressionFields {
@@ -160,7 +160,7 @@ fn flatten_expressions(
                 current_operator,
                 should_flatten,
             },
-            |formatted, has_comments| FlattenItem::Logical(formatted, has_comments),
+            FlattenItem::Logical,
         )?;
     } else if let Some(instanceof_expression) = JsInstanceofExpression::cast(syntax_node.clone()) {
         let JsInstanceofExpressionFields {
@@ -183,7 +183,7 @@ fn flatten_expressions(
                 current_operator,
                 should_flatten,
             },
-            |formatted, has_comments| FlattenItem::Instanceof(formatted, has_comments),
+            FlattenItem::Instanceof,
         )?;
     } else if let Some(in_expression) = JsInExpression::cast(syntax_node.clone()) {
         let JsInExpressionFields {
@@ -207,7 +207,7 @@ fn flatten_expressions(
                 current_operator,
                 should_flatten,
             },
-            |formatted, has_comments| FlattenItem::In(formatted, has_comments),
+            FlattenItem::In,
         )?;
     } else {
         let (formatted, has_comments) = if let Some(previous_operator) = previous_operator {
