@@ -1,3 +1,4 @@
+use crate::lexer::TextSize;
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
 use crate::state::{EnterAmbientContext, ExportDefaultItem, ExportDefaultItemKind};
 use crate::syntax::binding::{
@@ -26,7 +27,6 @@ use crate::{
     Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
     Present, SyntaxFeature,
 };
-use rome_js_lexer::TextSize;
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
 use std::collections::HashMap;

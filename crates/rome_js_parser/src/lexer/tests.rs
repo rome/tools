@@ -1,7 +1,7 @@
 #![cfg(test)]
 #![allow(unused_mut, unused_variables, unused_assignments)]
 
-use crate::{LexContext, Lexer, TextSize};
+use super::{LexContext, Lexer, TextSize};
 use quickcheck_macros::quickcheck;
 use rome_diagnostics::Span;
 use rome_js_syntax::JsSyntaxKind::{self, EOF};

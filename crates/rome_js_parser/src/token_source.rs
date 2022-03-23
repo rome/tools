@@ -1,7 +1,6 @@
+use crate::lexer::{BufferedLexer, LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
 use rome_diagnostics::file::FileId;
 use rome_diagnostics::Diagnostic;
-use rome_js_lexer::buffered_lexer::BufferedLexer;
-use rome_js_lexer::{LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
 use rome_rowan::api::TriviaPieceKind;
@@ -79,7 +78,7 @@ struct Lookahead {
 
 impl<'l> TokenSource<'l> {
     /// Creates a new token source.
-    pub fn new(lexer: BufferedLexer<'l>) -> TokenSource<'l> {
+    pub(crate) fn new(lexer: BufferedLexer<'l>) -> TokenSource<'l> {
         TokenSource {
             lexer,
             trivia_list: vec![],

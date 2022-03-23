@@ -49,7 +49,7 @@ pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> impl ToDiagnostic {
     ExpectedTokens(expected)
 }
 
-pub trait ToDiagnostic {
+pub(crate) trait ToDiagnostic {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic;
 }
 

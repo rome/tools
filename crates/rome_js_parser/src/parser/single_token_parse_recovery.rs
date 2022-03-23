@@ -1,13 +1,13 @@
+use crate::lexer::{JsSyntaxKind, T};
 use crate::{ParseDiagnostic, Parser, TokenSet};
 use rome_diagnostics::Diagnostic;
-use rome_js_lexer::{JsSyntaxKind, T};
 
 /// This struct contains the information needed to the parser to recover from a certain error
 ///
 /// By default it doesn't check curly braces, use [with_braces_included] to turn opt-in the check
 #[derive(Debug)]
 #[deprecated(note = "Use ParsedSyntax with ParseRecovery instead")]
-pub struct SingleTokenParseRecovery {
+pub(crate) struct SingleTokenParseRecovery {
     /// The [Diagnostic] to emit
     error: Option<ParseDiagnostic>,
     /// It tells the parser to recover if the position is inside a set of [tokens](TokenSet)

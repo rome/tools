@@ -2,6 +2,7 @@ pub mod jsx_parse_errors;
 
 use rome_js_syntax::JsSyntaxKind::*;
 
+use crate::lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 use crate::syntax::expr::{parse_expression, parse_name, ExpressionContext};
 use crate::syntax::js_parse_error::{expected_expression, expected_identifier};
 use crate::syntax::jsx::jsx_parse_errors::{
@@ -9,7 +10,6 @@ use crate::syntax::jsx::jsx_parse_errors::{
 };
 use crate::{parser::RecoveryResult, ParseNodeList, ParseRecovery, ParsedSyntax, Parser};
 use crate::{Absent, Checkpoint, Present};
-use rome_js_lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
 
 use super::typescript::parse_ts_type_arguments;
 

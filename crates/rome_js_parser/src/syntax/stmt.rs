@@ -81,7 +81,7 @@ pub const STMT_RECOVERY_SET: TokenSet = token_set![
 // let foo4
 // let foo5
 // function foo6() { return true }
-pub fn semi(p: &mut Parser, err_range: TextRange) -> bool {
+pub(crate) fn semi(p: &mut Parser, err_range: TextRange) -> bool {
     // test_err semicolons_err
     // let foo = bar throw foo
 
@@ -1868,7 +1868,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 // try {} catch {} finally {}
 // try {} catch (e) {} finally {}
 // try {} finally {}
-pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
     // TODO: recover from `try catch` and `try finally`. The issue is block_items
     // will cause infinite recursion because parsing a stmt would not consume the catch token
     // and block_items would not exit, and if we exited on any error that would greatly limit

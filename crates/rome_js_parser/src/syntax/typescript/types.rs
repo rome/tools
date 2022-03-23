@@ -20,13 +20,13 @@ use crate::syntax::stmt::optional_semi;
 use crate::syntax::typescript::try_parse;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
 
+use crate::lexer::{LexContext, ReLexContext};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
     Absent, CompletedMarker, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
     Parser, Present, SyntaxFeature,
 };
 use rome_diagnostics::Span;
-use rome_js_lexer::{LexContext, ReLexContext};
 use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rome_js_syntax::T;
 use rome_js_syntax::{JsSyntaxKind::*, *};
@@ -1220,7 +1220,7 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, kind))
 }
 
-pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     // Don't parse type arguments in JS because the syntax is ambiguous
     // https://github.com/microsoft/TypeScript/issues/36662
 
