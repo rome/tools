@@ -250,7 +250,7 @@ where
 {
     let mut elements = elements.into_iter();
 
-    let mut size_hint = if let (_, Some(upper_bound)) = elements.size_hint() {
+    let size_hint = if let (_, Some(upper_bound)) = elements.size_hint() {
         upper_bound
     } else {
         0
