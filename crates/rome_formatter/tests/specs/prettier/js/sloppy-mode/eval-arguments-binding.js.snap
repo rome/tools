@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 144
 expression: eval-arguments-binding.js
 
 ---
@@ -16,7 +16,7 @@ function myfunc() {
 # Output
 ```js
 function myfunc() {
-  var eval;
+  var eval
   var arguments;
 }
 

@@ -1,7 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-
+use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 use rome_js_syntax::JsContinueStatement;
@@ -18,12 +18,10 @@ impl ToFormatElement for JsContinueStatement {
         let label = label_token
             .format_with_or_empty(formatter, |token| format_elements![space_token(), token])?;
 
-        let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
-
-        Ok(format_elements![
-            continue_token.format(formatter)?,
-            label,
-            semicolon
-        ])
+        format_with_semicolon(
+            formatter,
+            format_elements![continue_token.format(formatter)?, label],
+            semicolon_token,
+        )
     }
 }

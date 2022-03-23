@@ -1,7 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, hard_group_elements, space_token, token, FormatElement, FormatResult,
-    Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rome_js_syntax::TsDeclareFunctionDeclaration;
 use rome_js_syntax::TsDeclareFunctionDeclarationFields;
@@ -27,17 +28,19 @@ impl ToFormatElement for TsDeclareFunctionDeclaration {
         let type_parameters = type_parameters.format_or_empty(formatter)?;
         let parameters = parameters.format(formatter)?;
         let return_type_annotation = return_type_annotation.format_or_empty(formatter)?;
-        let semicolon_token = semicolon_token.format_or(formatter, || token(";"))?;
 
-        Ok(hard_group_elements(format_elements![
-            async_token,
-            function_token,
-            space_token(),
-            id,
-            type_parameters,
-            parameters,
-            return_type_annotation,
+        Ok(hard_group_elements(format_with_semicolon(
+            formatter,
+            format_elements![
+                async_token,
+                function_token,
+                space_token(),
+                id,
+                type_parameters,
+                parameters,
+                return_type_annotation,
+            ],
             semicolon_token,
-        ]))
+        )?))
     }
 }

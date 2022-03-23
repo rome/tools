@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: keywords.ts
 
 ---
@@ -52,7 +52,7 @@ module YYY4 {
 // All of these should be an error
 
 module Y3 {
-  public;
+  public
   module Module {
     class A {
       s: string;
@@ -61,10 +61,10 @@ module Y3 {
 
   // Apparently this parses :P
     export
-  private;
-  public;
-  protected;
-  static;
+  private
+  public
+  protected
+  static
   readonly;
   abstract;
   async;
@@ -76,12 +76,12 @@ module Y3 {
 }
 
 module Y4 {
-  public;
+  public
   enum Color { Blue, Red }
 }
 
 module YY3 {
-  private;
+  private
   module Module {
     class A {
       s: string;
@@ -90,12 +90,12 @@ module YY3 {
 }
 
 module YY4 {
-  private;
+  private
   enum Color { Blue, Red }
 }
 
 module YYY3 {
-  static;
+  static
   module Module {
     class A {
       s: string;
@@ -104,7 +104,7 @@ module YYY3 {
 }
 
 module YYY4 {
-  static;
+  static
   enum Color { Blue, Red }
 }
 

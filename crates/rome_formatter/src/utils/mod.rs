@@ -578,3 +578,49 @@ impl FormatPrecedence {
         })
     }
 }
+
+/// Utility function to get the "last element" of a [FormatElement], recursing
+/// into lists and groups for find the last element that's not an empty element,
+/// a line break or a comment
+fn last_element(elem: &FormatElement) -> Option<&FormatElement> {
+    match elem {
+        FormatElement::List(list) | FormatElement::Fill(list) => {
+            list.iter().rev().find_map(last_element)
+        }
+
+        FormatElement::Empty | FormatElement::Line(_) | FormatElement::Comment(_) => None,
+
+        FormatElement::Indent(indent) => last_element(&indent.content),
+        FormatElement::Group(group) | FormatElement::HardGroup(group) => {
+            last_element(&group.content)
+        }
+
+        _ => Some(elem),
+    }
+}
+
+/// Format a some code followed by an optional semicolon, and performs
+/// semicolon insertion if it was missing in the input source and the
+/// preceeding element wasn't an unknown node
+pub(crate) fn format_with_semicolon(
+    formatter: &Formatter,
+    content: FormatElement,
+    semicolon: Option<SyntaxToken>,
+) -> FormatResult<FormatElement> {
+    let is_unknown = match last_element(&content) {
+        Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
+        _ => false,
+    };
+
+    Ok(format_elements![
+        content,
+        semicolon.format_or(
+            formatter,
+            if is_unknown {
+                empty_element
+            } else {
+                || token(";")
+            }
+        )?
+    ])
+}

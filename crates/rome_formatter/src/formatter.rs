@@ -459,13 +459,19 @@ impl Formatter {
     /// if these nodes still need to have their own implementation.
     pub fn format_verbatim(&self, node: &SyntaxNode) -> FormatElement {
         let verbatim = self.format_verbatim_node_or_token(node);
-        FormatElement::Verbatim(Verbatim::new(verbatim, node.to_string(), node.text_range()))
+        FormatElement::Verbatim(Verbatim::new_verbatim(
+            verbatim,
+            node.to_string(),
+            node.text_range(),
+        ))
     }
 
     /// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
     /// doesn't track nodes/tokens as [FormatElement::Verbatim]. They are just printed as they are.
     pub fn format_unknown(&self, node: &SyntaxNode) -> FormatElement {
-        self.format_verbatim_node_or_token(node)
+        FormatElement::Verbatim(Verbatim::new_unknown(
+            self.format_verbatim_node_or_token(node),
+        ))
     }
 
     /// Format a node having formatter suppression comment applied to it
@@ -474,7 +480,9 @@ impl Formatter {
             // Insert a force a line break to ensure the suppression comment is on its own line
             // and correctly registers as a leading trivia on the opening token of this node
             hard_line_break(),
-            self.format_verbatim_node_or_token(node),
+            FormatElement::Verbatim(Verbatim::new_suppressed(
+                self.format_verbatim_node_or_token(node)
+            )),
         ]
     }
 

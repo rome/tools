@@ -1,8 +1,8 @@
-use crate::formatter_traits::FormatOptionalTokenAndNode;
 use crate::formatter_traits::FormatTokenAndNode;
+use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, hard_group_elements, space_token, token, FormatElement, FormatResult,
-    Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rome_js_syntax::TsConstructorSignatureClassMember;
 use rome_js_syntax::TsConstructorSignatureClassMemberFields;
@@ -16,12 +16,15 @@ impl ToFormatElement for TsConstructorSignatureClassMember {
             semicolon_token,
         } = self.as_fields();
 
-        Ok(hard_group_elements(format_elements![
-            modifiers.format(formatter)?,
-            space_token(),
-            name.format(formatter)?,
-            parameters.format(formatter)?,
-            semicolon_token.format_or(formatter, || token(";"))?
-        ]))
+        Ok(hard_group_elements(format_with_semicolon(
+            formatter,
+            format_elements![
+                modifiers.format(formatter)?,
+                space_token(),
+                name.format(formatter)?,
+                parameters.format(formatter)?,
+            ],
+            semicolon_token,
+        )?))
     }
 }

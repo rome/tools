@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: spread.js
 
 ---
@@ -17,18 +17,18 @@ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
 
 # Output
 ```js
-const formData = #;
+const formData = #
 {
   title: "Implement all the things";
 }
-const taskNow = #;
+const taskNow = #
 {
   id: 42, status;
   : "WIP", ...formData
 }
-const taskLater = #;
+const taskLater = #
 {
-  ...taskNow, status: "DONE";
+  ...taskNow, status: "DONE"
 }
 
 // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)

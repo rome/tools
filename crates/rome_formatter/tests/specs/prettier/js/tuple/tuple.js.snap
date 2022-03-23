@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: tuple.js
 
 ---
@@ -28,7 +28,7 @@ assert(tuple5 === #[2, 2, 3, 4]);
 
 # Output
 ```js
-const tuple1 = #;
+const tuple1 = #
 [1, 2, 3];
 
 assert(tuple1[0] === 1);
@@ -37,7 +37,7 @@ const tuple2 = tuple1.with(0, 2);
 assert(tuple1 !== tuple2);
 assert(tuple2 === #[2, 2, 3]);
 
-const tuple3 = #;
+const tuple3 = #
 [1, ...tuple2];
 assert(tuple3 === #[1, 2, 2, 3]);
 

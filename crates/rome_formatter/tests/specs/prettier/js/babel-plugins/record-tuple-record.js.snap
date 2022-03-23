@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: record-tuple-record.js
 
 ---
@@ -18,16 +18,16 @@ const record2 = #{...record1, b: 5};
 
 # Output
 ```js
-const record1 = #;
+const record1 = #
 {
   a: 1, b;
   : 2,
     c: 3,
 }
 
-const record2 = #;
+const record2 = #
 {
-  ...record1, b: 5;
+  ...record1, b: 5
 }
 
 ```
