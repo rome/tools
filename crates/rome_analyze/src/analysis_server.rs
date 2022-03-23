@@ -1,7 +1,7 @@
 use std::{collections::HashMap, sync::Arc};
 
+use rome_js_parser::parse_script;
 use rome_js_syntax::{AstNode, SyntaxNode, TextRange};
-use rslint_parser::parse_script;
 use tracing::trace;
 
 use crate::{

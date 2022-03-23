@@ -10,9 +10,9 @@ use std::{
     path::Path,
 };
 
+use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
 use rome_formatter::{FormatOptions, IndentStyle};
-use rslint_errors::{file::SimpleFiles, termcolor, Emitter};
-use rslint_parser::{parse, SourceType};
+use rome_js_parser::{parse, SourceType};
 
 use crate::check_reformat::CheckReformatParams;
 

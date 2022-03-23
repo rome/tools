@@ -13,15 +13,15 @@ use std::{
 
 use crossbeam::channel::{unbounded, Sender};
 use rome_core::App;
-use rome_formatter::{FormatOptions, IndentStyle};
-use rome_fs::{AtomicInterner, PathInterner, RomePath};
-use rome_fs::{TraversalContext, TraversalScope};
-use rslint_errors::{
+use rome_diagnostics::{
     file::{FileId, Files, SimpleFile},
     termcolor::{ColorChoice, StandardStream},
     Diagnostic, Emitter,
 };
-use rslint_parser::{parse, SourceType};
+use rome_formatter::{FormatOptions, IndentStyle};
+use rome_fs::{AtomicInterner, PathInterner, RomePath};
+use rome_fs::{TraversalContext, TraversalScope};
+use rome_js_parser::{parse, SourceType};
 
 use crate::{CliSession, Termination};
 

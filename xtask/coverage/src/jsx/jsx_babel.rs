@@ -1,5 +1,5 @@
+use rome_js_parser::{parse, ModuleKind, SourceType};
 use rome_rowan::SyntaxKind;
-use rslint_parser::{parse, ModuleKind, SourceType};
 
 use crate::runner::create_unknown_node_in_tree_diagnostic;
 use crate::{

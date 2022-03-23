@@ -16,7 +16,7 @@ use crate::reporters::{
 };
 use crate::runner::{run_test_suite, TestRunContext, TestSuite};
 use jsx::jsx_babel::BabelJsxTestSuite;
-use rslint_parser::ParseDiagnostic;
+use rome_js_parser::ParseDiagnostic;
 use serde::{Deserialize, Serialize};
 use std::any::Any;
 use ts::ts_babel::BabelTypescriptTestSuite;

@@ -421,28 +421,24 @@ layout: layouts/page.liquid
 Rome contains code forked from other projects. They have been transformed in some way, sometimes
 substantially rewritten.
 
-- [`crates/rslint_errors`](https://github.com/rome/tools/tree/main/crates/rslint_errors)
+- [`crates/rome_diagnostics`](https://github.com/rome/tools/tree/main/crates/rome_diagnostics)
   - **Original**: [`rslint/rslint_errors`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
   - **License**: MIT
 
-- [`crates/rslint_parser`](https://github.com/rome/tools/tree/main/crates/rslint_parser)
+- [`crates/rome_js_parser`](https://github.com/rome/tools/tree/main/crates/rome_js_parser)
   - **Original**: [`rslint/rslint_parser`](https://github.com/rslint/rslint/tree/master/crates/rslint_parser)
   - **License**: MIT
 
-- [`crates/rslint_lexer`](https://github.com/rome/tools/tree/main/crates/rslint_lexer)
+- [`crates/rome_js_lexer`](https://github.com/rome/tools/tree/main/crates/rome_js_lexer)
   - **Original**:  [`rslint/rslint_lexer`](https://github.com/rslint/rslint/tree/master/crates/rslint_lexer)
   - **License**: MIT
 
-- [`crates/rslint_regex`](https://github.com/rome/tools/tree/main/crates/rslint_regex)
-  - **Original**: [`rslint/rslint_regex`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
-  - **License**: MIT
-
-- [`crates/rslint_syntax`](https://github.com/rome/tools/tree/main/crates/rslint_syntax)
-	- **Original**: [`rslint/rslint_syntax`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
+- [`crates/rome_js_syntax`](https://github.com/rome/tools/tree/main/crates/rome_js_syntax)
+	- **Original**: [`rslint/rslint_syntax`](https://github.com/rslint/rslint/tree/master/crates/rslint_syntax)
 	- **License**: MIT
 
-- [`crates/rslint_text_edit`](https://github.com/rome/tools/tree/main/crates/rslint_text_edit)
-	- **Original**: [`rslint/rslint_text_edit`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
+- [`crates/rome_text_edit`](https://github.com/rome/tools/tree/main/crates/rome_text_edit)
+	- **Original**: [`rslint/rslint_text_edit`](https://github.com/rslint/rslint/tree/master/crates/rslint_text_edit)
 	- **License**: MIT
 
 - [`crates/rome_rowan`](https://github.com/rome/tools/tree/main/crates/rome_rowan)

@@ -1,0 +1,10 @@
+[package]
+name = "rome_text_edit"
+version = "0.1.0"
+authors = ["RSLint developers"]
+edition = "2021"
+license = "MIT"
+description = "Simple text editing crate ported from rust-analyzer for the RSLint project"
+
+[dependencies]
+rome_rowan = { path = "../rome_rowan"}

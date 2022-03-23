@@ -3,8 +3,8 @@ pub(crate) mod no_var;
 pub(crate) mod use_single_case_statement;
 pub(crate) mod use_while;
 
+use rome_diagnostics::{Diagnostic, Span};
 use rome_js_syntax::{AstNode, SyntaxNode, TextRange};
-use rslint_errors::{Diagnostic, Span};
 
 use crate::{analysis_server::AnalysisServer, ActionCategory, Analysis, FileId};
 

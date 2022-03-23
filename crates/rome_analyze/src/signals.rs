@@ -1,5 +1,5 @@
+use rome_diagnostics::{Diagnostic, Span};
 use rome_js_syntax::TextRange;
-use rslint_errors::{Diagnostic, Span};
 
 use crate::{ActionCategory, Indel, SyntaxEdit};
 
@@ -88,9 +88,9 @@ impl FromIterator<AnalyzeDiagnostic> for Analysis {
 }
 
 #[derive(Debug, Clone)]
-/// Combines an rslint_errors Diagnostic with [SyntaxEdit] actions.
+/// Combines an rome_diagnostics Diagnostic with [SyntaxEdit] actions.
 ///
-/// The suggestions on a [rslint_errors::Diagnostic] are only suitable for text edits.
+/// The suggestions on a [rome_diagnostics::Diagnostic] are only suitable for text edits.
 /// Perhaps that diagnostic type can be modified so that this type is
 /// unnecessary, but we may not want the core diagnostics format to directly
 /// reference syntax nodes.
@@ -178,7 +178,7 @@ impl From<Vec<Signal>> for Analysis {
     }
 }
 
-/// An extension trait for [rslint_errors::Diagnostic]
+/// An extension trait for [rome_diagnostics::Diagnostic]
 /// In the future, the Diagnostic format might be modified directly.
 pub trait DiagnosticExt {
     fn into_signal(self) -> Signal;

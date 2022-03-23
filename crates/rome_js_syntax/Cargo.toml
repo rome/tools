@@ -3,11 +3,11 @@ edition = "2021"
 name = "rome_js_syntax"
 version = "0.1.4"
 authors = ["RSLint developers"]
-description = "SyntaxKind and common rowan definitions for rslint_parser"
+description = "SyntaxKind and common rowan definitions for rome_js_parser"
 license = "MIT"
 repository = "https://github.com/rslint/rslint"
 
 [dependencies]
-rome_rowan = { path = "../rome_rowan", version = "0.0.0" }
+rome_rowan = { path = "../rome_rowan" }
 thiserror = "1.0.30"
 num-bigint = "0.4.3"

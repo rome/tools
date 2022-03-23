@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'crates/rslint_**/'
-      - 'crates/rome_js_syntax/'
+      - 'crates/rome_js**/'
+      - 'crates/rome_rowan',
       - 'xtask/codegen'
 
 env:

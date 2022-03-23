@@ -1,6 +1,6 @@
 use anyhow::bail;
 use rome_fs::RomePath;
-use rslint_parser::SourceType;
+use rome_js_parser::SourceType;
 use std::sync::Arc;
 
 /// Internal representation of supported [language identifiers]

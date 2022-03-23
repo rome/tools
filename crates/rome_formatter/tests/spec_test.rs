@@ -1,7 +1,7 @@
 use rome_core::App;
 use rome_formatter::{format, FormatOptions, Formatted, IndentStyle};
 use rome_fs::{MemoryFileSystem, RomePath};
-use rslint_parser::{parse, ModuleKind, SourceType};
+use rome_js_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::fs;
