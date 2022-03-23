@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 149
+assertion_line: 151
 expression: nested.js
 
 ---
@@ -182,7 +182,7 @@ const foo = <div className={'match-achievement-medal-type type' + (medals[0].rec
 	) : (
 		i18n('Theme')
 	)}
-</div>
+</div>;
 
 a
   ? literalline

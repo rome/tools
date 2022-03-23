@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 149
+assertion_line: 151
 expression: no-semi.js
 
 ---
@@ -114,7 +114,7 @@ x;
 x;
 ({ a: 1 }).entries();
 x;
-<Hello />
+<Hello />;
 x;
 `string`;
 x;
