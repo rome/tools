@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: nested.js
 
 ---
@@ -189,65 +189,6 @@ a
   : { 123: 12 }
     ? line
     : softline;
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:16:7
-   │
-16 │     ? <ButtonStorybook />
-   │       ^^^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:18:7
-   │
-18 │     ? <ColorBook />
-   │       ^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:20:7
-   │
-20 │     ? <TypographyBook />
-   │       ^^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:22:7
-   │
-22 │     ? <LoaderStorybook />
-   │       ^^^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:24:7
-   │
-24 │     ? <DealListStory />
-   │       ^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:26:7
-   │  
-26 │ ┌       <Message>
-27 │ │         <Title>{'Missing story book'}</Title>
-28 │ │         <Content>
-29 │ │           <BackButton/>
-30 │ │         </Content>
-31 │ │       </Message>
-   │ └────────────────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested.js:73:13
-   │  
-73 │   const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
-   │ ┌─────────────^
-74 │ │     {medals[0].record ? (
-75 │ │         i18n('Record')
-76 │ │     ) : medals[0].unique ? (
-   · │
-86 │ │     )}
-87 │ │ </div>
-   │ └──────^ JSX only syntax
-
 
 ```
 

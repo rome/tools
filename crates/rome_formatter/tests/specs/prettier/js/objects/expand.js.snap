@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: expand.js
 
 ---
@@ -23,23 +23,6 @@ const Component2 = ({
 const Component1 = ({ props }) => (<Text>Test</Text>);
 
 const Component2 = ({ props }) => (<Text>Test</Text>);
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ expand.js:2:3
-  │
-2 │   <Text>Test</Text>
-  │   ^^^^^^^^^^^^^^^^^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ expand.js:8:3
-  │
-8 │   <Text>Test</Text>
-  │   ^^^^^^^^^^^^^^^^^ JSX only syntax
-
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: jsdoc.js
 
 ---
@@ -62,35 +62,6 @@ function HelloWorld() {
         </div>
   );
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ jsdoc.js:3:5
-  │  
-3 │ ┌     <div>
-4 │ │         <div />
-5 │ │     </div>
-  │ └──────────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ jsdoc.js:12:5
-   │  
-12 │ ┌     <div>
-13 │ │         sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
-14 │ │     </div>
-   │ └──────────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ jsdoc.js:22:9
-   │  
-22 │ ┌         <div>
-23 │ │            <span>Test</span>
-24 │ │         </div>
-   │ └──────────────^ JSX only syntax
-
 
 ```
 

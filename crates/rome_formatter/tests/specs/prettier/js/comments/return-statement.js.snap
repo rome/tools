@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: return-statement.js
 
 ---
@@ -260,17 +260,6 @@ function inlineComment() {
     /* hi */ 42
   ) || 42;
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ return-statement.js:4:5
-  │
-4 │     <div />
-  │     ^^^^^^^ JSX only syntax
-
 
 ```
 

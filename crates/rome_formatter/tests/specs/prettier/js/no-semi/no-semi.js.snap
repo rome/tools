@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: no-semi.js
 
 ---
@@ -187,17 +187,6 @@ while (false) (function () {}());
 aReallyLongLine012345678901234567890123456789012345678901234567890123456789 * (
   b + c
 );
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ no-semi.js:14:4
-   │
-14 │ x; <Hello />
-   │    ^^^^^^^^^ JSX only syntax
-
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: issue-4125.js
 
 ---
@@ -311,17 +311,6 @@ x.a().b(`${c(d())}`).f();
 xyz.a().b().c(a(a(b(c(d().p).p).p).p));
 
 var l = base.replace(/^\w*:\/\//, "").replace(/\/$/, "").split("/").length;
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-    ┌─ issue-4125.js:124:27
-    │
-124 │   const wrapper = shallow(<CalendarDay />);
-    │                           ^^^^^^^^^^^^^^^ JSX only syntax
-
 
 ```
 

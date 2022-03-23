@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: pr-7889.js
 
 ---
@@ -41,27 +41,6 @@ const Profile2 = view
   </div>
     ),
   );
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ pr-7889.js:2:3
-  │  
-2 │ ┌   <div>
-3 │ │     <h1>Hello, {props.name}</h1>
-4 │ │   </div>
-  │ └────────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ pr-7889.js:8:3
-   │  
- 8 │ ┌   <div>
- 9 │ │     <h1>Hello, {props.name}</h1>
-10 │ │   </div>
-   │ └────────^ JSX only syntax
-
 
 ```
 

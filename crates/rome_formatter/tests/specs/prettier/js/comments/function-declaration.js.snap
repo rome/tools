@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: function-declaration.js
 
 ---
@@ -137,17 +137,6 @@ function foo4() {
   // this is a function
   return 42;
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-  ┌─ function-declaration.js:6:3
-  │
-6 │   <div />
-  │   ^^^^^^^ JSX only syntax
-
 
 ```
 
