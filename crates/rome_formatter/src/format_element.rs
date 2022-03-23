@@ -250,22 +250,19 @@ where
 {
     let mut elements = elements.into_iter();
 
-    let size_hint = if let (_, Some(upper_bound)) = elements.size_hint() {
-        upper_bound
-    } else {
-        0
-    };
+    let (lower_bound, upper_bound) = elements.size_hint();
+    let size_hint = upper_bound.unwrap_or(lower_bound);
 
     // If the first non empty element is a vec, use it,
     // otherwise create a new one with the current element
     let mut concatenated = loop {
         match elements.next() {
+            Some(FormatElement::Empty) => continue,
             Some(FormatElement::List(list)) => {
                 let mut v = list.content;
                 v.reserve(size_hint);
                 break v;
             }
-            Some(FormatElement::Empty) => continue,
             Some(element) => {
                 let mut v = Vec::with_capacity(size_hint);
                 v.push(element);
@@ -276,12 +273,11 @@ where
     };
 
     // continue to the rest of the list
-    loop {
-        match elements.next() {
-            Some(FormatElement::List(list)) => concatenated.extend(list.content),
-            Some(FormatElement::Empty) => {}
-            Some(element) => concatenated.push(element),
-            None => break,
+    for element in elements {
+        match element {
+            FormatElement::List(list) => concatenated.extend(list.content),
+            FormatElement::Empty => {}
+            element => concatenated.push(element),
         }
     }
 
