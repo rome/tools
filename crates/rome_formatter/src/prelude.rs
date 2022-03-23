@@ -2,5 +2,5 @@
 //! when implementing the [crate::ToFormatElement] trait.
 
 pub use crate::formatter_traits::{
-    FormatOptionalTokenAndNode, FormatTokenAndNode, IntoFormatResult,
+    FormatOptionalTokenAndNode as _, FormatTokenAndNode as _, IntoFormatResult as _,
 };

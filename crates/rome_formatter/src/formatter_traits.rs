@@ -19,7 +19,7 @@ pub trait FormatOptionalTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, empty_element};
     /// use rome_js_syntax::{SyntaxToken};
-    /// use rome_formatter::prelude::{FormatOptionalTokenAndNode};
+    /// use rome_formatter::prelude::*;
     ///
     /// let formatter = Formatter::default();
     /// let token: Option<SyntaxToken> = None;
@@ -40,7 +40,7 @@ pub trait FormatOptionalTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, empty_element, space_token, format_elements, token};
     /// use rome_js_syntax::{SyntaxToken};
-    /// use rome_formatter::prelude::{FormatOptionalTokenAndNode};
+    /// use rome_formatter::prelude::*;
     /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let formatter = Formatter::default();
@@ -82,7 +82,7 @@ pub trait FormatOptionalTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, token};
     /// use rome_js_syntax::{SyntaxToken};
-    /// use rome_formatter::prelude::{FormatOptionalTokenAndNode};
+    /// use rome_formatter::prelude::*;
     ///
     /// let formatter = Formatter::default();
     /// let empty_token: Option<SyntaxToken> = None;
@@ -110,7 +110,7 @@ pub trait FormatOptionalTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, empty_element, space_token, format_elements, token};
     /// use rome_js_syntax::{SyntaxToken};
-    /// use rome_formatter::prelude::{FormatOptionalTokenAndNode};
+    /// use rome_formatter::prelude::*;
     /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let formatter = Formatter::default();
@@ -156,7 +156,7 @@ pub trait FormatTokenAndNode {
     ///
     /// ```
     /// use rome_formatter::{Formatter, token, space_token};
-    /// use rome_formatter::prelude::FormatTokenAndNode;
+    /// use rome_formatter::prelude::*;
     /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let mut builder = SyntaxTreeBuilder::new();
@@ -188,7 +188,7 @@ pub trait FormatTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, token, format_elements, space_token};
     /// use rome_js_syntax::{SyntaxNode, SyntaxTreeBuilder, JsSyntaxKind};
-    /// use rome_formatter::prelude::FormatTokenAndNode;
+    /// use rome_formatter::prelude::*;
     ///
     /// let mut builder = SyntaxTreeBuilder::new();
     /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
