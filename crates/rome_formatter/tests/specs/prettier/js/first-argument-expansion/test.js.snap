@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: test.js
 
 ---
@@ -318,17 +318,6 @@ func(
   },
   (result) => result && console.log("success"),
 );
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ test.js:96:3
-   │
-96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
-   │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ JSX only syntax
-
 
 ```
 

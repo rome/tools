@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: boundary.js
 
 ---
@@ -63,20 +63,6 @@ ${
 {ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
 }
 </div>;
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ boundary.js:21:1
-   │  
-21 │ ┌ <div>
-22 │ │ {ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
-23 │ │ }
-24 │ │ </div>;
-   │ └──────^ JSX only syntax
-
 
 ```
 

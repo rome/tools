@@ -1,0 +1,29 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 151
+expression: jsx.js
+
+---
+# Input
+```js
+const els = items.map(item => (
+  <div className="whatever">
+    <span>{children}</span>
+  </div>
+));
+
+```
+
+# Output
+```js
+const els = items.map(
+  (item) => (
+    <div className="whatever">
+    <span>{children}</span>
+  </div>
+  ),
+);
+
+```
+
+

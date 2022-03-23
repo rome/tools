@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: issue-7518.js
 
 ---
@@ -40,19 +40,6 @@ const Broken = React.forwardRef(
 	</div>
   ),
 );
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ issue-7518.js:9:2
-   │  
- 9 │ ┌     <div ref={ref}>
-10 │ │         {children}
-11 │ │     </div>
-   │ └──────────^ JSX only syntax
-
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: template-literals.js
 
 ---
@@ -192,23 +192,6 @@ const Bar = styled.div`
   )
 } !important;
 `;
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ template-literals.js:37:7
-   │  
-37 │ ┌       <Html
-38 │ │         headScripts={compact([ assets.javascript.head ])}
-39 │ │         headStyles={compact([ assets.styles.body, assets.styles.head ])}
-40 │ │         bodyScripts={compact([ assets.javascript.body ])}
-   · │
-49 │ │         ]}
-50 │ │       />
-   │ └────────^ JSX only syntax
-
 
 ```
 

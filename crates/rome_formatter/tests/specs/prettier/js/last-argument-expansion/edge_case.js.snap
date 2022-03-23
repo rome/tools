@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: edge_case.js
 
 ---
@@ -132,23 +132,6 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
     );
   },
 );
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ edge_case.js:18:11
-   │  
-18 │ ┌           <div>
-19 │ │             <InlineBlock>
-20 │ │               <img
-21 │ │                 src={data[1234567890].image.uri}
-   · │
-24 │ │             </InlineBlock>
-25 │ │           </div>
-   │ └────────────────^ JSX only syntax
-
 
 ```
 

@@ -1,0 +1,25 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 151
+expression: jsx.js
+
+---
+# Input
+```js
+function* f() {
+  yield (<div>generator</div>)
+  yield (<div><p>generator</p></div>)
+}
+
+```
+
+# Output
+```js
+function* f() {
+  yield (<div>generator</div>);
+  yield (<div><p>generator</p></div>);
+}
+
+```
+
+

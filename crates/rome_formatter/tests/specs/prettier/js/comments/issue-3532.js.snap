@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: issue-3532.js
 
 ---
@@ -89,23 +89,6 @@ const AspectRatioBox = ({ aspectRatio, children, ...props }) => (
 );
 
 export default AspectRatioBox;
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ issue-3532.js:30:3
-   │  
-30 │ ┌   <div
-31 │ │     className={`height: 0;
-32 │ │   overflow: hidden;
-33 │ │   padding-top: ${props => 100 / props.aspectRatio}%;
-   · │
-37 │ │     <div>{children}</div>
-38 │ │   </div>
-   │ └────────^ JSX only syntax
-
 
 ```
 

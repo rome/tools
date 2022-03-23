@@ -1,0 +1,63 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 151
+expression: jsx.js
+
+---
+# Input
+```js
+function foo() {
+  throw <Bar />;
+}
+
+function foo() {
+  throw <Bar>baz</Bar>;
+}
+
+function foo() {
+  throw <Bar baz={baz} />;
+}
+
+function foo() {
+  throw <Bar baz={baz}>foo</Bar>;
+}
+
+function foo() {
+  throw <></>;
+}
+
+function foo() {
+  throw <>foo</>;
+}
+
+```
+
+# Output
+```js
+function foo() {
+  throw <Bar />;
+}
+
+function foo() {
+  throw <Bar>baz</Bar>;
+}
+
+function foo() {
+  throw <Bar baz={baz} />;
+}
+
+function foo() {
+  throw <Bar baz={baz}>foo</Bar>;
+}
+
+function foo() {
+  throw <></>;
+}
+
+function foo() {
+  throw <>foo</>;
+}
+
+```
+
+

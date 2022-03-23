@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: break-parent.js
 
 ---
@@ -58,24 +58,6 @@ true ? test({ a: 1 }) : <div
       f={123412341234}
       g={123412341234}
     />;
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ break-parent.js:17:5
-   │  
-17 │     : <div
-   │ ┌─────^
-18 │ │       a={123412342314}
-19 │ │       b={123412341234}
-20 │ │       c={123412341234}
-   · │
-24 │ │       g={123412341234}
-25 │ │     />;
-   │ └──────^ JSX only syntax
-
 
 ```
 

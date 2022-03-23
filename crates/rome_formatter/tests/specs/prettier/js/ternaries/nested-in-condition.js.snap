@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 149
 expression: nested-in-condition.js
 
 ---
@@ -82,33 +82,6 @@ const value = (
     <Sub />
   </Element2>
 );
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested-in-condition.js:22:3
-   │  
-22 │ ┌   <Element>
-23 │ │     <Sub />
-24 │ │     <Sub />
-25 │ │     <Sub />
-   · │
-28 │ │     <Sub />
-29 │ │   </Element>
-   │ └────────────^ JSX only syntax
-
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ nested-in-condition.js:31:3
-   │  
-31 │ ┌   <Element2>
-32 │ │     <Sub />
-33 │ │     <Sub />
-34 │ │     <Sub />
-35 │ │   </Element2>
-   │ └─────────────^ JSX only syntax
-
 
 ```
 

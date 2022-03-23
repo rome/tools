@@ -20,13 +20,13 @@ mod check_reformat;
 
 static REPORTER: DiffReport = DiffReport::new();
 
-tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts}", crate::test_snapshot, "script"}
+tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts,jsx}", crate::test_snapshot, "script"}
 
 const PRETTIER_IGNORE: &str = "prettier-ignore";
 const ROME_IGNORE: &str = "rome-ignore format: prettier ignore";
 
 fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
-    if input.contains("jsx") || input.contains("flow") || input.contains("prepare_tests") {
+    if input.contains("flow") || input.contains("prepare_tests") {
         return;
     }
 
@@ -38,7 +38,14 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     let (_, range_start_index, range_end_index) = strip_placeholders(&mut input_code);
     let parse_input = input_code.replace(PRETTIER_IGNORE, ROME_IGNORE);
 
-    let source_type: SourceType = input_file.try_into().unwrap();
+    let mut source_type: SourceType = input_file.try_into().unwrap();
+
+    // Prettier testing suite uses JSX tags inside JS files.
+    // As there's no way to know in advance which files have JSX syntax, we
+    // change the source type only here
+    if input_file.extension().unwrap() == "js" {
+        source_type = SourceType::jsx();
+    }
 
     let parsed = parse(&parse_input, 0, source_type.clone());
 
