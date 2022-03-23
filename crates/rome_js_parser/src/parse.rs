@@ -107,7 +107,7 @@ impl<T: AstNode> Parse<T> {
     }
 }
 
-fn parse_common(
+pub fn parse_common(
     text: &str,
     file_id: usize,
     source_type: SourceType,
@@ -115,9 +115,9 @@ fn parse_common(
     let mut parser = crate::Parser::new(text, file_id, source_type);
     crate::syntax::program::parse(&mut parser);
 
-    let (events, tokens, errors) = parser.finish();
+    let (events, trivia, errors) = parser.finish();
 
-    (events, errors, tokens)
+    (events, errors, trivia)
 }
 
 /// Parse text into a [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).

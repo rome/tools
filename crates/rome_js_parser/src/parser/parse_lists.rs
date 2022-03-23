@@ -17,7 +17,7 @@ use rome_js_syntax::JsSyntaxKind;
 ///   // impl missing members
 /// }
 /// ```
-pub trait ParseNodeList {
+pub(crate) trait ParseNodeList {
     /// Parses a single element of the list
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax;
 
@@ -79,7 +79,7 @@ pub trait ParseNodeList {
 ///   // impl missing members
 /// }
 /// ```
-pub trait ParseSeparatedList {
+pub(crate) trait ParseSeparatedList {
     /// Parses a single element of the list
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax;
 

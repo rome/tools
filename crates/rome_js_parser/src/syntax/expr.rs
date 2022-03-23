@@ -7,6 +7,7 @@ use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
+use crate::lexer::{LexContext, ReLexContext};
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
 use crate::parser::{expected_token, ParserProgress, RecoveryResult};
 use crate::syntax::assignment::parse_assignment;
@@ -37,7 +38,6 @@ use crate::{
     syntax, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser, SyntaxFeature, TokenSet,
 };
 use bitflags::bitflags;
-use rome_js_lexer::{LexContext, ReLexContext};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -1021,7 +1021,7 @@ fn parse_parenthesized_expression(p: &mut Parser, context: ExpressionContext) ->
     Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION))
 }
 
-pub fn parse_expression_snipped(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_expression_snipped(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, expected_expression);
     m.complete(p, JS_EXPRESSION_SNIPPED).into()

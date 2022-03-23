@@ -62,6 +62,7 @@ mod parser;
 #[macro_use]
 mod token_set;
 mod event;
+mod lexer;
 mod lossless_tree_sink;
 mod parse;
 mod state;
@@ -74,11 +75,13 @@ mod token_source;
 
 pub use crate::{
     event::{process, Event},
+    lexer::{LexContext, ReLexContext},
     lossless_tree_sink::LosslessTreeSink,
     parse::*,
-    parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
+    parser::Parser,
     token_set::TokenSet,
 };
+pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery};
 pub(crate) use state::{ParserState, StrictMode};
 use std::fmt::{Debug, Display};
 
@@ -87,10 +90,9 @@ use std::fmt::{Debug, Display};
 pub type ParseDiagnostic = rome_diagnostics::Diagnostic;
 
 use crate::parser::ToDiagnostic;
-pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
-pub use crate::ParsedSyntax::{Absent, Present};
+pub(crate) use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
+pub(crate) use crate::ParsedSyntax::{Absent, Present};
 use rome_diagnostics::Diagnostic;
-pub use rome_js_lexer::buffered_lexer::BufferedLexer;
 pub use rome_js_syntax::numbers::BigInt;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::TextSize;
@@ -362,7 +364,7 @@ fn compute_source_type_from_path_or_extension(
 }
 
 /// A syntax feature that may or may not be supported depending on the file type and parser configuration
-pub trait SyntaxFeature: Sized {
+pub(crate) trait SyntaxFeature: Sized {
     /// Returns `true` if the current parsing context supports this syntax feature.
     fn is_supported(&self, p: &Parser) -> bool;
 

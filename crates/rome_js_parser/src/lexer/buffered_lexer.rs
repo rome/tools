@@ -1,4 +1,4 @@
-use crate::{LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange, TokenFlags};
+use super::{LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange, TokenFlags};
 use rome_diagnostics::Diagnostic;
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxKind::EOF};
 use std::collections::VecDeque;
@@ -20,7 +20,7 @@ use std::iter::FusedIterator;
 ///   that any following token may turn out to be different as well, thus, it's necessary to clear the
 ///   lookahead cache.
 #[derive(Debug)]
-pub struct BufferedLexer<'l> {
+pub(crate) struct BufferedLexer<'l> {
     /// Cache storing the lookahead tokens. That are, all tokens between the `current` token and
     /// the "current" of the [Lexer]. This is because the [Lexer]'s current token points to the
     /// furthest requested lookahead token.
@@ -199,7 +199,7 @@ impl<'l> BufferedLexer<'l> {
 }
 
 #[derive(Debug)]
-pub struct LookaheadIterator<'l, 't> {
+pub(crate) struct LookaheadIterator<'l, 't> {
     buffered: &'l mut BufferedLexer<'t>,
     nth: usize,
 }
@@ -248,7 +248,6 @@ impl<'l, 't> Iterator for LookaheadIterator<'l, 't> {
 
         Some(LookaheadToken {
             kind,
-            range: lexer.current_range(),
             flags: lexer.current_flags,
         })
     }
@@ -259,17 +258,12 @@ impl<'l, 't> FusedIterator for LookaheadIterator<'l, 't> {}
 #[derive(Debug)]
 pub struct LookaheadToken {
     kind: JsSyntaxKind,
-    range: TextRange,
     flags: TokenFlags,
 }
 
 impl LookaheadToken {
     pub fn kind(&self) -> JsSyntaxKind {
         self.kind
-    }
-
-    pub fn range(&self) -> TextRange {
-        self.range
     }
 
     pub fn has_preceding_line_break(&self) -> bool {
@@ -281,7 +275,6 @@ impl From<&LexerCheckpoint> for LookaheadToken {
     fn from(checkpoint: &LexerCheckpoint) -> Self {
         LookaheadToken {
             kind: checkpoint.current_kind,
-            range: TextRange::new(checkpoint.current_start, checkpoint.position),
             flags: checkpoint.current_flags,
         }
     }
@@ -289,8 +282,8 @@ impl From<&LexerCheckpoint> for LookaheadToken {
 
 #[cfg(test)]
 mod tests {
-    use crate::buffered_lexer::BufferedLexer;
-    use crate::{LexContext, Lexer, TextRange, TextSize};
+    use super::BufferedLexer;
+    use crate::lexer::{LexContext, Lexer, TextRange, TextSize};
     use rome_js_syntax::JsSyntaxKind::{JS_NUMBER_LITERAL, NEWLINE, WHITESPACE};
     use rome_js_syntax::T;
 
@@ -362,9 +355,7 @@ mod tests {
             let nth3 = lookahead.next().unwrap();
             let nth4 = lookahead.next().unwrap();
 
-            assert_eq!(nth1.range().start(), TextSize::from(4));
             assert_eq!(nth1.kind(), T![ident]);
-            assert_eq!(nth2.range().start(), TextSize::from(5));
             assert_eq!(nth2.kind(), NEWLINE);
             assert_eq!(nth3.kind(), WHITESPACE);
             assert_eq!(nth4.kind(), T![=]);

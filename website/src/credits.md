@@ -429,7 +429,7 @@ substantially rewritten.
   - **Original**: [`rslint/rslint_parser`](https://github.com/rslint/rslint/tree/master/crates/rslint_parser)
   - **License**: MIT
 
-- [`crates/rome_js_lexer`](https://github.com/rome/tools/tree/main/crates/rome_js_lexer)
+- [`crates/rome_js_parser/lexer`](https://github.com/rome/tools/tree/main/crates/rome_js_parser/src/lexer)
   - **Original**:  [`rslint/rslint_lexer`](https://github.com/rslint/rslint/tree/master/crates/rslint_lexer)
   - **License**: MIT
 

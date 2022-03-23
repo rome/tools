@@ -2,8 +2,8 @@
 
 use std::mem;
 
+use crate::lexer::TextSize;
 use crate::{ParseDiagnostic, Parser, TreeSink};
-use rome_js_lexer::TextSize;
 use rome_js_syntax::JsSyntaxKind::{self, *};
 use rome_rowan::TextRange;
 

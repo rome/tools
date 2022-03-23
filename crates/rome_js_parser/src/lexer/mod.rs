@@ -32,16 +32,17 @@ pub use highlight::*;
 use rome_diagnostics::Diagnostic;
 use tables::derived_property::*;
 
+pub(crate) use buffered_lexer::BufferedLexer;
 pub use rome_js_syntax::*;
 
-use crate::bytes::{
+use self::bytes::{
     lookup_byte,
     Dispatch::{self, *},
 };
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::JsSyntaxKind::*;
 
-use crate::errors::invalid_digits_after_unicode_escape_sequence;
+use self::errors::invalid_digits_after_unicode_escape_sequence;
 
 // Simple macro for unwinding a loop
 macro_rules! unwind_loop {
@@ -161,7 +162,7 @@ impl TokenFlags {
 
 /// An extremely fast, lookup table based, lossless ECMAScript lexer
 #[derive(Debug)]
-pub struct Lexer<'src> {
+pub(crate) struct Lexer<'src> {
     /// Source text
     source: &'src str,
 
@@ -494,7 +495,7 @@ impl<'src> Lexer<'src> {
             }
 
             let dispatcher = lookup_byte(current);
-            if dispatcher == crate::bytes::Dispatch::WHS
+            if dispatcher == self::bytes::Dispatch::WHS
                 || (UNICODE_WHITESPACE_STARTS.contains(&current) && UNICODE_SPACES.contains(&chr))
             {
                 self.advance(chr.len_utf8());
@@ -1993,7 +1994,7 @@ fn is_linebreak(chr: char) -> bool {
 
 /// Stores the state of the lexer so that it may later be restored to that position.
 #[derive(Debug, Clone)]
-pub struct LexerCheckpoint {
+pub(crate) struct LexerCheckpoint {
     pub(crate) position: TextSize,
     pub(crate) current_start: TextSize,
     pub(crate) current_kind: JsSyntaxKind,

@@ -10,7 +10,7 @@ use rome_js_syntax::JsSyntaxKind::*;
 // test_err unterminated_unicode_codepoint
 // let s = "\u{200";
 
-pub fn parse(p: &mut Parser) -> CompletedMarker {
+pub(crate) fn parse(p: &mut Parser) -> CompletedMarker {
     let m = p.start();
     p.eat(JS_SHEBANG);
 

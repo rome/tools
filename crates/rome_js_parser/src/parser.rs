@@ -16,20 +16,18 @@ use rome_js_syntax::{
     TextRange,
 };
 
-pub use parse_error::*;
-pub use parse_lists::{ParseNodeList, ParseSeparatedList};
-pub use parsed_syntax::ParsedSyntax;
+pub(crate) use parse_error::*;
+pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
+pub(crate) use parsed_syntax::ParsedSyntax;
 use rome_rowan::{SyntaxKind, TextSize};
-#[allow(deprecated)]
-pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
-pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
+use crate::lexer::{LexContext, ReLexContext};
+pub(crate) use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
 use crate::{
     state::ParserStateCheckpoint,
     token_source::{TokenSource, TokenSourceCheckpoint, Trivia},
 };
-use rome_js_lexer::{LexContext, ReLexContext};
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
@@ -161,36 +159,36 @@ impl<'s> Parser<'s> {
 
     /// Gets the current token kind of the parser
     #[inline]
-    pub fn cur(&self) -> JsSyntaxKind {
+    pub(crate) fn cur(&self) -> JsSyntaxKind {
         self.tokens.current()
     }
 
     /// Gets the range of the current token
     #[inline]
-    pub fn cur_range(&self) -> TextRange {
+    pub(crate) fn cur_range(&self) -> TextRange {
         self.tokens.current_range()
     }
 
     /// Checks if the parser is currently at a specific token
     #[inline]
-    pub fn at(&self, kind: JsSyntaxKind) -> bool {
+    pub(crate) fn at(&self, kind: JsSyntaxKind) -> bool {
         self.cur() == kind
     }
 
     /// Look ahead at a token and get its kind.
     #[inline]
-    pub fn nth(&mut self, n: usize) -> JsSyntaxKind {
+    pub(crate) fn nth(&mut self, n: usize) -> JsSyntaxKind {
         self.tokens.nth(n)
     }
 
     /// Checks if a token lookahead is something
     #[inline]
-    pub fn nth_at(&mut self, n: usize, kind: JsSyntaxKind) -> bool {
+    pub(crate) fn nth_at(&mut self, n: usize, kind: JsSyntaxKind) -> bool {
         self.nth(n) == kind
     }
 
     /// Returns the kind of the last bumped token.
-    pub fn last(&self) -> Option<JsSyntaxKind> {
+    pub(crate) fn last(&self) -> Option<JsSyntaxKind> {
         self.last_token_event_pos
             .map(|pos| match self.events[pos as usize] {
                 Event::Token { kind, .. } => kind,
@@ -199,7 +197,7 @@ impl<'s> Parser<'s> {
     }
 
     /// Returns the range of the last bumped token.
-    pub fn last_range(&self) -> Option<TextRange> {
+    pub(crate) fn last_range(&self) -> Option<TextRange> {
         self.last_token_event_pos
             .map(|pos| match self.events[pos as usize] {
                 Event::Token { range, .. } => range,
@@ -209,7 +207,7 @@ impl<'s> Parser<'s> {
 
     /// Consume the next token if `kind` matches.
     #[inline]
-    pub fn eat(&mut self, kind: JsSyntaxKind) -> bool {
+    pub(crate) fn eat(&mut self, kind: JsSyntaxKind) -> bool {
         if !self.at(kind) {
             return false;
         }
@@ -222,7 +220,7 @@ impl<'s> Parser<'s> {
     /// Starts a new node in the syntax tree. All nodes and tokens
     /// consumed between the `start` and the corresponding `Marker::complete`
     /// belong to the same node.
-    pub fn start(&mut self) -> Marker {
+    pub(crate) fn start(&mut self) -> Marker {
         let pos = self.events.len() as u32;
         let start = self.tokens.position();
         self.push_event(Event::tombstone(start));
@@ -231,26 +229,26 @@ impl<'s> Parser<'s> {
 
     /// Tests if there's a line break before the nth token.
     #[inline]
-    pub fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
+    pub(crate) fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
         self.tokens.has_nth_preceding_line_break(n)
     }
 
     /// Tests if there's a line break before the current token (between the last and current)
     #[inline]
-    pub fn has_preceding_line_break(&self) -> bool {
+    pub(crate) fn has_preceding_line_break(&self) -> bool {
         self.tokens.has_preceding_line_break()
     }
 
     /// Consume the current token if `kind` matches.
     #[inline]
-    pub fn bump(&mut self, kind: JsSyntaxKind) {
+    pub(crate) fn bump(&mut self, kind: JsSyntaxKind) {
         self.bump_with_context(kind, LexContext::default())
     }
 
     /// Consumes the current token if `kind` matches and lexes the next token using the
     /// specified `context.
     #[inline]
-    pub fn bump_with_context(&mut self, kind: JsSyntaxKind, context: LexContext) {
+    pub(crate) fn bump_with_context(&mut self, kind: JsSyntaxKind, context: LexContext) {
         assert_eq!(
             kind,
             self.cur(),
@@ -263,12 +261,12 @@ impl<'s> Parser<'s> {
     }
 
     /// Consume any token but cast it as a different kind
-    pub fn bump_remap(&mut self, kind: JsSyntaxKind) {
+    pub(crate) fn bump_remap(&mut self, kind: JsSyntaxKind) {
         self.do_bump(kind, LexContext::default())
     }
 
     /// Bumps the current token regardless of its kind and advances to the next token.
-    pub fn bump_any(&mut self) {
+    pub(crate) fn bump_any(&mut self) {
         let kind = self.nth(0);
         assert_ne!(kind, JsSyntaxKind::EOF);
         self.do_bump(kind, LexContext::default())
@@ -276,12 +274,12 @@ impl<'s> Parser<'s> {
 
     /// Make a new error builder with `error` severity
     #[must_use]
-    pub fn err_builder(&self, message: &str) -> Diagnostic {
+    pub(crate) fn err_builder(&self, message: &str) -> Diagnostic {
         Diagnostic::error(self.file_id, "SyntaxError", message)
     }
 
     /// Add an error
-    pub fn error(&mut self, err: impl ToDiagnostic) {
+    pub(crate) fn error(&mut self, err: impl ToDiagnostic) {
         let err = err.to_diagnostic(self);
 
         // Don't report another error if it would just be at the same position as the last error.
@@ -304,7 +302,7 @@ impl<'s> Parser<'s> {
     }
 
     /// Check if the parser's current token is contained in a token set
-    pub fn at_ts(&self, kinds: TokenSet) -> bool {
+    pub(crate) fn at_ts(&self, kinds: TokenSet) -> bool {
         kinds.contains(self.cur())
     }
 
@@ -341,12 +339,12 @@ impl<'s> Parser<'s> {
     }
 
     /// Get the source code of the parser's current token.
-    pub fn cur_src(&self) -> &str {
+    pub(crate) fn cur_src(&self) -> &str {
         &self.tokens.source()[self.cur_range()]
     }
 
     /// Try to eat a specific token kind, if the kind is not there then adds an error to the events stack.
-    pub fn expect(&mut self, kind: JsSyntaxKind) -> bool {
+    pub(crate) fn expect(&mut self, kind: JsSyntaxKind) -> bool {
         if self.eat(kind) {
             true
         } else {
@@ -357,12 +355,12 @@ impl<'s> Parser<'s> {
 
     /// Re-lexes the current token in the specified context. Returns the kind
     /// of the re-lexed token (can be the same as before if the context doesn't make a difference for the current token)
-    pub fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
+    pub(crate) fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
         self.tokens.re_lex(context)
     }
 
     /// Rewind the parser back to a previous position in time
-    pub fn rewind(&mut self, checkpoint: Checkpoint) {
+    pub(crate) fn rewind(&mut self, checkpoint: Checkpoint) {
         let Checkpoint {
             token_source,
             event_pos,
@@ -379,7 +377,7 @@ impl<'s> Parser<'s> {
 
     /// Get a checkpoint representing the progress of the parser at this point in time
     #[must_use]
-    pub fn checkpoint(&self) -> Checkpoint {
+    pub(crate) fn checkpoint(&self) -> Checkpoint {
         Checkpoint {
             token_source: self.tokens.checkpoint(),
             last_token_pos: self.last_token_event_pos,
@@ -390,7 +388,7 @@ impl<'s> Parser<'s> {
     }
 
     /// Allows parsing an unsupported syntax as skipped trivia tokens.
-    pub fn parse_as_skipped_trivia_tokens<P>(&mut self, parse: P)
+    pub(crate) fn parse_as_skipped_trivia_tokens<P>(&mut self, parse: P)
     where
         P: FnOnce(&mut Parser),
     {
@@ -409,7 +407,7 @@ impl<'s> Parser<'s> {
     /// Useful in situation where the parser must advance a few tokens to determine whatever a syntax is
     /// of one or the other kind.
     #[inline]
-    pub fn lookahead<F, R>(&mut self, op: F) -> R
+    pub(crate) fn lookahead<F, R>(&mut self, op: F) -> R
     where
         F: FnOnce(&mut Parser) -> R,
     {
@@ -431,12 +429,16 @@ impl<'s> Parser<'s> {
     }
 
     /// Make a new error builder with warning severity
-    pub fn warning_builder(&self, message: &str) -> Diagnostic {
+    pub(crate) fn warning_builder(&self, message: &str) -> Diagnostic {
         Diagnostic::warning(self.file_id, "SyntaxError", message)
     }
 
     /// Bump and add an error event
-    pub fn err_and_bump(&mut self, err: impl ToDiagnostic, unknown_syntax_kind: JsSyntaxKind) {
+    pub(crate) fn err_and_bump(
+        &mut self,
+        err: impl ToDiagnostic,
+        unknown_syntax_kind: JsSyntaxKind,
+    ) {
         let m = self.start();
         self.bump_any();
         m.complete(self, unknown_syntax_kind);
@@ -444,12 +446,12 @@ impl<'s> Parser<'s> {
     }
 
     /// Gets the source of a range
-    pub fn source(&self, span: TextRange) -> &'s str {
+    pub(crate) fn source(&self, span: TextRange) -> &'s str {
         &self.tokens.source()[span]
     }
 
     /// Whether the code we are parsing is a module
-    pub fn is_module(&self) -> bool {
+    pub(crate) fn is_module(&self) -> bool {
         self.source_type.module_kind.is_module()
     }
 }
@@ -457,7 +459,7 @@ impl<'s> Parser<'s> {
 /// A structure signifying the start of parsing of a syntax tree node
 #[derive(Debug)]
 #[must_use = "Marker must either be `completed` or `abandoned`"]
-pub struct Marker {
+pub(crate) struct Marker {
     /// The index in the events list
     pos: u32,
     /// The byte index where the node starts
@@ -557,7 +559,7 @@ impl Marker {
 
 /// A structure signifying a completed node
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct CompletedMarker {
+pub(crate) struct CompletedMarker {
     start_pos: u32,
     // Hack for parsing completed markers which have been preceded
     // This should be redone completely in the future

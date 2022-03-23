@@ -30,7 +30,7 @@ use std::ops::Range;
 /// This is a custom enum over using `Option` because [ParsedSyntax::Absent] values must be handled by the caller.
 #[derive(Debug, PartialEq, Eq)]
 #[must_use = "this `ParsedSyntax` may be an `Absent` variant, which should be handled"]
-pub enum ParsedSyntax {
+pub(crate) enum ParsedSyntax {
     /// A syntax that isn't present in the source code. Used when a parse rule can't match the current
     /// token of the parser.
     Absent,
@@ -106,6 +106,7 @@ impl ParsedSyntax {
     }
 
     /// Returns the contained [ParsedSyntax::Present] value or passed default
+    #[allow(unused)]
     #[inline]
     pub fn unwrap_or(self, default: CompletedMarker) -> CompletedMarker {
         match self {
@@ -116,6 +117,7 @@ impl ParsedSyntax {
 
     /// Returns the contained [ParsedSyntax::Present] value or computes it from a clojure.
     #[inline]
+    #[allow(unused)]
     pub fn unwrap_or_else<F>(self, default: F) -> CompletedMarker
     where
         F: FnOnce() -> CompletedMarker,
@@ -164,6 +166,7 @@ impl ParsedSyntax {
     }
 
     /// Adds a diagnostic at the current parser position if the syntax is present and return its marker.
+    #[allow(unused)]
     pub fn add_diagnostic_if_present<E, D>(
         self,
         p: &mut Parser,
@@ -266,13 +269,6 @@ impl ParsedSyntax {
                     Err(recovery_error)
                 }
             },
-        }
-    }
-
-    /// Undoes the completion and abandons the marker if the syntax is present.
-    pub fn abandon(self, p: &mut Parser) {
-        if let Present(marker) = self {
-            marker.undo_completion(p).abandon(p)
         }
     }
 }

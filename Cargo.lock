@@ -1416,19 +1416,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome_js_lexer"
-version = "0.2.0"
-dependencies = [
- "ansi_term",
- "atty",
- "bitflags",
- "quickcheck",
- "quickcheck_macros",
- "rome_diagnostics",
- "rome_js_syntax",
-]
-
-[[package]]
 name = "rome_js_parser"
 version = "0.3.0"
 dependencies = [
@@ -1437,8 +1424,9 @@ dependencies = [
  "drop_bomb",
  "expect-test",
  "indexmap",
+ "quickcheck",
+ "quickcheck_macros",
  "rome_diagnostics",
- "rome_js_lexer",
  "rome_js_syntax",
  "rome_rowan",
  "smallvec",

@@ -2,7 +2,7 @@ use crate::BenchmarkSummary;
 use itertools::Itertools;
 use rome_diagnostics::file::SimpleFile;
 use rome_diagnostics::{Diagnostic, Emitter, Severity};
-use rome_js_parser::{Parse, SourceType};
+use rome_js_parser::{parse_common, Parse, SourceType};
 use rome_js_syntax::JsAnyRoot;
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
@@ -55,13 +55,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
     let stats = dhat::get_stats().unwrap();
 
     let parser_timer = timing::start();
-
-    let (events, diagnostics, tokens) = {
-        let mut parser = rome_js_parser::Parser::new(code, 0, source_type);
-        rome_js_parser::syntax::program::parse(&mut parser);
-        let (events, tokens, diagnostics) = parser.finish();
-        (events, diagnostics, tokens)
-    };
+    let (events, diagnostics, trivia) = parse_common(code, 0, source_type);
     let parse_duration = parser_timer.stop();
 
     #[cfg(feature = "dhat-on")]
@@ -70,7 +64,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
     let stats = print_diff(stats, dhat::get_stats().unwrap());
 
     let tree_sink_timer = timing::start();
-    let mut tree_sink = rome_js_parser::LosslessTreeSink::new(code, &tokens);
+    let mut tree_sink = rome_js_parser::LosslessTreeSink::new(code, &trivia);
     rome_js_parser::process(&mut tree_sink, events, diagnostics);
     let (_green, diagnostics) = tree_sink.finish();
     let tree_sink_duration = tree_sink_timer.stop();
