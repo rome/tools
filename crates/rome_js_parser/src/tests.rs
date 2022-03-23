@@ -14,16 +14,10 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-function test() {}
-@test
-class Test {}
-@test.a?.c @test @test
-class Test2{}
-@test export class Test {}
-@test export default class Test {}
+const functionName1 = <T,>(arg) => false;
 "#;
 
-    let module = parse(src, 0, SourceType::ts());
+    let module = parse(src, 0, SourceType::tsx());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 

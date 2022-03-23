@@ -35,11 +35,15 @@ pub struct Formatter {
 pub enum TrailingSeparator {
     Allowed,
     Disallowed,
+    Mandatory,
 }
 
 impl TrailingSeparator {
     pub fn is_allowed(&self) -> bool {
         matches!(self, TrailingSeparator::Allowed)
+    }
+    pub fn is_mandatory(&self) -> bool {
+        matches!(self, TrailingSeparator::Mandatory)
     }
 }
 
@@ -277,6 +281,8 @@ impl Formatter {
                         // in order to remove only the token itself when the group doesn't break
                         // but still print its associated trivias unconditionally
                         self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))?
+                    } else if trailing_separator.is_mandatory() {
+                        separator.format(self)?
                     } else {
                         empty_element()
                     }
@@ -286,6 +292,8 @@ impl Formatter {
             } else if index == last_index {
                 if trailing_separator.is_allowed() {
                     if_group_breaks(separator_factory())
+                } else if trailing_separator.is_mandatory() {
+                    separator_factory()
                 } else {
                     empty_element()
                 }
