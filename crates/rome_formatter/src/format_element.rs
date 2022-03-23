@@ -919,24 +919,51 @@ pub enum FormatElement {
     Verbatim(Verbatim),
 }
 
+#[derive(Clone, Eq, PartialEq)]
+pub enum VerbatimKind {
+    Unknown,
+    Suppressed,
+    Verbatim {
+        /// the range that belongs to the node/token formatted verbatim
+        range: TextRange,
+        /// the text that belongs to the node/token formatted verbatim
+        text: String,
+    },
+}
+
 /// Information of the node/token formatted verbatim
 #[derive(Clone, Eq, PartialEq)]
 pub struct Verbatim {
-    /// the range that belongs to the node/token formatted verbatim
-    pub range: TextRange,
-    /// the text that belongs to the node/token formatted verbatim
-    pub text: String,
+    /// The reason this range is using verbatim formatting
+    pub kind: VerbatimKind,
     /// The [FormatElement] version of the node/token
     pub element: Box<FormatElement>,
 }
 
 impl Verbatim {
-    pub fn new(element: FormatElement, text: String, range: TextRange) -> Self {
+    pub fn new_verbatim(element: FormatElement, text: String, range: TextRange) -> Self {
         Self {
             element: Box::new(element),
-            range,
-            text,
+            kind: VerbatimKind::Verbatim { range, text },
         }
+    }
+
+    pub fn new_unknown(element: FormatElement) -> Self {
+        Self {
+            element: Box::new(element),
+            kind: VerbatimKind::Unknown,
+        }
+    }
+
+    pub fn new_suppressed(element: FormatElement) -> Self {
+        Self {
+            element: Box::new(element),
+            kind: VerbatimKind::Suppressed,
+        }
+    }
+
+    pub(crate) fn is_unknown(&self) -> bool {
+        matches!(self.kind, VerbatimKind::Unknown)
     }
 }
 

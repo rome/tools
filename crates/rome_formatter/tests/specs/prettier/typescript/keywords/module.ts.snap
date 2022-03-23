@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: module.ts
 
 ---
@@ -24,7 +24,7 @@ module Y3 {
 # Output
 ```js
 module Y3 {
-  public;
+  public
   module Module {
     class A {
       s: string;
@@ -33,10 +33,10 @@ module Y3 {
 
   // Apparently this parses :P
   export
-  private;
-  public;
-  protected;
-  static;
+  private
+  public
+  protected
+  static
   readonly;
   abstract;
   async;

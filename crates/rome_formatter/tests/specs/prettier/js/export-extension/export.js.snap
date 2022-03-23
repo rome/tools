@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: export.js
 
 ---
@@ -40,7 +40,7 @@ export * as d
 }
 from;
 "mod";
-export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo" ;
+export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
 export
 Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr };
 from;
@@ -48,7 +48,7 @@ from;
 export {
   foooooooooooooooooooooooooooooooooooooooooooooo,
   fooooooooooooooooooooooooooooooooooooooooooooooo,
-} from "fooooooooooooooooooooooooooooo" ;
+} from "fooooooooooooooooooooooooooooo";
 
 ```
 

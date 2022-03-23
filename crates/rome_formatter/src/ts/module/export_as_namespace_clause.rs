@@ -1,6 +1,7 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rome_js_syntax::TsExportAsNamespaceClause;
 use rome_js_syntax::TsExportAsNamespaceClauseFields;
@@ -14,13 +15,16 @@ impl ToFormatElement for TsExportAsNamespaceClause {
             semicolon_token,
         } = self.as_fields();
 
-        Ok(format_elements![
-            as_token.format(formatter)?,
-            space_token(),
-            namespace_token.format(formatter)?,
-            space_token(),
-            name.format(formatter)?,
-            semicolon_token.format_or(formatter, || token(";"))?,
-        ])
+        format_with_semicolon(
+            formatter,
+            format_elements![
+                as_token.format(formatter)?,
+                space_token(),
+                namespace_token.format(formatter)?,
+                space_token(),
+                name.format(formatter)?,
+            ],
+            semicolon_token,
+        )
     }
 }

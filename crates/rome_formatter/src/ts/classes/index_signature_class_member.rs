@@ -1,6 +1,7 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rome_js_syntax::TsIndexSignatureClassMember;
 use rome_js_syntax::TsIndexSignatureClassMemberFields;
@@ -16,16 +17,17 @@ impl ToFormatElement for TsIndexSignatureClassMember {
             semicolon_token,
         } = self.as_fields();
 
-        let semicolon_token = semicolon_token.format_or(formatter, || token(";"))?;
-
-        Ok(format_elements![
-            modifiers.format(formatter)?,
-            space_token(),
-            l_brack_token.format(formatter)?,
-            parameter.format(formatter)?,
-            r_brack_token.format(formatter)?,
-            type_annotation.format(formatter)?,
-            semicolon_token
-        ])
+        format_with_semicolon(
+            formatter,
+            format_elements![
+                modifiers.format(formatter)?,
+                space_token(),
+                l_brack_token.format(formatter)?,
+                parameter.format(formatter)?,
+                r_brack_token.format(formatter)?,
+                type_annotation.format(formatter)?,
+            ],
+            semicolon_token,
+        )
     }
 }

@@ -1,7 +1,8 @@
+use crate::utils::format_with_semicolon;
 use crate::{
     format_elements,
     formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
-    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rome_js_syntax::{TsPropertySignatureClassMember, TsPropertySignatureClassMemberFields};
 
@@ -16,14 +17,15 @@ impl ToFormatElement for TsPropertySignatureClassMember {
 
         let property_annotation = property_annotation.format_or_empty(formatter)?;
 
-        let semicolon_token = semicolon_token.format_or(formatter, || token(";"))?;
-
-        Ok(format_elements![
-            modifiers.format(formatter)?,
-            space_token(),
-            name.format(formatter)?,
-            property_annotation,
-            semicolon_token
-        ])
+        format_with_semicolon(
+            formatter,
+            format_elements![
+                modifiers.format(formatter)?,
+                space_token(),
+                name.format(formatter)?,
+                property_annotation,
+            ],
+            semicolon_token,
+        )
     }
 }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: type-modifier.ts
 
 ---
@@ -28,8 +28,8 @@ import type foo, { bar } from 'bar';
 ```js
 export type { SomeThing };
 export type { A as B };
-export type { B as C } from './a' ;
-export type { foo } from 'bar' ;
+export type { B as C } from './a';
+export type { foo } from 'bar';
 export type { foo };
 
 // this should be treated as a normal import statement

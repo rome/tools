@@ -1,7 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
+use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 use rome_js_syntax::JsExportNamedFromClause;
@@ -36,18 +37,19 @@ impl ToFormatElement for JsExportNamedFromClause {
         let assertion = assertion.format_with_or_empty(formatter, |assertion| {
             format_elements![space_token(), assertion]
         })?;
-        let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
 
-        Ok(format_elements![
-            type_token,
-            list,
-            space_token(),
-            from,
-            space_token(),
-            source,
-            space_token(),
-            assertion,
-            semicolon
-        ])
+        format_with_semicolon(
+            formatter,
+            format_elements![
+                type_token,
+                list,
+                space_token(),
+                from,
+                space_token(),
+                source,
+                assertion,
+            ],
+            semicolon_token,
+        )
     }
 }

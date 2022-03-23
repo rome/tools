@@ -1,7 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 
+use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 use rome_js_syntax::JsExportNamedClause;
@@ -28,8 +29,10 @@ impl ToFormatElement for JsExportNamedClause {
             &r_curly_token?,
         )?;
 
-        let semicolon = semicolon_token.format_or(formatter, || token(";"))?;
-
-        Ok(format_elements![type_token, list, semicolon])
+        format_with_semicolon(
+            formatter,
+            format_elements![type_token, list],
+            semicolon_token,
+        )
     }
 }

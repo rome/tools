@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: module-string-names.js
 
 ---
@@ -14,7 +14,7 @@ export { smile as "😄" } from "./emojis.js";
 # Output
 ```js
 import { "😄" as smile } from "./emojis.js";
-export { smile as "😄" } from "./emojis.js" ;
+export { smile as "😄" } from "./emojis.js";
 
 ```
 

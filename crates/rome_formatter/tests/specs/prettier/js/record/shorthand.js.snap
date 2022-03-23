@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: shorthand.js
 
 ---
@@ -15,7 +15,7 @@ console.log(record.url) // https://github.com/tc39/proposal-record-tuple
 # Output
 ```js
 const url = "https://github.com/tc39/proposal-record-tuple";
-const record = #;
+const record = #
 {
   url;
 }

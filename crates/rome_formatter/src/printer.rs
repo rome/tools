@@ -1,4 +1,6 @@
-use crate::format_element::{ConditionalGroupContent, Group, GroupPrintMode, LineMode, List};
+use crate::format_element::{
+    ConditionalGroupContent, Group, GroupPrintMode, LineMode, List, VerbatimKind,
+};
 use crate::intersperse::Intersperse;
 use crate::{
     hard_line_break, space_token, FormatElement, FormatOptions, Formatted, IndentStyle,
@@ -274,9 +276,10 @@ impl<'a> Printer<'a> {
             }
 
             FormatElement::Verbatim(verbatim) => {
-                self.state
-                    .verbatim_markers
-                    .push((verbatim.text.clone(), verbatim.range));
+                if let VerbatimKind::Verbatim { range, text } = &verbatim.kind {
+                    self.state.verbatim_markers.push((text.clone(), *range));
+                }
+
                 queue.enqueue(PrintElementCall::new(&verbatim.element, args));
             }
         }
