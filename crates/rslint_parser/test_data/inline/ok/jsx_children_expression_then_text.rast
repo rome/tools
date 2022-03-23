@@ -10,6 +10,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@1..5 "test" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@5..6 ">" [] [],
                     },
@@ -53,8 +54,9 @@ JsModule {
             0: L_ANGLE@0..1 "<" [] []
             1: JSX_NAME@1..5
               0: JSX_IDENT@1..5 "test" [] []
-            2: JSX_ATTRIBUTE_LIST@5..5
-            3: R_ANGLE@5..6 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@5..5
+            4: R_ANGLE@5..6 ">" [] []
           1: JSX_CHILD_LIST@6..47
             0: JSX_TEXT@6..11
               0: JSX_TEXT_LITERAL@6..11 "\n    " [] []

@@ -30,6 +30,7 @@ JsModule {
                                             name: JsxName {
                                                 value_token: JSX_IDENT@17..20 "div" [] [],
                                             },
+                                            type_arguments: missing (optional),
                                             attributes: JsxAttributeList [],
                                             r_angle_token: R_ANGLE@20..21 ">" [] [],
                                         },
@@ -81,6 +82,7 @@ JsModule {
                                                 name: JsxName {
                                                     value_token: JSX_IDENT@47..50 "div" [] [],
                                                 },
+                                                type_arguments: missing (optional),
                                                 attributes: JsxAttributeList [],
                                                 r_angle_token: R_ANGLE@50..51 ">" [] [],
                                             },
@@ -137,8 +139,9 @@ JsModule {
                       0: L_ANGLE@16..17 "<" [] []
                       1: JSX_NAME@17..20
                         0: JSX_IDENT@17..20 "div" [] []
-                      2: JSX_ATTRIBUTE_LIST@20..20
-                      3: R_ANGLE@20..21 ">" [] []
+                      2: (empty)
+                      3: JSX_ATTRIBUTE_LIST@20..20
+                      4: R_ANGLE@20..21 ">" [] []
                     1: JSX_CHILD_LIST@21..21
                     2: JSX_CLOSING_ELEMENT@21..27
                       0: L_ANGLE@21..22 "<" [] []
@@ -174,8 +177,9 @@ JsModule {
                         0: L_ANGLE@46..47 "<" [] []
                         1: JSX_NAME@47..50
                           0: JSX_IDENT@47..50 "div" [] []
-                        2: JSX_ATTRIBUTE_LIST@50..50
-                        3: R_ANGLE@50..51 ">" [] []
+                        2: (empty)
+                        3: JSX_ATTRIBUTE_LIST@50..50
+                        4: R_ANGLE@50..51 ">" [] []
                       1: JSX_CHILD_LIST@51..51
                       2: JSX_CLOSING_ELEMENT@51..57
                         0: L_ANGLE@51..52 "<" [] []

@@ -29,6 +29,7 @@ JsModule {
                                     name: JsxName {
                                         value_token: JSX_IDENT@27..31 "div" [] [Whitespace(" ")],
                                     },
+                                    type_arguments: missing (optional),
                                     attributes: JsxAttributeList [
                                         JsxAttribute {
                                             name: JsxName {
@@ -73,6 +74,7 @@ JsModule {
                                                     name: JsxName {
                                                         value_token: JSX_IDENT@77..78 "a" [] [],
                                                     },
+                                                    type_arguments: missing (optional),
                                                     attributes: JsxAttributeList [],
                                                     slash_token: SLASH@78..79 "/" [] [],
                                                     r_angle_token: R_ANGLE@79..80 ">" [] [],
@@ -106,6 +108,7 @@ JsModule {
                     name: JsxName {
                         value_token: JSX_IDENT@92..96 "div" [] [Whitespace(" ")],
                     },
+                    type_arguments: missing (optional),
                     attributes: JsxAttributeList [
                         JsxAttribute {
                             name: JsxName {
@@ -149,6 +152,7 @@ JsModule {
                     name: JsxName {
                         value_token: JSX_IDENT@140..144 "div" [] [Whitespace(" ")],
                     },
+                    type_arguments: missing (optional),
                     attributes: JsxAttributeList [
                         JsxAttribute {
                             name: JsxNamespaceName {
@@ -181,6 +185,7 @@ JsModule {
                     name: JsxName {
                         value_token: JSX_IDENT@188..192 "div" [] [Whitespace(" ")],
                     },
+                    type_arguments: missing (optional),
                     attributes: JsxAttributeList [
                         JsxAttribute {
                             name: JsxName {
@@ -207,6 +212,7 @@ JsModule {
                     name: JsxName {
                         value_token: JSX_IDENT@238..242 "div" [] [Whitespace(" ")],
                     },
+                    type_arguments: missing (optional),
                     attributes: JsxAttributeList [
                         JsxAttribute {
                             name: JsxName {
@@ -258,7 +264,8 @@ JsModule {
                   0: L_ANGLE@26..27 "<" [] []
                   1: JSX_NAME@27..31
                     0: JSX_IDENT@27..31 "div" [] [Whitespace(" ")]
-                  2: JSX_ATTRIBUTE_LIST@31..80
+                  2: (empty)
+                  3: JSX_ATTRIBUTE_LIST@31..80
                     0: JSX_ATTRIBUTE@31..50
                       0: JSX_NAME@31..45
                         0: JSX_IDENT@31..45 "string_literal" [] []
@@ -289,10 +296,11 @@ JsModule {
                           0: L_ANGLE@76..77 "<" [] []
                           1: JSX_NAME@77..78
                             0: JSX_IDENT@77..78 "a" [] []
-                          2: JSX_ATTRIBUTE_LIST@78..78
-                          3: SLASH@78..79 "/" [] []
-                          4: R_ANGLE@79..80 ">" [] []
-                  3: R_ANGLE@80..81 ">" [] []
+                          2: (empty)
+                          3: JSX_ATTRIBUTE_LIST@78..78
+                          4: SLASH@78..79 "/" [] []
+                          5: R_ANGLE@79..80 ">" [] []
+                  4: R_ANGLE@80..81 ">" [] []
                 1: JSX_CHILD_LIST@81..81
                 2: JSX_CLOSING_ELEMENT@81..87
                   0: L_ANGLE@81..82 "<" [] []
@@ -308,7 +316,8 @@ JsModule {
           0: L_ANGLE@90..92 "<" [Newline("\n")] []
           1: JSX_NAME@92..96
             0: JSX_IDENT@92..96 "div" [] [Whitespace(" ")]
-          2: JSX_ATTRIBUTE_LIST@96..135
+          2: (empty)
+          3: JSX_ATTRIBUTE_LIST@96..135
             0: JSX_ATTRIBUTE@96..115
               0: JSX_NAME@96..107
                 0: JSX_IDENT@96..107 "dashed-name" [] []
@@ -327,8 +336,8 @@ JsModule {
                 0: EQ@127..128 "=" [] []
                 1: JSX_STRING@128..135
                   0: JSX_STRING_LITERAL@128..135 "\"abcd\"" [] [Whitespace(" ")]
-          3: SLASH@135..136 "/" [] []
-          4: R_ANGLE@136..137 ">" [] []
+          4: SLASH@135..136 "/" [] []
+          5: R_ANGLE@136..137 ">" [] []
       1: SEMICOLON@137..138 ";" [] []
     2: JS_EXPRESSION_STATEMENT@138..186
       0: JSX_TAG_EXPRESSION@138..185
@@ -336,7 +345,8 @@ JsModule {
           0: L_ANGLE@138..140 "<" [Newline("\n")] []
           1: JSX_NAME@140..144
             0: JSX_IDENT@140..144 "div" [] [Whitespace(" ")]
-          2: JSX_ATTRIBUTE_LIST@144..183
+          2: (empty)
+          3: JSX_ATTRIBUTE_LIST@144..183
             0: JSX_ATTRIBUTE@144..183
               0: JSX_NAMESPACE_NAME@144..174
                 0: JSX_NAME@144..165
@@ -348,8 +358,8 @@ JsModule {
                 0: EQ@174..175 "=" [] []
                 1: JSX_STRING@175..183
                   0: JSX_STRING_LITERAL@175..183 "\"ahaha\"" [] [Whitespace(" ")]
-          3: SLASH@183..184 "/" [] []
-          4: R_ANGLE@184..185 ">" [] []
+          4: SLASH@183..184 "/" [] []
+          5: R_ANGLE@184..185 ">" [] []
       1: SEMICOLON@185..186 ";" [] []
     3: JS_EXPRESSION_STATEMENT@186..236
       0: JSX_TAG_EXPRESSION@186..235
@@ -357,7 +367,8 @@ JsModule {
           0: L_ANGLE@186..188 "<" [Newline("\n")] []
           1: JSX_NAME@188..192
             0: JSX_IDENT@188..192 "div" [] [Whitespace(" ")]
-          2: JSX_ATTRIBUTE_LIST@192..233
+          2: (empty)
+          3: JSX_ATTRIBUTE_LIST@192..233
             0: JSX_ATTRIBUTE@192..233
               0: JSX_NAME@192..208
                 0: JSX_IDENT@192..208 "multiline-string" [] []
@@ -365,8 +376,8 @@ JsModule {
                 0: EQ@208..209 "=" [] []
                 1: JSX_STRING@209..233
                   0: JSX_STRING_LITERAL@209..233 "'test\n  continues here'" [] [Whitespace(" ")]
-          3: SLASH@233..234 "/" [] []
-          4: R_ANGLE@234..235 ">" [] []
+          4: SLASH@233..234 "/" [] []
+          5: R_ANGLE@234..235 ">" [] []
       1: SEMICOLON@235..236 ";" [] []
     4: JS_EXPRESSION_STATEMENT@236..285
       0: JSX_TAG_EXPRESSION@236..284
@@ -374,7 +385,8 @@ JsModule {
           0: L_ANGLE@236..238 "<" [Newline("\n")] []
           1: JSX_NAME@238..242
             0: JSX_IDENT@238..242 "div" [] [Whitespace(" ")]
-          2: JSX_ATTRIBUTE_LIST@242..282
+          2: (empty)
+          3: JSX_ATTRIBUTE_LIST@242..282
             0: JSX_ATTRIBUTE@242..282
               0: JSX_NAME@242..264
                 0: JSX_IDENT@242..264 "invalid-unicode-escape" [] []
@@ -382,7 +394,7 @@ JsModule {
                 0: EQ@264..265 "=" [] []
                 1: JSX_STRING@265..282
                   0: JSX_STRING_LITERAL@265..282 "\"\\u10000\\u20000\"" [] [Whitespace(" ")]
-          3: SLASH@282..283 "/" [] []
-          4: R_ANGLE@283..284 ">" [] []
+          4: SLASH@282..283 "/" [] []
+          5: R_ANGLE@283..284 ">" [] []
       1: SEMICOLON@284..285 ";" [] []
   3: EOF@285..286 "" [Newline("\n")] []

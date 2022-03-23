@@ -188,6 +188,7 @@ fn is_nth_at_ts_type_parameters(p: &mut Parser, n: usize) -> bool {
     p.nth_at(n, T![<])
 }
 
+#[inline(always)]
 pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_type_impl(p, ConditionalType::Allowed)
 }
