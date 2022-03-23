@@ -51,21 +51,14 @@ mod cst;
 mod format_element;
 mod format_elements;
 mod formatter;
-pub mod formatter_traits;
+mod formatter_traits;
 mod intersperse;
 mod js;
 mod jsx;
+pub mod prelude;
 mod printer;
 mod ts;
 mod utils;
-
-pub use formatter::Formatter;
-use rome_js_syntax::{SyntaxError, SyntaxNode};
-use rome_rowan::TextRange;
-use rome_rowan::TextSize;
-use rome_rowan::TokenAtOffset;
-use std::fmt::Display;
-
 pub use format_element::{
     block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
     group_elements, hard_group_elements, hard_line_break, if_group_breaks,
@@ -73,8 +66,14 @@ pub use format_element::{
     soft_block_indent, soft_line_break, soft_line_break_or_space, soft_line_indent_or_space,
     space_token, token, FormatElement, Token,
 };
+pub use formatter::Formatter;
 pub use printer::Printer;
 pub use printer::PrinterOptions;
+use rome_js_syntax::{SyntaxError, SyntaxNode};
+use rome_rowan::TextRange;
+use rome_rowan::TextSize;
+use rome_rowan::TokenAtOffset;
+use std::fmt::Display;
 use std::str::FromStr;
 use thiserror::Error;
 

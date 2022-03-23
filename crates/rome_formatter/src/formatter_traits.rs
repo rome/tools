@@ -7,6 +7,9 @@ use crate::{
 use rome_js_syntax::{AstNode, SyntaxResult, SyntaxToken};
 
 /// Utility trait used to simplify the formatting of optional tokens
+///
+/// In order to take advantage of all the functions, you only need to implement the [FormatOptionalTokenAndNode::format_with_or]
+/// function.
 pub trait FormatOptionalTokenAndNode {
     /// This function tries to format an optional [token](rome_js_syntax::SyntaxToken) or [node](rome_js_syntax::AstNode).
     /// If the token doesn't exist, an [empty token](FormatElement::Empty) is created
@@ -16,7 +19,7 @@ pub trait FormatOptionalTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, empty_element};
     /// use rome_js_syntax::{SyntaxToken};
-    /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
+    /// use rome_formatter::prelude::{FormatOptionalTokenAndNode};
     ///
     /// let formatter = Formatter::default();
     /// let token: Option<SyntaxToken> = None;
@@ -37,7 +40,7 @@ pub trait FormatOptionalTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, empty_element, space_token, format_elements, token};
     /// use rome_js_syntax::{SyntaxToken};
-    /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
+    /// use rome_formatter::prelude::{FormatOptionalTokenAndNode};
     /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let formatter = Formatter::default();
@@ -79,7 +82,7 @@ pub trait FormatOptionalTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, token};
     /// use rome_js_syntax::{SyntaxToken};
-    /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
+    /// use rome_formatter::prelude::{FormatOptionalTokenAndNode};
     ///
     /// let formatter = Formatter::default();
     /// let empty_token: Option<SyntaxToken> = None;
@@ -107,7 +110,7 @@ pub trait FormatOptionalTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, empty_element, space_token, format_elements, token};
     /// use rome_js_syntax::{SyntaxToken};
-    /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
+    /// use rome_formatter::prelude::{FormatOptionalTokenAndNode};
     /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let formatter = Formatter::default();
@@ -153,7 +156,7 @@ pub trait FormatTokenAndNode {
     ///
     /// ```
     /// use rome_formatter::{Formatter, token, space_token};
-    /// use rome_formatter::formatter_traits::FormatTokenAndNode;
+    /// use rome_formatter::prelude::FormatTokenAndNode;
     /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let mut builder = SyntaxTreeBuilder::new();
@@ -185,7 +188,7 @@ pub trait FormatTokenAndNode {
     /// ```
     /// use rome_formatter::{Formatter, token, format_elements, space_token};
     /// use rome_js_syntax::{SyntaxNode, SyntaxTreeBuilder, JsSyntaxKind};
-    /// use rome_formatter::formatter_traits::FormatTokenAndNode;
+    /// use rome_formatter::prelude::FormatTokenAndNode;
     ///
     /// let mut builder = SyntaxTreeBuilder::new();
     /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
@@ -213,6 +216,10 @@ pub trait FormatTokenAndNode {
 
 /// Utility trait to convert [crate::FormatElement] to [FormatResult]
 pub trait IntoFormatResult {
+    /// Consumes a [crate::FormatElement] to return a [FormatResult::FormatElement]
+    ///
+    /// This function in important when working with closures and the rest of the traits
+    /// that belong to this module.
     fn into_format_result(self) -> FormatResult<FormatElement>;
 }
 
