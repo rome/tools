@@ -9,6 +9,7 @@ impl ToFormatElement for JsxAnyChild {
             Self::JsxSelfClosingElement(node) => node.to_format_element(formatter),
             Self::JsxText(node) => node.to_format_element(formatter),
             Self::JsxExpressionChild(node) => node.to_format_element(formatter),
+            Self::JsxSpreadChild(node) => node.to_format_element(formatter),
         }
     }
 }

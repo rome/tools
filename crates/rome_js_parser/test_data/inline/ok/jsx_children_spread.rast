@@ -1,0 +1,72 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@0..1 "<" [] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@1..4 "div" [] [],
+                        },
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@4..5 ">" [] [],
+                    },
+                    children: JsxChildList [
+                        JsxSpreadChild {
+                            l_curly_token: L_CURLY@5..6 "{" [] [],
+                            dotdotdot_token: DOT3@6..9 "..." [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@9..10 "a" [] [],
+                                },
+                            },
+                            r_curly_token: R_CURLY@10..11 "}" [] [],
+                        },
+                    ],
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@11..12 "<" [] [],
+                        slash_token: SLASH@12..13 "/" [] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@13..16 "div" [] [],
+                        },
+                        r_angle_token: R_ANGLE@16..17 ">" [] [],
+                    },
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@17..18 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..18
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..17
+    0: JS_EXPRESSION_STATEMENT@0..17
+      0: JSX_TAG_EXPRESSION@0..17
+        0: JSX_ELEMENT@0..17
+          0: JSX_OPENING_ELEMENT@0..5
+            0: L_ANGLE@0..1 "<" [] []
+            1: JSX_NAME@1..4
+              0: JSX_IDENT@1..4 "div" [] []
+            2: JSX_ATTRIBUTE_LIST@4..4
+            3: R_ANGLE@4..5 ">" [] []
+          1: JSX_CHILD_LIST@5..11
+            0: JSX_SPREAD_CHILD@5..11
+              0: L_CURLY@5..6 "{" [] []
+              1: DOT3@6..9 "..." [] []
+              2: JS_IDENTIFIER_EXPRESSION@9..10
+                0: JS_REFERENCE_IDENTIFIER@9..10
+                  0: IDENT@9..10 "a" [] []
+              3: R_CURLY@10..11 "}" [] []
+          2: JSX_CLOSING_ELEMENT@11..17
+            0: L_ANGLE@11..12 "<" [] []
+            1: SLASH@12..13 "/" [] []
+            2: JSX_NAME@13..16
+              0: JSX_IDENT@13..16 "div" [] []
+            3: R_ANGLE@16..17 ">" [] []
+      1: (empty)
+  3: EOF@17..18 "" [Newline("\n")] []

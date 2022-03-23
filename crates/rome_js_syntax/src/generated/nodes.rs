@@ -5519,6 +5519,45 @@ pub struct JsxSpreadAttributeFields {
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxSpreadChild {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxSpreadChild {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxSpreadChildFields {
+        JsxSpreadChildFields {
+            l_curly_token: self.l_curly_token(),
+            dotdotdot_token: self.dotdotdot_token(),
+            expression: self.expression(),
+            r_curly_token: self.r_curly_token(),
+        }
+    }
+    pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 2usize)
+    }
+    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 3usize)
+    }
+}
+pub struct JsxSpreadChildFields {
+    pub l_curly_token: SyntaxResult<SyntaxToken>,
+    pub dotdotdot_token: SyntaxResult<SyntaxToken>,
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsxString {
     pub(crate) syntax: SyntaxNode,
 }
@@ -9416,6 +9455,7 @@ pub enum JsxAnyChild {
     JsxElement(JsxElement),
     JsxExpressionChild(JsxExpressionChild),
     JsxSelfClosingElement(JsxSelfClosingElement),
+    JsxSpreadChild(JsxSpreadChild),
     JsxText(JsxText),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -14688,6 +14728,42 @@ impl From<JsxSpreadAttribute> for SyntaxNode {
 }
 impl From<JsxSpreadAttribute> for SyntaxElement {
     fn from(n: JsxSpreadAttribute) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxSpreadChild {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_SPREAD_CHILD }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxSpreadChild {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxSpreadChild")
+            .field(
+                "l_curly_token",
+                &support::DebugSyntaxResult(self.l_curly_token()),
+            )
+            .field(
+                "dotdotdot_token",
+                &support::DebugSyntaxResult(self.dotdotdot_token()),
+            )
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .field(
+                "r_curly_token",
+                &support::DebugSyntaxResult(self.r_curly_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxSpreadChild> for SyntaxNode {
+    fn from(n: JsxSpreadChild) -> SyntaxNode { n.syntax }
+}
+impl From<JsxSpreadChild> for SyntaxElement {
+    fn from(n: JsxSpreadChild) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsxString {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_STRING }
@@ -22410,6 +22486,9 @@ impl From<JsxExpressionChild> for JsxAnyChild {
 impl From<JsxSelfClosingElement> for JsxAnyChild {
     fn from(node: JsxSelfClosingElement) -> JsxAnyChild { JsxAnyChild::JsxSelfClosingElement(node) }
 }
+impl From<JsxSpreadChild> for JsxAnyChild {
+    fn from(node: JsxSpreadChild) -> JsxAnyChild { JsxAnyChild::JsxSpreadChild(node) }
+}
 impl From<JsxText> for JsxAnyChild {
     fn from(node: JsxText) -> JsxAnyChild { JsxAnyChild::JsxText(node) }
 }
@@ -22417,7 +22496,11 @@ impl AstNode for JsxAnyChild {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         matches!(
             kind,
-            JSX_ELEMENT | JSX_EXPRESSION_CHILD | JSX_SELF_CLOSING_ELEMENT | JSX_TEXT
+            JSX_ELEMENT
+                | JSX_EXPRESSION_CHILD
+                | JSX_SELF_CLOSING_ELEMENT
+                | JSX_SPREAD_CHILD
+                | JSX_TEXT
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -22427,6 +22510,7 @@ impl AstNode for JsxAnyChild {
             JSX_SELF_CLOSING_ELEMENT => {
                 JsxAnyChild::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
             }
+            JSX_SPREAD_CHILD => JsxAnyChild::JsxSpreadChild(JsxSpreadChild { syntax }),
             JSX_TEXT => JsxAnyChild::JsxText(JsxText { syntax }),
             _ => return None,
         };
@@ -22437,6 +22521,7 @@ impl AstNode for JsxAnyChild {
             JsxAnyChild::JsxElement(it) => &it.syntax,
             JsxAnyChild::JsxExpressionChild(it) => &it.syntax,
             JsxAnyChild::JsxSelfClosingElement(it) => &it.syntax,
+            JsxAnyChild::JsxSpreadChild(it) => &it.syntax,
             JsxAnyChild::JsxText(it) => &it.syntax,
         }
     }
@@ -22447,6 +22532,7 @@ impl std::fmt::Debug for JsxAnyChild {
             JsxAnyChild::JsxElement(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxExpressionChild(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyChild::JsxSpreadChild(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxText(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -22457,6 +22543,7 @@ impl From<JsxAnyChild> for SyntaxNode {
             JsxAnyChild::JsxElement(it) => it.into(),
             JsxAnyChild::JsxExpressionChild(it) => it.into(),
             JsxAnyChild::JsxSelfClosingElement(it) => it.into(),
+            JsxAnyChild::JsxSpreadChild(it) => it.into(),
             JsxAnyChild::JsxText(it) => it.into(),
         }
     }
@@ -25292,6 +25379,11 @@ impl std::fmt::Display for JsxSelfClosingElement {
     }
 }
 impl std::fmt::Display for JsxSpreadAttribute {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxSpreadChild {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -28649,6 +28741,9 @@ impl Debug for DebugSyntaxElement {
                 }
                 JSX_SPREAD_ATTRIBUTE => {
                     std::fmt::Debug::fmt(&JsxSpreadAttribute::cast(node.clone()).unwrap(), f)
+                }
+                JSX_SPREAD_CHILD => {
+                    std::fmt::Debug::fmt(&JsxSpreadChild::cast(node.clone()).unwrap(), f)
                 }
                 JSX_STRING => std::fmt::Debug::fmt(&JsxString::cast(node.clone()).unwrap(), f),
                 JSX_TAG_EXPRESSION => {

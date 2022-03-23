@@ -513,6 +513,7 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
+#[derive(PartialEq, Eq)]
 enum ExpressionBlock {
     Attribute,
     Children,
@@ -582,6 +583,7 @@ enum ExpressionBlock {
 //   {super()}
 //   {new.target}
 // </div>
+
 fn parse_jsx_expression_block(p: &mut Parser, kind: ExpressionBlock) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return ParsedSyntax::Absent;
@@ -590,6 +592,31 @@ fn parse_jsx_expression_block(p: &mut Parser, kind: ExpressionBlock) -> ParsedSy
     let m = p.start();
 
     p.bump(T!['{']);
+
+    // test jsx jsx_children_spread
+    // <div>{...a}</div>
+    if kind == ExpressionBlock::Children && p.at(T![...]) {
+        p.expect(T![...]);
+        let expr = super::expr::parse_expression(p, ExpressionContext::default()).map(|mut m| {
+            match m.kind() {
+                JsSyntaxKind::IMPORT_META
+                | JsSyntaxKind::NEW_TARGET
+                | JsSyntaxKind::JS_CLASS_EXPRESSION
+                | JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
+                    let err = p
+                        .err_builder("This expression is not valid as a JSX spread expression")
+                        .primary(m.range(p), "");
+                    p.error(err);
+                    m.change_to_unknown(p);
+                    m
+                }
+                _ => m,
+            }
+        });
+        expr.or_add_diagnostic(p, expected_expression);
+        p.expect(T!['}']);
+        return Present(m.complete(p, JSX_SPREAD_CHILD));
+    }
 
     let expr = super::expr::parse_expression(p, ExpressionContext::default());
     let _ = expr.map(|mut m| match m.kind() {

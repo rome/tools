@@ -2274,9 +2274,16 @@ JsxAnyChild =
 	| JsxSelfClosingElement
 	| JsxText
 	| JsxExpressionChild
+	| JsxSpreadChild
 
 JsxExpressionChild =
 	'{'
+	expression: JsAnyExpression
+	'}'
+
+JsxSpreadChild = 
+	'{'
+	'...'
 	expression: JsAnyExpression
 	'}'
 

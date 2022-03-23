@@ -707,6 +707,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxSpreadAttribute::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JSX_SPREAD_CHILD => {
+                    let $pattern = unsafe { $crate::JsxSpreadChild::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JSX_STRING => {
                     let $pattern = unsafe { $crate::JsxString::new_unchecked(node) };
                     $body
