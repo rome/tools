@@ -145,6 +145,12 @@ impl GreenTrivia {
         I::IntoIter: ExactSizeIterator,
     {
         let mut items = pieces.into_iter();
+        if items.len() == 0 {
+            return GreenTrivia {
+                inner: GreenTriviaRepr { bits: 0 },
+            };
+        }
+
         if items.len() == 1 {
             // SAFETY: Unwrap guarded by above call to len
             let item = GreenTriviaRepr {
@@ -185,13 +191,6 @@ impl GreenTrivia {
         }
 
         GreenTrivia { inner: data }
-    }
-
-    /// Creates an empty trivia
-    pub fn empty() -> Self {
-        GreenTrivia {
-            inner: GreenTriviaRepr { bits: 0 },
-        }
     }
 
     /// Returns the total length of all pieces

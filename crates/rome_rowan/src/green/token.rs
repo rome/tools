@@ -163,7 +163,7 @@ impl GreenToken {
     #[inline]
     #[cfg(test)]
     pub fn new(kind: RawSyntaxKind, text: &str) -> GreenToken {
-        let leading = GreenTrivia::empty();
+        let leading = GreenTrivia::new(None);
         let trailing = leading.clone();
 
         Self::with_trivia(kind, text, leading, trailing)
@@ -243,7 +243,7 @@ mod tests {
 
     #[test]
     fn empty_text_len() {
-        assert_eq!(TextSize::from(0), GreenTrivia::empty().text_len());
+        assert_eq!(TextSize::from(0), GreenTrivia::new(None).text_len());
     }
 
     #[quickcheck]

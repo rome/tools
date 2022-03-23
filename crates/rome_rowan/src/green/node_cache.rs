@@ -1,9 +1,8 @@
 use hashbrown::hash_map::{RawEntryMut, RawOccupiedEntryMut, RawVacantEntryMut};
 use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
-use text_size::TextSize;
 
-use crate::api::{TriviaPiece, TriviaPieceKind};
+use crate::api::TriviaPiece;
 use crate::green::Slot;
 use crate::{
     green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
@@ -251,56 +250,37 @@ impl<'a> VacantNodeEntry<'a> {
 #[derive(Debug)]
 struct CachedTrivia(GreenTrivia);
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 struct TriviaCache {
     /// Generic cache for trivia
     cache: HashMap<CachedTrivia, ()>,
-
-    /// Cached single whitespace trivia.
-    whitespace: GreenTrivia,
-}
-
-impl Default for TriviaCache {
-    fn default() -> Self {
-        Self {
-            cache: Default::default(),
-            whitespace: GreenTrivia::new([TriviaPiece::whitespace(1)]),
-        }
-    }
 }
 
 impl TriviaCache {
     /// Tries to retrieve a [GreenTrivia] with the given pieces from the cache or creates a new one and caches
     /// it for further calls.
     fn get(&mut self, pieces: &[TriviaPiece]) -> GreenTrivia {
-        match pieces {
-            [] => GreenTrivia::empty(),
-            [TriviaPiece {
-                kind: TriviaPieceKind::Whitespace,
-                length,
-            }] if *length == TextSize::from(1) => self.whitespace.clone(),
+        // Bypass the cache if there is one or less piece in the trivia (it can
+        // be stored directly inside the GreenTrivia)
+        if pieces.len() < 2 {
+            return GreenTrivia::new(pieces.first().copied());
+        }
 
-            _ => {
-                let hash = Self::trivia_hash_of(pieces);
+        let hash = Self::trivia_hash_of(pieces);
 
-                let entry = self
-                    .cache
-                    .raw_entry_mut()
-                    .from_hash(hash, |trivia| trivia.0.pieces() == pieces);
+        let entry = self
+            .cache
+            .raw_entry_mut()
+            .from_hash(hash, |trivia| trivia.0.pieces() == pieces);
 
-                match entry {
-                    RawEntryMut::Occupied(entry) => entry.key().0.clone(),
-                    RawEntryMut::Vacant(entry) => {
-                        let trivia = GreenTrivia::new(pieces.iter().copied());
-                        entry.insert_with_hasher(
-                            hash,
-                            CachedTrivia(trivia.clone()),
-                            (),
-                            |cached| Self::trivia_hash_of(cached.0.pieces()),
-                        );
-                        trivia
-                    }
-                }
+        match entry {
+            RawEntryMut::Occupied(entry) => entry.key().0.clone(),
+            RawEntryMut::Vacant(entry) => {
+                let trivia = GreenTrivia::new(pieces.iter().copied());
+                entry.insert_with_hasher(hash, CachedTrivia(trivia.clone()), (), |cached| {
+                    Self::trivia_hash_of(cached.0.pieces())
+                });
+                trivia
             }
         }
     }
