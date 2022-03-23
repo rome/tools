@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: test.js
 
 ---
@@ -26,7 +26,7 @@ export {
   value3,
   value4 as value4_renamed,
   value5,
-} from "exports" ;
+} from "exports";
 
 export
 a, { b };

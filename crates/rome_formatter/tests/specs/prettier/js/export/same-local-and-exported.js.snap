@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: same-local-and-exported.js
 
 ---
@@ -14,9 +14,9 @@ export {c as /* comment */c} from 'c';
 
 # Output
 ```js
-export { a } from 'a' ;
-export { b as b } from 'b' ;
-export { c as /* comment */ c } from 'c' ;
+export { a } from 'a';
+export { b as b } from 'b';
+export { c as /* comment */ c } from 'c';
 
 ```
 

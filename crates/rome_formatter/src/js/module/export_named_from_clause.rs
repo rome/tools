@@ -47,7 +47,6 @@ impl ToFormatElement for JsExportNamedFromClause {
                 from,
                 space_token(),
                 source,
-                space_token(),
                 assertion,
             ],
             semicolon_token,
