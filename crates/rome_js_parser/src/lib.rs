@@ -78,10 +78,9 @@ pub use crate::{
     lexer::{LexContext, ReLexContext},
     lossless_tree_sink::LosslessTreeSink,
     parse::*,
-    parser::Parser,
     token_set::TokenSet,
 };
-pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery};
+pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser};
 pub(crate) use state::{ParserState, StrictMode};
 use std::fmt::{Debug, Display};
 

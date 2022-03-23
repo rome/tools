@@ -31,7 +31,7 @@ use crate::{
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
-pub struct ParserProgress(Option<TextSize>);
+pub(crate) struct ParserProgress(Option<TextSize>);
 
 impl ParserProgress {
     /// Returns true if the current parser position is passed this position
@@ -120,7 +120,7 @@ impl ParserProgress {
 ///
 ///
 /// ```
-pub struct Parser<'s> {
+pub(crate) struct Parser<'s> {
     file_id: usize,
     pub(super) tokens: TokenSource<'s>,
     pub(super) events: Vec<Event>,
@@ -159,36 +159,36 @@ impl<'s> Parser<'s> {
 
     /// Gets the current token kind of the parser
     #[inline]
-    pub(crate) fn cur(&self) -> JsSyntaxKind {
+    pub fn cur(&self) -> JsSyntaxKind {
         self.tokens.current()
     }
 
     /// Gets the range of the current token
     #[inline]
-    pub(crate) fn cur_range(&self) -> TextRange {
+    pub fn cur_range(&self) -> TextRange {
         self.tokens.current_range()
     }
 
     /// Checks if the parser is currently at a specific token
     #[inline]
-    pub(crate) fn at(&self, kind: JsSyntaxKind) -> bool {
+    pub fn at(&self, kind: JsSyntaxKind) -> bool {
         self.cur() == kind
     }
 
     /// Look ahead at a token and get its kind.
     #[inline]
-    pub(crate) fn nth(&mut self, n: usize) -> JsSyntaxKind {
+    pub fn nth(&mut self, n: usize) -> JsSyntaxKind {
         self.tokens.nth(n)
     }
 
     /// Checks if a token lookahead is something
     #[inline]
-    pub(crate) fn nth_at(&mut self, n: usize, kind: JsSyntaxKind) -> bool {
+    pub fn nth_at(&mut self, n: usize, kind: JsSyntaxKind) -> bool {
         self.nth(n) == kind
     }
 
     /// Returns the kind of the last bumped token.
-    pub(crate) fn last(&self) -> Option<JsSyntaxKind> {
+    pub fn last(&self) -> Option<JsSyntaxKind> {
         self.last_token_event_pos
             .map(|pos| match self.events[pos as usize] {
                 Event::Token { kind, .. } => kind,
@@ -197,7 +197,7 @@ impl<'s> Parser<'s> {
     }
 
     /// Returns the range of the last bumped token.
-    pub(crate) fn last_range(&self) -> Option<TextRange> {
+    pub fn last_range(&self) -> Option<TextRange> {
         self.last_token_event_pos
             .map(|pos| match self.events[pos as usize] {
                 Event::Token { range, .. } => range,
@@ -207,7 +207,7 @@ impl<'s> Parser<'s> {
 
     /// Consume the next token if `kind` matches.
     #[inline]
-    pub(crate) fn eat(&mut self, kind: JsSyntaxKind) -> bool {
+    pub fn eat(&mut self, kind: JsSyntaxKind) -> bool {
         if !self.at(kind) {
             return false;
         }
@@ -220,7 +220,7 @@ impl<'s> Parser<'s> {
     /// Starts a new node in the syntax tree. All nodes and tokens
     /// consumed between the `start` and the corresponding `Marker::complete`
     /// belong to the same node.
-    pub(crate) fn start(&mut self) -> Marker {
+    pub fn start(&mut self) -> Marker {
         let pos = self.events.len() as u32;
         let start = self.tokens.position();
         self.push_event(Event::tombstone(start));
@@ -229,26 +229,26 @@ impl<'s> Parser<'s> {
 
     /// Tests if there's a line break before the nth token.
     #[inline]
-    pub(crate) fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
+    pub fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
         self.tokens.has_nth_preceding_line_break(n)
     }
 
     /// Tests if there's a line break before the current token (between the last and current)
     #[inline]
-    pub(crate) fn has_preceding_line_break(&self) -> bool {
+    pub fn has_preceding_line_break(&self) -> bool {
         self.tokens.has_preceding_line_break()
     }
 
     /// Consume the current token if `kind` matches.
     #[inline]
-    pub(crate) fn bump(&mut self, kind: JsSyntaxKind) {
+    pub fn bump(&mut self, kind: JsSyntaxKind) {
         self.bump_with_context(kind, LexContext::default())
     }
 
     /// Consumes the current token if `kind` matches and lexes the next token using the
     /// specified `context.
     #[inline]
-    pub(crate) fn bump_with_context(&mut self, kind: JsSyntaxKind, context: LexContext) {
+    pub fn bump_with_context(&mut self, kind: JsSyntaxKind, context: LexContext) {
         assert_eq!(
             kind,
             self.cur(),
@@ -261,12 +261,12 @@ impl<'s> Parser<'s> {
     }
 
     /// Consume any token but cast it as a different kind
-    pub(crate) fn bump_remap(&mut self, kind: JsSyntaxKind) {
+    pub fn bump_remap(&mut self, kind: JsSyntaxKind) {
         self.do_bump(kind, LexContext::default())
     }
 
     /// Bumps the current token regardless of its kind and advances to the next token.
-    pub(crate) fn bump_any(&mut self) {
+    pub fn bump_any(&mut self) {
         let kind = self.nth(0);
         assert_ne!(kind, JsSyntaxKind::EOF);
         self.do_bump(kind, LexContext::default())
@@ -274,12 +274,12 @@ impl<'s> Parser<'s> {
 
     /// Make a new error builder with `error` severity
     #[must_use]
-    pub(crate) fn err_builder(&self, message: &str) -> Diagnostic {
+    pub fn err_builder(&self, message: &str) -> Diagnostic {
         Diagnostic::error(self.file_id, "SyntaxError", message)
     }
 
     /// Add an error
-    pub(crate) fn error(&mut self, err: impl ToDiagnostic) {
+    pub fn error(&mut self, err: impl ToDiagnostic) {
         let err = err.to_diagnostic(self);
 
         // Don't report another error if it would just be at the same position as the last error.
@@ -302,7 +302,7 @@ impl<'s> Parser<'s> {
     }
 
     /// Check if the parser's current token is contained in a token set
-    pub(crate) fn at_ts(&self, kinds: TokenSet) -> bool {
+    pub fn at_ts(&self, kinds: TokenSet) -> bool {
         kinds.contains(self.cur())
     }
 
@@ -339,12 +339,12 @@ impl<'s> Parser<'s> {
     }
 
     /// Get the source code of the parser's current token.
-    pub(crate) fn cur_src(&self) -> &str {
+    pub fn cur_src(&self) -> &str {
         &self.tokens.source()[self.cur_range()]
     }
 
     /// Try to eat a specific token kind, if the kind is not there then adds an error to the events stack.
-    pub(crate) fn expect(&mut self, kind: JsSyntaxKind) -> bool {
+    pub fn expect(&mut self, kind: JsSyntaxKind) -> bool {
         if self.eat(kind) {
             true
         } else {
@@ -355,12 +355,12 @@ impl<'s> Parser<'s> {
 
     /// Re-lexes the current token in the specified context. Returns the kind
     /// of the re-lexed token (can be the same as before if the context doesn't make a difference for the current token)
-    pub(crate) fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
+    pub fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
         self.tokens.re_lex(context)
     }
 
     /// Rewind the parser back to a previous position in time
-    pub(crate) fn rewind(&mut self, checkpoint: Checkpoint) {
+    pub fn rewind(&mut self, checkpoint: Checkpoint) {
         let Checkpoint {
             token_source,
             event_pos,
@@ -377,7 +377,7 @@ impl<'s> Parser<'s> {
 
     /// Get a checkpoint representing the progress of the parser at this point in time
     #[must_use]
-    pub(crate) fn checkpoint(&self) -> Checkpoint {
+    pub fn checkpoint(&self) -> Checkpoint {
         Checkpoint {
             token_source: self.tokens.checkpoint(),
             last_token_pos: self.last_token_event_pos,
@@ -388,7 +388,7 @@ impl<'s> Parser<'s> {
     }
 
     /// Allows parsing an unsupported syntax as skipped trivia tokens.
-    pub(crate) fn parse_as_skipped_trivia_tokens<P>(&mut self, parse: P)
+    pub fn parse_as_skipped_trivia_tokens<P>(&mut self, parse: P)
     where
         P: FnOnce(&mut Parser),
     {
@@ -407,7 +407,7 @@ impl<'s> Parser<'s> {
     /// Useful in situation where the parser must advance a few tokens to determine whatever a syntax is
     /// of one or the other kind.
     #[inline]
-    pub(crate) fn lookahead<F, R>(&mut self, op: F) -> R
+    pub fn lookahead<F, R>(&mut self, op: F) -> R
     where
         F: FnOnce(&mut Parser) -> R,
     {
@@ -429,16 +429,12 @@ impl<'s> Parser<'s> {
     }
 
     /// Make a new error builder with warning severity
-    pub(crate) fn warning_builder(&self, message: &str) -> Diagnostic {
+    pub fn warning_builder(&self, message: &str) -> Diagnostic {
         Diagnostic::warning(self.file_id, "SyntaxError", message)
     }
 
     /// Bump and add an error event
-    pub(crate) fn err_and_bump(
-        &mut self,
-        err: impl ToDiagnostic,
-        unknown_syntax_kind: JsSyntaxKind,
-    ) {
+    pub fn err_and_bump(&mut self, err: impl ToDiagnostic, unknown_syntax_kind: JsSyntaxKind) {
         let m = self.start();
         self.bump_any();
         m.complete(self, unknown_syntax_kind);
@@ -446,12 +442,12 @@ impl<'s> Parser<'s> {
     }
 
     /// Gets the source of a range
-    pub(crate) fn source(&self, span: TextRange) -> &'s str {
+    pub fn source(&self, span: TextRange) -> &'s str {
         &self.tokens.source()[span]
     }
 
     /// Whether the code we are parsing is a module
-    pub(crate) fn is_module(&self) -> bool {
+    pub fn is_module(&self) -> bool {
         self.source_type.module_kind.is_module()
     }
 }
