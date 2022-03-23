@@ -495,8 +495,8 @@ mod tests {
 
     use super::{format_range, FormatOptions};
     use crate::IndentStyle;
+    use rome_js_parser::parse_script;
     use rome_rowan::{TextRange, TextSize};
-    use rslint_parser::parse_script;
 
     #[test]
     fn test_range_formatting() {
@@ -589,7 +589,7 @@ mod test {
     use crate::check_reformat::{check_reformat, CheckReformatParams};
     use crate::format;
     use crate::FormatOptions;
-    use rslint_parser::{parse, SourceType};
+    use rome_js_parser::{parse, SourceType};
 
     #[test]
     #[ignore]

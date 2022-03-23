@@ -1,10 +1,10 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
+use rome_diagnostics::file::SimpleFiles;
+use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
+use rome_diagnostics::{Formatter as ErrorFormatter, LongFormatter};
 use rome_formatter::{format as format_code, to_format_element, FormatOptions, IndentStyle};
-use rslint_errors::file::SimpleFiles;
-use rslint_errors::termcolor::{ColorSpec, WriteColor};
-use rslint_errors::{Formatter as ErrorFormatter, LongFormatter};
-use rslint_parser::{parse, SourceType};
+use rome_js_parser::{parse, SourceType};
 use std::io;
 use wasm_bindgen::prelude::*;
 

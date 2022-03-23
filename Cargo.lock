@@ -1337,9 +1337,9 @@ name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "rome_diagnostics",
+ "rome_js_parser",
  "rome_js_syntax",
- "rslint_errors",
- "rslint_parser",
  "tracing",
 ]
 
@@ -1353,10 +1353,10 @@ dependencies = [
  "parking_lot 0.12.0",
  "pico-args",
  "rome_core",
+ "rome_diagnostics",
  "rome_formatter",
  "rome_fs",
- "rslint_errors",
- "rslint_parser",
+ "rome_js_parser",
  "tracing",
  "tracing-subscriber",
 ]
@@ -1369,6 +1369,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_diagnostics"
+version = "0.2.0"
+dependencies = [
+ "colored",
+ "lsp-types 0.92.0",
+ "rome_rowan",
+ "rome_text_edit",
+ "serde",
+ "termcolor",
+ "unicode-width",
+]
+
+[[package]]
 name = "rome_formatter"
 version = "0.0.0"
 dependencies = [
@@ -1377,11 +1390,11 @@ dependencies = [
  "insta",
  "parking_lot 0.12.0",
  "rome_core",
+ "rome_diagnostics",
  "rome_fs",
+ "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
- "rslint_errors",
- "rslint_parser",
  "serde",
  "serde_json",
  "similar",
@@ -1399,6 +1412,37 @@ dependencies = [
  "indexmap",
  "parking_lot 0.12.0",
  "rayon",
+ "tracing",
+]
+
+[[package]]
+name = "rome_js_lexer"
+version = "0.2.0"
+dependencies = [
+ "ansi_term",
+ "atty",
+ "bitflags",
+ "quickcheck",
+ "quickcheck_macros",
+ "rome_diagnostics",
+ "rome_js_syntax",
+]
+
+[[package]]
+name = "rome_js_parser"
+version = "0.3.0"
+dependencies = [
+ "bitflags",
+ "cfg-if",
+ "drop_bomb",
+ "expect-test",
+ "indexmap",
+ "rome_diagnostics",
+ "rome_js_lexer",
+ "rome_js_syntax",
+ "rome_rowan",
+ "smallvec",
+ "tests_macros",
  "tracing",
 ]
 
@@ -1421,11 +1465,11 @@ dependencies = [
  "lspower",
  "parking_lot 0.12.0",
  "rome_analyze",
+ "rome_diagnostics",
  "rome_formatter",
  "rome_fs",
+ "rome_js_parser",
  "rome_js_syntax",
- "rslint_errors",
- "rslint_parser",
  "serde",
  "serde_json",
  "tokio",
@@ -1438,9 +1482,9 @@ dependencies = [
 name = "rome_playground"
 version = "0.0.0"
 dependencies = [
+ "rome_diagnostics",
  "rome_formatter",
- "rslint_errors",
- "rslint_parser",
+ "rome_js_parser",
  "wasm-bindgen",
 ]
 
@@ -1459,51 +1503,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rslint_errors"
-version = "0.2.0"
-dependencies = [
- "colored",
- "lsp-types 0.92.0",
- "rome_rowan",
- "rslint_text_edit",
- "serde",
- "termcolor",
- "unicode-width",
-]
-
-[[package]]
-name = "rslint_lexer"
-version = "0.2.0"
-dependencies = [
- "ansi_term",
- "atty",
- "bitflags",
- "quickcheck",
- "quickcheck_macros",
- "rome_js_syntax",
- "rslint_errors",
-]
-
-[[package]]
-name = "rslint_parser"
-version = "0.3.0"
-dependencies = [
- "bitflags",
- "cfg-if",
- "drop_bomb",
- "expect-test",
- "indexmap",
- "rome_js_syntax",
- "rome_rowan",
- "rslint_errors",
- "rslint_lexer",
- "smallvec",
- "tests_macros",
- "tracing",
-]
-
-[[package]]
-name = "rslint_text_edit"
+name = "rome_text_edit"
 version = "0.1.0"
 dependencies = [
  "rome_rowan",
@@ -2256,10 +2256,10 @@ dependencies = [
  "itertools",
  "pico-args",
  "regex",
+ "rome_diagnostics",
  "rome_formatter",
+ "rome_js_parser",
  "rome_js_syntax",
- "rslint_errors",
- "rslint_parser",
  "timing",
  "ureq",
  "url",
@@ -2294,10 +2294,10 @@ dependencies = [
  "once_cell",
  "pico-args",
  "regex",
+ "rome_diagnostics",
+ "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
- "rslint_errors",
- "rslint_parser",
  "serde",
  "serde_json",
  "serde_yaml",

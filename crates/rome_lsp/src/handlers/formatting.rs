@@ -4,8 +4,8 @@ use anyhow::{bail, Result};
 use lspower::lsp::*;
 use rome_analyze::FileId;
 use rome_formatter::{FormatOptions, IndentStyle};
+use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::{TextRange, TokenAtOffset};
-use rslint_parser::{parse, SourceType};
 use std::str::FromStr;
 use tracing::info;
 

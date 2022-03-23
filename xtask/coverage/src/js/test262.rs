@@ -2,9 +2,9 @@ use crate::runner::{
     create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
+use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::AstNode;
 use rome_rowan::api::SyntaxKind;
-use rslint_parser::{parse, SourceType};
 use serde::Deserialize;
 use std::io;
 use std::path::Path;

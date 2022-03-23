@@ -1,7 +1,7 @@
 mod features;
 mod utils;
 
-use rslint_parser::{parse, SourceType};
+use rome_js_parser::{parse, SourceType};
 use std::collections::HashMap;
 use std::convert::TryInto;
 use std::fmt::{Display, Formatter};

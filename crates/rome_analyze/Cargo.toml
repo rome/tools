@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 rome_js_syntax = { path = "../rome_js_syntax" }
-rslint_parser = { path = "../rslint_parser" }
+rome_js_parser = { path = "../rome_js_parser" }
 anyhow = "1.0.52"
 tracing = { version = "0.1.31", features = ["max_level_trace", "release_max_level_warn"] }
-rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
+rome_diagnostics = { path = "../rome_diagnostics" }

@@ -59,7 +59,7 @@ Here's a list of internal conventions that we follow to write grammar:
 This is needed because it will generate a different type of code, useful in case of errors inside the source code Rome will parse.
 
 ## `cargo codegen test`
-This command extracts inline comment tests inside `rslint_parser` into the directory `rslint_parser/test_data/`.
+This command extracts inline comment tests inside `rome_js_parser` into the directory `rome_js_parser/test_data/`.
 
 A usual workflow would be:
 ```bash
@@ -70,5 +70,5 @@ UPDATE_EXPECT=1 cargo test parser # for committing the changes
 ```
 
 ## `cargo codegen unicode`
-This command downloads unicode data from unicode.org and writes it `crates/rslint_lexer/src/tables.rs`.
+This command downloads unicode data from unicode.org and writes it `crates/rome_js_lexer/src/tables.rs`.
 Use this command when unicode support has changed.

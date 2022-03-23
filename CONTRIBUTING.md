@@ -163,7 +163,7 @@ from the main repository (not a fork), use these comments to run specific workfl
 
 ### Write parsers and parsing rules
 
-To have a better understanding of our parsing infrastructure, please [read the in-depth section](/crates/rslint_parser/docs/authoring_parse_rules.md)
+To have a better understanding of our parsing infrastructure, please [read the in-depth section](/crates/rome_js_parser/docs/authoring_parse_rules.md)
 
 ### Write tests for a parser
 
@@ -250,5 +250,5 @@ folder don't emit, the whole test suite will fail.
 
 We follow the specs suggested by [the official documentation](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prerelease-extensions):
 
-Odd minor versions are dedicated to pre-releases, e.g. `*.5.*` . 
-Even minor versions are dedicated to official releases, e.g. `*.6.*`.  
+Odd minor versions are dedicated to pre-releases, e.g. `*.5.*` .
+Even minor versions are dedicated to official releases, e.g. `*.6.*`.
