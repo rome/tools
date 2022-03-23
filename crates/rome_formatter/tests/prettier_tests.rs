@@ -20,7 +20,7 @@ mod check_reformat;
 
 static REPORTER: DiffReport = DiffReport::new();
 
-tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts,jsx}", crate::test_snapshot, "script"}
+tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts,jsx,tsx}", crate::test_snapshot, "script"}
 
 const PRETTIER_IGNORE: &str = "prettier-ignore";
 const ROME_IGNORE: &str = "rome-ignore format: prettier ignore";
