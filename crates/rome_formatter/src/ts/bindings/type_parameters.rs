@@ -1,8 +1,5 @@
-use crate::formatter::TrailingSeparator;
-use crate::{
-    join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
-};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rome_js_syntax::{TsTypeParameters, TsTypeParametersFields};
 
 impl ToFormatElement for TsTypeParameters {
@@ -12,13 +9,8 @@ impl ToFormatElement for TsTypeParameters {
             r_angle_token,
             l_angle_token,
         } = self.as_fields();
-        let items =
-            formatter.format_separated(&items, || token(","), TrailingSeparator::default())?;
+        let items = items.format(formatter)?;
 
-        formatter.format_delimited_soft_block_indent(
-            &l_angle_token?,
-            join_elements(soft_line_break_or_space(), items),
-            &r_angle_token?,
-        )
+        formatter.format_delimited_soft_block_indent(&l_angle_token?, items, &r_angle_token?)
     }
 }
