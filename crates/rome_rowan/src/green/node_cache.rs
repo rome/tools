@@ -260,10 +260,10 @@ impl TriviaCache {
     /// Tries to retrieve a [GreenTrivia] with the given pieces from the cache or creates a new one and caches
     /// it for further calls.
     fn get(&mut self, pieces: &[TriviaPiece]) -> GreenTrivia {
-        // Bypass the cache if there is one or less piece in the trivia (it can
-        // be stored directly inside the GreenTrivia)
-        if pieces.len() < 2 {
-            return GreenTrivia::new(pieces.first().copied());
+        // Bypass the cache if there is two or less pieces in the trivia (it
+        // can be stored directly inside the GreenTrivia)
+        if pieces.len() <= 2 {
+            return GreenTrivia::new(pieces.iter().copied());
         }
 
         let hash = Self::trivia_hash_of(pieces);

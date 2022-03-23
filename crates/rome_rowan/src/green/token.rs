@@ -247,31 +247,59 @@ mod tests {
     }
 
     #[quickcheck]
-    fn whitespace_and_comments_text_len(len: u32) {
+    fn whitespace_and_comments_text_len(len: u32) -> quickcheck::TestResult {
+        if len >= TriviaPiece::MAX_LENGTH {
+            return quickcheck::TestResult::discard();
+        }
+
         let len = TextSize::from(len);
         assert_eq!(len, GreenTrivia::whitespace(len).text_len());
         assert_eq!(len, GreenTrivia::single_line_comment(len).text_len());
+
+        quickcheck::TestResult::passed()
     }
 
     #[test]
     fn many_text_len_dont_panic() {
         let trivia = GreenTrivia::new(vec![
-            TriviaPiece::whitespace(u32::MAX),
-            TriviaPiece::single_line_comment(1),
+            TriviaPiece::whitespace(TriviaPiece::MAX_LENGTH),
+            TriviaPiece::newline(TriviaPiece::MAX_LENGTH),
+            TriviaPiece::single_line_comment(TriviaPiece::MAX_LENGTH),
+            TriviaPiece::multi_line_comment(TriviaPiece::MAX_LENGTH),
+            TriviaPiece::whitespace(TriviaPiece::MAX_LENGTH),
+            TriviaPiece::newline(TriviaPiece::MAX_LENGTH),
+            TriviaPiece::single_line_comment(TriviaPiece::MAX_LENGTH),
+            TriviaPiece::multi_line_comment(TriviaPiece::MAX_LENGTH),
+            TriviaPiece::whitespace(TriviaPiece::MAX_LENGTH),
         ]);
         assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
     }
 
     #[quickcheck]
-    fn many_text_len(lengths: Vec<u32>) {
-        let trivia: Vec<_> = lengths
-            .iter()
-            .map(|x| TriviaPiece::whitespace(*x))
-            .collect();
+    fn many_text_len(lengths: Vec<u32>) -> quickcheck::TestResult {
+        let mut trivia = Vec::with_capacity(lengths.len());
+        for x in &lengths {
+            if *x >= TriviaPiece::MAX_LENGTH {
+                return quickcheck::TestResult::discard();
+            }
+
+            trivia.push(TriviaPiece::whitespace(*x));
+        }
+
         let trivia = GreenTrivia::new(trivia);
 
         let total_len = lengths.iter().fold(0u32, |acc, x| acc.saturating_add(*x));
-        assert_eq!(TextSize::from(total_len), trivia.text_len());
+
+        let is_ok = TextSize::from(total_len) == trivia.text_len();
+        if is_ok {
+            return quickcheck::TestResult::passed();
+        }
+
+        quickcheck::TestResult::error(format!(
+            "{:?} != {:?}",
+            TextSize::from(total_len),
+            trivia.text_len()
+        ))
     }
 
     #[test]

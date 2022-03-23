@@ -1,11 +1,11 @@
 use crate::arc::{HeaderSlice, ThinArc};
 use crate::TriviaPiece;
+use bitfield::BitRange;
 use countme::Count;
 use std::fmt;
 use std::fmt::Formatter;
 use std::hash::Hash;
 use std::mem::ManuallyDrop;
-use std::slice;
 use text_size::TextSize;
 
 #[derive(PartialEq, Eq, Hash)]
@@ -47,12 +47,71 @@ impl fmt::Debug for GreenTriviaData {
 
 type TriviaPtr = ThinArc<GreenTriviaHead, TriviaPiece>;
 
+bitfield::bitfield! {
+    #[derive(Clone, Copy)]
+    pub struct GreenTriviaBits([TriviaPiece; 2]);
+    no default BitRange;
+    impl Debug;
+    /// Set to true if a valid [TriviaPiece] is being stored in inline slot 0
+    has_0, set_has_0: 0;
+    /// Set to true if a valid [TriviaPiece] is being stored in inline slot 1
+    has_1, set_has_1: 32;
+}
+
+impl BitRange<u8> for GreenTriviaBits {
+    fn bit_range(&self, msb: usize, lsb: usize) -> u8 {
+        if msb < 32 && lsb < 32 {
+            return self.0[0].bit_range(msb, lsb);
+        }
+
+        if msb >= 32 && lsb >= 32 {
+            return self.0[1].bit_range(msb - 32, lsb - 32);
+        }
+
+        // All the fields in GreenTriviaBits are single bit so reads can only
+        // fall in the first or second TriviaPiece but never in-between
+        unreachable!("unsupported")
+    }
+
+    fn set_bit_range(&mut self, msb: usize, lsb: usize, value: u8) {
+        if msb < 32 && lsb < 32 {
+            return self.0[0].set_bit_range(msb, lsb, value);
+        }
+
+        if msb >= 32 && lsb >= 32 {
+            return self.0[1].set_bit_range(msb - 32, lsb - 32, value);
+        }
+
+        // All the fields in GreenTriviaBits are single bit so reads can only
+        // fall in the first or second TriviaPiece but never in-between
+        unreachable!("unsupported")
+    }
+}
+
+impl GreenTriviaBits {
+    /// Creates an empty [GreenTrivia]
+    const fn empty() -> Self {
+        Self([TriviaPiece::zeroed(); 2])
+    }
+
+    /// Returns true if this [GreenTrivia] contains no piece, that is if its
+    /// binary representation is all zeroes
+    const fn is_empty(&self) -> bool {
+        self.0[0].is_zero() && self.0[1].is_zero()
+    }
+
+    /// Returns the number of trivia pieces contained in this GreenTrivia
+    fn len(&self) -> usize {
+        self.has_0() as usize + self.has_1() as usize
+    }
+}
+
 /// Internal memory layout of GreenTrivia
 ///
 /// A [GreenTrivia] is represented in memory as a 64-bits integer that is either:
 /// - If the value is 0, this is an empty trivia
-/// - If the least significant bit of the value is 1, its interpreted as a single
-/// [TriviaPiece] stored inline in the [GreenTrivia]
+/// - If the least significant bit of the value is 1, its interpreted as one or
+/// two [TriviaPiece] stored inline in the [GreenTrivia]
 /// - Otherwise the value is interpreted as a [TriviaPtr], that is a [ThinArc]
 /// pointing to the actual slice of [TriviaPiece]
 ///
@@ -63,22 +122,11 @@ type TriviaPtr = ThinArc<GreenTriviaHead, TriviaPiece>;
 /// aligned to a pointer-sized boundary (8 bytes on 64 bits architectures).
 /// This means the three least-significant bits of a valid [ThinArc] will
 /// always be zero
-/// - [TriviaPiece] and all the type it contains are using "forced
-/// representations" ([TriviaPiece] itself is `repr(C)`, `TriviaPieceKind` is a
-/// `repr(u8)` enum with manually specified discriminants, and `TextSize` is a
-/// `repr(transparent)` newtype struct wrapping a `u32`): this allows this type
-/// to have a stable memory layout that can be relied upon, an specifically to
-/// uphold the invariant that the least-significant bit of a valid [TriviaPiece]
-/// is alway set to one
-/// - The target platform must be using little-endian byte order for the [TriviaPiece]
-/// struct to be laid out correctly. This invariant is weaker than the previous ones
-/// as it could be lifted by using a slightly different different logic depending on
-/// the target platform endianness, but since Rome doesn't support any big-endian
-/// platform for now the code is just set to fail compiling on those
-#[cfg(target_endian = "little")]
+/// - The layout of [TriviaPiece] is specified manually using `bitfield` to fit
+/// within 32 bits, and have its least significant bit set to one for all valid
+/// values
 union GreenTriviaRepr {
-    bits: u64,
-    inline: TriviaPiece,
+    bits: GreenTriviaBits,
     ptr: ManuallyDrop<TriviaPtr>,
 }
 
@@ -114,7 +162,7 @@ impl Clone for GreenTrivia {
         // and either copies those directly or call clone on the contained
         // ThinArc if the content is determined to be a pointer
         unsafe {
-            if self.inner.bits == 0 || (self.inner.bits & 1) == 1 {
+            if self.inner.bits.is_empty() || self.inner.bits.has_0() {
                 GreenTrivia {
                     inner: GreenTriviaRepr {
                         bits: self.inner.bits,
@@ -145,30 +193,20 @@ impl GreenTrivia {
         I::IntoIter: ExactSizeIterator,
     {
         let mut items = pieces.into_iter();
-        if items.len() == 0 {
-            return GreenTrivia {
-                inner: GreenTriviaRepr { bits: 0 },
-            };
-        }
+        if items.len() < 3 {
+            let mut bits = GreenTriviaBits::empty();
 
-        if items.len() == 1 {
-            // SAFETY: Unwrap guarded by above call to len
-            let item = GreenTriviaRepr {
-                inline: items.next().unwrap(),
-            };
-
-            // SAFETY: This turns a TriviaPiece into a u64, this is safe since
-            // that struct only stores plain integers and enums
-            unsafe {
-                debug_assert_eq!(
-                    item.bits & 1,
-                    1,
-                    "unexpected bit pattern for TriviaPiece: {:0>64b}",
-                    item.bits,
-                );
+            if let Some(piece) = items.next() {
+                bits.0[0] = piece;
             }
 
-            return GreenTrivia { inner: item };
+            if let Some(piece) = items.next() {
+                bits.0[1] = piece;
+            }
+
+            return GreenTrivia {
+                inner: GreenTriviaRepr { bits },
+            };
         }
 
         let data = GreenTriviaRepr {
@@ -178,18 +216,6 @@ impl GreenTrivia {
             )),
         };
 
-        // SAFETY: this turns a ThinArc into a u64, this is safe since ThinArc
-        // in turn only contains a NonNull that get reinterpreted as a
-        // pointer-sized unsigned integer
-        unsafe {
-            debug_assert_eq!(
-                data.bits & 1,
-                0,
-                "unexpected bit pattern for ThinArc: {:0>64b}",
-                data.bits,
-            );
-        }
-
         GreenTrivia { inner: data }
     }
 
@@ -198,7 +224,7 @@ impl GreenTrivia {
         let mut len: Option<TextSize> = Some(TextSize::default());
 
         for piece in self.pieces() {
-            len = len.and_then(|len| len.checked_add(piece.length))
+            len = len.and_then(|len| len.checked_add(piece.length()))
         }
 
         // Realistically we will never have files bigger than usize::MAX, nor u32::MAX
@@ -211,12 +237,12 @@ impl GreenTrivia {
         // detect whether the content is empty, an inline trivia piece or a
         // pointer
         unsafe {
-            if self.inner.bits == 0 {
+            if self.inner.bits.is_empty() {
                 return 0;
             }
 
-            if (self.inner.bits & 1) == 1 {
-                return 1;
+            if self.inner.bits.has_0() {
+                return self.inner.bits.len();
             }
 
             self.inner.ptr.len()
@@ -229,12 +255,13 @@ impl GreenTrivia {
         // detect whether the content is empty, an inline trivia piece or a
         // pointer
         unsafe {
-            if self.inner.bits == 0 {
+            if self.inner.bits.is_empty() {
                 return &[];
             }
 
-            if (self.inner.bits & 1) == 1 {
-                return slice::from_ref(&self.inner.inline);
+            if self.inner.bits.has_0() {
+                let len = self.inner.bits.len();
+                return &self.inner.bits.0[..len];
             }
 
             self.inner.ptr.slice()
@@ -253,7 +280,7 @@ impl Drop for GreenTrivia {
         // the implementation of Drop for ThinArc if the content is determined
         // to be a pointer
         unsafe {
-            if self.inner.bits == 0 || (self.inner.bits & 1) == 1 {
+            if self.inner.bits.is_empty() || self.inner.bits.has_0() {
                 return;
             }
 
@@ -290,36 +317,5 @@ mod tests {
     fn sizes() {
         assert_eq!(0, std::mem::size_of::<GreenTriviaHead>());
         assert_eq!(8, std::mem::size_of::<GreenTrivia>());
-    }
-
-    #[test]
-    fn trivia_piece_layout() {
-        assert_eq!(
-            std::mem::size_of::<u64>(),
-            std::mem::size_of::<TriviaPiece>()
-        );
-
-        let piece = TriviaPiece {
-            kind: TriviaPieceKind::Newline,
-            length: TextSize::from(0),
-        };
-
-        let ptr = &piece as *const TriviaPiece as *const u8;
-        let kind = &piece.kind as *const TriviaPieceKind as *const u8;
-        let length = &piece.length as *const TextSize as *const u8;
-
-        let kind_offset = unsafe { kind.offset_from(ptr) };
-        let length_offset = unsafe { length.offset_from(ptr) };
-
-        assert_eq!(kind_offset, 0);
-        assert_eq!(length_offset, 4);
-
-        let bits: u64 = unsafe { std::mem::transmute(piece) };
-        assert_eq!(
-            bits & 1,
-            1,
-            "unexpected bit pattern for TriviaPiece: {:0>64b}",
-            bits,
-        );
     }
 }

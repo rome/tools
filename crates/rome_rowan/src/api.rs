@@ -28,23 +28,42 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
     type Kind: SyntaxKind;
 }
 
-// This enum must be `repr(u8)`, and has specially chosen discriminant values
-// with the least significant bit set to 1 to allow further optimizations in
-// the memory representation of trivia pieces
+// This enum is `repr(u8)` to allow further optimizations in the memory
+// representation of trivia pieces
 #[repr(u8)]
-// Allow inefficient arithmetic operations to make what's going on more explicit,
-// these are all const-expressions that get executed at compilation anyway
-#[allow(clippy::identity_op)]
 #[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
 pub enum TriviaPieceKind {
     /// A line break (`\n`, `\r`, `\r\n`, ...)
-    Newline = (0 << 1) | 1,
+    Newline,
     /// Any whitespace character
-    Whitespace = (1 << 1) | 1,
+    Whitespace,
     /// Comment that does not contain any line breaks
-    SingleLineComment = (2 << 1) | 1,
+    SingleLineComment,
     /// Comment that contains at least one line break
-    MultiLineComment = (3 << 1) | 1,
+    MultiLineComment,
+}
+
+impl From<u8> for TriviaPieceKind {
+    fn from(value: u8) -> Self {
+        const NEWLINE: u8 = TriviaPieceKind::Newline as u8;
+        const WHITESPACE: u8 = TriviaPieceKind::Whitespace as u8;
+        const SINGLE_LINE_COMMENT: u8 = TriviaPieceKind::SingleLineComment as u8;
+        const MULTI_LINE_COMMENT: u8 = TriviaPieceKind::MultiLineComment as u8;
+
+        match value {
+            NEWLINE => Self::Newline,
+            WHITESPACE => Self::Whitespace,
+            SINGLE_LINE_COMMENT => Self::SingleLineComment,
+            MULTI_LINE_COMMENT => Self::MultiLineComment,
+            _ => panic!("{value} is not a valid TriviaPieceKind"),
+        }
+    }
+}
+
+impl From<TriviaPieceKind> for u8 {
+    fn from(kind: TriviaPieceKind) -> Self {
+        kind as u8
+    }
 }
 
 impl TriviaPieceKind {
@@ -65,16 +84,34 @@ impl TriviaPieceKind {
     }
 }
 
-// This struct is `repr(C)` as optimizations on the representation of trivia
-// pieces in memory rely on it having a specific layout
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
-pub struct TriviaPiece {
-    pub(crate) kind: TriviaPieceKind,
-    pub(crate) length: TextSize,
+bitfield::bitfield! {
+    #[derive(Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct TriviaPiece(u32);
+    impl Debug;
+    flag, set_flag: 0;
+    pub u8, from into TriviaPieceKind, kind, set_kind: 2, 1;
+    pub u32, from into TextSize, length, set_length: 31, 3;
 }
 
 impl TriviaPiece {
+    /// Create a [TriviaPiece] with an internal bit pattern set to all zeroes
+    ///
+    /// While this function is safe to use this is not a valid [TriviaPiece],
+    /// it is exposed only to be used in the construction of empty `GreenTrivia`
+    pub(crate) const fn zeroed() -> Self {
+        Self(0)
+    }
+
+    /// Returns true if the internal bit pattern of this [TriviaPiece] is set
+    /// to all zeroes
+    ///
+    /// Due to the presence of the `flag` bit this function should never return
+    /// true for a valid [TriviaPiece] and is only meant to be used internally
+    /// in `GreenTrivia`
+    pub(crate) const fn is_zero(&self) -> bool {
+        self.0 == 0
+    }
+
     /// Creates a new whitespace trivia piece with the given length
     pub fn whitespace<L: Into<TextSize>>(len: L) -> Self {
         Self::new(TriviaPieceKind::Whitespace, len)
@@ -98,21 +135,36 @@ impl TriviaPiece {
         Self::new(TriviaPieceKind::MultiLineComment, len)
     }
 
+    /// Maximum allowed length of a single [TriviaPiece]
+    ///
+    /// Due to how the struct is internally packed, a single trivia piece can
+    /// not exceed 2^29 bytes or 512 MiB which should be enough for all
+    /// practical use
+    pub const MAX_LENGTH: u32 = 0x1F_FF_FF_FF;
+
     pub fn new<L: Into<TextSize>>(kind: TriviaPieceKind, length: L) -> Self {
-        Self {
-            kind,
-            length: length.into(),
-        }
+        let mut result = Self(0);
+        result.set_flag(true);
+
+        result.set_kind(kind);
+        debug_assert_eq!(result.kind() as u8, kind as u8);
+
+        let length: TextSize = length.into();
+        result.set_length(length);
+        assert_eq!(
+            result.length(),
+            length,
+            "length of TriviaPiece {:?} exceeds maximum length of {:?}",
+            length,
+            Self::MAX_LENGTH
+        );
+
+        result
     }
 
     /// Returns the trivia's length
     pub fn text_len(&self) -> TextSize {
-        self.length
-    }
-
-    /// Returns the trivia's kind
-    pub fn kind(&self) -> TriviaPieceKind {
-        self.kind
+        self.length()
     }
 }
 
@@ -162,7 +214,7 @@ impl<L: Language> SyntaxTriviaPieceComments<L> {
     }
 
     pub fn has_newline(&self) -> bool {
-        self.0.trivia.kind.is_multiline_comment()
+        self.0.trivia.kind().is_multiline_comment()
     }
 }
 
@@ -280,7 +332,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// assert!(pieces[0].is_newline())
     /// ```
     pub fn is_newline(&self) -> bool {
-        self.trivia.kind.is_newline()
+        self.trivia.kind().is_newline()
     }
 
     /// Returns true if this trivia piece is a [SyntaxTriviaPieceWhitespace].
@@ -301,7 +353,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// assert!(pieces[1].is_whitespace())
     /// ```
     pub fn is_whitespace(&self) -> bool {
-        self.trivia.kind.is_whitespace()
+        self.trivia.kind().is_whitespace()
     }
 
     /// Returns true if this trivia piece is a [SyntaxTriviaPieceComments].
@@ -323,7 +375,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// ```
     pub fn is_comments(&self) -> bool {
         matches!(
-            self.trivia.kind,
+            self.trivia.kind(),
             TriviaPieceKind::SingleLineComment | TriviaPieceKind::MultiLineComment
         )
     }
@@ -349,7 +401,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// assert!(w.is_none());
     /// ```
     pub fn as_newline(&self) -> Option<SyntaxTriviaPieceNewline<L>> {
-        match &self.trivia.kind {
+        match self.trivia.kind() {
             TriviaPieceKind::Newline => Some(SyntaxTriviaPieceNewline(self.clone())),
             _ => None,
         }
@@ -376,7 +428,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// assert!(w.is_none());
     /// ```
     pub fn as_whitespace(&self) -> Option<SyntaxTriviaPieceWhitespace<L>> {
-        match &self.trivia.kind {
+        match self.trivia.kind() {
             TriviaPieceKind::Whitespace => Some(SyntaxTriviaPieceWhitespace(self.clone())),
             _ => None,
         }
@@ -403,7 +455,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// assert!(w.is_some());
     /// ```
     pub fn as_comments(&self) -> Option<SyntaxTriviaPieceComments<L>> {
-        match &self.trivia.kind {
+        match self.trivia.kind() {
             TriviaPieceKind::SingleLineComment | TriviaPieceKind::MultiLineComment => {
                 Some(SyntaxTriviaPieceComments(self.clone()))
             }
@@ -494,7 +546,7 @@ fn print_debug_trivia_piece<L: Language>(
     piece: SyntaxTriviaPiece<L>,
     f: &mut fmt::Formatter<'_>,
 ) -> fmt::Result {
-    match piece.trivia.kind {
+    match piece.trivia.kind() {
         TriviaPieceKind::Newline => write!(f, "Newline(")?,
         TriviaPieceKind::Whitespace => write!(f, "Whitespace(")?,
         TriviaPieceKind::SingleLineComment | TriviaPieceKind::MultiLineComment => {
