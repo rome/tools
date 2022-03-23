@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: class-decorator.ts
 
 ---
@@ -31,17 +31,6 @@ class Greeter {
     return "Hello, " + this.greeting;
   }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@sealed'
-  ┌─ class-decorator.ts:1:1
-  │
-1 │ @sealed
-  │ ^^^^^^^ Expected a statement here
-
 
 ```
 

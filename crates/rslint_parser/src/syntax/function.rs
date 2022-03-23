@@ -12,7 +12,8 @@ use crate::syntax::js_parse_error::{expected_binding, expected_parameter, expect
 use crate::syntax::stmt::{is_semi, parse_block_impl, semi, StatementContext};
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
-    parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters, try_parse,
+    parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
+    skip_ts_decorators, try_parse,
 };
 
 use crate::JsSyntaxFeature::TypeScript;
@@ -946,6 +947,7 @@ pub(crate) fn parse_formal_parameter(
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
+    skip_ts_decorators(p);
     parse_binding_pattern(p, expression_context).map(|binding| {
         let binding_kind = binding.kind();
         let binding_range = binding.range(p);
@@ -1043,10 +1045,7 @@ pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
     if p.at(T!['[']) || p.at(T!['{']) {
         // Array or object pattern. Try to parse it and return true if there were no parsing errors
         let previous_error_count = p.diagnostics.len();
-        let pattern = parse_binding_pattern(
-            p,
-            ExpressionContext::default().and_object_expression_allowed(true),
-        );
+        let pattern = parse_binding_pattern(p, ExpressionContext::default());
         pattern.is_present() && p.diagnostics.len() == previous_error_count
     } else {
         false

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: methods.js
 
 ---
@@ -30,65 +30,6 @@ class Yo {
 
   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ methods.js:3:3
-  │
-3 │   @foo("hello")
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found '"hello"'
-  ┌─ methods.js:3:8
-  │
-3 │   @foo("hello")
-  │        ^^^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a class method body but instead found 'async'
-  ┌─ methods.js:4:3
-  │
-4 │   async plop() {}
-  │   ^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ methods.js:6:3
-  │
-6 │   @anotherDecoratorWithALongName("and a very long string as a first argument")
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found '"and a very long string as a first argument"'
-  ┌─ methods.js:6:34
-  │
-6 │   @anotherDecoratorWithALongName("and a very long string as a first argument")
-  │                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a class method body but instead found 'async'
-  ┌─ methods.js:7:3
-  │
-7 │   async plip() {}
-  │   ^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ methods.js:9:3
-  │
-9 │   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found '"another very long string, but now inline"'
-  ┌─ methods.js:9:34
-  │
-9 │   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
-  │                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a class method body but instead found 'async'
-  ┌─ methods.js:9:78
-  │
-9 │   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
-  │                                                                              ^^^^^ Expected a class method body here
-
 
 ```
 

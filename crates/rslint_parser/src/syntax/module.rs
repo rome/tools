@@ -19,7 +19,7 @@ use crate::syntax::stmt::{parse_statement, semi, StatementContext, STMT_RECOVERY
 use crate::syntax::typescript::ts_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{
     parse_ts_enum_declaration, parse_ts_import_equals_declaration_rest,
-    parse_ts_interface_declaration,
+    parse_ts_interface_declaration, skip_ts_decorators,
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
@@ -112,6 +112,10 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
             parse_import_or_import_equals_declaration(p)
         }
         T![export] => parse_export(p),
+        T![@] => {
+            skip_ts_decorators(p);
+            parse_module_item(p)
+        }
         _ => parse_statement(p, StatementContext::StatementList),
     }
 }
@@ -599,7 +603,8 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
 
     let stmt_start = p.cur_range().start();
     let m = p.start();
-    p.expect(T![export]);
+
+    p.bump(T![export]);
 
     let clause = if p.at(T![type]) && p.nth_at(1, T!['{']) {
         parse_export_named_or_named_from_clause(p)

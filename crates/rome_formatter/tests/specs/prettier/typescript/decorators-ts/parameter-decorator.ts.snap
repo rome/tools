@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 144
 expression: parameter-decorator.ts
 
 ---
@@ -45,59 +45,6 @@ class Greeter {
     return Function.prototype.toString.apply(toString);
   }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ parameter-decorator.ts:8:3
-  │
-8 │   @validate
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-  ┌─ parameter-decorator.ts:9:9
-  │
-9 │   greet(@required name: string) {
-  │         ^ Expected a parameter here
-
-error[SyntaxError]: expected `,` but instead found `required`
-  ┌─ parameter-decorator.ts:9:10
-  │
-9 │   greet(@required name: string) {
-  │          ^^^^^^^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `name`
-  ┌─ parameter-decorator.ts:9:19
-  │
-9 │   greet(@required name: string) {
-  │                   ^^^^ unexpected
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ parameter-decorator.ts:13:3
-   │
-13 │   @validate
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-   ┌─ parameter-decorator.ts:14:16
-   │
-14 │   destructured(@required { toString }: Object) {
-   │                ^ Expected a parameter here
-
-error[SyntaxError]: expected `,` but instead found `required`
-   ┌─ parameter-decorator.ts:14:17
-   │
-14 │   destructured(@required { toString }: Object) {
-   │                 ^^^^^^^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `{`
-   ┌─ parameter-decorator.ts:14:26
-   │
-14 │   destructured(@required { toString }: Object) {
-   │                          ^ unexpected
-
 
 ```
 

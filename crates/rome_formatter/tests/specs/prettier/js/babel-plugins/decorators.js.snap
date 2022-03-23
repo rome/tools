@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: decorators.js
 
 ---
@@ -60,7 +60,7 @@ function isTestable(value) {
 
 class C {
   @enumerable(false)
-  method() { }
+  method() {}
 }
 
 function enumerable(value) {
@@ -69,41 +69,6 @@ function enumerable(value) {
     return descriptor;
   };
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@annotation'
-  ┌─ decorators.js:3:1
-  │
-3 │ @annotation
-  │ ^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '@isTestable(true)'
-   ┌─ decorators.js:10:1
-   │
-10 │ @isTestable(true)
-   │ ^^^^^^^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ decorators.js:20:3
-   │
-20 │   @enumerable(false)
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found 'false'
-   ┌─ decorators.js:20:15
-   │
-20 │   @enumerable(false)
-   │               ^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a class method body but instead found 'method'
-   ┌─ decorators.js:21:3
-   │
-21 │   method() { }
-   │   ^^^^^^ Expected a class method body here
-
 
 ```
 

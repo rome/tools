@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 144
 expression: redux.js
 
 ---
@@ -19,35 +19,8 @@ export class Home extends React.Component {}
 @connect(mapStateToProps, mapDispatchToProps)
 export class MyApp extends React.Component {}
 
-@connect(state => (
-{
-  todos: state.todos;
-}
-))
+@connect(state => ({ todos: state.todos }))
 export class Home extends React.Component {}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@connect(mapStateToProps, mapDispatchToProps)'
-  ┌─ redux.js:1:1
-  │
-1 │ @connect(mapStateToProps, mapDispatchToProps)
-  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '@connect(state => ('
-  ┌─ redux.js:4:1
-  │
-4 │ @connect(state => ({ todos: state.todos }))
-  │ ^^^^^^^^^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '))'
-  ┌─ redux.js:4:42
-  │
-4 │ @connect(state => ({ todos: state.todos }))
-  │                                          ^^ Expected a statement here
-
 
 ```
 

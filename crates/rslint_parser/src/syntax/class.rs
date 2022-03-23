@@ -29,6 +29,7 @@ use crate::syntax::typescript::ts_parse_error::{
 use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
     parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
+    skip_ts_decorators,
 };
 
 use crate::JsSyntaxFeature::TypeScript;
@@ -59,11 +60,11 @@ pub(crate) fn is_at_ts_abstract_class_declaration(
     p: &mut Parser,
     should_check_line_break: LineBreak,
 ) -> bool {
-    let tokens = p.at(T![abstract]) && p.nth_at(1, T![class]);
+    let is_abstract = p.at(T![abstract]) && p.nth_at(1, T![class]);
     if should_check_line_break == LineBreak::DoCheck {
-        tokens && !p.has_nth_preceding_line_break(1)
+        is_abstract && !p.has_nth_preceding_line_break(1)
     } else {
-        tokens
+        is_abstract
     }
 }
 
@@ -73,8 +74,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    let m = p.start();
-    Present(parse_class(p, m, ClassKind::Expression))
+    Present(parse_class(p, ClassKind::Expression))
 }
 
 // test class_declaration
@@ -111,19 +111,41 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 // test_err ts typescript_abstract_classes_invalid_abstract_constructor
 // abstract class A { abstract constructor();};
 
+// test ts ts_decorate_computed_member
+// class Test {
+// @test
+// ['a']: string;
+// }
+
+// test ts ts_decorated_class_members
+// class Test {
+//   @test prop: string;
+//   @test method() {}
+//   @test get getter() {}
+//   @test set setter(a) {}
+//   @test constructor() {}
+//   @test declare prop;
+// }
+
+// test_err ts ts_invalid_decorated_class_members
+// abstract class Test {
+//   @test method();
+//   @test [index: string]: string;
+//   @test abstract method2();
+//   @test abstract get getter();
+//   @test abstract set setter();
+// }
+
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
-    let is_abstract_class = p.at(T![abstract]) && p.nth_at(1, T![class]);
-
-    if !p.at(T![class]) && !is_abstract_class {
+    if !matches!(p.cur(), T![abstract] | T![class]) {
         return Absent;
     }
 
-    let m = p.start();
-    let mut class = parse_class(p, m, ClassKind::Declaration);
+    let mut class = parse_class(p, ClassKind::Declaration);
 
     if !class.kind().is_unknown() && context.is_single_statement() {
         // test_err class_in_single_statement_context
@@ -144,15 +166,11 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
 // test ts typescript_export_default_abstract_class_case
 // export default abstract class {}
 pub(super) fn parse_class_export_default_declaration(p: &mut Parser) -> ParsedSyntax {
-    let is_abstract_class = p.at(T![abstract]) && p.nth_at(1, T![class]);
-
-    if !p.at(T![class]) && !is_abstract_class {
+    if !matches!(p.cur(), T![abstract] | T![class]) {
         return Absent;
     }
 
-    let m = p.start();
-
-    Present(parse_class(p, m, ClassKind::ExportDefault))
+    Present(parse_class(p, ClassKind::ExportDefault))
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -183,7 +201,9 @@ impl From<ClassKind> for JsSyntaxKind {
 
 // test ts ts_class_named_abstract_is_valid_in_ts
 // class abstract {}
-fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
+#[inline]
+fn parse_class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
+    let m = p.start();
     let is_abstract = p.eat(T![abstract]);
 
     let class_token_range = p.cur_range();
@@ -433,7 +453,8 @@ impl ParseNodeList for ClassMembersList {
                     T![async],
                     T![yield],
                     T!['}'],
-                    T![#]
+                    T![#],
+                    T![@],
                 ],
             ),
             js_parse_error::expected_class_member,
@@ -464,6 +485,7 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
         return Present(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER));
     }
 
+    skip_ts_decorators(p);
     let mut modifiers = parse_class_member_modifiers(p, false);
 
     if is_at_static_initialization_block_class_member(p) {
@@ -1454,6 +1476,8 @@ fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax {
 // // SCRIPT
 // class A { constructor(readonly, private, protected, public) {} }
 fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+    skip_ts_decorators(p);
+
     // test_err class_constructor_parameter
     // class B { constructor(protected b) {} }
 

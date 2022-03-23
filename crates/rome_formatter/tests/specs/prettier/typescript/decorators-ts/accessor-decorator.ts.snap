@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: accessor-decorator.ts
 
 ---
@@ -37,47 +37,16 @@ class Point {
     this._y = y;
   }
 
-  @
-  configurable(false);
+  @configurable(false)
   get x() {
     return this._x;
   }
 
-  @
-  configurable(false);
+  @configurable(false)
   get y() {
     return this._y;
   }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ accessor-decorator.ts:9:3
-  │
-9 │   @configurable(false)
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found 'false'
-  ┌─ accessor-decorator.ts:9:17
-  │
-9 │   @configurable(false)
-  │                 ^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ accessor-decorator.ts:14:3
-   │
-14 │   @configurable(false)
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found 'false'
-   ┌─ accessor-decorator.ts:14:17
-   │
-14 │   @configurable(false)
-   │                 ^^^^^ Expected a parameter here
-
 
 ```
 

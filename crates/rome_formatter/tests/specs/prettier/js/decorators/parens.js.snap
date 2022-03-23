@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: parens.js
 
 ---
@@ -17,31 +17,8 @@ class X {
 ```js
 class X {
   @(computed().volatile())
-  x
+  x;
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ parens.js:2:3
-  │
-2 │   @(computed().volatile())
-  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found '.'
-  ┌─ parens.js:2:15
-  │
-2 │   @(computed().volatile())
-  │               ^ Expected a class method body here
-
-error[SyntaxError]: expected a class method body but instead found ')'
-  ┌─ parens.js:2:26
-  │
-2 │   @(computed().volatile())
-  │                          ^ Expected a class method body here
-
 
 ```
 

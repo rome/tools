@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 144
 expression: range.js
 
 ---
@@ -32,7 +32,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │                         
   │ ...Which is required to end this statement
 
-error[SyntaxError]: Illegal use of an import declaration not at the top level
+error[SyntaxError]: Illegal use of an export declaration not at the top level
   ┌─ range.js:1:29
   │
 1 │ let moduleBlock = module {  export let y = 1;

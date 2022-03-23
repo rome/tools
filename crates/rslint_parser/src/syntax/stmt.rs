@@ -68,6 +68,7 @@ pub const STMT_RECOVERY_SET: TokenSet = token_set![
     MODULE_KW,
     NAMESPACE_KW,
     GLOBAL_KW,
+    T![@],
     T![;]
 ];
 
@@ -183,20 +184,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         // {
         //  export { pain } from "life";
         // }
-        T![export] => parse_export(p).map(|mut export| {
-            let error = match p.source_type.module_kind() {
-                ModuleKind::Module => p
-                    .err_builder("Illegal use of an import declaration not at the top level")
-                    .primary(export.range(p), "move this declaration to the top level"),
-                ModuleKind::Script => p
-                    .err_builder("Illegal use of an export declaration outside of a module")
-                    .primary(export.range(p), "not allowed inside scripts"),
-            };
-
-            p.error(error);
-            export.change_kind(p, JS_UNKNOWN_STATEMENT);
-            export
-        }),
+        T![export] => parse_non_top_level_export(p),
         T![;] => parse_empty_statement(p),
         T!['{'] => parse_block_stmt(p),
         T![if] => parse_if_statement(p),
@@ -227,6 +215,10 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         }
         // class and abstract class
         T![class] => parse_class_declaration(p, context),
+        T![@] => {
+            skip_ts_decorators(p);
+            parse_statement(p, context)
+        }
         T![abstract] if is_at_ts_abstract_class_declaration(p, LineBreak::DoCheck) => {
             // test_err abstract_class_in_js
             // abstract class A {}
@@ -308,6 +300,23 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         _ if is_at_expression(p) => parse_expression_statement(p),
         _ => Absent,
     }
+}
+
+pub(crate) fn parse_non_top_level_export(p: &mut Parser) -> ParsedSyntax {
+    parse_export(p).map(|mut export| {
+        let error = match p.source_type.module_kind() {
+            ModuleKind::Module => p
+                .err_builder("Illegal use of an export declaration not at the top level")
+                .primary(export.range(p), "move this declaration to the top level"),
+            ModuleKind::Script => p
+                .err_builder("Illegal use of an export declaration outside of a module")
+                .primary(export.range(p), "not allowed inside scripts"),
+        };
+
+        p.error(error);
+        export.change_kind(p, JS_UNKNOWN_STATEMENT);
+        export
+    })
 }
 
 // test labeled_statement

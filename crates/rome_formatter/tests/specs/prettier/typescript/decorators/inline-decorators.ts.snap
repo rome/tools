@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 144
 expression: inline-decorators.ts
 
 ---
@@ -67,330 +67,49 @@ class MyContainerComponent {
 class Class1 {}
 
 class Class2 {
-  @
-  d1;
-  @
-  d2(foo);
-  @
-  d3;
-  .
-  bar;
-  @
-  d4;
-  .
-  baz();
+  @d1
+    @d2(foo)
+    @d3.bar
+    @d4.baz()
   method1() {}
 
-  @
-  d1;
+  @d1
   method2() {}
 
-  @
-  d2(foo);
+  @d2(foo)
   method3() {}
 
-  @
-  d3;
-  .
-  bar;
+  @d3.bar
   method4() {}
 }
 
 class Class3 {
-    @d1 fieldA;
-    @d2(foo) fieldB;
-    @d3.bar fieldC;
-    @d4.baz() fieldD;
+  @d1 fieldA;
+  @d2(foo) fieldB;
+  @d3.bar fieldC;
+  @d4.baz() fieldD;
 
-    constructor (
-        @d1 private x: number,
-        @d2(foo) private y: number,
-        @d3('foo') private z: number,
-        @d4({
+  constructor(
+    @d1 private x: number,
+    @d2(foo) private y: number,
+    @d3('foo') private z: number,
+    @d4({
             x: string
         }) private a: string,
-    ) {}
+  ) {}
 }
 
-@decorated
-class Foo {}
+@decorated class Foo {}
 
 class Bar {
-  @
-  decorated;
-  method() {}
+  @decorated method() {}
 }
 
 class MyContainerComponent {
-  @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
+  @ContentChildren(MyComponent) components: QueryListSomeBigName<
+    MyComponentThat
+  >;
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '@d1
-@d2(foo)
-@d3.bar
-@d4.baz()'
-  ┌─ inline-decorators.ts:2:1
-  │  
-2 │ ┌ @d1
-3 │ │ @d2(foo)
-4 │ │ @d3.bar
-5 │ │ @d4.baz()
-  │ └─────────^ Expected a statement here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-  ┌─ inline-decorators.ts:9:5
-  │
-9 │     @d1
-  │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:10:5
-   │
-10 │     @d2(foo)
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:11:5
-   │
-11 │     @d3.bar
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:11:6
-   │
-11 │     @d3.bar
-   │      ^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '.'
-   ┌─ inline-decorators.ts:11:8
-   │
-11 │     @d3.bar
-   │        ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:12:5
-   │
-12 │     @d4.baz()
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:12:6
-   │
-12 │     @d4.baz()
-   │      ^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '.'
-   ┌─ inline-decorators.ts:12:8
-   │
-12 │     @d4.baz()
-   │        ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:15:5
-   │
-15 │     @d1
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:18:5
-   │
-18 │     @d2(foo)
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:21:5
-   │
-21 │     @d3.bar
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:21:6
-   │
-21 │     @d3.bar
-   │      ^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '.'
-   ┌─ inline-decorators.ts:21:8
-   │
-21 │     @d3.bar
-   │        ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:26:5
-   │
-26 │     @d1 fieldA;
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:26:6
-   │
-26 │     @d1 fieldA;
-   │      ^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:27:5
-   │
-27 │     @d2(foo) fieldB;
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'fieldB'
-   ┌─ inline-decorators.ts:27:14
-   │
-27 │     @d2(foo) fieldB;
-   │              ^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:28:5
-   │
-28 │     @d3.bar fieldC;
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:28:6
-   │
-28 │     @d3.bar fieldC;
-   │      ^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '.'
-   ┌─ inline-decorators.ts:28:8
-   │
-28 │     @d3.bar fieldC;
-   │        ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:28:9
-   │
-28 │     @d3.bar fieldC;
-   │         ^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:29:5
-   │
-29 │     @d4.baz() fieldD;
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:29:6
-   │
-29 │     @d4.baz() fieldD;
-   │      ^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '.'
-   ┌─ inline-decorators.ts:29:8
-   │
-29 │     @d4.baz() fieldD;
-   │        ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'fieldD'
-   ┌─ inline-decorators.ts:29:15
-   │
-29 │     @d4.baz() fieldD;
-   │               ^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected a parameter but instead found '@'
-   ┌─ inline-decorators.ts:32:9
-   │
-32 │         @d1 private x: number,
-   │         ^ Expected a parameter here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:32:10
-   │
-32 │         @d1 private x: number,
-   │          ^^
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:32:13
-   │
-32 │         @d1 private x: number,
-   │             ^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ inline-decorators.ts:32:30
-   │
-32 │         @d1 private x: number,
-   │                              ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'private'
-   ┌─ inline-decorators.ts:33:18
-   │
-33 │         @d2(foo) private y: number,
-   │                  ^^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ inline-decorators.ts:33:35
-   │
-33 │         @d2(foo) private y: number,
-   │                                   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a parameter but instead found ''foo''
-   ┌─ inline-decorators.ts:34:13
-   │
-34 │         @d3('foo') private z: number,
-   │             ^^^^^ Expected a parameter here
-
-error[SyntaxError]: expected a class method body but instead found 'private'
-   ┌─ inline-decorators.ts:34:20
-   │
-34 │         @d3('foo') private z: number,
-   │                    ^^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ inline-decorators.ts:34:37
-   │
-34 │         @d3('foo') private z: number,
-   │                                     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'private'
-   ┌─ inline-decorators.ts:37:12
-   │
-37 │         }) private a: string,
-   │            ^^^^^^^ Expected a class method body here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found ','
-   ┌─ inline-decorators.ts:37:29
-   │
-37 │         }) private a: string,
-   │                             ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a statement but instead found '}
-
-@decorated'
-   ┌─ inline-decorators.ts:39:1
-   │  
-39 │ ┌ }
-40 │ │ 
-41 │ │ @decorated class Foo {}
-   │ └──────────^ Expected a statement here
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:44:5
-   │
-44 │     @decorated method() {}
-   │     ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-   ┌─ inline-decorators.ts:44:6
-   │
-44 │     @decorated method() {}
-   │      ^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
-   ┌─ inline-decorators.ts:48:3
-   │
-48 │   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
-   │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a class method body but instead found 'components'
-   ┌─ inline-decorators.ts:48:33
-   │
-48 │   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
-   │                                 ^^^^^^^^^^ Expected a class method body here
-
 
 ```
 

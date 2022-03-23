@@ -2162,7 +2162,7 @@ JsxSelfClosingElement =
 	'/'
 	'>'
 
-JsxElement = 
+JsxElement =
 	opening_element: JsxOpeningElement
 	children: JsxChildList
 	closing_element: JsxClosingElement
@@ -2233,10 +2233,10 @@ JsxAnyAttribute =
 	JsxAttribute
 	| JsxSpreadAttribute
 
-JsxAttribute = 
+JsxAttribute =
 	name: JsxAnyAttributeName
 	initializer: JsxAttributeInitializerClause?
-	
+
 JsxAttributeInitializerClause =
 	'='
 	value: JsxAnyAttributeValue
@@ -2269,7 +2269,7 @@ JsxSpreadAttribute =
 
 JsxChildList = JsxAnyChild*
 
-JsxAnyChild = 
+JsxAnyChild =
 	JsxElement
 	| JsxSelfClosingElement
 	| JsxText

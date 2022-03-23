@@ -5,7 +5,7 @@ pub mod ts_parse_error;
 mod types;
 
 use crate::parser::expected_token_any;
-use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
+use crate::syntax::expr::{parse_identifier, parse_lhs_expr, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error::expected_expression;
 
 use crate::syntax::typescript::ts_parse_error::expected_ts_type;
@@ -230,5 +230,41 @@ fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
             }
             p.error(expected_token_any(&tokens));
         }
+    }
+}
+
+// test ts ts_class_decorator
+// function test() {}
+// @test
+// class Test {}
+// @test.a?.c @test @test
+// class Test2{}
+// @test export class Test {}
+// @test export default class Test {}
+
+/// Skips over any TypeScript decorator syntax.
+pub(crate) fn skip_ts_decorators(p: &mut Parser) {
+    if !p.at(T![@]) {
+        return;
+    }
+
+    p.parse_as_skipped_trivia_tokens(|p| {
+        while p.at(T![@]) {
+            parse_decorator(p).ok();
+        }
+    });
+}
+
+fn parse_decorator(p: &mut Parser) -> ParsedSyntax {
+    if p.at(T![@]) {
+        let m = p.start();
+        p.bump(T![@]);
+
+        parse_lhs_expr(p, ExpressionContext::default().and_in_ts_decorator(true))
+            .or_add_diagnostic(p, expected_expression);
+
+        Present(m.complete(p, JS_UNKNOWN))
+    } else {
+        Absent
     }
 }

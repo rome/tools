@@ -245,6 +245,24 @@ impl<'l> TokenSource<'l> {
         }
     }
 
+    /// Skips the current token as skipped token trivia
+    pub fn skip_as_trivia(&mut self, context: LexContext) {
+        if self.current() != EOF {
+            if !context.is_regular() {
+                self.lookahead_offset = 0;
+                self.non_trivia_lookahead.clear();
+            }
+
+            self.trivia_list.push(Trivia::new(
+                TriviaPieceKind::Skipped,
+                self.current_range(),
+                false,
+            ));
+
+            self.next_non_trivia_token(context, true)
+        }
+    }
+
     pub fn re_lex(&mut self, mode: ReLexContext) -> JsSyntaxKind {
         let current_kind = self.current();
 

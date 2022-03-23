@@ -23,109 +23,18 @@ for (a in b) 0;
 
 # Output
 ```js
-for ((x in a);
-)
-{}
-for (a=(a in b);
-)
-{}
-for (let a = (b in c);
-)
-for (a && (b in c);
-)
+for ((x in a); ; ) {}
+for (a = (a in b); ; ) {}
+for (let a = (b in c); ; );
+for (a && (b in c); ; );
 for ((a) => (b in c); ; );
 function* g() {
-  for (yield (a in b);
-  )
+  for (yield (a in b); ; );
 }
 async function f() {
-  for (await (a in b);
-  )
+  for (await (a in b); ; );
 }
 for (a in b) 0;
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected `')'` but instead found `in`
-  ┌─ in.js:1:9
-  │
-1 │ for ((x in a);;) {}
-  │         ^^ unexpected
-
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ in.js:1:16
-  │
-1 │ for ((x in a);;) {}
-  │                ^ Expected a statement here
-
-error[SyntaxError]: Invalid assignment to `a=(a`
-  ┌─ in.js:2:6
-  │
-2 │ for (a=(a in b);;) {}
-  │      ^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ in.js:2:18
-  │
-2 │ for (a=(a in b);;) {}
-  │                  ^ Expected a statement here
-
-error[SyntaxError]: expected `')'` but instead found `in`
-  ┌─ in.js:3:17
-  │
-3 │ for (let a = (b in c); ; );
-  │                 ^^ unexpected
-
-error[SyntaxError]: `for..in` statement declarators cannot have an initializer expression
-  ┌─ in.js:3:12
-  │
-3 │ for (let a = (b in c); ; );
-  │            ^^^^
-
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ in.js:3:26
-  │
-3 │ for (let a = (b in c); ; );
-  │                          ^ Expected a statement here
-
-error[SyntaxError]: Invalid assignment to `a && (b`
-  ┌─ in.js:4:6
-  │
-4 │ for (a && (b in c); ; );
-  │      ^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ in.js:4:23
-  │
-4 │ for (a && (b in c); ; );
-  │                       ^ Expected a statement here
-
-error[SyntaxError]: Invalid assignment to `yield (a`
-  ┌─ in.js:7:8
-  │
-7 │   for (yield (a in b); ; );
-  │        ^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ in.js:7:26
-  │
-7 │   for (yield (a in b); ; );
-  │                          ^ Expected a statement here
-
-error[SyntaxError]: Invalid assignment to `await (a`
-   ┌─ in.js:10:8
-   │
-10 │   for (await (a in b); ; );
-   │        ^^^^^^^^ This expression cannot be assigned to
-
-error[SyntaxError]: expected a statement but instead found ')'
-   ┌─ in.js:10:26
-   │
-10 │   for (await (a in b); ; );
-   │                          ^ Expected a statement here
-
 
 ```
 
