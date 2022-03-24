@@ -1,0 +1,27 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 197
+expression: suppressions.ts
+
+---
+# Input
+
+interface Suppressions {
+    // rome-ignore format: test
+    a: void
+
+    b: void
+}
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+interface Suppressions {
+	// rome-ignore format: test
+    a: void
+	b: void,
+}
+

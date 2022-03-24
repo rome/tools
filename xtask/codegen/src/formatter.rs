@@ -326,12 +326,12 @@ pub fn generate_formatter() {
                     .into_iter()
                     .map(|variant| {
                         let variant = Ident::new(&variant, Span::call_site());
-                        quote! { Self::#variant(node) => node.to_format_element(formatter), }
+                        quote! { Self::#variant(node) => node.format(formatter), }
                     })
                     .collect();
 
                 quote! {
-                    use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+                    use crate::{FormatElement, FormatResult, Formatter, ToFormatElement, prelude::*};
                     use rome_js_syntax::#id;
 
                     impl ToFormatElement for #id {

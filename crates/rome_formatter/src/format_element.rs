@@ -1318,6 +1318,26 @@ impl FormatElement {
             _ => (empty_element(), self, empty_element()),
         }
     }
+
+    /// Utility function to get the "last element" of a [FormatElement], recursing
+    /// into lists and groups for find the last element that's not an empty element,
+    /// a line break or a comment
+    pub fn last_element(&self) -> Option<&FormatElement> {
+        match self {
+            FormatElement::List(list) | FormatElement::Fill(list) => {
+                list.iter().rev().find_map(|element| element.last_element())
+            }
+
+            FormatElement::Empty | FormatElement::Line(_) | FormatElement::Comment(_) => None,
+
+            FormatElement::Indent(indent) => indent.content.last_element(),
+            FormatElement::Group(group) | FormatElement::HardGroup(group) => {
+                group.content.last_element()
+            }
+
+            _ => Some(self),
+        }
+    }
 }
 
 impl From<Token> for FormatElement {

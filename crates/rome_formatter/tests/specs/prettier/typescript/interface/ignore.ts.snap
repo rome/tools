@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 151
 expression: ignore.ts
 
 ---
@@ -119,31 +119,36 @@ interface I {
 ```js
 interface Interface {
   // prettier-ignore
-  prop: type,
+  prop: type
   // prettier-ignore
-  prop: type,
+  prop: type;
   prop: type,
 }
 
 // Last element
 interface Interface {
   // prettier-ignore
-  prop: type,
+  prop: type
   prop: type,
 }
 
 interface foo extends bar {
   // prettier-ignore
-  f(): void,
+  f(): void;
   // prettier-ignore
-  g(): void,
+  g(): void;
   h(): void,
 }
 
 interface T<T> {
   // prettier-ignore
+  new<T>(): T<T>;
   new<T>(): T<T>,
-  new<T>(): T<T>,
+}
+
+interface I {
+  // prettier-ignore
+  x: y;
 }
 
 interface I {
@@ -153,17 +158,12 @@ interface I {
 
 interface I {
   // prettier-ignore
-  x: y,
+  x: y
 }
 
 interface I {
   // prettier-ignore
-  x: y,
-}
-
-interface I {
-  // prettier-ignore
-  x: y,
+  x: y;
   y: x,
 }
 
@@ -175,13 +175,13 @@ interface I {
 
 interface I {
   // prettier-ignore
-  x: y,
+  x: y
   y: x,
 }
 
 interface I {
   // prettier-ignore
-  (): void,
+  (): void;
 }
 
 interface I {
@@ -191,7 +191,12 @@ interface I {
 
 interface I {
   // prettier-ignore
-  (): void,
+  (): void
+}
+
+interface I {
+  // prettier-ignore
+  foo(): void;
 }
 
 interface I {
@@ -201,27 +206,22 @@ interface I {
 
 interface I {
   // prettier-ignore
-  foo(): void,
+  foo(): void
 }
 
 interface I {
   // prettier-ignore
-  foo(): void,
+  new ();
 }
 
 interface I {
   // prettier-ignore
-  new(),
+  new (),
 }
 
 interface I {
   // prettier-ignore
-  new(),
-}
-
-interface I {
-  // prettier-ignore
-  new(),
+  new ()
 }
 
 ```

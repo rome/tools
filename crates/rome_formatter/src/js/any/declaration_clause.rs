@@ -1,21 +1,21 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{prelude::*, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rome_js_syntax::JsAnyDeclarationClause;
 impl ToFormatElement for JsAnyDeclarationClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            Self::JsClassDeclaration(node) => node.to_format_element(formatter),
-            Self::JsFunctionDeclaration(node) => node.to_format_element(formatter),
-            Self::JsVariableDeclarationClause(node) => node.to_format_element(formatter),
-            Self::TsEnumDeclaration(node) => node.to_format_element(formatter),
-            Self::TsTypeAliasDeclaration(node) => node.to_format_element(formatter),
-            Self::TsInterfaceDeclaration(node) => node.to_format_element(formatter),
-            Self::TsDeclareFunctionDeclaration(node) => node.to_format_element(formatter),
-            Self::TsModuleDeclaration(node) => node.to_format_element(formatter),
-            Self::TsExternalModuleDeclaration(node) => node.to_format_element(formatter),
-            Self::TsGlobalDeclaration(node) => node.to_format_element(formatter),
-            Self::TsImportEqualsDeclaration(node) => node.to_format_element(formatter),
+            Self::JsClassDeclaration(node) => node.format(formatter),
+            Self::JsFunctionDeclaration(node) => node.format(formatter),
+            Self::JsVariableDeclarationClause(node) => node.format(formatter),
+            Self::TsEnumDeclaration(node) => node.format(formatter),
+            Self::TsTypeAliasDeclaration(node) => node.format(formatter),
+            Self::TsInterfaceDeclaration(node) => node.format(formatter),
+            Self::TsDeclareFunctionDeclaration(node) => node.format(formatter),
+            Self::TsModuleDeclaration(node) => node.format(formatter),
+            Self::TsExternalModuleDeclaration(node) => node.format(formatter),
+            Self::TsGlobalDeclaration(node) => node.format(formatter),
+            Self::TsImportEqualsDeclaration(node) => node.format(formatter),
         }
     }
 }
