@@ -8,7 +8,7 @@ use thiserror::Error;
 /// Error message returned by the CLI when it aborts with an error
 #[derive(Error)]
 pub enum Termination {
-    /// Returned by the CLI when it is called with a subcommand it doesn't know
+    /// Returned when it is called with a subcommand it doesn't know
     #[error("unknown command '{command}'")]
     UnknownCommand { command: String },
 
@@ -24,14 +24,14 @@ pub enum Termination {
         source: pico_args::Error,
     },
 
-    /// Returned when the CLI is passed a command line argument it doesn't know
+    /// Returned when the CLI  doesn't recognize a command line argument
     #[error(
         "unrecognized option {argument:?}. Type '{} format --help' for more information.",
         command_name()
     )]
     UnexpectedArgument { argument: OsString },
 
-    /// Returned when the CLI when a required argument is not present in the command line
+    /// Returned when a required argument is not present in the command line
     #[error(
         "missing argument '{argument}'. Type '{} format --help' for more information.",
         command_name()
