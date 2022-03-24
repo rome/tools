@@ -10,6 +10,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@1..4 "div" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@4..5 ">" [] [],
                     },
@@ -45,6 +46,7 @@ JsModule {
                         name: JsxName {
                             value_token: JSX_IDENT@20..23 "div" [] [],
                         },
+                        type_arguments: missing (optional),
                         attributes: JsxAttributeList [],
                         r_angle_token: R_ANGLE@23..24 ">" [] [],
                     },
@@ -90,8 +92,9 @@ JsModule {
             0: L_ANGLE@0..1 "<" [] []
             1: JSX_NAME@1..4
               0: JSX_IDENT@1..4 "div" [] []
-            2: JSX_ATTRIBUTE_LIST@4..4
-            3: R_ANGLE@4..5 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@4..4
+            4: R_ANGLE@4..5 ">" [] []
           1: JSX_CHILD_LIST@5..11
             0: JSX_SPREAD_CHILD@5..11
               0: L_CURLY@5..6 "{" [] []
@@ -114,8 +117,9 @@ JsModule {
             0: L_ANGLE@18..20 "<" [Newline("\n")] []
             1: JSX_NAME@20..23
               0: JSX_IDENT@20..23 "div" [] []
-            2: JSX_ATTRIBUTE_LIST@23..23
-            3: R_ANGLE@23..24 ">" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@23..23
+            4: R_ANGLE@23..24 ">" [] []
           1: JSX_CHILD_LIST@24..35
             0: JSX_SPREAD_CHILD@24..30
               0: L_CURLY@24..25 "{" [] []
