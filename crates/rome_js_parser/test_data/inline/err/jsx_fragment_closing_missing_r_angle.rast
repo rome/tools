@@ -1,0 +1,75 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsUnknownExpression {
+                items: [
+                    JsUnknown {
+                        items: [
+                            JsxOpeningFragment {
+                                l_angle_token: L_ANGLE@0..1 "<" [] [],
+                                r_angle_token: R_ANGLE@1..2 ">" [] [],
+                            },
+                            JsxChildList [
+                                JsxText {
+                                    value_token: JSX_TEXT_LITERAL@2..6 "test" [] [],
+                                },
+                            ],
+                            JsUnknown {
+                                items: [
+                                    L_ANGLE@6..7 "<" [] [],
+                                    SLASH@7..8 "/" [] [],
+                                    JsxName {
+                                        value_token: JSX_IDENT@8..12 "test" [] [],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@12..13 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..13
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..12
+    0: JS_EXPRESSION_STATEMENT@0..12
+      0: JS_UNKNOWN_EXPRESSION@0..12
+        0: JS_UNKNOWN@0..12
+          0: JSX_OPENING_FRAGMENT@0..2
+            0: L_ANGLE@0..1 "<" [] []
+            1: R_ANGLE@1..2 ">" [] []
+          1: JSX_CHILD_LIST@2..6
+            0: JSX_TEXT@2..6
+              0: JSX_TEXT_LITERAL@2..6 "test" [] []
+          2: JS_UNKNOWN@6..12
+            0: L_ANGLE@6..7 "<" [] []
+            1: SLASH@7..8 "/" [] []
+            2: JSX_NAME@8..12
+              0: JSX_IDENT@8..12 "test" [] []
+      1: (empty)
+  3: EOF@12..13 "" [Newline("\n")] []
+--
+error[SyntaxError]: JSX fragment has no corresponding closing tag.
+  ┌─ jsx_fragment_closing_missing_r_angle.jsx:1:1
+  │
+1 │ <>test</test
+  │ ^^      ---- Closing tag
+  │ │        
+  │ Opening fragment
+
+--
+error[SyntaxError]: expected `>` but instead the file ends
+  ┌─ jsx_fragment_closing_missing_r_angle.jsx:2:1
+  │
+2 │ 
+  │ ^ the file ends here
+
+--
+<>test</test

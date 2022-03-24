@@ -2182,12 +2182,18 @@ JsxClosingElement =
 
 // <>content</>
 JsxFragment =
-	opening_l_angle_token: '<'
-	opening_r_angle_token: '>'
+	opening_fragment: JsxOpeningFragment
 	children: JsxChildList
-	closing_l_angle_token: '<'
-	closing_slash_token: '/'
-	closing_r_angle_token: '>'
+	closing_fragment: JsxClosingFragment
+
+JsxOpeningFragment =
+	'<'
+	'>'
+
+JsxClosingFragment =
+	'<'
+	'/'
+	'>'
 
 // ==================================
 // Names
@@ -2278,10 +2284,10 @@ JsxAnyChild =
 
 JsxExpressionChild =
 	'{'
-	expression: JsAnyExpression
+	expression: JsAnyExpression?
 	'}'
 
-JsxSpreadChild = 
+JsxSpreadChild =
 	'{'
 	'...'
 	expression: JsAnyExpression

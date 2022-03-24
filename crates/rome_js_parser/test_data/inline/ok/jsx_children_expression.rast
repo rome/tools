@@ -770,7 +770,7 @@ JsModule {
                         },
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@489..509 "{" [] [Comments("/* A JSX comment */")],
-                            expression: missing (required),
+                            expression: missing (optional),
                             r_curly_token: R_CURLY@509..510 "}" [] [],
                         },
                         JsxText {
@@ -778,20 +778,28 @@ JsModule {
                         },
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@513..538 "{" [] [Comments("/* Multi\n      line\n  */")],
-                            expression: missing (required),
+                            expression: missing (optional),
                             r_curly_token: R_CURLY@538..539 "}" [] [],
                         },
                         JsxText {
-                            value_token: JSX_TEXT_LITERAL@539..540 "\n" [] [],
+                            value_token: JSX_TEXT_LITERAL@539..542 "\n  " [] [],
+                        },
+                        JsxExpressionChild {
+                            l_curly_token: L_CURLY@542..543 "{" [] [],
+                            expression: missing (optional),
+                            r_curly_token: R_CURLY@543..544 "}" [] [],
+                        },
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@544..545 "\n" [] [],
                         },
                     ],
                     closing_element: JsxClosingElement {
-                        l_angle_token: L_ANGLE@540..541 "<" [] [],
-                        slash_token: SLASH@541..542 "/" [] [],
+                        l_angle_token: L_ANGLE@545..546 "<" [] [],
+                        slash_token: SLASH@546..547 "/" [] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@542..545 "div" [] [],
+                            value_token: JSX_IDENT@547..550 "div" [] [],
                         },
-                        r_angle_token: R_ANGLE@545..546 ">" [] [],
+                        r_angle_token: R_ANGLE@550..551 ">" [] [],
                     },
                 },
             },
@@ -799,82 +807,82 @@ JsModule {
         },
         JsFunctionDeclaration {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@546..556 "function" [Newline("\n")] [Whitespace(" ")],
-            star_token: STAR@556..557 "*" [] [],
+            function_token: FUNCTION_KW@551..561 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: STAR@561..562 "*" [] [],
             id: JsIdentifierBinding {
-                name_token: IDENT@557..558 "f" [] [],
+                name_token: IDENT@562..563 "f" [] [],
             },
             type_parameters: missing (optional),
             parameters: JsParameters {
-                l_paren_token: L_PAREN@558..559 "(" [] [],
+                l_paren_token: L_PAREN@563..564 "(" [] [],
                 items: JsParameterList [],
-                r_paren_token: R_PAREN@559..561 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@564..566 ")" [] [Whitespace(" ")],
             },
             return_type_annotation: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@561..562 "{" [] [],
+                l_curly_token: L_CURLY@566..567 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsReturnStatement {
-                        return_token: RETURN_KW@562..574 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        return_token: RETURN_KW@567..579 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                         argument: JsxTagExpression {
                             tag: JsxElement {
                                 opening_element: JsxOpeningElement {
-                                    l_angle_token: L_ANGLE@574..575 "<" [] [],
+                                    l_angle_token: L_ANGLE@579..580 "<" [] [],
                                     name: JsxName {
-                                        value_token: JSX_IDENT@575..578 "div" [] [],
+                                        value_token: JSX_IDENT@580..583 "div" [] [],
                                     },
                                     type_arguments: missing (optional),
                                     attributes: JsxAttributeList [],
-                                    r_angle_token: R_ANGLE@578..579 ">" [] [],
+                                    r_angle_token: R_ANGLE@583..584 ">" [] [],
                                 },
                                 children: JsxChildList [
                                     JsxText {
-                                        value_token: JSX_TEXT_LITERAL@579..588 "\n        " [] [],
+                                        value_token: JSX_TEXT_LITERAL@584..593 "\n        " [] [],
                                     },
                                     JsxExpressionChild {
-                                        l_curly_token: L_CURLY@588..589 "{" [] [],
+                                        l_curly_token: L_CURLY@593..594 "{" [] [],
                                         expression: JsYieldExpression {
-                                            yield_token: YIELD_KW@589..595 "yield" [] [Whitespace(" ")],
+                                            yield_token: YIELD_KW@594..600 "yield" [] [Whitespace(" ")],
                                             argument: JsYieldArgument {
                                                 star_token: missing (optional),
                                                 expression: JsIdentifierExpression {
                                                     name: JsReferenceIdentifier {
-                                                        value_token: IDENT@595..596 "a" [] [],
+                                                        value_token: IDENT@600..601 "a" [] [],
                                                     },
                                                 },
                                             },
                                         },
-                                        r_curly_token: R_CURLY@596..597 "}" [] [],
+                                        r_curly_token: R_CURLY@601..602 "}" [] [],
                                     },
                                     JsxText {
-                                        value_token: JSX_TEXT_LITERAL@597..602 "\n    " [] [],
+                                        value_token: JSX_TEXT_LITERAL@602..607 "\n    " [] [],
                                     },
                                 ],
                                 closing_element: JsxClosingElement {
-                                    l_angle_token: L_ANGLE@602..603 "<" [] [],
-                                    slash_token: SLASH@603..604 "/" [] [],
+                                    l_angle_token: L_ANGLE@607..608 "<" [] [],
+                                    slash_token: SLASH@608..609 "/" [] [],
                                     name: JsxName {
-                                        value_token: JSX_IDENT@604..607 "div" [] [],
+                                        value_token: JSX_IDENT@609..612 "div" [] [],
                                     },
-                                    r_angle_token: R_ANGLE@607..608 ">" [] [],
+                                    r_angle_token: R_ANGLE@612..613 ">" [] [],
                                 },
                             },
                         },
-                        semicolon_token: SEMICOLON@608..609 ";" [] [],
+                        semicolon_token: SEMICOLON@613..614 ";" [] [],
                     },
                 ],
-                r_curly_token: R_CURLY@609..611 "}" [Newline("\n")] [],
+                r_curly_token: R_CURLY@614..616 "}" [Newline("\n")] [],
             },
         },
     ],
-    eof_token: EOF@611..612 "" [Newline("\n")] [],
+    eof_token: EOF@616..617 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..612
+0: JS_MODULE@0..617
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..611
+  2: JS_MODULE_ITEM_LIST@0..616
     0: JS_VARIABLE_STATEMENT@0..6
       0: JS_VARIABLE_DECLARATION@0..5
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -940,9 +948,9 @@ JsModule {
                   2: JS_STATEMENT_LIST@45..45
                   3: R_CURLY@45..46 "}" [] []
       1: SEMICOLON@46..47 ";" [] []
-    5: JS_EXPRESSION_STATEMENT@47..546
-      0: JSX_TAG_EXPRESSION@47..546
-        0: JSX_ELEMENT@47..546
+    5: JS_EXPRESSION_STATEMENT@47..551
+      0: JSX_TAG_EXPRESSION@47..551
+        0: JSX_ELEMENT@47..551
           0: JSX_OPENING_ELEMENT@47..53
             0: L_ANGLE@47..49 "<" [Newline("\n")] []
             1: JSX_NAME@49..52
@@ -950,7 +958,7 @@ JsModule {
             2: (empty)
             3: JSX_ATTRIBUTE_LIST@52..52
             4: R_ANGLE@52..53 ">" [] []
-          1: JSX_CHILD_LIST@53..540
+          1: JSX_CHILD_LIST@53..545
             0: JSX_TEXT@53..56
               0: JSX_TEXT_LITERAL@53..56 "\n  " [] []
             1: JSX_EXPRESSION_CHILD@56..59
@@ -1419,63 +1427,69 @@ JsModule {
               0: L_CURLY@513..538 "{" [] [Comments("/* Multi\n      line\n  */")]
               1: (empty)
               2: R_CURLY@538..539 "}" [] []
-            82: JSX_TEXT@539..540
-              0: JSX_TEXT_LITERAL@539..540 "\n" [] []
-          2: JSX_CLOSING_ELEMENT@540..546
-            0: L_ANGLE@540..541 "<" [] []
-            1: SLASH@541..542 "/" [] []
-            2: JSX_NAME@542..545
-              0: JSX_IDENT@542..545 "div" [] []
-            3: R_ANGLE@545..546 ">" [] []
+            82: JSX_TEXT@539..542
+              0: JSX_TEXT_LITERAL@539..542 "\n  " [] []
+            83: JSX_EXPRESSION_CHILD@542..544
+              0: L_CURLY@542..543 "{" [] []
+              1: (empty)
+              2: R_CURLY@543..544 "}" [] []
+            84: JSX_TEXT@544..545
+              0: JSX_TEXT_LITERAL@544..545 "\n" [] []
+          2: JSX_CLOSING_ELEMENT@545..551
+            0: L_ANGLE@545..546 "<" [] []
+            1: SLASH@546..547 "/" [] []
+            2: JSX_NAME@547..550
+              0: JSX_IDENT@547..550 "div" [] []
+            3: R_ANGLE@550..551 ">" [] []
       1: (empty)
-    6: JS_FUNCTION_DECLARATION@546..611
+    6: JS_FUNCTION_DECLARATION@551..616
       0: (empty)
-      1: FUNCTION_KW@546..556 "function" [Newline("\n")] [Whitespace(" ")]
-      2: STAR@556..557 "*" [] []
-      3: JS_IDENTIFIER_BINDING@557..558
-        0: IDENT@557..558 "f" [] []
+      1: FUNCTION_KW@551..561 "function" [Newline("\n")] [Whitespace(" ")]
+      2: STAR@561..562 "*" [] []
+      3: JS_IDENTIFIER_BINDING@562..563
+        0: IDENT@562..563 "f" [] []
       4: (empty)
-      5: JS_PARAMETERS@558..561
-        0: L_PAREN@558..559 "(" [] []
-        1: JS_PARAMETER_LIST@559..559
-        2: R_PAREN@559..561 ")" [] [Whitespace(" ")]
+      5: JS_PARAMETERS@563..566
+        0: L_PAREN@563..564 "(" [] []
+        1: JS_PARAMETER_LIST@564..564
+        2: R_PAREN@564..566 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@561..611
-        0: L_CURLY@561..562 "{" [] []
-        1: JS_DIRECTIVE_LIST@562..562
-        2: JS_STATEMENT_LIST@562..609
-          0: JS_RETURN_STATEMENT@562..609
-            0: RETURN_KW@562..574 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-            1: JSX_TAG_EXPRESSION@574..608
-              0: JSX_ELEMENT@574..608
-                0: JSX_OPENING_ELEMENT@574..579
-                  0: L_ANGLE@574..575 "<" [] []
-                  1: JSX_NAME@575..578
-                    0: JSX_IDENT@575..578 "div" [] []
+      7: JS_FUNCTION_BODY@566..616
+        0: L_CURLY@566..567 "{" [] []
+        1: JS_DIRECTIVE_LIST@567..567
+        2: JS_STATEMENT_LIST@567..614
+          0: JS_RETURN_STATEMENT@567..614
+            0: RETURN_KW@567..579 "return" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: JSX_TAG_EXPRESSION@579..613
+              0: JSX_ELEMENT@579..613
+                0: JSX_OPENING_ELEMENT@579..584
+                  0: L_ANGLE@579..580 "<" [] []
+                  1: JSX_NAME@580..583
+                    0: JSX_IDENT@580..583 "div" [] []
                   2: (empty)
-                  3: JSX_ATTRIBUTE_LIST@578..578
-                  4: R_ANGLE@578..579 ">" [] []
-                1: JSX_CHILD_LIST@579..602
-                  0: JSX_TEXT@579..588
-                    0: JSX_TEXT_LITERAL@579..588 "\n        " [] []
-                  1: JSX_EXPRESSION_CHILD@588..597
-                    0: L_CURLY@588..589 "{" [] []
-                    1: JS_YIELD_EXPRESSION@589..596
-                      0: YIELD_KW@589..595 "yield" [] [Whitespace(" ")]
-                      1: JS_YIELD_ARGUMENT@595..596
+                  3: JSX_ATTRIBUTE_LIST@583..583
+                  4: R_ANGLE@583..584 ">" [] []
+                1: JSX_CHILD_LIST@584..607
+                  0: JSX_TEXT@584..593
+                    0: JSX_TEXT_LITERAL@584..593 "\n        " [] []
+                  1: JSX_EXPRESSION_CHILD@593..602
+                    0: L_CURLY@593..594 "{" [] []
+                    1: JS_YIELD_EXPRESSION@594..601
+                      0: YIELD_KW@594..600 "yield" [] [Whitespace(" ")]
+                      1: JS_YIELD_ARGUMENT@600..601
                         0: (empty)
-                        1: JS_IDENTIFIER_EXPRESSION@595..596
-                          0: JS_REFERENCE_IDENTIFIER@595..596
-                            0: IDENT@595..596 "a" [] []
-                    2: R_CURLY@596..597 "}" [] []
-                  2: JSX_TEXT@597..602
-                    0: JSX_TEXT_LITERAL@597..602 "\n    " [] []
-                2: JSX_CLOSING_ELEMENT@602..608
-                  0: L_ANGLE@602..603 "<" [] []
-                  1: SLASH@603..604 "/" [] []
-                  2: JSX_NAME@604..607
-                    0: JSX_IDENT@604..607 "div" [] []
-                  3: R_ANGLE@607..608 ">" [] []
-            2: SEMICOLON@608..609 ";" [] []
-        3: R_CURLY@609..611 "}" [Newline("\n")] []
-  3: EOF@611..612 "" [Newline("\n")] []
+                        1: JS_IDENTIFIER_EXPRESSION@600..601
+                          0: JS_REFERENCE_IDENTIFIER@600..601
+                            0: IDENT@600..601 "a" [] []
+                    2: R_CURLY@601..602 "}" [] []
+                  2: JSX_TEXT@602..607
+                    0: JSX_TEXT_LITERAL@602..607 "\n    " [] []
+                2: JSX_CLOSING_ELEMENT@607..613
+                  0: L_ANGLE@607..608 "<" [] []
+                  1: SLASH@608..609 "/" [] []
+                  2: JSX_NAME@609..612
+                    0: JSX_IDENT@609..612 "div" [] []
+                  3: R_ANGLE@612..613 ">" [] []
+            2: SEMICOLON@613..614 ";" [] []
+        3: R_CURLY@614..616 "}" [Newline("\n")] []
+  3: EOF@616..617 "" [Newline("\n")] []

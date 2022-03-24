@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 149
 expression: do.js
-
 ---
 # Input
 ```js
@@ -203,17 +201,17 @@ error[SyntaxError]: expected `while` but instead found `;`
 18 │ };
    │  ^ unexpected
 
-error[SyntaxError]: expected a JSX Expression, a Element, or a text but instead found 'do'
+error[SyntaxError]: expected `'}'` but instead found `do`
    ┌─ do.js:25:9
    │
 25 │         do {
-   │         ^^ Expected a JSX Expression, a Element, or a text here
+   │         ^^ unexpected
 
-error[SyntaxError]: expected a JSX Expression, a Element, or a text but instead found 'if (loggedIn)'
+error[SyntaxError]: expected `'}'` but instead found `if`
    ┌─ do.js:26:11
    │
 26 │           if (loggedIn) {
-   │           ^^^^^^^^^^^^^ Expected a JSX Expression, a Element, or a text here
+   │           ^^ unexpected
 
 error[SyntaxError]: expected `')'` but instead found `do`
    ┌─ do.js:37:2

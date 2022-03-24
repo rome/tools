@@ -1,0 +1,213 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@0..1 "<" [] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@1..5 "test" [] [],
+                        },
+                        type_arguments: missing (optional),
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@5..6 ">" [] [],
+                    },
+                    children: JsxChildList [],
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@6..7 "<" [] [],
+                        slash_token: SLASH@7..8 "/" [] [],
+                        name: missing (required),
+                        r_angle_token: R_ANGLE@8..9 ">" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@9..10 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@10..12 "<" [Newline("\n")] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@12..16 "test" [] [],
+                        },
+                        type_arguments: missing (optional),
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@16..17 ">" [] [],
+                    },
+                    children: JsxChildList [],
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@17..18 "<" [] [],
+                        slash_token: SLASH@18..19 "/" [] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@19..23 "text" [] [],
+                        },
+                        r_angle_token: R_ANGLE@23..24 ">" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@24..25 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@25..27 "<" [Newline("\n")] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@27..31 "some" [] [],
+                        },
+                        type_arguments: missing (optional),
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@31..32 ">" [] [],
+                    },
+                    children: JsxChildList [
+                        JsxElement {
+                            opening_element: JsxOpeningElement {
+                                l_angle_token: L_ANGLE@32..33 "<" [] [],
+                                name: JsxName {
+                                    value_token: JSX_IDENT@33..39 "nested" [] [],
+                                },
+                                type_arguments: missing (optional),
+                                attributes: JsxAttributeList [],
+                                r_angle_token: R_ANGLE@39..40 ">" [] [],
+                            },
+                            children: JsxChildList [],
+                            closing_element: JsxClosingElement {
+                                l_angle_token: L_ANGLE@40..41 "<" [] [],
+                                slash_token: SLASH@41..42 "/" [] [],
+                                name: JsxName {
+                                    value_token: JSX_IDENT@42..46 "some" [] [],
+                                },
+                                r_angle_token: R_ANGLE@46..47 ">" [] [],
+                            },
+                        },
+                    ],
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@47..48 "<" [] [],
+                        slash_token: SLASH@48..49 "/" [] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@49..55 "nested" [] [],
+                        },
+                        r_angle_token: R_ANGLE@55..56 ">" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@56..57 ";" [] [],
+        },
+    ],
+    eof_token: EOF@57..58 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..58
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..57
+    0: JS_EXPRESSION_STATEMENT@0..10
+      0: JSX_TAG_EXPRESSION@0..9
+        0: JSX_ELEMENT@0..9
+          0: JSX_OPENING_ELEMENT@0..6
+            0: L_ANGLE@0..1 "<" [] []
+            1: JSX_NAME@1..5
+              0: JSX_IDENT@1..5 "test" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@5..5
+            4: R_ANGLE@5..6 ">" [] []
+          1: JSX_CHILD_LIST@6..6
+          2: JSX_CLOSING_ELEMENT@6..9
+            0: L_ANGLE@6..7 "<" [] []
+            1: SLASH@7..8 "/" [] []
+            2: (empty)
+            3: R_ANGLE@8..9 ">" [] []
+      1: SEMICOLON@9..10 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@10..25
+      0: JSX_TAG_EXPRESSION@10..24
+        0: JSX_ELEMENT@10..24
+          0: JSX_OPENING_ELEMENT@10..17
+            0: L_ANGLE@10..12 "<" [Newline("\n")] []
+            1: JSX_NAME@12..16
+              0: JSX_IDENT@12..16 "test" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@16..16
+            4: R_ANGLE@16..17 ">" [] []
+          1: JSX_CHILD_LIST@17..17
+          2: JSX_CLOSING_ELEMENT@17..24
+            0: L_ANGLE@17..18 "<" [] []
+            1: SLASH@18..19 "/" [] []
+            2: JSX_NAME@19..23
+              0: JSX_IDENT@19..23 "text" [] []
+            3: R_ANGLE@23..24 ">" [] []
+      1: SEMICOLON@24..25 ";" [] []
+    2: JS_EXPRESSION_STATEMENT@25..57
+      0: JSX_TAG_EXPRESSION@25..56
+        0: JSX_ELEMENT@25..56
+          0: JSX_OPENING_ELEMENT@25..32
+            0: L_ANGLE@25..27 "<" [Newline("\n")] []
+            1: JSX_NAME@27..31
+              0: JSX_IDENT@27..31 "some" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@31..31
+            4: R_ANGLE@31..32 ">" [] []
+          1: JSX_CHILD_LIST@32..47
+            0: JSX_ELEMENT@32..47
+              0: JSX_OPENING_ELEMENT@32..40
+                0: L_ANGLE@32..33 "<" [] []
+                1: JSX_NAME@33..39
+                  0: JSX_IDENT@33..39 "nested" [] []
+                2: (empty)
+                3: JSX_ATTRIBUTE_LIST@39..39
+                4: R_ANGLE@39..40 ">" [] []
+              1: JSX_CHILD_LIST@40..40
+              2: JSX_CLOSING_ELEMENT@40..47
+                0: L_ANGLE@40..41 "<" [] []
+                1: SLASH@41..42 "/" [] []
+                2: JSX_NAME@42..46
+                  0: JSX_IDENT@42..46 "some" [] []
+                3: R_ANGLE@46..47 ">" [] []
+          2: JSX_CLOSING_ELEMENT@47..56
+            0: L_ANGLE@47..48 "<" [] []
+            1: SLASH@48..49 "/" [] []
+            2: JSX_NAME@49..55
+              0: JSX_IDENT@49..55 "nested" [] []
+            3: R_ANGLE@55..56 ">" [] []
+      1: SEMICOLON@56..57 ";" [] []
+  3: EOF@57..58 "" [Newline("\n")] []
+--
+error[SyntaxError]: expected an identifier but instead found '>'
+  ┌─ jsx_closing_element_mismatch.jsx:1:9
+  │
+1 │ <test></>;
+  │         ^ Expected an identifier here
+
+--
+error[SyntaxError]: Expected corresponding JSX closing tag for 'test'.
+  ┌─ jsx_closing_element_mismatch.jsx:2:1
+  │
+2 │ <test></text>;
+  │ ^^^^^^  ---- closing tag
+  │ │        
+  │ Opening tag
+
+--
+error[SyntaxError]: Expected corresponding JSX closing tag for 'nested'.
+  ┌─ jsx_closing_element_mismatch.jsx:3:7
+  │
+3 │ <some><nested></some></nested>;
+  │       ^^^^^^^^  ---- closing tag
+  │       │          
+  │       Opening tag
+
+--
+error[SyntaxError]: Expected corresponding JSX closing tag for 'some'.
+  ┌─ jsx_closing_element_mismatch.jsx:3:1
+  │
+3 │ <some><nested></some></nested>;
+  │ ^^^^^^                 ------ closing tag
+  │ │                       
+  │ Opening tag
+
+--
+<test></>;
+<test></text>;
+<some><nested></some></nested>;

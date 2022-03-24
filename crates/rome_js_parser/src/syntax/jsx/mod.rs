@@ -1,70 +1,23 @@
 pub mod jsx_parse_errors;
 
 use rome_js_syntax::JsSyntaxKind::*;
+use rome_rowan::TextRange;
 
 use crate::lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
-use crate::syntax::expr::{parse_expression, parse_name, ExpressionContext};
+use crate::parser::expected_token;
+use crate::syntax::expr::{
+    is_nth_at_identifier_or_keyword, parse_expression, parse_name, ExpressionContext,
+};
 use crate::syntax::js_parse_error::{expected_expression, expected_identifier};
 use crate::syntax::jsx::jsx_parse_errors::{
     jsx_expected_attribute, jsx_expected_attribute_value, jsx_expected_children,
 };
-use crate::{parser::RecoveryResult, ParseNodeList, ParseRecovery, ParsedSyntax, Parser};
-use crate::{Absent, Checkpoint, Present};
+use crate::{
+    parser::RecoveryResult, CompletedMarker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
+};
+use crate::{Absent, Present};
 
 use super::typescript::parse_ts_type_arguments;
-
-// Constraints function to be inside a checkpointed parser
-// allowing them advancing and abandoning the parser.
-struct CheckpointedParser<'a, 'b> {
-    parser: &'a mut Parser<'b>,
-    checkpoint: Checkpoint,
-}
-
-impl<'a, 'b> CheckpointedParser<'a, 'b> {
-    pub fn new(p: &'a mut Parser<'b>) -> CheckpointedParser<'a, 'b> {
-        let checkpoint = p.checkpoint();
-        Self {
-            parser: p,
-            checkpoint,
-        }
-    }
-
-    pub fn rewind(self) -> &'a mut Parser<'b> {
-        self.parser.rewind(self.checkpoint);
-        self.parser
-    }
-}
-
-impl<'a, 'b> std::ops::Deref for CheckpointedParser<'a, 'b> {
-    type Target = Parser<'b>;
-
-    fn deref(&self) -> &Self::Target {
-        self.parser
-    }
-}
-
-impl<'a, 'b> std::ops::DerefMut for CheckpointedParser<'a, 'b> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        self.parser
-    }
-}
-
-// It is impossible to lookahead and guarantee that we are at a JSX expression,
-// so this function will checkpoint and rewind the parser on failures.
-pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
-    if !p.at(T![<]) {
-        return ParsedSyntax::Absent;
-    }
-
-    let mut p = CheckpointedParser::new(p);
-    let syntax = parse_jsx_tag_expression(&mut p);
-
-    if syntax.is_absent() {
-        p.rewind();
-    }
-
-    syntax
-}
 
 // test jsx jsx_element_on_return
 // function f() {
@@ -86,11 +39,222 @@ pub(super) fn maybe_parse_jsx_expression(p: &mut Parser) -> ParsedSyntax {
 //     let d = <div>a</div>/; // ambigous: JSX or "type assertion a less than regex /div>/". Probably JSX.
 //     let d = <string>a</string>/;
 // }
-fn parse_jsx_tag_expression(p: &mut CheckpointedParser<'_, '_>) -> ParsedSyntax {
-    parse_jsx_element(p, true).map(|element| {
-        let m = element.precede(p);
-        m.complete(p, JSX_TAG_EXPRESSION)
-    })
+pub(crate) fn parse_jsx_tag_expression(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![<]) {
+        return Absent;
+    }
+
+    if !p.nth_at(1, T![>]) && !is_nth_at_identifier_or_keyword(p, 1) {
+        return Absent;
+    }
+
+    let m = p.start();
+
+    parse_any_jsx_tag(p, true).unwrap();
+    Present(m.complete(p, JSX_TAG_EXPRESSION))
+}
+
+// <a ...> or <a ... />
+// ^          ^
+
+// test jsx jsx_element_open_close
+// function f() {
+//     return <div></div>
+// }
+
+// test jsx jsx_element_self_close
+// function f() {
+//     return <div />
+// }
+
+// test jsx jsx_closing_token_trivia
+// <closing / /* some comment */ >;
+// <open><
+// /* some comment */ / open>;
+
+// test_err jsx jsx_invalid_text
+// <a> test ></a>;
+// <b> invalid }</b>;
+
+/// Parses a JSX tag (fragment or element)
+///
+/// `in_expression` must be `true` if this element is a direct child of the `JsxElementExpression` (root of an expression).
+/// It should be false when parsing any child node.
+fn parse_any_jsx_tag(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
+    match parse_any_jsx_opening_tag(p, in_expression) {
+        Some(OpeningElement::SelfClosing(marker)) => Present(marker),
+        Some(OpeningElement::Fragment(fragment_opening)) => {
+            let opening_range = fragment_opening.range(p);
+            let fragment = fragment_opening.precede(p);
+            parse_jsx_children(p);
+            expect_closing_fragment(p, in_expression, opening_range);
+            Present(fragment.complete(p, JSX_FRAGMENT))
+        }
+        Some(OpeningElement::Element { name, opening }) => {
+            let opening_range = opening.range(p);
+            let element = opening.precede(p);
+
+            parse_jsx_children(p);
+
+            expect_closing_element(p, in_expression, name, opening_range);
+            Present(element.complete(p, JSX_ELEMENT))
+        }
+        None => Absent,
+    }
+}
+
+enum OpeningElement {
+    Fragment(CompletedMarker),
+    Element {
+        name: Option<CompletedMarker>,
+        opening: CompletedMarker,
+    },
+    SelfClosing(CompletedMarker),
+}
+
+fn parse_any_jsx_opening_tag(p: &mut Parser, in_expression: bool) -> Option<OpeningElement> {
+    if !p.at(T![<]) {
+        return None;
+    }
+
+    let m = p.start();
+    p.bump(T![<]);
+
+    if p.at(T![>]) {
+        // test jsx jsx_fragments
+        // <></>;
+        // <>abcd</>;
+        // <>   whitespace
+        // </>;
+        // <
+        //   /*comment */
+        //   >
+        //   <
+        //   /
+        // >;
+        p.bump_with_context(T![>], LexContext::JsxChild);
+
+        return Some(OpeningElement::Fragment(
+            m.complete(p, JSX_OPENING_FRAGMENT),
+        ));
+    }
+
+    let name = parse_jsx_any_element_name(p).or_add_diagnostic(p, expected_identifier);
+
+    // test tsx tsx_element_generics_type
+    // <NonGeneric />;
+    // <Generic<true> />;
+    // <Generic<true>></Generic>;
+    let _ = parse_ts_type_arguments(p);
+
+    JsxAttributeList.parse_list(p);
+
+    if p.eat(T![/]) {
+        if !p.at(T![>]) {
+            // test_err jsx_self_closing_element_missing_r_angle
+            // <><test /<a /></>;
+            p.error(expected_token(T![>]));
+        } else if in_expression {
+            p.bump(T![>]);
+        } else {
+            p.bump_with_context(T![>], LexContext::JsxChild);
+        }
+
+        Some(OpeningElement::SelfClosing(
+            m.complete(p, JSX_SELF_CLOSING_ELEMENT),
+        ))
+    } else {
+        if !p.at(T![>]) {
+            // test_err jsx jsx_opening_element_missing_r_angle
+            // <><test abcd</test></>
+
+            // TODO call into relex when parsing children? necessary for decent error recovery
+            p.error(expected_token(T![>]));
+        } else {
+            p.bump_with_context(T![>], LexContext::JsxChild);
+        }
+
+        Some(OpeningElement::Element {
+            opening: m.complete(p, JSX_OPENING_ELEMENT),
+            name,
+        })
+    }
+}
+
+fn expect_closing_fragment(
+    p: &mut Parser,
+    in_expression: bool,
+    opening_range: TextRange,
+) -> CompletedMarker {
+    let m = p.start();
+    p.expect(T![<]);
+    p.expect(T![/]);
+
+    // test_err jsx jsx_missing_closing_fragment
+    // <>test</test>;
+    // <>test
+    if let Present(name) = parse_jsx_any_element_name(p) {
+        p.error(
+            p.err_builder("JSX fragment has no corresponding closing tag.")
+                .primary(opening_range, "Opening fragment")
+                .secondary(name.range(p), "Closing tag"),
+        );
+    }
+
+    if p.at(T![>]) && !in_expression {
+        p.bump_with_context(T![>], LexContext::JsxChild);
+    } else {
+        // test_err jsx jsx_fragment_closing_missing_r_angle
+        // <>test</test
+        p.expect(T![>]);
+    }
+
+    m.complete(p, JSX_CLOSING_FRAGMENT)
+}
+
+fn expect_closing_element(
+    p: &mut Parser,
+    in_expression: bool,
+    opening_name_marker: Option<CompletedMarker>,
+    opening_range: TextRange,
+) -> CompletedMarker {
+    let m = p.start();
+    p.expect(T![<]);
+    p.expect(T![/]);
+
+    // test_err jsx jsx_closing_element_mismatch
+    // <test></>;
+    // <test></text>;
+    // <some><nested></some></nested>;
+    let name_marker = parse_jsx_any_element_name(p).or_add_diagnostic(p, expected_identifier);
+
+    if let (Some(opening_name_marker), Some(closing_name_marker)) =
+        (opening_name_marker, name_marker)
+    {
+        let opening_name = opening_name_marker.text(p);
+        let closing_name = closing_name_marker.text(p);
+        if opening_name != closing_name {
+            let error = p
+                .err_builder(&format!(
+                    "Expected corresponding JSX closing tag for '{opening_name}'."
+                ))
+                .primary(opening_range, "Opening tag")
+                .secondary(closing_name_marker.range(p), "closing tag");
+            p.error(error)
+        }
+    }
+
+    // test_err jsx jsx_closing_missing_r_angle
+    // <test>abcd</test
+    if !p.at(T![>]) {
+        p.error(expected_token(T![>]));
+    } else if in_expression {
+        p.bump(T![>]);
+    } else {
+        p.bump_with_context(T![>], LexContext::JsxChild);
+    }
+
+    m.complete(p, JSX_CLOSING_ELEMENT)
 }
 
 struct JsxChildrenList;
@@ -106,8 +270,8 @@ impl ParseNodeList for JsxChildrenList {
             //     </b>
             //     <c></c>
             // </a>
-            T![<] => parse_jsx_element(p, false),
-            T!['{'] => parse_jsx_expression_block(p, ExpressionBlock::Children),
+            T![<] => parse_any_jsx_tag(p, false),
+            T!['{'] => parse_jsx_expression_child(p),
             // test jsx jsx_text
             // <a>test</a>;
             // <a>   whitespace handling </a>;
@@ -147,159 +311,53 @@ impl ParseNodeList for JsxChildrenList {
     }
 }
 
-// test jsx jsx_element_open_close
-// function f() {
-//     return <div></div>
-// }
-
-// test jsx jsx_element_self_close
-// function f() {
-//     return <div />
-// }
-
-// test jsx jsx_closing_token_trivia
-// <closing / /* some comment */ >;
-// <open><
-// /* some comment */ / open>;
-
-// test_err jsx jsx_invalid_text
-// <a> test ></a>;
-// <b> invalid }</b>;
-
-/// Parses a JSX element
-///
-/// `in_expression` must be `true` if this element is a direct child of the `JsxElementExpression` (root of an expression).
-/// It should be false when parsing any child node.
-fn parse_jsx_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
-    match parse_jsx_element_head_or_fragment(p, in_expression) {
-        Present(opening_marker) if opening_marker.kind() == JsSyntaxKind::JSX_OPENING_ELEMENT => {
-            let element_marker = opening_marker.precede(p);
-
-            parse_jsx_element_children(p);
-
-            let closing_marker = parse_jsx_closing_element(p, in_expression);
-            if closing_marker.is_absent() {
-                element_marker.abandon(p);
-                Absent
-            } else {
-                Present(element_marker.complete(p, JsSyntaxKind::JSX_ELEMENT))
-            }
-        }
-        Present(self_closing_marker)
-            if self_closing_marker.kind() == JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT =>
-        {
-            Present(self_closing_marker)
-        }
-        Present(fragment) if fragment.kind() == JSX_FRAGMENT => Present(fragment),
-        Absent => Absent,
-        _ => unreachable!("Unexpected present node returned"),
-    }
-}
-
 #[inline]
-fn parse_jsx_element_children(p: &mut Parser) {
+fn parse_jsx_children(p: &mut Parser) {
     JsxChildrenList.parse_list(p);
 }
 
-// <a ...> or <a ... />
-// ^          ^
-
-// test jsx jsx_fragments
-// <></>;
-// <>abcd</>;
-// <>   whitespace
-// </>;
-// <
-//   /*comment */
-//   >
-//   <
-//   /
-// >;
-fn parse_jsx_element_head_or_fragment(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
-    if !p.at(T![<]) {
+fn parse_jsx_expression_child(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T!['{']) {
         return ParsedSyntax::Absent;
     }
 
     let m = p.start();
-    p.bump(T![<]);
-    let name = parse_jsx_any_element_name(p);
+    p.bump(T!['{']);
 
-    if name.is_absent() {
-        if !p.at(T![>]) {
-            m.abandon(p);
-            return Absent;
-        }
+    // test jsx jsx_children_spread
+    // <div>{...a}</div>;
+    // <div>{...a}After</div>;
+    let is_spread = p.eat(T![...]);
 
-        p.bump_with_context(T![>], LexContext::JsxChild);
-        parse_jsx_element_children(p);
+    let expr = parse_jsx_assignment_expression(p, is_spread);
 
-        if !p.expect(T![<]) || !p.expect(T![/]) || !p.expect(T![>]) {
-            m.abandon(p);
-            return Absent;
-        }
-
-        return Present(m.complete(p, JSX_FRAGMENT));
+    if is_spread {
+        // test_err jsx jsx_spread_no_expression
+        // <test>{...}</test>
+        expr.or_add_diagnostic(p, expected_expression);
     }
 
-    // test tsx tsx_element_generics_type
-    // <NonGeneric />;
-    // <Generic<true> />;
-    // <Generic<true>></Generic>;
-    let _ = parse_ts_type_arguments(p);
-
-    JsxAttributeList.parse_list(p);
-
-    let kind = if p.at(T![/]) {
-        p.bump(T![/]);
-        JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT
+    // test jsx jsx_children_expression_then_text
+    // <test>
+    //     {/* comment */}
+    //      some
+    //      text
+    // </test>
+    if p.at(T!['}']) {
+        p.bump_with_context(T!['}'], LexContext::JsxChild);
     } else {
-        JsSyntaxKind::JSX_OPENING_ELEMENT
+        // test_err jsx jsx_child_expression_missing_r_curly
+        // <test>{ 4 + 3
+        p.error(expected_token(T!['}']));
+    }
+
+    let kind = if is_spread {
+        JsSyntaxKind::JSX_SPREAD_CHILD
+    } else {
+        JsSyntaxKind::JSX_EXPRESSION_CHILD
     };
 
-    if !p.at(T![>]) {
-        m.abandon(p);
-        return Absent;
-    } else if in_expression && kind == JSX_SELF_CLOSING_ELEMENT {
-        p.bump(T![>]);
-    } else {
-        p.bump_with_context(T![>], LexContext::JsxChild);
-    }
-
     ParsedSyntax::Present(m.complete(p, kind))
-}
-
-// <a/>
-// ^
-fn parse_jsx_closing_element(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
-    if !p.at(T![<]) {
-        return ParsedSyntax::Absent;
-    }
-
-    let m = p.start();
-
-    if !p.expect(T![<]) || !p.expect(T![/]) {
-        m.abandon(p);
-        return Absent;
-    }
-
-    let closing_name = parse_jsx_any_element_name(p);
-    if closing_name.is_absent() {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
-    }
-
-    if !p.at(T![>]) {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
-    }
-
-    if in_expression {
-        p.bump(T![>]);
-    } else {
-        p.bump_with_context(T![>], LexContext::JsxChild);
-    }
-
-    ParsedSyntax::Present(m.complete(p, JSX_CLOSING_ELEMENT))
 }
 
 // test jsx jsx_member_element_name
@@ -399,7 +457,7 @@ impl ParseNodeList for JsxAttributeList {
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
-        p.at(T![>]) || p.at(T![/])
+        matches!(p.cur(), T![>] | T![/] | T![<])
     }
 
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
@@ -419,17 +477,12 @@ impl ParseNodeList for JsxAttributeList {
 }
 
 fn parse_jsx_attribute(p: &mut Parser) -> ParsedSyntax {
-    let m = p.start();
+    parse_jsx_name_or_namespace(p).map(|name| {
+        let m = name.precede(p);
+        let _ = parse_jsx_attribute_initializer_clause(p);
 
-    let name = parse_jsx_name_or_namespace(p);
-    if name.is_absent() {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
-    }
-
-    let _ = parse_jsx_attribute_initializer_clause(p);
-
-    ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE))
+        m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE)
+    })
 }
 
 // test jsx jsx_spread_attribute
@@ -498,10 +551,10 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
         // test jsx jsx_element_attribute_expression
         // <div id={1} />;
         // <div className={prefix`none`} />;
-        T!['{'] => parse_jsx_expression_block(p, ExpressionBlock::Attribute),
+        T!['{'] => parse_jsx_expression_attribute_value(p),
         // test jsx jsx_element_attribute_element
         // <div id=<a/> />;
-        T![<] => parse_jsx_element(p, true),
+        T![<] => parse_any_jsx_tag(p, true),
         // test jsx jsx_element_attribute_string_literal
         // <div id="a" />;
         JsSyntaxKind::JSX_STRING_LITERAL => {
@@ -513,10 +566,17 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-#[derive(PartialEq, Eq)]
-enum ExpressionBlock {
-    Attribute,
-    Children,
+fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T!['{']) {
+        return ParsedSyntax::Absent;
+    }
+
+    let m = p.start();
+    p.bump(T!['{']);
+    parse_jsx_assignment_expression(p, false).or_add_diagnostic(p, expected_expression);
+    p.expect(T!['}']);
+
+    ParsedSyntax::Present(m.complete(p, JSX_EXPRESSION_ATTRIBUTE_VALUE))
 }
 
 // test jsx jsx_children_expression
@@ -569,6 +629,7 @@ enum ExpressionBlock {
 //   {/* Multi
 //       line
 //   */}
+//   {}
 // </div>
 // function *f() {
 //     return <div>
@@ -583,74 +644,33 @@ enum ExpressionBlock {
 //   {super()}
 //   {new.target}
 // </div>
+fn parse_jsx_assignment_expression(p: &mut Parser, is_spread: bool) -> ParsedSyntax {
+    let expr = parse_expression(p, ExpressionContext::default());
 
-fn parse_jsx_expression_block(p: &mut Parser, kind: ExpressionBlock) -> ParsedSyntax {
-    if !p.at(T!['{']) {
-        return ParsedSyntax::Absent;
-    }
-
-    let m = p.start();
-
-    p.bump(T!['{']);
-
-    // test jsx jsx_children_spread
-    // <div>{...a}</div>;
-    // <div>{...a}After</div>;
-    let is_spread = kind == ExpressionBlock::Children && p.eat(T![...]);
-
-    let expr = super::expr::parse_expression(p, ExpressionContext::default());
-    let _ = expr.map(|mut m| {
+    expr.map(|mut expr| {
         let msg = if is_spread {
             "This expression is not valid as a JSX spread expression"
         } else {
             "This expression is not valid as a JSX expression."
         };
 
-        let err = match m.kind() {
+        let err = match expr.kind() {
             JsSyntaxKind::IMPORT_META
             | JsSyntaxKind::NEW_TARGET
-            | JsSyntaxKind::JS_CLASS_EXPRESSION => Some(p.err_builder(msg).primary(m.range(p), "")),
+            | JsSyntaxKind::JS_CLASS_EXPRESSION => {
+                Some(p.err_builder(msg).primary(expr.range(p), ""))
+            }
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION if is_spread => {
-                Some(p.err_builder(msg).primary(m.range(p), ""))
+                Some(p.err_builder(msg).primary(expr.range(p), ""))
             }
             _ => None,
         };
 
         if let Some(err) = err {
             p.error(err);
-            m.change_to_unknown(p);
-            m
-        } else {
-            m
+            expr.change_to_unknown(p);
         }
-    });
 
-    // test jsx jsx_children_expression_then_text
-    // <test>
-    //     {/* comment */}
-    //      some
-    //      text
-    // </text>
-    if p.at(T!['}']) {
-        let context = match kind {
-            ExpressionBlock::Attribute => LexContext::Regular,
-            ExpressionBlock::Children => LexContext::JsxChild,
-        };
-        p.bump_with_context(T!['}'], context);
-    } else {
-        m.abandon(p);
-        return ParsedSyntax::Absent;
-    }
-
-    let kind = match kind {
-        ExpressionBlock::Attribute => JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE,
-        ExpressionBlock::Children => {
-            if is_spread {
-                JsSyntaxKind::JSX_SPREAD_CHILD
-            } else {
-                JsSyntaxKind::JSX_EXPRESSION_CHILD
-            }
-        }
-    };
-    ParsedSyntax::Present(m.complete(p, kind))
+        expr
+    })
 }

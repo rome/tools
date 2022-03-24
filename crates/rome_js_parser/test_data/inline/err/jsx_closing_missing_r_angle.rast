@@ -1,0 +1,71 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxElement {
+                    opening_element: JsxOpeningElement {
+                        l_angle_token: L_ANGLE@0..1 "<" [] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@1..5 "test" [] [],
+                        },
+                        type_arguments: missing (optional),
+                        attributes: JsxAttributeList [],
+                        r_angle_token: R_ANGLE@5..6 ">" [] [],
+                    },
+                    children: JsxChildList [
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@6..10 "abcd" [] [],
+                        },
+                    ],
+                    closing_element: JsxClosingElement {
+                        l_angle_token: L_ANGLE@10..11 "<" [] [],
+                        slash_token: SLASH@11..12 "/" [] [],
+                        name: JsxName {
+                            value_token: JSX_IDENT@12..16 "test" [] [],
+                        },
+                        r_angle_token: missing (required),
+                    },
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@16..17 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..17
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..16
+    0: JS_EXPRESSION_STATEMENT@0..16
+      0: JSX_TAG_EXPRESSION@0..16
+        0: JSX_ELEMENT@0..16
+          0: JSX_OPENING_ELEMENT@0..6
+            0: L_ANGLE@0..1 "<" [] []
+            1: JSX_NAME@1..5
+              0: JSX_IDENT@1..5 "test" [] []
+            2: (empty)
+            3: JSX_ATTRIBUTE_LIST@5..5
+            4: R_ANGLE@5..6 ">" [] []
+          1: JSX_CHILD_LIST@6..10
+            0: JSX_TEXT@6..10
+              0: JSX_TEXT_LITERAL@6..10 "abcd" [] []
+          2: JSX_CLOSING_ELEMENT@10..16
+            0: L_ANGLE@10..11 "<" [] []
+            1: SLASH@11..12 "/" [] []
+            2: JSX_NAME@12..16
+              0: JSX_IDENT@12..16 "test" [] []
+            3: (empty)
+      1: (empty)
+  3: EOF@16..17 "" [Newline("\n")] []
+--
+error[SyntaxError]: expected `>` but instead the file ends
+  ┌─ jsx_closing_missing_r_angle.jsx:2:1
+  │
+2 │ 
+  │ ^ the file ends here
+
+--
+<test>abcd</test

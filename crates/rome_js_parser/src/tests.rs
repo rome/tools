@@ -14,7 +14,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-const functionName1 = <T,>(arg) => false;
+let a = <Test />;
 "#;
 
     let module = parse(src, 0, SourceType::tsx());

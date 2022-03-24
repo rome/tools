@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 151
 expression: after_jsx_generic.ts
-
 ---
 # Input
 ```js
@@ -61,23 +59,6 @@ let comp = (
     ></Component>
   </>
 );
-
-```
-
-# Errors
-```
-error[SyntaxError]: JSX elements are a JSX only feature. Convert your file to a JSX file or remove the syntax.
-   ┌─ after_jsx_generic.ts:2:3
-   │  
- 2 │ ┌   <>
- 3 │ │     <Component<number> /* comment1 */></Component>
- 4 │ │     <Component<number> foo /* comment2 */></Component>
- 5 │ │     <Component<number> /* comment3 */ bar></Component>
-   · │
-23 │ │     ></Component>
-24 │ │   </>
-   │ └─────^ JSX only syntax
-
 
 ```
 

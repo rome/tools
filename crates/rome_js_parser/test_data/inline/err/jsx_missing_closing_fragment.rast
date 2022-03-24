@@ -1,0 +1,113 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsUnknownExpression {
+                items: [
+                    JsUnknown {
+                        items: [
+                            JsxOpeningFragment {
+                                l_angle_token: L_ANGLE@0..1 "<" [] [],
+                                r_angle_token: R_ANGLE@1..2 ">" [] [],
+                            },
+                            JsxChildList [
+                                JsxText {
+                                    value_token: JSX_TEXT_LITERAL@2..6 "test" [] [],
+                                },
+                            ],
+                            JsUnknown {
+                                items: [
+                                    L_ANGLE@6..7 "<" [] [],
+                                    SLASH@7..8 "/" [] [],
+                                    JsxName {
+                                        value_token: JSX_IDENT@8..12 "test" [] [],
+                                    },
+                                    R_ANGLE@12..13 ">" [] [],
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@13..14 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsxTagExpression {
+                tag: JsxFragment {
+                    opening_fragment: JsxOpeningFragment {
+                        l_angle_token: L_ANGLE@14..16 "<" [Newline("\n")] [],
+                        r_angle_token: R_ANGLE@16..17 ">" [] [],
+                    },
+                    children: JsxChildList [
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@17..22 "test\n" [] [],
+                        },
+                    ],
+                    closing_fragment: JsxClosingFragment {
+                        l_angle_token: missing (required),
+                        slash_token: missing (required),
+                        r_angle_token: missing (required),
+                    },
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@22..22 "" [] [],
+}
+
+0: JS_MODULE@0..22
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..22
+    0: JS_EXPRESSION_STATEMENT@0..14
+      0: JS_UNKNOWN_EXPRESSION@0..13
+        0: JS_UNKNOWN@0..13
+          0: JSX_OPENING_FRAGMENT@0..2
+            0: L_ANGLE@0..1 "<" [] []
+            1: R_ANGLE@1..2 ">" [] []
+          1: JSX_CHILD_LIST@2..6
+            0: JSX_TEXT@2..6
+              0: JSX_TEXT_LITERAL@2..6 "test" [] []
+          2: JS_UNKNOWN@6..13
+            0: L_ANGLE@6..7 "<" [] []
+            1: SLASH@7..8 "/" [] []
+            2: JSX_NAME@8..12
+              0: JSX_IDENT@8..12 "test" [] []
+            3: R_ANGLE@12..13 ">" [] []
+      1: SEMICOLON@13..14 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@14..22
+      0: JSX_TAG_EXPRESSION@14..22
+        0: JSX_FRAGMENT@14..22
+          0: JSX_OPENING_FRAGMENT@14..17
+            0: L_ANGLE@14..16 "<" [Newline("\n")] []
+            1: R_ANGLE@16..17 ">" [] []
+          1: JSX_CHILD_LIST@17..22
+            0: JSX_TEXT@17..22
+              0: JSX_TEXT_LITERAL@17..22 "test\n" [] []
+          2: JSX_CLOSING_FRAGMENT@22..22
+            0: (empty)
+            1: (empty)
+            2: (empty)
+      1: (empty)
+  3: EOF@22..22 "" [] []
+--
+error[SyntaxError]: JSX fragment has no corresponding closing tag.
+  ┌─ jsx_missing_closing_fragment.jsx:1:1
+  │
+1 │ <>test</test>;
+  │ ^^      ---- Closing tag
+  │ │        
+  │ Opening fragment
+
+--
+error[SyntaxError]: expected `<` but instead the file ends
+  ┌─ jsx_missing_closing_fragment.jsx:3:1
+  │
+3 │ 
+  │ ^ the file ends here
+
+--
+<>test</test>;
+<>test
