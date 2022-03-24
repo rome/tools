@@ -594,43 +594,35 @@ fn parse_jsx_expression_block(p: &mut Parser, kind: ExpressionBlock) -> ParsedSy
     p.bump(T!['{']);
 
     // test jsx jsx_children_spread
-    // <div>{...a}</div>
-    if kind == ExpressionBlock::Children && p.at(T![...]) {
-        p.expect(T![...]);
-        let expr = super::expr::parse_expression(p, ExpressionContext::default()).map(|mut m| {
-            match m.kind() {
-                JsSyntaxKind::IMPORT_META
-                | JsSyntaxKind::NEW_TARGET
-                | JsSyntaxKind::JS_CLASS_EXPRESSION
-                | JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
-                    let err = p
-                        .err_builder("This expression is not valid as a JSX spread expression")
-                        .primary(m.range(p), "");
-                    p.error(err);
-                    m.change_to_unknown(p);
-                    m
-                }
-                _ => m,
-            }
-        });
-        expr.or_add_diagnostic(p, expected_expression);
-        p.expect(T!['}']);
-        return Present(m.complete(p, JSX_SPREAD_CHILD));
-    }
+    // <div>{...a}</div>;
+    // <div>{...a}After</div>;
+    let is_spread = kind == ExpressionBlock::Children && p.eat(T![...]);
 
     let expr = super::expr::parse_expression(p, ExpressionContext::default());
-    let _ = expr.map(|mut m| match m.kind() {
-        JsSyntaxKind::IMPORT_META
-        | JsSyntaxKind::NEW_TARGET
-        | JsSyntaxKind::JS_CLASS_EXPRESSION => {
-            let err = p
-                .err_builder("This expression is not valid as a JSX expression.")
-                .primary(m.range(p), "");
+    let _ = expr.map(|mut m| {
+        let msg = if is_spread {
+            "This expression is not valid as a JSX spread expression"
+        } else {
+            "This expression is not valid as a JSX expression."
+        };
+
+        let err = match m.kind() {
+            JsSyntaxKind::IMPORT_META
+            | JsSyntaxKind::NEW_TARGET
+            | JsSyntaxKind::JS_CLASS_EXPRESSION => Some(p.err_builder(msg).primary(m.range(p), "")),
+            JsSyntaxKind::JS_SEQUENCE_EXPRESSION if is_spread => {
+                Some(p.err_builder(msg).primary(m.range(p), ""))
+            }
+            _ => None,
+        };
+
+        if let Some(err) = err {
             p.error(err);
             m.change_to_unknown(p);
             m
+        } else {
+            m
         }
-        _ => m,
     });
 
     // test jsx jsx_children_expression_then_text
@@ -652,7 +644,13 @@ fn parse_jsx_expression_block(p: &mut Parser, kind: ExpressionBlock) -> ParsedSy
 
     let kind = match kind {
         ExpressionBlock::Attribute => JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE,
-        ExpressionBlock::Children => JsSyntaxKind::JSX_EXPRESSION_CHILD,
+        ExpressionBlock::Children => {
+            if is_spread {
+                JsSyntaxKind::JSX_SPREAD_CHILD
+            } else {
+                JsSyntaxKind::JSX_EXPRESSION_CHILD
+            }
+        }
     };
     ParsedSyntax::Present(m.complete(p, kind))
 }

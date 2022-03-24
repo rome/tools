@@ -1,1 +1,2 @@
-<div>{...a}</div>
+<div>{...a}</div>;
+<div>{...a}After</div>;
