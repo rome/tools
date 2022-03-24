@@ -496,6 +496,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_EXPRESSION_ATTRIBUTE_VALUE",
         "JSX_CHILD_LIST",
         "JSX_EXPRESSION_CHILD",
+        "JSX_SPREAD_CHILD",
         "JSX_STRING",
         // unknown nodes JS
         "JS_UNKNOWN",
