@@ -1,18 +1,18 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{prelude::*, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rome_js_syntax::TsAnyTypeMember;
 impl ToFormatElement for TsAnyTypeMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            Self::TsCallSignatureTypeMember(node) => node.format(formatter),
-            Self::TsPropertySignatureTypeMember(node) => node.format(formatter),
-            Self::TsConstructSignatureTypeMember(node) => node.format(formatter),
-            Self::TsMethodSignatureTypeMember(node) => node.format(formatter),
-            Self::TsGetterSignatureTypeMember(node) => node.format(formatter),
-            Self::TsSetterSignatureTypeMember(node) => node.format(formatter),
-            Self::TsIndexSignatureTypeMember(node) => node.format(formatter),
-            Self::JsUnknownMember(node) => node.format(formatter),
+            Self::TsCallSignatureTypeMember(node) => node.to_format_element(formatter),
+            Self::TsPropertySignatureTypeMember(node) => node.to_format_element(formatter),
+            Self::TsConstructSignatureTypeMember(node) => node.to_format_element(formatter),
+            Self::TsMethodSignatureTypeMember(node) => node.to_format_element(formatter),
+            Self::TsGetterSignatureTypeMember(node) => node.to_format_element(formatter),
+            Self::TsSetterSignatureTypeMember(node) => node.to_format_element(formatter),
+            Self::TsIndexSignatureTypeMember(node) => node.to_format_element(formatter),
+            Self::JsUnknownMember(node) => node.to_format_element(formatter),
         }
     }
 }

@@ -1,14 +1,14 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{prelude::*, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rome_js_syntax::JsAnyImportClause;
 impl ToFormatElement for JsAnyImportClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            Self::JsImportBareClause(node) => node.format(formatter),
-            Self::JsImportNamedClause(node) => node.format(formatter),
-            Self::JsImportDefaultClause(node) => node.format(formatter),
-            Self::JsImportNamespaceClause(node) => node.format(formatter),
+            Self::JsImportBareClause(node) => node.to_format_element(formatter),
+            Self::JsImportNamedClause(node) => node.to_format_element(formatter),
+            Self::JsImportDefaultClause(node) => node.to_format_element(formatter),
+            Self::JsImportNamespaceClause(node) => node.to_format_element(formatter),
         }
     }
 }
