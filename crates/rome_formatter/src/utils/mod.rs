@@ -561,8 +561,8 @@ impl FormatPrecedence {
             | JsSyntaxKind::JS_TEMPLATE
             | JsSyntaxKind::JS_SPREAD
             | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-            | JsSyntaxKind::JS_CALL_EXPRESSION
             | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
+            | JsSyntaxKind::JS_CALL_EXPRESSION
             | JsSyntaxKind::JS_NEW_EXPRESSION
             | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
             | JsSyntaxKind::JS_EXTENDS_CLAUSE
@@ -572,7 +572,8 @@ impl FormatPrecedence {
             | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
             | JsSyntaxKind::JS_EXPRESSION_STATEMENT
             | JsSyntaxKind::JS_RETURN_STATEMENT
-            | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => FormatPrecedence::High,
+            | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
+            | JsSyntaxKind::JS_COMPUTED_MEMBER_ASSIGNMENT => FormatPrecedence::High,
 
             _ => FormatPrecedence::None,
         })
