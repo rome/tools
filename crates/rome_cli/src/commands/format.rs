@@ -1,7 +1,5 @@
 use std::{
     collections::{HashMap, HashSet},
-    convert::Infallible,
-    ffi::{OsStr, OsString},
     fmt::Display,
     io,
     ops::Range,
@@ -53,22 +51,29 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let ignore_errors = session.args.contains("--skip-errors");
 
     // Check that at least one input file / directory was specified in the command line
-    let mut inputs = vec![session
-        .args
-        .free_from_os_str(into_os_string)
-        .expect("needs at least one input file or directory")];
+    let mut inputs = vec![];
 
-    while let Some(input) = session
-        .args
-        .opt_free_from_os_str(into_os_string)
-        .expect("failed to parse argument")
-    {
+    for input in session.args.finish() {
+        if let Some(maybe_arg) = input.to_str() {
+            let without_dashes = maybe_arg.trim_start_matches('-');
+            if without_dashes.is_empty() {
+                // `-` or `--`
+                continue;
+            }
+            // `--<some character>` or `-<some character>`
+            if without_dashes != input {
+                let command_name = std::env::current_exe()
+                    .ok()
+                    .and_then(|path| Some(path.file_name()?.to_str()?.to_string()))
+                    .unwrap_or_else(|| String::from("rome"));
+                panic!("unrecognized option {input:?}. Type '{command_name} format --help' for more information.");
+            }
+        }
         inputs.push(input);
     }
 
-    // At this point any remaining command line argument is unknown
-    for arg in session.args.finish() {
-        panic!("unexpected argument {arg:?}");
+    if inputs.is_empty() {
+        panic!("needs at least one input file or directory");
     }
 
     let (interner, recv_files) = AtomicInterner::new();
@@ -171,10 +176,6 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     } else {
         Err(Termination::from("errors where emitted while formatting"))
     }
-}
-
-fn into_os_string(arg: &OsStr) -> Result<OsString, Infallible> {
-    arg.try_into()
 }
 
 /// Implementation of [Files] with pre-allocated file IDs
