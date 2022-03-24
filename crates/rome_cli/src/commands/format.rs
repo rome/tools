@@ -30,12 +30,18 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let size = session
         .args
         .opt_value_from_str("--indent-size")
-        .expect("failed to parse indent-size argument");
+        .map_err(|source| Termination::ParseError {
+            argument: "--indent-size",
+            source,
+        })?;
 
     let style = session
         .args
         .opt_value_from_str("--indent-style")
-        .expect("failed to parse indent-style argument");
+        .map_err(|source| Termination::ParseError {
+            argument: "--indent-style",
+            source,
+        })?;
 
     match style {
         Some(IndentStyle::Tab) => {
@@ -62,18 +68,16 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             }
             // `--<some character>` or `-<some character>`
             if without_dashes != input {
-                let command_name = std::env::current_exe()
-                    .ok()
-                    .and_then(|path| Some(path.file_name()?.to_str()?.to_string()))
-                    .unwrap_or_else(|| String::from("rome"));
-                panic!("unrecognized option {input:?}. Type '{command_name} format --help' for more information.");
+                return Err(Termination::UnexpectedArgument { argument: input });
             }
         }
         inputs.push(input);
     }
 
     if inputs.is_empty() {
-        panic!("needs at least one input file or directory");
+        return Err(Termination::MissingArgument {
+            argument: "<INPUT>",
+        });
     }
 
     let (interner, recv_files) = AtomicInterner::new();
@@ -174,7 +178,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     if !has_errors {
         Ok(())
     } else {
-        Err(Termination::from("errors where emitted while formatting"))
+        Err(Termination::FormattingError)
     }
 }
 

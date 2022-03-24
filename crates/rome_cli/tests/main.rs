@@ -18,7 +18,7 @@ fn test_format_cli() {
         args: Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
     });
 
-    assert_eq!(result, Ok(()));
+    assert!(result.is_ok(), "run_cli returned {result:?}");
 
     let mut file = fs
         .open(file_path)
