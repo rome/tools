@@ -1,5 +1,5 @@
 const MAIN: &str = concat!(
-    "Rome CLI v",
+    "Rome v",
     env!("CARGO_PKG_VERSION"),
     "
 Available commands:

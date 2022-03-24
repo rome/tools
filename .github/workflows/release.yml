@@ -115,19 +115,19 @@ jobs:
         if: matrix.os == 'windows-2022'
         run: |
           mkdir dist
-          cp target/${{ matrix.target }}/release/cli.exe ./dist/rome_cli-${{ matrix.code-target }}.exe
+          cp target/${{ matrix.target }}/release/rome.exe ./dist/rome-${{ matrix.code-target }}.exe
       - name: Copy CLI binary
         if: matrix.os != 'windows-2022'
         run: |
           mkdir dist
-          cp target/${{ matrix.target }}/release/cli ./dist/rome_cli-${{ matrix.code-target }}
+          cp target/${{ matrix.target }}/release/rome ./dist/rome-${{ matrix.code-target }}
 
       # Upload the CLI binary as a build artifact
       - name: Upload CLI artifact
         uses: actions/upload-artifact@v2
         with:
           name: cli
-          path: ./dist/rome_cli-*
+          path: ./dist/rome-*
           if-no-files-found: error
 
       - name: Copy LSP binary
@@ -222,5 +222,5 @@ jobs:
           prerelease: ${{ needs.build.outputs.prerelease == 'true' }}
           files: |
             rome_lsp-*.vsix
-            rome_cli-*
+            rome-*
           fail_on_unmatched_files: true
