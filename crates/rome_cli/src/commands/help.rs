@@ -1,3 +1,5 @@
+use crate::Termination;
+
 const MAIN: &str = concat!(
     "Rome v",
     env!("CARGO_PKG_VERSION"),
@@ -22,17 +24,19 @@ OPTIONS:
     --indent-size <number>      If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
 ";
 
-pub(crate) fn help(command: Option<&str>) {
+pub(crate) fn help(command: Option<&str>) -> Result<(), Termination> {
     match command {
         None => {
-            print!("{MAIN}")
+            print!("{MAIN}");
+            Ok(())
         }
         Some("format") => {
-            print!("{FORMAT}")
+            print!("{FORMAT}");
+            Ok(())
         }
 
-        Some(cmd) => {
-            panic!("cannot print help for unknown command {cmd:?}")
-        }
+        Some(cmd) => Err(Termination::UnknownCommandHelp {
+            command: cmd.into(),
+        }),
     }
 }
