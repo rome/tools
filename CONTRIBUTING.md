@@ -17,9 +17,9 @@ Compile all packages and dependencies:
 ```bash
 cargo build
 ```
-Rome can be used via the `cli` bin in the `rome_cli` package:
+Rome can be used via the `rome` bin in the `rome_cli` package:
 ```bash
-cargo run --bin cli -- --help
+cargo run --bin rome -- --help
 ```
 
 Rome can be used as a language server by following the instructions below.
