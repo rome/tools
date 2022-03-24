@@ -82,6 +82,8 @@ This will automatically build and open a browser tab to the documentation.
         }
    }
    ```
+   Traits are much safer and, they have an additional checks around nodes e.g. comments suppression; the golden rule
+   is that when you have a **typed node at hand**, prefer the `format*` traits instead of `.to_format_element`
 4. Use our [playground](https://play.rome.tools) to inspect the code that you want to format. You can inspect
 the AST given by a certain snippet. This will help you to understand which nodes need to be implemented/modified
 in order to correctly implement the formatter.
