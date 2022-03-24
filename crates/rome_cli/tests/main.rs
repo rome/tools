@@ -1,7 +1,7 @@
 use std::{ffi::OsString, path::Path, sync::Arc};
 
 use pico_args::Arguments;
-use rome_cli::{run_cli, CliSession};
+use rome_cli::{run_cli, CliSession, Termination};
 use rome_core::App;
 use rome_fs::{FileSystem, MemoryFileSystem};
 
@@ -29,4 +29,123 @@ fn test_format_cli() {
         .expect("failed to read file from memory FS");
 
     assert_eq!(content, "statement();\n");
+}
+
+#[test]
+fn test_unknown_command() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem(MemoryFileSystem::default()),
+        args: Arguments::from_vec(vec![OsString::from("unknown")]),
+    });
+
+    match result {
+        Err(Termination::UnknownCommand { command }) => assert_eq!(command, "unknown"),
+        _ => panic!("run_cli returned {result:?} for an unknown command, expected an error"),
+    }
+}
+
+#[test]
+fn test_unknown_command_help() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem(MemoryFileSystem::default()),
+        args: Arguments::from_vec(vec![OsString::from("unknown"), OsString::from("--help")]),
+    });
+
+    match result {
+        Err(Termination::UnknownCommandHelp { command }) => assert_eq!(command, "unknown"),
+        _ => panic!("run_cli returned {result:?} for an unknown command help, expected an error"),
+    }
+}
+
+#[test]
+fn test_indent_style_parse_errors() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem(MemoryFileSystem::default()),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--indent-style"),
+            OsString::from("invalid"),
+            OsString::from("file.js"),
+        ]),
+    });
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-style"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+}
+
+#[test]
+fn test_indent_size_parse_errors() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem(MemoryFileSystem::default()),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--indent-size"),
+            OsString::from("-1"),
+            OsString::from("file.js"),
+        ]),
+    });
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-size"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+}
+
+#[test]
+fn test_unexpected_argument() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem(MemoryFileSystem::default()),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--unknown"),
+            OsString::from("file.js"),
+        ]),
+    });
+
+    match result {
+        Err(Termination::UnexpectedArgument { argument, .. }) => {
+            assert_eq!(argument, OsString::from("--unknown"))
+        }
+        _ => panic!("run_cli returned {result:?} for an unknown argument, expected an error"),
+    }
+}
+
+#[test]
+fn test_missing_argument() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem(MemoryFileSystem::default()),
+        args: Arguments::from_vec(vec![OsString::from("format")]),
+    });
+
+    match result {
+        Err(Termination::MissingArgument { argument }) => assert_eq!(argument, "<INPUT>"),
+        _ => panic!("run_cli returned {result:?} for a missing argument, expected an error"),
+    }
+}
+
+#[test]
+fn test_formatting_error() {
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("format.js");
+    fs.insert(
+        file_path.into(),
+        b"  unformatted_statement(  )  ".as_slice(),
+    );
+
+    let result = run_cli(CliSession {
+        app: App::with_filesystem(fs),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--ci"),
+            file_path.as_os_str().into(),
+        ]),
+    });
+
+    match result {
+        Err(Termination::FormattingError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
 }
