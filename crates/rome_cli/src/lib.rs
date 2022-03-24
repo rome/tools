@@ -5,6 +5,9 @@ use rome_core::App;
 
 mod commands;
 mod metrics;
+mod panic;
+
+pub use panic::setup_panic_handler;
 
 /// Global context for an execution of the CLI
 pub struct CliSession {

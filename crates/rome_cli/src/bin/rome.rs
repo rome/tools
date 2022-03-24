@@ -1,4 +1,4 @@
-use rome_cli::{run_cli, CliSession, Termination};
+use rome_cli::{run_cli, setup_panic_handler, CliSession, Termination};
 
 ///
 /// To run this example, run:
@@ -20,5 +20,6 @@ use rome_cli::{run_cli, CliSession, Termination};
 /// ```
 ///
 fn main() -> Result<(), Termination> {
+    setup_panic_handler();
     run_cli(CliSession::from_env())
 }
