@@ -11,7 +11,7 @@ const path = require("path");
 const terser = require("terser");
 const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
-const {base64Encode} = require("./utils");
+const { base64Encode } = require("./utils");
 
 require("dotenv").config();
 
@@ -22,248 +22,237 @@ const grayMatter = require("gray-matter");
 
 const isProduction = process.env.ELEVENTY_ENV === "production";
 
-module.exports = function(eleventyConfig) {
-	eleventyConfig.addPassthroughCopy({"static": "."});
-	eleventyConfig.setUseGitIgnore(false);
+module.exports =
+	function (eleventyConfig) {
+		eleventyConfig.addPassthroughCopy({ "static": "." });
+		eleventyConfig.setUseGitIgnore(false);
 
-	eleventyConfig.setLiquidOptions({
-		cache: true,
-	});
+		eleventyConfig.setLiquidOptions({ cache: true });
 
-	eleventyConfig.addPlugin(syntaxHighlight);
+		eleventyConfig.addPlugin(syntaxHighlight);
 
-	eleventyConfig.addPlugin(
-		pluginTOC,
-		{
-			tags: ["h2", "h3", "h4"],
-			wrapper: "div  ",
-			wrapperClass: "toc",
-		},
-	);
+		eleventyConfig.addPlugin(
+			pluginTOC,
+			{ tags: ["h2", "h3", "h4"], wrapper: "div  ", wrapperClass: "toc" },
+		);
 
-	eleventyConfig.addPlugin(eleventyNavigationPlugin);
+		eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
-	const md = markdownIt({
-		html: true,
-		linkify: true,
-		typographer: true,
-	});
+		const md = markdownIt({ html: true, linkify: true, typographer: true });
 
-	md.use(markdownItHeaderSections);
+		md.use(markdownItHeaderSections);
 
-	md.use(markdownItImageSize);
+		md.use(markdownItImageSize);
 
-	md.use(
-		markdownItAnchor,
-		{
-			permalink: true,
-			permalinkSymbol: "",
-			permalinkAttrs: (slug) => ({"aria-label": slug}),
-			slugify: (title) => {
-				return encodeURIComponent(
-					String(title).trim().toLowerCase().replace(/[^a-zA-Z\s0-9]/g, "").replace(
-						/\s+/g,
-						"-",
-					),
-				);
+		md.use(
+			markdownItAnchor,
+			{
+				permalink: true,
+				permalinkSymbol: "",
+				permalinkAttrs: (slug) => ({ "aria-label": slug }),
+				slugify: (title) => {
+					return encodeURIComponent(
+						String(title)
+							.trim()
+							.toLowerCase()
+							.replace(/[^a-zA-Z\s0-9]/g, "")
+							.replace(/\s+/g, "-"),
+					);
+				},
 			},
-		},
-	);
+		);
 
-	eleventyConfig.setLibrary("md", md);
+		eleventyConfig.setLibrary("md", md);
 
-	// Taken from https://github.com/11ty/eleventy-base-blog/blob/master/_11ty/getTagList.js
-	eleventyConfig.addCollection(
-		"tagList",
-		function(collection) {
-			let tagSet = new Set();
-			collection.getAll().forEach(function(item) {
-				if ("tags" in item.data) {
-					let tags = item.data.tags;
+		// Taken from https://github.com/11ty/eleventy-base-blog/blob/master/_11ty/getTagList.js
+		eleventyConfig.addCollection(
+			"tagList",
+			function (collection) {
+				let tagSet = new Set();
+				collection
+					.getAll()
+					.forEach(function (item) {
+						if ("tags" in item.data) {
+							let tags = item.data.tags;
 
-					tags = tags.filter(function(item) {
-						switch (item) {
-							// This list should match the `filter` list in tags.liquid
-							case "all":
-							case "nav":
-							case "post":
-							case "posts":
-								return false;
+							tags =
+								tags.filter(function (item) {
+									switch (item) {
+										// This list should match the `filter` list in tags.liquid
+										case "all":
+										case "nav":
+										case "post":
+										case "posts":
+											return false;
+									}
+
+									return true;
+								});
+
+							for (const tag of tags) {
+								tagSet.add(tag);
+							}
 						}
-
-						return true;
 					});
 
-					for (const tag of tags) {
-						tagSet.add(tag);
-					}
+				// Returning an array in addCollection works in Eleventy 0.5.3
+				return [...tagSet];
+			},
+		);
+
+		// Used for including raw files without having them processed by liquid
+		const includerawCache = new Map();
+		eleventyConfig.addFilter(
+			"includeraw",
+			function (loc) {
+				const cached = includerawCache.get(loc);
+				if (cached !== undefined) {
+					return cached;
 				}
-			});
 
-			// Returning an array in addCollection works in Eleventy 0.5.3
-			return [...tagSet];
-		},
-	);
+				const file = fs.readFileSync(path.resolve(__dirname, loc), "utf8");
+				includerawCache.set(loc, file);
+				return file;
+			},
+		);
 
-	// Used for including raw files without having them processed by liquid
-	const includerawCache = new Map();
-	eleventyConfig.addFilter(
-		"includeraw",
-		function(loc) {
-			const cached = includerawCache.get(loc);
-			if (cached !== undefined) {
-				return cached;
-			}
+		eleventyConfig.addFilter(
+			"toBase64",
+			(content, ext) => {
+				return base64Encode(new Buffer(content), ext);
+			},
+		);
 
-			const file = fs.readFileSync(path.resolve(__dirname, loc), "utf8");
-			includerawCache.set(loc, file);
-			return file;
-		},
-	);
+		const minCache = new Map();
 
-	eleventyConfig.addFilter(
-		"toBase64",
-		(content, ext) => {
-			return base64Encode(new Buffer(content), ext);
-		},
-	);
+		// Minify JS in production
+		eleventyConfig.addFilter(
+			"jsmin",
+			function (code) {
+				if (!isProduction) {
+					return code;
+				}
 
-	const minCache = new Map();
+				const cached = minCache.get(code);
+				if (cached !== undefined) {
+					return cached;
+				}
 
-	// Minify JS in production
-	eleventyConfig.addFilter(
-		"jsmin",
-		function(code) {
-			if (!isProduction) {
-				return code;
-			}
+				const minified = terser.minify(code);
+				if (minified.error) {
+					throw minified.error;
+				}
 
-			const cached = minCache.get(code);
-			if (cached !== undefined) {
-				return cached;
-			}
+				minCache.set(code, minified.code);
+				return minified.code;
+			},
+		);
 
-			const minified = terser.minify(code);
-			if (minified.error) {
-				throw minified.error;
-			}
+		// Minify CSS in production
+		eleventyConfig.addFilter(
+			"cssmin",
+			function (code) {
+				if (!isProduction) {
+					return code;
+				}
 
-			minCache.set(code, minified.code);
-			return minified.code;
-		},
-	);
+				const cached = minCache.get(code);
+				if (cached !== undefined) {
+					return cached;
+				}
 
-	// Minify CSS in production
-	eleventyConfig.addFilter(
-		"cssmin",
-		function(code) {
-			if (!isProduction) {
-				return code;
-			}
+				const minified = new CleanCSS({}).minify(code).styles;
+				minCache.set(code, minified);
+				return minified;
+			},
+		);
 
-			const cached = minCache.get(code);
-			if (cached !== undefined) {
-				return cached;
-			}
+		// Minify HTML in production
+		eleventyConfig.addTransform(
+			"htmlmin",
+			function (content, outputPath) {
+				if (isProduction && outputPath.endsWith(".html")) {
+					return htmlmin.minify(
+						content,
+						{
+							useShortDoctype: true,
+							removeComments: true,
+							conservativeCollapse: true,
+							collapseWhitespace: true,
+						},
+					);
+				}
 
-			const minified = new CleanCSS({}).minify(code).styles;
-			minCache.set(code, minified);
-			return minified;
-		},
-	);
+				return content;
+			},
+		);
 
-	// Minify HTML in production
-	eleventyConfig.addTransform(
-		"htmlmin",
-		function(content, outputPath) {
-			if (isProduction && outputPath.endsWith(".html")) {
-				return htmlmin.minify(
-					content,
-					{
-						useShortDoctype: true,
-						removeComments: true,
-						conservativeCollapse: true,
-						collapseWhitespace: true,
-					},
+		eleventyConfig.addFilter(
+			"blogSummary",
+			(val) => {
+				const lines = val.split("<!-- DESCRIPTION_END -->")[0].split("\n");
+				return lines
+					.filter((line) => {
+						return line.startsWith("<p>");
+					})
+					.join("\n");
+			},
+		);
+
+		eleventyConfig.addFilter(
+			"dateFormat",
+			function (value) {
+				return new Date(value).toLocaleDateString(
+					undefined,
+					{ year: "numeric", month: "long", day: "numeric", timeZone: "UTC" },
 				);
-			}
+			},
+		);
 
-			return content;
-		},
-	);
-
-	eleventyConfig.addFilter(
-		"blogSummary",
-		(val) => {
-			const lines = val.split("<!-- DESCRIPTION_END -->")[0].split("\n");
-			return lines.filter((line) => {
-				return line.startsWith("<p>");
-			}).join("\n");
-		},
-	);
-
-	eleventyConfig.addFilter(
-		"dateFormat",
-		function(value) {
-			return new Date(value).toLocaleDateString(
-				undefined,
-				{
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-					timeZone: "UTC",
-				},
-			);
-		},
-	);
-
-	eleventyConfig.addFilter(
-		"titlify",
-		function(title) {
-			title = (title || "").trim();
-			if (!title.includes("Rome")) {
-				if (title !== "") {
-					title += " \u2014 ";
+		eleventyConfig.addFilter(
+			"titlify",
+			function (title) {
+				title = (title || "").trim();
+				if (!title.includes("Rome")) {
+					if (title !== "") {
+						title += " \u2014 ";
+					}
+					title += "Rome Toolchain";
 				}
-				title += "Rome Toolchain";
-			}
-			return title;
-		},
-	);
+				return title;
+			},
+		);
 
-	eleventyConfig.addFilter(
-		"kebabCase",
-		function(string) {
-			return string.toLowerCase().replace(/\s/g, "-");
-		},
-	);
+		eleventyConfig.addFilter(
+			"kebabCase",
+			function (string) {
+				return string.toLowerCase().replace(/\s/g, "-");
+			},
+		);
 
-	eleventyConfig.addShortcode(
-		"romeVersion",
-		function() {
-			return "?.?.?";
-		},
-	);
+		eleventyConfig.addShortcode(
+			"romeVersion",
+			function () {
+				return "?.?.?";
+			},
+		);
 
-	// Customize YAML engine so we can parse hard tabs lol...
-	eleventyConfig.setFrontMatterParsingOptions({
-		engines: {
-			yaml: {
-				...grayMatter.engines.yaml,
-				parse(content) {
-					content = content.replace(/\t/g, "  ");
-					return grayMatter.engines.yaml.parse(content);
+		// Customize YAML engine so we can parse hard tabs lol...
+		eleventyConfig.setFrontMatterParsingOptions({
+			engines: {
+				yaml: {
+					...grayMatter.engines.yaml,
+					parse(content) {
+						content = content.replace(/\t/g, "  ");
+						return grayMatter.engines.yaml.parse(content);
+					},
 				},
 			},
-		},
-	});
+		});
 
-	return {
-		dir: {
-			input: "src",
-			output: "build",
-		},
-		templateFormats: ["liquid", "md", "css", "html", "yml"],
-		htmlTemplateEngine: "liquid",
+		return {
+			dir: { input: "src", output: "build" },
+			templateFormats: ["liquid", "md", "css", "html", "yml"],
+			htmlTemplateEngine: "liquid",
+		};
 	};
-};

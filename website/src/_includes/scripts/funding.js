@@ -62,24 +62,29 @@ function loadStripe() {
 		return loadingStripePromise;
 	}
 
-	loadingStripePromise = new Promise((resolve, reject) => {
-		const script = document.createElement("script");
-		script.src = "https://js.stripe.com/v3/";
+	loadingStripePromise =
+		new Promise(
+			(resolve, reject) => {
+				const script = document.createElement("script");
+				script.src = "https://js.stripe.com/v3/";
 
-		script.onload = () => {
-			loadingStripePromise = undefined;
-			loadedStripe = true;
-			resolve();
-		};
+				script.onload =
+					() => {
+						loadingStripePromise = undefined;
+						loadedStripe = true;
+						resolve();
+					};
 
-		script.onerror = (err) => {
-			loadingStripePromise = undefined;
-			addErrorToast("while loading the Stripe API", err);
-			reject(err);
-		};
+				script.onerror =
+					(err) => {
+						loadingStripePromise = undefined;
+						addErrorToast("while loading the Stripe API", err);
+						reject(err);
+					};
 
-		document.head.appendChild(script);
-	});
+				document.head.appendChild(script);
+			},
+		);
 
 	return loadingStripePromise;
 }
@@ -171,7 +176,7 @@ async function wrapFetch(opts, attempt = 0) {
 
 function changeInputValue(input, value) {
 	input.value = value;
-	input.dispatchEvent(new Event("input", {bubbles: true}));
+	input.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
 function closeModal() {
@@ -309,7 +314,7 @@ function getFocusableElements(target) {
 // Credit https://uxdesign.cc/how-to-trap-focus-inside-modal-to-make-it-ada-compliant-6a50f9a70700
 document.addEventListener(
 	"keydown",
-	function(e) {
+	function (e) {
 		let isTabPressed = e.key === "Tab" || e.keyCode === 9;
 		if (!isTabPressed) {
 			return;
@@ -321,9 +326,7 @@ document.addEventListener(
 		}
 
 		// Select active step
-		const focusableElements = detailsForm.hidden
-			? reviewFormFocusableElements
-			: detailsFormFocusableElements;
+		const focusableElements = detailsForm.hidden ? reviewFormFocusableElements : detailsFormFocusableElements;
 		const firstFocusableElement = focusableElements[0];
 		const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
@@ -397,23 +400,22 @@ reviewForm.addEventListener(
 			url: "{{ env.API_DOMAIN }}/funding/checkout",
 			options: {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(data),
 			},
 			then: (res) => {
 				return stripeLoad.then(() => {
 					const stripe = Stripe("{{ env.STRIPE_PUBLIC }}");
 					localStorage.setItem("checkout-tier", selectedTier.name);
-					stripe.redirectToCheckout({sessionId: res.id});
+					stripe.redirectToCheckout({ sessionId: res.id });
 					return new Promise(() => {});
 				});
 			},
-		}).then(() => {
-			checkoutButton.textContent = oldCheckoutButtonText;
-			checkoutButton.disabled = false;
-		});
+		})
+			.then(() => {
+				checkoutButton.textContent = oldCheckoutButtonText;
+				checkoutButton.disabled = false;
+			});
 	},
 );
 
@@ -446,9 +448,10 @@ function updateCheckoutTotal() {
 	let total = formatCurrency(selectedTierPrice);
 
 	if (tip !== undefined) {
-		total = `${formatCurrency(selectedTierPrice + tip)} = ${formatCurrency(
-			selectedTierPrice,
-		)} Tier + ${formatCurrency(tip)} Tip`;
+		total =
+			`${formatCurrency(selectedTierPrice + tip)} = ${formatCurrency(
+				selectedTierPrice,
+			)} Tier + ${formatCurrency(tip)} Tip`;
 	}
 
 	checkoutTotal.textContent = total;
@@ -532,11 +535,7 @@ customInputForm.addEventListener(
 			heading.textContent = `Custom ${formatCurrency(price)}`;
 			preview.appendChild(heading);
 
-			openModal({
-				name: "Custom",
-				preview,
-				price,
-			});
+			openModal({ name: "Custom", preview, price });
 		}
 	},
 );
@@ -590,8 +589,7 @@ for (const elem of saveElements) {
 // Show custom input if we hydrated it with a value that doesn't correspond with a button
 
 if (
-	tipInput.value !== "" &&
-	!document.querySelector(
+	tipInput.value !== "" && !document.querySelector(
 		`.add-donation-buttons[data-price="${tipInput.value}"]`,
 	)
 ) {
@@ -626,9 +624,8 @@ function buildTierButton(tier) {
 	const already = document.createElement("div");
 	already.classList.add("already");
 	if (tier.count > 0 && tier.type === "personal") {
-		already.textContent = `${tier.count.toLocaleString()} ${tier.count === 1
-			? "person"
-			: "people"} selected this tier`;
+		already.textContent =
+			`${tier.count.toLocaleString()} ${tier.count === 1 ? "person" : "people"} selected this tier`;
 	}
 	headerRight.appendChild(already);
 
@@ -682,10 +679,7 @@ function addTier(tier, interactive) {
 		button.addEventListener(
 			"click",
 			() => {
-				openModal({
-					...tier,
-					preview: buildTierButton(tier),
-				});
+				openModal({ ...tier, preview: buildTierButton(tier) });
 			},
 		);
 	}
@@ -706,7 +700,8 @@ function processStats(res, interactive) {
 	if (interactive) {
 		function show() {
 			const percent = Math.min(100, 100 / res.target * res.current);
-			progressFillContainer.style.minWidth = `${progressFillContainer.clientWidth}px`;
+			progressFillContainer.style.minWidth =
+				`${progressFillContainer.clientWidth}px`;
 			progressFillContainer.style.width = "0";
 
 			requestAnimationFrame(() => {
@@ -720,7 +715,7 @@ function processStats(res, interactive) {
 			// Animate the progress fill only when it's visible to draw attention
 			let observer = new IntersectionObserver(
 				(changes) => {
-					for (const {isIntersecting} of changes) {
+					for (const { isIntersecting } of changes) {
 						if (!isIntersecting) {
 							continue;
 						}
@@ -729,9 +724,7 @@ function processStats(res, interactive) {
 						show();
 					}
 				},
-				{
-					threshold: 1,
-				},
+				{ threshold: 1 },
 			);
 			observer.observe(progressContainer);
 		}
@@ -769,7 +762,7 @@ wrapFetch({
 
 window.addEventListener(
 	"error",
-	function(event) {
+	function (event) {
 		addErrorToast("that wasn't handled", event);
 	},
 );

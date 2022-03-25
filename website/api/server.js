@@ -1,8 +1,6 @@
 const path = require("path");
 
-require("dotenv").config({
-	path: path.resolve(__dirname, "..", ".env"),
-});
+require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 
 /////
 
@@ -22,10 +20,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 let Sentry;
 if (process.env.SENTRY_DSN !== undefined) {
 	Sentry = require("@sentry/node");
-	Sentry.init({
-		dsn: process.env.SENTRY_DSN,
-		tracesSampleRate: 1,
-	});
+	Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 1 });
 }
 
 const tiers = [
@@ -216,12 +211,7 @@ function getTierFromAmount(price) {
 		}
 	}
 
-	return {
-		id: "custom",
-		name: "Custom",
-		price,
-		rewards: [],
-	};
+	return { id: "custom", name: "Custom", price, rewards: [] };
 }
 
 function wrapAsyncCallback(callback) {
@@ -236,11 +226,13 @@ function wrapAsyncCallback(callback) {
 
 app.use(morgan("tiny"));
 
-app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "*");
-	res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-	next();
-});
+app.use(
+	(req, res, next) => {
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+		next();
+	},
+);
 
 async function getContributions(limit) {
 	const query = await db.query(
@@ -250,9 +242,7 @@ async function getContributions(limit) {
 	return query.rows.map((row) => {
 		return {
 			name: row.publicName,
-			github: row.github === "" || row.publicName === ""
-				? undefined
-				: row.github,
+			github: row.github === "" || row.publicName === "" ? undefined : row.github,
 			comment: row.publicComment,
 			amount: Number(row.tierPrice) + Number(row.tip),
 			time: new Date(row.createdAt).valueOf(),
@@ -264,10 +254,7 @@ async function getTierStats() {
 	return Promise.all(
 		tiers.map(async (tier) => {
 			if (tier.type === "business") {
-				return {
-					...tier,
-					count: 0,
-				};
+				return { ...tier, count: 0 };
 			}
 
 			const query = await db.query(
@@ -290,12 +277,12 @@ async function getProgressStats() {
 		),
 	]);
 
-	const count =
-		countQuery.rows.length === 0 ? 0 : Number(countQuery.rows[0].count);
-	let current =
-		totalQuery.rows.length === 0
-			? 0
-			: Number(totalQuery.rows[0].tierPrice) + Number(totalQuery.rows[0].tip);
+	const count = countQuery.rows.length === 0 ? 0 : Number(
+		countQuery.rows[0].count,
+	);
+	let current = totalQuery.rows.length === 0 ? 0 : Number(
+		totalQuery.rows[0].tierPrice,
+	) + Number(totalQuery.rows[0].tip);
 
 	// Hard code current balance of external donations
 	current += 1_733;
@@ -307,11 +294,7 @@ async function getProgressStats() {
 		target = 100_000;
 	}
 
-	return {
-		count,
-		current,
-		target,
-	};
+	return { count, current, target };
 }
 
 let cachedStats;
@@ -333,33 +316,31 @@ function getAllContributions() {
 }
 
 async function getFreshStats() {
-	const [{count, current, target}, recentContributions, tiers] = await Promise.all([
+	const [{ count, current, target }, recentContributions, tiers] = await Promise.all([
 		getProgressStats(),
 		getContributions(3),
 		getTierStats(),
 	]);
 
-	return {
-		count,
-		current,
-		target,
-		recentContributions,
-		tiers,
-	};
+	return { count, current, target, recentContributions, tiers };
 }
 
 app.get(
 	"/funding/stats",
-	wrapAsyncCallback(async (req, res) => {
-		res.json(await getStats());
-	}),
+	wrapAsyncCallback(
+		async (req, res) => {
+			res.json(await getStats());
+		},
+	),
 );
 
 app.get(
 	"/funding/all",
-	wrapAsyncCallback(async (req, res) => {
-		res.json(await getAllContributions());
-	}),
+	wrapAsyncCallback(
+		async (req, res) => {
+			res.json(await getAllContributions());
+		},
+	),
 );
 
 function generateRewardsDescription(tier) {
@@ -375,153 +356,151 @@ function generateRewardsDescription(tier) {
 app.post(
 	"/funding/checkout",
 	bodyParser.json(),
-	wrapAsyncCallback(async (req, res) => {
-		const {body} = req;
+	wrapAsyncCallback(
+		async (req, res) => {
+			const { body } = req;
 
-		const email = ensureString(body.email);
-		const tierPrice = normalizeCurrency(body.tierPrice);
-		const tip = normalizeCurrency(body.tip);
+			const email = ensureString(body.email);
+			const tierPrice = normalizeCurrency(body.tierPrice);
+			const tip = normalizeCurrency(body.tip);
 
-		if (email === "") {
-			res.json({
-				error: "Missing email",
-			});
-			return;
-		}
+			if (email === "") {
+				res.json({ error: "Missing email" });
+				return;
+			}
 
-		const tier = getTierFromAmount(tierPrice);
-		const lineItems = [];
+			const tier = getTierFromAmount(tierPrice);
+			const lineItems = [];
 
-		lineItems.push({
-			price_data: {
-				currency: "usd",
-				product_data: {
-					name: `${tier.name} Tier`,
-					description: generateRewardsDescription(tier),
-					metadata: {
-						id: tier.id,
-					},
-				},
-				unit_amount: tierPrice * 100,
-			},
-			quantity: 1,
-		});
-
-		if (tip > 0) {
 			lineItems.push({
 				price_data: {
 					currency: "usd",
 					product_data: {
-						name: "Tip",
+						name: `${tier.name} Tier`,
+						description: generateRewardsDescription(tier),
+						metadata: { id: tier.id },
 					},
-					unit_amount: tip * 100,
+					unit_amount: tierPrice * 100,
 				},
 				quantity: 1,
 			});
-		}
 
-		const session = await stripe.checkout.sessions.create({
-			payment_method_types: ["card"],
-			line_items: lineItems,
-			mode: "payment",
-			customer_email: email,
-			success_url: `${process.env.WEBSITE_URL}/funding/checkout-complete`,
-			cancel_url: `${process.env.WEBSITE_URL}/funding/`,
-			billing_address_collection: "required",
-			// Retain body in case of some database corruption
-			metadata: req.body,
-			// Don't request shipping address for custom donators
-			shipping_address_collection: tier.id !== "custom" && tierPrice > 10
-				? constants.stripeShippingCollection
-				: undefined,
-		});
+			if (tip > 0) {
+				lineItems.push({
+					price_data: {
+						currency: "usd",
+						product_data: { name: "Tip" },
+						unit_amount: tip * 100,
+					},
+					quantity: 1,
+				});
+			}
 
-		const isPublic = ensureBoolean(body.public);
-		const publicName = ensureString(body.publicName, 100);
-		const publicComment = ensureString(body.publicComment, 500);
-		const twitter = normalizeUsername(body.twitter);
-		const github = normalizeUsername(body.github);
-		const discord = normalizeUsername(body.discord);
+			const session = await stripe.checkout.sessions.create({
+				payment_method_types: ["card"],
+				line_items: lineItems,
+				mode: "payment",
+				customer_email: email,
+				success_url: `${process.env.WEBSITE_URL}/funding/checkout-complete`,
+				cancel_url: `${process.env.WEBSITE_URL}/funding/`,
+				billing_address_collection: "required",
+				// Retain body in case of some database corruption
+				metadata: req.body,
+				// Don't request shipping address for custom donators
+				shipping_address_collection: tier.id !== "custom" && tierPrice > 10 ? constants.stripeShippingCollection : undefined,
+			});
 
-		await db.query(
-			`INSERT INTO contributions ("stripeSession", "email", "tierId", "tierPrice", "public", "publicName", "publicComment", "tip", "twitter", "github", "discord") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`,
-			[
-				session.id,
-				email,
-				tier.id,
-				tierPrice,
-				isPublic,
-				publicName,
-				publicComment,
-				tip,
-				twitter,
-				github,
-				discord,
-			],
-		);
+			const isPublic = ensureBoolean(body.public);
+			const publicName = ensureString(body.publicName, 100);
+			const publicComment = ensureString(body.publicComment, 500);
+			const twitter = normalizeUsername(body.twitter);
+			const github = normalizeUsername(body.github);
+			const discord = normalizeUsername(body.discord);
 
-		res.json({id: session.id});
-	}),
+			await db.query(
+				`INSERT INTO contributions ("stripeSession", "email", "tierId", "tierPrice", "public", "publicName", "publicComment", "tip", "twitter", "github", "discord") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`,
+				[
+					session.id,
+					email,
+					tier.id,
+					tierPrice,
+					isPublic,
+					publicName,
+					publicComment,
+					tip,
+					twitter,
+					github,
+					discord,
+				],
+			);
+
+			res.json({ id: session.id });
+		},
+	),
 );
 
 app.post(
 	"/stripe-webhook",
-	bodyParser.raw({type: "application/json"}),
-	wrapAsyncCallback(async (req, res) => {
-		const payload = req.body;
-		const sig = req.headers["stripe-signature"];
-		const event = stripe.webhooks.constructEvent(
-			payload,
-			sig,
-			process.env.STRIPE_WEBHOOK_SECRET,
-		);
-
-		// Handle the checkout.session.completed event
-		if (event.type === "checkout.session.completed") {
-			const session = event.data.object;
-			await db.query(
-				`UPDATE contributions SET paid = true WHERE "stripeSession" = $1 `,
-				[session.id],
+	bodyParser.raw({ type: "application/json" }),
+	wrapAsyncCallback(
+		async (req, res) => {
+			const payload = req.body;
+			const sig = req.headers["stripe-signature"];
+			const event = stripe.webhooks.constructEvent(
+				payload,
+				sig,
+				process.env.STRIPE_WEBHOOK_SECRET,
 			);
 
-			// Refresh stats
-			cachedStats = undefined;
-			cachedAllContributions = undefined;
+			// Handle the checkout.session.completed event
+			if (event.type === "checkout.session.completed") {
+				const session = event.data.object;
+				await db.query(
+					`UPDATE contributions SET paid = true WHERE "stripeSession" = $1 `,
+					[session.id],
+				);
 
-			// Purge cache from Cloudflare
-			await fetch(
-				`https://api.cloudflare.com/client/v4/zones/${process.env.CF_ZONE_ID}/purge_cache`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${process.env.CF_SECRET}`,
+				// Refresh stats
+				cachedStats = undefined;
+				cachedAllContributions = undefined;
+
+				// Purge cache from Cloudflare
+				await fetch(
+					`https://api.cloudflare.com/client/v4/zones/${process.env.CF_ZONE_ID}/purge_cache`,
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${process.env.CF_SECRET}`,
+						},
+						body: JSON.stringify({
+							files: [
+								`${process.env.API_URL}/funding/stats`,
+								`${process.env.API_URL}/funding/all`,
+							],
+						}),
 					},
-					body: JSON.stringify({
-						files: [
-							`${process.env.API_URL}/funding/stats`,
-							`${process.env.API_URL}/funding/all`,
-						],
-					}),
-				},
-			);
-		}
+				);
+			}
 
-		res.status(200);
-		res.end();
-	}),
+			res.status(200);
+			res.end();
+		},
+	),
 );
 
-app.use(function(err, req, res, next) {
-	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-	if (Sentry !== undefined) {
-		Sentry.captureException(err);
-	}
-	console.error(err.stack);
-	res.status(500);
-	res.end("Internal server error");
-	next;
-});
+app.use(
+	function (err, req, res, next) {
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+		if (Sentry !== undefined) {
+			Sentry.captureException(err);
+		}
+		console.error(err.stack);
+		res.status(500);
+		res.end("Internal server error");
+		next;
+	},
+);
 
 async function main() {
 	await db.connect();
@@ -536,11 +515,12 @@ async function main() {
 	);
 }
 
-main().catch((err) => {
-	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-	if (Sentry !== undefined) {
-		Sentry.captureException(err);
-	}
-	console.error(err.stack);
-	process.exit(1);
-});
+main()
+	.catch((err) => {
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+		if (Sentry !== undefined) {
+			Sentry.captureException(err);
+		}
+		console.error(err.stack);
+		process.exit(1);
+	});
