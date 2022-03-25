@@ -58,9 +58,9 @@ OPTIONS:
 
 ### Suppression
 
-There are times when a developer wants to keep a specific formatting, and the formatter should not get in the way.
+There are times when a developer wants to keep a specific formatting.
 
-You can achieve this by adding a suppression comment right before the expression/statement.
+You can achieve this by adding a suppression comment right before the syntax node (expressions, statements, etc.).
 
 A suppression comment will have to look like this:
 
@@ -87,6 +87,13 @@ const   expr   =
     0,           0,           -1,            0,
 ];
 
+
+const   expr   =   [
+    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
+    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
+    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
+    0,           0,           -1,            0,
+];
 ```
 
 After 
@@ -99,6 +106,25 @@ const expr =
     0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
     0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
     0,           0,           -1,            0,
+];
+
+const expr = [
+    (2 * n) / (r - l),
+    0,
+    (r + l) / (r - l),
+    0,
+    0,
+    (2 * n) / (t - b),
+    (t + b) / (t - b),
+    0,
+    0,
+    0,
+    -(f + n) / (f - n),
+    -(2 * f * n) / (f - n),
+    0,
+    0,
+    -1,
+    0,
 ];
 ```
 
