@@ -11,6 +11,7 @@ use crate::syntax::expr::{
 use crate::syntax::js_parse_error::{expected_expression, expected_identifier};
 use crate::syntax::jsx::jsx_parse_errors::{
     jsx_expected_attribute, jsx_expected_attribute_value, jsx_expected_children,
+    jsx_expected_closing_tag,
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
@@ -213,25 +214,52 @@ fn expect_closing_element(
     p.expect(T![<]);
     p.expect(T![/]);
 
+    let name_marker = parse_jsx_any_element_name(p);
+
     // test_err jsx jsx_closing_element_mismatch
     // <test></>;
     // <test></text>;
     // <some><nested></some></nested>;
-    let name_marker = parse_jsx_any_element_name(p).or_add_diagnostic(p, expected_identifier);
-
-    if let (Some(opening_name_marker), Some(closing_name_marker)) =
-        (opening_name_marker, name_marker)
-    {
+    // <><5></test></>;
+    if let Some(opening_name_marker) = opening_name_marker {
         let opening_name = opening_name_marker.text(p);
-        let closing_name = closing_name_marker.text(p);
-        if opening_name != closing_name {
-            let error = p
-                .err_builder(&format!(
-                    "Expected corresponding JSX closing tag for '{opening_name}'."
+
+        let error = match name_marker {
+            Present(name) if name.text(p) != opening_name => {
+                let closing_end = if p.at(T![>]) {
+                    p.cur_range().end()
+                } else {
+                    name.range(p).end()
+                };
+
+                let closing_range = TextRange::new(m.start(), closing_end);
+
+                Some(jsx_expected_closing_tag(
+                    p,
+                    opening_name,
+                    opening_range,
+                    closing_range,
                 ))
-                .primary(opening_range, "Opening tag")
-                .secondary(closing_name_marker.range(p), "closing tag");
-            p.error(error)
+            }
+            Present(_) => None,
+            Absent => {
+                if p.at(T![>]) {
+                    let closing_range = TextRange::new(m.start(), p.cur_range().end());
+
+                    Some(jsx_expected_closing_tag(
+                        p,
+                        opening_name,
+                        opening_range,
+                        closing_range,
+                    ))
+                } else {
+                    Some(expected_identifier(p, p.cur_range()))
+                }
+            }
+        };
+
+        if let Some(error) = error {
+            p.error(error);
         }
     }
 
