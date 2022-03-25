@@ -55,3 +55,51 @@ OPTIONS:
     --indent-size <number>      If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
 
 ```
+
+### Suppression
+
+There are times when a developer wants to keep a specific formatting, and the formatter should not get in the way.
+
+You can achieve this by adding a suppression comment right before the expression/statement.
+
+A suppression comment will have to look like this:
+
+```js
+// rome-ignore format: it's better this way
+```
+
+Where
+- `rome-ignore` is the start of each suppression comment in Rome;
+- `format:` is the category of the suppression;
+- `it's better this way` is the reason why there's a suppression in the first place; 
+
+Here's an example of how a code will look like before and after the formatter does its job:
+
+Before
+
+```js
+const   expr   =   
+// rome-ignore format: the array should not be formatted
+[
+    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
+    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
+    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
+    0,           0,           -1,            0,
+];
+
+```
+
+After 
+
+```js
+const expr =
+// rome-ignore format: the array should not be formatted
+[
+    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
+    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
+    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
+    0,           0,           -1,            0,
+];
+```
+
+As you can see the way the array is represented is left untouched!  
