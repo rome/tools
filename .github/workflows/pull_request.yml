@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Rome
-        uses: rome/gh-setup-rome@0.0.1-test
+        uses: rome/gh-setup-rome@0.0.1
         with:
           preview: true
       - name: Run Rome Format
