@@ -9,7 +9,7 @@
 		"onLanguage:javascript",
 		"onLanguage:typescript"
 	],
-	"main": "./out/extension.js",
+	"main": "./out/main.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/rome/tools.git"
@@ -51,7 +51,10 @@
 				},
 				"rome.formatter.indentStyle": {
 					"type": "string",
-					"enum": ["Tabs", "Spaces"],
+					"enum": [
+						"Tabs",
+						"Spaces"
+					],
 					"default": "Tabs",
 					"markdownEnumDescriptions": [
 						"**BETA**: applies **tabs** while formatting",
@@ -87,10 +90,12 @@
 	"license": "MIT",
 	"preview": true,
 	"scripts": {
-		"compile": "tsc -b",
+		"compile": "esbuild src/main.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node --target=node14",
+		"watch": "npm run compile -- --sourcemap --watch",
 		"package": "vsce package -o rome_lsp.vsix",
-		"build": "npm run compile && npm run package",
-		"install-extension": "code --install-extension rome_lsp.vsix"
+		"build": "npm run compile -- --minify && npm run package",
+		"install-extension": "code --install-extension rome_lsp.vsix",
+		"format": "cargo run --bin cli format ./src/ ./scripts"
 	},
 	"dependencies": {
 		"vscode-languageclient": "^8.0.0-next.13"
@@ -99,6 +104,7 @@
 		"@types/node": "^16.11.9",
 		"@types/vscode": "^1.52.0",
 		"typescript": "^4.5.2",
-		"vsce": "^2.7.0"
+		"vsce": "^2.7.0",
+		"esbuild": "^0.14.27"
 	}
 }
