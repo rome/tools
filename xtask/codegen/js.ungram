@@ -2281,6 +2281,7 @@ JsxAnyChild =
 	| JsxText
 	| JsxExpressionChild
 	| JsxSpreadChild
+	| JsxFragment
 
 JsxExpressionChild =
 	'{'

@@ -9500,6 +9500,7 @@ pub enum JsxAnyAttributeValue {
 pub enum JsxAnyChild {
     JsxElement(JsxElement),
     JsxExpressionChild(JsxExpressionChild),
+    JsxFragment(JsxFragment),
     JsxSelfClosingElement(JsxSelfClosingElement),
     JsxSpreadChild(JsxSpreadChild),
     JsxText(JsxText),
@@ -22586,6 +22587,9 @@ impl From<JsxElement> for JsxAnyChild {
 impl From<JsxExpressionChild> for JsxAnyChild {
     fn from(node: JsxExpressionChild) -> JsxAnyChild { JsxAnyChild::JsxExpressionChild(node) }
 }
+impl From<JsxFragment> for JsxAnyChild {
+    fn from(node: JsxFragment) -> JsxAnyChild { JsxAnyChild::JsxFragment(node) }
+}
 impl From<JsxSelfClosingElement> for JsxAnyChild {
     fn from(node: JsxSelfClosingElement) -> JsxAnyChild { JsxAnyChild::JsxSelfClosingElement(node) }
 }
@@ -22601,6 +22605,7 @@ impl AstNode for JsxAnyChild {
             kind,
             JSX_ELEMENT
                 | JSX_EXPRESSION_CHILD
+                | JSX_FRAGMENT
                 | JSX_SELF_CLOSING_ELEMENT
                 | JSX_SPREAD_CHILD
                 | JSX_TEXT
@@ -22610,6 +22615,7 @@ impl AstNode for JsxAnyChild {
         let res = match syntax.kind() {
             JSX_ELEMENT => JsxAnyChild::JsxElement(JsxElement { syntax }),
             JSX_EXPRESSION_CHILD => JsxAnyChild::JsxExpressionChild(JsxExpressionChild { syntax }),
+            JSX_FRAGMENT => JsxAnyChild::JsxFragment(JsxFragment { syntax }),
             JSX_SELF_CLOSING_ELEMENT => {
                 JsxAnyChild::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
             }
@@ -22623,6 +22629,7 @@ impl AstNode for JsxAnyChild {
         match self {
             JsxAnyChild::JsxElement(it) => &it.syntax,
             JsxAnyChild::JsxExpressionChild(it) => &it.syntax,
+            JsxAnyChild::JsxFragment(it) => &it.syntax,
             JsxAnyChild::JsxSelfClosingElement(it) => &it.syntax,
             JsxAnyChild::JsxSpreadChild(it) => &it.syntax,
             JsxAnyChild::JsxText(it) => &it.syntax,
@@ -22634,6 +22641,7 @@ impl std::fmt::Debug for JsxAnyChild {
         match self {
             JsxAnyChild::JsxElement(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxExpressionChild(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyChild::JsxFragment(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxSpreadChild(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxText(it) => std::fmt::Debug::fmt(it, f),
@@ -22645,6 +22653,7 @@ impl From<JsxAnyChild> for SyntaxNode {
         match n {
             JsxAnyChild::JsxElement(it) => it.into(),
             JsxAnyChild::JsxExpressionChild(it) => it.into(),
+            JsxAnyChild::JsxFragment(it) => it.into(),
             JsxAnyChild::JsxSelfClosingElement(it) => it.into(),
             JsxAnyChild::JsxSpreadChild(it) => it.into(),
             JsxAnyChild::JsxText(it) => it.into(),

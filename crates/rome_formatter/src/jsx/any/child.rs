@@ -10,6 +10,7 @@ impl ToFormatElement for JsxAnyChild {
             Self::JsxText(node) => node.to_format_element(formatter),
             Self::JsxExpressionChild(node) => node.to_format_element(formatter),
             Self::JsxSpreadChild(node) => node.to_format_element(formatter),
+            Self::JsxFragment(node) => node.to_format_element(formatter),
         }
     }
 }
