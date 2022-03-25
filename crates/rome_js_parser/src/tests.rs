@@ -14,7 +14,9 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-let a = <Test />;
+let a = 2
+
+a == 3 ? (a = <h1>123</h1>) : (a = <h1>abc</h1>)
 "#;
 
     let module = parse(src, 0, SourceType::tsx());
