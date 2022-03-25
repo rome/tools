@@ -94,7 +94,8 @@
 		"watch": "npm run compile -- --sourcemap --watch",
 		"package": "vsce package -o rome_lsp.vsix",
 		"build": "npm run compile -- --minify && npm run package",
-		"install-extension": "code --install-extension rome_lsp.vsix"
+		"install-extension": "code --install-extension rome_lsp.vsix",
+		"format": "cargo run --bin cli format ./src/ ./scripts"
 	},
 	"dependencies": {
 		"vscode-languageclient": "^8.0.0-next.13"
