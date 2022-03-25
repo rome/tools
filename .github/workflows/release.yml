@@ -186,6 +186,8 @@ jobs:
     needs: build
     environment: marketplace
     steps:
+      - uses: actions/checkout@v2
+
       - name: Download CLI artifacts
         uses: actions/download-artifact@v2
         with:
@@ -200,6 +202,9 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Generate npm packages
+        run: node npm/rome/scripts/generate-packages.mjs
+
       - name: Publish extension (pre-release)
         run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix
         if: needs.build.outputs.prerelease == 'true'
@@ -210,6 +215,13 @@ jobs:
         if: needs.build.outputs.prerelease != 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish npm packages
+        # For now always publish the CLI to the "next" tag
+        # TODO: Actually call "npm publish" when this gets merged
+        run: for package in npm/*; do echo "npm publish $package --tag next"; done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: Create GitHub release and tag
         uses: softprops/action-gh-release@v1
