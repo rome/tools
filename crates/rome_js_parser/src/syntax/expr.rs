@@ -445,6 +445,22 @@ fn parse_binary_or_logical_expression_recursive(
             break;
         }
 
+        // This isn't spec compliant but improves error recovery in case the `}` is missing
+        // inside of a JSX attribute expression value or an expression child.
+        // Prevents that it parses `</` as less than followed by a RegEx if JSX is enabled and only if
+        // there's no whitespace between the two tokens.
+        // The downside of this is that `a </test/` will be incorrectly left unparsed. I think this is
+        // a worth compromise and compatible with what TypeScript's doing.
+        if Jsx.is_supported(p)
+            && op == T![<]
+            && p.nth_at(1, T![/])
+            && !p.tokens.has_next_preceding_trivia()
+        {
+            // test_err jsx jsx_child_expression_missing_r_curly
+            // <test>{ 4 + 3</test>
+            break;
+        }
+
         let new_precedence = match OperatorPrecedence::try_from_binary_operator(op) {
             Ok(precedence) => precedence,
             // Not a binary operator

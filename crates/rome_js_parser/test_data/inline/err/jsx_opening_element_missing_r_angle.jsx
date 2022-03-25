@@ -1,1 +1,1 @@
-<><test abcd</test></>
+<><test <inner> some content</inner></test></>

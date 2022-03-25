@@ -3,89 +3,91 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsBinaryExpression {
-                left: JsUnknownExpression {
-                    items: [
-                        L_ANGLE@0..1 "<" [] [],
-                        R_ANGLE@1..2 ">" [] [],
-                        JsUnknownExpression {
-                            items: [
-                                L_ANGLE@2..3 "<" [] [],
-                                TsReferenceType {
-                                    name: JsReferenceIdentifier {
-                                        value_token: IDENT@3..8 "test" [] [Whitespace(" ")],
-                                    },
-                                    type_arguments: missing (optional),
-                                },
-                                JsRegexLiteralExpression {
-                                    value_token: JS_REGEX_LITERAL@8..13 "/<a /" [] [],
-                                },
-                            ],
+            expression: JsxTagExpression {
+                tag: JsxFragment {
+                    opening_fragment: JsxOpeningFragment {
+                        l_angle_token: L_ANGLE@0..1 "<" [] [],
+                        r_angle_token: R_ANGLE@1..2 ">" [] [],
+                    },
+                    children: JsxChildList [
+                        JsxSelfClosingElement {
+                            l_angle_token: L_ANGLE@2..3 "<" [] [],
+                            name: JsxName {
+                                value_token: JSX_IDENT@3..8 "test" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                            attributes: JsxAttributeList [],
+                            slash_token: SLASH@8..10 "/" [] [Whitespace(" ")],
+                            r_angle_token: missing (required),
+                        },
+                        JsxText {
+                            value_token: JSX_TEXT_LITERAL@10..31 "some test followed by" [] [],
+                        },
+                        JsxSelfClosingElement {
+                            l_angle_token: L_ANGLE@31..32 "<" [] [],
+                            name: JsxName {
+                                value_token: JSX_IDENT@32..34 "a" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                            attributes: JsxAttributeList [],
+                            slash_token: SLASH@34..35 "/" [] [],
+                            r_angle_token: R_ANGLE@35..36 ">" [] [],
                         },
                     ],
-                },
-                operator: R_ANGLE@13..14 ">" [] [],
-                right: JsUnknownExpression {
-                    items: [
-                        L_ANGLE@14..15 "<" [] [],
-                        JsRegexLiteralExpression {
-                            value_token: JS_REGEX_LITERAL@15..17 "/>" [] [],
-                        },
-                    ],
+                    closing_fragment: JsxClosingFragment {
+                        l_angle_token: L_ANGLE@36..37 "<" [] [],
+                        slash_token: SLASH@37..38 "/" [] [],
+                        r_angle_token: R_ANGLE@38..39 ">" [] [],
+                    },
                 },
             },
-            semicolon_token: SEMICOLON@17..18 ";" [] [],
+            semicolon_token: SEMICOLON@39..40 ";" [] [],
         },
     ],
-    eof_token: EOF@18..19 "" [Newline("\n")] [],
+    eof_token: EOF@40..41 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..19
+0: JS_MODULE@0..41
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..18
-    0: JS_EXPRESSION_STATEMENT@0..18
-      0: JS_BINARY_EXPRESSION@0..17
-        0: JS_UNKNOWN_EXPRESSION@0..13
-          0: L_ANGLE@0..1 "<" [] []
-          1: R_ANGLE@1..2 ">" [] []
-          2: JS_UNKNOWN_EXPRESSION@2..13
-            0: L_ANGLE@2..3 "<" [] []
-            1: TS_REFERENCE_TYPE@3..8
-              0: JS_REFERENCE_IDENTIFIER@3..8
-                0: IDENT@3..8 "test" [] [Whitespace(" ")]
-              1: (empty)
-            2: JS_REGEX_LITERAL_EXPRESSION@8..13
-              0: JS_REGEX_LITERAL@8..13 "/<a /" [] []
-        1: R_ANGLE@13..14 ">" [] []
-        2: JS_UNKNOWN_EXPRESSION@14..17
-          0: L_ANGLE@14..15 "<" [] []
-          1: JS_REGEX_LITERAL_EXPRESSION@15..17
-            0: JS_REGEX_LITERAL@15..17 "/>" [] []
-      1: SEMICOLON@17..18 ";" [] []
-  3: EOF@18..19 "" [Newline("\n")] []
+  2: JS_MODULE_ITEM_LIST@0..40
+    0: JS_EXPRESSION_STATEMENT@0..40
+      0: JSX_TAG_EXPRESSION@0..39
+        0: JSX_FRAGMENT@0..39
+          0: JSX_OPENING_FRAGMENT@0..2
+            0: L_ANGLE@0..1 "<" [] []
+            1: R_ANGLE@1..2 ">" [] []
+          1: JSX_CHILD_LIST@2..36
+            0: JSX_SELF_CLOSING_ELEMENT@2..10
+              0: L_ANGLE@2..3 "<" [] []
+              1: JSX_NAME@3..8
+                0: JSX_IDENT@3..8 "test" [] [Whitespace(" ")]
+              2: (empty)
+              3: JSX_ATTRIBUTE_LIST@8..8
+              4: SLASH@8..10 "/" [] [Whitespace(" ")]
+              5: (empty)
+            1: JSX_TEXT@10..31
+              0: JSX_TEXT_LITERAL@10..31 "some test followed by" [] []
+            2: JSX_SELF_CLOSING_ELEMENT@31..36
+              0: L_ANGLE@31..32 "<" [] []
+              1: JSX_NAME@32..34
+                0: JSX_IDENT@32..34 "a" [] [Whitespace(" ")]
+              2: (empty)
+              3: JSX_ATTRIBUTE_LIST@34..34
+              4: SLASH@34..35 "/" [] []
+              5: R_ANGLE@35..36 ">" [] []
+          2: JSX_CLOSING_FRAGMENT@36..39
+            0: L_ANGLE@36..37 "<" [] []
+            1: SLASH@37..38 "/" [] []
+            2: R_ANGLE@38..39 ">" [] []
+      1: SEMICOLON@39..40 ";" [] []
+  3: EOF@40..41 "" [Newline("\n")] []
 --
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ jsx_self_closing_element_missing_r_angle.js:1:1
+error[SyntaxError]: expected `>` but instead found `some`
+  ┌─ jsx_self_closing_element_missing_r_angle.jsx:1:11
   │
-1 │ <><test /<a /></>;
-  │ ^^^^^^^^^^^^^ TypeScript only syntax
+1 │ <><test / some test followed by<a /></>;
+  │           ^^^^ unexpected
 
 --
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ jsx_self_closing_element_missing_r_angle.js:1:15
-  │
-1 │ <><test /<a /></>;
-  │               ^^^ TypeScript only syntax
-
---
-error: unterminated regex literal
-  ┌─ jsx_self_closing_element_missing_r_angle.js:1:19
-  │
-1 │ <><test /<a /></>;
-  │                -  ^ ...but the line ends here
-  │                │  
-  │                a regex literal starts there...
-
---
-<><test /<a /></>;
+<><test / some test followed by<a /></>;

@@ -175,6 +175,17 @@ impl<'l> TokenSource<'l> {
         }
     }
 
+    /// Returns `true` if the next token has any preceding trivia (either trailing trivia of the current
+    /// token or leading trivia of the next token)
+    pub fn has_next_preceding_trivia(&mut self) -> bool {
+        let next_token_trivia = self
+            .lexer
+            .lookahead()
+            .next()
+            .and_then(|lookahead| TriviaPieceKind::try_from(lookahead.kind()).ok());
+        next_token_trivia.is_some()
+    }
+
     #[inline(always)]
     fn lookahead(&mut self, n: usize) -> Option<Lookahead> {
         assert_ne!(n, 0);

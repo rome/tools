@@ -12,8 +12,10 @@ use crate::syntax::js_parse_error::{expected_expression, expected_identifier};
 use crate::syntax::jsx::jsx_parse_errors::{
     jsx_expected_attribute, jsx_expected_attribute_value, jsx_expected_children,
 };
+use crate::JsSyntaxFeature::TypeScript;
 use crate::{
     parser::RecoveryResult, CompletedMarker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
+    SyntaxFeature,
 };
 use crate::{Absent, Present};
 
@@ -141,38 +143,31 @@ fn parse_any_jsx_opening_tag(p: &mut Parser, in_expression: bool) -> Option<Open
 
     let name = parse_jsx_any_element_name(p).or_add_diagnostic(p, expected_identifier);
 
-    // test tsx tsx_element_generics_type
-    // <NonGeneric />;
-    // <Generic<true> />;
-    // <Generic<true>></Generic>;
-    let _ = parse_ts_type_arguments(p);
+    // Don't parse type arguments in JS because it prevents us from doing better error recovery in case the
+    // `>` token of the opening element is missing:
+    // `<test <inner></test>` The `inner` is it's own element and not the type arguments
+    if TypeScript.is_supported(p) {
+        // test tsx tsx_element_generics_type
+        // <NonGeneric />;
+        // <Generic<true> />;
+        // <Generic<true>></Generic>;
+        let _ = parse_ts_type_arguments(p);
+    }
 
     JsxAttributeList.parse_list(p);
 
     if p.eat(T![/]) {
-        if !p.at(T![>]) {
-            // test_err jsx_self_closing_element_missing_r_angle
-            // <><test /<a /></>;
-            p.error(expected_token(T![>]));
-        } else if in_expression {
-            p.bump(T![>]);
-        } else {
-            p.bump_with_context(T![>], LexContext::JsxChild);
-        }
+        // test_err jsx jsx_self_closing_element_missing_r_angle
+        // <><test / some test followed by<a /></>;
+        expect_jsx_token(p, T![>], !in_expression);
 
         Some(OpeningElement::SelfClosing(
             m.complete(p, JSX_SELF_CLOSING_ELEMENT),
         ))
     } else {
-        if !p.at(T![>]) {
-            // test_err jsx jsx_opening_element_missing_r_angle
-            // <><test abcd</test></>
-
-            // TODO call into relex when parsing children? necessary for decent error recovery
-            p.error(expected_token(T![>]));
-        } else {
-            p.bump_with_context(T![>], LexContext::JsxChild);
-        }
+        // test_err jsx jsx_opening_element_missing_r_angle
+        // <><test <inner> some content</inner></test></>
+        expect_jsx_token(p, T![>], true);
 
         Some(OpeningElement::Element {
             opening: m.complete(p, JSX_OPENING_ELEMENT),
@@ -192,7 +187,7 @@ fn expect_closing_fragment(
 
     // test_err jsx jsx_missing_closing_fragment
     // <>test</test>;
-    // <>test
+    // <>test<inner> some text</inner>;
     if let Present(name) = parse_jsx_any_element_name(p) {
         p.error(
             p.err_builder("JSX fragment has no corresponding closing tag.")
@@ -201,13 +196,9 @@ fn expect_closing_fragment(
         );
     }
 
-    if p.at(T![>]) && !in_expression {
-        p.bump_with_context(T![>], LexContext::JsxChild);
-    } else {
-        // test_err jsx jsx_fragment_closing_missing_r_angle
-        // <>test</test
-        p.expect(T![>]);
-    }
+    // test_err jsx jsx_fragment_closing_missing_r_angle
+    // <div><>test</ 5 more content</div>
+    expect_jsx_token(p, T![>], !in_expression);
 
     m.complete(p, JSX_CLOSING_FRAGMENT)
 }
@@ -245,16 +236,26 @@ fn expect_closing_element(
     }
 
     // test_err jsx jsx_closing_missing_r_angle
-    // <test>abcd</test
-    if !p.at(T![>]) {
-        p.error(expected_token(T![>]));
-    } else if in_expression {
-        p.bump(T![>]);
-    } else {
-        p.bump_with_context(T![>], LexContext::JsxChild);
-    }
+    // <><test>abcd</test more content follows here</>
+    expect_jsx_token(p, T![>], !in_expression);
 
     m.complete(p, JSX_CLOSING_ELEMENT)
+}
+
+/// Expects a JSX token that may be followed by JSX child content.
+/// Ensures that the child content is lexed with the [LexContext::JsxChild] context.
+fn expect_jsx_token(p: &mut Parser, token: JsSyntaxKind, before_child_content: bool) {
+    if !before_child_content {
+        p.expect(token);
+    } else {
+        if p.at(token) {
+            p.bump_with_context(token, LexContext::JsxChild);
+        } else {
+            p.error(expected_token(token));
+            // Re-lex the current token as a JSX child.
+            p.re_lex(ReLexContext::JsxChild);
+        }
+    }
 }
 
 struct JsxChildrenList;
@@ -343,13 +344,13 @@ fn parse_jsx_expression_child(p: &mut Parser) -> ParsedSyntax {
     //      some
     //      text
     // </test>
-    if p.at(T!['}']) {
-        p.bump_with_context(T!['}'], LexContext::JsxChild);
-    } else {
-        // test_err jsx jsx_child_expression_missing_r_curly
-        // <test>{ 4 + 3
-        p.error(expected_token(T!['}']));
-    }
+
+    // test_err jsx jsx_children_expression_missing_r_curly
+    // <test>
+    //   { 5 + 3
+    //   some text
+    // </test>
+    expect_jsx_token(p, T!['}'], true);
 
     let kind = if is_spread {
         JsSyntaxKind::JSX_SPREAD_CHILD
