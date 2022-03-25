@@ -1,6 +1,7 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, if_group_breaks, join_elements, soft_line_break_or_space, token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    empty_element, format_elements, if_group_breaks, join_elements, soft_line_break_or_space,
+    token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rome_js_syntax::AstNodeList;
 use rome_js_syntax::TsTypeMemberList;
@@ -13,14 +14,23 @@ impl ToFormatElement for TsTypeMemberList {
         let items = items
             .enumerate()
             .map(|(index, element)| {
-                let formatted_element = element.to_format_element(formatter)?;
+                let formatted_element = element.format(formatter)?;
 
-                // Children don't format the separator on purpose, so it's up to the parent - this node,
-                // to decide to print their separator
-                let separator = if index == last_index {
-                    if_group_breaks(token(","))
+                let is_verbatim = matches!(
+                    formatted_element.last_element(),
+                    Some(FormatElement::Verbatim(_))
+                );
+
+                let separator = if !is_verbatim {
+                    // Children don't format the separator on purpose, so it's up to the parent - this node,
+                    // to decide to print their separator
+                    if index == last_index {
+                        if_group_breaks(token(","))
+                    } else {
+                        token(",")
+                    }
                 } else {
-                    token(",")
+                    empty_element()
                 };
 
                 Ok(format_elements![formatted_element, separator])

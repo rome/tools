@@ -1,5 +1,4 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-
 use rome_js_syntax::{JsAnyFunction, JsFunctionDeclaration};
 
 impl ToFormatElement for JsFunctionDeclaration {

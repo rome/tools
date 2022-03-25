@@ -23,3 +23,7 @@ const    expr2    =    {
         // rome-ignore format: only skip formatting the value
         'single quoted string'
 }
+
+let a =
+    // rome-ignore format: test
+function () {}

@@ -1,5 +1,4 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-
 use rome_js_syntax::{JsAnyClass, JsClassExpression};
 
 impl ToFormatElement for JsClassExpression {
