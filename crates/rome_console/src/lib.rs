@@ -1,19 +1,18 @@
 use std::panic::RefUnwindSafe;
 
-use markup::MarkupPrinter;
 use rome_diagnostics::{file::Files, Diagnostic, Emitter};
 use termcolor::{ColorChoice, NoColor, StandardStream, StandardStreamLock, WriteColor};
 
 mod markup;
 
-pub use self::markup::{MarkupElement, MarkupNode};
+pub use self::markup::{Markup, MarkupElement, MarkupNode};
 pub use rome_markup::markup;
 
 /// Generic abstraction over printing markup and diagnostics to an output,
 /// which can be a terminal, a file, a memory buffer ...
 pub trait Console: Sync + RefUnwindSafe {
     /// Prints a message (formatted using [markup]) to the console
-    fn message(&mut self, args: MarkupNode);
+    fn message(&mut self, args: Markup);
 
     /// Prints a diagnostic to the console using the provided file map to
     /// display source code
@@ -31,8 +30,8 @@ where
     O: WriteColor + Sync + RefUnwindSafe,
     E: WriteColor + Sync + RefUnwindSafe,
 {
-    fn message(&mut self, args: MarkupNode) {
-        args.print(&mut MarkupPrinter::new(&mut self.out)).unwrap();
+    fn message(&mut self, args: Markup) {
+        args.print(&mut self.out).unwrap();
         writeln!(self.out).unwrap();
     }
 
@@ -80,13 +79,12 @@ pub enum Message {
 }
 
 impl Console for BufferConsole {
-    fn message(&mut self, args: MarkupNode) {
+    fn message(&mut self, args: Markup) {
         let mut message = Vec::new();
 
         {
             let mut writer = NoColor::new(&mut message);
-            let mut printer = MarkupPrinter::new(&mut writer);
-            args.print(&mut printer).unwrap();
+            args.print(&mut writer).unwrap();
         }
 
         let message = String::from_utf8(message).unwrap();

@@ -1,11 +1,6 @@
-use proc_macro2::{Ident, TokenStream, TokenTree};
+use proc_macro2::{TokenStream, TokenTree};
 use proc_macro_error::*;
 use quote::quote;
-
-struct StackEntry {
-    ident: Ident,
-    children: Vec<TokenStream>,
-}
 
 #[proc_macro]
 #[proc_macro_error]
@@ -51,39 +46,25 @@ pub fn markup(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     };
 
                     if !is_closing_element {
-                        stack.push(StackEntry {
-                            ident: name.clone(),
-                            children: Vec::new(),
-                        });
+                        stack.push(name.clone());
                     } else if let Some(top) = stack.last() {
                         // Only verify the coherence of the top element on the
                         // stack with a closing element, skip over the check if
                         // the stack is empty as that error will be handled
                         // when the top element gets popped off the stack later
                         let name_str = name.to_string();
-                        let top_str = top.ident.to_string();
+                        let top_str = top.to_string();
                         if name_str != top_str {
                             abort!(
                                 name.span(), "closing element mismatch";
                                 close = "found closing element {}", name_str;
-                                open = top.ident.span() => "expected {}", top_str
+                                open = top.span() => "expected {}", top_str
                             );
                         }
                     }
 
-                    if is_closing_element || is_self_closing {
-                        match stack.pop() {
-                            Some(top) => {
-                                let StackEntry { ident, children } = top;
-                                output.push(quote! {
-                                    rome_console::MarkupNode::Element {
-                                        kind: rome_console::MarkupElement::#ident,
-                                        children: &[ #( #children, )* ],
-                                    }
-                                });
-                            }
-                            None => abort!(name.span(), "unexpected closing element"),
-                        }
+                    if (is_closing_element || is_self_closing) && stack.pop().is_none() {
+                        abort!(name.span(), "unexpected closing element");
                     }
                 }
                 _ => {
@@ -91,14 +72,19 @@ pub fn markup(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 }
             },
             TokenTree::Literal(literal) => {
-                let output = match stack.last_mut() {
-                    Some(top) => &mut top.children,
-                    None => &mut output,
-                };
-
                 let literal_str = literal.to_string();
                 if literal_str.starts_with('"') {
-                    output.push(quote! { rome_console::MarkupNode::from(format_args!(#literal)) });
+                    let elements: Vec<_> = stack
+                        .iter()
+                        .map(|entry| quote! { rome_console::MarkupElement::#entry })
+                        .collect();
+
+                    output.push(quote! {
+                        rome_console::MarkupNode {
+                            elements: &[ #( #elements ),* ],
+                            content: format_args!(#literal),
+                        }
+                    });
                 } else {
                     abort!(literal.span(), "unexpected non-string literal");
                 }
@@ -108,8 +94,8 @@ pub fn markup(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     }
 
     if let Some(top) = stack.pop() {
-        abort!(top.ident.span(), "unclosed element");
+        abort!(top.span(), "unclosed element");
     }
 
-    output.into_iter().collect::<TokenStream>().into()
+    quote! { rome_console::Markup(&[ #( #output ),* ]) }.into()
 }

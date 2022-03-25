@@ -112,9 +112,15 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 
     let duration = start.elapsed();
     let count = formatted.load(Ordering::Relaxed);
-    session.app.console.message(rome_console::markup! {
-        <Info>"Formatted {count} files in {duration:?}"</Info>
-    });
+    if is_check {
+        session.app.console.message(rome_console::markup! {
+            <Info>"Checked {count} files in {duration:?}"</Info>
+        });
+    } else {
+        session.app.console.message(rome_console::markup! {
+            <Info>"Formatted {count} files in {duration:?}"</Info>
+        });
+    }
 
     let mut has_errors = false;
     let mut file_ids = HashSet::new();
