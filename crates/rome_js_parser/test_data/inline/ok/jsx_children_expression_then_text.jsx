@@ -2,4 +2,4 @@
     {/* comment */}
      some
      text
-</text>
+</test>

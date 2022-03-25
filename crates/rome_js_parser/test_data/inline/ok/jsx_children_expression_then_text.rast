@@ -20,7 +20,7 @@ JsModule {
                         },
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@11..25 "{" [] [Comments("/* comment */")],
-                            expression: missing (required),
+                            expression: missing (optional),
                             r_curly_token: R_CURLY@25..26 "}" [] [],
                         },
                         JsxText {
@@ -31,7 +31,7 @@ JsModule {
                         l_angle_token: L_ANGLE@47..48 "<" [] [],
                         slash_token: SLASH@48..49 "/" [] [],
                         name: JsxName {
-                            value_token: JSX_IDENT@49..53 "text" [] [],
+                            value_token: JSX_IDENT@49..53 "test" [] [],
                         },
                         r_angle_token: R_ANGLE@53..54 ">" [] [],
                     },
@@ -70,7 +70,7 @@ JsModule {
             0: L_ANGLE@47..48 "<" [] []
             1: SLASH@48..49 "/" [] []
             2: JSX_NAME@49..53
-              0: JSX_IDENT@49..53 "text" [] []
+              0: JSX_IDENT@49..53 "test" [] []
             3: R_ANGLE@53..54 ">" [] []
       1: (empty)
   3: EOF@54..55 "" [Newline("\n")] []

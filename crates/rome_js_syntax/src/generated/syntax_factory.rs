@@ -5395,6 +5395,39 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(JSX_CLOSING_ELEMENT, children)
             }
+            JSX_CLOSING_FRAGMENT => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [<] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [/] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [>] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JSX_CLOSING_FRAGMENT.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSX_CLOSING_FRAGMENT, children)
+            }
             JSX_ELEMENT => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
@@ -5496,17 +5529,10 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JSX_FRAGMENT => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == T ! [<] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [>] {
+                    if JsxOpeningFragment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5520,21 +5546,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if element.kind() == T ! [<] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [/] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [>] {
+                    if JsxClosingFragment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5679,6 +5691,32 @@ impl SyntaxFactory for JsSyntaxFactory {
                     );
                 }
                 slots.into_node(JSX_OPENING_ELEMENT, children)
+            }
+            JSX_OPENING_FRAGMENT => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [<] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [>] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JSX_OPENING_FRAGMENT.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSX_OPENING_FRAGMENT, children)
             }
             JSX_REFERENCE_IDENTIFIER => {
                 let mut elements = (&children).into_iter();

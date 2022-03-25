@@ -1,4 +1,4 @@
-use rome_js_parser::SourceType;
+use rome_js_parser::{LanguageVariant, SourceType};
 use rome_rowan::SyntaxKind;
 
 use crate::runner::create_unknown_node_in_tree_diagnostic;
@@ -14,10 +14,11 @@ struct BabelTypescriptTestCase {
     name: String,
     expected_to_fail: bool,
     code: String,
+    variant: LanguageVariant,
 }
 
 impl BabelTypescriptTestCase {
-    fn new(path: &Path, code: String, expected_to_fail: bool) -> Self {
+    fn new(path: &Path, code: String, expected_to_fail: bool, variant: LanguageVariant) -> Self {
         let name = path
             .parent()
             .unwrap()
@@ -30,6 +31,7 @@ impl BabelTypescriptTestCase {
             name,
             code,
             expected_to_fail,
+            variant,
         }
     }
 }
@@ -40,7 +42,7 @@ impl TestCase for BabelTypescriptTestCase {
     }
 
     fn run(&self) -> TestRunOutcome {
-        let source_type = SourceType::ts();
+        let source_type = SourceType::ts().with_variant(self.variant);
         let files = TestCaseFiles::single(
             self.name().to_string(),
             self.code.clone(),
@@ -95,22 +97,30 @@ impl TestSuite for BabelTypescriptTestSuite {
         let output_json_path = path.with_file_name("output.json");
         let options_path = path.with_file_name("options.json");
 
-        let should_fail = if output_json_path.exists() {
-            check_file_encoding(&output_json_path)
-                .map(|content| content.contains("\"errors\":"))
-                .unwrap_or(false)
-        } else if options_path.exists() {
-            check_file_encoding(&options_path)
-                .map(|content| content.contains("\"throws\":"))
-                .unwrap_or(false)
-        } else {
-            false
+        let mut should_fail = false;
+        let mut variant = LanguageVariant::Standard;
+
+        if output_json_path.exists() {
+            if let Some(content) = check_file_encoding(&output_json_path) {
+                should_fail = content.contains("\"errors\":");
+            }
+        }
+
+        if options_path.exists() {
+            if let Some(content) = check_file_encoding(&options_path) {
+                should_fail = should_fail || content.contains("\"throws\":");
+
+                if content.contains("jsx") {
+                    variant = LanguageVariant::Jsx;
+                }
+            }
         };
 
         Some(Box::new(BabelTypescriptTestCase::new(
             path,
             code,
             should_fail,
+            variant,
         )))
     }
 }

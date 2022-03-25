@@ -5136,6 +5136,40 @@ pub struct JsxClosingElementFields {
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxClosingFragment {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxClosingFragment {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxClosingFragmentFields {
+        JsxClosingFragmentFields {
+            l_angle_token: self.l_angle_token(),
+            slash_token: self.slash_token(),
+            r_angle_token: self.r_angle_token(),
+        }
+    }
+    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn slash_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+pub struct JsxClosingFragmentFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
+    pub slash_token: SyntaxResult<SyntaxToken>,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsxElement {
     pub(crate) syntax: SyntaxNode,
 }
@@ -5223,16 +5257,14 @@ impl JsxExpressionChild {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
-        support::required_node(&self.syntax, 1usize)
-    }
+    pub fn expression(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 1usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
 }
 pub struct JsxExpressionChildFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: Option<JsAnyExpression>,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5249,38 +5281,23 @@ impl JsxFragment {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsxFragmentFields {
         JsxFragmentFields {
-            opening_l_angle_token_token: self.opening_l_angle_token_token(),
-            opening_r_angle_token_token: self.opening_r_angle_token_token(),
+            opening_fragment: self.opening_fragment(),
             children: self.children(),
-            closing_l_angle_token_token: self.closing_l_angle_token_token(),
-            closing_slash_token_token: self.closing_slash_token_token(),
-            closing_r_angle_token_token: self.closing_r_angle_token_token(),
+            closing_fragment: self.closing_fragment(),
         }
     }
-    pub fn opening_l_angle_token_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+    pub fn opening_fragment(&self) -> SyntaxResult<JsxOpeningFragment> {
+        support::required_node(&self.syntax, 0usize)
     }
-    pub fn opening_r_angle_token_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
-    }
-    pub fn children(&self) -> JsxChildList { support::list(&self.syntax, 2usize) }
-    pub fn closing_l_angle_token_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
-    }
-    pub fn closing_slash_token_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
-    }
-    pub fn closing_r_angle_token_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+    pub fn children(&self) -> JsxChildList { support::list(&self.syntax, 1usize) }
+    pub fn closing_fragment(&self) -> SyntaxResult<JsxClosingFragment> {
+        support::required_node(&self.syntax, 2usize)
     }
 }
 pub struct JsxFragmentFields {
-    pub opening_l_angle_token_token: SyntaxResult<SyntaxToken>,
-    pub opening_r_angle_token_token: SyntaxResult<SyntaxToken>,
+    pub opening_fragment: SyntaxResult<JsxOpeningFragment>,
     pub children: JsxChildList,
-    pub closing_l_angle_token_token: SyntaxResult<SyntaxToken>,
-    pub closing_slash_token_token: SyntaxResult<SyntaxToken>,
-    pub closing_r_angle_token_token: SyntaxResult<SyntaxToken>,
+    pub closing_fragment: SyntaxResult<JsxClosingFragment>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsxMemberName {
@@ -5408,6 +5425,35 @@ pub struct JsxOpeningElementFields {
     pub name: SyntaxResult<JsxAnyElementName>,
     pub type_arguments: Option<TsTypeArguments>,
     pub attributes: JsxAttributeList,
+    pub r_angle_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsxOpeningFragment {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsxOpeningFragment {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsxOpeningFragmentFields {
+        JsxOpeningFragmentFields {
+            l_angle_token: self.l_angle_token(),
+            r_angle_token: self.r_angle_token(),
+        }
+    }
+    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+}
+pub struct JsxOpeningFragmentFields {
+    pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9454,6 +9500,7 @@ pub enum JsxAnyAttributeValue {
 pub enum JsxAnyChild {
     JsxElement(JsxElement),
     JsxExpressionChild(JsxExpressionChild),
+    JsxFragment(JsxFragment),
     JsxSelfClosingElement(JsxSelfClosingElement),
     JsxSpreadChild(JsxSpreadChild),
     JsxText(JsxText),
@@ -14366,6 +14413,41 @@ impl From<JsxClosingElement> for SyntaxNode {
 impl From<JsxClosingElement> for SyntaxElement {
     fn from(n: JsxClosingElement) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for JsxClosingFragment {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_CLOSING_FRAGMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxClosingFragment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxClosingFragment")
+            .field(
+                "l_angle_token",
+                &support::DebugSyntaxResult(self.l_angle_token()),
+            )
+            .field(
+                "slash_token",
+                &support::DebugSyntaxResult(self.slash_token()),
+            )
+            .field(
+                "r_angle_token",
+                &support::DebugSyntaxResult(self.r_angle_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxClosingFragment> for SyntaxNode {
+    fn from(n: JsxClosingFragment) -> SyntaxNode { n.syntax }
+}
+impl From<JsxClosingFragment> for SyntaxElement {
+    fn from(n: JsxClosingFragment) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for JsxElement {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -14448,7 +14530,10 @@ impl std::fmt::Debug for JsxExpressionChild {
                 "l_curly_token",
                 &support::DebugSyntaxResult(self.l_curly_token()),
             )
-            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .field(
+                "expression",
+                &support::DebugOptionalElement(self.expression()),
+            )
             .field(
                 "r_curly_token",
                 &support::DebugSyntaxResult(self.r_curly_token()),
@@ -14477,25 +14562,13 @@ impl std::fmt::Debug for JsxFragment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsxFragment")
             .field(
-                "opening_l_angle_token_token",
-                &support::DebugSyntaxResult(self.opening_l_angle_token_token()),
-            )
-            .field(
-                "opening_r_angle_token_token",
-                &support::DebugSyntaxResult(self.opening_r_angle_token_token()),
+                "opening_fragment",
+                &support::DebugSyntaxResult(self.opening_fragment()),
             )
             .field("children", &self.children())
             .field(
-                "closing_l_angle_token_token",
-                &support::DebugSyntaxResult(self.closing_l_angle_token_token()),
-            )
-            .field(
-                "closing_slash_token_token",
-                &support::DebugSyntaxResult(self.closing_slash_token_token()),
-            )
-            .field(
-                "closing_r_angle_token_token",
-                &support::DebugSyntaxResult(self.closing_r_angle_token_token()),
+                "closing_fragment",
+                &support::DebugSyntaxResult(self.closing_fragment()),
             )
             .finish()
     }
@@ -14624,6 +14697,37 @@ impl From<JsxOpeningElement> for SyntaxNode {
 }
 impl From<JsxOpeningElement> for SyntaxElement {
     fn from(n: JsxOpeningElement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsxOpeningFragment {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_OPENING_FRAGMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsxOpeningFragment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsxOpeningFragment")
+            .field(
+                "l_angle_token",
+                &support::DebugSyntaxResult(self.l_angle_token()),
+            )
+            .field(
+                "r_angle_token",
+                &support::DebugSyntaxResult(self.r_angle_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsxOpeningFragment> for SyntaxNode {
+    fn from(n: JsxOpeningFragment) -> SyntaxNode { n.syntax }
+}
+impl From<JsxOpeningFragment> for SyntaxElement {
+    fn from(n: JsxOpeningFragment) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsxReferenceIdentifier {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JSX_REFERENCE_IDENTIFIER }
@@ -22483,6 +22587,9 @@ impl From<JsxElement> for JsxAnyChild {
 impl From<JsxExpressionChild> for JsxAnyChild {
     fn from(node: JsxExpressionChild) -> JsxAnyChild { JsxAnyChild::JsxExpressionChild(node) }
 }
+impl From<JsxFragment> for JsxAnyChild {
+    fn from(node: JsxFragment) -> JsxAnyChild { JsxAnyChild::JsxFragment(node) }
+}
 impl From<JsxSelfClosingElement> for JsxAnyChild {
     fn from(node: JsxSelfClosingElement) -> JsxAnyChild { JsxAnyChild::JsxSelfClosingElement(node) }
 }
@@ -22498,6 +22605,7 @@ impl AstNode for JsxAnyChild {
             kind,
             JSX_ELEMENT
                 | JSX_EXPRESSION_CHILD
+                | JSX_FRAGMENT
                 | JSX_SELF_CLOSING_ELEMENT
                 | JSX_SPREAD_CHILD
                 | JSX_TEXT
@@ -22507,6 +22615,7 @@ impl AstNode for JsxAnyChild {
         let res = match syntax.kind() {
             JSX_ELEMENT => JsxAnyChild::JsxElement(JsxElement { syntax }),
             JSX_EXPRESSION_CHILD => JsxAnyChild::JsxExpressionChild(JsxExpressionChild { syntax }),
+            JSX_FRAGMENT => JsxAnyChild::JsxFragment(JsxFragment { syntax }),
             JSX_SELF_CLOSING_ELEMENT => {
                 JsxAnyChild::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
             }
@@ -22520,6 +22629,7 @@ impl AstNode for JsxAnyChild {
         match self {
             JsxAnyChild::JsxElement(it) => &it.syntax,
             JsxAnyChild::JsxExpressionChild(it) => &it.syntax,
+            JsxAnyChild::JsxFragment(it) => &it.syntax,
             JsxAnyChild::JsxSelfClosingElement(it) => &it.syntax,
             JsxAnyChild::JsxSpreadChild(it) => &it.syntax,
             JsxAnyChild::JsxText(it) => &it.syntax,
@@ -22531,6 +22641,7 @@ impl std::fmt::Debug for JsxAnyChild {
         match self {
             JsxAnyChild::JsxElement(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxExpressionChild(it) => std::fmt::Debug::fmt(it, f),
+            JsxAnyChild::JsxFragment(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxSpreadChild(it) => std::fmt::Debug::fmt(it, f),
             JsxAnyChild::JsxText(it) => std::fmt::Debug::fmt(it, f),
@@ -22542,6 +22653,7 @@ impl From<JsxAnyChild> for SyntaxNode {
         match n {
             JsxAnyChild::JsxElement(it) => it.into(),
             JsxAnyChild::JsxExpressionChild(it) => it.into(),
+            JsxAnyChild::JsxFragment(it) => it.into(),
             JsxAnyChild::JsxSelfClosingElement(it) => it.into(),
             JsxAnyChild::JsxSpreadChild(it) => it.into(),
             JsxAnyChild::JsxText(it) => it.into(),
@@ -25328,6 +25440,11 @@ impl std::fmt::Display for JsxClosingElement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsxClosingFragment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsxElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -25364,6 +25481,11 @@ impl std::fmt::Display for JsxNamespaceName {
     }
 }
 impl std::fmt::Display for JsxOpeningElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsxOpeningFragment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -28714,6 +28836,9 @@ impl Debug for DebugSyntaxElement {
                 JSX_CLOSING_ELEMENT => {
                     std::fmt::Debug::fmt(&JsxClosingElement::cast(node.clone()).unwrap(), f)
                 }
+                JSX_CLOSING_FRAGMENT => {
+                    std::fmt::Debug::fmt(&JsxClosingFragment::cast(node.clone()).unwrap(), f)
+                }
                 JSX_ELEMENT => std::fmt::Debug::fmt(&JsxElement::cast(node.clone()).unwrap(), f),
                 JSX_EXPRESSION_ATTRIBUTE_VALUE => std::fmt::Debug::fmt(
                     &JsxExpressionAttributeValue::cast(node.clone()).unwrap(),
@@ -28732,6 +28857,9 @@ impl Debug for DebugSyntaxElement {
                 }
                 JSX_OPENING_ELEMENT => {
                     std::fmt::Debug::fmt(&JsxOpeningElement::cast(node.clone()).unwrap(), f)
+                }
+                JSX_OPENING_FRAGMENT => {
+                    std::fmt::Debug::fmt(&JsxOpeningFragment::cast(node.clone()).unwrap(), f)
                 }
                 JSX_REFERENCE_IDENTIFIER => {
                     std::fmt::Debug::fmt(&JsxReferenceIdentifier::cast(node.clone()).unwrap(), f)

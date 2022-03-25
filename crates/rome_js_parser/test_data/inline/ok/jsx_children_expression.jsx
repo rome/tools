@@ -47,6 +47,7 @@ let f = () => {};
   {/* Multi
       line
   */}
+  {}
 </div>
 function *f() {
     return <div>

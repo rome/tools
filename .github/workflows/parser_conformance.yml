@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'crates/rome_js**/'
-      - 'crates/rome_rowan',
+      - 'crates/rome_rowan'
       - 'xtask/codegen'
 
 env:

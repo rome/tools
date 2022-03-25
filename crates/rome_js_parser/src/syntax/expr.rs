@@ -23,15 +23,13 @@ use crate::syntax::js_parse_error::{
     expected_expression, expected_identifier, expected_parameters, invalid_assignment_error,
     private_names_only_allowed_on_left_side_of_in_expression,
 };
-use crate::syntax::jsx::jsx_parse_errors::jsx_only_syntax_error;
-use crate::syntax::jsx::maybe_parse_jsx_expression;
+use crate::syntax::jsx::parse_jsx_tag_expression;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 use crate::Checkpoint;
 use crate::CompletedMarker;
-use crate::JsSyntaxFeature;
-use crate::JsSyntaxFeature::{StrictMode, TypeScript};
+use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
 use crate::Marker;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
@@ -444,6 +442,22 @@ fn parse_binary_or_logical_expression_recursive(
         if (op == T![as] && p.has_preceding_line_break())
             || (op == T![in] && !context.is_in_included())
         {
+            break;
+        }
+
+        // This isn't spec compliant but improves error recovery in case the `}` is missing
+        // inside of a JSX attribute expression value or an expression child.
+        // Prevents that it parses `</` as less than followed by a RegEx if JSX is enabled and only if
+        // there's no whitespace between the two tokens.
+        // The downside of this is that `a </test/` will be incorrectly left unparsed. I think this is
+        // a worth compromise and compatible with what TypeScript's doing.
+        if Jsx.is_supported(p)
+            && op == T![<]
+            && p.nth_at(1, T![/])
+            && !p.tokens.has_next_preceding_trivia()
+        {
+            // test_err jsx jsx_child_expression_missing_r_curly
+            // <test>{ 4 + 3</test>
             break;
         }
 
@@ -1258,6 +1272,9 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
             m.complete(p, JS_UNKNOWN)
         }
         T![ident] => parse_identifier_expression(p).unwrap(),
+        // test jsx jsx_primary_expression
+        // let a = <test>abcd</test>.c;
+        T![<] if Jsx.is_supported(p) => return parse_jsx_tag_expression(p),
         // test_err primary_expr_invalid_recovery
         // let a = \; foo();
         t if t.is_contextual_keyword() || t.is_future_reserved_keyword() => {
@@ -1745,20 +1762,14 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         return Present(expr);
     }
 
-    // if we are at "<"; or we have JSX or Typescript type assertions
-    if p.at(T![<]) {
-        let jsx = JsSyntaxFeature::Jsx.parse_exclusive_syntax(
+    // This is a type assertion expression if the parser is at the `<` token and JSX is disabled
+    // JSX elements are parsed in parse_primary_expression.
+    if p.at(T![<]) && Jsx.is_unsupported(p) {
+        return TypeScript.parse_exclusive_syntax(
             p,
-            maybe_parse_jsx_expression,
-            |p, assertion| jsx_only_syntax_error(p, "JSX elements", assertion.range(p)),
+            |p| parse_ts_type_assertion_expression(p, context),
+            |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
         );
-        return jsx.or_else(|| {
-            TypeScript.parse_exclusive_syntax(
-                p,
-                |p| parse_ts_type_assertion_expression(p, context),
-                |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
-            )
-        });
     }
 
     // test pre_update_expr

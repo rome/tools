@@ -662,6 +662,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::JsxClosingElement::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JSX_CLOSING_FRAGMENT => {
+                    let $pattern = unsafe { $crate::JsxClosingFragment::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JSX_ELEMENT => {
                     let $pattern = unsafe { $crate::JsxElement::new_unchecked(node) };
                     $body
@@ -693,6 +697,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JSX_OPENING_ELEMENT => {
                     let $pattern = unsafe { $crate::JsxOpeningElement::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JSX_OPENING_FRAGMENT => {
+                    let $pattern = unsafe { $crate::JsxOpeningFragment::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JSX_REFERENCE_IDENTIFIER => {
