@@ -32,9 +32,10 @@ jobs:
     steps:
       - name: Install Rome
         uses: rome/gh-setup-rome@v0.0.1-test
-
         with:
           preview: true
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Run Rome Format
         run: rome format --ci editors website
 
