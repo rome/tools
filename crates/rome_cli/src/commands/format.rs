@@ -113,7 +113,12 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 
     let duration = start.elapsed();
     let count = formatted.load(Ordering::Relaxed);
-    println!("Formatted {count} files in {duration:?}");
+
+    if is_check {
+        println!("Checked {count} files in {duration:?}.");
+    } else {
+        println!("Formatted {count} files in {duration:?}.");
+    }
 
     let mut has_errors = false;
     let mut file_ids = HashSet::new();
