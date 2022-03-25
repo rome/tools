@@ -247,14 +247,12 @@ fn expect_closing_element(
 fn expect_jsx_token(p: &mut Parser, token: JsSyntaxKind, before_child_content: bool) {
     if !before_child_content {
         p.expect(token);
+    } else if p.at(token) {
+        p.bump_with_context(token, LexContext::JsxChild);
     } else {
-        if p.at(token) {
-            p.bump_with_context(token, LexContext::JsxChild);
-        } else {
-            p.error(expected_token(token));
-            // Re-lex the current token as a JSX child.
-            p.re_lex(ReLexContext::JsxChild);
-        }
+        p.error(expected_token(token));
+        // Re-lex the current token as a JSX child.
+        p.re_lex(ReLexContext::JsxChild);
     }
 }
 
@@ -478,12 +476,17 @@ impl ParseNodeList for JsxAttributeList {
 }
 
 fn parse_jsx_attribute(p: &mut Parser) -> ParsedSyntax {
-    parse_jsx_name_or_namespace(p).map(|name| {
-        let m = name.precede(p);
-        let _ = parse_jsx_attribute_initializer_clause(p);
+    if !is_nth_at_identifier_or_keyword(p, 0) {
+        return Absent;
+    }
 
-        m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE)
-    })
+    let m = p.start();
+
+    // SAFETY: Guaranteed to succeed because the parser is at an identifier or keyword
+    parse_jsx_name_or_namespace(p).unwrap();
+    let _ = parse_jsx_attribute_initializer_clause(p);
+
+    Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE))
 }
 
 // test jsx jsx_spread_attribute

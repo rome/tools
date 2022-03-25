@@ -1762,8 +1762,8 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         return Present(expr);
     }
 
-    // if we are at "<"; or we have Typescript type assertions
-    // JSX is a primary expression and hanled there
+    // This is a type assertion expression if the parser is at the `<` token and JSX is disabled
+    // JSX elements are parsed in parse_primary_expression.
     if p.at(T![<]) && Jsx.is_unsupported(p) {
         return TypeScript.parse_exclusive_syntax(
             p,
