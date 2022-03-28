@@ -751,7 +751,8 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
 }
 
 fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
-    if !matches!(p.cur(), T![type] | T![as]) && !is_nth_at_reference_identifier(p, 0) {
+    if !matches!(p.cur(), T![type] | T![as] | T![default]) && !is_nth_at_reference_identifier(p, 0)
+    {
         return Absent;
     }
 
@@ -780,7 +781,17 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
             TextRange::new(p.cur_range().start(), p.cur_range().start()),
         ));
     } else {
-        parse_reference_identifier(p).or_add_diagnostic(p, expected_identifier);
+        // We need to parse "default" here and fail so the "export ... from..." rewind later works.
+        if p.cur() == T![default] {
+            let range = p.cur_range();
+            p.bump_any();
+            let err = p
+                .err_builder("\"default\" can only be used with \"export ... from ...\"")
+                .primary(range, "");
+            p.error(err);
+        } else {
+            parse_reference_identifier(p).or_add_diagnostic(p, expected_identifier);
+        }
     }
 
     // test export_as_identifier
@@ -886,6 +897,9 @@ where
 }
 
 // test export_from_clause
+// export {
+//     default as a } from "b";
+// export { default as a } from "b";
 // export * from "a";
 // export * as c from "b";
 // export * as default from "b"

@@ -4,51 +4,58 @@ JsModule {
     items: JsModuleItemList [
         JsExport {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
-            export_clause: JsExportFromClause {
-                star_token: STAR@7..9 "*" [] [Whitespace(" ")],
-                export_as: missing (optional),
-                from_token: FROM_KW@9..14 "from" [] [Whitespace(" ")],
+            export_clause: JsExportNamedFromClause {
+                type_token: missing (optional),
+                l_curly_token: L_CURLY@7..8 "{" [] [],
+                specifiers: JsExportNamedFromSpecifierList [
+                    JsExportNamedFromSpecifier {
+                        type_token: missing (optional),
+                        source_name: JsLiteralExportName {
+                            value: IDENT@8..21 "default" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                        },
+                        export_as: JsExportAsClause {
+                            as_token: AS_KW@21..24 "as" [] [Whitespace(" ")],
+                            exported_name: JsLiteralExportName {
+                                value: IDENT@24..26 "a" [] [Whitespace(" ")],
+                            },
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@26..28 "}" [] [Whitespace(" ")],
+                from_token: FROM_KW@28..33 "from" [] [Whitespace(" ")],
                 source: JsModuleSource {
-                    value_token: JS_STRING_LITERAL@14..17 "\"a\"" [] [],
+                    value_token: JS_STRING_LITERAL@33..36 "\"b\"" [] [],
                 },
                 assertion: missing (optional),
-                semicolon_token: SEMICOLON@17..18 ";" [] [],
+                semicolon_token: SEMICOLON@36..37 ";" [] [],
             },
         },
         JsExport {
-            export_token: EXPORT_KW@18..26 "export" [Newline("\n")] [Whitespace(" ")],
-            export_clause: JsExportFromClause {
-                star_token: STAR@26..28 "*" [] [Whitespace(" ")],
-                export_as: JsExportAsClause {
-                    as_token: AS_KW@28..31 "as" [] [Whitespace(" ")],
-                    exported_name: JsLiteralExportName {
-                        value: IDENT@31..33 "c" [] [Whitespace(" ")],
+            export_token: EXPORT_KW@37..45 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportNamedFromClause {
+                type_token: missing (optional),
+                l_curly_token: L_CURLY@45..47 "{" [] [Whitespace(" ")],
+                specifiers: JsExportNamedFromSpecifierList [
+                    JsExportNamedFromSpecifier {
+                        type_token: missing (optional),
+                        source_name: JsLiteralExportName {
+                            value: IDENT@47..55 "default" [] [Whitespace(" ")],
+                        },
+                        export_as: JsExportAsClause {
+                            as_token: AS_KW@55..58 "as" [] [Whitespace(" ")],
+                            exported_name: JsLiteralExportName {
+                                value: IDENT@58..60 "a" [] [Whitespace(" ")],
+                            },
+                        },
                     },
-                },
-                from_token: FROM_KW@33..38 "from" [] [Whitespace(" ")],
+                ],
+                r_curly_token: R_CURLY@60..62 "}" [] [Whitespace(" ")],
+                from_token: FROM_KW@62..67 "from" [] [Whitespace(" ")],
                 source: JsModuleSource {
-                    value_token: JS_STRING_LITERAL@38..41 "\"b\"" [] [],
+                    value_token: JS_STRING_LITERAL@67..70 "\"b\"" [] [],
                 },
                 assertion: missing (optional),
-                semicolon_token: SEMICOLON@41..42 ";" [] [],
-            },
-        },
-        JsExport {
-            export_token: EXPORT_KW@42..50 "export" [Newline("\n")] [Whitespace(" ")],
-            export_clause: JsExportFromClause {
-                star_token: STAR@50..52 "*" [] [Whitespace(" ")],
-                export_as: JsExportAsClause {
-                    as_token: AS_KW@52..55 "as" [] [Whitespace(" ")],
-                    exported_name: JsLiteralExportName {
-                        value: IDENT@55..63 "default" [] [Whitespace(" ")],
-                    },
-                },
-                from_token: FROM_KW@63..68 "from" [] [Whitespace(" ")],
-                source: JsModuleSource {
-                    value_token: JS_STRING_LITERAL@68..71 "\"b\"" [] [],
-                },
-                assertion: missing (optional),
-                semicolon_token: missing (optional),
+                semicolon_token: SEMICOLON@70..71 ";" [] [],
             },
         },
         JsExport {
@@ -58,83 +65,172 @@ JsModule {
                 export_as: missing (optional),
                 from_token: FROM_KW@81..86 "from" [] [Whitespace(" ")],
                 source: JsModuleSource {
-                    value_token: JS_STRING_LITERAL@86..92 "\"mod\"" [] [Whitespace(" ")],
+                    value_token: JS_STRING_LITERAL@86..89 "\"a\"" [] [],
+                },
+                assertion: missing (optional),
+                semicolon_token: SEMICOLON@89..90 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@90..98 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportFromClause {
+                star_token: STAR@98..100 "*" [] [Whitespace(" ")],
+                export_as: JsExportAsClause {
+                    as_token: AS_KW@100..103 "as" [] [Whitespace(" ")],
+                    exported_name: JsLiteralExportName {
+                        value: IDENT@103..105 "c" [] [Whitespace(" ")],
+                    },
+                },
+                from_token: FROM_KW@105..110 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@110..113 "\"b\"" [] [],
+                },
+                assertion: missing (optional),
+                semicolon_token: SEMICOLON@113..114 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@114..122 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportFromClause {
+                star_token: STAR@122..124 "*" [] [Whitespace(" ")],
+                export_as: JsExportAsClause {
+                    as_token: AS_KW@124..127 "as" [] [Whitespace(" ")],
+                    exported_name: JsLiteralExportName {
+                        value: IDENT@127..135 "default" [] [Whitespace(" ")],
+                    },
+                },
+                from_token: FROM_KW@135..140 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@140..143 "\"b\"" [] [],
+                },
+                assertion: missing (optional),
+                semicolon_token: missing (optional),
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@143..151 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportFromClause {
+                star_token: STAR@151..153 "*" [] [Whitespace(" ")],
+                export_as: missing (optional),
+                from_token: FROM_KW@153..158 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@158..164 "\"mod\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@92..99 "assert" [] [Whitespace(" ")],
-                    l_curly_token: L_CURLY@99..101 "{" [] [Whitespace(" ")],
+                    assert_token: ASSERT_KW@164..171 "assert" [] [Whitespace(" ")],
+                    l_curly_token: L_CURLY@171..173 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
-                            key: IDENT@101..105 "type" [] [],
-                            colon_token: COLON@105..107 ":" [] [Whitespace(" ")],
-                            value_token: JS_STRING_LITERAL@107..114 "\"json\"" [] [Whitespace(" ")],
+                            key: IDENT@173..177 "type" [] [],
+                            colon_token: COLON@177..179 ":" [] [Whitespace(" ")],
+                            value_token: JS_STRING_LITERAL@179..186 "\"json\"" [] [Whitespace(" ")],
                         },
                     ],
-                    r_curly_token: R_CURLY@114..115 "}" [] [],
+                    r_curly_token: R_CURLY@186..187 "}" [] [],
                 },
                 semicolon_token: missing (optional),
             },
         },
     ],
-    eof_token: EOF@115..116 "" [Newline("\n")] [],
+    eof_token: EOF@187..188 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..116
+0: JS_MODULE@0..188
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..115
-    0: JS_EXPORT@0..18
+  2: JS_MODULE_ITEM_LIST@0..187
+    0: JS_EXPORT@0..37
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@7..18
-        0: STAR@7..9 "*" [] [Whitespace(" ")]
-        1: (empty)
-        2: FROM_KW@9..14 "from" [] [Whitespace(" ")]
-        3: JS_MODULE_SOURCE@14..17
-          0: JS_STRING_LITERAL@14..17 "\"a\"" [] []
-        4: (empty)
-        5: SEMICOLON@17..18 ";" [] []
-    1: JS_EXPORT@18..42
-      0: EXPORT_KW@18..26 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@26..42
-        0: STAR@26..28 "*" [] [Whitespace(" ")]
-        1: JS_EXPORT_AS_CLAUSE@28..33
-          0: AS_KW@28..31 "as" [] [Whitespace(" ")]
-          1: JS_LITERAL_EXPORT_NAME@31..33
-            0: IDENT@31..33 "c" [] [Whitespace(" ")]
-        2: FROM_KW@33..38 "from" [] [Whitespace(" ")]
-        3: JS_MODULE_SOURCE@38..41
-          0: JS_STRING_LITERAL@38..41 "\"b\"" [] []
-        4: (empty)
-        5: SEMICOLON@41..42 ";" [] []
-    2: JS_EXPORT@42..71
-      0: EXPORT_KW@42..50 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@50..71
-        0: STAR@50..52 "*" [] [Whitespace(" ")]
-        1: JS_EXPORT_AS_CLAUSE@52..63
-          0: AS_KW@52..55 "as" [] [Whitespace(" ")]
-          1: JS_LITERAL_EXPORT_NAME@55..63
-            0: IDENT@55..63 "default" [] [Whitespace(" ")]
-        2: FROM_KW@63..68 "from" [] [Whitespace(" ")]
-        3: JS_MODULE_SOURCE@68..71
-          0: JS_STRING_LITERAL@68..71 "\"b\"" [] []
-        4: (empty)
-        5: (empty)
-    3: JS_EXPORT@71..115
+      1: JS_EXPORT_NAMED_FROM_CLAUSE@7..37
+        0: (empty)
+        1: L_CURLY@7..8 "{" [] []
+        2: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@8..26
+          0: JS_EXPORT_NAMED_FROM_SPECIFIER@8..26
+            0: (empty)
+            1: JS_LITERAL_EXPORT_NAME@8..21
+              0: IDENT@8..21 "default" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            2: JS_EXPORT_AS_CLAUSE@21..26
+              0: AS_KW@21..24 "as" [] [Whitespace(" ")]
+              1: JS_LITERAL_EXPORT_NAME@24..26
+                0: IDENT@24..26 "a" [] [Whitespace(" ")]
+        3: R_CURLY@26..28 "}" [] [Whitespace(" ")]
+        4: FROM_KW@28..33 "from" [] [Whitespace(" ")]
+        5: JS_MODULE_SOURCE@33..36
+          0: JS_STRING_LITERAL@33..36 "\"b\"" [] []
+        6: (empty)
+        7: SEMICOLON@36..37 ";" [] []
+    1: JS_EXPORT@37..71
+      0: EXPORT_KW@37..45 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_NAMED_FROM_CLAUSE@45..71
+        0: (empty)
+        1: L_CURLY@45..47 "{" [] [Whitespace(" ")]
+        2: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@47..60
+          0: JS_EXPORT_NAMED_FROM_SPECIFIER@47..60
+            0: (empty)
+            1: JS_LITERAL_EXPORT_NAME@47..55
+              0: IDENT@47..55 "default" [] [Whitespace(" ")]
+            2: JS_EXPORT_AS_CLAUSE@55..60
+              0: AS_KW@55..58 "as" [] [Whitespace(" ")]
+              1: JS_LITERAL_EXPORT_NAME@58..60
+                0: IDENT@58..60 "a" [] [Whitespace(" ")]
+        3: R_CURLY@60..62 "}" [] [Whitespace(" ")]
+        4: FROM_KW@62..67 "from" [] [Whitespace(" ")]
+        5: JS_MODULE_SOURCE@67..70
+          0: JS_STRING_LITERAL@67..70 "\"b\"" [] []
+        6: (empty)
+        7: SEMICOLON@70..71 ";" [] []
+    2: JS_EXPORT@71..90
       0: EXPORT_KW@71..79 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_FROM_CLAUSE@79..115
+      1: JS_EXPORT_FROM_CLAUSE@79..90
         0: STAR@79..81 "*" [] [Whitespace(" ")]
         1: (empty)
         2: FROM_KW@81..86 "from" [] [Whitespace(" ")]
-        3: JS_MODULE_SOURCE@86..92
-          0: JS_STRING_LITERAL@86..92 "\"mod\"" [] [Whitespace(" ")]
-        4: JS_IMPORT_ASSERTION@92..115
-          0: ASSERT_KW@92..99 "assert" [] [Whitespace(" ")]
-          1: L_CURLY@99..101 "{" [] [Whitespace(" ")]
-          2: JS_IMPORT_ASSERTION_ENTRY_LIST@101..114
-            0: JS_IMPORT_ASSERTION_ENTRY@101..114
-              0: IDENT@101..105 "type" [] []
-              1: COLON@105..107 ":" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL@107..114 "\"json\"" [] [Whitespace(" ")]
-          3: R_CURLY@114..115 "}" [] []
+        3: JS_MODULE_SOURCE@86..89
+          0: JS_STRING_LITERAL@86..89 "\"a\"" [] []
+        4: (empty)
+        5: SEMICOLON@89..90 ";" [] []
+    3: JS_EXPORT@90..114
+      0: EXPORT_KW@90..98 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FROM_CLAUSE@98..114
+        0: STAR@98..100 "*" [] [Whitespace(" ")]
+        1: JS_EXPORT_AS_CLAUSE@100..105
+          0: AS_KW@100..103 "as" [] [Whitespace(" ")]
+          1: JS_LITERAL_EXPORT_NAME@103..105
+            0: IDENT@103..105 "c" [] [Whitespace(" ")]
+        2: FROM_KW@105..110 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@110..113
+          0: JS_STRING_LITERAL@110..113 "\"b\"" [] []
+        4: (empty)
+        5: SEMICOLON@113..114 ";" [] []
+    4: JS_EXPORT@114..143
+      0: EXPORT_KW@114..122 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FROM_CLAUSE@122..143
+        0: STAR@122..124 "*" [] [Whitespace(" ")]
+        1: JS_EXPORT_AS_CLAUSE@124..135
+          0: AS_KW@124..127 "as" [] [Whitespace(" ")]
+          1: JS_LITERAL_EXPORT_NAME@127..135
+            0: IDENT@127..135 "default" [] [Whitespace(" ")]
+        2: FROM_KW@135..140 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@140..143
+          0: JS_STRING_LITERAL@140..143 "\"b\"" [] []
+        4: (empty)
         5: (empty)
-  3: EOF@115..116 "" [Newline("\n")] []
+    5: JS_EXPORT@143..187
+      0: EXPORT_KW@143..151 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FROM_CLAUSE@151..187
+        0: STAR@151..153 "*" [] [Whitespace(" ")]
+        1: (empty)
+        2: FROM_KW@153..158 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@158..164
+          0: JS_STRING_LITERAL@158..164 "\"mod\"" [] [Whitespace(" ")]
+        4: JS_IMPORT_ASSERTION@164..187
+          0: ASSERT_KW@164..171 "assert" [] [Whitespace(" ")]
+          1: L_CURLY@171..173 "{" [] [Whitespace(" ")]
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@173..186
+            0: JS_IMPORT_ASSERTION_ENTRY@173..186
+              0: IDENT@173..177 "type" [] []
+              1: COLON@177..179 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@179..186 "\"json\"" [] [Whitespace(" ")]
+          3: R_CURLY@186..187 "}" [] []
+        5: (empty)
+  3: EOF@187..188 "" [Newline("\n")] []
