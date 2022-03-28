@@ -55,3 +55,77 @@ OPTIONS:
     --indent-size <number>      If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
 
 ```
+
+### Suppression
+
+There are times when a developer wants to keep a specific formatting.
+
+You can achieve this by adding a suppression comment right before the syntax node (expressions, statements, etc.).
+
+Suppression comments have the following format:
+
+```js
+// rome-ignore format: <explanation>
+```
+
+Where
+- `rome-ignore` is the start of a suppression comment;
+- `format:` suppresses the formatting;
+- `<explanation>` is an explanation why the formatting is disabled;
+
+Here's an example of how a code will look like before and after the formatter does its job:
+
+Before running the formatter
+
+```js
+const   expr   =   
+// rome-ignore format: the array should not be formatted
+[
+    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
+    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
+    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
+    0,           0,           -1,            0,
+];
+
+
+const   expr   =   [
+    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
+    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
+    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
+    0,           0,           -1,            0,
+];
+```
+
+After running the formatter 
+
+```js
+const expr =
+// rome-ignore format: the array should not be formatted
+[
+    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
+    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
+    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
+    0,           0,           -1,            0,
+];
+
+const expr = [
+    (2 * n) / (r - l),
+    0,
+    (r + l) / (r - l),
+    0,
+    0,
+    (2 * n) / (t - b),
+    (t + b) / (t - b),
+    0,
+    0,
+    0,
+    -(f + n) / (f - n),
+    -(2 * f * n) / (f - n),
+    0,
+    0,
+    -1,
+    0,
+];
+```
+
+As you can see the first array, which has a suppression comment, is left untouched! 
