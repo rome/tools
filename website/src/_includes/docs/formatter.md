@@ -135,5 +135,77 @@ const expr = [
 
 As you can see the first array, which has a suppression comment, is left untouched! 
 
+### Differences with Prettier/dprint
+
+Rome formatter uses a CST to implement its algorithms - as supposed to Prettier or dprint, which use an 
+AST -, which means that it has to deal with a different set of problems e.g. comments and how to place them.
+
+As you might know, comments can appear almost everywhere inside a program, which can make the implementation
+of a formatter more difficult.
+
+In a CST, comments are attached to tokens, so it's possible to extract this information when inspecting
+a single node. 
+
+Considering these assumptions, the Rome team had to create some heuristics and concepts in order to 
+**consistently format comments inside a program**.
+
+#### Comments with hard groups
+
+A **hard group** is a concept that the Rome team created when formatting certain parts of the code. The 
+idea of a hard group is that tokens that belong to this group can't be broken on multiple lines and, they can't
+contain comments. 
+
+We apply this concept, for example, to JavaScript functions and JavaScript classes. A function has a "head" and a "body":
+- the head is where we define the name of the function and its signature (its parameters, return type, etc.);
+- the body is where we define the implementation of the function, usually - but not only - inside a block `{}`;
+
+Our formatter marks a function head as a hard group, while the body is a normal group. This means that all 
+the comments inside the head are "pushed out" and moved outside it, making the formatting **always consistent**.
+
+Here's an example against Prettier/dprint, we place comments inside the head of a function:
+
+```js
+function // something
+ a(b, c)  {
+  let a = "f";
+}
+
+function a(b, c) // something 
+{
+    let a = "f";
+}
+```
+
+This how Rome and Prettier format this code:
+```js
+// Rome
+function a(b, c) {
+	// something
+	let a = "f";
+}
+
+function a(b, c) {
+    // something
+    let a = "f";
+}
+
+
+// Prettier/dprint
+function // something
+a(b, c) {
+    let a = "f";
+}
+function a(b, c) {
+    // something
+    let a = "f";
+}
+```
+
+Please check our [playground] and its result
+
+
+
+- [playground]: https://play.rome.tools/?lineWidth=80&indentStyle=tab&indentWidth=2&typescript=true&jsx=false#ZnVuY3Rpb24gLy8gc29tZXRoaW5nCiBhKGIsIGMpICB7CiAgbGV0IGEgPSAiZiI7Cn0KCmZ1bmN0aW9uIGEoYiwgYykgLy8gc29tZXRoaW5nIAp7CiAgICBsZXQgYSA9ICJmIjsKfQ==
+
 
 [command palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette
