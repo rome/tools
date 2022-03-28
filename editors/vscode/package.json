@@ -3,11 +3,12 @@
 	"publisher": "rome",
 	"displayName": "Rome",
 	"description": "Rome LSP VS Code Extension",
-	"version": "0.0.4",
+	"version": "0.6.0",
 	"icon": "icon.png",
 	"activationEvents": [
 		"onLanguage:javascript",
-		"onLanguage:typescript"
+		"onLanguage:typescript",
+		"onCommand:rome.syntaxTree"
 	],
 	"main": "./out/main.js",
 	"repository": {
@@ -21,6 +22,15 @@
 		"vscode": "^1.63.0"
 	},
 	"contributes": {
+		"commands": [
+			{
+				"command": "rome.syntaxTree",
+				"title": "Show Syntax Tree",
+				"category": "Rome"
+			}
+		],
+
+
 		"configuration": {
 			"title": "Rome",
 			"type": "object",
@@ -81,6 +91,7 @@
 			}
 		}
 	},
+
 	"categories": [
 		"Formatters"
 	],

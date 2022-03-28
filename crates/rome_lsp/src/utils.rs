@@ -6,7 +6,7 @@ use lspower::jsonrpc::Error as LspError;
 use lspower::jsonrpc::Result as LspResult;
 use lspower::lsp::{self, CodeAction, CodeActionKind, Diagnostic, TextEdit, Url, WorkspaceEdit};
 use rome_analyze::{DiagnosticExt, Indel, TextAction};
-use tracing::trace;
+use tracing::{error, trace};
 
 use rome_js_syntax::{TextRange, TextSize};
 
@@ -96,6 +96,7 @@ pub(crate) fn diagnostic_to_lsp(
 /// Helper to create a [lspower::jsonrpc::Error] from a message
 pub(crate) fn into_lsp_error(msg: impl Display) -> LspError {
     let mut error = LspError::internal_error();
+    error!("Error: {}", msg);
     error.data = Some(msg.to_string().into());
     error
 }

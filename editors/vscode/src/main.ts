@@ -1,8 +1,13 @@
-import { ExtensionContext, workspace, Uri, window } from 'vscode';
-
+import { ExtensionContext, Uri, window, workspace } from 'vscode';
 import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient/node';
+import { setContextValue } from "./utils";
+import { Session } from "./session";
+import { syntaxTree } from "./commands/syntaxTree";
+import { Commands } from "./commands";
 
 let client: LanguageClient;
+
+const IN_ROME_PROJECT = "inRomeProject";
 
 export async function activate(context: ExtensionContext) {
 	const command = await getServerPath(context);
@@ -28,6 +33,13 @@ export async function activate(context: ExtensionContext) {
 	};
 
 	client = new LanguageClient("rome_lsp", "Rome", serverOptions, clientOptions);
+
+	const session = new Session(context, client);
+
+	// we are now in a rome project
+	setContextValue(IN_ROME_PROJECT, true);
+
+	session.registerCommand(Commands.SyntaxTree, syntaxTree(session));
 
 	client.start();
 }
