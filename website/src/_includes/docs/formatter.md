@@ -203,9 +203,25 @@ function a(b, c) {
 
 Please check our [playground] and its result
 
+#### Migrate from other formatters
+
+Rome doesn't support a lot of options like other web formatters, which means that particular styles 
+won't be available to all developers.
+
+To migrate from suppression comments of the old formatter, it's recommended to run a global search and replace against the code
+base and replace the formatting comment with:
+
+```block
+// rome-ignore format: migration from <name_of_former_formatter>
+```
+
+Then, you are free to change the reason of the suppression that you want.
+
+Run Rome formatter and make sure that **the code that was ignored is still the same**.
 
 
-- [playground]: https://play.rome.tools/?lineWidth=80&indentStyle=tab&indentWidth=2&typescript=true&jsx=false#ZnVuY3Rpb24gLy8gc29tZXRoaW5nCiBhKGIsIGMpICB7CiAgbGV0IGEgPSAiZiI7Cn0KCmZ1bmN0aW9uIGEoYiwgYykgLy8gc29tZXRoaW5nIAp7CiAgICBsZXQgYSA9ICJmIjsKfQ==
+
+[playground]: https://play.rome.tools/?lineWidth=80&indentStyle=tab&indentWidth=2&typescript=true&jsx=false#ZnVuY3Rpb24gLy8gc29tZXRoaW5nCiBhKGIsIGMpICB7CiAgbGV0IGEgPSAiZiI7Cn0KCmZ1bmN0aW9uIGEoYiwgYykgLy8gc29tZXRoaW5nIAp7CiAgICBsZXQgYSA9ICJmIjsKfQ==
 
 
 [command palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette
