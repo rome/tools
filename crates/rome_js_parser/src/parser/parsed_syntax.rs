@@ -178,7 +178,7 @@ impl ParsedSyntax {
         match self {
             Present(syntax) => {
                 let range = syntax.range(p);
-                let range = TextRange::new(range.start().into(), range.end().into());
+                let range = TextRange::new(range.start(), range.end());
                 let diagnostic = error_builder(p, range);
                 p.error(diagnostic);
                 Some(syntax)
