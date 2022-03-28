@@ -21,7 +21,7 @@ switch (foo) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useSingleCaseStatement</span><span style="color: Orange;">]</span><em>: </em><em>A switch case should only have a single statement. If you want more, then wrap it in a block.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useSingleCaseStatement/">js/useSingleCaseStatement</a></span><span style="color: Orange;">]</span><em>: </em><em>A switch case should only have a single statement. If you want more, then wrap it in a block.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useSingleCaseStatement.js:4:9
   <span style="color: rgb(38, 148, 255);">│</span>  
 <span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: rgb(38, 148, 255);">┌</span>         let foo = '';

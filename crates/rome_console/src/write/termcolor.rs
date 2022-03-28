@@ -6,7 +6,7 @@ use std::{
 use termcolor::{ColorSpec, WriteColor};
 use unicode_width::UnicodeWidthChar;
 
-use crate::fmt::MarkupElements;
+use crate::{fmt::MarkupElements, MarkupElement};
 
 use super::Write;
 
@@ -63,6 +63,8 @@ where
     }
 }
 
+const ESC: char = '\x1b';
+
 /// Applies the current format in `state` to `writer`, calls `func` to
 /// print a piece of text, then reset the printing format
 fn with_format<W>(
@@ -74,18 +76,44 @@ where
     W: WriteColor,
 {
     let mut color = ColorSpec::new();
+    let mut link = None;
+
     state.for_each(&mut |elements| {
         for element in elements {
-            element.update_color(&mut color);
+            if let MarkupElement::Hyperlink { href } = element {
+                link = Some(href);
+            } else {
+                element.update_color(&mut color);
+            }
         }
-    });
+
+        Ok(())
+    })?;
 
     if let Err(err) = writer.set_color(&color) {
         writer.reset()?;
         return Err(err);
     }
 
+    let mut reset_link = false;
+    if let Some(href) = link {
+        // `is_synchronous` is used to check if the underlying writer
+        // is using the Windows Console API, that does not support ANSI
+        // escape codes. Generally this would only be true when running
+        // in the legacy `cmd.exe` terminal emulator, since int modern
+        // clients like the Windows Terminal ANSI is used instead
+        if writer.supports_color() && !writer.is_synchronous() {
+            write!(writer, "{ESC}]8;;{href}{ESC}\\")?;
+            reset_link = true;
+        }
+    }
+
     let result = func(writer);
+
+    if reset_link {
+        write!(writer, "{ESC}]8;;{ESC}\\")?;
+    }
+
     writer.reset()?;
     result
 }
@@ -127,7 +155,13 @@ impl<W: io::Write> fmt::Write for SanitizeAdapter<W> {
 mod tests {
     use std::{fmt::Write, str::from_utf8};
 
-    use super::SanitizeAdapter;
+    use rome_markup::markup;
+    use termcolor::Ansi;
+
+    use crate as rome_console;
+    use crate::fmt::Formatter;
+
+    use super::{SanitizeAdapter, Termcolor};
 
     #[test]
     fn test_sanitize() {
@@ -149,6 +183,23 @@ mod tests {
             adapter.write_str(INPUT).unwrap();
             adapter.error.unwrap();
         }
+
+        assert_eq!(from_utf8(&buffer).unwrap(), OUTPUT);
+    }
+
+    #[test]
+    fn test_hyperlink() {
+        const OUTPUT: &str = "\x1b[0m\x1b]8;;https://rome.tools/\x1b\\link\x1b]8;;\x1b\\\x1b[0m";
+
+        let mut buffer = Vec::new();
+        let mut writer = Termcolor(Ansi::new(&mut buffer));
+        let mut formatter = Formatter::new(&mut writer);
+
+        formatter
+            .write_markup(markup! {
+                <Hyperlink href="https://rome.tools/">"link"</Hyperlink>
+            })
+            .unwrap();
 
         assert_eq!(from_utf8(&buffer).unwrap(), OUTPUT);
     }

@@ -6,16 +6,34 @@ use crate::{markup, Markup, MarkupElement};
 /// A stack-allocated linked-list of [MarkupElement] slices
 pub enum MarkupElements<'a> {
     Root,
-    Node(&'a Self, &'a [MarkupElement]),
+    Node(&'a Self, &'a [MarkupElement<'a>]),
 }
 
 impl<'a> MarkupElements<'a> {
     /// Iterates on all the element slices depth-first
-    pub fn for_each(&self, func: &mut impl FnMut(&'a [MarkupElement])) {
+    pub fn for_each(
+        &self,
+        func: &mut impl FnMut(&'a [MarkupElement]) -> io::Result<()>,
+    ) -> io::Result<()> {
         if let Self::Node(parent, elem) = self {
-            parent.for_each(func);
-            func(elem);
+            parent.for_each(func)?;
+            func(elem)?;
         }
+
+        Ok(())
+    }
+
+    /// Iterates on all the element slices breadth-first
+    pub fn for_each_rev(
+        &self,
+        func: &mut impl FnMut(&'a [MarkupElement]) -> io::Result<()>,
+    ) -> io::Result<()> {
+        if let Self::Node(parent, elem) = self {
+            func(elem)?;
+            parent.for_each(func)?;
+        }
+
+        Ok(())
     }
 }
 

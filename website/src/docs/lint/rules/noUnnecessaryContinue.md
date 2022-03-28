@@ -17,7 +17,7 @@ loop: for (let i = 0; i < 5; i++) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noUnnecessaryContinue</span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnnecessaryContinue/">js/noUnnecessaryContinue</a></span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noUnnecessaryContinue.js:2:3
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>   continue loop;
@@ -37,7 +37,7 @@ while (i--) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noUnnecessaryContinue</span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnnecessaryContinue/">js/noUnnecessaryContinue</a></span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noUnnecessaryContinue.js:2:3
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>   continue;
@@ -57,7 +57,7 @@ while (1) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noUnnecessaryContinue</span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnnecessaryContinue/">js/noUnnecessaryContinue</a></span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noUnnecessaryContinue.js:2:3
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>   continue;
@@ -84,7 +84,7 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noUnnecessaryContinue</span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnnecessaryContinue/">js/noUnnecessaryContinue</a></span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noUnnecessaryContinue.js:4:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span>     continue;
@@ -108,7 +108,7 @@ for (let i = 0; i < 9; i++) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noUnnecessaryContinue</span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnnecessaryContinue/">js/noUnnecessaryContinue</a></span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noUnnecessaryContinue.js:2:3
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>   continue;
@@ -128,7 +128,7 @@ test2: do {
 } while (true);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/noUnnecessaryContinue</span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnnecessaryContinue/">js/noUnnecessaryContinue</a></span><span style="color: Orange;">]</span><em>: </em><em>Unnecessary continue statement</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noUnnecessaryContinue.js:2:2
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>     continue test2;

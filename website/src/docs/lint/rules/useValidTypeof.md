@@ -17,7 +17,7 @@ names or other `typeof` expressions
 typeof foo === "strnig"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:16
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo === &quot;strnig&quot;
@@ -29,7 +29,7 @@ typeof foo === "strnig"
 typeof foo == "undefimed"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo == &quot;undefimed&quot;
@@ -41,7 +41,7 @@ typeof foo == "undefimed"
 typeof bar != "nunber"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof bar != &quot;nunber&quot;
@@ -53,7 +53,7 @@ typeof bar != "nunber"
 typeof bar !== "fucntion"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:16
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof bar !== &quot;fucntion&quot;
@@ -65,7 +65,7 @@ typeof bar !== "fucntion"
 typeof foo === undefined
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:16
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo === undefined
@@ -82,7 +82,7 @@ typeof foo === undefined
 typeof bar == Object
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof bar == Object
@@ -99,7 +99,7 @@ typeof bar == Object
 typeof foo === baz
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:16
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo === baz
@@ -111,7 +111,7 @@ typeof foo === baz
 typeof foo == 5
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo == 5
@@ -123,7 +123,7 @@ typeof foo == 5
 typeof foo == -5
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">js/useValidTypeof</span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/useValidTypeof/">js/useValidTypeof</a></span><span style="color: Orange;">]</span><em>: </em><em>Invalid `typeof` comparison value</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/useValidTypeof.js:1:15
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> typeof foo == -5

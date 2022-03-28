@@ -1,5 +1,0 @@
-error: unexpected token
- --> tests/markup/open_element_props.rs:3:19
-  |
-3 |         <Emphasis property />
-  |                   ^^^^^^^^

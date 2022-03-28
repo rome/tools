@@ -383,8 +383,8 @@ fn assert_lint(
             );
         } else {
             bail!(format!(
-                "analysis returned an unexpected diagnostic, code snippet:\n\n{}",
-                diag.code.unwrap_or_else(|| "".to_string())
+                "analysis returned an unexpected diagnostic, code snippet:\n\n{:?}",
+                diag.code.unwrap_or_default()
             ));
         }
 

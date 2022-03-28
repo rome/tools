@@ -151,7 +151,11 @@ pub(crate) fn diagnostic_to_lsp(
             Severity::Warning => lsp::DiagnosticSeverity::WARNING,
             Severity::Error | Severity::Bug => lsp::DiagnosticSeverity::ERROR,
         }),
-        diagnostic.code.map(lsp::NumberOrString::String),
+        diagnostic
+            .code
+            .as_ref()
+            .map(print_markup)
+            .map(lsp::NumberOrString::String),
         Some("rome".into()),
         diagnostic
             .summary

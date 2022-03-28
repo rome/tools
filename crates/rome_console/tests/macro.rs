@@ -24,6 +24,13 @@ fn test_macro() {
 }
 
 #[test]
+fn test_macro_attributes() {
+    rome_markup::markup! {
+        <Hyperlink href="https://rome.tools/">"link"</Hyperlink>
+    };
+}
+
+#[test]
 fn test_macro_errors() {
     let t = trybuild::TestCases::new();
     t.compile_fail("tests/markup/*.rs");

@@ -14,7 +14,7 @@ pub struct Diagnostic {
     pub file_id: FileId,
 
     pub severity: Severity,
-    pub code: Option<String>,
+    pub code: Option<MarkupBuf>,
     pub title: MarkupBuf,
     pub summary: Option<String>,
     pub tag: Option<DiagnosticTag>,
@@ -27,23 +27,43 @@ pub struct Diagnostic {
 
 impl Diagnostic {
     /// Creates a new [`Diagnostic`] with the `Error` severity.
-    pub fn error(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Error, title, Some(code.into()))
+    pub fn error(file_id: FileId, code: impl Display, title: impl Display) -> Self {
+        Self::new_with_code(
+            file_id,
+            Severity::Error,
+            title,
+            Some(markup!({ code }).to_owned()),
+        )
     }
 
     /// Creates a new [`Diagnostic`] with the `Warning` severity.
-    pub fn warning(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Warning, title, Some(code.into()))
+    pub fn warning(file_id: FileId, code: impl Display, title: impl Display) -> Self {
+        Self::new_with_code(
+            file_id,
+            Severity::Warning,
+            title,
+            Some(markup!({ code }).to_owned()),
+        )
     }
 
     /// Creates a new [`Diagnostic`] with the `Help` severity.
-    pub fn help(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Help, title, Some(code.into()))
+    pub fn help(file_id: FileId, code: impl Display, title: impl Display) -> Self {
+        Self::new_with_code(
+            file_id,
+            Severity::Help,
+            title,
+            Some(markup!({ code }).to_owned()),
+        )
     }
 
     /// Creates a new [`Diagnostic`] with the `Note` severity.
-    pub fn note(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Note, title, Some(code.into()))
+    pub fn note(file_id: FileId, code: impl Display, title: impl Display) -> Self {
+        Self::new_with_code(
+            file_id,
+            Severity::Note,
+            title,
+            Some(markup!({ code }).to_owned()),
+        )
     }
 
     /// Creates a new [`Diagnostic`] that will be used in a builder-like way
@@ -58,7 +78,7 @@ impl Diagnostic {
         file_id: FileId,
         severity: Severity,
         title: impl Display,
-        code: Option<String>,
+        code: Option<MarkupBuf>,
     ) -> Self {
         Self {
             file_id,

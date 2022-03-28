@@ -15,7 +15,7 @@ Prevent comments from being inserted as text nodes
 const a3 = <div>// comment</div>;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">jsx/noCommentText</span><span style="color: Orange;">]</span><em>: </em><em>Wrap </em><em><em>comments</em></em><em> inside children within </em><em><em>braces</em></em><em>.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noCommentText/">jsx/noCommentText</a></span><span style="color: Orange;">]</span><em>: </em><em>Wrap </em><em><em>comments</em></em><em> inside children within </em><em><em>braces</em></em><em>.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> jsx/noCommentText.js:1:17
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const a3 = &lt;div&gt;// comment&lt;/div&gt;;
@@ -32,7 +32,7 @@ const a3 = <div>// comment</div>;
 const a4 = <div>/* comment */</div>;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">jsx/noCommentText</span><span style="color: Orange;">]</span><em>: </em><em>Wrap </em><em><em>comments</em></em><em> inside children within </em><em><em>braces</em></em><em>.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noCommentText/">jsx/noCommentText</a></span><span style="color: Orange;">]</span><em>: </em><em>Wrap </em><em><em>comments</em></em><em> inside children within </em><em><em>braces</em></em><em>.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> jsx/noCommentText.js:1:17
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const a4 = &lt;div&gt;/* comment */&lt;/div&gt;;
@@ -49,7 +49,7 @@ const a4 = <div>/* comment */</div>;
 const a5 = <div>/** comment */</div>;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;">jsx/noCommentText</span><span style="color: Orange;">]</span><em>: </em><em>Wrap </em><em><em>comments</em></em><em> inside children within </em><em><em>braces</em></em><em>.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noCommentText/">jsx/noCommentText</a></span><span style="color: Orange;">]</span><em>: </em><em>Wrap </em><em><em>comments</em></em><em> inside children within </em><em><em>braces</em></em><em>.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> jsx/noCommentText.js:1:17
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const a5 = &lt;div&gt;/** comment */&lt;/div&gt;;

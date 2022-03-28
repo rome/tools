@@ -1,0 +1,5 @@
+error: unexpected token
+ --> tests/markup/open_element_missing_prop_value.rs:3:28
+  |
+3 |         <Emphasis property />
+  |                            ^
