@@ -42,6 +42,10 @@ use super::typescript::parse_ts_type_arguments;
 //     let d = <div>a</div>/; // ambigous: JSX or "type assertion a less than regex /div>/". Probably JSX.
 //     let d = <string>a</string>/;
 // }
+
+// test jsx jsx_equal_content
+// <span></span>;
+// <span>=</span>;
 pub(crate) fn parse_jsx_tag_expression(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![<]) {
         return Absent;
@@ -491,7 +495,7 @@ impl ParseNodeList for JsxAttributeList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JsSyntaxKind::JS_UNKNOWN_MEMBER,
+                JsSyntaxKind::JS_UNKNOWN,
                 token_set![T![/], T![>], T![<], T!['{'], T!['}'], T![...], T![ident]],
             ),
             jsx_expected_attribute,

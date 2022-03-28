@@ -130,7 +130,12 @@ impl LexContext {
 pub enum ReLexContext {
     /// Re-lexes a `/` or `/=` token as a regular expression.
     Regex,
-    /// Re-lexes `'>', '>'` as `>>` and `'>', '>', '>'` as `>>>`
+    /// Re-lexes
+    /// * `> >` as `>>`
+    /// * `> > >` as `>>>`,
+    /// * `> =` as '>='
+    /// * `> > =` as '>>='
+    /// * `> > > =` as `>>>=`
     BinaryOperator,
     /// Re-lexes `'<', '<'` as `<<` in places where a type argument is expected to support
     /// `B<<A>()>`
@@ -1686,32 +1691,6 @@ impl<'src> Lexer<'src> {
     }
 
     #[inline]
-    fn resolve_greater_than(&mut self) -> JsSyntaxKind {
-        match self.next_byte() {
-            Some(b'>') => {
-                if let Some(b'>') = self.peek_byte() {
-                    if let Some(b'=') = self.byte_at(2) {
-                        self.advance(3);
-                        USHREQ
-                    } else {
-                        T![>]
-                    }
-                } else if self.peek_byte() == Some(b'=') {
-                    self.advance(2);
-                    SHREQ
-                } else {
-                    T![>]
-                }
-            }
-            Some(b'=') => {
-                self.next_byte();
-                GTEQ
-            }
-            _ => T![>],
-        }
-    }
-
-    #[inline]
     fn resolve_eq(&mut self) -> JsSyntaxKind {
         match self.next_byte() {
             Some(b'=') => {
@@ -1889,7 +1868,8 @@ impl<'src> Lexer<'src> {
             SEM => self.eat_byte(T![;]),
             LSS => self.resolve_less_than(),
             EQL => self.resolve_eq(),
-            MOR => self.resolve_greater_than(),
+            // `>>`, `>=` etc handled by `ReLex::BinaryOperator`
+            MOR => self.eat_byte(T![>]),
             QST => self.resolve_question(),
             BTO => self.eat_byte(T!('[')),
             BTC => self.eat_byte(T![']']),
