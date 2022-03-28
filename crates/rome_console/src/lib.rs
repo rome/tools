@@ -1,7 +1,7 @@
 use std::panic::RefUnwindSafe;
 
 use rome_diagnostics::{file::Files, Diagnostic, Emitter};
-use termcolor::{ColorChoice, NoColor, StandardStream, StandardStreamLock, WriteColor};
+use termcolor::{ColorChoice, NoColor, StandardStream, WriteColor};
 
 mod markup;
 
@@ -43,24 +43,14 @@ where
 }
 
 /// Type alias of [WriteConsole] printing to the standard output
-pub type EnvConsole = WriteConsole<StandardStreamLock<'static>, StandardStreamLock<'static>>;
+pub type EnvConsole = WriteConsole<StandardStream, StandardStream>;
 
 impl EnvConsole {
     /// Creates an instance of WriteConsole writing to the standard output
-    ///
-    /// This locks the stdout and stderr for the lifetime of the console instance,
-    /// so any attemps to write to the standard output (using println or panic)
-    /// may hang indefinitely if it happens from a different thread (the thread
-    /// owning the WriteConsole could be fine if the lock is reentrant)
     pub fn from_env() -> Self {
-        lazy_static::lazy_static! {
-            static ref STDOUT: StandardStream = StandardStream::stdout(ColorChoice::Always);
-            static ref STDERR: StandardStream = StandardStream::stderr(ColorChoice::Always);
-        }
-
         Self {
-            out: STDOUT.lock(),
-            err: STDERR.lock(),
+            out: StandardStream::stdout(ColorChoice::Always),
+            err: StandardStream::stderr(ColorChoice::Always),
         }
     }
 }
