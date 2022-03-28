@@ -62,20 +62,20 @@ There are times when a developer wants to keep a specific formatting.
 
 You can achieve this by adding a suppression comment right before the syntax node (expressions, statements, etc.).
 
-A suppression comment will have to look like this:
+Suppression comments have the following format:
 
 ```js
-// rome-ignore format: it's better this way
+// rome-ignore format: <explanation>
 ```
 
 Where
-- `rome-ignore` is the start of each suppression comment in Rome;
-- `format:` is the category of the suppression;
-- `it's better this way` is the reason why there's a suppression in the first place; 
+- `rome-ignore` is the start of a suppression comment;
+- `format:` suppresses the formatting;
+- `<explanation>` is an explanation why the formatting is disabled;
 
 Here's an example of how a code will look like before and after the formatter does its job:
 
-Before
+Before running the formatter
 
 ```js
 const   expr   =   
@@ -96,7 +96,7 @@ const   expr   =   [
 ];
 ```
 
-After 
+After running the formatter 
 
 ```js
 const expr =
@@ -128,4 +128,4 @@ const expr = [
 ];
 ```
 
-As you can see the way the array is represented is left untouched!  
+As you can see the first array, which has a suppression comment, is left untouched! 
