@@ -5,6 +5,10 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'crates/**'
+      - 'xtask/**'
+      - 'editors/**'
 
 env:
   RUST_LOG: info
