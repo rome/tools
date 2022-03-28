@@ -20,7 +20,7 @@ pub fn syntax_tree(document: Document) -> Result<Option<String>> {
     let file_id = document.file_id();
     let source_type = document.get_source_type();
     let parse_result = parse(text, file_id, source_type);
-    let cst = format!("{:#?}", parse_result.syntax());
+    let cst = format!("{:#?}", parse_result.tree());
 
     Ok(Some(cst))
 }
