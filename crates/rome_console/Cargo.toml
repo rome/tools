@@ -1,0 +1,15 @@
+[package]
+name = "rome_console"
+version = "0.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rome_diagnostics = { path = "../rome_diagnostics" }
+rome_markup = { path = "../rome_markup" }
+lazy_static = "1.4.0"
+termcolor = "1.1.2"
+
+[dev-dependencies]
+trybuild = "1.0"

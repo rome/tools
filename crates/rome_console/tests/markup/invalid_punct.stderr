@@ -1,0 +1,5 @@
+error: unexpected token
+ --> tests/markup/invalid_punct.rs:3:9
+  |
+3 |         !
+  |         ^

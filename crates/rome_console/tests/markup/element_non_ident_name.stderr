@@ -1,0 +1,5 @@
+error: unexpected token
+ --> tests/markup/element_non_ident_name.rs:3:10
+  |
+3 |         <"Literal" />
+  |          ^^^^^^^^^

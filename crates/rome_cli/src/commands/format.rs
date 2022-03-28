@@ -13,8 +13,7 @@ use crossbeam::channel::{unbounded, Sender};
 use rome_core::App;
 use rome_diagnostics::{
     file::{FileId, Files, SimpleFile},
-    termcolor::{ColorChoice, StandardStream},
-    Diagnostic, Emitter,
+    Diagnostic,
 };
 use rome_formatter::{FormatOptions, IndentStyle};
 use rome_fs::{AtomicInterner, PathInterner, RomePath};
@@ -113,11 +112,14 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 
     let duration = start.elapsed();
     let count = formatted.load(Ordering::Relaxed);
-
     if is_check {
-        println!("Checked {count} files in {duration:?}.");
+        session.app.console.message(rome_console::markup! {
+            <Info>"Checked {count} files in {duration:?}"</Info>
+        });
     } else {
-        println!("Formatted {count} files in {duration:?}.");
+        session.app.console.message(rome_console::markup! {
+            <Info>"Formatted {count} files in {duration:?}"</Info>
+        });
     }
 
     let mut has_errors = false;
@@ -168,15 +170,8 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         files.storage.insert(file_id, SimpleFile::new(name, source));
     }
 
-    {
-        // Only lock stderr once for printing all the diagnostics
-        let out = StandardStream::stderr(ColorChoice::Always);
-        let mut out = out.lock();
-
-        let mut emit = Emitter::new(&files);
-        for diag in diagnostics {
-            emit.emit_with_writer(&diag, &mut out).unwrap();
-        }
+    for diag in diagnostics {
+        session.app.console.diagnostic(&files, &diag);
     }
 
     // Formatting emitted error diagnostics, exit with a non-zero code
@@ -216,9 +211,9 @@ impl Files for PathFiles {
 }
 
 /// Context object shared between directory traversal tasks
-struct FormatCommandOptions<'a> {
+struct FormatCommandOptions<'ctx, 'app> {
     /// Shared instance of [App]
-    app: &'a App,
+    app: &'ctx App<'app>,
     /// Options to use for formatting the discovered files
     options: FormatOptions,
     /// Boolean flag storing whether the command is being run in check mode
@@ -228,12 +223,12 @@ struct FormatCommandOptions<'a> {
     /// File paths interner used by the filesystem traversal
     interner: AtomicInterner,
     /// Shared atomic counter storing the number of formatted files
-    formatted: &'a AtomicUsize,
+    formatted: &'ctx AtomicUsize,
     /// Channel sending diagnostics to the display thread
     diagnostics: Sender<Diagnostic>,
 }
 
-impl<'a> FormatCommandOptions<'a> {
+impl<'ctx, 'app> FormatCommandOptions<'ctx, 'app> {
     /// Increment the formatted files counter
     fn add_formatted(&self) {
         self.formatted.fetch_add(1, Ordering::Relaxed);
@@ -245,7 +240,7 @@ impl<'a> FormatCommandOptions<'a> {
     }
 }
 
-impl<'a> TraversalContext for FormatCommandOptions<'a> {
+impl<'ctx, 'app> TraversalContext for FormatCommandOptions<'ctx, 'app> {
     fn interner(&self) -> &dyn PathInterner {
         &self.interner
     }
@@ -303,12 +298,12 @@ fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
     }
 }
 
-struct FormatFileParams<'a> {
-    app: &'a App,
+struct FormatFileParams<'ctx, 'app> {
+    app: &'ctx App<'app>,
     options: FormatOptions,
     is_check: bool,
     ignore_errors: bool,
-    path: &'a Path,
+    path: &'ctx Path,
     file_id: FileId,
 }
 
