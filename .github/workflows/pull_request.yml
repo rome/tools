@@ -31,9 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Rome
-        uses: rome/setup-rome@v0.0.2
+        uses: rome/setup-rome@v0.1
         with:
-          preview: true
+          version: preview
 
       - name: Checkout repository
         uses: actions/checkout@v2
