@@ -1,11 +1,6 @@
 import { commands, TextDocument, TextEditor } from "vscode";
 
-const SUPPORTED_LANGUAGES = new Set([
-	"javascript",
-	"typescript",
-	"javascriptreact",
-	"typescriptreact",
-]);
+const SUPPORTED_LANGUAGES = new Set(["javascript", "typescript"]);
 
 export type RomeDocument =
 	& TextDocument
