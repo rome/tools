@@ -1,9 +1,11 @@
 use crate::file_handlers::unknown::UnknownFileHandler;
 use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
 use file_handlers::json::JsonFileHandler;
+use rome_console::{Console, WriteConsole};
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
+use std::ops::{Deref, DerefMut};
 
 pub mod file_handlers;
 
@@ -14,10 +16,11 @@ struct Features {
     unknown: UnknownFileHandler,
 }
 
-pub struct App {
-    pub fs: Box<dyn FileSystem>,
+pub struct App<'app> {
+    pub fs: DynRef<'app, dyn FileSystem>,
     /// features available throughout the application
     features: Features,
+    pub console: DynRef<'app, dyn Console>,
 }
 
 /// Generic errors thrown during rome operations
@@ -53,16 +56,25 @@ impl Display for RomeError {
 
 impl Error for RomeError {}
 
-impl App {
+impl App<'static> {
     /// Create a new instance of the app using the [OsFileSystem]
     pub fn from_env() -> Self {
-        Self::with_filesystem(OsFileSystem)
+        Self::with_filesystem_and_console(
+            DynRef::Owned(Box::new(OsFileSystem)),
+            DynRef::Owned(Box::new(WriteConsole::from_env())),
+        )
     }
+}
 
-    /// Create a new instance of the app using the specified [FileSystem] implementation
-    pub fn with_filesystem(fs: impl FileSystem + 'static) -> Self {
+impl<'app> App<'app> {
+    /// Create a new instance of the app using the specified [FileSystem] and [Console] implementation
+    pub fn with_filesystem_and_console(
+        fs: DynRef<'app, dyn FileSystem>,
+        console: DynRef<'app, dyn Console>,
+    ) -> Self {
         Self {
-            fs: Box::new(fs),
+            fs,
+            console,
             features: Features {
                 js: JsFileHandler {},
                 json: JsonFileHandler {},
@@ -120,5 +132,33 @@ impl App {
                 Language::Unknown => self.features.unknown.capabilities().lint,
             }
         })
+    }
+}
+
+/// Clone of [std::borrow::Cow] specialized for storing a trait object and
+/// holding a mutable reference in the `Borrowed` variant instead of requiring
+/// the inner type to implement [std::borrow::ToOwned]
+pub enum DynRef<'app, T: ?Sized + 'app> {
+    Owned(Box<T>),
+    Borrowed(&'app mut T),
+}
+
+impl<'app, T: ?Sized + 'app> Deref for DynRef<'app, T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        match self {
+            DynRef::Owned(inner) => inner,
+            DynRef::Borrowed(inner) => inner,
+        }
+    }
+}
+
+impl<'app, T: ?Sized + 'app> DerefMut for DynRef<'app, T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        match self {
+            DynRef::Owned(inner) => inner,
+            DynRef::Borrowed(inner) => inner,
+        }
     }
 }

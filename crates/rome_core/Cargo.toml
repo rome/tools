@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 rome_fs = { version = "0.0.0", path = "../rome_fs" }
+rome_console = { version = "0.0.0", path = "../rome_console" }

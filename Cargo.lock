@@ -619,6 +619,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "glob"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
+
+[[package]]
 name = "globset"
 version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1352,6 +1358,7 @@ dependencies = [
  "lazy_static",
  "parking_lot 0.12.0",
  "pico-args",
+ "rome_console",
  "rome_core",
  "rome_diagnostics",
  "rome_formatter",
@@ -1363,9 +1370,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_console"
+version = "0.0.0"
+dependencies = [
+ "lazy_static",
+ "rome_diagnostics",
+ "rome_markup",
+ "termcolor",
+ "trybuild",
+]
+
+[[package]]
 name = "rome_core"
 version = "0.0.0"
 dependencies = [
+ "rome_console",
  "rome_fs",
 ]
 
@@ -1465,6 +1484,15 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "tracing-tree",
+]
+
+[[package]]
+name = "rome_markup"
+version = "0.0.0"
+dependencies = [
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
 ]
 
 [[package]]
@@ -1868,6 +1896,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "toml"
+version = "0.5.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a31142970826733df8241ef35dc040ef98c679ab14d7c3e54d827099b3acecaa"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "tower-service"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1942,6 +1979,20 @@ dependencies = [
  "tracing-core",
  "tracing-log",
  "tracing-subscriber",
+]
+
+[[package]]
+name = "trybuild"
+version = "1.0.56"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2d60539445867cdd9680b2bfe2d0428f1814b7d5c9652f09d8d3eae9d19308db"
+dependencies = [
+ "glob",
+ "once_cell",
+ "serde",
+ "serde_json",
+ "termcolor",
+ "toml",
 ]
 
 [[package]]
