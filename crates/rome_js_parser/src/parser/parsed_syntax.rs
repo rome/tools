@@ -5,7 +5,6 @@ use crate::{CompletedMarker, Marker, Parser};
 use rome_diagnostics::Diagnostic;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::TextRange;
-use std::ops::Range;
 
 /// Syntax that is either present in the source tree or absent.
 ///
@@ -173,13 +172,14 @@ impl ParsedSyntax {
         error_builder: E,
     ) -> Option<CompletedMarker>
     where
-        E: FnOnce(&Parser, Range<usize>) -> D,
+        E: FnOnce(&Parser, TextRange) -> D,
         D: ToDiagnostic,
     {
         match self {
             Present(syntax) => {
                 let range = syntax.range(p);
-                let diagnostic = error_builder(p, range.start().into()..range.end().into());
+                let range = TextRange::new(range.start().into(), range.end().into());
+                let diagnostic = error_builder(p, range);
                 p.error(diagnostic);
                 Some(syntax)
             }
