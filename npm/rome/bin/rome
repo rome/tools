@@ -19,12 +19,16 @@ const PLATFORMS = {
 const binPath = PLATFORMS?.[platform]?.[arch];
 if (binPath) {
 	const result = require("node:child_process").spawnSync(
-		binPath,
+		require.resolve(binPath),
 		process.argv.slice(2),
 		{ shell: false, stdio: "inherit" },
 	);
 
-	process.exit(result.status);
+	if (result.error) {
+		throw result.error;
+	}
+
+	process.exitCode = result.status;
 } else {
 	console.error(
 		"The Rome CLI package doesn't ship with prebuilt binaries for your platform yet. " +
