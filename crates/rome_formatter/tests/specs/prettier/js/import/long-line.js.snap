@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: long-line.js
-
 ---
 # Input
 ```js
@@ -12,7 +10,7 @@ import someCoolUtilWithARatherLongName from '../../../../utils/someCoolUtilWithA
 
 # Output
 ```js
-import someCoolUtilWithARatherLongName from '../../../../utils/someCoolUtilWithARatherLongName';
+import someCoolUtilWithARatherLongName from "../../../../utils/someCoolUtilWithARatherLongName";
 
 ```
 

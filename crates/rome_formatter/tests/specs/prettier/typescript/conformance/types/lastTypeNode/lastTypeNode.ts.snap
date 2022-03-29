@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: lastTypeNode.ts
-
 ---
 # Input
 ```js
@@ -12,7 +10,7 @@ function x3(callback: (x?: 'hi') => number) {};
 
 # Output
 ```js
-function x3(callback: (x?: 'hi') => number) {}
+function x3(callback: (x?: "hi") => number) {}
 
 ```
 

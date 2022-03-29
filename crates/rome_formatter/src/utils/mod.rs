@@ -18,6 +18,7 @@ use rome_js_syntax::{
     JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
     TsTemplateElementFields, TsType,
 };
+use std::borrow::Cow;
 
 use crate::format_element::normalize_newlines;
 pub(crate) use simple::*;
@@ -31,11 +32,11 @@ pub(crate) use simple::*;
 pub(crate) fn format_type_member_separator(
     separator_token: Option<SyntaxToken>,
     formatter: &Formatter,
-) -> FormatResult<FormatElement> {
+) -> FormatElement {
     if let Some(separator) = separator_token {
         formatter.format_replaced(&separator, empty_element())
     } else {
-        Ok(empty_element())
+        empty_element()
     }
 }
 
@@ -390,13 +391,13 @@ pub(crate) fn format_template_chunk(
 ) -> FormatResult<FormatElement> {
     // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
     // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
-    formatter.format_replaced(
+    Ok(formatter.format_replaced(
         &chunk,
         FormatElement::from(Token::new_dynamic(
             normalize_newlines(chunk.text_trimmed(), ['\r']).into_owned(),
             chunk.text_trimmed_range(),
         )),
-    )
+    ))
 }
 
 /// Function to format template literals and template literal types
@@ -604,4 +605,28 @@ pub(crate) fn format_with_semicolon(
             }
         )?
     ])
+}
+
+pub(crate) fn format_string_literal_token(
+    token: SyntaxToken,
+    formatter: &Formatter,
+) -> FormatElement {
+    let quoted = token.text_trimmed();
+
+    // replace single quotes with double quotes if the string does not contain any
+    let content = if quoted.starts_with('\'') && !quoted.contains('"') {
+        let s = &quoted[1..quoted.len() - 1];
+        let s = format!("\"{}\"", s);
+        match normalize_newlines(&s, ['\r']) {
+            Cow::Borrowed(_) => s,
+            Cow::Owned(s) => s,
+        }
+    } else {
+        normalize_newlines(quoted, ['\r']).into_owned()
+    };
+
+    formatter.format_replaced(
+        &token,
+        Token::new_dynamic(content, token.text_trimmed_range()).into(),
+    )
 }

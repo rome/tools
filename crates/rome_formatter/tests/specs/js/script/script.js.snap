@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: script.js
-
 ---
 # Input
 #!/usr/bin/env node

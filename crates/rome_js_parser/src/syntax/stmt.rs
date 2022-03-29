@@ -7,8 +7,8 @@ use super::class::is_at_ts_abstract_class_declaration;
 use super::expr::parse_expression;
 use super::module::parse_export;
 use super::typescript::*;
+use crate::parser::RecoveryResult;
 use crate::parser::{expected_token, ParseNodeList, ParsedSyntax, ParserProgress};
-use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
     BreakableKind, ChangeParserState, EnableStrictMode, EnableStrictModeSnapshot, EnterBreakable,
     LabelledItem, StrictMode as StrictModeState, WithLabel,
@@ -683,13 +683,13 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
     let m = p.start();
     p.bump(T!['{']);
 
-    let strict_snapshot = if block_kind == JS_FUNCTION_BODY {
-        directives(p)
+    let (statement_list, strict_snapshot) = if block_kind == JS_FUNCTION_BODY {
+        parse_directives(p)
     } else {
-        None
+        (p.start(), None)
     };
 
-    parse_statements(p, true);
+    parse_statements(p, true, statement_list);
 
     p.expect(T!['}']);
 
@@ -698,81 +698,6 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
     }
 
     Present(m.complete(p, block_kind))
-}
-
-#[derive(Default)]
-struct DirectivesList {
-    strict_snapshot: Option<EnableStrictModeSnapshot>,
-}
-
-impl DirectivesList {
-    fn is_at_directives(&self, p: &mut Parser) -> bool {
-        if !p.at(JS_STRING_LITERAL) {
-            false
-        } else {
-            let next = p.nth(1);
-
-            matches!(next, T![;] | EOF | T!['}']) || p.has_nth_preceding_line_break(1)
-        }
-    }
-}
-
-impl ParseNodeList for DirectivesList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        let directive_range = p.cur_range();
-
-        let directive = p.start();
-        // bump string token
-        p.bump_any();
-
-        // eat semicolon if present, correct termination guaranteed by is_directive
-        p.eat(JsSyntaxKind::SEMICOLON);
-
-        let completed_marker = directive.complete(p, JS_DIRECTIVE);
-
-        let directive_text = p.source(directive_range);
-
-        if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
-            if let Some(strict) = p.state.strict() {
-                let mut err = p.warning_builder("Redundant strict mode declaration");
-
-                match strict {
-                    StrictModeState::Explicit(prev_range) => {
-                        err = err.secondary(prev_range, "strict mode is previous declared here");
-                    }
-                    StrictModeState::Module => {
-                        err = err.footer_note("modules are always strict mode");
-                    }
-                    StrictModeState::Class(prev_range) => {
-                        err = err.secondary(prev_range, "class bodies are always strict mode");
-                    }
-                }
-
-                err = err.primary(directive_range, "this declaration is redundant");
-                p.error(err);
-            } else if self.strict_snapshot.is_none() {
-                self.strict_snapshot = Some(
-                    EnableStrictMode(StrictModeState::Explicit(directive_range))
-                        .apply(&mut p.state),
-                );
-            }
-        }
-
-        Present(completed_marker)
-    }
-
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
-        !self.is_at_directives(p)
-    }
-
-    fn recover(&mut self, _p: &mut Parser, _parsed_element: ParsedSyntax) -> RecoveryResult {
-        // directives don't need proper error recovery
-        Err(RecoveryError::AlreadyRecovered)
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_DIRECTIVE_LIST
-    }
 }
 
 // test directives
@@ -787,6 +712,8 @@ impl ParseNodeList for DirectivesList {
 // }
 // (function () {
 //   "use strict";
+//   "use strict"
+//     .length; // not a directive
 //   let c = 10;
 //   "use strict"; // not a directive
 // });
@@ -812,17 +739,79 @@ impl ParseNodeList for DirectivesList {
 //     }
 //   }
 // }
-#[must_use]
-pub(crate) fn directives(p: &mut Parser) -> Option<EnableStrictModeSnapshot> {
-    let mut list = DirectivesList::default();
-    list.parse_list(p);
-    list.strict_snapshot
+/// Parses the directives and returns
+/// * The marker for the following statement list. May already contain a parsed out expression statement
+/// * A checkpoint containing the previous strict mode
+pub(crate) fn parse_directives(p: &mut Parser) -> (Marker, Option<EnableStrictModeSnapshot>) {
+    let list = p.start();
+    let mut directives_list = list.complete(p, JS_DIRECTIVE_LIST);
+    let mut strict_mode_snapshot: Option<EnableStrictModeSnapshot> = None;
+    let mut progress = ParserProgress::default();
+
+    let statement_list = loop {
+        progress.assert_progressing(p);
+        // Certainly not a directive, start statement list
+        if !p.at(JS_STRING_LITERAL) {
+            break p.start();
+        }
+
+        let expression = parse_expression(p, ExpressionContext::default())
+            .expect("A string token always yields a valid expression");
+
+        // Something like "use strict".length isn't a valid directive
+        if expression.kind() != JS_STRING_LITERAL_EXPRESSION {
+            // Turned out not to be a directive.
+            // Start statement list before the just parsed expression statement
+            let statement = expression.precede(p).complete(p, JS_EXPRESSION_STATEMENT);
+            break statement.precede(p);
+        }
+
+        let directive_range = expression.range(p);
+        let directive = expression.undo_completion(p);
+        semi(p, directive_range);
+
+        let directive_text = p.source(directive_range);
+
+        if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
+            if let Some(strict) = p.state.strict() {
+                let mut err = p.warning_builder("Redundant strict mode declaration");
+
+                match strict {
+                    StrictModeState::Explicit(prev_range) => {
+                        err = err.secondary(prev_range, "strict mode is previous declared here");
+                    }
+                    StrictModeState::Module => {
+                        err = err.footer_note("modules are always strict mode");
+                    }
+                    StrictModeState::Class(prev_range) => {
+                        err = err.secondary(prev_range, "class bodies are always strict mode");
+                    }
+                }
+
+                err = err.primary(directive_range, "this declaration is redundant");
+                p.error(err);
+            } else if strict_mode_snapshot.is_none() {
+                strict_mode_snapshot = Some(
+                    EnableStrictMode(StrictModeState::Explicit(directive_range))
+                        .apply(&mut p.state),
+                );
+            }
+        }
+
+        directive.complete(p, JS_DIRECTIVE);
+
+        // Extend the directive list to include the just parsed directive
+        directives_list = directives_list
+            .undo_completion(p)
+            .complete(p, JS_DIRECTIVE_LIST);
+    };
+
+    (statement_list, strict_mode_snapshot)
 }
 
 /// Top level items or items inside of a block statement, this also handles module items so we can
 /// easily recover from erroneous module declarations in scripts
-pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
-    let list_start = p.start();
+pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool, statement_list: Marker) {
     let mut progress = ParserProgress::default();
 
     // test_err statements_closing_curly
@@ -856,7 +845,7 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
         }
     }
 
-    list_start.complete(p, JS_STATEMENT_LIST);
+    statement_list.complete(p, JS_STATEMENT_LIST);
 }
 
 /// An expression wrapped in parentheses such as `()`

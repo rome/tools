@@ -214,18 +214,18 @@ impl Formatter {
         &self,
         current_token: &SyntaxToken,
         content_to_replace_with: FormatElement,
-    ) -> FormatResult<FormatElement> {
+    ) -> FormatElement {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 assert!(self.printed_tokens.borrow_mut().insert(current_token.clone()));
             }
         }
 
-        Ok(format_elements![
+        format_elements![
             self.print_leading_trivia(current_token, TriviaPrintMode::Full),
             content_to_replace_with,
             self.print_trailing_trivia(current_token),
-        ])
+        ]
     }
 
     /// Formats each child and returns the result as a list.
@@ -280,7 +280,7 @@ impl Formatter {
                         // Use format_replaced instead of wrapping the result of format_token
                         // in order to remove only the token itself when the group doesn't break
                         // but still print its associated trivias unconditionally
-                        self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))?
+                        self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))
                     } else if trailing_separator.is_mandatory() {
                         separator.format(self)?
                     } else {

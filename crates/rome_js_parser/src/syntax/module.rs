@@ -40,10 +40,8 @@ use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
 // export { a };
 // c();
 // import { c } from "c";
-pub(crate) fn parse_module_body(p: &mut Parser, m: Marker) -> CompletedMarker {
-    parse_module_item_list(p, ModuleItemListParent::Module);
-
-    m.complete(p, JS_MODULE)
+pub(crate) fn parse_module_body(p: &mut Parser, statement_list: Marker) {
+    parse_module_item_list(p, ModuleItemListParent::Module, statement_list);
 }
 
 pub(crate) enum ModuleItemListParent {
@@ -69,8 +67,11 @@ impl ModuleItemListParent {
     }
 }
 
-pub(crate) fn parse_module_item_list(p: &mut Parser, parent: ModuleItemListParent) {
-    let list_marker = p.start();
+pub(crate) fn parse_module_item_list(
+    p: &mut Parser,
+    parent: ModuleItemListParent,
+    list_marker: Marker,
+) {
     let mut progress = ParserProgress::default();
 
     let recovery_set = if parent.is_module() {

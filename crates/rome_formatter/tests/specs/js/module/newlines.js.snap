@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: newlines.js
-
 ---
 # Input
 "directive";
@@ -98,7 +96,6 @@ Line width: 80
 "directive";
 
 "directive";
-
 statement();
 // comment
 statement();

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: multiple.js
-
 ---
 # Input
 ```js
@@ -49,8 +47,8 @@ let superSuperSuperLong1,
 for (var i = 0, len = arr.length; i < len; i++) {}
 
 var templateTagsMapping = {
-  '%{itemIndex}': "index",
-  '%{itemContentMetaTextViews}': "views",
+  "%{itemIndex}": "index",
+  "%{itemContentMetaTextViews}": "views",
 },
   separator = '<span class="item__content__meta__separator">•</span>',
   templateTagsList = $.map(

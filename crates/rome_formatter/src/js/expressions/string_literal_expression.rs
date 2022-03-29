@@ -1,9 +1,6 @@
-use std::borrow::Cow;
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use crate::format_element::normalize_newlines;
-
-use crate::{format_element::Token, FormatElement, FormatResult, Formatter, ToFormatElement};
-
+use crate::utils::format_string_literal_token;
 use rome_js_syntax::JsStringLiteralExpression;
 use rome_js_syntax::JsStringLiteralExpressionFields;
 
@@ -12,23 +9,7 @@ impl ToFormatElement for JsStringLiteralExpression {
         let JsStringLiteralExpressionFields { value_token } = self.as_fields();
 
         let value_token = value_token?;
-        let quoted = value_token.text_trimmed();
 
-        // replace single quotes with double quotes if the string does not contain any
-        let content = if quoted.starts_with('\'') && !quoted.contains('"') {
-            let s = &quoted[1..quoted.len() - 1];
-            let s = format!("\"{}\"", s);
-            match normalize_newlines(&s, ['\r']) {
-                Cow::Borrowed(_) => s,
-                Cow::Owned(s) => s,
-            }
-        } else {
-            normalize_newlines(quoted, ['\r']).into_owned()
-        };
-
-        formatter.format_replaced(
-            &value_token,
-            Token::new_dynamic(content, value_token.text_trimmed_range()).into(),
-        )
+        Ok(format_string_literal_token(value_token, formatter))
     }
 }
