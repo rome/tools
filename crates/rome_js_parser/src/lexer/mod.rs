@@ -44,25 +44,6 @@ use rome_js_syntax::JsSyntaxKind::*;
 
 use self::errors::invalid_digits_after_unicode_escape_sequence;
 
-// Simple macro for unwinding a loop
-macro_rules! unwind_loop {
-    ($($iter:tt)*) => {
-        $($iter)*
-        $($iter)*
-        $($iter)*
-        $($iter)*
-        $($iter)*
-
-        loop {
-            $($iter)*
-            $($iter)*
-            $($iter)*
-            $($iter)*
-            $($iter)*
-        }
-    };
-}
-
 // The first utf8 byte of every valid unicode whitespace char, used for short circuiting whitespace checks
 const UNICODE_WHITESPACE_STARTS: [u8; 5] = [
     // NBSP
@@ -815,13 +796,9 @@ impl<'src> Lexer<'src> {
     // Consume an identifier by recursively consuming IDENTIFIER_PART kind chars
     #[inline]
     fn consume_ident(&mut self) {
-        unwind_loop! {
-            if self.next_byte_bounded().is_some() {
-                if self.cur_ident_part().is_none() {
-                    return;
-                }
-            } else {
-                return;
+        loop {
+            if self.next_byte_bounded().is_none() || self.cur_ident_part().is_none() {
+                break;
             }
         }
     }
@@ -836,21 +813,19 @@ impl<'src> Lexer<'src> {
     fn consume_and_get_ident(&mut self, buf: &mut [u8]) -> (usize, bool) {
         let mut idx = 0;
         let mut any_escaped = false;
-        unwind_loop! {
-            if self.next_byte_bounded().is_some() {
-                if let Some((c, escaped)) = self.cur_ident_part() {
-                    if let Some(buf) = buf.get_mut(idx..idx + 4) {
-                        let res = c.encode_utf8(buf);
-                        idx += res.len();
-                        any_escaped |= escaped;
-                    }
-                } else {
-                    return (idx, any_escaped);
+        while self.next_byte_bounded().is_some() {
+            if let Some((c, escaped)) = self.cur_ident_part() {
+                if let Some(buf) = buf.get_mut(idx..idx + 4) {
+                    let res = c.encode_utf8(buf);
+                    idx += res.len();
+                    any_escaped |= escaped;
                 }
             } else {
                 return (idx, any_escaped);
             }
         }
+
+        (idx, any_escaped)
     }
 
     // Consume a string literal and advance the lexer, and returning a list of errors that occurred when reading the string
@@ -1168,11 +1143,11 @@ impl<'src> Lexer<'src> {
 
     #[inline]
     fn read_hexnumber(&mut self) {
-        unwind_loop! {
-            match self.next_byte() {
-                Some(b'_') => self.handle_numeric_separator(16),
-                Some(b) if char::from(b).is_ascii_hexdigit() => {},
-                _ => {return;},
+        while let Some(byte) = self.next_byte() {
+            match byte {
+                b'_' => self.handle_numeric_separator(16),
+                b if char::from(b).is_ascii_hexdigit() => {}
+                _ => break,
             }
         }
     }
@@ -1221,7 +1196,7 @@ impl<'src> Lexer<'src> {
     #[inline]
     fn read_number(&mut self, leading_zero: bool) {
         let start = self.position;
-        unwind_loop! {
+        loop {
             match self.next_byte_bounded() {
                 Some(b'_') => {
                     if leading_zero {
@@ -1235,17 +1210,17 @@ impl<'src> Lexer<'src> {
                         );
                     }
                     self.handle_numeric_separator(10);
-                },
-                Some(b'0'..=b'9') => {},
+                }
+                Some(b'0'..=b'9') => {}
                 Some(b'.') => {
                     if leading_zero {
                         self.diagnostics.push(
-                                Diagnostic::error(self.file_id, "", "unexpected number")
+                            Diagnostic::error(self.file_id, "", "unexpected number")
                                 .primary(start..self.position + 1, ""),
                         );
                     }
                     return self.read_float();
-                },
+                }
                 // TODO: merge this, and read_float's implementation into one so we dont duplicate exponent code
                 Some(b'e') | Some(b'E') => {
                     // At least one digit is required
@@ -1254,29 +1229,29 @@ impl<'src> Lexer<'src> {
                             if let Some(b'0'..=b'9') = self.byte_at(2) {
                                 self.next_byte();
                                 self.read_exponent();
-                                return
+                                return;
                             } else {
                                 return;
                             }
-                        },
+                        }
                         Some(b'0'..=b'9') => {
                             self.read_exponent();
                             return;
-                        },
+                        }
                         _ => {
                             return;
-                        },
+                        }
                     }
-                },
+                }
                 Some(b'n') => {
                     if leading_zero {
                         self.diagnostics.push(
-                                Diagnostic::error(
-                                    self.file_id,
-                                    "",
-                                    "Octal literals are not allowed for BigInts.",
-                                )
-                                .primary(start..self.position + 1, ""),
+                            Diagnostic::error(
+                                self.file_id,
+                                "",
+                                "Octal literals are not allowed for BigInts.",
+                            )
+                            .primary(start..self.position + 1, ""),
                         );
                     }
                     self.next_byte();
@@ -1291,12 +1266,12 @@ impl<'src> Lexer<'src> {
 
     #[inline]
     fn read_float(&mut self) {
-        unwind_loop! {
+        loop {
             match self.next_byte_bounded() {
                 Some(b'_') => self.handle_numeric_separator(10),
                 // LLVM has a hard time optimizing inclusive patterns, perhaps we should check if it makes llvm sad,
                 // and optimize this into a lookup table
-                Some(b'0'..=b'9') => {},
+                Some(b'0'..=b'9') => {}
                 Some(b'e') | Some(b'E') => {
                     // At least one digit is required
                     match self.peek_byte() {
@@ -1308,16 +1283,16 @@ impl<'src> Lexer<'src> {
                             } else {
                                 return;
                             }
-                        },
+                        }
                         Some(b'0'..=b'9') => {
                             self.read_exponent();
                             return;
-                        },
+                        }
                         _ => {
                             return;
-                        },
+                        }
                     }
-                },
+                }
                 _ => {
                     return;
                 }
@@ -1331,33 +1306,39 @@ impl<'src> Lexer<'src> {
             self.next_byte();
         }
 
-        unwind_loop! {
+        loop {
             match self.next_byte() {
                 Some(b'_') => self.handle_numeric_separator(10),
-                Some(b'0'..=b'9') => {},
-                _ => {return;},
+                Some(b'0'..=b'9') => {}
+                _ => {
+                    return;
+                }
             }
         }
     }
 
     #[inline]
     fn read_bindigits(&mut self) {
-        unwind_loop! {
+        loop {
             match self.next_byte() {
                 Some(b'_') => self.handle_numeric_separator(2),
-                Some(b'0') | Some(b'1') => {},
-                _ => {return;},
+                Some(b'0') | Some(b'1') => {}
+                _ => {
+                    return;
+                }
             }
         }
     }
 
     #[inline]
     fn read_octaldigits(&mut self) {
-        unwind_loop! {
+        loop {
             match self.next_byte() {
                 Some(b'_') => self.handle_numeric_separator(8),
-                Some(b'0'..=b'7') => {},
-                _ => {return; },
+                Some(b'0'..=b'7') => {}
+                _ => {
+                    return;
+                }
             }
         }
     }
@@ -1494,107 +1475,117 @@ impl<'src> Lexer<'src> {
         let start = self.position;
         let mut in_class = false;
 
-        unwind_loop! {
-            match self.next_byte() {
-                Some(b'[') => in_class = true,
-                Some(b']') => in_class = false,
-                Some(b'/') => {
+        while let Some(byte) = self.next_byte() {
+            match byte {
+                b'[' => in_class = true,
+                b']' => in_class = false,
+                b'/' => {
                     if !in_class {
-                        let (mut g, mut i, mut m, mut s, mut u, mut y, mut d) = (false, false, false, false, false, false, false);
+                        let (mut g, mut i, mut m, mut s, mut u, mut y, mut d) =
+                            (false, false, false, false, false, false, false);
 
                         while let Some(next) = self.next_byte_bounded() {
                             let chr_start = self.position;
 
                             match next {
                                 b'g' => {
-                                    if g  {
+                                    if g {
                                         self.diagnostics.push(self.flag_err('g'));
                                     }
                                     g = true;
-                                },
+                                }
                                 b'i' => {
-                                    if i  {
+                                    if i {
                                         self.diagnostics.push(self.flag_err('i'));
                                     }
                                     i = true;
-                                },
+                                }
                                 b'm' => {
                                     if m {
                                         self.diagnostics.push(self.flag_err('m'));
                                     }
                                     m = true;
-                                },
+                                }
                                 b's' => {
                                     if s {
                                         self.diagnostics.push(self.flag_err('s'));
                                     }
                                     s = true;
-                                },
+                                }
                                 b'u' => {
                                     if u {
                                         self.diagnostics.push(self.flag_err('u'));
                                     }
                                     u = true;
-                                },
+                                }
                                 b'y' => {
                                     if y {
                                         self.diagnostics.push(self.flag_err('y'));
                                     }
                                     y = true;
-                                },
+                                }
                                 b'd' => {
                                     if d {
                                         self.diagnostics.push(self.flag_err('d'));
                                     }
                                     d = true;
-                                },
+                                }
                                 _ if self.cur_ident_part().is_some() => {
                                     self.diagnostics.push(
                                         Diagnostic::error(self.file_id, "", "invalid regex flag")
-                                            .primary(chr_start .. self.position + 1, "this is not a valid regex flag")
+                                            .primary(
+                                                chr_start..self.position + 1,
+                                                "this is not a valid regex flag",
+                                            ),
                                     );
                                 }
-                                _ => {break}
+                                _ => break,
                             };
                         }
 
                         return JsSyntaxKind::JS_REGEX_LITERAL;
                     }
-                },
-                Some(b'\\') => {
+                }
+                b'\\' => {
                     if self.next_byte_bounded().is_none() {
                         self.diagnostics.push(
-                            Diagnostic::error(self.file_id, "", "expected a character after a regex escape, but found none")
-                                .primary(self.position..self.position + 1, "expected a character following this")
+                            Diagnostic::error(
+                                self.file_id,
+                                "",
+                                "expected a character after a regex escape, but found none",
+                            )
+                            .primary(
+                                self.position..self.position + 1,
+                                "expected a character following this",
+                            ),
                         );
 
                         return JsSyntaxKind::JS_REGEX_LITERAL;
                     }
-                },
-                Some(_) if is_linebreak(self.current_char_unchecked()) => {
+                }
+                _ if is_linebreak(self.current_char_unchecked()) => {
                     self.diagnostics.push(
                         Diagnostic::error(self.file_id, "", "unterminated regex literal")
                             .primary(self.position..self.position, "...but the line ends here")
-                            .secondary(start..start + 1, "a regex literal starts there...")
+                            .secondary(start..start + 1, "a regex literal starts there..."),
                     );
 
                     // Undo the read of the new line trivia
                     self.position -= 1;
 
                     return JsSyntaxKind::JS_REGEX_LITERAL;
-                },
-                None => {
-                    self.diagnostics.push(
-                        Diagnostic::error(self.file_id, "", "unterminated regex literal")
-                            .primary(self.position..self.position, "...but the file ends here")
-                            .secondary(start..start + 1, "a regex literal starts there...")
-                    );
-
-                    return JsSyntaxKind::JS_REGEX_LITERAL;
-                },
-                _ => {},
+                }
+                _ => {}
             }
         }
+
+        self.diagnostics.push(
+            Diagnostic::error(self.file_id, "", "unterminated regex literal")
+                .primary(self.position..self.position, "...but the file ends here")
+                .secondary(start..start + 1, "a regex literal starts there..."),
+        );
+
+        JsSyntaxKind::JS_REGEX_LITERAL
     }
 
     #[inline]
