@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: ambientDeclarations.ts
-
 ---
 # Input
 ```js
@@ -22,7 +20,7 @@ declare namespace f {}
 # Output
 ```js
 declare type a = true;
-declare function b(): 'hello';
+declare function b(): "hello";
 declare const foo = "bar";
 declare var qux: boolean;
 declare enum YO {}

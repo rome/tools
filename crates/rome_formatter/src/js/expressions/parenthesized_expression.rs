@@ -22,13 +22,13 @@ impl ToFormatElement for JsParenthesizedExpression {
         if is_simple_parenthesized_expression(self)? {
             Ok(hard_group_elements(format_elements![
                 if parenthesis_can_be_omitted {
-                    formatter.format_replaced(&l_paren_token?, empty_element())?
+                    formatter.format_replaced(&l_paren_token?, empty_element())
                 } else {
                     l_paren_token.format(formatter)?
                 },
                 expression.format(formatter)?,
                 if parenthesis_can_be_omitted {
-                    formatter.format_replaced(&r_paren_token?, empty_element())?
+                    formatter.format_replaced(&r_paren_token?, empty_element())
                 } else {
                     r_paren_token.format(formatter)?
                 },
@@ -36,9 +36,9 @@ impl ToFormatElement for JsParenthesizedExpression {
         } else if parenthesis_can_be_omitted {
             // we mimic the format delimited utility function
             Ok(format_elements![
-                formatter.format_replaced(&l_paren_token?, empty_element())?,
+                formatter.format_replaced(&l_paren_token?, empty_element()),
                 group_elements(expression.format(formatter)?),
-                formatter.format_replaced(&r_paren_token?, empty_element())?,
+                formatter.format_replaced(&r_paren_token?, empty_element()),
             ])
         } else {
             formatter.format_delimited_soft_block_indent(

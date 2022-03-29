@@ -10,7 +10,7 @@ impl ToFormatElement for TsMethodSignatureTypeMember {
         let type_arguments = self.type_parameters().format_or_empty(formatter)?;
         let parameters = self.parameters().format(formatter)?;
         let return_type_annotation = self.return_type_annotation().format_or_empty(formatter)?;
-        let separator = format_type_member_separator(self.separator_token(), formatter)?;
+        let separator = format_type_member_separator(self.separator_token(), formatter);
         Ok(format_elements![
             name,
             optional_token,

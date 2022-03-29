@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: multiple_standalones.js
-
 ---
 # Input
 ```js
@@ -12,7 +10,7 @@ import a, * as b from 'a';
 
 # Output
 ```js
-import a, * as b from 'a';
+import a, * as b from "a";
 
 ```
 

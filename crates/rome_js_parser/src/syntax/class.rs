@@ -877,7 +877,8 @@ fn parse_static_initialization_block_class_member(
     p.expect(T![static]);
     p.expect(T!['{']);
     p.with_state(EnterClassStaticInitializationBlock, |p| {
-        parse_statements(p, true)
+        let statement_list = p.start();
+        parse_statements(p, true, statement_list)
     });
     p.expect(T!['}']);
 

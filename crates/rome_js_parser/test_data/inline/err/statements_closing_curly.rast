@@ -6,56 +6,69 @@ JsModule {
             l_curly_token: L_CURLY@0..1 "{" [] [],
             statements: JsStatementList [
                 JsExpressionStatement {
+                    expression: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@1..2 "x" [] [],
+                        },
+                    },
+                    semicolon_token: missing (optional),
+                },
+                JsExpressionStatement {
                     expression: JsStringLiteralExpression {
-                        value_token: JS_STRING_LITERAL@1..8 "\"name\"" [Newline("\n")] [],
+                        value_token: JS_STRING_LITERAL@2..9 "\"name\"" [Newline("\n")] [],
                     },
                     semicolon_token: missing (optional),
                 },
                 JsUnknownStatement {
                     items: [
-                        COLON@8..10 ":" [] [Whitespace(" ")],
-                        JS_STRING_LITERAL@10..27 "\"troublesome-lib\"" [] [],
-                        COMMA@27..28 "," [] [],
-                        JS_STRING_LITERAL@28..38 "\"typings\"" [Newline("\n")] [],
-                        COLON@38..40 ":" [] [Whitespace(" ")],
-                        JS_STRING_LITERAL@40..56 "\"lib/index.d.ts\"" [] [],
-                        COMMA@56..57 "," [] [],
-                        JS_STRING_LITERAL@57..67 "\"version\"" [Newline("\n")] [],
-                        COLON@67..69 ":" [] [Whitespace(" ")],
-                        JS_STRING_LITERAL@69..76 "\"0.0.1\"" [] [],
+                        COLON@9..11 ":" [] [Whitespace(" ")],
+                        JS_STRING_LITERAL@11..28 "\"troublesome-lib\"" [] [],
+                        COMMA@28..29 "," [] [],
+                        JS_STRING_LITERAL@29..39 "\"typings\"" [Newline("\n")] [],
+                        COLON@39..41 ":" [] [Whitespace(" ")],
+                        JS_STRING_LITERAL@41..57 "\"lib/index.d.ts\"" [] [],
+                        COMMA@57..58 "," [] [],
+                        JS_STRING_LITERAL@58..68 "\"version\"" [Newline("\n")] [],
+                        COLON@68..70 ":" [] [Whitespace(" ")],
+                        JS_STRING_LITERAL@70..77 "\"0.0.1\"" [] [],
                     ],
                 },
             ],
-            r_curly_token: R_CURLY@76..78 "}" [Newline("\n")] [],
+            r_curly_token: R_CURLY@77..79 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@78..79 "" [Newline("\n")] [],
+    eof_token: EOF@79..80 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..79
+0: JS_MODULE@0..80
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..78
-    0: JS_BLOCK_STATEMENT@0..78
+  2: JS_MODULE_ITEM_LIST@0..79
+    0: JS_BLOCK_STATEMENT@0..79
       0: L_CURLY@0..1 "{" [] []
-      1: JS_STATEMENT_LIST@1..76
-        0: JS_EXPRESSION_STATEMENT@1..8
-          0: JS_STRING_LITERAL_EXPRESSION@1..8
-            0: JS_STRING_LITERAL@1..8 "\"name\"" [Newline("\n")] []
+      1: JS_STATEMENT_LIST@1..77
+        0: JS_EXPRESSION_STATEMENT@1..2
+          0: JS_IDENTIFIER_EXPRESSION@1..2
+            0: JS_REFERENCE_IDENTIFIER@1..2
+              0: IDENT@1..2 "x" [] []
           1: (empty)
-        1: JS_UNKNOWN_STATEMENT@8..76
-          0: COLON@8..10 ":" [] [Whitespace(" ")]
-          1: JS_STRING_LITERAL@10..27 "\"troublesome-lib\"" [] []
-          2: COMMA@27..28 "," [] []
-          3: JS_STRING_LITERAL@28..38 "\"typings\"" [Newline("\n")] []
-          4: COLON@38..40 ":" [] [Whitespace(" ")]
-          5: JS_STRING_LITERAL@40..56 "\"lib/index.d.ts\"" [] []
-          6: COMMA@56..57 "," [] []
-          7: JS_STRING_LITERAL@57..67 "\"version\"" [Newline("\n")] []
-          8: COLON@67..69 ":" [] [Whitespace(" ")]
-          9: JS_STRING_LITERAL@69..76 "\"0.0.1\"" [] []
-      2: R_CURLY@76..78 "}" [Newline("\n")] []
-  3: EOF@78..79 "" [Newline("\n")] []
+        1: JS_EXPRESSION_STATEMENT@2..9
+          0: JS_STRING_LITERAL_EXPRESSION@2..9
+            0: JS_STRING_LITERAL@2..9 "\"name\"" [Newline("\n")] []
+          1: (empty)
+        2: JS_UNKNOWN_STATEMENT@9..77
+          0: COLON@9..11 ":" [] [Whitespace(" ")]
+          1: JS_STRING_LITERAL@11..28 "\"troublesome-lib\"" [] []
+          2: COMMA@28..29 "," [] []
+          3: JS_STRING_LITERAL@29..39 "\"typings\"" [Newline("\n")] []
+          4: COLON@39..41 ":" [] [Whitespace(" ")]
+          5: JS_STRING_LITERAL@41..57 "\"lib/index.d.ts\"" [] []
+          6: COMMA@57..58 "," [] []
+          7: JS_STRING_LITERAL@58..68 "\"version\"" [Newline("\n")] []
+          8: COLON@68..70 ":" [] [Whitespace(" ")]
+          9: JS_STRING_LITERAL@70..77 "\"0.0.1\"" [] []
+      2: R_CURLY@77..79 "}" [Newline("\n")] []
+  3: EOF@79..80 "" [Newline("\n")] []
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ statements_closing_curly.js:2:7
@@ -67,7 +80,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ ...Which is required to end this statement
 
 --
-{
+{x
 "name": "troublesome-lib",
 "typings": "lib/index.d.ts",
 "version": "0.0.1"
