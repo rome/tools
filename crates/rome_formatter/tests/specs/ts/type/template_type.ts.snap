@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 168
 expression: template_type.ts
+
 ---
 # Input
 type TemplateType = `
@@ -17,14 +19,14 @@ Line width: 80
 type TemplateType = `
     text
     ${
-	| "lorem"
-	| "ipsum"
-	| "dolor"
-	| "sit"
-	| "amet"
-	| "consectetur"
-	| "adipiscing"
-	| "elit"
-	| "sed"}
+	| 'lorem'
+	| 'ipsum'
+	| 'dolor'
+	| 'sit'
+	| 'amet'
+	| 'consectetur'
+	| 'adipiscing'
+	| 'elit'
+	| 'sed'}
 `;
 

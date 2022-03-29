@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 144
 expression: last-line-0.js
+
 ---
 # Input
 ```js
@@ -9,7 +11,7 @@ expression: last-line-0.js
 
 # Output
 ```js
-"use strict";
+'use strict';
 
 ```
 

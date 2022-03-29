@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
 expression: separator.ts
+
 ---
 # Input
 ```js
@@ -24,7 +26,7 @@ interface Test { one: string, two: any[] }
 
 # Output
 ```js
-declare module "selenium-webdriver" {
+declare module 'selenium-webdriver' {
   export const until: {
     ableToSwitchToFrame(frame: number | WebElement | By): Condition<boolean>,
     alertIsPresent(): Condition<Alert>,

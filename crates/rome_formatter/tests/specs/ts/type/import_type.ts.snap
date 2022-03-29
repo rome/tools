@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 168
 expression: import_type.ts
+
 ---
 # Input
 type ImportType1 = typeof import('source');
@@ -17,9 +19,9 @@ type QualifiedImportType = typeof import('source').Qualified<TypeParams>;
 Indent style: Tab
 Line width: 80
 -----
-type ImportType1 = typeof import("source");
+type ImportType1 = typeof import('source');
 
-type ImportType2 = import("source");
+type ImportType2 = import('source');
 
-type QualifiedImportType = typeof import("source").Qualified<TypeParams>;
+type QualifiedImportType = typeof import('source').Qualified<TypeParams>;
 

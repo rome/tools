@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
 expression: brackets.js
+
 ---
 # Input
 ```js
@@ -29,8 +31,8 @@ import {
   multiLine,
   andMore,
   soWeCanGetItTo80Columns,
-} from ".";
-import { fitsIn, oneLine } from ".";
+} from '.';
+import { fitsIn, oneLine } from '.';
 
 ```
 

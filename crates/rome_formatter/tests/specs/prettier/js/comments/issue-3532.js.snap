@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 149
 expression: issue-3532.js
+
 ---
 # Input
 ```js
@@ -50,7 +52,7 @@ export default AspectRatioBox;
 
 # Output
 ```js
-import React from "react";
+import React from 'react';
 
 /*
 import styled from 'react-emotion';

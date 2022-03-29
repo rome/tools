@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
 expression: empty-import.js
+
 ---
 # Input
 ```js
@@ -10,7 +12,7 @@ import { } from '@types/googlemaps';
 
 # Output
 ```js
-import {} from "@types/googlemaps";
+import {} from '@types/googlemaps';
 
 ```
 

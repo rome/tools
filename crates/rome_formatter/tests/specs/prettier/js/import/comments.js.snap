@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
 expression: comments.js
+
 ---
 # Input
 ```js
@@ -99,12 +101,12 @@ import {
   /* tslint:disable */
   SelectionSetNode,
   /* tslint:enable */
-} from "graphql";
+} from 'graphql';
 
 import x, {
   // comment
   y,
-} from "z";
+} from 'z';
 
 ```
 

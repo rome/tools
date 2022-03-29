@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 121
 expression: export-namespace-from.js
+
 ---
 # Input
 ```js
@@ -14,7 +16,7 @@ export * as ns from 'mod';
 ```js
 // https://babeljs.io/docs/en/babel-plugin-proposal-export-namespace-from
 
-export * as ns from "mod";
+export * as ns from 'mod';
 
 ```
 

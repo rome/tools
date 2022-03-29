@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 119
 expression: method_chain.js
+
 ---
 # Input
 ```js
@@ -26,12 +28,12 @@ function test(observable) {
 
 # Output
 ```js
-import { interval } from "rxjs/observable/interval";
-import { filter } from "rxjs/operator/filter";
-import { take } from "rxjs/operator/take";
-import { map } from "rxjs/operator/map";
-import { throttle } from "rxjs/operator/throttle";
-import { takeUntil } from "rxjs/operator/takeUntil";
+import { interval } from 'rxjs/observable/interval';
+import { filter } from 'rxjs/operator/filter';
+import { take } from 'rxjs/operator/take';
+import { map } from 'rxjs/operator/map';
+import { throttle } from 'rxjs/operator/throttle';
+import { takeUntil } from 'rxjs/operator/takeUntil';
 
 function test(observable) {
   return observable;

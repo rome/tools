@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 119
 expression: import_require.ts
+
 ---
 # Input
 ```js
@@ -11,8 +13,8 @@ import JSONContributionRegistry = require('vs/platform/jsonschemas/common/jsonCo
 
 # Output
 ```js
-import { IModel } from "vs/editor/common/editorCommon";
-import JSONContributionRegistry = require("vs/platform/jsonschemas/common/jsonContributionRegistry");
+import { IModel } from 'vs/editor/common/editorCommon';
+import JSONContributionRegistry = require('vs/platform/jsonschemas/common/jsonContributionRegistry');
 
 ```
 

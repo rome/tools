@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 144
 expression: escaped.js
+
 ---
 # Input
 ```js
@@ -47,7 +49,7 @@ expression: escaped.js
 // Unnecessary escapes. (adapted from tests/quotes/strings.js)
 // Note that in directives, unnecessary escapes should be preserved.
 // See https://github.com/prettier/prettier/issues/1555
-"\'";
+'\'';
 '\"';
 "\'";
 "\"";

@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 125
 expression: assignment.ts
+
 ---
 # Input
 ```js
@@ -51,12 +53,12 @@ export const LOG_LEVEL = {
 } as const;
 
 const TYPE_MAP = {
-  "character device": "special",
-  "character special file": "special",
+  'character device': "special",
+  'character special file': "special",
   directory: "directory",
-  "regular file": "file",
+  'regular file': "file",
   socket: "socket",
-  "symbolic link": "link",
+  'symbolic link': "link",
 } as Foo;
 
 this.previewPlayerHandle =

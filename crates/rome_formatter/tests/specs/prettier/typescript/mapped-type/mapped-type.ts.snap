@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 119
 expression: mapped-type.ts
+
 ---
 # Input
 ```js
@@ -12,7 +14,7 @@ type B = { [K in Keys]+? };
 
 # Output
 ```js
-type Keys = "option1" | "option2";
+type Keys = 'option1' | 'option2';
 type A = {
   [K in Keys];
 };

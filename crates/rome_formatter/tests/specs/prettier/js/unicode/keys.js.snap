@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
 expression: keys.js
+
 ---
 # Input
 ```js
@@ -10,7 +12,7 @@ expression: keys.js
 
 # Output
 ```js
-({ "この事はつもり素晴らしいことさ": "35jL9V" });
+({ 'この事はつもり素晴らしいことさ': "35jL9V" });
 
 ```
 

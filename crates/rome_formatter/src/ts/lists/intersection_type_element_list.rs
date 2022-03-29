@@ -17,7 +17,7 @@ impl ToFormatElement for TsIntersectionTypeElementList {
             let separator = match separator {
                 Some(token) => {
                     if index == last_index {
-                        formatter.format_replaced(&token, empty_element())
+                        formatter.format_replaced(&token, empty_element())?
                     } else {
                         format_elements![
                             soft_line_break_or_space(),

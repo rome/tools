@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
 expression: inline.js
+
 ---
 # Input
 ```js
@@ -13,10 +15,10 @@ import {a2, somethingSuperLongsomethingSuperLong3} from 'somethingSuperLongsomet
 
 # Output
 ```js
-import somethingSuperLongsomethingSuperLong from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-import { somethingSuperLongsomethingSuperLong1 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-import a, { somethingSuperLongsomethingSuperLong2 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-import { a2, somethingSuperLongsomethingSuperLong3 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+import somethingSuperLongsomethingSuperLong from 'somethingSuperLongsomethingSuperLongsomethingSuperLong';
+import { somethingSuperLongsomethingSuperLong1 } from 'somethingSuperLongsomethingSuperLongsomethingSuperLong';
+import a, { somethingSuperLongsomethingSuperLong2 } from 'somethingSuperLongsomethingSuperLongsomethingSuperLong';
+import { a2, somethingSuperLongsomethingSuperLong3 } from 'somethingSuperLongsomethingSuperLongsomethingSuperLong';
 
 ```
 

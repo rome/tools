@@ -9,8 +9,6 @@ function test() {
 }
 (function () {
   "use strict";
-  "use strict"
-    .length; // not a directive
   let c = 10;
   "use strict"; // not a directive
 });

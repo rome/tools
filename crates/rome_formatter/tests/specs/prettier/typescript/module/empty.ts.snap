@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
 expression: empty.ts
+
 ---
 # Input
 ```js
@@ -10,7 +12,7 @@ declare module 'autoprefixer';
 
 # Output
 ```js
-declare module "autoprefixer" ;
+declare module 'autoprefixer' ;
 
 ```
 

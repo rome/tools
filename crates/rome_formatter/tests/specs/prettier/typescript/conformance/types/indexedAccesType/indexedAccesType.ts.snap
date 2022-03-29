@@ -1,6 +1,8 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 123
 expression: indexedAccesType.ts
+
 ---
 # Input
 ```js
@@ -12,7 +14,7 @@ const a: Foo['bar'] = {
 
 # Output
 ```js
-const a: Foo["bar"] = { baz: "yawp" };
+const a: Foo['bar'] = { baz: "yawp" };
 
 ```
 
