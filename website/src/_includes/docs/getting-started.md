@@ -34,7 +34,30 @@ You can use Rome by downloading the [VS Code extension](https://marketplace.visu
 
 ### Installation via CI
 
-You can install rom
+You can install Rome in a continues integration too.
+
+#### Installation on GitHub
+
+Please refer to the [official page](https://github.com/rome/setup-rome#usage) for more information about its configuration: 
+
+```yaml
+steps:
+    - uses: rome/setup-rome@v0.1
+      with:
+        version: latest 
+    - run: rome --help
+```
+
+#### Installation on any other CI
+
+You can download and install the binary directly using `curl`:
+
+```shell
+curl -L https://github.com/rome/tools/releases/download/latest/rome-linux-x64 -o rome
+chmod +x rome
+```
+
+Please make sure to choose the correct architecture from the [releases page](https://github.com/rome/tools/releases).
 
 
 ## After installation
