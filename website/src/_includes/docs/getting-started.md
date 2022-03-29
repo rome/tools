@@ -6,6 +6,9 @@ Install Rome via one of the following alternatives.
 
 You can install the `rome` binary via any node package manager.
 
+> WARNING: we strongly suggest to **not** install the binary globally, instead install the binary
+> locally to your project and create local commands in order to leverage the CLI.
+
 #### [Installation via Yarn](https://yarnpkg.com/)
 
 ```bash
@@ -23,6 +26,8 @@ npm i rome@next
 ```bash
 pnpm i rome@next
 ```
+
+
 
 ### Installation VS Code extension
 
