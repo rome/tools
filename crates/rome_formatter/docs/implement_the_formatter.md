@@ -86,7 +86,8 @@ This will automatically build and open a browser tab to the documentation.
    is that when you have a **typed node at hand**, prefer the `format*` traits instead of `.to_format_element`
 4. Use our [playground](https://play.rome.tools) to inspect the code that you want to format. You can inspect
 the AST given by a certain snippet. This will help you to understand which nodes need to be implemented/modified
-in order to correctly implement the formatter.
+in order to correctly implement the formatter. Alternatively, you can locally run the playground by following [its
+instructions](/crates/rome_playground/README.md).
 5. Use the [`quick_test()`](https://github.com/rome/tools/blob/main/crates/rome_formatter/src/lib.rs#L597-L616) 
 function to test you snippet straight from your IDE, without running the whole test suite. The test 
 is ignored on purpose, so you won't need to worry about the CI breaking.

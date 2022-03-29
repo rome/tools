@@ -47,6 +47,7 @@ function App() {
 
   const searchParams = new URLSearchParams(window.location.search);
   const [loadingState, setLoadingState] = useState(LoadingState.Loading);
+  const [language, setLanguage] = useState("js");
   const [code, setCode] = useState(
     window.location.hash !== "#" ? atob(window.location.hash.substring(1)) : ""
   );
@@ -63,6 +64,16 @@ function App() {
     searchParams.get("typescript") === "true"
   );
   const [isJsx, setIsJsx] = useState(searchParams.get("jsx") === "true");
+
+  useEffect(() => {
+    if (isTypeScript) {
+      setLanguage("typescript");
+    } else if (isJsx) {
+      setLanguage("jsx")
+    } else {
+      setLanguage("js")
+    }
+  }, [isJsx, isTypeScript]);
 
   useEffect(() => {
     const url = `${window.location.protocol}//${window.location.host}${
@@ -113,8 +124,8 @@ function App() {
             <div className="w-1/2 p-5">
               <CodeEditor
                 value={code}
-                language="js"
-                placeholder="Enter JS here"
+                language={language}
+                placeholder="Enter some code here"
                 onChange={(evn) => {
                   setCode(evn.target.value);
                 }}
