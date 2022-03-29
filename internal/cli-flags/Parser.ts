@@ -1327,7 +1327,12 @@ function writeBanner(reporter: Reporter) {
 		);
 		reporter.br();
 		reporter.info(
-			markup`Please update the project to use to <emphasis>rome@next</emphasis>.`,
+			markup`Please update the project to the <emphasis>next</emphasis> tag.`,
 		);
+		reporter.br();
+		reporter.info(
+			markup`Please visit the official website for details on how to install the correct version: <underline><hyperlink target="https://rome.tools/#getting-started">https://rome.tools/#getting-started</hyperlink></underline>.`,
+		);
+		reporter.br();
 	});
 }
