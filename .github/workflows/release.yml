@@ -186,6 +186,8 @@ jobs:
     needs: build
     environment: marketplace
     steps:
+      - uses: actions/checkout@v2
+
       - name: Download CLI artifacts
         uses: actions/download-artifact@v2
         with:
@@ -199,6 +201,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Generate npm packages
+        run: node npm/rome/scripts/generate-packages.mjs
+
+      - name: Publish npm packages
+        # For now always publish the CLI to the "next" tag
+        run: for package in npm/*; do npm publish $package --tag next --access public; done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: Publish extension (pre-release)
         run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix

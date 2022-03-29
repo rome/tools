@@ -1,0 +1,8 @@
+{
+    "name": "rome",
+    "version": "0.4.0-next",
+    "bin": "bin/rome",
+    "files": [
+        "bin/rome"
+    ]
+}
