@@ -499,7 +499,7 @@ export default class Parser<T> {
 	public async init(): Promise<T> {
 		const flagsConsumer = this.getFlagsConsumer();
 		const {flags} = flagsConsumer;
-
+		writeBanner(this.reporter);
 		// Show help for --version
 		const version = this.opts.version;
 		if (version !== undefined) {
@@ -596,6 +596,7 @@ export default class Parser<T> {
 			) {
 				this.opts.onRunHiddenCommand(this.reporter);
 			}
+
 			await definedCommand.command.callback(definedCommand.flags);
 		}
 
@@ -1314,4 +1315,19 @@ export class ParserInterface<T> {
 	public command(opts: AnyCommandOptions) {
 		this.parser.addCommand(opts);
 	}
+}
+
+function writeBanner(reporter: Reporter) {
+	reporter.hr(markup`Please read carefully`);
+	reporter.indentSync(() => {
+		reporter.warn(markup`This is rome classic and the project is archived.`);
+		reporter.br();
+		reporter.warn(
+			markup`The project is now <underline><hyperlink target="https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust">written in Rust</hyperlink></underline>.`,
+		);
+		reporter.br();
+		reporter.info(
+			markup`Please update the project to use to <emphasis>rome@next</emphasis>.`,
+		);
+	});
 }
