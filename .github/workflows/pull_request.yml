@@ -26,6 +26,21 @@ jobs:
         with:
           command: fmt
           args: --all --verbose -- --check
+  format-js:
+    name: Format JS Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Rome
+        uses: rome/setup-rome@v0.1
+        with:
+          version: preview
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Rome Format
+        run: rome format --ci editors website
+
 
   lint:
     name: lint
@@ -35,10 +50,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: false
-      - name: Support longpaths
-        run: git config core.longpaths true
-      - name: Checkout repository
-        uses: actions/checkout@v2
       - name: Install toolchain
         run: rustup show
       - name: Cache

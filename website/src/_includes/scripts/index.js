@@ -1,6 +1,5 @@
 // @ts-check
 "use strict";
-
 //# Responsive width
 let isMobile = false;
 window.addEventListener(
@@ -133,7 +132,7 @@ class Manager {
 	 * @returns {CalculatedHeading}
 	 */
 	calculateHeading(i, stack) {
-		const {heading, link} = headingElements[i];
+		const { heading, link } = headingElements[i];
 		const id = heading.getAttribute("id");
 
 		// Extract the level from the H tag
@@ -161,14 +160,7 @@ class Manager {
 			end = document.body.clientHeight;
 		}
 
-		return {
-			level,
-			id,
-			titles,
-			link,
-			start,
-			end,
-		};
+		return { level, id, titles, link, start, end };
 	}
 
 	calculateHeadingsPositions() {
@@ -185,8 +177,7 @@ class Manager {
 			if (existing !== undefined) {
 				const recalculated = this.calculateHeading(i, []);
 				if (
-					recalculated.start === existing.start &&
-					recalculated.end === existing.end
+					recalculated.start === existing.start && recalculated.end === existing.end
 				) {
 					return;
 				}
@@ -209,7 +200,7 @@ class Manager {
 	 * @returns {boolean}
 	 */
 	isVisibleHeading(i) {
-		const {start, end} = this.headingsCalculated[i];
+		const { start, end } = this.headingsCalculated[i];
 		const scrollY = this.getScrollY();
 		return scrollY >= start && scrollY <= end;
 	}
@@ -219,7 +210,7 @@ class Manager {
 	 * @param {boolean} activating
 	 */
 	toggleActiveHeading(i, activating) {
-		const {link, titles} = this.headingsCalculated[i];
+		const { link, titles } = this.headingsCalculated[i];
 
 		// Only automatically rewrite the heading on the homepage
 		if (location.pathname === "/") {
@@ -280,14 +271,12 @@ class Manager {
 				hasActive = true;
 
 				// Make sure TOC link is visible
-				let linkTop =
-					this.headingsCalculated[i].link.offsetTop - sidebarScroller.offsetTop;
+				let linkTop = this.headingsCalculated[i].link.offsetTop - sidebarScroller.offsetTop;
 				if (i === 0) {
 					linkTop = 0;
 				}
 				const visibleStart = sidebarScroller.scrollTop;
-				const visibleEnd =
-					sidebarScroller.scrollTop + sidebarScroller.clientHeight;
+				const visibleEnd = sidebarScroller.scrollTop + sidebarScroller.clientHeight;
 				const isVisible = linkTop > visibleStart && linkTop < visibleEnd;
 				if (!isVisible) {
 					sidebarScroller.scrollTop = linkTop;
@@ -429,7 +418,7 @@ class Manager {
 
 		this.scrollToHeading(
 			href,
-			function() {
+			function () {
 				event.preventDefault();
 				location.hash = href;
 			},
@@ -440,7 +429,7 @@ class Manager {
 	 * @param {MouseEvent} event
 	 */
 	handleGlobalClick(event) {
-		const {target} = event;
+		const { target } = event;
 		if (!(target instanceof HTMLElement)) {
 			return;
 		}
@@ -467,12 +456,20 @@ class Manager {
 			this.scrollToHeading(window.location.hash);
 		}
 
-		window.addEventListener("scroll", this.refresh.bind(this), {passive: true});
-		window.addEventListener("resize", this.refresh.bind(this), {passive: true});
+		window.addEventListener(
+			"scroll",
+			this.refresh.bind(this),
+			{ passive: true },
+		);
+		window.addEventListener(
+			"resize",
+			this.refresh.bind(this),
+			{ passive: true },
+		);
 		window.addEventListener(
 			"resize",
 			this.calculateHeadingsPositions.bind(this),
-			{passive: true},
+			{ passive: true },
 		);
 
 		document.addEventListener("click", this.handleGlobalClick.bind(this), false);
@@ -609,7 +606,7 @@ if (docsearchInput != null) {
 			);
 			document.body.appendChild(script);
 		},
-		{once: true},
+		{ once: true },
 	);
 }
 
@@ -727,7 +724,7 @@ for (const scroller of heroScrollers) {
 	}
 
 	function isOverflow(index) {
-		return index - activeStartIndex >= initialItems.length;
+		return (index - activeStartIndex) >= initialItems.length;
 	}
 
 	function setActiveIndex(newActiveIndex, smooth) {
