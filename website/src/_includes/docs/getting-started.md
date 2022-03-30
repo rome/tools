@@ -1,44 +1,33 @@
 ## Getting Started
 
-Install Rome via one of the following alternatives.
+Install Rome using any of the following installation methods.
 
-### Installation of the CLI
+### Install Rome official VS Code extension
 
-You can install the `rome` binary via any node package manager.
+You can use Rome by installing the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace. 
+
+Rome currently doesn't support other editors than VS Code. Let us know if you're interested in getting support for another editor to help us prioritize our work.
+
+### Install Rome CLI
+
+Install `rome` using your preferred node package manager.
 
 > WARNING: we strongly suggest to **not** install the binary globally, instead install the binary
 > locally to your project or use `npx/pnpx/yarn dlx` in order to leverage the CLI.
 
-#### [Installation via Yarn](https://yarnpkg.com/)
 
-```bash
-yarn add rome@next
-```
-
-#### [Installation via npm](https://www.npmjs.com/)
-
-```bash
-npm i rome@next
-```
-
-#### [Installation via pnpm](https://pnpm.io/)
-
-```bash
-pnpm i rome@next
-```
-
-### Installation VS Code extension
-
-You can use Rome by downloading the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace. 
+| Package manager               | Instructions         |
+|-------------------------------|----------------------|
+| [npm](https://www.npmjs.com/) | `npm i rome@next`    |
+| [pnpm](https://pnpm.io/)      | `pnpm i rome@next`   |
+| [yarn](https://yarnpkg.com/)  | `yarn add rome@next` |
 
 
-### Installation via CI
+### Install Rome in your CI pipeline
 
-You can install Rome in a continues integration too.
+#### GitHub Actions
 
-#### Installation on GitHub
-
-Please refer to the [official page](https://github.com/rome/setup-rome#usage) for more information about its configuration: 
+Please refer to the documentation of the [`setup-rome` action](https://github.com/rome/setup-rome#usage) for more information about its configuration: 
 
 ```yaml
 steps:
@@ -53,7 +42,7 @@ steps:
 You can download and install the binary directly using `curl`:
 
 ```shell
-curl -L https://github.com/rome/tools/releases/download/latest/rome-linux-x64 -o rome
+curl -L https://github.com/rome/tools/releases/download/latest/rome-<OS>-<ARCH> -o rome
 chmod +x rome
 ```
 
