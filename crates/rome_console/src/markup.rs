@@ -45,7 +45,13 @@ impl MarkupElement {
                 color.set_fg(Some(Color::Yellow));
             }
             MarkupElement::Info => {
-                color.set_fg(Some(Color::Blue));
+                // Blue is really difficult to see on the standard windows command line
+                #[cfg(windows)]
+                const BLUE: Color = Color::Cyan;
+                #[cfg(not(windows))]
+                const BLUE: Color = Color::Blue;
+
+                color.set_fg(Some(BLUE));
             }
         }
     }

@@ -153,6 +153,12 @@ impl Display for String {
     }
 }
 
+impl<'a> Display for std::fmt::Arguments<'a> {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        fmt.write_fmt(*self)
+    }
+}
+
 /// Implement [Display] for types that implement [std::fmt::Display] by calling
 /// through to [Formatter::write_fmt]
 macro_rules! impl_std_display {
