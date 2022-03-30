@@ -1,20 +1,17 @@
 import { IndentStyle } from "./types";
 
 interface Props {
-  setIndentStyle: (indentStyle: IndentStyle) => void;
-  indentStyle: IndentStyle;
-  indentWidth: number;
-  setIndentWidth: (indentWidth: number) => void;
+	setIndentStyle: (indentStyle: IndentStyle) => void,
+	indentStyle: IndentStyle,
+	indentWidth: number,
+	setIndentWidth: (indentWidth: number) => void,
 }
 
-export default function IndentStyleSelect({
-  indentStyle,
-  setIndentStyle,
-  indentWidth,
-  setIndentWidth,
-}: Props) {
-  return (
-    <div className="pl-5 flex">
+export default function IndentStyleSelect(
+	{ indentStyle, setIndentStyle, indentWidth, setIndentWidth }: Props,
+) {
+	return (
+		<div className="pl-5 flex">
       <div>
         <label htmlFor="indentStyle" className="block text-sm font-medium text-gray-700">
           Indent Style
@@ -50,5 +47,5 @@ export default function IndentStyleSelect({
         </div>
       )}
     </div>
-  );
+	);
 }

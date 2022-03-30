@@ -1,4 +1,1 @@
-export enum IndentStyle {
-  Tab = "tab",
-  Space = "space",
-}
+export enum IndentStyle { Tab = "tab", Space = "space" }
