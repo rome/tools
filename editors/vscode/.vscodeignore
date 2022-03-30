@@ -7,4 +7,5 @@
 !package.json
 !server/rome_lsp
 !server/rome_lsp.exe
+!rome_syntax_tree.tmGrammar.json
 !README.md

@@ -7,7 +7,8 @@
 	"icon": "icon.png",
 	"activationEvents": [
 		"onLanguage:javascript",
-		"onLanguage:typescript"
+		"onLanguage:typescript",
+		"onCommand:rome.syntaxTree"
 	],
 	"main": "./out/main.js",
 	"repository": {
@@ -21,6 +22,36 @@
 		"vscode": "^1.63.0"
 	},
 	"contributes": {
+		"languages": [
+			{
+				"id": "rome_syntax_tree",
+				"extensions": [
+					".rast"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "rome_syntax_tree",
+				"scopeName": "source.rome_syntax_tree",
+				"path": "rome_syntax_tree.tmGrammar.json"
+			}
+		],
+		"commands": [
+			{
+				"command": "rome.syntaxTree",
+				"title": "Show Syntax Tree",
+				"category": "Rome"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "rome.syntaxTree",
+					"when": "inRomeProject"
+				}
+			]
+		},
 		"configuration": {
 			"title": "Rome",
 			"type": "object",
@@ -81,6 +112,7 @@
 			}
 		}
 	},
+
 	"categories": [
 		"Formatters"
 	],
@@ -95,7 +127,7 @@
 		"package": "vsce package -o rome_lsp.vsix",
 		"build": "npm run compile -- --minify && npm run package",
 		"install-extension": "code --install-extension rome_lsp.vsix",
-		"format": "cargo run --bin cli format ./src/ ./scripts"
+		"format": "cargo run --bin rome format ./src/ ./scripts"
 	},
 	"dependencies": {
 		"vscode-languageclient": "^8.0.0-next.13"

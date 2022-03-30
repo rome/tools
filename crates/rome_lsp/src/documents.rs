@@ -42,7 +42,7 @@ impl From<EditorLanguage> for SourceType {
 /// Represents an open [`textDocument`]. Can be cheaply cloned.
 ///
 /// [`textDocument`]: https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocumentItem
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Document {
     pub path: RomePath,
     pub editor_language: EditorLanguage,

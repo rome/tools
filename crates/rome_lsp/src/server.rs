@@ -1,19 +1,21 @@
-use lspower::jsonrpc::Result as LspResult;
-use lspower::lsp::*;
-use lspower::{Client, LanguageServer, LspService, Server};
-use rome_analyze::AnalysisServer;
-use std::sync::Arc;
-use tokio::io::{Stdin, Stdout};
-use tracing::{error, info};
-
 use crate::capabilities::server_capabilities;
 use crate::handlers;
 use crate::handlers::formatting::{
     to_format_options, FormatOnTypeParams, FormatParams, FormatRangeParams,
 };
 use crate::line_index::LineIndex;
+use crate::requests::syntax_tree::{syntax_tree, SyntaxTreePayload, SYNTAX_TREE_REQUEST};
 use crate::session::Session;
 use crate::utils;
+use crate::utils::into_lsp_error;
+use lspower::jsonrpc::Result as LspResult;
+use lspower::lsp::*;
+use lspower::{Client, LanguageServer, LspService, Server};
+use rome_analyze::AnalysisServer;
+use serde_json::Value;
+use std::sync::Arc;
+use tokio::io::{Stdin, Stdout};
+use tracing::{error, info, trace};
 
 struct LSPServer {
     client: Client,
@@ -71,6 +73,27 @@ impl LanguageServer for LSPServer {
         Ok(())
     }
 
+    async fn request_else(&self, method: &str, params: Option<Value>) -> LspResult<Option<Value>> {
+        trace!("Calling method: {}\n with params: {:?}", method, &params);
+
+        match method {
+            SYNTAX_TREE_REQUEST => match params.map(serde_json::from_value) {
+                Some(Ok(params)) => {
+                    let params: SyntaxTreePayload = params;
+                    let url = params.text_document.uri.clone();
+                    let document = self.session.document(&url)?;
+                    let task = utils::spawn_blocking_task(move || syntax_tree(document));
+                    let result = task.await?;
+                    let result = serde_json::to_value(result).map_err(into_lsp_error)?;
+                    Ok(Some(result))
+                }
+                _ => Ok(None),
+            },
+
+            _ => Ok(None),
+        }
+    }
+
     async fn code_action(&self, params: CodeActionParams) -> LspResult<Option<CodeActionResponse>> {
         let workspace_settings = self.session.config.read().get_workspace_settings();
         if !workspace_settings.analysis.enable_code_actions {
@@ -101,6 +124,7 @@ impl LanguageServer for LSPServer {
         let doc = self.session.document(&url)?;
         let workspace_settings = self.session.config.read().get_workspace_settings();
 
+        trace!("Formatting...");
         let task = utils::spawn_blocking_task(move || {
             handlers::formatting::format(FormatParams {
                 text: &doc.text,
