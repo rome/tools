@@ -313,16 +313,8 @@ export default class Parser<T> {
 					target: ConsumeSourceLocationRequestTarget,
 				) => {
 					return serializeCLIFlags(
-						{
-							...this.getSerializeOptions(),
-							defaultFlags,
-							flags,
-						},
-						{
-							type: "flag",
-							key: String(keys[0]),
-							target,
-						},
+						{...this.getSerializeOptions(), defaultFlags, flags},
+						{type: "flag", key: String(keys[0]), target},
 					);
 				},
 			},
@@ -499,15 +491,13 @@ export default class Parser<T> {
 	public async init(): Promise<T> {
 		const flagsConsumer = this.getFlagsConsumer();
 		const {flags} = flagsConsumer;
-
+		writeBanner(this.reporter);
 		// Show help for --version
 		const version = this.opts.version;
 		if (version !== undefined) {
 			const shouldDisplayVersion = flags.get(
 				"version",
-				{
-					description: markup`Show the version`,
-				},
+				{description: markup`Show the version`},
 			).required(false).asBoolean();
 			if (shouldDisplayVersion) {
 				this.reporter.log(version);
@@ -519,10 +509,7 @@ export default class Parser<T> {
 		// `--write-shell-completions <SHELL>` writes the commands to a file
 		const writeShellCompletions: undefined | SupportedCompletionShells = flags.get(
 			"writeShellCompletions",
-			{
-				description: markup`Write shell completion commands`,
-				inputName: "shell",
-			},
+			{description: markup`Write shell completion commands`, inputName: "shell"},
 		).asStringSetOrVoid(["fish", "bash", "zsh"]);
 		if (writeShellCompletions !== undefined) {
 			await this.writeShellCompletions(
@@ -546,10 +533,7 @@ export default class Parser<T> {
 		// Show help for --help
 		const shouldShowHelp = flags.get(
 			"help",
-			{
-				description: markup`Show this help screen`,
-				alternateName: "h",
-			},
+			{description: markup`Show this help screen`, alternateName: "h"},
 		).required(false).asBoolean();
 
 		let definedCommand: undefined | DefinedCommand;
@@ -596,6 +580,7 @@ export default class Parser<T> {
 			) {
 				this.opts.onRunHiddenCommand(this.reporter);
 			}
+
 			await definedCommand.command.callback(definedCommand.flags);
 		}
 
@@ -677,7 +662,10 @@ export default class Parser<T> {
 			optionOutput.push({
 				argName,
 				arg: joinMarkup(
-					highlightShell({input: argCol, isShorthand: !!metadata.alternateName}),
+					highlightShell({
+						input: argCol,
+						isShorthand: !!metadata.alternateName,
+					}),
 					markup` `,
 				),
 				description: descCol,
@@ -1199,10 +1187,7 @@ export default class Parser<T> {
 
 				const selected = await this.reporter.select(
 					markup`Unknown command <emphasis>${commandName}</emphasis>. Found matching commands`,
-					{
-						radio: true,
-						options,
-					},
+					{radio: true, options},
 				);
 
 				const args = Array.from(selected)[0].split(" ");
@@ -1314,4 +1299,21 @@ export class ParserInterface<T> {
 	public command(opts: AnyCommandOptions) {
 		this.parser.addCommand(opts);
 	}
+}
+
+function writeBanner(reporter: Reporter) {
+	reporter.warn(markup`This is rome classic and the project is archived.`);
+	reporter.br();
+	reporter.warn(
+		markup`The project is now <underline><hyperlink target="https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust">written in Rust</hyperlink></underline>.`,
+	);
+	reporter.br();
+	reporter.info(
+		markup`Install <emphasis>rome@next</emphasis> if you want to use the new blazing fast rust rewrite of Rome.`,
+	);
+	reporter.br();
+	reporter.info(
+		markup`Please visit the official website for details on how to install the correct version: <underline><hyperlink target="https://rome.tools/#getting-started">https://rome.tools/#getting-started</hyperlink></underline>.`,
+	);
+	reporter.br();
 }
