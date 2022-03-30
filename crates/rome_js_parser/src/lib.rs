@@ -100,7 +100,7 @@ use std::path::Path;
 /// An abstraction for syntax tree implementations
 pub trait TreeSink {
     /// Adds new token to the current branch.
-    fn token(&mut self, kind: JsSyntaxKind, length: TextSize);
+    fn token(&mut self, kind: JsSyntaxKind, end: TextSize);
 
     /// Start new branch and make it current.
     fn start_node(&mut self, kind: JsSyntaxKind);

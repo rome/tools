@@ -15,6 +15,7 @@ use rome_js_syntax::{
     JsSyntaxKind::{self},
     TextRange,
 };
+use std::num::NonZeroU32;
 
 pub(crate) use parse_error::*;
 pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
@@ -73,8 +74,6 @@ pub(crate) struct Parser<'s> {
     pub(super) state: ParserState,
     pub source_type: SourceType,
     pub diagnostics: Vec<ParseDiagnostic>,
-    // A `u32` is sufficient because the parser only supports files up to `u32` bytes.
-    pub(super) last_token_event_pos: Option<u32>,
     // If the parser should skip tokens as trivia
     skipping: bool,
 }
@@ -89,7 +88,6 @@ impl<'s> Parser<'s> {
             events: vec![],
             state: ParserState::new(&source_type),
             tokens: token_source,
-            last_token_event_pos: None,
             source_type,
             diagnostics: vec![],
             skipping: false,
@@ -135,20 +133,18 @@ impl<'s> Parser<'s> {
 
     /// Returns the kind of the last bumped token.
     pub fn last(&self) -> Option<JsSyntaxKind> {
-        self.last_token_event_pos
-            .map(|pos| match self.events[pos as usize] {
-                Event::Token { kind, .. } => kind,
-                _ => unreachable!(),
-            })
+        self.events.iter().rev().find_map(|event| match event {
+            Event::Token { kind, .. } => Some(*kind),
+            _ => None,
+        })
     }
 
-    /// Returns the range of the last bumped token.
-    pub fn last_range(&self) -> Option<TextRange> {
-        self.last_token_event_pos
-            .map(|pos| match self.events[pos as usize] {
-                Event::Token { range, .. } => range,
-                _ => unreachable!(),
-            })
+    /// Returns the end offset of the last bumped token.
+    pub fn last_end(&self) -> Option<TextSize> {
+        self.events.iter().rev().find_map(|event| match event {
+            Event::Token { end, .. } => Some(*end),
+            _ => None,
+        })
     }
 
     /// Consume the next token if `kind` matches.
@@ -169,7 +165,7 @@ impl<'s> Parser<'s> {
     pub fn start(&mut self) -> Marker {
         let pos = self.events.len() as u32;
         let start = self.tokens.position();
-        self.push_event(Event::tombstone(start));
+        self.push_event(Event::tombstone());
         Marker::new(pos, start)
     }
 
@@ -271,13 +267,12 @@ impl<'s> Parser<'s> {
         } else {
             let range = self.cur_range();
             self.tokens.bump(context);
-            self.push_token(kind, range);
+            self.push_token(kind, range.end());
         }
     }
 
-    fn push_token(&mut self, kind: JsSyntaxKind, range: TextRange) {
-        self.last_token_event_pos = Some(self.events.len() as u32);
-        self.push_event(Event::Token { kind, range });
+    fn push_token(&mut self, kind: JsSyntaxKind, end: TextSize) {
+        self.push_event(Event::Token { kind, end });
     }
 
     fn push_event(&mut self, event: Event) {
@@ -312,10 +307,8 @@ impl<'s> Parser<'s> {
             event_pos,
             errors_pos,
             state,
-            last_token_pos,
         } = checkpoint;
         self.tokens.rewind(token_source);
-        self.last_token_event_pos = last_token_pos;
         self.drain_events(self.cur_event_pos() - event_pos);
         self.diagnostics.truncate(errors_pos as usize);
         self.state.restore(state)
@@ -326,7 +319,6 @@ impl<'s> Parser<'s> {
     pub fn checkpoint(&self) -> Checkpoint {
         Checkpoint {
             token_source: self.tokens.checkpoint(),
-            last_token_pos: self.last_token_event_pos,
             event_pos: self.cur_event_pos(),
             errors_pos: self.diagnostics.len() as u32,
             state: self.state.checkpoint(),
@@ -432,21 +424,7 @@ impl Marker {
     /// Finishes the syntax tree node and assigns `kind` to it,
     /// and mark the create a `CompletedMarker` for possible future
     /// operation like `.precede()` to deal with forward_parent.
-    pub fn complete(self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
-        let end_pos = TextSize::max(
-            p.last_range().map(|t| t.end()).unwrap_or(self.start),
-            self.start,
-        );
-
-        self.complete_at(p, kind, end_pos)
-    }
-
-    fn complete_at(
-        mut self,
-        p: &mut Parser,
-        kind: JsSyntaxKind,
-        end_pos: TextSize,
-    ) -> CompletedMarker {
+    pub fn complete(mut self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
         self.bomb.defuse();
         let idx = self.pos as usize;
         match p.events[idx] {
@@ -458,11 +436,9 @@ impl Marker {
             _ => unreachable!(),
         }
         let finish_pos = p.events.len() as u32;
+        p.push_event(Event::Finish);
 
-        assert!(end_pos >= self.start);
-        p.push_event(Event::Finish { end: end_pos });
-
-        let new = CompletedMarker::new(self.pos, finish_pos, kind);
+        let new = CompletedMarker::new(self.pos, finish_pos, self.start, kind);
         new.old_start(self.old_start)
     }
 
@@ -503,6 +479,7 @@ impl Marker {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub(crate) struct CompletedMarker {
     start_pos: u32,
+    offset: TextSize,
     // Hack for parsing completed markers which have been preceded
     // This should be redone completely in the future
     old_start: u32,
@@ -511,9 +488,10 @@ pub(crate) struct CompletedMarker {
 }
 
 impl CompletedMarker {
-    pub fn new(start_pos: u32, finish_pos: u32, kind: JsSyntaxKind) -> Self {
+    pub fn new(start_pos: u32, finish_pos: u32, offset: TextSize, kind: JsSyntaxKind) -> Self {
         CompletedMarker {
             start_pos,
+            offset,
             old_start: start_pos,
             finish_pos,
             kind,
@@ -549,15 +527,16 @@ impl CompletedMarker {
 
     /// Get the range of the marker
     pub fn range(&self, p: &Parser) -> TextRange {
-        let start = match p.events[self.old_start as usize] {
-            Event::Start { start, .. } => start,
-            _ => unreachable!(),
-        };
-        let end = match p.events[self.finish_pos as usize] {
-            Event::Finish { end } => end,
-            _ => unreachable!(),
-        };
-        TextRange::new(start, end)
+        let end = p.events[self.old_start as usize..self.finish_pos as usize]
+            .iter()
+            .rev()
+            .find_map(|event| match event {
+                Event::Token { end, .. } => Some(*end),
+                _ => None,
+            })
+            .unwrap_or(self.offset);
+
+        TextRange::new(self.offset, end)
     }
 
     /// Get the underlying text of a marker
@@ -583,15 +562,16 @@ impl CompletedMarker {
         match p.events[idx] {
             Event::Start {
                 ref mut forward_parent,
-                start,
                 ..
             } => {
-                *forward_parent = Some(new_pos.pos - self.start_pos);
-                new_pos.start = start;
+                // Safety: The new marker is always inserted after the start marker of this node, thus
+                // subtracting the two positions can never be 0.
+                *forward_parent = Some(NonZeroU32::try_from(new_pos.pos - self.start_pos).unwrap());
             }
             _ => unreachable!(),
         }
         new_pos.child_idx = Some(self.start_pos as usize);
+        new_pos.start = self.offset;
         new_pos.old_start(self.old_start as u32)
     }
 
@@ -599,24 +579,19 @@ impl CompletedMarker {
     pub fn undo_completion(self, p: &mut Parser) -> Marker {
         let start_idx = self.start_pos as usize;
         let finish_idx = self.finish_pos as usize;
-        let start_pos;
 
         match p.events[start_idx] {
             Event::Start {
                 ref mut kind,
                 forward_parent: None,
-                start,
-            } => {
-                start_pos = start;
-                *kind = JsSyntaxKind::TOMBSTONE
-            }
+            } => *kind = JsSyntaxKind::TOMBSTONE,
             _ => unreachable!(),
         }
         match p.events[finish_idx] {
-            ref mut slot @ Event::Finish { .. } => *slot = Event::tombstone(start_pos),
+            ref mut slot @ Event::Finish { .. } => *slot = Event::tombstone(),
             _ => unreachable!(),
         }
-        Marker::new(self.start_pos, start_pos)
+        Marker::new(self.start_pos, self.offset)
     }
 
     pub fn kind(&self) -> JsSyntaxKind {
@@ -632,7 +607,6 @@ pub struct Checkpoint {
     /// Safety: The parser only supports files <= 4Gb. Storing a `u32` is sufficient to store one error
     /// for each single character in the file, which should be sufficient for any realistic file.
     errors_pos: u32,
-    pub(super) last_token_pos: Option<u32>,
     state: ParserStateCheckpoint,
     pub(super) token_source: TokenSourceCheckpoint,
 }
