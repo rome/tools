@@ -12,7 +12,7 @@ Rome currently doesn't support other editors than VS Code. Let us know if you're
 
 Install `rome` using your preferred node package manager.
 
-> WARNING: we strongly suggest to **not** install the binary globally, instead install the binary
+> RECOMMENDATION: we advise to **not** install the binary globally, instead install the binary
 > locally to your project or use `npx/pnpx/yarn dlx` in order to leverage the CLI.
 
 
