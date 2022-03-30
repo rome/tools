@@ -15,7 +15,7 @@ body:
     id: environment
     attributes:
       label: Environment information
-      description: Please share any information about your environment that can help debug your issue.
+      description: Please share any information about your environment that can help debug your issue (OS and OS version, CPU architecture, installation method, etc.).
       render: bash
     validations:
       required: true
@@ -39,12 +39,6 @@ body:
       placeholder: It should not throw an error.
     validations:
       required: true
-  - type: textarea
-    id: configuration
-    attributes:
-      label: Configuration file of your project
-      description: Paste here your configuration if relevant
-      render: json
   - type: checkboxes
     id: terms
     attributes:

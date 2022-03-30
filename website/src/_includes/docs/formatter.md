@@ -28,6 +28,11 @@ This is an **opt-in feature** that allows the developers to experiment how a for
 
 > WARNING: all options are marked as **BETA** because this might change, once we will add support of a configuration file
 
+If you want to set Rome formatter as your default formatter, you can do so by opening the [command palette]
+and select `Format Document With ...` , then `Configure Default Formatter` and finally select `Rome`. The option will
+appear only for documents that Rome supports.
+
+
 ### Use the formatter with the CLI
 
 The only command that is supported is `format`.
@@ -129,3 +134,6 @@ const expr = [
 ```
 
 As you can see the first array, which has a suppression comment, is left untouched! 
+
+
+[command palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette
