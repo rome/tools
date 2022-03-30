@@ -2,7 +2,7 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import "react-tabs/style/react-tabs.css";
 import init, { run } from "../pkg/rome_playground";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
-import { useEffect, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
@@ -62,7 +62,6 @@ function App() {
 
 	const searchParams = new URLSearchParams(window.location.search);
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
-	const [language, setLanguage] = useState("js");
 	const [code, setCode] = useState(
 		window.location.hash !== "#" ? atob(window.location.hash.substring(1)) : "",
 	);
@@ -80,9 +79,9 @@ function App() {
 	);
 	const [isJsx, setIsJsx] = useState(searchParams.get("jsx") === "true");
 
-	useEffect(
+	const language = useMemo(
 		() => {
-			setLanguage(getLanguage(isJsx, isTypeScript));
+			return getLanguage(isJsx, isTypeScript);
 		},
 		[isJsx, isTypeScript],
 	);
