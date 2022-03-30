@@ -1,5 +1,12 @@
 ## Getting Started
 
+Rome works on Linux, macOS, and Windows operative systems. 
+
+On macOS, both M1 (arm64) and Intel (x64) executables are provided. On Linux and Windows, only x64 is supported.
+
+
+
+
 Install Rome using any of the following installation methods.
 
 ### Install Rome official VS Code extension
@@ -46,6 +53,17 @@ curl -L https://github.com/rome/tools/releases/download/latest/rome-<OS>-<ARCH> 
 chmod +x rome
 ```
 
+Where `OS` and `ARCH` follow the Node.js syntax convention:
+
+- `OS` is one of the following values: `win32`, `darwin` or `linux`
+- `ARCH` is one of the following values: `arm64` or `x64`
+
+
+|         | `win32`       | `darwin`       | `linux`       |
+|---------|---------------|----------------|---------------|
+| `arm64` | `win32-arm64` | `darwin-arm64` | `linux-arm64` | 
+| `x64`   | `win32-x64`   | `darwin-arm64` | `linux-arm64` | 
+
 Please make sure to choose the correct architecture from the [releases page](https://github.com/rome/tools/releases).
 
 
@@ -53,3 +71,5 @@ Please make sure to choose the correct architecture from the [releases page](htt
 
 - check the [formatter section](/formatter#use-the-formatter-with-the-cli) for options and commands;
 - check the options available in the [VS Code extension](/formatter#use-the-formatter-with-the-vscode-extension)
+
+
