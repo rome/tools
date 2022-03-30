@@ -2,7 +2,7 @@
 
 You can use the formatter via our [VS Code extension] or by downloading our CLI directly from our [release page].
 
-> WARNING: the CLI and VS Code extension are packaged with separate binaries, which means that if you don't
+> WARNING: The CLI and VS Code extension are packaged with separate binaries, which means that if you don't
 > use our default options, you will have to **pass them to both the extension AND the CLI**.
 >
 > This is a temporary choice to allow people to play with our formatter. This will change in the near future.
