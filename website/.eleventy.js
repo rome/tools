@@ -5,6 +5,7 @@ const markdownIt = require("markdown-it");
 const markdownItHeaderSections = require("markdown-it-header-sections");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItImageSize = require("markdown-it-imsize");
+const markdownItFootnote = require("markdown-it-footnote");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
@@ -52,6 +53,18 @@ module.exports = function(eleventyConfig) {
 	md.use(markdownItHeaderSections);
 
 	md.use(markdownItImageSize);
+
+	md.use(markdownItFootnote);
+
+	md.renderer.rules.footnote_caption = (tokens, idx) => {
+		let n = Number(tokens[idx].meta.id + 1).toString();
+
+		if (tokens[idx].meta.subId > 0) {
+			n += ":" + tokens[idx].meta.subId;
+		}
+
+		return n;
+	};
 
 	md.use(
 		markdownItAnchor,

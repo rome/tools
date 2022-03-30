@@ -12,7 +12,7 @@ tags:
 permalink: /blog/2021/09/21/rome-will-be-rewritten-in-rust.html
 layout: layouts/blog.liquid
 social-image: social-logo-rust.png
-cover-image: rust-cover.png
+cover-image: rust-cover.jpg
 ---
 
 Rome started off written in JavaScript because that is the language of choice for our team and it made it easier for others in the community to join as contributors. We love JavaScript and TypeScript (and HTML and CSS) at Rome, and we want to build the very best tooling possible for these languages. For a number of reasons, we've decided that Rust will provide a better foundation for this tooling.
@@ -23,7 +23,7 @@ We are also taking the opportunity to explore fundamental shifts in the architec
 
 ## Why write Rome in Rust?
 
-Many others have communicated the performance, memory, and safety benefits of Rust before us - let's just say everyone who has ever said Rust is good is correct. However, our biggest concern was our own productivity. 
+Many others have communicated the performance, memory, and safety benefits of Rust before us - let's just say everyone who has ever said Rust is good is correct. However, our biggest concern was our own productivity.
 
 It was initially pretty hard to imagine a small team of JavaScript developers getting ramped up in a new language with enough expertise to build complex language tooling and be productive in a matter of weeks. After some prototyping however, we quickly realized we might actually be more productive in Rust.
 
@@ -126,7 +126,7 @@ Node(Program,
 
 However, this specific type of Concrete Syntax Tree (CST) inherits a lot of the same problems as an AST - It still requires valid syntax and it's easy to lose track of the original source text when making edits to the tree.
 
-To reproduce the benefits of both lexical tokens and a syntactic tree, we need a different data structure for our CST that meets all of the following: 
+To reproduce the benefits of both lexical tokens and a syntactic tree, we need a different data structure for our CST that meets all of the following:
 
 - Must be a tree where the nodes of the tree represent abstract syntactic structure.
 - Must contain lexical tokens that represent the literal source text.
@@ -170,7 +170,7 @@ To make this easy to use, we'll also wrap the tree in another API that looks a l
 fn visitor(node: Node) -> Option<_> {
 	// checks if the current node is a `VariableDeclarator` and returns if it's not
 	let variable_declarator = node.cast::<VariableDeclarator>()?;
-	
+
 	// checks if the variable_declarator has a valid id field and returns if not
 	let id = variable_declarator.id()?;
 
@@ -218,6 +218,6 @@ Taking the time to explore Rust presented us with the opportunity to identify th
 
 We have decided to move forward with a Rust-powered Rome. We've spent the last several weeks experimenting and prototyping, and found a lot to be excited about for the future. We're reaching the end of the prototype phase, and we'll be working out in the open to turn this into reality.
 
-We're building a foundation for the future of JavaScript and Web tooling - tackling some of the largest challenges that these communities have faced for many years. 
+We're building a foundation for the future of JavaScript and Web tooling - tackling some of the largest challenges that these communities have faced for many years.
 
 If you're a Rust developer and you're excited to get involved, we are currently [hiring for senior developers experienced in both Rust and compiler/language tooling](https://rome-tools-inc.breezy.hr/p/cf7ddbd89110).
