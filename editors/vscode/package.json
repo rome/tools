@@ -22,6 +22,21 @@
 		"vscode": "^1.63.0"
 	},
 	"contributes": {
+		"languages": [
+			{
+				"id": "rome_syntax_tree",
+				"extensions": [
+					".rast"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "rome_syntax_tree",
+				"scopeName": "source.rome_syntax_tree",
+				"path": "rome_syntax_tree.tmGrammar.json"
+			}
+		],
 		"commands": [
 			{
 				"command": "rome.syntaxTree",
@@ -29,8 +44,14 @@
 				"category": "Rome"
 			}
 		],
-
-
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "rome.syntaxTree",
+					"when": "inRomeProject"
+				}
+			]
+		},
 		"configuration": {
 			"title": "Rome",
 			"type": "object",

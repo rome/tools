@@ -13,7 +13,7 @@ pub struct SyntaxTreePayload {
     pub text_document: TextDocumentIdentifier,
 }
 
-pub fn syntax_tree(document: Document) -> Result<Option<String>> {
+pub fn syntax_tree(document: Document) -> Result<String> {
     info!("Showing syntax tree");
     trace!("Showing syntax tree for: {:?}", document);
     let text = &document.text;
@@ -22,5 +22,5 @@ pub fn syntax_tree(document: Document) -> Result<Option<String>> {
     let parse_result = parse(text, file_id, source_type);
     let cst = format!("{:#?}", parse_result.tree());
 
-    Ok(Some(cst))
+    Ok(cst)
 }

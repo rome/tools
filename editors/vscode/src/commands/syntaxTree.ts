@@ -7,15 +7,13 @@ import {
 	TextDocumentContentProvider,
 	workspace,
 	ViewColumn,
-	languages,
 	Disposable,
-	commands,
 	DocumentLinkProvider,
 	TextDocument,
 	DocumentLink,
 	EventEmitter,
 	TextEditor,
-	TextDocumentChangeEvent,
+	TextDocumentChangeEvent, languages,
 } from "vscode";
 import { SyntaxTreeParams, syntaxTreeRequest } from "../lsp_requests";
 import { SyntaxTreeDocument } from "./syntaxTreeDocument";
@@ -32,7 +30,7 @@ class SyntaxTreeProvider
 	readonly session: Session;
 	static scheme = "rome";
 	public readonly uri: Uri = Uri.parse(
-		`${SyntaxTreeProvider.scheme}:syntax_tree`,
+		`${SyntaxTreeProvider.scheme}:syntax_tree/tree.rast`,
 	);
 	readonly eventEmitter = new EventEmitter<Uri>();
 
@@ -135,6 +133,17 @@ export function syntaxTree(session: Session): Command {
 			provider,
 		),
 	);
+
+	session.subscriptions.push(
+
+	languages.setLanguageConfiguration(
+		"rome_syntax_tree",
+		{
+			brackets: [["[", ")"]]
+		}
+	)
+	);
+
 
 	// we return a function that instructs the command what to do
 	// when opening a document
