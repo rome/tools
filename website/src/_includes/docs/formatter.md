@@ -1,7 +1,6 @@
 ## Formatter
 
-You can use the Rome formatter via our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome)
-or by downloading our CLI directly from our  [release page](https://github.com/rome/tools/releases).
+You can use the Rome formatter via our [VS Code extension] or by downloading our CLI directly from our [release page].
 
 > WARNING: both the CLI and the VS Code extension are packaged with separated binaries, which means that if you don't 
 > use our default options, you will have to make sure to **pass them to both the extension AND the CLI**.
@@ -135,5 +134,90 @@ const expr = [
 
 As you can see the first array, which has a suppression comment, is left untouched! 
 
+### Differences with Prettier/dprint
 
+Rome formatter uses a CST to implement its algorithms - as supposed to Prettier or dprint, which use an 
+AST -, which means that it has to deal with a different set of problems e.g. comments and how to place them.
+
+As you might know, comments can appear almost everywhere inside a program, which can make the implementation
+of a formatter more difficult.
+
+In a CST, comments are attached to tokens, so it's possible to extract this information when inspecting
+a single node. 
+
+Considering these assumptions, the Rome team had to create some heuristics and concepts in order to 
+**consistently format comments inside a program**.
+
+#### Comments
+
+The placements of some comments might be different, for example in JavaScript functions and JavaScript classes. 
+
+A function has a "head" and a "body":
+- the head is where we define the name of the function and its signature (its parameters, return type, etc.);
+- the body is where we define the implementation of the function, usually - but not only - inside a block `{}`;
+
+Our formatter marks a function head as a hard group, while the body is a normal group. This means that all 
+the comments inside the head are "pushed out" and moved outside it, making the formatting **always consistent**.
+
+Here's an example against Prettier/dprint, we place comments inside the head of a function:
+
+```js
+function // something
+ a(b, c)  {
+  let a = "f";
+}
+
+function a(b, c) // something 
+{
+    let a = "f";
+}
+```
+
+This how Rome and Prettier format this code:
+```js
+// Rome
+function a(b, c) {
+	// something
+	let a = "f";
+}
+
+function a(b, c) {
+    // something
+    let a = "f";
+}
+
+
+// Prettier/dprint
+function // something
+a(b, c) {
+    let a = "f";
+}
+function a(b, c) {
+    // something
+    let a = "f";
+}
+```
+
+Please check our [playground] and its result
+
+#### Migrate from other formatters
+
+Rome doesn't support a lot of options like other web formatters, which means that particular styles 
+won't be available to all developers.
+
+To migrate from suppression comments of the old formatter, it's recommended to run a global search and replace against the code
+base and replace the formatting comment with:
+
+```block
+// rome-ignore format: migration from <name_of_former_formatter>
+```
+
+Then, you are free to change the reason of the suppression that you want.
+
+Run Rome formatter and make sure that **the code that was ignored is still the same**.
+
+
+[VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
+[release page]: https://github.com/rome/tools/releases
+[playground]: https://play.rome.tools/?lineWidth=80&indentStyle=tab&indentWidth=2&typescript=true&jsx=false#ZnVuY3Rpb24gLy8gc29tZXRoaW5nCiBhKGIsIGMpICB7CiAgbGV0IGEgPSAiZiI7Cn0KCmZ1bmN0aW9uIGEoYiwgYykgLy8gc29tZXRoaW5nIAp7CiAgICBsZXQgYSA9ICJmIjsKfQ==
 [command palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette
