@@ -71,4 +71,11 @@ pub struct MarkupNode<'fmt> {
 /// Text nodes are formatted lazily by storing an [fmt::Arguments] struct, this
 /// means [Markup] shares the same restriction as the values returned by
 /// [format_args] and can't be stored in a `let` binding for instance
+#[derive(Copy, Clone)]
 pub struct Markup<'fmt>(pub &'fmt [MarkupNode<'fmt>]);
+
+impl<'fmt> Markup<'fmt> {
+    pub(crate) fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
+}

@@ -11,6 +11,7 @@ rome_markup = { path = "../rome_markup" }
 lazy_static = "1.4.0"
 termcolor = "1.1.2"
 similar = "2.1.0"
+unicode-width = "0.1.9"
 
 [dev-dependencies]
 trybuild = "1.0"
