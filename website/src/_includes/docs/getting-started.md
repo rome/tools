@@ -2,10 +2,7 @@
 
 Rome works on Linux, macOS, and Windows operative systems. 
 
-On macOS, both M1 (arm64) and Intel (x64) executables are provided. On Linux and Windows, only x64 is supported.
-
-
-
+On macOS, Linux and Windows we both support x64 and ARM architectures.
 
 Install Rome using any of the following installation methods.
 
@@ -62,7 +59,7 @@ Where `OS` and `ARCH` follow the Node.js syntax convention:
 |         | `win32`       | `darwin`       | `linux`       |
 |---------|---------------|----------------|---------------|
 | `arm64` | `win32-arm64` | `darwin-arm64` | `linux-arm64` | 
-| `x64`   | `win32-x64`   | `darwin-arm64` | `linux-arm64` | 
+| `x64`   | `win32-x64`   | `darwin-x64`   | `linux-x64`   | 
 
 Please make sure to choose the correct architecture from the [releases page](https://github.com/rome/tools/releases).
 
