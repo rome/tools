@@ -12,7 +12,7 @@ impl ToFormatElement for TsGetterSignatureTypeMember {
         let l_paren = self.l_paren_token().format(formatter)?;
         let r_paren = self.r_paren_token().format(formatter)?;
         let type_annotation = self.type_annotation().format_or_empty(formatter)?;
-        let separator = format_type_member_separator(self.separator_token(), formatter)?;
+        let separator = format_type_member_separator(self.separator_token(), formatter);
 
         Ok(format_elements![
             get,

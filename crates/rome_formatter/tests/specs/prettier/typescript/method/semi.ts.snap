@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: semi.ts
-
 ---
 # Input
 ```js
@@ -18,7 +16,7 @@ function pickCard(x: number): {suit: string; card: number; };
 
 # Output
 ```js
-declare module 'foo' {
+declare module "foo" {
   function foo(namespace: string): void;
   function bar(namespace: string): void;
 }

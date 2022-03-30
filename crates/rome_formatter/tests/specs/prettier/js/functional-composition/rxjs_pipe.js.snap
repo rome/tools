@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: rxjs_pipe.js
-
 ---
 # Input
 ```js
@@ -22,8 +20,8 @@ source$.pipe(
 
 # Output
 ```js
-import { range } from 'rxjs/observable/range';
-import { map, filter, scan } from 'rxjs/operators';
+import { range } from "rxjs/observable/range";
+import { map, filter, scan } from "rxjs/operators";
 
 const source$ = range(0, 10);
 

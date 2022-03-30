@@ -484,7 +484,8 @@ fn parse_ts_module_block(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump(T!['{']);
-    parse_module_item_list(p, ModuleItemListParent::Block);
+    let items_list = p.start();
+    parse_module_item_list(p, ModuleItemListParent::Block, items_list);
     p.expect(T!['}']);
 
     Present(m.complete(p, TS_MODULE_BLOCK))

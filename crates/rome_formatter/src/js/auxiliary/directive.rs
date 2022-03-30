@@ -1,6 +1,4 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
-use crate::utils::format_with_semicolon;
+use crate::utils::{format_string_literal_token, format_with_semicolon};
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
 use rome_js_syntax::JsDirective;
@@ -13,6 +11,10 @@ impl ToFormatElement for JsDirective {
             semicolon_token,
         } = self.as_fields();
 
-        format_with_semicolon(formatter, value_token.format(formatter)?, semicolon_token)
+        format_with_semicolon(
+            formatter,
+            format_string_literal_token(value_token?, formatter),
+            semicolon_token,
+        )
     }
 }

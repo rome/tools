@@ -22,7 +22,7 @@ impl ToFormatElement for TsUnionType {
                 // group does not break
                 let replaced =
                     if_group_breaks(format_elements![Token::from(token.clone()), space_token()]);
-                formatter.format_replaced(&token, replaced)?
+                formatter.format_replaced(&token, replaced)
             }
             None => if_group_breaks(format_elements![token("|"), space_token()]),
         };

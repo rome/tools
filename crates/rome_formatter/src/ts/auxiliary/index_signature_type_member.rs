@@ -18,7 +18,7 @@ impl ToFormatElement for TsIndexSignatureTypeMember {
         let r_bracket = self.r_brack_token().format(formatter)?;
 
         let type_annotation = self.type_annotation().format(formatter)?;
-        let separator = format_type_member_separator(self.separator_token(), formatter)?;
+        let separator = format_type_member_separator(self.separator_token(), formatter);
 
         Ok(format_elements![
             readonly,

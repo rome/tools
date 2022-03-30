@@ -17,7 +17,7 @@ impl ToFormatElement for TsConstructSignatureTypeMember {
         let type_parameters = type_parameters.format_or_empty(formatter)?;
         let parameters = parameters.format(formatter)?;
         let type_annotation = type_annotation.format_or_empty(formatter)?;
-        let separator_token = format_type_member_separator(separator_token, formatter)?;
+        let separator_token = format_type_member_separator(separator_token, formatter);
 
         Ok(format_elements![
             new,

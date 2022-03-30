@@ -1,8 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: reselect_createselector.js
-
 ---
 # Input
 ```js
@@ -23,7 +21,7 @@ const bar = createSelector(
 
 # Output
 ```js
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 const foo = createSelector(
   getIds,
