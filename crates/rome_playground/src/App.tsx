@@ -34,6 +34,16 @@ function formatWithPrettier(
   }
 }
 
+function getLanguage(isJsx: boolean, isTypeScript: boolean): "jsx" | "typescript" | "js" {
+  if (isTypeScript) {
+   return "typescript";
+  } else if (isJsx) {
+    return "jsx";
+  } else {
+    return "js";
+  }
+}
+
 function App() {
   useEffect(() => {
     init()
@@ -66,13 +76,7 @@ function App() {
   const [isJsx, setIsJsx] = useState(searchParams.get("jsx") === "true");
 
   useEffect(() => {
-    if (isTypeScript) {
-      setLanguage("typescript");
-    } else if (isJsx) {
-      setLanguage("jsx")
-    } else {
-      setLanguage("js")
-    }
+    setLanguage(getLanguage(isJsx, isTypeScript));
   }, [isJsx, isTypeScript]);
 
   useEffect(() => {
