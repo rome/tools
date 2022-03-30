@@ -1,5 +1,0 @@
-error: unexpected non-string literal
- --> tests/markup/invalid_literal.rs:3:9
-  |
-3 |         123
-  |         ^^^

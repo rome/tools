@@ -14,7 +14,7 @@ The `Console` trait can be used to print two types of information to the user: m
 
 ```rust
 console.message(markup! {
-    <Info>"Processed "<Emphasis>"{count}"</Emphasis>" files"</Info>
+    <Info>"Processed "<Emphasis>{count}</Emphasis>" files"</Info>
 });
 
 console.diagnostic(

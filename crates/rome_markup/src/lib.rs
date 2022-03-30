@@ -1,4 +1,4 @@
-use proc_macro2::{TokenStream, TokenTree};
+use proc_macro2::{Delimiter, TokenStream, TokenTree};
 use proc_macro_error::*;
 use quote::quote;
 
@@ -72,23 +72,35 @@ pub fn markup(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 }
             },
             TokenTree::Literal(literal) => {
-                let literal_str = literal.to_string();
-                if literal_str.starts_with('"') {
+                let elements: Vec<_> = stack
+                    .iter()
+                    .map(|entry| quote! { rome_console::MarkupElement::#entry })
+                    .collect();
+
+                output.push(quote! {
+                    rome_console::MarkupNode {
+                        elements: &[ #( #elements ),* ],
+                        content: &(#literal),
+                    }
+                });
+            }
+            TokenTree::Group(group) => match group.delimiter() {
+                Delimiter::Brace => {
                     let elements: Vec<_> = stack
                         .iter()
                         .map(|entry| quote! { rome_console::MarkupElement::#entry })
                         .collect();
 
+                    let body = group.stream();
                     output.push(quote! {
                         rome_console::MarkupNode {
                             elements: &[ #( #elements ),* ],
-                            content: format_args!(#literal),
+                            content: &(#body),
                         }
                     });
-                } else {
-                    abort!(literal.span(), "unexpected non-string literal");
                 }
-            }
+                _ => abort!(group.span(), "unexpected token"),
+            },
             _ => abort!(token.span(), "unexpected token"),
         }
     }
