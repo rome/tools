@@ -156,7 +156,7 @@ A function has a "head" and a "body":
 - the head is where we define the name of the function and its signature (its parameters, return type, etc.);
 - the body is where we define the implementation of the function, usually - but not only - inside a block `{}`;
 
-Our formatter marks a function head as a [hard group](#hard-groups), while the body is a normal [group](#groups). This means that all 
+Our formatter marks a function head as a hard group, while the body is a normal group. This means that all 
 the comments inside the head are "pushed out" and moved outside it, making the formatting **always consistent**.
 
 Here's an example against Prettier/dprint, we place comments inside the head of a function:
@@ -217,21 +217,7 @@ Then, you are free to change the reason of the suppression that you want.
 Run Rome formatter and make sure that **the code that was ignored is still the same**.
 
 
-### Formatter internals
-
-If you are interested in the internals of our formatter, the following section will explain some of them.
-
-### Groups
-
-...description will arrive soon.
-
-### Hard groups
-
-...description will arrive soon.
-
-
 [VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
 [release page]: https://github.com/rome/tools/releases
 [playground]: https://play.rome.tools/?lineWidth=80&indentStyle=tab&indentWidth=2&typescript=true&jsx=false#ZnVuY3Rpb24gLy8gc29tZXRoaW5nCiBhKGIsIGMpICB7CiAgbGV0IGEgPSAiZiI7Cn0KCmZ1bmN0aW9uIGEoYiwgYykgLy8gc29tZXRoaW5nIAp7CiAgICBsZXQgYSA9ICJmIjsKfQ==
-
 [command palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette
