@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "cargo run --bin rome format ./src"
   },
   "dependencies": {
     "@uiw/react-textarea-code-editor": "^1.4.16",

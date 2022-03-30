@@ -5,13 +5,20 @@ tad ironic, but in the future we can use this as a dogfood for Rome.
 
 ## Installation
 
-[wasm-pack](https://github.com/rustwasm/wasm-pack) is 
+[`wasm-pack`](https://github.com/rustwasm/wasm-pack) is 
 required to build the playground. It's assumed that you've
 cloned the playground repo in the same director as the tools repo.
 
-To build run:
-```
+Follow the [instructions](https://rustwasm.github.io/wasm-pack/installer/) to install `wasm-pack`. 
+
+Once installed, build the Rust bindings:
+
+```shell
 wasm-pack build --target web
 ```
 
-Then, if you want to run in development: `npm run dev`
+Then, if you want to run in development 
+
+```shell
+npm run dev
+```

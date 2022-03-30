@@ -208,7 +208,7 @@ won't be available to all developers.
 To migrate from suppression comments of the old formatter, it's recommended to run a global search and replace against the code
 base and replace the formatting comment with:
 
-```block
+```
 // rome-ignore format: migration from <name_of_former_formatter>
 ```
 
