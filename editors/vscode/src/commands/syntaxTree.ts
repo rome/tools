@@ -13,7 +13,8 @@ import {
 	DocumentLink,
 	EventEmitter,
 	TextEditor,
-	TextDocumentChangeEvent, languages,
+	TextDocumentChangeEvent,
+	languages,
 } from "vscode";
 import { SyntaxTreeParams, syntaxTreeRequest } from "../lsp_requests";
 import { SyntaxTreeDocument } from "./syntaxTreeDocument";
@@ -135,15 +136,11 @@ export function syntaxTree(session: Session): Command {
 	);
 
 	session.subscriptions.push(
-
-	languages.setLanguageConfiguration(
-		"rome_syntax_tree",
-		{
-			brackets: [["[", ")"]]
-		}
-	)
+		languages.setLanguageConfiguration(
+			"rome_syntax_tree",
+			{ brackets: [["[", ")"]] },
+		),
 	);
-
 
 	// we return a function that instructs the command what to do
 	// when opening a document
