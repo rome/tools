@@ -1,8 +1,8 @@
 use crate::green::NodeCacheNodeEntryMut;
 use crate::{
-    api::TriviaPiece,
     cow_mut::CowMut,
     green::{GreenElement, NodeCache},
+    syntax::TriviaPiece,
     GreenNode, Language, NodeOrToken, ParsedChildren, SyntaxFactory, SyntaxKind, SyntaxNode,
 };
 use std::marker::PhantomData;

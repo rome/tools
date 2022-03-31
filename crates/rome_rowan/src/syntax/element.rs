@@ -1,4 +1,4 @@
-use crate::api::SyntaxTrivia;
+use crate::syntax::SyntaxTrivia;
 use crate::{cursor, Language, NodeOrToken, SyntaxNode, SyntaxToken};
 use std::iter;
 use text_size::TextRange;

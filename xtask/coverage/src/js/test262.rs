@@ -4,7 +4,7 @@ use crate::runner::{
 use regex::Regex;
 use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::AstNode;
-use rome_rowan::api::SyntaxKind;
+use rome_rowan::syntax::SyntaxKind;
 use serde::Deserialize;
 use std::io;
 use std::path::Path;

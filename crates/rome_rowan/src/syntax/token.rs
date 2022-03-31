@@ -1,4 +1,4 @@
-use crate::api::SyntaxTrivia;
+use crate::syntax::SyntaxTrivia;
 use crate::{cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode};
 use std::fmt;
 use std::marker::PhantomData;

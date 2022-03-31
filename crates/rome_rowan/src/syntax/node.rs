@@ -1,5 +1,5 @@
-use crate::api::element::SyntaxElement;
-use crate::api::SyntaxTrivia;
+use crate::syntax::element::SyntaxElement;
+use crate::syntax::SyntaxTrivia;
 use crate::{
     cursor, Direction, GreenNode, Language, NodeOrToken, SyntaxKind, SyntaxList, SyntaxText,
     SyntaxToken, TokenAtOffset, WalkEvent,

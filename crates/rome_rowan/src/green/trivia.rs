@@ -115,8 +115,8 @@ impl GreenTrivia {
 
 #[cfg(test)]
 mod tests {
-    use crate::api::TriviaPieceKind;
     use crate::green::trivia::{GreenTrivia, GreenTriviaHead};
+    use crate::syntax::TriviaPieceKind;
     use crate::TriviaPiece;
     use text_size::TextSize;
 

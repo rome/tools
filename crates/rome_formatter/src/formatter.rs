@@ -16,8 +16,7 @@ use crate::{
     ToFormatElement,
 };
 use rome_js_syntax::{AstNode, AstNodeList, AstSeparatedList, JsLanguage, SyntaxNode, SyntaxToken};
-use rome_rowan::api::SyntaxTriviaPiece;
-use rome_rowan::Language;
+use rome_rowan::{Language, SyntaxTriviaPiece};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
