@@ -1,6 +1,5 @@
 use rome_js_syntax::{AstNode, SyntaxNode};
-use rome_rowan::api::SyntaxTriviaPieceComments;
-use rome_rowan::{Language, SyntaxToken, TextRange};
+use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPieceComments, TextRange};
 
 use crate::format_elements;
 use crate::intersperse::{Intersperse, IntersperseFn};

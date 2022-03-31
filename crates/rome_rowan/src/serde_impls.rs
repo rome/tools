@@ -2,7 +2,7 @@ use serde::ser::{Serialize, SerializeMap, SerializeSeq, Serializer};
 use std::fmt;
 
 use crate::{
-    api::{Language, RawLanguage, SyntaxNode, SyntaxToken},
+    syntax::{Language, RawLanguage, SyntaxNode, SyntaxToken},
     NodeOrToken,
 };
 
@@ -73,7 +73,7 @@ impl<L: Language> Serialize for Children<&'_ SyntaxNode<L>> {
 
 #[test]
 pub fn serialization() {
-    let mut builder: crate::TreeBuilder<crate::api::RawLanguage> = crate::TreeBuilder::new();
+    let mut builder: crate::TreeBuilder<crate::syntax::RawLanguage> = crate::TreeBuilder::new();
     builder.start_node(crate::RawSyntaxKind(0));
     builder.token(crate::RawSyntaxKind(0), "\n\tlet ");
     builder.finish_node();

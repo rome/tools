@@ -3,8 +3,8 @@ use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 use text_size::TextSize;
 
-use crate::api::{TriviaPiece, TriviaPieceKind};
 use crate::green::Slot;
+use crate::syntax::{TriviaPiece, TriviaPieceKind};
 use crate::{
     green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
     RawSyntaxKind,

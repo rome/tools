@@ -216,7 +216,7 @@ impl ops::Deref for GreenToken {
 
 #[cfg(test)]
 mod tests {
-    use crate::api::TriviaPiece;
+    use crate::syntax::TriviaPiece;
 
     use super::*;
     use quickcheck_macros::*;

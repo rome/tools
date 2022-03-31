@@ -3,8 +3,7 @@ use rome_diagnostics::file::FileId;
 use rome_diagnostics::Diagnostic;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
-use rome_rowan::api::TriviaPieceKind;
-use rome_rowan::TextSize;
+use rome_rowan::{TextSize, TriviaPieceKind};
 use std::collections::VecDeque;
 
 /// A comment or a whitespace trivia in the source code.

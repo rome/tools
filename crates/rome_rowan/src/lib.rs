@@ -13,7 +13,7 @@ pub mod cursor;
 #[allow(unsafe_code)]
 mod green;
 
-pub mod api;
+pub mod syntax;
 mod syntax_text;
 mod utility_types;
 
@@ -31,11 +31,12 @@ mod tree_builder;
 pub use text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
-    api::{
-        Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
-        SyntaxNodeChildren, SyntaxSlot, SyntaxSlots, SyntaxToken, TriviaPiece,
-    },
     green::RawSyntaxKind,
+    syntax::{
+        Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
+        SyntaxNodeChildren, SyntaxSlot, SyntaxSlots, SyntaxToken, SyntaxTriviaPiece,
+        SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind,
+    },
     syntax_factory::*,
     syntax_text::SyntaxText,
     tree_builder::{Checkpoint, TreeBuilder},
