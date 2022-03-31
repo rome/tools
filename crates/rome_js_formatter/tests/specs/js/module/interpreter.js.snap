@@ -1,5 +1,5 @@
 ---
-source: crates/rome_formatter/tests/spec_test.rs
+source: crates/rome_js_formatter/tests/spec_test.rs
 assertion_line: 198
 expression: interpreter.js
 

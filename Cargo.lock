@@ -1403,29 +1403,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome_formatter"
-version = "0.0.0"
-dependencies = [
- "cfg-if",
- "ctor",
- "insta",
- "parking_lot 0.12.0",
- "rome_core",
- "rome_diagnostics",
- "rome_fs",
- "rome_js_parser",
- "rome_js_syntax",
- "rome_rowan",
- "serde",
- "serde_json",
- "similar",
- "similar-asserts",
- "tests_macros",
- "thiserror",
- "tracing",
-]
-
-[[package]]
 name = "rome_fs"
 version = "0.0.0"
 dependencies = [
