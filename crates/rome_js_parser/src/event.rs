@@ -1,14 +1,13 @@
 //! Events emitted by the Parser which are then constructed into a syntax tree
 
 use std::mem;
+use std::num::NonZeroU32;
 
 use crate::lexer::TextSize;
-use crate::{ParseDiagnostic, Parser, TreeSink};
-use rome_js_syntax::JsSyntaxKind::{self, *};
-use rome_rowan::TextRange;
-
 use crate::parser::rewrite_parser::{RewriteParser, RewriteToken};
 use crate::parser::Checkpoint;
+use crate::{ParseDiagnostic, Parser, TreeSink};
+use rome_js_syntax::JsSyntaxKind::{self, *};
 
 /// Events emitted by the Parser, these events are later
 /// made into a syntax tree with `process` into TreeSink.
@@ -23,29 +22,25 @@ pub enum Event {
     /// become the children of the respective node.
     Start {
         kind: JsSyntaxKind,
-        start: TextSize,
-        forward_parent: Option<u32>,
+        forward_parent: Option<NonZeroU32>,
     },
 
     /// Complete the previous `Start` event
-    Finish { end: TextSize },
+    Finish,
 
     /// Produce a single leaf-element.
-    /// `n_raw_tokens` is used to glue complex contextual tokens.
-    /// For example, lexer tokenizes `>>` as `>`, `>`, and
-    /// `n_raw_tokens = 2` is used to produced a single `>>`.
     Token {
         kind: JsSyntaxKind,
-        range: TextRange,
+        /// The end offset of this token.
+        end: TextSize,
     },
 }
 
 impl Event {
-    pub fn tombstone(start: TextSize) -> Self {
+    pub fn tombstone() -> Self {
         Event::Start {
             kind: TOMBSTONE,
             forward_parent: None,
-            start,
         }
     }
 }
@@ -57,7 +52,7 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
     let mut forward_parents = Vec::new();
 
     for i in 0..events.len() {
-        match mem::replace(&mut events[i], Event::tombstone(TextSize::default())) {
+        match &mut events[i] {
             Event::Start {
                 kind: TOMBSTONE, ..
             } => (),
@@ -72,14 +67,13 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
                 // while with the magic forward_parent, it writes: `C <- B <- A`.
 
                 // append `A` into parents.
-                forward_parents.push(kind);
+                forward_parents.push(*kind);
                 let mut idx = i;
-                let mut fp = forward_parent;
+                let mut fp = *forward_parent;
                 while let Some(fwd) = fp {
-                    idx += fwd as usize;
+                    idx += u32::from(fwd) as usize;
                     // append `A`'s forward_parent `B`
-                    fp = match mem::replace(&mut events[idx], Event::tombstone(TextSize::default()))
-                    {
+                    fp = match mem::replace(&mut events[idx], Event::tombstone()) {
                         Event::Start {
                             kind,
                             forward_parent,
@@ -100,8 +94,8 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
                 }
             }
             Event::Finish { .. } => sink.finish_node(),
-            Event::Token { kind, range } => {
-                sink.token(kind, range.len());
+            Event::Token { kind, end } => {
+                sink.token(*kind, *end);
             }
         }
     }
@@ -113,9 +107,9 @@ struct RewriteParseEventsTreeSink<'r, 'p, T> {
 }
 
 impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 'p, T> {
-    fn token(&mut self, kind: JsSyntaxKind, length: TextSize) {
+    fn token(&mut self, kind: JsSyntaxKind, end: TextSize) {
         self.reparse
-            .token(RewriteToken::new(kind, length), &mut self.parser);
+            .token(RewriteToken::new(kind, end), &mut self.parser);
     }
 
     fn start_node(&mut self, kind: JsSyntaxKind) {
@@ -156,7 +150,6 @@ pub(crate) fn rewrite_events<T: RewriteParseEvents>(
     // The current parsed grammar is a super-set of the grammar that gets re-parsed. Thus, any
     // error that applied to the old grammar also applies to the sub-grammar.
     let events: Vec<_> = p.events.split_off(checkpoint.event_pos + 1);
-    p.last_token_event_pos = checkpoint.last_token_pos;
 
     let mut sink = RewriteParseEventsTreeSink {
         parser: RewriteParser::new(p, checkpoint.token_source),

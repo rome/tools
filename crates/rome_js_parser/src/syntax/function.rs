@@ -186,9 +186,11 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     }
 
     p.expect(T![function]);
-    let generator_range = if p.eat(T![*]) {
+    let generator_range = if p.at(T![*]) {
+        let range = p.cur_range();
+        p.bump(T![*]);
         flags |= SignatureFlags::GENERATOR;
-        p.last_range()
+        Some(range)
     } else {
         None
     };
