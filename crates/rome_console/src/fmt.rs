@@ -21,19 +21,21 @@ impl<'a> MarkupElements<'a> {
 }
 
 /// The [Formatter] is the `rome_console` equivalent to [std::fmt::Formatter]:
-/// its never constructed directly by consumers and can only be used through
+/// it's never constructed directly by consumers, and can only be used through
 /// the mutable reference passed to implementations of the [Display] trait).
-/// It manages the state of the markup being printed, and implementations of
+/// It manages the state of the markup to print, and implementations of
 /// [Display] can call into its methods to append content into the current
 /// printing session
 pub struct Formatter<'fmt> {
+    /// Stack of markup elements currently applied to the text being printed
     state: MarkupElements<'fmt>,
+    /// Inner IO writer this [Formatter] will print text into
     writer: &'fmt mut dyn WriteColor,
 }
 
-impl<'a> Formatter<'a> {
+impl<'fmt> Formatter<'fmt> {
     /// Create a new instance of the [Formatter] using the provided `writer` for printing
-    pub(crate) fn new(writer: &'a mut dyn WriteColor) -> Self {
+    pub(crate) fn new(writer: &'fmt mut dyn WriteColor) -> Self {
         Self {
             state: MarkupElements::Root,
             writer,
@@ -47,9 +49,7 @@ impl<'a> Formatter<'a> {
             writer: self.writer,
         }
     }
-}
 
-impl<'fmt> Formatter<'fmt> {
     /// Write a piece of markup into this formatter
     pub fn write_markup(&mut self, markup: Markup) -> io::Result<()> {
         for node in markup.0 {
@@ -60,6 +60,8 @@ impl<'fmt> Formatter<'fmt> {
         Ok(())
     }
 
+    /// Applies the current format in `state` to `writer`, calls `func` to
+    /// print a piece of text, then reset the printing format
     fn with_format(
         &mut self,
         func: impl FnOnce(&mut dyn WriteColor) -> io::Result<()>,
@@ -92,7 +94,7 @@ impl<'fmt> Formatter<'fmt> {
     }
 }
 
-/// Formatting trait for types that be displayed as markup, the `rome_console`
+/// Formatting trait for types to be displayed as markup, the `rome_console`
 /// equivalent to [std::fmt::Display]
 ///
 /// # Example

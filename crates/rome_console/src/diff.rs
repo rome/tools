@@ -119,19 +119,22 @@ impl<'a> Display for Diff<'a> {
 
                     left_line += 1;
 
+                    // Don't print any padding space if the right side is empty anyway
+                    let padding = if right.is_some() { max_line_length } else { 0 };
+
                     // Print the left side in red if the sides are different,
                     // use the standard text color otherwise
                     if !is_same {
                         fmt.write_markup(markup! {
-                            <Error>{format_args!("{left: <0$}", max_line_length)}</Error>
+                            <Error>{format_args!("- {left: <0$}", padding)}</Error>
                         })?;
                     } else {
-                        fmt.write_fmt(format_args!("{left: <0$}", max_line_length))?;
+                        fmt.write_fmt(format_args!("  {left: <0$}", padding))?;
                     }
                 } else if right.is_some() {
                     // If the left side is empty but the right side isn't,
                     // print some padding spaces to align the columns
-                    fmt.write_str(&" ".repeat(max_digits + 1 + max_line_length))?;
+                    fmt.write_str(&" ".repeat(max_digits + 3 + max_line_length))?;
                 }
 
                 if let Some(right) = right {
@@ -148,9 +151,10 @@ impl<'a> Display for Diff<'a> {
                     // use the standard text color otherwise
                     if !is_same {
                         fmt.write_markup(markup! {
-                            <Success>{right}</Success>
+                            <Success>"+ "{right}</Success>
                         })?;
-                    } else {
+                    } else if !right.is_empty() {
+                        fmt.write_str("  ")?;
                         fmt.write_str(right)?;
                     }
                 }
@@ -227,24 +231,24 @@ function name(args) {
 }";
 
         const DIFF_RESULT: &str = "@@ -3,10 +3,8 @@
- 3 dolor                 3 dolor
- 4 sit                   4 sit
- 5 amet,                 5 amet,
- 6 function              6 function name(args) {
- 7 name(                 7 }
- 8     args             
- 9 ) {}                 
-10 consectetur           8 consectetur
-11 adipiscing            9 adipiscing
-12 elit,                10 elit,
+ 3   dolor                 3   dolor
+ 4   sit                   4   sit
+ 5   amet,                 5   amet,
+ 6 - function              6 + function name(args) {
+ 7 - name(                 7 + }
+ 8 -     args
+ 9 - ) {}
+10   consectetur           8   consectetur
+11   adipiscing            9   adipiscing
+12   elit,                10   elit,
 @@ -15,7 +13,5 @@
-15 eiusmod              13 eiusmod
-16                      14 
-17 incididunt           15 incididunt
-18 function             16 function name(args) {
-19 name(                17 }
-20     args             
-21 ) {}                 
+15   eiusmod              13   eiusmod
+16                        14 
+17   incididunt           15   incididunt
+18 - function             16 + function name(args) {
+19 - name(                17 + }
+20 -     args
+21 - ) {}
 ";
 
         let diff = Diff {
