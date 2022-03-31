@@ -77,6 +77,12 @@ pub struct Diff<'a> {
     pub right: &'a str,
 }
 
+/// Lines longer than this will have the remaining characters clipped
+///
+/// This is intended as a safety check to avoid overflowing the console,
+/// for instance when printing minified files
+const MAX_LINE_LENGTH: usize = 250;
+
 impl<'a> Display for Diff<'a> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         let diff = TextDiff::from_lines(self.left, self.right);
@@ -96,7 +102,9 @@ impl<'a> Display for Diff<'a> {
             }
 
             for change in hunk.iter_changes() {
-                max_line_length = max_line_length.max(change.value().trim_end().len());
+                let line = change.value().trim_end();
+                let line_length = line.len().min(MAX_LINE_LENGTH);
+                max_line_length = max_line_length.max(line_length);
             }
         }
 
@@ -143,26 +151,28 @@ impl<'a> Display for Diff<'a> {
 
                         fmt.write_str(" | ")?;
 
+                        let line = change.value().trim_end();
+                        let line_length = line.len().min(MAX_LINE_LENGTH);
+                        let line = &line[..line_length];
+
                         match change.tag() {
                             ChangeTag::Delete => {
                                 fmt.write_markup(markup! {
-                                    <Error>"- "{change.value()}</Error>
+                                    <Error>"- "{line}</Error>
                                 })?;
                             }
                             ChangeTag::Insert => {
                                 fmt.write_markup(markup! {
-                                    <Success>"+ "{change.value()}</Success>
+                                    <Success>"+ "{line}</Success>
                                 })?;
                             }
                             ChangeTag::Equal => {
                                 fmt.write_str("  ")?;
-                                fmt.write_str(change.value())?;
+                                fmt.write_str(line)?;
                             }
                         }
 
-                        if change.missing_newline() {
-                            writeln!(fmt)?;
-                        }
+                        writeln!(fmt)?;
                     }
                 }
                 DiffMode::Split => {
@@ -176,12 +186,16 @@ impl<'a> Display for Diff<'a> {
                     let mut right = Vec::new();
 
                     for change in hunk.iter_changes() {
+                        let line = change.value().trim_end();
+                        let line_length = line.len().min(MAX_LINE_LENGTH);
+                        let line = &line[..line_length];
+
                         match change.tag() {
                             ChangeTag::Delete => {
-                                left.push(Some(change.value().trim_end()));
+                                left.push(Some(line));
                             }
                             ChangeTag::Insert => {
-                                right.push(Some(change.value().trim_end()));
+                                right.push(Some(line));
                             }
                             ChangeTag::Equal => {
                                 let position = left.len().max(right.len());
@@ -195,8 +209,8 @@ impl<'a> Display for Diff<'a> {
                                     right.resize(position, None);
                                 }
 
-                                left.push(Some(change.value().trim_end()));
-                                right.push(Some(change.value().trim_end()));
+                                left.push(Some(line));
+                                right.push(Some(line));
                             }
                         }
                     }
