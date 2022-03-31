@@ -16,7 +16,9 @@ We’re very excited to announce our first release of Rome Formatter, a new form
 
 You can try out our formatter by installing our [Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome). We also have a CLI in an early alpha state that you can download [from our releases page](https://github.com/rome/tools/releases).
 
-Why use our new formatter? Let’s start with performance. Our formatter is extremely fast. It uses our brand new Rust codebase to parse and format faster than the competition. This is extremely important for a few reasons. For one, it’s very common for developers to have a git hook or continuous integration workflow that verifies that their repository is correctly formatted. For existing JavaScript formatters such as Prettier, this can take over 30 seconds on a top computer!
+Why use our new formatter? Let’s start with performance. Our formatter is extremely fast. It uses our brand-new Rust codebase to parse and format faster than the competition. This is extremely important for a few reasons. For one, it’s very common for developers to have a git hook or continuous integration workflow that verifies that their repository is correctly formatted. For existing JavaScript formatters such as Prettier, this can take over 30 seconds on a top computer!
+
+With a Docker container on a continuous integration workflow, this can be even longer. Nobody likes waiting for CI to finish. It disrupts your flow, wasting time and energy, not to mention running up your AWS or GCP bill.
 
 As a quick example of our performance, we decided to compare our formatter to Prettier, a popular JavaScript formatter by formatting some large open source projects on an M1 Macbook Air with 8GB of RAM [^1].
 
@@ -26,7 +28,7 @@ We started by running our formatter on popular open source repositories such as 
 
 <div style="display: flex; flex-direction: column; align-items: center; padding: 20px">
   <img
-    style="max-width: 1000px"
+    style="max-width: 800px"
     alt="Bar graph comparing Prettier and Rome performance in formatting the ESLint, Webpack and TypeScript compiler codebases. For ESLint, Prettier is at 5.1 seconds while Rome is at 0.4 seconds. For Webpack, Prettier is at 6.9 seconds and Rome is at 0.74 seconds. For TypeScript, Prettier is at 30 seconds while Rome is at 2.8 seconds"
     src="/img/blog/formatter_benchmark.png"
   />
