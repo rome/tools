@@ -1,6 +1,5 @@
 use rome_js_syntax::{AstNode, SyntaxNode};
-use rome_rowan::api::SyntaxTriviaPieceComments;
-use rome_rowan::{Language, SyntaxToken, TextRange};
+use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPieceComments, TextRange};
 
 use crate::format_elements;
 use crate::intersperse::{Intersperse, IntersperseFn};
@@ -27,7 +26,7 @@ pub fn empty_element() -> FormatElement {
 /// Soft line breaks are omitted if the enclosing `Group` fits on a single line
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a,"),
@@ -42,7 +41,7 @@ pub fn empty_element() -> FormatElement {
 ///
 /// Soft line breaks are emitted if the enclosing `Group` doesn't fit on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a long word,"),
@@ -69,7 +68,7 @@ pub const fn soft_line_break() -> FormatElement {
 ///
 /// It forces a line break, even if the enclosing `Group` would otherwise fit on a single line.
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, FormatOptions, hard_line_break};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, FormatOptions, hard_line_break};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a,"),
@@ -91,7 +90,7 @@ pub const fn hard_line_break() -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, FormatOptions, empty_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, FormatOptions, empty_line};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a,"),
@@ -113,7 +112,7 @@ pub const fn empty_line() -> FormatElement {
 ///
 /// The line breaks are emitted as spaces if the enclosing `Group` fits on a a single line:
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a,"),
@@ -126,7 +125,7 @@ pub const fn empty_line() -> FormatElement {
 ///
 /// The printer breaks the lines if the enclosing `Group` doesn't fit on a single line:
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a long word,"),
@@ -156,7 +155,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{token, format_element, FormatOptions};
+/// use rome_formatter::{token, format_element, FormatOptions};
 /// let elements = token("Hello World");
 ///
 /// assert_eq!("Hello World", format_element(&elements, FormatOptions::default()).as_code());
@@ -166,7 +165,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// enclosed in quotes (depending on the target language).
 ///
 /// ```
-/// use rome_js_formatter::{FormatOptions, token, format_element};
+/// use rome_formatter::{FormatOptions, token, format_element};
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = token("\"Hello\\tWorld\"");
@@ -187,7 +186,7 @@ pub const fn token(text: &'static str) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{FormatOptions, token, format_element, line_suffix, format_elements};
+/// use rome_formatter::{FormatOptions, token, format_element, line_suffix, format_elements};
 ///
 /// let elements = format_elements![token("a"), line_suffix(token("c")), token("b")];
 ///
@@ -206,7 +205,7 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{FormatOptions, token, format_element, comment, format_elements, group_elements, empty_line, soft_line_break_or_space};
+/// use rome_formatter::{FormatOptions, token, format_element, comment, format_elements, group_elements, empty_line, soft_line_break_or_space};
 ///
 /// let elements = group_elements(format_elements![comment(empty_line()), token("a"), soft_line_break_or_space(), token("b")]);
 ///
@@ -222,7 +221,7 @@ pub fn comment(element: impl Into<FormatElement>) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{FormatOptions, token, format_element, space_token, format_elements};
+/// use rome_formatter::{FormatOptions, token, format_element, space_token, format_elements};
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = format_elements![token("a"), space_token(), token("b")];
@@ -239,7 +238,7 @@ pub const fn space_token() -> FormatElement {
 /// ## Examples
 ///
 /// ```rust
-/// use rome_js_formatter::{concat_elements, FormatElement, space_token, token, format_element, FormatOptions};
+/// use rome_formatter::{concat_elements, FormatElement, space_token, token, format_element, FormatOptions};
 /// let expr = concat_elements(vec![token("a"), space_token(), token("+"), space_token(), token("b")]);
 ///
 /// assert_eq!("a + b", format_element(&expr, FormatOptions::default()).as_code())
@@ -297,7 +296,7 @@ where
 ///
 /// ```rust
 /// use std::str::from_utf8;
-/// use rome_js_formatter::{fill_elements, FormatElement, space_token, token, format_element, FormatOptions};
+/// use rome_formatter::{fill_elements, FormatElement, space_token, token, format_element, FormatOptions};
 /// let a = from_utf8(&[b'a'; 30]).unwrap();
 /// let b = from_utf8(&[b'b'; 30]).unwrap();
 /// let c = from_utf8(&[b'c'; 30]).unwrap();
@@ -322,7 +321,7 @@ pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> Forma
 /// Joining different tokens by separating them with a comma and a space.
 ///
 /// ```
-/// use rome_js_formatter::{concat_elements, FormatOptions, join_elements, space_token, token, format_element};
+/// use rome_formatter::{concat_elements, FormatOptions, join_elements, space_token, token, format_element};
 ///
 /// let separator = concat_elements(vec![token(","), space_token()]);
 /// let elements = join_elements(separator, vec![token("1"), token("2"), token("3"), token("4")]);
@@ -434,7 +433,7 @@ where
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{format_elements, format_element, FormatOptions, hard_line_break, block_indent, token, indent};
+/// use rome_formatter::{format_elements, format_element, FormatOptions, hard_line_break, block_indent, token, indent};
 /// let block = (format_elements![
 ///   token("switch {"),
 ///   block_indent(format_elements![
@@ -473,7 +472,7 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{format_element, format_elements, token, FormatOptions, hard_line_break, block_indent};
+/// use rome_formatter::{format_element, format_elements, token, FormatOptions, hard_line_break, block_indent};
 ///
 /// let block = (format_elements![
 ///   token("{"),
@@ -513,7 +512,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't fit on a single line
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -535,7 +534,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Doesn't change the formatting if the enclosing `Group` fits on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -579,7 +578,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// fit on a single line. Otherwise, just inserts a space.
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("name"),
@@ -604,7 +603,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Only adds a space if the enclosing `Group` fits on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a"),
@@ -649,7 +648,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// `Group` that fits on a single line
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -668,7 +667,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 ///
 /// The printer breaks the `Group` over multiple lines if its content doesn't fit on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -711,7 +710,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// # Example
 /// ```
-/// use rome_js_formatter::{
+/// use rome_formatter::{
 ///   group_elements, format_element, format_elements, token, hard_group_elements,
 ///   FormatOptions, empty_line, if_group_breaks, if_group_fits_on_single_line
 /// };
@@ -747,7 +746,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///
 /// Omits the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -766,7 +765,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///
 /// Prints the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -810,7 +809,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Adds the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -829,7 +828,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Omits the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
