@@ -3,6 +3,8 @@ use std::panic::RefUnwindSafe;
 use rome_diagnostics::{file::Files, Diagnostic, Emitter};
 use termcolor::{ColorChoice, NoColor, StandardStream, WriteColor};
 
+pub mod diff;
+pub mod fmt;
 mod markup;
 
 pub use self::markup::{Markup, MarkupElement, MarkupNode};
@@ -31,7 +33,9 @@ where
     E: WriteColor + Sync + RefUnwindSafe,
 {
     fn message(&mut self, args: Markup) {
-        args.print(&mut self.out).unwrap();
+        fmt::Formatter::new(&mut self.out)
+            .write_markup(args)
+            .unwrap();
         writeln!(self.out).unwrap();
     }
 
@@ -74,7 +78,8 @@ impl Console for BufferConsole {
 
         {
             let mut writer = NoColor::new(&mut message);
-            args.print(&mut writer).unwrap();
+            let mut fmt = fmt::Formatter::new(&mut writer);
+            fmt.write_markup(args).unwrap();
         }
 
         let message = String::from_utf8(message).unwrap();

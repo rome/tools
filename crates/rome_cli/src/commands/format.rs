@@ -114,11 +114,11 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let count = formatted.load(Ordering::Relaxed);
     if is_check {
         session.app.console.message(rome_console::markup! {
-            <Info>"Checked {count} files in {duration:?}"</Info>
+            <Info>"Checked "{count}" files in "{duration}</Info>
         });
     } else {
         session.app.console.message(rome_console::markup! {
-            <Info>"Formatted {count} files in {duration:?}"</Info>
+            <Info>"Formatted "{count}" files in "{duration}</Info>
         });
     }
 

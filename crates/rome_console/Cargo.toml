@@ -10,6 +10,7 @@ rome_diagnostics = { path = "../rome_diagnostics" }
 rome_markup = { path = "../rome_markup" }
 lazy_static = "1.4.0"
 termcolor = "1.1.2"
+similar = "2.1.0"
 
 [dev-dependencies]
 trybuild = "1.0"

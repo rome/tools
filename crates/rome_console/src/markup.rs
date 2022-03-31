@@ -1,7 +1,6 @@
-use core::fmt;
-use std::io;
+use termcolor::{Color, ColorSpec};
 
-use termcolor::{Color, ColorSpec, WriteColor};
+use crate::fmt::Display;
 
 /// Enumeration of all the supported markup elements
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -19,7 +18,7 @@ pub enum MarkupElement {
 impl MarkupElement {
     /// Mutate a [ColorSpec] object in place to apply this element's associated
     /// style to it
-    fn update_color(&self, color: &mut ColorSpec) {
+    pub(crate) fn update_color(&self, color: &mut ColorSpec) {
         match self {
             // Text Styles
             MarkupElement::Emphasis => {
@@ -46,7 +45,13 @@ impl MarkupElement {
                 color.set_fg(Some(Color::Yellow));
             }
             MarkupElement::Info => {
-                color.set_fg(Some(Color::Blue));
+                // Blue is really difficult to see on the standard windows command line
+                #[cfg(windows)]
+                const BLUE: Color = Color::Cyan;
+                #[cfg(not(windows))]
+                const BLUE: Color = Color::Blue;
+
+                color.set_fg(Some(BLUE));
             }
         }
     }
@@ -54,10 +59,10 @@ impl MarkupElement {
 
 /// Implementation of a single "markup node": a piece of text with a number of
 /// associated styles applied to it
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone)]
 pub struct MarkupNode<'fmt> {
     pub elements: &'fmt [MarkupElement],
-    pub content: fmt::Arguments<'fmt>,
+    pub content: &'fmt dyn Display,
 }
 
 /// Root type returned by the `markup` macro: this is simply a container for a
@@ -67,28 +72,3 @@ pub struct MarkupNode<'fmt> {
 /// means [Markup] shares the same restriction as the values returned by
 /// [format_args] and can't be stored in a `let` binding for instance
 pub struct Markup<'fmt>(pub &'fmt [MarkupNode<'fmt>]);
-
-impl<'fmt> Markup<'fmt> {
-    /// Print a [MarkupNode] to the provided [MarkupPrinter]
-    pub(crate) fn print(&self, fmt: &mut impl WriteColor) -> io::Result<()> {
-        for node in self.0 {
-            let mut color = ColorSpec::new();
-            for element in node.elements {
-                element.update_color(&mut color);
-            }
-
-            if let Err(err) = fmt.set_color(&color) {
-                fmt.reset()?;
-                return Err(err);
-            }
-
-            if let Err(err) = write!(fmt, "{}", node.content) {
-                fmt.reset()?;
-                return Err(err);
-            }
-        }
-
-        fmt.reset()?;
-        Ok(())
-    }
-}
