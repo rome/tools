@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 153
 expression: shebang.js
 
 ---
@@ -14,6 +14,7 @@ function a() {}
 # Output
 ```js
 #!/usr/bin/env node
+
 function a() {}
 
 ```
