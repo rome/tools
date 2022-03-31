@@ -62,7 +62,12 @@ function App() {
 
 	const searchParams = new URLSearchParams(window.location.search);
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
-	const [code, setCode] = useState(() => window.location.hash !== "#" ? decodeCode(window.location.hash.substring(1)) : "");
+	const [code, setCode] = useState(
+		() =>
+			window.location.hash !== "#" ? decodeCode(
+				window.location.hash.substring(1),
+			) : "",
+	);
 	const [lineWidth, setLineWidth] = useState(
 		parseInt(searchParams.get("lineWidth") ?? "80"),
 	);
@@ -81,7 +86,9 @@ function App() {
 
 	useEffect(
 		() => {
-			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}#${encodeCode(code)}`;
+			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}#${encodeCode(
+				code,
+			)}`;
 			window.history.pushState({ path: url }, "", url);
 		},
 		[lineWidth, indentStyle, indentWidth, code, isTypeScript, isJsx],
@@ -216,7 +223,7 @@ function encodeCode(code: string): string {
 }
 
 function decodeCode(encoded: string): string {
-	return fromBinary(atob(encoded))
+	return fromBinary(atob(encoded));
 }
 
 // convert a Unicode string to a string in which
@@ -228,7 +235,7 @@ function toBinary(input: string) {
 	}
 
 	const charCodes = new Uint8Array(codeUnits.buffer);
-	let result = '';
+	let result = "";
 	for (let i = 0; i < charCodes.byteLength; i++) {
 		result += String.fromCharCode(charCodes[i]);
 	}
@@ -241,7 +248,7 @@ function fromBinary(binary: string) {
 		bytes[i] = binary.charCodeAt(i);
 	}
 	const charCodes = new Uint16Array(bytes.buffer);
-	let result = '';
+	let result = "";
 	for (let i = 0; i < charCodes.length; i++) {
 		result += String.fromCharCode(charCodes[i]);
 	}
