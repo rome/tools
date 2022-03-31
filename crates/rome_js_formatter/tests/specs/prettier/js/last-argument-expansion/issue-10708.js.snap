@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: issue-10708.js
+
+---
+# Input
+```js
+bob
+	.doL(({ a, b: {
+		// comment
+	}}) => something
+		.else
+      	.else({}))
+
+```
+
+# Output
+```js
+bob.doL(
+  (
+    {
+      a,
+      b: {
+        // comment
+      },
+    },
+  ) => something.else.else({}),
+);
+
+```
+
+

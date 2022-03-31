@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: body.js
+
+---
+# Input
+```js
+export default (class {}[1] = 1);
+
+```
+
+# Output
+```js
+export default (class {}[1] = 1);
+
+```
+
+

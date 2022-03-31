@@ -1,0 +1,59 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: comment.js
+
+---
+# Input
+```js
+function x() {
+  throw func2
+      //comment
+      .bar();
+}
+ 
+function f() {
+  throw (
+    foo
+      // comment
+      .bar()
+  );
+}
+ 
+fn(function f() {
+  throw (
+    foo
+      // comment
+      .bar()
+  );
+});
+
+```
+
+# Output
+```js
+function x() {
+  throw func2
+  //comment
+  .bar();
+}
+
+function f() {
+  throw (
+    foo
+    // comment
+    .bar()
+  );
+}
+
+fn(function f() {
+  throw (
+    foo
+    // comment
+    .bar()
+  );
+});
+
+```
+
+

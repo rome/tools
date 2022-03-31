@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: static-import.js
+
+---
+# Input
+```js
+import json from "./foo.json" assert { type: "json" };
+
+```
+
+# Output
+```js
+import json from "./foo.json" assert { type: "json" };
+
+```
+
+

@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: parameterProperty.ts
+
+---
+# Input
+```js
+class c3 {
+  constructor(public arg: number = 10) {
+    // fails because of comment
+  }
+  not_constructor(public arg: number = 10) {
+  }
+}
+
+```
+
+# Output
+```js
+class c3 {
+  constructor(public arg: number = 10) {
+    // fails because of comment
+  }
+  not_constructor(public arg: number = 10) {
+  }
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Illegal use of reserved keyword `public` as an identifier in strict mode
+  ┌─ parameterProperty.ts:5:19
+  │
+5 │   not_constructor(public arg: number = 10) {
+  │                   ^^^^^^
+
+error[SyntaxError]: expected `,` but instead found `arg`
+  ┌─ parameterProperty.ts:5:26
+  │
+5 │   not_constructor(public arg: number = 10) {
+  │                          ^^^ unexpected
+
+
+```
+
+

@@ -1,0 +1,40 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: parserES5ForOfStatement2.ts
+
+---
+# Input
+```js
+//@target: ES5
+for (var of X) {
+}
+
+```
+
+# Output
+```js
+//@target: ES5
+for (var of X) {
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `;` but instead found `X`
+  ┌─ parserES5ForOfStatement2.ts:2:13
+  │
+2 │ for (var of X) {
+  │             ^ unexpected
+
+error[SyntaxError]: expected `;` but instead found `)`
+  ┌─ parserES5ForOfStatement2.ts:2:14
+  │
+2 │ for (var of X) {
+  │              ^ unexpected
+
+
+```
+
+

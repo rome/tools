@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: empty_switch.js
+
+---
+# Input
+```js
+switch (1) { default:; }
+switch (1) {}
+
+```
+
+# Output
+```js
+switch (1) {
+  default:
+}
+switch (1) {}
+
+```
+
+

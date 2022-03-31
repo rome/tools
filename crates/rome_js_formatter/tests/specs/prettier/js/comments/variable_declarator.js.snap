@@ -1,0 +1,133 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: variable_declarator.js
+
+---
+# Input
+```js
+let obj1 = // Comment
+{
+  key: 'val'
+}
+
+let obj2 // Comment
+= {
+  key: 'val'
+}
+
+let obj3 = { // Comment
+  key: 'val'
+}
+
+let obj4 = {
+  // Comment
+  key: 'val'
+}
+
+let obj5 = // Comment
+[
+  'val'
+]
+
+let obj6 // Comment
+= [
+  'val'
+]
+
+let obj7 = [ // Comment
+  'val'
+]
+
+let obj8 = [
+  // Comment
+  'val'
+]
+
+let obj9 = // Comment
+`val`;
+
+let obj10 = // Comment
+`
+val
+val
+`;
+
+let obj11 = // Comment
+tag`val`;
+
+let obj12 = // Comment
+tag`
+val
+val
+`;
+
+let // Comment
+  foo1 = 'val';
+
+let // Comment
+  foo2 = 'val',
+  bar = 'val';
+
+const foo3 = 123
+// Nothing to see here.
+;["2", "3"].forEach(x => console.log(x))
+
+```
+
+# Output
+```js
+let obj1 = { key: "val" }; // Comment
+
+let obj2 = { key: "val" }; // Comment
+
+let obj3 = {
+  // Comment
+  key: "val",
+};
+
+let obj4 = {
+  // Comment
+  key: "val",
+};
+
+let obj5 = ["val"]; // Comment
+
+let obj6 = ["val"]; // Comment
+
+let obj7 = [
+  // Comment
+  "val",
+];
+
+let obj8 = [
+  // Comment
+  "val",
+];
+
+let obj9 = `val`; // Comment
+
+let obj10 = `
+val
+val
+`; // Comment
+
+let obj11 = tag`val`; // Comment
+
+let obj12 = tag`
+val
+val
+`; // Comment
+
+let foo1 = "val"; // Comment
+
+let foo2 = "val", bar = "val"; // Comment
+
+const foo3 = 123
+// Nothing to see here.
+;
+["2", "3"].forEach((x) => console.log(x));
+
+```
+
+

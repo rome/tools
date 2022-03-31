@@ -1,0 +1,99 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 197
+expression: decoartors.ts
+
+---
+# Input
+@sealed
+class Test {
+	@readonly
+	prop: string;
+
+	constructor(@param test, @readonly private other, @aVeryLongDecoratorNameLetsSeeWhatHappensWithIt last) {}
+
+	method(@param a) {}
+
+	get getter() {}
+
+	set setter(@param param) {}
+}
+
+@sealed
+export default class {}
+
+@sealed
+export class Test {}
+
+// Leading comment before decorator
+@test // first decorator
+// Leading comment before class
+class Test2 {
+
+
+
+
+
+	/*
+	 * Leading multiline comment
+	 */
+
+
+
+	@test /* trailing multiline comment
+	 for decorator */ @anotherDecorator()
+
+
+
+
+		// leading comment
+	prop: string;
+
+}
+
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+@sealed
+class Test {
+	@readonly
+	prop: string;
+
+	constructor(
+		@param test,
+		@readonly private other,
+		@aVeryLongDecoratorNameLetsSeeWhatHappensWithIt last,
+	) {}
+
+	method(@param a) {}
+
+	get getter() {}
+
+	set setter(@param param) {}
+}
+
+@sealed
+export default class {}
+
+@sealed
+export class Test {}
+
+// Leading comment before decorator
+@test // first decorator
+// Leading comment before class
+class Test2 {
+	/*
+	 * Leading multiline comment
+	 */
+
+	@test /* trailing multiline comment
+	 for decorator */ @anotherDecorator()
+	// leading comment
+	prop: string;
+}
+

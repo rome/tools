@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: issue-2482.ts
+
+---
+# Input
+```js
+export function countriesReceived(countries: Array<Country>): CountryActionType {
+  return {
+    type: ActionTypes.COUNTRIES_RECEIVED,
+    countries: countries,
+  };
+}
+
+```
+
+# Output
+```js
+export function countriesReceived(countries: Array<Country>): CountryActionType {
+  return { type: ActionTypes.COUNTRIES_RECEIVED, countries: countries };
+}
+
+```
+
+

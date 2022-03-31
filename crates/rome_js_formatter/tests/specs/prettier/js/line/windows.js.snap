@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: windows.js
+
+---
+# Input
+```js
+const vscode = require("vscode");
+const {getDir, getActiveFile, uint8arrayToString} = require("./utils");
+
+let outChannel;
+let _commands;
+
+```
+
+# Output
+```js
+const vscode = require("vscode");
+const { getDir, getActiveFile, uint8arrayToString } = require("./utils");
+
+let outChannel;
+let _commands;
+
+```
+
+

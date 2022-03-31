@@ -1,0 +1,170 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: tuple.js
+
+---
+# Input
+```js
+const tuple1 = #[1, 2, 3];
+
+assert(tuple1[0] === 1);
+
+const tuple2 = tuple1.with(0, 2);
+assert(tuple1 !== tuple2);
+assert(tuple2 === #[2, 2, 3]);
+
+const tuple3 = #[1, ...tuple2];
+assert(tuple3 === #[1, 2, 2, 3]);
+
+const tuple4 = tuple3.pushed(4);
+assert(tuple4 === #[1, 2, 2, 3, 4]);
+
+assert(tuple4.first() === 1);
+const tuple5 = tuple4.popped();
+assert(tuple5 === #[2, 2, 3, 4]);
+
+```
+
+# Output
+```js
+const tuple1 = #
+[1, 2, 3];
+
+assert(tuple1[0] === 1);
+
+const tuple2 = tuple1.with(0, 2);
+assert(tuple1 !== tuple2);
+assert(tuple2 === #[2, 2, 3]);
+
+const tuple3 = #
+[1, ...tuple2];
+assert(tuple3 === #[1, 2, 2, 3]);
+
+const tuple4 = tuple3.pushed(4);
+assert(tuple4 === #[1, 2, 2, 3, 4]);
+
+assert(tuple4.first() === 1);
+const tuple5 = tuple4.popped();
+assert(tuple5 === #[2, 2, 3, 4]);
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an identifier but instead found '['
+  ┌─ tuple.js:1:17
+  │
+1 │ const tuple1 = #[1, 2, 3];
+  │                 ^ Expected an identifier here
+
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+  ┌─ tuple.js:1:16
+  │
+1 │ const tuple1 = #[1, 2, 3];
+  │                ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ tuple.js:1:17
+  │
+1 │ const tuple1 = #[1, 2, 3];
+  │ ----------------^ An explicit or implicit semicolon is expected here...
+  │ │                
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected an identifier but instead found '['
+  ┌─ tuple.js:7:20
+  │
+7 │ assert(tuple2 === #[2, 2, 3]);
+  │                    ^ Expected an identifier here
+
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+  ┌─ tuple.js:7:19
+  │
+7 │ assert(tuple2 === #[2, 2, 3]);
+  │                   ^
+
+error[SyntaxError]: expected `,` but instead found `[`
+  ┌─ tuple.js:7:20
+  │
+7 │ assert(tuple2 === #[2, 2, 3]);
+  │                    ^ unexpected
+
+error[SyntaxError]: expected an identifier but instead found '['
+  ┌─ tuple.js:9:17
+  │
+9 │ const tuple3 = #[1, ...tuple2];
+  │                 ^ Expected an identifier here
+
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+  ┌─ tuple.js:9:16
+  │
+9 │ const tuple3 = #[1, ...tuple2];
+  │                ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ tuple.js:9:17
+  │
+9 │ const tuple3 = #[1, ...tuple2];
+  │ ----------------^ An explicit or implicit semicolon is expected here...
+  │ │                
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected an identifier but instead found '['
+   ┌─ tuple.js:10:20
+   │
+10 │ assert(tuple3 === #[1, 2, 2, 3]);
+   │                    ^ Expected an identifier here
+
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+   ┌─ tuple.js:10:19
+   │
+10 │ assert(tuple3 === #[1, 2, 2, 3]);
+   │                   ^
+
+error[SyntaxError]: expected `,` but instead found `[`
+   ┌─ tuple.js:10:20
+   │
+10 │ assert(tuple3 === #[1, 2, 2, 3]);
+   │                    ^ unexpected
+
+error[SyntaxError]: expected an identifier but instead found '['
+   ┌─ tuple.js:13:20
+   │
+13 │ assert(tuple4 === #[1, 2, 2, 3, 4]);
+   │                    ^ Expected an identifier here
+
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+   ┌─ tuple.js:13:19
+   │
+13 │ assert(tuple4 === #[1, 2, 2, 3, 4]);
+   │                   ^
+
+error[SyntaxError]: expected `,` but instead found `[`
+   ┌─ tuple.js:13:20
+   │
+13 │ assert(tuple4 === #[1, 2, 2, 3, 4]);
+   │                    ^ unexpected
+
+error[SyntaxError]: expected an identifier but instead found '['
+   ┌─ tuple.js:17:20
+   │
+17 │ assert(tuple5 === #[2, 2, 3, 4]);
+   │                    ^ Expected an identifier here
+
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+   ┌─ tuple.js:17:19
+   │
+17 │ assert(tuple5 === #[2, 2, 3, 4]);
+   │                   ^
+
+error[SyntaxError]: expected `,` but instead found `[`
+   ┌─ tuple.js:17:20
+   │
+17 │ assert(tuple5 === #[2, 2, 3, 4]);
+   │                    ^ unexpected
+
+
+```
+
+

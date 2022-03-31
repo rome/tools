@@ -1,0 +1,51 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: es5.js
+
+---
+# Input
+```js
+function send_single_email(
+  app,
+  email_id,
+  email_address,
+  subject,
+  html,
+  reply_to
+) {
+  send_single_email_implementation(  app,
+  email_id,
+  email_address,
+  subject,
+  html,
+  reply_to);
+  return "nothing";
+}
+
+```
+
+# Output
+```js
+function send_single_email(
+  app,
+  email_id,
+  email_address,
+  subject,
+  html,
+  reply_to,
+) {
+  send_single_email_implementation(
+    app,
+    email_id,
+    email_address,
+    subject,
+    html,
+    reply_to,
+  );
+  return "nothing";
+}
+
+```
+
+

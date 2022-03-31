@@ -3,7 +3,7 @@
 use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
 use rome_diagnostics::{Formatter as ErrorFormatter, LongFormatter};
-use rome_formatter::{format as format_code, to_format_element, FormatOptions, IndentStyle};
+use rome_js_formatter::{format as format_code, to_format_element, FormatOptions, IndentStyle};
 use rome_js_parser::{parse, SourceType};
 use std::io;
 use wasm_bindgen::prelude::*;

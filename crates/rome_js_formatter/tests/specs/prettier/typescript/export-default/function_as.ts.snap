@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: function_as.ts
+
+---
+# Input
+```js
+export default (function log(){} as typeof console.log);
+
+```
+
+# Output
+```js
+export default (function log() {} as typeof console.log);
+
+```
+
+

@@ -1,0 +1,40 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: async-do-expressions.js
+
+---
+# Input
+```js
+async do { await requestAPI().json() };
+
+```
+
+# Output
+```js
+async;
+do { await requestAPI().json() };
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ async-do-expressions.js:1:7
+  │
+1 │ async do { await requestAPI().json() };
+  │ ------^^
+  │ │     │
+  │ │     An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected `while` but instead found `;`
+  ┌─ async-do-expressions.js:1:39
+  │
+1 │ async do { await requestAPI().json() };
+  │                                       ^ unexpected
+
+
+```
+
+

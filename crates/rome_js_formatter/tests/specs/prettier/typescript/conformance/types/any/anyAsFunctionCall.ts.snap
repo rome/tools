@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: anyAsFunctionCall.ts
+
+---
+# Input
+```js
+// any is considered an untyped function call
+// can be called except with type arguments which is an error
+
+var x: any;
+var a = x();
+var b = x('hello');
+var c = x(x);
+
+```
+
+# Output
+```js
+// any is considered an untyped function call
+// can be called except with type arguments which is an error
+
+var x: any;
+var a = x();
+var b = x("hello");
+var c = x(x);
+
+```
+
+

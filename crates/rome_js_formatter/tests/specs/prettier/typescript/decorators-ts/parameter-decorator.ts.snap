@@ -1,0 +1,51 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: parameter-decorator.ts
+
+---
+# Input
+```js
+class Greeter {
+  greeting: string;
+
+  constructor(message: string) {
+    this.greeting = message;
+  }
+
+  @validate
+  greet(@required name: string) {
+    return "Hello " + name + ", " + this.greeting;
+  }
+
+  @validate
+  destructured(@required { toString }: Object) {
+    return Function.prototype.toString.apply(toString);
+  }
+}
+
+```
+
+# Output
+```js
+class Greeter {
+  greeting: string;
+
+  constructor(message: string) {
+    this.greeting = message;
+  }
+
+  @validate
+  greet(@required name: string) {
+    return "Hello " + name + ", " + this.greeting;
+  }
+
+  @validate
+  destructured(@required { toString }: Object) {
+    return Function.prototype.toString.apply(toString);
+  }
+}
+
+```
+
+

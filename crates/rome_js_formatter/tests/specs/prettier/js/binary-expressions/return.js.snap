@@ -1,0 +1,43 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: return.js
+
+---
+# Input
+```js
+function foo() {
+  return this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft.right;
+}
+
+function foo2() {
+  return this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft.right
+    ? true
+    : false;
+}
+
+function foo3() {
+  return this.calculate().compute().first.numberOfThings > this.calculate().compute().last.numberOfThings
+    ? true
+    : false;
+}
+
+```
+
+# Output
+```js
+function foo() {
+  return this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft.right;
+}
+
+function foo2() {
+  return this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft.right ? true : false;
+}
+
+function foo3() {
+  return this.calculate().compute().first.numberOfThings > this.calculate().compute().last.numberOfThings ? true : false;
+}
+
+```
+
+

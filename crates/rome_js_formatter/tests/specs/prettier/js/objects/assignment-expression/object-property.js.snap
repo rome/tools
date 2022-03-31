@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: object-property.js
+
+---
+# Input
+```js
+a = {
+  [this.resource = resource]: 1,
+}
+
+```
+
+# Output
+```js
+a = { [this.resource = resource]: 1 };
+
+```
+
+

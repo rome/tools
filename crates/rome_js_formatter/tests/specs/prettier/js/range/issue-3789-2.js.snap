@@ -1,0 +1,35 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: issue-3789-2.js
+
+---
+# Input
+```js
+export class F {
+  reformatThis() {
+    return 1;
+  }
+
+  dontTouchThis(){
+    return 2    ;
+  }
+}
+
+```
+
+# Output
+```js
+export class F {
+  reformatThis() {
+    return 1;
+  }
+
+  dontTouchThis(){
+    return 2    ;
+  }
+}
+
+```
+
+

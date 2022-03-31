@@ -1,0 +1,72 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: method_chain.js
+---
+# Input
+```js
+import {interval} from 'rxjs/observable/interval';
+import {filter} from 'rxjs/operator/filter';
+import {take} from 'rxjs/operator/take';
+import {map} from 'rxjs/operator/map';
+import {throttle} from 'rxjs/operator/throttle';
+import {takeUntil} from 'rxjs/operator/takeUntil';
+
+function test(observable) {
+    return observable
+        ::filter(data => data.someTest)
+        ::throttle(() =>
+            interval(10)
+                ::take(1)
+                ::takeUntil(observable::filter(data => someOtherTest))
+        )
+        ::map(someFunction);
+}
+
+```
+
+# Output
+```js
+import { interval } from "rxjs/observable/interval";
+import { filter } from "rxjs/operator/filter";
+import { take } from "rxjs/operator/take";
+import { map } from "rxjs/operator/map";
+import { throttle } from "rxjs/operator/throttle";
+import { takeUntil } from "rxjs/operator/takeUntil";
+
+function test(observable) {
+  return observable;
+  ::filter(data => data.someTest)
+        ::throttle(() =>
+            interval(10)
+                ::take(1)
+                ::takeUntil(observable::filter(data => someOtherTest))
+        )
+        ::map(someFunction)
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '::filter(data => data.someTest)
+        ::throttle(() =>
+            interval(10)
+                ::take(1)
+                ::takeUntil(observable::filter(data => someOtherTest))
+        )
+        ::map(someFunction)'
+   ┌─ method_chain.js:10:9
+   │  
+10 │ ┌         ::filter(data => data.someTest)
+11 │ │         ::throttle(() =>
+12 │ │             interval(10)
+13 │ │                 ::take(1)
+14 │ │                 ::takeUntil(observable::filter(data => someOtherTest))
+15 │ │         )
+16 │ │         ::map(someFunction);
+   │ └───────────────────────────^ Expected a statement here
+
+
+```
+
+

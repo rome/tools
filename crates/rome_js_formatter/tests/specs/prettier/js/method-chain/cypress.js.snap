@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: cypress.js
+
+---
+# Input
+```js
+cy.get('option:first')
+  .should('be.selected')
+  .and('have.value', 'Metallica')
+
+cy.get(".ready")
+  .should("have.text", "FOO")
+  .should("have.css", "color", "#aaa");
+
+```
+
+# Output
+```js
+cy.get("option:first").should("be.selected").and("have.value", "Metallica");
+
+cy.get(".ready").should("have.text", "FOO").should("have.css", "color", "#aaa");
+
+```
+
+

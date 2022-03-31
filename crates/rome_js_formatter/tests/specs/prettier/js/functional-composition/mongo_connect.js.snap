@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: mongo_connect.js
+
+---
+# Input
+```js
+MongoClient.connect(
+  "mongodb://localhost:27017/posts",
+  (err, db) => {
+    assert.equal(null, err);
+    db.close();
+  }
+);
+
+```
+
+# Output
+```js
+MongoClient.connect(
+  "mongodb://localhost:27017/posts",
+  (err, db) => {
+    assert.equal(null, err);
+    db.close();
+  },
+);
+
+```
+
+

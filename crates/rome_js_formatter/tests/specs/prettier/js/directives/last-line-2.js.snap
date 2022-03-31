@@ -1,0 +1,18 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: last-line-2.js
+---
+# Input
+```js
+'use strict';
+
+
+```
+
+# Output
+```js
+"use strict";
+
+```
+
+

@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: reselect_createselector.js
+---
+# Input
+```js
+import { createSelector } from 'reselect';
+
+const foo = createSelector(
+  getIds,
+  getObjects,
+  (ids, objects) => ids.map(id => objects[id])
+);
+
+const bar = createSelector(
+  [getIds, getObjects],
+  (ids, objects) => ids.map(id => objects[id])
+);
+
+```
+
+# Output
+```js
+import { createSelector } from "reselect";
+
+const foo = createSelector(
+  getIds,
+  getObjects,
+  (ids, objects) => ids.map((id) => objects[id]),
+);
+
+const bar = createSelector(
+  [getIds, getObjects],
+  (ids, objects) => ids.map((id) => objects[id]),
+);
+
+```
+
+

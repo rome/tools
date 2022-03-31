@@ -1,0 +1,41 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: declare.ts
+
+---
+# Input
+```js
+declare class a  // 1
+  // extends b   // 2
+  implements z,x // 3
+{
+  doo:boolean
+}
+
+declare class A1<T> // 1
+// 2
+extends B<T> // 3
+{}
+
+```
+
+# Output
+```js
+declare class a
+  // 1
+  // extends b   // 2
+  implements
+    z,
+    x // 3
+{
+  doo: boolean;
+}
+
+declare class A1<T> // 1
+// 2
+extends B<T> {} // 3
+
+```
+
+

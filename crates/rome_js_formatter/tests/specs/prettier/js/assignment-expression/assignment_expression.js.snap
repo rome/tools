@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: assignment_expression.js
+
+---
+# Input
+```js
+this.size = this._origin = this._capacity = 0;
+
+```
+
+# Output
+```js
+this.size = this._origin = this._capacity = 0;
+
+```
+
+

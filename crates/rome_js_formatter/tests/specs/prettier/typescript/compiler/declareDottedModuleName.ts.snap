@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: declareDottedModuleName.ts
+
+---
+# Input
+```js
+// @declaration: true
+module M {
+    module P.Q { } // This shouldnt be emitted
+}
+
+module M {
+    export module R.S { }  //This should be emitted
+}
+
+module T.U { // This needs to be emitted
+}
+```
+
+# Output
+```js
+// @declaration: true
+module M {
+  module P.Q {} // This shouldnt be emitted
+}
+
+module M {
+  export module R.S {} //This should be emitted
+}
+
+module T.U {
+  // This needs to be emitted
+}
+
+```
+
+

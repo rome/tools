@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: key-remapping.ts
+
+---
+# Input
+```js
+type MappedTypeWithNewKeys<T> = {
+  [K in keyof T as NewKeyType]: T[K]
+};
+  
+type RemoveKindField<T> = {
+  [K in keyof T as Exclude<K, "kind">]: T[K]
+};
+  
+type PickByValueType<T, U> = {
+  [K in keyof T as T[K] extends U ? K : never]: T[K]
+};
+
+```
+
+# Output
+```js
+type MappedTypeWithNewKeys<T> = {
+  [K in keyof T as NewKeyType]: T[K];
+};
+
+type RemoveKindField<T> = {
+  [K in keyof T as Exclude<K, "kind">]: T[K];
+};
+
+type PickByValueType<T, U> = {
+  [K in keyof T as T[K] extends U ? K : never]: T[K];
+};
+
+```
+
+

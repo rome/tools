@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: range.js
+
+---
+# Input
+```js
+function ugly ( {a=1,     b     =   2     }      ) {
+  function ugly ( {a=1,     b     =   2     }      ) {
+    function ugly ( {a=1,     b     =   2     }      ) {
+             `multiline template string
+              with too much indentation`
+    }
+  }
+}
+
+```
+
+# Output
+```js
+function ugly ( {a=1,     b     =   2     }      ) {
+  function ugly ( {a=1,     b     =   2     }      ) {
+    function ugly ( {a=1,     b     =   2     }      ) {
+             `multiline template string
+              with too much indentation`
+    }
+  }
+}
+
+```
+
+

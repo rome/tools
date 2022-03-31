@@ -1,0 +1,60 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: moduleBlock.ts
+
+---
+# Input
+```js
+module m2 {
+    function fn() {
+        return 1;
+    }
+    export function exports() {
+        return 1;
+    }
+    export function require() {
+        return "require";
+    }
+}
+
+module m2 {
+
+    export function exports() {
+        return 1;
+    }
+
+    export function require() {
+        return "require";
+    }
+}
+
+```
+
+# Output
+```js
+module m2 {
+  function fn() {
+    return 1;
+  }
+  export function exports() {
+    return 1;
+  }
+  export function require() {
+    return "require";
+  }
+}
+
+module m2 {
+  export function exports() {
+    return 1;
+  }
+
+  export function require() {
+    return "require";
+  }
+}
+
+```
+
+

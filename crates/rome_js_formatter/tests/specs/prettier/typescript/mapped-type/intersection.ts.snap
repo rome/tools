@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: intersection.ts
+
+---
+# Input
+```js
+type Example = {
+  [A in B]: T;
+} & {
+  [A in B]: T;
+};
+
+```
+
+# Output
+```js
+type Example =
+  & {
+    [A in B]: T;
+  }
+  & {
+    [A in B]: T;
+  };
+
+```
+
+

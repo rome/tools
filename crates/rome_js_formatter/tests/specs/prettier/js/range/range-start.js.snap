@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: range-start.js
+
+---
+# Input
+```js
+call(
+  1, 2,3
+);
+
+
+// Unchanged
+call(
+  1, 2,3
+);
+
+```
+
+# Output
+```js
+call(1, 2, 3);
+
+
+// Unchanged
+call(
+  1, 2,3
+);
+
+```
+
+

@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: export-class.ts
+
+---
+# Input
+```js
+export class A {}
+export default class B {}
+export abstract class C {}
+export default abstract class D {}
+
+```
+
+# Output
+```js
+export class A {}
+export default class B {}
+export abstract class C {}
+export default abstract class D {}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Illegal duplicate default export declarations
+  ┌─ export-class.ts:4:8
+  │
+2 │ export default class B {}
+  │        ------------------ the module's default export is first defined here
+3 │ export abstract class C {}
+4 │ export default abstract class D {}
+  │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^ multiple default exports are erroneous
+
+
+```
+
+

@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: same-local-and-exported.js
+---
+# Input
+```js
+export {a} from 'a';
+export {b as b} from 'b';
+export {c as /* comment */c} from 'c';
+
+```
+
+# Output
+```js
+export { a } from "a";
+export { b as b } from "b";
+export { c as /* comment */ c } from "c";
+
+```
+
+

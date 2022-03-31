@@ -1,0 +1,43 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: ungrouped-parameters.ts
+
+---
+# Input
+```js
+function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
+  customTooltipWithoutAggregatedField?:
+    | StringFieldDefWithCondition<F>
+    | StringValueDefWithCondition<F>
+    | StringFieldDef<F>[];
+  filteredEncoding: Encoding<F>;
+} {
+  const {tooltip, ...filteredEncoding} = oldEncoding;
+  if (!tooltip) {
+    return {filteredEncoding};
+  }
+  // ...
+}
+
+```
+
+# Output
+```js
+function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
+  customTooltipWithoutAggregatedField?:
+    | StringFieldDefWithCondition<F>
+    | StringValueDefWithCondition<F>
+    | StringFieldDef<F>[],
+  filteredEncoding: Encoding<F>,
+} {
+  const { tooltip, ...filteredEncoding } = oldEncoding;
+  if (!tooltip) {
+    return { filteredEncoding };
+  }
+  // ...
+}
+
+```
+
+

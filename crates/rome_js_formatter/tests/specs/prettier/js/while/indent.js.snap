@@ -1,0 +1,80 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: indent.js
+
+---
+# Input
+```js
+if (someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD) {}
+while (someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD) {}
+do {}
+while (someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD);
+
+if (someVeryLongFunc(someVeryLongArgA, someVeryLongArgB, someVeryLongArgC, someVeryLongArgD)) {}
+while (someVeryLongFunc(someVeryLongArgA, someVeryLongArgB, someVeryLongArgC, someVeryLongArgD)) {}
+do {}
+while (someVeryLongFunc(someVeryLongArgA, someVeryLongArgB, someVeryLongArgC, someVeryLongArgD));
+
+while (0) 1;
+
+do 1;
+while (0);
+
+```
+
+# Output
+```js
+if (
+  someVeryLongStringA &&
+  someVeryLongStringB &&
+  someVeryLongStringC &&
+  someVeryLongStringD
+) {
+}
+while (
+  someVeryLongStringA &&
+  someVeryLongStringB &&
+  someVeryLongStringC &&
+  someVeryLongStringD
+) {}
+do {} while (
+  someVeryLongStringA &&
+  someVeryLongStringB &&
+  someVeryLongStringC &&
+  someVeryLongStringD
+);
+
+if (
+  someVeryLongFunc(
+    someVeryLongArgA,
+    someVeryLongArgB,
+    someVeryLongArgC,
+    someVeryLongArgD,
+  )
+) {
+}
+while (
+  someVeryLongFunc(
+    someVeryLongArgA,
+    someVeryLongArgB,
+    someVeryLongArgC,
+    someVeryLongArgD,
+  )
+) {}
+do {} while (
+  someVeryLongFunc(
+    someVeryLongArgA,
+    someVeryLongArgB,
+    someVeryLongArgC,
+    someVeryLongArgD,
+  )
+);
+
+while (0) 1;
+
+do 1; while (0);
+
+```
+
+

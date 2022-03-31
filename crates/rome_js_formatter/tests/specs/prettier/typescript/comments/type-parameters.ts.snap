@@ -1,0 +1,132 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: type-parameters.ts
+
+---
+# Input
+```js
+functionName<A /* A comment */>();
+const a: T</* comment */> = 1;
+functionName</* comment */>();
+function foo</* comment */>() {}
+interface Foo {
+ </* comment */>(arg): any;
+}
+type T = </* comment */>(arg) => any;
+
+functionName<
+  A // comment
+>();
+const a: T<
+  // comment
+> = 1;
+functionName<
+  // comment
+>();
+function foo<
+  // comment
+>() {}
+interface Foo {
+ <
+  A// comment
+ >(arg): any;
+}
+type T = <
+  // comment
+>(arg) => any;
+
+```
+
+# Output
+```js
+functionName<A /* A comment */ >();
+const a: T< /* comment */ > = 1;
+functionName< /* comment */ >();
+function foo< /* comment */ >() {}
+interface Foo { < /* comment */ >(arg): any }
+type T = < /* comment */ >(arg) => any;
+
+functionName<
+  A // comment
+>();
+const a: T<
+  // comment
+> = 1;
+functionName<
+  // comment
+>();
+function foo<
+  // comment
+>() {}
+interface Foo {
+  <
+    A, // comment
+  >(arg): any,
+}
+type T = <
+  // comment
+>(arg) => any;
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a type parameter but instead found '>'
+  ┌─ type-parameters.ts:2:25
+  │
+2 │ const a: T</* comment */> = 1;
+  │                         ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+  ┌─ type-parameters.ts:3:27
+  │
+3 │ functionName</* comment */>();
+  │                           ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+  ┌─ type-parameters.ts:4:27
+  │
+4 │ function foo</* comment */>() {}
+  │                           ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+  ┌─ type-parameters.ts:6:16
+  │
+6 │  </* comment */>(arg): any;
+  │                ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+  ┌─ type-parameters.ts:8:24
+  │
+8 │ type T = </* comment */>(arg) => any;
+  │                        ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+   ┌─ type-parameters.ts:15:1
+   │
+15 │ > = 1;
+   │ ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+   ┌─ type-parameters.ts:18:1
+   │
+18 │ >();
+   │ ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+   ┌─ type-parameters.ts:21:1
+   │
+21 │ >() {}
+   │ ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+   ┌─ type-parameters.ts:29:1
+   │
+29 │ >(arg) => any;
+   │ ^ Expected a type parameter here
+
+
+```
+
+

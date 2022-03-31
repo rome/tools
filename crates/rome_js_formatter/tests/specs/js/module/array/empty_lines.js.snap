@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: empty_lines.js
+
+---
+# Input
+let a = [
+
+    1,
+    2,
+
+    3,
+
+
+    4,
+
+
+  ];
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+let a = [
+	1,
+	2,
+
+	3,
+
+	4,
+];
+

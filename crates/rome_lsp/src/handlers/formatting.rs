@@ -3,14 +3,14 @@ use crate::line_index::{self, LineCol};
 use anyhow::{bail, Result};
 use lspower::lsp::*;
 use rome_analyze::FileId;
-use rome_formatter::{FormatOptions, IndentStyle};
+use rome_js_formatter::{FormatOptions, IndentStyle};
 use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::{TextRange, TokenAtOffset};
 use std::str::FromStr;
 use tracing::info;
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
-/// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand.
+/// and transforms that to [options](rome_js_formatter::FormatOptions) that the rome formatter can understand.
 ///
 /// It also read information from the workspace settings and use their values, which will override
 /// the defaults passed from the client.
@@ -80,7 +80,7 @@ pub(crate) fn format(params: FormatParams) -> Result<Option<Vec<TextEdit>>> {
         return Ok(None);
     }
 
-    let new_text = rome_formatter::format(format_options, &parse_result.syntax())?.into_code();
+    let new_text = rome_js_formatter::format(format_options, &parse_result.syntax())?.into_code();
 
     let num_lines: u32 = line_index::LineIndex::new(text).newlines.len().try_into()?;
 
@@ -100,7 +100,7 @@ pub(crate) struct FormatRangeParams<'input> {
     pub(crate) text: &'input str,
     pub(crate) file_id: FileId,
     pub(crate) range: Range,
-    /// Options to pass to [rome_formatter]
+    /// Options to pass to [rome_js_formatter]
     pub(crate) format_options: FormatOptions,
     pub(crate) workspace_settings: WorkspaceSettings,
     pub(crate) source_type: SourceType,
@@ -130,7 +130,7 @@ pub(crate) fn format_range(params: FormatRangeParams) -> Result<Option<Vec<TextE
 
     let tree = parse_result.syntax();
     let format_range = TextRange::new(start_index, end_index);
-    let formatted = rome_formatter::format_range(params.format_options, &tree, format_range)?;
+    let formatted = rome_js_formatter::format_range(params.format_options, &tree, format_range)?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
@@ -167,7 +167,7 @@ pub(crate) struct FormatOnTypeParams<'input> {
     pub(crate) text: &'input str,
     pub(crate) file_id: FileId,
     pub(crate) position: Position,
-    /// Options to pass to [rome_formatter]
+    /// Options to pass to [rome_js_formatter]
     pub(crate) format_options: FormatOptions,
     pub(crate) workspace_settings: WorkspaceSettings,
     pub(crate) source_type: SourceType,
@@ -205,7 +205,7 @@ pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Option<Vec<Te
         None => bail!("found a token with no parent"),
     };
 
-    let formatted = rome_formatter::format_node(params.format_options, &root_node)?;
+    let formatted = rome_js_formatter::format_node(params.format_options, &root_node)?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {

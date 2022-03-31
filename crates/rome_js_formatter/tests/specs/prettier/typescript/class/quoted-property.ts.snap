@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: quoted-property.ts
+
+---
+# Input
+```js
+class User {
+    "username": string;
+}
+
+```
+
+# Output
+```js
+class User {
+  "username": string;
+}
+
+```
+
+

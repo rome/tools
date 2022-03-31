@@ -1,0 +1,82 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: abstractProperties.ts
+
+---
+# Input
+```js
+abstract class Foo {
+    abstract private a: 1;
+    private abstract b: 2;
+    static abstract c: 3;
+    abstract private ['g'];
+    private abstract ['h'];
+    static abstract ['i'];
+}
+
+```
+
+# Output
+```js
+abstract class Foo {
+  abstract private a: 1;
+  private abstract b: 2;
+  static abstract c: 3;
+  abstract private ['g'];
+  private abstract ['h'];
+  static abstract ['i'];
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+  ┌─ abstractProperties.ts:2:14
+  │
+2 │     abstract private a: 1;
+  │     -------- ^^^^^^^
+  │     │         
+  │     'abstract' modifier
+
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+  ┌─ abstractProperties.ts:3:5
+  │
+3 │     private abstract b: 2;
+  │     ^^^^^^^ -------- 'abstract' modifier
+
+error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
+  ┌─ abstractProperties.ts:4:12
+  │
+4 │     static abstract c: 3;
+  │     ------ ^^^^^^^^
+  │     │       
+  │     'static' modifier
+
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+  ┌─ abstractProperties.ts:5:14
+  │
+5 │     abstract private ['g'];
+  │     -------- ^^^^^^^
+  │     │         
+  │     'abstract' modifier
+
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+  ┌─ abstractProperties.ts:6:5
+  │
+6 │     private abstract ['h'];
+  │     ^^^^^^^ -------- 'abstract' modifier
+
+error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
+  ┌─ abstractProperties.ts:7:12
+  │
+7 │     static abstract ['i'];
+  │     ------ ^^^^^^^^
+  │     │       
+  │     'static' modifier
+
+
+```
+
+

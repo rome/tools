@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: methods.ts
+
+---
+# Input
+```js
+class X {
+    optionalMethod?() {}
+}
+
+interface Iterable<T> {
+  export [Symbol.iterator](): Iterator<T>;
+}
+
+export class Check {
+  private static property = 'test';
+}
+
+```
+
+# Output
+```js
+class X {
+  optionalMethod?() {}
+}
+
+interface Iterable<T> { export, [Symbol.iterator](): Iterator<T> }
+
+export class Check {
+  private static property = "test";
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: ';' expected'
+  ┌─ methods.ts:6:10
+  │
+6 │   export [Symbol.iterator](): Iterator<T>;
+  │          ^ An explicit or implicit semicolon is expected here...
+
+
+```
+
+

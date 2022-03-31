@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: issue-2482-2.js
+
+---
+# Input
+```js
+class foo {
+    bar() {
+        const median = dates.length % 2
+            ? dates[half].getTime()
+            : (dates[half - 1].getTime() + dates[half].getTime()) / 2.0;
+    }
+}
+
+```
+
+# Output
+```js
+class foo {
+  bar() {
+    const median = dates.length % 2 ? dates[half].getTime() : (
+      dates[half - 1].getTime() + dates[half].getTime()
+    ) / 2.0;
+  }
+}
+
+```
+
+

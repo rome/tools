@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: as-expression.ts
+
+---
+# Input
+```js
+const a = `${(foo + bar) as baz}`;
+const b = `${(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + bar) as baz}`;
+const b = `${(foo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar) as baz}`;
+const b = `${(foo + bar) as veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBaz}`;
+const b = `${(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar) as veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBaz}`;
+
+```
+
+# Output
+```js
+const a = `${(foo + bar) as baz}`;
+const b = `${
+  (veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + bar) as baz
+}`;
+const b = `${
+  (foo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar) as baz
+}`;
+const b = `${
+  (foo + bar) as veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBaz
+}`;
+const b = `${
+  (
+    veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+  ) as veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBaz
+}`;
+
+```
+
+

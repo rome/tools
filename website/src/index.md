@@ -9,3 +9,4 @@ layout: layouts/homepage.liquid
 {% include docs/status.md %}
 {% include docs/formatter.md %}
 {% include docs/philosophy.md %}
+{% include docs/_old_diagnostic-anatomy.md %}

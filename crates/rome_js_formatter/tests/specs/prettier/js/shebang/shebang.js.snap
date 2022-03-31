@@ -1,0 +1,22 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 153
+expression: shebang.js
+
+---
+# Input
+```js
+#!/usr/bin/env node
+function a() {}
+
+```
+
+# Output
+```js
+#!/usr/bin/env node
+
+function a() {}
+
+```
+
+

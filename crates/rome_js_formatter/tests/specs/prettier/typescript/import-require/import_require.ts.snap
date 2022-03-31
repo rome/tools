@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: import_require.ts
+---
+# Input
+```js
+import { IModel } from 'vs/editor/common/editorCommon';
+import JSONContributionRegistry = require('vs/platform/jsonschemas/common/jsonContributionRegistry');
+
+```
+
+# Output
+```js
+import { IModel } from "vs/editor/common/editorCommon";
+import JSONContributionRegistry = require("vs/platform/jsonschemas/common/jsonContributionRegistry");
+
+```
+
+

@@ -1,0 +1,41 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: classAbstractClinterfaceAssignability.ts
+
+---
+# Input
+```js
+
+var I: IConstructor;
+
+abstract class A {
+    x: number;
+    static y: number;
+}
+
+var AA: typeof A;
+AA = I;
+
+var AAA: typeof I;
+AAA = A;
+```
+
+# Output
+```js
+var I: IConstructor;
+
+abstract class A {
+  x: number;
+  static y: number;
+}
+
+var AA: typeof A;
+AA = I;
+
+var AAA: typeof I;
+AAA = A;
+
+```
+
+

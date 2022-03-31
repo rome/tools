@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: rest.ts
+
+---
+# Input
+```js
+function test([first, ...rest]) {}
+
+```
+
+# Output
+```js
+function test([first, ...rest]) {}
+
+```
+
+

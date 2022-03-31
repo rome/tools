@@ -1,0 +1,64 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: classAbstractOverloads.ts
+
+---
+# Input
+```js
+abstract class A {
+    abstract foo();
+    abstract foo() : number;
+    abstract foo();
+    
+    abstract bar();
+    bar();
+    abstract bar();
+    
+    abstract baz();
+    baz();
+    abstract baz();
+    baz() {}
+    
+    qux();
+}
+
+abstract class B {
+    abstract foo() : number;
+    abstract foo();
+    x : number;
+    abstract foo();
+    abstract foo();
+}
+```
+
+# Output
+```js
+abstract class A {
+  abstract foo();
+  abstract foo(): number;
+  abstract foo();
+
+  abstract bar();
+  bar();
+  abstract bar();
+
+  abstract baz();
+  baz();
+  abstract baz();
+  baz() {}
+
+  qux();
+}
+
+abstract class B {
+  abstract foo(): number;
+  abstract foo();
+  x: number;
+  abstract foo();
+  abstract foo();
+}
+
+```
+
+

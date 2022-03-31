@@ -1,0 +1,24 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: post_update_expression.js
+
+---
+# Input
+y++
+y--
+x = y++
+x = y--
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+y++;
+y--;
+x = y++;
+x = y--;
+

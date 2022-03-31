@@ -1,0 +1,64 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: block-comments.js
+
+---
+# Input
+```js
+bifornCringerMoshedPerplexSawder
+|> foo1
+|> foo2 /* comment1 */
+|> foo3 /* comment2 */
+|> kochabCooieGameOnOboleUnweave
+|> glimseGlyphsHazardNoopsTieTie;
+
+```
+
+# Output
+```js
+bifornCringerMoshedPerplexSawder
+|> foo1
+|> foo2 /* comment1 */
+|> foo3 /* comment2 */
+|> kochabCooieGameOnOboleUnweave
+|> glimseGlyphsHazardNoopsTieTie;
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
+  ┌─ block-comments.js:2:2
+  │
+2 │ |> foo1
+  │  ^ This operator requires a left hand side value
+
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
+  ┌─ block-comments.js:3:2
+  │
+3 │ |> foo2 /* comment1 */
+  │  ^ This operator requires a left hand side value
+
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
+  ┌─ block-comments.js:4:2
+  │
+4 │ |> foo3 /* comment2 */
+  │  ^ This operator requires a left hand side value
+
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
+  ┌─ block-comments.js:5:2
+  │
+5 │ |> kochabCooieGameOnOboleUnweave
+  │  ^ This operator requires a left hand side value
+
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
+  ┌─ block-comments.js:6:2
+  │
+6 │ |> glimseGlyphsHazardNoopsTieTie;
+  │  ^ This operator requires a left hand side value
+
+
+```
+
+

@@ -1,0 +1,20 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 197
+expression: array-assignment-holes.js
+
+---
+# Input
+let a, b;
+[a,/*empty*/,] = b;
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+let a, b;
+[a, /*empty*/ ,] = b;
+

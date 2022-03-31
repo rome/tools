@@ -1361,8 +1361,8 @@ dependencies = [
  "rome_console",
  "rome_core",
  "rome_diagnostics",
- "rome_formatter",
  "rome_fs",
+ "rome_js_formatter",
  "rome_js_parser",
  "thiserror",
  "tracing",
@@ -1403,7 +1403,18 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome_formatter"
+name = "rome_fs"
+version = "0.0.0"
+dependencies = [
+ "crossbeam",
+ "indexmap",
+ "parking_lot 0.12.0",
+ "rayon",
+ "tracing",
+]
+
+[[package]]
+name = "rome_js_formatter"
 version = "0.0.0"
 dependencies = [
  "cfg-if",
@@ -1422,17 +1433,6 @@ dependencies = [
  "similar-asserts",
  "tests_macros",
  "thiserror",
- "tracing",
-]
-
-[[package]]
-name = "rome_fs"
-version = "0.0.0"
-dependencies = [
- "crossbeam",
- "indexmap",
- "parking_lot 0.12.0",
- "rayon",
  "tracing",
 ]
 
@@ -1475,8 +1475,8 @@ dependencies = [
  "parking_lot 0.12.0",
  "rome_analyze",
  "rome_diagnostics",
- "rome_formatter",
  "rome_fs",
+ "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
  "serde",
@@ -1501,7 +1501,7 @@ name = "rome_playground"
 version = "0.0.0"
 dependencies = [
  "rome_diagnostics",
- "rome_formatter",
+ "rome_js_formatter",
  "rome_js_parser",
  "wasm-bindgen",
 ]
@@ -2298,7 +2298,7 @@ dependencies = [
  "pico-args",
  "regex",
  "rome_diagnostics",
- "rome_formatter",
+ "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
  "timing",

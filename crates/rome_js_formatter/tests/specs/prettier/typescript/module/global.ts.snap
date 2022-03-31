@@ -1,0 +1,25 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: global.ts
+
+---
+# Input
+```js
+namespace global {}
+module global {}
+global {}
+declare global {}
+
+```
+
+# Output
+```js
+namespace global {}
+module global {}
+global {}
+declare global {}
+
+```
+
+

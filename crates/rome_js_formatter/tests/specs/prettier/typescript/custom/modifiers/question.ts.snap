@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: question.ts
+
+---
+# Input
+```js
+var x: {
+    [A in keyof B]?: any;
+};
+
+```
+
+# Output
+```js
+var x: {
+    [A in keyof B]?: any;
+};
+
+```
+
+

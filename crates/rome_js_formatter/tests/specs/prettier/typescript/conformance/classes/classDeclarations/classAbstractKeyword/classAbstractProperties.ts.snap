@@ -1,0 +1,59 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: classAbstractProperties.ts
+
+---
+# Input
+```js
+abstract class A {
+    abstract x : number;
+    public abstract y : number;
+    protected abstract z : number;
+    private abstract w : number;
+    
+    abstract m: () => void; 
+    
+    abstract foo_x() : number;
+    public abstract foo_y() : number;
+    protected abstract foo_z() : number;
+    private abstract foo_w() : number;
+}
+```
+
+# Output
+```js
+abstract class A {
+  abstract x: number;
+  public abstract y: number;
+  protected abstract z: number;
+  private abstract w : number;
+
+  abstract m: () => void;
+
+  abstract foo_x(): number;
+  public abstract foo_y(): number;
+  protected abstract foo_z(): number;
+  private abstract foo_w() : number;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+  ┌─ classAbstractProperties.ts:5:5
+  │
+5 │     private abstract w : number;
+  │     ^^^^^^^ -------- 'abstract' modifier
+
+error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
+   ┌─ classAbstractProperties.ts:12:5
+   │
+12 │     private abstract foo_w() : number;
+   │     ^^^^^^^ -------- 'abstract' modifier
+
+
+```
+
+

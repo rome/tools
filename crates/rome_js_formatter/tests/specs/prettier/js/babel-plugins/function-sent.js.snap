@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: function-sent.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-function-sent
+
+function* generator() {
+    console.log("Sent", function.sent);
+    console.log("Yield", yield);
+}
+
+const iterator = generator();
+iterator.next(1); // Logs "Sent 1"
+iterator.next(2); // Logs "Yield 2"
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-function-sent
+
+function* generator() {
+  console.log("Sent", function.sent);
+  console.log("Yield", yield);
+}
+
+const iterator = generator();
+iterator.next(1); // Logs "Sent 1"
+iterator.next(2); // Logs "Yield 2"
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a parenthesis '(' but instead found '.'
+  ┌─ function-sent.js:4:33
+  │
+4 │     console.log("Sent", function.sent);
+  │                                 ^ Expected a parenthesis '(' here
+
+
+```
+
+

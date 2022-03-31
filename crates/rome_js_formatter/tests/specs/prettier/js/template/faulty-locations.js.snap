@@ -1,0 +1,46 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: faulty-locations.js
+
+---
+# Input
+```js
+var o = {
+  [`key`]: () => {
+    // Comment
+  }
+};
+
+var x = {
+  y: () => Relay.QL`
+    query {
+      ${foo},
+      field,
+    }
+  `
+};
+
+```
+
+# Output
+```js
+var o = {
+  [`key`]: () => {
+    // Comment
+  },
+};
+
+var x = {
+  y: () =>
+    Relay.QL`
+    query {
+      ${foo},
+      field,
+    }
+  `,
+};
+
+```
+
+

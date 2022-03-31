@@ -1,0 +1,67 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: try_catch_finally.js
+
+---
+# Input
+try {
+	var foo = 4
+} catch {
+	var foo = 4
+}
+
+try {
+	var foo = 4
+} catch (e) {
+	var foo = 4
+}
+
+
+try {
+	var foo = 4
+} finally    {
+	var foo = 4
+}
+
+try {
+	var foo = 4
+} catch {
+	var foo = 4
+} finally {
+	var foo = 4
+}
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+try {
+	var foo = 4;
+} catch {
+	var foo = 4;
+}
+
+try {
+	var foo = 4;
+} catch (e) {
+	var foo = 4;
+}
+
+try {
+	var foo = 4;
+} finally {
+	var foo = 4;
+}
+
+try {
+	var foo = 4;
+} catch {
+	var foo = 4;
+} finally {
+	var foo = 4;
+}
+
