@@ -22,7 +22,7 @@ jobs:
           node-version: '14'
       - run: npm install --prefix crates/rome_playground
       - uses: jetli/wasm-pack-action@v0.3.0
-      - run: wasm-pack build crates/rome_playground --target web
+      - run: wasm-pack build crates/rome_playground --target web --release
       - run: npm run build --prefix crates/rome_playground
       - name: Publish
         uses: cloudflare/wrangler-action@1.3.0
