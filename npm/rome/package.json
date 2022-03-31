@@ -2,7 +2,11 @@
     "name": "rome",
     "version": "0.4.0-next",
     "bin": "bin/rome",
+    "scripts": {
+        "postinstall": "node scripts/postinstall.js"
+    },
     "files": [
-        "bin/rome"
+        "bin/rome",
+        "scripts/postinstall.js"
     ]
 }
