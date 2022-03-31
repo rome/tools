@@ -6,7 +6,7 @@ mod simple;
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    empty_element, format_elements, hard_group_elements, hard_line_break, space_token, token,
+    empty_element, empty_line, format_elements, hard_group_elements, space_token, token,
     FormatElement, FormatResult, Formatter, Token,
 };
 pub use binarish_expression::format_binaryish_expression;
@@ -56,7 +56,7 @@ pub(crate) fn format_interpreter(
 ) -> FormatResult<FormatElement> {
     interpreter.format_with_or(
         formatter,
-        |interpreter| format_elements![interpreter, hard_line_break()],
+        |interpreter| format_elements![interpreter, empty_line()],
         empty_element,
     )
 }

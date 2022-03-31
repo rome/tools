@@ -1,15 +1,14 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
 assertion_line: 198
-expression: script.js
+expression: interpreter.js
 
 ---
 # Input
 #!/usr/bin/env node
-"use strict";
-'use asm'
-var express = require("express")
+console.log(1)
 
+console.log(1)
 =============================
 # Outputs
 ## Output 1
@@ -19,7 +18,7 @@ Line width: 80
 -----
 #!/usr/bin/env node
 
-"use strict";
-"use asm";
-var express = require("express");
+console.log(1);
+
+console.log(1);
 
