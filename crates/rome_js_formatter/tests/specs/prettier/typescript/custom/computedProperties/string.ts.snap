@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: string.ts
+---
+# Input
+```js
+interface I {
+    "string": "I";
+}
+
+type T = {
+    "string": "T";
+}
+
+interface A {
+    'string': "A";
+}
+
+type B = {
+    'string': "B";
+}
+
+```
+
+# Output
+```js
+interface I { "string": "I" }
+
+type T = { "string": "T" };
+
+interface A { "string": "A" }
+
+type B = { "string": "B" };
+
+```
+
+

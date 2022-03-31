@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: jsx.ts
+---
+# Input
+```js
+var example1 = <div>
+	https://test
+</div>;
+
+var example2 = <div>
+	/*test*/
+</div>;
+
+```
+
+# Output
+```js
+var example1 = <div>
+	https://test
+</div>;
+
+var example2 = <div>
+	/*test*/
+</div>;
+
+```
+
+

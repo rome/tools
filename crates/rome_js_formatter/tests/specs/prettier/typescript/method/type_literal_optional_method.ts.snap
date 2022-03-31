@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: type_literal_optional_method.ts
+
+---
+# Input
+```js
+var v: { e?(): number };
+
+```
+
+# Output
+```js
+var v: { e?(): number };
+
+```
+
+

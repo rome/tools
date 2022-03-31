@@ -1,0 +1,68 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 149
+expression: jsdoc.js
+
+---
+# Input
+```js
+/** @type {any} */
+const x = (
+    <div>
+        <div />
+    </div>
+);
+
+/**
+ * @type {object}
+ */
+() => (
+    <div>
+        sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
+    </div>
+);
+
+/**
+ * @type {object}
+ */
+function HelloWorld() {
+    return (
+        <div>
+           <span>Test</span>
+        </div>
+    );
+}
+```
+
+# Output
+```js
+/** @type {any} */
+const x = (
+  <div>
+        <div />
+    </div>
+);
+
+/**
+ * @type {object}
+ */
+() => (
+  <div>
+        sajdfpoiasdjfpoiasdjfpoiasdjfpoiadsjfpaoisdjfapsdiofjapioisadfaskfaspiofjp
+    </div>
+);
+
+/**
+ * @type {object}
+ */
+function HelloWorld() {
+  return (
+    <div>
+           <span>Test</span>
+        </div>
+  );
+}
+
+```
+
+

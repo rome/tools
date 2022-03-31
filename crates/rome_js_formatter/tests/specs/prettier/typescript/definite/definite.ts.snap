@@ -1,0 +1,42 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: definite.ts
+
+---
+# Input
+```js
+class MyComponent {
+ngModel!: ng.INgModelController;
+}
+
+const x!: string
+
+var y!: MyComponent
+
+```
+
+# Output
+```js
+class MyComponent {
+  ngModel!: ng.INgModelController;
+}
+
+const x!: string;
+
+var y!: MyComponent;
+
+```
+
+# Errors
+```
+error[SyntaxError]: Const var declarations must have an initialized value
+  ┌─ definite.ts:5:7
+  │
+5 │ const x!: string
+  │       ^ this variable needs to be initialized
+
+
+```
+
+

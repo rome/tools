@@ -1,0 +1,20 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: export-default.js
+
+---
+# Input
+```js
+export default (1,
+2);
+
+```
+
+# Output
+```js
+export default (1, 2);
+
+```
+
+

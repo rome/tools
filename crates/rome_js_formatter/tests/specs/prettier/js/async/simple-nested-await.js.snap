@@ -1,0 +1,25 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: simple-nested-await.js
+
+---
+# Input
+```js
+async function f() {
+  const a = await (await request()).json();
+  const b = await fs.writeFile(file, await (await request()).text());
+}
+
+```
+
+# Output
+```js
+async function f() {
+  const a = await (await request()).json();
+  const b = await fs.writeFile(file, await (await request()).text());
+}
+
+```
+
+

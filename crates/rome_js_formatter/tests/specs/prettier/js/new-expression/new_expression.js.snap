@@ -1,0 +1,35 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: new_expression.js
+
+---
+# Input
+```js
+new (memoize.Cache || MapCache)
+new (typeof this == "function" ? this : Dict())
+new (createObj()).prop(a());
+new (x()``.y)();
+new e[f().x].y();
+new e[f()].y();
+new (a().b)();
+new (a().b().c)();
+new (a``());
+
+```
+
+# Output
+```js
+new (memoize.Cache || MapCache)();
+new (typeof this == "function" ? this : Dict())();
+new (createObj()).prop(a());
+new (x()``.y)();
+new e[f().x].y();
+new e[f()].y();
+new (a().b)();
+new (a().b().c)();
+new (a``())();
+
+```
+
+

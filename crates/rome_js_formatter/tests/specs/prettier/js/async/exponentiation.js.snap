@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: exponentiation.js
+
+---
+# Input
+```js
+async () => (await 5) ** 6;
+
+```
+
+# Output
+```js
+async () => (await 5) ** 6;
+
+```
+
+

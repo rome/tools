@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: octal-number.js
+
+---
+# Input
+```js
+0777
+
+```
+
+# Output
+```js
+0777;
+
+```
+
+# Errors
+```
+error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" prefix instead.
+  ┌─ octal-number.js:1:1
+  │
+1 │ 0777
+  │ ^^^^
+
+
+```
+
+

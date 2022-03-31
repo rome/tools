@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: declare_var.ts
+
+---
+# Input
+```js
+// tslint:disable-next-line:no-use-before-declare
+const hello = 5;
+
+// tslint:disable-next-line:no-use-before-declare
+declare const hello2 = 5;
+
+```
+
+# Output
+```js
+// tslint:disable-next-line:no-use-before-declare
+const hello = 5;
+
+// tslint:disable-next-line:no-use-before-declare
+declare const hello2 = 5;
+
+```
+
+

@@ -1,0 +1,38 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: with-member-expression.js
+
+---
+# Input
+```js
+function functionName() {
+  // indent to make the line break
+  if (true) {
+    this._aVeryLongVariableNameToForceLineBreak = new this.Promise(
+      (resolve, reject) => {
+        // do something
+      }
+    );
+  }
+}
+
+```
+
+# Output
+```js
+function functionName() {
+  // indent to make the line break
+  if (true) {
+    this._aVeryLongVariableNameToForceLineBreak =
+      new this.Promise(
+        (resolve, reject) => {
+          // do something
+        },
+      );
+  }
+}
+
+```
+
+

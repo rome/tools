@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 168
+expression: default_import.js
+
+---
+# Input
+import hey from "hey"
+import hey from "hey";
+import "x" assert { type: "json" }
+import "foo" assert { "type": "json" };
+import foo from "foo.json" assert { type: "json" };
+import foo from "foo.json" assert {
+
+    type:
+        "json" };
+import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+import a, * as b from "foo"
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+import hey from "hey";
+import hey from "hey";
+import "x" assert { type: "json" };
+import "foo" assert { "type": "json" };
+import foo from "foo.json" assert { type: "json" };
+import foo from "foo.json" assert { type: "json" };
+import foo2 from "foo.json" assert {
+	"type": "json",
+	type: "html",
+	"type": "js",
+};
+import a, * as b from "foo";
+

@@ -1,0 +1,61 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: catch.js
+
+---
+# Input
+```js
+try {}
+catch(
+  // comment
+  foo
+) {}
+
+try {}
+catch(foo //comment
+) {}
+
+try {}
+catch(
+  /* comment */ foo
+) {}
+
+try {}
+catch(
+  foo /* comment */
+) {}
+
+try {}
+catch(
+  foo
+  /* comment */
+) {}
+
+```
+
+# Output
+```js
+try {} catch (
+  // comment
+  foo
+) {}
+
+try {} catch (
+  foo //comment
+) {}
+
+try {} catch (
+  /* comment */ foo
+) {}
+
+try {} catch (foo /* comment */ ) {}
+
+try {} catch (
+  foo
+  /* comment */
+) {}
+
+```
+
+

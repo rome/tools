@@ -1,0 +1,17 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: long-line.js
+---
+# Input
+```js
+import someCoolUtilWithARatherLongName from '../../../../utils/someCoolUtilWithARatherLongName';
+
+```
+
+# Output
+```js
+import someCoolUtilWithARatherLongName from "../../../../utils/someCoolUtilWithARatherLongName";
+
+```
+
+

@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: block_stmt_err.js
+
+---
+# Input
+{
+	let x= 10;
+	let y = 100;
+
+	if (test) {
+		let z = 110;
+	} else
+}
+
+let recovered     = "no"
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+{
+	let x = 10;
+	let y = 100;
+
+	if (test) {
+		let z = 110;
+	} else
+}
+
+let recovered = "no";
+

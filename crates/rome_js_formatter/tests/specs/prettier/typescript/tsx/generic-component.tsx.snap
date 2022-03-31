@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 151
+expression: generic-component.tsx
+
+---
+# Input
+```js
+const c1 = <MyComponent<number> data={12} />
+
+const c2 = <MyComponent<number> />
+
+const c3 = <MyComponent<number> attr="value" />
+
+```
+
+# Output
+```js
+const c1 = <MyComponent<number> data={12} />;
+
+const c2 = <MyComponent<number> />;
+
+const c3 = <MyComponent<number> attr="value" />;
+
+```
+
+

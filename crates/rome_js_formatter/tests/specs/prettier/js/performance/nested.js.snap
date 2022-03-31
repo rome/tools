@@ -1,0 +1,103 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: nested.js
+
+---
+# Input
+```js
+someObject.someFunction().then(function() {
+  return someObject.someFunction().then(function() {
+    return someObject.someFunction().then(function() {
+      return someObject.someFunction().then(function() {
+        return someObject.someFunction().then(function() {
+          return someObject.someFunction().then(function() {
+            return someObject.someFunction().then(function() {
+              return someObject.someFunction().then(function() {
+                return someObject.someFunction().then(function() {
+                  return someObject.someFunction().then(function() {
+                    return someObject.someFunction().then(function() {
+                      return someObject.someFunction().then(function() {
+                        return someObject.someFunction().then(function() {
+                          return someObject.someFunction().then(function() {
+                            anotherFunction();
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+});
+
+```
+
+# Output
+```js
+someObject
+  .someFunction()
+  .then(function () {
+    return someObject
+      .someFunction()
+      .then(function () {
+        return someObject
+          .someFunction()
+          .then(function () {
+            return someObject
+              .someFunction()
+              .then(function () {
+                return someObject
+                  .someFunction()
+                  .then(function () {
+                    return someObject
+                      .someFunction()
+                      .then(function () {
+                        return someObject
+                          .someFunction()
+                          .then(function () {
+                            return someObject
+                              .someFunction()
+                              .then(function () {
+                                return someObject
+                                  .someFunction()
+                                  .then(function () {
+                                    return someObject
+                                      .someFunction()
+                                      .then(function () {
+                                        return someObject
+                                          .someFunction()
+                                          .then(function () {
+                                            return someObject
+                                              .someFunction()
+                                              .then(function () {
+                                                return someObject
+                                                  .someFunction()
+                                                  .then(function () {
+                                                    return someObject
+                                                      .someFunction()
+                                                      .then(function () {
+                                                        anotherFunction();
+                                                      });
+                                                  });
+                                              });
+                                          });
+                                      });
+                                  });
+                              });
+                          });
+                      });
+                  });
+              });
+          });
+      });
+  });
+
+```
+
+

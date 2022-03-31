@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: simple-args.js
+
+---
+# Input
+```js
+const fieldsToSend = _(["id", extra]).without("transition").uniq();
+
+console.log(values.filter(isValid).map(extractId).slice(-5, -1));
+
+```
+
+# Output
+```js
+const fieldsToSend = _(["id", extra]).without("transition").uniq();
+
+console.log(values.filter(isValid).map(extractId).slice(-5, -1));
+
+```
+
+

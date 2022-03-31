@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: template_type.ts
+---
+# Input
+type TemplateType = `
+    text
+    ${'lorem'| 'ipsum' |'dolor'| 'sit' |'amet'| 'consectetur' |'adipiscing'| 'elit' |'sed'}
+`
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+type TemplateType = `
+    text
+    ${
+	| "lorem"
+	| "ipsum"
+	| "dolor"
+	| "sit"
+	| "amet"
+	| "consectetur"
+	| "adipiscing"
+	| "elit"
+	| "sed"}
+`;
+

@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: statement.js
+
+---
+# Input
+;
+debugger
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+debugger;
+

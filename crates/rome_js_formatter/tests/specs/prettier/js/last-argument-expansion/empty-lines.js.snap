@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: empty-lines.js
+
+---
+# Input
+```js
+all_verylongcall_verylongcall_verylongcall_verylongcall_verylongcall(
+  (a,
+
+   b) => {
+    console.log()
+  }
+)
+
+```
+
+# Output
+```js
+all_verylongcall_verylongcall_verylongcall_verylongcall_verylongcall(
+  (a, b) => {
+    console.log();
+  },
+);
+
+```
+
+

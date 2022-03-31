@@ -1,0 +1,24 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: issue-7024.js
+
+---
+# Input
+```js
+const radioSelectedAttr =
+  (isAnyValueSelected &&
+    node.getAttribute(radioAttr.toLowerCase()) === radioValue) ||
+  ((!isAnyValueSelected && values[a].default === true) || a === 0);
+
+```
+
+# Output
+```js
+const radioSelectedAttr = (
+  isAnyValueSelected && node.getAttribute(radioAttr.toLowerCase()) === radioValue
+) || ((!isAnyValueSelected && values[a].default === true) || a === 0);
+
+```
+
+

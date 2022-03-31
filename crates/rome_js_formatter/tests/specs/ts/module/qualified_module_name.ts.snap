@@ -1,0 +1,18 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 168
+expression: qualified_module_name.ts
+
+---
+# Input
+module a . b . c { }
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+module a.b.c {}
+

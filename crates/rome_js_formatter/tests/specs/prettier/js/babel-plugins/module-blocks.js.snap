@@ -1,0 +1,51 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: module-blocks.js
+
+---
+# Input
+```js
+let m = module {
+  export let m = 2;
+  export let n = 3;
+};
+
+```
+
+# Output
+```js
+let m = module;
+{
+  export let m = 2;
+  export let n = 3;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ module-blocks.js:1:16
+  │
+1 │ let m = module {
+  │ ---------------^ An explicit or implicit semicolon is expected here...
+  │ │               
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: Illegal use of an export declaration not at the top level
+  ┌─ module-blocks.js:2:3
+  │
+2 │   export let m = 2;
+  │   ^^^^^^^^^^^^^^^^^ move this declaration to the top level
+
+error[SyntaxError]: Illegal use of an export declaration not at the top level
+  ┌─ module-blocks.js:3:3
+  │
+3 │   export let n = 3;
+  │   ^^^^^^^^^^^^^^^^^ move this declaration to the top level
+
+
+```
+
+

@@ -1,0 +1,44 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: arrow_regression.ts
+
+---
+# Input
+```js
+const bar = (...varargs:any[]) => {
+  console.log(varargs);
+};
+
+const foo = (x:string):void => (
+  bar(
+    x,
+    () => {},
+    () => {}
+  )
+);
+
+app.get("/", (req, res): void => {
+  res.send("Hello world");
+});
+
+```
+
+# Output
+```js
+const bar = (...varargs: any[]) => {
+  console.log(varargs);
+};
+
+const foo = (x: string): void => (bar(x, () => {}, () => {}));
+
+app.get(
+  "/",
+  (req, res): void => {
+    res.send("Hello world");
+  },
+);
+
+```
+
+

@@ -1,0 +1,40 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: classAbstractSingleLineDecl.ts
+
+---
+# Input
+```js
+abstract class A {}
+
+abstract
+class B {}
+
+abstract
+
+class C {}
+
+new A;
+new B;
+new C;
+```
+
+# Output
+```js
+abstract class A {}
+
+abstract;
+class B {}
+
+abstract;
+
+class C {}
+
+new A();
+new B();
+new C();
+
+```
+
+

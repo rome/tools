@@ -1,0 +1,60 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: while.js
+
+---
+# Input
+```js
+while(
+    true
+    // Comment
+  ) {}
+
+while(true)// Comment
+{}
+
+while(true){}// Comment
+
+while(true)/*Comment*/{}
+
+while(
+  true // Comment
+  && true // Comment
+  ){}
+
+while(true) {} // comment
+
+while(true) /* comment */ ++x; 
+
+while(1) // Comment
+  foo();
+
+```
+
+# Output
+```js
+while (
+  true
+  // Comment
+) {}
+
+while (true) {} // Comment
+
+while (true) {} // Comment
+
+while (true) /*Comment*/ {}
+
+while (
+  true && true // Comment // Comment
+) {}
+
+while (true) {} // comment
+
+while (true) /* comment */ ++x;
+
+while (1) foo(); // Comment
+
+```
+
+

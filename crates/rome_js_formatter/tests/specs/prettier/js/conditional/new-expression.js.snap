@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: new-expression.js
+
+---
+# Input
+```js
+const testConsole = new TestConsole(
+  config.useStderr ? process.stderr : process.stdout
+);
+
+```
+
+# Output
+```js
+const testConsole = new TestConsole(
+  config.useStderr ? process.stderr : process.stdout,
+);
+
+```
+
+

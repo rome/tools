@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: property-decorator.ts
+
+---
+# Input
+```js
+class Greeter {
+  @format("Hello, %s") greeting: string;
+
+  constructor(message: string) {
+    this.greeting = message;
+  }
+  greet() {
+    let formatString = getFormat(this, "greeting");
+    return formatString.replace("%s", this.greeting);
+  }
+}
+
+```
+
+# Output
+```js
+class Greeter {
+  @format("Hello, %s") greeting: string;
+
+  constructor(message: string) {
+    this.greeting = message;
+  }
+  greet() {
+    let formatString = getFormat(this, "greeting");
+    return formatString.replace("%s", this.greeting);
+  }
+}
+
+```
+
+

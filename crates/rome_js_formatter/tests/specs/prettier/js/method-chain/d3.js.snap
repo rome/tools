@@ -1,0 +1,49 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: d3.js
+
+---
+# Input
+```js
+d3.select('body')
+  .append('circle')
+  .at({ width: 30, fill: '#f0f' })
+  .st({ fontWeight: 600 })
+
+const myScale = d3.scaleLinear()
+  .domain([1950, 1980])
+  .range([0, width])
+
+not.d3.select('body')
+  .append('circle')
+  .at({ width: 30, fill: '#f0f' })
+  .st({ fontWeight: 600 })
+
+not.d3.scaleLinear()
+  .domain([1950, 1980])
+  .range([0, width])
+
+```
+
+# Output
+```js
+d3
+  .select("body")
+  .append("circle")
+  .at({ width: 30, fill: "#f0f" })
+  .st({ fontWeight: 600 });
+
+const myScale = d3.scaleLinear().domain([1950, 1980]).range([0, width]);
+
+not.d3
+  .select("body")
+  .append("circle")
+  .at({ width: 30, fill: "#f0f" })
+  .st({ fontWeight: 600 });
+
+not.d3.scaleLinear().domain([1950, 1980]).range([0, width]);
+
+```
+
+

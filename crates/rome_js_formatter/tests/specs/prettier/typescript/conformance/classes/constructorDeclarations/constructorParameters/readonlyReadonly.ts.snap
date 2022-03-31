@@ -1,0 +1,45 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: readonlyReadonly.ts
+
+---
+# Input
+```js
+class C {
+    readonly readonly x: number;
+    constructor(readonly readonly y: number) {}
+}
+```
+
+# Output
+```js
+class C {
+  readonly readonly x: number;
+  constructor(readonly readonly y: number) {}
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: 'readonly' already seen
+  ┌─ readonlyReadonly.ts:2:14
+  │
+2 │     readonly readonly x: number;
+  │     -------- ^^^^^^^^ duplicate modifier
+  │     │         
+  │     first seen here
+
+error[SyntaxError]: 'readonly' already seen
+  ┌─ readonlyReadonly.ts:3:26
+  │
+3 │     constructor(readonly readonly y: number) {}
+  │                 -------- ^^^^^^^^ duplicate modifier
+  │                 │         
+  │                 first seen here
+
+
+```
+
+

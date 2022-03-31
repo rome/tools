@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: comments.ts
+
+---
+# Input
+```js
+const fn1 = () => {
+  return;
+} /* foo */;
+
+const fn2 = () => {
+  return;
+}
+
+// foo
+;
+
+```
+
+# Output
+```js
+const fn1 = () => {
+  return;
+} /* foo */ ;
+
+const fn2 = () => {
+  return;
+}
+// foo
+;
+
+```
+
+

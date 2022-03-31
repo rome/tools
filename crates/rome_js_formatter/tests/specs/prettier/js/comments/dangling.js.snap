@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: dangling.js
+
+---
+# Input
+```js
+var a = {/* dangling */};
+var b = {
+  // dangling
+};
+var b = [/* dangling */];
+function d() {
+  /* dangling */
+}
+new Thing(/* dangling */);
+Thing(/* dangling */);
+export /* dangling */{};
+
+```
+
+# Output
+```js
+var a = { /* dangling */ };
+var b = {
+  // dangling
+};
+var b = [ /* dangling */ ];
+function d() {
+  /* dangling */
+}
+new Thing( /* dangling */ );
+Thing( /* dangling */ );
+export {}; /* dangling */
+
+```
+
+

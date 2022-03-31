@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: url.js
+
+---
+# Input
+```js
+styled.div`color:red;background: url(http://example.com?q=${foo})`
+
+```
+
+# Output
+```js
+styled.div`color:red;background: url(http://example.com?q=${foo})`;
+
+```
+
+

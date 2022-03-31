@@ -1,0 +1,69 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 149
+expression: boundary.js
+
+---
+# Input
+```js
+`${
+a +  // a
+  a
+}
+
+${a // comment
+}
+
+${b /* comment */}
+
+${/* comment */ c /* comment */}
+
+${// comment
+d //comment
+}
+
+${// $FlowFixMe found when converting React.createClass to ES6
+ExampleStory.getFragment('story')}
+`;
+
+<div>
+{ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
+}
+</div>;
+
+```
+
+# Output
+```js
+`${
+  a + // a
+  a
+}
+
+${
+  a // comment
+}
+
+${b /* comment */ }
+
+${ /* comment */ c /* comment */ }
+
+${
+  // comment
+  d //comment
+}
+
+${
+  // $FlowFixMe found when converting React.createClass to ES6
+  ExampleStory.getFragment("story")
+}
+`;
+
+<div>
+{ExampleStory.getFragment('story') // $FlowFixMe found when converting React.createClass to ES6
+}
+</div>;
+
+```
+
+

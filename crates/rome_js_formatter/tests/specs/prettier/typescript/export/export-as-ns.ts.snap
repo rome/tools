@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: export-as-ns.ts
+
+---
+# Input
+```js
+export * as utilities from "./utilities.js";
+
+```
+
+# Output
+```js
+export * as utilities from "./utilities.js";
+
+```
+
+

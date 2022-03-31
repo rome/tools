@@ -15,9 +15,9 @@ use rome_diagnostics::{
     file::{FileId, Files, SimpleFile},
     Diagnostic,
 };
-use rome_formatter::{FormatOptions, IndentStyle};
 use rome_fs::{AtomicInterner, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
+use rome_js_formatter::{FormatOptions, IndentStyle};
 use rome_js_parser::{parse, SourceType};
 
 use crate::{CliSession, Termination};
@@ -346,7 +346,7 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
         });
     }
 
-    let result = rome_formatter::format(params.options, &root.syntax())
+    let result = rome_js_formatter::format(params.options, &root.syntax())
         .with_file_id_and_code(params.file_id, "Format")?;
 
     let output = result.as_code().as_bytes();

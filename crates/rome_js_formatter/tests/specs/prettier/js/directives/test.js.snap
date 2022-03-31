@@ -1,0 +1,59 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: test.js
+---
+# Input
+```js
+"use strict";
+
+function f1() {
+  "use strict";
+}
+
+function f2() {
+  'ngInject';
+  Object.assign(this, { $log, $uibModal });
+}
+
+function f3() {
+
+  'ngInject';
+
+  Object.assign(this, { $log, $uibModal });
+
+}
+
+function f4() {
+  'ngInject';
+
+
+  Object.assign(this, { $log, $uibModal });
+}
+
+```
+
+# Output
+```js
+"use strict";
+function f1() {
+  "use strict";
+}
+
+function f2() {
+  "ngInject";
+  Object.assign(this, { $log, $uibModal });
+}
+
+function f3() {
+  "ngInject";
+  Object.assign(this, { $log, $uibModal });
+}
+
+function f4() {
+  "ngInject";
+  Object.assign(this, { $log, $uibModal });
+}
+
+```
+
+

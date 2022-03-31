@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: wideningTuples5.ts
+
+---
+# Input
+```js
+//@noImplicitAny: true
+var [a, b] = [undefined, null];
+
+```
+
+# Output
+```js
+//@noImplicitAny: true
+var [a, b] = [undefined, null];
+
+```
+
+

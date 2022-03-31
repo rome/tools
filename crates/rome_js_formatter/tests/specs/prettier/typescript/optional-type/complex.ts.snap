@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: complex.ts
+
+---
+# Input
+```js
+type T = [("a" | "b")?];
+type TupleWithOptional = [number, (1 extends 2 ? string[] : number[])?];
+
+```
+
+# Output
+```js
+type T = [("a" | "b")?];
+type TupleWithOptional = [number, (1 extends 2 ? string[] : number[])?];
+
+```
+
+

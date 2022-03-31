@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: abstract.ts
+
+---
+# Input
+```js
+abstract interface I {
+
+}
+
+```
+
+# Output
+```js
+abstract;
+interface I {}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ abstract.ts:1:10
+  │
+1 │ abstract interface I {
+  │ ---------^^^^^^^^^
+  │ │        │
+  │ │        An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+
+```
+
+

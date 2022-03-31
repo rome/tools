@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: after-key.js
+
+---
+# Input
+```js
+let a = {
+   a /* comment */: () => 1
+};
+
+let b = {
+   "a" /* comment */: () => 1
+};
+
+```
+
+# Output
+```js
+let a = { a /* comment */ : () => 1 };
+
+let b = { "a" /* comment */ : () => 1 };
+
+```
+
+

@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: issue-6899.ts
+---
+# Input
+```js
+const getUnusedAuthorizationHoldDocuments = async (): Promise<DocumentData[]> => {}
+
+const firestorePersonallyIdentifiablePaths: Array<
+  keyof Collections.Users.Entity
+> = []
+
+export const SUPPORTED_VEHICLE_TYPES: Array<
+  Collections.VehiclesStates.Entity['type']
+> = Object.values(Collections.VehiclesStates.Type);
+
+```
+
+# Output
+```js
+const getUnusedAuthorizationHoldDocuments = async (): Promise<DocumentData[]> => {};
+
+const firestorePersonallyIdentifiablePaths: Array<
+  keyof Collections.Users.Entity
+> = [];
+
+export const SUPPORTED_VEHICLE_TYPES: Array<
+  Collections.VehiclesStates.Entity["type"]
+> = Object.values(Collections.VehiclesStates.Type);
+
+```
+
+

@@ -1,0 +1,54 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: syntax.js
+
+---
+# Input
+```js
+#[]
+#[1, 2]
+#[1, 2, #{ a: 3 }]
+
+```
+
+# Output
+```js
+#[]
+#[1, 2]
+#[1, 2, #
+{
+  a: 3;
+}
+]
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '#[]
+#[1, 2]
+#[1, 2, #'
+  ┌─ syntax.js:1:1
+  │  
+1 │ ┌ #[]
+2 │ │ #[1, 2]
+3 │ │ #[1, 2, #{ a: 3 }]
+  │ └─────────^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ']'
+  ┌─ syntax.js:3:18
+  │
+3 │ #[1, 2, #{ a: 3 }]
+  │                  ^ Expected a statement here
+
+error: expected `!` following a `#`, but found none
+  ┌─ syntax.js:1:1
+  │
+1 │ #[]
+  │ ^
+
+
+```
+
+

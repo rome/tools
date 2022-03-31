@@ -1,0 +1,57 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: export-default-from.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-export-default-from
+
+
+export v from 'mod';
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-export-default-from
+
+
+export
+v;
+from;
+"mod";
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `*` but instead found `v`
+  ┌─ export-default-from.js:4:8
+  │
+4 │ export v from 'mod';
+  │        ^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ export-default-from.js:4:10
+  │
+4 │ export v from 'mod';
+  │        --^^^^
+  │        │ │
+  │        │ An explicit or implicit semicolon is expected here...
+  │        ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ export-default-from.js:4:15
+  │
+4 │ export v from 'mod';
+  │          -----^^^^^
+  │          │    │
+  │          │    An explicit or implicit semicolon is expected here...
+  │          ...Which is required to end this statement
+
+
+```
+
+

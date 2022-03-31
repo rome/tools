@@ -1,0 +1,22 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: methodSignature.ts
+
+---
+# Input
+```js
+var logger: {
+    log(val: any, val2: any),
+    error(val: any)
+};
+
+```
+
+# Output
+```js
+var logger: { log(val: any, val2: any), error(val: any) };
+
+```
+
+

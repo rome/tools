@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: issue-7572.js
+---
+# Input
+```js
+const t = {
+  "hello": world(),
+  'this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line':
+  	orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
+  "can-someone-explain": this()
+};
+
+```
+
+# Output
+```js
+const t = {
+  "hello": world(),
+  "this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line": orMaybeIAmMisunderstandingAndIHaveSetSomethingWrongInMyConfig(),
+  "can-someone-explain": this(),
+};
+
+```
+
+

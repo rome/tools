@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: unique-symbol.ts
+
+---
+# Input
+```js
+type A = unique symbol;
+type B = keyof something;
+
+```
+
+# Output
+```js
+type A = unique symbol;
+type B = keyof something;
+
+```
+
+

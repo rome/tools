@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: class-declaration.js
+
+---
+# Input
+```js
+
+
+class    a {
+  b(   ) {}
+}
+
+let    x
+```
+
+# Output
+```js
+
+
+class    a {
+  b() {}
+}
+
+let    x
+```
+
+

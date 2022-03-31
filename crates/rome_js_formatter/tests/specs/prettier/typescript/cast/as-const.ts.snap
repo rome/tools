@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: as-const.ts
+
+---
+# Input
+```js
+let x = '123' as const;
+
+// https://github.com/babel/babel/pull/11912
+x as boolean <= y; // (x as boolean) <= y;
+x as boolean ?? y; // (x as boolean) ?? y;
+
+```
+
+# Output
+```js
+let x = "123" as const;
+
+// https://github.com/babel/babel/pull/11912
+x as boolean <= y; // (x as boolean) <= y;
+x as boolean ?? y; // (x as boolean) ?? y;
+
+```
+
+

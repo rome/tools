@@ -1,0 +1,34 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: tuple.ts
+
+---
+# Input
+```js
+
+export type SCMRawResource = [
+	number /*handle*/,
+	string /*resourceUri*/,
+	modes.Command /*command*/,
+	string[] /*icons: light, dark*/,
+	boolean /*strike through*/,
+	boolean /*faded*/
+];
+
+```
+
+# Output
+```js
+export type SCMRawResource = [
+  number, /*handle*/
+  string, /*resourceUri*/
+  modes.Command, /*command*/
+  string[], /*icons: light, dark*/
+  boolean, /*strike through*/
+  boolean, /*faded*/
+];
+
+```
+
+

@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: identifier_binding.js
+
+---
+# Input
+let x = y
+
+let abcde = "very long value that will cause a line break", fghij = "this should end up on the next line"
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+let x = y;
+
+let abcde = "very long value that will cause a line break",
+	fghij = "this should end up on the next line";
+

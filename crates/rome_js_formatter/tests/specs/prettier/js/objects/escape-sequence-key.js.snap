@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: escape-sequence-key.js
+---
+# Input
+```js
+// #6235
+const a = {
+  '\u2139': 'why "\\u2139" is converted to "i"?',
+};
+
+const b = {
+  "\x66\x69\x73\x6b\x65\x72": "\x66\x69\x73\x6b\x65\x72",
+};
+
+```
+
+# Output
+```js
+// #6235
+const a = { "\u2139": 'why "\\u2139" is converted to "i"?' };
+
+const b = { "\x66\x69\x73\x6b\x65\x72": "\x66\x69\x73\x6b\x65\x72" };
+
+```
+
+

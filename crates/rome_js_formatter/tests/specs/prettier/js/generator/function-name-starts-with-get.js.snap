@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: function-name-starts-with-get.js
+
+---
+# Input
+```js
+// https://github.com/meriyah/meriyah/issues/164
+
+function get() {}
+
+function* getData() {
+    return yield get();
+}
+
+```
+
+# Output
+```js
+// https://github.com/meriyah/meriyah/issues/164
+
+function get() {}
+
+function* getData() {
+  return yield get();
+}
+
+```
+
+

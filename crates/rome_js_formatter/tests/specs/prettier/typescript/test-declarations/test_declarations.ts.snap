@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: test_declarations.ts
+
+---
+# Input
+```js
+test("does something really long and complicated so I have to write a very long name for the test", <T>(done) => {
+  console.log("hello!");
+});
+
+```
+
+# Output
+```js
+test(
+  "does something really long and complicated so I have to write a very long name for the test",
+  <T>(done) => {
+    console.log("hello!");
+  },
+);
+
+```
+
+

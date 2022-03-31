@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: comment.js
+
+---
+# Input
+```js
+function foo() {
+  return {
+    // this comment causes the problem
+    bar: baz() + 1
+  };
+}
+
+```
+
+# Output
+```js
+function foo() {
+  return {
+    // this comment causes the problem
+    bar: baz() + 1,
+  };
+}
+
+```
+
+

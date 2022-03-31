@@ -1,0 +1,43 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: classAbstractConstructorAssignability.ts
+
+---
+# Input
+```js
+
+class A {}
+
+abstract class B extends A {}
+
+class C extends B {}
+
+var AA : typeof A = B;
+var BB : typeof B = A;
+var CC : typeof C = B;
+
+new AA;
+new BB;
+new CC;
+```
+
+# Output
+```js
+class A {}
+
+abstract class B extends A {}
+
+class C extends B {}
+
+var AA: typeof A = B;
+var BB: typeof B = A;
+var CC: typeof C = B;
+
+new AA();
+new BB();
+new CC();
+
+```
+
+

@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: castOfAwait.ts
+
+---
+# Input
+```js
+// @target: es6
+async function f() {
+    <number> await 0;
+    typeof await 0;
+    void await 0;
+    await void <string> typeof <number> void await 0;
+    await await 0;
+}
+
+```
+
+# Output
+```js
+// @target: es6
+async function f() {
+  <number>await 0;
+  typeof await 0;
+  void await 0;
+  await void <string>typeof <number>void await 0;
+  await await 0;
+}
+
+```
+
+

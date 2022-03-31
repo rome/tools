@@ -1,0 +1,35 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: module-export1.js
+
+---
+# Input
+```js
+import  def , {named}  from    'x'
+
+export *  from   'd'
+
+export    const  x
+  =  42
+
+export   default    42
+
+
+```
+
+# Output
+```js
+import  def , {named}  from    'x'
+
+export *  from 'd'
+
+export    const  x
+  =  42
+
+export   default    42
+
+
+```
+
+

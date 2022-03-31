@@ -1,0 +1,46 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: errorOnInitializerInInterfaceProperty.ts
+
+---
+# Input
+```js
+interface Foo {
+    bar: number = 5;
+}
+
+```
+
+# Output
+```js
+interface Foo {
+    bar: number = 5
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: ';' expected'
+  ┌─ errorOnInitializerInInterfaceProperty.ts:2:17
+  │
+2 │     bar: number = 5;
+  │                 ^ An explicit or implicit semicolon is expected here...
+
+error[SyntaxError]: expected a property, or a signature but instead found ';'
+  ┌─ errorOnInitializerInInterfaceProperty.ts:2:20
+  │
+2 │     bar: number = 5;
+  │                    ^ Expected a property, or a signature here
+
+error[SyntaxError]: expected a statement but instead found '}'
+  ┌─ errorOnInitializerInInterfaceProperty.ts:3:1
+  │
+3 │ }
+  │ ^ Expected a statement here
+
+
+```
+
+

@@ -1,0 +1,117 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: decorators-comments.ts
+
+---
+# Input
+```js
+
+class Foo1 {
+    @foo
+    // comment
+    async method() {}
+}
+
+class Foo2 {
+    @foo
+    // comment
+    private method() {}
+}
+
+class Foo3 {
+    @foo
+    // comment
+    *method() {}
+}
+
+class Foo4 {
+    @foo
+    // comment
+    async *method() {}
+}
+
+class Something {
+    @foo()
+    // comment
+    readonly property: Array<string>
+}
+
+class Something2 {
+    @foo()
+    // comment
+    abstract property: Array<string>
+}
+
+class Something3 {
+    @foo()
+    // comment
+    abstract method(): Array<string>
+}
+
+```
+
+# Output
+```js
+class Foo1 {
+  @foo
+  // comment
+  async method() {}
+}
+
+class Foo2 {
+  @foo
+  // comment
+  private method() {}
+}
+
+class Foo3 {
+  @foo
+  // comment
+  *method() {}
+}
+
+class Foo4 {
+  @foo
+  // comment
+  async *method() {}
+}
+
+class Something {
+  @foo()
+  // comment
+  readonly property: Array<string>;
+}
+
+class Something2 {
+  @foo()
+    // comment
+    abstract property: Array<string>
+}
+
+class Something3 {
+  @foo()
+    // comment
+    abstract method(): Array<string>
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Only abstract classes can have abstract members
+   ┌─ decorators-comments.ts:35:5
+   │
+35 │     abstract property: Array<string>
+   │     ^^^^^^^^
+
+error[SyntaxError]: Only abstract classes can have abstract members
+   ┌─ decorators-comments.ts:41:5
+   │
+41 │     abstract method(): Array<string>
+   │     ^^^^^^^^
+
+
+```
+
+

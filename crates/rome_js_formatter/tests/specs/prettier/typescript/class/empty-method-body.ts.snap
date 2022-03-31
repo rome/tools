@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: empty-method-body.ts
+
+---
+# Input
+```js
+// #9324
+
+class foo1 {
+  bar() /* bat */;
+}
+
+// #9367
+class Test {
+  foo (/* 2 */) /* 3 */;
+}
+
+```
+
+# Output
+```js
+// #9324
+
+class foo1 {
+  bar() /* bat */ ;
+}
+
+// #9367
+class Test {
+  foo( /* 2 */ ) /* 3 */ ;
+}
+
+```
+
+

@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: declarationEmitThisPredicatesWithPrivateName01.ts
+
+---
+# Input
+```js
+// @declaration: true
+// @module: commonjs
+
+export class C {
+    m(): this is D {
+        return this instanceof D;
+    }
+}
+
+class D extends C {
+}
+```
+
+# Output
+```js
+// @declaration: true
+// @module: commonjs
+
+export class C {
+  m(): this is D {
+    return this instanceof D;
+  }
+}
+
+class D extends C {}
+
+```
+
+

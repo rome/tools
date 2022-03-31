@@ -1,0 +1,24 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: getter_setter.js
+
+---
+# Input
+let a = {
+	get foo() {}
+}
+let b = {
+	set foo(a) {}
+}
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+let a = { get foo() {} };
+let b = { set foo(a) {} };
+

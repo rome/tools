@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: objects.js
+---
+# Input
+```js
+const obj = {
+ 'a': true,
+ b: true,
+ "𐊧": true,
+}
+
+```
+
+# Output
+```js
+const obj = { "a": true, b: true, "𐊧": true };
+
+```
+
+

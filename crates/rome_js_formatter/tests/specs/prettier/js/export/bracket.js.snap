@@ -1,0 +1,59 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: bracket.js
+
+---
+# Input
+```js
+const {  runTaskForChanged,
+  description,
+  someOtherLabel,
+  thatMakes,
+  itGo,
+  multiLine,
+  andMore,
+  soWeCanGetItTo80Columns,fitsIn, oneLine} = {}
+export {
+  runTaskForChanged,
+  description,
+  someOtherLabel,
+  thatMakes,
+  itGo,
+  multiLine,
+  andMore,
+  soWeCanGetItTo80Columns
+};
+export {fitsIn, oneLine};
+
+```
+
+# Output
+```js
+const {
+  runTaskForChanged,
+  description,
+  someOtherLabel,
+  thatMakes,
+  itGo,
+  multiLine,
+  andMore,
+  soWeCanGetItTo80Columns,
+  fitsIn,
+  oneLine,
+} = {};
+export {
+  runTaskForChanged,
+  description,
+  someOtherLabel,
+  thatMakes,
+  itGo,
+  multiLine,
+  andMore,
+  soWeCanGetItTo80Columns,
+};
+export { fitsIn, oneLine };
+
+```
+
+

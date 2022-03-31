@@ -1,0 +1,24 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: single-parameter.ts
+
+---
+# Input
+```js
+type X = (options:{ a: string; b: AbstractCompositeThingamabobberFactoryProvider}) => {};
+type Y = new (options:{ a: string; b: AbstractCompositeThingamabobberFactoryProvider}) => {};
+```
+
+# Output
+```js
+type X = (
+  options: { a: string, b: AbstractCompositeThingamabobberFactoryProvider },
+) => {};
+type Y = new(
+  options: { a: string, b: AbstractCompositeThingamabobberFactoryProvider },
+) => {};
+
+```
+
+

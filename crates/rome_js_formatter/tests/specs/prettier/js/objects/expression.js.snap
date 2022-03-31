@@ -1,0 +1,83 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: expression.js
+
+---
+# Input
+```js
+() => ({}``);
+({})``;
+a = () => ({}).x;
+({} && a, b);
+({}::b, 0);
+({}::b()``[''].c++ && 0 ? 0 : 0, 0);
+({}(), 0);
+({} = 0);
+(({} = 0), 1);
+
+const a1 = {
+  someKey:
+    (shortName, shortName)
+};
+
+const a2 = {
+  someKey:
+    (longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName)
+};
+
+const a3 = {
+  someKey:
+    (longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName)
+};
+
+```
+
+# Output
+```js
+() => ({}``);
+({})``;
+a = () => ({}).x;
+({} && a, b);
+({}
+::b, 0)
+({}
+::b()``[''].c++ && 0 ? 0 : 0, 0)
+({}(), 0);
+({} = 0);
+(({} = 0), 1);
+
+const a1 = { someKey: (shortName, shortName) };
+
+const a2 = {
+  someKey: (
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName
+  ),
+};
+
+const a3 = {
+  someKey: (
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName
+  ),
+};
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `')'` but instead found `:`
+  ┌─ expression.js:5:4
+  │
+5 │ ({}::b, 0);
+  │    ^ unexpected
+
+error[SyntaxError]: expected `')'` but instead found `:`
+  ┌─ expression.js:6:4
+  │
+6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
+  │    ^ unexpected
+
+
+```
+
+

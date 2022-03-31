@@ -1,0 +1,17 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: multiple_standalones.js
+---
+# Input
+```js
+import a, * as b from 'a';
+
+```
+
+# Output
+```js
+import a, * as b from "a";
+
+```
+
+

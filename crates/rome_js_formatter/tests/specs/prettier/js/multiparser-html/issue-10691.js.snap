@@ -1,0 +1,35 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: issue-10691.js
+
+---
+# Input
+```js
+export default function include_photoswipe(
+	gallery_selector = ".my-gallery"
+) {
+	return /* HTML */ `
+		<script>
+			window.addEventListener("load", () =>
+				initPhotoSwipeFromDOM("${gallery_selector}")
+			);
+		</script>`;
+}
+
+```
+
+# Output
+```js
+export default function include_photoswipe(gallery_selector = ".my-gallery") {
+  return `
+		<script>
+			window.addEventListener("load", () =>
+				initPhotoSwipeFromDOM("${gallery_selector}")
+			);
+		</script>`; /* HTML */
+}
+
+```
+
+

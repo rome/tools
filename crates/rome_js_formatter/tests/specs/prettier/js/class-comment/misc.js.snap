@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: misc.js
+
+---
+# Input
+```js
+class x {
+  focus() // comment 1
+  {
+    // comment 2
+  }
+}
+
+```
+
+# Output
+```js
+class x {
+  focus() {
+    // comment 1
+    // comment 2
+  }
+}
+
+```
+
+

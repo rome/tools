@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: module.ts
+
+---
+# Input
+```js
+declare module X {
+  declare interface Y { x: number; }
+}
+
+```
+
+# Output
+```js
+declare module X {
+  declare interface Y { x: number }
+}
+
+```
+
+

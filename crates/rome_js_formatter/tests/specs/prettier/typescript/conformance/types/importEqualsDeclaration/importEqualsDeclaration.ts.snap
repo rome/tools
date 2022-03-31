@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: importEqualsDeclaration.ts
+
+---
+# Input
+```js
+import glo_m4 = require("glo_m4");
+
+```
+
+# Output
+```js
+import glo_m4 = require("glo_m4");
+
+```
+
+

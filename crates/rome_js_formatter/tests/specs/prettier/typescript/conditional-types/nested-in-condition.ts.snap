@@ -1,0 +1,47 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: nested-in-condition.ts
+
+---
+# Input
+```js
+type Foo =
+  (ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider) extends
+  DoubleGobbledygookProvider
+    ? UniqueDalgametreService
+    : CompositeZamazingoResolver;
+
+type Foo2 =
+  DoubleGobbledygookProvider extends
+  (ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider)
+    ? UniqueDalgametreService
+    : CompositeZamazingoResolver;
+
+type Foo3 =
+  (ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider) extends
+  (DoubleGobbledygookProvider extends MockGobbledygookProvider ? MockThingamabobberFactory : ThingamabobberFactory)
+    ? UniqueDalgametreService
+    : CompositeZamazingoResolver;
+
+```
+
+# Output
+```js
+type Foo = (
+  ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
+) extends DoubleGobbledygookProvider ? UniqueDalgametreService : CompositeZamazingoResolver;
+
+type Foo2 = DoubleGobbledygookProvider extends (
+  ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
+) ? UniqueDalgametreService : CompositeZamazingoResolver;
+
+type Foo3 = (
+  ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
+) extends (
+  DoubleGobbledygookProvider extends MockGobbledygookProvider ? MockThingamabobberFactory : ThingamabobberFactory
+) ? UniqueDalgametreService : CompositeZamazingoResolver;
+
+```
+
+
