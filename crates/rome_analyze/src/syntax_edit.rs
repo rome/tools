@@ -1,4 +1,4 @@
-use rome_js_syntax::{NodeOrToken, SyntaxElement, TextRange, TextSize};
+use rome_js_syntax::{JsSyntaxElement, NodeOrToken, TextRange, TextSize};
 
 /// A single insert or deletion of text.
 pub struct Indel {
@@ -9,16 +9,16 @@ pub struct Indel {
 #[derive(Debug, Clone)]
 pub enum SyntaxEdit {
     Remove {
-        target: SyntaxElement,
+        target: JsSyntaxElement,
         trimmed: bool,
     },
     Insert {
         offset: TextSize,
-        element: SyntaxElement,
+        element: JsSyntaxElement,
     },
     Replace {
-        target: SyntaxElement,
-        replacement: SyntaxElement,
+        target: JsSyntaxElement,
+        replacement: JsSyntaxElement,
         trimmed: bool,
     },
 }

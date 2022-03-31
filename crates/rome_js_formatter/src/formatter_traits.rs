@@ -4,7 +4,8 @@ use crate::Token;
 use crate::{
     empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rome_js_syntax::{AstNode, SyntaxResult, SyntaxToken};
+use rome_js_syntax::{JsLanguage, JsSyntaxToken, SyntaxResult};
+use rome_rowan::AstNode;
 
 /// Utility trait used to simplify the formatting of optional tokens
 ///
@@ -18,11 +19,11 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// ```
     /// use rome_js_formatter::{Formatter, empty_element};
-    /// use rome_js_syntax::{SyntaxToken};
+    /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
     ///
     /// let formatter = Formatter::default();
-    /// let token: Option<SyntaxToken> = None;
+    /// let token: Option<JsSyntaxToken> = None;
     /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
     /// let result = token.format_or_empty(&formatter);
     ///
@@ -39,14 +40,14 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// ```
     /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token};
-    /// use rome_js_syntax::{SyntaxToken};
+    /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
-    /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{JsSyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let formatter = Formatter::default();
-    /// let empty_token: Option<SyntaxToken> = None;
+    /// let empty_token: Option<JsSyntaxToken> = None;
     ///
-    /// let mut builder = SyntaxTreeBuilder::new();
+    /// let mut builder = JsSyntaxTreeBuilder::new();
     ///
     /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
     /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
@@ -81,11 +82,11 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// ```
     /// use rome_js_formatter::{Formatter, token};
-    /// use rome_js_syntax::{SyntaxToken};
+    /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
     ///
     /// let formatter = Formatter::default();
-    /// let empty_token: Option<SyntaxToken> = None;
+    /// let empty_token: Option<JsSyntaxToken> = None;
     ///
     /// let result = empty_token.format_or(&formatter, || token(" other result"));
     ///
@@ -109,14 +110,14 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// ```
     /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token};
-    /// use rome_js_syntax::{SyntaxToken};
+    /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
-    /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{JsSyntaxTreeBuilder, JsSyntaxKind};
     ///
     /// let formatter = Formatter::default();
-    /// let empty_token: Option<SyntaxToken> = None;
+    /// let empty_token: Option<JsSyntaxToken> = None;
     ///
-    /// let mut builder = SyntaxTreeBuilder::new();
+    /// let mut builder = JsSyntaxTreeBuilder::new();
     ///
     /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
     /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
@@ -157,9 +158,9 @@ pub trait FormatTokenAndNode {
     /// ```
     /// use rome_js_formatter::{Formatter, token, space_token};
     /// use rome_js_formatter::prelude::*;
-    /// use rome_js_syntax::{SyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{JsSyntaxTreeBuilder, JsSyntaxKind};
     ///
-    /// let mut builder = SyntaxTreeBuilder::new();
+    /// let mut builder = JsSyntaxTreeBuilder::new();
     ///
     /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
     /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
@@ -187,10 +188,10 @@ pub trait FormatTokenAndNode {
     ///
     /// ```
     /// use rome_js_formatter::{Formatter, token, format_elements, space_token};
-    /// use rome_js_syntax::{SyntaxNode, SyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{JsSyntaxNode, JsSyntaxTreeBuilder, JsSyntaxKind};
     /// use rome_js_formatter::prelude::*;
     ///
-    /// let mut builder = SyntaxTreeBuilder::new();
+    /// let mut builder = JsSyntaxTreeBuilder::new();
     /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
     /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
     /// builder.finish_node();
@@ -252,7 +253,7 @@ impl<F: FormatTokenAndNode> FormatTokenAndNode for SyntaxResult<F> {
     }
 }
 
-impl FormatTokenAndNode for SyntaxToken {
+impl FormatTokenAndNode for JsSyntaxToken {
     fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,
@@ -277,7 +278,7 @@ impl FormatTokenAndNode for SyntaxToken {
     }
 }
 
-impl<N: AstNode + ToFormatElement> FormatTokenAndNode for N {
+impl<N: AstNode<JsLanguage> + ToFormatElement> FormatTokenAndNode for N {
     fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,

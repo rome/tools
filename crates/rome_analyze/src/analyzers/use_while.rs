@@ -1,4 +1,5 @@
-use rome_js_syntax::{AstNode, JsForStatement};
+use rome_js_syntax::JsForStatement;
+use rome_rowan::AstNode;
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 

@@ -1,14 +1,15 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::{parse_js_big_int, parse_js_number};
 use crate::{
-    AstNode, AstSeparatedList, JsArrayExpression, JsArrayHole, JsAssignmentExpression,
-    JsBigIntLiteralExpression, JsBinaryExpression, JsLiteralMemberName, JsLogicalExpression,
-    JsNumberLiteralExpression, JsObjectExpression, JsStringLiteralExpression, JsTemplate,
-    JsUnaryExpression, SyntaxResult, SyntaxToken,
+    JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBigIntLiteralExpression,
+    JsBinaryExpression, JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression,
+    JsObjectExpression, JsStringLiteralExpression, JsSyntaxToken, JsTemplate, JsUnaryExpression, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use num_bigint::BigInt;
-use rome_rowan::{NodeOrToken, SyntaxText, TextRange, TextSize};
+use rome_rowan::{
+    AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxText, TextRange, TextSize,
+};
 use std::cmp::Ordering;
 
 impl JsLiteralMemberName {
@@ -19,9 +20,9 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a string literal
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, SyntaxNodeExt, JsSyntaxTreeBuilder, JsLiteralMemberName};
     ///
-    /// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+    /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
     /// });
     ///
@@ -33,9 +34,9 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a number literal
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, SyntaxNodeExt, JsSyntaxTreeBuilder, JsLiteralMemberName};
     ///
-    /// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+    /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, "5");
     /// });
     ///
@@ -47,9 +48,9 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing an identifier
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, SyntaxNodeExt, JsSyntaxTreeBuilder, JsLiteralMemberName};
     ///
-    /// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+    /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::IDENT, "abcd");
     /// });
     ///
@@ -244,7 +245,7 @@ impl JsLogicalExpression {
 }
 
 impl JsArrayHole {
-    pub fn hole_token(&self) -> Option<SyntaxToken> {
+    pub fn hole_token(&self) -> Option<JsSyntaxToken> {
         None
     }
 }
@@ -399,7 +400,7 @@ impl JsTemplate {
     /// The string chunks of the template. aka:
     /// `foo ${bar} foo` breaks down into:
     /// `QUASIS ELEMENT{EXPR} QUASIS`
-    pub fn quasis(&self) -> impl Iterator<Item = SyntaxToken> {
+    pub fn quasis(&self) -> impl Iterator<Item = JsSyntaxToken> {
         self.syntax()
             .children_with_tokens()
             .filter_map(NodeOrToken::into_token)

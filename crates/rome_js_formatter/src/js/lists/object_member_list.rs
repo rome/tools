@@ -3,7 +3,8 @@ use crate::{
     join_elements_soft_line, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rome_js_syntax::{AstNode, AstSeparatedList, JsObjectMemberList};
+use rome_js_syntax::JsObjectMemberList;
+use rome_rowan::{AstNode, AstSeparatedList};
 
 impl ToFormatElement for JsObjectMemberList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

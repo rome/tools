@@ -1,5 +1,6 @@
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
-use rome_js_syntax::{AstNode, JsVariableDeclaration};
+use rome_js_syntax::JsVariableDeclaration;
+use rome_rowan::AstNode;
 
 pub const ANALYZER: Analyzer = Analyzer {
     name: "noVar",

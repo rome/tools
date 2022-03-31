@@ -5,7 +5,8 @@ use crate::{
 };
 
 use rome_js_syntax::JsCallArgumentsFields;
-use rome_js_syntax::{AstSeparatedList, JsAnyCallArgument, JsCallArguments, SyntaxResult};
+use rome_js_syntax::{JsAnyCallArgument, JsCallArguments, SyntaxResult};
+use rome_rowan::AstSeparatedList;
 
 impl ToFormatElement for JsCallArguments {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

@@ -14,7 +14,6 @@ mod union_ext;
 pub mod util;
 
 pub use self::generated::*;
-pub use ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult};
 pub use expr_ext::*;
 pub use modifier_ext::*;
 pub use rome_rowan::{

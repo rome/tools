@@ -4,7 +4,8 @@ pub(crate) mod use_single_case_statement;
 pub(crate) mod use_while;
 
 use rome_diagnostics::{Diagnostic, Span};
-use rome_js_syntax::{AstNode, SyntaxNode, TextRange};
+use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange};
+use rome_rowan::AstNode;
 
 use crate::{analysis_server::AnalysisServer, ActionCategory, Analysis, FileId};
 
@@ -41,17 +42,17 @@ impl<'a> AnalyzerContext<'a> {
     }
 
     /// Get the root [SyntaxNode] for the file being analyzed
-    pub fn tree(&self) -> SyntaxNode {
+    pub fn tree(&self) -> JsSyntaxNode {
         self.analysis_server.parse(self.file_id)
     }
 
     /// Iterate over syntax nodes in this file that can be cast to T
-    pub fn query_nodes<T: AstNode>(&self) -> impl Iterator<Item = T> {
+    pub fn query_nodes<T: AstNode<JsLanguage>>(&self) -> impl Iterator<Item = T> {
         self.analysis_server.query_nodes(self.file_id)
     }
 
     /// Find the deepest AST node of type T that covers a TextRange
-    pub fn find_node_at_range<T: AstNode>(&self, range: TextRange) -> Option<T> {
+    pub fn find_node_at_range<T: AstNode<JsLanguage>>(&self, range: TextRange) -> Option<T> {
         self.analysis_server.find_node_at_range(self.file_id, range)
     }
 

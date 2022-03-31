@@ -3,7 +3,8 @@ use crate::{
     join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rome_js_syntax::{AstSeparatedList, TsTypeParameterList};
+use rome_js_syntax::TsTypeParameterList;
+use rome_rowan::AstSeparatedList;
 
 impl ToFormatElement for TsTypeParameterList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

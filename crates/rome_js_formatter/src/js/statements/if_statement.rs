@@ -7,7 +7,7 @@ use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rome_js_syntax::SyntaxToken;
+use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
 use rome_js_syntax::{JsElseClause, JsIfStatementFields};
 
@@ -47,7 +47,7 @@ impl ToFormatElement for JsIfStatement {
 /// Format a single `else? if(test) consequent` element, returning the next else clause
 fn format_if_element(
     formatter: &Formatter,
-    else_token: Option<SyntaxToken>,
+    else_token: Option<JsSyntaxToken>,
     stmt: &JsIfStatement,
 ) -> FormatResult<(FormatElement, Option<JsElseClause>)> {
     let JsIfStatementFields {

@@ -1,8 +1,7 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
 use rome_js_syntax::JsUnknownParameter;
-
-use rome_js_syntax::AstNode;
+use rome_rowan::AstNode;
 
 impl ToFormatElement for JsUnknownParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

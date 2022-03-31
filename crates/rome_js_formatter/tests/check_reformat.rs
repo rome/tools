@@ -3,10 +3,10 @@ use rome_formatter::format_element;
 use rome_js_formatter::to_format_element;
 use rome_js_formatter::FormatOptions;
 use rome_js_parser::{parse, SourceType};
-use rome_js_syntax::SyntaxNode;
+use rome_js_syntax::JsSyntaxNode;
 
 pub struct CheckReformatParams<'a> {
-    pub root: &'a SyntaxNode,
+    pub root: &'a JsSyntaxNode,
     pub text: &'a str,
     pub source_type: SourceType,
     pub file_name: &'a str,

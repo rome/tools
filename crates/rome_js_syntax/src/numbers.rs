@@ -44,14 +44,15 @@ pub fn parse_js_big_int(num: &str) -> Option<BigInt> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        AstNode, JsBigIntLiteralExpression, JsNumberLiteralExpression, SyntaxTreeBuilder,
+        JsBigIntLiteralExpression, JsNumberLiteralExpression, JsSyntaxTreeBuilder,
         JS_BIG_INT_LITERAL, JS_BIG_INT_LITERAL_EXPRESSION, JS_NUMBER_LITERAL,
         JS_NUMBER_LITERAL_EXPRESSION,
     };
     use num_bigint::ToBigInt;
+    use rome_rowan::AstNode;
 
     fn assert_float(literal: &str, value: f64) {
-        let mut tree_builder = SyntaxTreeBuilder::new();
+        let mut tree_builder = JsSyntaxTreeBuilder::new();
         tree_builder.start_node(JS_NUMBER_LITERAL_EXPRESSION);
         tree_builder.token(JS_NUMBER_LITERAL, literal);
         tree_builder.finish_node();
@@ -62,7 +63,7 @@ mod tests {
     }
 
     fn assert_bigint(literal: &str, value: u64) {
-        let mut tree_builder = SyntaxTreeBuilder::new();
+        let mut tree_builder = JsSyntaxTreeBuilder::new();
         tree_builder.start_node(JS_BIG_INT_LITERAL_EXPRESSION);
         tree_builder.token(JS_BIG_INT_LITERAL, literal);
         tree_builder.finish_node();

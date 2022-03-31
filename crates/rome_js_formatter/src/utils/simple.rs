@@ -40,12 +40,13 @@
 //! ```
 
 use rome_js_syntax::JsParameters;
-use rome_js_syntax::{AstNode, AstSeparatedList, SyntaxNodeExt, SyntaxResult, SyntaxToken};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyFunctionBody, JsArrayExpression, JsArrayExpressionFields,
     JsFormalParameter, JsFormalParameterFields, JsFunctionBodyFields, JsIdentifierBinding,
     JsIdentifierBindingFields, JsObjectExpression, JsObjectExpressionFields, JsParametersFields,
 };
+use rome_js_syntax::{JsSyntaxToken, SyntaxNodeExt, SyntaxResult};
+use rome_rowan::{AstNode, AstSeparatedList};
 
 /// Returns true is the passed [JsAnyExpression] is a simple function, array or object expression
 pub(crate) fn is_simple_expression(node: JsAnyExpression) -> SyntaxResult<bool> {
@@ -220,6 +221,6 @@ fn is_simple_parameter(node: JsFormalParameter) -> SyntaxResult<bool> {
 }
 
 /// Returns true if the passed [SyntaxToken] has any comments
-pub(crate) fn token_has_comments(token: SyntaxToken) -> bool {
+pub(crate) fn token_has_comments(token: JsSyntaxToken) -> bool {
     token.has_leading_comments() || token.has_trailing_comments()
 }

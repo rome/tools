@@ -1,4 +1,5 @@
-use rome_js_syntax::{AstNode, AstNodeList, JsCaseClause};
+use rome_js_syntax::JsCaseClause;
+use rome_rowan::{AstNode, AstNodeList};
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 

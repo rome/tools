@@ -13,12 +13,13 @@ pub use binarish_expression::format_binaryish_expression;
 pub(crate) use call_expression::format_call_expression;
 pub(crate) use format_conditional::{format_conditional, Conditional};
 use rome_formatter::normalize_newlines;
-use rome_js_syntax::{AstNode, AstNodeList, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause,
+    JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause, JsLanguage,
     JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
     TsTemplateElementFields, TsType,
 };
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, SyntaxNodeExt};
+use rome_rowan::{AstNode, AstNodeList};
 use std::borrow::Cow;
 
 pub(crate) use simple::*;
@@ -30,7 +31,7 @@ pub(crate) use simple::*;
 /// Because of how the grammar crafts the nodes, the parent will add the separator to the node.
 /// So here, we create - on purpose - an empty node.
 pub(crate) fn format_type_member_separator(
-    separator_token: Option<SyntaxToken>,
+    separator_token: Option<JsSyntaxToken>,
     formatter: &Formatter,
 ) -> FormatElement {
     if let Some(separator) = separator_token {
@@ -51,7 +52,7 @@ pub(crate) fn format_initializer_clause(
 }
 
 pub(crate) fn format_interpreter(
-    interpreter: Option<SyntaxToken>,
+    interpreter: Option<JsSyntaxToken>,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
     interpreter.format_with_or(
@@ -63,7 +64,7 @@ pub(crate) fn format_interpreter(
 
 /// Returns true if this node contains "printable" trivias: comments
 /// or empty lines (2 consecutive newlines only separated by whitespace)
-pub(crate) fn has_formatter_trivia(node: &SyntaxNode) -> bool {
+pub(crate) fn has_formatter_trivia(node: &JsSyntaxNode) -> bool {
     let mut line_count = 0;
 
     for token in node.descendants_tokens() {
@@ -229,7 +230,7 @@ fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppression>
     })
 }
 
-pub(crate) fn has_formatter_suppressions(node: &SyntaxNode) -> bool {
+pub(crate) fn has_formatter_suppressions(node: &JsSyntaxNode) -> bool {
     // Lists cannot have a suppression comment attached, it must
     // belong to either the entire parent node or one of the children
     let kind = node.kind();
@@ -373,8 +374,8 @@ mod tests {
 /// This function consumes a list of modifiers and applies a predictable sorting.
 pub(crate) fn sort_modifiers_by_precedence<List, Node>(list: &List) -> Vec<Node>
 where
-    Node: AstNode + Clone,
-    List: AstNodeList<Node>,
+    Node: AstNode<JsLanguage> + Clone,
+    List: AstNodeList<JsLanguage, Node>,
     Modifiers: for<'a> From<&'a Node>,
 {
     let mut nodes_and_modifiers = list.iter().collect::<Vec<Node>>();
@@ -386,7 +387,7 @@ where
 
 /// Utility to format
 pub(crate) fn format_template_chunk(
-    chunk: SyntaxToken,
+    chunk: JsSyntaxToken,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
     // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
@@ -549,7 +550,7 @@ impl FormatPrecedence {
     /// In this case, we have a parenthesised expression and its parent is a binary expression.
     /// The first one will have [FormatPrecedence::Low] as priority and the second has
     /// [FormatPrecedence::None] as priority. In this case, the parenthesis can be omitted.
-    pub fn with_precedence_for_parenthesis(node: Option<&SyntaxNode>) -> Self {
+    pub fn with_precedence_for_parenthesis(node: Option<&JsSyntaxNode>) -> Self {
         node.map_or(FormatPrecedence::None, |node| match node.kind() {
             JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => FormatPrecedence::Low,
 
@@ -587,7 +588,7 @@ impl FormatPrecedence {
 pub(crate) fn format_with_semicolon(
     formatter: &Formatter,
     content: FormatElement,
-    semicolon: Option<SyntaxToken>,
+    semicolon: Option<JsSyntaxToken>,
 ) -> FormatResult<FormatElement> {
     let is_unknown = match content.last_element() {
         Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
@@ -608,7 +609,7 @@ pub(crate) fn format_with_semicolon(
 }
 
 pub(crate) fn format_string_literal_token(
-    token: SyntaxToken,
+    token: JsSyntaxToken,
     formatter: &Formatter,
 ) -> FormatElement {
     let quoted = token.text_trimmed();

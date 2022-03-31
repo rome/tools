@@ -15,6 +15,7 @@ use crate::ParsedSyntax::{Absent, Present};
 use crate::{Checkpoint, CompletedMarker, Parser};
 use rome_diagnostics::Diagnostic;
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_rowan::AstNode;
 
 // test assignment_target
 // foo += bar = b ??= 3;

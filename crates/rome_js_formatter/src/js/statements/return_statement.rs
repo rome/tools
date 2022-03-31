@@ -4,7 +4,8 @@ use crate::{
     empty_element, format_elements, group_elements, soft_block_indent, space_token, token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rome_js_syntax::{AstNode, JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
+use rome_js_syntax::{JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
+use rome_rowan::AstNode;
 
 impl ToFormatElement for JsReturnStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

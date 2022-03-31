@@ -1,6 +1,6 @@
 use crate::token_source::Trivia;
 use crate::{ParseDiagnostic, TreeSink};
-use rome_js_syntax::{JsSyntaxKind, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize};
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxTreeBuilder, TextRange, TextSize};
 use rome_rowan::TriviaPiece;
 
 /// Structure for converting events to a syntax tree representation, while preserving whitespace.
@@ -14,7 +14,7 @@ pub struct LosslessTreeSink<'a> {
     trivia_pos: usize,
     parents_count: usize,
     errors: Vec<ParseDiagnostic>,
-    inner: SyntaxTreeBuilder,
+    inner: JsSyntaxTreeBuilder,
     /// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
     needs_eof: bool,
     trivia_pieces: Vec<TriviaPiece>,
@@ -53,7 +53,7 @@ impl<'a> LosslessTreeSink<'a> {
             text_pos: 0.into(),
             trivia_pos: 0,
             parents_count: 0,
-            inner: SyntaxTreeBuilder::default(),
+            inner: JsSyntaxTreeBuilder::default(),
             errors: vec![],
             needs_eof: true,
             trivia_pieces: Vec::with_capacity(128),
@@ -64,7 +64,7 @@ impl<'a> LosslessTreeSink<'a> {
     ///
     /// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
     /// will be appended to its leading trivia.
-    pub fn finish(self) -> (SyntaxNode, Vec<ParseDiagnostic>) {
+    pub fn finish(self) -> (JsSyntaxNode, Vec<ParseDiagnostic>) {
         (self.inner.finish(), self.errors)
     }
 
