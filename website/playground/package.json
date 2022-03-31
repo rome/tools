@@ -2,10 +2,11 @@
   "name": "playground",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "format": "cargo run --bin rome format ./src"
+		"build:wasm": "wasm-pack build --target web --release",
+    "format": "cargo run -p rome_cli --release -- format ./src"
   },
   "dependencies": {
     "@uiw/react-textarea-code-editor": "^1.4.16",
