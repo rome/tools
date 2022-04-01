@@ -4,11 +4,10 @@ use rome_js_syntax::{
 };
 
 use crate::{
-    empty_element,
-    format_element::join_elements_soft_line,
-    format_elements,
+    empty_element, format_elements,
     formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
-    if_group_breaks, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    if_group_breaks, join_elements_soft_line, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
@@ -53,7 +52,7 @@ where
                 if_group_breaks(token(","))
             };
 
-            Ok((node, format_elements![elem, separator]))
+            Ok((node.syntax().clone(), format_elements![elem, separator]))
         })
         .collect::<FormatResult<Vec<_>>>()?;
 

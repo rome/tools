@@ -1,5 +1,5 @@
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-use rome_js_formatter::format_element;
+use rome_formatter::format_element;
 use rome_js_formatter::to_format_element;
 use rome_js_formatter::FormatOptions;
 use rome_js_parser::{parse, SourceType};

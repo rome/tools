@@ -1,8 +1,6 @@
-use rome_js_syntax::{AstNode, SyntaxNode};
-use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPieceComments, TextRange};
-
 use crate::format_elements;
 use crate::intersperse::{Intersperse, IntersperseFn};
+use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments, TextRange};
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
@@ -26,7 +24,7 @@ pub fn empty_element() -> FormatElement {
 /// Soft line breaks are omitted if the enclosing `Group` fits on a single line
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a,"),
@@ -41,7 +39,7 @@ pub fn empty_element() -> FormatElement {
 ///
 /// Soft line breaks are emitted if the enclosing `Group` doesn't fit on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a long word,"),
@@ -68,7 +66,7 @@ pub const fn soft_line_break() -> FormatElement {
 ///
 /// It forces a line break, even if the enclosing `Group` would otherwise fit on a single line.
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, FormatOptions, hard_line_break};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, FormatOptions, hard_line_break};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a,"),
@@ -90,7 +88,7 @@ pub const fn hard_line_break() -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, FormatOptions, empty_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, FormatOptions, empty_line};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a,"),
@@ -112,7 +110,7 @@ pub const fn empty_line() -> FormatElement {
 ///
 /// The line breaks are emitted as spaces if the enclosing `Group` fits on a a single line:
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a,"),
@@ -125,7 +123,7 @@ pub const fn empty_line() -> FormatElement {
 ///
 /// The printer breaks the lines if the enclosing `Group` doesn't fit on a single line:
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a long word,"),
@@ -155,7 +153,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{token, format_element, FormatOptions};
+/// use rome_formatter::{token, format_element, FormatOptions};
 /// let elements = token("Hello World");
 ///
 /// assert_eq!("Hello World", format_element(&elements, FormatOptions::default()).as_code());
@@ -165,7 +163,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// enclosed in quotes (depending on the target language).
 ///
 /// ```
-/// use rome_js_formatter::{FormatOptions, token, format_element};
+/// use rome_formatter::{FormatOptions, token, format_element};
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = token("\"Hello\\tWorld\"");
@@ -186,7 +184,7 @@ pub const fn token(text: &'static str) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{FormatOptions, token, format_element, line_suffix, format_elements};
+/// use rome_formatter::{FormatOptions, token, format_element, line_suffix, format_elements};
 ///
 /// let elements = format_elements![token("a"), line_suffix(token("c")), token("b")];
 ///
@@ -205,7 +203,7 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{FormatOptions, token, format_element, comment, format_elements, group_elements, empty_line, soft_line_break_or_space};
+/// use rome_formatter::{FormatOptions, token, format_element, comment, format_elements, group_elements, empty_line, soft_line_break_or_space};
 ///
 /// let elements = group_elements(format_elements![comment(empty_line()), token("a"), soft_line_break_or_space(), token("b")]);
 ///
@@ -221,7 +219,7 @@ pub fn comment(element: impl Into<FormatElement>) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{FormatOptions, token, format_element, space_token, format_elements};
+/// use rome_formatter::{FormatOptions, token, format_element, space_token, format_elements};
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = format_elements![token("a"), space_token(), token("b")];
@@ -238,7 +236,7 @@ pub const fn space_token() -> FormatElement {
 /// ## Examples
 ///
 /// ```rust
-/// use rome_js_formatter::{concat_elements, FormatElement, space_token, token, format_element, FormatOptions};
+/// use rome_formatter::{concat_elements, FormatElement, space_token, token, format_element, FormatOptions};
 /// let expr = concat_elements(vec![token("a"), space_token(), token("+"), space_token(), token("b")]);
 ///
 /// assert_eq!("a + b", format_element(&expr, FormatOptions::default()).as_code())
@@ -296,7 +294,7 @@ where
 ///
 /// ```rust
 /// use std::str::from_utf8;
-/// use rome_js_formatter::{fill_elements, FormatElement, space_token, token, format_element, FormatOptions};
+/// use rome_formatter::{fill_elements, FormatElement, space_token, token, format_element, FormatOptions};
 /// let a = from_utf8(&[b'a'; 30]).unwrap();
 /// let b = from_utf8(&[b'b'; 30]).unwrap();
 /// let c = from_utf8(&[b'c'; 30]).unwrap();
@@ -321,7 +319,7 @@ pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> Forma
 /// Joining different tokens by separating them with a comma and a space.
 ///
 /// ```
-/// use rome_js_formatter::{concat_elements, FormatOptions, join_elements, space_token, token, format_element};
+/// use rome_formatter::{concat_elements, FormatOptions, join_elements, space_token, token, format_element};
 ///
 /// let separator = concat_elements(vec![token(","), space_token()]);
 /// let elements = join_elements(separator, vec![token("1"), token("2"), token("3"), token("4")]);
@@ -340,88 +338,6 @@ where
     ))
 }
 
-/// Specialized version of [join_elements] for joining SyntaxNodes separated by a space, soft
-/// line break or empty line depending on the input file.
-///
-/// This functions inspects the input source and separates consecutive elements with either
-/// a [soft_line_break_or_space] or [empty_line] depending on how many line breaks were
-/// separating the elements in the original file.
-#[inline]
-pub fn join_elements_soft_line<I, N>(elements: I) -> FormatElement
-where
-    I: IntoIterator<Item = (N, FormatElement)>,
-    N: AstNode,
-{
-    join_elements_with(elements, soft_line_break_or_space)
-}
-
-/// Specialized version of [join_elements] for joining SyntaxNodes separated by one or more
-/// line breaks depending on the input file.
-///
-/// This functions inspects the input source and separates consecutive elements with either
-/// a [hard_line_break] or [empty_line] depending on how many line breaks were separating the
-/// elements in the original file.
-#[inline]
-pub fn join_elements_hard_line<I, N>(elements: I) -> FormatElement
-where
-    I: IntoIterator<Item = (N, FormatElement)>,
-    N: AstNode,
-{
-    join_elements_with(elements, hard_line_break)
-}
-
-#[inline]
-pub fn join_elements_with<I, N>(elements: I, separator: fn() -> FormatElement) -> FormatElement
-where
-    I: IntoIterator<Item = (N, FormatElement)>,
-    N: AstNode,
-{
-    /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
-    fn get_lines_between_nodes(prev_node: &SyntaxNode, next_node: &SyntaxNode) -> usize {
-        // Ensure the two nodes are actually siblings on debug
-        debug_assert_eq!(prev_node.next_sibling().as_ref(), Some(next_node));
-        debug_assert_eq!(next_node.prev_sibling().as_ref(), Some(prev_node));
-
-        // Count the lines separating the two statements,
-        // starting with the trailing trivia of the previous node
-        let mut line_count = prev_node
-            .last_trailing_trivia()
-            .and_then(|prev_token| {
-                // Newline pieces can only come last in trailing trivias, skip to it directly
-                prev_token.pieces().next_back()?.as_newline()
-            })
-            .is_some() as usize;
-
-        // Then add the newlines in the leading trivia of the next node
-        if let Some(leading_trivia) = next_node.first_leading_trivia() {
-            for piece in leading_trivia.pieces() {
-                if piece.is_newline() {
-                    line_count += 1;
-                } else if piece.is_comments() {
-                    // Stop at the first comment piece, the comment printer
-                    // will handle newlines between the comment and the node
-                    break;
-                }
-            }
-        }
-
-        line_count
-    }
-
-    concat_elements(IntersperseFn::new(
-        elements.into_iter(),
-        |prev_node, next_node, next_elem| {
-            if next_elem.is_empty() {
-                empty_element()
-            } else if get_lines_between_nodes(prev_node.syntax(), next_node.syntax()) > 1 {
-                empty_line()
-            } else {
-                separator()
-            }
-        },
-    ))
-}
-
 /// It adds a level of indentation to the given content
 ///
 /// It doesn't add any line breaks at the edges of the content, meaning that
@@ -433,7 +349,7 @@ where
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{format_elements, format_element, FormatOptions, hard_line_break, block_indent, token, indent};
+/// use rome_formatter::{format_elements, format_element, FormatOptions, hard_line_break, block_indent, token, indent};
 /// let block = (format_elements![
 ///   token("switch {"),
 ///   block_indent(format_elements![
@@ -472,7 +388,7 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_js_formatter::{format_element, format_elements, token, FormatOptions, hard_line_break, block_indent};
+/// use rome_formatter::{format_element, format_elements, token, FormatOptions, hard_line_break, block_indent};
 ///
 /// let block = (format_elements![
 ///   token("{"),
@@ -512,7 +428,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't fit on a single line
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -534,7 +450,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Doesn't change the formatting if the enclosing `Group` fits on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -578,7 +494,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// fit on a single line. Otherwise, just inserts a space.
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("name"),
@@ -603,7 +519,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Only adds a space if the enclosing `Group` fits on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a"),
@@ -648,7 +564,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// `Group` that fits on a single line
 ///
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -667,7 +583,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 ///
 /// The printer breaks the `Group` over multiple lines if its content doesn't fit on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -710,7 +626,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// # Example
 /// ```
-/// use rome_js_formatter::{
+/// use rome_formatter::{
 ///   group_elements, format_element, format_elements, token, hard_group_elements,
 ///   FormatOptions, empty_line, if_group_breaks, if_group_fits_on_single_line
 /// };
@@ -746,7 +662,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///
 /// Omits the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -765,7 +681,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///
 /// Prints the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -809,7 +725,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Adds the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -828,7 +744,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Omits the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_js_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -864,6 +780,91 @@ where
             GroupPrintMode::Flat,
         ))
     }
+}
+
+/// Specialized version of [join_elements] for joining SyntaxNodes separated by a space, soft
+/// line break or empty line depending on the input file.
+///
+/// This functions inspects the input source and separates consecutive elements with either
+/// a [soft_line_break_or_space] or [empty_line] depending on how many line breaks were
+/// separating the elements in the original file.
+#[inline]
+pub fn join_elements_soft_line<I, L>(elements: I) -> FormatElement
+where
+    I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
+    L: Language,
+{
+    join_elements_with(elements, soft_line_break_or_space)
+}
+
+/// Specialized version of [join_elements] for joining SyntaxNodes separated by one or more
+/// line breaks depending on the input file.
+///
+/// This functions inspects the input source and separates consecutive elements with either
+/// a [hard_line_break] or [empty_line] depending on how many line breaks were separating the
+/// elements in the original file.
+#[inline]
+pub fn join_elements_hard_line<I, L>(elements: I) -> FormatElement
+where
+    I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
+    L: Language,
+{
+    join_elements_with(elements, hard_line_break)
+}
+
+#[inline]
+pub fn join_elements_with<I, L>(elements: I, separator: fn() -> FormatElement) -> FormatElement
+where
+    I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
+    L: Language,
+{
+    /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
+    fn get_lines_between_nodes<L: Language>(
+        prev_node: &SyntaxNode<L>,
+        next_node: &SyntaxNode<L>,
+    ) -> usize {
+        // Ensure the two nodes are actually siblings on debug
+        debug_assert_eq!(prev_node.next_sibling().as_ref(), Some(next_node));
+        debug_assert_eq!(next_node.prev_sibling().as_ref(), Some(prev_node));
+
+        // Count the lines separating the two statements,
+        // starting with the trailing trivia of the previous node
+        let mut line_count = prev_node
+            .last_trailing_trivia()
+            .and_then(|prev_token| {
+                // Newline pieces can only come last in trailing trivias, skip to it directly
+                prev_token.pieces().next_back()?.as_newline()
+            })
+            .is_some() as usize;
+
+        // Then add the newlines in the leading trivia of the next node
+        if let Some(leading_trivia) = next_node.first_leading_trivia() {
+            for piece in leading_trivia.pieces() {
+                if piece.is_newline() {
+                    line_count += 1;
+                } else if piece.is_comments() {
+                    // Stop at the first comment piece, the comment printer
+                    // will handle newlines between the comment and the node
+                    break;
+                }
+            }
+        }
+
+        line_count
+    }
+
+    concat_elements(IntersperseFn::new(
+        elements.into_iter(),
+        |prev_node, next_node, next_elem| {
+            if next_elem.is_empty() {
+                empty_element()
+            } else if get_lines_between_nodes(prev_node, next_node) > 1 {
+                empty_line()
+            } else {
+                separator()
+            }
+        },
+    ))
 }
 
 /// Language agnostic IR for formatting source code.
@@ -961,7 +962,7 @@ impl Verbatim {
         }
     }
 
-    pub(crate) fn is_unknown(&self) -> bool {
+    pub fn is_unknown(&self) -> bool {
         matches!(self.kind, VerbatimKind::Unknown)
     }
 }
@@ -1155,14 +1156,14 @@ impl Token {
     }
 
     /// Create a token from a dynamic string and a range of the input source
-    pub(crate) fn new_dynamic(text: String, source: TextRange) -> Self {
+    pub fn new_dynamic(text: String, source: TextRange) -> Self {
         debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
         Self::Dynamic { text, source }
     }
 
     /// Get the range of the input source covered by this token,
     /// or None if the token was synthesized by the formatter
-    pub(crate) fn source(&self) -> Option<&TextRange> {
+    pub fn source(&self) -> Option<&TextRange> {
         match self {
             Token::Static { .. } => None,
             Token::Dynamic { source, .. } => Some(source),
@@ -1191,11 +1192,11 @@ impl<'a, L: Language> From<&'a SyntaxToken<L>> for Token {
 
 const LINE_SEPARATOR: char = '\u{2028}';
 const PARAGRAPH_SEPARATOR: char = '\u{2029}';
-pub(crate) const LINE_TERMINATORS: [char; 3] = ['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
+pub const LINE_TERMINATORS: [char; 3] = ['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
 
 /// Replace the line terminators matching the provided list with "\n"
 /// since its the only line break type supported by the printer
-pub(crate) fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) -> Cow<str> {
+pub fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) -> Cow<str> {
     let mut result = String::new();
     let mut last_end = 0;
 

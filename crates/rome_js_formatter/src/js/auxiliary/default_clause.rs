@@ -1,10 +1,8 @@
 use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::FormatResult;
-
 use crate::{
-    format_element::indent, format_elements, hard_line_break, space_token, FormatElement,
-    Formatter, ToFormatElement,
+    format_elements, hard_line_break, indent, space_token, FormatElement, Formatter,
+    ToFormatElement,
 };
 
 use rome_js_syntax::JsDefaultClause;

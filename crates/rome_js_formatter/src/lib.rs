@@ -1,80 +1,28 @@
-//! Rome's official formatter.
-//!
-//! The crate exposes some API and utilities to implement the formatting logic.
-//!
-//! The formatter relies on an [IR], which allows to format any kind of data structure.
-//!
-//! In order to implement the formatting logic, you need to implement the trait [ToFormatElement] for
-//! the data structure you want to format.
-//!
-//! Let's say, for example that you have a small data structure that represents a key/value data:
-//!
-//! ```rust,no_test
-//! struct KeyValue {
-//!     key: &'static str,
-//!     value: &'static str
-//! }
-//! ```
-//!
-//! Now, we do want to create this IR for the data structure:
-//! ```rust
-//! use rome_js_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatResult, FormatOptions, space_token, token };
-//!
-//! struct KeyValue {
-//!     key: &'static str,
-//!     value: &'static str
-//! }
-//!
-//! impl ToFormatElement for KeyValue {
-//!     fn to_format_element(&self, formatter: &Formatter)-> FormatResult<FormatElement>  {
-//!         Ok(format_elements![
-//!             token(self.key),
-//!             space_token(),
-//!             token("=>"),
-//!             space_token(),
-//!             token(self.value)
-//!         ])
-//!     }
-//! }
-//!
-//! fn my_function() {
-//!     let key_value = KeyValue { key: "lorem", value: "ipsum" };
-//!     let element = key_value.to_format_element(&Formatter::default()).unwrap();
-//!     let result = format_element(&element, FormatOptions::default());
-//!     assert_eq!(result.as_code(), "lorem => ipsum");
-//! }
-//!
-//! ```
-//! [IR]: https://en.wikipedia.org/wiki/Intermediate_representation
+//! Rome's official JavaScript formatter.
 
 mod cst;
-mod format_element;
-mod format_elements;
 mod formatter;
 mod formatter_traits;
-mod intersperse;
 mod js;
 mod jsx;
 pub mod prelude;
-mod printer;
 mod ts;
 mod utils;
-pub use format_element::{
-    block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
-    group_elements, hard_group_elements, hard_line_break, if_group_breaks,
-    if_group_fits_on_single_line, indent, join_elements, join_elements_hard_line, line_suffix,
-    soft_block_indent, soft_line_break, soft_line_break_or_space, soft_line_indent_or_space,
-    space_token, token, FormatElement, Token,
-};
 pub use formatter::Formatter;
-pub use printer::Printer;
-pub use printer::PrinterOptions;
+pub use rome_formatter::intersperse::{Intersperse, IntersperseFn};
+pub use rome_formatter::printer::{Printer, PrinterOptions};
+pub use rome_formatter::{
+    block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
+    format_element, format_elements, group_elements, hard_group_elements, hard_line_break,
+    if_group_breaks, if_group_fits_on_single_line, indent, join_elements, join_elements_hard_line,
+    join_elements_soft_line, join_elements_with, line_suffix, soft_block_indent, soft_line_break,
+    soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
+    FormatOptions, Formatted, IndentStyle, Token, Verbatim, LINE_TERMINATORS,
+};
 use rome_js_syntax::{SyntaxError, SyntaxNode};
 use rome_rowan::TextRange;
 use rome_rowan::TextSize;
 use rome_rowan::TokenAtOffset;
-use std::fmt::Display;
-use std::str::FromStr;
 use thiserror::Error;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
@@ -114,150 +62,6 @@ impl From<&SyntaxError> for FormatError {
         match syntax_error {
             SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
         }
-    }
-}
-
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
-pub enum IndentStyle {
-    /// Tab
-    Tab,
-    /// Space, with its quantity
-    Space(u8),
-}
-
-impl IndentStyle {
-    pub const DEFAULT_SPACES: u8 = 2;
-}
-
-impl Default for IndentStyle {
-    fn default() -> Self {
-        Self::Tab
-    }
-}
-
-impl FromStr for IndentStyle {
-    type Err = &'static str;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "tab" | "Tabs" => Ok(Self::Tab),
-            "space" | "Spaces" => Ok(Self::Space(IndentStyle::DEFAULT_SPACES)),
-            // TODO: replace this error with a diagnostic
-            _ => Err("Value not supported for IndentStyle"),
-        }
-    }
-}
-
-impl Display for IndentStyle {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            IndentStyle::Tab => write!(f, "Tab"),
-            IndentStyle::Space(size) => write!(f, "Spaces, size: {}", size),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub struct FormatOptions {
-    /// The indent style
-    pub indent_style: IndentStyle,
-
-    /// What's the max width of a line. Defaults to 80
-    pub line_width: u16,
-}
-
-impl FormatOptions {
-    pub fn new(indent_style: IndentStyle) -> Self {
-        Self {
-            indent_style,
-            ..Self::default()
-        }
-    }
-}
-
-impl Default for FormatOptions {
-    fn default() -> Self {
-        Self {
-            indent_style: IndentStyle::default(),
-            line_width: 80,
-        }
-    }
-}
-
-impl Display for FormatOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Indent style: {}", self.indent_style)?;
-        writeln!(f, "Line width: {}", self.line_width)?;
-        Ok(())
-    }
-}
-
-/// Lightweight sourcemap marker between source and output tokens
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct SourceMarker {
-    /// Position of the marker in the original source
-    pub source: TextSize,
-    /// Position of the marker in the output code
-    pub dest: TextSize,
-}
-
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct Formatted {
-    code: String,
-    range: Option<TextRange>,
-    sourcemap: Vec<SourceMarker>,
-    verbatim_source: Vec<(String, TextRange)>,
-}
-
-impl Formatted {
-    fn new(
-        code: String,
-        range: Option<TextRange>,
-        sourcemap: Vec<SourceMarker>,
-        verbatim_source: Vec<(String, TextRange)>,
-    ) -> Self {
-        Self {
-            code,
-            range,
-            sourcemap,
-            verbatim_source,
-        }
-    }
-
-    /// Construct an empty formatter result
-    fn new_empty() -> Self {
-        Self {
-            code: String::new(),
-            range: None,
-            sourcemap: Vec::new(),
-            verbatim_source: Vec::new(),
-        }
-    }
-
-    /// Range of the input source file covered by this formatted code,
-    /// or None if the entire file is covered in this instance
-    pub fn range(&self) -> Option<TextRange> {
-        self.range
-    }
-
-    /// Returns a list of [SourceMarker] mapping byte positions
-    /// in the output string to the input source code
-    pub fn sourcemap(&self) -> &[SourceMarker] {
-        &self.sourcemap
-    }
-
-    /// Access the resulting code, borrowing the result
-    pub fn as_code(&self) -> &str {
-        &self.code
-    }
-
-    /// Access the resulting code, consuming the result
-    pub fn into_code(self) -> String {
-        self.code
-    }
-
-    pub fn verbatim(&self) -> &[(String, TextRange)] {
-        &self.verbatim_source
     }
 }
 
@@ -358,7 +162,8 @@ pub fn format_range(
     let mut range_start = None;
     let mut range_end = None;
 
-    for marker in &formatted.sourcemap {
+    let sourcemap = Vec::from(formatted.sourcemap());
+    for marker in &sourcemap {
         if let Some(start_dist) = marker.source.checked_sub(range.start()) {
             range_start = match range_start {
                 Some((prev_marker, prev_dist)) => {
@@ -398,19 +203,20 @@ pub fn format_range(
         Some((end_marker, _)) => (end_marker.source, end_marker.dest),
         None => (
             common_root.text_range().end(),
-            TextSize::try_from(formatted.code.len()).expect("code length out of bounds"),
+            TextSize::try_from(formatted.as_code().len()).expect("code length out of bounds"),
         ),
     };
 
     let input_range = TextRange::new(start_source, end_source);
     let output_range = TextRange::new(start_dest, end_dest);
-    let code = &formatted.code[output_range];
-
+    let sourcemap = Vec::from(formatted.sourcemap());
+    let verbatim = Vec::from(formatted.verbatim());
+    let code = &formatted.into_code()[output_range];
     Ok(Formatted::new(
         code.into(),
         Some(input_range),
-        formatted.sourcemap,
-        formatted.verbatim_source,
+        sourcemap,
+        verbatim,
     ))
 }
 
@@ -475,18 +281,14 @@ pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Fo
 
     let element = Formatter::new(options).format_root(root)?;
     let formatted = Printer::new(options).print_with_indent(&element, initial_indent);
-
+    let sourcemap = Vec::from(formatted.sourcemap());
+    let verbatim = Vec::from(formatted.verbatim());
     Ok(Formatted::new(
-        formatted.code,
+        formatted.into_code(),
         Some(root.text_range()),
-        formatted.sourcemap,
-        formatted.verbatim_source,
+        sourcemap,
+        verbatim,
     ))
-}
-
-pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
-    let printer = Printer::new(options);
-    printer.print(element)
 }
 
 #[cfg(test)]
