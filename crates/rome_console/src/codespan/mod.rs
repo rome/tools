@@ -1,5 +1,5 @@
-///! This module if a fork of https://github.com/brendanzab/codespan,
-/// adapted to use the `rome_console` markup for formatting
+//! This module is a fork of https://github.com/brendanzab/codespan
+//! adapted to use the `rome_console` markup for formatting
 use std::collections::BTreeMap;
 use std::io;
 use std::ops::Range;
@@ -77,7 +77,12 @@ pub struct Location {
 pub struct Codespan<'diagnostic> {
     severity: Severity,
     locus: Option<Locus>,
+    /// Source code and line indices for the file being annotated
     source_file: &'diagnostic SourceFile<'diagnostic>,
+    /// Cached annotated line contents and layout
+    ///
+    /// This holds only the lines of the file that have labels attached,
+    /// with precaculated positions for each label to make the printing efficient
     labeled_file: Option<LabeledFile<'diagnostic>>,
     outer_padding: usize,
 }
