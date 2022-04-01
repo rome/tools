@@ -1,6 +1,6 @@
 use crate::formatter::TrailingSeparator;
 use crate::{
-    format_element::join_elements_soft_line, token, FormatElement, FormatResult, Formatter,
+    join_elements::join_elements_soft_line, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
 use rome_js_syntax::{AstSeparatedList, JsObjectMemberList};
