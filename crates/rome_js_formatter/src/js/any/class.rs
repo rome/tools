@@ -1,12 +1,10 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::hard_group_elements;
-
 use crate::{
     format_elements, join_elements_hard_line, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-
-use rome_js_syntax::JsAnyClass;
+use rome_js_syntax::{AstNode, JsAnyClass};
 
 impl ToFormatElement for JsAnyClass {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -45,6 +43,7 @@ impl ToFormatElement for JsAnyClass {
                 join_elements_hard_line(
                     self.members()
                         .into_iter()
+                        .map(|node| node.syntax().clone())
                         .zip(formatter.format_nodes(self.members())?)
                 ),
                 &self.r_curly_token()?

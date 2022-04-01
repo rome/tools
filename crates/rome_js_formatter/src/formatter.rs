@@ -326,7 +326,7 @@ impl Formatter {
                 }
             };
 
-            (module_item, elem)
+            (module_item.syntax().clone(), elem)
         });
         join_elements_hard_line(formatted_list)
     }

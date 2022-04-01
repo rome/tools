@@ -3,25 +3,21 @@
 mod cst;
 mod formatter;
 mod formatter_traits;
-mod join_elements;
 mod js;
 mod jsx;
 pub mod prelude;
 mod ts;
 mod utils;
-pub use crate::join_elements::{
-    join_elements_hard_line, join_elements_soft_line, join_elements_with,
-};
 pub use formatter::Formatter;
 pub use rome_formatter::intersperse::{Intersperse, IntersperseFn};
 pub use rome_formatter::printer::{Printer, PrinterOptions};
 pub use rome_formatter::{
     block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
     format_element, format_elements, group_elements, hard_group_elements, hard_line_break,
-    if_group_breaks, if_group_fits_on_single_line, indent, join_elements, line_suffix,
-    soft_block_indent, soft_line_break, soft_line_break_or_space, soft_line_indent_or_space,
-    space_token, token, FormatElement, FormatOptions, Formatted, IndentStyle, Token, Verbatim,
-    LINE_TERMINATORS,
+    if_group_breaks, if_group_fits_on_single_line, indent, join_elements, join_elements_hard_line,
+    join_elements_soft_line, join_elements_with, line_suffix, soft_block_indent, soft_line_break,
+    soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
+    FormatOptions, Formatted, IndentStyle, Token, Verbatim, LINE_TERMINATORS,
 };
 use rome_js_syntax::{SyntaxError, SyntaxNode};
 use rome_rowan::TextRange;
