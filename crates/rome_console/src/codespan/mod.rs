@@ -5,25 +5,27 @@ use std::io;
 use std::ops::Range;
 
 use crate::fmt::{Display, Formatter};
-use crate::Markup;
+use crate::markup::MarkupBuf;
 
 use self::render::{MultiLabel, Renderer, SingleLabel};
 
 mod render;
+
+pub use self::render::WithSeverity;
 
 const START_CONTEXT_LINES: usize = 3;
 const END_CONTEXT_LINES: usize = 1;
 
 /// A label describing an underlined region of code associated with a diagnostic.
 #[derive(Clone)]
-pub struct Label<'diagnostic> {
+pub struct Label {
     /// The style of the label.
     pub style: LabelStyle,
     /// The range in bytes we are going to include in the final snippet.
     pub range: Range<usize>,
     /// An optional message to provide some additional information for the
     /// underlined code. These should not include line breaks.
-    pub message: Markup<'diagnostic>,
+    pub message: MarkupBuf,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd)]
@@ -37,21 +39,22 @@ pub enum LabelStyle {
 /// A severity level for diagnostic messages.
 ///
 /// These are ordered in the following way:
-#[derive(Copy, Clone, PartialEq, Hash, Debug)]
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
 pub enum Severity {
-    /// An unexpected bug.
-    Bug,
-    /// An error.
-    Error,
-    /// A warning.
-    Warning,
-    /// A note.
-    Note,
     /// A help message.
     Help,
+    /// A note.
+    Note,
+    /// A warning.
+    Warning,
+    /// An error.
+    Error,
+    /// An unexpected bug.
+    Bug,
 }
 
 /// The 'location focus' of a source code snippet.
+#[derive(Clone)]
 pub enum Locus {
     File {
         /// The user-facing name of the file.
@@ -65,6 +68,21 @@ pub enum Locus {
     },
 }
 
+impl Display for Locus {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        match self {
+            Locus::File { name } => write!(fmt, "{name}"),
+            Locus::FileLocation { name, location } => write!(
+                fmt,
+                "{name}:{line_number}:{column_number}",
+                name = name,
+                line_number = location.line_number,
+                column_number = location.column_number,
+            ),
+        }
+    }
+}
+
 /// A user-facing location in a source file.
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Location {
@@ -74,200 +92,187 @@ pub struct Location {
     pub column_number: usize,
 }
 
+#[derive(Clone)]
 pub struct Codespan<'diagnostic> {
-    severity: Severity,
-    locus: Option<Locus>,
     /// Source code and line indices for the file being annotated
-    source_file: &'diagnostic SourceFile<'diagnostic>,
-    /// Cached annotated line contents and layout
-    ///
-    /// This holds only the lines of the file that have labels attached,
-    /// with precaculated positions for each label to make the printing efficient
-    labeled_file: Option<LabeledFile<'diagnostic>>,
-    outer_padding: usize,
+    pub source_file: &'diagnostic SourceFile<'diagnostic>,
+    /// Overall severity of the codespan, used to select a color for primary labels
+    pub severity: Severity,
+    /// Optional locus to show at the top of the codespan
+    pub locus: Option<Locus>,
+    /// List of labels to draw on top of the source file
+    pub labels: &'diagnostic [Label],
 }
 
-impl<'diagnostic> Codespan<'diagnostic> {
-    /// Create a new codespan from a slice of source text, an overall severity
-    /// level and an optional "locus" to be displayed at the top
-    pub fn new(
-        source_file: &'diagnostic SourceFile<'diagnostic>,
-        severity: Severity,
-        locus: Option<Locus>,
-    ) -> Self {
-        Self {
-            severity,
-            locus,
-            source_file,
-            labeled_file: None,
-            outer_padding: 0,
-        }
-    }
+impl<'diagnostic> Display for Codespan<'diagnostic> {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        let mut outer_padding = 0;
+        let mut labeled_file: Option<LabeledFile> = None;
 
-    /// Insert a new label into this codespan
-    pub fn add_label(&mut self, label: Label<'diagnostic>) -> Result<(), OverflowError> {
-        let start_line_index = self.source_file.line_index(label.range.start);
-        let start_line_number = self.source_file.line_number(start_line_index);
+        for label in self.labels {
+            let start_line_index = self.source_file.line_index(label.range.start);
+            let start_line_number = self.source_file.line_number(start_line_index);
 
-        let start_line_range = self.source_file.line_range(start_line_index)?;
-        let end_line_index = self.source_file.line_index(label.range.end);
-        let end_line_number = self.source_file.line_number(end_line_index);
+            let start_line_range = self.source_file.line_range(start_line_index)?;
+            let end_line_index = self.source_file.line_index(label.range.end);
+            let end_line_number = self.source_file.line_number(end_line_index);
 
-        let end_line_range = self.source_file.line_range(end_line_index)?;
+            let end_line_range = self.source_file.line_range(end_line_index)?;
 
-        self.outer_padding = std::cmp::max(self.outer_padding, count_digits(start_line_number));
-        self.outer_padding = std::cmp::max(self.outer_padding, count_digits(end_line_number));
+            outer_padding = std::cmp::max(outer_padding, count_digits(start_line_number));
+            outer_padding = std::cmp::max(outer_padding, count_digits(end_line_number));
 
-        let labeled_file = match &mut self.labeled_file {
-            Some(labeled_file) => {
-                // other labezls already exist in this codespan
-                if labeled_file.max_label_style > label.style
-                    || (labeled_file.max_label_style == label.style
-                        && labeled_file.start > label.range.start)
-                {
-                    // this label has a higher style or has the same style but starts earlier
-                    labeled_file.start = label.range.start;
-                    labeled_file.location = self.source_file.location(label.range.start)?;
-                    labeled_file.max_label_style = label.style;
+            let labeled_file = match &mut labeled_file {
+                Some(labeled_file) => {
+                    // other labezls already exist in this codespan
+                    if labeled_file.max_label_style > label.style
+                        || (labeled_file.max_label_style == label.style
+                            && labeled_file.start > label.range.start)
+                    {
+                        // this label has a higher style or has the same style but starts earlier
+                        labeled_file.start = label.range.start;
+                        labeled_file.location = self.source_file.location(label.range.start)?;
+                        labeled_file.max_label_style = label.style;
+                    }
+                    labeled_file
                 }
-                labeled_file
-            }
-            None => {
-                // this is the first label inserted into this codespan
-                self.labeled_file.get_or_insert(LabeledFile {
-                    start: label.range.start,
-                    location: self.source_file.location(label.range.start)?,
-                    num_multi_labels: 0,
-                    lines: BTreeMap::new(),
-                    max_label_style: label.style,
-                })
-            }
-        };
-
-        if start_line_index == end_line_index {
-            // Single line
-            //
-            // ```text
-            // 2 │ (+ test "")
-            //   │         ^^ expected `Int` but found `String`
-            // ```
-            let label_start = label.range.start - start_line_range.start;
-            // Ensure that we print at least one caret, even when we
-            // have a zero-length source range.
-            let label_end = usize::max(label.range.end - start_line_range.start, label_start + 1);
-
-            let line = labeled_file.get_or_insert_line(
-                start_line_index,
-                start_line_range,
-                start_line_number,
-            );
-
-            // Ensure that the single line labels are lexicographically
-            // sorted by the range of source code that they cover.
-            let index = match line.single_labels.binary_search_by(|(_, range, _)| {
-                // `Range<usize>` doesn't implement `Ord`, so convert to `(usize, usize)`
-                // to piggyback off its lexicographic comparison implementation.
-                (range.start, range.end).cmp(&(label_start, label_end))
-            }) {
-                // If the ranges are the same, order the labels in reverse
-                // to how they were originally specified in the diagnostic.
-                // This helps with printing in the renderer.
-                Ok(index) | Err(index) => index,
+                None => {
+                    // this is the first label inserted into this codespan
+                    labeled_file.get_or_insert(LabeledFile {
+                        start: label.range.start,
+                        location: self.source_file.location(label.range.start)?,
+                        num_multi_labels: 0,
+                        lines: BTreeMap::new(),
+                        max_label_style: label.style,
+                    })
+                }
             };
 
-            line.single_labels
-                .insert(index, (label.style, label_start..label_end, label.message));
+            if start_line_index == end_line_index {
+                // Single line
+                //
+                // ```text
+                // 2 │ (+ test "")
+                //   │         ^^ expected `Int` but found `String`
+                // ```
+                let label_start = label.range.start - start_line_range.start;
+                // Ensure that we print at least one caret, even when we
+                // have a zero-length source range.
+                let label_end =
+                    usize::max(label.range.end - start_line_range.start, label_start + 1);
 
-            // If this line is not rendered, the SingleLabel is not visible.
-            line.must_render = true;
-        } else {
-            // Multiple lines
-            //
-            // ```text
-            // 4 │   fizz₁ num = case (mod num 5) (mod num 3) of
-            //   │ ╭─────────────^
-            // 5 │ │     0 0 => "FizzBuzz"
-            // 6 │ │     0 _ => "Fizz"
-            // 7 │ │     _ 0 => "Buzz"
-            // 8 │ │     _ _ => num
-            //   │ ╰──────────────^ `case` clauses have incompatible types
-            // ```
+                let line = labeled_file.get_or_insert_line(
+                    start_line_index,
+                    start_line_range,
+                    start_line_number,
+                );
 
-            let label_index = labeled_file.num_multi_labels;
-            labeled_file.num_multi_labels += 1;
+                // Ensure that the single line labels are lexicographically
+                // sorted by the range of source code that they cover.
+                let index = match line.single_labels.binary_search_by(|(_, range, _)| {
+                    // `Range<usize>` doesn't implement `Ord`, so convert to `(usize, usize)`
+                    // to piggyback off its lexicographic comparison implementation.
+                    (range.start, range.end).cmp(&(label_start, label_end))
+                }) {
+                    // If the ranges are the same, order the labels in reverse
+                    // to how they were originally specified in the diagnostic.
+                    // This helps with printing in the renderer.
+                    Ok(index) | Err(index) => index,
+                };
 
-            // First labeled line
-            let label_start = label.range.start - start_line_range.start;
+                line.single_labels
+                    .insert(index, (label.style, label_start..label_end, &label.message));
 
-            let start_line = labeled_file.get_or_insert_line(
-                start_line_index,
-                start_line_range,
-                start_line_number,
-            );
+                // If this line is not rendered, the SingleLabel is not visible.
+                line.must_render = true;
+            } else {
+                // Multiple lines
+                //
+                // ```text
+                // 4 │   fizz₁ num = case (mod num 5) (mod num 3) of
+                //   │ ╭─────────────^
+                // 5 │ │     0 0 => "FizzBuzz"
+                // 6 │ │     0 _ => "Fizz"
+                // 7 │ │     _ 0 => "Buzz"
+                // 8 │ │     _ _ => num
+                //   │ ╰──────────────^ `case` clauses have incompatible types
+                // ```
 
-            start_line
-                .multi_labels
-                .push((label_index, label.style, MultiLabel::Top(label_start)));
+                let label_index = labeled_file.num_multi_labels;
+                labeled_file.num_multi_labels += 1;
 
-            // The first line has to be rendered so the start of the label is visible.
-            start_line.must_render = true;
+                // First labeled line
+                let label_start = label.range.start - start_line_range.start;
 
-            // Marked lines
-            //
-            // ```text
-            // 5 │ │     0 0 => "FizzBuzz"
-            // 6 │ │     0 _ => "Fizz"
-            // 7 │ │     _ 0 => "Buzz"
-            // ```
-            for line_index in (start_line_index + 1)..end_line_index {
-                let line_range = self.source_file.line_range(line_index)?;
-                let line_number = self.source_file.line_number(line_index);
+                let start_line = labeled_file.get_or_insert_line(
+                    start_line_index,
+                    start_line_range,
+                    start_line_number,
+                );
 
-                self.outer_padding = std::cmp::max(self.outer_padding, count_digits(line_number));
+                start_line.multi_labels.push((
+                    label_index,
+                    label.style,
+                    MultiLabel::Top(label_start),
+                ));
 
-                let line = labeled_file.get_or_insert_line(line_index, line_range, line_number);
+                // The first line has to be rendered so the start of the label is visible.
+                start_line.must_render = true;
 
-                line.multi_labels
-                    .push((label_index, label.style, MultiLabel::Left));
+                // Marked lines
+                //
+                // ```text
+                // 5 │ │     0 0 => "FizzBuzz"
+                // 6 │ │     0 _ => "Fizz"
+                // 7 │ │     _ 0 => "Buzz"
+                // ```
+                for line_index in (start_line_index + 1)..end_line_index {
+                    let line_range = self.source_file.line_range(line_index)?;
+                    let line_number = self.source_file.line_number(line_index);
 
-                // The line should be rendered to match the configuration of how much context to show.
-                line.must_render |=
+                    outer_padding = std::cmp::max(outer_padding, count_digits(line_number));
+
+                    let line = labeled_file.get_or_insert_line(line_index, line_range, line_number);
+
+                    line.multi_labels
+                        .push((label_index, label.style, MultiLabel::Left));
+
+                    // The line should be rendered to match the configuration of how much context to show.
+                    line.must_render |=
                         // Is this line part of the context after the start of the label?
                         line_index - start_line_index <= START_CONTEXT_LINES
                         ||
                         // Is this line part of the context before the end of the label?
                         end_line_index - line_index <= END_CONTEXT_LINES;
+                }
+
+                // Last labeled line
+                //
+                // ```text
+                // 8 │ │     _ _ => num
+                //   │ ╰──────────────^ `case` clauses have incompatible types
+                // ```
+                let label_end = label.range.end - end_line_range.start;
+
+                let end_line = labeled_file.get_or_insert_line(
+                    end_line_index,
+                    end_line_range,
+                    end_line_number,
+                );
+
+                end_line.multi_labels.push((
+                    label_index,
+                    label.style,
+                    MultiLabel::Bottom(label_end, &label.message),
+                ));
+
+                // The last line has to be rendered so the end of the label is visible.
+                end_line.must_render = true;
             }
-
-            // Last labeled line
-            //
-            // ```text
-            // 8 │ │     _ _ => num
-            //   │ ╰──────────────^ `case` clauses have incompatible types
-            // ```
-            let label_end = label.range.end - end_line_range.start;
-
-            let end_line =
-                labeled_file.get_or_insert_line(end_line_index, end_line_range, end_line_number);
-
-            end_line.multi_labels.push((
-                label_index,
-                label.style,
-                MultiLabel::Bottom(label_end, label.message),
-            ));
-
-            // The last line has to be rendered so the end of the label is visible.
-            end_line.must_render = true;
         }
 
-        Ok(())
-    }
-}
-
-impl<'diagnostic> Display for Codespan<'diagnostic> {
-    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         let mut renderer = Renderer::new(&mut *fmt);
-        let file = match &self.labeled_file {
+        let file = match &labeled_file {
             Some(file) => file,
             None => return Ok(()),
         };
@@ -279,11 +284,11 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
         // ```
         if !file.lines.is_empty() {
             if let Some(locus) = &self.locus {
-                renderer.render_snippet_start(self.outer_padding, locus)?;
+                renderer.render_snippet_start(outer_padding, locus)?;
             }
 
             renderer.render_snippet_empty(
-                self.outer_padding,
+                outer_padding,
                 self.severity,
                 file.num_multi_labels,
                 &[],
@@ -298,7 +303,7 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
 
         while let Some((line_index, line)) = lines.next() {
             renderer.render_snippet_source(
-                self.outer_padding,
+                outer_padding,
                 line.number,
                 line.range.clone(),
                 self.source_file.source,
@@ -330,7 +335,7 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                             .map_err(|_| io::Error::new(io::ErrorKind::Other, "overflow error"))?;
 
                         renderer.render_snippet_source(
-                            self.outer_padding,
+                            outer_padding,
                             line_number,
                             line_range.clone(),
                             self.source_file.source,
@@ -348,7 +353,7 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                         // ·
                         // ```
                         renderer.render_snippet_break(
-                            self.outer_padding,
+                            outer_padding,
                             self.severity,
                             file.num_multi_labels,
                             &line.multi_labels,
@@ -361,11 +366,6 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
         Ok(())
     }
 }
-
-/// Error type returned when a label is inserted with a range that falls
-/// outside of the source file
-#[derive(Debug)]
-pub struct OverflowError;
 
 /// Representation of a single source file holding additional information for
 /// efficiently rendering [Codespan]
@@ -387,7 +387,7 @@ impl<'diagnostic> SourceFile<'diagnostic> {
 
     /// Return the starting byte index of the line with the specified line index.
     /// Convenience method that already generates errors if necessary.
-    fn line_start(&self, line_index: usize) -> Result<usize, OverflowError> {
+    fn line_start(&self, line_index: usize) -> io::Result<usize> {
         use std::cmp::Ordering;
 
         match line_index.cmp(&self.line_starts.len()) {
@@ -397,7 +397,10 @@ impl<'diagnostic> SourceFile<'diagnostic> {
                 .cloned()
                 .expect("failed despite previous check")),
             Ordering::Equal => Ok(self.source.len()),
-            Ordering::Greater => Err(OverflowError),
+            Ordering::Greater => Err(io::Error::new(
+                io::ErrorKind::InvalidInput,
+                "overflow error",
+            )),
         }
     }
 
@@ -407,7 +410,7 @@ impl<'diagnostic> SourceFile<'diagnostic> {
             .unwrap_or_else(|next_line| next_line - 1)
     }
 
-    fn line_range(&self, line_index: usize) -> Result<Range<usize>, OverflowError> {
+    fn line_range(&self, line_index: usize) -> io::Result<Range<usize>> {
         let line_start = self.line_start(line_index)?;
         let next_line_start = self.line_start(line_index + 1)?;
 
@@ -418,7 +421,7 @@ impl<'diagnostic> SourceFile<'diagnostic> {
         line_index + 1
     }
 
-    fn column_number(&self, line_index: usize, byte_index: usize) -> Result<usize, OverflowError> {
+    fn column_number(&self, line_index: usize, byte_index: usize) -> io::Result<usize> {
         let source = self.source;
         let line_range = self.line_range(line_index)?;
         let column_index = column_index(source, line_range, byte_index);
@@ -426,7 +429,8 @@ impl<'diagnostic> SourceFile<'diagnostic> {
         Ok(column_index + 1)
     }
 
-    fn location(&self, byte_index: usize) -> Result<Location, OverflowError> {
+    /// Get a source location from a byte index into the text of this file
+    pub fn location(&self, byte_index: usize) -> io::Result<Location> {
         let line_index = self.line_index(byte_index);
 
         Ok(Location {
@@ -510,7 +514,7 @@ struct Line<'diagnostic> {
 #[cfg(test)]
 mod tests {
     use crate::codespan::SourceFile;
-    use crate::{self as rome_console, BufferConsole, Console, Message};
+    use crate::{self as rome_console, BufferConsole, ConsoleExt, LogLevel, Markup};
     use crate::{
         codespan::{Codespan, Label, LabelStyle, Location, Locus, Severity},
         markup,
@@ -523,74 +527,71 @@ consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut
 labore et dolore magna aliqua";
 
-        const DIAGNOSTIC: &str = "  ┌─ file_name:2:12
-  │  
-2 │   consectetur adipiscing elit,
-  │               ^^^^^^^^^^^^^^^ Important message
-3 │   sed do eiusmod tempor incididunt ut
-  │ ╭──────────────'
-4 │ │ labore et dolore magna aliqua
-  │ │        --------- Secondary message
-  │ ╰──────' Multiline message
-";
+        const DIAGNOSTIC: Markup<'static> = markup! {
+            "  "<Info>"┌─"</Info>" file_name:2:12\n  "
+                <Info>"│"</Info>"  \n"
+                <Info>"2"</Info>" "<Info>"│"</Info>"   consectetur "<Error>"adipiscing elit"</Error>",\n  "
+                <Info>"│"</Info>                   "               "<Error>"^^^^^^^^^^^^^^^"</Error>" "<Error><Emphasis>"Important"</Emphasis>" message"</Error>"\n"
+                <Info>"3"</Info>" "<Info>"│"</Info>"   sed do eiusmod tempor incididunt ut\n  "
+                <Info>"│"</Info>" "<Info>          "┌───────────────'"</Info>"\n"
+                <Info>"4"</Info>" "<Info>          "│"</Info>" "<Info>"│"</Info>" labore et dolore magna aliqua\n  "
+                <Info>"│"</Info>" "<Info>          "│"</Info>"        "<Info>"---------"</Info>" "<Info>"Secondary message"</Info>"\n  "
+                <Info>"│"</Info>" "<Info>          "└──────' Multiline message"</Info>"\n"
+        };
 
         let source = SourceFile::new(SOURCE);
 
-        let mut codespan = Codespan::new(
-            &source,
-            Severity::Error,
-            Some(Locus::FileLocation {
+        let codespan = Codespan {
+            source_file: &source,
+            severity: Severity::Error,
+            locus: Some(Locus::FileLocation {
                 name: String::from("file_name"),
                 location: Location {
                     line_number: 2,
                     column_number: 12,
                 },
             }),
-        );
-
-        codespan
-            .add_label(Label {
-                style: LabelStyle::Primary,
-                range: 40..55,
-                message: markup! {
-                    <Emphasis>"Important"</Emphasis>" message"
+            labels: &[
+                Label {
+                    style: LabelStyle::Primary,
+                    range: 40..55,
+                    message: markup! {
+                        <Emphasis>"Important"</Emphasis>" message"
+                    }
+                    .to_owned(),
                 },
-            })
-            .unwrap();
-
-        codespan
-            .add_label(Label {
-                style: LabelStyle::Secondary,
-                range: 71..99,
-                message: markup! {
-                    "Multiline message"
+                Label {
+                    style: LabelStyle::Secondary,
+                    range: 71..99,
+                    message: markup! {
+                        "Multiline message"
+                    }
+                    .to_owned(),
                 },
-            })
-            .unwrap();
-
-        codespan
-            .add_label(Label {
-                style: LabelStyle::Secondary,
-                range: 100..109,
-                message: markup! {
-                    "Secondary message"
+                Label {
+                    style: LabelStyle::Secondary,
+                    range: 100..109,
+                    message: markup! {
+                        "Secondary message"
+                    }
+                    .to_owned(),
                 },
-            })
-            .unwrap();
+            ],
+        };
 
         let mut console = BufferConsole::default();
-        console.message(markup! {
+        console.log(markup! {
             {codespan}
         });
 
         let mut iter = console.buffer.into_iter();
 
-        let message = match iter.next() {
-            Some(Message::Message(msg)) => msg,
-            other => panic!("unexpected message {other:?}"),
-        };
+        let message = iter
+            .next()
+            .expect("the buffer console should have a message in memory");
 
-        assert_eq!(message, DIAGNOSTIC);
+        assert_eq!(message.level, LogLevel::Log);
+        assert_eq!(message.content, DIAGNOSTIC.to_owned());
 
         assert!(iter.next().is_none());
     }

@@ -9,6 +9,7 @@ use crate::{
 };
 
 /// Determines how a diff should be printed in the console
+#[derive(Clone, Copy)]
 pub enum DiffMode {
     /// Render the diff in a single column by stacking the changes
     ///
@@ -68,6 +69,7 @@ pub enum DiffMode {
 }
 
 /// Utility struct to print a diff between two texts in the console
+#[derive(Clone, Copy)]
 pub struct Diff<'a> {
     /// Rendering mode for this diff
     pub mode: DiffMode,
@@ -314,7 +316,7 @@ mod tests {
     use crate::{
         self as rome_console,
         diff::{Diff, DiffMode},
-        markup, BufferConsole, Console, Message,
+        markup, BufferConsole, ConsoleExt, Markup,
     };
 
     const SOURCE_LEFT: &str = "Lorem
@@ -357,51 +359,53 @@ incididunt
 function name(args) {
 }";
 
-    const UNIFIED_RESULT: &str = "      | @@ -3,10 +3,8 @@
- 2  2 |   dolor
- 3  3 |   sit
- 4  4 |   amet,
- 5    | - function
- 6    | - name(
- 7    | -     args
- 8    | - ) {}
-    5 | + function name(args) {
-    6 | + }
- 9  7 |   consectetur
-10  8 |   adipiscing
-11  9 |   elit,
-      | @@ -15,7 +13,5 @@
-14 12 |   eiusmod
-15 13 |   
-16 14 |   incididunt
-17    | - function
-18    | - name(
-19    | -     args
-20    | - ) {}
-   15 | + function name(args) {
-   16 | + }
-";
+    const UNIFIED_RESULT: Markup = markup! {
+        "      | "<Info>"@@ -3,10 +3,8 @@"</Info>"\n"
+        " 2  2 |   dolor\n"
+        " 3  3 |   sit\n"
+        " 4  4 |   amet,\n"
+        " 5    | "<Error>"- function"</Error>"\n"
+        " 6    | "<Error>"- name("</Error>"\n"
+        " 7    | "<Error>"-     args"</Error>"\n"
+        " 8    | "<Error>"- ) {}"</Error>"\n"
+        "    5 | "<Success>"+ function name(args) {"</Success>"\n"
+        "    6 | "<Success>"+ }"</Success>"\n"
+        " 9  7 |   consectetur\n"
+        "10  8 |   adipiscing\n"
+        "11  9 |   elit,\n"
+        "      | "<Info>"@@ -15,7 +13,5 @@"</Info>"\n"
+        "14 12 |   eiusmod\n"
+        "15 13 |   \n"
+        "16 14 |   incididunt\n"
+        "17    | "<Error>"- function"</Error>"\n"
+        "18    | "<Error>"- name("</Error>"\n"
+        "19    | "<Error>"-     args"</Error>"\n"
+        "20    | "<Error>"- ) {}"</Error>"\n"
+        "   15 | "<Success>"+ function name(args) {"</Success>"\n"
+        "   16 | "<Success>"+ }"</Success>"\n"
+    };
 
-    const SPLIT_RESULT: &str = "@@ -3,10 +3,8 @@
- 3   dolor                 3   dolor
- 4   sit                   4   sit
- 5   amet,                 5   amet,
- 6 - function              6 + function name(args) {
- 7 - name(                 7 + }
- 8 -     args
- 9 - ) {}
-10   consectetur           8   consectetur
-11   adipiscing            9   adipiscing
-12   elit,                10   elit,
-@@ -15,7 +13,5 @@
-15   eiusmod              13   eiusmod
-16                        14 
-17   incididunt           15   incididunt
-18 - function             16 + function name(args) {
-19 - name(                17 + }
-20 -     args
-21 - ) {}
-";
+    const SPLIT_RESULT: Markup = markup! {
+        <Info>"@@ -3,10 +3,8 @@"</Info>"\n"
+        <Warn>" 3 "</Warn>       "  dolor                "        <Warn>" 3 "</Warn>         "  dolor\n"
+        <Warn>" 4 "</Warn>       "  sit                  "        <Warn>" 4 "</Warn>         "  sit\n"
+        <Warn>" 5 "</Warn>       "  amet,                "        <Warn>" 5 "</Warn>         "  amet,\n"
+        <Warn>" 6 "</Warn><Error>"- function             "</Error><Warn>" 6 "</Warn><Success>"+ function name(args) {"</Success>"\n"
+        <Warn>" 7 "</Warn><Error>"- name(                "</Error><Warn>" 7 "</Warn><Success>"+ }"</Success>"\n"
+        <Warn>" 8 "</Warn><Error>"-     args"</Error>"\n"
+        <Warn>" 9 "</Warn><Error>"- ) {}"</Error>"\n"
+        <Warn>"10 "</Warn>       "  consectetur          "        <Warn>" 8 "</Warn>         "  consectetur\n"
+        <Warn>"11 "</Warn>       "  adipiscing           "        <Warn>" 9 "</Warn>         "  adipiscing\n"
+        <Warn>"12 "</Warn>       "  elit,                "        <Warn>"10 "</Warn>         "  elit,\n"
+        <Info>"@@ -15,7 +13,5 @@"</Info>"\n"
+        <Warn>"15 "</Warn>       "  eiusmod              "        <Warn>"13 "</Warn>         "  eiusmod\n"
+        <Warn>"16 "</Warn>       "                       "        <Warn>"14 "</Warn>         "\n"
+        <Warn>"17 "</Warn>       "  incididunt           "        <Warn>"15 "</Warn>         "  incididunt\n"
+        <Warn>"18 "</Warn><Error>"- function             "</Error><Warn>"16 "</Warn><Success>"+ function name(args) {"</Success>"\n"
+        <Warn>"19 "</Warn><Error>"- name(                "</Error><Warn>"17 "</Warn><Success>"+ }"</Success>"\n"
+        <Warn>"20 "</Warn><Error>"-     args"</Error>"\n"
+        <Warn>"21 "</Warn><Error>"- ) {}"</Error>"\n"
+    };
 
     #[test]
     fn test_diff_unified() {
@@ -412,17 +416,17 @@ function name(args) {
         };
 
         let mut console = BufferConsole::default();
-        console.message(markup! {
+        console.log(markup! {
             {diff}
         });
 
         let mut messages = console.buffer.into_iter();
         let message = match messages.next() {
-            Some(Message::Message(msg)) => msg,
+            Some(msg) => msg,
             other => panic!("unexpected message {other:?}"),
         };
 
-        assert_eq!(message, UNIFIED_RESULT);
+        assert_eq!(message.content, UNIFIED_RESULT.to_owned());
 
         assert!(messages.next().is_none());
     }
@@ -436,17 +440,17 @@ function name(args) {
         };
 
         let mut console = BufferConsole::default();
-        console.message(markup! {
+        console.log(markup! {
             {diff}
         });
 
         let mut messages = console.buffer.into_iter();
         let message = match messages.next() {
-            Some(Message::Message(msg)) => msg,
+            Some(msg) => msg,
             other => panic!("unexpected message {other:?}"),
         };
 
-        assert_eq!(message, SPLIT_RESULT);
+        assert_eq!(message.content, SPLIT_RESULT.to_owned());
 
         assert!(messages.next().is_none());
     }

@@ -4,7 +4,6 @@ pub mod file;
 #[cfg(feature = "lsp")]
 pub mod lsp;
 
-mod codespan;
 mod diagnostic;
 mod emit;
 mod formatters;
@@ -16,7 +15,7 @@ pub use file::Span;
 pub use formatters::*;
 pub use suggestion::*;
 
-pub use codespan::diagnostic::Severity;
+pub use rome_console::codespan::Severity;
 pub use termcolor;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]

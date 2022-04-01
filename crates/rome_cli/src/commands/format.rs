@@ -12,7 +12,7 @@ use std::{
 use crossbeam::channel::{unbounded, Sender};
 use rome_console::{
     diff::{Diff, DiffMode},
-    markup,
+    markup, ConsoleExt,
 };
 use rome_core::App;
 use rome_diagnostics::{
@@ -176,7 +176,9 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     for error in diagnostics {
         match error {
             Error::Diagnostic(diag) => {
-                session.app.console.diagnostic(&files, &diag);
+                session.app.console.error(markup! {
+                    {diag.display(&files)}
+                });
             }
             Error::Diff {
                 file_name,
@@ -186,7 +188,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
                 // Skip printing the diff for files over 1Mb (probably a minified file)
                 let max_len = old.len().max(new.len());
                 if max_len >= 1_000_000 {
-                    session.app.console.message(markup! {
+                    session.app.console.error(markup! {
                         {file_name}": "
                         <Error>"error[CI]"</Error>": File content differs from formatting output\n"
                         <Info>"[Diff not printed for file over 1Mb]\n"</Info>
@@ -200,7 +202,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
                     right: &new,
                 };
 
-                session.app.console.message(markup! {
+                session.app.console.error(markup! {
                     {file_name}": "
                     <Error>"error[CI]"</Error>": File content differs from formatting output\n"
                     {diff}
@@ -210,14 +212,15 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     }
 
     if is_check {
-        session.app.console.message(rome_console::markup! {
+        session.app.console.log(rome_console::markup! {
             <Info>"Checked "{count}" files in "{duration}</Info>
         });
     } else {
-        session.app.console.message(rome_console::markup! {
+        session.app.console.log(rome_console::markup! {
             <Info>"Formatted "{count}" files in "{duration}</Info>
         });
     }
+
     // Formatting emitted error diagnostics, exit with a non-zero code
     if !has_errors {
         Ok(())

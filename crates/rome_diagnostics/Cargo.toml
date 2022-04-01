@@ -8,6 +8,7 @@ description = "Pretty error reporting library based on codespan-reporting built 
 
 [dependencies]
 rome_rowan = { path = "../rome_rowan" }
+rome_console = { path = "../rome_console" }
 unicode-width = "0.1.9"
 serde = { version = "1.0.133", optional = true, features = ["derive"] }
 lsp-types = { version = "0.92.0", optional = true }

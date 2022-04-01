@@ -2,6 +2,7 @@ use std::io;
 use std::{io::Error, ops::Range};
 
 use crate::fmt::Display;
+use crate::markup::MarkupBuf;
 use crate::{self as rome_console, MarkupNode};
 use crate::{
     codespan::{LabelStyle, Locus, Severity},
@@ -21,23 +22,34 @@ const SINGLE_SECONDARY_CARET: char = '-';
 
 const MULTI_PRIMARY_CARET_START: char = '^';
 const MULTI_SECONDARY_CARET_START: char = '\'';
-const MULTI_TOP_LEFT: char = '╭';
+const MULTI_TOP_LEFT: char = '┌';
 const MULTI_TOP: char = '─';
-const MULTI_BOTTOM_LEFT: char = '╰';
+const MULTI_BOTTOM_LEFT: char = '└';
 const MULTI_BOTTOM: char = '─';
 const MULTI_LEFT: char = '│';
 
 const POINTER_LEFT: char = '│';
 
-/// The style used to mark a primary or secondary label at a given severity.
-fn label_element(severity: Severity, label_style: LabelStyle) -> MarkupElement {
-    match (label_style, severity) {
-        (LabelStyle::Primary, Severity::Bug) => MarkupElement::Error,
-        (LabelStyle::Primary, Severity::Error) => MarkupElement::Error,
-        (LabelStyle::Primary, Severity::Warning) => MarkupElement::Warn,
-        (LabelStyle::Primary, Severity::Note) => MarkupElement::Success,
-        (LabelStyle::Primary, Severity::Help) => MarkupElement::Info,
-        (LabelStyle::Secondary, _) => MarkupElement::Info,
+/// Prints a piece of markup with the appropriate formatting for the given
+/// label style and severity
+#[derive(Clone, Copy)]
+pub struct WithSeverity<'a>(pub LabelStyle, pub Severity, pub &'a dyn Display);
+
+impl<'a> Display for WithSeverity<'a> {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        let element = match (self.0, self.1) {
+            (LabelStyle::Primary, Severity::Bug) => MarkupElement::Error,
+            (LabelStyle::Primary, Severity::Error) => MarkupElement::Error,
+            (LabelStyle::Primary, Severity::Warning) => MarkupElement::Warn,
+            (LabelStyle::Primary, Severity::Note) => MarkupElement::Success,
+            (LabelStyle::Primary, Severity::Help) => MarkupElement::Info,
+            (LabelStyle::Secondary, _) => MarkupElement::Info,
+        };
+
+        fmt.write_markup(Markup(&[MarkupNode {
+            elements: &[element],
+            content: self.2,
+        }]))
     }
 }
 
@@ -46,7 +58,7 @@ fn label_element(severity: Severity, label_style: LabelStyle) -> MarkupElement {
 /// ```text
 /// ^^^^^^^^^ blah blah
 /// ```
-pub(super) type SingleLabel<'diagnostic> = (LabelStyle, Range<usize>, Markup<'diagnostic>);
+pub(super) type SingleLabel<'diagnostic> = (LabelStyle, Range<usize>, &'diagnostic MarkupBuf);
 
 /// A multi-line label to render.
 ///
@@ -78,7 +90,7 @@ pub(super) enum MultiLabel<'diagnostic> {
     /// ```text
     /// ╰────────────^ blah blah
     /// ```
-    Bottom(usize, Markup<'diagnostic>),
+    Bottom(usize, &'diagnostic MarkupBuf),
 }
 
 #[derive(Copy, Clone)]
@@ -124,12 +136,6 @@ type Underline = (LabelStyle, VerticalBound);
 /// snippet break ── │    ·
 ///  snippet line ── │ 82 │     gingerbread toffee chupa chups chupa chups jelly-o cotton candy.
 ///                  │    │                 ^^^^^^                         ------- blah blah
-/// snippet empty ── │    │
-///  snippet note ── │    = blah blah
-///  snippet note ── │    = blah blah blah
-///                  │      blah blah
-///  snippet note ── │    = blah blah blah
-///                  │      blah blah
 ///         empty ── │
 /// ```
 ///
@@ -155,17 +161,9 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         locus: &Locus,
     ) -> Result<(), Error> {
         self.outer_gutter(outer_padding)?;
-
         self.writer.write_markup(markup! {
-            <Info>{SOURCE_BORDER_TOP_LEFT}{SOURCE_BORDER_TOP}</Info>
-        })?;
-
-        write!(self.writer, " ")?;
-        self.snippet_locus(locus)?;
-
-        writeln!(self.writer)?;
-
-        Ok(())
+            <Info>{SOURCE_BORDER_TOP_LEFT}{SOURCE_BORDER_TOP}</Info>" "{locus}"\n"
+        })
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -394,23 +392,22 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                             .try_for_each(|_| write!(self.writer, "{}", caret_ch))?;
                     }
                     (Some(label_style), Some(caret_ch)) => {
-                        let style = label_element(severity, label_style);
                         for _ in 0..metrics.unicode_width {
-                            self.writer.write_markup(Markup(&[MarkupNode {
-                                elements: &[style],
-                                content: &caret_ch,
-                            }]))?
+                            self.writer.write_markup(markup! {
+                                {WithSeverity(label_style, severity, &markup! { {caret_ch} })}
+                            })?;
                         }
                     }
                 }
             }
             // Write first trailing label message
             if let Some((_, (label_style, _, message))) = trailing_label {
-                write!(self.writer, " ")?;
-                self.writer.write_markup(Markup(&[MarkupNode {
-                    elements: &[label_element(severity, *label_style)],
-                    content: message,
-                }]))?;
+                if !message.is_empty() {
+                    write!(self.writer, " ")?;
+                    self.writer.write_markup(markup! {
+                        {WithSeverity(*label_style, severity, message)}
+                    })?;
+                }
             }
             writeln!(self.writer)?;
 
@@ -464,10 +461,9 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                             .char_indices()
                             .take_while(|(byte_index, _)| *byte_index < range.start),
                     )?;
-                    self.writer.write_markup(Markup(&[MarkupNode {
-                        elements: &[label_element(severity, *label_style)],
-                        content: message,
-                    }]))?;
+                    self.writer.write_markup(markup! {
+                        {WithSeverity(*label_style, severity, *message)}
+                    })?;
                     writeln!(self.writer)?;
                 }
             }
@@ -535,7 +531,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             match bottom_message {
                 None => self.label_multi_top_caret(severity, label_style, source, *range)?,
                 Some(message) => {
-                    self.label_multi_bottom_caret(severity, label_style, source, *range, *message)?
+                    self.label_multi_bottom_caret(severity, label_style, source, *range, message)?
                 }
             }
         }
@@ -548,7 +544,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         line_number: usize,
         line_range: Range<usize>,
         severity: Severity,
-        single_labels: &mut Vec<(LabelStyle, Range<usize>, Markup)>,
+        single_labels: &mut Vec<(LabelStyle, Range<usize>, &MarkupBuf)>,
         outer_padding: usize,
         source: &str,
     ) -> Result<(), Error> {
@@ -746,21 +742,6 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         })
     }
 
-    /// Location focus.
-    fn snippet_locus(&mut self, locus: &Locus) -> Result<(), Error> {
-        match locus {
-            Locus::File { name } => write!(self.writer, "{name}",)?,
-            Locus::FileLocation { name, location } => write!(
-                self.writer,
-                "{name}:{line_number}:{column_number}",
-                name = name,
-                line_number = location.line_number,
-                column_number = location.column_number,
-            )?,
-        }
-        Ok(())
-    }
-
     /// The outer gutter of a source line.
     fn outer_gutter(&mut self, outer_padding: usize) -> Result<(), Error> {
         write!(
@@ -826,10 +807,9 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             let mut spaces = match label_style {
                 None => 0..metrics.unicode_width,
                 Some(label_style) => {
-                    self.writer.write_markup(Markup(&[MarkupNode {
-                        elements: &[label_element(severity, label_style)],
-                        content: &POINTER_LEFT,
-                    }]))?;
+                    self.writer.write_markup(markup! {
+                        {WithSeverity(label_style, severity, &POINTER_LEFT)}
+                    })?;
                     1..metrics.unicode_width
                 }
             };
@@ -857,16 +837,14 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             None => write!(self.writer, " ")?,
             // Continue an underline horizontally
             Some(label_style) => {
-                self.writer.write_markup(Markup(&[MarkupNode {
-                    elements: &[label_element(severity, label_style)],
-                    content: &MULTI_TOP,
-                }]))?;
+                self.writer.write_markup(markup! {
+                    {WithSeverity(label_style, severity, &MULTI_TOP)}
+                })?;
             }
         }
-        self.writer.write_markup(Markup(&[MarkupNode {
-            elements: &[label_element(severity, label_style)],
-            content: &MULTI_LEFT,
-        }]))?;
+        self.writer.write_markup(markup! {
+            {WithSeverity(label_style, severity, &MULTI_LEFT)}
+        })?;
         Ok(())
     }
 
@@ -881,10 +859,9 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         label_style: LabelStyle,
     ) -> Result<(), Error> {
         write!(self.writer, " ")?;
-        self.writer.write_markup(Markup(&[MarkupNode {
-            elements: &[label_element(severity, label_style)],
-            content: &MULTI_TOP_LEFT,
-        }]))?;
+        self.writer.write_markup(markup! {
+            {WithSeverity(label_style, severity, &MULTI_TOP_LEFT)}
+        })?;
         Ok(())
     }
 
@@ -899,10 +876,9 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         label_style: LabelStyle,
     ) -> Result<(), Error> {
         write!(self.writer, " ")?;
-        self.writer.write_markup(Markup(&[MarkupNode {
-            elements: &[label_element(severity, label_style)],
-            content: &MULTI_BOTTOM_LEFT,
-        }]))?;
+        self.writer.write_markup(markup! {
+            {WithSeverity(label_style, severity, &MULTI_BOTTOM_LEFT)}
+        })?;
         Ok(())
     }
 
@@ -918,17 +894,16 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         source: &str,
         start: usize,
     ) -> Result<(), Error> {
-        self.writer.write_markup(Markup(&[MarkupNode {
-            elements: &[label_element(severity, label_style)],
-            content: &MultiCaret {
+        self.writer.write_markup(markup! {
+            {WithSeverity(label_style, severity, &MultiCaret {
                 label_style,
-                message: Markup(&[]),
+                message: &MarkupBuf(Vec::new()),
                 caret: MULTI_TOP,
                 char_metrics: self
                     .char_metrics(source.char_indices())
-                    .take_while(|(metrics, _)| metrics.byte_index < start),
-            },
-        }]))?;
+                    .take_while(|(metrics, _)| metrics.byte_index < start + 1),
+            })}
+        })?;
 
         writeln!(self.writer)?;
         Ok(())
@@ -945,19 +920,18 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         label_style: LabelStyle,
         source: &str,
         start: usize,
-        message: Markup,
+        message: &MarkupBuf,
     ) -> Result<(), Error> {
-        self.writer.write_markup(Markup(&[MarkupNode {
-            elements: &[label_element(severity, label_style)],
-            content: &MultiCaret {
+        self.writer.write_markup(markup! {
+            {WithSeverity(label_style, severity, &MultiCaret {
                 label_style,
                 message,
                 caret: MULTI_BOTTOM,
                 char_metrics: self
                     .char_metrics(source.char_indices())
                     .take_while(|(metrics, _)| metrics.byte_index < start),
-            },
-        }]))?;
+            })}
+        })?;
 
         writeln!(self.writer)?;
         Ok(())
@@ -976,17 +950,11 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                     VerticalBound::Top => MULTI_TOP,
                     VerticalBound::Bottom => MULTI_BOTTOM,
                 };
-                let element = label_element(severity, label_style);
-                self.writer.write_markup(Markup(&[
-                    MarkupNode {
-                        elements: &[element],
-                        content: &ch,
-                    },
-                    MarkupNode {
-                        elements: &[element],
-                        content: &ch,
-                    },
-                ]))?;
+                self.writer.write_markup(markup! {
+                    {WithSeverity(label_style, severity, &markup!{
+                        {ch}{ch}
+                    })}
+                })?;
                 Ok(())
             }
         }
@@ -1026,9 +994,10 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
     }
 }
 
+#[derive(Clone, Copy)]
 struct MultiCaret<'a, I> {
     label_style: LabelStyle,
-    message: Markup<'a>,
+    message: &'a MarkupBuf,
     caret: char,
     char_metrics: I,
 }
@@ -1051,8 +1020,7 @@ where
         write!(fmt, "{}", caret_end)?;
 
         if !self.message.is_empty() {
-            fmt.write_str(" ")?;
-            fmt.write_markup(self.message)?;
+            fmt.write_markup(markup! { " "{self.message} })?;
         }
 
         Ok(())

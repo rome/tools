@@ -191,7 +191,7 @@ JsScript {
   3: EOF@172..173 "" [Newline("\n")] []
 --
 warning[SyntaxError]: Redundant strict mode declaration
-  ┌─ directives_err.js:3:3
+  ┌─ directives_err.js:5:5
   │
 3 │   "use strict";
   │   ------------ strict mode is previous declared here
@@ -201,7 +201,7 @@ warning[SyntaxError]: Redundant strict mode declaration
 
 --
 warning[SyntaxError]: Redundant strict mode declaration
-  ┌─ directives_err.js:3:3
+  ┌─ directives_err.js:9:7
   │
 3 │   "use strict";
   │   ------------ strict mode is previous declared here
