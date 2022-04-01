@@ -294,11 +294,6 @@ pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Fo
     ))
 }
 
-pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
-    let printer = Printer::new(options);
-    printer.print(element)
-}
-
 #[cfg(test)]
 mod tests {
 

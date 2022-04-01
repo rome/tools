@@ -2,6 +2,7 @@ pub mod format_element;
 pub mod format_elements;
 pub mod intersperse;
 pub mod printer;
+use crate::printer::Printer;
 pub use format_element::{
     block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
     group_elements, hard_group_elements, hard_line_break, if_group_breaks,
@@ -165,4 +166,9 @@ impl Formatted {
     pub fn into_verbatim(self) -> Vec<(String, TextRange)> {
         self.verbatim_source
     }
+}
+
+pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
+    let printer = Printer::new(options);
+    printer.print(element)
 }
