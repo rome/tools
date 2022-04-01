@@ -16,14 +16,14 @@ Rome currently doesn't support other editors than VS Code. [Let us know](https:/
 
 Install `rome` using your preferred node package manager. We require a minimum Node version of v14.18.
 
-> RECOMMENDATION: we recommend **not** installing the binary globally, instead please install the binary
+> NOTE: we recommend **not** installing the binary globally, instead please install the binary
 > locally to your project. You can also use `npx`, `pnpx` or `yarn dlx` to run `rome@next`.
 
 
 | Package manager               | Instructions            |
 |-------------------------------|-------------------------|
 | [npm](https://www.npmjs.com/) | `npm i -D rome@next`    |
-| [pnpm](https://pnpm.io/)      | `pnpm i -D rome@next `  |
+| [pnpm](https://pnpm.io/)      | `pnpm i -D rome@next`   |
 | [yarn](https://yarnpkg.com/)  | `yarn add -D rome@next` |
 
 If you install the CLI locally, use the [scripts field](https://docs.npmjs.com/cli/v8/using-npm/scripts) of your package.json to run Rome. For instance:
@@ -40,7 +40,7 @@ Then you can run:
 
 ```bash
 npm run format
-yarn run format
+yarn format
 pnpm run format
 ```
 
@@ -72,6 +72,7 @@ Where `<OS>` and `<ARCH>` follow the Node.js syntax convention:
 - `<OS>` is one of the following values: `win32`, `darwin` or `linux`
 - `<ARCH>` is one of the following values: `arm64` or `x64`
 
+> NOTE: For Windows Subsystem for Linux (WSL), please use `linux` as your OS
 
 |         | `win32`         | `darwin`         | `linux`         |
 |---------|-----------------|------------------|-----------------|
