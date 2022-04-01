@@ -1403,6 +1403,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_formatter"
+version = "0.1.0"
+dependencies = [
+ "rome_rowan",
+ "tracing",
+]
+
+[[package]]
 name = "rome_fs"
 version = "0.0.0"
 dependencies = [
@@ -1423,6 +1431,7 @@ dependencies = [
  "parking_lot 0.12.0",
  "rome_core",
  "rome_diagnostics",
+ "rome_formatter",
  "rome_fs",
  "rome_js_parser",
  "rome_js_syntax",

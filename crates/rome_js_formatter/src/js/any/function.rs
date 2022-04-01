@@ -1,11 +1,9 @@
-use crate::format_element::{hard_group_elements, soft_line_indent_or_space};
-
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-
 use crate::utils::is_simple_expression;
 use crate::{
-    concat_elements, empty_element, format_elements, group_elements, if_group_breaks,
-    soft_block_indent, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    concat_elements, empty_element, format_elements, group_elements, hard_group_elements,
+    if_group_breaks, soft_block_indent, soft_line_indent_or_space, space_token, token,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 use rome_js_syntax::{

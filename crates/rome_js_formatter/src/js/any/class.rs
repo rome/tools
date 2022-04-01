@@ -1,5 +1,5 @@
-use crate::format_element::hard_group_elements;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::hard_group_elements;
 
 use crate::{
     format_elements, join_elements_hard_line, space_token, FormatElement, FormatResult, Formatter,

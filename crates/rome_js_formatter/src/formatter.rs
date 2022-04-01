@@ -1,22 +1,19 @@
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::utils::has_formatter_suppressions;
+use crate::{
+    block_indent, concat_elements, empty_element, empty_line, format_elements, group_elements,
+    hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
+    join_elements_hard_line, line_suffix, soft_block_indent, soft_line_break_or_space, space_token,
+    FormatElement, FormatOptions, FormatResult, TextRange, ToFormatElement, Token, Verbatim,
+};
+use rome_formatter::{normalize_newlines, LINE_TERMINATORS};
+use rome_js_syntax::{AstNode, AstNodeList, AstSeparatedList, JsLanguage, SyntaxNode, SyntaxToken};
+use rome_rowan::{Language, SyntaxTriviaPiece};
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
 #[cfg(debug_assertions)]
 use std::collections::HashSet;
 use std::iter::once;
-
-use crate::format_element::Verbatim;
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::utils::has_formatter_suppressions;
-use crate::{
-    block_indent, concat_elements, empty_element, empty_line,
-    format_element::{normalize_newlines, Token, LINE_TERMINATORS},
-    format_elements, group_elements, hard_line_break, if_group_breaks,
-    if_group_fits_on_single_line, indent, join_elements_hard_line, line_suffix, soft_block_indent,
-    soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult, TextRange,
-    ToFormatElement,
-};
-use rome_js_syntax::{AstNode, AstNodeList, AstSeparatedList, JsLanguage, SyntaxNode, SyntaxToken};
-use rome_rowan::{Language, SyntaxTriviaPiece};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they

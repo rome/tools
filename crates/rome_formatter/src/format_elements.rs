@@ -8,7 +8,7 @@
 /// you would write:
 ///
 /// ```rust
-/// use rome_js_formatter::{format_elements, space_token, token};
+/// use rome_formatter::{format_elements, space_token, token};
 /// let element = format_elements![token("foo:"), space_token(), token("bar")];
 /// ```
 ///
@@ -21,7 +21,7 @@
 /// You would write it like the following:
 ///
 /// ```rust
-/// use rome_js_formatter::{format_elements, format_element, FormatOptions, space_token, token};
+/// use rome_formatter::{format_elements, format_element, FormatOptions, space_token, token};
 /// let element = format_elements![
 ///   token("foo:"),
 ///   space_token(),
@@ -37,7 +37,7 @@
 /// ```
 /// Or you can also create single element:
 /// ```
-/// use rome_js_formatter::{format_elements, format_element, FormatOptions, token};
+/// use rome_formatter::{format_elements, format_element, FormatOptions, token};
 /// let element = format_elements![token("single")];
 /// assert_eq!(r#"single"#, format_element(&element, FormatOptions::default()).as_code());
 /// ```
