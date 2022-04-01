@@ -7,6 +7,11 @@
     },
     "files": [
         "bin/rome",
-        "scripts/postinstall.js"
-    ]
+        "scripts/postinstall.js",
+        "README.md"
+    ],
+    "engines": {
+        "node": ">=14.18.0"
+    },
+    "license": "MIT"
 }
