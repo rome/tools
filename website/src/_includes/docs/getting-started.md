@@ -16,7 +16,7 @@ Rome currently doesn't support other editors than VS Code. [Let us know](https:/
 
 Install `rome` using your preferred node package manager. We require a minimum Node version of v14.18.
 
-> RECOMMENDATION: we recommend **not** installing the binary globally, instead install the binary
+> RECOMMENDATION: we recommend **not** installing the binary globally, instead please install the binary
 > locally to your project. You can also use `npx`, `pnpx` or `yarn dlx` to run `rome@next`.
 
 
