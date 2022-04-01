@@ -10,7 +10,7 @@ Install Rome using any of the following methods.
 
 You can use Rome by installing the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace.
 
-Rome currently doesn't support other editors than VS Code. Let us know if you would like support for another editor.
+Rome currently doesn't support other editors than VS Code. [Let us know](https://github.com/rome/tools/discussions/categories/suggestions) if you would like support for another editor.
 
 ### Install Rome CLI
 
