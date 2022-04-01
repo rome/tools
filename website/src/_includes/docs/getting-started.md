@@ -1,43 +1,60 @@
 ## Getting Started
 
-Rome works on Linux, macOS, and Windows operative systems. 
+Rome works on Linux, macOS, and Windows.
 
-On macOS, Linux and Windows we both support x64 and ARM architectures.
+For all operating systems, we support both x86_64 and ARM architectures.
 
-Install Rome using any of the following installation methods.
+Install Rome using any of the following methods.
 
-### Install Rome official VS Code extension
+### Install official Rome VS Code extension
 
-You can use Rome by installing the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace. 
+You can use Rome by installing the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace.
 
-Rome currently doesn't support other editors than VS Code. Let us know if you're interested in getting support for another editor to help us prioritize our work.
+Rome currently doesn't support other editors than VS Code. Let us know if you would like support for another editor.
 
 ### Install Rome CLI
 
-Install `rome` using your preferred node package manager.
+Install `rome` using your preferred node package manager. We require a minimum Node version of v14.18.
 
-> RECOMMENDATION: we advise to **not** install the binary globally, instead install the binary
-> locally to your project or use `npx/pnpx/yarn dlx` in order to leverage the CLI.
+> RECOMMENDATION: we recommend **not** installing the binary globally, instead install the binary
+> locally to your project. You can also use `npx`, `pnpx` or `yarn dlx` to run `rome@next`.
 
 
-| Package manager               | Instructions         |
-|-------------------------------|----------------------|
-| [npm](https://www.npmjs.com/) | `npm i rome@next`    |
-| [pnpm](https://pnpm.io/)      | `pnpm i rome@next`   |
-| [yarn](https://yarnpkg.com/)  | `yarn add rome@next` |
+| Package manager               | Instructions            |
+|-------------------------------|-------------------------|
+| [npm](https://www.npmjs.com/) | `npm i -D rome@next`    |
+| [pnpm](https://pnpm.io/)      | `pnpm i -D rome@next `  |
+| [yarn](https://yarnpkg.com/)  | `yarn add -D rome@next` |
 
+If you install the CLI locally, use the [scripts field](https://docs.npmjs.com/cli/v8/using-npm/scripts) of your package.json to run Rome. For instance:
+
+```json
+{
+	"scripts": {
+		"format": "rome format ."
+	}
+}
+```
+
+Then you can run:
+
+```bash
+npm run format
+yarn run format
+pnpm run format
+```
 
 ### Install Rome in your CI pipeline
 
 #### GitHub Actions
 
-Please refer to the documentation of the [`setup-rome` action](https://github.com/rome/setup-rome#usage) for more information about its configuration: 
+Please refer to the [`setup-rome` action documentation](https://github.com/rome/setup-rome#usage) for more information about its configuration:
 
 ```yaml
 steps:
     - uses: rome/setup-rome@v0.1
       with:
-        version: latest 
+        version: latest
     - run: rome --help
 ```
 
@@ -58,13 +75,13 @@ Where `OS` and `ARCH` follow the Node.js syntax convention:
 
 |         | `win32`         | `darwin`         | `linux`         |
 |---------|-----------------|------------------|-----------------|
-| `arm64` | [`win32-arm64`] | [`darwin-arm64`] | [`linux-arm64`] | 
-| `x64`   | [`win32-x64`]   | [`darwin-x64`]   | [`linux-x64`]   | 
+| `arm64` | [`win32-arm64`] | [`darwin-arm64`] | [`linux-arm64`] |
+| `x64`   | [`win32-x64`]   | [`darwin-x64`]   | [`linux-x64`]   |
 
 Please make sure to choose the correct architecture from the [releases page](https://github.com/rome/tools/releases).
 
 
-## After installation
+## After Installation
 
 - check the [formatter section](/formatter#use-the-formatter-with-the-cli) for options and commands;
 - check the options available in the [VS Code extension](/formatter#use-the-formatter-with-the-vscode-extension)
