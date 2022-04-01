@@ -67,10 +67,10 @@ curl -L https://github.com/rome/tools/releases/download/latest/rome-<OS>-<ARCH> 
 chmod +x rome
 ```
 
-Where `OS` and `ARCH` follow the Node.js syntax convention:
+Where `<OS>` and `<ARCH>` follow the Node.js syntax convention:
 
-- `OS` is one of the following values: `win32`, `darwin` or `linux`
-- `ARCH` is one of the following values: `arm64` or `x64`
+- `<OS>` is one of the following values: `win32`, `darwin` or `linux`
+- `<ARCH>` is one of the following values: `arm64` or `x64`
 
 
 |         | `win32`         | `darwin`         | `linux`         |
@@ -81,7 +81,7 @@ Where `OS` and `ARCH` follow the Node.js syntax convention:
 Please make sure to choose the correct architecture from the [releases page](https://github.com/rome/tools/releases).
 
 
-## After Installation
+## Post-Installation
 
 - check the [formatter section](/formatter#use-the-formatter-with-the-cli) for options and commands;
 - check the options available in the [VS Code extension](/formatter#use-the-formatter-with-the-vscode-extension)
