@@ -9,5 +9,9 @@
         "bin/rome",
         "scripts/postinstall.js",
         "README.md"
-    ]
+    ],
+    "engines": {
+        "node": ">=14.16.0"
+    },
+    "license": "MIT"
 }
