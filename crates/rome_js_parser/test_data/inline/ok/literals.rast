@@ -74,14 +74,20 @@ JsModule {
             },
             semicolon_token: SEMICOLON@66..67 ";" [] [],
         },
+        JsExpressionStatement {
+            expression: JsRegexLiteralExpression {
+                value_token: JS_REGEX_LITERAL@67..103 "/^[يفمئامئ\u{200d}ئاسۆند]/i" [Newline("\n")] [],
+            },
+            semicolon_token: SEMICOLON@103..125 ";" [] [Whitespace(" "), Comments("//regex with unicode")],
+        },
     ],
-    eof_token: EOF@67..68 "" [Newline("\n")] [],
+    eof_token: EOF@125..126 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..68
+0: JS_MODULE@0..126
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..67
+  2: JS_MODULE_ITEM_LIST@0..125
     0: JS_EXPRESSION_STATEMENT@0..1
       0: JS_NUMBER_LITERAL_EXPRESSION@0..1
         0: JS_NUMBER_LITERAL@0..1 "5" [] []
@@ -130,4 +136,8 @@ JsModule {
       0: JS_STRING_LITERAL_EXPRESSION@49..66
         0: JS_STRING_LITERAL@49..66 "\"test\\\nnew-line\"" [Newline("\n")] []
       1: SEMICOLON@66..67 ";" [] []
-  3: EOF@67..68 "" [Newline("\n")] []
+    9: JS_EXPRESSION_STATEMENT@67..125
+      0: JS_REGEX_LITERAL_EXPRESSION@67..103
+        0: JS_REGEX_LITERAL@67..103 "/^[يفمئامئ\u{200d}ئاسۆند]/i" [Newline("\n")] []
+      1: SEMICOLON@103..125 ";" [] [Whitespace(" "), Comments("//regex with unicode")]
+  3: EOF@125..126 "" [Newline("\n")] []
