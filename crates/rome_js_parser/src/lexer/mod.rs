@@ -1495,8 +1495,8 @@ impl<'src> Lexer<'src> {
         let start = self.position;
         let mut in_class = false;
 
-        while let Some(byte) = self.next_char_unchecked() {
-            match byte {
+        while let Some(c) = self.next_char_unchecked() {
+            match c {
                 '[' => in_class = true,
                 ']' => in_class = false,
                 '/' => {
