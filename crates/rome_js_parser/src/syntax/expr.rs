@@ -144,6 +144,7 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
 // 0, 0.0, 0n, 0e00
 // "test\
 // new-line";
+// /^[يفمئامئ‍ئاسۆند]/i; //regex with unicode
 
 // test_err literals
 // 00, 012, 08, 091, 0789 // parser errors
