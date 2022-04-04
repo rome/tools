@@ -1470,7 +1470,6 @@ impl<'src> Lexer<'src> {
                 self.advance(2);
                 SLASHEQ
             }
-            // _ if self.state.expr_allowed => self.read_regex(),
             _ => self.eat_byte(T![/]),
         }
     }
