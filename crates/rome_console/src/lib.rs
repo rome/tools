@@ -12,9 +12,14 @@ mod markup;
 pub use self::markup::{Markup, MarkupBuf, MarkupElement, MarkupNode};
 pub use rome_markup::markup;
 
+/// Determines the "ouput stream" a message should get printed to
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum LogLevel {
+    /// Print the message to the `Error` stream of the console, for instance
+    /// "stderr" for the [EnvConsole]
     Error,
+    /// Print the message to the `Log` stream of the console, for instance
+    /// "stdout" for the [EnvConsole]
     Log,
 }
 
@@ -25,9 +30,12 @@ pub trait Console: Sync + RefUnwindSafe {
     fn print(&mut self, level: LogLevel, args: Markup);
 }
 
+/// Extension trait for [Console] providing convenience printing methods
 pub trait ConsoleExt: Console {
+    /// Prints a piece of markup with level [LogLevel::Error]
     fn error(&mut self, args: Markup);
 
+    /// Prints a piece of markup with level [LogLevel::Log]
     fn log(&mut self, args: Markup);
 }
 
@@ -41,15 +49,14 @@ impl<T: Console + ?Sized> ConsoleExt for T {
     }
 }
 
-/// Implementation of [Console] printing messages to the standard output
+/// Implementation of [Console] printing messages to the standard output and standard error
 pub struct EnvConsole {
     out: StandardStream,
     err: StandardStream,
 }
 
-impl EnvConsole {
-    /// Creates an instance of WriteConsole writing to the standard output
-    pub fn from_env() -> Self {
+impl Default for EnvConsole {
+    fn default() -> Self {
         Self {
             out: StandardStream::stdout(ColorChoice::Always),
             err: StandardStream::stderr(ColorChoice::Always),

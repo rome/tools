@@ -107,13 +107,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
             })?;
         }
 
-        let level = match self.d.severity {
-            Severity::Bug => "bug",
-            Severity::Error => "error",
-            Severity::Warning => "warning",
-            Severity::Help => "help",
-            Severity::Note => "note",
-        };
+        let level = <&str>::from(self.d.severity);
 
         match self.d.code.as_ref().filter(|code| !code.is_empty()) {
             Some(code) => fmt.write_markup(markup! {
@@ -225,16 +219,13 @@ impl<'a> Display for DiagnosticPrinter<'a> {
 
         for footer in &self.d.footers {
             let level = match footer.severity {
-                Severity::Bug => "bug",
-                Severity::Error => "error",
-                Severity::Warning => "warning",
-                Severity::Help => "help",
                 Severity::Note => {
                     fmt.write_markup(markup! {
                         "=  note: "{footer.msg}"\n"
                     })?;
                     continue;
                 }
+                level => <&str>::from(level),
             };
 
             fmt.write_markup(markup! {

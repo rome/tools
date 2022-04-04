@@ -53,6 +53,18 @@ pub enum Severity {
     Bug,
 }
 
+impl From<Severity> for &'static str {
+    fn from(level: Severity) -> Self {
+        match level {
+            Severity::Bug => "bug",
+            Severity::Error => "error",
+            Severity::Warning => "warning",
+            Severity::Help => "help",
+            Severity::Note => "note",
+        }
+    }
+}
+
 /// The 'location focus' of a source code snippet.
 #[derive(Clone)]
 pub enum Locus {

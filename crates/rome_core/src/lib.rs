@@ -57,11 +57,11 @@ impl Display for RomeError {
 impl Error for RomeError {}
 
 impl App<'static> {
-    /// Create a new instance of the app using the [OsFileSystem]
+    /// Create a new instance of the app using the [OsFileSystem] and [EnvConsole]
     pub fn from_env() -> Self {
         Self::with_filesystem_and_console(
             DynRef::Owned(Box::new(OsFileSystem)),
-            DynRef::Owned(Box::new(EnvConsole::from_env())),
+            DynRef::Owned(Box::new(EnvConsole::default())),
         )
     }
 }
