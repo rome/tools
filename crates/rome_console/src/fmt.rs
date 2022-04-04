@@ -155,6 +155,13 @@ impl Display for String {
     }
 }
 
+// Implement Display for Markup and Rust format Arguments
+impl<'a> Display for Markup<'a> {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        fmt.write_markup(*self)
+    }
+}
+
 impl<'a> Display for std::fmt::Arguments<'a> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         fmt.write_fmt(*self)
@@ -173,6 +180,7 @@ macro_rules! impl_std_display {
     };
 }
 
+impl_std_display!(char);
 impl_std_display!(i8);
 impl_std_display!(i16);
 impl_std_display!(i32);

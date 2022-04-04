@@ -1379,6 +1379,7 @@ dependencies = [
  "similar",
  "termcolor",
  "trybuild",
+ "unicode-width",
 ]
 
 [[package]]

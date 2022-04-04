@@ -425,6 +425,10 @@ substantially rewritten.
   - **Original**: [`rslint/rslint_errors`](https://github.com/rslint/rslint/tree/master/crates/rslint_errors)
   - **License**: MIT
 
+- [`crates/rome_console/src/codespan`](https://github.com/rome/tools/tree/main/crates/rome_console/src/codespan)
+  - **Original**: [`brendanzab/codespan`](https://github.com/brendanzab/codespan)
+  - **License**: Apache License, Version 2.0
+
 - [`crates/rome_js_parser`](https://github.com/rome/tools/tree/main/crates/rome_js_parser)
   - **Original**: [`rslint/rslint_parser`](https://github.com/rslint/rslint/tree/master/crates/rslint_parser)
   - **License**: MIT

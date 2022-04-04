@@ -3,6 +3,7 @@ use std::panic::RefUnwindSafe;
 use rome_diagnostics::{file::Files, Diagnostic, Emitter};
 use termcolor::{ColorChoice, NoColor, StandardStream, WriteColor};
 
+pub mod codespan;
 pub mod diff;
 pub mod fmt;
 mod markup;
