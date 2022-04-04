@@ -1,6 +1,6 @@
 {
     "name": "rome",
-    "version": "0.4.1-next",
+    "version": "0.4.2-next",
     "bin": "bin/rome",
     "scripts": {
         "postinstall": "node scripts/postinstall.js"
