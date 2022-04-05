@@ -2,13 +2,14 @@
 title: Announcing Rome Formatter
 description: Release of Rome Formatter, a super fast formatter for JavaScript and TypeScript
 author_name: Rome Team
-author_avatar: /img/favicon.svg
-date: 2022-04-04
+author_avatar: /img/favicon.png
+date: 2022-04-05
 tags:
 - formatter
 - typescript
 - release
-permalink: /blog/2022/04/04/rome_formatter_release.html
+- post
+permalink: /blog/2022/04/05/rome_formatter_release.html
 layout: layouts/blog.liquid
 cover-image: formatter-cover.webp
 social-image: social-logo-formatter.png
