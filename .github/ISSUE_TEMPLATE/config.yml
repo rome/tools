@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: 🗣️ Chat
     url: https://discord.gg/rome
-    about: Our Discord server is active and is used for real-time discussions including contribution collaboratio, questions, and more!
+    about: Our Discord server is active and is used for real-time discussions including contribution collaboration, questions, and more!
   - name: 🤔 Support
     url: https://discord.gg/rome
     about: "This issue tracker is not for support questions. Visit our community Discord and the #support channel for assistance!"
