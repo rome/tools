@@ -1,7 +1,7 @@
 use crate::file_handlers::unknown::UnknownFileHandler;
 use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
 use file_handlers::json::JsonFileHandler;
-use rome_console::{Console, WriteConsole};
+use rome_console::{Console, EnvConsole};
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
@@ -57,11 +57,11 @@ impl Display for RomeError {
 impl Error for RomeError {}
 
 impl App<'static> {
-    /// Create a new instance of the app using the [OsFileSystem]
+    /// Create a new instance of the app using the [OsFileSystem] and [EnvConsole]
     pub fn from_env() -> Self {
         Self::with_filesystem_and_console(
             DynRef::Owned(Box::new(OsFileSystem)),
-            DynRef::Owned(Box::new(WriteConsole::from_env())),
+            DynRef::Owned(Box::new(EnvConsole::default())),
         )
     }
 }
