@@ -42,7 +42,7 @@ macro_rules! assert_lex {
                 tokens[idx].0,
             );
 
-            new_str.push_str($src.get(tokens[idx].1.as_range()).unwrap());
+            new_str.push_str(&$src[tokens[idx].1.as_range()]);
             tok_idx += tokens[idx].1.len();
 
             idx += 1;
@@ -96,7 +96,7 @@ fn losslessness(string: String) -> bool {
     let mut idx = TextSize::from(0);
 
     for range in token_ranges {
-        new_str.push_str(string.get(range.as_range()).unwrap());
+        new_str.push_str(&string[range.as_range()]);
         idx += range.len();
     }
 

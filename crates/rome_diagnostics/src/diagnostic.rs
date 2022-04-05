@@ -167,7 +167,7 @@ impl Diagnostic {
     }
 
     fn auto_suggestion_style(span: &impl Span, msg: &str) -> SuggestionStyle {
-        if span.as_range().len() + msg.len() > 25 {
+        if span.as_range().len() + TextSize::of(msg) > TextSize::from(25u32) {
             SuggestionStyle::Full
         } else {
             SuggestionStyle::Inline
@@ -270,7 +270,12 @@ impl Diagnostic {
         let labels = indels
             .iter()
             .filter(|x| !x.insert.is_empty())
-            .map(|x| x.delete.as_range().start..x.delete.as_range().start + x.insert.len())
+            .map(|x| {
+                TextRange::new(
+                    x.delete.as_range().start(),
+                    x.delete.as_range().start() + TextSize::of(&x.insert),
+                )
+            })
             .collect();
 
         let suggestion = CodeSuggestion {
@@ -305,7 +310,10 @@ impl Diagnostic {
             .into_iter()
             .map(|x| {
                 let range = x.as_range();
-                span.range.start + range.start..span.range.start + range.end
+                TextRange::new(
+                    span.range.start() + range.start(),
+                    span.range.start() + range.end(),
+                )
             })
             .collect::<Vec<_>>();
         let suggestion = CodeSuggestion {

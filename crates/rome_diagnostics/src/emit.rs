@@ -4,11 +4,12 @@
 use crate::{file::Files, Diagnostic};
 use crate::{SuggestionChange, SuggestionStyle};
 use rome_console::{
-    codespan::{Codespan, Label, LabelStyle, Locus, Severity, SourceFile, WithSeverity},
+    codespan::{Codespan, Label, LabelStyle, Locus, Severity, WithSeverity},
     diff::{Diff, DiffMode},
     fmt::{Display, Formatter, Termcolor},
     markup, MarkupBuf,
 };
+use rome_rowan::{TextRange, TextSize};
 use rome_text_edit::apply_indels;
 use std::borrow::Cow;
 use std::io;
@@ -33,19 +34,6 @@ impl Emitter<'_> {
     /// This method will lock stderr for the entire time it takes to emit the diagnostic.
     pub fn emit_stderr(&mut self, d: &Diagnostic, color: bool) -> io::Result<()> {
         let out = StandardStream::stderr(if color {
-            ColorChoice::Always
-        } else {
-            ColorChoice::Never
-        });
-        let mut out = out.lock();
-        self.emit_with_writer(d, &mut out)
-    }
-
-    /// Render and emit the diagnostic to stdout
-    ///
-    /// This method will lock stdout for the entire time it takes to emit the diagnostic.
-    pub fn emit_stdout(&mut self, d: &Diagnostic, color: bool) -> io::Result<()> {
-        let out = StandardStream::stdout(if color {
             ColorChoice::Always
         } else {
             ColorChoice::Never
@@ -83,20 +71,18 @@ impl<'a> Display for DiagnosticPrinter<'a> {
             .files
             .name(self.d.file_id)
             .ok_or_else(|| io::Error::new(io::ErrorKind::NotFound, "file not found"))?;
-        let source = self
+        let source_file = self
             .files
             .source(self.d.file_id)
             .ok_or_else(|| io::Error::new(io::ErrorKind::NotFound, "file not found"))?;
 
-        let source = SourceFile::new(source);
-
         let locus = if let Some(label) = &self.d.primary {
             Locus::FileLocation {
-                name: name.into(),
-                location: source.location(label.span.range.start)?,
+                name,
+                location: source_file.location(label.span.range.start())?,
             }
         } else {
-            Locus::File { name: name.into() }
+            Locus::File { name }
         };
 
         // If the diagnostic doesn't have a codespan, show the locus in the header instead
@@ -105,7 +91,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
         fmt.write_markup(markup! {
             {DiagnosticHeader {
                 locus: if !has_codespan {
-                    Some(&locus)
+                    Some(locus)
                 } else {
                     None
                 },
@@ -133,13 +119,13 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                     if sub.msg.is_empty() {
                         Label {
                             style,
-                            range: sub.span.range.clone(),
+                            range: sub.span.range,
                             message: MarkupBuf::default(),
                         }
                     } else {
                         Label {
                             style,
-                            range: sub.span.range.clone(),
+                            range: sub.span.range,
                             message: markup! {
                                 {sub.msg}
                             }
@@ -150,7 +136,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                 .collect();
 
             fmt.write_markup(markup! {
-                {Codespan { source_file: &source, severity: self.d.severity, locus: Some(locus), labels: &labels }}"\n"
+                {Codespan { source_file, severity: self.d.severity, locus: Some(locus), labels: &labels }}"\n"
             })?;
         }
 
@@ -160,19 +146,25 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                     let old = self
                         .files
                         .source(suggestion.span.file)
-                        .expect("Non existant file id");
+                        .expect("Non existant file id")
+                        .source;
 
-                    let range = &suggestion.span.range;
+                    let range = suggestion.span.range;
                     let new = match &suggestion.substitution {
                         SuggestionChange::Indels(indels) => {
-                            let mut new = String::from(&old[range.clone()]);
+                            let mut new = String::from(&old[range]);
                             apply_indels(indels, &mut new);
                             Cow::Owned(new)
                         }
                         SuggestionChange::String(string) => Cow::Borrowed(string),
                     };
 
-                    let new = format!("{}{}{}", &old[..range.start], new, &old[range.end..]);
+                    let new = format!(
+                        "{}{}{}",
+                        &old[TextRange::new(TextSize::from(0u32), range.start())],
+                        new,
+                        &old[TextRange::new(range.end(), TextSize::of(old))],
+                    );
 
                     fmt.write_markup(markup! {
                         <Info>{suggestion.msg}</Info>"\n"
@@ -186,7 +178,8 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                                 &self
                                     .files
                                     .source(suggestion.span.file)
-                                    .expect("Non existant file id")[suggestion.span.range.clone()],
+                                    .expect("Non existant file id")
+                                    .source[suggestion.span.range],
                             );
                             apply_indels(indels, &mut old);
                             old
@@ -240,7 +233,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
 }
 
 pub struct DiagnosticHeader<'a> {
-    pub locus: Option<&'a Locus>,
+    pub locus: Option<Locus<'a>>,
     pub severity: Severity,
     pub code: Option<&'a str>,
     pub title: &'a str,
@@ -274,6 +267,7 @@ impl<'a> Display for DiagnosticHeader<'a> {
 #[cfg(test)]
 mod tests {
     use rome_console::{codespan::Severity, markup, BufferConsole, ConsoleExt, Markup};
+    use rome_rowan::{TextRange, TextSize};
 
     use crate::{file::SimpleFile, Applicability, Diagnostic};
 
@@ -308,9 +302,13 @@ labore et dolore magna aliqua";
         let files = SimpleFile::new(String::from("file_name"), SOURCE.into());
 
         let diag = Diagnostic::error(0, "CODE", "message")
-            .label(Severity::Error, 40usize..55, "label")
+            .label(
+                Severity::Error,
+                TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
+                "label",
+            )
             .suggestion_full(
-                40usize..55,
+                TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
                 "suggestion",
                 "completely different\ntext",
                 Applicability::Always,

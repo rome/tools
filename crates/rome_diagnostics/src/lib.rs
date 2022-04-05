@@ -1,18 +1,14 @@
 #![deny(rust_2018_idioms)]
 
 pub mod file;
-#[cfg(feature = "lsp")]
-pub mod lsp;
 
 mod diagnostic;
 mod emit;
-mod formatters;
 mod suggestion;
 
 pub use diagnostic::{Diagnostic, SubDiagnostic};
 pub use emit::{DiagnosticHeader, Emitter};
 pub use file::Span;
-pub use formatters::*;
 pub use suggestion::*;
 
 pub use rome_console::codespan::Severity;

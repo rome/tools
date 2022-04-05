@@ -2,10 +2,10 @@
 //! adapted to use the `rome_console` markup for formatting
 use std::collections::BTreeMap;
 use std::io;
-use std::ops::Range;
 
 use crate::fmt::{Display, Formatter};
 use crate::markup::MarkupBuf;
+use rome_rowan::{TextRange, TextSize};
 
 use self::render::{MultiLabel, Renderer, SingleLabel};
 
@@ -22,7 +22,7 @@ pub struct Label {
     /// The style of the label.
     pub style: LabelStyle,
     /// The range in bytes we are going to include in the final snippet.
-    pub range: Range<usize>,
+    pub range: TextRange,
     /// An optional message to provide some additional information for the
     /// underlined code. These should not include line breaks.
     pub message: MarkupBuf,
@@ -66,21 +66,21 @@ impl From<Severity> for &'static str {
 }
 
 /// The 'location focus' of a source code snippet.
-#[derive(Clone)]
-pub enum Locus {
+#[derive(Copy, Clone)]
+pub enum Locus<'diagnostic> {
     File {
         /// The user-facing name of the file.
-        name: String,
+        name: &'diagnostic str,
     },
     FileLocation {
         /// The user-facing name of the file.
-        name: String,
+        name: &'diagnostic str,
         /// The location.
         location: Location,
     },
 }
 
-impl Display for Locus {
+impl<'diagnostic> Display for Locus<'diagnostic> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         match self {
             Locus::File { name } => write!(fmt, "{name}"),
@@ -104,14 +104,14 @@ pub struct Location {
     pub column_number: usize,
 }
 
-#[derive(Clone)]
+#[derive(Copy, Clone)]
 pub struct Codespan<'diagnostic> {
     /// Source code and line indices for the file being annotated
-    pub source_file: &'diagnostic SourceFile<'diagnostic>,
+    pub source_file: SourceFile<'diagnostic>,
     /// Overall severity of the codespan, used to select a color for primary labels
     pub severity: Severity,
     /// Optional locus to show at the top of the codespan
-    pub locus: Option<Locus>,
+    pub locus: Option<Locus<'diagnostic>>,
     /// List of labels to draw on top of the source file
     pub labels: &'diagnostic [Label],
 }
@@ -122,11 +122,11 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
         let mut labeled_file: Option<LabeledFile> = None;
 
         for label in self.labels {
-            let start_line_index = self.source_file.line_index(label.range.start);
+            let start_line_index = self.source_file.line_index(label.range.start());
             let start_line_number = self.source_file.line_number(start_line_index);
 
             let start_line_range = self.source_file.line_range(start_line_index)?;
-            let end_line_index = self.source_file.line_index(label.range.end);
+            let end_line_index = self.source_file.line_index(label.range.end());
             let end_line_number = self.source_file.line_number(end_line_index);
 
             let end_line_range = self.source_file.line_range(end_line_index)?;
@@ -139,11 +139,11 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                     // other labezls already exist in this codespan
                     if labeled_file.max_label_style > label.style
                         || (labeled_file.max_label_style == label.style
-                            && labeled_file.start > label.range.start)
+                            && labeled_file.start > label.range.start())
                     {
                         // this label has a higher style or has the same style but starts earlier
-                        labeled_file.start = label.range.start;
-                        labeled_file.location = self.source_file.location(label.range.start)?;
+                        labeled_file.start = label.range.start();
+                        labeled_file.location = self.source_file.location(label.range.start())?;
                         labeled_file.max_label_style = label.style;
                     }
                     labeled_file
@@ -151,8 +151,8 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                 None => {
                     // this is the first label inserted into this codespan
                     labeled_file.get_or_insert(LabeledFile {
-                        start: label.range.start,
-                        location: self.source_file.location(label.range.start)?,
+                        start: label.range.start(),
+                        location: self.source_file.location(label.range.start())?,
                         num_multi_labels: 0,
                         lines: BTreeMap::new(),
                         max_label_style: label.style,
@@ -167,11 +167,13 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                 // 2 │ (+ test "")
                 //   │         ^^ expected `Int` but found `String`
                 // ```
-                let label_start = label.range.start - start_line_range.start;
+                let label_start = label.range.start() - start_line_range.start();
                 // Ensure that we print at least one caret, even when we
                 // have a zero-length source range.
-                let label_end =
-                    usize::max(label.range.end - start_line_range.start, label_start + 1);
+                let label_end = TextSize::max(
+                    label.range.end() - start_line_range.start(),
+                    label_start + TextSize::from(1u32),
+                );
 
                 let line = labeled_file.get_or_insert_line(
                     start_line_index,
@@ -182,9 +184,9 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                 // Ensure that the single line labels are lexicographically
                 // sorted by the range of source code that they cover.
                 let index = match line.single_labels.binary_search_by(|(_, range, _)| {
-                    // `Range<usize>` doesn't implement `Ord`, so convert to `(usize, usize)`
+                    // `TextRange` doesn't implement `Ord`, so convert to `(usize, usize)`
                     // to piggyback off its lexicographic comparison implementation.
-                    (range.start, range.end).cmp(&(label_start, label_end))
+                    (range.start(), range.end()).cmp(&(label_start, label_end))
                 }) {
                     // If the ranges are the same, order the labels in reverse
                     // to how they were originally specified in the diagnostic.
@@ -192,8 +194,14 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                     Ok(index) | Err(index) => index,
                 };
 
-                line.single_labels
-                    .insert(index, (label.style, label_start..label_end, &label.message));
+                line.single_labels.insert(
+                    index,
+                    (
+                        label.style,
+                        TextRange::new(label_start, label_end),
+                        &label.message,
+                    ),
+                );
 
                 // If this line is not rendered, the SingleLabel is not visible.
                 line.must_render = true;
@@ -214,7 +222,7 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                 labeled_file.num_multi_labels += 1;
 
                 // First labeled line
-                let label_start = label.range.start - start_line_range.start;
+                let label_start = label.range.start() - start_line_range.start();
 
                 let start_line = labeled_file.get_or_insert_line(
                     start_line_index,
@@ -264,7 +272,7 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                 // 8 │ │     _ _ => num
                 //   │ ╰──────────────^ `case` clauses have incompatible types
                 // ```
-                let label_end = label.range.end - end_line_range.start;
+                let label_end = label.range.end() - end_line_range.start();
 
                 let end_line = labeled_file.get_or_insert_line(
                     end_line_index,
@@ -317,7 +325,7 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
             renderer.render_snippet_source(
                 outer_padding,
                 line.number,
-                line.range.clone(),
+                line.range,
                 self.source_file.source,
                 self.severity,
                 &line.single_labels,
@@ -349,7 +357,7 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
                         renderer.render_snippet_source(
                             outer_padding,
                             line_number,
-                            line_range.clone(),
+                            line_range,
                             self.source_file.source,
                             self.severity,
                             &[],
@@ -381,25 +389,48 @@ impl<'diagnostic> Display for Codespan<'diagnostic> {
 
 /// Representation of a single source file holding additional information for
 /// efficiently rendering [Codespan]
+#[derive(Clone, Copy)]
 pub struct SourceFile<'diagnostic> {
     /// The source code of the file.
-    source: &'diagnostic str,
+    pub source: &'diagnostic str,
     /// The starting byte indices in the source code.
-    line_starts: Vec<usize>,
+    line_starts: &'diagnostic [TextSize],
 }
 
 impl<'diagnostic> SourceFile<'diagnostic> {
     /// Create a new [SourceFile] from a slice of text
-    pub fn new(source: &'diagnostic str) -> Self {
+    pub fn new(source: &'diagnostic str, line_starts: &'diagnostic [TextSize]) -> Self {
         Self {
             source,
-            line_starts: line_starts(source).collect(),
+            line_starts,
         }
+    }
+
+    /// Return the starting byte index of each line in the source string.
+    ///
+    /// This can make it easier to implement [`Files::line_index`] by allowing
+    /// implementors of [`Files`] to pre-compute the line starts, then search for
+    /// the corresponding line range, as shown in the example below.
+    ///
+    /// [`Files`]: Files
+    /// [`Files::line_index`]: Files::line_index
+    pub fn line_starts(source: &'_ str) -> impl '_ + Iterator<Item = TextSize> {
+        std::iter::once(0)
+            .chain(source.match_indices(&['\n', '\r']).filter_map(|(i, _)| {
+                let bytes = source.as_bytes();
+
+                match bytes[i] {
+                    // Filter out the `\r` in `\r\n` to avoid counting the line break twice
+                    b'\r' if i + 1 < bytes.len() && bytes[i + 1] == b'\n' => None,
+                    _ => Some(i + 1),
+                }
+            }))
+            .map(|i| TextSize::try_from(i).expect("integer overflow"))
     }
 
     /// Return the starting byte index of the line with the specified line index.
     /// Convenience method that already generates errors if necessary.
-    fn line_start(&self, line_index: usize) -> io::Result<usize> {
+    fn line_start(&self, line_index: usize) -> io::Result<TextSize> {
         use std::cmp::Ordering;
 
         match line_index.cmp(&self.line_starts.len()) {
@@ -408,7 +439,7 @@ impl<'diagnostic> SourceFile<'diagnostic> {
                 .get(line_index)
                 .cloned()
                 .expect("failed despite previous check")),
-            Ordering::Equal => Ok(self.source.len()),
+            Ordering::Equal => Ok(TextSize::of(self.source)),
             Ordering::Greater => Err(io::Error::new(
                 io::ErrorKind::InvalidInput,
                 "overflow error",
@@ -416,24 +447,24 @@ impl<'diagnostic> SourceFile<'diagnostic> {
         }
     }
 
-    fn line_index(&self, byte_index: usize) -> usize {
+    fn line_index(&self, byte_index: TextSize) -> usize {
         self.line_starts
             .binary_search(&byte_index)
             .unwrap_or_else(|next_line| next_line - 1)
     }
 
-    fn line_range(&self, line_index: usize) -> io::Result<Range<usize>> {
+    fn line_range(&self, line_index: usize) -> io::Result<TextRange> {
         let line_start = self.line_start(line_index)?;
         let next_line_start = self.line_start(line_index + 1)?;
 
-        Ok(line_start..next_line_start)
+        Ok(TextRange::new(line_start, next_line_start))
     }
 
     fn line_number(&self, line_index: usize) -> usize {
         line_index + 1
     }
 
-    fn column_number(&self, line_index: usize, byte_index: usize) -> io::Result<usize> {
+    fn column_number(&self, line_index: usize, byte_index: TextSize) -> io::Result<usize> {
         let source = self.source;
         let line_range = self.line_range(line_index)?;
         let column_index = column_index(source, line_range, byte_index);
@@ -442,7 +473,7 @@ impl<'diagnostic> SourceFile<'diagnostic> {
     }
 
     /// Get a source location from a byte index into the text of this file
-    pub fn location(&self, byte_index: usize) -> io::Result<Location> {
+    pub fn location(&self, byte_index: TextSize) -> io::Result<Location> {
         let line_index = self.line_index(byte_index);
 
         Ok(Location {
@@ -452,28 +483,19 @@ impl<'diagnostic> SourceFile<'diagnostic> {
     }
 }
 
-/// Return the starting byte index of each line in the source string.
-///
-/// This can make it easier to implement [`Files::line_index`] by allowing
-/// implementors of [`Files`] to pre-compute the line starts, then search for
-/// the corresponding line range, as shown in the example below.
-///
-/// [`Files`]: Files
-/// [`Files::line_index`]: Files::line_index
-fn line_starts(source: &'_ str) -> impl '_ + Iterator<Item = usize> {
-    std::iter::once(0).chain(source.match_indices('\n').map(|(i, _)| i + 1))
-}
-
 /// The column index at the given byte index in the source file.
 /// This is the number of characters to the given byte index.
 ///
 /// If the byte index is smaller than the start of the line, then `0` is returned.
 /// If the byte index is past the end of the line, the column index of the last
 /// character `+ 1` is returned.
-fn column_index(source: &str, line_range: Range<usize>, byte_index: usize) -> usize {
-    let end_index = std::cmp::min(byte_index, std::cmp::min(line_range.end, source.len()));
+fn column_index(source: &str, line_range: TextRange, byte_index: TextSize) -> usize {
+    let end_index = std::cmp::min(
+        byte_index,
+        std::cmp::min(line_range.end(), TextSize::of(source)),
+    );
 
-    (line_range.start..end_index)
+    (usize::from(line_range.start())..usize::from(end_index))
         .filter(|byte_index| source.is_char_boundary(byte_index + 1))
         .count()
 }
@@ -489,7 +511,7 @@ fn count_digits(mut n: usize) -> usize {
 }
 
 struct LabeledFile<'diagnostic> {
-    start: usize,
+    start: TextSize,
     location: Location,
     num_multi_labels: usize,
     lines: BTreeMap<usize, Line<'diagnostic>>,
@@ -500,7 +522,7 @@ impl<'diagnostic> LabeledFile<'diagnostic> {
     fn get_or_insert_line(
         &mut self,
         line_index: usize,
-        line_range: Range<usize>,
+        line_range: TextRange,
         line_number: usize,
     ) -> &mut Line<'diagnostic> {
         self.lines.entry(line_index).or_insert_with(|| Line {
@@ -516,7 +538,7 @@ impl<'diagnostic> LabeledFile<'diagnostic> {
 
 struct Line<'diagnostic> {
     number: usize,
-    range: Range<usize>,
+    range: TextRange,
     // TODO: How do we reuse these allocations?
     single_labels: Vec<SingleLabel<'diagnostic>>,
     multi_labels: Vec<(usize, LabelStyle, MultiLabel<'diagnostic>)>,
@@ -525,6 +547,8 @@ struct Line<'diagnostic> {
 
 #[cfg(test)]
 mod tests {
+    use rome_rowan::{TextRange, TextSize};
+
     use crate::codespan::SourceFile;
     use crate::{self as rome_console, BufferConsole, ConsoleExt, LogLevel, Markup};
     use crate::{
@@ -551,13 +575,14 @@ labore et dolore magna aliqua";
                 <Info>"│"</Info>" "<Info>          "└──────' Multiline message"</Info>"\n"
         };
 
-        let source = SourceFile::new(SOURCE);
+        let lines_starts: Vec<_> = SourceFile::line_starts(SOURCE).collect();
+        let source_file = SourceFile::new(SOURCE, &lines_starts);
 
         let codespan = Codespan {
-            source_file: &source,
+            source_file,
             severity: Severity::Error,
             locus: Some(Locus::FileLocation {
-                name: String::from("file_name"),
+                name: "file_name",
                 location: Location {
                     line_number: 2,
                     column_number: 12,
@@ -566,7 +591,7 @@ labore et dolore magna aliqua";
             labels: &[
                 Label {
                     style: LabelStyle::Primary,
-                    range: 40..55,
+                    range: TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
                     message: markup! {
                         <Emphasis>"Important"</Emphasis>" message"
                     }
@@ -574,7 +599,7 @@ labore et dolore magna aliqua";
                 },
                 Label {
                     style: LabelStyle::Secondary,
-                    range: 71..99,
+                    range: TextRange::new(TextSize::from(71u32), TextSize::from(99u32)),
                     message: markup! {
                         "Multiline message"
                     }
@@ -582,7 +607,7 @@ labore et dolore magna aliqua";
                 },
                 Label {
                     style: LabelStyle::Secondary,
-                    range: 100..109,
+                    range: TextRange::new(TextSize::from(100u32), TextSize::from(109u32)),
                     message: markup! {
                         "Secondary message"
                     }
@@ -606,5 +631,50 @@ labore et dolore magna aliqua";
         assert_eq!(message.content, DIAGNOSTIC.to_owned());
 
         assert!(iter.next().is_none());
+    }
+
+    #[test]
+    fn line_starts_with_carriage_return_line_feed() {
+        let input = "a\r\nb\r\nc";
+        let starts = SourceFile::line_starts(input).collect::<Vec<_>>();
+
+        assert_eq!(
+            vec![
+                TextSize::from(0u32),
+                TextSize::from(3u32),
+                TextSize::from(6u32)
+            ],
+            starts
+        );
+    }
+
+    #[test]
+    fn line_starts_with_carriage_return() {
+        let input = "a\rb\rc";
+        let starts = SourceFile::line_starts(input).collect::<Vec<_>>();
+
+        assert_eq!(
+            vec![
+                TextSize::from(0u32),
+                TextSize::from(2u32),
+                TextSize::from(4u32)
+            ],
+            starts
+        );
+    }
+
+    #[test]
+    fn line_starts_with_line_feed() {
+        let input = "a\nb\nc";
+        let starts = SourceFile::line_starts(input).collect::<Vec<_>>();
+
+        assert_eq!(
+            vec![
+                TextSize::from(0u32),
+                TextSize::from(2u32),
+                TextSize::from(4u32)
+            ],
+            starts
+        );
     }
 }

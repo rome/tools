@@ -69,7 +69,7 @@ pub(crate) struct ParserState {
     /// If set, the parser reports bindings with identical names. The option stores the name of the
     /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
     pub duplicate_binding_parent: Option<&'static str>,
-    pub name_map: IndexMap<String, Range<usize>>,
+    pub name_map: IndexMap<String, TextRange>,
 
     /// Indicates that the parser is speculatively parsing a syntax. Speculative parsing means that the
     /// parser tries to parse a syntax as one kind and determines at the end if the assumption was right
