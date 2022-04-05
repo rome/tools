@@ -1,0 +1,50 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 198
+expression: self_closing.jsx
+
+---
+# Input
+<Foo />;
+
+<Foo           />;
+
+<LineWidthInput />;
+<IndentStyleSelect
+
+/>;
+<SourceTypeSelect
+
+/>;
+
+<CodeEditor
+
+/>
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+<Foo />;
+
+<Foo />;
+
+<LineWidthInput />;
+<IndentStyleSelect />;
+<SourceTypeSelect />;
+
+<CodeEditor />;
+
+
+## Unimplemented nodes/tokens
+
+"Foo " => 1..5
+"Foo           " => 11..25
+"LineWidthInput " => 31..46
+"IndentStyleSelect" => 51..68
+"SourceTypeSelect" => 75..91
+"CodeEditor" => 99..109
+
