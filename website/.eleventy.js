@@ -12,7 +12,7 @@ const path = require("path");
 const terser = require("terser");
 const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
-const { base64Encode } = require("./utils");
+const {base64Encode} = require("./utils");
 
 require("dotenv").config();
 
@@ -71,199 +71,203 @@ module.exports = function(eleventyConfig) {
 					),
 				);
 			},
-		);
+		},
+	);
 
-		eleventyConfig.setLibrary("md", md);
+	eleventyConfig.setLibrary("md", md);
 
-		// Taken from https://github.com/11ty/eleventy-base-blog/blob/master/_11ty/getTagList.js
-		eleventyConfig.addCollection(
-			"tagList",
-			function (collection) {
-				let tagSet = new Set();
-				collection
-					.getAll()
-					.forEach(function (item) {
-						if ("tags" in item.data) {
-							let tags = item.data.tags;
+	// Taken from https://github.com/11ty/eleventy-base-blog/blob/master/_11ty/getTagList.js
+	eleventyConfig.addCollection(
+		"tagList",
+		function(collection) {
+			let tagSet = new Set();
+			collection.getAll().forEach(function(item) {
+				if ("tags" in item.data) {
+					let tags = item.data.tags;
 
-							tags =
-								tags.filter(function (item) {
-									switch (item) {
-										// This list should match the `filter` list in tags.liquid
-										case "all":
-										case "nav":
-										case "post":
-										case "posts":
-											return false;
-									}
-
-									return true;
-								});
-
-							for (const tag of tags) {
-								tagSet.add(tag);
-							}
+					tags = tags.filter(function(item) {
+						switch (item) {
+							// This list should match the `filter` list in tags.liquid
+							case "all":
+							case "nav":
+							case "post":
+							case "posts":
+								return false;
 						}
+
+						return true;
 					});
 
-				// Returning an array in addCollection works in Eleventy 0.5.3
-				return [...tagSet];
-			},
-		);
-
-		// Used for including raw files without having them processed by liquid
-		const includerawCache = new Map();
-		eleventyConfig.addFilter(
-			"includeraw",
-			function (loc) {
-				const cached = includerawCache.get(loc);
-				if (cached !== undefined) {
-					return cached;
-				}
-
-				const file = fs.readFileSync(path.resolve(__dirname, loc), "utf8");
-				includerawCache.set(loc, file);
-				return file;
-			},
-		);
-
-		eleventyConfig.addFilter(
-			"toBase64",
-			(content, ext) => {
-				return base64Encode(new Buffer(content), ext);
-			},
-		);
-
-		const minCache = new Map();
-
-		// Minify JS in production
-		eleventyConfig.addFilter(
-			"jsmin",
-			function (code) {
-				if (!isProduction) {
-					return code;
-				}
-
-				const cached = minCache.get(code);
-				if (cached !== undefined) {
-					return cached;
-				}
-
-				const minified = terser.minify(code);
-				if (minified.error) {
-					throw minified.error;
-				}
-
-				minCache.set(code, minified.code);
-				return minified.code;
-			},
-		);
-
-		// Minify CSS in production
-		eleventyConfig.addFilter(
-			"cssmin",
-			function (code) {
-				if (!isProduction) {
-					return code;
-				}
-
-				const cached = minCache.get(code);
-				if (cached !== undefined) {
-					return cached;
-				}
-
-				const minified = new CleanCSS({}).minify(code).styles;
-				minCache.set(code, minified);
-				return minified;
-			},
-		);
-
-		// Minify HTML in production
-		eleventyConfig.addTransform(
-			"htmlmin",
-			function (content, outputPath) {
-				if (isProduction && outputPath.endsWith(".html")) {
-					return htmlmin.minify(
-						content,
-						{
-							useShortDoctype: true,
-							removeComments: true,
-							conservativeCollapse: true,
-							collapseWhitespace: true,
-						},
-					);
-				}
-
-				return content;
-			},
-		);
-
-		eleventyConfig.addFilter(
-			"blogSummary",
-			(val) => {
-				const lines = val.split("<!-- DESCRIPTION_END -->")[0].split("\n");
-				return lines
-					.filter((line) => {
-						return line.startsWith("<p>");
-					})
-					.join("\n");
-			},
-		);
-
-		eleventyConfig.addFilter(
-			"dateFormat",
-			function (value) {
-				return new Date(value).toLocaleDateString(
-					undefined,
-					{ year: "numeric", month: "long", day: "numeric", timeZone: "UTC" },
-				);
-			},
-		);
-
-		eleventyConfig.addFilter(
-			"titlify",
-			function (title) {
-				title = (title || "").trim();
-				if (!title.includes("Rome")) {
-					if (title !== "") {
-						title += " \u2014 ";
+					for (const tag of tags) {
+						tagSet.add(tag);
 					}
-					title += "Rome Toolchain";
 				}
-				return title;
-			},
-		);
+			});
 
-		eleventyConfig.addFilter(
-			"kebabCase",
-			function (string) {
-				return string.toLowerCase().replace(/\s/g, "-");
-			},
-		);
+			// Returning an array in addCollection works in Eleventy 0.5.3
+			return [...tagSet];
+		},
+	);
 
-		eleventyConfig.addShortcode(
-			"romeVersion",
-			function () {
-				return "?.?.?";
-			},
-		);
+	// Used for including raw files without having them processed by liquid
+	const includerawCache = new Map();
+	eleventyConfig.addFilter(
+		"includeraw",
+		function(loc) {
+			const cached = includerawCache.get(loc);
+			if (cached !== undefined) {
+				return cached;
+			}
 
-		// Customize YAML engine so we can parse hard tabs lol...
-		eleventyConfig.setFrontMatterParsingOptions({
-			engines: {
-				yaml: {
-					...grayMatter.engines.yaml,
-					parse(content) {
-						content = content.replace(/\t/g, "  ");
-						return grayMatter.engines.yaml.parse(content);
+			const file = fs.readFileSync(path.resolve(__dirname, loc), "utf8");
+			includerawCache.set(loc, file);
+			return file;
+		},
+	);
+
+	eleventyConfig.addFilter(
+		"toBase64",
+		(content, ext) => {
+			return base64Encode(new Buffer(content), ext);
+		},
+	);
+
+	const minCache = new Map();
+
+	// Minify JS in production
+	eleventyConfig.addFilter(
+		"jsmin",
+		function(code) {
+			if (!isProduction) {
+				return code;
+			}
+
+			const cached = minCache.get(code);
+			if (cached !== undefined) {
+				return cached;
+			}
+
+			const minified = terser.minify(code);
+			if (minified.error) {
+				throw minified.error;
+			}
+
+			minCache.set(code, minified.code);
+			return minified.code;
+		},
+	);
+
+	// Minify CSS in production
+	eleventyConfig.addFilter(
+		"cssmin",
+		function(code) {
+			if (!isProduction) {
+				return code;
+			}
+
+			const cached = minCache.get(code);
+			if (cached !== undefined) {
+				return cached;
+			}
+
+			const minified = new CleanCSS({}).minify(code).styles;
+			minCache.set(code, minified);
+			return minified;
+		},
+	);
+
+	// Minify HTML in production
+	eleventyConfig.addTransform(
+		"htmlmin",
+		function(content, outputPath) {
+			if (isProduction && outputPath.endsWith(".html")) {
+				return htmlmin.minify(
+					content,
+					{
+						useShortDoctype: true,
+						removeComments: true,
+						conservativeCollapse: true,
+						collapseWhitespace: true,
 					},
+				);
+			}
+
+			return content;
+		},
+	);
+
+	eleventyConfig.addFilter(
+		"blogSummary",
+		(val) => {
+			const lines = val.split("<!-- DESCRIPTION_END -->")[0].split("\n");
+			return lines.filter((line) => {
+				return line.startsWith("<p>");
+			}).join("\n");
+		},
+	);
+
+	eleventyConfig.addFilter(
+		"dateFormat",
+		function(value) {
+			return new Date(value).toLocaleDateString(
+				undefined,
+				{
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+					timeZone: "UTC",
+				},
+			);
+		},
+	);
+
+	eleventyConfig.addFilter(
+		"titlify",
+		function(title) {
+			title = (title || "").trim();
+			if (!title.includes("Rome")) {
+				if (title !== "") {
+					title += " \u2014 ";
+				}
+				title += "Rome Toolchain";
+			}
+			return title;
+		},
+	);
+
+	eleventyConfig.addFilter(
+		"kebabCase",
+		function(string) {
+			return string.toLowerCase().replace(/\s/g, "-");
+		},
+	);
+
+	eleventyConfig.addShortcode(
+		"romeVersion",
+		function() {
+			return "?.?.?";
+		},
+	);
+
+	// Customize YAML engine so we can parse hard tabs lol...
+	eleventyConfig.setFrontMatterParsingOptions({
+		engines: {
+			yaml: {
+				...grayMatter.engines.yaml,
+				parse(content) {
+					content = content.replace(/\t/g, "  ");
+					return grayMatter.engines.yaml.parse(content);
 				},
 			},
-		});
+		},
+	});
 
-		return {
-			dir: { input: "src", output: "build" },
-			templateFormats: ["liquid", "md", "css", "html", "yml"],
-			htmlTemplateEngine: "liquid",
-		};
+	return {
+		dir: {
+			input: "src",
+			output: "build",
+		},
+		templateFormats: ["liquid", "md", "css", "html", "yml"],
+		htmlTemplateEngine: "liquid",
 	};
+};
