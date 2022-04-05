@@ -10,6 +10,7 @@ mod generate_syntax_kinds;
 mod kinds_src;
 mod parser_tests;
 mod unicode;
+mod css_kinds_src;
 
 use std::path::Path;
 
@@ -20,10 +21,15 @@ pub use self::formatter::generate_formatter;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
 
-const SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
-const AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";
-const SYNTAX_FACTORY: &str = "crates/rome_js_syntax/src/generated/syntax_factory.rs";
-const AST_MACROS: &str = "crates/rome_js_syntax/src/generated/macros.rs";
+const JS_SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
+const JS_AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";
+const JS_SYNTAX_FACTORY: &str = "crates/rome_js_syntax/src/generated/syntax_factory.rs";
+const JS_AST_MACROS: &str = "crates/rome_js_syntax/src/generated/macros.rs";
+
+const CSS_SYNTAX_KINDS: &str = "crates/rome_css_syntax/src/generated/kind.rs";
+const CSS_AST_NODES: &str = "crates/rome_css_syntax/src/generated/nodes.rs";
+const CSS_SYNTAX_FACTORY: &str = "crates/rome_css_syntax/src/generated/syntax_factory.rs";
+const CSS_AST_MACROS: &str = "crates/rome_css_syntax/src/generated/macros.rs";
 
 enum UpdateResult {
     NotUpdated,
@@ -32,7 +38,7 @@ enum UpdateResult {
 
 /// A helper to update file on disk if it has changed.
 /// With verify = false,
-fn update(path: &Path, contents: &str, mode: Mode) -> Result<UpdateResult> {
+fn update(path: &Path, contents: &str, mode: &Mode) -> Result<UpdateResult> {
     match fs2::read_to_string(path) {
         Ok(old_contents) if old_contents == contents => {
             return Ok(UpdateResult::NotUpdated);

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::kinds_src::{AstSrc, Field, TokenKind, KINDS_SRC};
+use crate::kinds_src::{AstSrc, Field, TokenKind, JS_KINDS_SRC};
 use crate::{to_lower_snake_case, to_upper_snake_case};
 use quote::{format_ident, quote};
 use xtask::Result;
@@ -720,8 +720,8 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 pub(crate) fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
     let kind_variant_name = to_upper_snake_case(name);
 
-    if KINDS_SRC.literals.contains(&kind_variant_name.as_str())
-        || KINDS_SRC.tokens.contains(&kind_variant_name.as_str())
+    if JS_KINDS_SRC.literals.contains(&kind_variant_name.as_str())
+        || JS_KINDS_SRC.tokens.contains(&kind_variant_name.as_str())
     {
         let ident = format_ident!("{}", kind_variant_name);
         quote! {  #ident }

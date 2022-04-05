@@ -14,7 +14,7 @@ pub struct KindsSrc<'a> {
     pub nodes: &'a [&'a str],
 }
 
-pub const KINDS_SRC: KindsSrc = KindsSrc {
+pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
     punct: &[
         (";", "SEMICOLON"),
         (",", "COMMA"),
