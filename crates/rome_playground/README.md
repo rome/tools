@@ -11,7 +11,7 @@ cloned the playground repo in the same director as the tools repo.
 
 Follow the [instructions](https://rustwasm.github.io/wasm-pack/installer/) to install `wasm-pack`. 
 
-`cd` to `rome_playground` directory.
+`cd` to `crates/rome_playground` directory.
 
 Once installed, build the Rust bindings:
 
