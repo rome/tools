@@ -1,10 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy Playground
+name: Deploy Playground on Main
 
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
 
 
 
@@ -18,16 +20,15 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install --prefix website/playground
+      - run: npm install --prefix crates/rome_playground
       - uses: jetli/wasm-pack-action@v0.3.0
-      - run: npm run build --prefix website/playground
+      - run: wasm-pack build crates/rome_playground --target web --release
+      - run: npm run build --prefix crates/rome_playground
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: 'website/playground/dist'      # optional: defaults to entire repository
-          DEST_DIR: $GITHUB_SHA
-
+          SOURCE_DIR: 'crates/rome_playground/dist'      # optional: defaults to entire repository
 
