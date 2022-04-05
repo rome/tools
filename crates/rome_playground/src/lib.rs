@@ -78,15 +78,20 @@ pub fn run(
     indent_width: Option<u8>, // If None, we use tabs
     is_typescript: bool,
     is_jsx: bool,
+    source_type: String,
 ) -> PlaygroundResult {
     let mut simple_files = SimpleFiles::new();
     let main_file_id = simple_files.add("main.js".to_string(), code.clone());
 
-    let source_type = match (is_typescript, is_jsx) {
-        (true, true) => SourceType::tsx(),
-        (true, false) => SourceType::ts(),
-        (false, true) => SourceType::jsx(),
-        (false, false) => SourceType::js_module(),
+    let source_type = if source_type == "script" {
+        SourceType::js_script()
+    } else {
+        match (is_typescript, is_jsx) {
+            (true, true) => SourceType::tsx(),
+            (true, false) => SourceType::ts(),
+            (false, true) => SourceType::jsx(),
+            (false, false) => SourceType::js_module(),
+        }
     };
 
     let parse = parse(&code, main_file_id, source_type);
