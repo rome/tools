@@ -4,7 +4,7 @@ use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
 use rome_diagnostics::{Formatter as ErrorFormatter, LongFormatter};
 use rome_js_formatter::{format as format_code, to_format_element, FormatOptions, IndentStyle};
-use rome_js_parser::{parse, SourceType};
+use rome_js_parser::{parse, LanguageVariant, SourceType};
 use std::io;
 use wasm_bindgen::prelude::*;
 
@@ -78,15 +78,25 @@ pub fn run(
     indent_width: Option<u8>, // If None, we use tabs
     is_typescript: bool,
     is_jsx: bool,
+    source_type: String,
 ) -> PlaygroundResult {
     let mut simple_files = SimpleFiles::new();
     let main_file_id = simple_files.add("main.js".to_string(), code.clone());
 
-    let source_type = match (is_typescript, is_jsx) {
-        (true, true) => SourceType::tsx(),
-        (true, false) => SourceType::ts(),
-        (false, true) => SourceType::jsx(),
-        (false, false) => SourceType::js_module(),
+    let source_type = if source_type == "script" {
+        SourceType::js_script()
+    } else {
+        let source_type = if is_typescript {
+            SourceType::ts()
+        } else {
+            SourceType::js_module()
+        };
+
+        if is_jsx {
+            source_type.with_variant(LanguageVariant::Jsx)
+        } else {
+            source_type
+        }
     };
 
     let parse = parse(&code, main_file_id, source_type);

@@ -8,7 +8,7 @@ import prettier from "prettier";
 import parserBabel from "prettier/esm/parser-babel";
 import IndentStyleSelect from "./IndentStyleSelect";
 import LineWidthInput from "./LineWidthInput";
-import { IndentStyle } from "./types";
+import {IndentStyle, SourceType} from "./types";
 import SourceTypeSelect from "./SourceTypeSelect";
 
 enum LoadingState { Loading, Success, Error }
@@ -76,15 +76,18 @@ function App() {
 		searchParams.get("typescript") === "true",
 	);
 	const [isJsx, setIsJsx] = useState(searchParams.get("jsx") === "true");
+	const [sourceType, setSourceType] = useState(
+		(searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
+	);
 
 	const language = getLanguage(isJsx, isTypeScript);
 
 	useEffect(
 		() => {
-			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}#${encodeCode(code)}`;
+			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}&sourceType=${sourceType}#${encodeCode(code)}`;
 			window.history.pushState({ path: url }, "", url);
 		},
-		[lineWidth, indentStyle, indentWidth, code, isTypeScript, isJsx],
+		[lineWidth, indentStyle, indentWidth, code, isTypeScript, isJsx, sourceType],
 	);
 
 	switch (loadingState) {
@@ -103,6 +106,7 @@ function App() {
 				indentStyle === IndentStyle.Space ? indentWidth : undefined,
 				isTypeScript,
 				isJsx,
+				sourceType
 			);
 
 			return (
@@ -121,6 +125,8 @@ function App() {
 							setIsTypeScript={setIsTypeScript}
 							isJsx={isJsx}
 							setIsJsx={setIsJsx}
+							sourceType={sourceType}
+							setSourceType={setSourceType}
 						/>
 					</div>
 					<div className="box-border flex h-screen divide-x divide-slate-300">
