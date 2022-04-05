@@ -5,6 +5,7 @@ const markdownIt = require("markdown-it");
 const markdownItHeaderSections = require("markdown-it-header-sections");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItImageSize = require("markdown-it-imsize");
+const markdownItFootnote = require("markdown-it-footnote");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
@@ -22,43 +23,53 @@ const grayMatter = require("gray-matter");
 
 const isProduction = process.env.ELEVENTY_ENV === "production";
 
-module.exports =
-	function (eleventyConfig) {
-		eleventyConfig.addPassthroughCopy({ "static": "." });
-		eleventyConfig.setUseGitIgnore(false);
+module.exports = function(eleventyConfig) {
+	eleventyConfig.addPassthroughCopy({"static": "."});
+	eleventyConfig.setUseGitIgnore(false);
 
-		eleventyConfig.setLiquidOptions({ cache: true });
+	eleventyConfig.setLiquidOptions({
+		cache: true,
+	});
 
-		eleventyConfig.addPlugin(syntaxHighlight);
+	eleventyConfig.addPlugin(syntaxHighlight);
 
-		eleventyConfig.addPlugin(
-			pluginTOC,
-			{ tags: ["h2", "h3", "h4"], wrapper: "div  ", wrapperClass: "toc" },
-		);
+	eleventyConfig.addPlugin(
+		pluginTOC,
+		{
+			tags: ["h2", "h3", "h4"],
+			wrapper: "div  ",
+			wrapperClass: "toc",
+		},
+	);
 
-		eleventyConfig.addPlugin(eleventyNavigationPlugin);
+	eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
-		const md = markdownIt({ html: true, linkify: true, typographer: true });
+	const md = markdownIt({
+		html: true,
+		linkify: true,
+		typographer: true,
+	});
 
-		md.use(markdownItHeaderSections);
+	md.use(markdownItHeaderSections);
 
-		md.use(markdownItImageSize);
+	md.use(markdownItImageSize);
 
-		md.use(
-			markdownItAnchor,
-			{
-				permalink: true,
-				permalinkSymbol: "",
-				permalinkAttrs: (slug) => ({ "aria-label": slug }),
-				slugify: (title) => {
-					return encodeURIComponent(
-						String(title)
-							.trim()
-							.toLowerCase()
-							.replace(/[^a-zA-Z\s0-9]/g, "")
-							.replace(/\s+/g, "-"),
-					);
-				},
+	md.use(markdownItFootnote);
+
+
+	md.use(
+		markdownItAnchor,
+		{
+			permalink: true,
+			permalinkSymbol: "",
+			permalinkAttrs: (slug) => ({"aria-label": slug}),
+			slugify: (title) => {
+				return encodeURIComponent(
+					String(title).trim().toLowerCase().replace(/[^a-zA-Z\s0-9]/g, "").replace(
+						/\s+/g,
+						"-",
+					),
+				);
 			},
 		);
 
