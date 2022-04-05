@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 rome_markup = { path = "../rome_markup" }
-rome_rowan = { path = "../rome_rowan" }
+text-size = "1.1.0"
 lazy_static = "1.4.0"
 termcolor = "1.1.2"
 similar = "2.1.0"

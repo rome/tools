@@ -1363,9 +1363,9 @@ version = "0.0.0"
 dependencies = [
  "lazy_static",
  "rome_markup",
- "rome_rowan",
  "similar",
  "termcolor",
+ "text-size",
  "trybuild",
  "unicode-width",
 ]

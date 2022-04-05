@@ -5,7 +5,7 @@ use std::io;
 
 use crate::fmt::{Display, Formatter};
 use crate::markup::MarkupBuf;
-use rome_rowan::{TextRange, TextSize};
+use text_size::{TextRange, TextSize};
 
 use self::render::{MultiLabel, Renderer, SingleLabel};
 
@@ -407,13 +407,6 @@ impl<'diagnostic> SourceFile<'diagnostic> {
     }
 
     /// Return the starting byte index of each line in the source string.
-    ///
-    /// This can make it easier to implement [`Files::line_index`] by allowing
-    /// implementors of [`Files`] to pre-compute the line starts, then search for
-    /// the corresponding line range, as shown in the example below.
-    ///
-    /// [`Files`]: Files
-    /// [`Files::line_index`]: Files::line_index
     pub fn line_starts(source: &'_ str) -> impl '_ + Iterator<Item = TextSize> {
         std::iter::once(0)
             .chain(source.match_indices(&['\n', '\r']).filter_map(|(i, _)| {
@@ -547,7 +540,7 @@ struct Line<'diagnostic> {
 
 #[cfg(test)]
 mod tests {
-    use rome_rowan::{TextRange, TextSize};
+    use text_size::{TextRange, TextSize};
 
     use crate::codespan::SourceFile;
     use crate::{self as rome_console, BufferConsole, ConsoleExt, LogLevel, Markup};
