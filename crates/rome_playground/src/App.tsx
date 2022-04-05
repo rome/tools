@@ -10,7 +10,6 @@ import IndentStyleSelect from "./IndentStyleSelect";
 import LineWidthInput from "./LineWidthInput";
 import {IndentStyle, SourceType} from "./types";
 import SourceTypeSelect from "./SourceTypeSelect";
-import {Source} from "postcss";
 
 enum LoadingState { Loading, Success, Error }
 
