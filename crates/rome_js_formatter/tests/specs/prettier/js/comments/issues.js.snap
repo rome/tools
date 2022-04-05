@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 153
 expression: issues.js
+
 ---
 # Input
 ```js
@@ -131,7 +133,7 @@ Observable
 
 // Comments in JSX tag are placed in a non optimal way
 <div
-  // comment
+// comment
 />;
 
 // Comments disappear in empty blocks

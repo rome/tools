@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 151
+assertion_line: 153
 expression: ignore-2.js
 
 ---
@@ -44,11 +44,11 @@ function HelloWorld() {
   );
 }
 
-a = <div {.../* prettier-ignore */b}/>;
-a = <div {...b/* prettier-ignore */}/>;
-a = <div {.../* prettier-ignore */{}}/>;
-a = <div {...{/* prettier-ignore */}}/>;
-a = <div {...{}/* prettier-ignore */}/>;
+a = <div {.../* prettier-ignore */b} />;
+a = <div {...b/* prettier-ignore */} />;
+a = <div {.../* prettier-ignore */{}} />;
+a = <div {...{/* prettier-ignore */}} />;
+a = <div {...{}/* prettier-ignore */} />;
 
 ```
 
