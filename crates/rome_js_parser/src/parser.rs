@@ -262,12 +262,13 @@ impl<'s> Parser<'s> {
             kind
         };
 
+        let range = self.cur_range();
+        self.push_token(kind, range.end());
+
         if self.skipping {
             self.tokens.skip_as_trivia(context);
         } else {
-            let range = self.cur_range();
             self.tokens.bump(context);
-            self.push_token(kind, range.end());
         }
     }
 
