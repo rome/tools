@@ -213,3 +213,52 @@ fn test_empty_arguments() {
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 }
+
+#[test]
+fn test_dry_run() {
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("format.js");
+    fs.insert(
+        file_path.into(),
+        b"  unformatted_statement(  )  ".as_slice(),
+    );
+
+    let result = run_cli(CliSession {
+        app: App::with_filesystem_and_console(
+            DynRef::Owned(Box::new(fs)),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+        ),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--dry-run"),
+            file_path.as_os_str().into(),
+        ]),
+    });
+
+    match result {
+        Ok(()) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected ok"),
+    }
+}
+
+#[test]
+fn test_incompatible_arguments() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem_and_console(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+        ),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--ci"),
+            OsString::from("--dry-run"),
+            OsString::from("format.js"),
+        ]),
+    });
+
+    match result {
+        Err(Termination::IncompatibleArguments("--ci", "--dry-run")) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+}

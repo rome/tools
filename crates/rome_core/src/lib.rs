@@ -10,7 +10,7 @@ use std::ops::{Deref, DerefMut};
 pub mod file_handlers;
 
 /// Features available for each language
-struct Features {
+pub struct Features {
     js: JsFileHandler,
     json: JsonFileHandler,
     unknown: UnknownFileHandler,
@@ -19,7 +19,7 @@ struct Features {
 pub struct App<'app> {
     pub fs: DynRef<'app, dyn FileSystem>,
     /// features available throughout the application
-    features: Features,
+    pub features: Features,
     pub console: DynRef<'app, dyn Console>,
 }
 
@@ -84,7 +84,7 @@ impl<'app> App<'app> {
     }
 
     /// Return a [Language] from a string
-    pub fn get_language<L: Into<Language>>(&self, file_extension: L) -> Language {
+    pub fn get_language<L: Into<Language>>(file_extension: L) -> Language {
         file_extension.into()
     }
 
@@ -107,16 +107,18 @@ impl<'app> App<'app> {
     pub fn get_unknown_features(&self) -> &UnknownFileHandler {
         &self.features.unknown
     }
+}
 
+impl Features {
     /// Checks if the current file can be formatted
     pub fn can_format(&self, rome_path: &RomePath) -> bool {
         rome_path.extension().map_or(false, |extension| {
-            let language = self.get_language(extension);
+            let language = App::get_language(extension);
 
             match language {
-                Language::JavaScript => self.features.js.capabilities().format,
-                Language::Json => self.features.json.capabilities().format,
-                Language::Unknown => self.features.unknown.capabilities().format,
+                Language::JavaScript => self.js.capabilities().format,
+                Language::Json => self.json.capabilities().format,
+                Language::Unknown => self.unknown.capabilities().format,
             }
         })
     }
@@ -124,12 +126,12 @@ impl<'app> App<'app> {
     /// Checks if the current file can be analyzed for linting rules
     pub fn can_lint(&self, rome_path: &RomePath) -> bool {
         rome_path.extension().map_or(false, |extension| {
-            let language = self.get_language(extension);
+            let language = App::get_language(extension);
 
             match language {
-                Language::JavaScript => self.features.js.capabilities().lint,
-                Language::Json => self.features.json.capabilities().lint,
-                Language::Unknown => self.features.unknown.capabilities().lint,
+                Language::JavaScript => self.js.capabilities().lint,
+                Language::Json => self.json.capabilities().lint,
+                Language::Unknown => self.unknown.capabilities().lint,
             }
         })
     }

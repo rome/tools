@@ -130,7 +130,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
     );
 
     let mut rome_path = RomePath::new(file_path);
-    if app.can_format(&rome_path) {
+    if app.features.can_format(&rome_path) {
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
         let mut source_type: SourceType = rome_path.as_path().try_into().unwrap();

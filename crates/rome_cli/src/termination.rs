@@ -42,6 +42,10 @@ pub enum Termination {
     #[error("empty arguments")]
     EmptyArguments,
 
+    /// Returned when a subcommand is called with an unsupported combination of arguments
+    #[error("incompatible arguments '{0}' and '{1}'")]
+    IncompatibleArguments(&'static str, &'static str),
+
     /// Returned by the formatter when error diagnostics were emitted in CI mode
     #[error("errors where emitted while formatting")]
     FormattingError,

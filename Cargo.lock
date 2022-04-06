@@ -1358,6 +1358,7 @@ dependencies = [
  "lazy_static",
  "parking_lot 0.12.0",
  "pico-args",
+ "rayon",
  "rome_console",
  "rome_core",
  "rome_diagnostics",

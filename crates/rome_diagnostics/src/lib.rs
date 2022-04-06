@@ -10,7 +10,7 @@ mod formatters;
 mod suggestion;
 
 pub use diagnostic::{Diagnostic, SubDiagnostic};
-pub use emit::Emitter;
+pub use emit::{DiagnosticHeader, Emitter};
 pub use file::Span;
 pub use formatters::*;
 pub use suggestion::*;
