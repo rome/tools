@@ -101,25 +101,19 @@ impl<'a> Display for DiagnosticPrinter<'a> {
 
         // If the diagnostic doesn't have a codespan, show the locus in the header instead
         let has_codespan = self.d.primary.is_some() || !self.d.children.is_empty();
-        if !has_codespan {
-            fmt.write_markup(markup! {
-                {locus}": "
-            })?;
-        }
-
-        let level = <&str>::from(self.d.severity);
-
-        match self.d.code.as_ref().filter(|code| !code.is_empty()) {
-            Some(code) => fmt.write_markup(markup! {
-                {WithSeverity(LabelStyle::Primary, self.d.severity, &markup!{ {level}"["{code}"]" })}
-            })?,
-            None => fmt.write_markup(markup! {
-                {WithSeverity(LabelStyle::Primary, self.d.severity, &level)}
-            })?,
-        }
 
         fmt.write_markup(markup! {
-            <Emphasis>": "{self.d.title}</Emphasis>"\n"
+            {DiagnosticHeader {
+                locus: if !has_codespan {
+                    Some(&locus)
+                } else {
+                    None
+                },
+                severity: self.d.severity,
+                code: self.d.code.as_deref().filter(|code| !code.is_empty()),
+                title: &self.d.title,
+            }}
+            "\n"
         })?;
 
         if has_codespan {
@@ -242,6 +236,38 @@ impl<'a> Display for DiagnosticPrinter<'a> {
         }
 
         Ok(())
+    }
+}
+
+pub struct DiagnosticHeader<'a> {
+    pub locus: Option<&'a Locus>,
+    pub severity: Severity,
+    pub code: Option<&'a str>,
+    pub title: &'a str,
+}
+
+impl<'a> Display for DiagnosticHeader<'a> {
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> io::Result<()> {
+        if let Some(locus) = &self.locus {
+            fmt.write_markup(markup! {
+                {locus}": "
+            })?;
+        }
+
+        let level = <&str>::from(self.severity);
+
+        match self.code {
+            Some(code) => fmt.write_markup(markup! {
+                {WithSeverity(LabelStyle::Primary, self.severity, &markup!{ {level}"["{code}"]" })}
+            })?,
+            None => fmt.write_markup(markup! {
+                {WithSeverity(LabelStyle::Primary, self.severity, &level)}
+            })?,
+        }
+
+        fmt.write_markup(markup! {
+            <Emphasis>": "{self.title}</Emphasis>
+        })
     }
 }
 

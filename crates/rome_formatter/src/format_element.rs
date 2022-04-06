@@ -39,7 +39,7 @@ pub fn empty_element() -> FormatElement {
 ///
 /// Soft line breaks are emitted if the enclosing `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions, LineWidth};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a long word,"),
@@ -48,7 +48,7 @@ pub fn empty_element() -> FormatElement {
 /// ]);
 ///
 /// let options = FormatOptions {
-///  line_width: 10,
+///  line_width: LineWidth::try_from(10).unwrap(),
 ///  ..FormatOptions::default()
 /// };
 ///
@@ -123,7 +123,7 @@ pub const fn empty_line() -> FormatElement {
 ///
 /// The printer breaks the lines if the enclosing `Group` doesn't fit on a single line:
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, LineWidth};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a long word,"),
@@ -132,7 +132,7 @@ pub const fn empty_line() -> FormatElement {
 /// ]);
 ///
 /// let options = FormatOptions {
-///  line_width: 10,
+///  line_width: LineWidth::try_from(10).unwrap(),
 ///  ..FormatOptions::default()
 /// };
 ///
@@ -428,7 +428,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't fit on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, LineWidth};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -441,7 +441,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ]);
 ///
 /// let options = FormatOptions {
-///  line_width: 10,
+///  line_width: LineWidth::try_from(10).unwrap(),
 ///  ..FormatOptions::default()
 /// };
 ///
@@ -494,7 +494,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// fit on a single line. Otherwise, just inserts a space.
 ///
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token, LineWidth};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("name"),
@@ -510,7 +510,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ]);
 ///
 /// let options = FormatOptions {
-///  line_width: 10,
+///  line_width: LineWidth::try_from(10).unwrap(),
 ///  ..FormatOptions::default()
 /// };
 ///
@@ -583,7 +583,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 ///
 /// The printer breaks the `Group` over multiple lines if its content doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, LineWidth};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -598,7 +598,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// ]);
 ///
 /// let options = FormatOptions {
-///   line_width: 20,
+///   line_width: LineWidth::try_from(20).unwrap(),
 ///   ..FormatOptions::default()
 /// };
 ///
@@ -681,7 +681,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///
 /// Prints the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks, LineWidth};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -696,7 +696,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///   token("]"),
 /// ]);
 ///
-/// let options = FormatOptions { line_width: 20, ..FormatOptions::default() };
+/// let options = FormatOptions { line_width: LineWidth::try_from(20).unwrap(), ..FormatOptions::default() };
 /// assert_eq!(
 ///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3,\n]",
 ///   format_element(&elements, options).as_code()
@@ -744,7 +744,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Omits the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line, LineWidth};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("["),
@@ -759,7 +759,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   token("]"),
 /// ]);
 ///
-/// let options = FormatOptions { line_width: 20, ..FormatOptions::default() };
+/// let options = FormatOptions { line_width: LineWidth::try_from(20).unwrap(), ..FormatOptions::default() };
 /// assert_eq!(
 ///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3\n]",
 ///   format_element(&elements, options).as_code()

@@ -1,25 +1,28 @@
 use std::{
-    collections::{HashMap, HashSet},
+    collections::HashMap,
+    ffi::OsString,
     fmt::Display,
     io,
     ops::Range,
     panic::catch_unwind,
     path::{Path, PathBuf},
     sync::atomic::{AtomicUsize, Ordering},
-    time::Instant,
+    time::{Duration, Instant},
 };
 
-use crossbeam::channel::{unbounded, Sender};
+use crossbeam::channel::{unbounded, Receiver, Sender};
+use rayon::join;
 use rome_console::{
+    codespan::Locus,
     diff::{Diff, DiffMode},
-    markup, ConsoleExt,
+    markup, Console, ConsoleExt,
 };
-use rome_core::App;
+use rome_core::Features;
 use rome_diagnostics::{
     file::{FileId, Files, SimpleFile},
-    Diagnostic,
+    Diagnostic, DiagnosticHeader, Severity,
 };
-use rome_fs::{AtomicInterner, PathInterner, RomePath};
+use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_js_formatter::{FormatOptions, IndentStyle};
 use rome_js_parser::{parse, SourceType};
@@ -56,8 +59,28 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         None => {}
     }
 
-    let is_check = session.args.contains("--ci");
+    let line_width = session
+        .args
+        .opt_value_from_str("--line-width")
+        .map_err(|source| Termination::ParseError {
+            argument: "--line-width",
+            source,
+        })?;
+
+    if let Some(line_width) = line_width {
+        options.line_width = line_width;
+    }
+
+    let is_write = session.args.contains("--write");
+    let is_ci = session.args.contains("--ci");
     let ignore_errors = session.args.contains("--skip-errors");
+
+    let mode = match (is_write, is_ci) {
+        (true, true) => return Err(Termination::IncompatibleArguments("--write", "--ci")),
+        (true, false) => FormatMode::Write,
+        (false, true) => FormatMode::Check,
+        (false, false) => FormatMode::Print,
+    };
 
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
@@ -84,113 +107,183 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     }
 
     let (interner, recv_files) = AtomicInterner::new();
-    let (send_diags, recv_diags) = unbounded();
+    let (send_msgs, recv_msgs) = unbounded();
 
     let formatted = AtomicUsize::new(0);
+    let skipped = AtomicUsize::new(0);
 
+    let fs = &*session.app.fs;
+    let features = &session.app.features;
+    let console = &mut *session.app.console;
+
+    let (has_errors, duration) = join(
+        || print_messages_to_console(mode, console, recv_files, recv_msgs),
+        || {
+            // The traversal context is scoped to ensure all the channels it
+            // contains are properly closed once the traversal finishes
+            traverse_inputs(
+                fs,
+                inputs,
+                &FormatCommandOptions {
+                    fs,
+                    features,
+                    options,
+                    mode,
+                    ignore_errors,
+                    interner,
+                    formatted: &formatted,
+                    skipped: &skipped,
+                    messages: send_msgs,
+                },
+            )
+        },
+    );
+
+    let count = formatted.load(Ordering::Relaxed);
+    let skipped = skipped.load(Ordering::Relaxed);
+
+    match mode {
+        FormatMode::Write => {
+            console.log(rome_console::markup! {
+                <Info>"Formatted "{count}" files in "{duration}</Info>
+            });
+        }
+        FormatMode::Check => {
+            console.log(rome_console::markup! {
+                <Info>"Checked "{count}" files in "{duration}</Info>
+            });
+        }
+        FormatMode::Print => {
+            console.log(rome_console::markup! {
+                <Info>"Compared "{count}" files in "{duration}</Info>
+            });
+        }
+    }
+
+    if skipped > 0 {
+        console.log(rome_console::markup! {
+            <Warn>"Skipped "{skipped}" files"</Warn>
+        });
+    }
+
+    // Formatting emitted error diagnostics, exit with a non-zero code
+    if !has_errors {
+        Ok(())
+    } else {
+        Err(Termination::FormattingError)
+    }
+}
+
+/// Initiate the filesystem traversal tasks with the provided input paths and
+/// run it to completion, returning the duration of the process
+fn traverse_inputs(
+    fs: &dyn FileSystem,
+    inputs: Vec<OsString>,
+    ctx: &FormatCommandOptions,
+) -> Duration {
     let start = Instant::now();
 
-    {
-        // The traversal context is scoped to ensure all the channels it
-        // contains are properly closed once the traversal finishes
-        let ctx = FormatCommandOptions {
-            app: &session.app,
-            options,
-            is_check,
-            ignore_errors,
-            interner,
-            formatted: &formatted,
-            diagnostics: send_diags,
-        };
+    fs.traversal(Box::new(move |scope: &dyn TraversalScope| {
+        for input in inputs {
+            scope.spawn(ctx, PathBuf::from(input));
+        }
+    }));
 
-        let ctx = &ctx;
-        session
-            .app
-            .fs
-            .traversal(Box::new(move |scope: &dyn TraversalScope| {
-                for input in inputs {
-                    scope.spawn(ctx, PathBuf::from(input));
-                }
-            }));
-    }
+    start.elapsed()
+}
 
-    let duration = start.elapsed();
-    let count = formatted.load(Ordering::Relaxed);
-
+/// This thread receives [Message]s from the workers through the `recv_msgs`
+/// and `recv_files` channels and prints them to the console
+fn print_messages_to_console(
+    mode: FormatMode,
+    console: &mut dyn Console,
+    recv_files: Receiver<(usize, PathBuf)>,
+    recv_msgs: Receiver<Message>,
+) -> bool {
     let mut has_errors = false;
-    let mut file_ids = HashSet::new();
-    let mut diagnostics = Vec::new();
+    let mut paths = HashMap::new();
 
-    while let Ok(error) = recv_diags.recv() {
-        match &error {
-            Error::Diagnostic(diag) => {
-                has_errors |= diag.is_error();
-                file_ids.insert(diag.file_id);
-            }
-            Error::Diff { .. } => {
-                has_errors = true;
-            }
-        }
+    while let Ok(msg) = recv_msgs.recv() {
+        match msg {
+            Message::Error(err) => {
+                // Retrieves the file name from the file ID cache, if it's a miss
+                // flush entries from the interner channel until it's found
+                let file_name = match paths.get(&err.file_id) {
+                    Some(path) => Some(path),
+                    None => loop {
+                        match recv_files.recv() {
+                            Ok((file_id, path)) => {
+                                paths.insert(file_id, path);
+                                if file_id == err.file_id {
+                                    break Some(&paths[&file_id]);
+                                }
+                            }
+                            // In case the channel disconnected without sending
+                            // the path we need, print the error without a file
+                            // name (normally this should never happen)
+                            Err(_) => break None,
+                        }
+                    },
+                };
 
-        diagnostics.push(error);
-    }
+                let locus = file_name.map(|file_name| Locus::File {
+                    name: file_name.display().to_string(),
+                });
 
-    let mut files = PathFiles::default();
-    while let Ok((file_id, path)) = recv_files.recv() {
-        if !file_ids.contains(&file_id) {
-            continue;
-        }
-
-        let name = path.display().to_string();
-        let mut source = String::new();
-        session
-            .app
-            .fs
-            .open(&path)
-            .and_then(|mut file| file.read_to_string(&mut source))
-            // Any potential read error is ignored for two reasons:
-            // - The first is that if this code is reached this means an error
-            // diagnostic was emitted for this path, we can't really know what
-            // it was at this stage since its an opaque diagnostic but it could
-            // be that the file doesn't exist, is a directory, or the process
-            // doesn't have the permission to read it. There's a fairly high
-            // chance the same error will happen again when the file is loaded
-            // a second time, in which case we don't want to do anything with
-            // it since we're already in the process of printing the error
-            // diagnostic to the console anyway and we don't want to show the
-            // same error twice
-            // - The second scenario is that the filesystem could be in an
-            // inconsistent state, for instance the file got deleted between
-            // the moment the diagnostic was emitted and the moment it gets
-            // printed. The probability of this happening is very low so for
-            // now the diagnostics just gets printed in "degraded mode" with no
-            // code span information, and not print any additional error.
-            // Eventually this will go away when the virtual filesystem can
-            // cache the content of files in memory and we don't have to load
-            // the file a second time to print diagnostics
-            .ok();
-
-        files.storage.insert(file_id, SimpleFile::new(name, source));
-    }
-
-    for error in diagnostics {
-        match error {
-            Error::Diagnostic(diag) => {
-                session.app.console.error(markup! {
-                    {diag.display(&files)}
+                console.error(markup! {
+                    {DiagnosticHeader {
+                        locus: locus.as_ref(),
+                        severity: err.severity,
+                        code: Some(err.code),
+                        title: &err.message,
+                    }}
                 });
             }
-            Error::Diff {
+
+            Message::Diagnostics {
+                name,
+                content,
+                diagnostics,
+            } => {
+                let file = SimpleFile::new(name, content);
+
+                for diag in diagnostics {
+                    has_errors |= diag.is_error();
+                    console.error(markup! {
+                        {diag.display(&file)}
+                    });
+                }
+            }
+
+            Message::Diff {
                 file_name,
                 old,
                 new,
             } => {
+                let locus = Locus::File { name: file_name };
+                let header = if matches!(mode, FormatMode::Check) {
+                    // A diff is an error in CI mode
+                    has_errors = true;
+                    DiagnosticHeader {
+                        locus: Some(&locus),
+                        severity: Severity::Error,
+                        code: Some("CI"),
+                        title: "File content differs from formatting output",
+                    }
+                } else {
+                    DiagnosticHeader {
+                        locus: Some(&locus),
+                        severity: Severity::Help,
+                        code: Some("Formatter"),
+                        title: "Formatter would have printed the following content:",
+                    }
+                };
+
                 // Skip printing the diff for files over 1Mb (probably a minified file)
                 let max_len = old.len().max(new.len());
                 if max_len >= 1_000_000 {
-                    session.app.console.error(markup! {
-                        {file_name}": "
-                        <Error>"error[CI]"</Error>": File content differs from formatting output\n"
+                    console.error(markup! {
+                        {header}"\n"
                         <Info>"[Diff not printed for file over 1Mb]\n"</Info>
                     });
                     continue;
@@ -202,31 +295,15 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
                     right: &new,
                 };
 
-                session.app.console.error(markup! {
-                    {file_name}": "
-                    <Error>"error[CI]"</Error>": File content differs from formatting output\n"
+                console.error(markup! {
+                    {header}"\n"
                     {diff}
                 });
             }
         }
     }
 
-    if is_check {
-        session.app.console.log(rome_console::markup! {
-            <Info>"Checked "{count}" files in "{duration}</Info>
-        });
-    } else {
-        session.app.console.log(rome_console::markup! {
-            <Info>"Formatted "{count}" files in "{duration}</Info>
-        });
-    }
-
-    // Formatting emitted error diagnostics, exit with a non-zero code
-    if !has_errors {
-        Ok(())
-    } else {
-        Err(Termination::FormattingError)
-    }
+    has_errors
 }
 
 /// Implementation of [Files] with pre-allocated file IDs
@@ -257,22 +334,44 @@ impl Files for PathFiles {
     }
 }
 
+/// Determines how the result of formatting should be handled
+#[derive(Clone, Copy)]
+enum FormatMode {
+    /// Write the result to the original file
+    ///
+    /// This is the behavior of the CLI when the `--write` argument is specified
+    Write,
+    /// Compare the result to the original content of the file and return an
+    /// error if they differ
+    ///
+    /// This is the behavior of the CLI when the `--ci` argument is specified
+    Check,
+    /// Print a diff of the formatting result with original content of the file
+    ///
+    /// This is the default behavior when no CLI argument is specified
+    Print,
+}
+
 /// Context object shared between directory traversal tasks
 struct FormatCommandOptions<'ctx, 'app> {
-    /// Shared instance of [App]
-    app: &'ctx App<'app>,
+    /// Shared instance of [FileSystem]
+    fs: &'app dyn FileSystem,
+    /// Set of features supported by this instance of the CLI
+    features: &'ctx Features,
     /// Options to use for formatting the discovered files
     options: FormatOptions,
-    /// Boolean flag storing whether the command is being run in check mode
-    is_check: bool,
+    /// Determines how the result of formatting should be handled
+    mode: FormatMode,
     /// Whether the formatter should silently skip files with errors
     ignore_errors: bool,
     /// File paths interner used by the filesystem traversal
     interner: AtomicInterner,
     /// Shared atomic counter storing the number of formatted files
     formatted: &'ctx AtomicUsize,
-    /// Channel sending diagnostics to the display thread
-    diagnostics: Sender<Error>,
+    /// Shared atomic counter storing the number of skipped files
+    skipped: &'ctx AtomicUsize,
+    /// Channel sending messages to the display thread
+    messages: Sender<Message>,
 }
 
 impl<'ctx, 'app> FormatCommandOptions<'ctx, 'app> {
@@ -281,9 +380,9 @@ impl<'ctx, 'app> FormatCommandOptions<'ctx, 'app> {
         self.formatted.fetch_add(1, Ordering::Relaxed);
     }
 
-    /// Send a diagnostic to the display thread
-    fn push_diagnostic(&self, err: Error) {
-        self.diagnostics.send(err).ok();
+    /// Send a message to the display thread
+    fn push_message(&self, msg: impl Into<Message>) {
+        self.messages.send(msg.into()).ok();
     }
 }
 
@@ -292,12 +391,17 @@ impl<'ctx, 'app> TraversalContext for FormatCommandOptions<'ctx, 'app> {
         &self.interner
     }
 
-    fn push_diagnostic(&self, file_id: FileId, code: &'static str, title: String) {
-        self.push_diagnostic(Diagnostic::error(file_id, code, title).into());
+    fn push_diagnostic(&self, file_id: FileId, code: &'static str, message: String) {
+        self.push_message(FormatError {
+            severity: Severity::Error,
+            file_id,
+            code,
+            message,
+        });
     }
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
-        self.app.can_format(rome_path)
+        self.features.can_format(rome_path)
     }
 
     fn handle_file(&self, path: &Path, file_id: FileId) {
@@ -310,29 +414,29 @@ impl<'ctx, 'app> TraversalContext for FormatCommandOptions<'ctx, 'app> {
 /// formatting function returns Err or panics)
 fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
     let params = FormatFileParams {
-        app: ctx.app,
+        fs: ctx.fs,
+        features: ctx.features,
         options: ctx.options,
-        is_check: ctx.is_check,
+        mode: ctx.mode,
         ignore_errors: ctx.ignore_errors,
         path,
         file_id,
     };
 
     match catch_unwind(move || format_file(params)) {
-        Ok(Ok(errors)) => {
-            if errors.is_empty() {
-                ctx.add_formatted();
-            } else {
-                for error in errors {
-                    ctx.push_diagnostic(error.into());
-                }
-            }
+        Ok(Ok(None)) => {
+            ctx.add_formatted();
+        }
+        Ok(Ok(Some(msg))) => {
+            ctx.add_formatted();
+            ctx.push_message(msg);
         }
         Ok(Err(err)) => {
-            ctx.push_diagnostic(err);
+            ctx.skipped.fetch_add(1, Ordering::Relaxed);
+            ctx.push_message(err);
         }
         Err(err) => {
-            let msg = match err.downcast::<String>() {
+            let message = match err.downcast::<String>() {
                 Ok(msg) => format!("formatting panicked: {msg}"),
                 Err(err) => match err.downcast::<&'static str>() {
                     Ok(msg) => format!("formatting panicked: {msg}"),
@@ -340,40 +444,52 @@ fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
                 },
             };
 
-            ctx.push_diagnostic(Diagnostic::error(file_id, "Panic", msg).into());
+            ctx.push_message(FormatError {
+                severity: Severity::Bug,
+                file_id,
+                code: "Panic",
+                message,
+            });
         }
     }
 }
 
 struct FormatFileParams<'ctx, 'app> {
-    app: &'ctx App<'app>,
+    fs: &'app dyn FileSystem,
+    features: &'ctx Features,
     options: FormatOptions,
-    is_check: bool,
+    mode: FormatMode,
     ignore_errors: bool,
     path: &'ctx Path,
     file_id: FileId,
 }
 
+/// The return type for [format_file], with the following semantics:
+/// - `Ok(None)` means the operation was successful (the file is added to the
+///   `formatted` counter)
+/// - `Ok(Some(_))` means the operation was successful but a message still
+///   needs to be printed (eg. the diff when not in CI or write mode)
+/// - `Err(_)` means the operation failed and the file should be added to the
+///   skipped counter
+type FormatResult = Result<Option<Message>, Message>;
+
 /// This function performs the actual formatting: it reads the file from disk
 /// (or map it into memory it), parse and format it; then, it either writes the
 /// result back or compares it with the original content and emit a diagnostic
 #[tracing::instrument(level = "trace", skip_all, fields(path = ?params.path))]
-fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Error> {
-    if !params.app.can_format(&RomePath::new(params.path)) {
-        return Err(Error::from(Diagnostic::error(
-            params.file_id,
-            "IO",
-            "unhandled file type",
-        )));
+fn format_file(params: FormatFileParams) -> FormatResult {
+    if !params.features.can_format(&RomePath::new(params.path)) {
+        return Err(Message::from(FormatError {
+            severity: Severity::Error,
+            file_id: params.file_id,
+            code: "IO",
+            message: String::from("unhandled file type"),
+        }));
     }
 
     let source_type = SourceType::try_from(params.path).unwrap_or_else(|_| SourceType::js_module());
 
-    let mut file = params
-        .app
-        .fs
-        .open(params.path)
-        .with_file_id(params.file_id)?;
+    let mut file = params.fs.open(params.path).with_file_id(params.file_id)?;
 
     let mut input = String::new();
     file.read_to_string(&mut input)
@@ -382,14 +498,19 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Error> {
     let root = parse(&input, params.file_id, source_type);
 
     if root.has_errors() {
-        return Ok(if params.ignore_errors {
-            vec![Diagnostic::warning(
-                params.file_id,
-                "IO",
-                "Skipped file with syntax errors",
-            )]
+        return Err(if params.ignore_errors {
+            Message::from(FormatError {
+                severity: Severity::Warning,
+                file_id: params.file_id,
+                code: "IO",
+                message: String::from("Skipped file with syntax errors"),
+            })
         } else {
-            root.into_diagnostics()
+            Message::Diagnostics {
+                name: params.path.display().to_string(),
+                content: input,
+                diagnostics: root.into_diagnostics(),
+            }
         });
     }
 
@@ -398,25 +519,33 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Error> {
 
     let output = result.as_code().as_bytes();
 
-    if params.is_check {
-        let has_diff = output != input.as_bytes();
-        if has_diff {
-            return Err(Error::Diff {
-                file_name: params.path.display().to_string(),
-                old: input,
-                new: result.into_code(),
-            });
+    match params.mode {
+        FormatMode::Write => {
+            file.set_content(output).with_file_id(params.file_id)?;
         }
-    } else {
-        file.set_content(output).with_file_id(params.file_id)?;
+        FormatMode::Check | FormatMode::Print => {
+            let has_diff = output != input.as_bytes();
+            if has_diff {
+                return Ok(Some(Message::Diff {
+                    file_name: params.path.display().to_string(),
+                    old: input,
+                    new: result.into_code(),
+                }));
+            }
+        }
     }
 
-    Ok(Vec::new())
+    Ok(None)
 }
 
-/// Wrapper type for errors that may happen during the formatting process
-enum Error {
-    Diagnostic(Diagnostic),
+/// Wrapper type for messages that can be printed during the formatting process
+enum Message {
+    Error(FormatError),
+    Diagnostics {
+        name: String,
+        content: String,
+        diagnostics: Vec<Diagnostic>,
+    },
     Diff {
         file_name: String,
         old: String,
@@ -424,20 +553,28 @@ enum Error {
     },
 }
 
-impl From<Diagnostic> for Error {
-    fn from(diagnostic: Diagnostic) -> Self {
-        Self::Diagnostic(diagnostic)
+impl From<FormatError> for Message {
+    fn from(err: FormatError) -> Self {
+        Self::Error(err)
     }
 }
 
-/// Extension trait for turning [Display]-able error types into [Diagnostic]
+/// Generic error type returned by the formatting process
+struct FormatError {
+    severity: Severity,
+    file_id: FileId,
+    code: &'static str,
+    message: String,
+}
+
+/// Extension trait for turning [Display]-able error types into [FormatError]
 trait ResultExt {
     type Result;
     fn with_file_id_and_code(
         self,
         file_id: FileId,
         code: &'static str,
-    ) -> Result<Self::Result, Diagnostic>;
+    ) -> Result<Self::Result, FormatError>;
 }
 
 impl<T, E> ResultExt for Result<T, E>
@@ -450,18 +587,23 @@ where
         self,
         file_id: FileId,
         code: &'static str,
-    ) -> Result<Self::Result, Diagnostic> {
-        self.map_err(move |err| Diagnostic::error(file_id, code, err.to_string()))
+    ) -> Result<Self::Result, FormatError> {
+        self.map_err(move |err| FormatError {
+            severity: Severity::Error,
+            file_id,
+            code,
+            message: err.to_string(),
+        })
     }
 }
 
-/// Extension trait for turning [io::Error] into [Diagnostic]
+/// Extension trait for turning [io::Error] into [FormatError]
 trait ResultIoExt: ResultExt {
-    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, Diagnostic>;
+    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, FormatError>;
 }
 
 impl<T> ResultIoExt for io::Result<T> {
-    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, Diagnostic> {
+    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, FormatError> {
         self.with_file_id_and_code(file_id, "IO")
     }
 }

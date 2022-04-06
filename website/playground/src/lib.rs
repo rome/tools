@@ -110,7 +110,7 @@ pub fn run(
 
     let options = FormatOptions {
         indent_style,
-        line_width,
+        line_width: line_width.try_into().unwrap_or_default(),
     };
 
     let cst = format!("{:#?}", syntax);
