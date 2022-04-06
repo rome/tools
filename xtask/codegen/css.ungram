@@ -25,6 +25,19 @@
 //   not part of the grammar but they will appear inside the green tree
 
 
+///////////////
+// UNKNOWN NODES
+///////////////
+// SyntaxElement is a generic data structure that is meant to track nodes and tokens
+// in cases where we care about both types
+//
+// As Unknown* node will need to yield both tokens and nodes without discrimination,
+// and their children will need to yield nodes and tokens as well.
+// For this reason, SyntaxElement = SyntaxElement
+SyntaxElement = SyntaxElement
+
+CssUnknown = SyntaxElement*
+
 CssRoot = CssAnyRule*
 
 CssAnyRule =
@@ -45,7 +58,10 @@ CssSelectorList = (CssSelector (',' CssSelector)*)
 
 
 CssSelector =
-	pattern_list: CssAnySelectorPattern*
+	pattern_list: CssAnySelectorPatternList
+
+
+CssAnySelectorPatternList = CssAnySelectorPattern*
 
 CssAnySelectorPattern =
 	CssIdSelectorPattern
@@ -53,7 +69,6 @@ CssAnySelectorPattern =
 	| CssUniversalSelectorPattern
 	| CssAttributeSelectorPattern
 	| CssPseudoClassSelectorPattern
-	| CssPseudoElementPattern
 	| CssTypeSelectorPattern
 	| CssCombinatorSelectorPattern
 
@@ -64,7 +79,7 @@ CssAnySelectorPattern =
 
 // #app {}
 // ^^^^
-CssIdSelectorPattern = =
+CssIdSelectorPattern =
 	'#'
 	name: CssIdentifier
 
@@ -83,13 +98,17 @@ CssUniversalSelectorPattern =
 // ^^^^^^^^^^^^^^^^^^^
 CssAttributeSelectorPattern =
 	name: CssIdentifier
-	attribute_list: CssAttribute*
+	attribute_list: CssAttributeList
+
+CssAttributeList = CssAttribute*
 
 CssAttribute =
 	'['
 	attribute_name: CssAttributeName
 	attribute_meta: CssAttributeMeta?
 	']'
+
+CssAttributeName = CssString
 
 // [title = "title" i] {}
 //        ^^^^^^^^^^^
@@ -111,7 +130,7 @@ CssPseudoClassSelectorPattern =
 	name: CssIdentifier
 	parameters: CssPseudoClassSelectorPatternParameters?
 
-CssPseudoClassSelectorPatternParameters:
+CssPseudoClassSelectorPatternParameters =
 	'('
 	parameter: CssAnyValue
 	')'
@@ -125,12 +144,9 @@ CssTypeSelectorPattern = ident: CssIdentifier
 // div > a {}
 // ^^^^^^^
 CssCombinatorSelectorPattern =
-	left: CssAnySelectorPattern,
-	combinator: ' ' | '>' | '+' | '~'
+	left: CssAnySelectorPattern
+	combinator: '>' | '+' | '~' | 'css_space_literal'
 	right: CssAnySelectorPattern
-
-
-
 
 CssBlock =
 	'{'
@@ -138,37 +154,42 @@ CssBlock =
  	'}'
 
 
-CssDeclarationList = CssDecloration*
+CssDeclarationList = CssDeclaration*
 
-CssDecloration =
+CssDeclaration =
 	name: CssIdentifier | CssCustomProperty
 	':'
-	value: CssAnyValue*
-	'!important'?
+	value: CssAnyValue
+	important: CssDeclarationImportant?
 
+
+CssDeclarationImportant =
+	'!'
+	'important'
 
 /////////////
 // AT RULES
 ////////////
 CssAnyAtRule =
-	| CssAtKeyframe
-	| CSSAtMedia
+	CssAtKeyframes
+	| CssAtMedia
 
 
 // @keyframes "something" { from {} to {} }
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 CssAtKeyframes =
-	'@keyframes'
+	'@'
+	'keyframes'
 	name: CssIdentifier | CssString
 	body: CssAtKeyframesBody
 
 
 CssAtKeyframesBody =
 	'{'
-	items: CssAtKeyframeItemList
+	items: CssAtKeyframesItemList
 	'}'
 
-CssAtKeyframeItemList = CssKeyframesBlock*
+CssAtKeyframesItemList = CssKeyframesBlock*
 
 // @keyframes "something" { 30%, 60% {} }
 //                          ^^^^^^^^^^^
@@ -178,14 +199,15 @@ CssKeyframesBlock =
 	declarations: CssDeclarationList
 	'}'
 
-CssKeyframesSelectorList =  (CssKeyframesSelector (',' CssKeyframesSelector)*
+CssKeyframesSelectorList =  (CssKeyframesSelector (',' CssKeyframesSelector)*)
 
 CssKeyframesSelector = 'from' | 'to' | CssPercentage
 
 
 // @media screen, all, print {}
-CSSAtMedia =
-	'@media'
+CssAtMedia =
+	'@'
+	'media'
 	query_list: CssAtMediaQueryList
 	'{'
 	body: CssAnyRule
@@ -193,18 +215,18 @@ CSSAtMedia =
 
 
 // NB: a query list can't start with `and` condition
-CssAtMediaQueryList = (CssAtMediaQuery (',' CssAtMediaQuery)*
+CssAtMediaQueryList = (CssAtMediaQuery (',' CssAtMediaQuery)*)
 
 // @media or screen and print {}
-// 				^^^^^^^^^^^^^^^^^^^^
+// 		  ^^^^^^^^^^^^^^^^^^^^
 CssAtMediaQuery =
 	condition: 'not' | 'or' | 'only'?
-	type: CssAtMediaQueryAnyType
+	type: CssAnyAtMediaQueryType
 	consequent: CssAtMediaQueryConsequent?
 
 
 // @media not screen and print {}
-// 									 ^^^^^^^^^
+// 		  ^^^^^^^^^
 CssAtMediaQueryConsequent =
 	'and'
 	condition: 'not'?
@@ -247,19 +269,19 @@ CssAtMediaQueryFeatureBoolean = CssIdentifier
 // 				^^^^^^^^^^^^^^^
 CssAtMediaQueryFeatureCompare =
 	name: CssIdentifier
-	range: '>' | '<' | '>=' | '<='
+	range: CssAtMediaQueryRange
 	value: CssAnyValue
 
 // @media (400px <= width <= 700px) {}
 // 				^^^^^^^^^^^^^^^^^^^^^^^^
 CssAtMediaQueryFeatureRange =
 	first_value: CssAnyValue
-	first_range: '>' | '<' | '>=' | '<='
+	first_range: CssAtMediaQueryRange
 	name: CssIdentifier
 	second_value: CssAnyValue
-	second_range: '>' | '<' | '>=' | '<='
+	second_range: CssAtMediaQueryRange
 
-
+CssAtMediaQueryRange = '>' | '<' | '>=' | '<='
 
 
 ///////////////
@@ -286,7 +308,7 @@ CssDimension =
 
 
 // 3 / 2
-CssRaio =
+CssRatio =
 	numerator: CssNumber
 	denominator: CssNumber
 
@@ -303,7 +325,8 @@ CssSimpleFunction =
 	')'
 
 CssVarFunction =
-	'var('
+	'var'
+	'('
 		property: CssCustomProperty
 		value: CssVarFunctionValue?
 	')'

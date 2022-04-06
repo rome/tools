@@ -7,6 +7,7 @@ use super::{
     kinds_src::{AstSrc, Field},
     to_lower_snake_case, Mode,
 };
+use crate::css_kinds_src::CSS_KINDS_SRC;
 use crate::generate_syntax_factory::generate_syntax_factory;
 use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
 use crate::{
@@ -14,7 +15,7 @@ use crate::{
     generate_nodes::generate_nodes,
     generate_syntax_kinds::generate_syntax_kinds,
     kinds_src::{AstEnumSrc, AstNodeSrc, JS_KINDS_SRC},
-    update,
+    update, LanguageKind,
 };
 use ungrammar::{Grammar, Rule, Token};
 use xtask::{project_root, Result};
@@ -25,50 +26,30 @@ pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 pub fn generate_ast(mode: Mode) -> Result<()> {
     let mut ast = load_js_ast();
     ast.sort();
-    generate_js_syntax(ast, &mode)?;
+    generate_syntax(ast, &mode, LanguageKind::Js)?;
 
     let mut ast = load_css_ast();
     ast.sort();
-    generate_js_syntax(ast, &mode)?;
+    generate_syntax(ast, &mode, LanguageKind::Css)?;
 
     Ok(())
 }
 
-pub(crate) fn generate_js_syntax(ast: AstSrc, mode: &Mode) -> Result<()> {
+pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageKind) -> Result<()> {
     let ast_nodes_file = project_root().join(crate::JS_AST_NODES);
-    let contents = generate_nodes(&ast)?;
+    let contents = generate_nodes(&ast, language_kind)?;
     update(ast_nodes_file.as_path(), &contents, mode)?;
 
     let syntax_kinds_file = project_root().join(crate::JS_SYNTAX_KINDS);
-    let contents = generate_syntax_kinds(JS_KINDS_SRC)?;
+    let contents = generate_syntax_kinds(JS_KINDS_SRC, language_kind)?;
     update(syntax_kinds_file.as_path(), &contents, mode)?;
 
     let syntax_factory_file = project_root().join(crate::JS_SYNTAX_FACTORY);
-    let contents = generate_syntax_factory(&ast)?;
+    let contents = generate_syntax_factory(&ast, language_kind)?;
     update(syntax_factory_file.as_path(), &contents, mode)?;
 
     let ast_macros_file = project_root().join(crate::JS_AST_MACROS);
-    let contents = generate_macros(&ast)?;
-    update(ast_macros_file.as_path(), &contents, mode)?;
-
-    Ok(())
-}
-
-pub(crate) fn generate_css_syntax(ast: AstSrc, mode: &Mode) -> Result<()> {
-    let ast_nodes_file = project_root().join(crate::CSS_AST_NODES);
-    let contents = generate_nodes(&ast)?;
-    update(ast_nodes_file.as_path(), &contents, mode)?;
-
-    let syntax_kinds_file = project_root().join(crate::CSS_SYNTAX_KINDS);
-    let contents = generate_syntax_kinds(JS_KINDS_SRC)?;
-    update(syntax_kinds_file.as_path(), &contents, mode)?;
-
-    let syntax_factory_file = project_root().join(crate::CSS_SYNTAX_FACTORY);
-    let contents = generate_syntax_factory(&ast)?;
-    update(syntax_factory_file.as_path(), &contents, mode)?;
-
-    let ast_macros_file = project_root().join(crate::CSS_AST_MACROS);
-    let contents = generate_macros(&ast)?;
+    let contents = generate_macros(&ast, language_kind)?;
     update(ast_macros_file.as_path(), &contents, mode)?;
 
     Ok(())

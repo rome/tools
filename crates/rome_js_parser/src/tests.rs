@@ -20,7 +20,6 @@ a;
 "#;
 
     let module = parse(src, 0, SourceType::tsx());
-    dbg!(&module.syntax());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 

@@ -1,11 +1,17 @@
+use proc_macro2::{Punct, Spacing, TokenStream, TokenTree};
 use std::collections::HashMap;
 
+use crate::css_kinds_src::CSS_KINDS_SRC;
 use crate::kinds_src::{AstSrc, Field, TokenKind, JS_KINDS_SRC};
-use crate::{to_lower_snake_case, to_upper_snake_case};
-use quote::{format_ident, quote};
+use crate::{to_lower_snake_case, to_upper_snake_case, LanguageKind};
+use quote::{format_ident, quote, TokenStreamExt};
 use xtask::Result;
 
-pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
+pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
+    let syntax_kind = match language_kind {
+        LanguageKind::Js => quote! { JsSyntaxKind },
+        LanguageKind::Css => quote! { CssSyntaxKind },
+    };
     let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = ast
         .nodes
         .iter()
@@ -24,7 +30,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                         let method_name = if many {
                             format_ident!("{}", name)
                         } else {
-                            field.method_name()
+                            field.method_name(language_kind)
                         };
 
                         let is_optional = field.is_optional();
@@ -47,7 +53,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                         let is_list = ast.is_list(ty);
                         let ty = format_ident!("{}", &ty);
 
-                        let method_name = field.method_name();
+                        let method_name = field.method_name(language_kind);
                         if is_list {
                             quote! {
                                 pub fn #method_name(&self) -> #ty {
@@ -77,7 +83,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                         kind: TokenKind::Many(_),
                         ..
                     } => format_ident!("{}", name),
-                    _ => field.method_name(),
+                    _ => field.method_name(language_kind),
                 };
 
                 let is_list = match field {
@@ -116,7 +122,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                         let method_name = if many {
                             format_ident!("{}", name)
                         } else {
-                            field.method_name()
+                            field.method_name(language_kind)
                         };
 
                         let is_optional = field.is_optional();
@@ -133,7 +139,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                         let is_list = ast.is_list(ty);
                         let ty = format_ident!("{}", &ty);
 
-                        let method_name = field.method_name();
+                        let method_name = field.method_name(language_kind);
                         let field = if is_list {
                             quote! { #method_name: #ty }
                         } else if *optional {
@@ -182,7 +188,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                 },
                 quote! {
                     impl AstNode for #name {
-                        fn can_cast(kind: JsSyntaxKind) -> bool {
+                        fn can_cast(kind: #syntax_kind) -> bool {
                             kind == #node_kind
                         }
                         fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -399,7 +405,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                     )*
 
                     impl AstNode for #name {
-                        fn can_cast(kind: JsSyntaxKind) -> bool {
+                        fn can_cast(kind: #syntax_kind) -> bool {
                             #can_cast_fn
                         }
                         fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -493,7 +499,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
             }
 
             impl AstNode for #name {
-                fn can_cast(kind: JsSyntaxKind) -> bool {
+                fn can_cast(kind: #syntax_kind) -> bool {
                     kind == #kind
                 }
 
@@ -550,7 +556,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
             }
 
             impl AstNode for #list_name {
-                fn can_cast(kind: JsSyntaxKind) -> bool {
+                fn can_cast(kind: #syntax_kind) -> bool {
                     kind == #list_kind
                 }
 
@@ -692,7 +698,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
         #![allow(clippy::match_like_matches_macro)]
         use crate::{
             ast::*,
-            JsSyntaxKind::{self, *},
+            #syntax_kind::{self, *},
             SyntaxElement, SyntaxElementChildren, SyntaxList, SyntaxNode, SyntaxResult, SyntaxToken,
         };
         use rome_rowan::NodeOrToken;
@@ -717,16 +723,42 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
     Ok(pretty)
 }
 
-pub(crate) fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
+pub(crate) fn token_kind_to_code(
+    name: &str,
+    language_kind: LanguageKind,
+) -> proc_macro2::TokenStream {
     let kind_variant_name = to_upper_snake_case(name);
 
-    if JS_KINDS_SRC.literals.contains(&kind_variant_name.as_str())
-        || JS_KINDS_SRC.tokens.contains(&kind_variant_name.as_str())
+    let kind_source = match language_kind {
+        LanguageKind::Js => JS_KINDS_SRC,
+        LanguageKind::Css => CSS_KINDS_SRC,
+    };
+    if kind_source.literals.contains(&kind_variant_name.as_str())
+        || kind_source.tokens.contains(&kind_variant_name.as_str())
     {
         let ident = format_ident!("{}", kind_variant_name);
         quote! {  #ident }
     } else {
-        let token: proc_macro2::TokenStream = name.parse().unwrap();
-        quote! { T![#token] }
+        // $ is valid syntax in rust and it's part of macros,
+        // so we need to decorate the tokens with quotes
+        if name == "$=" {
+            let mut stream = TokenStream::new();
+            // proc_macro returns two puncts, where the second one has a trailing space
+            // here we create a new token stream where we remove that space
+            let tokens: proc_macro2::TokenStream = name.parse().unwrap();
+
+            stream.append(Punct::new('"', Spacing::Joint));
+            for token in tokens {
+                if let TokenTree::Punct(token) = token {
+                    stream.append(Punct::new(token.as_char(), Spacing::Joint))
+                }
+            }
+            stream.append(Punct::new('"', Spacing::Joint));
+
+            quote! { T![#stream] }
+        } else {
+            let token: proc_macro2::TokenStream = name.parse().unwrap();
+            quote! { T![#token] }
+        }
     }
 }

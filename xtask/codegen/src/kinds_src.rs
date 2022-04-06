@@ -1,10 +1,11 @@
 //! Definitions for the ECMAScript AST used for codegen
 //! Based on the rust analyzer parser and ast definitions
 
+use crate::LanguageKind;
 use quote::format_ident;
 use std::collections::BTreeMap;
 
-const LANGUAGE_PREFIXES: [&str; 4] = ["js_", "ts_", "jsx_", "tsx_"];
+const LANGUAGE_PREFIXES: [&str; 5] = ["js_", "ts_", "jsx_", "tsx_", "css_"];
 
 pub struct KindsSrc<'a> {
     pub punct: &'a [(&'a str, &'a str)],
@@ -598,7 +599,7 @@ pub struct AstEnumSrc {
 }
 
 impl Field {
-    pub fn method_name(&self) -> proc_macro2::Ident {
+    pub fn method_name(&self, language_kind: LanguageKind) -> proc_macro2::Ident {
         match self {
             Field::Token { name, .. } => {
                 let name = match name.as_str() {
@@ -635,8 +636,10 @@ impl Field {
                     ">>>=" => "unsigned_right_shift_assign",
                     "~" => "bitwise_not",
                     "&=" => "bitwise_and_assign",
-                    "|=" => "bitwise_or_assign",
-                    "^=" => "bitwise_xor_assign",
+                    "|=" if language_kind == LanguageKind::Js => "bitwise_or_assign",
+                    "|=" if language_kind == LanguageKind::Css => "exactly_or_hyphen",
+                    "^=" if language_kind == LanguageKind::Js => "bitwise_xor_assign",
+                    "^=" if language_kind == LanguageKind::Css => "prefix",
                     "&&=" => "bitwise_logical_and_assign",
                     "||=" => "bitwise_logical_or_assign",
                     "??=" => "bitwise_nullish_coalescing_assign",
@@ -659,6 +662,9 @@ impl Field {
                     "??" => "nullish_coalescing",
                     "||" => "logical_or",
                     "&&" => "logical_and",
+                    "$=" => "suffix",
+                    "~=" => "whitespace_like",
+                    "," => "comma",
                     _ => name,
                 };
                 format_ident!("{}_token", name)

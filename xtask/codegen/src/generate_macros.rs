@@ -1,8 +1,12 @@
 use super::kinds_src::AstSrc;
-use crate::{to_upper_snake_case, Result};
+use crate::{to_upper_snake_case, LanguageKind, Result};
 use quote::{format_ident, quote};
 
-pub fn generate_macros(ast: &AstSrc) -> Result<String> {
+pub fn generate_macros(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
+    let syntax_kind = match language_kind {
+        LanguageKind::Js => quote! { JsSyntaxKind },
+        LanguageKind::Css => quote! { CssSyntaxKind },
+    };
     let match_arms: Vec<_> = ast
         .nodes
         .iter()
@@ -23,7 +27,7 @@ pub fn generate_macros(ast: &AstSrc) -> Result<String> {
         }))
         .map(|(name, node_kind)| {
             quote! {
-                $crate::JsSyntaxKind::#node_kind => {
+                $crate::#syntax_kind::#node_kind => {
                     // SAFETY: The call to new_unchecked is guarded by matching on node.kind()
                     let $pattern = unsafe { $crate::#name::new_unchecked(node) };
                     $body

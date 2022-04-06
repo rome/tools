@@ -65,7 +65,7 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
                     .join(name)
                     .with_extension(test.language.extension()),
             };
-            if let crate::UpdateResult::Updated = update(&path, &test.text, mode)? {
+            if let crate::UpdateResult::Updated = update(&path, &test.text, &mode)? {
                 some_file_was_updated = true;
             }
         }

@@ -1,11 +1,15 @@
 use super::kinds_src::AstSrc;
 use crate::generate_nodes::token_kind_to_code;
 use crate::kinds_src::TokenKind;
-use crate::{kinds_src::Field, to_upper_snake_case};
+use crate::{kinds_src::Field, to_upper_snake_case, LanguageKind};
 use quote::{format_ident, quote};
 use xtask::Result;
 
-pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
+pub fn generate_syntax_factory(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
+    let (syntax_kind, factory_kind) = match language_kind {
+        LanguageKind::Js => (quote! { JsSyntaxKind }, quote! { JsSyntaxFactory }),
+        LanguageKind::Css => (quote! { CssSyntaxKind }, quote! {CssSyntaxFactory}),
+    };
     let normal_node_arms = ast.nodes.iter().map(|node| {
         let kind = format_ident!("{}", to_upper_snake_case(&node.name));
         let expected_len = node.fields.len();
@@ -21,11 +25,13 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
                 }
                 Field::Token { kind, .. } => match kind {
                     TokenKind::Single(expected) => {
-                        let expected_kind = token_kind_to_code(expected);
+                        let expected_kind = token_kind_to_code(expected, language_kind);
                         quote! { element.kind() == #expected_kind}
                     }
                     TokenKind::Many(expected) => {
-                        let expected_kinds = expected.iter().map(|kind| token_kind_to_code(kind));
+                        let expected_kinds = expected
+                            .iter()
+                            .map(|kind| token_kind_to_code(kind, language_kind));
                         quote! {
                             matches!(element.kind(), #(#expected_kinds)|*)
                         }
@@ -70,7 +76,7 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
         let kind = format_ident!("{}", to_upper_snake_case(name));
         if let Some(separator) = &data.separator {
             let allow_trailing = separator.allow_trailing;
-            let separator_kind = token_kind_to_code(&separator.separator_token);
+            let separator_kind = token_kind_to_code(&separator.separator_token, language_kind);
             quote! {
                 #kind => Self::make_separated_list_syntax(kind, children, #element_type::can_cast, #separator_kind, #allow_trailing)
             }
@@ -87,14 +93,14 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
         .map(|node| format_ident!("{}", to_upper_snake_case(node)));
 
     let output = quote! {
-        use crate::{generated::nodes::*, AstNode, JsSyntaxKind, JsSyntaxKind::*, T};
+        use crate::{generated::nodes::*, AstNode, #syntax_kind, #syntax_kind::*, T};
         use rome_rowan::{ParsedChildren, RawNodeSlots, RawSyntaxNode, SyntaxFactory, SyntaxKind};
 
         #[derive(Debug)]
-        pub struct JsSyntaxFactory;
+        pub struct #factory_kind;
 
-        impl SyntaxFactory for JsSyntaxFactory {
-            type Kind = JsSyntaxKind;
+        impl SyntaxFactory for #factory_kind {
+            type Kind = #syntax_kind;
 
             #[allow(unused_mut)]
             fn make_syntax(

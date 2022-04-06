@@ -2,6 +2,7 @@
 //!
 //!
 mod ast;
+mod css_kinds_src;
 mod formatter;
 mod generate_macros;
 mod generate_nodes;
@@ -10,7 +11,6 @@ mod generate_syntax_kinds;
 mod kinds_src;
 mod parser_tests;
 mod unicode;
-mod css_kinds_src;
 
 use std::path::Path;
 
@@ -36,6 +36,12 @@ enum UpdateResult {
     Updated,
 }
 
+#[derive(Debug, Eq, Copy, Clone, PartialEq)]
+pub enum LanguageKind {
+    Js,
+    Css,
+}
+
 /// A helper to update file on disk if it has changed.
 /// With verify = false,
 fn update(path: &Path, contents: &str, mode: &Mode) -> Result<UpdateResult> {
@@ -46,7 +52,7 @@ fn update(path: &Path, contents: &str, mode: &Mode) -> Result<UpdateResult> {
         _ => (),
     }
 
-    if mode == Mode::Verify {
+    if *mode == Mode::Verify {
         anyhow::bail!("`{}` is not up-to-date", path.display());
     }
 
