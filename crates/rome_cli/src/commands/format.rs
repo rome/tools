@@ -110,6 +110,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let (send_msgs, recv_msgs) = unbounded();
 
     let formatted = AtomicUsize::new(0);
+    let skipped = AtomicUsize::new(0);
 
     let fs = &*session.app.fs;
     let features = &session.app.features;
@@ -131,6 +132,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
                     ignore_errors,
                     interner,
                     formatted: &formatted,
+                    skipped: &skipped,
                     messages: send_msgs,
                 },
             )
@@ -138,6 +140,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     );
 
     let count = formatted.load(Ordering::Relaxed);
+    let skipped = skipped.load(Ordering::Relaxed);
 
     match mode {
         FormatMode::Write => {
@@ -155,6 +158,12 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
                 <Info>"Compared "{count}" files in "{duration}</Info>
             });
         }
+    }
+
+    if skipped > 0 {
+        console.log(rome_console::markup! {
+            <Warn>"Skipped "{skipped}" files"</Warn>
+        });
     }
 
     // Formatting emitted error diagnostics, exit with a non-zero code
@@ -359,6 +368,8 @@ struct FormatCommandOptions<'ctx, 'app> {
     interner: AtomicInterner,
     /// Shared atomic counter storing the number of formatted files
     formatted: &'ctx AtomicUsize,
+    /// Shared atomic counter storing the number of skipped files
+    skipped: &'ctx AtomicUsize,
     /// Channel sending messages to the display thread
     messages: Sender<Message>,
 }
@@ -421,6 +432,7 @@ fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
             ctx.push_message(msg);
         }
         Ok(Err(err)) => {
+            ctx.skipped.fetch_add(1, Ordering::Relaxed);
             ctx.push_message(err);
         }
         Err(err) => {
@@ -457,7 +469,8 @@ struct FormatFileParams<'ctx, 'app> {
 ///   `formatted` counter)
 /// - `Ok(Some(_))` means the operation was successful but a message still
 ///   needs to be printed (eg. the diff when not in CI or write mode)
-/// - `Err(_)` means the operation failed and the file should not be counted
+/// - `Err(_)` means the operation failed and the file should be added to the
+///   skipped counter
 type FormatResult = Result<Option<Message>, Message>;
 
 /// This function performs the actual formatting: it reads the file from disk
