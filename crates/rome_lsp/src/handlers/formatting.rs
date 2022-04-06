@@ -45,11 +45,12 @@ pub(crate) fn to_format_options(
     }
 
     // apply the new line width only if they are different
-    if default_options.line_width != workspace_settings.line_width {
-        default_options.line_width = workspace_settings.line_width;
+    let custom_line_width = workspace_settings.line_width.try_into().unwrap_or_default();
+    if default_options.line_width != custom_line_width {
+        default_options.line_width = custom_line_width;
         info!(
             "Using user setting line width: {}",
-            default_options.line_width
+            default_options.line_width.value()
         );
     }
 

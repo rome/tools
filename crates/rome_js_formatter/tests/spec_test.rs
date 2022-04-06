@@ -1,4 +1,5 @@
 use rome_core::App;
+use rome_formatter::LineWidth;
 use rome_fs::RomePath;
 use rome_js_formatter::{format, FormatOptions, Formatted, IndentStyle};
 use rome_js_parser::{parse, ModuleKind, SourceType};
@@ -43,7 +44,10 @@ impl From<SerializableFormatOptions> for FormatOptions {
             indent_style: test
                 .indent_style
                 .map_or_else(|| IndentStyle::Tab, |value| value.into()),
-            line_width: test.line_width.unwrap_or(80),
+            line_width: test
+                .line_width
+                .and_then(|width| LineWidth::try_from(width).ok())
+                .unwrap_or_default(),
         }
     }
 }

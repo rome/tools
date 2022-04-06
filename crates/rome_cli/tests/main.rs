@@ -233,7 +233,7 @@ fn test_line_width_parse_errors_overflow() {
         args: Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--line-width"),
-            OsString::from("65537"),
+            OsString::from("321"),
             OsString::from("file.js"),
         ]),
     });

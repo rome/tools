@@ -3,7 +3,7 @@ use crate::format_element::{
 };
 use crate::intersperse::Intersperse;
 use crate::{
-    hard_line_break, space_token, FormatElement, FormatOptions, Formatted, IndentStyle,
+    hard_line_break, space_token, FormatElement, FormatOptions, Formatted, IndentStyle, LineWidth,
     SourceMarker, TextRange,
 };
 use rome_rowan::TextSize;
@@ -16,7 +16,7 @@ pub struct PrinterOptions {
     pub tab_width: u8,
 
     /// What's the max width of a line. Defaults to 80
-    pub print_width: u16,
+    pub print_width: LineWidth,
 
     /// The type of line ending to apply to the printed input
     pub line_ending: LineEnding,
@@ -75,7 +75,7 @@ impl Default for PrinterOptions {
     fn default() -> Self {
         PrinterOptions {
             tab_width: 2,
-            print_width: 80,
+            print_width: LineWidth::default(),
             indent_string: String::from("\t"),
             line_ending: LineEnding::LineFeed,
         }
@@ -326,7 +326,7 @@ impl<'a> Printer<'a> {
                 self.print_element(queue, element, args);
 
                 // If the line is too long, break the group
-                if self.state.line_width > self.options.print_width as usize {
+                if self.state.line_width > self.options.print_width.value().into() {
                     return Err(LineBreakRequiredError);
                 }
 
@@ -417,7 +417,7 @@ impl<'a> Printer<'a> {
 
             self.print_all(queue, item, args.clone());
 
-            if self.state.line_width > self.options.print_width.into() {
+            if self.state.line_width > self.options.print_width.value().into() {
                 if let Some(snapshot) = snapshot.take() {
                     self.state.restore(snapshot);
 
@@ -645,7 +645,7 @@ mod tests {
     use crate::{
         block_indent, empty_line, format_elements, group_elements, hard_line_break,
         if_group_breaks, soft_block_indent, soft_line_break, soft_line_break_or_space, token,
-        FormatElement, Formatted,
+        FormatElement, Formatted, LineWidth,
     };
 
     /// Prints the given element with the default printer options
@@ -771,7 +771,7 @@ two lines`,
         let printer = Printer::new(PrinterOptions {
             indent_string: String::from("\t"),
             tab_width: 4,
-            print_width: 19,
+            print_width: LineWidth::try_from(19).unwrap(),
             ..PrinterOptions::default()
         });
 

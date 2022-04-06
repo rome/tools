@@ -12,7 +12,8 @@ pub use format_element::{
     space_token, token, FormatElement, Token, Verbatim, LINE_TERMINATORS,
 };
 use rome_rowan::{TextRange, TextSize};
-use std::fmt::Display;
+use std::fmt::{self, Display, Formatter};
+use std::num::ParseIntError;
 use std::str::FromStr;
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
@@ -55,13 +56,79 @@ impl Display for IndentStyle {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+/// Validated value for the `line_width` formatter options
+///
+/// The allowed range of values is 1..=320
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct LineWidth(u16);
+
+impl LineWidth {
+    /// Return the numeric value for this [LineWidth]
+    pub fn value(&self) -> u16 {
+        self.0
+    }
+}
+
+impl Default for LineWidth {
+    fn default() -> Self {
+        Self(80)
+    }
+}
+
+/// Error type returned when parsing a [LineWidth] from a string fails
+#[derive(Debug)]
+pub enum ParseLineWidthError {
+    /// The string could not be parsed as a valid [u16]
+    ParseError(ParseIntError),
+    /// The [u16] value of the string is not a valid [LineWidth]
+    TryFromIntError(LineWidthFromIntError),
+}
+
+impl Display for ParseLineWidthError {
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> fmt::Result {
+        write!(fmt, "{self:?}")
+    }
+}
+
+impl FromStr for LineWidth {
+    type Err = ParseLineWidthError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let value = u16::from_str(s).map_err(ParseLineWidthError::ParseError)?;
+        let value = Self::try_from(value).map_err(ParseLineWidthError::TryFromIntError)?;
+        Ok(value)
+    }
+}
+
+/// Error type returned when converting a u16 to a [LineWidth] fails
+#[derive(Clone, Copy, Debug)]
+pub struct LineWidthFromIntError(pub u16);
+
+impl TryFrom<u16> for LineWidth {
+    type Error = LineWidthFromIntError;
+
+    fn try_from(value: u16) -> Result<Self, Self::Error> {
+        if value > 0 && value <= 320 {
+            Ok(Self(value))
+        } else {
+            Err(LineWidthFromIntError(value))
+        }
+    }
+}
+
+impl From<LineWidth> for u16 {
+    fn from(value: LineWidth) -> Self {
+        value.0
+    }
+}
+
+#[derive(Debug, Clone, Copy, Default)]
 pub struct FormatOptions {
     /// The indent style
     pub indent_style: IndentStyle,
 
     /// What's the max width of a line. Defaults to 80
-    pub line_width: u16,
+    pub line_width: LineWidth,
 }
 
 impl FormatOptions {
@@ -73,19 +140,10 @@ impl FormatOptions {
     }
 }
 
-impl Default for FormatOptions {
-    fn default() -> Self {
-        Self {
-            indent_style: IndentStyle::default(),
-            line_width: 80,
-        }
-    }
-}
-
 impl Display for FormatOptions {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Indent style: {}", self.indent_style)?;
-        writeln!(f, "Line width: {}", self.line_width)?;
+        writeln!(f, "Line width: {}", self.line_width.value())?;
         Ok(())
     }
 }
