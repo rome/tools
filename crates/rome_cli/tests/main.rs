@@ -6,19 +6,21 @@ use rome_console::BufferConsole;
 use rome_core::{App, DynRef};
 use rome_fs::{FileSystem, MemoryFileSystem};
 
+const UNFORMATTED: &str = "  statement(  )  ";
+const FORMATTED: &str = "statement();\n";
+
 #[test]
-fn test_format_cli() {
+fn test_format_print() {
     let mut fs = MemoryFileSystem::default();
 
     let file_path = Path::new("format.js");
-    fs.insert(file_path.into(), b"statement()".as_slice());
-
-    let mut console = BufferConsole::default();
-    let app =
-        App::with_filesystem_and_console(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console));
+    fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
     let result = run_cli(CliSession {
-        app,
+        app: App::with_filesystem_and_console(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+        ),
         args: Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
     });
 
@@ -32,7 +34,75 @@ fn test_format_cli() {
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    assert_eq!(content, "statement();\n");
+    assert_eq!(content, UNFORMATTED);
+}
+
+#[test]
+fn test_format_write() {
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("format.js");
+    fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+
+    let mut console = BufferConsole::default();
+    let app =
+        App::with_filesystem_and_console(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console));
+
+    let result = run_cli(CliSession {
+        app,
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--write"),
+            file_path.as_os_str().into(),
+        ]),
+    });
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, FORMATTED);
+
+    assert_eq!(console.buffer.len(), 1);
+}
+
+#[test]
+fn test_format_ci() {
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("format.js");
+    fs.insert(file_path.into(), FORMATTED.as_bytes());
+
+    let mut console = BufferConsole::default();
+    let app =
+        App::with_filesystem_and_console(DynRef::Borrowed(&mut fs), DynRef::Borrowed(&mut console));
+
+    let result = run_cli(CliSession {
+        app,
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--ci"),
+            file_path.as_os_str().into(),
+        ]),
+    });
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, FORMATTED);
 
     assert_eq!(console.buffer.len(), 1);
 }
@@ -91,7 +161,7 @@ fn test_indent_style_parse_errors() {
 }
 
 #[test]
-fn test_indent_size_parse_errors() {
+fn test_indent_size_parse_errors_negative() {
     let result = run_cli(CliSession {
         app: App::with_filesystem_and_console(
             DynRef::Owned(Box::new(MemoryFileSystem::default())),
@@ -112,7 +182,28 @@ fn test_indent_size_parse_errors() {
 }
 
 #[test]
-fn test_line_width_parse_errors() {
+fn test_indent_size_parse_errors_overflow() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem_and_console(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+        ),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--indent-size"),
+            OsString::from("257"),
+            OsString::from("file.js"),
+        ]),
+    });
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-size"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+}
+
+#[test]
+fn test_line_width_parse_errors_negative() {
     let result = run_cli(CliSession {
         app: App::with_filesystem_and_console(
             DynRef::Owned(Box::new(MemoryFileSystem::default())),
@@ -122,6 +213,27 @@ fn test_line_width_parse_errors() {
             OsString::from("format"),
             OsString::from("--line-width"),
             OsString::from("-1"),
+            OsString::from("file.js"),
+        ]),
+    });
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--line-width"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+}
+
+#[test]
+fn test_line_width_parse_errors_overflow() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem_and_console(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+        ),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--line-width"),
+            OsString::from("65537"),
             OsString::from("file.js"),
         ]),
     });
@@ -175,10 +287,7 @@ fn test_formatting_error() {
     let mut fs = MemoryFileSystem::default();
 
     let file_path = Path::new("format.js");
-    fs.insert(
-        file_path.into(),
-        b"  unformatted_statement(  )  ".as_slice(),
-    );
+    fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
     let result = run_cli(CliSession {
         app: App::with_filesystem_and_console(
@@ -215,34 +324,6 @@ fn test_empty_arguments() {
 }
 
 #[test]
-fn test_dry_run() {
-    let mut fs = MemoryFileSystem::default();
-
-    let file_path = Path::new("format.js");
-    fs.insert(
-        file_path.into(),
-        b"  unformatted_statement(  )  ".as_slice(),
-    );
-
-    let result = run_cli(CliSession {
-        app: App::with_filesystem_and_console(
-            DynRef::Owned(Box::new(fs)),
-            DynRef::Owned(Box::new(BufferConsole::default())),
-        ),
-        args: Arguments::from_vec(vec![
-            OsString::from("format"),
-            OsString::from("--dry-run"),
-            file_path.as_os_str().into(),
-        ]),
-    });
-
-    match result {
-        Ok(()) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected ok"),
-    }
-}
-
-#[test]
 fn test_incompatible_arguments() {
     let result = run_cli(CliSession {
         app: App::with_filesystem_and_console(
@@ -251,14 +332,14 @@ fn test_incompatible_arguments() {
         ),
         args: Arguments::from_vec(vec![
             OsString::from("format"),
+            OsString::from("--write"),
             OsString::from("--ci"),
-            OsString::from("--dry-run"),
             OsString::from("format.js"),
         ]),
     });
 
     match result {
-        Err(Termination::IncompatibleArguments("--ci", "--dry-run")) => {}
+        Err(Termination::IncompatibleArguments("--write", "--ci")) => {}
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 }

@@ -1,12 +1,13 @@
 use std::{
     collections::HashMap,
+    ffi::OsString,
     fmt::Display,
     io,
     ops::Range,
     panic::catch_unwind,
     path::{Path, PathBuf},
     sync::atomic::{AtomicUsize, Ordering},
-    time::Instant,
+    time::{Duration, Instant},
 };
 
 use crossbeam::channel::{unbounded, Receiver, Sender};
@@ -70,15 +71,15 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         options.line_width = line_width;
     }
 
-    let is_check = session.args.contains("--ci");
-    let is_dry_run = session.args.contains("--dry-run");
+    let is_write = session.args.contains("--write");
+    let is_ci = session.args.contains("--ci");
     let ignore_errors = session.args.contains("--skip-errors");
 
-    let mode = match (is_check, is_dry_run) {
-        (true, true) => return Err(Termination::IncompatibleArguments("--ci", "--dry-run")),
-        (true, false) => FormatMode::Check,
-        (false, true) => FormatMode::Print,
-        (false, false) => FormatMode::Write,
+    let mode = match (is_write, is_ci) {
+        (true, true) => return Err(Termination::IncompatibleArguments("--write", "--ci")),
+        (true, false) => FormatMode::Write,
+        (false, true) => FormatMode::Check,
+        (false, false) => FormatMode::Print,
     };
 
     // Check that at least one input file / directory was specified in the command line
@@ -115,34 +116,24 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let console = &mut *session.app.console;
 
     let (has_errors, duration) = join(
-        || console_thread(mode, console, recv_files, recv_msgs),
+        || print_messages_to_console(mode, console, recv_files, recv_msgs),
         || {
-            let start = Instant::now();
-
             // The traversal context is scoped to ensure all the channels it
             // contains are properly closed once the traversal finishes
-            let ctx = FormatCommandOptions {
+            traverse_inputs(
                 fs,
-                features,
-                options,
-                mode,
-                ignore_errors,
-                interner,
-                formatted: &formatted,
-                messages: send_msgs,
-            };
-
-            let ctx = &ctx;
-            session
-                .app
-                .fs
-                .traversal(Box::new(move |scope: &dyn TraversalScope| {
-                    for input in inputs {
-                        scope.spawn(ctx, PathBuf::from(input));
-                    }
-                }));
-
-            start.elapsed()
+                inputs,
+                &FormatCommandOptions {
+                    fs,
+                    features,
+                    options,
+                    mode,
+                    ignore_errors,
+                    interner,
+                    formatted: &formatted,
+                    messages: send_msgs,
+                },
+            )
         },
     );
 
@@ -174,9 +165,27 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     }
 }
 
+/// Initiate the filesystem traversal tasks with the provided input paths and
+/// run it to completion, returning the duration of the process
+fn traverse_inputs(
+    fs: &dyn FileSystem,
+    inputs: Vec<OsString>,
+    ctx: &FormatCommandOptions,
+) -> Duration {
+    let start = Instant::now();
+
+    fs.traversal(Box::new(move |scope: &dyn TraversalScope| {
+        for input in inputs {
+            scope.spawn(ctx, PathBuf::from(input));
+        }
+    }));
+
+    start.elapsed()
+}
+
 /// This thread receives [Message]s from the workers through the `recv_msgs`
 /// and `recv_files` channels and prints them to the console
-fn console_thread(
+fn print_messages_to_console(
     mode: FormatMode,
     console: &mut dyn Console,
     recv_files: Receiver<(usize, PathBuf)>,
@@ -321,7 +330,7 @@ impl Files for PathFiles {
 enum FormatMode {
     /// Write the result to the original file
     ///
-    /// This is the default behavior when no CLI argument is specified
+    /// This is the behavior of the CLI when the `--write` argument is specified
     Write,
     /// Compare the result to the original content of the file and return an
     /// error if they differ
@@ -330,7 +339,7 @@ enum FormatMode {
     Check,
     /// Print a diff of the formatting result with original content of the file
     ///
-    /// This is the behavior of the CLI when the `--dry-run` argument is specified
+    /// This is the default behavior when no CLI argument is specified
     Print,
 }
 
@@ -372,7 +381,7 @@ impl<'ctx, 'app> TraversalContext for FormatCommandOptions<'ctx, 'app> {
     }
 
     fn push_diagnostic(&self, file_id: FileId, code: &'static str, message: String) {
-        self.push_message(Error {
+        self.push_message(FormatError {
             severity: Severity::Error,
             file_id,
             code,
@@ -423,7 +432,7 @@ fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
                 },
             };
 
-            ctx.push_message(Error {
+            ctx.push_message(FormatError {
                 severity: Severity::Bug,
                 file_id,
                 code: "Panic",
@@ -447,7 +456,7 @@ struct FormatFileParams<'ctx, 'app> {
 /// - `Ok(None)` means the operation was successful (the file is added to the
 ///   `formatted` counter)
 /// - `Ok(Some(_))` means the operation was successful but a message still
-///   needs to be printed (eg. the dry-run diff)
+///   needs to be printed (eg. the diff when not in CI or write mode)
 /// - `Err(_)` means the operation failed and the file should not be counted
 type FormatResult = Result<Option<Message>, Message>;
 
@@ -457,7 +466,7 @@ type FormatResult = Result<Option<Message>, Message>;
 #[tracing::instrument(level = "trace", skip_all, fields(path = ?params.path))]
 fn format_file(params: FormatFileParams) -> FormatResult {
     if !params.features.can_format(&RomePath::new(params.path)) {
-        return Err(Message::from(Error {
+        return Err(Message::from(FormatError {
             severity: Severity::Error,
             file_id: params.file_id,
             code: "IO",
@@ -477,7 +486,7 @@ fn format_file(params: FormatFileParams) -> FormatResult {
 
     if root.has_errors() {
         return Err(if params.ignore_errors {
-            Message::from(Error {
+            Message::from(FormatError {
                 severity: Severity::Warning,
                 file_id: params.file_id,
                 code: "IO",
@@ -518,7 +527,7 @@ fn format_file(params: FormatFileParams) -> FormatResult {
 
 /// Wrapper type for messages that can be printed during the formatting process
 enum Message {
-    Error(Error),
+    Error(FormatError),
     Diagnostics {
         name: String,
         content: String,
@@ -531,28 +540,28 @@ enum Message {
     },
 }
 
-impl From<Error> for Message {
-    fn from(err: Error) -> Self {
+impl From<FormatError> for Message {
+    fn from(err: FormatError) -> Self {
         Self::Error(err)
     }
 }
 
 /// Generic error type returned by the formatting process
-struct Error {
+struct FormatError {
     severity: Severity,
     file_id: FileId,
     code: &'static str,
     message: String,
 }
 
-/// Extension trait for turning [Display]-able error types into [Error]
+/// Extension trait for turning [Display]-able error types into [FormatError]
 trait ResultExt {
     type Result;
     fn with_file_id_and_code(
         self,
         file_id: FileId,
         code: &'static str,
-    ) -> Result<Self::Result, Error>;
+    ) -> Result<Self::Result, FormatError>;
 }
 
 impl<T, E> ResultExt for Result<T, E>
@@ -565,8 +574,8 @@ where
         self,
         file_id: FileId,
         code: &'static str,
-    ) -> Result<Self::Result, Error> {
-        self.map_err(move |err| Error {
+    ) -> Result<Self::Result, FormatError> {
+        self.map_err(move |err| FormatError {
             severity: Severity::Error,
             file_id,
             code,
@@ -575,13 +584,13 @@ where
     }
 }
 
-/// Extension trait for turning [io::Error] into [Error]
+/// Extension trait for turning [io::Error] into [FormatError]
 trait ResultIoExt: ResultExt {
-    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, Error>;
+    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, FormatError>;
 }
 
 impl<T> ResultIoExt for io::Result<T> {
-    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, Error> {
+    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, FormatError> {
         self.with_file_id_and_code(file_id, "IO")
     }
 }
