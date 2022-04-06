@@ -3,7 +3,6 @@ use std::{
     ffi::OsString,
     fmt::Display,
     io,
-    ops::Range,
     panic::catch_unwind,
     path::{Path, PathBuf},
     sync::atomic::{AtomicUsize, Ordering},
@@ -13,7 +12,7 @@ use std::{
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use rayon::join;
 use rome_console::{
-    codespan::Locus,
+    codespan::{Locus, SourceFile},
     diff::{Diff, DiffMode},
     markup, Console, ConsoleExt,
 };
@@ -213,7 +212,7 @@ fn print_messages_to_console(
                     None => loop {
                         match recv_files.recv() {
                             Ok((file_id, path)) => {
-                                paths.insert(file_id, path);
+                                paths.insert(file_id, path.display().to_string());
                                 if file_id == err.file_id {
                                     break Some(&paths[&file_id]);
                                 }
@@ -226,13 +225,9 @@ fn print_messages_to_console(
                     },
                 };
 
-                let locus = file_name.map(|file_name| Locus::File {
-                    name: file_name.display().to_string(),
-                });
-
                 console.error(markup! {
                     {DiagnosticHeader {
-                        locus: locus.as_ref(),
+                        locus: file_name.map(|name| Locus::File { name }),
                         severity: err.severity,
                         code: Some(err.code),
                         title: &err.message,
@@ -260,19 +255,18 @@ fn print_messages_to_console(
                 old,
                 new,
             } => {
-                let locus = Locus::File { name: file_name };
                 let header = if matches!(mode, FormatMode::Check) {
                     // A diff is an error in CI mode
                     has_errors = true;
                     DiagnosticHeader {
-                        locus: Some(&locus),
+                        locus: Some(Locus::File { name: &file_name }),
                         severity: Severity::Error,
                         code: Some("CI"),
                         title: "File content differs from formatting output",
                     }
                 } else {
                     DiagnosticHeader {
-                        locus: Some(&locus),
+                        locus: Some(Locus::File { name: &file_name }),
                         severity: Severity::Help,
                         code: Some("Formatter"),
                         title: "Formatter would have printed the following content:",
@@ -319,18 +313,8 @@ impl Files for PathFiles {
     }
 
     /// Returns the source of the file identified by the id.
-    fn source(&self, id: FileId) -> Option<&str> {
+    fn source(&self, id: FileId) -> Option<SourceFile<'_>> {
         self.storage.get(&id)?.source(id)
-    }
-
-    /// The index of the line at the byte index.
-    fn line_index(&self, id: FileId, byte_index: usize) -> Option<usize> {
-        self.storage.get(&id)?.line_index(id, byte_index)
-    }
-
-    /// The byte range of line in the source of the file.
-    fn line_range(&self, file_id: FileId, line_index: usize) -> Option<Range<usize>> {
-        self.storage.get(&file_id)?.line_range(file_id, line_index)
     }
 }
 

@@ -232,7 +232,8 @@ impl<'s> Parser<'s> {
             {
                 match (&err.primary, &previous.primary) {
                     (Some(err_primary), Some(previous_primary))
-                        if err_primary.span.range.start == previous_primary.span.range.start =>
+                        if err_primary.span.range.start()
+                            == previous_primary.span.range.start() =>
                     {
                         return;
                     }

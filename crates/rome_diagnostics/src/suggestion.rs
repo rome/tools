@@ -1,6 +1,6 @@
 use crate::{file::FileSpan, *};
+use rome_rowan::TextRange;
 use rome_text_edit::Indel;
-use std::ops::Range;
 
 /// A Suggestion that is provided by rslint, and
 /// can be reported to the user, and can be automatically
@@ -14,7 +14,7 @@ pub struct CodeSuggestion {
     pub applicability: Applicability,
     pub msg: String,
     pub style: SuggestionStyle,
-    pub labels: Vec<Range<usize>>,
+    pub labels: Vec<TextRange>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]

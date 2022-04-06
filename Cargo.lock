@@ -891,19 +891,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "lsp-types"
-version = "0.92.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8a69d4142d51b208c9fc3cea68b1a7fcef30354e7aa6ccad07250fd8430fc76"
-dependencies = [
- "bitflags",
- "serde",
- "serde_json",
- "serde_repr",
- "url",
-]
-
-[[package]]
 name = "lspower"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -917,7 +904,7 @@ dependencies = [
  "futures",
  "httparse",
  "log",
- "lsp-types 0.91.1",
+ "lsp-types",
  "lspower-macros",
  "serde",
  "serde_json",
@@ -1378,6 +1365,7 @@ dependencies = [
  "rome_markup",
  "similar",
  "termcolor",
+ "text-size",
  "trybuild",
  "unicode-width",
 ]
@@ -1395,7 +1383,6 @@ name = "rome_diagnostics"
 version = "0.2.0"
 dependencies = [
  "colored",
- "lsp-types 0.92.0",
  "rome_console",
  "rome_rowan",
  "rome_text_edit",

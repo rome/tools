@@ -293,7 +293,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
                 p,
                 parse_any_ts_namespace_declaration_statement,
                 |p, declaration| {
-                    ts_only_syntax_error(p, p.source(name.as_text_range()), declaration.range(p))
+                    ts_only_syntax_error(p, p.source(name.as_range()), declaration.range(p))
                 },
             )
         }

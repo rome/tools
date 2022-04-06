@@ -1,3 +1,5 @@
+use std::ops::Range;
+
 use crate::Parser;
 use rome_diagnostics::{Diagnostic, Span};
 use rome_js_syntax::{JsSyntaxKind, TextRange};
@@ -106,7 +108,12 @@ impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic {
         let range = &self.range;
 
-        let msg = if range.is_empty() && p.tokens.source().get(range.as_range()) == None {
+        let msg = if range.is_empty()
+            && p.tokens
+                .source()
+                .get(Range::<_>::from(range.as_range()))
+                .is_none()
+        {
             format!(
                 "expected {} but instead found the end of the file",
                 self.names
@@ -115,7 +122,7 @@ impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
             format!(
                 "expected {} but instead found '{}'",
                 self.names,
-                p.source(range.as_text_range())
+                p.source(range.as_range())
             )
         };
 
