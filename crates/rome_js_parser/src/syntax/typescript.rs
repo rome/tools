@@ -259,7 +259,11 @@ fn parse_decorator(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![@]) {
         let m = p.start();
         p.bump(T![@]);
-
+        // test ts ts_decorator_call_expression_with_arrow
+        // export class Foo {
+        //  @Decorator((val) => val)
+        //  badField!: number
+        // }
         parse_lhs_expr(p, ExpressionContext::default().and_in_ts_decorator(true))
             .or_add_diagnostic(p, expected_expression);
 
