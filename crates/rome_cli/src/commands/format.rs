@@ -56,6 +56,18 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         None => {}
     }
 
+    let line_width = session
+        .args
+        .opt_value_from_str("--line-width")
+        .map_err(|source| Termination::ParseError {
+            argument: "--line-width",
+            source,
+        })?;
+
+    if let Some(line_width) = line_width {
+        options.line_width = line_width;
+    }
+
     let is_check = session.args.contains("--ci");
     let ignore_errors = session.args.contains("--skip-errors");
 

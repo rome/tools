@@ -112,6 +112,27 @@ fn test_indent_size_parse_errors() {
 }
 
 #[test]
+fn test_line_width_parse_errors() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem_and_console(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+        ),
+        args: Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--line-width"),
+            OsString::from("-1"),
+            OsString::from("file.js"),
+        ]),
+    });
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--line-width"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+}
+
+#[test]
 fn test_unexpected_argument() {
     let result = run_cli(CliSession {
         app: App::with_filesystem_and_console(
