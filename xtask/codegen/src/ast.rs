@@ -7,7 +7,6 @@ use super::{
     kinds_src::{AstSrc, Field},
     to_lower_snake_case, Mode,
 };
-use crate::css_kinds_src::CSS_KINDS_SRC;
 use crate::generate_syntax_factory::generate_syntax_factory;
 use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
 use crate::{
@@ -36,19 +35,33 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 }
 
 pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageKind) -> Result<()> {
-    let ast_nodes_file = project_root().join(crate::JS_AST_NODES);
+    let (nodes, kinds, factory, macros) = match language_kind {
+        LanguageKind::Js => (
+            crate::JS_AST_NODES,
+            crate::JS_SYNTAX_KINDS,
+            crate::JS_SYNTAX_FACTORY,
+            crate::JS_AST_MACROS,
+        ),
+        LanguageKind::Css => (
+            crate::CSS_AST_NODES,
+            crate::CSS_SYNTAX_KINDS,
+            crate::CSS_SYNTAX_FACTORY,
+            crate::CSS_AST_MACROS,
+        ),
+    };
+    let ast_nodes_file = project_root().join(nodes);
     let contents = generate_nodes(&ast, language_kind)?;
     update(ast_nodes_file.as_path(), &contents, mode)?;
 
-    let syntax_kinds_file = project_root().join(crate::JS_SYNTAX_KINDS);
+    let syntax_kinds_file = project_root().join(kinds);
     let contents = generate_syntax_kinds(JS_KINDS_SRC, language_kind)?;
     update(syntax_kinds_file.as_path(), &contents, mode)?;
 
-    let syntax_factory_file = project_root().join(crate::JS_SYNTAX_FACTORY);
+    let syntax_factory_file = project_root().join(factory);
     let contents = generate_syntax_factory(&ast, language_kind)?;
     update(syntax_factory_file.as_path(), &contents, mode)?;
 
-    let ast_macros_file = project_root().join(crate::JS_AST_MACROS);
+    let ast_macros_file = project_root().join(macros);
     let contents = generate_macros(&ast, language_kind)?;
     update(ast_macros_file.as_path(), &contents, mode)?;
 
