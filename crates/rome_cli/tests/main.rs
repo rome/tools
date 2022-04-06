@@ -140,7 +140,7 @@ fn test_missing_argument() {
             DynRef::Owned(Box::new(MemoryFileSystem::default())),
             DynRef::Owned(Box::new(BufferConsole::default())),
         ),
-        args: Arguments::from_vec(vec![OsString::from("format")]),
+        args: Arguments::from_vec(vec![OsString::from("format"), OsString::from("--ci")]),
     });
 
     match result {
@@ -173,6 +173,22 @@ fn test_formatting_error() {
 
     match result {
         Err(Termination::FormattingError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+}
+
+#[test]
+fn test_empty_arguments() {
+    let result = run_cli(CliSession {
+        app: App::with_filesystem_and_console(
+            DynRef::Owned(Box::new(MemoryFileSystem::default())),
+            DynRef::Owned(Box::new(BufferConsole::default())),
+        ),
+        args: Arguments::from_vec(vec![OsString::from("format")]),
+    });
+
+    match result {
+        Err(Termination::EmptyArguments) => {}
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 }

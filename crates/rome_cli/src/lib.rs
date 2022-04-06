@@ -42,10 +42,14 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
+    // True if the command line did not contain any arguments beside the subcommand
+    let is_empty = session.args.clone().finish().is_empty();
+
     match subcommand.as_deref() {
+        // Print the help for the subcommand if it was called with `--help`
         Some(cmd) if has_help => crate::commands::help::help(Some(cmd)),
 
-        Some("format") => {
+        Some("format") if !is_empty => {
             let result = crate::commands::format::format(session);
 
             if has_metrics {
@@ -55,6 +59,13 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
             result
         }
 
+        // Print the help for known commands called without any arguments, and exit with an error
+        Some(cmd @ "format") => {
+            crate::commands::help::help(Some(cmd))?;
+            Err(Termination::EmptyArguments)
+        }
+
+        // Print the general help if no subcommand was specified / the subcommand is `help`
         None | Some("help") => crate::commands::help::help(None),
 
         Some(cmd) => Err(Termination::UnknownCommand {

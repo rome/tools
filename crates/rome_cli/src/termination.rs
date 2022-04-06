@@ -38,6 +38,10 @@ pub enum Termination {
     )]
     MissingArgument { argument: &'static str },
 
+    /// Returned when a subcommand is called without any arguments
+    #[error("empty arguments")]
+    EmptyArguments,
+
     /// Returned by the formatter when error diagnostics were emitted in CI mode
     #[error("errors where emitted while formatting")]
     FormattingError,

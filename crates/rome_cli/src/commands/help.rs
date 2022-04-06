@@ -26,7 +26,7 @@ OPTIONS:
 
 pub(crate) fn help(command: Option<&str>) -> Result<(), Termination> {
     match command {
-        None => {
+        Some("help") | None => {
             print!("{MAIN}");
             Ok(())
         }
