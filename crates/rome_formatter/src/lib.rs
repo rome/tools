@@ -63,6 +63,9 @@ impl Display for IndentStyle {
 pub struct LineWidth(u16);
 
 impl LineWidth {
+    /// Maximum allowed value for a valid [LineWidth]
+    pub const MAX: u16 = 320;
+
     /// Return the numeric value for this [LineWidth]
     pub fn value(&self) -> u16 {
         self.0
@@ -108,7 +111,7 @@ impl TryFrom<u16> for LineWidth {
     type Error = LineWidthFromIntError;
 
     fn try_from(value: u16) -> Result<Self, Self::Error> {
-        if value > 0 && value <= 320 {
+        if value > 0 && value <= Self::MAX {
             Ok(Self(value))
         } else {
             Err(LineWidthFromIntError(value))
