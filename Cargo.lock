@@ -1390,10 +1390,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome_css_syntax"
-version = "0.1.0"
-
-[[package]]
 name = "rome_diagnostics"
 version = "0.2.0"
 dependencies = [

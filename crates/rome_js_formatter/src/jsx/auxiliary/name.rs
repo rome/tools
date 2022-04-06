@@ -1,7 +1,9 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rome_js_syntax::{AstNode, JsxName};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement, formatter_traits::FormatTokenAndNode};
+use rome_js_syntax::{AstNode, JsxName, JsxNameFields};
 impl ToFormatElement for JsxName {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let JsxNameFields { value_token } = self.as_fields();
+
+        value_token.format(formatter)
     }
 }
