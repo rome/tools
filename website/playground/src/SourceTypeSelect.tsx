@@ -51,8 +51,6 @@ export default function SourceTypeSelect(
 							type="checkbox"
 							checked={isTypeScript}
 							onChange={(e) => {
-								setIsTypeScript(false);
-								setIsJsx(false);
 								setIsTypeScript(e.target.checked);
 							}}
 							className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded disabled:opacity-30"
