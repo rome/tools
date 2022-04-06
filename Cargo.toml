@@ -4,12 +4,9 @@
 resolver = "2"
 members = [
 	"crates/*",
-	"xtask/",
+	"website/playground",
 	"xtask/bench",
 	"xtask/codegen",
 	"xtask/coverage",
 ]
 
-# TODO: Possibly setup profiles for dev to speed up tests/etc
-
-# TODO: Setup release profile (incremental mode?)

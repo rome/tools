@@ -180,4 +180,4 @@ Even minor versions are dedicated to official releases, e.g. `*.6.*`.
 
 ### Playground
 
-- [run the playground locally](/crates/rome_playground/README.md)
+- [run the playground locally](/website/playground/README.md)
