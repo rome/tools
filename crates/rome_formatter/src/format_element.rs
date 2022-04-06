@@ -1,8 +1,6 @@
-use rome_js_syntax::{AstNode, SyntaxNode};
-use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPieceComments, TextRange};
-
 use crate::format_elements;
 use crate::intersperse::{Intersperse, IntersperseFn};
+use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments, TextRange};
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
@@ -337,88 +335,6 @@ where
     concat_elements(Intersperse::new(
         elements.into_iter().filter(|e| !e.is_empty()),
         separator.into(),
-    ))
-}
-
-/// Specialized version of [join_elements] for joining SyntaxNodes separated by a space, soft
-/// line break or empty line depending on the input file.
-///
-/// This functions inspects the input source and separates consecutive elements with either
-/// a [soft_line_break_or_space] or [empty_line] depending on how many line breaks were
-/// separating the elements in the original file.
-#[inline]
-pub fn join_elements_soft_line<I, N>(elements: I) -> FormatElement
-where
-    I: IntoIterator<Item = (N, FormatElement)>,
-    N: AstNode,
-{
-    join_elements_with(elements, soft_line_break_or_space)
-}
-
-/// Specialized version of [join_elements] for joining SyntaxNodes separated by one or more
-/// line breaks depending on the input file.
-///
-/// This functions inspects the input source and separates consecutive elements with either
-/// a [hard_line_break] or [empty_line] depending on how many line breaks were separating the
-/// elements in the original file.
-#[inline]
-pub fn join_elements_hard_line<I, N>(elements: I) -> FormatElement
-where
-    I: IntoIterator<Item = (N, FormatElement)>,
-    N: AstNode,
-{
-    join_elements_with(elements, hard_line_break)
-}
-
-#[inline]
-pub fn join_elements_with<I, N>(elements: I, separator: fn() -> FormatElement) -> FormatElement
-where
-    I: IntoIterator<Item = (N, FormatElement)>,
-    N: AstNode,
-{
-    /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
-    fn get_lines_between_nodes(prev_node: &SyntaxNode, next_node: &SyntaxNode) -> usize {
-        // Ensure the two nodes are actually siblings on debug
-        debug_assert_eq!(prev_node.next_sibling().as_ref(), Some(next_node));
-        debug_assert_eq!(next_node.prev_sibling().as_ref(), Some(prev_node));
-
-        // Count the lines separating the two statements,
-        // starting with the trailing trivia of the previous node
-        let mut line_count = prev_node
-            .last_trailing_trivia()
-            .and_then(|prev_token| {
-                // Newline pieces can only come last in trailing trivias, skip to it directly
-                prev_token.pieces().next_back()?.as_newline()
-            })
-            .is_some() as usize;
-
-        // Then add the newlines in the leading trivia of the next node
-        if let Some(leading_trivia) = next_node.first_leading_trivia() {
-            for piece in leading_trivia.pieces() {
-                if piece.is_newline() {
-                    line_count += 1;
-                } else if piece.is_comments() {
-                    // Stop at the first comment piece, the comment printer
-                    // will handle newlines between the comment and the node
-                    break;
-                }
-            }
-        }
-
-        line_count
-    }
-
-    concat_elements(IntersperseFn::new(
-        elements.into_iter(),
-        |prev_node, next_node, next_elem| {
-            if next_elem.is_empty() {
-                empty_element()
-            } else if get_lines_between_nodes(prev_node.syntax(), next_node.syntax()) > 1 {
-                empty_line()
-            } else {
-                separator()
-            }
-        },
     ))
 }
 
@@ -866,6 +782,91 @@ where
     }
 }
 
+/// Specialized version of [join_elements] for joining SyntaxNodes separated by a space, soft
+/// line break or empty line depending on the input file.
+///
+/// This functions inspects the input source and separates consecutive elements with either
+/// a [soft_line_break_or_space] or [empty_line] depending on how many line breaks were
+/// separating the elements in the original file.
+#[inline]
+pub fn join_elements_soft_line<I, L>(elements: I) -> FormatElement
+where
+    I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
+    L: Language,
+{
+    join_elements_with(elements, soft_line_break_or_space)
+}
+
+/// Specialized version of [join_elements] for joining SyntaxNodes separated by one or more
+/// line breaks depending on the input file.
+///
+/// This functions inspects the input source and separates consecutive elements with either
+/// a [hard_line_break] or [empty_line] depending on how many line breaks were separating the
+/// elements in the original file.
+#[inline]
+pub fn join_elements_hard_line<I, L>(elements: I) -> FormatElement
+where
+    I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
+    L: Language,
+{
+    join_elements_with(elements, hard_line_break)
+}
+
+#[inline]
+pub fn join_elements_with<I, L>(elements: I, separator: fn() -> FormatElement) -> FormatElement
+where
+    I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
+    L: Language,
+{
+    /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
+    fn get_lines_between_nodes<L: Language>(
+        prev_node: &SyntaxNode<L>,
+        next_node: &SyntaxNode<L>,
+    ) -> usize {
+        // Ensure the two nodes are actually siblings on debug
+        debug_assert_eq!(prev_node.next_sibling().as_ref(), Some(next_node));
+        debug_assert_eq!(next_node.prev_sibling().as_ref(), Some(prev_node));
+
+        // Count the lines separating the two statements,
+        // starting with the trailing trivia of the previous node
+        let mut line_count = prev_node
+            .last_trailing_trivia()
+            .and_then(|prev_token| {
+                // Newline pieces can only come last in trailing trivias, skip to it directly
+                prev_token.pieces().next_back()?.as_newline()
+            })
+            .is_some() as usize;
+
+        // Then add the newlines in the leading trivia of the next node
+        if let Some(leading_trivia) = next_node.first_leading_trivia() {
+            for piece in leading_trivia.pieces() {
+                if piece.is_newline() {
+                    line_count += 1;
+                } else if piece.is_comments() {
+                    // Stop at the first comment piece, the comment printer
+                    // will handle newlines between the comment and the node
+                    break;
+                }
+            }
+        }
+
+        line_count
+    }
+
+    concat_elements(IntersperseFn::new(
+        elements.into_iter(),
+        |prev_node, next_node, next_elem| {
+            if next_elem.is_empty() {
+                empty_element()
+            } else if get_lines_between_nodes(prev_node, next_node) > 1 {
+                empty_line()
+            } else {
+                separator()
+            }
+        },
+    ))
+}
+
 /// Language agnostic IR for formatting source code.
 ///
 /// Use the helper functions like [crate::space_token], [crate::soft_line_break] etc. defined in this file to create elements.
@@ -961,7 +962,7 @@ impl Verbatim {
         }
     }
 
-    pub(crate) fn is_unknown(&self) -> bool {
+    pub fn is_unknown(&self) -> bool {
         matches!(self.kind, VerbatimKind::Unknown)
     }
 }
@@ -1155,14 +1156,14 @@ impl Token {
     }
 
     /// Create a token from a dynamic string and a range of the input source
-    pub(crate) fn new_dynamic(text: String, source: TextRange) -> Self {
+    pub fn new_dynamic(text: String, source: TextRange) -> Self {
         debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
         Self::Dynamic { text, source }
     }
 
     /// Get the range of the input source covered by this token,
     /// or None if the token was synthesized by the formatter
-    pub(crate) fn source(&self) -> Option<&TextRange> {
+    pub fn source(&self) -> Option<&TextRange> {
         match self {
             Token::Static { .. } => None,
             Token::Dynamic { source, .. } => Some(source),
@@ -1191,11 +1192,11 @@ impl<'a, L: Language> From<&'a SyntaxToken<L>> for Token {
 
 const LINE_SEPARATOR: char = '\u{2028}';
 const PARAGRAPH_SEPARATOR: char = '\u{2029}';
-pub(crate) const LINE_TERMINATORS: [char; 3] = ['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
+pub const LINE_TERMINATORS: [char; 3] = ['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
 
 /// Replace the line terminators matching the provided list with "\n"
 /// since its the only line break type supported by the printer
-pub(crate) fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) -> Cow<str> {
+pub fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) -> Cow<str> {
     let mut result = String::new();
     let mut last_end = 0;
 

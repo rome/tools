@@ -1,0 +1,20 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: bracket_0-1.js
+
+---
+# Input
+```js
+const thingamabobMetaAlias =
+path.scope.getProgramParent().path.get("body")[0].node;
+
+```
+
+# Output
+```js
+const thingamabobMetaAlias = path.scope.getProgramParent().path.get("body")[0].node;
+
+```
+
+

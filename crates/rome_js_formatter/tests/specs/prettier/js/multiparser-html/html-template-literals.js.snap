@@ -1,0 +1,81 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: html-template-literals.js
+
+---
+# Input
+```js
+const nestedFun = /* HTML */ `${outerExpr(1)}
+  <script>
+    const tpl = html\`<div>\${innerExpr(1)} ${outerExpr(2)}</div>\`;
+  </script>`;
+
+const nestedFun2 = /* HTML */ `${outerExpr(1)}
+  <script>
+    const tpl = html\`\\n<div>\${innerExpr(1)} ${outerExpr(2)}</div>\\n\`;
+  </script>`;
+
+setFoo(
+  html`<div>one</div>
+    <div>two</div>
+    <div>three</div>`,
+  secondArgument
+);
+
+setFoo(
+  html`<div>
+      <div>nested</div>
+    </div>
+    <div>two</div>
+    <div>three</div>`,
+  secondArgument
+);
+
+setFoo(
+  html`<div>
+    <div>nested</div>
+  </div>`,
+  secondArgument
+);
+
+```
+
+# Output
+```js
+const nestedFun = /* HTML */ `${outerExpr(1)}
+  <script>
+    const tpl = html\`<div>\${innerExpr(1)} ${outerExpr(2)}</div>\`;
+  </script>`;
+
+const nestedFun2 = /* HTML */ `${outerExpr(1)}
+  <script>
+    const tpl = html\`\\n<div>\${innerExpr(1)} ${outerExpr(2)}</div>\\n\`;
+  </script>`;
+
+setFoo(
+  html`<div>one</div>
+    <div>two</div>
+    <div>three</div>`,
+  secondArgument,
+);
+
+setFoo(
+  html`<div>
+      <div>nested</div>
+    </div>
+    <div>two</div>
+    <div>three</div>`,
+  secondArgument,
+);
+
+setFoo(
+  html`<div>
+    <div>nested</div>
+  </div>`,
+  secondArgument,
+);
+
+```
+
+

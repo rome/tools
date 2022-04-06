@@ -1,0 +1,46 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: long_name_method.js
+
+---
+# Input
+```js
+class X {
+  constructor() {
+    this.testLongNameMethodAndSomethingElseLallala = ::this.testLongNameMethodAndSomethingElseLallala;
+  }
+  
+  testLongNameMethodAndSomethingElseLallala() {
+    return true;
+  }
+}
+```
+
+# Output
+```js
+class X {
+  constructor() {
+    this.testLongNameMethodAndSomethingElseLallala =
+    ::this.testLongNameMethodAndSomethingElseLallala
+  }
+
+  testLongNameMethodAndSomethingElseLallala() {
+    return true;
+  }
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an expression, or an assignment but instead found ':'
+  ┌─ long_name_method.js:3:54
+  │
+3 │     this.testLongNameMethodAndSomethingElseLallala = ::this.testLongNameMethodAndSomethingElseLallala;
+  │                                                      ^ Expected an expression, or an assignment here
+
+
+```
+
+

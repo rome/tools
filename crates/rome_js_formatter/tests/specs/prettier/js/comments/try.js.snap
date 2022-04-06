@@ -1,0 +1,46 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: try.js
+
+---
+# Input
+```js
+// Comment 1
+try { // Comment 2
+  // Comment 3
+}
+// Comment 4
+catch(e) { // Comment 5
+  // Comment 6
+}
+// Comment 7
+finally { // Comment 8
+  // Comment 9
+}
+// Comment 10
+
+```
+
+# Output
+```js
+// Comment 1
+try {
+  // Comment 2
+  // Comment 3
+}
+// Comment 4
+catch (e) {
+  // Comment 5
+  // Comment 6
+}
+// Comment 7
+finally {
+  // Comment 8
+  // Comment 9
+}
+// Comment 10
+
+```
+
+

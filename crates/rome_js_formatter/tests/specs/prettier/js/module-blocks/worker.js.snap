@@ -1,0 +1,88 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: worker.js
+
+---
+# Input
+```js
+let worker = new Worker(module {
+  onmessage = function({data}) {
+    let mod = import(data);
+    postMessage(mod.fn());
+  }
+}, {type: "module"});
+
+let worker = new Worker(module {
+  onmessage = function({data}) {
+    let mod = import(data);
+    postMessage(mod.fn());
+  }
+}, {type: "module", foo: "bar" });
+
+worker.postMessage(module { export function fn() { return "hello!" } });
+
+```
+
+# Output
+```js
+let worker = new Worker(module {
+  onmessage = function({data}) {
+    let mod = import(data);
+    postMessage(mod.fn());
+  }
+}, {type: "module"});
+
+let worker = new Worker(module {
+  onmessage = function({data}) {
+    let mod = import(data);
+    postMessage(mod.fn());
+  }
+}, {type: "module", foo: "bar" });
+
+worker.postMessage(module { export function fn() { return "hello!" } });
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `,` but instead found `{`
+  ┌─ worker.js:1:32
+  │
+1 │ let worker = new Worker(module {
+  │                                ^ unexpected
+
+error[SyntaxError]: Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
+  ┌─ worker.js:2:13
+  │
+2 │   onmessage = function({data}) {
+  │             ^
+
+error[SyntaxError]: expected `,` but instead found `{`
+  ┌─ worker.js:8:32
+  │
+8 │ let worker = new Worker(module {
+  │                                ^ unexpected
+
+error[SyntaxError]: Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
+  ┌─ worker.js:9:13
+  │
+9 │   onmessage = function({data}) {
+  │             ^
+
+error[SyntaxError]: expected `,` but instead found `{`
+   ┌─ worker.js:15:27
+   │
+15 │ worker.postMessage(module { export function fn() { return "hello!" } });
+   │                           ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `function`
+   ┌─ worker.js:15:36
+   │
+15 │ worker.postMessage(module { export function fn() { return "hello!" } });
+   │                                    ^^^^^^^^ unexpected
+
+
+```
+
+

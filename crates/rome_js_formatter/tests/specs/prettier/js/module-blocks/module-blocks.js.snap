@@ -1,0 +1,305 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: module-blocks.js
+
+---
+# Input
+```js
+module { await 3 };
+
+class B {
+  #p() {
+    module {
+      class C { [this.#p]; }
+    };
+  }
+}
+
+const m = module {
+  export const foo = "foo";
+  export { foo };
+};
+
+module {
+  export { foo }
+};
+
+const m = module       {};
+
+const worker = new Worker(module {
+  export const foo = "foo";
+});
+
+let m = module {
+  module {
+    export let foo = "foo";
+  };
+};
+
+const m = module { export const foo = "foo" };
+
+let moduleBlock = module { export let y = 1; };
+
+foo(module { export let foo = "foo"; });
+
+let m = module { /* foo */ };
+
+```
+
+# Output
+```js
+module;
+{
+  await 3;
+}
+
+class B {
+  #p() {
+    module;
+    {
+      class C {
+        [this.#p];
+      }
+    }
+  }
+}
+
+const m = module;
+{
+  export const foo = "foo";
+  export { foo };
+}
+
+module;
+{
+  export { foo }
+}
+
+const m = module;
+{}
+
+const worker = new Worker(module {
+  export const foo = "foo";
+})
+
+let m = module;
+{
+  module;
+  {
+    export let foo = "foo";
+  }
+}
+
+const m = module;
+{
+  export const foo = "foo"
+}
+
+let moduleBlock = module;
+{
+  export let y = 1;
+}
+
+foo(module { export let foo = "foo";
+})
+
+let m = module;
+{
+  /* foo */
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ module-blocks.js:1:8
+  │
+1 │ module { await 3 };
+  │ -------^
+  │ │      │
+  │ │      An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ module-blocks.js:5:12
+  │
+5 │     module {
+  │     -------^
+  │     │      │
+  │     │      An explicit or implicit semicolon is expected here...
+  │     ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ module-blocks.js:11:18
+   │
+11 │ const m = module {
+   │ -----------------^ An explicit or implicit semicolon is expected here...
+   │ │                 
+   │ ...Which is required to end this statement
+
+error[SyntaxError]: Illegal use of an export declaration not at the top level
+   ┌─ module-blocks.js:12:3
+   │
+12 │   export const foo = "foo";
+   │   ^^^^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
+
+error[SyntaxError]: Illegal use of an export declaration not at the top level
+   ┌─ module-blocks.js:13:3
+   │
+13 │   export { foo };
+   │   ^^^^^^^^^^^^^^^ move this declaration to the top level
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ module-blocks.js:16:8
+   │
+16 │ module {
+   │ -------^
+   │ │      │
+   │ │      An explicit or implicit semicolon is expected here...
+   │ ...Which is required to end this statement
+
+error[SyntaxError]: Illegal use of an export declaration not at the top level
+   ┌─ module-blocks.js:17:3
+   │
+17 │   export { foo }
+   │   ^^^^^^^^^^^^^^ move this declaration to the top level
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ module-blocks.js:20:24
+   │
+20 │ const m = module       {};
+   │ -----------------------^ An explicit or implicit semicolon is expected here...
+   │ │                       
+   │ ...Which is required to end this statement
+
+error[SyntaxError]: expected `,` but instead found `{`
+   ┌─ module-blocks.js:22:34
+   │
+22 │ const worker = new Worker(module {
+   │                                  ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `const`
+   ┌─ module-blocks.js:23:10
+   │
+23 │   export const foo = "foo";
+   │          ^^^^^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `foo`
+   ┌─ module-blocks.js:23:16
+   │
+23 │   export const foo = "foo";
+   │                ^^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `;`
+   ┌─ module-blocks.js:23:27
+   │
+23 │   export const foo = "foo";
+   │                           ^ unexpected
+
+error[SyntaxError]: expected a statement but instead found '})'
+   ┌─ module-blocks.js:24:1
+   │
+24 │ });
+   │ ^^ Expected a statement here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ module-blocks.js:26:16
+   │
+26 │ let m = module {
+   │ ---------------^ An explicit or implicit semicolon is expected here...
+   │ │               
+   │ ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ module-blocks.js:27:10
+   │
+27 │   module {
+   │   -------^
+   │   │      │
+   │   │      An explicit or implicit semicolon is expected here...
+   │   ...Which is required to end this statement
+
+error[SyntaxError]: Illegal use of an export declaration not at the top level
+   ┌─ module-blocks.js:28:5
+   │
+28 │     export let foo = "foo";
+   │     ^^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ module-blocks.js:32:18
+   │
+32 │ const m = module { export const foo = "foo" };
+   │ -----------------^ An explicit or implicit semicolon is expected here...
+   │ │                 
+   │ ...Which is required to end this statement
+
+error[SyntaxError]: Illegal use of an export declaration not at the top level
+   ┌─ module-blocks.js:32:20
+   │
+32 │ const m = module { export const foo = "foo" };
+   │                    ^^^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ module-blocks.js:34:26
+   │
+34 │ let moduleBlock = module { export let y = 1; };
+   │ -------------------------^ An explicit or implicit semicolon is expected here...
+   │ │                         
+   │ ...Which is required to end this statement
+
+error[SyntaxError]: Illegal use of an export declaration not at the top level
+   ┌─ module-blocks.js:34:28
+   │
+34 │ let moduleBlock = module { export let y = 1; };
+   │                            ^^^^^^^^^^^^^^^^^ move this declaration to the top level
+
+error[SyntaxError]: expected `,` but instead found `{`
+   ┌─ module-blocks.js:36:12
+   │
+36 │ foo(module { export let foo = "foo"; });
+   │            ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `let`
+   ┌─ module-blocks.js:36:21
+   │
+36 │ foo(module { export let foo = "foo"; });
+   │                     ^^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `foo`
+   ┌─ module-blocks.js:36:25
+   │
+36 │ foo(module { export let foo = "foo"; });
+   │                         ^^^ unexpected
+
+error[SyntaxError]: Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
+   ┌─ module-blocks.js:36:29
+   │
+36 │ foo(module { export let foo = "foo"; });
+   │                             ^
+
+error[SyntaxError]: expected `,` but instead found `;`
+   ┌─ module-blocks.js:36:36
+   │
+36 │ foo(module { export let foo = "foo"; });
+   │                                    ^ unexpected
+
+error[SyntaxError]: expected a statement but instead found '})'
+   ┌─ module-blocks.js:36:38
+   │
+36 │ foo(module { export let foo = "foo"; });
+   │                                      ^^ Expected a statement here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ module-blocks.js:38:16
+   │
+38 │ let m = module { /* foo */ };
+   │ ---------------^ An explicit or implicit semicolon is expected here...
+   │ │               
+   │ ...Which is required to end this statement
+
+
+```
+
+

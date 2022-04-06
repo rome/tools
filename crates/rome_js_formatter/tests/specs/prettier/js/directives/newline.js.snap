@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: newline.js
+
+---
+# Input
+```js
+/* @flow */
+
+"use strict";
+
+import a from "a";
+
+a();
+
+```
+
+# Output
+```js
+/* @flow */
+
+"use strict";
+import a from "a";
+
+a();
+
+```
+
+

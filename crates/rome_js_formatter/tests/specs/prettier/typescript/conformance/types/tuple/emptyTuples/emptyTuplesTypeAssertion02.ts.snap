@@ -1,0 +1,25 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: emptyTuplesTypeAssertion02.ts
+
+---
+# Input
+```js
+// @declaration: true
+
+let x = [] as [];
+let y = x[0];
+
+```
+
+# Output
+```js
+// @declaration: true
+
+let x = [] as [];
+let y = x[0];
+
+```
+
+

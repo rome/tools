@@ -240,7 +240,7 @@ pub fn generate_formatter() {
 
     // Store references to all the files created by the codegen
     // script to build the module import files
-    let mut modules = ModuleIndex::new(project_root().join("crates/rome_formatter/src"));
+    let mut modules = ModuleIndex::new(project_root().join("crates/rome_js_formatter/src"));
 
     // Build an unified iterator over all the AstNode types
     let names = ast
@@ -566,7 +566,7 @@ fn name_to_path(kind: &NodeKind, in_name: &str) -> PathBuf {
     stem.push_str(".rs");
 
     project_root()
-        .join("crates/rome_formatter/src")
+        .join("crates/rome_js_formatter/src")
         .join(language.as_str())
         .join(concept.as_str())
         .join(stem)

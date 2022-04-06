@@ -1,0 +1,32 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: class_clause.js
+
+---
+# Input
+// another comment
+export          class A { // small comment
+        constructor() {
+    }
+}
+
+
+export default  class
+B {}
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+// another comment
+export class A {
+	// small comment
+	constructor() {}
+}
+
+export default class B {}
+

@@ -1,0 +1,57 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: preserve-new-line-last.js
+
+---
+# Input
+```js
+function f() {
+  a
+  /* eslint-disable */
+}
+
+function f() {
+  a
+
+  /* eslint-disable */
+}
+
+function name() {
+  // comment1
+  func1()
+
+  // comment2
+  func2()
+
+  // comment3 why func3 commented
+  // func3()
+}
+
+```
+
+# Output
+```js
+function f() {
+  a;
+  /* eslint-disable */
+}
+
+function f() {
+  a;
+  /* eslint-disable */
+}
+
+function name() {
+  // comment1
+  func1();
+
+  // comment2
+  func2();
+  // comment3 why func3 commented
+  // func3()
+}
+
+```
+
+

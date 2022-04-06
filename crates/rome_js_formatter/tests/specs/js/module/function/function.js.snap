@@ -1,0 +1,78 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 168
+expression: function.js
+
+---
+# Input
+function foo() {
+}
+async function foo(a) {
+	await x
+}
+x = function() {
+}
+x = async function* foo(a) {
+}
+function Foo() {
+  if (!new.target) { }
+}
+function* Foo() {
+  yield
+  yield x
+  yield* x
+  yield aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  yield* aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+}
+function foo() {
+	let [ref, setRef] = useState();
+
+	useEffect(() => {
+		setRef()
+	});
+
+	return ref;
+}
+
+function directives() {
+  "use strict";
+}
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+function foo() {}
+async function foo(a) {
+	await x;
+}
+x = function () {};
+x = async function* foo(a) {};
+function Foo() {
+	if (!new.target) {
+	}
+}
+function* Foo() {
+	yield;
+	yield x;
+	yield* x;
+	yield aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+	yield* aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+}
+function foo() {
+	let [ref, setRef] = useState();
+
+	useEffect(() => {
+		setRef();
+	});
+
+	return ref;
+}
+
+function directives() {
+	"use strict";
+}
+

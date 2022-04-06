@@ -1,0 +1,17 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: empty.ts
+---
+# Input
+```js
+declare module 'autoprefixer';
+
+```
+
+# Output
+```js
+declare module "autoprefixer" ;
+
+```
+
+

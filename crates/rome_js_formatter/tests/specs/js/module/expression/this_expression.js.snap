@@ -1,0 +1,18 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: this_expression.js
+
+---
+# Input
+this
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+this;
+

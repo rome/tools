@@ -1,0 +1,41 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: method-signature.ts
+
+---
+# Input
+```js
+type Foo = {
+  get(key: "foo"): `
+  `;
+};
+type Foo = {
+  get(key: "foo"): ``;
+};
+
+type Bar = {
+  get(key: "bar"): {
+    bar: "bar"
+  };
+}
+type Bar = {
+  get(key: "bar"): { bar: "bar" };
+}
+
+```
+
+# Output
+```js
+type Foo = {
+  get(key: "foo"): `
+  `,
+};
+type Foo = { get(key: "foo"): `` };
+
+type Bar = { get(key: "bar"): { bar: "bar" } };
+type Bar = { get(key: "bar"): { bar: "bar" } };
+
+```
+
+

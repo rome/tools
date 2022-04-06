@@ -1,0 +1,23 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: nullish-coalescing-operator.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator
+
+var foo = object.foo ?? "default";
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator
+
+var foo = object.foo ?? "default";
+
+```
+
+

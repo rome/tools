@@ -1,0 +1,146 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: mapped-types.ts
+
+---
+# Input
+```js
+type a= {
+    // prettier-ignore
+    [A in B]: C  |  D
+  }
+
+type a= {
+    [
+      // prettier-ignore
+      A in B
+    ]: C  |  D
+  }
+
+type a= {
+    [
+      A in
+      // prettier-ignore
+      B
+    ]: C  |  D
+  }
+
+type a= {
+    [A in B]:
+      // prettier-ignore
+      C  |  D
+  }
+
+type a= {
+    [
+      /* prettier-ignore */
+      A in B
+    ]: C  |  D
+  }
+
+type a= {
+    [
+      A in
+      /* prettier-ignore */
+      B
+    ]: C  |  D
+  }
+
+type a= {
+    [A in B]:
+      /* prettier-ignore */
+      C  |  D
+  }
+
+
+type a= {
+    /* prettier-ignore */ [A in B]: C  |  D
+  }
+
+type a= {
+    [/* prettier-ignore */ A in B ]: C  |  D
+  }
+
+type a= {
+    [A in /* prettier-ignore */ B]: C  |  D
+  }
+
+type a= {
+    [A in B]: /* prettier-ignore */ C  |  D
+  }
+
+type a= {
+    /* prettier-ignore */
+    [A in B]: C  |  D
+  }
+
+```
+
+# Output
+```js
+type a = {
+  // prettier-ignore
+  [A in B]: C | D;
+};
+
+type a = {
+  [
+  // prettier-ignore
+      A in B]: C | D;
+};
+
+type a = {
+  [A in
+  // prettier-ignore
+      B]: C | D;
+};
+
+type a = {
+  [A in B]:
+  // prettier-ignore
+      C  |  D;
+};
+
+type a = {
+  [
+  /* prettier-ignore */
+      A in B]: C | D;
+};
+
+type a = {
+  [A in
+  /* prettier-ignore */
+      B]: C | D;
+};
+
+type a = {
+  [A in B]:
+  /* prettier-ignore */
+      C  |  D;
+};
+
+type a = {
+  /* prettier-ignore */ [A in B]: C | D;
+};
+
+type a = {
+  [A in B]: C | D; /* prettier-ignore */
+};
+
+type a = {
+  [A in B]: C | D; /* prettier-ignore */
+};
+
+type a = {
+  [A in B]: C | D; /* prettier-ignore */
+};
+
+type a = {
+  /* prettier-ignore */
+  [A in B]: C | D;
+};
+
+```
+
+

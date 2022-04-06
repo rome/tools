@@ -1,0 +1,39 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: issue-4926.ts
+
+---
+# Input
+```js
+class Foo {
+    /** Does this key match a given MinimalKey extending object? */
+    match(keyevent) {
+        // 'in' doesn't include prototypes, so it's safe for this object.
+        for (let attr in this) {
+            if (this[attr] !== keyevent[attr]) return false
+        }
+        return true
+    }
+}
+
+```
+
+# Output
+```js
+class Foo {
+    /** Does this key match a given MinimalKey extending object? */
+    match(keyevent) {
+        // 'in' doesn't include prototypes, so it's safe for this object.
+      for (let attr in this) {
+        if (this[attr] !== keyevent[attr]) {
+          return false;
+        }
+      }
+      return true;
+    }
+}
+
+```
+
+

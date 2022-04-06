@@ -1,0 +1,28 @@
+[package]
+name = "rome_js_formatter"
+version = "0.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rome_js_parser = { path = "../rome_js_parser" }
+rome_js_syntax = { path = "../rome_js_syntax" }
+rome_formatter = { path = "../rome_formatter" }
+rome_rowan = { path = "../rome_rowan" }
+rome_fs = { path = "../rome_fs" }
+rome_core = { path = "../rome_core" }
+cfg-if = "1.0.0"
+thiserror = "1.0.30"
+tracing = "0.1.31"
+
+[dev-dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tests_macros = { path = "../tests_macros" }
+insta = { version = "1.10.0", features = ["glob"] }
+rome_diagnostics = { path = "../rome_diagnostics" }
+parking_lot = "0.12.0"
+similar = "2.1.0"
+similar-asserts = "1.2.0"
+ctor = "0.1.21"

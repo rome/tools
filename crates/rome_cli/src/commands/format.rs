@@ -10,14 +10,18 @@ use std::{
 };
 
 use crossbeam::channel::{unbounded, Sender};
+use rome_console::{
+    diff::{Diff, DiffMode},
+    markup, ConsoleExt,
+};
 use rome_core::App;
 use rome_diagnostics::{
     file::{FileId, Files, SimpleFile},
     Diagnostic,
 };
-use rome_formatter::{FormatOptions, IndentStyle};
 use rome_fs::{AtomicInterner, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
+use rome_js_formatter::{FormatOptions, IndentStyle};
 use rome_js_parser::{parse, SourceType};
 
 use crate::{CliSession, Termination};
@@ -112,24 +116,23 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 
     let duration = start.elapsed();
     let count = formatted.load(Ordering::Relaxed);
-    if is_check {
-        session.app.console.message(rome_console::markup! {
-            <Info>"Checked "{count}" files in "{duration}</Info>
-        });
-    } else {
-        session.app.console.message(rome_console::markup! {
-            <Info>"Formatted "{count}" files in "{duration}</Info>
-        });
-    }
 
     let mut has_errors = false;
     let mut file_ids = HashSet::new();
     let mut diagnostics = Vec::new();
 
-    while let Ok(diag) = recv_diags.recv() {
-        has_errors |= diag.is_error();
-        file_ids.insert(diag.file_id);
-        diagnostics.push(diag);
+    while let Ok(error) = recv_diags.recv() {
+        match &error {
+            Error::Diagnostic(diag) => {
+                has_errors |= diag.is_error();
+                file_ids.insert(diag.file_id);
+            }
+            Error::Diff { .. } => {
+                has_errors = true;
+            }
+        }
+
+        diagnostics.push(error);
     }
 
     let mut files = PathFiles::default();
@@ -170,8 +173,52 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         files.storage.insert(file_id, SimpleFile::new(name, source));
     }
 
-    for diag in diagnostics {
-        session.app.console.diagnostic(&files, &diag);
+    for error in diagnostics {
+        match error {
+            Error::Diagnostic(diag) => {
+                session.app.console.error(markup! {
+                    {diag.display(&files)}
+                });
+            }
+            Error::Diff {
+                file_name,
+                old,
+                new,
+            } => {
+                // Skip printing the diff for files over 1Mb (probably a minified file)
+                let max_len = old.len().max(new.len());
+                if max_len >= 1_000_000 {
+                    session.app.console.error(markup! {
+                        {file_name}": "
+                        <Error>"error[CI]"</Error>": File content differs from formatting output\n"
+                        <Info>"[Diff not printed for file over 1Mb]\n"</Info>
+                    });
+                    continue;
+                }
+
+                let diff = Diff {
+                    mode: DiffMode::Unified,
+                    left: &old,
+                    right: &new,
+                };
+
+                session.app.console.error(markup! {
+                    {file_name}": "
+                    <Error>"error[CI]"</Error>": File content differs from formatting output\n"
+                    {diff}
+                });
+            }
+        }
+    }
+
+    if is_check {
+        session.app.console.log(rome_console::markup! {
+            <Info>"Checked "{count}" files in "{duration}</Info>
+        });
+    } else {
+        session.app.console.log(rome_console::markup! {
+            <Info>"Formatted "{count}" files in "{duration}</Info>
+        });
     }
 
     // Formatting emitted error diagnostics, exit with a non-zero code
@@ -225,7 +272,7 @@ struct FormatCommandOptions<'ctx, 'app> {
     /// Shared atomic counter storing the number of formatted files
     formatted: &'ctx AtomicUsize,
     /// Channel sending diagnostics to the display thread
-    diagnostics: Sender<Diagnostic>,
+    diagnostics: Sender<Error>,
 }
 
 impl<'ctx, 'app> FormatCommandOptions<'ctx, 'app> {
@@ -235,7 +282,7 @@ impl<'ctx, 'app> FormatCommandOptions<'ctx, 'app> {
     }
 
     /// Send a diagnostic to the display thread
-    fn push_diagnostic(&self, err: Diagnostic) {
+    fn push_diagnostic(&self, err: Error) {
         self.diagnostics.send(err).ok();
     }
 }
@@ -246,7 +293,7 @@ impl<'ctx, 'app> TraversalContext for FormatCommandOptions<'ctx, 'app> {
     }
 
     fn push_diagnostic(&self, file_id: FileId, code: &'static str, title: String) {
-        self.push_diagnostic(Diagnostic::error(file_id, code, title));
+        self.push_diagnostic(Diagnostic::error(file_id, code, title).into());
     }
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
@@ -277,7 +324,7 @@ fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
                 ctx.add_formatted();
             } else {
                 for error in errors {
-                    ctx.push_diagnostic(error);
+                    ctx.push_diagnostic(error.into());
                 }
             }
         }
@@ -293,7 +340,7 @@ fn handle_file(ctx: &FormatCommandOptions, path: &Path, file_id: FileId) {
                 },
             };
 
-            ctx.push_diagnostic(Diagnostic::error(file_id, "Panic", msg));
+            ctx.push_diagnostic(Diagnostic::error(file_id, "Panic", msg).into());
         }
     }
 }
@@ -311,13 +358,13 @@ struct FormatFileParams<'ctx, 'app> {
 /// (or map it into memory it), parse and format it; then, it either writes the
 /// result back or compares it with the original content and emit a diagnostic
 #[tracing::instrument(level = "trace", skip_all, fields(path = ?params.path))]
-fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> {
+fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Error> {
     if !params.app.can_format(&RomePath::new(params.path)) {
-        return Err(Diagnostic::error(
+        return Err(Error::from(Diagnostic::error(
             params.file_id,
             "IO",
             "unhandled file type",
-        ));
+        )));
     }
 
     let source_type = SourceType::try_from(params.path).unwrap_or_else(|_| SourceType::js_module());
@@ -346,7 +393,7 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
         });
     }
 
-    let result = rome_formatter::format(params.options, &root.syntax())
+    let result = rome_js_formatter::format(params.options, &root.syntax())
         .with_file_id_and_code(params.file_id, "Format")?;
 
     let output = result.as_code().as_bytes();
@@ -354,17 +401,33 @@ fn format_file(params: FormatFileParams) -> Result<Vec<Diagnostic>, Diagnostic> 
     if params.is_check {
         let has_diff = output != input.as_bytes();
         if has_diff {
-            return Err(Diagnostic::error(
-                params.file_id,
-                "CI",
-                "File content differs from formatting output",
-            ));
+            return Err(Error::Diff {
+                file_name: params.path.display().to_string(),
+                old: input,
+                new: result.into_code(),
+            });
         }
     } else {
         file.set_content(output).with_file_id(params.file_id)?;
     }
 
     Ok(Vec::new())
+}
+
+/// Wrapper type for errors that may happen during the formatting process
+enum Error {
+    Diagnostic(Diagnostic),
+    Diff {
+        file_name: String,
+        old: String,
+        new: String,
+    },
+}
+
+impl From<Diagnostic> for Error {
+    fn from(diagnostic: Diagnostic) -> Self {
+        Self::Diagnostic(diagnostic)
+    }
 }
 
 /// Extension trait for turning [Display]-able error types into [Diagnostic]

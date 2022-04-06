@@ -1,0 +1,32 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: parserES5ForOfStatement21.ts
+
+---
+# Input
+```js
+//@target: ES5
+for (var of of) { }
+
+```
+
+# Output
+```js
+//@target: ES5
+for (var of of) { }
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an expression, or an assignment but instead found ')'
+  ┌─ parserES5ForOfStatement21.ts:2:15
+  │
+2 │ for (var of of) { }
+  │               ^ Expected an expression, or an assignment here
+
+
+```
+
+

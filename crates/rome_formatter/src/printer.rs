@@ -109,11 +109,7 @@ impl<'a> Printer<'a> {
 
     /// Prints the passed in element as well as all its content,
     /// starting at the specified indentation level
-    pub(crate) fn print_with_indent(
-        mut self,
-        element: &'a FormatElement,
-        indent: u16,
-    ) -> Formatted {
+    pub fn print_with_indent(mut self, element: &'a FormatElement, indent: u16) -> Formatted {
         let mut queue = ElementCallQueue::new();
 
         queue.enqueue(PrintElementCall::new(

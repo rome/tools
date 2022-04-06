@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: destructuring-array.js
+
+---
+# Input
+```js
+const [
+  width= nextWidth,
+  height= nextHeight,
+  baseline= nextBaseline,
+] = measureText(nextText, getFontString(element));
+
+```
+
+# Output
+```js
+const [width = nextWidth, height = nextHeight, baseline = nextBaseline] = measureText(
+  nextText,
+  getFontString(element),
+);
+
+```
+
+

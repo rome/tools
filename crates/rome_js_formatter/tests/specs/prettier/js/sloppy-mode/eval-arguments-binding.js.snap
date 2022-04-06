@@ -1,0 +1,42 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: eval-arguments-binding.js
+
+---
+# Input
+```js
+function myfunc() {
+  var eval
+  var arguments;
+}
+
+```
+
+# Output
+```js
+function myfunc() {
+  var eval
+  var arguments;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
+  ┌─ eval-arguments-binding.js:2:7
+  │
+2 │   var eval
+  │       ^^^^
+
+error[SyntaxError]: Illegal use of `arguments` as an identifier in strict mode
+  ┌─ eval-arguments-binding.js:3:7
+  │
+3 │   var arguments;
+  │       ^^^^^^^^^
+
+
+```
+
+

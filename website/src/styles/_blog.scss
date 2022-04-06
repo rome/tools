@@ -19,6 +19,7 @@ section.blog {
 		height: 36px;
 		margin-right: 8px;
 		vertical-align: middle;
+		background-color: white;
 	}
 
 	a {
@@ -71,7 +72,6 @@ a.tag {
 }
 
 .blog-cover {
-	pointer-events: none;
 	margin: 0 -$unit * 2;
 	margin-bottom: $unit;
 	overflow: hidden;

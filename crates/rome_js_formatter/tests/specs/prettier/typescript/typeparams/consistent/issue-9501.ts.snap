@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: issue-9501.ts
+
+---
+# Input
+```js
+const name: SomeGeneric<
+  Pick<Config, "ONE_LONG_PROP" | "ANOTHER_LONG_PROP">
+> = null;
+
+```
+
+# Output
+```js
+const name: SomeGeneric<Pick<Config, "ONE_LONG_PROP" | "ANOTHER_LONG_PROP">> = null;
+
+```
+
+

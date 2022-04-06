@@ -30,8 +30,8 @@
 	--soft-border-color: rgba(39, 39, 42, 0.15);
 	--pattern-color: #{rgba($gray-7, 0.6)};
 	--pattern-color-2: #{rgba(255, 255, 255, 0)};
-	--pattern-img-path: url("../img/pattern-white.png");
-	--pattern-dark-img-path: url("../img/pattern-black.png");
+	--pattern-img-path: url("/img/pattern-white.png");
+	--pattern-dark-img-path: url("/img/pattern-black.png");
 	--toc-background-active: #{$gray-8};
 	--toc-link-color-hover: #{$gray-6};
 	--toc-link-color-active: #{$gray-4};

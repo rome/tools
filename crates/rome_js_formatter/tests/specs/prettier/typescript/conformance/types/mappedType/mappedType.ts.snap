@@ -1,0 +1,22 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: mappedType.ts
+---
+# Input
+```js
+type Keys = 'option1' | 'option2';
+type Flags = { [K in Keys]: boolean };
+
+
+```
+
+# Output
+```js
+type Keys = "option1" | "option2";
+type Flags = {
+  [K in Keys]: boolean;
+};
+
+```
+
+

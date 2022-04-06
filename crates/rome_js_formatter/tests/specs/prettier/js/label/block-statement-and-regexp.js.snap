@@ -1,0 +1,22 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: block-statement-and-regexp.js
+
+---
+# Input
+```js
+a : { b : 1 }/2/;
+
+```
+
+# Output
+```js
+a: {
+  b: 1;
+}
+/2/;
+
+```
+
+

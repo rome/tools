@@ -1,0 +1,32 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: computed_member.js
+
+---
+# Input
+const foo = {};
+
+foo["bar"] = true;
+foo["foo-bar"] = true;
+foo.bar["bar"]["lorem_ispsum"].foo["lorem-ipsum"] = true;
+
+a[ b ]
+c?.[ d ]
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+const foo = {};
+
+foo["bar"] = true;
+foo["foo-bar"] = true;
+foo.bar["bar"]["lorem_ispsum"].foo["lorem-ipsum"] = true;
+
+a[b];
+c?.[d];
+

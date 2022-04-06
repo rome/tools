@@ -1,0 +1,28 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: classAbstractInAModule.ts
+
+---
+# Input
+```js
+
+export abstract class A {}
+export class B extends A {}
+
+
+new M.A;
+new M.B;
+```
+
+# Output
+```js
+export abstract class A {}
+export class B extends A {}
+
+new M.A();
+new M.B();
+
+```
+
+

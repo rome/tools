@@ -1361,8 +1361,8 @@ dependencies = [
  "rome_console",
  "rome_core",
  "rome_diagnostics",
- "rome_formatter",
  "rome_fs",
+ "rome_js_formatter",
  "rome_js_parser",
  "thiserror",
  "tracing",
@@ -1374,11 +1374,11 @@ name = "rome_console"
 version = "0.0.0"
 dependencies = [
  "lazy_static",
- "rome_diagnostics",
  "rome_markup",
  "similar",
  "termcolor",
  "trybuild",
+ "unicode-width",
 ]
 
 [[package]]
@@ -1395,6 +1395,7 @@ version = "0.2.0"
 dependencies = [
  "colored",
  "lsp-types 0.92.0",
+ "rome_console",
  "rome_rowan",
  "rome_text_edit",
  "serde",
@@ -1404,24 +1405,9 @@ dependencies = [
 
 [[package]]
 name = "rome_formatter"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
- "cfg-if",
- "ctor",
- "insta",
- "parking_lot 0.12.0",
- "rome_core",
- "rome_diagnostics",
- "rome_fs",
- "rome_js_parser",
- "rome_js_syntax",
  "rome_rowan",
- "serde",
- "serde_json",
- "similar",
- "similar-asserts",
- "tests_macros",
- "thiserror",
  "tracing",
 ]
 
@@ -1433,6 +1419,30 @@ dependencies = [
  "indexmap",
  "parking_lot 0.12.0",
  "rayon",
+ "tracing",
+]
+
+[[package]]
+name = "rome_js_formatter"
+version = "0.0.0"
+dependencies = [
+ "cfg-if",
+ "ctor",
+ "insta",
+ "parking_lot 0.12.0",
+ "rome_core",
+ "rome_diagnostics",
+ "rome_formatter",
+ "rome_fs",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_rowan",
+ "serde",
+ "serde_json",
+ "similar",
+ "similar-asserts",
+ "tests_macros",
+ "thiserror",
  "tracing",
 ]
 
@@ -1475,8 +1485,8 @@ dependencies = [
  "parking_lot 0.12.0",
  "rome_analyze",
  "rome_diagnostics",
- "rome_formatter",
  "rome_fs",
+ "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
  "serde",
@@ -1501,7 +1511,7 @@ name = "rome_playground"
 version = "0.0.0"
 dependencies = [
  "rome_diagnostics",
- "rome_formatter",
+ "rome_js_formatter",
  "rome_js_parser",
  "wasm-bindgen",
 ]
@@ -2298,7 +2308,7 @@ dependencies = [
  "pico-args",
  "regex",
  "rome_diagnostics",
- "rome_formatter",
+ "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
  "timing",

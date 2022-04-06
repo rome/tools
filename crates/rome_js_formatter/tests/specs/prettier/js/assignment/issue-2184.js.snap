@@ -1,0 +1,24 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: issue-2184.js
+
+---
+# Input
+```js
+const areaPercentageDiff = (
+    topRankedZoneFit.areaPercentageRemaining
+  - previousZoneFitNow.areaPercentageRemaining
+).toFixed(2)
+
+```
+
+# Output
+```js
+const areaPercentageDiff = (
+  topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining
+).toFixed(2);
+
+```
+
+

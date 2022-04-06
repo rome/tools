@@ -1,0 +1,116 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: ignore.js
+
+---
+# Input
+```js
+foo = {
+  // prettier-ignore
+  bar:            1,
+}
+
+foo = {
+  _: '',
+  // prettier-ignore
+  bar:            1,
+}
+
+/* comments */
+foo = {
+  _: '',
+  // prettier-ignore
+  bar:            1,         // comment
+}
+
+foo = {
+  _: '',
+  // prettier-ignore
+  bar:            1,         /* comment */
+}
+
+foo = {
+  _: '',
+  // prettier-ignore
+  bar:            /* comment */          1,
+}
+
+/* SpreadElement */
+foo = {
+  _: '',
+  // prettier-ignore
+  ...bar,
+}
+
+// Nested
+foo = {
+  baz: {
+  // prettier-ignore
+  foo: [1, 2,    3]
+},
+  // prettier-ignore
+  bar:            1,
+}
+
+```
+
+# Output
+```js
+foo =
+  {
+    // prettier-ignore
+  bar:            1,
+  };
+
+foo =
+  {
+    _: "",
+    // prettier-ignore
+  bar:            1,
+  };
+
+/* comments */
+foo =
+  {
+    _: "",
+    // prettier-ignore
+  bar:            1, // comment
+  };
+
+foo =
+  {
+    _: "",
+    // prettier-ignore
+  bar:            1, /* comment */
+  };
+
+foo =
+  {
+    _: "",
+    // prettier-ignore
+  bar:            /* comment */          1,
+  };
+
+/* SpreadElement */
+foo =
+  {
+    _: "",
+    // prettier-ignore
+  ...bar,
+  };
+
+// Nested
+foo =
+  {
+    baz: {
+      // prettier-ignore
+  foo: [1, 2,    3],
+    },
+    // prettier-ignore
+  bar:            1,
+  };
+
+```
+
+

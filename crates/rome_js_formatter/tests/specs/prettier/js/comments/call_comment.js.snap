@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 149
+expression: call_comment.js
+
+---
+# Input
+```js
+render( // Warm any cache
+  <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  container
+);
+
+React.render( // Warm any cache
+  <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  container
+);
+
+render?.( // Warm any cache
+  <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  container
+);
+
+```
+
+# Output
+```js
+render(
+  // Warm any cache
+  <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  container,
+);
+
+React.render(
+  // Warm any cache
+  <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  container,
+);
+
+render?.(
+  // Warm any cache
+  <ChildUpdates renderAnchor={true} anchorClassOn={true} />,
+  container,
+);
+
+```
+
+

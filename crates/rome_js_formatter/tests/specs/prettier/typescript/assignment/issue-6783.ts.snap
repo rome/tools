@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: issue-6783.ts
+
+---
+# Input
+```js
+export const enviromentProdValues: EnvironmentValues = assign<EnvironmentValues>(
+  {
+    apiURL: '/api',
+  },
+  enviromentBaseValues
+);
+
+```
+
+# Output
+```js
+export const enviromentProdValues: EnvironmentValues = assign<EnvironmentValues>(
+  { apiURL: "/api" },
+  enviromentBaseValues,
+);
+
+```
+
+

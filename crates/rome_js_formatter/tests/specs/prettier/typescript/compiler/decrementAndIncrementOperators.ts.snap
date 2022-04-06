@@ -1,0 +1,174 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: decrementAndIncrementOperators.ts
+
+---
+# Input
+```js
+var x = 0;
+
+// errors
+1 ++;
+
+(1)++;
+(1)--;
+
+++(1);
+--(1);
+
+(1 + 2)++;
+(1 + 2)--;
+
+++(1 + 2);
+--(1 + 2);
+
+(x + x)++;
+(x + x)--;
+
+++(x + x);
+--(x + x);
+
+//OK
+x++;
+x--;
+
+++x;
+--x;
+
+(x)++;
+--(x);
+
+((x))++;
+((x))--;
+
+x[x++]++;
+
+```
+
+# Output
+```js
+var x = 0;
+
+// errors
+1++;
+
+(1)++;
+(1)--;
+
+++(1);
+--(1);
+
+(1 + 2)++;
+(1 + 2)--;
+
+++(1 + 2);
+--(1 + 2);
+
+(x + x)++;
+(x + x)--;
+
+++(x + x);
+--(x + x);
+
+//OK
+x++;
+x--;
+
+++x;
+--x;
+
+(x)++;
+--(x);
+
+((x))++;
+((x))--;
+
+x[x++]++;
+
+```
+
+# Errors
+```
+error[SyntaxError]: Invalid assignment to `1`
+  ┌─ decrementAndIncrementOperators.ts:4:1
+  │
+4 │ 1 ++;
+  │ ^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `1`
+  ┌─ decrementAndIncrementOperators.ts:6:2
+  │
+6 │ (1)++;
+  │  ^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `1`
+  ┌─ decrementAndIncrementOperators.ts:7:2
+  │
+7 │ (1)--;
+  │  ^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `1`
+  ┌─ decrementAndIncrementOperators.ts:9:4
+  │
+9 │ ++(1);
+  │    ^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `1`
+   ┌─ decrementAndIncrementOperators.ts:10:4
+   │
+10 │ --(1);
+   │    ^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `1 + 2`
+   ┌─ decrementAndIncrementOperators.ts:12:2
+   │
+12 │ (1 + 2)++;
+   │  ^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `1 + 2`
+   ┌─ decrementAndIncrementOperators.ts:13:2
+   │
+13 │ (1 + 2)--;
+   │  ^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `1 + 2`
+   ┌─ decrementAndIncrementOperators.ts:15:4
+   │
+15 │ ++(1 + 2);
+   │    ^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `1 + 2`
+   ┌─ decrementAndIncrementOperators.ts:16:4
+   │
+16 │ --(1 + 2);
+   │    ^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `x + x`
+   ┌─ decrementAndIncrementOperators.ts:18:2
+   │
+18 │ (x + x)++;
+   │  ^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `x + x`
+   ┌─ decrementAndIncrementOperators.ts:19:2
+   │
+19 │ (x + x)--;
+   │  ^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `x + x`
+   ┌─ decrementAndIncrementOperators.ts:21:4
+   │
+21 │ ++(x + x);
+   │    ^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Invalid assignment to `x + x`
+   ┌─ decrementAndIncrementOperators.ts:22:4
+   │
+22 │ --(x + x);
+   │    ^^^^^ This expression cannot be assigned to
+
+
+```
+
+

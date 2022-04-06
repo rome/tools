@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: before_export.js
+
+---
+# Input
+```js
+@decorator
+export class Foo {}
+
+@decorator
+export default class {}
+
+```
+
+# Output
+```js
+@decorator
+export class Foo {}
+
+@decorator
+export default class {}
+
+```
+
+

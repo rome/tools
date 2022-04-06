@@ -1,0 +1,43 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: issue-9072.js
+
+---
+# Input
+```js
+const style1 = css`
+  width:${size+10}${sizeUnit};
+  border:${size/10} ${sizeUnit} solid ${color};
+`;
+
+const style2 = css`
+  width: ${size + 10}${sizeUnit};
+  border: ${size / 10} ${sizeUnit} solid ${color};
+`;
+
+const style3 = css`
+  foo: ${foo}${bar}       ${baz};
+`;
+
+```
+
+# Output
+```js
+const style1 = css`
+  width:${size + 10}${sizeUnit};
+  border:${size / 10} ${sizeUnit} solid ${color};
+`;
+
+const style2 = css`
+  width: ${size + 10}${sizeUnit};
+  border: ${size / 10} ${sizeUnit} solid ${color};
+`;
+
+const style3 = css`
+  foo: ${foo}${bar}       ${baz};
+`;
+
+```
+
+

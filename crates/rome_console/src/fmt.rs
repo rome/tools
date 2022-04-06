@@ -5,18 +5,70 @@ use termcolor::{ColorSpec, WriteColor};
 use crate::{markup, Markup, MarkupElement};
 
 /// A stack-allocated linked-list of [MarkupElement] slices
-enum MarkupElements<'a> {
+pub enum MarkupElements<'a> {
     Root,
     Node(&'a Self, &'a [MarkupElement]),
 }
 
 impl<'a> MarkupElements<'a> {
     /// Iterates on all the element slices depth-first
-    fn for_each(&self, func: &mut impl FnMut(&'a [MarkupElement])) {
+    pub fn for_each(&self, func: &mut impl FnMut(&'a [MarkupElement])) {
         if let Self::Node(parent, elem) = self {
             parent.for_each(func);
             func(elem);
         }
+    }
+}
+
+pub trait Write {
+    fn write_str(&mut self, elements: &MarkupElements, content: &str) -> io::Result<()>;
+    fn write_fmt(&mut self, elements: &MarkupElements, content: fmt::Arguments) -> io::Result<()>;
+}
+
+/// Applies the current format in `state` to `writer`, calls `func` to
+/// print a piece of text, then reset the printing format
+fn with_format<W>(
+    writer: &mut W,
+    state: &MarkupElements,
+    func: impl FnOnce(&mut W) -> io::Result<()>,
+) -> io::Result<()>
+where
+    W: WriteColor,
+{
+    let mut color = ColorSpec::new();
+    state.for_each(&mut |elements| {
+        for element in elements {
+            element.update_color(&mut color);
+        }
+    });
+
+    if let Err(err) = writer.set_color(&color) {
+        writer.reset()?;
+        return Err(err);
+    }
+
+    let result = func(writer);
+    writer.reset()?;
+    result
+}
+
+/// Adapter struct implementing [Write] over types implementing [WriteColor]
+pub struct Termcolor<W>(pub W);
+
+impl<W> Write for Termcolor<W>
+where
+    W: WriteColor,
+{
+    fn write_str(&mut self, elements: &MarkupElements, content: &str) -> io::Result<()> {
+        with_format(&mut self.0, elements, |writer| {
+            io::Write::write_all(writer, content.as_bytes())
+        })
+    }
+
+    fn write_fmt(&mut self, elements: &MarkupElements, content: fmt::Arguments) -> io::Result<()> {
+        with_format(&mut self.0, elements, |writer| {
+            io::Write::write_fmt(writer, content)
+        })
     }
 }
 
@@ -30,12 +82,12 @@ pub struct Formatter<'fmt> {
     /// Stack of markup elements currently applied to the text being printed
     state: MarkupElements<'fmt>,
     /// Inner IO writer this [Formatter] will print text into
-    writer: &'fmt mut dyn WriteColor,
+    writer: &'fmt mut dyn Write,
 }
 
 impl<'fmt> Formatter<'fmt> {
     /// Create a new instance of the [Formatter] using the provided `writer` for printing
-    pub(crate) fn new(writer: &'fmt mut dyn WriteColor) -> Self {
+    pub fn new(writer: &'fmt mut dyn Write) -> Self {
         Self {
             state: MarkupElements::Root,
             writer,
@@ -60,37 +112,14 @@ impl<'fmt> Formatter<'fmt> {
         Ok(())
     }
 
-    /// Applies the current format in `state` to `writer`, calls `func` to
-    /// print a piece of text, then reset the printing format
-    fn with_format(
-        &mut self,
-        func: impl FnOnce(&mut dyn WriteColor) -> io::Result<()>,
-    ) -> io::Result<()> {
-        let mut color = ColorSpec::new();
-        self.state.for_each(&mut |elements| {
-            for element in elements {
-                element.update_color(&mut color);
-            }
-        });
-
-        if let Err(err) = self.writer.set_color(&color) {
-            self.writer.reset()?;
-            return Err(err);
-        }
-
-        let result = func(self.writer);
-        self.writer.reset()?;
-        result
-    }
-
     /// Write a slice of text into this formatter
     pub fn write_str(&mut self, content: &str) -> io::Result<()> {
-        self.with_format(|writer| writer.write_all(content.as_bytes()))
+        self.writer.write_str(&self.state, content)
     }
 
     /// Write formatted text into this formatter
     pub fn write_fmt(&mut self, content: fmt::Arguments) -> io::Result<()> {
-        self.with_format(|writer| writer.write_fmt(content))
+        self.writer.write_fmt(&self.state, content)
     }
 }
 
@@ -155,6 +184,13 @@ impl Display for String {
     }
 }
 
+// Implement Display for Markup and Rust format Arguments
+impl<'a> Display for Markup<'a> {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        fmt.write_markup(*self)
+    }
+}
+
 impl<'a> Display for std::fmt::Arguments<'a> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         fmt.write_fmt(*self)
@@ -173,6 +209,7 @@ macro_rules! impl_std_display {
     };
 }
 
+impl_std_display!(char);
 impl_std_display!(i8);
 impl_std_display!(i16);
 impl_std_display!(i32);

@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: module-string-names.js
+
+---
+# Input
+```js
+import { "😄" as smile } from "./emojis.js";
+export { smile as "😄" } from "./emojis.js";
+
+```
+
+# Output
+```js
+import { "😄" as smile } from "./emojis.js";
+export { smile as "😄" } from "./emojis.js";
+
+```
+
+

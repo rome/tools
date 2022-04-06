@@ -1,0 +1,46 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: trailing_comment.js
+
+---
+# Input
+```js
+if (code === 92 /* '\' */) {}
+if (code === 92 /* '\' */ /* '\' */) {}
+
+if (code === 92) /* '\' */ {}
+if (code === 92) { /* '\' */ }
+
+if (
+  1
+  // Comment
+) {
+  a;
+}
+
+```
+
+# Output
+```js
+if (code === 92 /* '\' */ ) {
+}
+if (code === 92 /* '\' */ /* '\' */ ) {
+}
+
+if (code === 92) /* '\' */ {
+}
+if (code === 92) {
+  /* '\' */
+}
+
+if (
+  1
+  // Comment
+) {
+  a;
+}
+
+```
+
+

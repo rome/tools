@@ -22,7 +22,6 @@ jobs:
           node-version: '14'
       - run: npm install --prefix website/playground
       - uses: jetli/wasm-pack-action@v0.3.0
-      - run: npm run build:wasm --prefix website/playground
       - run: npm run build --prefix website/playground
       - name: Publish
         uses: cloudflare/wrangler-action@1.3.0

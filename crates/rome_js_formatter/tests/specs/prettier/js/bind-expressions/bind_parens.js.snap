@@ -1,0 +1,374 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: bind_parens.js
+
+---
+# Input
+```js
+(a || b)::c;
+a || (b::c);
+::obj.prop;
+(void 0)::func();
+(+0)::is(-0);
+a::(b.c);
+a::(b.c());
+a::b.c();
+a::(b.c()());
+a::((b.c())());
+a::(b.c())();
+a::(b.c().d);
+a::(c().d.e);
+a::(b());
+a::(b::c());
+a::(b()::c);
+a::(b().c::d);
+a::(b.c::d);
+a::(b::c.d);
+a::(b.c::d::e);
+a::(b::c::d);
+a::(b::c::d.e);
+a::((b::c::d).e);
+a::(void 0);
+a::(b.c()::d.e);
+a::(b.c::d.e);
+a::(b.c::d.e)::f.g;
+b.c::d.e;
+(b.c::d).e;
+(b::c::d).e;
+new (a::b)();
+new f(a::b);
+f[a::b];
+f[a::b()];
+
+```
+
+# Output
+```js
+(a || b);
+::c
+a || (b
+::c)
+::obj.prop
+(void 0);
+::func()
+(+0);
+::is(-0)
+a:
+:(b.c)
+a:
+:(b.c())
+a:
+:b.c()
+a:
+:(b.c()())
+a:
+:((b.c())())
+a:
+:(b.c())()
+a:
+:(b.c().d)
+a:
+:(c().d.e)
+a:
+:(b())
+a:
+:(b::c())
+a:
+:(b()::c)
+a:
+:(b().c::d)
+a:
+:(b.c::d)
+a:
+:(b::c.d)
+a:
+:(b.c::d::e)
+a:
+:(b::c::d)
+a:
+:(b::c::d.e)
+a:
+:((b::c::d).e)
+a:
+:(void 0)
+a:
+:(b.c()::d.e)
+a:
+:(b.c::d.e)
+a:
+:(b.c::d.e)::f.g
+b.c;
+::d.e
+(b.c
+::d).e
+(b::c::d)
+.e
+new (a
+::b)()
+new f(a::b);
+f[a
+::b]
+f[a
+::b()]
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ bind_parens.js:1:9
+  │
+1 │ (a || b)::c;
+  │ --------^
+  │ │       │
+  │ │       An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected `')'` but instead found `:`
+  ┌─ bind_parens.js:2:8
+  │
+2 │ a || (b::c);
+  │        ^ unexpected
+
+error[SyntaxError]: expected a statement but instead found '::obj.prop'
+  ┌─ bind_parens.js:3:1
+  │
+3 │ ::obj.prop;
+  │ ^^^^^^^^^^ Expected a statement here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ bind_parens.js:4:9
+  │
+4 │ (void 0)::func();
+  │ --------^
+  │ │       │
+  │ │       An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ bind_parens.js:5:5
+  │
+5 │ (+0)::is(-0);
+  │ ----^
+  │ │   │
+  │ │   An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected a statement but instead found ':'
+  ┌─ bind_parens.js:6:3
+  │
+6 │ a::(b.c);
+  │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+  ┌─ bind_parens.js:7:3
+  │
+7 │ a::(b.c());
+  │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+  ┌─ bind_parens.js:8:3
+  │
+8 │ a::b.c();
+  │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+  ┌─ bind_parens.js:9:3
+  │
+9 │ a::(b.c()());
+  │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:10:3
+   │
+10 │ a::((b.c())());
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:11:3
+   │
+11 │ a::(b.c())();
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:12:3
+   │
+12 │ a::(b.c().d);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:13:3
+   │
+13 │ a::(c().d.e);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:14:3
+   │
+14 │ a::(b());
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:15:3
+   │
+15 │ a::(b::c());
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:16:3
+   │
+16 │ a::(b()::c);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:17:3
+   │
+17 │ a::(b().c::d);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:18:3
+   │
+18 │ a::(b.c::d);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:19:3
+   │
+19 │ a::(b::c.d);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:20:3
+   │
+20 │ a::(b.c::d::e);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:21:3
+   │
+21 │ a::(b::c::d);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:22:3
+   │
+22 │ a::(b::c::d.e);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:23:3
+   │
+23 │ a::((b::c::d).e);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:24:3
+   │
+24 │ a::(void 0);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:25:3
+   │
+25 │ a::(b.c()::d.e);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:26:3
+   │
+26 │ a::(b.c::d.e);
+   │   ^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found ':'
+   ┌─ bind_parens.js:27:3
+   │
+27 │ a::(b.c::d.e)::f.g;
+   │   ^ Expected a statement here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ bind_parens.js:28:4
+   │
+28 │ b.c::d.e;
+   │ ---^
+   │ │  │
+   │ │  An explicit or implicit semicolon is expected here...
+   │ ...Which is required to end this statement
+
+error[SyntaxError]: expected `')'` but instead found `:`
+   ┌─ bind_parens.js:29:5
+   │
+29 │ (b.c::d).e;
+   │     ^ unexpected
+
+error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ bind_parens.js:30:3
+   │
+30 │ (b::c::d).e;
+   │   ^ TypeScript only syntax
+
+error[SyntaxError]: expected `,` but instead found `:`
+   ┌─ bind_parens.js:30:4
+   │
+30 │ (b::c::d).e;
+   │    ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `c`
+   ┌─ bind_parens.js:30:5
+   │
+30 │ (b::c::d).e;
+   │     ^ unexpected
+
+error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ bind_parens.js:30:6
+   │
+30 │ (b::c::d).e;
+   │      ^ TypeScript only syntax
+
+error[SyntaxError]: expected `,` but instead found `:`
+   ┌─ bind_parens.js:30:7
+   │
+30 │ (b::c::d).e;
+   │       ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `d`
+   ┌─ bind_parens.js:30:8
+   │
+30 │ (b::c::d).e;
+   │        ^ unexpected
+
+error[SyntaxError]: expected `=>` but instead found `.`
+   ┌─ bind_parens.js:30:10
+   │
+30 │ (b::c::d).e;
+   │          ^ unexpected
+
+error[SyntaxError]: expected `')'` but instead found `:`
+   ┌─ bind_parens.js:31:7
+   │
+31 │ new (a::b)();
+   │       ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `:`
+   ┌─ bind_parens.js:32:8
+   │
+32 │ new f(a::b);
+   │        ^ unexpected
+
+error[SyntaxError]: expected `']'` but instead found `:`
+   ┌─ bind_parens.js:33:4
+   │
+33 │ f[a::b];
+   │    ^ unexpected
+
+error[SyntaxError]: expected `']'` but instead found `:`
+   ┌─ bind_parens.js:34:4
+   │
+34 │ f[a::b()];
+   │    ^ unexpected
+
+
+```
+
+

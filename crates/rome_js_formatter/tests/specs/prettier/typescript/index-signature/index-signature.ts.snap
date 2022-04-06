@@ -1,0 +1,25 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: index-signature.ts
+
+---
+# Input
+```js
+class LocalStorage implements Storage {
+  [index: number]: string;
+  [key: string]: any;
+}
+
+```
+
+# Output
+```js
+class LocalStorage implements Storage {
+  [index: number]: string;
+  [key: string]: any;
+}
+
+```
+
+

@@ -1,0 +1,50 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: issue-6107-curry.ts
+
+---
+# Input
+```js
+const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) =>
+  iconEngagementType => engagementTypes.includes(iconEngagementType);
+
+const getIconEngagementTypeFrom2 =
+  (
+    engagementTypes: Array<EngagementType>,
+    secondArg: Something
+  ) =>
+  iconEngagementType =>
+  engagementTypes.includes(iconEngagementType);
+
+const getIconEngagementTypeFrom2 =
+  (
+    engagementTypes: Array<EngagementType>,
+    secondArg: Something,
+    thirArg: SomethingElse
+  ) =>
+  iconEngagementType =>
+  engagementTypes.includes(iconEngagementType);
+
+```
+
+# Output
+```js
+const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) => (
+  iconEngagementType,
+) => engagementTypes.includes(iconEngagementType);
+
+const getIconEngagementTypeFrom2 = (
+  engagementTypes: Array<EngagementType>,
+  secondArg: Something,
+) => (iconEngagementType) => engagementTypes.includes(iconEngagementType);
+
+const getIconEngagementTypeFrom2 = (
+  engagementTypes: Array<EngagementType>,
+  secondArg: Something,
+  thirArg: SomethingElse,
+) => (iconEngagementType) => engagementTypes.includes(iconEngagementType);
+
+```
+
+

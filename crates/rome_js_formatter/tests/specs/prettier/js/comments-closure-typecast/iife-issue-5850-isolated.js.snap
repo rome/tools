@@ -1,0 +1,20 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: iife-issue-5850-isolated.js
+
+---
+# Input
+```js
+const a = /** @param {*} b */
+((b) => {})();
+
+```
+
+# Output
+```js
+const a = /** @param {*} b */ ((b) => {})();
+
+```
+
+

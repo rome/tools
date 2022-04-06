@@ -1,0 +1,54 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: declare_class_fields.ts
+
+---
+# Input
+```js
+class B {p: number;}
+class C extends B {declare p: 256 | 1000;}
+class D {
+  declare field = "field";
+}
+declare class D {
+  field = "field";
+}
+
+```
+
+# Output
+```js
+class B {
+  p: number;
+}
+class C extends B {
+  declare p: 256 | 1000;
+}
+class D {
+  declare field = "field";
+}
+declare class D {
+  field = "field";
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Initializers are not allowed in ambient contexts.
+  ┌─ declare_class_fields.ts:4:17
+  │
+4 │   declare field = "field";
+  │                 ^^^^^^^^^
+
+error[SyntaxError]: Initializers are not allowed in ambient contexts.
+  ┌─ declare_class_fields.ts:7:9
+  │
+7 │   field = "field";
+  │         ^^^^^^^^^
+
+
+```
+
+

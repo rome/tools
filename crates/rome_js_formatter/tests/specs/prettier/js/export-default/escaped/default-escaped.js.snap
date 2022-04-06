@@ -1,0 +1,52 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: default-escaped.js
+
+---
+# Input
+```js
+// export asyn\u{63} from "async";
+export n\u{63} from "async";
+```
+
+# Output
+```js
+// export asyn\u{63} from "async";
+export
+n\u{63};
+from;
+"async";
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `*` but instead found `n\u{63}`
+  ┌─ default-escaped.js:2:8
+  │
+2 │ export n\u{63} from "async";
+  │        ^^^^^^^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ default-escaped.js:2:16
+  │
+2 │ export n\u{63} from "async";
+  │        --------^^^^
+  │        │       │
+  │        │       An explicit or implicit semicolon is expected here...
+  │        ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ default-escaped.js:2:21
+  │
+2 │ export n\u{63} from "async";
+  │                -----^^^^^^^
+  │                │    │
+  │                │    An explicit or implicit semicolon is expected here...
+  │                ...Which is required to end this statement
+
+
+```
+
+

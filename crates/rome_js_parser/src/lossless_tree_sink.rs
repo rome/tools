@@ -21,8 +21,8 @@ pub struct LosslessTreeSink<'a> {
 }
 
 impl<'a> TreeSink for LosslessTreeSink<'a> {
-    fn token(&mut self, kind: JsSyntaxKind, length: TextSize) {
-        self.do_token(kind, length);
+    fn token(&mut self, kind: JsSyntaxKind, end: TextSize) {
+        self.do_token(kind, end);
     }
 
     fn start_node(&mut self, kind: JsSyntaxKind) {
@@ -34,7 +34,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
         self.parents_count -= 1;
 
         if self.parents_count == 0 && self.needs_eof {
-            self.do_token(JsSyntaxKind::EOF, TextSize::default());
+            self.do_token(JsSyntaxKind::EOF, TextSize::from(self.text.len() as u32));
         }
 
         self.inner.finish_node();
@@ -69,7 +69,7 @@ impl<'a> LosslessTreeSink<'a> {
     }
 
     #[inline]
-    fn do_token(&mut self, kind: JsSyntaxKind, length: TextSize) {
+    fn do_token(&mut self, kind: JsSyntaxKind, token_end: TextSize) {
         if kind == JsSyntaxKind::EOF {
             self.needs_eof = false;
         }
@@ -80,7 +80,7 @@ impl<'a> LosslessTreeSink<'a> {
         self.eat_trivia(false);
         let trailing_start = self.trivia_pieces.len();
 
-        self.text_pos += length;
+        self.text_pos = token_end;
 
         // Everything until the next linebreak (but not including it)
         // will be the trailing trivia...

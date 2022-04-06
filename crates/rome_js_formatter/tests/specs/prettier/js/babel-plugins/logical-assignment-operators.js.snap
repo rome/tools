@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: logical-assignment-operators.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-logical-assignment-operators
+
+a ||= b;
+obj.a.b ||= c;
+
+a &&= b;
+obj.a.b &&= c;
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-logical-assignment-operators
+
+a ||= b;
+obj.a.b ||= c;
+
+a &&= b;
+obj.a.b &&= c;
+
+```
+
+

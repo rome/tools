@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: indexSignatureWithInitializer.ts
+
+---
+# Input
+```js
+// These used to be indexers, now they are computed properties
+interface I {
+    [x = '']: string;
+}
+
+class C {
+    [x = 0]: string
+}
+```
+
+# Output
+```js
+// These used to be indexers, now they are computed properties
+interface I { [x = ""]: string }
+
+class C {
+  [x = 0]: string;
+}
+
+```
+
+

@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: with_comments.js
+
+---
+# Input
+```js
+class A {
+  #foobar =
+    // comment to break
+    1 +
+    // comment to break again
+    2;
+}
+
+```
+
+# Output
+```js
+class A {
+  #foobar =
+  // comment to break
+  1 +
+    // comment to break again
+    2;
+}
+
+```
+
+

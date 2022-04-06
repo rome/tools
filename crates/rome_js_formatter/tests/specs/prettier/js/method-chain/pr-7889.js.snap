@@ -1,0 +1,47 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 149
+expression: pr-7889.js
+
+---
+# Input
+```js
+const Profile = view.with({ name: (state) => state.name }).as((props) => (
+  <div>
+    <h1>Hello, {props.name}</h1>
+  </div>
+))
+
+const Profile2 = view.with({ name }).as((props) => (
+  <div>
+    <h1>Hello, {props.name}</h1>
+  </div>
+))
+
+```
+
+# Output
+```js
+const Profile = view
+  .with({ name: (state) => state.name })
+  .as(
+    (props) => (
+      <div>
+    <h1>Hello, {props.name}</h1>
+  </div>
+    ),
+  );
+
+const Profile2 = view
+  .with({ name })
+  .as(
+    (props) => (
+      <div>
+    <h1>Hello, {props.name}</h1>
+  </div>
+    ),
+  );
+
+```
+
+

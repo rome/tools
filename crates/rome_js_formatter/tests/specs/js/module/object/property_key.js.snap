@@ -1,0 +1,28 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 157
+expression: property_key.js
+
+---
+# Input
+const foo = {
+  "foo-bar": true,
+  "bar": {
+    "lorem_ispsum": {
+      "lorem-ipsum": true
+    },
+  },
+};
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+const foo = {
+	"foo-bar": true,
+	"bar": { "lorem_ispsum": { "lorem-ipsum": true } },
+};
+

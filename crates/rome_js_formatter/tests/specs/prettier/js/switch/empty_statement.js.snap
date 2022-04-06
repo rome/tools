@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: empty_statement.js
+
+---
+# Input
+```js
+switch (error.code) {
+	case ConfigurationEditingErrorCode.ERROR_INVALID_CONFIGURATION: {
+		nls.localize('errorInvalidConfiguration', "Unable to write into settings. Correct errors/warnings in the file and try again.");
+	};
+}
+
+```
+
+# Output
+```js
+switch (error.code) {
+  case ConfigurationEditingErrorCode.ERROR_INVALID_CONFIGURATION:
+    {
+      nls.localize(
+        "errorInvalidConfiguration",
+        "Unable to write into settings. Correct errors/warnings in the file and try again.",
+      );
+    }
+}
+
+```
+
+

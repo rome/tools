@@ -1,0 +1,110 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: mapped_types.ts
+
+---
+# Input
+```js
+type A = {
+  // commentA
+  [a in A]: string;
+}
+
+type B = {
+  /* commentB */ [b in B]: string
+}
+
+type C = {
+  [/* commentC */ c in C]: string
+}
+
+type D = {
+  [d /* commentD */ in D]: string
+}
+
+type E = {
+  [e in /* commentE */ E]: string
+}
+
+type F = {
+  [f in F /* commentF */]: string
+}
+
+type G = {
+  [g in G] /* commentG */: string
+}
+
+type H = { /* commentH */ [h in H]: string }
+
+type I = { [/* commentI */ i in I]: string }
+
+type J = { [j /* commentJ */ in J]: string }
+
+type K = { [k in /* commentK */ K]: string }
+
+type L = { [l in L /* commentL */]: string }
+
+type M = { [m in M] /* commentG */: string }
+
+```
+
+# Output
+```js
+type A = {
+  // commentA
+  [a in A]: string;
+};
+
+type B = {
+  /* commentB */ [b in B]: string;
+};
+
+type C = {
+  [c in C]: string; /* commentC */
+};
+
+type D = {
+  [d in D]: string; /* commentD */
+};
+
+type E = {
+  [e in E]: string; /* commentE */
+};
+
+type F = {
+  [f in F]: string; /* commentF */
+};
+
+type G = {
+  [g in G]: string; /* commentG */
+};
+
+type H = {
+  /* commentH */
+  [h in H]: string;
+};
+
+type I = {
+  [i in I]: string; /* commentI */
+};
+
+type J = {
+  [j in J]: string; /* commentJ */
+};
+
+type K = {
+  [k in K]: string; /* commentK */
+};
+
+type L = {
+  [l in L]: string; /* commentL */
+};
+
+type M = {
+  [m in M]: string; /* commentG */
+};
+
+```
+
+

@@ -37,16 +37,15 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     pub fn start(&mut self) -> RewriteMarker {
         let pos = self.inner.events.len() as u32;
         self.skip_trivia(false);
-        self.inner.push_event(Event::tombstone(self.offset));
+        self.inner.push_event(Event::tombstone());
         RewriteMarker(Marker::new(pos, self.offset))
     }
 
     /// Bumps the passed in token
     pub fn bump(&mut self, token: RewriteToken) {
         self.skip_trivia(false);
-        self.inner
-            .push_token(token.kind, TextRange::at(self.offset, token.length));
-        self.offset += token.length;
+        self.inner.push_token(token.kind, token.end);
+        self.offset = token.end;
         self.skip_trivia(true);
     }
 
@@ -92,12 +91,12 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
 #[derive(Debug, Clone, Copy)]
 pub(crate) struct RewriteToken {
     pub(crate) kind: JsSyntaxKind,
-    length: TextSize,
+    end: TextSize,
 }
 
 impl RewriteToken {
-    pub fn new(kind: JsSyntaxKind, length: TextSize) -> Self {
-        Self { kind, length }
+    pub fn new(kind: JsSyntaxKind, end: TextSize) -> Self {
+        Self { kind, end }
     }
 }
 
@@ -107,12 +106,7 @@ pub(crate) struct RewriteMarker(Marker);
 impl RewriteMarker {
     /// Completes the node with the specified kind
     pub fn complete(self, p: &mut RewriteParser, kind: JsSyntaxKind) -> RewriteCompletedMarker {
-        let mut end_pos = p.inner.last_range().map(|t| t.end()).unwrap_or_default();
-        if end_pos < self.0.start {
-            end_pos = p.offset;
-        }
-
-        RewriteCompletedMarker(self.0.complete_at(p.inner, kind, end_pos))
+        RewriteCompletedMarker(self.0.complete(p.inner, kind))
     }
 }
 

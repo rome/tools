@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: getter-setter.js
+
+---
+# Input
+```js
+({ set x(foo) {} });
+({ get x() { return 1 } });
+({ set x(a) {} });
+({ get x() {} });
+
+```
+
+# Output
+```js
+({ set x(foo) {} });
+({
+  get x() {
+    return 1;
+  },
+});
+({ set x(a) {} });
+({ get x() {} });
+
+```
+
+

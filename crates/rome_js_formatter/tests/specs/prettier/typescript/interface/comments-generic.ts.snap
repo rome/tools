@@ -1,0 +1,80 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: comments-generic.ts
+
+---
+# Input
+```js
+interface ReallyReallyLongName<
+  TypeArgumentNumberOne,
+  TypeArgumentNumberTwo,
+  TypeArgumentNumberThree
+> // 1
+extends BaseInterface {}
+
+interface ReallyReallyLongName2<
+  TypeArgumentNumberOne,
+  TypeArgumentNumberTwo,
+  TypeArgumentNumberThree
+> // 1
+// 2
+extends BaseInterface {}
+
+interface ReallyReallyLongName3<
+  TypeArgumentNumberOne,
+  TypeArgumentNumberTwo,
+  TypeArgumentNumberThree
+> // 1
+// 2
+extends BaseInterface // 3
+{}
+
+interface Foo<
+  FOOOOOOOOOOOOOOOOOOOOOOOOOO,
+  FOOOOOOOOOOOOOOOOOOOOOOOOOO,
+  FOOOOOOOOOOOOOOOOOOOOOOOOOO
+> // comments
+  extends Foo {}
+
+```
+
+# Output
+```js
+interface ReallyReallyLongName<
+  TypeArgumentNumberOne,
+  TypeArgumentNumberTwo,
+  TypeArgumentNumberThree,
+> extends BaseInterface {} // 1
+
+interface ReallyReallyLongName2<
+  TypeArgumentNumberOne,
+  TypeArgumentNumberTwo,
+  TypeArgumentNumberThree,
+>
+  // 1
+  // 2
+  extends
+    BaseInterface
+{}
+
+interface ReallyReallyLongName3<
+  TypeArgumentNumberOne,
+  TypeArgumentNumberTwo,
+  TypeArgumentNumberThree,
+>
+  // 1
+  // 2
+  extends
+    BaseInterface // 3
+{}
+
+interface Foo<
+  FOOOOOOOOOOOOOOOOOOOOOOOOOO,
+  FOOOOOOOOOOOOOOOOOOOOOOOOOO,
+  FOOOOOOOOOOOOOOOOOOOOOOOOOO,
+> extends Foo {} // comments
+
+```
+
+

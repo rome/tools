@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 125
+expression: conditional.js
+
+---
+# Input
+```js
+(valid
+  ? helper.responseBody(this.currentUser)
+  : helper.responseBody(this.defaultUser))
+.prop;
+
+```
+
+# Output
+```js
+(
+  valid ? helper.responseBody(this.currentUser) : helper.responseBody(
+    this.defaultUser,
+  )
+).prop;
+
+```
+
+

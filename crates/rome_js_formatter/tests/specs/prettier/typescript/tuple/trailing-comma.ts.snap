@@ -1,0 +1,42 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: trailing-comma.ts
+
+---
+# Input
+```js
+export interface ShopQueryResult {
+  chic: boolean;
+  location: number[];
+  menus: Menu[];
+  openingDays: number[];
+  closingDays: [
+    {
+      from: string,
+      to: string,
+    }, // <== this one
+  ];
+  shop: string;
+  distance: number;
+}
+
+```
+
+# Output
+```js
+export interface ShopQueryResult {
+  chic: boolean,
+  location: number[],
+  menus: Menu[],
+  openingDays: number[],
+  closingDays: [
+    { from: string, to: string }, // <== this one
+  ],
+  shop: string,
+  distance: number,
+}
+
+```
+
+

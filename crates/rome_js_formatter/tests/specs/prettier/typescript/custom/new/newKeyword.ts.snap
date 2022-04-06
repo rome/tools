@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: newKeyword.ts
+
+---
+# Input
+```js
+var x: { y: new <T, U> () => [T, U] };
+
+interface I {
+    new <T>(x: string);
+    new (x: string);
+    new (x: number): number;
+}
+
+```
+
+# Output
+```js
+var x: { y: new<T, U>() => [T, U] };
+
+interface I { new<T>(x: string), new(x: string), new(x: number): number }
+
+```
+
+

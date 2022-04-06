@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: declarationEmitReadonly.ts
+
+---
+# Input
+```js
+// @declaration: true
+
+class C {
+    constructor(readonly x: number) {}
+}
+```
+
+# Output
+```js
+// @declaration: true
+
+class C {
+  constructor(readonly x: number) {}
+}
+
+```
+
+

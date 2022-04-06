@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: dynamic-import.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import
+
+// There is no example code on babel website
+
+import('./prettier.mjs');
+import(prettier);
+import('./prettier.mjs').then(module => console.log(module));
+import(prettier).then(module => console.log(module));
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import
+
+// There is no example code on babel website
+
+import("./prettier.mjs");
+import(prettier);
+import("./prettier.mjs").then((module) => console.log(module));
+import(prettier).then((module) => console.log(module));
+
+```
+
+

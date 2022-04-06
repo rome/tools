@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: classAppearsToHaveMembersOfObject.ts
+
+---
+# Input
+```js
+class C { foo: string; }
+
+var c: C;
+var r = c.toString();
+var r2 = c.hasOwnProperty('');
+var o: Object = c;
+var o2: {} = c;
+
+```
+
+# Output
+```js
+class C {
+  foo: string;
+}
+
+var c: C;
+var r = c.toString();
+var r2 = c.hasOwnProperty("");
+var o: Object = c;
+var o2: {} = c;
+
+```
+
+

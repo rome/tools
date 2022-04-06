@@ -1,0 +1,47 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: optional-catch-binding.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-optional-catch-binding
+
+try {
+  throw 0;
+} catch {
+  doSomethingWhichDoesNotCareAboutTheValueThrown();
+}
+
+try {
+  throw 0;
+} catch {
+  doSomethingWhichDoesNotCareAboutTheValueThrown();
+} finally {
+  doSomeCleanup();
+}
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-optional-catch-binding
+
+try {
+  throw 0;
+} catch {
+  doSomethingWhichDoesNotCareAboutTheValueThrown();
+}
+
+try {
+  throw 0;
+} catch {
+  doSomethingWhichDoesNotCareAboutTheValueThrown();
+} finally {
+  doSomeCleanup();
+}
+
+```
+
+

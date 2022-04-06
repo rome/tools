@@ -1,0 +1,81 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: pipeline-operator-hack.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
+// https://github.com/js-choi/proposal-hack-pipes
+
+return list
+ |> take(prefix.length, %)
+ |> equals(%, prefix);
+
+// (The % token isn't final; it might instead be @ or ? or #.)
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
+// https://github.com/js-choi/proposal-hack-pipes
+
+return list
+ |> take(prefix.length, %)
+ |> equals(%, prefix);
+// (The % token isn't final; it might instead be @ or ? or #.)
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
+  ┌─ pipeline-operator-hack.js:5:3
+  │
+5 │  |> take(prefix.length, %)
+  │   ^ This operator requires a left hand side value
+
+error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
+  ┌─ pipeline-operator-hack.js:5:25
+  │
+5 │  |> take(prefix.length, %)
+  │                         ^ This operator requires a left hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ pipeline-operator-hack.js:5:26
+  │
+5 │  |> take(prefix.length, %)
+  │                          ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
+  ┌─ pipeline-operator-hack.js:6:3
+  │
+6 │  |> equals(%, prefix);
+  │   ^ This operator requires a left hand side value
+
+error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
+  ┌─ pipeline-operator-hack.js:6:12
+  │
+6 │  |> equals(%, prefix);
+  │            ^ This operator requires a left hand side value
+
+error[SyntaxError]: expected an expression but instead found ','
+  ┌─ pipeline-operator-hack.js:6:13
+  │
+6 │  |> equals(%, prefix);
+  │             ^ Expected an expression here
+
+error[SyntaxError]: Illegal return statement outside of a function
+  ┌─ pipeline-operator-hack.js:4:1
+  │  
+4 │ ┌ return list
+5 │ │  |> take(prefix.length, %)
+6 │ │  |> equals(%, prefix);
+  │ └──────────────────────^
+
+
+```
+
+

@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: class.js
+
+---
+# Input
+```js
+// #8718
+class C {
+    ma() {} /* D */ /* E */
+    mb() {}
+}
+
+class D {
+    ma() {} /* D */ /* E */ /* F */
+    mb() {}
+}
+
+```
+
+# Output
+```js
+// #8718
+class C {
+  ma() {} /* D */ /* E */
+  mb() {}
+}
+
+class D {
+  ma() {} /* D */ /* E */ /* F */
+  mb() {}
+}
+
+```
+
+

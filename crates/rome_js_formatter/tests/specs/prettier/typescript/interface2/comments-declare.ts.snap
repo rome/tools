@@ -1,0 +1,25 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: comments-declare.ts
+
+---
+# Input
+```js
+declare interface a // 1
+  extends b  // 2
+{  foo: boolean}
+
+```
+
+# Output
+```js
+declare interface a
+  // 1
+  extends
+    b // 2
+{ foo: boolean }
+
+```
+
+

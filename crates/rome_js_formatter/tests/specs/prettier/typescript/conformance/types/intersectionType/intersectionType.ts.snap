@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 119
+expression: intersectionType.ts
+
+---
+# Input
+```js
+type A = & string;
+type B =
+  & { foo: string }
+  & { bar: number };
+
+type C = [& { foo: 1 } & { bar: 2 }, & { foo: 3 } & { bar: 4 }];
+
+```
+
+# Output
+```js
+type A = string;
+type B = { foo: string } & { bar: number };
+
+type C = [{ foo: 1 } & { bar: 2 }, { foo: 3 } & { bar: 4 }];
+
+```
+
+

@@ -1,0 +1,54 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: abstractNewlineHandling.ts
+
+---
+# Input
+```js
+var
+abstract
+class X {}
+
+const
+abstract
+class Y {}
+
+export let
+abstract
+class Y {}
+
+let
+abstract
+export class Y {}
+
+```
+
+# Output
+```js
+var abstract;
+class X {}
+
+const abstract;
+class Y {}
+
+export let abstract;
+class Y {}
+
+let abstract;
+export class Y {}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Const var declarations must have an initialized value
+  ┌─ abstractNewlineHandling.ts:6:1
+  │
+6 │ abstract
+  │ ^^^^^^^^ this variable needs to be initialized
+
+
+```
+
+

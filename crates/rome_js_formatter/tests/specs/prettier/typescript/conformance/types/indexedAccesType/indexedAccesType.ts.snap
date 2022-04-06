@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+expression: indexedAccesType.ts
+---
+# Input
+```js
+const a: Foo['bar'] = {
+  baz: 'yawp'
+}
+
+```
+
+# Output
+```js
+const a: Foo["bar"] = { baz: "yawp" };
+
+```
+
+

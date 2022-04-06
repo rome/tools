@@ -6,11 +6,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_diagnostics = { path = "../rome_diagnostics" }
 rome_markup = { path = "../rome_markup" }
 lazy_static = "1.4.0"
 termcolor = "1.1.2"
 similar = "2.1.0"
+unicode-width = "0.1.9"
 
 [dev-dependencies]
 trybuild = "1.0"

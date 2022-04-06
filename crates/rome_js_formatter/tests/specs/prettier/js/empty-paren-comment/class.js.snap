@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: class.js
+
+---
+# Input
+```js
+class x {
+  /**
+  * Set of default settings to be applied to model fetch calls in DAO layer.
+  */
+  static get defaultSettings() {
+  }
+}
+
+```
+
+# Output
+```js
+class x {
+  /**
+  * Set of default settings to be applied to model fetch calls in DAO layer.
+  */
+  static get defaultSettings() {}
+}
+
+```
+
+

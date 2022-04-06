@@ -237,10 +237,7 @@ fn parse_import_default_or_named_clause_rest(
             parse_named_import(p).or_add_diagnostic(p, expected_named_import);
 
             if is_typed {
-                let end = p
-                    .last_range()
-                    .map(|r| r.end())
-                    .unwrap_or_else(|| p.cur_range().start());
+                let end = p.last_end().unwrap_or_else(|| p.cur_range().start());
 
                 // test_err ts ts_typed_default_import_with_named
                 // import type A, { B, C } from './a';

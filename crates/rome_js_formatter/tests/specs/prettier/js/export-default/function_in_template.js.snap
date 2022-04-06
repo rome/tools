@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: function_in_template.js
+
+---
+# Input
+```js
+export default (function templ() {})`foo`;
+
+```
+
+# Output
+```js
+export default (function templ() {})`foo`;
+
+```
+
+

@@ -11,7 +11,7 @@ serde_json = "1.0.74"
 serde = { version = "1.0.133", features = ["derive"] }
 anyhow = "1.0.52"
 indexmap = "1.8.0"
-rome_formatter = { path = "../rome_formatter" }
+rome_js_formatter = { path = "../rome_js_formatter" }
 rome_analyze = { path = "../rome_analyze" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 rome_js_parser = { path = "../rome_js_parser" }

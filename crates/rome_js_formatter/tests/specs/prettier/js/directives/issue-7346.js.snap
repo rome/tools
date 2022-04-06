@@ -1,0 +1,25 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: issue-7346.js
+
+---
+# Input
+```js
+('bar'); // parens should not be removed to avoid becoming a directive
+`foo`;
+'bar'; // parens should be added, see https://github.com/prettier/prettier/issues/7346#issuecomment-574823604
+'"';
+
+```
+
+# Output
+```js
+("bar"); // parens should not be removed to avoid becoming a directive
+`foo`;
+"bar"; // parens should be added, see https://github.com/prettier/prettier/issues/7346#issuecomment-574823604
+'"';
+
+```
+
+

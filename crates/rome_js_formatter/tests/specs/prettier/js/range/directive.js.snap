@@ -1,0 +1,21 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: directive.js
+
+---
+# Input
+```js
+'aaa';
+'bbb';
+
+```
+
+# Output
+```js
+'aaa';
+'bbb';
+
+```
+
+

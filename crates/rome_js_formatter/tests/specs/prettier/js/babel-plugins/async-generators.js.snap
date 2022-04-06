@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 121
+expression: async-generators.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-async-generator-functions
+
+async function* agf() {
+  await 1;
+  yield 2;
+}
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-async-generator-functions
+
+async function* agf() {
+  await 1;
+  yield 2;
+}
+
+```
+
+

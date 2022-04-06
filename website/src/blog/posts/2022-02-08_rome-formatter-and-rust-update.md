@@ -2,7 +2,7 @@
 title: Rome Formatter and Rust Update
 description: An update from the Rome team on the Rust rewrite progress
 author_name: Rome Team
-author_avatar: /img/favicon.svg
+author_avatar: /img/circle-indent-logo.png
 date: 2022-02-08
 tags:
 	- update

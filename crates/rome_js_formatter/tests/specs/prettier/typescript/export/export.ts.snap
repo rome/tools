@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: export.ts
+
+---
+# Input
+```js
+declare module "hello" {
+    export default Hello;
+}
+
+declare module "hello" {
+    export = Hello;
+}
+
+```
+
+# Output
+```js
+declare module "hello" {
+  export default Hello;
+}
+
+declare module "hello" {
+  export = Hello;
+}
+
+```
+
+

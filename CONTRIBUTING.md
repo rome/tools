@@ -168,8 +168,8 @@ from the main repository (not a fork), use these comments to run specific workfl
 
 ### Formatter
 
-- [write tests for the formatter](/crates/rome_formatter/docs/write_tests.md)
-- [implement the formatter](/crates/rome_formatter/docs/implement_the_formatter.md)
+- [write tests for the formatter](/crates/rome_js_formatter/docs/write_tests.md)
+- [implement the formatter](/crates/rome_js_formatter/docs/implement_the_formatter.md)
 
 ### Versioning
 

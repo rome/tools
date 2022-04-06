@@ -1,0 +1,97 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 123
+expression: jsdoc_only_types.ts
+
+---
+# Input
+```js
+let a: *;
+function b(x: ?) {}
+let c: ?string;
+let d: string?;
+let e: ?(string | number);
+let f: !string;
+let g: string!;
+let h: !(string | number);
+
+```
+
+# Output
+```js
+let a:
+*
+function b(x: ?) {}
+let c:
+?string
+let d: string;
+?
+let e:
+?(string | number)
+let f:
+!string;
+let g: string;
+!;
+let h:
+!(string | number);
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a type but instead found '*'
+  ┌─ jsdoc_only_types.ts:1:8
+  │
+1 │ let a: *;
+  │        ^ Expected a type here
+
+error[SyntaxError]: expected a type but instead found '?'
+  ┌─ jsdoc_only_types.ts:2:15
+  │
+2 │ function b(x: ?) {}
+  │               ^ Expected a type here
+
+error[SyntaxError]: expected a type but instead found '?'
+  ┌─ jsdoc_only_types.ts:3:8
+  │
+3 │ let c: ?string;
+  │        ^ Expected a type here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ jsdoc_only_types.ts:4:14
+  │
+4 │ let d: string?;
+  │ -------------^ An explicit or implicit semicolon is expected here...
+  │ │             
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected a type but instead found '?'
+  ┌─ jsdoc_only_types.ts:5:8
+  │
+5 │ let e: ?(string | number);
+  │        ^ Expected a type here
+
+error[SyntaxError]: expected a type but instead found '!'
+  ┌─ jsdoc_only_types.ts:6:8
+  │
+6 │ let f: !string;
+  │        ^ Expected a type here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ jsdoc_only_types.ts:7:14
+  │
+7 │ let g: string!;
+  │ -------------^ An explicit or implicit semicolon is expected here...
+  │ │             
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected a type but instead found '!'
+  ┌─ jsdoc_only_types.ts:8:8
+  │
+8 │ let h: !(string | number);
+  │        ^ Expected a type here
+
+
+```
+
+

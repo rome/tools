@@ -1,0 +1,59 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: typeorm.ts
+
+---
+# Input
+```js
+@Entity()
+export class Board {
+
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    slug: string;
+
+    @Column()
+    name: string;
+
+    @Column()
+    theme: string;
+
+    @Column()
+    description: string;
+
+    @OneToMany(type => Topic, topic => topic.board)
+    topics: Topic[]
+
+}
+
+```
+
+# Output
+```js
+@Entity()
+export class Board {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  slug: string;
+
+  @Column()
+  name: string;
+
+  @Column()
+  theme: string;
+
+  @Column()
+  description: string;
+
+  @OneToMany(type => Topic, topic => topic.board)
+  topics: Topic[];
+}
+
+```
+
+

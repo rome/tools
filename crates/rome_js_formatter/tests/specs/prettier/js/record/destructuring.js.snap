@@ -1,0 +1,106 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 144
+expression: destructuring.js
+
+---
+# Input
+```js
+const { a, b } = #{ a: 1, b: 2 };
+assert(a === 1);
+assert(b === 2);
+
+const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+assert(a === 1);
+assert(typeof rest === "object");
+assert(rest.b === 2);
+assert(rest.c === 3);
+
+```
+
+# Output
+```js
+const { a, b } = #
+{
+  a: 1, b;
+  : 2
+}
+assert(a === 1);
+assert(b === 2);
+
+const { a, ...rest } = #
+{
+  a: 1, b;
+  : 2, c: 3
+}
+assert(a === 1);
+assert(typeof rest === "object");
+assert(rest.b === 2);
+assert(rest.c === 3);
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an identifier but instead found '{'
+  ┌─ destructuring.js:1:19
+  │
+1 │ const { a, b } = #{ a: 1, b: 2 };
+  │                   ^ Expected an identifier here
+
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+  ┌─ destructuring.js:1:18
+  │
+1 │ const { a, b } = #{ a: 1, b: 2 };
+  │                  ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ destructuring.js:1:19
+  │
+1 │ const { a, b } = #{ a: 1, b: 2 };
+  │ ------------------^ An explicit or implicit semicolon is expected here...
+  │ │                  
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ destructuring.js:1:28
+  │
+1 │ const { a, b } = #{ a: 1, b: 2 };
+  │                        ----^
+  │                        │   │
+  │                        │   An explicit or implicit semicolon is expected here...
+  │                        ...Which is required to end this statement
+
+error[SyntaxError]: expected an identifier but instead found '{'
+  ┌─ destructuring.js:5:25
+  │
+5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+  │                         ^ Expected an identifier here
+
+error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
+  ┌─ destructuring.js:5:24
+  │
+5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+  │                        ^
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ destructuring.js:5:25
+  │
+5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+  │ ------------------------^ An explicit or implicit semicolon is expected here...
+  │ │                        
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ destructuring.js:5:34
+  │
+5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+  │                              ----^
+  │                              │   │
+  │                              │   An explicit or implicit semicolon is expected here...
+  │                              ...Which is required to end this statement
+
+
+```
+
+
