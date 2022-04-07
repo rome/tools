@@ -15,7 +15,12 @@ enum LoadingState { Loading, Success, Error }
 
 function formatWithPrettier(
 	code: string,
-	options: { lineWidth: number, indentStyle: IndentStyle, indentWidth: number },
+	options: {
+		lineWidth: number,
+		indentStyle: IndentStyle,
+		indentWidth: number,
+		language: "js" | "ts",
+	},
 ) {
 	try {
 		return prettier.format(
@@ -24,12 +29,21 @@ function formatWithPrettier(
 				useTabs: options.indentStyle === IndentStyle.Tab,
 				tabWidth: options.indentWidth,
 				printWidth: options.lineWidth,
-				parser: "babel",
+				parser: getPrettierParser(options.language),
 				plugins: [parserBabel],
 			},
 		);
 	} catch (err) {
 		return code;
+	}
+}
+
+function getPrettierParser(language: "js" | "ts"): string {
+	switch (language) {
+		case "js":
+			return "babel";
+		case "ts":
+			return "babel-ts";
 	}
 }
 
@@ -171,7 +185,7 @@ function App() {
 									<h1>Rome</h1>
 									<CodeEditor
 										value={formatted_code}
-										language="js"
+										language={language}
 										placeholder="Rome Output"
 										style={{
 											fontSize: 12,
@@ -187,8 +201,9 @@ function App() {
 											lineWidth,
 											indentStyle,
 											indentWidth,
+											language: isTypeScript ? "ts" : "js"
 										})}
-										language="js"
+										language={language}
 										placeholder="Prettier Output"
 										style={{
 											fontSize: 12,

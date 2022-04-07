@@ -7,7 +7,7 @@
 		"build": "npm run build:wasm && npm run build:js",
 		"build:js": "tsc && vite build",
 		"build:wasm": "wasm-pack build --target web --release",
-		"format": "cargo run -p rome_cli --release -- format ./src"
+		"format": "cargo run -p rome_cli --release -- format --write ./src"
 	},
 	"dependencies": {
 		"@uiw/react-textarea-code-editor": "^1.4.16",
