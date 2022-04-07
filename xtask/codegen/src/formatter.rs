@@ -11,7 +11,7 @@ use proc_macro2::{Ident, Span};
 use quote::quote;
 use xtask::project_root;
 
-use crate::ast::load_ast;
+use crate::ast::load_js_ast;
 
 struct GitRepo {
     repo: Repository,
@@ -236,7 +236,7 @@ enum NodeKind {
 pub fn generate_formatter() {
     let repo = GitRepo::open();
 
-    let ast = load_ast();
+    let ast = load_js_ast();
 
     // Store references to all the files created by the codegen
     // script to build the module import files
