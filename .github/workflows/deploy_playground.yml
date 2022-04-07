@@ -4,8 +4,11 @@ name: Deploy Playground
 
 on:
   workflow_dispatch:
-  push:
-
+  pull_request:
+    paths:
+      - "website/playground"
+    branches:
+      - main
 
 
 jobs:
