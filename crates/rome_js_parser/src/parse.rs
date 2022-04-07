@@ -46,7 +46,8 @@ impl<T> Parse<T> {
     ///
     /// ```
     /// use rome_js_parser::parse_script;
-    /// use rome_js_syntax::{JsIfStatement, SyntaxNodeExt, JsSyntaxKind, AstNode, AstNodeList};
+    /// use rome_rowan::{AstNode, AstNodeList};
+    /// use rome_js_syntax::{JsIfStatement, SyntaxNodeExt, JsSyntaxKind};
     ///
     /// let parse = parse_script(
     /// "
@@ -129,6 +130,7 @@ pub fn parse_common(
 /// ```
 /// use rome_js_parser::parse_script;
 /// use rome_js_syntax::{JsSyntaxToken, SyntaxNodeExt,  JsSyntaxList, util, JsComputedMemberExpression};
+/// use rome_rowan::AstNode;
 ///
 /// let parse = parse_script("foo.bar[2]", 0);
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
