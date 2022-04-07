@@ -417,220 +417,189 @@ pub mod support {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use crate::ast::{AstSeparatedElement, AstSeparatedList};
-//     use crate::{AstNode, AstSeparatedList, JsLanguage, JsNumberLiteralExpression, JsSyntaxFactory, JsSyntaxKind, SyntaxList, SyntaxNode, SyntaxResult};
-//     use rome_rowan::{SyntaxList, TreeBuilder};
-//
-//     struct TestList {
-//         syntax_list: SyntaxList<JsLanguage>,
-//     }
-//
-//     impl TestList {
-//         fn new(list: SyntaxList<JsLanguage>) -> Self {
-//             Self { syntax_list: list }
-//         }
-//     }
-//
-//     impl AstSeparatedList<JsNumberLiteralExpression> for TestList {
-//         fn syntax_list(&self) -> &crate::SyntaxList {
-//             &self.syntax_list
-//         }
-//     }
-//
-//     impl AstNode for TestList {
-//         fn can_cast(_: JsSyntaxKind) -> bool {
-//             unimplemented!()
-//         }
-//
-//         fn cast(_: SyntaxNode) -> Option<Self>
-//         where
-//             Self: Sized,
-//         {
-//             unimplemented!()
-//         }
-//
-//         fn syntax(&self) -> &SyntaxNode {
-//             self.syntax_list.node()
-//         }
-//     }
-//
-//     /// Creates a ast separated list over a sequence of numbers separated by ",".
-//     /// The elements are pairs of: (value, separator).
-//     fn build_list<'a>(
-//         elements: impl IntoIterator<Item = (Option<i32>, Option<&'a str>)>,
-//     ) -> TestList {
-//         let mut builder: TreeBuilder<JsLanguage, JsSyntaxFactory> = TreeBuilder::new();
-//
-//         builder.start_node(JsSyntaxKind::JS_ARRAY_ELEMENT_LIST);
-//
-//         for (node, separator) in elements.into_iter() {
-//             if let Some(node) = node {
-//                 builder.start_node(JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
-//                 builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
-//                 builder.finish_node();
-//             }
-//
-//             if let Some(separator) = separator {
-//                 builder.token(JsSyntaxKind::COMMA, separator);
-//             }
-//         }
-//
-//         builder.finish_node();
-//
-//         let node = builder.finish();
-//
-//         TestList::new(node.into_list())
-//     }
-//
-//     fn assert_elements<'a>(
-//         actual: impl Iterator<Item = AstSeparatedElement<JsNumberLiteralExpression>>,
-//         expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
-//     ) {
-//         let actual = actual.map(|element| {
-//             (
-//                 element.node.ok().map(|n| n.as_number().unwrap()),
-//                 element
-//                     .trailing_separator
-//                     .ok()
-//                     .flatten()
-//                     .map(|separator| separator.text().to_string()),
-//             )
-//         });
-//
-//         let expected = expected
-//             .into_iter()
-//             .map(|(value, separator)| (value, separator.map(|sep| sep.to_string())))
-//             .collect::<Vec<_>>();
-//
-//         assert_eq!(actual.collect::<Vec<_>>(), expected);
-//     }
-//
-//     fn assert_nodes(
-//         actual: impl Iterator<Item = SyntaxResult<JsNumberLiteralExpression>>,
-//         expected: impl IntoIterator<Item = f64>,
-//     ) {
-//         assert_eq!(
-//             actual
-//                 .map(|literal| literal.unwrap().as_number().unwrap())
-//                 .collect::<Vec<_>>(),
-//             expected.into_iter().collect::<Vec<_>>()
-//         );
-//     }
-//
-//     #[test]
-//     fn empty() {
-//         let list = build_list(vec![]);
-//
-//         assert_eq!(list.len(), 0);
-//         assert!(list.is_empty());
-//         assert_eq!(list.separators().count(), 0);
-//
-//         assert_nodes(list.iter(), vec![]);
-//         assert_elements(list.elements(), vec![]);
-//         assert_eq!(list.trailing_separator(), None);
-//     }
-//
-//     #[test]
-//     fn separated_list() {
-//         let list = build_list(vec![
-//             (Some(1), Some(",")),
-//             (Some(2), Some(",")),
-//             (Some(3), Some(",")),
-//             (Some(4), None),
-//         ]);
-//
-//         assert_eq!(list.len(), 4);
-//         assert!(!list.is_empty());
-//         assert_eq!(list.separators().count(), 3);
-//
-//         assert_nodes(list.iter(), vec![1., 2., 3., 4.]);
-//         assert_elements(
-//             list.elements(),
-//             vec![
-//                 (Some(1.), Some(",")),
-//                 (Some(2.), Some(",")),
-//                 (Some(3.), Some(",")),
-//                 (Some(4.), None),
-//             ],
-//         );
-//         assert_eq!(list.trailing_separator(), None);
-//     }
-//
-//     #[test]
-//     fn separated_with_trailing() {
-//         // list(1, 2, 3, 4,)
-//         let list = build_list(vec![
-//             (Some(1), Some(",")),
-//             (Some(2), Some(",")),
-//             (Some(3), Some(",")),
-//             (Some(4), Some(",")),
-//         ]);
-//
-//         assert_eq!(list.len(), 4);
-//         assert!(!list.is_empty());
-//         assert_nodes(list.iter(), vec![1., 2., 3., 4.]);
-//         assert_eq!(list.separators().count(), 4);
-//
-//         assert_elements(
-//             list.elements(),
-//             vec![
-//                 (Some(1.), Some(",")),
-//                 (Some(2.), Some(",")),
-//                 (Some(3.), Some(",")),
-//                 (Some(4.), Some(",")),
-//             ],
-//         );
-//         assert!(list.trailing_separator().is_some());
-//     }
-//
-//     #[test]
-//     fn separated_with_two_successive_separators() {
-//         // list([1,,])
-//         let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
-//
-//         assert_eq!(list.len(), 2);
-//         assert!(!list.is_empty());
-//         assert_eq!(list.separators().count(), 2);
-//
-//         assert_elements(
-//             list.elements(),
-//             vec![(Some(1.), Some(",")), (None, Some(","))],
-//         );
-//     }
-//
-//     #[test]
-//     fn separated_with_leading_separator() {
-//         // list([,3])
-//         let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
-//
-//         assert_eq!(list.len(), 2);
-//         assert!(!list.is_empty());
-//         assert_eq!(list.separators().count(), 1);
-//
-//         assert_elements(
-//             list.elements(),
-//             vec![
-//                 // missing first element
-//                 (None, Some(",")),
-//                 (Some(3.), None),
-//             ],
-//         );
-//     }
-//
-//     #[test]
-//     fn separated_with_two_successive_nodes() {
-//         // list([1 2,])
-//         let list = build_list(vec![(Some(1), None), (Some(2), Some(","))]);
-//
-//         assert_eq!(list.len(), 2);
-//         assert!(!list.is_empty());
-//         assert_eq!(list.separators().count(), 2);
-//
-//         assert_elements(
-//             list.elements(),
-//             vec![(Some(1.), None), (Some(2.), Some(","))],
-//         );
-//     }
-// }
+#[cfg(test)]
+mod tests {
+    use crate::raw_language::{
+        LiteralExpression, RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder,
+        SeparatedExpressionList,
+    };
+    use crate::{AstNode, AstSeparatedElement, AstSeparatedList, SyntaxResult};
+
+    /// Creates a ast separated list over a sequence of numbers separated by ",".
+    /// The elements are pairs of: (value, separator).
+    fn build_list<'a>(
+        elements: impl IntoIterator<Item = (Option<i32>, Option<&'a str>)>,
+    ) -> SeparatedExpressionList {
+        let mut builder = RawSyntaxTreeBuilder::new();
+
+        builder.start_node(RawLanguageKind::SEPARATED_EXPRESSION_LIST);
+
+        for (node, separator) in elements.into_iter() {
+            if let Some(node) = node {
+                builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+                builder.token(RawLanguageKind::NUMBER_TOKEN, node.to_string().as_str());
+                builder.finish_node();
+            }
+
+            if let Some(separator) = separator {
+                builder.token(RawLanguageKind::COMMA_TOKEN, separator);
+            }
+        }
+
+        builder.finish_node();
+
+        let node = builder.finish();
+
+        SeparatedExpressionList::new(node.into_list())
+    }
+
+    fn assert_elements<'a>(
+        actual: impl Iterator<Item = AstSeparatedElement<RawLanguage, LiteralExpression>>,
+        expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
+    ) {
+        let actual = actual.map(|element| {
+            (
+                element.node.ok().map(|n| n.text().parse::<f64>().unwrap()),
+                element
+                    .trailing_separator
+                    .ok()
+                    .flatten()
+                    .map(|separator| separator.text().to_string()),
+            )
+        });
+
+        let expected = expected
+            .into_iter()
+            .map(|(value, separator)| (value, separator.map(|sep| sep.to_string())))
+            .collect::<Vec<_>>();
+
+        assert_eq!(actual.collect::<Vec<_>>(), expected);
+    }
+
+    fn assert_nodes(
+        actual: impl Iterator<Item = SyntaxResult<LiteralExpression>>,
+        expected: impl IntoIterator<Item = f64>,
+    ) {
+        assert_eq!(
+            actual
+                .map(|literal| literal.unwrap().text().parse::<f64>().unwrap())
+                .collect::<Vec<_>>(),
+            expected.into_iter().collect::<Vec<_>>()
+        );
+    }
+
+    #[test]
+    fn empty() {
+        let list = build_list(vec![]);
+
+        assert_eq!(list.len(), 0);
+        assert!(list.is_empty());
+        assert_eq!(list.separators().count(), 0);
+
+        assert_nodes(list.iter(), vec![]);
+        assert_elements(list.elements(), vec![]);
+        assert_eq!(list.trailing_separator(), None);
+    }
+
+    #[test]
+    fn separated_list() {
+        let list = build_list(vec![
+            (Some(1), Some(",")),
+            (Some(2), Some(",")),
+            (Some(3), Some(",")),
+            (Some(4), None),
+        ]);
+
+        assert_eq!(list.len(), 4);
+        assert!(!list.is_empty());
+        assert_eq!(list.separators().count(), 3);
+
+        assert_nodes(list.iter(), vec![1., 2., 3., 4.]);
+        assert_elements(
+            list.elements(),
+            vec![
+                (Some(1.), Some(",")),
+                (Some(2.), Some(",")),
+                (Some(3.), Some(",")),
+                (Some(4.), None),
+            ],
+        );
+        assert_eq!(list.trailing_separator(), None);
+    }
+
+    #[test]
+    fn separated_with_trailing() {
+        // list(1, 2, 3, 4,)
+        let list = build_list(vec![
+            (Some(1), Some(",")),
+            (Some(2), Some(",")),
+            (Some(3), Some(",")),
+            (Some(4), Some(",")),
+        ]);
+
+        assert_eq!(list.len(), 4);
+        assert!(!list.is_empty());
+        assert_nodes(list.iter(), vec![1., 2., 3., 4.]);
+        assert_eq!(list.separators().count(), 4);
+
+        assert_elements(
+            list.elements(),
+            vec![
+                (Some(1.), Some(",")),
+                (Some(2.), Some(",")),
+                (Some(3.), Some(",")),
+                (Some(4.), Some(",")),
+            ],
+        );
+        assert!(list.trailing_separator().is_some());
+    }
+
+    #[test]
+    fn separated_with_two_successive_separators() {
+        // list([1,,])
+        let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
+
+        assert_eq!(list.len(), 2);
+        assert!(!list.is_empty());
+        assert_eq!(list.separators().count(), 2);
+
+        assert_elements(
+            list.elements(),
+            vec![(Some(1.), Some(",")), (None, Some(","))],
+        );
+    }
+
+    #[test]
+    fn separated_with_leading_separator() {
+        // list([,3])
+        let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
+
+        assert_eq!(list.len(), 2);
+        assert!(!list.is_empty());
+        assert_eq!(list.separators().count(), 1);
+
+        assert_elements(
+            list.elements(),
+            vec![
+                // missing first element
+                (None, Some(",")),
+                (Some(3.), None),
+            ],
+        );
+    }
+
+    #[test]
+    fn separated_with_two_successive_nodes() {
+        // list([1 2,])
+        let list = build_list(vec![(Some(1), None), (Some(2), Some(","))]);
+
+        assert_eq!(list.len(), 2);
+        assert!(!list.is_empty());
+        assert_eq!(list.separators().count(), 2);
+
+        assert_elements(
+            list.elements(),
+            vec![(Some(1.), None), (Some(2.), Some(","))],
+        );
+    }
+}
