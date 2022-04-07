@@ -14,8 +14,6 @@ pub const CSS_KINDS_SRC: KindsSrc = KindsSrc {
         (">", "R_ANGLE"),
         ("~", "TILDE"),
         ("#", "HASH"),
-        // These are *not* question AND dot tokens, they are one
-        // to distinguish between `? .3134` and `?.` per ecma specs
         ("&", "AMP"),
         ("|", "PIPE"),
         ("+", "PLUS"),

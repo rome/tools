@@ -1,10 +1,9 @@
-use proc_macro2::{Punct, Spacing, TokenStream, TokenTree};
-use std::collections::HashMap;
-
 use crate::css_kinds_src::CSS_KINDS_SRC;
 use crate::kinds_src::{AstSrc, Field, TokenKind, JS_KINDS_SRC};
 use crate::{to_lower_snake_case, to_upper_snake_case, LanguageKind};
-use quote::{format_ident, quote, TokenStreamExt};
+use proc_macro2::Literal;
+use quote::{format_ident, quote};
+use std::collections::HashMap;
 use xtask::Result;
 
 pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
@@ -742,20 +741,8 @@ pub(crate) fn token_kind_to_code(
         // $ is valid syntax in rust and it's part of macros,
         // so we need to decorate the tokens with quotes
         if name == "$=" {
-            let mut stream = TokenStream::new();
-            // proc_macro returns two puncts, where the second one has a trailing space
-            // here we create a new token stream where we remove that space
-            let tokens: proc_macro2::TokenStream = name.parse().unwrap();
-
-            stream.append(Punct::new('"', Spacing::Joint));
-            for token in tokens {
-                if let TokenTree::Punct(token) = token {
-                    stream.append(Punct::new(token.as_char(), Spacing::Joint))
-                }
-            }
-            stream.append(Punct::new('"', Spacing::Joint));
-
-            quote! { T![#stream] }
+            let token = Literal::string(name);
+            quote! { T![#token] }
         } else {
             let token: proc_macro2::TokenStream = name.parse().unwrap();
             quote! { T![#token] }

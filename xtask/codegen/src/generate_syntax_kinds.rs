@@ -1,5 +1,5 @@
 use crate::{to_upper_snake_case, LanguageKind, Result};
-use proc_macro2::{Punct, Spacing};
+use proc_macro2::{Literal, Punct, Spacing};
 use quote::{format_ident, quote};
 
 use super::kinds_src::KindsSrc;
@@ -17,15 +17,8 @@ pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> 
             let c = token.chars().next().unwrap();
             quote! { #c }
         } else if *token == "$=" {
-            let mut puncts: Vec<Punct> = Vec::with_capacity(token.len() + 2);
-            puncts.push(Punct::new('"', Spacing::Joint));
-            let cs: Vec<_> = token
-                .chars()
-                .map(|c| Punct::new(c, Spacing::Joint))
-                .collect();
-            puncts.extend(cs);
-            puncts.push(Punct::new('"', Spacing::Alone));
-            quote! { #(#puncts)* }
+            let token = Literal::string(*token);
+            quote! { #token }
         } else {
             let cs = token.chars().map(|c| Punct::new(c, Spacing::Joint));
             quote! { #(#cs)* }
