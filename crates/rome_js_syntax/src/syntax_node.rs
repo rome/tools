@@ -24,6 +24,4 @@ pub type JsSyntaxList = rome_rowan::SyntaxList<JsLanguage>;
 pub type SyntaxResult<T> = rome_rowan::SyntaxResult<T>;
 pub type SyntaxError = rome_rowan::SyntaxError;
 
-pub use rome_rowan::NodeOrToken;
-
 pub type JsSyntaxTreeBuilder = TreeBuilder<'static, JsLanguage, JsSyntaxFactory>;
