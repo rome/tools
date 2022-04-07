@@ -18,16 +18,40 @@ use crate::{Language, SyntaxList, SyntaxNode, SyntaxToken};
 /// the same representation: a pointer to the tree root and a pointer to the
 /// node itself.
 pub trait AstNode<L: Language> {
-    fn can_cast(kind: L::Kind) -> bool
+    /// Returns `true` if a node with the given kind can be cased to this AST node.
+    fn can_cast(kind: L::Kind) -> bool;
+
+    /// Tries to cast the passed syntax node to this AST node.
+    ///
+    /// # Returns
+    ///
+    /// [None] if the passed node is of a different kind. [Some] otherwise.
+    fn try_cast(syntax: SyntaxNode<L>) -> Option<Self>
     where
         Self: Sized;
 
-    fn cast(syntax: SyntaxNode<L>) -> Option<Self>
-    where
-        Self: Sized;
-
+    /// Returns the underlying syntax node.
     fn syntax(&self) -> &SyntaxNode<L>;
 
+    /// Cast this node to this AST node
+    ///
+    /// # Panics
+    /// Panics if the underlying node cannot be cast to this AST node
+    fn cast(syntax: SyntaxNode<L>) -> Self
+    where
+        Self: Sized,
+    {
+        let kind = syntax.kind();
+        Self::try_cast(syntax).unwrap_or_else(|| {
+            panic!(
+                "Tried to cast node with kind {:?} as `{:?}` but was unable to cast",
+                kind,
+                std::any::type_name::<Self>()
+            )
+        })
+    }
+
+    /// Returns the string representation of this node without the leading and trailing trivia
     fn text(&self) -> std::string::String {
         self.syntax().text_trimmed().to_string()
     }
@@ -40,7 +64,7 @@ pub trait AstNode<L: Language> {
     where
         Self: Sized,
     {
-        Self::cast(self.syntax().clone_subtree()).unwrap()
+        Self::try_cast(self.syntax().clone_subtree()).unwrap()
     }
 }
 
@@ -95,7 +119,7 @@ impl<L: Language, N: AstNode<L>> AstNodeListIterator<L, N> {
     fn slot_to_node(slot: &SyntaxSlot<L>) -> N {
         match slot {
             SyntaxSlot::Empty => panic!("Node isn't permitted to contain empty slots"),
-            SyntaxSlot::Node(node) => force_cast(node.to_owned()),
+            SyntaxSlot::Node(node) => N::cast(node.to_owned()),
             SyntaxSlot::Token(token) => panic!(
                 "Expected node of type `{:?}` but found token `{:?}` instead.",
                 std::any::type_name::<N>(),
@@ -264,7 +288,7 @@ impl<L: Language, N: AstNode<L>> Iterator for AstSeparatedListElementsIterator<L
             SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
             // Missing element
             SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
-            SyntaxSlot::Node(node) => Ok(force_cast(node))
+            SyntaxSlot::Node(node) => Ok(N::cast(node))
         };
 
         let separator = match self.slots.next() {
@@ -310,21 +334,10 @@ pub enum SyntaxError {
     MissingRequiredChild,
 }
 
-fn force_cast<L: Language, N: AstNode<L>>(node: SyntaxNode<L>) -> N {
-    N::cast(node.clone()).unwrap_or_else(|| {
-        panic!(
-            "Tried to cast node {:?} as `{:?}` but was unable to cast",
-            node,
-            std::any::type_name::<N>()
-        )
-    })
-}
-
 pub mod support {
     use super::{AstNode, SyntaxNode, SyntaxToken};
 
     use super::{Language, SyntaxError, SyntaxResult};
-    use crate::ast::force_cast;
     use crate::syntax::SyntaxSlot;
     use crate::SyntaxElementChildren;
     use std::fmt::{Debug, Formatter};
@@ -335,7 +348,7 @@ pub mod support {
     ) -> Option<N> {
         match parent.slots().nth(slot_index)? {
             SyntaxSlot::Empty => None,
-            SyntaxSlot::Node(node) => Some(force_cast(node)),
+            SyntaxSlot::Node(node) => Some(N::cast(node)),
             SyntaxSlot::Token(token) => panic!(
                 "expected a node in the slot {} but found token {:?}",
                 slot_index, token

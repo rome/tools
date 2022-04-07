@@ -4,6 +4,8 @@ use quote::{format_ident, quote};
 
 pub fn generate_macros(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
     let syntax_kind = language_kind.syntax_kind();
+    let syntax_node = language_kind.syntax_node();
+
     let match_arms: Vec<_> = ast
         .nodes
         .iter()
@@ -49,7 +51,7 @@ pub fn generate_macros(ast: &AstSrc, language_kind: LanguageKind) -> Result<Stri
         macro_rules! map_syntax_node {
             ($node:expr, $pattern:pat => $body:expr) => {
                 match $node {
-                    node => match $crate::JsSyntaxNode::kind(&node) {
+                    node => match $crate::#syntax_node::kind(&node) {
                         #( #match_arms, )*
                         _ => unreachable!()
                     }

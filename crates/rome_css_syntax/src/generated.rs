@@ -8,6 +8,5 @@ pub mod macros;
 pub mod kind;
 
 pub use kind::*;
-pub use macros::*;
 pub use nodes::*;
 pub use syntax_factory::CssSyntaxFactory;

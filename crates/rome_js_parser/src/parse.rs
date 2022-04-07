@@ -47,7 +47,7 @@ impl<T> Parse<T> {
     /// ```
     /// use rome_js_parser::parse_script;
     /// use rome_rowan::{AstNode, AstNodeList};
-    /// use rome_js_syntax::{JsIfStatement, SyntaxNodeExt, JsSyntaxKind};
+    /// use rome_js_syntax::{JsIfStatement, JsSyntaxKind};
     ///
     /// let parse = parse_script(
     /// "
@@ -98,7 +98,7 @@ impl<T: AstNode<JsLanguage>> Parse<T> {
 
     /// Try to convert this parse's untyped syntax node into an AST node.
     pub fn try_tree(&self) -> Option<T> {
-        T::cast(self.syntax())
+        T::try_cast(self.syntax())
     }
 
     /// Convert this parse into a result
@@ -129,7 +129,7 @@ pub fn parse_common(
 ///
 /// ```
 /// use rome_js_parser::parse_script;
-/// use rome_js_syntax::{JsSyntaxToken, SyntaxNodeExt,  JsSyntaxList, util, JsComputedMemberExpression};
+/// use rome_js_syntax::{JsSyntaxToken, JsSyntaxList, util, JsComputedMemberExpression};
 /// use rome_rowan::AstNode;
 ///
 /// let parse = parse_script("foo.bar[2]", 0);
@@ -142,7 +142,7 @@ pub fn parse_common(
 /// println!("{:#?}", untyped_expr_node);
 ///
 /// // You can then cast syntax nodes into a typed AST node.
-/// let typed_ast_node = JsComputedMemberExpression::cast(untyped_expr_node.first_child().unwrap()).unwrap();
+/// let typed_ast_node = JsComputedMemberExpression::try_cast(untyped_expr_node.first_child().unwrap()).unwrap();
 ///
 /// // Everything on every ast node is optional because of error recovery.
 /// let prop = dbg!(typed_ast_node.member()).unwrap();
@@ -151,9 +151,9 @@ pub fn parse_common(
 /// assert_eq!(prop.syntax().text(), "2");
 ///
 /// // Util has a function for yielding all tokens of a node.
-/// let tokens = untyped_expr_node.descendants_tokens().collect::<Vec<_>>();
+/// let tokens = untyped_expr_node.descendants_tokens().map(|token| token.text_trimmed().to_string()).collect::<Vec<_>>();
 ///
-/// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
+/// assert_eq!(&tokens, &vec!["foo", ".", "bar", "[", "2", "]"]);
 /// ```
 pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
     parse(

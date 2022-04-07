@@ -20,13 +20,14 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a string literal
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, SyntaxNodeExt, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
     /// });
     ///
-    /// let static_member_name = node.to::<JsLiteralMemberName>();
+    /// let static_member_name = JsLiteralMemberName::cast(node);
     ///
     /// assert_eq!("abcd", static_member_name.name().unwrap());
     /// ```
@@ -34,13 +35,14 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a number literal
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, SyntaxNodeExt, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, "5");
     /// });
     ///
-    /// let static_member_name = node.to::<JsLiteralMemberName>();
+    /// let static_member_name = JsLiteralMemberName::cast(node);
     ///
     /// assert_eq!("5", static_member_name.name().unwrap());
     /// ```
@@ -48,13 +50,14 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing an identifier
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, SyntaxNodeExt, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
     ///   builder.token(JsSyntaxKind::IDENT, "abcd");
     /// });
     ///
-    /// let static_member_name = node.to::<JsLiteralMemberName>();
+    /// let static_member_name = JsLiteralMemberName::cast(node);
     ///
     /// assert_eq!("abcd", static_member_name.name().unwrap());
     /// ```

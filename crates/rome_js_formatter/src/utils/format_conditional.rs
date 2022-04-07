@@ -13,7 +13,8 @@ pub enum Conditional {
 
 impl Conditional {
     fn from_type(ts_type: TsType) -> Option<Self> {
-        if let Some(TsType::TsConditionalType(conditional)) = TsType::cast(ts_type.syntax().clone())
+        if let Some(TsType::TsConditionalType(conditional)) =
+            TsType::try_cast(ts_type.syntax().clone())
         {
             Some(Self::Type(conditional))
         } else {
@@ -23,7 +24,7 @@ impl Conditional {
 
     fn from_expression(any_expression: JsAnyExpression) -> Option<Self> {
         if let Some(JsAnyExpression::JsConditionalExpression(conditional)) =
-            JsAnyExpression::cast(any_expression.syntax().clone())
+            JsAnyExpression::try_cast(any_expression.syntax().clone())
         {
             Some(Self::Expression(conditional))
         } else {

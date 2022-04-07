@@ -18,7 +18,7 @@ use rome_js_syntax::{
     JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
     TsTemplateElementFields, TsType,
 };
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, SyntaxNodeExt};
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 use std::borrow::Cow;
 
@@ -493,7 +493,7 @@ impl TemplateElement {
 
                     _ => {
                         if let Some(function) =
-                            JsAnyFunction::cast(current_expression.syntax().clone())
+                            JsAnyFunction::try_cast(current_expression.syntax().clone())
                         {
                             Ok(is_simple_function_expression(function)?)
                         } else {

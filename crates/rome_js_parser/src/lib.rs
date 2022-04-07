@@ -26,7 +26,6 @@
 //!
 //! The crate further includes utilities such as:
 //! - ANSI syntax highlighting of nodes (through [`util`]) or text through [`rome_js_lexer`].
-//! - Rich utility functions for syntax nodes through [`SyntaxNodeExt`].
 //!
 //! It is inspired by the rust analyzer parser but adapted for JavaScript.
 //!

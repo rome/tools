@@ -64,7 +64,7 @@ mod tests {
 
         let root = tree_builder.finish();
 
-        let var_decl = JsVariableDeclaration::cast(root).unwrap();
+        let var_decl = JsVariableDeclaration::try_cast(root).unwrap();
 
         assert!(var_decl.is_var());
     }

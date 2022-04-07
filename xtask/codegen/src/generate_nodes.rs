@@ -7,8 +7,6 @@ use std::collections::HashMap;
 use xtask::Result;
 
 pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
-    let syntax_kind = language_kind.syntax_kind();
-
     let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = ast
         .nodes
         .iter()
@@ -34,13 +32,13 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                         if is_optional {
                             quote! {
-                                pub fn #method_name(&self) -> Option<JsSyntaxToken> {
+                                pub fn #method_name(&self) -> Option<SyntaxToken> {
                                     support::token(&self.syntax, #slot_index)
                                 }
                             }
                         } else {
                             quote! {
-                                pub fn #method_name(&self) -> SyntaxResult<JsSyntaxToken> {
+                                pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
                                     support::required_token(&self.syntax, #slot_index)
                                 }
                             }
@@ -125,9 +123,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         let is_optional = field.is_optional();
 
                         let field = if is_optional {
-                            quote! { #method_name: Option<JsSyntaxToken> }
+                            quote! { #method_name: Option<SyntaxToken> }
                         } else {
-                            quote! { #method_name: SyntaxResult<JsSyntaxToken> }
+                            quote! { #method_name: SyntaxResult<SyntaxToken> }
                         };
 
                         (field, quote! { #method_name: self.#method_name() })
@@ -156,17 +154,17 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     // #[doc = #documentation]
                     #[derive(Clone, PartialEq, Eq, Hash)]
                     pub struct #name {
-                        pub(crate) syntax: JsSyntaxNode,
+                        pub(crate) syntax: SyntaxNode,
                     }
 
                     impl #name {
-                        /// Create an AstNode from a JsSyntaxNode without checking its kind
+                        /// Create an AstNode from a SyntaxNode without checking its kind
                         ///
                         /// # Safety
                         /// This function must be guarded with a call to [AstNode::can_cast]
-                        /// or a match on [JsSyntaxNode::kind]
+                        /// or a match on [SyntaxNode::kind]
                         #[inline]
-                        pub const unsafe fn new_unchecked(syntax: JsSyntaxNode) -> Self {
+                        pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
                             Self { syntax }
                         }
 
@@ -184,14 +182,14 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     }
                 },
                 quote! {
-                    impl AstNode<JsLanguage> for #name {
-                        fn can_cast(kind: #syntax_kind) -> bool {
+                    impl AstNode<Language> for #name {
+                        fn can_cast(kind: SyntaxKind) -> bool {
                             kind == #node_kind
                         }
-                        fn cast(syntax: JsSyntaxNode) -> Option<Self> {
+                        fn cast(syntax: SyntaxNode) -> Option<Self> {
                             if Self::can_cast(syntax.kind()) { Some(Self { syntax }) } else { None }
                         }
-                        fn syntax(&self) -> &JsSyntaxNode { &self.syntax }
+                        fn syntax(&self) -> &SyntaxNode { &self.syntax }
                     }
 
                     impl std::fmt::Debug for #name {
@@ -202,14 +200,14 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         }
                     }
 
-                    impl From<#name> for JsSyntaxNode {
-                        fn from(n: #name) -> JsSyntaxNode {
+                    impl From<#name> for SyntaxNode {
+                        fn from(n: #name) -> SyntaxNode {
                             n.syntax
                         }
                     }
 
-                    impl From<#name> for JsSyntaxElement {
-                        fn from(n: #name) -> JsSyntaxElement {
+                    impl From<#name> for SyntaxElement {
+                        fn from(n: #name) -> SyntaxElement {
                             n.syntax.into()
                         }
                     }
@@ -401,14 +399,14 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     }
                     )*
 
-                    impl AstNode<JsLanguage> for #name {
-                        fn can_cast(kind: #syntax_kind) -> bool {
+                    impl AstNode<Language> for #name {
+                        fn can_cast(kind: SyntaxKind) -> bool {
                             #can_cast_fn
                         }
-                        fn cast(syntax: JsSyntaxNode) -> Option<Self> {
+                        fn cast(syntax: SyntaxNode) -> Option<Self> {
                                 #cast_fn
                         }
-                        fn syntax(&self) -> &JsSyntaxNode {
+                        fn syntax(&self) -> &SyntaxNode {
                             match self {
                                 #(
                                 #name::#variants(it) => #variant_can_cast,
@@ -431,8 +429,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                             }
                     }
 
-                    impl From<#name> for JsSyntaxNode {
-                        fn from(n: #name) -> JsSyntaxNode {
+                    impl From<#name> for SyntaxNode {
+                        fn from(n: #name) -> SyntaxNode {
                             match n {
                                 #(
                                 #name::#all_variant_names(it) => it.into(),
@@ -441,9 +439,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         }
                     }
 
-                    impl From<#name> for JsSyntaxElement {
-                        fn from(n: #name) -> JsSyntaxElement {
-                            let node: JsSyntaxNode = n.into();
+                    impl From<#name> for SyntaxElement {
+                        fn from(n: #name) -> SyntaxElement {
+                            let node: SyntaxNode = n.into();
                             node.into()
                         }
                     }
@@ -476,38 +474,38 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         quote! {
             #[derive(Clone, PartialEq, Eq, Hash)]
             pub struct #name {
-                syntax: JsSyntaxNode
+                syntax: SyntaxNode
             }
 
             impl #name {
-                /// Create an AstNode from a JsSyntaxNode without checking its kind
+                /// Create an AstNode from a SyntaxNode without checking its kind
                 ///
                 /// # Safety
                 /// This function must be guarded with a call to [AstNode::can_cast]
-                /// or a match on [JsSyntaxNode::kind]
+                /// or a match on [SyntaxNode::kind]
                 #[inline]
-                pub const unsafe fn new_unchecked(syntax: JsSyntaxNode) -> Self {
+                pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
                     Self { syntax }
                 }
 
-                pub fn items(&self) -> JsSyntaxElementChildren {
+                pub fn items(&self) -> SyntaxElementChildren {
                     support::elements(&self.syntax)
                 }
             }
 
-            impl AstNode<JsLanguage> for #name {
-                fn can_cast(kind: #syntax_kind) -> bool {
+            impl AstNode<Language> for #name {
+                fn can_cast(kind: SyntaxKind) -> bool {
                     kind == #kind
                 }
 
-                fn cast(syntax: JsSyntaxNode) -> Option<Self> {
+                fn cast(syntax: SyntaxNode) -> Option<Self> {
                     if Self::can_cast(syntax.kind()) {
                         Some(Self { syntax })
                     } else {
                         None
                     }
                 }
-                fn syntax(&self) -> &JsSyntaxNode {
+                fn syntax(&self) -> &SyntaxNode {
                     &self.syntax
                 }
             }
@@ -520,14 +518,14 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             }
 
-            impl From<#name> for JsSyntaxNode {
-                fn from(n: #name) -> JsSyntaxNode {
+            impl From<#name> for SyntaxNode {
+                fn from(n: #name) -> SyntaxNode {
                     n.syntax
                 }
             }
 
-            impl From<#name> for JsSyntaxElement {
-                fn from(n: #name) -> JsSyntaxElement {
+            impl From<#name> for SyntaxElement {
+                fn from(n: #name) -> SyntaxElement {
                     n.syntax.into()
                 }
             }
@@ -541,23 +539,23 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
         let node_impl = quote! {
             impl #list_name {
-                /// Create an AstNode from a JsSyntaxNode without checking its kind
+                /// Create an AstNode from a SyntaxNode without checking its kind
                 ///
                 /// # Safety
                 /// This function must be guarded with a call to [AstNode::can_cast]
-                /// or a match on [JsSyntaxNode::kind]
+                /// or a match on [SyntaxNode::kind]
                 #[inline]
-                pub unsafe fn new_unchecked(syntax: JsSyntaxNode) -> Self {
+                pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
                     Self { syntax_list: syntax.into_list() }
                 }
             }
 
-            impl AstNode<JsLanguage> for #list_name {
-                fn can_cast(kind: #syntax_kind) -> bool {
+            impl AstNode<Language> for #list_name {
+                fn can_cast(kind: SyntaxKind) -> bool {
                     kind == #list_kind
                 }
 
-                fn cast(syntax: JsSyntaxNode) -> Option<#list_name> {
+                fn cast(syntax: SyntaxNode) -> Option<#list_name> {
                     if Self::can_cast(syntax.kind()) {
                         Some(#list_name { syntax_list: syntax.into_list() })
                     } else {
@@ -565,7 +563,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     }
                 }
 
-                fn syntax(&self) -> &JsSyntaxNode {
+                fn syntax(&self) -> &SyntaxNode {
                     self.syntax_list.node()
                 }
             }
@@ -574,8 +572,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         let padded_name = format!("{} ", name);
         let list_impl = if list.separator.is_some() {
             quote! {
-                impl AstSeparatedList<JsLanguage, #element_type> for #list_name {
-                    fn syntax_list(&self) -> &JsSyntaxList {
+                impl AstSeparatedList<Language, #element_type> for #list_name {
+                    fn syntax_list(&self) -> &SyntaxList {
                         &self.syntax_list
                     }
                 }
@@ -589,7 +587,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 impl IntoIterator for #list_name {
                     type Item = SyntaxResult<#element_type>;
-                    type IntoIter = AstSeparatedListNodesIterator<JsLanguage, #element_type>;
+                    type IntoIter = AstSeparatedListNodesIterator<Language, #element_type>;
 
                     fn into_iter(self) -> Self::IntoIter {
                         self.iter()
@@ -598,7 +596,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 impl IntoIterator for &#list_name {
                     type Item = SyntaxResult<#element_type>;
-                    type IntoIter = AstSeparatedListNodesIterator<JsLanguage, #element_type>;
+                    type IntoIter = AstSeparatedListNodesIterator<Language, #element_type>;
 
                     fn into_iter(self) -> Self::IntoIter {
                         self.iter()
@@ -607,8 +605,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             }
         } else {
             quote! {
-                impl AstNodeList<JsLanguage, #element_type> for #list_name {
-                    fn syntax_list(&self) -> &JsSyntaxList {
+                impl AstNodeList<Language, #element_type> for #list_name {
+                    fn syntax_list(&self) -> &SyntaxList {
                         &self.syntax_list
                     }
                 }
@@ -622,7 +620,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 impl IntoIterator for &#list_name {
                     type Item = #element_type;
-                    type IntoIter = AstNodeListIterator<JsLanguage, #element_type>;
+                    type IntoIter = AstNodeListIterator<Language, #element_type>;
 
                     fn into_iter(self) -> Self::IntoIter {
                         self.iter()
@@ -631,7 +629,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 impl IntoIterator for #list_name {
                     type Item = #element_type;
-                    type IntoIter = AstNodeListIterator<JsLanguage, #element_type>;
+                    type IntoIter = AstNodeListIterator<Language, #element_type>;
 
                     fn into_iter(self) -> Self::IntoIter {
                         self.iter()
@@ -644,7 +642,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         quote! {
             #[derive(Clone, Eq, PartialEq, Hash)]
             pub struct #list_name {
-              syntax_list: JsSyntaxList,
+              syntax_list: SyntaxList,
             }
 
             #node_impl
@@ -652,56 +650,27 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         }
     });
 
-    let debug_syntax_element = {
-        let mut all_nodes: Vec<_> = ast
-            .nodes
-            .iter()
-            .map(|node| &node.name)
-            .chain(ast.unknowns.iter())
-            .chain(ast.lists().map(|(name, _)| name))
-            .collect();
-
-        all_nodes.sort_unstable();
-
-        let node_arms = all_nodes.iter().map(|node| {
-            let kind = format_ident!("{}", to_upper_snake_case(node));
-            let ident = format_ident!("{}", node);
-
-            quote! {
-                #kind => std::fmt::Debug::fmt(&#ident::cast(node.clone()).unwrap(), f)
-            }
-        });
-
-        quote! {
-            pub struct DebugSyntaxElement(pub(crate) JsSyntaxElement);
-
-            impl Debug for DebugSyntaxElement {
-                fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-                    match &self.0 {
-                        NodeOrToken::Node(node) => match node.kind() {
-                            #(#node_arms),*,
-                            _ => std::fmt::Debug::fmt(node, f),
-                        },
-                        NodeOrToken::Token(token) => Debug::fmt(token, f),
-                    }
-                }
-            }
-        }
-    };
+    let syntax_kind = language_kind.syntax_kind();
+    let syntax_node = language_kind.syntax_node();
+    let syntax_element = language_kind.syntax_element();
+    let syntax_element_children = language_kind.syntax_element_children();
+    let syntax_list = language_kind.syntax_list();
+    let syntax_token = language_kind.syntax_token();
+    let language = language_kind.language();
 
     let ast = quote! {
         #![allow(clippy::enum_variant_names)]
         // sometimes we generate comparison of simple tokens
         #![allow(clippy::match_like_matches_macro)]
         use crate::{
-            JsLanguage, JsSyntaxElement, JsSyntaxElementChildren,
-            ast::DebugSyntaxElementChildren,
-            #syntax_kind::{self, *},
-            JsSyntaxList, JsSyntaxNode, JsSyntaxToken,
+            macros::map_syntax_node,
+            #language as Language, #syntax_element as SyntaxElement, #syntax_element_children as SyntaxElementChildren,
+            #syntax_kind::{self as SyntaxKind, *},
+            #syntax_list as SyntaxList, #syntax_node as SyntaxNode, #syntax_token as SyntaxToken,
         };
         use rome_rowan::{
             support, AstNode, AstNodeList, AstNodeListIterator, AstSeparatedList,
-            AstSeparatedListNodesIterator, NodeOrToken, SyntaxResult,
+            AstSeparatedListNodesIterator, SyntaxResult,
         };
         use std::fmt::{Debug, Formatter};
 
@@ -712,7 +681,31 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         #(#display_impls)*
         #(#unknowns)*
         #(#lists)*
-        #debug_syntax_element
+
+        #[derive(Clone)]
+        pub struct DebugSyntaxElementChildren(pub SyntaxElementChildren);
+
+        impl Debug for DebugSyntaxElementChildren {
+            fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+                f.debug_list()
+                    .entries(self.clone().0.map(DebugSyntaxElement))
+                    .finish()
+            }
+        }
+
+        struct DebugSyntaxElement(SyntaxElement);
+
+        impl Debug for DebugSyntaxElement {
+            fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+                match &self.0 {
+                    SyntaxElement::Node(node) => {
+                        map_syntax_node!(node.clone(), node => std::fmt::Debug::fmt(&node, f))
+                    }
+                    SyntaxElement::Token(token) => Debug::fmt(token, f),
+                }
+            }
+        }
+
     };
 
     let ast = ast

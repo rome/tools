@@ -1,12 +1,8 @@
 #[macro_use]
 mod generated;
-pub mod ast;
 mod syntax_node;
-pub mod util;
-pub use util::SyntaxNodeExt;
 
 pub use self::generated::*;
-pub use ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult};
 pub use rome_rowan::{
     SyntaxText, TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent,
 };

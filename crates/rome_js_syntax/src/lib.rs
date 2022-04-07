@@ -4,14 +4,12 @@
 
 #[macro_use]
 mod generated;
-pub mod ast;
 pub mod expr_ext;
 pub mod modifier_ext;
 pub mod numbers;
 pub mod stmt_ext;
 mod syntax_node;
 mod union_ext;
-pub mod util;
 
 pub use self::generated::*;
 pub use expr_ext::*;
@@ -21,7 +19,6 @@ pub use rome_rowan::{
 };
 pub use stmt_ext::*;
 pub use syntax_node::*;
-pub use util::SyntaxNodeExt;
 
 use crate::JsSyntaxKind::*;
 use rome_rowan::RawSyntaxKind;
