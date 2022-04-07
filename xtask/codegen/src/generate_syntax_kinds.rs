@@ -5,10 +5,7 @@ use quote::{format_ident, quote};
 use super::kinds_src::KindsSrc;
 
 pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> Result<String> {
-    let syntax_kind = match language_kind {
-        LanguageKind::Js => quote! { JsSyntaxKind },
-        LanguageKind::Css => quote! { CssSyntaxKind },
-    };
+    let syntax_kind = language_kind.syntax_kind();
     let punctuation_values = grammar.punct.iter().map(|(token, _name)| {
         // These tokens, when parsed to proc_macro2::TokenStream, generates a stream of bytes
         // that can't be recognized by [quote].
@@ -82,17 +79,6 @@ pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> 
     let syntax_kind_impl = match language_kind {
         LanguageKind::Js => {
             quote! {
-                pub const fn is_before_expr(self) -> bool {
-                    match self {
-                        BANG | L_PAREN | L_BRACK | L_CURLY | SEMICOLON | COMMA | COLON | QUESTION | PLUS2
-                        | MINUS2 | TILDE | CASE_KW | DEFAULT_KW | DO_KW | ELSE_KW | RETURN_KW | THROW_KW
-                        | NEW_KW | EXTENDS_KW | YIELD_KW | IN_KW | TYPEOF_KW | VOID_KW | DELETE_KW | PLUSEQ
-                        | INSTANCEOF_KW | MINUSEQ | PIPEEQ | AMPEQ | CARETEQ | SLASHEQ | STAREQ | PERCENTEQ
-                        | AMP2 | PIPE2 | SHLEQ | SHREQ | USHREQ | EQ | EQ2 | EQ3 | NEQ | NEQ2 | FAT_ARROW | MINUS | PLUS | AWAIT_KW => true,
-                        _ => false,
-                    }
-                }
-
                 pub const fn to_string(&self) -> Option<&'static str> {
                     let tok = match self {
                         #(#punctuation => #punctuation_strings,)*

@@ -12,6 +12,8 @@ mod kinds_src;
 mod parser_tests;
 mod unicode;
 
+use proc_macro2::TokenStream;
+use quote::quote;
 use std::path::Path;
 
 use xtask::{glue::fs2, Mode, Result};
@@ -40,6 +42,15 @@ enum UpdateResult {
 pub enum LanguageKind {
     Js,
     Css,
+}
+
+impl LanguageKind {
+    pub fn syntax_kind(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxKind },
+            LanguageKind::Css => quote! { CssSyntaxKind },
+        }
+    }
 }
 
 /// A helper to update file on disk if it has changed.

@@ -7,10 +7,8 @@ use std::collections::HashMap;
 use xtask::Result;
 
 pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
-    let syntax_kind = match language_kind {
-        LanguageKind::Js => quote! { JsSyntaxKind },
-        LanguageKind::Css => quote! { CssSyntaxKind },
-    };
+    let syntax_kind = language_kind.syntax_kind();
+
     let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = ast
         .nodes
         .iter()

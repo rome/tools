@@ -3,10 +3,7 @@ use crate::{to_upper_snake_case, LanguageKind, Result};
 use quote::{format_ident, quote};
 
 pub fn generate_macros(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
-    let syntax_kind = match language_kind {
-        LanguageKind::Js => quote! { JsSyntaxKind },
-        LanguageKind::Css => quote! { CssSyntaxKind },
-    };
+    let syntax_kind = language_kind.syntax_kind();
     let match_arms: Vec<_> = ast
         .nodes
         .iter()

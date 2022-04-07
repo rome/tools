@@ -1539,10 +1539,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome_syntax"
-version = "0.0.0"
-
-[[package]]
 name = "rome_text_edit"
 version = "0.1.0"
 dependencies = [
