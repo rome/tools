@@ -129,7 +129,7 @@ pub fn parse_common(
 ///
 /// ```
 /// use rome_js_parser::parse_script;
-/// use rome_js_syntax::{JsSyntaxToken, JsSyntaxList, util, JsComputedMemberExpression};
+/// use rome_js_syntax::{JsSyntaxToken, JsSyntaxList, JsComputedMemberExpression};
 /// use rome_rowan::AstNode;
 ///
 /// let parse = parse_script("foo.bar[2]", 0);

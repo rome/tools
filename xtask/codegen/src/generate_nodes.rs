@@ -186,7 +186,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         fn can_cast(kind: SyntaxKind) -> bool {
                             kind == #node_kind
                         }
-                        fn cast(syntax: SyntaxNode) -> Option<Self> {
+                        fn try_cast(syntax: SyntaxNode) -> Option<Self> {
                             if Self::can_cast(syntax.kind()) { Some(Self { syntax }) } else { None }
                         }
                         fn syntax(&self) -> &SyntaxNode { &self.syntax }
@@ -273,7 +273,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                     if variant_is_enum.is_some() {
                         quote! {
-                            #variant_name::cast(syntax)?
+                            #variant_name::try_cast(syntax)?
                         }
                     } else {
                         quote! {
@@ -294,13 +294,13 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         // cast() code
                         if i != variant_of_variants.len() - 1 {
                             quote! {
-                            if let Some(#variable_name) = #variant_name::cast(syntax.clone()) {
+                            if let Some(#variable_name) = #variant_name::try_cast(syntax.clone()) {
                                     return Some(#name::#variant_name(#variable_name));
                             }}
                         } else {
                             // if this is the last variant, do not clone syntax
                             quote! {
-                                if let Some(#variable_name) = #variant_name::cast(syntax) {
+                                if let Some(#variable_name) = #variant_name::try_cast(syntax) {
                                     return Some(#name::#variant_name(#variable_name));
                             }}
                         },
@@ -403,7 +403,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         fn can_cast(kind: SyntaxKind) -> bool {
                             #can_cast_fn
                         }
-                        fn cast(syntax: SyntaxNode) -> Option<Self> {
+                        fn try_cast(syntax: SyntaxNode) -> Option<Self> {
                                 #cast_fn
                         }
                         fn syntax(&self) -> &SyntaxNode {
@@ -498,7 +498,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     kind == #kind
                 }
 
-                fn cast(syntax: SyntaxNode) -> Option<Self> {
+                fn try_cast(syntax: SyntaxNode) -> Option<Self> {
                     if Self::can_cast(syntax.kind()) {
                         Some(Self { syntax })
                     } else {
@@ -555,7 +555,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     kind == #list_kind
                 }
 
-                fn cast(syntax: SyntaxNode) -> Option<#list_name> {
+                fn try_cast(syntax: SyntaxNode) -> Option<#list_name> {
                     if Self::can_cast(syntax.kind()) {
                         Some(#list_name { syntax_list: syntax.into_list() })
                     } else {
