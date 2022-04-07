@@ -32,10 +32,7 @@ impl CssSyntaxKind {
     pub fn is_trivia(self) -> bool {
         matches!(
             self,
-            CssSyntaxKind::NEWLINE
-                | CssSyntaxKind::WHITESPACE
-                | CssSyntaxKind::COMMENT
-                | CssSyntaxKind::MULTILINE_COMMENT
+            CssSyntaxKind::NEWLINE | CssSyntaxKind::WHITESPACE | CssSyntaxKind::COMMENT
         )
     }
 
@@ -87,7 +84,6 @@ impl TryFrom<CssSyntaxKind> for TriviaPieceKind {
                 CssSyntaxKind::NEWLINE => Ok(TriviaPieceKind::Newline),
                 CssSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
                 CssSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
-                CssSyntaxKind::MULTILINE_COMMENT => Ok(TriviaPieceKind::MultiLineComment),
                 _ => unreachable!("Not Trivia"),
             }
         } else {
