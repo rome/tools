@@ -399,10 +399,11 @@ fn can_hard_group(flatten_nodes: &[FlattenItem]) -> bool {
 }
 
 fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
-    current_node.parent().map_or(false, |parent| {
-        let kind = parent.kind();
-        matches!(
-            kind,
+    let parent_kind = current_node.parent().map(|parent| parent.kind());
+
+    matches!(
+        parent_kind,
+        Some(
             JsSyntaxKind::JS_IF_STATEMENT
                 | JsSyntaxKind::JS_DO_WHILE_STATEMENT
                 | JsSyntaxKind::JS_WHILE_STATEMENT
@@ -410,7 +411,7 @@ fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
                 | JsSyntaxKind::JS_TEMPLATE_ELEMENT
                 | JsSyntaxKind::TS_TEMPLATE_ELEMENT
         )
-    })
+    )
 }
 
 /// This function checks whether the chain of logical/binary expressions **should not** be indented
