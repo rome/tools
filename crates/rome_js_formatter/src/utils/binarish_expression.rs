@@ -4,11 +4,12 @@ use crate::{
     join_elements, soft_block_indent, soft_line_break_or_space, soft_line_indent_or_space,
     space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
+use rome_js_syntax::JsSyntaxKind::JS_PRIVATE_NAME;
 use rome_js_syntax::{
     AstNode, JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryExpressionFields,
     JsBinaryOperator, JsInExpressionFields, JsInstanceofExpression, JsInstanceofExpressionFields,
-    JsLogicalExpression, JsLogicalExpressionFields, JsLogicalOperator, JsSyntaxKind, SyntaxNode,
-    SyntaxNodeExt, SyntaxToken,
+    JsLogicalExpression, JsLogicalExpressionFields, JsLogicalOperator, JsPrivateName, JsSyntaxKind,
+    SyntaxNode, SyntaxNodeExt, SyntaxToken,
 };
 use std::cmp::Ordering;
 use std::fmt::Debug;
@@ -97,7 +98,7 @@ use std::fmt::Debug;
 /// But this is fine! Because this is want we wanted! By removing the operator, we are left with `happy`
 /// which is what we wanted since the beginning!
 ///
-pub fn format_binaryish_expression(
+pub fn format_binary_like_expression(
     expression: &JsAnyExpression,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
@@ -125,11 +126,11 @@ fn flatten_expressions(
             let should_flatten = should_flatten_binary_expression(&binary_expression)?;
 
             let payload = BinaryLikeExpression {
-                left: left?,
+                left: left?.into(),
                 right: right?,
                 operator_token: operator_token?,
                 parent_operator,
-                operator: BinarishOperator::Binary(binary_expression.operator()?),
+                operator: BinaryLikeOperator::Binary(binary_expression.operator()?),
             };
 
             if should_flatten {
@@ -147,9 +148,9 @@ fn flatten_expressions(
 
             let should_flatten = should_flatten_logical_expression(&logical_expression)?;
             let payload = BinaryLikeExpression {
-                left: left?,
+                left: left?.into(),
                 operator_token: operator_token?,
-                operator: BinarishOperator::Logical(logical_expression.operator()?),
+                operator: BinaryLikeOperator::Logical(logical_expression.operator()?),
                 right: right?,
                 parent_operator,
             };
@@ -169,9 +170,9 @@ fn flatten_expressions(
 
             let should_flatten = should_flatten_instanceof_expression(&instanceof_expression)?;
             let payload = BinaryLikeExpression {
-                left: left?,
+                left: left?.into(),
                 operator_token: instanceof_token?,
-                operator: BinarishOperator::Instanceof,
+                operator: BinaryLikeOperator::Instanceof,
                 right: right?,
                 parent_operator,
             };
@@ -189,27 +190,23 @@ fn flatten_expressions(
                 object,
             } = in_expression.as_fields();
 
-            let property = property?;
+            let property = BinaryLikeExpressionOperand::from(property?);
 
-            if let JsAnyInProperty::JsAnyExpression(JsAnyExpression::JsInExpression(
-                in_expression,
-            )) = property.clone()
-            {
-                flatten_items.push_flattened_binary_like_expression(BinaryLikeExpression {
-                    left: JsAnyExpression::JsInExpression(in_expression),
-                    operator_token: in_token?,
-                    operator: BinarishOperator::In,
-                    right: object?,
-                    parent_operator,
-                })?;
+            let binary_like = BinaryLikeExpression {
+                left: property,
+                operator_token: in_token?,
+                operator: BinaryLikeOperator::In,
+                right: object?,
+                parent_operator,
+            };
+
+            if matches!(
+                &binary_like.left,
+                BinaryLikeExpressionOperand::Expression(JsAnyExpression::JsInExpression(_))
+            ) {
+                flatten_items.push_flattened_binary_like_expression(binary_like)?;
             } else {
-                flatten_items.push_binary_like_expression(BinaryLikeExpression {
-                    left: property,
-                    operator_token: in_token?,
-                    operator: BinarishOperator::In,
-                    right: object?,
-                    parent_operator,
-                })?;
+                flatten_items.push_binary_like_expression(binary_like)?;
             }
         }
         _ => {
@@ -300,7 +297,7 @@ fn should_flatten_instanceof_expression(node: &JsInstanceofExpression) -> Format
 
 /// Small wrapper to identify the operation of an expression and deduce their precedence
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
-enum BinarishOperator {
+enum BinaryLikeOperator {
     Logical(JsLogicalOperator),
     Binary(JsBinaryOperator),
     Instanceof,
@@ -325,37 +322,37 @@ enum BinarishOperator {
 ///
 /// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis.
 fn format_with_or_without_parenthesis(
-    parent_operator: BinarishOperator,
+    parent_operator: BinaryLikeOperator,
     node: &SyntaxNode,
     formatted_node: FormatElement,
 ) -> FormatResult<(FormatElement, bool)> {
     let compare_to = match JsAnyExpression::cast(node.clone()) {
         Some(JsAnyExpression::JsLogicalExpression(logical)) => {
-            Some(BinarishOperator::Logical(logical.operator()?))
+            Some(BinaryLikeOperator::Logical(logical.operator()?))
         }
         Some(JsAnyExpression::JsBinaryExpression(binary)) => {
-            Some(BinarishOperator::Binary(binary.operator()?))
+            Some(BinaryLikeOperator::Binary(binary.operator()?))
         }
-        Some(JsAnyExpression::JsInstanceofExpression(_)) => Some(BinarishOperator::Instanceof),
-        Some(JsAnyExpression::JsInExpression(_)) => Some(BinarishOperator::In),
+        Some(JsAnyExpression::JsInstanceofExpression(_)) => Some(BinaryLikeOperator::Instanceof),
+        Some(JsAnyExpression::JsInExpression(_)) => Some(BinaryLikeOperator::In),
         _ => None,
     };
 
     let operation_is_higher = if let Some(compare_to) = compare_to {
         match (parent_operator, compare_to) {
             (
-                BinarishOperator::Logical(previous_operation),
-                BinarishOperator::Logical(compare_to),
+                BinaryLikeOperator::Logical(previous_operation),
+                BinaryLikeOperator::Logical(compare_to),
             ) => compare_to > previous_operation,
 
             (
-                BinarishOperator::Binary(previous_operation),
-                BinarishOperator::Binary(compare_to),
+                BinaryLikeOperator::Binary(previous_operation),
+                BinaryLikeOperator::Binary(compare_to),
             ) => compare_to.compare_precedence(&previous_operation) == Ordering::Greater,
             // `instanceof` operator has higher precedence than `in` operator, so we apply parenthesis here
-            (BinarishOperator::In, BinarishOperator::Instanceof) => true,
+            (BinaryLikeOperator::In, BinaryLikeOperator::Instanceof) => true,
             // any other case where we have `instanceof` or `in` on the right, we apply parenthesis
-            (_, BinarishOperator::Instanceof) | (_, BinarishOperator::In) => true,
+            (_, BinaryLikeOperator::Instanceof) | (_, BinaryLikeOperator::In) => true,
             _ => false,
         }
     } else {
@@ -452,16 +449,86 @@ struct FlattenItems<'f> {
     formatter: &'f Formatter,
 }
 
-struct BinaryLikeExpression<Left: AstNode + ToFormatElement + Clone> {
+struct BinaryLikeExpression {
     /// Left hand side of the expression
-    left: Left,
+    left: BinaryLikeExpressionOperand,
     /// The operator of the expression
     operator_token: SyntaxToken,
     /// Right hand side of the expression
     right: JsAnyExpression,
     /// The operation that belongs to the current node
-    operator: BinarishOperator,
+    operator: BinaryLikeOperator,
     parent_operator: Option<SyntaxToken>,
+}
+
+enum BinaryLikeExpressionOperand {
+    Expression(JsAnyExpression),
+    PrivateName(JsPrivateName),
+}
+
+impl AstNode for BinaryLikeExpressionOperand {
+    fn can_cast(kind: JsSyntaxKind) -> bool
+    where
+        Self: Sized,
+    {
+        JsAnyExpression::can_cast(kind) || JsPrivateName::can_cast(kind)
+    }
+
+    fn cast(syntax: SyntaxNode) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        if syntax.kind() == JS_PRIVATE_NAME {
+            JsPrivateName::cast(syntax).map(|name| name.into())
+        } else {
+            JsAnyExpression::cast(syntax).map(|expr| expr.into())
+        }
+    }
+
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            BinaryLikeExpressionOperand::Expression(expression) => expression.syntax(),
+            BinaryLikeExpressionOperand::PrivateName(private_name) => private_name.syntax(),
+        }
+    }
+}
+
+impl ToFormatElement for BinaryLikeExpressionOperand {
+    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match self {
+            BinaryLikeExpressionOperand::Expression(expression) => {
+                expression.to_format_element(formatter)
+            }
+            BinaryLikeExpressionOperand::PrivateName(private_name) => {
+                private_name.to_format_element(formatter)
+            }
+        }
+    }
+}
+
+impl From<JsAnyExpression> for BinaryLikeExpressionOperand {
+    fn from(expression: JsAnyExpression) -> Self {
+        BinaryLikeExpressionOperand::Expression(expression)
+    }
+}
+
+impl From<JsPrivateName> for BinaryLikeExpressionOperand {
+    fn from(private_name: JsPrivateName) -> Self {
+        BinaryLikeExpressionOperand::PrivateName(private_name)
+    }
+}
+
+impl From<JsAnyInProperty> for BinaryLikeExpressionOperand {
+    fn from(property: JsAnyInProperty) -> Self {
+        match property {
+            JsAnyInProperty::JsAnyExpression(expression) => {
+                BinaryLikeExpressionOperand::Expression(expression)
+            }
+            JsAnyInProperty::JsPrivateName(private_name) => {
+                BinaryLikeExpressionOperand::PrivateName(private_name)
+            }
+        }
+    }
 }
 
 impl<'f> FlattenItems<'f> {
@@ -482,7 +549,7 @@ impl<'f> FlattenItems<'f> {
     /// - `JsInExpression`
     fn push_flattened_binary_like_expression(
         &mut self,
-        payload: BinaryLikeExpression<JsAnyExpression>,
+        payload: BinaryLikeExpression,
     ) -> FormatResult<()> {
         let BinaryLikeExpression {
             left,
@@ -491,6 +558,12 @@ impl<'f> FlattenItems<'f> {
             operator,
             parent_operator,
         } = payload;
+
+        // TODO make safer
+        let left = match left {
+            BinaryLikeExpressionOperand::Expression(expression) => expression,
+            _ => unreachable!(),
+        };
 
         flatten_expressions(self, &left, self.formatter, Some(operator_token))?;
 
@@ -515,13 +588,7 @@ impl<'f> FlattenItems<'f> {
         Ok(())
     }
 
-    fn push_binary_like_expression<Left>(
-        &mut self,
-        payload: BinaryLikeExpression<Left>,
-    ) -> FormatResult<()>
-    where
-        Left: AstNode + ToFormatElement + Clone,
-    {
+    fn push_binary_like_expression(&mut self, payload: BinaryLikeExpression) -> FormatResult<()> {
         let BinaryLikeExpression {
             left,
             operator_token,
@@ -583,7 +650,7 @@ impl<'f> FlattenItems<'f> {
         let (right_node_formatted, parenthesized) = format_with_or_without_parenthesis(
             operator,
             right.syntax(),
-            format_binaryish_expression(&right, self.formatter)?,
+            format_binary_like_expression(&right, self.formatter)?,
         )?;
         let formatted_right = format_elements![right_node_formatted, formatted_parent_operator];
 
@@ -734,3 +801,16 @@ impl From<FlattenItem> for FormatElement {
         item.formatted
     }
 }
+//
+// enum VisitEvent {
+//     Enter(BinaryLikeExpression),
+//     Exit(BinaryLikeExpression),
+// }
+//
+// struct BinaryLikeExpressionIterator {
+//     current: VisitEvent,
+// }
+//
+// impl Iterator for BinaryLikeExpressionIterator {
+//     type Item = BinaryLikeExpression;
+// }
