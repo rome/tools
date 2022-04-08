@@ -37,7 +37,7 @@ pub trait AstNode<L: Language> {
     ///
     /// # Panics
     /// Panics if the underlying node cannot be cast to this AST node
-    fn cast_unwrap(syntax: SyntaxNode<L>) -> Self
+    fn unwrap_cast(syntax: SyntaxNode<L>) -> Self
     where
         Self: Sized,
     {
@@ -119,7 +119,7 @@ impl<L: Language, N: AstNode<L>> AstNodeListIterator<L, N> {
     fn slot_to_node(slot: &SyntaxSlot<L>) -> N {
         match slot {
             SyntaxSlot::Empty => panic!("Node isn't permitted to contain empty slots"),
-            SyntaxSlot::Node(node) => N::cast_unwrap(node.to_owned()),
+            SyntaxSlot::Node(node) => N::unwrap_cast(node.to_owned()),
             SyntaxSlot::Token(token) => panic!(
                 "Expected node of type `{:?}` but found token `{:?}` instead.",
                 std::any::type_name::<N>(),
@@ -288,7 +288,7 @@ impl<L: Language, N: AstNode<L>> Iterator for AstSeparatedListElementsIterator<L
             SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
             // Missing element
             SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild),
-            SyntaxSlot::Node(node) => Ok(N::cast_unwrap(node))
+            SyntaxSlot::Node(node) => Ok(N::unwrap_cast(node))
         };
 
         let separator = match self.slots.next() {
@@ -348,7 +348,7 @@ pub mod support {
     ) -> Option<N> {
         match parent.slots().nth(slot_index)? {
             SyntaxSlot::Empty => None,
-            SyntaxSlot::Node(node) => Some(N::cast_unwrap(node)),
+            SyntaxSlot::Node(node) => Some(N::unwrap_cast(node)),
             SyntaxSlot::Token(token) => panic!(
                 "expected a node in the slot {} but found token {:?}",
                 slot_index, token
