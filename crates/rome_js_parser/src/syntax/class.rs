@@ -425,7 +425,7 @@ impl ParseNodeList for ClassMembersList {
         parse_class_member(p, self.inside_abstract_class)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T!['}'])
     }
 

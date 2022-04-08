@@ -72,7 +72,7 @@ advance in the parsing process and consume tokens - if it returns `Absent`.
 The parse rules will guide you in how to write your implementation and the parser infrastructure provides the following convenience APIs:
 
 * Optional token `'ident'?`: Use `p.eat_optional(token)`. It eats the next token if it matches the passed-in token. Adds a missing marker if the token isn't present in the source code.
-* Required token `'ident'`: Use`p.expect_required(token)`. It eats the next token if it matches the passed-in token. 
+* Required token `'ident'`: Use`p.expect_required(token)`. It eats the next token if it matches the passed-in token.
 It adds an `Expected 'x' but found 'y' instead` error and a missing marker if the token isn't present in the source code.
 * Optional node `body: JsBlockStatement?`: Use`parse_block_statement(p).or_missing(p)`. It parses the block if it is present in the source code and adds a missing marker if it isn't.
 * Required node `body: JsBlockStatement`: Use `parse_block_statement(p).or_missing_with_error(p, error_builder)`:
@@ -100,24 +100,24 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
 }
 ```
 
-Hold on, what are these *missing* markers? Rome's AST facade uses fixed offsets to retrieve a particular child from a node. 
-For example, the 3rd child of the if statement is the condition. However, the condition would become the second element 
-if the opening parentheses `(` isn't present in the source text. That's where missing elements come into play. 
+Hold on, what are these *missing* markers? Rome's AST facade uses fixed offsets to retrieve a particular child from a node.
+For example, the 3rd child of the if statement is the condition. However, the condition would become the second element
+if the opening parentheses `(` isn't present in the source text. That's where missing elements come into play.
 Missing elements (added by calling `p.missing()`) represent placeholders for syntax that isn't present in the source text to guarantee that the children always appear in the same order.
 
 ## Parsing Lists & Error Recovery
 
-Parsing lists is different from parsing single elements with a fixed set of children because it requires looping until 
+Parsing lists is different from parsing single elements with a fixed set of children because it requires looping until
 the parser reaches a terminal token (or the end of the file).
 
-You may remember that `parse_*` methods shouldn't progress parsing if they return `Absent`. 
+You may remember that `parse_*` methods shouldn't progress parsing if they return `Absent`.
 Not progressing the parser is problematic inside `while` loops because it inevitably results in an infinite loop.
 
 That's why you must do error recovery when parsing lists. Luckily, the parser comes with the infrastructure to make error recovery a piece of cake.
 The general structure for parsing a list is (yes, that's something the parser infrastructure should provide for you):
 
 
-Let's try to parse an array: 
+Let's try to parse an array:
 
 ```js
 [ 1, 3, 6 ]
@@ -135,7 +135,7 @@ impl ParseSeparatedList for ArrayElementsList {
         parse_array_element(p)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at_ts(token_set![T![default], T![case], T!['}']])
     }
 
@@ -163,13 +163,13 @@ parsed_element.or_recover(
 )
 ```
 
-The `or_recover` performs an error recovery if the `parse_array_element` method returns `Absent`; 
-there's no array element in the source text. 
+The `or_recover` performs an error recovery if the `parse_array_element` method returns `Absent`;
+there's no array element in the source text.
 
-The recovery eats all tokens until it finds one of the tokens specified in the `token_set`, 
-a line break (if you called `enable_recovery_on_line_break`) or the end of the file. 
+The recovery eats all tokens until it finds one of the tokens specified in the `token_set`,
+a line break (if you called `enable_recovery_on_line_break`) or the end of the file.
 
-The recovery doesn't throw the tokens away but instead wraps them inside a `UNKNOWN_JS_EXPRESSION` node (first parameter). 
+The recovery doesn't throw the tokens away but instead wraps them inside a `UNKNOWN_JS_EXPRESSION` node (first parameter).
 There exist multiple `UNKNOWN_*` nodes. You must consult the grammar to understand which `UNKNOWN*` node is supported in your case.
 
 > You usually want to include the terminal token ending your list, the element separator token, and the token terminating a statement in your recovery set.
@@ -190,7 +190,7 @@ The conditional syntax allows you to express that some syntax may not be valid i
 * syntax that is only supported in certain file types: Typescript, JSX, modules;
 * syntax that is only available in specific language versions: experimental features, different versions of the language e.g. (ECMA versions for JavaScript);
 
-The idea is that the parser always parses the syntax regardless of whatever it is supported in this specific file or context. 
+The idea is that the parser always parses the syntax regardless of whatever it is supported in this specific file or context.
 The main motivation behind doing so is that this gives us perfect error recovery and allows us to use the same code regardless of whether the syntax is supported.
 
 However, conditional syntax must be handled because we want to add a diagnostic if the syntax isn't supported for the current file, and the parsed tokens must be attached somewhere.
