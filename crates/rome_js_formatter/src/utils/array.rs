@@ -1,7 +1,8 @@
 use rome_js_syntax::{
-    AstNode, AstSeparatedList, JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement,
-    JsAnyArrayElement,
+    JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
+    JsLanguage,
 };
+use rome_rowan::{AstNode, AstSeparatedList};
 
 use crate::{
     empty_element, format_elements,
@@ -16,7 +17,7 @@ pub(crate) fn format_array_node<N, I>(
     formatter: &Formatter,
 ) -> FormatResult<FormatElement>
 where
-    N: AstSeparatedList<I>,
+    N: AstSeparatedList<JsLanguage, I>,
     I: ArrayNodeElement,
 {
     // Specifically do not use format_separated as arrays need separators
@@ -70,7 +71,7 @@ pub(crate) enum TrailingSeparatorMode {
     Force,
 }
 
-pub(crate) trait ArrayNodeElement: AstNode + Clone + ToFormatElement {
+pub(crate) trait ArrayNodeElement: AstNode<JsLanguage> + Clone + ToFormatElement {
     /// Determines how the trailing separator should be printer for this element
     fn separator_mode(&self) -> TrailingSeparatorMode;
 }

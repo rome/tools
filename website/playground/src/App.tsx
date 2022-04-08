@@ -8,14 +8,19 @@ import prettier from "prettier";
 import parserBabel from "prettier/esm/parser-babel";
 import IndentStyleSelect from "./IndentStyleSelect";
 import LineWidthInput from "./LineWidthInput";
-import {IndentStyle, SourceType} from "./types";
+import { IndentStyle, SourceType } from "./types";
 import SourceTypeSelect from "./SourceTypeSelect";
 
 enum LoadingState { Loading, Success, Error }
 
 function formatWithPrettier(
 	code: string,
-	options: { lineWidth: number, indentStyle: IndentStyle, indentWidth: number },
+	options: {
+		lineWidth: number,
+		indentStyle: IndentStyle,
+		indentWidth: number,
+		language: "js" | "ts",
+	},
 ) {
 	try {
 		return prettier.format(
@@ -24,12 +29,21 @@ function formatWithPrettier(
 				useTabs: options.indentStyle === IndentStyle.Tab,
 				tabWidth: options.indentWidth,
 				printWidth: options.lineWidth,
-				parser: "babel",
+				parser: getPrettierParser(options.language),
 				plugins: [parserBabel],
 			},
 		);
 	} catch (err) {
 		return code;
+	}
+}
+
+function getPrettierParser(language: "js" | "ts"): string {
+	switch (language) {
+		case "js":
+			return "babel";
+		case "ts":
+			return "babel-ts";
 	}
 }
 
@@ -62,7 +76,12 @@ function App() {
 
 	const searchParams = new URLSearchParams(window.location.search);
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
-	const [code, setCode] = useState(() => window.location.hash !== "#" ? decodeCode(window.location.hash.substring(1)) : "");
+	const [code, setCode] = useState(
+		() =>
+			window.location.hash !== "#" ? decodeCode(
+				window.location.hash.substring(1),
+			) : "",
+	);
 	const [lineWidth, setLineWidth] = useState(
 		parseInt(searchParams.get("lineWidth") ?? "80"),
 	);
@@ -84,7 +103,9 @@ function App() {
 
 	useEffect(
 		() => {
-			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}&sourceType=${sourceType}#${encodeCode(code)}`;
+			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}&sourceType=${sourceType}#${encodeCode(
+				code,
+			)}`;
 			window.history.pushState({ path: url }, "", url);
 		},
 		[lineWidth, indentStyle, indentWidth, code, isTypeScript, isJsx, sourceType],
@@ -106,7 +127,7 @@ function App() {
 				indentStyle === IndentStyle.Space ? indentWidth : undefined,
 				isTypeScript,
 				isJsx,
-				sourceType
+				sourceType,
 			);
 
 			return (
@@ -164,7 +185,7 @@ function App() {
 									<h1>Rome</h1>
 									<CodeEditor
 										value={formatted_code}
-										language="js"
+										language={language}
 										placeholder="Rome Output"
 										style={{
 											fontSize: 12,
@@ -180,8 +201,9 @@ function App() {
 											lineWidth,
 											indentStyle,
 											indentWidth,
+											language: isTypeScript ? "ts" : "js"
 										})}
-										language="js"
+										language={language}
 										placeholder="Prettier Output"
 										style={{
 											fontSize: 12,
@@ -222,7 +244,7 @@ function encodeCode(code: string): string {
 }
 
 function decodeCode(encoded: string): string {
-	return fromBinary(atob(encoded))
+	return fromBinary(atob(encoded));
 }
 
 // convert a Unicode string to a string in which
@@ -234,7 +256,7 @@ function toBinary(input: string) {
 	}
 
 	const charCodes = new Uint8Array(codeUnits.buffer);
-	let result = '';
+	let result = "";
 	for (let i = 0; i < charCodes.byteLength; i++) {
 		result += String.fromCharCode(charCodes[i]);
 	}
@@ -247,7 +269,7 @@ function fromBinary(binary: string) {
 		bytes[i] = binary.charCodeAt(i);
 	}
 	const charCodes = new Uint16Array(bytes.buffer);
-	let result = '';
+	let result = "";
 	for (let i = 0; i < charCodes.length; i++) {
 		result += String.fromCharCode(charCodes[i]);
 	}

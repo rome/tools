@@ -8,6 +8,9 @@ mod jsx;
 pub mod prelude;
 mod ts;
 mod utils;
+use std::error::Error;
+use std::fmt::{self, Display};
+
 pub use formatter::Formatter;
 pub use rome_formatter::intersperse::{Intersperse, IntersperseFn};
 pub use rome_formatter::printer::{Printer, PrinterOptions};
@@ -19,11 +22,10 @@ pub use rome_formatter::{
     soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
     FormatOptions, Formatted, IndentStyle, Token, Verbatim, LINE_TERMINATORS,
 };
-use rome_js_syntax::{SyntaxError, SyntaxNode};
-use rome_rowan::TextRange;
+use rome_js_syntax::JsSyntaxNode;
 use rome_rowan::TextSize;
 use rome_rowan::TokenAtOffset;
-use thiserror::Error;
+use rome_rowan::{SyntaxError, TextRange};
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
@@ -33,26 +35,35 @@ pub trait ToFormatElement {
 /// Public return type of the formatter
 pub type FormatResult<F> = Result<F, FormatError>;
 
-#[derive(Debug, PartialEq, Error)]
+#[derive(Debug, PartialEq)]
 /// Series of errors encountered during formatting
 pub enum FormatError {
     /// Node is missing and it should be required for a correct formatting
-    #[error("missing required child")]
     MissingRequiredChild,
 
     /// In case our formatter doesn't know how to format a certain language
-    #[error("language is not supported")]
     UnsupportedLanguage,
 
     /// When the ability to format the current file has been turned off on purpose
-    #[error("formatting capability is disabled")]
     CapabilityDisabled,
 }
+
+impl Display for FormatError {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            FormatError::MissingRequiredChild => fmt.write_str("missing required child"),
+            FormatError::UnsupportedLanguage => fmt.write_str("language is not supported"),
+            FormatError::CapabilityDisabled => fmt.write_str("formatting capability is disabled"),
+        }
+    }
+}
+
+impl Error for FormatError {}
 
 impl From<SyntaxError> for FormatError {
     fn from(syntax_error: SyntaxError) -> Self {
         match syntax_error {
-            SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
+            SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
         }
     }
 }
@@ -60,7 +71,7 @@ impl From<SyntaxError> for FormatError {
 impl From<&SyntaxError> for FormatError {
     fn from(syntax_error: &SyntaxError) -> Self {
         match syntax_error {
-            SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
+            SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
         }
     }
 }
@@ -68,10 +79,11 @@ impl From<&SyntaxError> for FormatError {
 /// Formats a JavaScript (and its super languages) file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-#[tracing::instrument(level = "trace", skip_all)]
-pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Formatted> {
-    let element = Formatter::new(options).format_root(syntax)?;
-    Ok(Printer::new(options).print(&element))
+pub fn format(options: FormatOptions, syntax: &JsSyntaxNode) -> FormatResult<Formatted> {
+    tracing::trace_span!("format").in_scope(move || {
+        let element = Formatter::new(options).format_root(syntax)?;
+        Ok(Printer::new(options).print(&element))
+    })
 }
 
 /// Outputs formatter IR for a JavaScript (and its super languages) file
@@ -79,7 +91,7 @@ pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Forma
 /// It returns a [FormatElement] result. Mostly for debugging purposes.
 pub fn to_format_element(
     options: FormatOptions,
-    syntax: &SyntaxNode,
+    syntax: &JsSyntaxNode,
 ) -> FormatResult<FormatElement> {
     Formatter::new(options).format_root(syntax)
 }
@@ -97,7 +109,7 @@ pub fn to_format_element(
 /// range of the input that was effectively overwritten by the formatter
 pub fn format_range(
     options: FormatOptions,
-    root: &SyntaxNode,
+    root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Formatted> {
     // Find the tokens corresponding to the start and end of the range
@@ -230,7 +242,7 @@ pub fn format_range(
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Formatted> {
+pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<Formatted> {
     // Determine the initial indentation level for the printer by inspecting the trivias
     // of each token from the first token of the common root towards the start of the file
     let mut tokens = std::iter::successors(root.first_token(), |token| token.prev_token());

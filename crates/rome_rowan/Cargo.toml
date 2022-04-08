@@ -15,6 +15,7 @@ hashbrown = { version = "0.11.2", features = [
 text-size = "1.1.0"
 memoffset = "0.6.5"
 countme = "3.0.0"
+thiserror = "1.0.30"
 
 serde = { version = "1.0.133", optional = true, default-features = false }
 

@@ -1,8 +1,8 @@
 use crate::raw_language::RawLanguageKind::{COMMA_TOKEN, LITERAL_EXPRESSION};
 ///! Provides a sample language implementation that is useful in API explanation or tests
 use crate::{
-    Language, ParsedChildren, RawNodeSlots, RawSyntaxKind, RawSyntaxNode, SyntaxFactory,
-    SyntaxKind, TreeBuilder,
+    AstNode, AstSeparatedList, Language, ParsedChildren, RawNodeSlots, RawSyntaxKind,
+    RawSyntaxNode, SyntaxFactory, SyntaxKind, SyntaxList, SyntaxNode, TreeBuilder,
 };
 
 #[doc(hidden)]
@@ -55,6 +55,49 @@ impl SyntaxKind for RawLanguageKind {
         assert!(raw.0 < RawLanguageKind::__LAST as u16);
 
         unsafe { std::mem::transmute::<u16, RawLanguageKind>(raw.0) }
+    }
+}
+
+#[doc(hidden)]
+pub struct LiteralExpression {
+    node: SyntaxNode<RawLanguage>,
+}
+
+impl AstNode<RawLanguage> for LiteralExpression {
+    fn can_cast(kind: RawLanguageKind) -> bool {
+        kind == LITERAL_EXPRESSION
+    }
+
+    fn cast(syntax: SyntaxNode<RawLanguage>) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        if syntax.kind() == LITERAL_EXPRESSION {
+            Some(LiteralExpression { node: syntax })
+        } else {
+            None
+        }
+    }
+
+    fn syntax(&self) -> &SyntaxNode<RawLanguage> {
+        &self.node
+    }
+}
+
+#[doc(hidden)]
+pub struct SeparatedExpressionList {
+    syntax_list: SyntaxList<RawLanguage>,
+}
+
+impl SeparatedExpressionList {
+    pub fn new(list: SyntaxList<RawLanguage>) -> Self {
+        Self { syntax_list: list }
+    }
+}
+
+impl AstSeparatedList<RawLanguage, LiteralExpression> for SeparatedExpressionList {
+    fn syntax_list(&self) -> &SyntaxList<RawLanguage> {
+        &self.syntax_list
     }
 }
 

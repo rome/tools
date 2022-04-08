@@ -2,7 +2,7 @@
 
 use rome_diagnostics::file::SimpleFiles;
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
-use rome_diagnostics::{Formatter as ErrorFormatter, LongFormatter};
+use rome_diagnostics::Emitter;
 use rome_js_formatter::{format as format_code, to_format_element, FormatOptions, IndentStyle};
 use rome_js_parser::{parse, LanguageVariant, SourceType};
 use std::io;
@@ -110,7 +110,7 @@ pub fn run(
 
     let options = FormatOptions {
         indent_style,
-        line_width,
+        line_width: line_width.try_into().unwrap_or_default(),
     };
 
     let cst = format!("{:#?}", syntax);
@@ -124,10 +124,11 @@ pub fn run(
     let formatter_ir = format!("{:#?}", root_element);
 
     let mut errors = ErrorOutput(Vec::new());
-    let mut error_formatter = LongFormatter;
-    error_formatter
-        .emit_with_writer(parse.diagnostics(), &simple_files, &mut errors)
-        .unwrap();
+    for diag in parse.diagnostics() {
+        Emitter::new(&simple_files)
+            .emit_with_writer(diag, &mut errors)
+            .unwrap();
+    }
 
     PlaygroundResult {
         cst,

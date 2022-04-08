@@ -2,6 +2,7 @@
 //!
 //!
 mod ast;
+mod css_kinds_src;
 mod formatter;
 mod generate_macros;
 mod generate_nodes;
@@ -11,6 +12,8 @@ mod kinds_src;
 mod parser_tests;
 mod unicode;
 
+use proc_macro2::TokenStream;
+use quote::quote;
 use std::path::Path;
 
 use xtask::{glue::fs2, Mode, Result};
@@ -20,19 +23,81 @@ pub use self::formatter::generate_formatter;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
 
-const SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
-const AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";
-const SYNTAX_FACTORY: &str = "crates/rome_js_syntax/src/generated/syntax_factory.rs";
-const AST_MACROS: &str = "crates/rome_js_syntax/src/generated/macros.rs";
+const JS_SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
+const JS_AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";
+const JS_SYNTAX_FACTORY: &str = "crates/rome_js_syntax/src/generated/syntax_factory.rs";
+const JS_AST_MACROS: &str = "crates/rome_js_syntax/src/generated/macros.rs";
+
+const CSS_SYNTAX_KINDS: &str = "crates/rome_css_syntax/src/generated/kind.rs";
+const CSS_AST_NODES: &str = "crates/rome_css_syntax/src/generated/nodes.rs";
+const CSS_SYNTAX_FACTORY: &str = "crates/rome_css_syntax/src/generated/syntax_factory.rs";
+const CSS_AST_MACROS: &str = "crates/rome_css_syntax/src/generated/macros.rs";
 
 enum UpdateResult {
     NotUpdated,
     Updated,
 }
 
+#[derive(Debug, Eq, Copy, Clone, PartialEq)]
+pub enum LanguageKind {
+    Js,
+    Css,
+}
+
+impl LanguageKind {
+    pub(crate) fn syntax_kind(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxKind },
+            LanguageKind::Css => quote! { CssSyntaxKind },
+        }
+    }
+
+    pub(crate) fn syntax_node(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxNode },
+            LanguageKind::Css => quote! { CssSyntaxNode },
+        }
+    }
+
+    pub(crate) fn syntax_element(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxElement },
+            LanguageKind::Css => quote! { CssSyntaxElement },
+        }
+    }
+
+    pub(crate) fn syntax_token(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxToken },
+            LanguageKind::Css => quote! { CssSyntaxToken },
+        }
+    }
+
+    pub(crate) fn syntax_element_children(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxElementChildren },
+            LanguageKind::Css => quote! { CssSyntaxElementChildren },
+        }
+    }
+
+    pub(crate) fn syntax_list(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxList },
+            LanguageKind::Css => quote! { CssSyntaxList },
+        }
+    }
+
+    pub(crate) fn language(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsLanguage },
+            LanguageKind::Css => quote! { CssLanguage },
+        }
+    }
+}
+
 /// A helper to update file on disk if it has changed.
 /// With verify = false,
-fn update(path: &Path, contents: &str, mode: Mode) -> Result<UpdateResult> {
+fn update(path: &Path, contents: &str, mode: &Mode) -> Result<UpdateResult> {
     match fs2::read_to_string(path) {
         Ok(old_contents) if old_contents == contents => {
             return Ok(UpdateResult::NotUpdated);
@@ -40,7 +105,7 @@ fn update(path: &Path, contents: &str, mode: Mode) -> Result<UpdateResult> {
         _ => (),
     }
 
-    if mode == Mode::Verify {
+    if *mode == Mode::Verify {
         anyhow::bail!("`{}` is not up-to-date", path.display());
     }
 

@@ -26,7 +26,6 @@
 //!
 //! The crate further includes utilities such as:
 //! - ANSI syntax highlighting of nodes (through [`util`]) or text through [`rome_js_lexer`].
-//! - Rich utility functions for syntax nodes through [`SyntaxNodeExt`].
 //!
 //! It is inspired by the rust analyzer parser but adapted for JavaScript.
 //!
@@ -92,7 +91,6 @@ use crate::parser::ToDiagnostic;
 pub(crate) use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub(crate) use crate::ParsedSyntax::{Absent, Present};
 use rome_diagnostics::Diagnostic;
-pub use rome_js_syntax::numbers::BigInt;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::TextSize;
 use std::path::Path;

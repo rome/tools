@@ -11,10 +11,6 @@ rome_rowan = { path = "../rome_rowan" }
 rome_console = { path = "../rome_console" }
 unicode-width = "0.1.9"
 serde = { version = "1.0.133", optional = true, features = ["derive"] }
-lsp-types = { version = "0.92.0", optional = true }
 rome_text_edit = { path = "../rome_text_edit" }
 termcolor = "1.1.2"
 colored = "2.0.0"
-
-[features]
-lsp = ["lsp-types"]

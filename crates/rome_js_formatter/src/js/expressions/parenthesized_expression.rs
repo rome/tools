@@ -5,9 +5,10 @@ use crate::{
     FormatResult, Formatter, ToFormatElement,
 };
 use rome_js_syntax::{
-    AstNode, JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields,
-    JsSyntaxKind, SyntaxNode, SyntaxResult,
+    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxKind,
+    JsSyntaxNode,
 };
+use rome_rowan::{AstNode, SyntaxResult};
 
 impl ToFormatElement for JsParenthesizedExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -102,7 +103,7 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
     }
 }
 
-fn not_binaryish_expression(node: &SyntaxNode) -> bool {
+fn not_binaryish_expression(node: &JsSyntaxNode) -> bool {
     !matches!(
         node.kind(),
         JsSyntaxKind::JS_BINARY_EXPRESSION | JsSyntaxKind::JS_LOGICAL_EXPRESSION

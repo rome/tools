@@ -199,7 +199,7 @@ pub(crate) fn private_names_only_allowed_on_left_side_of_in_expression(
 pub(crate) fn invalid_assignment_error(p: &Parser, range: TextRange) -> Diagnostic {
     p.err_builder(&format!(
         "Invalid assignment to `{}`",
-        p.source(range.as_text_range())
+        p.source(range.as_range())
     ))
     .primary(range, "This expression cannot be assigned to")
 }

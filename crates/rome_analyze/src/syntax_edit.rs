@@ -1,4 +1,4 @@
-use rome_js_syntax::{NodeOrToken, SyntaxElement, TextRange, TextSize};
+use rome_js_syntax::{JsSyntaxElement, TextRange, TextSize};
 
 /// A single insert or deletion of text.
 pub struct Indel {
@@ -9,16 +9,16 @@ pub struct Indel {
 #[derive(Debug, Clone)]
 pub enum SyntaxEdit {
     Remove {
-        target: SyntaxElement,
+        target: JsSyntaxElement,
         trimmed: bool,
     },
     Insert {
         offset: TextSize,
-        element: SyntaxElement,
+        element: JsSyntaxElement,
     },
     Replace {
-        target: SyntaxElement,
-        replacement: SyntaxElement,
+        target: JsSyntaxElement,
+        replacement: JsSyntaxElement,
         trimmed: bool,
     },
 }
@@ -39,8 +39,8 @@ impl From<SyntaxEdit> for Indel {
             }
             SyntaxEdit::Insert { offset, element } => {
                 let text = match element {
-                    NodeOrToken::Node(it) => it.text_trimmed().into(),
-                    NodeOrToken::Token(it) => it.text_trimmed().into(),
+                    JsSyntaxElement::Node(it) => it.text_trimmed().into(),
+                    JsSyntaxElement::Token(it) => it.text_trimmed().into(),
                 };
                 let range = TextRange::new(offset, offset);
                 Indel { text, range }
@@ -51,8 +51,8 @@ impl From<SyntaxEdit> for Indel {
                 trimmed: true,
             } => {
                 let text = match replacement {
-                    NodeOrToken::Node(it) => it.text_trimmed().into(),
-                    NodeOrToken::Token(it) => it.text_trimmed().into(),
+                    JsSyntaxElement::Node(it) => it.text_trimmed().into(),
+                    JsSyntaxElement::Token(it) => it.text_trimmed().into(),
                 };
                 let range = target.text_trimmed_range();
                 Indel { text, range }
@@ -63,8 +63,8 @@ impl From<SyntaxEdit> for Indel {
                 trimmed: false,
             } => {
                 let text = match replacement {
-                    NodeOrToken::Node(it) => it.text().into(),
-                    NodeOrToken::Token(it) => it.text().into(),
+                    JsSyntaxElement::Node(it) => it.text().into(),
+                    JsSyntaxElement::Token(it) => it.text().into(),
                 };
                 let range = target.text_range();
                 Indel { text, range }

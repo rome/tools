@@ -2,7 +2,7 @@
 
 use std::collections::HashMap;
 
-use rome_js_syntax::{SyntaxNode, SyntaxToken, TextRange};
+use rome_js_syntax::{JsSyntaxNode, JsSyntaxToken, TextRange};
 
 const ROME_IGNORE: &str = "rome-ignore";
 
@@ -27,7 +27,7 @@ impl Suppressions {
     }
 }
 
-pub fn compute(node: SyntaxNode) -> Suppressions {
+pub fn compute(node: JsSyntaxNode) -> Suppressions {
     let mut suppressions: HashMap<String, Vec<TextRange>> = HashMap::new();
 
     for token in node.descendants_tokens() {
@@ -58,7 +58,7 @@ pub fn compute(node: SyntaxNode) -> Suppressions {
 }
 
 // TODO: Improve this logic
-fn suppressed_range(token: &SyntaxToken) -> Option<TextRange> {
+fn suppressed_range(token: &JsSyntaxToken) -> Option<TextRange> {
     let mut node = token.parent()?;
 
     while !node.parent()?.text_trimmed().to_string().contains('\n') {

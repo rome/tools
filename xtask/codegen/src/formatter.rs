@@ -11,7 +11,7 @@ use proc_macro2::{Ident, Span};
 use quote::quote;
 use xtask::project_root;
 
-use crate::ast::load_ast;
+use crate::ast::load_js_ast;
 
 struct GitRepo {
     repo: Repository,
@@ -236,7 +236,7 @@ enum NodeKind {
 pub fn generate_formatter() {
     let repo = GitRepo::open();
 
-    let ast = load_ast();
+    let ast = load_js_ast();
 
     // Store references to all the files created by the codegen
     // script to build the module import files
@@ -311,7 +311,8 @@ pub fn generate_formatter() {
             NodeKind::Node | NodeKind::Unknown | NodeKind::List { separated: true } => {
                 quote! {
                     use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-                    use rome_js_syntax::{#id, AstNode};
+                    use rome_rowan::AstNode;
+                    use rome_js_syntax::{#id};
 
                     impl ToFormatElement for #id {
                         fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

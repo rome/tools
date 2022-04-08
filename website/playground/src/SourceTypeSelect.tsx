@@ -1,22 +1,17 @@
 import { SourceType } from "./types";
 
 interface Props {
-	setIsTypeScript: (b: boolean) => void;
-	isTypeScript: boolean;
-	setIsJsx: (b: boolean) => void;
-	isJsx: boolean;
-	setSourceType: (v: SourceType) => void;
-	sourceType: SourceType;
+	setIsTypeScript: (b: boolean) => void,
+	isTypeScript: boolean,
+	setIsJsx: (b: boolean) => void,
+	isJsx: boolean,
+	setSourceType: (v: SourceType) => void,
+	sourceType: SourceType,
 }
 
-export default function SourceTypeSelect({
-	setIsTypeScript,
-	isTypeScript,
-	setIsJsx,
-	isJsx,
-	setSourceType,
-	sourceType,
-}: Props) {
+export default function SourceTypeSelect(
+	{ setIsTypeScript, isTypeScript, setIsJsx, isJsx, setSourceType, sourceType }: Props,
+) {
 	return (
 		<div className="pl-5 pb-5">
 			<fieldset className="space-y-5">
@@ -56,8 +51,6 @@ export default function SourceTypeSelect({
 							type="checkbox"
 							checked={isTypeScript}
 							onChange={(e) => {
-								setIsTypeScript(false);
-								setIsJsx(false);
 								setIsTypeScript(e.target.checked);
 							}}
 							className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded disabled:opacity-30"

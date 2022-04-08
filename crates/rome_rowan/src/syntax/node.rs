@@ -373,6 +373,24 @@ impl<L: Language> SyntaxNode<L> {
     pub fn into_list(self) -> SyntaxList<L> {
         SyntaxList::new(self)
     }
+
+    /// Whether the node contains any comments.
+    pub fn contains_comments(&self) -> bool {
+        self.descendants_tokens()
+            .any(|tok| tok.has_trailing_comments() || tok.has_leading_comments())
+    }
+
+    /// Whether the node contains trailing comments.
+    pub fn has_trailing_comments(&self) -> bool {
+        self.last_token()
+            .map_or(false, |tok| tok.has_trailing_comments())
+    }
+
+    /// Whether the node contains leading comments.
+    pub fn has_leading_comments(&self) -> bool {
+        self.first_token()
+            .map_or(false, |tok| tok.has_leading_comments())
+    }
 }
 
 impl<L: Language> fmt::Debug for SyntaxNode<L> {

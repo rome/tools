@@ -6,17 +6,16 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rome_js_parser = { path = "../rome_js_parser" }
 rome_js_syntax = { path = "../rome_js_syntax" }
 rome_formatter = { path = "../rome_formatter" }
 rome_rowan = { path = "../rome_rowan" }
-rome_fs = { path = "../rome_fs" }
-rome_core = { path = "../rome_core" }
 cfg-if = "1.0.0"
-thiserror = "1.0.30"
-tracing = "0.1.31"
+tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 
 [dev-dependencies]
+rome_fs = { path = "../rome_fs" }
+rome_core = { path = "../rome_core" }
+rome_js_parser = { path = "../rome_js_parser" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tests_macros = { path = "../tests_macros" }

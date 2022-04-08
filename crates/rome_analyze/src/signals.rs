@@ -194,6 +194,6 @@ impl DiagnosticExt for Diagnostic {
 
     /// Get the [TextRange] of the diagnostic's primary label
     fn primary_text_range(&self) -> Option<TextRange> {
-        self.primary.as_ref().map(|p| p.span.range.as_text_range())
+        self.primary.as_ref().map(|p| p.span.range.as_range())
     }
 }

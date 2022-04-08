@@ -3,11 +3,9 @@ use expect_test::expect_file;
 use rome_diagnostics::file::SimpleFile;
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{file::SimpleFiles, Emitter};
-use rome_js_syntax::{
-    AstNode, JsCallArguments, JsLogicalExpression, SyntaxNode, SyntaxNodeExt, SyntaxToken,
-};
 use rome_js_syntax::{JsAnyRoot, JsSyntaxKind};
-use rome_rowan::{SyntaxKind, TextSize};
+use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxNode, JsSyntaxToken};
+use rome_rowan::{AstNode, SyntaxKind, TextSize};
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
@@ -20,7 +18,6 @@ a;
 "#;
 
     let module = parse(src, 0, SourceType::tsx());
-    dbg!(&module.syntax());
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 
@@ -160,7 +157,7 @@ fn assert_errors_are_present(program: &Parse<JsAnyRoot>, path: &Path) {
 
 // sometimes our parser emits unknown nodes without diagnostics;
 // this check makes sure that we don't signal that the tree has errors.
-fn has_unknown_nodes(node: &SyntaxNode) -> bool {
+fn has_unknown_nodes(node: &JsSyntaxNode) -> bool {
     node.descendants()
         .any(|descendant| descendant.kind().is_unknown())
 }
@@ -192,7 +189,7 @@ pub fn test_trivia_attached_to_tokens() {
     let m = parse_module(text, 0);
     let mut tokens = m.syntax().descendants_tokens();
 
-    let is_let = |x: &SyntaxToken| x.text_trimmed() == "let";
+    let is_let = |x: &JsSyntaxToken| x.text_trimmed() == "let";
     let first_let = tokens.find(is_let).unwrap();
 
     // first let leading trivia asserts

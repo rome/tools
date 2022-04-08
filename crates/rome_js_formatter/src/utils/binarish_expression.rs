@@ -6,11 +6,12 @@ use crate::{
     ToFormatElement,
 };
 use rome_js_syntax::{
-    AstNode, JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryExpressionFields,
+    JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryExpressionFields,
     JsBinaryOperation, JsInExpression, JsInExpressionFields, JsInstanceofExpression,
-    JsInstanceofExpressionFields, JsLogicalExpression, JsLogicalExpressionFields,
-    JsLogicalOperation, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken,
+    JsInstanceofExpressionFields, JsLanguage, JsLogicalExpression, JsLogicalExpressionFields,
+    JsLogicalOperation, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
+use rome_rowan::AstNode;
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
@@ -99,7 +100,7 @@ use std::fmt::Debug;
 /// which is what we wanted since the beginning!
 ///
 pub fn format_binaryish_expression(
-    syntax_node: &SyntaxNode,
+    syntax_node: &JsSyntaxNode,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
     let mut flatten_nodes = FlattenItems::new(syntax_node.clone(), formatter);
@@ -112,9 +113,9 @@ pub fn format_binaryish_expression(
 // that have the same operator
 fn flatten_expressions(
     flatten_items: &mut FlattenItems,
-    syntax_node: SyntaxNode,
+    syntax_node: JsSyntaxNode,
     formatter: &Formatter,
-    previous_operator: Option<SyntaxToken>,
+    previous_operator: Option<JsSyntaxToken>,
 ) -> FormatResult<()> {
     if let Some(binary_expression) = JsBinaryExpression::cast(syntax_node.clone()) {
         let JsBinaryExpressionFields {
@@ -317,8 +318,8 @@ enum Operation {
 /// Check the documentation of  [split_node_to_flatten_items] for a better explanation of the payload
 struct SplitToElementParams<
     'a,
-    Left: AstNode + ToFormatElement + Clone,
-    Right: AstNode + ToFormatElement + Clone,
+    Left: AstNode<JsLanguage> + ToFormatElement + Clone,
+    Right: AstNode<JsLanguage> + ToFormatElement + Clone,
 > {
     /// Current instance of the formatter
     formatter: &'a Formatter,
@@ -327,9 +328,9 @@ struct SplitToElementParams<
     /// The right property of the current binaryish expression
     right: Right,
     /// The token of the operator of the current binaryish expression
-    operator: SyntaxToken,
+    operator: JsSyntaxToken,
     /// The  token of the operator of the previous binaryish expression, if it exists
-    previous_operator: Option<SyntaxToken>,
+    previous_operator: Option<JsSyntaxToken>,
 
     /// The current operator of the node
     current_operator: Operation,
@@ -359,8 +360,8 @@ fn split_binaryish_to_flatten_items<Left, Right>(
     params: SplitToElementParams<Left, Right>,
 ) -> FormatResult<(FlattenItem, FlattenItem)>
 where
-    Left: AstNode + ToFormatElement + Clone,
-    Right: AstNode + ToFormatElement + Clone,
+    Left: AstNode<JsLanguage> + ToFormatElement + Clone,
+    Right: AstNode<JsLanguage> + ToFormatElement + Clone,
 {
     let SplitToElementParams {
         formatter,
@@ -468,7 +469,7 @@ where
 /// first `foo && bar` is computed and its result is then computed against `|| lorem`.
 ///
 /// In order to make this distinction more obvious, we wrap `foo && bar` in parenthesis.
-fn format_with_or_without_parenthesis<Node: AstNode + ToFormatElement>(
+fn format_with_or_without_parenthesis<Node: AstNode<JsLanguage> + ToFormatElement>(
     previous_operation: Operation,
     node: Node,
     formatted_node: FormatElement,
@@ -545,7 +546,7 @@ fn can_hard_group(flatten_nodes: &[FlattenItem]) -> bool {
             .all(|node| !node.has_comments() && !matches!(node, FlattenItem::Group(..)))
 }
 
-fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
+fn is_inside_parenthesis(current_node: &JsSyntaxNode) -> bool {
     current_node.parent().map_or(false, |parent| {
         let kind = parent.kind();
         matches!(
@@ -564,7 +565,7 @@ fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
 ///
 /// There are some cases where the indentation is done by the parent, so if the parent is already doing
 /// the indentation, then there's no need to do a second indentation.
-fn should_not_indent_if_parent_indents(current_node: &SyntaxNode) -> bool {
+fn should_not_indent_if_parent_indents(current_node: &JsSyntaxNode) -> bool {
     let parent = current_node.parent();
     let grand_parent = parent.as_ref().map_or_else(|| None, |p| p.parent());
 
@@ -581,7 +582,7 @@ fn should_not_indent_if_parent_indents(current_node: &SyntaxNode) -> bool {
 /// these cases the decide to actually break on a new line and indent it.
 ///
 /// This function checks what the parents adheres to this behaviour
-fn should_indent_if_parent_inlines(current_node: &SyntaxNode) -> bool {
+fn should_indent_if_parent_inlines(current_node: &JsSyntaxNode) -> bool {
     let parent = current_node.parent();
     let grand_parent = parent.as_ref().map_or_else(|| None, |p| p.parent());
 
@@ -597,19 +598,19 @@ fn should_indent_if_parent_inlines(current_node: &SyntaxNode) -> bool {
 
 #[derive(Debug)]
 struct FlattenItems<'f> {
-    pub current_node: SyntaxNode,
+    pub current_node: JsSyntaxNode,
     pub items: Vec<FlattenItem>,
     pub formatter: &'f Formatter,
 }
 
 struct MakeFlattenItemPayload<
-    Node: AstNode + ToFormatElement + Clone,
-    Right: AstNode + ToFormatElement + Clone,
+    Node: AstNode<JsLanguage> + ToFormatElement + Clone,
+    Right: AstNode<JsLanguage> + ToFormatElement + Clone,
 > {
     /// Left hand side of the expression
     left: Node,
     /// The operator of the expression
-    operator: SyntaxToken,
+    operator: JsSyntaxToken,
     /// Right hand side of the expression
     right: Right,
     // In order to flatten the expression, we have to check if the left node has the same operator
@@ -618,11 +619,11 @@ struct MakeFlattenItemPayload<
     should_flatten: bool,
     /// The operation that belongs to the current node
     current_operator: Operation,
-    previous_operator: Option<SyntaxToken>,
+    previous_operator: Option<JsSyntaxToken>,
 }
 
 impl<'f> FlattenItems<'f> {
-    pub fn new(current_node: SyntaxNode, formatter: &'f Formatter) -> Self {
+    pub fn new(current_node: JsSyntaxNode, formatter: &'f Formatter) -> Self {
         Self {
             current_node,
             items: Vec::new(),
@@ -644,8 +645,8 @@ impl<'f> FlattenItems<'f> {
     ) -> FormatResult<()>
     where
         MakeItem: FnOnce(FlattenItemFormatted, WithComments) -> FlattenItem,
-        Left: AstNode + ToFormatElement + Clone,
-        Right: AstNode + ToFormatElement + Clone,
+        Left: AstNode<JsLanguage> + ToFormatElement + Clone,
+        Right: AstNode<JsLanguage> + ToFormatElement + Clone,
     {
         let MakeFlattenItemPayload {
             left,

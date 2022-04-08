@@ -4,30 +4,73 @@ name: Deploy Playground
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
+    paths:
+      - "crates"
+      - "website/playground"
     branches:
       - main
-
 
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: cloudflare
+    environment: aws
     name: Deploy
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install --prefix crates/rome_playground
+      - run: npm install --prefix website/playground
       - uses: jetli/wasm-pack-action@v0.3.0
-      - run: wasm-pack build crates/rome_playground --target web --release
-      - run: npm run build --prefix crates/rome_playground
+      - run: npm run build --prefix website/playground -- --base=/$GITHUB_SHA/
       - name: Publish
-        uses: cloudflare/wrangler-action@1.3.0
+        uses: jakejarvis/s3-sync-action@master
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: 'website/playground/dist'      # optional: defaults to entire repository
+          DEST_DIR: $GITHUB_SHA
+
+      - name: Set Playground URL
+        if: github.event_name == "pull_request"
+        id: url
+        run: |
+          url="[Playground for commit](http://play.rome.tools.s3-website-us-east-1.amazonaws.com/${{ GITHUB_SHA }}/index.html)"
+          echo "::set-output name=url::$url"
+
+      - name: Get the PR number
+        if: github.event_name == 'pull_request'
+        id: pr-number
+        uses: kkak10/pr-number-action@v1.3
+
+      - name: Find Previous Comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1.3.0
+        id: previous-comment
         with:
-          apiToken: ${{ secrets.CF_API_KEY }}
-          workingDirectory: 'crates/rome_playground'
-          environment: 'production'
+          issue-number: ${{ steps.pr-number.outputs.pr }}
+          body-includes: Playground link
+
+      - name: Update existing comment
+        if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
+        uses: peter-evans/create-or-update-comment@v1.4.5
+        continue-on-error: true
+        with:
+          comment-id: ${{ steps.previous-comment.outputs.comment-id }}
+          body: |
+            ${{ steps.url.outputs.url }}
+          edit-mode: replace
+
+      - name: Write a new comment
+        if: github.event_name == 'pull_request' && !steps.previous-comment.outputs.comment-id
+        uses: peter-evans/create-or-update-comment@v1.4.5
+        continue-on-error: true
+        with:
+          issue-number: ${{ steps.pr-number.outputs.pr }}
+          body: |
+            ${{ steps.url.outputs.url }}
+
 

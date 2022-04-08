@@ -21,11 +21,14 @@ use super::{BoxedTraversal, File};
 pub struct OsFileSystem;
 
 impl FileSystem for OsFileSystem {
-    #[tracing::instrument(level = "debug", skip(self))]
     fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        Ok(Box::new(OsFile {
-            inner: fs::File::options().read(true).write(true).open(path)?,
-        }))
+        tracing::debug_span!("OsFileSystem::open", path = ?path).in_scope(
+            move || -> io::Result<Box<dyn File>> {
+                Ok(Box::new(OsFile {
+                    inner: fs::File::options().read(true).write(true).open(path)?,
+                }))
+            },
+        )
     }
 
     fn traversal(&self, func: BoxedTraversal) {
@@ -40,24 +43,26 @@ struct OsFile {
 }
 
 impl File for OsFile {
-    #[tracing::instrument(level = "debug", skip_all)]
     fn read_to_string(&mut self, buffer: &mut String) -> io::Result<()> {
-        // Reset the cursor to the starting position
-        self.inner.seek(SeekFrom::Start(0))?;
-        // Read the file content
-        self.inner.read_to_string(buffer)?;
-        Ok(())
+        tracing::debug_span!("OsFile::read_to_string").in_scope(move || {
+            // Reset the cursor to the starting position
+            self.inner.seek(SeekFrom::Start(0))?;
+            // Read the file content
+            self.inner.read_to_string(buffer)?;
+            Ok(())
+        })
     }
 
-    #[tracing::instrument(level = "debug", skip_all)]
     fn set_content(&mut self, content: &[u8]) -> io::Result<()> {
-        // Truncate the file
-        self.inner.set_len(0)?;
-        // Reset the cursor to the starting position
-        self.inner.seek(SeekFrom::Start(0))?;
-        // Write the byte slice
-        self.inner.write_all(content)?;
-        Ok(())
+        tracing::debug_span!("OsFile::set_content").in_scope(move || {
+            // Truncate the file
+            self.inner.set_len(0)?;
+            // Reset the cursor to the starting position
+            self.inner.seek(SeekFrom::Start(0))?;
+            // Write the byte slice
+            self.inner.write_all(content)?;
+            Ok(())
+        })
     }
 }
 

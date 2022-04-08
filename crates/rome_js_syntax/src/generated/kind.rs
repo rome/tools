@@ -556,17 +556,6 @@ impl JsSyntaxKind {
             _ => false,
         }
     }
-    pub const fn is_before_expr(self) -> bool {
-        match self {
-            BANG | L_PAREN | L_BRACK | L_CURLY | SEMICOLON | COMMA | COLON | QUESTION | PLUS2
-            | MINUS2 | TILDE | CASE_KW | DEFAULT_KW | DO_KW | ELSE_KW | RETURN_KW | THROW_KW
-            | NEW_KW | EXTENDS_KW | YIELD_KW | IN_KW | TYPEOF_KW | VOID_KW | DELETE_KW | PLUSEQ
-            | INSTANCEOF_KW | MINUSEQ | PIPEEQ | AMPEQ | CARETEQ | SLASHEQ | STAREQ | PERCENTEQ
-            | AMP2 | PIPE2 | SHLEQ | SHREQ | USHREQ | EQ | EQ2 | EQ3 | NEQ | NEQ2 | FAT_ARROW
-            | MINUS | PLUS | AWAIT_KW => true,
-            _ => false,
-        }
-    }
     pub fn from_keyword(ident: &str) -> Option<JsSyntaxKind> {
         let kw = match ident {
             "break" => BREAK_KW,

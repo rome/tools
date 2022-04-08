@@ -1,8 +1,10 @@
 use std::borrow::Cow;
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rome_formatter::{format_elements, token, Token};
-use rome_js_syntax::{AstNode, JsxText, JsxTextFields};
+use rome_formatter::Token;
+use rome_js_syntax::{JsxText, JsxTextFields};
+use rome_rowan::AstNode;
+
 impl ToFormatElement for JsxText {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsxTextFields { value_token } = self.as_fields();

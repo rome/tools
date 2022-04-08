@@ -1,4 +1,5 @@
 use rome_core::App;
+use rome_formatter::LineWidth;
 use rome_fs::RomePath;
 use rome_js_formatter::{format, FormatOptions, Formatted, IndentStyle};
 use rome_js_parser::{parse, ModuleKind, SourceType};
@@ -43,7 +44,10 @@ impl From<SerializableFormatOptions> for FormatOptions {
             indent_style: test
                 .indent_style
                 .map_or_else(|| IndentStyle::Tab, |value| value.into()),
-            line_width: test.line_width.unwrap_or(80),
+            line_width: test
+                .line_width
+                .and_then(|width| LineWidth::try_from(width).ok())
+                .unwrap_or_default(),
         }
     }
 }
@@ -130,7 +134,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
     );
 
     let mut rome_path = RomePath::new(file_path);
-    if app.can_format(&rome_path) {
+    if app.features.can_format(&rome_path) {
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
         let mut source_type: SourceType = rome_path.as_path().try_into().unwrap();

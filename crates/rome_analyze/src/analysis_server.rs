@@ -1,7 +1,8 @@
 use std::{collections::HashMap, sync::Arc};
 
 use rome_js_parser::parse_script;
-use rome_js_syntax::{AstNode, SyntaxNode, TextRange};
+use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange};
+use rome_rowan::AstNode;
 use tracing::trace;
 
 use crate::{
@@ -33,7 +34,7 @@ impl AnalysisServer {
         self.file_map.get(&file_id).cloned()
     }
 
-    pub fn parse(&self, file_id: FileId) -> SyntaxNode {
+    pub fn parse(&self, file_id: FileId) -> JsSyntaxNode {
         let text = self
             .get_file_text(file_id)
             .expect("File contents missing while parsing");
@@ -45,13 +46,17 @@ impl AnalysisServer {
         suppressions::compute(tree)
     }
 
-    pub fn query_nodes<T: AstNode>(&self, file_id: FileId) -> impl Iterator<Item = T> {
+    pub fn query_nodes<T: AstNode<JsLanguage>>(&self, file_id: FileId) -> impl Iterator<Item = T> {
         trace!("Query nodes: {:?}", std::any::type_name::<T>());
         let tree = self.parse(file_id);
         tree.descendants().filter_map(|n| T::cast(n))
     }
 
-    pub fn find_node_at_range<T: AstNode>(&self, file_id: FileId, range: TextRange) -> Option<T> {
+    pub fn find_node_at_range<T: AstNode<JsLanguage>>(
+        &self,
+        file_id: FileId,
+        range: TextRange,
+    ) -> Option<T> {
         trace!("Find {:?} range: {:?}", std::any::type_name::<T>(), range);
         let tree = self.parse(file_id);
         tree.covering_element(range).ancestors().find_map(T::cast)

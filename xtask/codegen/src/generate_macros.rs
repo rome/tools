@@ -1,8 +1,11 @@
 use super::kinds_src::AstSrc;
-use crate::{to_upper_snake_case, Result};
+use crate::{to_upper_snake_case, LanguageKind, Result};
 use quote::{format_ident, quote};
 
-pub fn generate_macros(ast: &AstSrc) -> Result<String> {
+pub fn generate_macros(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
+    let syntax_kind = language_kind.syntax_kind();
+    let syntax_node = language_kind.syntax_node();
+
     let match_arms: Vec<_> = ast
         .nodes
         .iter()
@@ -23,7 +26,7 @@ pub fn generate_macros(ast: &AstSrc) -> Result<String> {
         }))
         .map(|(name, node_kind)| {
             quote! {
-                $crate::JsSyntaxKind::#node_kind => {
+                $crate::#syntax_kind::#node_kind => {
                     // SAFETY: The call to new_unchecked is guarded by matching on node.kind()
                     let $pattern = unsafe { $crate::#name::new_unchecked(node) };
                     $body
@@ -39,35 +42,24 @@ pub fn generate_macros(ast: &AstSrc) -> Result<String> {
         /// of the provided [SyntaxNode] and constructs the appropriate
         /// AstNode type for it, then execute the provided expression over it.
         ///
-        /// The macro accepts an optional fallback branch wich defaults to
-        /// `unreachable!()` as the only SyntaxKind variants not covered by
-        /// this macro are token kinds that should not be used to construct
-        /// a SyntaxNode.
-        ///
         /// # Examples
         ///
         /// ```ignore
         /// map_syntax_node!(syntax_node, node => node.format())
         /// ```
-        ///
-        /// ```ignore
-        /// map_syntax_node!(syntax_node, node => Ok(node.format()), _ => Err("invalid node kind"))
-        /// ```
         #[macro_export]
         macro_rules! map_syntax_node {
             ($node:expr, $pattern:pat => $body:expr) => {
-                $crate::map_syntax_node!( $node, $pattern => $body, _ => unreachable!() )
-            };
-
-            ($node:expr, $pattern:pat => $body:expr, $fallback:pat => $default:expr) => {
                 match $node {
-                    node => match $crate::SyntaxNode::kind(&node) {
+                    node => match $crate::#syntax_node::kind(&node) {
                         #( #match_arms, )*
-                        $fallback => $default
+                        _ => unreachable!()
                     }
                 }
             };
         }
+
+        pub(crate) use map_syntax_node;
     };
 
     xtask::reformat(ast)

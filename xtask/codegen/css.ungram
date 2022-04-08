@@ -1,0 +1,352 @@
+// CSS Un-Grammar.
+//
+// This grammar specifies the structure of Rust's concrete syntax tree.
+// It does not specify parsing rules (ambiguities, precedence, etc are out of scope).
+// Tokens are processed -- contextual keywords are recognised, compound operators glued.
+//
+// Legend:
+//
+//   //          				-- comment
+//   Name =      				-- non-terminal definition
+//   'ident'     				-- token (terminal)
+//   A B         				-- sequence
+//   A | B       				-- alternation
+//   A*          				-- zero or more repetition
+//   (A (',' A)* ','?)	        -- repetition of node A separated by ',' and allowing a trailing comma
+//   (A (',' A)*)	            -- repetition of node A separated by ',' without a trailing comma
+//   A?          				-- zero or one repetition
+//   (A)         				-- same as A
+//   label:A     				-- suggested name for field of AST node
+
+// NOTES
+//
+// - SyntaxNode, SyntaxToken and SyntaxElement will be stripped from the codegen
+// - Unknown nodes are special nodes used to keep track of broken code; they are
+//   not part of the grammar but they will appear inside the green tree
+
+
+///////////////
+// UNKNOWN NODES
+///////////////
+// SyntaxElement is a generic data structure that is meant to track nodes and tokens
+// in cases where we care about both types
+//
+// As Unknown* node will need to yield both tokens and nodes without discrimination,
+// and their children will need to yield nodes and tokens as well.
+// For this reason, SyntaxElement = SyntaxElement
+SyntaxElement = SyntaxElement
+
+CssUnknown = SyntaxElement*
+
+CssRoot = CssAnyRule*
+
+CssAnyRule =
+	CssRule
+	| CssAnyAtRule
+
+
+// .header { color: red }
+// ^^^^^^^^^^^^^^^^^^^^^
+CssRule =
+	prelude: CssSelectorList
+	block: CssBlock
+
+
+// .header, .app {}
+// ^^^^^^^^^^^^^
+CssSelectorList = (CssSelector (',' CssSelector)*)
+
+
+CssSelector =
+	pattern_list: CssAnySelectorPatternList
+
+
+CssAnySelectorPatternList = CssAnySelectorPattern*
+
+CssAnySelectorPattern =
+	CssIdSelectorPattern
+	| CssClassSelectorPattern
+	| CssUniversalSelectorPattern
+	| CssAttributeSelectorPattern
+	| CssPseudoClassSelectorPattern
+	| CssTypeSelectorPattern
+	| CssCombinatorSelectorPattern
+
+/////////////
+/// SELECTORS
+/////////////
+
+
+// #app {}
+// ^^^^
+CssIdSelectorPattern =
+	'#'
+	name: CssIdentifier
+
+// .app {}
+// ^^^^
+CssClassSelectorPattern =
+	'.'
+	name: CssIdentifier
+
+// * {}
+// ^
+CssUniversalSelectorPattern =
+	'*'
+
+// [title = "title" i] {}
+// ^^^^^^^^^^^^^^^^^^^
+CssAttributeSelectorPattern =
+	name: CssIdentifier
+	attribute_list: CssAttributeList
+
+CssAttributeList = CssAttribute*
+
+CssAttribute =
+	'['
+	attribute_name: CssAttributeName
+	attribute_meta: CssAttributeMeta?
+	']'
+
+CssAttributeName = CssString
+
+// [title = "title" i] {}
+//        ^^^^^^^^^^^
+CssAttributeMeta =
+	attribute_matcher: CssAttributeMatcher?
+	attribute_modifier: CssAttributeModifier?
+
+CssAttributeMatcher =
+	matcher_type: '~=' | '|=' | '^=' | '$=' | '*=' | '='
+	matcher_name: CssString | CssIdentifier
+
+CssAttributeModifier = 'i'
+
+
+// :nth-type(2) {}
+// ^^^^^^^^^^^^
+CssPseudoClassSelectorPattern =
+	':'
+	name: CssIdentifier
+	parameters: CssPseudoClassSelectorPatternParameters?
+
+CssPseudoClassSelectorPatternParameters =
+	'('
+	parameter: CssAnyValue
+	')'
+
+// div {}
+// ^^^
+CssTypeSelectorPattern = ident: CssIdentifier
+
+// div a {}
+// ^^^^^
+// div > a {}
+// ^^^^^^^
+CssCombinatorSelectorPattern =
+	left: CssAnySelectorPattern
+	combinator: '>' | '+' | '~' | 'css_space_literal'
+	right: CssAnySelectorPattern
+
+CssBlock =
+	'{'
+	declaration_list: CssDeclarationList
+ 	'}'
+
+
+CssDeclarationList = CssDeclaration*
+
+CssDeclaration =
+	name: CssIdentifier | CssCustomProperty
+	':'
+	value: CssAnyValue
+	important: CssDeclarationImportant?
+
+
+CssDeclarationImportant =
+	'!'
+	'important'
+
+/////////////
+// AT RULES
+////////////
+CssAnyAtRule =
+	CssAtKeyframes
+	| CssAtMedia
+
+
+// @keyframes "something" { from {} to {} }
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CssAtKeyframes =
+	'@'
+	'keyframes'
+	name: CssIdentifier | CssString
+	body: CssAtKeyframesBody
+
+
+CssAtKeyframesBody =
+	'{'
+	items: CssAtKeyframesItemList
+	'}'
+
+CssAtKeyframesItemList = CssKeyframesBlock*
+
+// @keyframes "something" { 30%, 60% {} }
+//                          ^^^^^^^^^^^
+CssKeyframesBlock =
+	selectors: CssKeyframesSelectorList
+	'{'
+	declarations: CssDeclarationList
+	'}'
+
+CssKeyframesSelectorList =  (CssKeyframesSelector (',' CssKeyframesSelector)*)
+
+CssKeyframesSelector = 'from' | 'to' | CssPercentage
+
+
+// @media screen, all, print {}
+CssAtMedia =
+	'@'
+	'media'
+	query_list: CssAtMediaQueryList
+	'{'
+	body: CssAnyRule
+	'}'
+
+
+// NB: a query list can't start with `and` condition
+CssAtMediaQueryList = (CssAtMediaQuery (',' CssAtMediaQuery)*)
+
+// @media or screen and print {}
+// 		  ^^^^^^^^^^^^^^^^^^^^
+CssAtMediaQuery =
+	condition: 'not' | 'or' | 'only'?
+	type: CssAnyAtMediaQueryType
+	consequent: CssAtMediaQueryConsequent?
+
+
+// @media not screen and print {}
+// 		  ^^^^^^^^^
+CssAtMediaQueryConsequent =
+	'and'
+	condition: 'not'?
+	type: CssAnyAtMediaQueryType
+
+
+CssAnyAtMediaQueryType =
+	CssIdentifier
+	| CssAtMediaQueryFeature
+
+// @media (width: 800px) {}
+// 				^^^^^^^^^^^^^^
+// @media (width) {}
+// 				^^^^^^^
+CssAtMediaQueryFeature =
+	'('
+	feature: CssAnyAtMediaQueryFeatureType
+	')'
+
+CssAnyAtMediaQueryFeatureType =
+	CssAtMediaQueryFeaturePlain
+	| CssAtMediaQueryFeatureBoolean
+	| CssAtMediaQueryFeatureCompare
+	| CssAtMediaQueryFeatureRange
+
+
+// @media (width: 800px) {}
+// 				^^^^^^^^^^^^^^
+CssAtMediaQueryFeaturePlain =
+	name: CssIdentifier
+	':'
+	value: CssAnyValue
+
+// @media (width) {}
+// 				^^^^^^^
+CssAtMediaQueryFeatureBoolean = CssIdentifier
+
+
+// @media (height > 600px) {}
+// 				^^^^^^^^^^^^^^^
+CssAtMediaQueryFeatureCompare =
+	name: CssIdentifier
+	range: CssAtMediaQueryRange
+	value: CssAnyValue
+
+// @media (400px <= width <= 700px) {}
+// 				^^^^^^^^^^^^^^^^^^^^^^^^
+CssAtMediaQueryFeatureRange =
+	first_value: CssAnyValue
+	first_range: CssAtMediaQueryRange
+	name: CssIdentifier
+	second_value: CssAnyValue
+	second_range: CssAtMediaQueryRange
+
+CssAtMediaQueryRange = '>' | '<' | '>=' | '<='
+
+
+///////////////
+// AUXILIARY
+///////////////
+
+CssAnyValue =
+	CssIdentifier
+	| CssString
+	| CssNumber
+	| CssDimension
+	| CssRatio
+	| CssAnyFunction
+	| CssCustomProperty
+
+
+// 10px
+// 100vh
+// 4rem
+// 1e-2
+CssDimension =
+	value: CssNumber
+	unit: CssIdentifier
+
+
+// 3 / 2
+CssRatio =
+	numerator: CssNumber
+	denominator: CssNumber
+
+
+CssAnyFunction =
+	CssSimpleFunction
+
+// content: counter(section);
+// 					^^^^^^^^^^^^^^^^
+CssSimpleFunction =
+	name: CssIdentifier
+	'('
+	items: CssParameterList
+	')'
+
+CssVarFunction =
+	'var'
+	'('
+		property: CssCustomProperty
+		value: CssVarFunctionValue?
+	')'
+
+CssVarFunctionValue =
+	','
+	value: CssIdentifier
+
+CssPercentage =
+	value: CssNumber
+	'%'
+
+
+// parsed with --ident
+CssCustomProperty = value: 'css_custom_property'
+
+CssParameterList = CssParameter*
+
+CssParameter = CssAnyValue
+
+CssIdentifier = value: 'ident'
+CssString = value: 'css_string_literal'
+CssNumber = value: 'css_number_literal'

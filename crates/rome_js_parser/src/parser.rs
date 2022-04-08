@@ -232,7 +232,8 @@ impl<'s> Parser<'s> {
             {
                 match (&err.primary, &previous.primary) {
                     (Some(err_primary), Some(previous_primary))
-                        if err_primary.span.range.start == previous_primary.span.range.start =>
+                        if err_primary.span.range.start()
+                            == previous_primary.span.range.start() =>
                     {
                         return;
                     }
@@ -262,12 +263,13 @@ impl<'s> Parser<'s> {
             kind
         };
 
+        let range = self.cur_range();
+        self.push_token(kind, range.end());
+
         if self.skipping {
             self.tokens.skip_as_trivia(context);
         } else {
-            let range = self.cur_range();
             self.tokens.bump(context);
-            self.push_token(kind, range.end());
         }
     }
 
@@ -615,12 +617,13 @@ pub struct Checkpoint {
 mod tests {
     use crate::{Parser, SourceType};
     use rome_js_syntax::JsSyntaxKind;
+    use rome_rowan::AstNode;
 
     #[test]
     fn example() {
         use crate::syntax::expr::parse_expression_snipped;
         use crate::{process, LosslessTreeSink, Parser, SourceType};
-        use rome_js_syntax::{AstNode, JsAnyExpression, JsExpressionSnipped};
+        use rome_js_syntax::{JsAnyExpression, JsExpressionSnipped};
 
         let source = "(void b)";
 

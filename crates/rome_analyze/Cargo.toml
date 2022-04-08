@@ -6,8 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+rome_rowan = { path = "../rome_rowan" }
 rome_js_syntax = { path = "../rome_js_syntax" }
 rome_js_parser = { path = "../rome_js_parser" }
 anyhow = "1.0.52"
-tracing = { version = "0.1.31", features = ["max_level_trace", "release_max_level_warn"] }
+tracing = { version = "0.1.31", default-features = false, features = ["std", "max_level_trace", "release_max_level_warn"] }
 rome_diagnostics = { path = "../rome_diagnostics" }

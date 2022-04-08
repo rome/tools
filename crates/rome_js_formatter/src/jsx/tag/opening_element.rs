@@ -2,7 +2,9 @@ use crate::{
     formatter_traits::FormatTokenAndNode, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rome_formatter::format_elements;
-use rome_js_syntax::{AstNode, JsxOpeningElement, JsxOpeningElementFields};
+use rome_js_syntax::{JsxOpeningElement, JsxOpeningElementFields};
+use rome_rowan::AstNode;
+
 impl ToFormatElement for JsxOpeningElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsxOpeningElementFields {

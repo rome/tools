@@ -1,5 +1,7 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rome_js_syntax::{AstNode, JsxSpreadAttribute};
+use rome_js_syntax::JsxSpreadAttribute;
+use rome_rowan::AstNode;
+
 impl ToFormatElement for JsxSpreadAttribute {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(formatter.format_verbatim(self.syntax()))

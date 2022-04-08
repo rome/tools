@@ -4,7 +4,8 @@ use crate::{
     format_elements, join_elements_hard_line, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rome_js_syntax::{AstNode, JsAnyClass};
+use rome_js_syntax::JsAnyClass;
+use rome_rowan::AstNode;
 
 impl ToFormatElement for JsAnyClass {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

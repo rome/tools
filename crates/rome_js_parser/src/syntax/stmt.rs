@@ -293,7 +293,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
                 p,
                 parse_any_ts_namespace_declaration_statement,
                 |p, declaration| {
-                    ts_only_syntax_error(p, p.source(name.as_text_range()), declaration.range(p))
+                    ts_only_syntax_error(p, p.source(name.as_range()), declaration.range(p))
                 },
             )
         }
@@ -1113,7 +1113,7 @@ impl ParseSeparatedList for VariableDeclaratorList {
         })
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         if self.declarator_context.is_first {
             false
         } else {
@@ -1613,7 +1613,7 @@ impl ParseNodeList for SwitchCaseStatementList {
         parse_statement(p, StatementContext::StatementList)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at_ts(token_set![T![default], T![case], T!['}']])
     }
 
@@ -1699,7 +1699,7 @@ impl ParseNodeList for SwitchCasesList {
         clause
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T!['}'])
     }
 

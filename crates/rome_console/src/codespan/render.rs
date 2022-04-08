@@ -1,6 +1,8 @@
 use std::io;
 use std::{io::Error, ops::Range};
 
+use text_size::{TextRange, TextSize};
+
 use crate::fmt::Display;
 use crate::markup::MarkupBuf;
 use crate::{self as rome_console, MarkupNode};
@@ -10,7 +12,7 @@ use crate::{
     markup, Markup, MarkupElement,
 };
 
-const MAX_LINE_LENGTH: usize = 250;
+const MAX_LINE_LENGTH: u32 = 250;
 
 const SOURCE_BORDER_TOP_LEFT: char = '┌';
 const SOURCE_BORDER_TOP: char = '─';
@@ -58,7 +60,7 @@ impl<'a> Display for WithSeverity<'a> {
 /// ```text
 /// ^^^^^^^^^ blah blah
 /// ```
-pub(super) type SingleLabel<'diagnostic> = (LabelStyle, Range<usize>, &'diagnostic MarkupBuf);
+pub(super) type SingleLabel<'diagnostic> = (LabelStyle, TextRange, &'diagnostic MarkupBuf);
 
 /// A multi-line label to render.
 ///
@@ -77,7 +79,7 @@ pub(super) enum MultiLabel<'diagnostic> {
     /// /// ```text
     /// ╭
     /// ```
-    Top(usize),
+    Top(TextSize),
     /// Left vertical labels for multi-line labels.
     ///
     /// ```text
@@ -90,7 +92,7 @@ pub(super) enum MultiLabel<'diagnostic> {
     /// ```text
     /// ╰────────────^ blah blah
     /// ```
-    Bottom(usize, &'diagnostic MarkupBuf),
+    Bottom(TextSize, &'diagnostic MarkupBuf),
 }
 
 #[derive(Copy, Clone)]
@@ -198,7 +200,8 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                     Some((label_index, label_style, label)) if *label_index == label_column => {
                         match label {
                             MultiLabel::Top(start)
-                                if *start <= source.len() - source.trim_start().len() =>
+                                if *start
+                                    <= TextSize::of(source) - TextSize::of(source.trim_start()) =>
                             {
                                 self.label_multi_top_left(severity, *label_style)?;
                             }
@@ -216,7 +219,8 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             // Write source text
             write!(self.writer, " ")?;
             for (metrics, ch) in self.char_metrics(source.char_indices()) {
-                let column_range = metrics.byte_index..(metrics.byte_index + ch.len_utf8());
+                let column_range =
+                    TextRange::new(metrics.byte_index, metrics.byte_index + TextSize::of(ch));
 
                 // Check if we are overlapping a primary label
                 let is_primary = single_labels.iter().any(|(ls, range, _)| {
@@ -224,9 +228,9 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                 }) || multi_labels.iter().any(|(_, ls, label)| {
                     *ls == LabelStyle::Primary
                         && match label {
-                            MultiLabel::Top(start) => column_range.start >= *start,
+                            MultiLabel::Top(start) => column_range.start() >= *start,
                             MultiLabel::Left => true,
-                            MultiLabel::Bottom(start, _) => column_range.end <= *start,
+                            MultiLabel::Bottom(start, _) => column_range.end() <= *start,
                         }
                 });
 
@@ -295,7 +299,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             //           │
             //           right-most start position
             // ```
-            let mut max_label_start = 0;
+            let mut max_label_start = TextSize::from(0u32);
             // The right-most end position, eg:
             //
             // ```text
@@ -303,7 +307,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             //                 │
             //                 right-most end position
             // ```
-            let mut max_label_end = 0;
+            let mut max_label_end = TextSize::from(0u32);
             // A trailing message, eg:
             //
             // ```text
@@ -316,10 +320,10 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                 if !message.is_empty() {
                     num_messages += 1;
                 }
-                max_label_start = std::cmp::max(max_label_start, range.start);
-                max_label_end = std::cmp::max(max_label_end, range.end);
+                max_label_start = std::cmp::max(max_label_start, range.start());
+                max_label_end = std::cmp::max(max_label_end, range.end());
                 // This is a candidate for the trailing label, so let's record it.
-                if range.end == max_label_end {
+                if range.end() == max_label_end {
                     if message.is_empty() {
                         trailing_label = None;
                     } else {
@@ -354,7 +358,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             write!(self.writer, " ")?;
 
             let placeholder_metrics = Metrics {
-                byte_index: source.len(),
+                byte_index: TextSize::of(source),
                 unicode_width: 1,
             };
             for (metrics, ch) in self
@@ -369,7 +373,8 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                 .chain(std::iter::once((placeholder_metrics, '\0')))
             {
                 // Find the current label style at this column
-                let column_range = metrics.byte_index..(metrics.byte_index + ch.len_utf8());
+                let column_range =
+                    TextRange::new(metrics.byte_index, metrics.byte_index + TextSize::of(ch));
                 let current_label_style = single_labels
                     .iter()
                     .filter(|(_, range, _)| is_overlapping(range, &column_range))
@@ -459,7 +464,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                         trailing_label,
                         source
                             .char_indices()
-                            .take_while(|(byte_index, _)| *byte_index < range.start),
+                            .take_while(|(byte_index, _)| *byte_index < range.start().into()),
                     )?;
                     self.writer.write_markup(markup! {
                         {WithSeverity(*label_style, severity, *message)}
@@ -479,7 +484,9 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             let (label_style, range, bottom_message) = match label {
                 MultiLabel::Left => continue, // no label caret needed
                 // no label caret needed if this can be started in front of the line
-                MultiLabel::Top(start) if *start <= source.len() - source.trim_start().len() => {
+                MultiLabel::Top(start)
+                    if *start <= TextSize::of(source) - TextSize::of(source.trim_start()) =>
+                {
                     continue
                 }
                 MultiLabel::Top(range) => (*label_style, range, None),
@@ -542,55 +549,61 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
     fn render_snippet_source_inside_of_long_line(
         &mut self,
         line_number: usize,
-        line_range: Range<usize>,
+        line_range: TextRange,
         severity: Severity,
-        single_labels: &mut Vec<(LabelStyle, Range<usize>, &MarkupBuf)>,
+        single_labels: &mut Vec<(LabelStyle, TextRange, &MarkupBuf)>,
         outer_padding: usize,
         source: &str,
     ) -> Result<(), Error> {
         let labels_start = single_labels
             .first()
-            .map_or(line_range.start, |x| x.1.start);
-        let labels_end = single_labels.last().map_or(line_range.end, |x| x.1.end);
+            .map_or(line_range.start(), |x| x.1.start());
+        let labels_end = single_labels.last().map_or(line_range.end(), |x| x.1.end());
 
         // If labels width are larger then max_line_length, we will
         // trim the label
-        let labels_width = (labels_end - labels_start).min(MAX_LINE_LENGTH);
+        let labels_width = (labels_end - labels_start).min(TextSize::from(MAX_LINE_LENGTH));
 
-        let spacing = (MAX_LINE_LENGTH - labels_width) / 2;
+        let spacing = u32::from(TextSize::from(MAX_LINE_LENGTH) - labels_width) / 2;
 
         // We will try to center the interesting part of the line
-        let interesting_part_start = labels_start.saturating_sub(spacing);
-        let interesting_part_end = labels_end.saturating_add(spacing);
-        let interesting_part_range = interesting_part_start..interesting_part_end;
+        let interesting_part_start =
+            TextSize::from(u32::from(labels_start).saturating_sub(spacing));
+        let interesting_part_end = TextSize::from(u32::from(labels_end).saturating_add(spacing));
+        let interesting_part_range = TextRange::new(interesting_part_start, interesting_part_end);
 
         // labels range are relative to the start of the line, now we
         // need the range relative to the file start.
-        let mut new_code_range = line_range
-            .start
-            .saturating_add(interesting_part_range.start)
-            ..line_range.start.saturating_add(interesting_part_range.end);
+        let mut new_code_range = TextRange::new(
+            TextSize::from(
+                u32::from(line_range.start()).saturating_add(interesting_part_range.start().into()),
+            ),
+            TextSize::from(
+                u32::from(line_range.start()).saturating_add(interesting_part_range.end().into()),
+            ),
+        );
 
         // We need to adjust all labels ranges to be relative to the start
         // of the interesting part
         for label in single_labels.iter_mut() {
-            label.1.start -= interesting_part_range.start;
-            label.1.end -= interesting_part_range.start;
-
-            // We need to limit the width of the range
-            label.1.end = label
-                .1
-                .end
-                .min(interesting_part_range.start + MAX_LINE_LENGTH);
+            label.1 = TextRange::new(
+                label.1.start() - interesting_part_range.start(),
+                // We need to limit the width of the range
+                (label.1.end() - interesting_part_range.start())
+                    .min(interesting_part_range.start() + TextSize::from(MAX_LINE_LENGTH)),
+            );
         }
 
         // and the width of what we are going to print
-        new_code_range.end = new_code_range
-            .end
-            .min(new_code_range.start + MAX_LINE_LENGTH);
+        new_code_range = TextRange::new(
+            new_code_range.start(),
+            new_code_range
+                .end()
+                .min(new_code_range.start() + TextSize::from(MAX_LINE_LENGTH)),
+        );
 
         let source = source
-            .get(new_code_range)
+            .get(Range::<usize>::from(new_code_range))
             .unwrap_or_else(|| &source[line_range]);
 
         self.render_snippet_source_impl(
@@ -617,7 +630,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         &mut self,
         outer_padding: usize,
         line_number: usize,
-        line_range: Range<usize>,
+        line_range: TextRange,
         source: &str,
         severity: Severity,
         single_labels: &[SingleLabel<'_>],
@@ -626,8 +639,10 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
     ) -> Result<(), Error> {
         // if the line is smaller than max_line_length, we print it entirely...
         // we also print it entirely if there are multi_labels
-        let line_candidate = &source[line_range.clone()];
-        if (line_candidate.len() < MAX_LINE_LENGTH) || !multi_labels.is_empty() {
+        let line_candidate = &source[line_range];
+        if (TextSize::of(line_candidate) < TextSize::from(MAX_LINE_LENGTH))
+            || !multi_labels.is_empty()
+        {
             return self.render_snippet_source_impl(
                 outer_padding,
                 line_number,
@@ -642,17 +657,19 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
             // showing only the interesting part of the line.
             let mut candidates = vec![];
             for single_label in single_labels.iter() {
-                candidates.push((*single_label).clone());
+                candidates.push(*single_label);
 
                 // We need to know which part of the long line we are going to display
-                let labels_start = candidates.first().map_or(line_range.start, |x| x.1.start);
-                let labels_end = candidates.last().map_or(line_range.end, |x| x.1.end);
+                let labels_start = candidates
+                    .first()
+                    .map_or(line_range.start(), |x| x.1.start());
+                let labels_end = candidates.last().map_or(line_range.end(), |x| x.1.end());
                 let labels_width = labels_end - labels_start;
 
-                if labels_width >= MAX_LINE_LENGTH {
+                if labels_width >= TextSize::from(MAX_LINE_LENGTH) {
                     self.render_snippet_source_inside_of_long_line(
                         line_number,
-                        line_range.clone(),
+                        line_range,
                         severity,
                         &mut candidates,
                         outer_padding,
@@ -729,7 +746,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
 
         char_indices.map(move |(byte_index, ch)| {
             let metrics = Metrics {
-                byte_index,
+                byte_index: TextSize::try_from(byte_index).expect("integer overflow"),
                 unicode_width: match (ch, tab_width) {
                     ('\t', 0) => 0, // Guard divide-by-zero
                     ('\t', _) => tab_width - (unicode_column % tab_width),
@@ -792,15 +809,15 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
     fn caret_pointers(
         &mut self,
         severity: Severity,
-        max_label_start: usize,
+        max_label_start: TextSize,
         single_labels: &[SingleLabel<'_>],
         trailing_label: Option<(usize, &SingleLabel<'_>)>,
         char_indices: impl Iterator<Item = (usize, char)> + Clone,
     ) -> Result<(), Error> {
         for (metrics, ch) in self.char_metrics(char_indices) {
-            let column_range = metrics.byte_index..(metrics.byte_index + ch.len_utf8());
+            let column_range = metrics.byte_index..(metrics.byte_index + TextSize::of(ch));
             let label_style = hanging_labels(single_labels, trailing_label)
-                .filter(|(_, range, _)| column_range.contains(&range.start))
+                .filter(|(_, range, _)| column_range.contains(&range.start()))
                 .map(|(label_style, _, _)| *label_style)
                 .max_by_key(label_priority_key);
 
@@ -892,7 +909,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         severity: Severity,
         label_style: LabelStyle,
         source: &str,
-        start: usize,
+        start: TextSize,
     ) -> Result<(), Error> {
         self.writer.write_markup(markup! {
             {WithSeverity(label_style, severity, &MultiCaret {
@@ -901,7 +918,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
                 caret: MULTI_TOP,
                 char_metrics: self
                     .char_metrics(source.char_indices())
-                    .take_while(|(metrics, _)| metrics.byte_index < start + 1),
+                    .take_while(|(metrics, _)| metrics.byte_index < start + TextSize::from(1u32)),
             })}
         })?;
 
@@ -919,7 +936,7 @@ impl<'render, 'fmt> Renderer<'render, 'fmt> {
         severity: Severity,
         label_style: LabelStyle,
         source: &str,
-        start: usize,
+        start: TextSize,
         message: &MarkupBuf,
     ) -> Result<(), Error> {
         self.writer.write_markup(markup! {
@@ -1027,14 +1044,14 @@ where
     }
 }
 struct Metrics {
-    byte_index: usize,
+    byte_index: TextSize,
     unicode_width: usize,
 }
 
 /// Check if two ranges overlap
-fn is_overlapping(range0: &Range<usize>, range1: &Range<usize>) -> bool {
-    let start = std::cmp::max(range0.start, range1.start);
-    let end = std::cmp::min(range0.end, range1.end);
+fn is_overlapping(range0: &TextRange, range1: &TextRange) -> bool {
+    let start = std::cmp::max(range0.start(), range1.start());
+    let end = std::cmp::min(range0.end(), range1.end());
     start < end
 }
 
