@@ -1,12 +1,13 @@
 use crate::{
     JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFunction, JsAnyFunctionBody,
-    JsClassMemberList, JsExtendsClause, SyntaxResult, SyntaxToken, TsAnyPropertyAnnotation,
+    JsClassMemberList, JsExtendsClause, JsSyntaxToken, TsAnyPropertyAnnotation,
     TsAnyVariableAnnotation, TsImplementsClause, TsReturnTypeAnnotation, TsTypeAnnotation,
     TsTypeParameters,
 };
+use rome_rowan::SyntaxResult;
 
 impl JsAnyClass {
-    pub fn abstract_token(&self) -> Option<SyntaxToken> {
+    pub fn abstract_token(&self) -> Option<JsSyntaxToken> {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.abstract_token(),
             JsAnyClass::JsClassExpression(_) => None,
@@ -14,7 +15,7 @@ impl JsAnyClass {
         }
     }
 
-    pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn class_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.class_token(),
             JsAnyClass::JsClassExpression(expression) => expression.class_token(),
@@ -58,7 +59,7 @@ impl JsAnyClass {
         }
     }
 
-    pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn l_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.l_curly_token(),
             JsAnyClass::JsClassExpression(expression) => expression.l_curly_token(),
@@ -74,7 +75,7 @@ impl JsAnyClass {
         }
     }
 
-    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn r_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
             JsAnyClass::JsClassDeclaration(declaration) => declaration.r_curly_token(),
             JsAnyClass::JsClassExpression(expression) => expression.r_curly_token(),
@@ -84,7 +85,7 @@ impl JsAnyClass {
 }
 
 impl JsAnyFunction {
-    pub fn async_token(&self) -> Option<SyntaxToken> {
+    pub fn async_token(&self) -> Option<JsSyntaxToken> {
         match self {
             JsAnyFunction::JsArrowFunctionExpression(expr) => expr.async_token(),
             JsAnyFunction::JsFunctionExpression(expr) => expr.async_token(),
@@ -99,7 +100,7 @@ impl JsAnyFunction {
         self.async_token().is_some()
     }
 
-    pub fn function_token(&self) -> SyntaxResult<Option<SyntaxToken>> {
+    pub fn function_token(&self) -> SyntaxResult<Option<JsSyntaxToken>> {
         match self {
             JsAnyFunction::JsArrowFunctionExpression(_) => Ok(None),
             JsAnyFunction::JsFunctionExpression(expr) => expr.function_token().map(Some),
@@ -112,7 +113,7 @@ impl JsAnyFunction {
         }
     }
 
-    pub fn star_token(&self) -> Option<SyntaxToken> {
+    pub fn star_token(&self) -> Option<JsSyntaxToken> {
         match self {
             JsAnyFunction::JsArrowFunctionExpression(_) => None,
             JsAnyFunction::JsFunctionExpression(expr) => expr.star_token(),

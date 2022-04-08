@@ -19,10 +19,10 @@ pub use rome_formatter::{
     soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
     FormatOptions, Formatted, IndentStyle, Token, Verbatim, LINE_TERMINATORS,
 };
-use rome_js_syntax::{SyntaxError, SyntaxNode};
-use rome_rowan::TextRange;
+use rome_js_syntax::JsSyntaxNode;
 use rome_rowan::TextSize;
 use rome_rowan::TokenAtOffset;
+use rome_rowan::{SyntaxError, TextRange};
 use thiserror::Error;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
@@ -52,7 +52,7 @@ pub enum FormatError {
 impl From<SyntaxError> for FormatError {
     fn from(syntax_error: SyntaxError) -> Self {
         match syntax_error {
-            SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
+            SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
         }
     }
 }
@@ -60,7 +60,7 @@ impl From<SyntaxError> for FormatError {
 impl From<&SyntaxError> for FormatError {
     fn from(syntax_error: &SyntaxError) -> Self {
         match syntax_error {
-            SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
+            SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
         }
     }
 }
@@ -69,7 +69,7 @@ impl From<&SyntaxError> for FormatError {
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 #[tracing::instrument(level = "trace", skip_all)]
-pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Formatted> {
+pub fn format(options: FormatOptions, syntax: &JsSyntaxNode) -> FormatResult<Formatted> {
     let element = Formatter::new(options).format_root(syntax)?;
     Ok(Printer::new(options).print(&element))
 }
@@ -79,7 +79,7 @@ pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Forma
 /// It returns a [FormatElement] result. Mostly for debugging purposes.
 pub fn to_format_element(
     options: FormatOptions,
-    syntax: &SyntaxNode,
+    syntax: &JsSyntaxNode,
 ) -> FormatResult<FormatElement> {
     Formatter::new(options).format_root(syntax)
 }
@@ -97,7 +97,7 @@ pub fn to_format_element(
 /// range of the input that was effectively overwritten by the formatter
 pub fn format_range(
     options: FormatOptions,
-    root: &SyntaxNode,
+    root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Formatted> {
     // Find the tokens corresponding to the start and end of the range
@@ -230,7 +230,7 @@ pub fn format_range(
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Formatted> {
+pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<Formatted> {
     // Determine the initial indentation level for the printer by inspecting the trivias
     // of each token from the first token of the common root towards the start of the file
     let mut tokens = std::iter::successors(root.first_token(), |token| token.prev_token());

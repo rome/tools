@@ -2,7 +2,8 @@
 
 pub mod flip_bin_exp;
 
-use rome_js_syntax::{AstNode, SyntaxNode, SyntaxToken, TextRange, TextSize, TokenAtOffset};
+use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken, TextRange, TextSize, TokenAtOffset};
+use rome_rowan::AstNode;
 
 use crate::{ActionCategory, Analysis, AnalysisServer, AnalyzerContext, FileId};
 
@@ -49,28 +50,28 @@ impl<'a> AssistContext<'a> {
     }
 
     /// Get the root [SyntaxNode] for the file being analyzed
-    pub fn tree(&self) -> SyntaxNode {
+    pub fn tree(&self) -> JsSyntaxNode {
         self.analysis_server.parse(self.file_id)
     }
 
     /// Iterate over syntax nodes in the file being analyzed that can be cast to T
-    pub fn query_nodes<T: AstNode>(&self) -> impl Iterator<Item = T> {
+    pub fn query_nodes<T: AstNode<JsLanguage>>(&self) -> impl Iterator<Item = T> {
         self.analysis_server.query_nodes(self.file_id)
     }
 
     /// Find the deepest AST node of type T that covers a TextRange
-    pub fn find_node_at_range<T: AstNode>(&self, range: TextRange) -> Option<T> {
+    pub fn find_node_at_range<T: AstNode<JsLanguage>>(&self, range: TextRange) -> Option<T> {
         self.analysis_server.find_node_at_range(self.file_id, range)
     }
 
     /// Find the deepest AST node of type T that covers this AssistContext's cursor_range
-    pub fn find_node_at_cursor_range<T: AstNode>(&self) -> Option<T> {
+    pub fn find_node_at_cursor_range<T: AstNode<JsLanguage>>(&self) -> Option<T> {
         self.analysis_server
             .find_node_at_range(self.file_id, self.cursor_range)
     }
 
     /// Find the token that covers the start of the AssistContext's cursor_range
-    pub(crate) fn token_at_offset(&self) -> TokenAtOffset<SyntaxToken> {
+    pub(crate) fn token_at_offset(&self) -> TokenAtOffset<JsSyntaxToken> {
         self.tree().token_at_offset(self.offset)
     }
 }

@@ -15,15 +15,11 @@ impl Language for JsLanguage {
     type Kind = JsSyntaxKind;
 }
 
-pub type SyntaxNode = rome_rowan::SyntaxNode<JsLanguage>;
-pub type SyntaxToken = rome_rowan::SyntaxToken<JsLanguage>;
-pub type SyntaxElement = rome_rowan::SyntaxElement<JsLanguage>;
-pub type SyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<JsLanguage>;
-pub type SyntaxElementChildren = rome_rowan::SyntaxElementChildren<JsLanguage>;
-pub type SyntaxList = rome_rowan::SyntaxList<JsLanguage>;
-pub type SyntaxSlots = rome_rowan::SyntaxSlots<JsLanguage>;
-pub type SyntaxSlot = rome_rowan::SyntaxSlot<JsLanguage>;
+pub type JsSyntaxNode = rome_rowan::SyntaxNode<JsLanguage>;
+pub type JsSyntaxToken = rome_rowan::SyntaxToken<JsLanguage>;
+pub type JsSyntaxElement = rome_rowan::SyntaxElement<JsLanguage>;
+pub type JsSyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<JsLanguage>;
+pub type JsSyntaxElementChildren = rome_rowan::SyntaxElementChildren<JsLanguage>;
+pub type JsSyntaxList = rome_rowan::SyntaxList<JsLanguage>;
 
-pub use rome_rowan::{Direction, NodeOrToken};
-
-pub type SyntaxTreeBuilder = TreeBuilder<'static, JsLanguage, JsSyntaxFactory>;
+pub type JsSyntaxTreeBuilder = TreeBuilder<'static, JsLanguage, JsSyntaxFactory>;

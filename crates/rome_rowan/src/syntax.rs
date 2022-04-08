@@ -13,8 +13,9 @@ pub use trivia::{
 pub use element::SyntaxElement;
 pub use node::{
     Preorder, PreorderWithTokens, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
-    SyntaxSlot, SyntaxSlots,
 };
+pub(crate) use node::{SyntaxSlot, SyntaxSlots};
+
 pub use token::SyntaxToken;
 
 use std::fmt;

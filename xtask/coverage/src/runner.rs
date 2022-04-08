@@ -4,7 +4,7 @@ use rome_diagnostics::file::{FileId, SimpleFiles};
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{Diagnostic, Emitter, Severity};
 use rome_js_parser::{parse, Parse, SourceType};
-use rome_js_syntax::{JsAnyRoot, SyntaxNode};
+use rome_js_syntax::{JsAnyRoot, JsSyntaxNode};
 use rome_rowan::SyntaxKind;
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
@@ -96,7 +96,7 @@ impl TestCaseFile {
 
 pub(crate) fn create_unknown_node_in_tree_diagnostic(
     file_id: FileId,
-    node: SyntaxNode,
+    node: JsSyntaxNode,
 ) -> Diagnostic {
     assert!(node.kind().is_unknown());
     Diagnostic::new(

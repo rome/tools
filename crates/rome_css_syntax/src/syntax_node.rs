@@ -15,15 +15,11 @@ impl Language for CssLanguage {
     type Kind = CssSyntaxKind;
 }
 
-pub type SyntaxNode = rome_rowan::SyntaxNode<CssLanguage>;
-pub type SyntaxToken = rome_rowan::SyntaxToken<CssLanguage>;
-pub type SyntaxElement = rome_rowan::SyntaxElement<CssLanguage>;
-pub type SyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<CssLanguage>;
-pub type SyntaxElementChildren = rome_rowan::SyntaxElementChildren<CssLanguage>;
-pub type SyntaxList = rome_rowan::SyntaxList<CssLanguage>;
-pub type SyntaxSlots = rome_rowan::SyntaxSlots<CssLanguage>;
-pub type SyntaxSlot = rome_rowan::SyntaxSlot<CssLanguage>;
+pub type CssSyntaxNode = rome_rowan::SyntaxNode<CssLanguage>;
+pub type CssSyntaxToken = rome_rowan::SyntaxToken<CssLanguage>;
+pub type CssSyntaxElement = rome_rowan::SyntaxElement<CssLanguage>;
+pub type CssSyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<CssLanguage>;
+pub type CssSyntaxElementChildren = rome_rowan::SyntaxElementChildren<CssLanguage>;
+pub type CssSyntaxList = rome_rowan::SyntaxList<CssLanguage>;
 
-pub use rome_rowan::{Direction, NodeOrToken};
-
-pub type SyntaxTreeBuilder = TreeBuilder<'static, CssLanguage, CssSyntaxFactory>;
+pub type CssSyntaxTreeBuilder = TreeBuilder<'static, CssLanguage, CssSyntaxFactory>;

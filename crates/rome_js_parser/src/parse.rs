@@ -3,27 +3,30 @@
 use crate::token_source::Trivia;
 use crate::*;
 use rome_diagnostics::Severity;
-use rome_js_syntax::{AstNode, JsAnyRoot, JsExpressionSnipped, JsModule, JsScript, SyntaxNode};
+use rome_js_syntax::{
+    JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode,
+};
+use rome_rowan::AstNode;
 use std::marker::PhantomData;
 
 /// A utility struct for managing the result of a parser job
 #[derive(Debug, Clone)]
 pub struct Parse<T> {
-    root: SyntaxNode,
+    root: JsSyntaxNode,
     errors: Vec<ParseDiagnostic>,
     _ty: PhantomData<T>,
 }
 
 impl<T> Parse<T> {
-    pub fn new_module(root: SyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
+    pub fn new_module(root: JsSyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
         Self::new(root, errors)
     }
 
-    pub fn new_script(root: SyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
+    pub fn new_script(root: JsSyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
         Self::new(root, errors)
     }
 
-    pub fn new(root: SyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
+    pub fn new(root: JsSyntaxNode, errors: Vec<ParseDiagnostic>) -> Parse<T> {
         Parse {
             root,
             errors,
@@ -31,7 +34,7 @@ impl<T> Parse<T> {
         }
     }
 
-    pub fn cast<N: AstNode>(self) -> Option<Parse<N>> {
+    pub fn cast<N: AstNode<JsLanguage>>(self) -> Option<Parse<N>> {
         if N::can_cast(self.syntax().kind()) {
             Some(Parse::new(self.root, self.errors))
         } else {
@@ -43,7 +46,8 @@ impl<T> Parse<T> {
     ///
     /// ```
     /// use rome_js_parser::parse_script;
-    /// use rome_js_syntax::{JsIfStatement, SyntaxNodeExt, JsSyntaxKind, AstNode, AstNodeList};
+    /// use rome_rowan::{AstNode, AstNodeList};
+    /// use rome_js_syntax::{JsIfStatement, JsSyntaxKind};
     ///
     /// let parse = parse_script(
     /// "
@@ -57,7 +61,7 @@ impl<T> Parse<T> {
     ///
     /// assert_eq!(if_stmt.syntax().kind(), JsSyntaxKind::JS_IF_STATEMENT);
     /// ```
-    pub fn syntax(&self) -> SyntaxNode {
+    pub fn syntax(&self) -> JsSyntaxNode {
         self.root.clone()
     }
 
@@ -77,7 +81,7 @@ impl<T> Parse<T> {
     }
 }
 
-impl<T: AstNode> Parse<T> {
+impl<T: AstNode<JsLanguage>> Parse<T> {
     /// Convert this parse result into a typed AST node.
     ///
     /// # Panics
@@ -125,7 +129,8 @@ pub fn parse_common(
 ///
 /// ```
 /// use rome_js_parser::parse_script;
-/// use rome_js_syntax::{AstNode, SyntaxToken, SyntaxNodeExt,  SyntaxList, util, JsComputedMemberExpression};
+/// use rome_js_syntax::{JsSyntaxToken, JsSyntaxList, JsComputedMemberExpression};
+/// use rome_rowan::AstNode;
 ///
 /// let parse = parse_script("foo.bar[2]", 0);
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
@@ -146,9 +151,9 @@ pub fn parse_common(
 /// assert_eq!(prop.syntax().text(), "2");
 ///
 /// // Util has a function for yielding all tokens of a node.
-/// let tokens = untyped_expr_node.descendants_tokens().collect::<Vec<_>>();
+/// let tokens = untyped_expr_node.descendants_tokens().map(|token| token.text_trimmed().to_string()).collect::<Vec<_>>();
 ///
-/// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
+/// assert_eq!(&tokens, &vec!["foo", ".", "bar", "[", "2", "]"]);
 /// ```
 pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
     parse(

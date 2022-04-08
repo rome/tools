@@ -3,8 +3,8 @@ use crate::{
     format_elements, group_elements, hard_line_break, indent, space_token, FormatElement,
     FormatResult, Formatter,
 };
-use rome_js_syntax::AstNode;
 use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
+use rome_rowan::AstNode;
 
 pub enum Conditional {
     Expression(JsConditionalExpression),

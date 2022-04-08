@@ -1,10 +1,10 @@
 use crate::{format_element, to_format_element, FormatOptions};
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
 use rome_js_parser::{parse, SourceType};
-use rome_js_syntax::SyntaxNode;
+use rome_js_syntax::JsSyntaxNode;
 
 pub struct CheckReformatParams<'a> {
-    pub root: &'a SyntaxNode,
+    pub root: &'a JsSyntaxNode,
     pub text: &'a str,
     pub source_type: SourceType,
     pub file_name: &'a str,

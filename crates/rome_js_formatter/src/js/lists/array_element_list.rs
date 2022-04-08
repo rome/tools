@@ -7,7 +7,8 @@ use crate::{
     ToFormatElement,
 };
 
-use rome_js_syntax::{AstNode, AstSeparatedList, JsAnyExpression, JsArrayElementList};
+use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
+use rome_rowan::{AstNode, AstSeparatedList};
 
 impl ToFormatElement for JsArrayElementList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

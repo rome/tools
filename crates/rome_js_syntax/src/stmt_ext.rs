@@ -1,6 +1,7 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
-use crate::{JsVariableDeclaration, SyntaxResult};
+use crate::{JsVariableDeclaration, T};
+use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum JsVariableKind {
@@ -40,13 +41,14 @@ impl JsVariableDeclaration {
 #[cfg(test)]
 mod tests {
     use crate::{
-        AstNode, JsVariableDeclaration, SyntaxTreeBuilder, IDENT, JS_IDENTIFIER_BINDING,
+        JsSyntaxTreeBuilder, JsVariableDeclaration, IDENT, JS_IDENTIFIER_BINDING,
         JS_VARIABLE_DECLARATION, JS_VARIABLE_DECLARATOR, JS_VARIABLE_DECLARATOR_LIST, VAR_KW,
     };
+    use rome_rowan::AstNode;
 
     #[test]
     fn is_var_check() {
-        let mut tree_builder = SyntaxTreeBuilder::new();
+        let mut tree_builder = JsSyntaxTreeBuilder::new();
         tree_builder.start_node(JS_VARIABLE_DECLARATION);
         tree_builder.token(VAR_KW, "var");
         tree_builder.start_node(JS_VARIABLE_DECLARATOR_LIST);

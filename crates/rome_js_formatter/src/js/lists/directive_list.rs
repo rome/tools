@@ -2,7 +2,8 @@ use crate::{
     empty_element, format_elements, hard_line_break, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rome_js_syntax::{AstNodeList, JsDirectiveList};
+use rome_js_syntax::JsDirectiveList;
+use rome_rowan::AstNodeList;
 
 impl ToFormatElement for JsDirectiveList {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

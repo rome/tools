@@ -1,4 +1,5 @@
-use rome_js_syntax::{AstNode, JsBinaryExpression};
+use rome_js_syntax::JsBinaryExpression;
+use rome_rowan::AstNode;
 
 use crate::{Action, ActionCategory, Analysis, AssistContext, SyntaxEdit};
 

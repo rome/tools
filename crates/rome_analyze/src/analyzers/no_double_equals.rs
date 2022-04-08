@@ -1,5 +1,6 @@
 use rome_js_syntax::JsSyntaxKind::*;
-use rome_js_syntax::{AstNode, JsAnyExpression, JsBinaryExpression, SyntaxResult};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression};
+use rome_rowan::SyntaxResult;
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
@@ -31,8 +32,10 @@ fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
 }
 
 fn is_null_literal(res: SyntaxResult<JsAnyExpression>) -> bool {
-    match res {
-        Ok(exp) => exp.syntax().kind() == JS_NULL_LITERAL_EXPRESSION,
-        Err(_) => false,
-    }
+    matches!(
+        res,
+        Ok(JsAnyExpression::JsAnyLiteralExpression(
+            JsAnyLiteralExpression::JsNullLiteralExpression(_)
+        ))
+    )
 }

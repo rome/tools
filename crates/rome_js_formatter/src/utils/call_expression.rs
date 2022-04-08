@@ -3,10 +3,11 @@ use crate::{
     concat_elements, format_elements, group_elements, indent, join_elements, soft_line_break,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rome_js_syntax::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxNodeExt};
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsImportCallExpression, JsStaticMemberExpression,
 };
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode};
+use rome_rowan::AstNode;
 use std::fmt::Debug;
 use std::slice;
 
@@ -117,7 +118,7 @@ use std::slice;
 ///
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js
 pub fn format_call_expression(
-    syntax_node: &SyntaxNode,
+    syntax_node: &JsSyntaxNode,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
     let mut flattened_items = vec![];
@@ -289,7 +290,7 @@ fn format_groups(
 /// inside an vector of [FlattenItem]. The first element of the vector is the last one.
 fn flatten_call_expression(
     queue: &mut Vec<FlattenItem>,
-    node: SyntaxNode,
+    node: JsSyntaxNode,
     formatter: &Formatter,
 ) -> FormatResult<()> {
     match node.kind() {
@@ -359,7 +360,7 @@ pub(crate) enum FlattenItem {
     ComputedExpression(JsComputedMemberExpression, Vec<FormatElement>),
     /// Any other node that are not  [rome_js_syntax::JsCallExpression] or [rome_js_syntax::JsStaticMemberExpression]
     /// Are tracked using this variant
-    Node(SyntaxNode, FormatElement),
+    Node(JsSyntaxNode, FormatElement),
 }
 
 impl FlattenItem {
@@ -381,7 +382,7 @@ impl FlattenItem {
         }
     }
 
-    fn syntax(&self) -> &SyntaxNode {
+    fn syntax(&self) -> &JsSyntaxNode {
         match self {
             FlattenItem::StaticMember(node, _) => node.syntax(),
             FlattenItem::CallExpression(node, _) => node.syntax(),

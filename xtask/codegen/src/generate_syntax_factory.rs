@@ -93,8 +93,8 @@ pub fn generate_syntax_factory(ast: &AstSrc, language_kind: LanguageKind) -> Res
         .map(|node| format_ident!("{}", to_upper_snake_case(node)));
 
     let output = quote! {
-        use crate::{generated::nodes::*, AstNode, #syntax_kind, #syntax_kind::*, T};
-        use rome_rowan::{ParsedChildren, RawNodeSlots, RawSyntaxNode, SyntaxFactory, SyntaxKind};
+        use crate::{generated::nodes::*, #syntax_kind, #syntax_kind::*, T};
+        use rome_rowan::{AstNode, ParsedChildren, RawNodeSlots, RawSyntaxNode, SyntaxFactory, SyntaxKind};
 
         #[derive(Debug)]
         pub struct #factory_kind;

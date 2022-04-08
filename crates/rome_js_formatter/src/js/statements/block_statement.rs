@@ -7,7 +7,8 @@ use crate::{
 use rome_js_syntax::JsBlockStatement;
 
 use rome_js_syntax::JsBlockStatementFields;
-use rome_js_syntax::{AstNode, AstNodeList, JsSyntaxKind};
+use rome_js_syntax::JsSyntaxKind;
+use rome_rowan::{AstNode, AstNodeList};
 
 impl ToFormatElement for JsBlockStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

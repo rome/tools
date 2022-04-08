@@ -7,8 +7,6 @@ use std::collections::HashMap;
 use xtask::Result;
 
 pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
-    let syntax_kind = language_kind.syntax_kind();
-
     let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = ast
         .nodes
         .iter()
@@ -184,8 +182,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     }
                 },
                 quote! {
-                    impl AstNode for #name {
-                        fn can_cast(kind: #syntax_kind) -> bool {
+                    impl AstNode<Language> for #name {
+                        fn can_cast(kind: SyntaxKind) -> bool {
                             kind == #node_kind
                         }
                         fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -401,8 +399,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     }
                     )*
 
-                    impl AstNode for #name {
-                        fn can_cast(kind: #syntax_kind) -> bool {
+                    impl AstNode<Language> for #name {
+                        fn can_cast(kind: SyntaxKind) -> bool {
                             #can_cast_fn
                         }
                         fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -495,8 +493,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             }
 
-            impl AstNode for #name {
-                fn can_cast(kind: #syntax_kind) -> bool {
+            impl AstNode<Language> for #name {
+                fn can_cast(kind: SyntaxKind) -> bool {
                     kind == #kind
                 }
 
@@ -515,7 +513,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             impl std::fmt::Debug for #name {
                 fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                     f.debug_struct(#string_name)
-                        .field("items", &support::DebugSyntaxElementChildren(self.items()))
+                        .field("items", &DebugSyntaxElementChildren(self.items()))
                         .finish()
                 }
             }
@@ -552,8 +550,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             }
 
-            impl AstNode for #list_name {
-                fn can_cast(kind: #syntax_kind) -> bool {
+            impl AstNode<Language> for #list_name {
+                fn can_cast(kind: SyntaxKind) -> bool {
                     kind == #list_kind
                 }
 
@@ -574,7 +572,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         let padded_name = format!("{} ", name);
         let list_impl = if list.separator.is_some() {
             quote! {
-                impl AstSeparatedList<#element_type> for #list_name {
+                impl AstSeparatedList<Language, #element_type> for #list_name {
                     fn syntax_list(&self) -> &SyntaxList {
                         &self.syntax_list
                     }
@@ -589,7 +587,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 impl IntoIterator for #list_name {
                     type Item = SyntaxResult<#element_type>;
-                    type IntoIter = AstSeparatedListNodesIterator<#element_type>;
+                    type IntoIter = AstSeparatedListNodesIterator<Language, #element_type>;
 
                     fn into_iter(self) -> Self::IntoIter {
                         self.iter()
@@ -598,7 +596,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 impl IntoIterator for &#list_name {
                     type Item = SyntaxResult<#element_type>;
-                    type IntoIter = AstSeparatedListNodesIterator<#element_type>;
+                    type IntoIter = AstSeparatedListNodesIterator<Language, #element_type>;
 
                     fn into_iter(self) -> Self::IntoIter {
                         self.iter()
@@ -607,7 +605,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             }
         } else {
             quote! {
-                impl AstNodeList<#element_type> for #list_name {
+                impl AstNodeList<Language, #element_type> for #list_name {
                     fn syntax_list(&self) -> &SyntaxList {
                         &self.syntax_list
                     }
@@ -622,7 +620,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 impl IntoIterator for &#list_name {
                     type Item = #element_type;
-                    type IntoIter = AstNodeListIterator<#element_type>;
+                    type IntoIter = AstNodeListIterator<Language, #element_type>;
 
                     fn into_iter(self) -> Self::IntoIter {
                         self.iter()
@@ -631,7 +629,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 impl IntoIterator for #list_name {
                     type Item = #element_type;
-                    type IntoIter = AstNodeListIterator<#element_type>;
+                    type IntoIter = AstNodeListIterator<Language, #element_type>;
 
                     fn into_iter(self) -> Self::IntoIter {
                         self.iter()
@@ -652,53 +650,28 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         }
     });
 
-    let debug_syntax_element = {
-        let mut all_nodes: Vec<_> = ast
-            .nodes
-            .iter()
-            .map(|node| &node.name)
-            .chain(ast.unknowns.iter())
-            .chain(ast.lists().map(|(name, _)| name))
-            .collect();
-
-        all_nodes.sort_unstable();
-
-        let node_arms = all_nodes.iter().map(|node| {
-            let kind = format_ident!("{}", to_upper_snake_case(node));
-            let ident = format_ident!("{}", node);
-
-            quote! {
-                #kind => std::fmt::Debug::fmt(&#ident::cast(node.clone()).unwrap(), f)
-            }
-        });
-
-        quote! {
-            pub struct DebugSyntaxElement(pub(crate) SyntaxElement);
-
-            impl Debug for DebugSyntaxElement {
-                fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-                    match &self.0 {
-                        NodeOrToken::Node(node) => match node.kind() {
-                            #(#node_arms),*,
-                            _ => std::fmt::Debug::fmt(node, f),
-                        },
-                        NodeOrToken::Token(token) => Debug::fmt(token, f),
-                    }
-                }
-            }
-        }
-    };
+    let syntax_kind = language_kind.syntax_kind();
+    let syntax_node = language_kind.syntax_node();
+    let syntax_element = language_kind.syntax_element();
+    let syntax_element_children = language_kind.syntax_element_children();
+    let syntax_list = language_kind.syntax_list();
+    let syntax_token = language_kind.syntax_token();
+    let language = language_kind.language();
 
     let ast = quote! {
         #![allow(clippy::enum_variant_names)]
         // sometimes we generate comparison of simple tokens
         #![allow(clippy::match_like_matches_macro)]
         use crate::{
-            ast::*,
-            #syntax_kind::{self, *},
-            SyntaxElement, SyntaxElementChildren, SyntaxList, SyntaxNode, SyntaxResult, SyntaxToken,
+            macros::map_syntax_node,
+            #language as Language, #syntax_element as SyntaxElement, #syntax_element_children as SyntaxElementChildren,
+            #syntax_kind::{self as SyntaxKind, *},
+            #syntax_list as SyntaxList, #syntax_node as SyntaxNode, #syntax_token as SyntaxToken,
         };
-        use rome_rowan::NodeOrToken;
+        use rome_rowan::{
+            support, AstNode, AstNodeList, AstNodeListIterator, AstSeparatedList,
+            AstSeparatedListNodesIterator, SyntaxResult,
+        };
         use std::fmt::{Debug, Formatter};
 
         #(#node_defs)*
@@ -708,7 +681,31 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         #(#display_impls)*
         #(#unknowns)*
         #(#lists)*
-        #debug_syntax_element
+
+        #[derive(Clone)]
+        pub struct DebugSyntaxElementChildren(pub SyntaxElementChildren);
+
+        impl Debug for DebugSyntaxElementChildren {
+            fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+                f.debug_list()
+                    .entries(self.clone().0.map(DebugSyntaxElement))
+                    .finish()
+            }
+        }
+
+        struct DebugSyntaxElement(SyntaxElement);
+
+        impl Debug for DebugSyntaxElement {
+            fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+                match &self.0 {
+                    SyntaxElement::Node(node) => {
+                        map_syntax_node!(node.clone(), node => std::fmt::Debug::fmt(&node, f))
+                    }
+                    SyntaxElement::Token(token) => Debug::fmt(token, f),
+                }
+            }
+        }
+
     };
 
     let ast = ast

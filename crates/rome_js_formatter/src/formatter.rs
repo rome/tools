@@ -7,8 +7,8 @@ use crate::{
     FormatElement, FormatOptions, FormatResult, TextRange, ToFormatElement, Token, Verbatim,
 };
 use rome_formatter::{normalize_newlines, LINE_TERMINATORS};
-use rome_js_syntax::{AstNode, AstNodeList, AstSeparatedList, JsLanguage, SyntaxNode, SyntaxToken};
-use rome_rowan::{Language, SyntaxTriviaPiece};
+use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
+use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaPiece};
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
 #[cfg(debug_assertions)]
@@ -24,7 +24,7 @@ pub struct Formatter {
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
-    pub(super) printed_tokens: RefCell<HashSet<SyntaxToken>>,
+    pub(super) printed_tokens: RefCell<HashSet<JsSyntaxToken>>,
 }
 
 #[derive(Debug)]
@@ -67,7 +67,7 @@ impl Formatter {
 
     /// Formats a CST
     #[tracing::instrument(level = "debug", skip_all)]
-    pub(crate) fn format_root(self, root: &SyntaxNode) -> FormatResult<FormatElement> {
+    pub(crate) fn format_root(self, root: &JsSyntaxNode) -> FormatResult<FormatElement> {
         let element = self.format_syntax_node(root)?;
 
         cfg_if::cfg_if! {
@@ -86,7 +86,7 @@ impl Formatter {
         Ok(element)
     }
 
-    fn format_syntax_node(&self, node: &SyntaxNode) -> FormatResult<FormatElement> {
+    fn format_syntax_node(&self, node: &JsSyntaxNode) -> FormatResult<FormatElement> {
         if has_formatter_suppressions(node) {
             return Ok(self.format_suppressed(node));
         }
@@ -101,9 +101,9 @@ impl Formatter {
     /// to the opening and closing tokens and insert them inside the group block
     fn format_delimited(
         &self,
-        open_token: &SyntaxToken,
+        open_token: &JsSyntaxToken,
         content: impl FnOnce(FormatElement, FormatElement) -> FormatElement,
-        close_token: &SyntaxToken,
+        close_token: &JsSyntaxToken,
     ) -> FormatResult<FormatElement> {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
@@ -142,9 +142,9 @@ impl Formatter {
     /// content in a [block_indent] group
     pub(crate) fn format_delimited_block_indent(
         &self,
-        open_token: &SyntaxToken,
+        open_token: &JsSyntaxToken,
         content: FormatElement,
-        close_token: &SyntaxToken,
+        close_token: &JsSyntaxToken,
     ) -> FormatResult<FormatElement> {
         self.format_delimited(
             open_token,
@@ -159,9 +159,9 @@ impl Formatter {
     /// content in a [soft_block_indent] group
     pub(crate) fn format_delimited_soft_block_indent(
         &self,
-        open_token: &SyntaxToken,
+        open_token: &JsSyntaxToken,
         content: FormatElement,
-        close_token: &SyntaxToken,
+        close_token: &JsSyntaxToken,
     ) -> FormatResult<FormatElement> {
         self.format_delimited(
             open_token,
@@ -177,9 +177,9 @@ impl Formatter {
     /// start and end
     pub(crate) fn format_delimited_soft_block_spaces(
         &self,
-        open_token: &SyntaxToken,
+        open_token: &JsSyntaxToken,
         content: FormatElement,
-        close_token: &SyntaxToken,
+        close_token: &JsSyntaxToken,
     ) -> FormatResult<FormatElement> {
         self.format_delimited(
             open_token,
@@ -208,7 +208,7 @@ impl Formatter {
     /// `token` is then marked as consumed by the formatter.
     pub fn format_replaced(
         &self,
-        current_token: &SyntaxToken,
+        current_token: &JsSyntaxToken,
         content_to_replace_with: FormatElement,
     ) -> FormatElement {
         cfg_if::cfg_if! {
@@ -227,7 +227,7 @@ impl Formatter {
     /// Formats each child and returns the result as a list.
     ///
     /// Returns [None] if a child couldn't be formatted.
-    pub fn format_nodes<T: AstNode + ToFormatElement>(
+    pub fn format_nodes<T: AstNode<JsLanguage> + ToFormatElement>(
         &self,
         nodes: impl IntoIterator<Item = T>,
     ) -> FormatResult<impl Iterator<Item = FormatElement>> {
@@ -258,8 +258,8 @@ impl Formatter {
         trailing_separator: TrailingSeparator,
     ) -> FormatResult<impl Iterator<Item = FormatElement>>
     where
-        T: AstNode + ToFormatElement + Clone,
-        L: AstSeparatedList<T>,
+        T: AstNode<JsLanguage> + ToFormatElement + Clone,
+        L: AstSeparatedList<JsLanguage, T>,
         F: Fn() -> FormatElement,
     {
         let mut result = Vec::with_capacity(list.len());
@@ -310,9 +310,12 @@ impl Formatter {
     /// end up separated by hard lines or empty lines.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
-    pub fn format_list<List, Node: AstNode + ToFormatElement>(&self, list: List) -> FormatElement
+    pub fn format_list<List, Node: AstNode<JsLanguage> + ToFormatElement>(
+        &self,
+        list: List,
+    ) -> FormatElement
     where
-        List: AstNodeList<Node>,
+        List: AstNodeList<JsLanguage, Node>,
     {
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = self.snapshot();
@@ -333,7 +336,7 @@ impl Formatter {
 
     pub(super) fn print_leading_trivia(
         &self,
-        token: &SyntaxToken,
+        token: &JsSyntaxToken,
         trim_mode: TriviaPrintMode,
     ) -> FormatElement {
         // Checks whether the previous token has any trailing newline
@@ -368,7 +371,7 @@ impl Formatter {
     /// If called on a token that does not have skipped trivia
     fn print_leading_trivia_with_skipped_tokens(
         &self,
-        token: &SyntaxToken,
+        token: &JsSyntaxToken,
         trim_mode: TriviaPrintMode,
         has_trailing_newline: bool,
     ) -> FormatElement {
@@ -554,7 +557,7 @@ impl Formatter {
         Ok(concat_elements(elements.into_iter().rev()))
     }
 
-    pub(super) fn print_trailing_trivia(&self, token: &SyntaxToken) -> FormatElement {
+    pub(super) fn print_trailing_trivia(&self, token: &JsSyntaxToken) -> FormatElement {
         self.print_trailing_trivia_pieces(token.trailing_trivia().pieces())
     }
 
@@ -604,7 +607,7 @@ impl Formatter {
     ///
     /// These nodes and tokens get tracked as [FormatElement::Verbatim], useful to understand
     /// if these nodes still need to have their own implementation.
-    pub fn format_verbatim(&self, node: &SyntaxNode) -> FormatElement {
+    pub fn format_verbatim(&self, node: &JsSyntaxNode) -> FormatElement {
         let verbatim = self.format_verbatim_node_or_token(node);
         FormatElement::Verbatim(Verbatim::new_verbatim(
             verbatim,
@@ -615,14 +618,14 @@ impl Formatter {
 
     /// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
     /// doesn't track nodes/tokens as [FormatElement::Verbatim]. They are just printed as they are.
-    pub fn format_unknown(&self, node: &SyntaxNode) -> FormatElement {
+    pub fn format_unknown(&self, node: &JsSyntaxNode) -> FormatElement {
         FormatElement::Verbatim(Verbatim::new_unknown(
             self.format_verbatim_node_or_token(node),
         ))
     }
 
     /// Format a node having formatter suppression comment applied to it
-    pub fn format_suppressed(&self, node: &SyntaxNode) -> FormatElement {
+    pub fn format_suppressed(&self, node: &JsSyntaxNode) -> FormatElement {
         format_elements![
             // Insert a force a line break to ensure the suppression comment is on its own line
             // and correctly registers as a leading trivia on the opening token of this node
@@ -633,7 +636,7 @@ impl Formatter {
         ]
     }
 
-    fn format_verbatim_node_or_token(&self, node: &SyntaxNode) -> FormatElement {
+    fn format_verbatim_node_or_token(&self, node: &JsSyntaxNode) -> FormatElement {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 for token in node.descendants_tokens() {
@@ -700,7 +703,7 @@ pub(super) enum TriviaPrintMode {
 /// mode and compiled to nothing in release mode
 pub struct FormatterSnapshot {
     #[cfg(debug_assertions)]
-    printed_tokens: HashSet<SyntaxToken>,
+    printed_tokens: HashSet<JsSyntaxToken>,
 }
 
 impl Formatter {

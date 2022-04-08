@@ -45,10 +45,52 @@ pub enum LanguageKind {
 }
 
 impl LanguageKind {
-    pub fn syntax_kind(&self) -> TokenStream {
+    pub(crate) fn syntax_kind(&self) -> TokenStream {
         match self {
             LanguageKind::Js => quote! { JsSyntaxKind },
             LanguageKind::Css => quote! { CssSyntaxKind },
+        }
+    }
+
+    pub(crate) fn syntax_node(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxNode },
+            LanguageKind::Css => quote! { CssSyntaxNode },
+        }
+    }
+
+    pub(crate) fn syntax_element(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxElement },
+            LanguageKind::Css => quote! { CssSyntaxElement },
+        }
+    }
+
+    pub(crate) fn syntax_token(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxToken },
+            LanguageKind::Css => quote! { CssSyntaxToken },
+        }
+    }
+
+    pub(crate) fn syntax_element_children(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxElementChildren },
+            LanguageKind::Css => quote! { CssSyntaxElementChildren },
+        }
+    }
+
+    pub(crate) fn syntax_list(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsSyntaxList },
+            LanguageKind::Css => quote! { CssSyntaxList },
+        }
+    }
+
+    pub(crate) fn language(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { JsLanguage },
+            LanguageKind::Css => quote! { CssLanguage },
         }
     }
 }

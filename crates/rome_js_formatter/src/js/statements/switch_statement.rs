@@ -4,7 +4,8 @@ use crate::{
     ToFormatElement,
 };
 use crate::{hard_group_elements, FormatResult};
-use rome_js_syntax::{AstNode, JsSwitchStatement, JsSwitchStatementFields};
+use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
+use rome_rowan::AstNode;
 
 impl ToFormatElement for JsSwitchStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

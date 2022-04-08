@@ -311,7 +311,8 @@ pub fn generate_formatter() {
             NodeKind::Node | NodeKind::Unknown | NodeKind::List { separated: true } => {
                 quote! {
                     use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-                    use rome_js_syntax::{#id, AstNode};
+                    use rome_rowan::AstNode;
+                    use rome_js_syntax::{#id};
 
                     impl ToFormatElement for #id {
                         fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
