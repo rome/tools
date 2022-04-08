@@ -20,15 +20,14 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install --prefix crates/rome_playground
+      - run: npm install --prefix website/playground
       - uses: jetli/wasm-pack-action@v0.3.0
-      - run: wasm-pack build crates/rome_playground --target web --release
-      - run: npm run build --prefix crates/rome_playground
+      - run: npm run build --prefix website/playground
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: 'crates/rome_playground/dist'      # optional: defaults to entire repository
+          SOURCE_DIR: 'website/playground/dist'      # optional: defaults to entire repository
 

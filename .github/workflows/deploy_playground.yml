@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
+      - "crates"
       - "website/playground"
     branches:
       - main
@@ -23,7 +24,6 @@ jobs:
           node-version: '14'
       - run: npm install --prefix website/playground
       - uses: jetli/wasm-pack-action@v0.3.0
-      - run: wasm-pack build website/playground --target web --release
       - run: npm run build --prefix website/playground -- --base=/$GITHUB_SHA/
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
@@ -33,6 +33,13 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: 'website/playground/dist'      # optional: defaults to entire repository
           DEST_DIR: $GITHUB_SHA
+
+      - name: Set Playground URL
+        if: github.event_name == "pull_request"
+        id: url
+        run: |
+          url="[Playground for commit](http://play.rome.tools.s3-website-us-east-1.amazonaws.com/${{ GITHUB_SHA }}/index.html)"
+          echo "::set-output name=url::$url"
 
       - name: Get the PR number
         if: github.event_name == 'pull_request'
@@ -54,7 +61,7 @@ jobs:
         with:
           comment-id: ${{ steps.previous-comment.outputs.comment-id }}
           body: |
-            [Playground link](http://play.rome.tools.s3-website-us-east-1.amazonaws.com/$GITHUB_SHA/index.html)
+            ${{ steps.url.outputs.url }}
           edit-mode: replace
 
       - name: Write a new comment
@@ -64,6 +71,6 @@ jobs:
         with:
           issue-number: ${{ steps.pr-number.outputs.pr }}
           body: |
-            [Playground link](http://play.rome.tools.s3-website-us-east-1.amazonaws.com/$GITHUB_SHA/index.html)
+            ${{ steps.url.outputs.url }}
 
 
