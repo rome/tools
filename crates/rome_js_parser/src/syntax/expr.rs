@@ -1518,7 +1518,7 @@ impl ParseSeparatedList for ArrayElementsList {
         }
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T![']'])
     }
 

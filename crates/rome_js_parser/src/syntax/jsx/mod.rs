@@ -320,7 +320,7 @@ impl ParseNodeList for JsxChildrenList {
         }
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         let at_l_angle0 = p.at(T![<]);
         let at_slash1 = p.nth_at(1, T![/]);
         at_l_angle0 && at_slash1
@@ -487,7 +487,7 @@ impl ParseNodeList for JsxAttributeList {
         }
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         matches!(p.cur(), T![>] | T![/] | T![<])
     }
 
