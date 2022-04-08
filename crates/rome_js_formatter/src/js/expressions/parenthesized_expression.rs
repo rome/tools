@@ -6,9 +6,9 @@ use crate::{
 };
 use rome_js_syntax::{
     JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxKind,
-    JsSyntaxNode, SyntaxResult,
+    JsSyntaxNode,
 };
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, SyntaxResult};
 
 impl ToFormatElement for JsParenthesizedExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

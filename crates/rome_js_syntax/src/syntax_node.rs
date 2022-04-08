@@ -21,7 +21,5 @@ pub type JsSyntaxElement = rome_rowan::SyntaxElement<JsLanguage>;
 pub type JsSyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<JsLanguage>;
 pub type JsSyntaxElementChildren = rome_rowan::SyntaxElementChildren<JsLanguage>;
 pub type JsSyntaxList = rome_rowan::SyntaxList<JsLanguage>;
-pub type SyntaxResult<T> = rome_rowan::SyntaxResult<T>;
-pub type SyntaxError = rome_rowan::SyntaxError;
 
 pub type JsSyntaxTreeBuilder = TreeBuilder<'static, JsLanguage, JsSyntaxFactory>;

@@ -1,5 +1,6 @@
 use rome_js_syntax::JsSyntaxKind::*;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, SyntaxResult};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression};
+use rome_rowan::SyntaxResult;
 
 use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 

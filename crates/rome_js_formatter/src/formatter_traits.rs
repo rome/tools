@@ -4,8 +4,8 @@ use crate::Token;
 use crate::{
     empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rome_js_syntax::{JsLanguage, JsSyntaxToken, SyntaxResult};
-use rome_rowan::AstNode;
+use rome_js_syntax::{JsLanguage, JsSyntaxToken};
+use rome_rowan::{AstNode, SyntaxResult};
 
 /// Utility trait used to simplify the formatting of optional tokens
 ///
