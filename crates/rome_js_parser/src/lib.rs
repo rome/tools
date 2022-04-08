@@ -91,7 +91,6 @@ use crate::parser::ToDiagnostic;
 pub(crate) use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub(crate) use crate::ParsedSyntax::{Absent, Present};
 use rome_diagnostics::Diagnostic;
-pub use rome_js_syntax::numbers::BigInt;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::TextSize;
 use std::path::Path;
