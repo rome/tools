@@ -75,7 +75,7 @@ JsModule {
                                     value_token: IDENT@55..57 "A" [] [Whitespace(" ")],
                                 },
                             },
-                            operator: STAR@57..59 "*" [] [Whitespace(" ")],
+                            operator_token: STAR@57..59 "*" [] [Whitespace(" ")],
                             right: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@59..60 "2" [] [],
                             },

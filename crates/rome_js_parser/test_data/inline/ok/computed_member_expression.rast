@@ -33,7 +33,7 @@ JsModule {
                     left: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@13..15 "5" [] [Whitespace(" ")],
                     },
-                    operator: PLUS@15..17 "+" [] [Whitespace(" ")],
+                    operator_token: PLUS@15..17 "+" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@17..18 "5" [] [],
                     },

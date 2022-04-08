@@ -42,7 +42,7 @@ JsModule {
                             value_token: IDENT@25..27 "i" [] [Whitespace(" ")],
                         },
                     },
-                    operator: L_ANGLE@27..29 "<" [] [Whitespace(" ")],
+                    operator_token: L_ANGLE@27..29 "<" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@29..31 "10" [] [],
                     },
@@ -52,7 +52,7 @@ JsModule {
                     operand: JsIdentifierAssignment {
                         name_token: IDENT@33..34 "i" [] [],
                     },
-                    operator: PLUS2@34..37 "++" [] [Whitespace(" ")],
+                    operator_token: PLUS2@34..37 "++" [] [Whitespace(" ")],
                 },
                 r_paren_token: missing (required),
                 body: JsBlockStatement {
@@ -89,14 +89,14 @@ JsModule {
                         value_token: IDENT@55..57 "i" [] [Whitespace(" ")],
                     },
                 },
-                operator: L_ANGLE@57..59 "<" [] [Whitespace(" ")],
+                operator_token: L_ANGLE@57..59 "<" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@59..61 "10" [] [],
                 },
             },
             second_semi_token: SEMICOLON@61..63 ";" [] [Whitespace(" ")],
             update: JsPreUpdateExpression {
-                operator: PLUS2@63..65 "++" [] [],
+                operator_token: PLUS2@63..65 "++" [] [],
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@65..67 "i" [] [Whitespace(" ")],
                 },
@@ -226,14 +226,14 @@ JsModule {
                             value_token: IDENT@162..164 "i" [] [Whitespace(" ")],
                         },
                     },
-                    operator: L_ANGLE@164..166 "<" [] [Whitespace(" ")],
+                    operator_token: L_ANGLE@164..166 "<" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@166..168 "10" [] [],
                     },
                 },
                 SEMICOLON@168..170 ";" [] [Whitespace(" ")],
                 JsPreUpdateExpression {
-                    operator: PLUS2@170..172 "++" [] [],
+                    operator_token: PLUS2@170..172 "++" [] [],
                     operand: JsIdentifierAssignment {
                         name_token: IDENT@172..173 "i" [] [],
                     },

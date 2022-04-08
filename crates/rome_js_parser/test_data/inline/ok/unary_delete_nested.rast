@@ -49,7 +49,7 @@ JsModule {
                         statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsUnaryExpression {
-                                    operator: DELETE_KW@45..52 "delete" [] [Whitespace(" ")],
+                                    operator_token: DELETE_KW@45..52 "delete" [] [Whitespace(" ")],
                                     argument: JsCallExpression {
                                         callee: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
@@ -65,7 +65,7 @@ JsModule {
                                                     object: JsThisExpression {
                                                         this_token: THIS_KW@57..61 "this" [] [],
                                                     },
-                                                    operator: DOT@61..62 "." [] [],
+                                                    operator_token: DOT@61..62 "." [] [],
                                                     member: JsPrivateName {
                                                         hash_token: HASH@62..63 "#" [] [],
                                                         value_token: IDENT@63..69 "member" [] [],
@@ -132,7 +132,7 @@ JsModule {
                         statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsUnaryExpression {
-                                    operator: DELETE_KW@120..127 "delete" [] [Whitespace(" ")],
+                                    operator_token: DELETE_KW@120..127 "delete" [] [Whitespace(" ")],
                                     argument: JsArrayExpression {
                                         l_brack_token: L_BRACK@127..128 "[" [] [],
                                         elements: JsArrayElementList [
@@ -140,7 +140,7 @@ JsModule {
                                                 object: JsThisExpression {
                                                     this_token: THIS_KW@128..132 "this" [] [],
                                                 },
-                                                operator: DOT@132..133 "." [] [],
+                                                operator_token: DOT@132..133 "." [] [],
                                                 member: JsPrivateName {
                                                     hash_token: HASH@133..134 "#" [] [],
                                                     value_token: IDENT@134..140 "member" [] [],
@@ -206,7 +206,7 @@ JsModule {
                         statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsUnaryExpression {
-                                    operator: DELETE_KW@191..198 "delete" [] [Whitespace(" ")],
+                                    operator_token: DELETE_KW@191..198 "delete" [] [Whitespace(" ")],
                                     argument: JsObjectExpression {
                                         l_curly_token: L_CURLY@198..200 "{" [] [Whitespace(" ")],
                                         members: JsObjectMemberList [
@@ -219,7 +219,7 @@ JsModule {
                                                     object: JsThisExpression {
                                                         this_token: THIS_KW@205..209 "this" [] [],
                                                     },
-                                                    operator: DOT@209..210 "." [] [],
+                                                    operator_token: DOT@209..210 "." [] [],
                                                     member: JsPrivateName {
                                                         hash_token: HASH@210..211 "#" [] [],
                                                         value_token: IDENT@211..218 "member" [] [Whitespace(" ")],
@@ -286,7 +286,7 @@ JsModule {
                         statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsUnaryExpression {
-                                    operator: DELETE_KW@269..276 "delete" [] [Whitespace(" ")],
+                                    operator_token: DELETE_KW@269..276 "delete" [] [Whitespace(" ")],
                                     argument: JsParenthesizedExpression {
                                         l_paren_token: L_PAREN@276..277 "(" [] [],
                                         expression: JsArrowFunctionExpression {
@@ -308,7 +308,7 @@ JsModule {
                                                             object: JsThisExpression {
                                                                 this_token: THIS_KW@285..289 "this" [] [],
                                                             },
-                                                            operator: DOT@289..290 "." [] [],
+                                                            operator_token: DOT@289..290 "." [] [],
                                                             member: JsPrivateName {
                                                                 hash_token: HASH@290..291 "#" [] [],
                                                                 value_token: IDENT@291..297 "member" [] [],
@@ -379,7 +379,7 @@ JsModule {
                         statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsUnaryExpression {
-                                    operator: DELETE_KW@351..358 "delete" [] [Whitespace(" ")],
+                                    operator_token: DELETE_KW@351..358 "delete" [] [Whitespace(" ")],
                                     argument: JsParenthesizedExpression {
                                         l_paren_token: L_PAREN@358..359 "(" [] [],
                                         expression: JsArrowFunctionExpression {
@@ -399,7 +399,7 @@ JsModule {
                                                             object: JsThisExpression {
                                                                 this_token: THIS_KW@370..374 "this" [] [],
                                                             },
-                                                            operator: DOT@374..375 "." [] [],
+                                                            operator_token: DOT@374..375 "." [] [],
                                                             member: JsPrivateName {
                                                                 hash_token: HASH@375..376 "#" [] [],
                                                                 value_token: IDENT@376..382 "member" [] [],
@@ -470,7 +470,7 @@ JsModule {
                         statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsUnaryExpression {
-                                    operator: DELETE_KW@436..443 "delete" [] [Whitespace(" ")],
+                                    operator_token: DELETE_KW@436..443 "delete" [] [Whitespace(" ")],
                                     argument: JsParenthesizedExpression {
                                         l_paren_token: L_PAREN@443..444 "(" [] [],
                                         expression: JsArrowFunctionExpression {
@@ -492,7 +492,7 @@ JsModule {
                                                             object: JsThisExpression {
                                                                 this_token: THIS_KW@458..462 "this" [] [],
                                                             },
-                                                            operator: DOT@462..463 "." [] [],
+                                                            operator_token: DOT@462..463 "." [] [],
                                                             member: JsPrivateName {
                                                                 hash_token: HASH@463..464 "#" [] [],
                                                                 value_token: IDENT@464..470 "member" [] [],

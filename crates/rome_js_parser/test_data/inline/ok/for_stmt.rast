@@ -29,7 +29,7 @@ JsModule {
                         value_token: IDENT@16..18 "i" [] [Whitespace(" ")],
                     },
                 },
-                operator: L_ANGLE@18..20 "<" [] [Whitespace(" ")],
+                operator_token: L_ANGLE@18..20 "<" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@20..22 "10" [] [],
                 },
@@ -39,7 +39,7 @@ JsModule {
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@24..25 "i" [] [],
                 },
-                operator: PLUS2@25..27 "++" [] [],
+                operator_token: PLUS2@25..27 "++" [] [],
             },
             r_paren_token: R_PAREN@27..29 ")" [] [Whitespace(" ")],
             body: JsBlockStatement {
@@ -192,7 +192,7 @@ JsModule {
                         value_token: IDENT@141..143 "i" [] [Whitespace(" ")],
                     },
                 },
-                operator: L_ANGLE@143..145 "<" [] [Whitespace(" ")],
+                operator_token: L_ANGLE@143..145 "<" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@145..146 "j" [] [],
@@ -201,7 +201,7 @@ JsModule {
             },
             second_semi_token: SEMICOLON@146..148 ";" [] [Whitespace(" ")],
             update: JsPreUpdateExpression {
-                operator: PLUS2@148..150 "++" [] [],
+                operator_token: PLUS2@148..150 "++" [] [],
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@150..151 "j" [] [],
                 },

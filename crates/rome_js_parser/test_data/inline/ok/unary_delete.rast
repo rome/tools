@@ -4,14 +4,14 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
+                operator_token: DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@7..10 "obj" [] [],
                         },
                     },
-                    operator: DOT@10..11 "." [] [],
+                    operator_token: DOT@10..11 "." [] [],
                     member: JsName {
                         value_token: IDENT@11..14 "key" [] [],
                     },
@@ -21,7 +21,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@15..23 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@15..23 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@23..24 "(" [] [],
@@ -32,7 +32,7 @@ JsModule {
                         },
                         r_paren_token: R_PAREN@27..28 ")" [] [],
                     },
-                    operator: DOT@28..29 "." [] [],
+                    operator_token: DOT@28..29 "." [] [],
                     member: JsName {
                         value_token: IDENT@29..32 "key" [] [],
                     },
@@ -42,7 +42,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@33..41 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@33..41 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsStaticMemberExpression {
                         object: JsIdentifierExpression {
@@ -50,13 +50,13 @@ JsModule {
                                 value_token: IDENT@41..44 "obj" [] [],
                             },
                         },
-                        operator: DOT@44..45 "." [] [],
+                        operator_token: DOT@44..45 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@45..46 "#" [] [],
                             value_token: IDENT@46..52 "member" [] [],
                         },
                     },
-                    operator: DOT@52..53 "." [] [],
+                    operator_token: DOT@52..53 "." [] [],
                     member: JsName {
                         value_token: IDENT@53..56 "key" [] [],
                     },
@@ -66,7 +66,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@57..65 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@57..65 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@65..66 "(" [] [],
@@ -76,7 +76,7 @@ JsModule {
                                     value_token: IDENT@66..69 "obj" [] [],
                                 },
                             },
-                            operator: DOT@69..70 "." [] [],
+                            operator_token: DOT@69..70 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@70..71 "#" [] [],
                                 value_token: IDENT@71..77 "member" [] [],
@@ -84,7 +84,7 @@ JsModule {
                         },
                         r_paren_token: R_PAREN@77..78 ")" [] [],
                     },
-                    operator: DOT@78..79 "." [] [],
+                    operator_token: DOT@78..79 "." [] [],
                     member: JsName {
                         value_token: IDENT@79..82 "key" [] [],
                     },
@@ -94,7 +94,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@83..91 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@83..91 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsStaticMemberExpression {
                         object: JsCallExpression {
@@ -111,13 +111,13 @@ JsModule {
                                 r_paren_token: R_PAREN@96..97 ")" [] [],
                             },
                         },
-                        operator: DOT@97..98 "." [] [],
+                        operator_token: DOT@97..98 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@98..99 "#" [] [],
                             value_token: IDENT@99..105 "member" [] [],
                         },
                     },
-                    operator: DOT@105..106 "." [] [],
+                    operator_token: DOT@105..106 "." [] [],
                     member: JsName {
                         value_token: IDENT@106..109 "key" [] [],
                     },
@@ -127,7 +127,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@110..118 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@110..118 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@118..119 "(" [] [],
@@ -146,7 +146,7 @@ JsModule {
                                     r_paren_token: R_PAREN@124..125 ")" [] [],
                                 },
                             },
-                            operator: DOT@125..126 "." [] [],
+                            operator_token: DOT@125..126 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@126..127 "#" [] [],
                                 value_token: IDENT@127..133 "member" [] [],
@@ -154,7 +154,7 @@ JsModule {
                         },
                         r_paren_token: R_PAREN@133..134 ")" [] [],
                     },
-                    operator: DOT@134..135 "." [] [],
+                    operator_token: DOT@134..135 "." [] [],
                     member: JsName {
                         value_token: IDENT@135..138 "key" [] [],
                     },
@@ -164,7 +164,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@139..147 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@139..147 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsStaticMemberExpression {
                         object: JsIdentifierExpression {
@@ -172,13 +172,13 @@ JsModule {
                                 value_token: IDENT@147..150 "obj" [] [],
                             },
                         },
-                        operator: QUESTIONDOT@150..152 "?." [] [],
+                        operator_token: QUESTIONDOT@150..152 "?." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@152..153 "#" [] [],
                             value_token: IDENT@153..159 "member" [] [],
                         },
                     },
-                    operator: DOT@159..160 "." [] [],
+                    operator_token: DOT@159..160 "." [] [],
                     member: JsName {
                         value_token: IDENT@160..163 "key" [] [],
                     },
@@ -188,7 +188,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@164..172 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@164..172 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@172..173 "(" [] [],
@@ -198,7 +198,7 @@ JsModule {
                                     value_token: IDENT@173..176 "obj" [] [],
                                 },
                             },
-                            operator: QUESTIONDOT@176..178 "?." [] [],
+                            operator_token: QUESTIONDOT@176..178 "?." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@178..179 "#" [] [],
                                 value_token: IDENT@179..185 "member" [] [],
@@ -206,7 +206,7 @@ JsModule {
                         },
                         r_paren_token: R_PAREN@185..186 ")" [] [],
                     },
-                    operator: DOT@186..187 "." [] [],
+                    operator_token: DOT@186..187 "." [] [],
                     member: JsName {
                         value_token: IDENT@187..190 "key" [] [],
                     },
@@ -216,7 +216,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@191..199 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@191..199 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsStaticMemberExpression {
                         object: JsStaticMemberExpression {
@@ -225,18 +225,18 @@ JsModule {
                                     value_token: IDENT@199..202 "obj" [] [],
                                 },
                             },
-                            operator: QUESTIONDOT@202..204 "?." [] [],
+                            operator_token: QUESTIONDOT@202..204 "?." [] [],
                             member: JsName {
                                 value_token: IDENT@204..209 "inner" [] [],
                             },
                         },
-                        operator: DOT@209..210 "." [] [],
+                        operator_token: DOT@209..210 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@210..211 "#" [] [],
                             value_token: IDENT@211..217 "member" [] [],
                         },
                     },
-                    operator: DOT@217..218 "." [] [],
+                    operator_token: DOT@217..218 "." [] [],
                     member: JsName {
                         value_token: IDENT@218..221 "key" [] [],
                     },
@@ -246,7 +246,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@222..230 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@222..230 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsStaticMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@230..231 "(" [] [],
@@ -257,12 +257,12 @@ JsModule {
                                         value_token: IDENT@231..234 "obj" [] [],
                                     },
                                 },
-                                operator: QUESTIONDOT@234..236 "?." [] [],
+                                operator_token: QUESTIONDOT@234..236 "?." [] [],
                                 member: JsName {
                                     value_token: IDENT@236..241 "inner" [] [],
                                 },
                             },
-                            operator: DOT@241..242 "." [] [],
+                            operator_token: DOT@241..242 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@242..243 "#" [] [],
                                 value_token: IDENT@243..249 "member" [] [],
@@ -270,7 +270,7 @@ JsModule {
                         },
                         r_paren_token: R_PAREN@249..250 ")" [] [],
                     },
-                    operator: DOT@250..251 "." [] [],
+                    operator_token: DOT@250..251 "." [] [],
                     member: JsName {
                         value_token: IDENT@251..254 "key" [] [],
                     },
@@ -280,7 +280,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@255..263 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@255..263 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
@@ -301,7 +301,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@272..280 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@272..280 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@280..281 "(" [] [],
@@ -326,7 +326,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@291..299 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@291..299 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsStaticMemberExpression {
                         object: JsIdentifierExpression {
@@ -334,7 +334,7 @@ JsModule {
                                 value_token: IDENT@299..302 "obj" [] [],
                             },
                         },
-                        operator: DOT@302..303 "." [] [],
+                        operator_token: DOT@302..303 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@303..304 "#" [] [],
                             value_token: IDENT@304..310 "member" [] [],
@@ -354,7 +354,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@316..324 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@316..324 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@324..325 "(" [] [],
@@ -364,7 +364,7 @@ JsModule {
                                     value_token: IDENT@325..328 "obj" [] [],
                                 },
                             },
-                            operator: DOT@328..329 "." [] [],
+                            operator_token: DOT@328..329 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@329..330 "#" [] [],
                                 value_token: IDENT@330..336 "member" [] [],
@@ -386,7 +386,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@343..351 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@343..351 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsStaticMemberExpression {
                         object: JsCallExpression {
@@ -403,7 +403,7 @@ JsModule {
                                 r_paren_token: R_PAREN@356..357 ")" [] [],
                             },
                         },
-                        operator: DOT@357..358 "." [] [],
+                        operator_token: DOT@357..358 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@358..359 "#" [] [],
                             value_token: IDENT@359..365 "member" [] [],
@@ -423,7 +423,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@371..379 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@371..379 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@379..380 "(" [] [],
@@ -442,7 +442,7 @@ JsModule {
                                     r_paren_token: R_PAREN@385..386 ")" [] [],
                                 },
                             },
-                            operator: DOT@386..387 "." [] [],
+                            operator_token: DOT@386..387 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@387..388 "#" [] [],
                                 value_token: IDENT@388..394 "member" [] [],
@@ -464,7 +464,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@401..409 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@401..409 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsStaticMemberExpression {
                         object: JsIdentifierExpression {
@@ -472,7 +472,7 @@ JsModule {
                                 value_token: IDENT@409..412 "obj" [] [],
                             },
                         },
-                        operator: QUESTIONDOT@412..414 "?." [] [],
+                        operator_token: QUESTIONDOT@412..414 "?." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@414..415 "#" [] [],
                             value_token: IDENT@415..421 "member" [] [],
@@ -492,7 +492,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@427..435 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@427..435 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@435..436 "(" [] [],
@@ -502,7 +502,7 @@ JsModule {
                                     value_token: IDENT@436..439 "obj" [] [],
                                 },
                             },
-                            operator: QUESTIONDOT@439..441 "?." [] [],
+                            operator_token: QUESTIONDOT@439..441 "?." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@441..442 "#" [] [],
                                 value_token: IDENT@442..448 "member" [] [],
@@ -524,7 +524,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@455..463 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@455..463 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsStaticMemberExpression {
                         object: JsStaticMemberExpression {
@@ -533,12 +533,12 @@ JsModule {
                                     value_token: IDENT@463..466 "obj" [] [],
                                 },
                             },
-                            operator: QUESTIONDOT@466..468 "?." [] [],
+                            operator_token: QUESTIONDOT@466..468 "?." [] [],
                             member: JsName {
                                 value_token: IDENT@468..473 "inner" [] [],
                             },
                         },
-                        operator: DOT@473..474 "." [] [],
+                        operator_token: DOT@473..474 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@474..475 "#" [] [],
                             value_token: IDENT@475..481 "member" [] [],
@@ -558,7 +558,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@487..495 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@487..495 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
                     object: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@495..496 "(" [] [],
@@ -569,12 +569,12 @@ JsModule {
                                         value_token: IDENT@496..499 "obj" [] [],
                                     },
                                 },
-                                operator: QUESTIONDOT@499..501 "?." [] [],
+                                operator_token: QUESTIONDOT@499..501 "?." [] [],
                                 member: JsName {
                                     value_token: IDENT@501..506 "inner" [] [],
                                 },
                             },
-                            operator: DOT@506..507 "." [] [],
+                            operator_token: DOT@506..507 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@507..508 "#" [] [],
                                 value_token: IDENT@508..514 "member" [] [],
@@ -596,7 +596,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@521..529 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@521..529 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@529..530 "(" [] [],
                     expression: JsSequenceExpression {
@@ -606,7 +606,7 @@ JsModule {
                                     value_token: IDENT@530..533 "obj" [] [],
                                 },
                             },
-                            operator: DOT@533..534 "." [] [],
+                            operator_token: DOT@533..534 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@534..535 "#" [] [],
                                 value_token: IDENT@535..538 "key" [] [],
@@ -619,7 +619,7 @@ JsModule {
                                     value_token: IDENT@540..543 "obj" [] [],
                                 },
                             },
-                            operator: DOT@543..544 "." [] [],
+                            operator_token: DOT@543..544 "." [] [],
                             member: JsName {
                                 value_token: IDENT@544..547 "key" [] [],
                             },
@@ -632,7 +632,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: DELETE_KW@549..557 "delete" [Newline("\n")] [Whitespace(" ")],
+                operator_token: DELETE_KW@549..557 "delete" [Newline("\n")] [Whitespace(" ")],
                 argument: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@557..558 "(" [] [],
                     expression: JsInExpression {

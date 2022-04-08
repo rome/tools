@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsPreUpdateExpression {
-                operator: PLUS2@0..2 "++" [] [],
+                operator_token: PLUS2@0..2 "++" [] [],
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@2..5 "foo" [] [],
                 },
@@ -13,7 +13,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsPreUpdateExpression {
-                operator: MINUS2@5..8 "--" [Newline("\n")] [],
+                operator_token: MINUS2@5..8 "--" [Newline("\n")] [],
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@8..11 "foo" [] [],
                 },

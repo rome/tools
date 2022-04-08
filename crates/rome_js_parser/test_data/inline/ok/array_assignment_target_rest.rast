@@ -159,7 +159,7 @@ JsModule {
                                                     value_token: IDENT@91..94 "any" [] [],
                                                 },
                                             },
-                                            operator: DOT@94..95 "." [] [],
+                                            operator_token: DOT@94..95 "." [] [],
                                             member: JsName {
                                                 value_token: IDENT@95..105 "expression" [] [],
                                             },

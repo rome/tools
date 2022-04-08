@@ -9,7 +9,7 @@ JsModule {
                         value_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
                     },
                 },
-                operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
+                operator_token: QUESTION2@4..7 "??" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@7..10 "bar" [] [],
@@ -25,7 +25,7 @@ JsModule {
                         value_token: IDENT@10..13 "a" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
-                operator: PIPE2@13..16 "||" [] [Whitespace(" ")],
+                operator_token: PIPE2@13..16 "||" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@16..17 "b" [] [],
@@ -41,7 +41,7 @@ JsModule {
                         value_token: IDENT@17..20 "a" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
-                operator: AMP2@20..23 "&&" [] [Whitespace(" ")],
+                operator_token: AMP2@20..23 "&&" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@23..24 "b" [] [],

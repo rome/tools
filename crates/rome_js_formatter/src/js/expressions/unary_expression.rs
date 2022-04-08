@@ -6,27 +6,30 @@ use crate::{
     FormatResult, Formatter, ToFormatElement,
 };
 
-use rome_js_syntax::JsPreUpdateOperation;
+use rome_js_syntax::JsPreUpdateOperator;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
-use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperation};
+use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
 impl ToFormatElement for JsUnaryExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsUnaryExpressionFields { operator, argument } = self.as_fields();
+        let JsUnaryExpressionFields {
+            operator_token,
+            argument,
+        } = self.as_fields();
 
-        let operation = self.operation()?;
-        let operator = operator?;
+        let operation = self.operator()?;
+        let operator_token = operator_token?;
         let argument = argument?;
 
         // Insert a space between the operator and argument if its a keyword
         let is_keyword_operator = matches!(
             operation,
-            JsUnaryOperation::Delete | JsUnaryOperation::Void | JsUnaryOperation::Typeof
+            JsUnaryOperator::Delete | JsUnaryOperator::Void | JsUnaryOperator::Typeof
         );
 
         if is_keyword_operator {
             return Ok(format_elements![
-                operator.format(formatter)?,
+                operator_token.format(formatter)?,
                 space_token(),
                 argument.format(formatter)?,
             ]);
@@ -36,19 +39,19 @@ impl ToFormatElement for JsUnaryExpression {
         // operation with an ambiguous operator (+ and ++ or - and --)
         let is_ambiguous_expression = match &argument {
             JsAnyExpression::JsUnaryExpression(expr) => {
-                let inner_op = expr.operation()?;
+                let inner_op = expr.operator()?;
                 matches!(
                     (operation, inner_op),
-                    (JsUnaryOperation::Plus, JsUnaryOperation::Plus)
-                        | (JsUnaryOperation::Minus, JsUnaryOperation::Minus)
+                    (JsUnaryOperator::Plus, JsUnaryOperator::Plus)
+                        | (JsUnaryOperator::Minus, JsUnaryOperator::Minus)
                 )
             }
             JsAnyExpression::JsPreUpdateExpression(expr) => {
-                let inner_op = expr.operation()?;
+                let inner_op = expr.operator()?;
                 matches!(
                     (operation, inner_op),
-                    (JsUnaryOperation::Plus, JsPreUpdateOperation::Increment)
-                        | (JsUnaryOperation::Minus, JsPreUpdateOperation::Decrement)
+                    (JsUnaryOperator::Plus, JsPreUpdateOperator::Increment)
+                        | (JsUnaryOperator::Minus, JsPreUpdateOperator::Decrement)
                 )
             }
             _ => false,
@@ -57,14 +60,14 @@ impl ToFormatElement for JsUnaryExpression {
         if is_ambiguous_expression {
             let parenthesized = if is_simple_expression(argument.clone())? {
                 format_elements![
-                    operator.format(formatter)?,
+                    operator_token.format(formatter)?,
                     token("("),
                     argument.format(formatter)?,
                     token(")"),
                 ]
             } else {
                 format_elements![
-                    operator.format(formatter)?,
+                    operator_token.format(formatter)?,
                     group_elements(format_elements![
                         token("("),
                         soft_block_indent(argument.format(formatter)?),
@@ -77,7 +80,7 @@ impl ToFormatElement for JsUnaryExpression {
         }
 
         Ok(format_elements![
-            operator.format(formatter)?,
+            operator_token.format(formatter)?,
             argument.format(formatter)?,
         ])
     }

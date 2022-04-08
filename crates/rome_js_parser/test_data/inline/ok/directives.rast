@@ -115,7 +115,7 @@ JsScript {
                                     object: JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@180..195 "\"use strict\"" [Newline("\n"), Whitespace("  ")] [],
                                     },
-                                    operator: DOT@195..201 "." [Newline("\n"), Whitespace("    ")] [],
+                                    operator_token: DOT@195..201 "." [Newline("\n"), Whitespace("    ")] [],
                                     member: JsName {
                                         value_token: IDENT@201..207 "length" [] [],
                                     },

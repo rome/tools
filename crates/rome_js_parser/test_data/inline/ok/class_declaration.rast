@@ -51,7 +51,7 @@ JsModule {
                             value_token: IDENT@56..59 "foo" [] [],
                         },
                     },
-                    operator: DOT@59..60 "." [] [],
+                    operator_token: DOT@59..60 "." [] [],
                     member: JsName {
                         value_token: IDENT@60..64 "bar" [] [Whitespace(" ")],
                     },

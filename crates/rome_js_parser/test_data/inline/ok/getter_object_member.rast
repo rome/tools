@@ -74,7 +74,7 @@ JsModule {
                                                 left: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@91..95 "\"a\"" [] [Whitespace(" ")],
                                                 },
-                                                operator: PLUS@95..97 "+" [] [Whitespace(" ")],
+                                                operator_token: PLUS@95..97 "+" [] [Whitespace(" ")],
                                                 right: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@97..100 "\"b\"" [] [],
                                                 },
@@ -94,7 +94,7 @@ JsModule {
                                                         left: JsStringLiteralExpression {
                                                             value_token: JS_STRING_LITERAL@117..121 "\"a\"" [] [Whitespace(" ")],
                                                         },
-                                                        operator: PLUS@121..123 "+" [] [Whitespace(" ")],
+                                                        operator_token: PLUS@121..123 "+" [] [Whitespace(" ")],
                                                         right: JsStringLiteralExpression {
                                                             value_token: JS_STRING_LITERAL@123..126 "\"b\"" [] [],
                                                         },

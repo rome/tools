@@ -82,12 +82,12 @@ JsModule {
                                 return_token: RETURN_KW@87..103 "return" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")],
                                 argument: JsBinaryExpression {
                                     left: JsUnaryExpression {
-                                        operator: TYPEOF_KW@103..110 "typeof" [] [Whitespace(" ")],
+                                        operator_token: TYPEOF_KW@103..110 "typeof" [] [Whitespace(" ")],
                                         argument: JsThisExpression {
                                             this_token: THIS_KW@110..115 "this" [] [Whitespace(" ")],
                                         },
                                     },
-                                    operator: EQ3@115..119 "===" [] [Whitespace(" ")],
+                                    operator_token: EQ3@115..119 "===" [] [Whitespace(" ")],
                                     right: JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@119..127 "\"string\"" [] [],
                                     },

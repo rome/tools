@@ -9,7 +9,7 @@ JsModule {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
-                operator: DOT@3..4 "." [] [],
+                operator_token: DOT@3..4 "." [] [],
                 member: JsName {
                     value_token: IDENT@4..7 "bar" [] [],
                 },
@@ -23,7 +23,7 @@ JsModule {
                         value_token: IDENT@7..11 "foo" [Newline("\n")] [],
                     },
                 },
-                operator: DOT@11..12 "." [] [],
+                operator_token: DOT@11..12 "." [] [],
                 member: JsName {
                     value_token: IDENT@12..17 "await" [] [],
                 },
@@ -37,7 +37,7 @@ JsModule {
                         value_token: IDENT@17..21 "foo" [Newline("\n")] [],
                     },
                 },
-                operator: DOT@21..22 "." [] [],
+                operator_token: DOT@21..22 "." [] [],
                 member: JsName {
                     value_token: IDENT@22..27 "yield" [] [],
                 },
@@ -51,7 +51,7 @@ JsModule {
                         value_token: IDENT@27..31 "foo" [Newline("\n")] [],
                     },
                 },
-                operator: DOT@31..32 "." [] [],
+                operator_token: DOT@31..32 "." [] [],
                 member: JsName {
                     value_token: IDENT@32..35 "for" [] [],
                 },
@@ -65,7 +65,7 @@ JsModule {
                         value_token: IDENT@35..39 "foo" [Newline("\n")] [],
                     },
                 },
-                operator: QUESTIONDOT@39..41 "?." [] [],
+                operator_token: QUESTIONDOT@39..41 "?." [] [],
                 member: JsName {
                     value_token: IDENT@41..44 "for" [] [],
                 },
@@ -79,7 +79,7 @@ JsModule {
                         value_token: IDENT@44..48 "foo" [Newline("\n")] [],
                     },
                 },
-                operator: QUESTIONDOT@48..50 "?." [] [],
+                operator_token: QUESTIONDOT@48..50 "?." [] [],
                 member: JsName {
                     value_token: IDENT@50..53 "bar" [] [],
                 },
@@ -140,7 +140,7 @@ JsModule {
                                     object: JsThisExpression {
                                         this_token: THIS_KW@89..98 "this" [Newline("\n"), Whitespace("    ")] [],
                                     },
-                                    operator: DOT@98..99 "." [] [],
+                                    operator_token: DOT@98..99 "." [] [],
                                     member: JsPrivateName {
                                         hash_token: HASH@99..100 "#" [] [],
                                         value_token: IDENT@100..103 "bar" [] [],
@@ -153,7 +153,7 @@ JsModule {
                                     object: JsThisExpression {
                                         this_token: THIS_KW@104..113 "this" [Newline("\n"), Whitespace("    ")] [],
                                     },
-                                    operator: QUESTIONDOT@113..115 "?." [] [],
+                                    operator_token: QUESTIONDOT@113..115 "?." [] [],
                                     member: JsPrivateName {
                                         hash_token: HASH@115..116 "#" [] [],
                                         value_token: IDENT@116..119 "bar" [] [],
@@ -168,7 +168,7 @@ JsModule {
                                             value_token: IDENT@120..130 "other" [Newline("\n"), Whitespace("    ")] [],
                                         },
                                     },
-                                    operator: DOT@130..131 "." [] [],
+                                    operator_token: DOT@130..131 "." [] [],
                                     member: JsPrivateName {
                                         hash_token: HASH@131..132 "#" [] [],
                                         value_token: IDENT@132..135 "bar" [] [],
@@ -183,7 +183,7 @@ JsModule {
                                             value_token: IDENT@136..146 "other" [Newline("\n"), Whitespace("    ")] [],
                                         },
                                     },
-                                    operator: QUESTIONDOT@146..148 "?." [] [],
+                                    operator_token: QUESTIONDOT@146..148 "?." [] [],
                                     member: JsPrivateName {
                                         hash_token: HASH@148..149 "#" [] [],
                                         value_token: IDENT@149..152 "bar" [] [],

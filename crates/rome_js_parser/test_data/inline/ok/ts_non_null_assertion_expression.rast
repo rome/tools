@@ -97,12 +97,12 @@ JsModule {
                                 value_token: IDENT@49..52 "a" [Newline("\n"), Whitespace("\t")] [],
                             },
                         },
-                        operator: DOT@52..53 "." [] [],
+                        operator_token: DOT@52..53 "." [] [],
                         member: JsName {
                             value_token: IDENT@53..54 "b" [] [],
                         },
                     },
-                    operator: DOT@54..55 "." [] [],
+                    operator_token: DOT@54..55 "." [] [],
                     member: JsName {
                         value_token: IDENT@55..56 "c" [] [],
                     },

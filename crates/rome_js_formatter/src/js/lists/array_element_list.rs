@@ -33,11 +33,11 @@ impl ToFormatElement for JsArrayElementList {
 fn can_print_fill(list: &JsArrayElementList) -> bool {
     use rome_js_syntax::JsAnyArrayElement::*;
     use rome_js_syntax::JsAnyExpression::*;
-    use rome_js_syntax::JsUnaryOperation::*;
+    use rome_js_syntax::JsUnaryOperator::*;
 
     list.iter().all(|item| match item {
         Ok(JsAnyExpression(JsUnaryExpression(expr))) => {
-            match expr.operation() {
+            match expr.operator() {
                 Ok(Plus | Minus | BitwiseNot | LogicalNot) => {}
                 _ => return false,
             }

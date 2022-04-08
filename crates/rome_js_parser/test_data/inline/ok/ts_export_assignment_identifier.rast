@@ -106,12 +106,12 @@ JsModule {
                         left: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@94..96 "4" [] [Whitespace(" ")],
                         },
-                        operator: PLUS@96..98 "+" [] [Whitespace(" ")],
+                        operator_token: PLUS@96..98 "+" [] [Whitespace(" ")],
                         right: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@98..100 "3" [] [Whitespace(" ")],
                         },
                     },
-                    operator: PLUS@100..102 "+" [] [Whitespace(" ")],
+                    operator_token: PLUS@100..102 "+" [] [Whitespace(" ")],
                     right: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@102..103 "a" [] [],

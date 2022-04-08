@@ -35,7 +35,7 @@ JsModule {
                                                 left: JsNumberLiteralExpression {
                                                     value_token: JS_NUMBER_LITERAL@22..24 "6" [] [Whitespace(" ")],
                                                 },
-                                                operator: PLUS@24..26 "+" [] [Whitespace(" ")],
+                                                operator_token: PLUS@24..26 "+" [] [Whitespace(" ")],
                                                 right: JsNumberLiteralExpression {
                                                     value_token: JS_NUMBER_LITERAL@26..27 "6" [] [],
                                                 },

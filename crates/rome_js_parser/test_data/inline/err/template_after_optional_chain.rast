@@ -12,12 +12,12 @@ JsModule {
                                     value_token: IDENT@0..3 "obj" [] [],
                                 },
                             },
-                            operator: DOT@3..4 "." [] [],
+                            operator_token: DOT@3..4 "." [] [],
                             member: JsName {
                                 value_token: IDENT@4..7 "val" [] [],
                             },
                         },
-                        operator: QUESTIONDOT@7..9 "?." [] [],
+                        operator_token: QUESTIONDOT@7..9 "?." [] [],
                         member: JsName {
                             value_token: IDENT@9..13 "prop" [] [],
                         },
@@ -43,7 +43,7 @@ JsModule {
                                     value_token: IDENT@23..27 "obj" [Newline("\n")] [],
                                 },
                             },
-                            operator: DOT@27..28 "." [] [],
+                            operator_token: DOT@27..28 "." [] [],
                             member: JsName {
                                 value_token: IDENT@28..31 "val" [] [],
                             },
@@ -78,7 +78,7 @@ JsModule {
                                     value_token: IDENT@49..53 "obj" [Newline("\n")] [],
                                 },
                             },
-                            operator: DOT@53..54 "." [] [],
+                            operator_token: DOT@53..54 "." [] [],
                             member: JsName {
                                 value_token: IDENT@54..58 "func" [] [],
                             },

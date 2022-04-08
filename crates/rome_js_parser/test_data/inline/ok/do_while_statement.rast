@@ -12,7 +12,7 @@ JsModule {
                                 value_token: IDENT@3..10 "console" [] [],
                             },
                         },
-                        operator: DOT@10..11 "." [] [],
+                        operator_token: DOT@10..11 "." [] [],
                         member: JsName {
                             value_token: IDENT@11..14 "log" [] [],
                         },
@@ -52,7 +52,7 @@ JsModule {
                                         value_token: IDENT@40..50 "console" [Newline("\n"), Whitespace("  ")] [],
                                     },
                                 },
-                                operator: DOT@50..51 "." [] [],
+                                operator_token: DOT@50..51 "." [] [],
                                 member: JsName {
                                     value_token: IDENT@51..54 "log" [] [],
                                 },
@@ -121,7 +121,7 @@ JsModule {
                                             value_token: IDENT@104..106 "a" [] [Whitespace(" ")],
                                         },
                                     },
-                                    operator: PLUS@106..108 "+" [] [Whitespace(" ")],
+                                    operator_token: PLUS@106..108 "+" [] [Whitespace(" ")],
                                     right: JsNumberLiteralExpression {
                                         value_token: JS_NUMBER_LITERAL@108..109 "1" [] [],
                                     },
@@ -140,7 +140,7 @@ JsModule {
                             value_token: IDENT@118..120 "a" [] [Whitespace(" ")],
                         },
                     },
-                    operator: L_ANGLE@120..122 "<" [] [Whitespace(" ")],
+                    operator_token: L_ANGLE@120..122 "<" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@122..123 "5" [] [],
                     },
@@ -156,7 +156,7 @@ JsModule {
                         value_token: IDENT@132..134 "a" [] [Whitespace(" ")],
                     },
                 },
-                operator: L_ANGLE@134..136 "<" [] [Whitespace(" ")],
+                operator_token: L_ANGLE@134..136 "<" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@136..139 "100" [] [],
                 },

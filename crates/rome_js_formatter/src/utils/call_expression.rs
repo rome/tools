@@ -315,7 +315,7 @@ fn flatten_call_expression(
             let object = static_member.object()?;
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
             let formatted = vec![
-                static_member.operator().format(formatter)?,
+                static_member.operator_token().format(formatter)?,
                 static_member.member().format(formatter)?,
             ];
             queue.push(FlattenItem::StaticMember(static_member, formatted));

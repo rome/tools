@@ -35,7 +35,7 @@ JsModule {
                                     value_token: IDENT@41..43 "a" [] [Whitespace(" ")],
                                 },
                             },
-                            operator: PLUS@43..45 "+" [] [Whitespace(" ")],
+                            operator_token: PLUS@43..45 "+" [] [Whitespace(" ")],
                             right: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@45..46 "b" [] [],

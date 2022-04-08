@@ -13,7 +13,7 @@ JsModule {
                 object: JsThisExpression {
                     this_token: THIS_KW@4..9 "this" [Newline("\n")] [],
                 },
-                operator: DOT@9..10 "." [] [],
+                operator_token: DOT@9..10 "." [] [],
                 member: JsName {
                     value_token: IDENT@10..13 "foo" [] [],
                 },

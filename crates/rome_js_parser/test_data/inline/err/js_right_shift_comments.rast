@@ -8,10 +8,10 @@ JsModule {
                     left: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@0..2 "1" [] [Whitespace(" ")],
                     },
-                    operator: SHR@2..21 ">>" [] [Whitespace(" "), Comments("/* a comment */"), Whitespace(" ")],
+                    operator_token: SHR@2..21 ">>" [] [Whitespace(" "), Comments("/* a comment */"), Whitespace(" ")],
                     right: missing (required),
                 },
-                operator: R_ANGLE@21..23 ">" [] [Whitespace(" ")],
+                operator_token: R_ANGLE@21..23 ">" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@23..24 "2" [] [],
                 },

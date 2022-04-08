@@ -13,7 +13,7 @@ pub const ANALYZER: Analyzer = Analyzer {
 fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
     ctx.query_nodes::<JsBinaryExpression>()
         .filter_map(|n| {
-            let op = n.operator().ok()?;
+            let op = n.operator_token().ok()?;
 
             if !matches!(op.kind(), EQ2 | NEQ) {
                 return None;

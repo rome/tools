@@ -40,7 +40,7 @@ JsModule {
                                         },
                                     },
                                 },
-                                operator: DOT@25..26 "." [] [],
+                                operator_token: DOT@25..26 "." [] [],
                                 member: JsName {
                                     value_token: IDENT@26..27 "c" [] [],
                                 },

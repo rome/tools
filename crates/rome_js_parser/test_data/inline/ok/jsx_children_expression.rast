@@ -213,7 +213,7 @@ JsModule {
                                                 value_token: IDENT@144..151 "console" [] [],
                                             },
                                         },
-                                        operator: DOT@151..152 "." [] [],
+                                        operator_token: DOT@151..152 "." [] [],
                                         member: JsName {
                                             value_token: IDENT@152..155 "log" [] [],
                                         },
@@ -275,7 +275,7 @@ JsModule {
                                 left: JsNumberLiteralExpression {
                                     value_token: JS_NUMBER_LITERAL@185..187 "1" [] [Whitespace(" ")],
                                 },
-                                operator: PLUS@187..189 "+" [] [Whitespace(" ")],
+                                operator_token: PLUS@187..189 "+" [] [Whitespace(" ")],
                                 right: JsNumberLiteralExpression {
                                     value_token: JS_NUMBER_LITERAL@189..190 "1" [] [],
                                 },
@@ -483,7 +483,7 @@ JsModule {
                                         value_token: IDENT@323..325 "a" [] [Whitespace(" ")],
                                     },
                                 },
-                                operator: AMP2@325..328 "&&" [] [Whitespace(" ")],
+                                operator_token: AMP2@325..328 "&&" [] [Whitespace(" ")],
                                 right: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@328..329 "b" [] [],
@@ -550,7 +550,7 @@ JsModule {
                                 operand: JsIdentifierAssignment {
                                     name_token: IDENT@361..362 "a" [] [],
                                 },
-                                operator: PLUS2@362..364 "++" [] [],
+                                operator_token: PLUS2@362..364 "++" [] [],
                             },
                             r_curly_token: R_CURLY@364..365 "}" [] [],
                         },
@@ -560,7 +560,7 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@368..369 "{" [] [],
                             expression: JsPreUpdateExpression {
-                                operator: PLUS2@369..371 "++" [] [],
+                                operator_token: PLUS2@369..371 "++" [] [],
                                 operand: JsIdentifierAssignment {
                                     name_token: IDENT@371..372 "a" [] [],
                                 },
@@ -598,7 +598,7 @@ JsModule {
                                         value_token: IDENT@385..386 "a" [] [],
                                     },
                                 },
-                                operator: DOT@386..387 "." [] [],
+                                operator_token: DOT@386..387 "." [] [],
                                 member: JsName {
                                     value_token: IDENT@387..388 "b" [] [],
                                 },
@@ -615,7 +615,7 @@ JsModule {
                                     object: JsSuperExpression {
                                         super_token: SUPER_KW@393..398 "super" [] [],
                                     },
-                                    operator: DOT@398..399 "." [] [],
+                                    operator_token: DOT@398..399 "." [] [],
                                     member: JsName {
                                         value_token: IDENT@399..400 "a" [] [],
                                     },
@@ -646,14 +646,14 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@415..416 "{" [] [],
                             expression: JsUnaryExpression {
-                                operator: DELETE_KW@416..423 "delete" [] [Whitespace(" ")],
+                                operator_token: DELETE_KW@416..423 "delete" [] [Whitespace(" ")],
                                 argument: JsStaticMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@423..424 "a" [] [],
                                         },
                                     },
-                                    operator: DOT@424..425 "." [] [],
+                                    operator_token: DOT@424..425 "." [] [],
                                     member: JsName {
                                         value_token: IDENT@425..426 "a" [] [],
                                     },
@@ -667,7 +667,7 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@430..431 "{" [] [],
                             expression: JsUnaryExpression {
-                                operator: VOID_KW@431..436 "void" [] [Whitespace(" ")],
+                                operator_token: VOID_KW@431..436 "void" [] [Whitespace(" ")],
                                 argument: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@436..437 "a" [] [],
@@ -682,7 +682,7 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@441..442 "{" [] [],
                             expression: JsUnaryExpression {
-                                operator: TYPEOF_KW@442..449 "typeof" [] [Whitespace(" ")],
+                                operator_token: TYPEOF_KW@442..449 "typeof" [] [Whitespace(" ")],
                                 argument: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@449..450 "a" [] [],
@@ -697,7 +697,7 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@454..455 "{" [] [],
                             expression: JsUnaryExpression {
-                                operator: PLUS@455..456 "+" [] [],
+                                operator_token: PLUS@455..456 "+" [] [],
                                 argument: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@456..457 "a" [] [],
@@ -712,7 +712,7 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@461..462 "{" [] [],
                             expression: JsUnaryExpression {
-                                operator: MINUS@462..463 "-" [] [],
+                                operator_token: MINUS@462..463 "-" [] [],
                                 argument: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@463..464 "a" [] [],
@@ -727,7 +727,7 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@468..469 "{" [] [],
                             expression: JsUnaryExpression {
-                                operator: BANG@469..470 "!" [] [],
+                                operator_token: BANG@469..470 "!" [] [],
                                 argument: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@470..471 "a" [] [],
@@ -742,7 +742,7 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@475..476 "{" [] [],
                             expression: JsUnaryExpression {
-                                operator: TILDE@476..477 "~" [] [],
+                                operator_token: TILDE@476..477 "~" [] [],
                                 argument: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@477..478 "a" [] [],

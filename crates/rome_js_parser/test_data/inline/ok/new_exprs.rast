@@ -100,7 +100,7 @@ JsModule {
                             left: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@71..73 "6" [] [Whitespace(" ")],
                             },
-                            operator: PLUS@73..75 "+" [] [Whitespace(" ")],
+                            operator_token: PLUS@73..75 "+" [] [Whitespace(" ")],
                             right: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@75..76 "6" [] [],
                             },
@@ -122,7 +122,7 @@ JsModule {
                                 },
                                 r_brack_token: R_BRACK@85..87 "]" [] [Whitespace(" ")],
                             },
-                            operator: PLUS@87..89 "+" [] [Whitespace(" ")],
+                            operator_token: PLUS@87..89 "+" [] [Whitespace(" ")],
                             right: JsBinaryExpression {
                                 left: JsParenthesizedExpression {
                                     l_paren_token: L_PAREN@89..90 "(" [] [],
@@ -154,14 +154,14 @@ JsModule {
                                     },
                                     r_paren_token: R_PAREN@101..103 ")" [] [Whitespace(" ")],
                                 },
-                                operator: STAR@103..105 "*" [] [Whitespace(" ")],
+                                operator_token: STAR@103..105 "*" [] [Whitespace(" ")],
                                 right: JsStaticMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@105..108 "foo" [] [],
                                         },
                                     },
-                                    operator: QUESTIONDOT@108..110 "?." [] [],
+                                    operator_token: QUESTIONDOT@108..110 "?." [] [],
                                     member: JsName {
                                         value_token: IDENT@110..113 "bar" [] [],
                                     },

@@ -14,12 +14,12 @@ JsModule {
                             },
                             r_paren_token: R_PAREN@3..4 ")" [] [],
                         },
-                        operator: L_ANGLE@4..5 "<" [] [],
+                        operator_token: L_ANGLE@4..5 "<" [] [],
                         right: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@5..6 "5" [] [],
                         },
                     },
-                    operator: R_ANGLE@6..7 ">" [] [],
+                    operator_token: R_ANGLE@6..7 ">" [] [],
                     right: JsParenthesizedExpression {
                         l_paren_token: L_PAREN@7..8 "(" [] [],
                         expression: JsNumberLiteralExpression {

@@ -404,14 +404,14 @@ impl JsBinaryExpression {
     pub fn as_fields(&self) -> JsBinaryExpressionFields {
         JsBinaryExpressionFields {
             left: self.left(),
-            operator: self.operator(),
+            operator_token: self.operator_token(),
             right: self.right(),
         }
     }
     pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
@@ -420,7 +420,7 @@ impl JsBinaryExpression {
 }
 pub struct JsBinaryExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
-    pub operator: SyntaxResult<SyntaxToken>,
+    pub operator_token: SyntaxResult<SyntaxToken>,
     pub right: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2985,14 +2985,14 @@ impl JsLogicalExpression {
     pub fn as_fields(&self) -> JsLogicalExpressionFields {
         JsLogicalExpressionFields {
             left: self.left(),
-            operator: self.operator(),
+            operator_token: self.operator_token(),
             right: self.right(),
         }
     }
     pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
@@ -3001,7 +3001,7 @@ impl JsLogicalExpression {
 }
 pub struct JsLogicalExpressionFields {
     pub left: SyntaxResult<JsAnyExpression>,
-    pub operator: SyntaxResult<SyntaxToken>,
+    pub operator_token: SyntaxResult<SyntaxToken>,
     pub right: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -3780,19 +3780,19 @@ impl JsPostUpdateExpression {
     pub fn as_fields(&self) -> JsPostUpdateExpressionFields {
         JsPostUpdateExpressionFields {
             operand: self.operand(),
-            operator: self.operator(),
+            operator_token: self.operator_token(),
         }
     }
     pub fn operand(&self) -> SyntaxResult<JsAnyAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
 }
 pub struct JsPostUpdateExpressionFields {
     pub operand: SyntaxResult<JsAnyAssignment>,
-    pub operator: SyntaxResult<SyntaxToken>,
+    pub operator_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPreUpdateExpression {
@@ -3808,11 +3808,11 @@ impl JsPreUpdateExpression {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsPreUpdateExpressionFields {
         JsPreUpdateExpressionFields {
-            operator: self.operator(),
+            operator_token: self.operator_token(),
             operand: self.operand(),
         }
     }
-    pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn operand(&self) -> SyntaxResult<JsAnyAssignment> {
@@ -3820,7 +3820,7 @@ impl JsPreUpdateExpression {
     }
 }
 pub struct JsPreUpdateExpressionFields {
-    pub operator: SyntaxResult<SyntaxToken>,
+    pub operator_token: SyntaxResult<SyntaxToken>,
     pub operand: SyntaxResult<JsAnyAssignment>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4395,21 +4395,21 @@ impl JsStaticMemberExpression {
     pub fn as_fields(&self) -> JsStaticMemberExpressionFields {
         JsStaticMemberExpressionFields {
             object: self.object(),
-            operator: self.operator(),
+            operator_token: self.operator_token(),
             member: self.member(),
         }
     }
     pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
 }
 pub struct JsStaticMemberExpressionFields {
     pub object: SyntaxResult<JsAnyExpression>,
-    pub operator: SyntaxResult<SyntaxToken>,
+    pub operator_token: SyntaxResult<SyntaxToken>,
     pub member: SyntaxResult<JsAnyName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4773,11 +4773,11 @@ impl JsUnaryExpression {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsUnaryExpressionFields {
         JsUnaryExpressionFields {
-            operator: self.operator(),
+            operator_token: self.operator_token(),
             argument: self.argument(),
         }
     }
-    pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
@@ -4785,7 +4785,7 @@ impl JsUnaryExpression {
     }
 }
 pub struct JsUnaryExpressionFields {
-    pub operator: SyntaxResult<SyntaxToken>,
+    pub operator_token: SyntaxResult<SyntaxToken>,
     pub argument: SyntaxResult<JsAnyExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10037,7 +10037,10 @@ impl std::fmt::Debug for JsBinaryExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsBinaryExpression")
             .field("left", &support::DebugSyntaxResult(self.left()))
-            .field("operator", &support::DebugSyntaxResult(self.operator()))
+            .field(
+                "operator_token",
+                &support::DebugSyntaxResult(self.operator_token()),
+            )
             .field("right", &support::DebugSyntaxResult(self.right()))
             .finish()
     }
@@ -12414,7 +12417,10 @@ impl std::fmt::Debug for JsLogicalExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsLogicalExpression")
             .field("left", &support::DebugSyntaxResult(self.left()))
-            .field("operator", &support::DebugSyntaxResult(self.operator()))
+            .field(
+                "operator_token",
+                &support::DebugSyntaxResult(self.operator_token()),
+            )
             .field("right", &support::DebugSyntaxResult(self.right()))
             .finish()
     }
@@ -13148,7 +13154,10 @@ impl std::fmt::Debug for JsPostUpdateExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsPostUpdateExpression")
             .field("operand", &support::DebugSyntaxResult(self.operand()))
-            .field("operator", &support::DebugSyntaxResult(self.operator()))
+            .field(
+                "operator_token",
+                &support::DebugSyntaxResult(self.operator_token()),
+            )
             .finish()
     }
 }
@@ -13172,7 +13181,10 @@ impl AstNode<Language> for JsPreUpdateExpression {
 impl std::fmt::Debug for JsPreUpdateExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsPreUpdateExpression")
-            .field("operator", &support::DebugSyntaxResult(self.operator()))
+            .field(
+                "operator_token",
+                &support::DebugSyntaxResult(self.operator_token()),
+            )
             .field("operand", &support::DebugSyntaxResult(self.operand()))
             .finish()
     }
@@ -13704,7 +13716,10 @@ impl std::fmt::Debug for JsStaticMemberExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsStaticMemberExpression")
             .field("object", &support::DebugSyntaxResult(self.object()))
-            .field("operator", &support::DebugSyntaxResult(self.operator()))
+            .field(
+                "operator_token",
+                &support::DebugSyntaxResult(self.operator_token()),
+            )
             .field("member", &support::DebugSyntaxResult(self.member()))
             .finish()
     }
@@ -14072,7 +14087,10 @@ impl AstNode<Language> for JsUnaryExpression {
 impl std::fmt::Debug for JsUnaryExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsUnaryExpression")
-            .field("operator", &support::DebugSyntaxResult(self.operator()))
+            .field(
+                "operator_token",
+                &support::DebugSyntaxResult(self.operator_token()),
+            )
             .field("argument", &support::DebugSyntaxResult(self.argument()))
             .finish()
     }

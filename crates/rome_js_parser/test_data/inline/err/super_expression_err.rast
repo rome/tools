@@ -65,7 +65,7 @@ JsModule {
                                                 SUPER_KW@46..56 "super" [Newline("\n"), Whitespace("    ")] [],
                                             ],
                                         },
-                                        operator: QUESTIONDOT@56..58 "?." [] [],
+                                        operator_token: QUESTIONDOT@56..58 "?." [] [],
                                         member: JsName {
                                             value_token: IDENT@58..62 "test" [] [],
                                         },

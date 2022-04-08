@@ -21,7 +21,7 @@ JsModule {
                                 left: JsNumberLiteralExpression {
                                     value_token: JS_NUMBER_LITERAL@8..10 "4" [] [Whitespace(" ")],
                                 },
-                                operator: PLUS@10..12 "+" [] [Whitespace(" ")],
+                                operator_token: PLUS@10..12 "+" [] [Whitespace(" ")],
                                 right: JsNumberLiteralExpression {
                                     value_token: JS_NUMBER_LITERAL@12..13 "3" [] [],
                                 },

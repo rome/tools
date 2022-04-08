@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: VOID_KW@0..5 "void" [] [Whitespace(" ")],
+                operator_token: VOID_KW@0..5 "void" [] [Whitespace(" ")],
                 argument: JsUnknownExpression {
                     items: [
                         ERROR_TOKEN@5..16 "\\u0061sync" [] [Whitespace(" ")],

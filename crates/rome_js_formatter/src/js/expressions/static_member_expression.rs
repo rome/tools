@@ -11,13 +11,13 @@ impl ToFormatElement for JsStaticMemberExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsStaticMemberExpressionFields {
             object,
-            operator,
+            operator_token,
             member,
         } = self.as_fields();
 
         Ok(group_elements(format_elements![
             object.format(formatter)?,
-            operator.format(formatter)?,
+            operator_token.format(formatter)?,
             member.format(formatter)?,
         ]))
     }

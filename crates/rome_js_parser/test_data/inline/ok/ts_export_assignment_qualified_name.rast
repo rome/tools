@@ -52,7 +52,7 @@ JsModule {
                             value_token: IDENT@40..41 "a" [] [],
                         },
                     },
-                    operator: DOT@41..42 "." [] [],
+                    operator_token: DOT@41..42 "." [] [],
                     member: JsName {
                         value_token: IDENT@42..43 "b" [] [],
                     },

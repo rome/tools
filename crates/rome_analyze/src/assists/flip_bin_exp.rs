@@ -14,7 +14,7 @@ pub const ASSIST: AssistProvider = AssistProvider {
 fn analyze(ctx: &AssistContext) -> Option<Analysis> {
     let node = ctx.find_node_at_cursor_range::<JsBinaryExpression>()?;
 
-    let op_range = node.operator().ok()?.text_trimmed_range();
+    let op_range = node.operator_token().ok()?.text_trimmed_range();
     if !op_range.contains_range(ctx.cursor_range) {
         return None;
     }

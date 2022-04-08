@@ -77,7 +77,7 @@ impl JsLiteralMemberName {
 ///
 /// The variants are ordered based on their precedence
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum JsBinaryOperation {
+pub enum JsBinaryOperator {
     /// `<`
     LessThan,
     /// `>`
@@ -120,45 +120,45 @@ pub enum JsBinaryOperation {
     BitwiseXor,
 }
 
-impl JsBinaryOperation {
+impl JsBinaryOperator {
     pub fn is_bit_wise_operator(&self) -> bool {
         matches!(
             self,
-            JsBinaryOperation::LeftShift
-                | JsBinaryOperation::RightShift
-                | JsBinaryOperation::UnsignedRightShift
-                | JsBinaryOperation::BitwiseAnd
-                | JsBinaryOperation::BitwiseOr
-                | JsBinaryOperation::BitwiseXor
+            JsBinaryOperator::LeftShift
+                | JsBinaryOperator::RightShift
+                | JsBinaryOperator::UnsignedRightShift
+                | JsBinaryOperator::BitwiseAnd
+                | JsBinaryOperator::BitwiseOr
+                | JsBinaryOperator::BitwiseXor
         )
     }
 
     pub fn is_plus_or_minus_operator(&self) -> bool {
-        matches!(self, JsBinaryOperation::Plus | JsBinaryOperation::Minus)
+        matches!(self, JsBinaryOperator::Plus | JsBinaryOperator::Minus)
     }
 
     pub fn is_times_or_div_operator(&self) -> bool {
         matches!(
             self,
-            JsBinaryOperation::Divide | JsBinaryOperation::Times | JsBinaryOperation::Remainder
+            JsBinaryOperator::Divide | JsBinaryOperator::Times | JsBinaryOperator::Remainder
         )
     }
 
     pub fn is_exponent_operator(&self) -> bool {
-        matches!(self, JsBinaryOperation::Exponent)
+        matches!(self, JsBinaryOperator::Exponent)
     }
 
     pub fn is_comparison_operator(&self) -> bool {
         matches!(
             self,
-            JsBinaryOperation::LessThan
-                | JsBinaryOperation::GreaterThan
-                | JsBinaryOperation::LessThanOrEqual
-                | JsBinaryOperation::GreaterThanOrEqual
-                | JsBinaryOperation::Equality
-                | JsBinaryOperation::StrictEquality
-                | JsBinaryOperation::Inequality
-                | JsBinaryOperation::StrictInequality
+            JsBinaryOperator::LessThan
+                | JsBinaryOperator::GreaterThan
+                | JsBinaryOperator::LessThanOrEqual
+                | JsBinaryOperator::GreaterThanOrEqual
+                | JsBinaryOperator::Equality
+                | JsBinaryOperator::StrictEquality
+                | JsBinaryOperator::Inequality
+                | JsBinaryOperator::StrictInequality
         )
     }
 
@@ -187,28 +187,28 @@ impl JsBinaryOperation {
 }
 
 impl JsBinaryExpression {
-    pub fn operator_kind(&self) -> SyntaxResult<JsBinaryOperation> {
-        let kind = match self.operator()?.kind() {
-            T![<] => JsBinaryOperation::LessThan,
-            T![>] => JsBinaryOperation::GreaterThan,
-            T![<=] => JsBinaryOperation::LessThanOrEqual,
-            T![>=] => JsBinaryOperation::GreaterThanOrEqual,
-            T![==] => JsBinaryOperation::Equality,
-            T![===] => JsBinaryOperation::StrictEquality,
-            T![!=] => JsBinaryOperation::Inequality,
-            T![!==] => JsBinaryOperation::StrictInequality,
-            T![+] => JsBinaryOperation::Plus,
-            T![-] => JsBinaryOperation::Minus,
-            T![*] => JsBinaryOperation::Times,
-            T![/] => JsBinaryOperation::Divide,
-            T![%] => JsBinaryOperation::Remainder,
-            T![**] => JsBinaryOperation::Exponent,
-            T![<<] => JsBinaryOperation::LeftShift,
-            T![>>] => JsBinaryOperation::RightShift,
-            T![>>>] => JsBinaryOperation::UnsignedRightShift,
-            T![&] => JsBinaryOperation::BitwiseAnd,
-            T![|] => JsBinaryOperation::BitwiseOr,
-            T![^] => JsBinaryOperation::BitwiseXor,
+    pub fn operator(&self) -> SyntaxResult<JsBinaryOperator> {
+        let kind = match self.operator_token()?.kind() {
+            T![<] => JsBinaryOperator::LessThan,
+            T![>] => JsBinaryOperator::GreaterThan,
+            T![<=] => JsBinaryOperator::LessThanOrEqual,
+            T![>=] => JsBinaryOperator::GreaterThanOrEqual,
+            T![==] => JsBinaryOperator::Equality,
+            T![===] => JsBinaryOperator::StrictEquality,
+            T![!=] => JsBinaryOperator::Inequality,
+            T![!==] => JsBinaryOperator::StrictInequality,
+            T![+] => JsBinaryOperator::Plus,
+            T![-] => JsBinaryOperator::Minus,
+            T![*] => JsBinaryOperator::Times,
+            T![/] => JsBinaryOperator::Divide,
+            T![%] => JsBinaryOperator::Remainder,
+            T![**] => JsBinaryOperator::Exponent,
+            T![<<] => JsBinaryOperator::LeftShift,
+            T![>>] => JsBinaryOperator::RightShift,
+            T![>>>] => JsBinaryOperator::UnsignedRightShift,
+            T![&] => JsBinaryOperator::BitwiseAnd,
+            T![|] => JsBinaryOperator::BitwiseOr,
+            T![^] => JsBinaryOperator::BitwiseXor,
             _ => unreachable!(),
         };
 
@@ -217,14 +217,14 @@ impl JsBinaryExpression {
     /// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
     pub fn is_comparison_operator(&self) -> bool {
         matches!(
-            self.operator().map(|t| t.kind()),
+            self.operator_token().map(|t| t.kind()),
             Ok(T![>] | T![<] | T![>=] | T![<=] | T![==] | T![===] | T![!=] | T![!==])
         )
     }
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Ord, PartialOrd)]
-pub enum JsLogicalOperation {
+pub enum JsLogicalOperator {
     /// `??`
     NullishCoalescing,
     /// `||`
@@ -234,11 +234,11 @@ pub enum JsLogicalOperation {
 }
 
 impl JsLogicalExpression {
-    pub fn operator_kind(&self) -> SyntaxResult<JsLogicalOperation> {
-        let kind = match self.operator()?.kind() {
-            T![&&] => JsLogicalOperation::LogicalAnd,
-            T![||] => JsLogicalOperation::LogicalOr,
-            T![??] => JsLogicalOperation::NullishCoalescing,
+    pub fn operator(&self) -> SyntaxResult<JsLogicalOperator> {
+        let kind = match self.operator_token()?.kind() {
+            T![&&] => JsLogicalOperator::LogicalAnd,
+            T![||] => JsLogicalOperator::LogicalOr,
+            T![??] => JsLogicalOperator::NullishCoalescing,
             _ => unreachable!(),
         };
 
@@ -253,7 +253,7 @@ impl JsArrayHole {
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum JsUnaryOperation {
+pub enum JsUnaryOperator {
     /// `delete`
     Delete,
     /// `void`
@@ -271,24 +271,24 @@ pub enum JsUnaryOperation {
 }
 
 impl JsUnaryExpression {
-    pub fn operation(&self) -> SyntaxResult<JsUnaryOperation> {
-        let operator = self.operator()?;
+    pub fn operator(&self) -> SyntaxResult<JsUnaryOperator> {
+        let operator = self.operator_token()?;
 
         Ok(match operator.kind() {
-            T![+] => JsUnaryOperation::Plus,
-            T![-] => JsUnaryOperation::Minus,
-            T![~] => JsUnaryOperation::BitwiseNot,
-            T![!] => JsUnaryOperation::LogicalNot,
-            T![typeof] => JsUnaryOperation::Typeof,
-            T![void] => JsUnaryOperation::Void,
-            T![delete] => JsUnaryOperation::Delete,
+            T![+] => JsUnaryOperator::Plus,
+            T![-] => JsUnaryOperator::Minus,
+            T![~] => JsUnaryOperator::BitwiseNot,
+            T![!] => JsUnaryOperator::LogicalNot,
+            T![typeof] => JsUnaryOperator::Typeof,
+            T![void] => JsUnaryOperator::Void,
+            T![delete] => JsUnaryOperator::Delete,
             _ => unreachable!(),
         })
     }
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum JsPreUpdateOperation {
+pub enum JsPreUpdateOperator {
     /// `++`
     Increment,
     /// `--`
@@ -296,12 +296,12 @@ pub enum JsPreUpdateOperation {
 }
 
 impl JsPreUpdateExpression {
-    pub fn operation(&self) -> SyntaxResult<JsPreUpdateOperation> {
-        let operator = self.operator()?;
+    pub fn operator(&self) -> SyntaxResult<JsPreUpdateOperator> {
+        let operator = self.operator_token()?;
 
         Ok(match operator.kind() {
-            T![++] => JsPreUpdateOperation::Increment,
-            T![--] => JsPreUpdateOperation::Decrement,
+            T![++] => JsPreUpdateOperator::Increment,
+            T![--] => JsPreUpdateOperator::Decrement,
             _ => unreachable!(),
         })
     }
