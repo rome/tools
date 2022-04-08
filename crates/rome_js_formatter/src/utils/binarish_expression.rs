@@ -647,7 +647,7 @@ impl<'f> FlattenItems<'f> {
         let (formatted, _) =
             format_with_or_without_parenthesis(current_operator, right.syntax(), right_formatted)?;
 
-        let flatten_item = FlattenItem::binarish(
+        let flatten_item = FlattenItem::right(
             previous_operator.format_or_empty(self.formatter)?,
             formatted,
             has_comments.into(),
@@ -673,6 +673,7 @@ impl<'f> FlattenItems<'f> {
             previous_operator,
         } = payload;
 
+        // TODO inline? Rename to non-flattable_expression?
         let (left_item, right_item) = split_binaryish_to_flatten_items(
             &self.formatter,
             SplitToElementParams {
@@ -798,7 +799,7 @@ struct FlattenItem {
 }
 
 impl FlattenItem {
-    fn binarish(
+    fn right(
         operator_element: FormatElement,
         node_element: FormatElement,
         comments: Comments,
@@ -811,7 +812,7 @@ impl FlattenItem {
 
         Self {
             formatted,
-            kind: FlattenItemKind::Binarish,
+            kind: FlattenItemKind::Right,
             comments,
         }
     }
@@ -843,7 +844,7 @@ impl FlattenItem {
 
 #[derive(Debug)]
 enum FlattenItemKind {
-    Binarish,
+    Right,
     /// Used when the right side of a binary/logical expression is another binary/logical.
     /// When we have such cases we
     Group,
