@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rome_formatter::{format_elements, token, Token};
 use rome_js_syntax::{AstNode, JsxText, JsxTextFields};
@@ -9,26 +11,36 @@ impl ToFormatElement for JsxText {
 
         Ok(formatter.format_replaced(
             &token,
-            Token::new_dynamic(new_text, token.text_trimmed_range()).into(),
+            Token::new_dynamic(new_text.to_string(), token.text_trimmed_range()).into(),
         ))
     }
 }
 
-fn clean_jsx_text(text: &str) -> String {
-    let words_vec: Vec<_> = text.split_ascii_whitespace().collect();
-    let mut words = words_vec.join(" ");
-    let mut chars = text.chars();
-    if let Some(c) = chars.nth(0) {
-        if c.is_ascii_whitespace() {
-            words.insert(0, ' ');
+fn clean_jsx_text(text: &str) -> Cow<str> {
+    if text.len() == 0 {
+        Cow::Borrowed(text)
+    } else {
+        let terminators = [' ', '\n', '\t'];
+        let mut result = String::new();
+        if text.starts_with(terminators) {
+            result.push(' ');
+        }
+        let split_text = text.split_ascii_whitespace();
+        for word in split_text {
+            result.reserve(word.len() + 1);
+            result.push_str(word);
+            result.push(' ');
+        }
+        if !text.ends_with(terminators) {
+            result.pop();
+        }
+
+        if result == text || result.is_empty() {
+            Cow::Borrowed(text)
+        } else {
+            Cow::Owned(result)
         }
     }
-    if let Some(c) = chars.last() {
-        if c.is_ascii_whitespace() {
-            words.push(' ');
-        }
-    }
-    words
 }
 
 #[cfg(test)]
@@ -37,12 +49,15 @@ mod tests {
 
     #[test]
     fn clean_jsx_text_works() {
+        assert_eq!("", clean_jsx_text(""));
+        assert_eq!(" ", clean_jsx_text(" "));
         assert_eq!("Foo", clean_jsx_text("Foo"));
         assert_eq!(" Foo", clean_jsx_text(" Foo"));
         assert_eq!(" Foo", clean_jsx_text("\nFoo"));
         assert_eq!(" Foo", clean_jsx_text("\tFoo"));
         assert_eq!(" Foo", clean_jsx_text("\n \t Foo"));
         assert_eq!(" Foo", clean_jsx_text("\n \t \n \t\nFoo"));
+        assert_eq!(" Foo bar lorem", clean_jsx_text(" Foo bar lorem"));
         assert_eq!("Foo ", clean_jsx_text("Foo "));
         assert_eq!("Foo ", clean_jsx_text("Foo\n"));
         assert_eq!("Foo ", clean_jsx_text("Foo\t"));
