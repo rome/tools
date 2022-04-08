@@ -1,9 +1,8 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
-    if_group_breaks, if_group_fits_on_single_line, indent, join_elements, soft_block_indent,
-    soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    join_elements, soft_block_indent, soft_line_break_or_space, soft_line_indent_or_space,
+    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rome_js_syntax::{
     AstNode, JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryExpressionFields,
@@ -419,18 +418,12 @@ fn is_inside_parenthesis(current_node: &SyntaxNode) -> bool {
 /// There are some cases where the indentation is done by the parent, so if the parent is already doing
 /// the indentation, then there's no need to do a second indentation.
 fn should_not_indent_if_parent_indents(current_node: &SyntaxNode) -> bool {
-    let parent = current_node.parent();
-    let grand_parent = parent.as_ref().map_or_else(|| None, |p| p.parent());
+    let parent_kind = current_node.parent().map(|parent| parent.kind());
 
-    match (parent, grand_parent) {
-        (Some(parent), _) => {
-            matches!(
-                parent.kind(),
-                JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
-            )
-        }
-        _ => false,
-    }
+    matches!(
+        parent_kind,
+        Some(JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
+    )
 }
 
 /// There are other cases where the parent decides to inline the the element; in
@@ -439,7 +432,7 @@ fn should_not_indent_if_parent_indents(current_node: &SyntaxNode) -> bool {
 /// This function checks what the parents adheres to this behaviour
 fn should_indent_if_parent_inlines(current_node: &SyntaxNode) -> bool {
     let parent = current_node.parent();
-    let grand_parent = parent.as_ref().map_or_else(|| None, |p| p.parent());
+    let grand_parent = parent.as_ref().and_then(|p| p.parent());
 
     match (parent, grand_parent) {
         (Some(parent), Some(grand_parent)) => {
@@ -606,16 +599,16 @@ impl<'f> FlattenItems<'f> {
         Ok(())
     }
 
-    pub fn into_format_element(self) -> FormatResult<FormatElement> {
+    fn into_format_element(self) -> FormatResult<FormatElement> {
         let can_hard_group = can_hard_group(&self.items);
         let len = self.items.len();
 
-        let mut groups: Vec<FormatElement> = self
+        let mut groups = self
             .items
             .into_iter()
             .enumerate()
             // groups not like ["something &&", "something &&" ]
-            // we want to add a space between them in case they can't break
+            // we want to add a space between them in case they don't break
             .map(|(index, element)| {
                 let element: FormatElement = element.into();
                 // the last element doesn't need a space
@@ -624,59 +617,35 @@ impl<'f> FlattenItems<'f> {
                 } else {
                     format_elements![element, space_token()]
                 }
-            })
-            .collect::<Vec<FormatElement>>();
+            });
 
         if can_hard_group {
             // we bail early if group doesn't need to be broken. We don't need to do further checks
-            return Ok(hard_group_elements(join_elements(
-                soft_line_break_or_space(),
-                groups,
-            )));
+            return Ok(hard_group_elements(join_elements(space_token(), groups)));
         }
 
-        let is_inside_parenthesis = is_inside_parenthesis(&self.current_node);
-        let should_not_indent = should_not_indent_if_parent_indents(&self.current_node);
-        let should_ident_if_parent_inlines = should_indent_if_parent_inlines(&self.current_node);
-        let formatted = if is_inside_parenthesis {
+        let formatted = if is_inside_parenthesis(&self.current_node) {
             join_elements(soft_line_break_or_space(), groups)
-        } else if should_not_indent {
+        } else if should_not_indent_if_parent_indents(&self.current_node) {
             group_elements(join_elements(soft_line_break_or_space(), groups))
-        } else if should_ident_if_parent_inlines {
+        } else if should_indent_if_parent_inlines(&self.current_node) {
             // in order to correctly break, we need to check if the parent created a group
             // that breaks or not. In order to do that , we need to create two conditional groups
             // that behave differently depending on the situation
-            format_elements![
-                // the parent has created a group that breaks, then we create an indentation
-                if_group_breaks(indent(format_elements![
-                    hard_line_break(),
-                    group_elements(join_elements(soft_line_break_or_space(), groups.clone(),),)
-                ])),
-                // the group doesn't break, so we just normally group
-                if_group_fits_on_single_line(group_elements(join_elements(
-                    soft_line_break_or_space(),
-                    groups,
-                )))
-            ]
+            soft_line_indent_or_space(group_elements(join_elements(
+                soft_line_break_or_space(),
+                groups,
+            )))
         } else {
             // if none of the previous conditions is met,
             // we take take out the first element from the rest of group, then we hard group the "head"
             // and we indent the rest of the groups in a new line
-            let rest = groups.split_off(1);
-            let head = groups;
+            let head = groups.next().unwrap();
+            let rest = join_elements(soft_line_break_or_space(), groups);
 
             format_elements![
-                hard_group_elements(join_elements(soft_line_break_or_space(), head,)),
-                group_elements(format_elements![
-                    if_group_breaks(indent(format_elements![
-                        hard_line_break(),
-                        join_elements(soft_line_break_or_space(), rest.clone(),)
-                    ],)),
-                    if_group_fits_on_single_line(hard_group_elements(join_elements(
-                        soft_line_break_or_space(),
-                        rest,
-                    )),)
-                ])
+                hard_group_elements(head),
+                group_elements(soft_line_indent_or_space(rest))
             ]
         };
 
@@ -691,8 +660,8 @@ enum Comments {
 }
 
 impl From<&Comments> for bool {
-    fn from(w_c: &Comments) -> Self {
-        match w_c {
+    fn from(comments: &Comments) -> Self {
+        match comments {
             Comments::WithComments => true,
             Comments::NoComments => false,
         }
@@ -743,7 +712,7 @@ impl FlattenItem {
         matches!(self.kind, FlattenItemKind::Group)
     }
 
-    pub fn has_comments(&self) -> bool {
+    fn has_comments(&self) -> bool {
         matches!(self.comments, Comments::WithComments)
     }
 }
