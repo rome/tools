@@ -1441,7 +1441,7 @@ pub enum CssAnyValue {
 }
 impl AstNode<Language> for CssAnyFunction {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ANY_FUNCTION }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1468,7 +1468,7 @@ impl From<CssAnyFunction> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtKeyframes {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_KEYFRAMES }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1499,7 +1499,7 @@ impl From<CssAtKeyframes> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtKeyframesBody {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_KEYFRAMES_BODY }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1531,7 +1531,7 @@ impl From<CssAtKeyframesBody> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMedia {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1569,7 +1569,7 @@ impl From<CssAtMedia> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMediaQuery {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1606,7 +1606,7 @@ impl From<CssAtMediaQuery> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMediaQueryConsequent {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_CONSEQUENT }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1635,7 +1635,7 @@ impl From<CssAtMediaQueryConsequent> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMediaQueryFeature {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1667,7 +1667,7 @@ impl From<CssAtMediaQueryFeature> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMediaQueryFeatureBoolean {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE_BOOLEAN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1694,7 +1694,7 @@ impl From<CssAtMediaQueryFeatureBoolean> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMediaQueryFeatureCompare {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE_COMPARE }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1720,7 +1720,7 @@ impl From<CssAtMediaQueryFeatureCompare> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMediaQueryFeaturePlain {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE_PLAIN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1749,7 +1749,7 @@ impl From<CssAtMediaQueryFeaturePlain> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMediaQueryFeatureRange {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_FEATURE_RANGE }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1789,7 +1789,7 @@ impl From<CssAtMediaQueryFeatureRange> for SyntaxElement {
 }
 impl AstNode<Language> for CssAtMediaQueryRange {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_RANGE }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1828,7 +1828,7 @@ impl From<CssAtMediaQueryRange> for SyntaxElement {
 }
 impl AstNode<Language> for CssAttribute {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1867,7 +1867,7 @@ impl From<CssAttribute> for SyntaxElement {
 }
 impl AstNode<Language> for CssAttributeMatcher {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_MATCHER }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1919,7 +1919,7 @@ impl From<CssAttributeMatcher> for SyntaxElement {
 }
 impl AstNode<Language> for CssAttributeMeta {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_META }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1950,7 +1950,7 @@ impl From<CssAttributeMeta> for SyntaxElement {
 }
 impl AstNode<Language> for CssAttributeModifier {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_MODIFIER }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1974,7 +1974,7 @@ impl From<CssAttributeModifier> for SyntaxElement {
 }
 impl AstNode<Language> for CssAttributeName {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_NAME }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -1998,7 +1998,7 @@ impl From<CssAttributeName> for SyntaxElement {
 }
 impl AstNode<Language> for CssAttributeSelectorPattern {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_SELECTOR_PATTERN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2023,7 +2023,7 @@ impl From<CssAttributeSelectorPattern> for SyntaxElement {
 }
 impl AstNode<Language> for CssBlock {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_BLOCK }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2055,7 +2055,7 @@ impl From<CssBlock> for SyntaxElement {
 }
 impl AstNode<Language> for CssClassSelectorPattern {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_CLASS_SELECTOR_PATTERN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2080,7 +2080,7 @@ impl From<CssClassSelectorPattern> for SyntaxElement {
 }
 impl AstNode<Language> for CssCombinatorSelectorPattern {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_COMBINATOR_SELECTOR_PATTERN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2118,7 +2118,7 @@ impl From<CssCombinatorSelectorPattern> for SyntaxElement {
 }
 impl AstNode<Language> for CssCustomProperty {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_CUSTOM_PROPERTY }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2145,7 +2145,7 @@ impl From<CssCustomProperty> for SyntaxElement {
 }
 impl AstNode<Language> for CssDeclaration {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_DECLARATION }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2182,7 +2182,7 @@ impl From<CssDeclaration> for SyntaxElement {
 }
 impl AstNode<Language> for CssDeclarationImportant {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_DECLARATION_IMPORTANT }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2210,7 +2210,7 @@ impl From<CssDeclarationImportant> for SyntaxElement {
 }
 impl AstNode<Language> for CssDimension {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_DIMENSION }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2235,7 +2235,7 @@ impl From<CssDimension> for SyntaxElement {
 }
 impl AstNode<Language> for CssIdSelectorPattern {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ID_SELECTOR_PATTERN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2260,7 +2260,7 @@ impl From<CssIdSelectorPattern> for SyntaxElement {
 }
 impl AstNode<Language> for CssIdentifier {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_IDENTIFIER }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2287,7 +2287,7 @@ impl From<CssIdentifier> for SyntaxElement {
 }
 impl AstNode<Language> for CssKeyframesBlock {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_KEYFRAMES_BLOCK }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2320,7 +2320,7 @@ impl From<CssKeyframesBlock> for SyntaxElement {
 }
 impl AstNode<Language> for CssKeyframesSelector {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_KEYFRAMES_SELECTOR }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2349,7 +2349,7 @@ impl From<CssKeyframesSelector> for SyntaxElement {
 }
 impl AstNode<Language> for CssNumber {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_NUMBER }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2376,7 +2376,7 @@ impl From<CssNumber> for SyntaxElement {
 }
 impl AstNode<Language> for CssParameter {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PARAMETER }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2403,7 +2403,7 @@ impl From<CssParameter> for SyntaxElement {
 }
 impl AstNode<Language> for CssPercentage {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PERCENTAGE }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2431,7 +2431,7 @@ impl From<CssPercentage> for SyntaxElement {
 }
 impl AstNode<Language> for CssPseudoClassSelectorPattern {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PSEUDO_CLASS_SELECTOR_PATTERN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2463,7 +2463,7 @@ impl From<CssPseudoClassSelectorPattern> for SyntaxElement {
 }
 impl AstNode<Language> for CssPseudoClassSelectorPatternParameters {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PSEUDO_CLASS_SELECTOR_PATTERN_PARAMETERS }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2495,7 +2495,7 @@ impl From<CssPseudoClassSelectorPatternParameters> for SyntaxElement {
 }
 impl AstNode<Language> for CssRatio {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_RATIO }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2523,7 +2523,7 @@ impl From<CssRatio> for SyntaxElement {
 }
 impl AstNode<Language> for CssRule {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_RULE }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2548,7 +2548,7 @@ impl From<CssRule> for SyntaxElement {
 }
 impl AstNode<Language> for CssSelector {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_SELECTOR }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2572,7 +2572,7 @@ impl From<CssSelector> for SyntaxElement {
 }
 impl AstNode<Language> for CssSimpleFunction {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_SIMPLE_FUNCTION }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2605,7 +2605,7 @@ impl From<CssSimpleFunction> for SyntaxElement {
 }
 impl AstNode<Language> for CssString {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_STRING }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2632,7 +2632,7 @@ impl From<CssString> for SyntaxElement {
 }
 impl AstNode<Language> for CssTypeSelectorPattern {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_TYPE_SELECTOR_PATTERN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2656,7 +2656,7 @@ impl From<CssTypeSelectorPattern> for SyntaxElement {
 }
 impl AstNode<Language> for CssUniversalSelectorPattern {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_UNIVERSAL_SELECTOR_PATTERN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2680,7 +2680,7 @@ impl From<CssUniversalSelectorPattern> for SyntaxElement {
 }
 impl AstNode<Language> for CssVarFunction {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_VAR_FUNCTION }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2714,7 +2714,7 @@ impl From<CssVarFunction> for SyntaxElement {
 }
 impl AstNode<Language> for CssVarFunctionValue {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_VAR_FUNCTION_VALUE }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -2770,7 +2770,7 @@ impl AstNode<Language> for CssAnyAtMediaQueryFeatureType {
                 | CSS_AT_MEDIA_QUERY_FEATURE_RANGE
         )
     }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             CSS_AT_MEDIA_QUERY_FEATURE_BOOLEAN => {
                 CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeatureBoolean(
@@ -2853,7 +2853,7 @@ impl AstNode<Language> for CssAnyAtMediaQueryType {
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, CSS_AT_MEDIA_QUERY_FEATURE | CSS_IDENTIFIER)
     }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             CSS_AT_MEDIA_QUERY_FEATURE => {
                 CssAnyAtMediaQueryType::CssAtMediaQueryFeature(CssAtMediaQueryFeature { syntax })
@@ -2900,7 +2900,7 @@ impl From<CssAtMedia> for CssAnyAtRule {
 }
 impl AstNode<Language> for CssAnyAtRule {
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, CSS_AT_KEYFRAMES | CSS_AT_MEDIA) }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             CSS_AT_KEYFRAMES => CssAnyAtRule::CssAtKeyframes(CssAtKeyframes { syntax }),
             CSS_AT_MEDIA => CssAnyAtRule::CssAtMedia(CssAtMedia { syntax }),
@@ -2948,11 +2948,11 @@ impl AstNode<Language> for CssAnyRule {
             _ => false,
         }
     }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             CSS_RULE => CssAnyRule::CssRule(CssRule { syntax }),
             _ => {
-                if let Some(css_any_at_rule) = CssAnyAtRule::try_cast(syntax) {
+                if let Some(css_any_at_rule) = CssAnyAtRule::cast(syntax) {
                     return Some(CssAnyRule::CssAnyAtRule(css_any_at_rule));
                 }
                 return None;
@@ -3037,7 +3037,7 @@ impl AstNode<Language> for CssAnySelectorPattern {
                 | CSS_UNIVERSAL_SELECTOR_PATTERN
         )
     }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             CSS_ATTRIBUTE_SELECTOR_PATTERN => {
                 CssAnySelectorPattern::CssAttributeSelectorPattern(CssAttributeSelectorPattern {
@@ -3150,7 +3150,7 @@ impl AstNode<Language> for CssAnyValue {
                 | CSS_STRING
         )
     }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             CSS_ANY_FUNCTION => CssAnyValue::CssAnyFunction(CssAnyFunction { syntax }),
             CSS_CUSTOM_PROPERTY => CssAnyValue::CssCustomProperty(CssCustomProperty { syntax }),
@@ -3468,7 +3468,7 @@ impl CssUnknown {
 }
 impl AstNode<Language> for CssUnknown {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_UNKNOWN }
-    fn try_cast(syntax: SyntaxNode) -> Option<Self> {
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
         } else {
@@ -3509,7 +3509,7 @@ impl CssAnySelectorPatternList {
 }
 impl AstNode<Language> for CssAnySelectorPatternList {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ANY_SELECTOR_PATTERN_LIST }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssAnySelectorPatternList> {
+    fn cast(syntax: SyntaxNode) -> Option<CssAnySelectorPatternList> {
         if Self::can_cast(syntax.kind()) {
             Some(CssAnySelectorPatternList {
                 syntax_list: syntax.into_list(),
@@ -3558,7 +3558,7 @@ impl CssAtKeyframesItemList {
 }
 impl AstNode<Language> for CssAtKeyframesItemList {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_KEYFRAMES_ITEM_LIST }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssAtKeyframesItemList> {
+    fn cast(syntax: SyntaxNode) -> Option<CssAtKeyframesItemList> {
         if Self::can_cast(syntax.kind()) {
             Some(CssAtKeyframesItemList {
                 syntax_list: syntax.into_list(),
@@ -3607,7 +3607,7 @@ impl CssAtMediaQueryList {
 }
 impl AstNode<Language> for CssAtMediaQueryList {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_AT_MEDIA_QUERY_LIST }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssAtMediaQueryList> {
+    fn cast(syntax: SyntaxNode) -> Option<CssAtMediaQueryList> {
         if Self::can_cast(syntax.kind()) {
             Some(CssAtMediaQueryList {
                 syntax_list: syntax.into_list(),
@@ -3656,7 +3656,7 @@ impl CssAttributeList {
 }
 impl AstNode<Language> for CssAttributeList {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ATTRIBUTE_LIST }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssAttributeList> {
+    fn cast(syntax: SyntaxNode) -> Option<CssAttributeList> {
         if Self::can_cast(syntax.kind()) {
             Some(CssAttributeList {
                 syntax_list: syntax.into_list(),
@@ -3705,7 +3705,7 @@ impl CssDeclarationList {
 }
 impl AstNode<Language> for CssDeclarationList {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_DECLARATION_LIST }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssDeclarationList> {
+    fn cast(syntax: SyntaxNode) -> Option<CssDeclarationList> {
         if Self::can_cast(syntax.kind()) {
             Some(CssDeclarationList {
                 syntax_list: syntax.into_list(),
@@ -3754,7 +3754,7 @@ impl CssKeyframesSelectorList {
 }
 impl AstNode<Language> for CssKeyframesSelectorList {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_KEYFRAMES_SELECTOR_LIST }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssKeyframesSelectorList> {
+    fn cast(syntax: SyntaxNode) -> Option<CssKeyframesSelectorList> {
         if Self::can_cast(syntax.kind()) {
             Some(CssKeyframesSelectorList {
                 syntax_list: syntax.into_list(),
@@ -3803,7 +3803,7 @@ impl CssParameterList {
 }
 impl AstNode<Language> for CssParameterList {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_PARAMETER_LIST }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssParameterList> {
+    fn cast(syntax: SyntaxNode) -> Option<CssParameterList> {
         if Self::can_cast(syntax.kind()) {
             Some(CssParameterList {
                 syntax_list: syntax.into_list(),
@@ -3852,7 +3852,7 @@ impl CssRoot {
 }
 impl AstNode<Language> for CssRoot {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_ROOT }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssRoot> {
+    fn cast(syntax: SyntaxNode) -> Option<CssRoot> {
         if Self::can_cast(syntax.kind()) {
             Some(CssRoot {
                 syntax_list: syntax.into_list(),
@@ -3901,7 +3901,7 @@ impl CssSelectorList {
 }
 impl AstNode<Language> for CssSelectorList {
     fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_SELECTOR_LIST }
-    fn try_cast(syntax: SyntaxNode) -> Option<CssSelectorList> {
+    fn cast(syntax: SyntaxNode) -> Option<CssSelectorList> {
         if Self::can_cast(syntax.kind()) {
             Some(CssSelectorList {
                 syntax_list: syntax.into_list(),

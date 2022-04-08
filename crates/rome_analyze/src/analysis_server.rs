@@ -49,7 +49,7 @@ impl AnalysisServer {
     pub fn query_nodes<T: AstNode<JsLanguage>>(&self, file_id: FileId) -> impl Iterator<Item = T> {
         trace!("Query nodes: {:?}", std::any::type_name::<T>());
         let tree = self.parse(file_id);
-        tree.descendants().filter_map(|n| T::try_cast(n))
+        tree.descendants().filter_map(|n| T::cast(n))
     }
 
     pub fn find_node_at_range<T: AstNode<JsLanguage>>(
@@ -59,9 +59,7 @@ impl AnalysisServer {
     ) -> Option<T> {
         trace!("Find {:?} range: {:?}", std::any::type_name::<T>(), range);
         let tree = self.parse(file_id);
-        tree.covering_element(range)
-            .ancestors()
-            .find_map(T::try_cast)
+        tree.covering_element(range).ancestors().find_map(T::cast)
     }
 
     /// Returns a combined [`Analysis`] from running every [`AssistProvider`] on

@@ -655,7 +655,7 @@ mod tests {
         assert!(JsExpressionSnipped::can_cast(untyped_node.kind()));
 
         // Convert the untyped SyntaxNode into a typed AST node
-        let expression_snipped = JsExpressionSnipped::try_cast(untyped_node).unwrap();
+        let expression_snipped = JsExpressionSnipped::cast(untyped_node).unwrap();
         let expression = expression_snipped.expression().unwrap();
 
         match expression {

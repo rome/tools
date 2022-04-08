@@ -32,7 +32,7 @@ fn parser_missing_smoke_test() {
     let arg_list = module
         .syntax()
         .descendants()
-        .find_map(JsCallArguments::try_cast)
+        .find_map(JsCallArguments::cast)
         .unwrap();
 
     let opening = arg_list.syntax().element_in_slot(0);
@@ -344,7 +344,7 @@ pub fn node_contains_trailing_comments() {
         .find(|n| n.kind() == JsSyntaxKind::JS_LOGICAL_EXPRESSION)
         .unwrap();
 
-    let logical_expression = JsLogicalExpression::try_cast(node).unwrap();
+    let logical_expression = JsLogicalExpression::cast(node).unwrap();
     let right = logical_expression.right().unwrap();
 
     assert!(right.syntax().has_trailing_comments());
@@ -363,7 +363,7 @@ pub fn node_contains_leading_comments() {
         .find(|n| n.kind() == JsSyntaxKind::JS_LOGICAL_EXPRESSION)
         .unwrap();
 
-    let logical_expression = JsLogicalExpression::try_cast(node).unwrap();
+    let logical_expression = JsLogicalExpression::cast(node).unwrap();
     let right = logical_expression.right().unwrap();
 
     assert!(right.syntax().has_leading_comments());

@@ -493,7 +493,7 @@ impl TemplateElement {
 
                     _ => {
                         if let Some(function) =
-                            JsAnyFunction::try_cast(current_expression.syntax().clone())
+                            JsAnyFunction::cast(current_expression.syntax().clone())
                         {
                             Ok(is_simple_function_expression(function)?)
                         } else {

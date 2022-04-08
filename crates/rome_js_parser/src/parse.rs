@@ -98,7 +98,7 @@ impl<T: AstNode<JsLanguage>> Parse<T> {
 
     /// Try to convert this parse's untyped syntax node into an AST node.
     pub fn try_tree(&self) -> Option<T> {
-        T::try_cast(self.syntax())
+        T::cast(self.syntax())
     }
 
     /// Convert this parse into a result
@@ -142,7 +142,7 @@ pub fn parse_common(
 /// println!("{:#?}", untyped_expr_node);
 ///
 /// // You can then cast syntax nodes into a typed AST node.
-/// let typed_ast_node = JsComputedMemberExpression::try_cast(untyped_expr_node.first_child().unwrap()).unwrap();
+/// let typed_ast_node = JsComputedMemberExpression::cast(untyped_expr_node.first_child().unwrap()).unwrap();
 ///
 /// // Everything on every ast node is optional because of error recovery.
 /// let prop = dbg!(typed_ast_node.member()).unwrap();

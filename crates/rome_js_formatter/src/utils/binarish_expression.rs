@@ -117,7 +117,7 @@ fn flatten_expressions(
     formatter: &Formatter,
     previous_operator: Option<JsSyntaxToken>,
 ) -> FormatResult<()> {
-    if let Some(binary_expression) = JsBinaryExpression::try_cast(syntax_node.clone()) {
+    if let Some(binary_expression) = JsBinaryExpression::cast(syntax_node.clone()) {
         let JsBinaryExpressionFields {
             left,
             right,
@@ -140,7 +140,7 @@ fn flatten_expressions(
             },
             FlattenItem::Binary,
         )?;
-    } else if let Some(logical_expression) = JsLogicalExpression::try_cast(syntax_node.clone()) {
+    } else if let Some(logical_expression) = JsLogicalExpression::cast(syntax_node.clone()) {
         let JsLogicalExpressionFields {
             left,
             right,
@@ -163,9 +163,7 @@ fn flatten_expressions(
             },
             FlattenItem::Logical,
         )?;
-    } else if let Some(instanceof_expression) =
-        JsInstanceofExpression::try_cast(syntax_node.clone())
-    {
+    } else if let Some(instanceof_expression) = JsInstanceofExpression::cast(syntax_node.clone()) {
         let JsInstanceofExpressionFields {
             left,
             right,
@@ -188,7 +186,7 @@ fn flatten_expressions(
             },
             FlattenItem::Instanceof,
         )?;
-    } else if let Some(in_expression) = JsInExpression::try_cast(syntax_node.clone()) {
+    } else if let Some(in_expression) = JsInExpression::cast(syntax_node.clone()) {
         let JsInExpressionFields {
             property,
             in_token,
@@ -476,9 +474,9 @@ fn format_with_or_without_parenthesis<Node: AstNode<JsLanguage> + ToFormatElemen
     node: Node,
     formatted_node: FormatElement,
 ) -> FormatResult<(FormatElement, bool)> {
-    let compare_to = if let Some(logical) = JsLogicalExpression::try_cast(node.syntax().clone()) {
+    let compare_to = if let Some(logical) = JsLogicalExpression::cast(node.syntax().clone()) {
         Some(Operation::Logical(logical.operator_kind()?))
-    } else if let Some(binary) = JsBinaryExpression::try_cast(node.syntax().clone()) {
+    } else if let Some(binary) = JsBinaryExpression::cast(node.syntax().clone()) {
         Some(Operation::Binary(binary.operator_kind()?))
     } else if JsInstanceofExpression::can_cast(node.syntax().kind()) {
         Some(Operation::Instanceof)

@@ -50,11 +50,11 @@ use rome_rowan::{AstNode, AstSeparatedList, SyntaxResult};
 
 /// Returns true is the passed [JsAnyExpression] is a simple function, array or object expression
 pub(crate) fn is_simple_expression(node: JsAnyExpression) -> SyntaxResult<bool> {
-    if let Some(func) = JsAnyFunction::try_cast(node.syntax().clone()) {
+    if let Some(func) = JsAnyFunction::cast(node.syntax().clone()) {
         is_simple_function_expression(func)
-    } else if let Some(array) = JsArrayExpression::try_cast(node.syntax().clone()) {
+    } else if let Some(array) = JsArrayExpression::cast(node.syntax().clone()) {
         is_simple_array_expression(array)
-    } else if let Some(object) = JsObjectExpression::try_cast(node.syntax().clone()) {
+    } else if let Some(object) = JsObjectExpression::cast(node.syntax().clone()) {
         is_simple_object_expression(object)
     } else {
         Ok(false)
@@ -92,7 +92,7 @@ pub(crate) fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult
         return Ok(false);
     }
 
-    match JsParameters::try_cast(func.parameters()?.syntax().clone()) {
+    match JsParameters::cast(func.parameters()?.syntax().clone()) {
         Some(params) => {
             if !is_simple_function_parameters(params)? {
                 return Ok(false);
@@ -172,7 +172,7 @@ fn is_simple_function_parameters(node: JsParameters) -> SyntaxResult<bool> {
     }
 
     for item in &items {
-        match JsFormalParameter::try_cast(item?.syntax().clone()) {
+        match JsFormalParameter::cast(item?.syntax().clone()) {
             Some(node) => {
                 if !is_simple_parameter(node)? {
                     return Ok(false);
@@ -195,7 +195,7 @@ fn is_simple_parameter(node: JsFormalParameter) -> SyntaxResult<bool> {
         initializer,
     } = node.as_fields();
 
-    match JsIdentifierBinding::try_cast(binding?.syntax().clone()) {
+    match JsIdentifierBinding::cast(binding?.syntax().clone()) {
         Some(ident) => {
             let JsIdentifierBindingFields { name_token } = ident.as_fields();
             if token_has_comments(name_token?) {

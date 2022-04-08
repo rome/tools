@@ -295,7 +295,7 @@ fn flatten_call_expression(
 ) -> FormatResult<()> {
     match node.kind() {
         JsSyntaxKind::JS_CALL_EXPRESSION => {
-            let call_expression = JsCallExpression::try_cast(node).unwrap();
+            let call_expression = JsCallExpression::cast(node).unwrap();
             let callee = call_expression.callee()?;
             flatten_call_expression(queue, callee.syntax().clone(), formatter)?;
             let formatted = vec![
@@ -311,7 +311,7 @@ fn flatten_call_expression(
             queue.push(FlattenItem::CallExpression(call_expression, formatted));
         }
         JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
-            let static_member = JsStaticMemberExpression::try_cast(node).unwrap();
+            let static_member = JsStaticMemberExpression::cast(node).unwrap();
             let object = static_member.object()?;
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
             let formatted = vec![
@@ -322,7 +322,7 @@ fn flatten_call_expression(
         }
 
         JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
-            let computed_expression = JsComputedMemberExpression::try_cast(node).unwrap();
+            let computed_expression = JsComputedMemberExpression::cast(node).unwrap();
             let object = computed_expression.object()?;
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
             let formatted = vec![

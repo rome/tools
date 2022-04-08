@@ -58,7 +58,7 @@ mod tests {
         tree_builder.finish_node();
 
         let node = tree_builder.finish();
-        let number_literal = JsNumberLiteralExpression::try_cast(node).unwrap();
+        let number_literal = JsNumberLiteralExpression::cast(node).unwrap();
         assert_eq!(number_literal.as_number(), Some(value))
     }
 
@@ -69,7 +69,7 @@ mod tests {
         tree_builder.finish_node();
 
         let node = tree_builder.finish();
-        let number_literal = JsBigIntLiteralExpression::try_cast(node).unwrap();
+        let number_literal = JsBigIntLiteralExpression::cast(node).unwrap();
         assert_eq!(number_literal.as_number(), Some(value.to_bigint().unwrap()))
     }
 

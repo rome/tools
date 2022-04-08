@@ -68,7 +68,7 @@ impl AstNode<RawLanguage> for LiteralExpression {
         kind == LITERAL_EXPRESSION
     }
 
-    fn try_cast(syntax: SyntaxNode<RawLanguage>) -> Option<Self>
+    fn cast(syntax: SyntaxNode<RawLanguage>) -> Option<Self>
     where
         Self: Sized,
     {

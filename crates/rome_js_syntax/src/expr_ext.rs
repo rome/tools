@@ -27,7 +27,7 @@ impl JsLiteralMemberName {
     ///   builder.token(JsSyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
     /// });
     ///
-    /// let static_member_name = JsLiteralMemberName::cast(node);
+    /// let static_member_name = JsLiteralMemberName::cast_unwrap(node);
     ///
     /// assert_eq!("abcd", static_member_name.name().unwrap());
     /// ```
@@ -42,7 +42,7 @@ impl JsLiteralMemberName {
     ///   builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, "5");
     /// });
     ///
-    /// let static_member_name = JsLiteralMemberName::cast(node);
+    /// let static_member_name = JsLiteralMemberName::cast_unwrap(node);
     ///
     /// assert_eq!("5", static_member_name.name().unwrap());
     /// ```
@@ -57,7 +57,7 @@ impl JsLiteralMemberName {
     ///   builder.token(JsSyntaxKind::IDENT, "abcd");
     /// });
     ///
-    /// let static_member_name = JsLiteralMemberName::cast(node);
+    /// let static_member_name = JsLiteralMemberName::cast_unwrap(node);
     ///
     /// assert_eq!("abcd", static_member_name.name().unwrap());
     /// ```
