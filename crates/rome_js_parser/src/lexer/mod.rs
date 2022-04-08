@@ -807,6 +807,12 @@ impl<'src> Lexer<'src> {
                 }
                 'u' => self.read_unicode_escape(true).is_ok(),
                 'x' => self.validate_hex_escape(),
+                '\r' => {
+                    if self.next_byte() == Some(b'\n') {
+                        self.advance(1);
+                    }
+                    true
+                }
                 _ => {
                     self.advance_char_unchecked();
                     true
@@ -875,11 +881,8 @@ impl<'src> Lexer<'src> {
                         valid = false;
                     }
                 }
-                chr if chr == quote => {
-                    self.advance_char_unchecked();
-                    return valid;
-                }
-                chr if is_linebreak(chr) && !jsx_attribute => {
+
+                '\r' | '\n' if !jsx_attribute => {
                     let unterminated =
                         Diagnostic::error(self.file_id, "", "unterminated string literal")
                             .primary(start..self.position, "")
@@ -887,6 +890,12 @@ impl<'src> Lexer<'src> {
                     self.diagnostics.push(unterminated);
                     return false;
                 }
+
+                chr if chr == quote => {
+                    self.advance_char_unchecked();
+                    return valid;
+                }
+
                 _ => {
                     self.advance_char_unchecked();
                 }
@@ -1496,6 +1505,7 @@ impl<'src> Lexer<'src> {
         let start = self.position;
         let mut in_class = false;
 
+        let mut last_len = 1;
         while let Some(c) = self.next_char() {
             match c {
                 '[' => in_class = true,
@@ -1592,12 +1602,14 @@ impl<'src> Lexer<'src> {
                     );
 
                     // Undo the read of the new line trivia
-                    self.position -= c.len_utf8();
+                    self.position -= last_len;
 
                     return JsSyntaxKind::JS_REGEX_LITERAL;
                 }
                 _ => {}
             }
+
+            last_len = c.len_utf8();
         }
 
         self.diagnostics.push(
