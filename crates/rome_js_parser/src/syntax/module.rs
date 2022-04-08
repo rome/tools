@@ -350,7 +350,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
         parse_any_named_import_specifier(p)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T!['}'])
     }
 
@@ -489,7 +489,7 @@ impl ParseSeparatedList for ImportAssertionList {
         parse_import_assertion_entry(p, &mut self.assertion_keys)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T!['}'])
     }
 
@@ -719,7 +719,7 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
         parse_any_export_named_specifier(p)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T!['}'])
     }
 
@@ -985,7 +985,7 @@ impl ParseSeparatedList for ExportNamedFromSpecifierList {
         parse_export_named_from_specifier(p)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T!['}'])
     }
 

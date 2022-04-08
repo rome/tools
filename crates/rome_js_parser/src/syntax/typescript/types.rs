@@ -117,7 +117,7 @@ impl ParseSeparatedList for TsTypeParameterList {
         parse_ts_type_parameter(p)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T![>])
     }
 
@@ -712,7 +712,7 @@ impl ParseNodeList for TypeMembers {
         parse_ts_type_member(p)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T!['}'])
     }
 
@@ -951,7 +951,7 @@ impl ParseSeparatedList for TsTupleTypeElementList {
         ty
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T![']'])
     }
 
@@ -1282,7 +1282,7 @@ impl ParseSeparatedList for TypeArgumentsList {
         parse_ts_type(p)
     }
 
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut Parser) -> bool {
         p.at(T![>])
     }
 

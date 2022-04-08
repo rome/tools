@@ -30,7 +30,7 @@ pub(crate) trait ParseNodeList {
     /// the trait will exit from the loop.
     ///
     /// Usually here you want to check the current token.
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool;
+    fn is_at_list_end(&self, p: &mut Parser) -> bool;
 
     /// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult;
@@ -92,7 +92,7 @@ pub(crate) trait ParseSeparatedList {
     /// the trait will exit from the loop.
     ///
     /// Usually here you want to check the current token.
-    fn is_at_list_end(&mut self, p: &mut Parser) -> bool;
+    fn is_at_list_end(&self, p: &mut Parser) -> bool;
 
     /// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult;
