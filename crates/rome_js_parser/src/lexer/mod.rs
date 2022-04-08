@@ -392,22 +392,20 @@ impl<'src> Lexer<'src> {
         debug_assert!(!self.is_eof());
 
         // SAFETY: `lex_token` only calls this method if it isn't passed the EOF
-        let byte = unsafe { self.current_unchecked() };
+        let chr = unsafe { self.current_char_unchecked() };
 
-        match byte {
+        match chr {
             // `<`: empty jsx text, directly followed by another element or closing element
-            b'<' => self.eat_byte(T![<]),
+            '<' => self.eat_byte(T![<]),
             // `{`: empty jsx text, directly followed by an expression
-            b'{' => self.eat_byte(T!['{']),
+            '{' => self.eat_byte(T!['{']),
             _ => {
-                while let Some(byte) = self.current_byte() {
+                while let Some(chr) = self.current_char() {
                     // but not one of: { or < or > or }
-                    match byte {
+                    match chr {
                         // Start of a new element, the closing tag, or an expression
-                        b'<' | b'{' => {
-                            break;
-                        }
-                        b'>' => {
+                        '<' | '{' => break,
+                        '>' => {
                             self.diagnostics.push(
                                 Diagnostic::error(
                                     self.file_id,
@@ -418,7 +416,7 @@ impl<'src> Lexer<'src> {
                             );
                             self.next_byte();
                         }
-                        b'}' => {
+                        '}' => {
                             self.diagnostics.push(
                                 Diagnostic::error(
                                     self.file_id,
@@ -430,7 +428,7 @@ impl<'src> Lexer<'src> {
                             self.next_byte();
                         }
                         _ => {
-                            self.next_byte();
+                            self.advance_char_unchecked();
                         }
                     }
                 }
@@ -444,12 +442,11 @@ impl<'src> Lexer<'src> {
         debug_assert!(!self.is_eof());
 
         // Safety: Guaranteed because we aren't at the end of the file
-        let byte = unsafe { self.current_unchecked() };
+        let chr = unsafe { self.current_char_unchecked() };
 
-        match byte {
-            b'\'' | b'"' => {
+        match chr {
+            '\'' | '"' => {
                 self.read_str_literal(true);
-
                 JSX_STRING_LITERAL
             }
             _ => self.lex_token(),
@@ -506,7 +503,9 @@ impl<'src> Lexer<'src> {
     }
 
     /// Get the UTF8 char which starts at the current byte
-    /// Safety: Must be called at the begining of a UTF8 char.
+    ///
+    /// ## Safety
+    /// Must be called at the begining of a UTF8 char.
     fn current_char_unchecked(&self) -> char {
         // This is unreachable for all intents and purposes, but this is just a precautionary measure
         debug_assert!(!self.is_eof());
@@ -540,6 +539,22 @@ impl<'src> Lexer<'src> {
         }
     }
 
+    /// Gets the current char.
+    ///
+    /// ## Returns
+    /// The current char if the lexer isn't at the end of the file.
+    ///
+    /// ## Safety
+    /// Must be called at the begining of a UTF8 char.
+    #[inline]
+    fn current_char(&self) -> Option<char> {
+        if self.is_eof() {
+            None
+        } else {
+            Some(self.current_char_unchecked())
+        }
+    }
+
     /// Asserts that the lexer is currently positioned at `byte`
     #[inline]
     fn assert_byte(&self, byte: u8) {
@@ -562,17 +577,14 @@ impl<'src> Lexer<'src> {
         self.current_byte()
     }
 
-    /// Advances the position by the current char UTF8 length and returns the next char
-    /// Safety: Must be called at the begining of a UTF8 char.
+    /// Advances the position by the current char UTF8 length and returns the next char.
+    ///
+    /// ## Safety
+    /// Must be called at the begining of a UTF8 char.
     #[inline]
-    fn next_char_unchecked(&mut self) -> Option<char> {
+    fn next_char(&mut self) -> Option<char> {
         self.advance_char_unchecked();
-
-        if self.is_eof() {
-            None
-        } else {
-            Some(self.current_char_unchecked())
-        }
+        self.current_char()
     }
 
     /// Get the next byte but only advance the index if there is a next byte.
@@ -597,6 +609,13 @@ impl<'src> Lexer<'src> {
         self.byte_at(1)
     }
 
+    fn peek_char(&self) -> Option<char> {
+        let string = unsafe {
+            std::str::from_utf8_unchecked(self.source.as_bytes().get_unchecked(self.position..))
+        };
+        string.chars().skip(1).next()
+    }
+
     /// Returns the byte at position `self.position + offset` or `None` if it is out of bounds.
     #[inline]
     fn byte_at(&self, offset: usize) -> Option<u8> {
@@ -610,7 +629,9 @@ impl<'src> Lexer<'src> {
     }
 
     /// Advances the current position by the current char UTF8 length
-    /// Safety: Must be called at the begining of a UTF8 char.
+    ///
+    /// ## Safety
+    /// Must be called at the begining of a UTF8 char.
     #[inline]
     fn advance_char_unchecked(&mut self) {
         let c = self.current_char_unchecked();
@@ -773,35 +794,21 @@ impl<'src> Lexer<'src> {
         self.assert_byte(b'\\');
         let cur = self.position;
         self.next_byte(); // eat over the \
-        if let Some(escape) = self.current_byte() {
-            match escape {
+        if let Some(chr) = self.current_char() {
+            match chr {
                 // Single escape character
-                b'\\' | b'n' | b'r' | b't' | b'b' | b'v' | b'f' | b'\'' | b'"' => {
+                '\\' | 'n' | 'r' | 't' | 'b' | 'v' | 'f' | '\'' | '"' => {
                     self.next_byte();
                     true
                 }
-                b'u' if self.peek_byte() == Some(b'{') => {
+                'u' if self.peek_byte() == Some(b'{') => {
                     self.next_byte(); // jump over '{'
                     self.read_codepoint_escape().is_ok()
                 }
-                b'u' => self.read_unicode_escape(true).is_ok(),
-                // hexadecimal escape sequence
-                b'x' => self.validate_hex_escape(),
-                b'\r' => {
-                    if self.next_byte() == Some(b'\n') {
-                        self.advance(1);
-                    }
-
-                    true
-                }
-                b if is_linebreak(b as char) => {
-                    self.next_byte();
-                    true
-                }
+                'u' => self.read_unicode_escape(true).is_ok(),
+                'x' => self.validate_hex_escape(),
                 _ => {
-                    // We use get_unicode_char to account for escaped source characters which are unicode
-                    let chr = self.current_char_unchecked();
-                    self.advance(chr.len_utf8());
+                    self.advance_char_unchecked();
                     true
                 }
             }
@@ -850,28 +857,29 @@ impl<'src> Lexer<'src> {
         (idx, any_escaped)
     }
 
-    // Consume a string literal and advance the lexer, and returning a list of errors that occurred when reading the string
-    // This could include unterminated string and invalid escape sequences
+    /// Consume a string literal and advance the lexer, and returning a list of errors that occurred when reading the string
+    /// This could include unterminated string and invalid escape sequences
+    ///
+    /// ## Safety
+    /// Must be called at the begining of a UTF8 char.
     fn read_str_literal(&mut self, jsx_attribute: bool) -> bool {
-        // Safety: this is only ever called from lex_token, which is guaranteed to be called on a char position
-        let quote = unsafe { self.current_unchecked() };
+        let quote = self.current_char_unchecked();
         let start = self.position;
         let mut valid = true;
 
-        self.next_byte(); // skip quote;
-
-        while let Some(byte) = self.current_byte() {
-            match byte {
-                b'\\' if !jsx_attribute => {
+        self.advance_char_unchecked(); // start quote
+        while let Some(chr) = self.current_char() {
+            match chr {
+                '\\' if !jsx_attribute => {
                     if !self.validate_escape_sequence() {
                         valid = false;
                     }
                 }
-                b if b == quote => {
-                    self.next_byte();
+                chr if chr == quote => {
+                    self.advance_char_unchecked();
                     return valid;
                 }
-                b if is_linebreak(b as char) && !jsx_attribute => {
+                chr if is_linebreak(chr) && !jsx_attribute => {
                     let unterminated =
                         Diagnostic::error(self.file_id, "", "unterminated string literal")
                             .primary(start..self.position, "")
@@ -880,7 +888,7 @@ impl<'src> Lexer<'src> {
                     return false;
                 }
                 _ => {
-                    self.next_byte();
+                    self.advance_char_unchecked();
                 }
             }
         }
@@ -888,7 +896,6 @@ impl<'src> Lexer<'src> {
         let unterminated = Diagnostic::error(self.file_id, "", "unterminated string literal")
             .primary(self.position..self.position, "input ends here")
             .secondary(start..start + 1, "string literal starts here");
-
         self.diagnostics.push(unterminated);
 
         false
@@ -1418,13 +1425,13 @@ impl<'src> Lexer<'src> {
     #[inline]
     fn read_slash(&mut self) -> JsSyntaxKind {
         let start = self.position;
-        match self.peek_byte() {
-            Some(b'*') => {
+        match self.peek_char() {
+            Some('*') => {
                 self.next_byte();
                 let mut has_newline = false;
-                while let Some(b) = self.next_byte() {
-                    match b {
-                        b'*' if self.peek_byte() == Some(b'/') => {
+                while let Some(chr) = self.next_char() {
+                    match chr {
+                        '*' if self.peek_byte() == Some(b'/') => {
                             self.advance(2);
                             if has_newline {
                                 self.after_newline = true;
@@ -1433,12 +1440,9 @@ impl<'src> Lexer<'src> {
                                 return COMMENT;
                             }
                         }
-                        x => {
-                            if is_linebreak(x as char) {
+                        chr => {
+                            if is_linebreak(chr) {
                                 has_newline = true;
-                            } else if UNICODE_WHITESPACE_STARTS.contains(&x) {
-                                let x = self.current_char_unchecked();
-                                has_newline |= is_linebreak(x as char);
                             }
                         }
                     }
@@ -1454,19 +1458,16 @@ impl<'src> Lexer<'src> {
 
                 JsSyntaxKind::COMMENT
             }
-            Some(b'/') => {
+            Some('/') => {
                 self.next_byte();
-                while self.next_byte().is_some() {
-                    let chr = self.current_char_unchecked();
-
+                while let Some(chr) = self.next_char() {
                     if is_linebreak(chr) {
                         return COMMENT;
                     }
-                    self.advance(chr.len_utf8() - 1);
                 }
                 COMMENT
             }
-            Some(b'=') => {
+            Some('=') => {
                 self.advance(2);
                 SLASHEQ
             }
@@ -1495,7 +1496,7 @@ impl<'src> Lexer<'src> {
         let start = self.position;
         let mut in_class = false;
 
-        while let Some(c) = self.next_char_unchecked() {
+        while let Some(c) = self.next_char() {
             match c {
                 '[' => in_class = true,
                 ']' => in_class = false,
@@ -1583,7 +1584,7 @@ impl<'src> Lexer<'src> {
                         return JsSyntaxKind::JS_REGEX_LITERAL;
                     }
                 }
-                _ if is_linebreak(self.current_char_unchecked()) => {
+                _ if is_linebreak(c) => {
                     self.diagnostics.push(
                         Diagnostic::error(self.file_id, "", "unterminated regex literal")
                             .primary(self.position..self.position, "...but the line ends here")
@@ -1591,7 +1592,7 @@ impl<'src> Lexer<'src> {
                     );
 
                     // Undo the read of the new line trivia
-                    self.position -= 1;
+                    self.position -= c.len_utf8();
 
                     return JsSyntaxKind::JS_REGEX_LITERAL;
                 }
@@ -1933,18 +1934,19 @@ impl<'src> Lexer<'src> {
         let mut token: Option<JsSyntaxKind> = None;
         let start = self.position;
 
-        loop {
-            match self.current_byte() {
-                Some(b'`') if self.position == start => {
-                    self.next_byte();
-                    token = Some(BACKTICK);
-                    break;
+        while let Some(chr) = self.current_char() {
+            match chr {
+                '`' => {
+                    if self.position == start {
+                        self.next_byte();
+                        token = Some(BACKTICK);
+                        break;
+                    } else {
+                        token = Some(JsSyntaxKind::TEMPLATE_CHUNK);
+                        break;
+                    }
                 }
-                Some(b'`') => {
-                    token = Some(JsSyntaxKind::TEMPLATE_CHUNK);
-                    break;
-                }
-                Some(b'\\') => {
+                '\\' => {
                     let diags_len = self.diagnostics.len();
                     self.validate_escape_sequence();
 
@@ -1952,20 +1954,21 @@ impl<'src> Lexer<'src> {
                         self.diagnostics.truncate(diags_len);
                     }
                 }
-                Some(b'$') if self.peek_byte() == Some(b'{') && self.position == start => {
-                    self.advance(2);
-                    token = Some(JsSyntaxKind::DOLLAR_CURLY);
-                    break;
+                '$' => {
+                    if let Some('{') = self.peek_char() {
+                        if self.position == start {
+                            self.advance(2);
+                            token = Some(JsSyntaxKind::DOLLAR_CURLY);
+                        } else {
+                            token = Some(JsSyntaxKind::TEMPLATE_CHUNK);
+                        }
+                        break;
+                    } else {
+                        self.advance_char_unchecked();
+                    }
                 }
-                Some(b'$') if self.peek_byte() == Some(b'{') => {
-                    token = Some(JsSyntaxKind::TEMPLATE_CHUNK);
-                    break;
-                }
-                Some(_) => {
-                    let _ = self.next_byte();
-                }
-                None => {
-                    break;
+                _ => {
+                    self.advance_char_unchecked();
                 }
             }
         }
