@@ -173,13 +173,14 @@ pub fn parse_module(text: &str, file_id: usize) -> Parse<JsModule> {
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features.
-#[tracing::instrument(level = "debug", skip_all, fields(file_id = file_id))]
 pub fn parse(text: &str, file_id: usize, source_type: SourceType) -> Parse<JsAnyRoot> {
-    let (events, errors, tokens) = parse_common(text, file_id, source_type);
-    let mut tree_sink = LosslessTreeSink::new(text, &tokens);
-    crate::process(&mut tree_sink, events, errors);
-    let (green, parse_errors) = tree_sink.finish();
-    Parse::new(green, parse_errors)
+    tracing::debug_span!("parse", file_id = file_id).in_scope(move || {
+        let (events, errors, tokens) = parse_common(text, file_id, source_type);
+        let mut tree_sink = LosslessTreeSink::new(text, &tokens);
+        crate::process(&mut tree_sink, events, errors);
+        let (green, parse_errors) = tree_sink.finish();
+        Parse::new(green, parse_errors)
+    })
 }
 
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).

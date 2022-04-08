@@ -1,12 +1,11 @@
 //! Extensions for things which are not easily generated in ast expr nodes
-use crate::numbers::{parse_js_big_int, parse_js_number};
+use crate::numbers::parse_js_number;
 use crate::{
-    JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBigIntLiteralExpression,
-    JsBinaryExpression, JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression,
-    JsObjectExpression, JsStringLiteralExpression, JsSyntaxToken, JsTemplate, JsUnaryExpression, T,
+    JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression,
+    JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression, JsObjectExpression,
+    JsStringLiteralExpression, JsSyntaxToken, JsTemplate, JsUnaryExpression, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
-use num_bigint::BigInt;
 use rome_rowan::{
     AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxText, TextRange, TextSize,
 };
@@ -367,12 +366,6 @@ impl JsObjectExpression {
 impl JsNumberLiteralExpression {
     pub fn as_number(&self) -> Option<f64> {
         parse_js_number(self.value_token().unwrap().text())
-    }
-}
-
-impl JsBigIntLiteralExpression {
-    pub fn as_number(&self) -> Option<BigInt> {
-        parse_js_big_int(self.value_token().ok()?.text())
     }
 }
 

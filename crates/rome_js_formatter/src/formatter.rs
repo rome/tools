@@ -66,24 +66,25 @@ impl Formatter {
     }
 
     /// Formats a CST
-    #[tracing::instrument(level = "debug", skip_all)]
     pub(crate) fn format_root(self, root: &JsSyntaxNode) -> FormatResult<FormatElement> {
-        let element = self.format_syntax_node(root)?;
+        tracing::debug_span!("Formatter::format_root").in_scope(move || {
+            let element = self.format_syntax_node(root)?;
 
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                let printed_tokens = self.printed_tokens.into_inner();
-                for token in root.descendants_tokens() {
-                    assert!(
-                        printed_tokens.contains(&token),
-                        "token was not seen by the formatter: {:?}",
-                        token
-                    );
+            cfg_if::cfg_if! {
+                if #[cfg(debug_assertions)] {
+                    let printed_tokens = self.printed_tokens.into_inner();
+                    for token in root.descendants_tokens() {
+                        assert!(
+                            printed_tokens.contains(&token),
+                            "token was not seen by the formatter: {:?}",
+                            token
+                        );
+                    }
                 }
             }
-        }
 
-        Ok(element)
+            Ok(element)
+        })
     }
 
     fn format_syntax_node(&self, node: &JsSyntaxNode) -> FormatResult<FormatElement> {

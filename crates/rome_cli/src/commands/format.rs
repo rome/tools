@@ -460,66 +460,68 @@ type FormatResult = Result<Option<Message>, Message>;
 /// This function performs the actual formatting: it reads the file from disk
 /// (or map it into memory it), parse and format it; then, it either writes the
 /// result back or compares it with the original content and emit a diagnostic
-#[tracing::instrument(level = "trace", skip_all, fields(path = ?params.path))]
 fn format_file(params: FormatFileParams) -> FormatResult {
-    if !params.features.can_format(&RomePath::new(params.path)) {
-        return Err(Message::from(FormatError {
-            severity: Severity::Error,
-            file_id: params.file_id,
-            code: "IO",
-            message: String::from("unhandled file type"),
-        }));
-    }
-
-    let source_type = SourceType::try_from(params.path).unwrap_or_else(|_| SourceType::js_module());
-
-    let mut file = params.fs.open(params.path).with_file_id(params.file_id)?;
-
-    let mut input = String::new();
-    file.read_to_string(&mut input)
-        .with_file_id(params.file_id)?;
-
-    let root = parse(&input, params.file_id, source_type);
-
-    if root.has_errors() {
-        return Err(if params.ignore_errors {
-            Message::from(FormatError {
-                severity: Severity::Warning,
+    tracing::trace_span!("format_file", path = ?params.path).in_scope(move || {
+        if !params.features.can_format(&RomePath::new(params.path)) {
+            return Err(Message::from(FormatError {
+                severity: Severity::Error,
                 file_id: params.file_id,
                 code: "IO",
-                message: String::from("Skipped file with syntax errors"),
-            })
-        } else {
-            Message::Diagnostics {
-                name: params.path.display().to_string(),
-                content: input,
-                diagnostics: root.into_diagnostics(),
-            }
-        });
-    }
-
-    let result = rome_js_formatter::format(params.options, &root.syntax())
-        .with_file_id_and_code(params.file_id, "Format")?;
-
-    let output = result.as_code().as_bytes();
-
-    match params.mode {
-        FormatMode::Write => {
-            file.set_content(output).with_file_id(params.file_id)?;
+                message: String::from("unhandled file type"),
+            }));
         }
-        FormatMode::Check | FormatMode::Print => {
-            let has_diff = output != input.as_bytes();
-            if has_diff {
-                return Ok(Some(Message::Diff {
-                    file_name: params.path.display().to_string(),
-                    old: input,
-                    new: result.into_code(),
-                }));
+
+        let source_type =
+            SourceType::try_from(params.path).unwrap_or_else(|_| SourceType::js_module());
+
+        let mut file = params.fs.open(params.path).with_file_id(params.file_id)?;
+
+        let mut input = String::new();
+        file.read_to_string(&mut input)
+            .with_file_id(params.file_id)?;
+
+        let root = parse(&input, params.file_id, source_type);
+
+        if root.has_errors() {
+            return Err(if params.ignore_errors {
+                Message::from(FormatError {
+                    severity: Severity::Warning,
+                    file_id: params.file_id,
+                    code: "IO",
+                    message: String::from("Skipped file with syntax errors"),
+                })
+            } else {
+                Message::Diagnostics {
+                    name: params.path.display().to_string(),
+                    content: input,
+                    diagnostics: root.into_diagnostics(),
+                }
+            });
+        }
+
+        let result = rome_js_formatter::format(params.options, &root.syntax())
+            .with_file_id_and_code(params.file_id, "Format")?;
+
+        let output = result.as_code().as_bytes();
+
+        match params.mode {
+            FormatMode::Write => {
+                file.set_content(output).with_file_id(params.file_id)?;
+            }
+            FormatMode::Check | FormatMode::Print => {
+                let has_diff = output != input.as_bytes();
+                if has_diff {
+                    return Ok(Some(Message::Diff {
+                        file_name: params.path.display().to_string(),
+                        old: input,
+                        new: result.into_code(),
+                    }));
+                }
             }
         }
-    }
 
-    Ok(None)
+        Ok(None)
+    })
 }
 
 /// Wrapper type for messages that can be printed during the formatting process

@@ -4,11 +4,11 @@
 //! from any error and produce an ast from any source code. If you don't want to account for
 //! optionals for everything, you can use ...
 
-use std::fmt::{Debug, Formatter};
+use std::error::Error;
+use std::fmt::{self, Debug, Display, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use text_size::TextRange;
-use thiserror::Error;
 
 use crate::syntax::{SyntaxSlot, SyntaxSlots};
 use crate::{Language, SyntaxList, SyntaxNode, SyntaxToken};
@@ -181,7 +181,7 @@ impl<L: Language, N: Debug> Debug for AstSeparatedElement<L, N> {
         match &self.trailing_separator {
             Ok(Some(separator)) => {
                 f.write_str(",\n")?;
-                separator.fmt(f)
+                Debug::fmt(&separator, f)
             }
             Err(_) => f.write_str(",\nmissing separator"),
             Ok(None) => Ok(()),
@@ -327,12 +327,21 @@ impl<L: Language, N: AstNode<L>> FusedIterator for AstSeparatedListNodesIterator
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 
-#[derive(Debug, Eq, PartialEq, Clone, Error)]
+#[derive(Debug, Eq, PartialEq, Clone)]
 pub enum SyntaxError {
     /// Error thrown when a mandatory node is not found
-    #[error("missing required child")]
     MissingRequiredChild,
 }
+
+impl Display for SyntaxError {
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> fmt::Result {
+        match self {
+            SyntaxError::MissingRequiredChild => fmt.write_str("missing required child"),
+        }
+    }
+}
+
+impl Error for SyntaxError {}
 
 pub mod support {
     use super::{AstNode, SyntaxNode, SyntaxToken};
