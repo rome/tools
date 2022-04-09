@@ -67,7 +67,7 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     /// If not all tokens have been consumed or if they have been consumed out of order
     pub fn finish(mut self) {
         self.skip_trivia(false); // Skip the leading trivia up to the current token.
-        assert_eq!(
+        debug_assert_eq!(
             self.offset,
             self.inner.tokens.position(),
             "Rewrite didn't consume all tokens"

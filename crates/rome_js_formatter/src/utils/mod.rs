@@ -266,7 +266,7 @@ mod tests {
 
     #[test]
     fn parse_simple_suppression() {
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment("// rome-ignore parse: explanation1").collect::<Vec<_>>(),
             vec![Suppression {
                 categories: vec![("parse", None)],
@@ -274,7 +274,7 @@ mod tests {
             }],
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment("/** rome-ignore parse: explanation2 */").collect::<Vec<_>>(),
             vec![Suppression {
                 categories: vec![("parse", None)],
@@ -282,7 +282,7 @@ mod tests {
             }],
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment(
                 "/**
                   * rome-ignore parse: explanation3
@@ -295,7 +295,7 @@ mod tests {
             }],
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment(
                 "/**
                   * hello
@@ -312,7 +312,7 @@ mod tests {
 
     #[test]
     fn parse_multiple_suppression() {
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment("// rome-ignore parse(foo) parse(dog): explanation")
                 .collect::<Vec<_>>(),
             vec![Suppression {
@@ -321,7 +321,7 @@ mod tests {
             }],
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment("/** rome-ignore parse(bar) parse(cat): explanation */")
                 .collect::<Vec<_>>(),
             vec![Suppression {
@@ -330,7 +330,7 @@ mod tests {
             }],
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment(
                 "/**
                   * rome-ignore parse(yes) parse(frog): explanation
@@ -343,7 +343,7 @@ mod tests {
             }],
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment(
                 "/**
                   * hello
@@ -360,7 +360,7 @@ mod tests {
 
     #[test]
     fn parse_multiple_suppression_categories() {
-        assert_eq!(
+        debug_assert_eq!(
             parse_suppression_comment("// rome-ignore format lint: explanation")
                 .collect::<Vec<_>>(),
             vec![Suppression {

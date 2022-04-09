@@ -249,15 +249,15 @@ impl DebugParserStateCheckpoint {
     }
 
     fn rewind(self, state: &mut ParserState) {
-        assert_eq!(state.parsing_context, self.parsing_context);
-        assert_eq!(state.label_set.len(), self.label_set_len);
-        assert_eq!(state.strict, self.strict);
-        assert_eq!(state.default_item, self.default_item);
-        assert_eq!(
+        debug_assert_eq!(state.parsing_context, self.parsing_context);
+        debug_assert_eq!(state.label_set.len(), self.label_set_len);
+        debug_assert_eq!(state.strict, self.strict);
+        debug_assert_eq!(state.default_item, self.default_item);
+        debug_assert_eq!(
             state.duplicate_binding_parent,
             self.duplicate_binding_parent
         );
-        assert_eq!(state.name_map.len(), self.name_map_len);
+        debug_assert_eq!(state.name_map.len(), self.name_map_len);
     }
 }
 
@@ -595,7 +595,7 @@ impl ChangeParserState for WithLabel {
 
     #[cfg(debug_assertions)]
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        assert_eq!(state.label_set.len(), value.label_set_len + 1);
+        debug_assert_eq!(state.label_set.len(), value.label_set_len + 1);
         state.label_set.pop();
     }
 }

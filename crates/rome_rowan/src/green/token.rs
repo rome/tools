@@ -230,27 +230,27 @@ mod tests {
             GreenTrivia::whitespace(3),
         );
 
-        assert_eq!("\n\t let \t\t", t.text());
-        assert_eq!(TextSize::from(9), t.text_len());
+        debug_assert_eq!("\n\t let \t\t", t.text());
+        debug_assert_eq!(TextSize::from(9), t.text_len());
 
-        assert_eq!("let", t.text_trimmed());
+        debug_assert_eq!("let", t.text_trimmed());
 
-        assert_eq!("\n\t ", t.text_leading_trivia());
-        assert_eq!(" \t\t", t.text_trailing_trivia());
+        debug_assert_eq!("\n\t ", t.text_leading_trivia());
+        debug_assert_eq!(" \t\t", t.text_trailing_trivia());
 
-        assert_eq!("\n\t let \t\t", format!("{}", t));
+        debug_assert_eq!("\n\t let \t\t", format!("{}", t));
     }
 
     #[test]
     fn empty_text_len() {
-        assert_eq!(TextSize::from(0), GreenTrivia::empty().text_len());
+        debug_assert_eq!(TextSize::from(0), GreenTrivia::empty().text_len());
     }
 
     #[quickcheck]
     fn whitespace_and_comments_text_len(len: u32) {
         let len = TextSize::from(len);
-        assert_eq!(len, GreenTrivia::whitespace(len).text_len());
-        assert_eq!(len, GreenTrivia::single_line_comment(len).text_len());
+        debug_assert_eq!(len, GreenTrivia::whitespace(len).text_len());
+        debug_assert_eq!(len, GreenTrivia::single_line_comment(len).text_len());
     }
 
     #[test]
@@ -259,7 +259,7 @@ mod tests {
             TriviaPiece::whitespace(u32::MAX),
             TriviaPiece::single_line_comment(1),
         ]);
-        assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
+        debug_assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
     }
 
     #[quickcheck]
@@ -271,12 +271,12 @@ mod tests {
         let trivia = GreenTrivia::new(trivia);
 
         let total_len = lengths.iter().fold(0u32, |acc, x| acc.saturating_add(*x));
-        assert_eq!(TextSize::from(total_len), trivia.text_len());
+        debug_assert_eq!(TextSize::from(total_len), trivia.text_len());
     }
 
     #[test]
     fn sizes() {
-        assert_eq!(24, std::mem::size_of::<GreenTokenHead>());
-        assert_eq!(8, std::mem::size_of::<GreenToken>());
+        debug_assert_eq!(24, std::mem::size_of::<GreenTokenHead>());
+        debug_assert_eq!(8, std::mem::size_of::<GreenToken>());
     }
 }

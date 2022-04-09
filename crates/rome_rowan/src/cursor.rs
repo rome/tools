@@ -217,7 +217,7 @@ impl NodeData {
                 ) {
                     sll::AddToSllResult::AlreadyInSll(node) => {
                         if cfg!(debug_assertions) {
-                            assert_eq!((*node).slot(), (*res_ptr).slot());
+                            debug_assert_eq!((*node).slot(), (*res_ptr).slot());
                             match ((*node).green(), (*res_ptr).green()) {
                                 (NodeOrToken::Node(lhs), NodeOrToken::Node(rhs)) => {
                                     assert!(ptr::eq(lhs, rhs))

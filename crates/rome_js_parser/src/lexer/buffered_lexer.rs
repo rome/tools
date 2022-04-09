@@ -293,25 +293,25 @@ mod tests {
         let mut buffered = BufferedLexer::new(lexer);
 
         buffered.next_token(LexContext::default());
-        assert_eq!(buffered.current(), T![let]);
+        debug_assert_eq!(buffered.current(), T![let]);
         assert!(!buffered.has_preceding_line_break());
-        assert_eq!(
+        debug_assert_eq!(
             buffered.current_range(),
             TextRange::at(TextSize::from(0), TextSize::from(3))
         );
 
-        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
-        assert_eq!(buffered.next_token(LexContext::default()), T![ident]);
-        assert_eq!(buffered.next_token(LexContext::default()), NEWLINE);
-        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
-        assert_eq!(buffered.next_token(LexContext::default()), T![=]);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), T![ident]);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), NEWLINE);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), T![=]);
         assert!(buffered.has_preceding_line_break());
-        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
-        assert_eq!(
+        debug_assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        debug_assert_eq!(
             buffered.next_token(LexContext::default()),
             JS_NUMBER_LITERAL
         );
-        assert_eq!(buffered.next_token(LexContext::default()), T![EOF]);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), T![EOF]);
     }
 
     #[test]
@@ -320,9 +320,9 @@ mod tests {
         let mut buffered = BufferedLexer::new(lexer);
 
         buffered.next_token(LexContext::default());
-        assert_eq!(buffered.current(), T![let]);
+        debug_assert_eq!(buffered.current(), T![let]);
         assert!(!buffered.has_preceding_line_break());
-        assert_eq!(
+        debug_assert_eq!(
             buffered.current_range(),
             TextRange::at(TextSize::from(0), TextSize::from(3))
         );
@@ -330,7 +330,7 @@ mod tests {
         {
             let lookahead = buffered.lookahead().map(|l| l.kind).collect::<Vec<_>>();
 
-            assert_eq!(
+            debug_assert_eq!(
                 lookahead,
                 vec![
                     WHITESPACE,
@@ -345,8 +345,8 @@ mod tests {
             );
         }
 
-        assert_eq!(buffered.current(), T![let]);
-        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        debug_assert_eq!(buffered.current(), T![let]);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
 
         {
             let mut lookahead = buffered.lookahead();
@@ -355,23 +355,23 @@ mod tests {
             let nth3 = lookahead.next().unwrap();
             let nth4 = lookahead.next().unwrap();
 
-            assert_eq!(nth1.kind(), T![ident]);
-            assert_eq!(nth2.kind(), NEWLINE);
-            assert_eq!(nth3.kind(), WHITESPACE);
-            assert_eq!(nth4.kind(), T![=]);
+            debug_assert_eq!(nth1.kind(), T![ident]);
+            debug_assert_eq!(nth2.kind(), NEWLINE);
+            debug_assert_eq!(nth3.kind(), WHITESPACE);
+            debug_assert_eq!(nth4.kind(), T![=]);
             assert!(nth4.has_preceding_line_break());
         }
 
-        assert_eq!(buffered.next_token(LexContext::default()), T![ident]);
-        assert_eq!(buffered.next_token(LexContext::default()), NEWLINE);
-        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
-        assert_eq!(buffered.next_token(LexContext::default()), T![=]);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), T![ident]);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), NEWLINE);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), T![=]);
         assert!(buffered.has_preceding_line_break());
-        assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
-        assert_eq!(
+        debug_assert_eq!(buffered.next_token(LexContext::default()), WHITESPACE);
+        debug_assert_eq!(
             buffered.next_token(LexContext::default()),
             JS_NUMBER_LITERAL
         );
-        assert_eq!(buffered.next_token(LexContext::default()), T![EOF]);
+        debug_assert_eq!(buffered.next_token(LexContext::default()), T![EOF]);
     }
 }

@@ -342,7 +342,7 @@ mod tests {
             GreenTrivia::whitespace(1),
         );
 
-        assert_eq!(token_hash(&t1), token_hash(&t2));
+        debug_assert_eq!(token_hash(&t1), token_hash(&t2));
 
         let t3 = GreenToken::new(kind, "let");
         assert_ne!(token_hash(&t1), token_hash(&t3));

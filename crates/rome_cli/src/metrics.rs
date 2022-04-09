@@ -346,10 +346,10 @@ mod tests {
             };
 
             let sample_count = 5;
-            assert_eq!(histogram.len(), sample_count);
+            debug_assert_eq!(histogram.len(), sample_count);
 
             let mean = 3.0 * scale;
-            assert_eq!(histogram.mean(), mean);
+            debug_assert_eq!(histogram.mean(), mean);
 
             let sum = (1..=5).fold(0.0, |sum, i| {
                 let sample = i as f64 * scale;
@@ -357,7 +357,7 @@ mod tests {
             });
 
             let stddev = (sum / sample_count as f64).sqrt();
-            assert_eq!(histogram.stdev(), stddev);
+            debug_assert_eq!(histogram.stdev(), stddev);
 
             let s = scale as u64 - 1;
             let expected_buckets = [
@@ -372,9 +372,9 @@ mod tests {
             for (bucket, expected) in histogram.iter_linear(scale as u64).zip(&expected_buckets) {
                 let (count, value, quantile) = *expected;
 
-                assert_eq!(bucket.count_since_last_iteration(), count);
-                assert_eq!(bucket.value_iterated_to(), value);
-                assert_eq!(bucket.quantile_iterated_to(), quantile);
+                debug_assert_eq!(bucket.count_since_last_iteration(), count);
+                debug_assert_eq!(bucket.value_iterated_to(), value);
+                debug_assert_eq!(bucket.quantile_iterated_to(), quantile);
             }
         }
     }
@@ -405,7 +405,7 @@ mod tests {
         let histograms = entry.into_histograms(key.name());
 
         for (_, histogram) in histograms {
-            assert_eq!(histogram.len(), 1);
+            debug_assert_eq!(histogram.len(), 1);
         }
     }
 }

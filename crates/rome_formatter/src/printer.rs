@@ -666,7 +666,7 @@ mod tests {
             token("\"d\""),
         ]));
 
-        assert_eq!(r#"["a", "b", "c", "d"]"#, result.as_code())
+        debug_assert_eq!(r#"["a", "b", "c", "d"]"#, result.as_code())
     }
 
     #[test]
@@ -685,7 +685,7 @@ mod tests {
             token("a"),
         ];
 
-        assert_eq!(
+        debug_assert_eq!(
             r#"a
   b
     c
@@ -705,7 +705,7 @@ a"#,
             token("\"b\""),
         ]));
 
-        assert_eq!(
+        debug_assert_eq!(
             r#"[
   `This is a string spanning
 two lines`,
@@ -731,7 +731,7 @@ two lines`,
 
         let result = Printer::new(options).print(&program);
 
-        assert_eq!(
+        debug_assert_eq!(
             "function main() {\r\n\tlet x = `This is a multiline\r\nstring`;\r\n}\r\n",
             result.as_code()
         );
@@ -753,7 +753,7 @@ two lines`,
             ]),
         ]));
 
-        assert_eq!(
+        debug_assert_eq!(
             r#"[
   "a",
   "b",
@@ -779,7 +779,7 @@ two lines`,
 
         let result = printer.print(&element);
 
-        assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.as_code());
+        debug_assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.as_code());
     }
 
     fn create_array_element(items: Vec<FormatElement>) -> FormatElement {
@@ -805,7 +805,7 @@ two lines`,
             token("b"),
         ]);
 
-        assert_eq!("a\nb", result.as_code())
+        debug_assert_eq!("a\nb", result.as_code())
     }
 
     #[test]
@@ -818,7 +818,7 @@ two lines`,
             token("b"),
         ]);
 
-        assert_eq!("a\n\nb", result.as_code())
+        debug_assert_eq!("a\n\nb", result.as_code())
     }
 
     #[test]
@@ -832,6 +832,6 @@ two lines`,
             token("b"),
         ]);
 
-        assert_eq!("a\n\nb", result.as_code())
+        debug_assert_eq!("a\n\nb", result.as_code())
     }
 }

@@ -40,7 +40,7 @@ impl<L: Language> SyntaxToken<L> {
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// }).first_token().unwrap();
-    /// assert_eq!("\n\t let \t\t", token.text());
+    /// debug_assert_eq!("\n\t let \t\t", token.text());
     /// ```
     pub fn text(&self) -> &str {
         self.raw.text()
@@ -59,7 +59,7 @@ impl<L: Language> SyntaxToken<L> {
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// }).first_token().unwrap();
-    /// assert_eq!("let", token.text_trimmed());
+    /// debug_assert_eq!("let", token.text_trimmed());
     /// ```
     pub fn text_trimmed(&self) -> &str {
         self.raw.text_trimmed()
@@ -115,7 +115,7 @@ impl<L: Language> SyntaxToken<L> {
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// }).first_token().unwrap();
-    /// assert_eq!("\n\t ", token.leading_trivia().text());
+    /// debug_assert_eq!("\n\t ", token.leading_trivia().text());
     /// ```
     #[inline]
     pub fn leading_trivia(&self) -> SyntaxTrivia<L> {
@@ -135,7 +135,7 @@ impl<L: Language> SyntaxToken<L> {
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// }).first_token().unwrap();
-    /// assert_eq!(" \t\t", token.trailing_trivia().text());
+    /// debug_assert_eq!(" \t\t", token.trailing_trivia().text());
     /// ```
     #[inline]
     pub fn trailing_trivia(&self) -> SyntaxTrivia<L> {

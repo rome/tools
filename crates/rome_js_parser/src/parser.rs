@@ -191,7 +191,7 @@ impl<'s> Parser<'s> {
     /// specified `context.
     #[inline]
     pub fn bump_with_context(&mut self, kind: JsSyntaxKind, context: LexContext) {
-        assert_eq!(
+        debug_assert_eq!(
             kind,
             self.cur(),
             "expected {:?} but at {:?}",
@@ -660,7 +660,7 @@ mod tests {
 
         match expression {
             JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
-                assert_eq!(
+                debug_assert_eq!(
                     parenthesized.expression().unwrap().syntax().text(),
                     "void b"
                 );

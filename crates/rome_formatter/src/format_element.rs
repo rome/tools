@@ -32,7 +32,7 @@ pub fn empty_element() -> FormatElement {
 ///   token("b"),
 /// ]);
 ///
-/// assert_eq!("a,b", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("a,b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 /// See [soft_line_break_or_space] if you want to insert a space between the elements if the enclosing
 /// `Group` fits on a single line.
@@ -52,7 +52,7 @@ pub fn empty_element() -> FormatElement {
 ///  ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).as_code());
+/// debug_assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).as_code());
 /// ```
 #[inline]
 pub const fn soft_line_break() -> FormatElement {
@@ -75,7 +75,7 @@ pub const fn soft_line_break() -> FormatElement {
 ///   hard_line_break()
 /// ]);
 ///
-/// assert_eq!("a,\nb\n", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("a,\nb\n", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub const fn hard_line_break() -> FormatElement {
@@ -97,7 +97,7 @@ pub const fn hard_line_break() -> FormatElement {
 ///   empty_line()
 /// ]);
 ///
-/// assert_eq!("a,\n\nb\n\n", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("a,\n\nb\n\n", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub const fn empty_line() -> FormatElement {
@@ -118,7 +118,7 @@ pub const fn empty_line() -> FormatElement {
 ///   token("b"),
 /// ]);
 ///
-/// assert_eq!("a, b", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("a, b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// The printer breaks the lines if the enclosing `Group` doesn't fit on a single line:
@@ -136,7 +136,7 @@ pub const fn empty_line() -> FormatElement {
 ///  ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).as_code());
+/// debug_assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).as_code());
 /// ```
 #[inline]
 pub const fn soft_line_break_or_space() -> FormatElement {
@@ -156,7 +156,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// use rome_formatter::{token, format_element, FormatOptions};
 /// let elements = token("Hello World");
 ///
-/// assert_eq!("Hello World", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("Hello World", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// Printing a string literal as a literal requires that the string literal is properly escaped and
@@ -168,7 +168,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = token("\"Hello\\tWorld\"");
 ///
-/// assert_eq!(r#""Hello\tWorld""#, format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!(r#""Hello\tWorld""#, format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub const fn token(text: &'static str) -> FormatElement {
@@ -188,7 +188,7 @@ pub const fn token(text: &'static str) -> FormatElement {
 ///
 /// let elements = format_elements![token("a"), line_suffix(token("c")), token("b")];
 ///
-/// assert_eq!("abc", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("abc", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
@@ -207,7 +207,7 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
 ///
 /// let elements = group_elements(format_elements![comment(empty_line()), token("a"), soft_line_break_or_space(), token("b")]);
 ///
-/// assert_eq!("\na b", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("\na b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub fn comment(element: impl Into<FormatElement>) -> FormatElement {
@@ -224,7 +224,7 @@ pub fn comment(element: impl Into<FormatElement>) -> FormatElement {
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = format_elements![token("a"), space_token(), token("b")];
 ///
-/// assert_eq!("a b", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("a b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub const fn space_token() -> FormatElement {
@@ -239,7 +239,7 @@ pub const fn space_token() -> FormatElement {
 /// use rome_formatter::{concat_elements, FormatElement, space_token, token, format_element, FormatOptions};
 /// let expr = concat_elements(vec![token("a"), space_token(), token("+"), space_token(), token("b")]);
 ///
-/// assert_eq!("a + b", format_element(&expr, FormatOptions::default()).as_code())
+/// debug_assert_eq!("a + b", format_element(&expr, FormatOptions::default()).as_code())
 /// ```
 pub fn concat_elements<I>(elements: I) -> FormatElement
 where
@@ -301,7 +301,7 @@ where
 /// let d = from_utf8(&[b'd'; 30]).unwrap();
 /// let expr = fill_elements([token(a), token(b), token(c), token(d)]);
 ///
-/// assert_eq!(format!("{a} {b}\n{c} {d}"), format_element(&expr, FormatOptions::default()).into_code())
+/// debug_assert_eq!(format!("{a} {b}\n{c} {d}"), format_element(&expr, FormatOptions::default()).into_code())
 /// ```
 pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> FormatElement {
     let mut list: Vec<_> = elements.into_iter().collect();
@@ -324,7 +324,7 @@ pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> Forma
 /// let separator = concat_elements(vec![token(","), space_token()]);
 /// let elements = join_elements(separator, vec![token("1"), token("2"), token("3"), token("4")]);
 ///
-/// assert_eq!("1, 2, 3, 4", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("1, 2, 3, 4", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub fn join_elements<TSep, I>(separator: TSep, elements: I) -> FormatElement
@@ -362,7 +362,7 @@ where
 ///   token("}"),
 /// ]);
 ///
-/// assert_eq!(
+/// debug_assert_eq!(
 ///   "switch {\n\tdefault:\n\t\tbreak;\n}",
 ///   format_element(&block, FormatOptions::default()).as_code()
 /// );
@@ -400,7 +400,7 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   token("}"),
 /// ]);
 ///
-/// assert_eq!(
+/// debug_assert_eq!(
 ///   "{\n\tlet a = 10;\n\tlet c = a + 5;\n}",
 ///   format_element(&block, FormatOptions::default()).as_code()
 /// );
@@ -445,7 +445,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///  ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("[\n\t'First string',\n\t'second string',\n]", format_element(&elements, options).as_code());
+/// debug_assert_eq!("[\n\t'First string',\n\t'second string',\n]", format_element(&elements, options).as_code());
 /// ```
 ///
 /// Doesn't change the formatting if the enclosing `Group` fits on a single line
@@ -462,7 +462,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   token("]"),
 /// ]);
 ///
-/// assert_eq!(
+/// debug_assert_eq!(
 ///   "[5, 10]",
 ///   format_element(&elements, FormatOptions::default()).as_code()
 /// );
@@ -514,7 +514,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///  ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("name =\n\tfirstName + lastName", format_element(&elements, options).as_code());
+/// debug_assert_eq!("name =\n\tfirstName + lastName", format_element(&elements, options).as_code());
 /// ```
 ///
 /// Only adds a space if the enclosing `Group` fits on a single line
@@ -530,7 +530,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   ]),
 /// ]);
 ///
-/// assert_eq!(
+/// debug_assert_eq!(
 ///   "a = 10",
 ///   format_element(&elements, FormatOptions::default()).as_code()
 /// );
@@ -578,7 +578,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 ///   token("]"),
 /// ]);
 ///
-/// assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// The printer breaks the `Group` over multiple lines if its content doesn't fit on a single line
@@ -602,7 +602,7 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 ///   ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]", format_element(&elements, options).as_code());
+/// debug_assert_eq!("[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]", format_element(&elements, options).as_code());
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
@@ -637,7 +637,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   if_group_fits_on_single_line(token("printed")),
 /// ]));
 ///
-/// assert_eq!("\nprinted", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("\nprinted", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
@@ -676,7 +676,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///   ]),
 ///   token("]"),
 /// ]);
-/// assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// Prints the trailing comma for the last array element if the `Group` doesn't fit on a single line
@@ -697,7 +697,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 /// ]);
 ///
 /// let options = FormatOptions { line_width: LineWidth::try_from(20).unwrap(), ..FormatOptions::default() };
-/// assert_eq!(
+/// debug_assert_eq!(
 ///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3,\n]",
 ///   format_element(&elements, options).as_code()
 /// );
@@ -739,7 +739,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   ]),
 ///   token("]"),
 /// ]);
-/// assert_eq!("[1, 2, 3,]", format_element(&elements, FormatOptions::default()).as_code());
+/// debug_assert_eq!("[1, 2, 3,]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// Omits the trailing comma for the last array element if the `Group` doesn't fit on a single line
@@ -760,7 +760,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ]);
 ///
 /// let options = FormatOptions { line_width: LineWidth::try_from(20).unwrap(), ..FormatOptions::default() };
-/// assert_eq!(
+/// debug_assert_eq!(
 ///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3\n]",
 ///   format_element(&elements, options).as_code()
 /// );
@@ -1394,7 +1394,7 @@ mod tests {
     fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {
         let concatenated = concat_elements(vec![token("a"), space_token(), token("b")]);
 
-        assert_eq!(
+        debug_assert_eq!(
             concatenated,
             FormatElement::List(List::new(vec![token("a"), space_token(), token("b")]))
         );
@@ -1405,14 +1405,14 @@ mod tests {
     ) {
         let concatenated = concat_elements(vec![token("a")]);
 
-        assert_eq!(concatenated, token("a"));
+        debug_assert_eq!(concatenated, token("a"));
     }
 
     #[test]
     fn concat_elements_the_empty_element_if_the_passed_vector_is_empty() {
         let concatenated = concat_elements(vec![]);
 
-        assert_eq!(concatenated, empty_element());
+        debug_assert_eq!(concatenated, empty_element());
     }
 
     #[test]
@@ -1426,7 +1426,7 @@ mod tests {
             token("b"),
         ]);
 
-        assert_eq!(
+        debug_assert_eq!(
             concatenated,
             FormatElement::List(List::new(vec![
                 token("a"),
@@ -1444,7 +1444,7 @@ mod tests {
     fn join_elements_inserts_the_separator_between_elements() {
         let joined = join_elements(space_token(), vec![token("a"), token("b"), token("c")]);
 
-        assert_eq!(
+        debug_assert_eq!(
             joined,
             concat_elements(vec![
                 token("a"),
@@ -1460,14 +1460,14 @@ mod tests {
     fn join_returns_the_content_element_if_the_content_contains_a_single_element() {
         let joined = join_elements(space_token(), vec![token("a")]);
 
-        assert_eq!(joined, token("a"));
+        debug_assert_eq!(joined, token("a"));
     }
 
     #[test]
     fn join_returns_the_empty_element_if_the_passed_vec_is_empty() {
         let joined = join_elements(space_token(), vec![]);
 
-        assert_eq!(joined, empty_element());
+        debug_assert_eq!(joined, empty_element());
     }
 
     #[test]
@@ -1482,7 +1482,7 @@ mod tests {
             ],
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             joined,
             FormatElement::List(List::new(vec![
                 token("a"),
@@ -1498,10 +1498,10 @@ mod tests {
 
     #[test]
     fn test_normalize_newlines() {
-        assert_eq!(normalize_newlines("a\nb", LINE_TERMINATORS), "a\nb");
-        assert_eq!(normalize_newlines("a\rb", LINE_TERMINATORS), "a\nb");
-        assert_eq!(normalize_newlines("a\r\nb", LINE_TERMINATORS), "a\nb");
-        assert_eq!(normalize_newlines("a\u{2028}b", LINE_TERMINATORS), "a\nb");
-        assert_eq!(normalize_newlines("a\u{2029}b", LINE_TERMINATORS), "a\nb");
+        debug_assert_eq!(normalize_newlines("a\nb", LINE_TERMINATORS), "a\nb");
+        debug_assert_eq!(normalize_newlines("a\rb", LINE_TERMINATORS), "a\nb");
+        debug_assert_eq!(normalize_newlines("a\r\nb", LINE_TERMINATORS), "a\nb");
+        debug_assert_eq!(normalize_newlines("a\u{2028}b", LINE_TERMINATORS), "a\nb");
+        debug_assert_eq!(normalize_newlines("a\u{2029}b", LINE_TERMINATORS), "a\nb");
     }
 }

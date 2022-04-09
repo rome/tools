@@ -27,7 +27,7 @@ pub trait FormatOptionalTokenAndNode {
     /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
     /// let result = token.format_or_empty(&formatter);
     ///
-    /// assert_eq!(Ok(empty_element()), result)
+    /// debug_assert_eq!(Ok(empty_element()), result)
     fn format_or_empty(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         self.format_or(formatter, empty_element)
     }
@@ -61,8 +61,8 @@ pub trait FormatOptionalTokenAndNode {
     ///     format_elements![space_token(), token]
     /// });
     ///
-    /// assert_eq!(Ok(empty_element()), empty_result);
-    /// assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
+    /// debug_assert_eq!(Ok(empty_element()), empty_result);
+    /// debug_assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
     fn format_with_or_empty<With, WithResult>(
         &self,
         formatter: &Formatter,
@@ -90,7 +90,7 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// let result = empty_token.format_or(&formatter, || token(" other result"));
     ///
-    /// assert_eq!(Ok(token(" other result")), result);
+    /// debug_assert_eq!(Ok(token(" other result")), result);
     fn format_or<Or, OrResult>(&self, formatter: &Formatter, op: Or) -> FormatResult<FormatElement>
     where
         Or: FnOnce() -> OrResult,
@@ -133,8 +133,8 @@ pub trait FormatOptionalTokenAndNode {
     ///     format_elements![space_token(), token]
     /// }, || empty_element());
     ///
-    /// assert_eq!(Ok(token("empty")), empty_result);
-    /// assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
+    /// debug_assert_eq!(Ok(token("empty")), empty_result);
+    /// debug_assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
     fn format_with_or<With, Or, WithResult, OrResult>(
         &self,
         formatter: &Formatter,
@@ -172,7 +172,7 @@ pub trait FormatTokenAndNode {
     /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
     /// let result = Ok(syntax_token).format(&formatter);
     ///
-    /// assert_eq!(Ok(token("'abc'")), result)
+    /// debug_assert_eq!(Ok(token("'abc'")), result)
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         self.format_with(formatter, |token| token)
     }
@@ -204,7 +204,7 @@ pub trait FormatTokenAndNode {
     ///     format_elements![token.clone(), space_token(), token.clone()]
     /// });
     ///
-    /// assert_eq!(Ok(format_elements![token("'abc'"), space_token(), token("'abc'")]), result)
+    /// debug_assert_eq!(Ok(format_elements![token("'abc'"), space_token(), token("'abc'")]), result)
     fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,

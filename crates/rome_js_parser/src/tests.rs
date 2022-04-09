@@ -39,12 +39,12 @@ fn parser_missing_smoke_test() {
     let list = arg_list.syntax().element_in_slot(1);
     let closing = arg_list.syntax().element_in_slot(2);
 
-    assert_eq!(opening.map(|o| o.to_string()), Some(String::from("(")));
-    assert_eq!(
+    debug_assert_eq!(opening.map(|o| o.to_string()), Some(String::from("(")));
+    debug_assert_eq!(
         list.map(|l| l.kind()),
         Some(JsSyntaxKind::JS_CALL_ARGUMENT_LIST)
     );
-    assert_eq!(closing, None);
+    debug_assert_eq!(closing, None);
 }
 
 fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
@@ -60,7 +60,7 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
 
         let parse = parse(text, 0, source_type);
 
-        assert_eq!(
+        debug_assert_eq!(
             parse.syntax().to_string(),
             text,
             "Original source and re-printed tree differ\nParsed Tree: {:#?}",
@@ -104,7 +104,7 @@ fn run_and_expect_no_errors(path: &str, _: &str, _: &str, _: &str) {
     let actual = format!("{}\n\n{:#?}", ast, parse.syntax());
 
     let path = path.with_extension("rast");
-    expect_file![path].assert_eq(&actual)
+    expect_file![path].debug_assert_eq(&actual)
 }
 
 #[cfg(test)]
@@ -134,7 +134,7 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
     actual.push_str(&format!("--\n{}", text));
 
     let path = path.with_extension("rast");
-    expect_file![path].assert_eq(&actual)
+    expect_file![path].debug_assert_eq(&actual)
 }
 
 mod parser {
@@ -205,7 +205,7 @@ pub fn test_trivia_attached_to_tokens() {
     // second let leading trivia asserts
     let second_let = tokens.find(is_let).unwrap();
     let pieces: Vec<_> = second_let.leading_trivia().pieces().collect();
-    assert_eq!(4, pieces.len());
+    debug_assert_eq!(4, pieces.len());
     assert!(matches!(pieces.get(0).map(|x| x.text()), Some("\n")));
     assert!(matches!(pieces.get(1).map(|x| x.text()), Some(" ")));
     assert!(matches!(pieces.get(2).map(|x| x.text()), Some("/*hey*/")));
@@ -213,7 +213,7 @@ pub fn test_trivia_attached_to_tokens() {
 
     // second let trailing trivia asserts
     let pieces: Vec<_> = second_let.trailing_trivia().pieces().collect();
-    assert_eq!(1, pieces.len());
+    debug_assert_eq!(1, pieces.len());
     assert!(matches!(pieces.get(0).map(|x| x.text()), Some(" \t ")));
 }
 
@@ -223,13 +223,13 @@ pub fn jsroot_display_text_and_trimmed() {
     let root = parse_module(code, 0);
     let syntax = root.syntax();
 
-    assert_eq!(format!("{}", syntax), code);
+    debug_assert_eq!(format!("{}", syntax), code);
 
     let syntax_text = syntax.text();
-    assert_eq!(format!("{}", syntax_text), code);
+    debug_assert_eq!(format!("{}", syntax_text), code);
 
     let syntax_text = syntax.text_trimmed();
-    assert_eq!(format!("{}", syntax_text), code.trim());
+    debug_assert_eq!(format!("{}", syntax_text), code.trim());
 }
 
 #[test]
@@ -241,24 +241,24 @@ pub fn jsroot_ranges() {
 
     let first_let = syntax.first_token().unwrap();
     let range = first_let.text_range();
-    assert_eq!(0usize, range.start().into());
-    assert_eq!(5usize, range.end().into());
+    debug_assert_eq!(0usize, range.start().into());
+    debug_assert_eq!(5usize, range.end().into());
 
     let range = first_let.text_trimmed_range();
-    assert_eq!(1usize, range.start().into());
-    assert_eq!(4usize, range.end().into());
+    debug_assert_eq!(1usize, range.start().into());
+    debug_assert_eq!(4usize, range.end().into());
 
     let eq = syntax
         .descendants_tokens()
         .find(|x| x.text_trimmed() == "=")
         .unwrap();
     let range = eq.text_range();
-    assert_eq!(7usize, range.start().into());
-    assert_eq!(9usize, range.end().into());
+    debug_assert_eq!(7usize, range.start().into());
+    debug_assert_eq!(9usize, range.end().into());
 
     let range = eq.text_trimmed_range();
-    assert_eq!(7usize, range.start().into());
-    assert_eq!(8usize, range.end().into());
+    debug_assert_eq!(7usize, range.start().into());
+    debug_assert_eq!(8usize, range.end().into());
 }
 
 #[test]
@@ -274,12 +274,12 @@ pub fn node_range_must_be_correct() {
         .unwrap();
 
     let range = var_decl.text_range();
-    assert_eq!(18usize, range.start().into());
-    assert_eq!(29usize, range.end().into());
+    debug_assert_eq!(18usize, range.start().into());
+    debug_assert_eq!(29usize, range.end().into());
 
     let range = var_decl.text_trimmed_range();
-    assert_eq!(18usize, range.start().into());
-    assert_eq!(28usize, range.end().into());
+    debug_assert_eq!(18usize, range.start().into());
+    debug_assert_eq!(28usize, range.end().into());
 }
 
 #[test]
@@ -293,8 +293,8 @@ pub fn last_trivia_must_be_appended_to_eof() {
     let start = range.start();
     let end = range.end();
 
-    assert_eq!(TextSize::from(0), start);
-    assert_eq!(TextSize::from(31), end);
+    debug_assert_eq!(TextSize::from(0), start);
+    debug_assert_eq!(TextSize::from(31), end);
 }
 
 #[test]
@@ -308,8 +308,8 @@ pub fn just_trivia_must_be_appended_to_eof() {
     let start = range.start();
     let end = range.end();
 
-    assert_eq!(TextSize::from(0), start);
-    assert_eq!(TextSize::from(34), end);
+    debug_assert_eq!(TextSize::from(0), start);
+    debug_assert_eq!(TextSize::from(34), end);
 }
 
 #[test]

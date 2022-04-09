@@ -59,7 +59,7 @@ impl<T> Parse<T> {
     /// // The first stmt in the root syntax node (Script) is the if statement.
     /// let if_stmt = parse.tree().statements().first().unwrap();
     ///
-    /// assert_eq!(if_stmt.syntax().kind(), JsSyntaxKind::JS_IF_STATEMENT);
+    /// debug_assert_eq!(if_stmt.syntax().kind(), JsSyntaxKind::JS_IF_STATEMENT);
     /// ```
     pub fn syntax(&self) -> JsSyntaxNode {
         self.root.clone()
@@ -148,12 +148,12 @@ pub fn parse_common(
 /// let prop = dbg!(typed_ast_node.member()).unwrap();
 ///
 /// // You can then go back to an untyped SyntaxNode and get its range, text, parents, children, etc.
-/// assert_eq!(prop.syntax().text(), "2");
+/// debug_assert_eq!(prop.syntax().text(), "2");
 ///
 /// // Util has a function for yielding all tokens of a node.
 /// let tokens = untyped_expr_node.descendants_tokens().map(|token| token.text_trimmed().to_string()).collect::<Vec<_>>();
 ///
-/// assert_eq!(&tokens, &vec!["foo", ".", "bar", "[", "2", "]"]);
+/// debug_assert_eq!(&tokens, &vec!["foo", ".", "bar", "[", "2", "]"]);
 /// ```
 pub fn parse_script(text: &str, file_id: usize) -> Parse<JsScript> {
     parse(

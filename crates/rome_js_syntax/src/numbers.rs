@@ -43,7 +43,7 @@ mod tests {
 
         let node = tree_builder.finish();
         let number_literal = JsNumberLiteralExpression::cast(node).unwrap();
-        assert_eq!(number_literal.as_number(), Some(value))
+        debug_assert_eq!(number_literal.as_number(), Some(value))
     }
 
     #[test]

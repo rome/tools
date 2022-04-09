@@ -13,12 +13,12 @@ fn test_macro() {
     {
         Markup(markup) => {
             let node_0 = &markup[0];
-            assert_eq!(&node_0.elements, &[MarkupElement::Info, MarkupElement::Emphasis]);
-            // assert_eq!(node_0.content.to_string(), category.to_string());
+            debug_assert_eq!(&node_0.elements, &[MarkupElement::Info, MarkupElement::Emphasis]);
+            // debug_assert_eq!(node_0.content.to_string(), category.to_string());
 
             let node_1 = &markup[1];
-            assert_eq!(&node_1.elements, &[MarkupElement::Info]);
-            // assert_eq!(node_1.content.to_string(), " Commands".to_string());
+            debug_assert_eq!(&node_1.elements, &[MarkupElement::Info]);
+            // debug_assert_eq!(node_1.content.to_string(), " Commands".to_string());
         }
     }
 }

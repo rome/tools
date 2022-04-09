@@ -135,7 +135,7 @@ mod tests {
         file.read_to_string(&mut buffer)
             .expect("the file should be read without error");
 
-        assert_eq!(buffer, content_1);
+        debug_assert_eq!(buffer, content_1);
 
         file.set_content(content_2.as_bytes())
             .expect("the file should be written without error");
@@ -144,7 +144,7 @@ mod tests {
         file.read_to_string(&mut buffer)
             .expect("the file should be read without error");
 
-        assert_eq!(buffer, content_2);
+        debug_assert_eq!(buffer, content_2);
     }
 
     #[test]
@@ -156,7 +156,7 @@ mod tests {
         match result {
             Ok(_) => panic!("opening a non-existing file should return an error"),
             Err(error) => {
-                assert_eq!(error.kind(), io::ErrorKind::NotFound);
+                debug_assert_eq!(error.kind(), io::ErrorKind::NotFound);
             }
         }
     }
@@ -207,7 +207,7 @@ mod tests {
         let mut visited = Vec::new();
         swap(&mut visited, ctx.visited.get_mut());
 
-        assert_eq!(visited.len(), 2);
+        debug_assert_eq!(visited.len(), 2);
         assert!(visited.contains(&PathBuf::from("dir1/file1")));
         assert!(visited.contains(&PathBuf::from("dir1/file2")));
 
@@ -219,7 +219,7 @@ mod tests {
         let mut visited = Vec::new();
         swap(&mut visited, ctx.visited.get_mut());
 
-        assert_eq!(visited.len(), 1);
+        debug_assert_eq!(visited.len(), 1);
         assert!(visited.contains(&PathBuf::from("dir2/file2")));
     }
 }

@@ -33,13 +33,13 @@
 ///   space_token(),
 ///   token("}")
 /// ];
-/// assert_eq!(r#"foo: { bar: lorem }"#, format_element(&element, FormatOptions::default()).as_code());
+/// debug_assert_eq!(r#"foo: { bar: lorem }"#, format_element(&element, FormatOptions::default()).as_code());
 /// ```
 /// Or you can also create single element:
 /// ```
 /// use rome_formatter::{format_elements, format_element, FormatOptions, token};
 /// let element = format_elements![token("single")];
-/// assert_eq!(r#"single"#, format_element(&element, FormatOptions::default()).as_code());
+/// debug_assert_eq!(r#"single"#, format_element(&element, FormatOptions::default()).as_code());
 /// ```
 #[macro_export]
 macro_rules! format_elements {

@@ -114,12 +114,12 @@ mod tests {
         let list = builder.finish().into_list();
 
         assert!(list.is_empty());
-        assert_eq!(list.len(), 0);
+        debug_assert_eq!(list.len(), 0);
 
-        assert_eq!(list.first(), None);
-        assert_eq!(list.last(), None);
+        debug_assert_eq!(list.first(), None);
+        debug_assert_eq!(list.last(), None);
 
-        assert_eq!(list.iter().collect::<Vec<_>>(), Vec::default());
+        debug_assert_eq!(list.iter().collect::<Vec<_>>(), Vec::default());
     }
 
     #[test]
@@ -142,22 +142,22 @@ mod tests {
         let list = node.into_list();
 
         assert!(!list.is_empty());
-        assert_eq!(list.len(), 2);
+        debug_assert_eq!(list.len(), 2);
 
         let first = list.first().and_then(|e| e.into_node()).unwrap();
-        assert_eq!(first.kind(), RawLanguageKind::LITERAL_EXPRESSION);
-        assert_eq!(first.text(), "1");
+        debug_assert_eq!(first.kind(), RawLanguageKind::LITERAL_EXPRESSION);
+        debug_assert_eq!(first.text(), "1");
 
         let last = list.last().and_then(|e| e.into_node()).unwrap();
-        assert_eq!(last.kind(), RawLanguageKind::LITERAL_EXPRESSION);
-        assert_eq!(last.text(), "2");
+        debug_assert_eq!(last.kind(), RawLanguageKind::LITERAL_EXPRESSION);
+        debug_assert_eq!(last.text(), "2");
 
         let node_texts: Vec<_> = list
             .iter()
             .map(|e| e.into_node().map(|n| n.text().to_string()))
             .collect();
 
-        assert_eq!(
+        debug_assert_eq!(
             node_texts,
             vec![Some(String::from("1")), Some(String::from("2"))]
         )
@@ -185,19 +185,19 @@ mod tests {
         let list = node.into_list();
 
         assert!(!list.is_empty());
-        assert_eq!(list.len(), 3);
+        debug_assert_eq!(list.len(), 3);
 
         let first = list.first().and_then(|e| e.into_node()).unwrap();
-        assert_eq!(first.kind(), RawLanguageKind::LITERAL_EXPRESSION);
-        assert_eq!(first.text(), "1");
+        debug_assert_eq!(first.kind(), RawLanguageKind::LITERAL_EXPRESSION);
+        debug_assert_eq!(first.text(), "1");
 
         let last = list.last().and_then(|e| e.into_node()).unwrap();
-        assert_eq!(last.kind(), RawLanguageKind::LITERAL_EXPRESSION);
-        assert_eq!(last.text(), "2");
+        debug_assert_eq!(last.kind(), RawLanguageKind::LITERAL_EXPRESSION);
+        debug_assert_eq!(last.text(), "2");
 
         let kinds: Vec<_> = list.iter().map(|e| e.kind()).collect();
 
-        assert_eq!(
+        debug_assert_eq!(
             kinds,
             vec![
                 Some(RawLanguageKind::LITERAL_EXPRESSION),
@@ -236,35 +236,35 @@ mod tests {
         let root = builder.finish();
 
         let first = root.children().next().unwrap();
-        assert_eq!(first.text().to_string(), "a");
-        assert_eq!(
+        debug_assert_eq!(first.text().to_string(), "a");
+        debug_assert_eq!(
             first.next_sibling().map(|e| e.text().to_string()),
             Some(String::from("b"))
         );
 
         let second = root.children().nth(1).unwrap();
-        assert_eq!(second.text().to_string(), "b");
+        debug_assert_eq!(second.text().to_string(), "b");
 
         // Skips the missing element
-        assert_eq!(
+        debug_assert_eq!(
             second.next_sibling().map(|e| e.text().to_string()),
             Some(String::from("c"))
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             second.prev_sibling().map(|e| e.text().to_string()),
             Some(String::from("a"))
         );
 
         let last = root.children().last().unwrap();
-        assert_eq!(last.text(), "c");
-        assert_eq!(last.next_sibling(), None);
-        assert_eq!(
+        debug_assert_eq!(last.text(), "c");
+        debug_assert_eq!(last.next_sibling(), None);
+        debug_assert_eq!(
             last.prev_sibling().map(|e| e.text().to_string()),
             Some(String::from("b"))
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             first
                 .siblings(Direction::Next)
                 .map(|s| s.text().to_string())
@@ -272,7 +272,7 @@ mod tests {
             vec!["a", "b", "c"]
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             last.siblings(Direction::Prev)
                 .map(|s| s.text().to_string())
                 .collect::<Vec<_>>(),
@@ -307,9 +307,9 @@ mod tests {
             .and_then(|e| e.into_token())
             .unwrap();
 
-        assert_eq!(first_semicolon.text(), ";");
+        debug_assert_eq!(first_semicolon.text(), ";");
 
-        assert_eq!(
+        debug_assert_eq!(
             first_semicolon
                 .siblings_with_tokens(Direction::Next)
                 .map(|e| e.to_string())
@@ -317,11 +317,11 @@ mod tests {
             vec!["x", ";", ")"]
         );
 
-        assert_eq!(
+        debug_assert_eq!(
             first_semicolon.next_sibling_or_token(),
             first_semicolon.siblings_with_tokens(Direction::Next).next()
         );
-        assert_eq!(
+        debug_assert_eq!(
             first_semicolon.prev_sibling_or_token(),
             first_semicolon.siblings_with_tokens(Direction::Prev).next()
         );
@@ -342,18 +342,18 @@ mod tests {
         // // Node texts
 
         let node = builder.finish();
-        assert_eq!("\n\t let \t\t", node.text());
-        assert_eq!("let", node.text_trimmed());
-        assert_eq!("\n\t ", node.first_leading_trivia().unwrap().text());
-        assert_eq!(" \t\t", node.last_trailing_trivia().unwrap().text());
+        debug_assert_eq!("\n\t let \t\t", node.text());
+        debug_assert_eq!("let", node.text_trimmed());
+        debug_assert_eq!("\n\t ", node.first_leading_trivia().unwrap().text());
+        debug_assert_eq!(" \t\t", node.last_trailing_trivia().unwrap().text());
 
         // Token texts
 
         let token = node.first_token().unwrap();
-        assert_eq!("\n\t let \t\t", token.text());
-        assert_eq!("let", token.text_trimmed());
-        assert_eq!("\n\t ", token.leading_trivia().text());
-        assert_eq!(" \t\t", token.trailing_trivia().text());
+        debug_assert_eq!("\n\t let \t\t", token.text());
+        debug_assert_eq!("let", token.text_trimmed());
+        debug_assert_eq!("\n\t ", token.leading_trivia().text());
+        debug_assert_eq!(" \t\t", token.trailing_trivia().text());
     }
 
     #[test]
@@ -391,16 +391,16 @@ mod tests {
 
         // Node Ranges
 
-        assert_eq!(TextRange::new(0.into(), 18.into()), node.text_range());
-        assert_eq!(
+        debug_assert_eq!(TextRange::new(0.into(), 18.into()), node.text_range());
+        debug_assert_eq!(
             TextRange::new(3.into(), 16.into()),
             node.text_trimmed_range()
         );
-        assert_eq!(
+        debug_assert_eq!(
             TextRange::new(0.into(), 3.into()),
             node.first_leading_trivia().unwrap().text_range()
         );
-        assert_eq!(
+        debug_assert_eq!(
             TextRange::new(16.into(), 18.into()),
             node.last_trailing_trivia().unwrap().text_range()
         );
@@ -412,16 +412,16 @@ mod tests {
             .find(|x| x.kind() == RawLanguageKind::EQUAL_TOKEN)
             .unwrap();
 
-        assert_eq!(TextRange::new(11.into(), 14.into()), eq_token.text_range());
-        assert_eq!(
+        debug_assert_eq!(TextRange::new(11.into(), 14.into()), eq_token.text_range());
+        debug_assert_eq!(
             TextRange::new(12.into(), 13.into()),
             eq_token.text_trimmed_range()
         );
-        assert_eq!(
+        debug_assert_eq!(
             TextRange::new(11.into(), 12.into()),
             eq_token.leading_trivia().unwrap().text_range()
         );
-        assert_eq!(
+        debug_assert_eq!(
             TextRange::new(13.into(), 14.into()),
             eq_token.trailing_trivia().unwrap().text_range()
         );
@@ -429,16 +429,16 @@ mod tests {
         // as Token
 
         let eq_token = eq_token.as_token().unwrap();
-        assert_eq!(TextRange::new(11.into(), 14.into()), eq_token.text_range());
-        assert_eq!(
+        debug_assert_eq!(TextRange::new(11.into(), 14.into()), eq_token.text_range());
+        debug_assert_eq!(
             TextRange::new(12.into(), 13.into()),
             eq_token.text_trimmed_range()
         );
-        assert_eq!(
+        debug_assert_eq!(
             TextRange::new(11.into(), 12.into()),
             eq_token.leading_trivia().text_range()
         );
-        assert_eq!(
+        debug_assert_eq!(
             TextRange::new(13.into(), 14.into()),
             eq_token.trailing_trivia().text_range()
         );
@@ -460,16 +460,16 @@ mod tests {
         });
 
         let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
-        assert_eq!(2, pieces.len());
+        debug_assert_eq!(2, pieces.len());
 
-        assert_eq!("\n\t ", pieces[0].text());
-        assert_eq!(TextSize::from(3), pieces[0].text_len());
-        assert_eq!(TextRange::new(0.into(), 3.into()), pieces[0].text_range());
+        debug_assert_eq!("\n\t ", pieces[0].text());
+        debug_assert_eq!(TextSize::from(3), pieces[0].text_len());
+        debug_assert_eq!(TextRange::new(0.into(), 3.into()), pieces[0].text_range());
         assert!(pieces[0].is_whitespace());
 
-        assert_eq!("/**/", pieces[1].text());
-        assert_eq!(TextSize::from(4), pieces[1].text_len());
-        assert_eq!(TextRange::new(3.into(), 7.into()), pieces[1].text_range());
+        debug_assert_eq!("/**/", pieces[1].text());
+        debug_assert_eq!(TextSize::from(4), pieces[1].text_len());
+        debug_assert_eq!(TextRange::new(3.into(), 7.into()), pieces[1].text_range());
         assert!(pieces[1].is_comments());
 
         let pieces_rev: Vec<_> = node
@@ -479,8 +479,8 @@ mod tests {
             .rev()
             .collect();
 
-        assert_eq!(2, pieces_rev.len());
-        assert_eq!("/**/", pieces_rev[0].text());
-        assert_eq!("\n\t ", pieces_rev[1].text());
+        debug_assert_eq!(2, pieces_rev.len());
+        debug_assert_eq!("/**/", pieces_rev[0].text());
+        debug_assert_eq!("\n\t ", pieces_rev[1].text());
     }
 }

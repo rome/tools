@@ -352,11 +352,11 @@ while(
         );
 
         let result = result.expect("range formatting failed");
-        assert_eq!(
+        debug_assert_eq!(
             result.range(),
             Some(TextRange::new(range_start + TextSize::from(2), range_end))
         );
-        assert_eq!(
+        debug_assert_eq!(
             result.as_code(),
             "let array = [1, 2];\n    }\n\n    function func2() {\n        "
         );
@@ -384,10 +384,10 @@ function() {
         );
 
         let result = result.expect("range formatting failed");
-        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+        debug_assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
         // As a result of the indentation normalization, the number of spaces within
         // the object expression is currently rounded down from an odd indentation level
-        assert_eq!(
+        debug_assert_eq!(
             result.as_code(),
             "const veryLongIdentifierToCauseALineBreak = {\n            veryLongKeyToCauseALineBreak: \"veryLongValueToCauseALineBreak\",\n        "
         );
@@ -421,7 +421,7 @@ mod test {
             file_name: "quick_test",
             format_options: FormatOptions::default(),
         });
-        assert_eq!(
+        debug_assert_eq!(
             result.as_code(),
             r#"let g = [[], [0, 1], [0, 1]];
 "#

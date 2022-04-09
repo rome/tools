@@ -139,7 +139,7 @@ mod tests {
 
     #[test]
     fn sizes() {
-        assert_eq!(0, std::mem::size_of::<GreenTriviaHead>());
-        assert_eq!(8, std::mem::size_of::<GreenTrivia>());
+        debug_assert_eq!(0, std::mem::size_of::<GreenTriviaHead>());
+        debug_assert_eq!(8, std::mem::size_of::<GreenTrivia>());
     }
 }

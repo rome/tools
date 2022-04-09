@@ -34,7 +34,7 @@ fn test_format_print() {
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    assert_eq!(content, UNFORMATTED);
+    debug_assert_eq!(content, UNFORMATTED);
 }
 
 #[test]
@@ -67,9 +67,9 @@ fn test_format_write() {
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    assert_eq!(content, FORMATTED);
+    debug_assert_eq!(content, FORMATTED);
 
-    assert_eq!(console.buffer.len(), 1);
+    debug_assert_eq!(console.buffer.len(), 1);
 }
 
 #[test]
@@ -102,9 +102,9 @@ fn test_format_ci() {
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    assert_eq!(content, FORMATTED);
+    debug_assert_eq!(content, FORMATTED);
 
-    assert_eq!(console.buffer.len(), 1);
+    debug_assert_eq!(console.buffer.len(), 1);
 }
 
 #[test]
@@ -118,7 +118,7 @@ fn test_unknown_command() {
     });
 
     match result {
-        Err(Termination::UnknownCommand { command }) => assert_eq!(command, "unknown"),
+        Err(Termination::UnknownCommand { command }) => debug_assert_eq!(command, "unknown"),
         _ => panic!("run_cli returned {result:?} for an unknown command, expected an error"),
     }
 }
@@ -134,7 +134,7 @@ fn test_unknown_command_help() {
     });
 
     match result {
-        Err(Termination::UnknownCommandHelp { command }) => assert_eq!(command, "unknown"),
+        Err(Termination::UnknownCommandHelp { command }) => debug_assert_eq!(command, "unknown"),
         _ => panic!("run_cli returned {result:?} for an unknown command help, expected an error"),
     }
 }
@@ -155,7 +155,7 @@ fn test_indent_style_parse_errors() {
     });
 
     match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-style"),
+        Err(Termination::ParseError { argument, .. }) => debug_assert_eq!(argument, "--indent-style"),
         _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
     }
 }
@@ -176,7 +176,7 @@ fn test_indent_size_parse_errors_negative() {
     });
 
     match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-size"),
+        Err(Termination::ParseError { argument, .. }) => debug_assert_eq!(argument, "--indent-size"),
         _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
     }
 }
@@ -197,7 +197,7 @@ fn test_indent_size_parse_errors_overflow() {
     });
 
     match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-size"),
+        Err(Termination::ParseError { argument, .. }) => debug_assert_eq!(argument, "--indent-size"),
         _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
     }
 }
@@ -218,7 +218,7 @@ fn test_line_width_parse_errors_negative() {
     });
 
     match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--line-width"),
+        Err(Termination::ParseError { argument, .. }) => debug_assert_eq!(argument, "--line-width"),
         _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
     }
 }
@@ -239,7 +239,7 @@ fn test_line_width_parse_errors_overflow() {
     });
 
     match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--line-width"),
+        Err(Termination::ParseError { argument, .. }) => debug_assert_eq!(argument, "--line-width"),
         _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
     }
 }
@@ -260,7 +260,7 @@ fn test_unexpected_argument() {
 
     match result {
         Err(Termination::UnexpectedArgument { argument, .. }) => {
-            assert_eq!(argument, OsString::from("--unknown"))
+            debug_assert_eq!(argument, OsString::from("--unknown"))
         }
         _ => panic!("run_cli returned {result:?} for an unknown argument, expected an error"),
     }
@@ -277,7 +277,7 @@ fn test_missing_argument() {
     });
 
     match result {
-        Err(Termination::MissingArgument { argument }) => assert_eq!(argument, "<INPUT>"),
+        Err(Termination::MissingArgument { argument }) => debug_assert_eq!(argument, "<INPUT>"),
         _ => panic!("run_cli returned {result:?} for a missing argument, expected an error"),
     }
 }

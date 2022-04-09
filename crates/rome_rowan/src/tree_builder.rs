@@ -188,7 +188,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
     // For tests
     #[must_use]
     pub(crate) fn finish_green(mut self) -> GreenNode {
-        assert_eq!(self.children.len(), 1);
+        debug_assert_eq!(self.children.len(), 1);
         match self.children.pop().unwrap().1 {
             NodeOrToken::Node(node) => node,
             _ => panic!(),
@@ -231,7 +231,7 @@ mod tests {
         let first = root.children().next().unwrap();
         let last = root.children().last().unwrap();
 
-        assert_eq!(first.element(), last.element());
+        debug_assert_eq!(first.element(), last.element());
         assert_same_elements(first.element(), last.element());
     }
 
@@ -274,6 +274,6 @@ mod tests {
             }
         }
 
-        assert_eq!(element_id(left), element_id(right),);
+        debug_assert_eq!(element_id(left), element_id(right),);
     }
 }

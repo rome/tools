@@ -620,8 +620,8 @@ labore et dolore magna aliqua";
             .next()
             .expect("the buffer console should have a message in memory");
 
-        assert_eq!(message.level, LogLevel::Log);
-        assert_eq!(message.content, DIAGNOSTIC.to_owned());
+        debug_assert_eq!(message.level, LogLevel::Log);
+        debug_assert_eq!(message.content, DIAGNOSTIC.to_owned());
 
         assert!(iter.next().is_none());
     }
@@ -631,7 +631,7 @@ labore et dolore magna aliqua";
         let input = "a\r\nb\r\nc";
         let starts = SourceFile::line_starts(input).collect::<Vec<_>>();
 
-        assert_eq!(
+        debug_assert_eq!(
             vec![
                 TextSize::from(0u32),
                 TextSize::from(3u32),
@@ -646,7 +646,7 @@ labore et dolore magna aliqua";
         let input = "a\rb\rc";
         let starts = SourceFile::line_starts(input).collect::<Vec<_>>();
 
-        assert_eq!(
+        debug_assert_eq!(
             vec![
                 TextSize::from(0u32),
                 TextSize::from(2u32),
@@ -661,7 +661,7 @@ labore et dolore magna aliqua";
         let input = "a\nb\nc";
         let starts = SourceFile::line_starts(input).collect::<Vec<_>>();
 
-        assert_eq!(
+        debug_assert_eq!(
             vec![
                 TextSize::from(0u32),
                 TextSize::from(2u32),

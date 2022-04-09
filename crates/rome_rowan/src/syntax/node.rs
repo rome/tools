@@ -54,7 +54,7 @@ impl<L: Language> SyntaxNode<L> {
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// });
-    /// assert_eq!("\n\t let \t\ta; \t\t", node.text());
+    /// debug_assert_eq!("\n\t let \t\ta; \t\t", node.text());
     /// ```
     pub fn text(&self) -> SyntaxText {
         self.raw.text()
@@ -82,7 +82,7 @@ impl<L: Language> SyntaxNode<L> {
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// });
-    /// assert_eq!("let \t\ta;", node.text_trimmed());
+    /// debug_assert_eq!("let \t\ta;", node.text_trimmed());
     /// ```
     pub fn text_trimmed(&self) -> SyntaxText {
         self.raw.text_trimmed()
@@ -109,8 +109,8 @@ impl<L: Language> SyntaxNode<L> {
     ///     );
     /// });
     /// let range = node.text_range();
-    /// assert_eq!(0u32, range.start().into());
-    /// assert_eq!(14u32, range.end().into());
+    /// debug_assert_eq!(0u32, range.start().into());
+    /// debug_assert_eq!(14u32, range.end().into());
     /// ```
     pub fn text_range(&self) -> TextRange {
         self.raw.text_range()
@@ -139,8 +139,8 @@ impl<L: Language> SyntaxNode<L> {
     ///     );
     /// });
     /// let range = node.text_trimmed_range();
-    /// assert_eq!(3u32, range.start().into());
-    /// assert_eq!(11u32, range.end().into());
+    /// debug_assert_eq!(3u32, range.start().into());
+    /// debug_assert_eq!(11u32, range.end().into());
     /// ```
     pub fn text_trimmed_range(&self) -> TextRange {
         self.raw.text_trimmed_range()
@@ -168,7 +168,7 @@ impl<L: Language> SyntaxNode<L> {
     /// });
     /// let trivia = node.first_leading_trivia();
     /// assert!(trivia.is_some());
-    /// assert_eq!("\n\t ", trivia.unwrap().text());
+    /// debug_assert_eq!("\n\t ", trivia.unwrap().text());
     ///
     /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {});
     /// let trivia = node.first_leading_trivia();
@@ -200,7 +200,7 @@ impl<L: Language> SyntaxNode<L> {
     /// });
     /// let trivia = node.last_trailing_trivia();
     /// assert!(trivia.is_some());
-    /// assert_eq!(" \t\t", trivia.unwrap().text());
+    /// debug_assert_eq!(" \t\t", trivia.unwrap().text());
     ///
     /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {});
     /// let trivia = node.last_trailing_trivia();
@@ -422,7 +422,7 @@ impl<L: Language> fmt::Debug for SyntaxNode<L> {
                     WalkEvent::Leave(_) => level -= 1,
                 }
             }
-            assert_eq!(level, 0);
+            debug_assert_eq!(level, 0);
             Ok(())
         } else {
             write!(f, "{:?}@{:?}", self.kind(), self.text_range())

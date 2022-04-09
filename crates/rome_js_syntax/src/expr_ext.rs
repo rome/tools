@@ -28,7 +28,7 @@ impl JsLiteralMemberName {
     ///
     /// let static_member_name = JsLiteralMemberName::unwrap_cast(node);
     ///
-    /// assert_eq!("abcd", static_member_name.name().unwrap());
+    /// debug_assert_eq!("abcd", static_member_name.name().unwrap());
     /// ```
     ///
     /// Getting the name of a static member containing a number literal
@@ -43,7 +43,7 @@ impl JsLiteralMemberName {
     ///
     /// let static_member_name = JsLiteralMemberName::unwrap_cast(node);
     ///
-    /// assert_eq!("5", static_member_name.name().unwrap());
+    /// debug_assert_eq!("5", static_member_name.name().unwrap());
     /// ```
     ///
     /// Getting the name of a static member containing an identifier
@@ -58,7 +58,7 @@ impl JsLiteralMemberName {
     ///
     /// let static_member_name = JsLiteralMemberName::unwrap_cast(node);
     ///
-    /// assert_eq!("abcd", static_member_name.name().unwrap());
+    /// debug_assert_eq!("abcd", static_member_name.name().unwrap());
     /// ```
     pub fn name(&self) -> SyntaxResult<String> {
         let value = self.value()?;

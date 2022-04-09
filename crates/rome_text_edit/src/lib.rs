@@ -71,7 +71,7 @@ pub fn apply_indels(indels: &[Indel], text: &mut String) {
         prev = end;
     }
     buf.push_str(&text[prev..text.len()]);
-    assert_eq!(TextSize::of(&buf), total_len);
+    debug_assert_eq!(TextSize::of(&buf), total_len);
 
     // FIXME: figure out a way to mutate the text in-place or reuse the
     // memory in some other way

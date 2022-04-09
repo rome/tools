@@ -531,8 +531,8 @@ mod tests {
         let root = build_test_list();
 
         // Test that children skips missing
-        assert_eq!(root.children().count(), 2);
-        assert_eq!(
+        debug_assert_eq!(root.children().count(), 2);
+        debug_assert_eq!(
             root.children()
                 .map(|child| child.element.to_string())
                 .collect::<Vec<_>>(),
@@ -540,13 +540,13 @@ mod tests {
         );
 
         // Slot 2 (index 1) is empty
-        assert_eq!(
+        debug_assert_eq!(
             root.children().map(|child| child.slot).collect::<Vec<_>>(),
             vec![0, 2]
         );
 
         // Same when reverse
-        assert_eq!(
+        debug_assert_eq!(
             root.children()
                 .rev()
                 .map(|child| child.slot)
@@ -560,6 +560,6 @@ mod tests {
         let root = build_test_list();
 
         // Has 3 slots, one is missing
-        assert_eq!(root.slots().len(), 3);
+        debug_assert_eq!(root.slots().len(), 3);
     }
 }

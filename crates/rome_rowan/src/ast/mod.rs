@@ -482,14 +482,14 @@ mod tests {
             .map(|(value, separator)| (value, separator.map(|sep| sep.to_string())))
             .collect::<Vec<_>>();
 
-        assert_eq!(actual.collect::<Vec<_>>(), expected);
+        debug_assert_eq!(actual.collect::<Vec<_>>(), expected);
     }
 
     fn assert_nodes(
         actual: impl Iterator<Item = SyntaxResult<LiteralExpression>>,
         expected: impl IntoIterator<Item = f64>,
     ) {
-        assert_eq!(
+        debug_assert_eq!(
             actual
                 .map(|literal| literal.unwrap().text().parse::<f64>().unwrap())
                 .collect::<Vec<_>>(),
@@ -501,13 +501,13 @@ mod tests {
     fn empty() {
         let list = build_list(vec![]);
 
-        assert_eq!(list.len(), 0);
+        debug_assert_eq!(list.len(), 0);
         assert!(list.is_empty());
-        assert_eq!(list.separators().count(), 0);
+        debug_assert_eq!(list.separators().count(), 0);
 
         assert_nodes(list.iter(), vec![]);
         assert_elements(list.elements(), vec![]);
-        assert_eq!(list.trailing_separator(), None);
+        debug_assert_eq!(list.trailing_separator(), None);
     }
 
     #[test]
@@ -519,9 +519,9 @@ mod tests {
             (Some(4), None),
         ]);
 
-        assert_eq!(list.len(), 4);
+        debug_assert_eq!(list.len(), 4);
         assert!(!list.is_empty());
-        assert_eq!(list.separators().count(), 3);
+        debug_assert_eq!(list.separators().count(), 3);
 
         assert_nodes(list.iter(), vec![1., 2., 3., 4.]);
         assert_elements(
@@ -533,7 +533,7 @@ mod tests {
                 (Some(4.), None),
             ],
         );
-        assert_eq!(list.trailing_separator(), None);
+        debug_assert_eq!(list.trailing_separator(), None);
     }
 
     #[test]
@@ -546,10 +546,10 @@ mod tests {
             (Some(4), Some(",")),
         ]);
 
-        assert_eq!(list.len(), 4);
+        debug_assert_eq!(list.len(), 4);
         assert!(!list.is_empty());
         assert_nodes(list.iter(), vec![1., 2., 3., 4.]);
-        assert_eq!(list.separators().count(), 4);
+        debug_assert_eq!(list.separators().count(), 4);
 
         assert_elements(
             list.elements(),
@@ -568,9 +568,9 @@ mod tests {
         // list([1,,])
         let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
 
-        assert_eq!(list.len(), 2);
+        debug_assert_eq!(list.len(), 2);
         assert!(!list.is_empty());
-        assert_eq!(list.separators().count(), 2);
+        debug_assert_eq!(list.separators().count(), 2);
 
         assert_elements(
             list.elements(),
@@ -583,9 +583,9 @@ mod tests {
         // list([,3])
         let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
 
-        assert_eq!(list.len(), 2);
+        debug_assert_eq!(list.len(), 2);
         assert!(!list.is_empty());
-        assert_eq!(list.separators().count(), 1);
+        debug_assert_eq!(list.separators().count(), 1);
 
         assert_elements(
             list.elements(),
@@ -602,9 +602,9 @@ mod tests {
         // list([1 2,])
         let list = build_list(vec![(Some(1), None), (Some(2), Some(","))]);
 
-        assert_eq!(list.len(), 2);
+        debug_assert_eq!(list.len(), 2);
         assert!(!list.is_empty());
-        assert_eq!(list.separators().count(), 2);
+        debug_assert_eq!(list.separators().count(), 2);
 
         assert_elements(
             list.elements(),

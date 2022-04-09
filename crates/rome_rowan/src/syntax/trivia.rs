@@ -194,7 +194,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     ///     );
     /// });
     /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
-    /// assert_eq!("\n\t ", pieces[0].text());
+    /// debug_assert_eq!("\n\t ", pieces[0].text());
     /// ```
     pub fn text(&self) -> &str {
         let txt = self.raw.text();
@@ -220,7 +220,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     ///     );
     /// });
     /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
-    /// assert_eq!(TextSize::from(3), pieces[0].text_len());
+    /// debug_assert_eq!(TextSize::from(3), pieces[0].text_len());
     /// ```
     pub fn text_len(&self) -> TextSize {
         self.trivia.text_len()
@@ -242,7 +242,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     ///     );
     /// });
     /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
-    /// assert_eq!(TextRange::new(0.into(), 3.into()), pieces[0].text_range());
+    /// debug_assert_eq!(TextRange::new(0.into(), 3.into()), pieces[0].text_range());
     /// ```
     pub fn text_range(&self) -> TextRange {
         TextRange::at(self.offset, self.text_len())
@@ -493,9 +493,9 @@ impl<L: Language> SyntaxTrivia<L> {
     /// );
     /// });
     /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
-    /// assert_eq!(2, pieces.len());
+    /// debug_assert_eq!(2, pieces.len());
     /// let pieces: Vec<_> = node.last_trailing_trivia().unwrap().pieces().collect();
-    /// assert_eq!(1, pieces.len());
+    /// debug_assert_eq!(1, pieces.len());
     /// ```
     pub fn pieces(&self) -> SyntaxTriviaPiecesIterator<L> {
         SyntaxTriviaPiecesIterator {

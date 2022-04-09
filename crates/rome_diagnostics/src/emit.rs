@@ -328,7 +328,7 @@ labore et dolore magna aliqua";
             other => panic!("unexpected message {other:?}"),
         };
 
-        assert_eq!(message.content, DIAGNOSTIC.to_owned());
+        debug_assert_eq!(message.content, DIAGNOSTIC.to_owned());
 
         assert!(iter.next().is_none());
     }

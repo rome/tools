@@ -450,7 +450,7 @@ impl<H, T> Arc<HeaderSlice<H, [T]>> {
     /// is not modified.
     #[inline]
     pub(crate) fn into_thin(a: Self) -> ThinArc<H, T> {
-        assert_eq!(
+        debug_assert_eq!(
             a.length,
             a.slice.len(),
             "Length needs to be correct for ThinArc to work"

@@ -25,7 +25,7 @@ macro_rules! assert_lex {
         }
 
         $(
-            assert_eq!(
+            debug_assert_eq!(
                 tokens[idx].0,
                 rome_js_syntax::JsSyntaxKind::$kind,
                 "expected token kind {}, but found {:?}",
@@ -33,7 +33,7 @@ macro_rules! assert_lex {
                 tokens[idx].0,
             );
 
-            assert_eq!(
+            debug_assert_eq!(
                 tokens[idx].1.len(),
                 TextSize::from($len),
                 "expected token length of {}, but found {:?} for token {:?}",
@@ -56,10 +56,10 @@ macro_rules! assert_lex {
                 tokens[idx].0
             );
         } else {
-            assert_eq!(idx, tokens.len());
+            debug_assert_eq!(idx, tokens.len());
         }
 
-        assert_eq!($src, new_str, "Failed to reconstruct input");
+        debug_assert_eq!($src, new_str, "Failed to reconstruct input");
     }};
 }
 
@@ -1343,14 +1343,14 @@ fn keywords() {
         lexer.next_token(LexContext::default());
 
         let lexed_kind = lexer.current();
-        assert_eq!(
+        debug_assert_eq!(
             lexed_kind, kind,
             "Expected token '{keyword}' to be of kind {:?} but is {:?}.",
             kind, lexed_kind
         );
 
         let lexed_range = lexer.current_range();
-        assert_eq!(
+        debug_assert_eq!(
             lexed_range.len(),
             TextSize::from(keyword.len() as u32),
             "Expected lexed keyword to be of len {} but has length {:?}",
@@ -1358,6 +1358,6 @@ fn keywords() {
             lexed_range.len()
         );
 
-        assert_eq!(lexer.next_token(LexContext::default()), EOF);
+        debug_assert_eq!(lexer.next_token(LexContext::default()), EOF);
     }
 }
