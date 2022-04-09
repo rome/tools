@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: computed_member.js
-
 ---
 # Input
 const foo = {};
@@ -20,6 +18,7 @@ c?.[ d ]
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 const foo = {};
 

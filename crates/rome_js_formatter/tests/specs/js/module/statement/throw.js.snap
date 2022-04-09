@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: throw.js
-
 ---
 # Input
 throw "Something";
@@ -15,6 +13,7 @@ throw false
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 throw "Something";
 

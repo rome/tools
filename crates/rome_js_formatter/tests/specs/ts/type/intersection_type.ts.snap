@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 168
 expression: intersection_type.ts
-
 ---
 # Input
 type ShortIntersection =
@@ -18,6 +16,7 @@ type LongIntersection = A & B & C & D & E & F & G & H & I & J & K & L & M & N & 
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 type ShortIntersection = A & B;
 

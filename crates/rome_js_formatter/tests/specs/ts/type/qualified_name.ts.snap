@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 168
 expression: qualified_name.ts
-
 ---
 # Input
 type QualifiedType = A  .  B . C
@@ -12,6 +10,7 @@ type QualifiedType = A  .  B . C
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 type QualifiedType = A.B.C;
 

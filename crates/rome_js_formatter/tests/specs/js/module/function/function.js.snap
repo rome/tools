@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 168
 expression: function.js
-
 ---
 # Input
 function foo() {
@@ -44,6 +42,7 @@ function directives() {
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 function foo() {}
 async function foo(a) {

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 168
 expression: class.ts
-
 ---
 # Input
 
@@ -71,6 +69,7 @@ abstract class Test1 {
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 class Test {
 	name: string;

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 163
 expression: parameters.ts
-
 ---
 # Input
 function a(
@@ -14,6 +12,7 @@ function a(
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 function a(this: string) {}
 

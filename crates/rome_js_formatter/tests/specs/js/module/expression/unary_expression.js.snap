@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: unary_expression.js
-
 ---
 # Input
 delete  a.a
@@ -26,6 +24,7 @@ x = !aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 delete a.a;
 void b;

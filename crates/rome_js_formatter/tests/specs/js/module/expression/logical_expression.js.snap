@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 197
 expression: logical_expression.js
-
 ---
 # Input
 x ?? y;
@@ -124,6 +122,7 @@ veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String && ver
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 x ?? y;
 x || y;

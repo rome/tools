@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 163
 expression: enum_statement.ts
-
 ---
 # Input
 enum    A   {}
@@ -24,6 +22,7 @@ const enum C {
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 enum A {}
 enum B {

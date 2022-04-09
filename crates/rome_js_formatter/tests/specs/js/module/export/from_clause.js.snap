@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: from_clause.js
-
 ---
 # Input
 export * from "hey"
@@ -16,6 +14,7 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" asse
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 export * from "hey";
 

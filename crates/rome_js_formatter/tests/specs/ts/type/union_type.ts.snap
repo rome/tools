@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 197
 expression: union_type.ts
-
 ---
 # Input
 type ShortUnion =
@@ -25,6 +23,7 @@ trailing type */
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 type ShortUnion = A | B;
 

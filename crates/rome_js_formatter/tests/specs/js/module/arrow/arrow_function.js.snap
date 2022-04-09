@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 168
 expression: arrow_function.js
-
 ---
 # Input
 () => {}
@@ -18,6 +16,7 @@ async () => {}
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 () => {};
 async () => {};

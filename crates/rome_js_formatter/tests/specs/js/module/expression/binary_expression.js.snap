@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 197
 expression: binary_expression.js
-
 ---
 # Input
 a  +   b
@@ -39,6 +37,7 @@ a + b * c > 65 + 5;
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 a + b;
 a < b;
