@@ -7,7 +7,7 @@ mod simple;
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, empty_line, format_elements, hard_group_elements, space_token, token,
-    FormatElement, FormatResult, Formatter, Token,
+    FormatElement, FormatResult, Formatter, QuoteStyle, Token,
 };
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use call_expression::format_call_expression;
@@ -607,18 +607,21 @@ pub(crate) fn format_string_literal_token(
     formatter: &Formatter,
 ) -> FormatElement {
     let quoted = token.text_trimmed();
-
-    // replace single quotes with double quotes if the string does not contain any
-    let content = if quoted.starts_with('\'') && !quoted.contains('"') {
-        let s = &quoted[1..quoted.len() - 1];
-        let s = format!("\"{}\"", s);
-        match normalize_newlines(&s, ['\r']) {
-            Cow::Borrowed(_) => s,
-            Cow::Owned(s) => s,
-        }
-    } else {
-        normalize_newlines(quoted, ['\r']).into_owned()
+    let (primary_quote_char, secondary_quote_char) = match formatter.options().quote_style {
+        QuoteStyle::Double => ('"', '\''),
+        QuoteStyle::Single => ('\'', '"'),
     };
+    let content =
+        if quoted.starts_with(secondary_quote_char) && !quoted.contains(primary_quote_char) {
+            let s = &quoted[1..quoted.len() - 1];
+            let s = format!("{}{}{}", primary_quote_char, s, primary_quote_char);
+            match normalize_newlines(&s, ['\r']) {
+                Cow::Borrowed(_) => s,
+                Cow::Owned(s) => s,
+            }
+        } else {
+            normalize_newlines(quoted, ['\r']).into_owned()
+        };
 
     formatter.format_replaced(
         &token,

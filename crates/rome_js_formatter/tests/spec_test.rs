@@ -1,7 +1,7 @@
 use rome_core::App;
 use rome_formatter::LineWidth;
 use rome_fs::RomePath;
-use rome_js_formatter::{format, FormatOptions, Formatted, IndentStyle};
+use rome_js_formatter::{format, FormatOptions, Formatted, IndentStyle, QuoteStyle};
 use rome_js_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
@@ -29,13 +29,31 @@ impl From<SerializableIndentStyle> for IndentStyle {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
+pub enum SerializableQuoteStyle {
+    Double,
+    Single,
+}
+
+impl From<SerializableQuoteStyle> for QuoteStyle {
+    fn from(test: SerializableQuoteStyle) -> Self {
+        match test {
+            SerializableQuoteStyle::Double => QuoteStyle::Double,
+            SerializableQuoteStyle::Single => QuoteStyle::Single,
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
 pub struct SerializableFormatOptions {
-    /// The indent style
+    /// The indent style.
     pub indent_style: Option<SerializableIndentStyle>,
 
-    /// What's the max width of a line. Defaults to 80
+    /// What's the max width of a line. Defaults to 80.
     pub line_width: Option<u16>,
+
+    // The style for quotes. Defaults to double.
+    pub quote_style: Option<SerializableQuoteStyle>,
 }
 
 impl From<SerializableFormatOptions> for FormatOptions {
@@ -48,6 +66,9 @@ impl From<SerializableFormatOptions> for FormatOptions {
                 .line_width
                 .and_then(|width| LineWidth::try_from(width).ok())
                 .unwrap_or_default(),
+            quote_style: test
+                .quote_style
+                .map_or_else(|| QuoteStyle::Double, |value| value.into()),
         }
     }
 }

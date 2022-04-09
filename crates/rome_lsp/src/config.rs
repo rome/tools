@@ -14,6 +14,8 @@ pub struct FormatterWorkspaceSettings {
     pub line_width: u16,
     /// The indent style, specified by the user
     pub indent_style: String,
+    /// The quote style, specified by the user
+    pub quote_style: String,
     /// The number of spaces, specified by the user and applied only when using Spaces
     pub space_quantity: u8,
 }

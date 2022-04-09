@@ -23,7 +23,7 @@ use rome_diagnostics::{
 };
 use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_js_formatter::{FormatOptions, IndentStyle};
+use rome_js_formatter::{FormatOptions, IndentStyle, QuoteStyle};
 use rome_js_parser::{parse, SourceType};
 
 use crate::{CliSession, Termination};
@@ -40,7 +40,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
-    let style = session
+    let indent_style = session
         .args
         .opt_value_from_str("--indent-style")
         .map_err(|source| Termination::ParseError {
@@ -48,12 +48,30 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
-    match style {
+    match indent_style {
         Some(IndentStyle::Tab) => {
             options.indent_style = IndentStyle::Tab;
         }
         Some(IndentStyle::Space(default_size)) => {
             options.indent_style = IndentStyle::Space(size.unwrap_or(default_size));
+        }
+        None => {}
+    }
+
+    let quote_style = session
+        .args
+        .opt_value_from_str("--quote-style")
+        .map_err(|source| Termination::ParseError {
+            argument: "--quote-style",
+            source,
+        })?;
+
+    match quote_style {
+        Some(QuoteStyle::Double) => {
+            options.quote_style = QuoteStyle::Double;
+        }
+        Some(QuoteStyle::Single) => {
+            options.quote_style = QuoteStyle::Single;
         }
         None => {}
     }

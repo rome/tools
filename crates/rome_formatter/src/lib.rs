@@ -125,13 +125,50 @@ impl From<LineWidth> for u16 {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Clone, Copy)]
+pub enum QuoteStyle {
+    Double,
+    Single,
+}
+
+impl Default for QuoteStyle {
+    fn default() -> Self {
+        Self::Double
+    }
+}
+
+impl FromStr for QuoteStyle {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "double" | "Double" => Ok(Self::Double),
+            "single" | "Single" => Ok(Self::Single),
+            // TODO: replace this error with a diagnostic
+            _ => Err("Value not supported for QuoteStyle"),
+        }
+    }
+}
+
+impl Display for QuoteStyle {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QuoteStyle::Double => write!(f, "Double Quotes"),
+            QuoteStyle::Single => write!(f, "Single Quotes"),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, Default)]
 pub struct FormatOptions {
-    /// The indent style
+    /// The indent style.
     pub indent_style: IndentStyle,
 
-    /// What's the max width of a line. Defaults to 80
+    /// What's the max width of a line. Defaults to 80.
     pub line_width: LineWidth,
+
+    // The style for quotes. Defaults to double.
+    pub quote_style: QuoteStyle,
 }
 
 impl FormatOptions {
@@ -147,6 +184,7 @@ impl Display for FormatOptions {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
+        writeln!(f, "Quote style: {}", self.quote_style)?;
         Ok(())
     }
 }
