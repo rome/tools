@@ -1,6 +1,6 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
+    empty_element, format, format_elements, group_elements, hard_group_elements, hard_line_break,
     join_elements, soft_block_indent, soft_line_break_or_space, soft_line_indent_or_space,
     space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -20,12 +20,12 @@ use std::iter::FusedIterator;
 /// This means that expressions like `some && thing && elsewhere` are entitled to fall in the same group.
 ///
 /// Instead, if we encounter something like `some && thing  || elsewhere && thing`, we will creat two groups:
-/// `[some, thing]` and `[elsewhere, thing]`, each group will be grouped altogether.
+/// `[some, thing]` and `[elsewhere, thing]`, each group will be grouped together.
 ///
 ///
 /// Let's take for example:
 ///
-/// ```ignore
+/// ```js
 /// some && thing && elsewhere && happy
 /// ```
 ///
@@ -48,7 +48,7 @@ use std::iter::FusedIterator;
 /// ```
 ///
 /// Our final result should be something like this:
-/// ```ignore
+/// ```js
 /// some &&
 /// thing &&
 /// elsewhere &&
@@ -78,14 +78,14 @@ use std::iter::FusedIterator;
 /// Nothing fancy here. Although, if we needed to format this node, you would notice that we don't have
 /// a second operator, because our end result should be:
 ///
-/// ```ignore
+/// ```js
 /// some &&
 /// thing &&
 /// ```
 ///
 /// So what we do is to "borrow" (no Rust reference) the operator "&&" that belongs to the "parent" -
 /// or, if want to see it from a recursion point of view, the previous node that we visited -
-/// in our case `elsewhere &&`. We then take it's operator token and pass it down.
+/// in our case `elsewhere &&`. We then take its operator token and pass it down.
 ///
 /// Eventually we will have a `[ JsLogicalExpression, operator2: "&&" ]`.
 ///
@@ -107,7 +107,7 @@ pub(crate) fn format_binary_like_expression(
 
     let current_node = expression.syntax().clone();
     flatten_expressions(&mut flatten_nodes, expression, formatter)?;
-    flatten_nodes.into_format_element(&current_node)
+    flatten_nodes.take_format_element(&current_node, formatter)
 }
 
 // this function is responsible to resource the tree and flatten logical/binary expressions
@@ -121,22 +121,14 @@ fn flatten_expressions(
 
     let mut left: Option<JsAnyBinaryLikeExpression> = None;
 
-    // TODO drain the flattened items when should_flatten is false and maybe parenthesize
-    // the expression. Figure out how to remove the last opreator
-
     for parent in post_order_binary_like_expressions {
         let parent_operator = parent.operator_token()?;
 
         if let Some(left) = left {
             let should_flatten = left.can_flatten()?;
-            dbg!(&left, should_flatten);
 
             if should_flatten {
-                flatten_items.push_flattened_binary_like_expression(
-                    left,
-                    Some(parent_operator),
-                    formatter,
-                )?;
+                flatten_items.flatten_right_hand_side(left, Some(parent_operator), formatter)?;
             } else {
                 flatten_items.push_binary_like_expression(
                     left,
@@ -150,27 +142,15 @@ fn flatten_expressions(
 
             // Format the left hand sie of the binarish expression
             let left = parent.left()?;
-            let (left_node_formatted, _) = format_with_or_without_parenthesis(
-                parent.operator()?,
-                left.syntax(),
-                left.format(formatter)?,
-            )?;
 
-            let operator_has_trailing_comments = parent_operator.has_trailing_comments();
-            let formatted_left = format_elements![
-                left_node_formatted,
-                space_token(),
-                parent_operator.format(formatter)?,
-                if operator_has_trailing_comments {
-                    hard_line_break()
-                } else {
-                    empty_element()
-                },
-            ];
-            let left_item =
-                FlattenItem::other(formatted_left, operator_has_trailing_comments.into());
+            let formatted = left.format(formatter)?;
+            let has_comments = left.syntax().contains_comments();
 
-            flatten_items.items.push(left_item);
+            flatten_items.items.push(FlattenItem::regular(
+                formatted,
+                Some(parent_operator),
+                has_comments.into(),
+            ));
         }
 
         left = Some(parent);
@@ -179,10 +159,8 @@ fn flatten_expressions(
     if let Some(root) = left {
         let should_flatten = root.can_flatten()?;
 
-        dbg!(should_flatten, &root, &flatten_items);
-
         if should_flatten {
-            flatten_items.push_flattened_binary_like_expression(root, None, formatter)?;
+            flatten_items.flatten_right_hand_side(root, None, formatter)?;
         } else {
             flatten_items.push_binary_like_expression(root, None, formatter)?;
         }
@@ -222,7 +200,6 @@ fn format_with_or_without_parenthesis(
     node: &SyntaxNode,
     formatted_node: FormatElement,
 ) -> FormatResult<(FormatElement, bool)> {
-    dbg!(node);
     let compare_to = match JsAnyExpression::cast(node.clone()) {
         Some(JsAnyExpression::JsLogicalExpression(logical)) => {
             Some(BinaryLikeOperator::Logical(logical.operator()?))
@@ -345,14 +322,8 @@ struct FlattenItems {
 }
 
 impl FlattenItems {
-    /// Generic function that used to create a [FlattenItem] out of a binaryish expression:
-    ///
-    /// Nodes that fit the requirements are:
-    /// - `JsLogicalExpression`
-    /// - `JsBinaryExpression`
-    /// - `JsInstanceofExpression`
-    /// - `JsInExpression`
-    fn push_flattened_binary_like_expression(
+    /// Flattens the right hand operand of a binary like expression.
+    fn flatten_right_hand_side(
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<SyntaxToken>,
@@ -369,16 +340,9 @@ impl FlattenItems {
             right.syntax(),
             right_formatted,
         )?;
-        let operator_element = parent_operator.format_or_empty(formatter)?;
 
-        let formatted = if operator_element.is_empty() {
-            formatted_node
-        } else {
-            format_elements![formatted_node, space_token(), operator_element]
-        };
-
-        let flatten_item = FlattenItem::right(formatted, has_comments.into());
-
+        let flatten_item =
+            FlattenItem::regular(formatted_node, parent_operator, has_comments.into());
         self.items.push(flatten_item);
 
         Ok(())
@@ -390,52 +354,79 @@ impl FlattenItems {
         parent_operator: Option<SyntaxToken>,
         formatter: &Formatter,
     ) -> FormatResult<()> {
+        if let Some(last) = self.items.last_mut() {
+            last.terminator = TrailingTerminator::None;
+            last.operator = None;
+        }
+
+        let left = binary_like_expression.left()?;
+        let operator = binary_like_expression.operator()?;
+        let operator_token = binary_like_expression.operator_token()?;
+
+        // Issue, moves comment inside parenthesized expression.
+        let left_formatted = self.take_format_element(left.syntax(), formatter)?;
+        let (left_formatted, _) =
+            format_with_or_without_parenthesis(operator, left.syntax(), left_formatted)?;
+
+        let operator_has_trailing_comments = operator_token.has_trailing_comments();
+        let mut left_item = FlattenItem::regular(
+            left_formatted,
+            Some(operator_token),
+            operator_has_trailing_comments.into(),
+        );
+
+        if operator_has_trailing_comments {
+            left_item = left_item.with_terminator(TrailingTerminator::HardLineBreak);
+        }
+
+        self.items.push(left_item);
+
         let right = binary_like_expression.right()?;
 
-        dbg!(&self.items);
-
         // Format the parent operator
-        let (formatted_parent_operator, parent_operator_has_comments) =
-            if let Some(parent_operator) = parent_operator {
-                let previous_operator_has_trailing_comments =
-                    parent_operator.has_trailing_comments();
-                (
-                    format_elements![
-                        space_token(),
-                        parent_operator.format(formatter)?,
-                        if previous_operator_has_trailing_comments {
-                            hard_line_break()
-                        } else {
-                            empty_element()
-                        }
-                    ],
-                    // Here we care only about trailing comments that belong to the previous operator
-                    previous_operator_has_trailing_comments || right.syntax().contains_comments(),
-                )
-            } else {
-                (
-                    empty_element(),
-                    // Here we want to check only leading comments;
-                    // trailing comments will be added after the end of the whole expression.
-                    // We want to handle cases like `lorem && (3 + 5 == 9) // comment`.
-                    // This part is a signal to the formatter to tell it if the whole expression should break.
-                    right.syntax().has_leading_comments(),
-                )
-            };
+        let (trailing_separator, parent_operator_has_comments) = if let Some(parent_operator) =
+            parent_operator.as_ref()
+        {
+            let previous_operator_has_trailing_comments = parent_operator.has_trailing_comments();
+            (
+                if previous_operator_has_trailing_comments {
+                    TrailingTerminator::HardLineBreak
+                } else {
+                    TrailingTerminator::None
+                },
+                // Here we care only about trailing comments that belong to the previous operator
+                previous_operator_has_trailing_comments || right.syntax().contains_comments(),
+            )
+        } else {
+            (
+                TrailingTerminator::None,
+                // Here we want to check only leading comments;
+                // trailing comments will be added after the end of the whole expression.
+                // We want to handle cases like `lorem && (3 + 5 == 9) // comment`.
+                // This part is a signal to the formatter to tell it if the whole expression should break.
+                right.syntax().has_leading_comments(),
+            )
+        };
 
         // Format the right node
-        let (right_node_formatted, parenthesized) = format_with_or_without_parenthesis(
-            binary_like_expression.operator()?,
-            right.syntax(),
-            right.format(formatter)?,
-        )?;
-        let formatted_right = format_elements![right_node_formatted, formatted_parent_operator];
+        let (formatted_right, parenthesized) =
+            format_with_or_without_parenthesis(operator, right.syntax(), right.format(formatter)?)?;
 
         let right_item =
             if !parenthesized && matches!(right, JsAnyExpression::JsLogicalExpression(_)) {
-                FlattenItem::group(formatted_right, parent_operator_has_comments.into())
+                FlattenItem::group(
+                    formatted_right,
+                    parent_operator,
+                    parent_operator_has_comments.into(),
+                )
+                .with_terminator(trailing_separator)
             } else {
-                FlattenItem::right(formatted_right, parent_operator_has_comments.into())
+                FlattenItem::regular(
+                    formatted_right,
+                    parent_operator,
+                    parent_operator_has_comments.into(),
+                )
+                .with_terminator(trailing_separator)
             };
 
         self.items.push(right_item);
@@ -443,24 +434,36 @@ impl FlattenItems {
         Ok(())
     }
 
-    fn into_format_element(self, current_node: &SyntaxNode) -> FormatResult<FormatElement> {
+    fn take_format_element(
+        &mut self,
+        current_node: &SyntaxNode,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let can_hard_group = can_hard_group(&self.items);
         let len = self.items.len();
 
         let mut groups = self
             .items
-            .into_iter()
+            .drain(..)
             .enumerate()
             // groups not like ["something &&", "something &&" ]
             // we want to add a space between them in case they don't break
             .map(|(index, element)| {
-                let element: FormatElement = element.into();
-                // the last element doesn't need a space
-                if index + 1 == len {
-                    element
-                } else {
-                    format_elements![element, space_token()]
-                }
+                let operator = match &element.operator {
+                    Some(operator) => {
+                        format_elements![space_token(), operator.format(formatter).unwrap()]
+                    }
+                    None => empty_element(),
+                };
+
+                let terminator = match &element.terminator {
+                    // the last element doesn't need a space
+                    TrailingTerminator::None if index + 1 == len => empty_element(),
+                    TrailingTerminator::None => empty_element(),
+                    TrailingTerminator::HardLineBreak => hard_line_break(),
+                };
+
+                format_elements![element.formatted, operator, terminator]
             });
 
         if can_hard_group {
@@ -487,8 +490,11 @@ impl FlattenItems {
             let head = groups.next().unwrap();
             let rest = join_elements(soft_line_break_or_space(), groups);
 
+            let (head_leading, head, trailing) = head.split_trivia();
+
             format_elements![
-                hard_group_elements(head),
+                head_leading,
+                hard_group_elements(format_elements![head, trailing]),
                 group_elements(soft_line_indent_or_space(rest))
             ]
         };
@@ -523,32 +529,39 @@ impl From<bool> for Comments {
 #[derive(Debug)]
 struct FlattenItem {
     kind: FlattenItemKind,
-    formatted_left: FormatElement,
-    formatted_operator: FormatElement,
+    formatted: FormatElement,
+    operator: Option<SyntaxToken>,
+    terminator: TrailingTerminator,
     comments: Comments,
 }
 
+#[derive(Debug)]
+enum TrailingTerminator {
+    None,
+    HardLineBreak,
+}
+
 impl FlattenItem {
-    fn right(formatted_left: FormatElement, comments: Comments) -> Self {
+    fn regular(
+        formatted: FormatElement,
+        operator: Option<SyntaxToken>,
+        comments: Comments,
+    ) -> Self {
         Self {
-            formatted_left,
-            kind: FlattenItemKind::Right,
+            formatted,
+            operator,
+            kind: FlattenItemKind::Regular,
+            terminator: TrailingTerminator::None,
             comments,
         }
     }
 
-    fn other(formatted_left: FormatElement, comments: Comments) -> Self {
+    fn group(formatted: FormatElement, operator: Option<SyntaxToken>, comments: Comments) -> Self {
         Self {
-            formatted_left: formatted,
-            kind: FlattenItemKind::Other,
+            formatted,
             comments,
-        }
-    }
-
-    fn group(formatted: FormatElement, comments: Comments) -> Self {
-        Self {
-            formatted_left: formatted,
-            comments,
+            operator,
+            terminator: TrailingTerminator::None,
             kind: FlattenItemKind::Group,
         }
     }
@@ -560,23 +573,19 @@ impl FlattenItem {
     fn has_comments(&self) -> bool {
         matches!(self.comments, Comments::WithComments)
     }
+
+    fn with_terminator(mut self, terminator: TrailingTerminator) -> Self {
+        self.terminator = terminator;
+        self
+    }
 }
 
 #[derive(Debug)]
 enum FlattenItemKind {
-    /// The right hand side of a binary expression. May have a trailing operator if this is a nested binarish expression.
-    Right,
+    Regular,
     /// Used when the right side of a binary/logical expression is another binary/logical.
     /// When we have such cases we
     Group,
-    /// nodes that don't need any special handling
-    Other,
-}
-
-impl From<FlattenItem> for FormatElement {
-    fn from(item: FlattenItem) -> Self {
-        item.formatted_left
-    }
 }
 
 #[derive(Debug)]
