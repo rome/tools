@@ -646,7 +646,11 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
     if content.is_empty() {
         content
     } else {
-        FormatElement::HardGroup(Group::new(content))
+        let (leading, content, trailing) = content.split_trivia();
+        format_elements![
+            leading,
+            FormatElement::HardGroup(Group::new(format_elements![content, trailing])),
+        ]
     }
 }
 
@@ -1276,32 +1280,39 @@ impl FormatElement {
     /// content itself.
     pub fn split_trivia(self) -> (FormatElement, FormatElement, FormatElement) {
         match self {
-            FormatElement::List(list) => {
+            FormatElement::List(mut list) => {
                 // Find the index of the first non-comment element in the list
                 let content_start = list
                     .content
                     .iter()
-                    .position(|elem| !matches!(elem, FormatElement::Comment(_)))
-                    .unwrap_or(list.content.len());
+                    .position(|elem| !matches!(elem, FormatElement::Comment(_)));
 
-                // Split the list at the found index
-                let mut leading = list.content;
-                let mut content = leading.split_off(content_start);
+                // List contains at least one non trivia element.
+                if let Some(content_start) = content_start {
+                    let relative_content_end = list.content[content_start..]
+                        .iter()
+                        .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
+                        .expect("List guaranteed to contain at least one non trivia element.");
+                    let content_end = relative_content_end + content_start;
 
-                // Find the index of the last non-comment element in the list
-                let content_end = content
-                    .iter()
-                    .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
-                    .map_or(0, |index| index + 1);
+                    let trailing = if content_end < list.len() - 1 {
+                        concat_elements(list.content.drain(content_end + 1..))
+                    } else {
+                        empty_element()
+                    };
 
-                // Split the list at the found index, content now holds the inner elements
-                let trailing = content.split_off(content_end);
-
-                (
-                    concat_elements(leading),
-                    concat_elements(content),
-                    concat_elements(trailing),
-                )
+                    // If the content is the first element, then there's no leading trivia
+                    if content_start == 0 {
+                        (empty_element(), FormatElement::List(list), trailing)
+                    } else {
+                        // Drain the content, which leaves the leading trivia in the list
+                        let content = concat_elements(list.content.drain(content_start..));
+                        (FormatElement::List(list), content, trailing)
+                    }
+                } else {
+                    // All leading trivia
+                    return (FormatElement::List(list), empty_element(), empty_element());
+                }
             }
             FormatElement::HardGroup(group) => {
                 let (leading, content, trailing) = group.content.split_trivia();

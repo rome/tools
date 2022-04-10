@@ -490,11 +490,8 @@ impl FlattenItems {
             let head = groups.next().unwrap();
             let rest = join_elements(soft_line_break_or_space(), groups);
 
-            let (head_leading, head, trailing) = head.split_trivia();
-
             format_elements![
-                head_leading,
-                hard_group_elements(format_elements![head, trailing]),
+                hard_group_elements(head),
                 group_elements(soft_line_indent_or_space(rest))
             ]
         };
