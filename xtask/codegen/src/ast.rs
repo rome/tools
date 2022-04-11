@@ -72,34 +72,30 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
     Ok(())
 }
 
-fn check_unions(unions: &Vec<AstEnumSrc>) -> bool {
+fn check_unions(unions: &[AstEnumSrc]) {
     // Setup a map to find the indices of unions quickly
-    let idx_map: HashMap<&String, usize> = unions
+    let idx_map: HashMap<_, _> = unions
             .into_iter()
             .enumerate()
-            .map(|(idx, en)| -> (&String, usize) { (&en.name, idx) })
+            .map(|(idx, en)| -> (&str, usize) { (&en.name.as_str(), idx) })
             .collect();
 
     // Iterate over all unions
     for union in unions {
-        let mut union_set: HashSet<&String> = HashSet::from([&union.name]);
-        let mut union_queue: VecDeque<&String> = VecDeque::new();
-        println!("******** START ********\nChecking {}, variants : {:?}", union.name, union.variants);
+        let mut stack_string = format!("\n******** START ERROR STACK ********\nChecking {}, variants : {:?}", union.name, union.variants);
+        let mut union_set: HashSet<&str> = HashSet::from([union.name.as_str()]);
+        let mut union_queue: VecDeque<&str> = VecDeque::new();
 
         // Init queue for BFS
-        for v in &union.variants {
-            union_queue.push_back(v);
-        }
+        union_queue.extend::<Vec<&str>>(union.variants.iter().map(|x| -> &str { &x.as_str() }).collect());
 
-        while !union_queue.is_empty() {
-            // Get the first variant in the queue
-            // We can unwrap because the queue is never empty at this stage
-            let variant = union_queue.pop_front().unwrap();
+        // Loop over the queue getting the first variant
+        while let Some(variant) = union_queue.pop_front() {
             if idx_map.contains_key(variant) {
                 // The variant is a compound variant
                 // Get the struct from the map
                 let current_union = &unions[idx_map[variant]];
-                println!("SUB-ENUM CHECK : {}, variants : {:?}", current_union.name, current_union.variants);
+                stack_string.push_str(&format!("\nSUB-ENUM CHECK : {}, variants : {:?}", current_union.name, current_union.variants));
                 // Try to insert the current variant into the set
                 if union_set.insert(&current_union.name) {
                     // Add all variants into the BFS queue
@@ -108,31 +104,27 @@ fn check_unions(unions: &Vec<AstEnumSrc>) -> bool {
                     }
                 } else {
                     // We either have a circular dependency or 2 variants referencing the same type
-                    println!("Variant '{variant}' used twice or circular dependency");
-                    return false;
+                    println!("{}", stack_string);
+                    panic!("Variant '{variant}' used twice or circular dependency");
                 }
             } else {
                 // The variant isn't another enum
-                println!("BASE-VAR CHECK : {}", variant);
+                stack_string.push_str(&format!("\nBASE-VAR CHECK : {}", variant));
                 if !union_set.insert(variant) {
                     // The variant already used
-                    println!("Variant '{variant}' used twice");
-                    return false;
+                    println!("{}", stack_string);
+                    panic!("Variant '{variant}' used twice");
                 }
             }
         }
     }
-
-    return true
 }
 
 pub(crate) fn load_js_ast() -> AstSrc {
     let grammar_src = include_str!("../js.ungram");
     let grammar: Grammar = grammar_src.parse().unwrap();
     let ast : AstSrc = make_ast(&grammar);
-    if !check_unions(&ast.unions) {
-        panic!("Invalid Unions") // TODO Graceful error, not sure how it should be handled ?
-    }
+    check_unions(&ast.unions);
     return ast;
 }
 
