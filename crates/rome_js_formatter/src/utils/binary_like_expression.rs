@@ -322,8 +322,6 @@ impl FlattenItems {
         formatter: &Formatter,
     ) -> FormatResult<()> {
         let right = binary_like_expression.right()?;
-
-        // Call lazily by storing the right syntax node instead?
         let has_comments = right.syntax().contains_comments();
         let right_formatted = right.format(formatter)?;
 
