@@ -392,13 +392,13 @@ impl<'src> Lexer<'src> {
         debug_assert!(!self.is_eof());
 
         // SAFETY: `lex_token` only calls this method if it isn't passed the EOF
-        let chr = unsafe { self.current_char_unchecked() };
+        let chr = unsafe { self.current_unchecked() };
 
         match chr {
             // `<`: empty jsx text, directly followed by another element or closing element
-            '<' => self.eat_byte(T![<]),
+            b'<' => self.eat_byte(T![<]),
             // `{`: empty jsx text, directly followed by an expression
-            '{' => self.eat_byte(T!['{']),
+            b'{' => self.eat_byte(T!['{']),
             _ => {
                 while let Some(chr) = self.current_byte() {
                     // but not one of: { or < or > or }
@@ -446,10 +446,10 @@ impl<'src> Lexer<'src> {
         debug_assert!(!self.is_eof());
 
         // Safety: Guaranteed because we aren't at the end of the file
-        let chr = unsafe { self.current_char_unchecked() };
+        let chr = unsafe { self.current_unchecked() };
 
         match chr {
-            '\'' | '"' => {
+            b'\'' | b'"' => {
                 self.read_str_literal(true);
                 JSX_STRING_LITERAL
             }
@@ -556,22 +556,6 @@ impl<'src> Lexer<'src> {
         }
     }
 
-    /// Gets the current char.
-    ///
-    /// ## Returns
-    /// The current char if the lexer isn't at the end of the file.
-    ///
-    /// ## Safety
-    /// Must be called at the begining of a UTF8 char.
-    #[inline]
-    fn current_char(&self) -> Option<char> {
-        if self.is_eof() {
-            None
-        } else {
-            Some(self.current_char_unchecked())
-        }
-    }
-
     /// Asserts that the lexer is currently positioned at `byte`
     #[inline]
     fn assert_byte(&self, byte: u8) {
@@ -592,16 +576,6 @@ impl<'src> Lexer<'src> {
     fn next_byte(&mut self) -> Option<u8> {
         self.advance(1);
         self.current_byte()
-    }
-
-    /// Advances the position by the current char UTF8 length and returns the next char.
-    ///
-    /// ## Safety
-    /// Must be called at the begining of a UTF8 char.
-    #[inline]
-    fn next_char(&mut self) -> Option<char> {
-        self.advance_char_unchecked();
-        self.current_char()
     }
 
     /// Get the next byte but only advance the index if there is a next byte.
@@ -630,7 +604,7 @@ impl<'src> Lexer<'src> {
         let string = unsafe {
             std::str::from_utf8_unchecked(self.source.as_bytes().get_unchecked(self.position..))
         };
-        string.chars().skip(1).next()
+        string.chars().nth(1)
     }
 
     /// Returns the byte at position `self.position + offset` or `None` if it is out of bounds.
@@ -1498,16 +1472,14 @@ impl<'src> Lexer<'src> {
                 while let Some(chr) = self.current_byte() {
                     if let b'\r' | b'\n' = chr {
                         return COMMENT;
+                    } else if chr < 0x80 {
+                        self.advance(1);
                     } else {
-                        if chr < 0x80 {
-                            self.advance(1);
+                        let chr = self.current_char_unchecked();
+                        if is_linebreak(chr) {
+                            return COMMENT;
                         } else {
-                            let chr = self.current_char_unchecked();
-                            if is_linebreak(chr) {
-                                return COMMENT;
-                            } else {
-                                self.advance(chr.len_utf8());
-                            }
+                            self.advance(chr.len_utf8());
                         }
                     }
                 }
