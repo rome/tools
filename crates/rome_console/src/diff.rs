@@ -30,7 +30,7 @@ pub enum DiffMode {
     /// 11  9 |   elit,
     ///       | @@ -15,7 +13,5 @@
     /// 14 12 |   eiusmod
-    /// 15 13 |   
+    /// 15 13 |
     /// 16 14 |   incididunt
     /// 17    | - function
     /// 18    | - name(
@@ -154,8 +154,11 @@ impl<'a> Display for Diff<'a> {
                         fmt.write_str(" | ")?;
 
                         let line = change.value().trim_end();
-                        let line_length = line.len().min(MAX_LINE_LENGTH);
-                        let line = &line[..line_length];
+                        let line = line
+                            .char_indices()
+                            .nth(MAX_LINE_LENGTH)
+                            .map(|(byte_index, _)| &line[..byte_index])
+                            .unwrap_or_else(|| &line);
 
                         match change.tag() {
                             ChangeTag::Delete => {
