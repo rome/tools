@@ -24,6 +24,8 @@ pub(crate) trait ParseWithDefaultPattern {
     fn parse_pattern_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax {
         let pattern = self.parse_pattern(p);
 
+        // test_err js_invalid_assignment
+        // ([=[(p[=[(p%]>([=[(p[=[(
         if p.at(T![=]) {
             let with_default = pattern.precede_or_add_diagnostic(p, Self::expected_pattern_error);
             p.bump_any(); // eat the = token
@@ -166,7 +168,7 @@ pub(crate) trait ParseObjectPattern {
             }
             let recovery_set = ParseRecovery::new(
                 Self::unknown_pattern_kind(),
-                token_set!(EOF, T![,], T!['}'], T![...], T![;], T![')']),
+                token_set!(EOF, T![,], T!['}'], T![...], T![;], T![')'], T![=]),
             )
             .enable_recovery_on_line_break();
 
