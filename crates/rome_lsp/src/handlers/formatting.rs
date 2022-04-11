@@ -44,10 +44,10 @@ pub(crate) fn to_format_options(
         );
     }
 
-    let custom_ident_style =
+    let custom_quote_style =
         QuoteStyle::from_str(workspace_settings.quote_style.as_str()).unwrap_or(QuoteStyle::Double);
-    if custom_ident_style != default_options.quote_style {
-        default_options.quote_style = custom_ident_style;
+    if custom_quote_style != default_options.quote_style {
+        default_options.quote_style = custom_quote_style;
         info!(
             "Using user setting quote style: {}",
             default_options.quote_style
