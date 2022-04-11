@@ -1312,7 +1312,7 @@ impl FormatElement {
                     (leading, FormatElement::List(List::new(content)), trailing)
                 } else {
                     // All leading trivia
-                    return (FormatElement::List(list), empty_element(), empty_element());
+                    (FormatElement::List(list), empty_element(), empty_element())
                 }
             }
             FormatElement::HardGroup(group) => {

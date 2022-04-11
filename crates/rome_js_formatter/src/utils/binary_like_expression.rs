@@ -644,6 +644,7 @@ impl Iterator for PostorderIterator {
 
 impl FusedIterator for PostorderIterator {}
 
+#[allow(clippy::enum_variant_names)]
 #[derive(Debug, Clone)]
 pub(crate) enum JsAnyBinaryLikeExpression {
     JsLogicalExpression(JsLogicalExpression),

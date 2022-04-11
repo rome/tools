@@ -158,7 +158,7 @@ impl<'a> Display for Diff<'a> {
                             .char_indices()
                             .nth(MAX_LINE_LENGTH)
                             .map(|(byte_index, _)| &line[..byte_index])
-                            .unwrap_or_else(|| &line);
+                            .unwrap_or_else(|| line);
 
                         match change.tag() {
                             ChangeTag::Delete => {
