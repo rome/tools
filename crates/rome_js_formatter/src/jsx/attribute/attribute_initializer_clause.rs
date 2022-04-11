@@ -1,8 +1,5 @@
 use crate::formatter_traits::FormatTokenAndNode;
-use crate::{
-    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
-};
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rome_js_syntax::{JsxAttributeInitializerClause, JsxAttributeInitializerClauseFields};
 
 impl ToFormatElement for JsxAttributeInitializerClause {

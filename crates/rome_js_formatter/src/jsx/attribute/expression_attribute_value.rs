@@ -1,7 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, group_elements, hard_group_elements, soft_block_indent, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_group_elements, soft_block_indent, FormatElement, FormatResult,
+    Formatter, ToFormatElement,
 };
 use rome_js_syntax::{JsxExpressionAttributeValue, JsxExpressionAttributeValueFields};
 
