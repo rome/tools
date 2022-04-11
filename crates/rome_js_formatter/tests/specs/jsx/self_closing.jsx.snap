@@ -38,13 +38,3 @@ Line width: 80
 
 <CodeEditor />;
 
-
-## Unimplemented nodes/tokens
-
-"Foo " => 1..5
-"Foo           " => 11..25
-"LineWidthInput " => 31..46
-"IndentStyleSelect" => 51..68
-"SourceTypeSelect" => 75..91
-"CodeEditor" => 99..109
-
