@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: with.js
-
 ---
 # Input
 with (   b)
@@ -17,6 +15,7 @@ with (   b)
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 with (b) {
 	5;

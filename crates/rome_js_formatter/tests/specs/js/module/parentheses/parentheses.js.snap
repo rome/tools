@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 197
 expression: parentheses.js
-
 ---
 # Input
 (foo++)?.();
@@ -35,6 +33,7 @@ const a = () => ({}?.() && a);
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 (foo++)?.();
 async () => {

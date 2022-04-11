@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 198
 expression: interpreter.js
-
 ---
 # Input
 #!/usr/bin/env node
@@ -15,6 +13,7 @@ console.log(1)
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 #!/usr/bin/env node
 

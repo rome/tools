@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: import_specifiers.js
-
 ---
 # Input
 import { hey } from "hey"
@@ -28,6 +26,7 @@ import loooooooooooooooooooong7, { loooooooooooooooooooong8, loooooooooooooooooo
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 import { hey } from "hey";
 import { hey } from "hey";

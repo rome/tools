@@ -40,7 +40,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
-    let style = session
+    let indent_style = session
         .args
         .opt_value_from_str("--indent-style")
         .map_err(|source| Termination::ParseError {
@@ -48,7 +48,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
-    match style {
+    match indent_style {
         Some(IndentStyle::Tab) => {
             options.indent_style = IndentStyle::Tab;
         }
@@ -56,6 +56,18 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             options.indent_style = IndentStyle::Space(size.unwrap_or(default_size));
         }
         None => {}
+    }
+
+    let quote_style = session
+        .args
+        .opt_value_from_str("--quote-style")
+        .map_err(|source| Termination::ParseError {
+            argument: "--quote-style",
+            source,
+        })?;
+
+    if let Some(quote_style) = quote_style {
+        options.quote_style = quote_style;
     }
 
     let line_width = session

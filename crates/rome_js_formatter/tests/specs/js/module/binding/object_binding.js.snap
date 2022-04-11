@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 197
 expression: object_binding.js
-
 ---
 # Input
 let {a}=b
@@ -16,6 +14,7 @@ let {aaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbb=cccccccccccccccccccc,dddddddddddd
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 let { a } = b;
 let { d, b: c } = d;

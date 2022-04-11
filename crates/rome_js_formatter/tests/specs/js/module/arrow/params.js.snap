@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 168
 expression: params.js
-
 ---
 # Input
 fooooooooooooooooooooooooooooooooooooooooooooooooooo(action => next =>
@@ -333,6 +331,7 @@ foo(
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 fooooooooooooooooooooooooooooooooooooooooooooooooooo(
 	(action) => (next) => dispatch(action),

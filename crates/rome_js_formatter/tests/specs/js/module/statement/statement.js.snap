@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: statement.js
-
 ---
 # Input
 ;
@@ -14,6 +12,7 @@ debugger
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 debugger;
 

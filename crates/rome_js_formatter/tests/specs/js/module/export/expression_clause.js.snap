@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 168
 expression: expression_clause.js
-
 ---
 # Input
 export default (1 - 43);
@@ -12,6 +10,7 @@ export default (1 - 43);
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 export default 1 - 43;
 

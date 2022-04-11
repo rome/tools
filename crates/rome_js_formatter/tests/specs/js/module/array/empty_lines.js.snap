@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: empty_lines.js
-
 ---
 # Input
 let a = [
@@ -24,6 +22,7 @@ let a = [
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 let a = [
 	1,

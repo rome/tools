@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 198
 expression: script.js
-
 ---
 # Input
 #!/usr/bin/env node
@@ -16,6 +14,7 @@ var express = require("express")
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 #!/usr/bin/env node
 

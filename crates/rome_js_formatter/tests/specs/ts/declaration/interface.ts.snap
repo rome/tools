@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 168
 expression: interface.ts
-
 ---
 # Input
 interface A {}
@@ -33,6 +31,7 @@ interface D extends B<string, symbol>, F<string, symbol> {
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 interface A {}
 interface B extends A /** comment **/ { something: string }

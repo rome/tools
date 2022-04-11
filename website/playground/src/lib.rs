@@ -76,6 +76,7 @@ pub fn run(
     code: String,
     line_width: u16,
     indent_width: Option<u8>, // If None, we use tabs
+    quote_style: String,
     is_typescript: bool,
     is_jsx: bool,
     source_type: String,
@@ -111,6 +112,7 @@ pub fn run(
     let options = FormatOptions {
         indent_style,
         line_width: line_width.try_into().unwrap_or_default(),
+        quote_style: quote_style.parse().unwrap_or_default(),
     };
 
     let cst = format!("{:#?}", syntax);

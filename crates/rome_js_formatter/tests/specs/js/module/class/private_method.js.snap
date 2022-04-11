@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: private_method.js
-
 ---
 # Input
 class Foo {
@@ -28,6 +26,7 @@ class Foo {
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 class Foo {
 	a = 1;

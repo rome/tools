@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: number.js
-
 ---
 # Input
 1.23e4
@@ -14,6 +12,7 @@ expression: number.js
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 1.23e4;
 1000e3; // FIXME handle number with scientific notation #1294

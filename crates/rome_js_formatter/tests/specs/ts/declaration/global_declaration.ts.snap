@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 163
 expression: global_declaration.ts
-
 ---
 # Input
 declare module "./test"
@@ -18,6 +16,7 @@ declare module "./test"
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 declare module "./test" {
 	global {

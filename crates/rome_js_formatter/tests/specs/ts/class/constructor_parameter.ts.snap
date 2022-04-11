@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 163
 expression: constructor_parameter.ts
-
 ---
 # Input
 class B {
@@ -47,6 +45,7 @@ class C {
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 class B {
 	constructor(private a: string) {}

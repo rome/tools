@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 173
 expression: type_expression.ts
-
 ---
 # Input
 import * as assert from "assert";
@@ -116,6 +114,7 @@ type Type01 = 0 extends
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 import * as assert from "assert";
 

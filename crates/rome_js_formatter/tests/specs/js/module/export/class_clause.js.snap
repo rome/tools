@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: class_clause.js
-
 ---
 # Input
 // another comment
@@ -21,6 +19,7 @@ B {}
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 // another comment
 export class A {

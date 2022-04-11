@@ -20,7 +20,7 @@ pub use rome_formatter::{
     if_group_breaks, if_group_fits_on_single_line, indent, join_elements, join_elements_hard_line,
     join_elements_soft_line, join_elements_with, line_suffix, soft_block_indent, soft_line_break,
     soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
-    FormatOptions, Formatted, IndentStyle, Token, Verbatim, LINE_TERMINATORS,
+    FormatOptions, Formatted, IndentStyle, QuoteStyle, Token, Verbatim, LINE_TERMINATORS,
 };
 use rome_js_syntax::JsSyntaxNode;
 use rome_rowan::TextSize;

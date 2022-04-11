@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 157
 expression: spread.js
-
 ---
 # Input
 let a = [...a, ...b,];
@@ -17,6 +15,7 @@ let a = [...baaaaaaaaaaaaaaaaaaaaaaaaaaaaa,...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,...
 -----
 Indent style: Tab
 Line width: 80
+Quote style: Double Quotes
 -----
 let a = [...a, ...b];
 let b = [...a, ...b];
