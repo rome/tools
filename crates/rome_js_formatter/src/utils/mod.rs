@@ -1,5 +1,5 @@
 pub(crate) mod array;
-mod binarish_expression;
+mod binary_like_expression;
 mod call_expression;
 mod format_conditional;
 mod simple;
@@ -9,7 +9,7 @@ use crate::{
     empty_element, empty_line, format_elements, hard_group_elements, space_token, token,
     FormatElement, FormatResult, Formatter, Token,
 };
-pub(crate) use binarish_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
+pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use call_expression::format_call_expression;
 pub(crate) use format_conditional::{format_conditional, Conditional};
 use rome_formatter::normalize_newlines;

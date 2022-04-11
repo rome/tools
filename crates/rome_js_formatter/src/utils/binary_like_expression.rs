@@ -1,6 +1,6 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    empty_element, format, format_elements, group_elements, hard_group_elements, hard_line_break,
+    empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
     join_elements, soft_block_indent, soft_line_break_or_space, soft_line_indent_or_space,
     space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -63,7 +63,7 @@ use std::iter::FusedIterator;
 /// - the formatted elements will be grouped
 ///
 ///
-/// The flattening of the groups is done with recursion, during the recursions we want to be careful of:
+/// The flattening of the groups is done by traversing the binary like expression in post-order, first visiting the left most binary like expression:
 /// - not printing nodes/token twice
 /// - not "forget" tokens/nodes
 /// - apply recursions as long as we encounter the same operator
@@ -103,44 +103,25 @@ pub(crate) fn format_binary_like_expression(
     expression: JsAnyBinaryLikeExpression,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
-    let mut flatten_nodes = FlattenItems::default();
-
+    let mut flatten_items = FlattenItems::default();
     let current_node = expression.syntax().clone();
-    flatten_expressions(&mut flatten_nodes, expression, formatter)?;
-    flatten_nodes.take_format_element(&current_node, formatter)
-}
 
-// this function is responsible to resource the tree and flatten logical/binary expressions
-// that have the same operator
-fn flatten_expressions(
-    flatten_items: &mut FlattenItems,
-    expression: JsAnyBinaryLikeExpression,
-    formatter: &Formatter,
-) -> FormatResult<()> {
     let post_order_binary_like_expressions = PostorderIterator::new(expression);
-
     let mut left: Option<JsAnyBinaryLikeExpression> = None;
 
     for parent in post_order_binary_like_expressions {
         let parent_operator = parent.operator_token()?;
 
         if let Some(left) = left {
-            let should_flatten = left.can_flatten()?;
-
-            if should_flatten {
-                flatten_items.flatten_right_hand_side(left, Some(parent_operator), formatter)?;
-            } else {
-                flatten_items.push_binary_like_expression(
-                    left,
-                    Some(parent_operator),
-                    formatter,
-                )?;
-            }
+            flatten_items.format_binary_expression_right_hand_side(
+                left,
+                Some(parent_operator),
+                formatter,
+            )?;
         } else {
-            // `parent` is currently the left most binary expression in the tree. Format its left hand
-            // side. The right hand side will be formatted when traversing upwards in the tree.
+            // Leaf binary like expression. Format the left hand side.
+            // The right hand side gets formatted when traversing upwards in the tree.
 
-            // Format the left hand sie of the binarish expression
             let left = parent.left()?;
 
             let formatted = left.format(formatter)?;
@@ -156,17 +137,12 @@ fn flatten_expressions(
         left = Some(parent);
     }
 
+    // Format the top most binary like expression
     if let Some(root) = left {
-        let should_flatten = root.can_flatten()?;
-
-        if should_flatten {
-            flatten_items.flatten_right_hand_side(root, None, formatter)?;
-        } else {
-            flatten_items.push_binary_like_expression(root, None, formatter)?;
-        }
+        flatten_items.format_binary_expression_right_hand_side(root, None, formatter)?;
     }
 
-    Ok(())
+    flatten_items.take_format_element(&current_node, formatter)
 }
 
 /// Small wrapper to identify the operation of an expression and deduce their precedence
@@ -322,6 +298,22 @@ struct FlattenItems {
 }
 
 impl FlattenItems {
+    /// Formats the right hand side of a binary like expression
+    fn format_binary_expression_right_hand_side(
+        &mut self,
+        expression: JsAnyBinaryLikeExpression,
+        parent_operator: Option<SyntaxToken>,
+        formatter: &Formatter,
+    ) -> FormatResult<()> {
+        let should_flatten = expression.can_flatten()?;
+
+        if should_flatten {
+            self.flatten_right_hand_side(expression, parent_operator, formatter)
+        } else {
+            self.format_new_binary_like_group(expression, parent_operator, formatter)
+        }
+    }
+
     /// Flattens the right hand operand of a binary like expression.
     fn flatten_right_hand_side(
         &mut self,
@@ -348,13 +340,18 @@ impl FlattenItems {
         Ok(())
     }
 
-    fn push_binary_like_expression(
+    /// The left hand-side expression and the current operator cannot be flattened.
+    /// Format the left hand side by its own and potentially wrap it in parentheses before formatting
+    /// the right-hand side of the current expression.
+    fn format_new_binary_like_group(
         &mut self,
         binary_like_expression: JsAnyBinaryLikeExpression,
         parent_operator: Option<SyntaxToken>,
         formatter: &Formatter,
     ) -> FormatResult<()> {
         if let Some(last) = self.items.last_mut() {
+            // Remove any line breaks and the trailing operator so that the operator/trailing aren't part
+            // of the parenthesized expression.
             last.terminator = TrailingTerminator::None;
             last.operator = None;
         }
@@ -363,7 +360,6 @@ impl FlattenItems {
         let operator = binary_like_expression.operator()?;
         let operator_token = binary_like_expression.operator_token()?;
 
-        // Issue, moves comment inside parenthesized expression.
         let left_formatted = self.take_format_element(left.syntax(), formatter)?;
         let (left_formatted, _) =
             format_with_or_without_parenthesis(operator, left.syntax(), left_formatted)?;
@@ -451,6 +447,7 @@ impl FlattenItems {
             .map(|(index, element)| {
                 let operator = match &element.operator {
                     Some(operator) => {
+                        // SAFETY: `syntax_token.format` never returns MissingToken.
                         format_elements![space_token(), operator.format(formatter).unwrap()]
                     }
                     None => empty_element(),
@@ -591,6 +588,7 @@ enum VisitEvent {
     Exit(JsAnyBinaryLikeExpression),
 }
 
+/// Iterator that visits the left hand sides of all binary like expressions in post-order.
 struct PostorderIterator {
     next: Option<VisitEvent>,
     start: SyntaxNode,

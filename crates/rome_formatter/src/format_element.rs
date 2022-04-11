@@ -1247,8 +1247,8 @@ impl Deref for Token {
 
 impl FormatElement {
     /// Returns true if the element contains no content.
-    pub fn is_empty(&self) -> bool {
-        self == &FormatElement::Empty
+    pub const fn is_empty(&self) -> bool {
+        matches!(self, FormatElement::Empty)
     }
 
     /// Returns true if this [FormatElement] recursively contains any hard line break
@@ -1289,26 +1289,27 @@ impl FormatElement {
 
                 // List contains at least one non trivia element.
                 if let Some(content_start) = content_start {
-                    let relative_content_end = list.content[content_start..]
+                    let (leading, mut content) = if content_start > 0 {
+                        let content = list.content.split_off(content_start);
+                        (FormatElement::List(list), content)
+                    } else {
+                        // No leading trivia
+                        (empty_element(), list.content)
+                    };
+
+                    let content_end = content
                         .iter()
                         .rposition(|elem| !matches!(elem, FormatElement::Comment(_)))
                         .expect("List guaranteed to contain at least one non trivia element.");
-                    let content_end = relative_content_end + content_start;
+                    let trailing_start = content_end + 1;
 
-                    let trailing = if content_end < list.len() - 1 {
-                        concat_elements(list.content.drain(content_end + 1..))
+                    let trailing = if trailing_start < content.len() {
+                        FormatElement::List(List::new(content.split_off(trailing_start)))
                     } else {
                         empty_element()
                     };
 
-                    // If the content is the first element, then there's no leading trivia
-                    if content_start == 0 {
-                        (empty_element(), FormatElement::List(list), trailing)
-                    } else {
-                        // Drain the content, which leaves the leading trivia in the list
-                        let content = concat_elements(list.content.drain(content_start..));
-                        (FormatElement::List(list), content, trailing)
-                    }
+                    (leading, FormatElement::List(List::new(content)), trailing)
                 } else {
                     // All leading trivia
                     return (FormatElement::List(list), empty_element(), empty_element());
