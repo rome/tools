@@ -46,6 +46,11 @@ impl Trivia {
     pub fn trailing(&self) -> bool {
         self.trailing
     }
+
+    /// Returns the text range of this trivia
+    pub fn text_range(&self) -> TextRange {
+        self.range
+    }
 }
 
 /// Token source for the parser that skips over any non-trivia token.

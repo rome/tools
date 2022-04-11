@@ -43,7 +43,7 @@ JsModule {
                                                                     value_token: IDENT@10..11 "p" [] [],
                                                                 },
                                                             },
-                                                            operator: PERCENT@11..12 "%" [] [],
+                                                            operator_token: PERCENT@11..12 "%" [] [],
                                                             right: missing (required),
                                                         },
                                                         r_paren_token: missing (required),
@@ -51,7 +51,7 @@ JsModule {
                                                 ],
                                                 r_brack_token: R_BRACK@12..13 "]" [] [],
                                             },
-                                            operator: R_ANGLE@13..14 ">" [] [],
+                                            operator_token: R_ANGLE@13..14 ">" [] [],
                                             right: JsParenthesizedExpression {
                                                 l_paren_token: L_PAREN@14..15 "(" [] [],
                                                 expression: JsArrayExpression {

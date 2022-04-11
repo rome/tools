@@ -44,7 +44,20 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     /// Bumps the passed in token
     pub fn bump(&mut self, token: RewriteToken) {
         self.skip_trivia(false);
+        debug_assert!(self.offset < token.end);
         self.inner.push_token(token.kind, token.end);
+
+        // test ts ts_decorator_assignment
+        // @test(--a)
+        // class Test {}
+
+        // If the parser originally skipped this token as trivia, then make sure to also consume the trivia.
+        if let Some(trivia) = self.inner.tokens.trivia_list.get(self.trivia_offset) {
+            if trivia.kind().is_skipped() && trivia.offset() == self.offset {
+                self.trivia_offset += 1;
+            }
+        }
+
         self.offset = token.end;
         self.skip_trivia(true);
     }
@@ -52,7 +65,11 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     fn skip_trivia(&mut self, trailing: bool) {
         let remaining_trivia = &self.inner.tokens.trivia_list[self.trivia_offset..];
         for trivia in remaining_trivia {
-            if trailing != trivia.trailing() || self.offset != trivia.offset() {
+            // Don't skip over any "skipped token trivia". These get consumed when bumping the token.
+            if trailing != trivia.trailing()
+                || self.offset != trivia.offset()
+                || trivia.kind().is_skipped()
+            {
                 break;
             }
 
