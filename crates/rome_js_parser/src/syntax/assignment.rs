@@ -109,12 +109,21 @@ pub(crate) fn expression_to_assignment(
     target: CompletedMarker,
     checkpoint: Checkpoint,
 ) -> CompletedMarker {
-    try_expression_to_assignment(p, target, checkpoint).unwrap_or_else(|checkpoint| {
-        // Doesn't seem to be a valid assignment target. Recover and create an error.
-        let expression_end = p.tokens.position();
-        p.rewind(checkpoint);
-        wrap_expression_in_invalid_assignment(p, expression_end)
-    })
+    try_expression_to_assignment(p, target, checkpoint).unwrap_or_else(
+        // test_err js_regex_assignment
+        // /=0*_:m/=/*_:|
+        |mut invalid_assignment_target| {
+            // Doesn't seem to be a valid assignment target. Recover and create an error.
+            invalid_assignment_target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
+
+            p.error(invalid_assignment_error(
+                p,
+                invalid_assignment_target.range(p),
+            ));
+
+            invalid_assignment_target
+        },
+    )
 }
 
 pub(crate) enum AssignmentExprPrecedence {
@@ -334,7 +343,7 @@ fn try_expression_to_assignment(
     p: &mut Parser,
     target: CompletedMarker,
     checkpoint: Checkpoint,
-) -> Result<CompletedMarker, Checkpoint> {
+) -> Result<CompletedMarker, CompletedMarker> {
     if !matches!(
         target.kind(),
         JS_PARENTHESIZED_EXPRESSION
@@ -345,7 +354,7 @@ fn try_expression_to_assignment(
             | TS_TYPE_ASSERTION_EXPRESSION
             | TS_AS_EXPRESSION
     ) {
-        return Err(checkpoint);
+        return Err(target);
     }
 
     // At this point it's guaranteed that the root node can be mapped to an assignment,
@@ -490,22 +499,4 @@ impl RewriteParseEvents for ReparseAssignment {
 
         p.bump(token)
     }
-}
-
-fn wrap_expression_in_invalid_assignment(
-    p: &mut Parser,
-    expression_end: TextSize,
-) -> CompletedMarker {
-    let unknown = p.start();
-    // Eat all tokens until we reached the end of the original expression. This is better than
-    // any other error recovery because it's already know where the expression ends.
-    while p.tokens.position() < expression_end {
-        p.bump_any();
-    }
-
-    let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT);
-
-    p.error(invalid_assignment_error(p, completed.range(p)));
-
-    completed
 }

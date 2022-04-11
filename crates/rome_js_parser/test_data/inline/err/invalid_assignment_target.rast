@@ -7,7 +7,9 @@ JsModule {
                 left: JsUnknownAssignment {
                     items: [
                         PLUS2@0..2 "++" [] [],
-                        IDENT@2..4 "a" [] [Whitespace(" ")],
+                        JsIdentifierAssignment {
+                            name_token: IDENT@2..4 "a" [] [Whitespace(" ")],
+                        },
                     ],
                 },
                 operator_token: EQ@4..6 "=" [] [Whitespace(" ")],
@@ -147,7 +149,8 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@0..7
         0: JS_UNKNOWN_ASSIGNMENT@0..4
           0: PLUS2@0..2 "++" [] []
-          1: IDENT@2..4 "a" [] [Whitespace(" ")]
+          1: JS_IDENTIFIER_ASSIGNMENT@2..4
+            0: IDENT@2..4 "a" [] [Whitespace(" ")]
         1: EQ@4..6 "=" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_EXPRESSION@6..7
           0: JS_REFERENCE_IDENTIFIER@6..7

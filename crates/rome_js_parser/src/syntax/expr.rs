@@ -274,7 +274,8 @@ fn parse_assign_expr_recursive(
     checkpoint: Checkpoint,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    if is_assign_token(p.cur()) {
+    let assign_operator = p.cur();
+    if is_assign_token(assign_operator) {
         let target = if matches!(
             target.kind(),
             JS_BINARY_EXPRESSION | TS_TYPE_ASSERTION_EXPRESSION
@@ -290,7 +291,8 @@ fn parse_assign_expr_recursive(
         };
 
         let m = target.precede(p);
-        p.bump_any(); // operator
+        p.expect(assign_operator);
+
         parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true))
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         Present(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
