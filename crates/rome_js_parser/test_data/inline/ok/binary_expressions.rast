@@ -7,7 +7,7 @@ JsModule {
                 left: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@0..2 "5" [] [Whitespace(" ")],
                 },
-                operator: STAR@2..4 "*" [] [Whitespace(" ")],
+                operator_token: STAR@2..4 "*" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@4..5 "5" [] [],
                 },
@@ -19,12 +19,12 @@ JsModule {
                 left: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@5..8 "6" [Newline("\n")] [Whitespace(" ")],
                 },
-                operator: STAR2@8..11 "**" [] [Whitespace(" ")],
+                operator_token: STAR2@8..11 "**" [] [Whitespace(" ")],
                 right: JsBinaryExpression {
                     left: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@11..13 "6" [] [Whitespace(" ")],
                     },
-                    operator: STAR2@13..16 "**" [] [Whitespace(" ")],
+                    operator_token: STAR2@13..16 "**" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@16..17 "7" [] [],
                     },
@@ -37,13 +37,13 @@ JsModule {
                 left: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@17..20 "1" [Newline("\n")] [Whitespace(" ")],
                 },
-                operator: PLUS@20..22 "+" [] [Whitespace(" ")],
+                operator_token: PLUS@20..22 "+" [] [Whitespace(" ")],
                 right: JsBinaryExpression {
                     left: JsBinaryExpression {
                         left: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@22..24 "2" [] [Whitespace(" ")],
                         },
-                        operator: STAR@24..26 "*" [] [Whitespace(" ")],
+                        operator_token: STAR@24..26 "*" [] [Whitespace(" ")],
                         right: JsCallExpression {
                             callee: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@26..27 "3" [] [],
@@ -57,7 +57,7 @@ JsModule {
                                         left: JsNumberLiteralExpression {
                                             value_token: JS_NUMBER_LITERAL@29..31 "1" [] [Whitespace(" ")],
                                         },
-                                        operator: PLUS@31..33 "+" [] [Whitespace(" ")],
+                                        operator_token: PLUS@31..33 "+" [] [Whitespace(" ")],
                                         right: JsNumberLiteralExpression {
                                             value_token: JS_NUMBER_LITERAL@33..34 "2" [] [],
                                         },
@@ -67,7 +67,7 @@ JsModule {
                             },
                         },
                     },
-                    operator: STAR@36..38 "*" [] [Whitespace(" ")],
+                    operator_token: STAR@36..38 "*" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@38..39 "3" [] [],
                     },
@@ -80,7 +80,7 @@ JsModule {
                 left: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@39..42 "1" [Newline("\n")] [Whitespace(" ")],
                 },
-                operator: SLASH@42..44 "/" [] [Whitespace(" ")],
+                operator_token: SLASH@42..44 "/" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@44..45 "2" [] [],
                 },
@@ -124,7 +124,7 @@ JsModule {
                         value_token: IDENT@76..81 "foo" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
-                operator: QUESTION2@81..84 "??" [] [Whitespace(" ")],
+                operator_token: QUESTION2@81..84 "??" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@84..87 "bar" [] [],
@@ -140,7 +140,7 @@ JsModule {
                         value_token: IDENT@87..90 "a" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
-                operator: SHR@90..93 ">>" [] [Whitespace(" ")],
+                operator_token: SHR@90..93 ">>" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@93..94 "b" [] [],
@@ -156,7 +156,7 @@ JsModule {
                         value_token: IDENT@94..97 "a" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
-                operator: USHR@97..101 ">>>" [] [Whitespace(" ")],
+                operator_token: USHR@97..101 ">>>" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@101..102 "b" [] [],
@@ -172,17 +172,17 @@ JsModule {
                         left: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@102..105 "1" [Newline("\n")] [Whitespace(" ")],
                         },
-                        operator: PLUS@105..107 "+" [] [Whitespace(" ")],
+                        operator_token: PLUS@105..107 "+" [] [Whitespace(" ")],
                         right: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@107..109 "1" [] [Whitespace(" ")],
                         },
                     },
-                    operator: PLUS@109..111 "+" [] [Whitespace(" ")],
+                    operator_token: PLUS@109..111 "+" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@111..113 "1" [] [Whitespace(" ")],
                     },
                 },
-                operator: PLUS@113..115 "+" [] [Whitespace(" ")],
+                operator_token: PLUS@113..115 "+" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@115..116 "1" [] [],
                 },
@@ -195,28 +195,28 @@ JsModule {
                     left: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@116..119 "5" [Newline("\n")] [Whitespace(" ")],
                     },
-                    operator: PLUS@119..121 "+" [] [Whitespace(" ")],
+                    operator_token: PLUS@119..121 "+" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@121..123 "6" [] [Whitespace(" ")],
                     },
                 },
-                operator: MINUS@123..125 "-" [] [Whitespace(" ")],
+                operator_token: MINUS@123..125 "-" [] [Whitespace(" ")],
                 right: JsBinaryExpression {
                     left: JsBinaryExpression {
                         left: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@125..127 "1" [] [Whitespace(" ")],
                         },
-                        operator: STAR@127..129 "*" [] [Whitespace(" ")],
+                        operator_token: STAR@127..129 "*" [] [Whitespace(" ")],
                         right: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@129..131 "2" [] [Whitespace(" ")],
                         },
                     },
-                    operator: SLASH@131..133 "/" [] [Whitespace(" ")],
+                    operator_token: SLASH@131..133 "/" [] [Whitespace(" ")],
                     right: JsBinaryExpression {
                         left: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@133..135 "1" [] [Whitespace(" ")],
                         },
-                        operator: STAR2@135..138 "**" [] [Whitespace(" ")],
+                        operator_token: STAR2@135..138 "**" [] [Whitespace(" ")],
                         right: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@138..139 "6" [] [],
                         },
@@ -270,7 +270,7 @@ JsModule {
                                     left: JsBooleanLiteralExpression {
                                         value_token: TRUE_KW@169..174 "true" [] [Whitespace(" ")],
                                     },
-                                    operator: AMP2@174..177 "&&" [] [Whitespace(" ")],
+                                    operator_token: AMP2@174..177 "&&" [] [Whitespace(" ")],
                                     right: JsInExpression {
                                         property: JsPrivateName {
                                             hash_token: HASH@177..178 "#" [] [],

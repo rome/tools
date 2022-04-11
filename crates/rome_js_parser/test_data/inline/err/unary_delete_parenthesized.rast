@@ -53,7 +53,7 @@ JsModule {
                                         value_token: IDENT@42..45 "obj" [] [],
                                     },
                                 },
-                                operator: DOT@45..46 "." [] [],
+                                operator_token: DOT@45..46 "." [] [],
                                 member: JsName {
                                     value_token: IDENT@46..49 "key" [] [],
                                 },
@@ -83,7 +83,7 @@ JsModule {
                                     value_token: IDENT@67..70 "obj" [] [],
                                 },
                             },
-                            operator: DOT@70..71 "." [] [],
+                            operator_token: DOT@70..71 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@71..72 "#" [] [],
                                 value_token: IDENT@72..78 "member" [] [],
@@ -116,7 +116,7 @@ JsModule {
                                     r_paren_token: R_PAREN@94..95 ")" [] [],
                                 },
                             },
-                            operator: DOT@95..96 "." [] [],
+                            operator_token: DOT@95..96 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@96..97 "#" [] [],
                                 value_token: IDENT@97..103 "member" [] [],
@@ -140,7 +140,7 @@ JsModule {
                                     value_token: IDENT@114..117 "obj" [] [],
                                 },
                             },
-                            operator: QUESTIONDOT@117..119 "?." [] [],
+                            operator_token: QUESTIONDOT@117..119 "?." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@119..120 "#" [] [],
                                 value_token: IDENT@120..126 "member" [] [],
@@ -165,12 +165,12 @@ JsModule {
                                         value_token: IDENT@137..140 "obj" [] [],
                                     },
                                 },
-                                operator: QUESTIONDOT@140..142 "?." [] [],
+                                operator_token: QUESTIONDOT@140..142 "?." [] [],
                                 member: JsName {
                                     value_token: IDENT@142..147 "inner" [] [],
                                 },
                             },
-                            operator: DOT@147..148 "." [] [],
+                            operator_token: DOT@147..148 "." [] [],
                             member: JsPrivateName {
                                 hash_token: HASH@148..149 "#" [] [],
                                 value_token: IDENT@149..155 "member" [] [],
@@ -195,7 +195,7 @@ JsModule {
                                         value_token: IDENT@166..169 "obj" [] [],
                                     },
                                 },
-                                operator: DOT@169..170 "." [] [],
+                                operator_token: DOT@169..170 "." [] [],
                                 member: JsName {
                                     value_token: IDENT@170..173 "key" [] [],
                                 },
@@ -207,7 +207,7 @@ JsModule {
                                         value_token: IDENT@175..178 "obj" [] [],
                                     },
                                 },
-                                operator: DOT@178..179 "." [] [],
+                                operator_token: DOT@178..179 "." [] [],
                                 member: JsPrivateName {
                                     hash_token: HASH@179..180 "#" [] [],
                                     value_token: IDENT@180..183 "key" [] [],

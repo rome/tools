@@ -80,7 +80,7 @@ JsModule {
                                                     value_token: IDENT@30..31 "y" [] [],
                                                 },
                                             },
-                                            operator: DOT@31..32 "." [] [],
+                                            operator_token: DOT@31..32 "." [] [],
                                             member: JsName {
                                                 value_token: IDENT@32..36 "test" [] [],
                                             },

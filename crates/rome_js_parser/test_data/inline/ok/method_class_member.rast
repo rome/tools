@@ -133,7 +133,7 @@ JsModule {
                             left: JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@128..134 "\"foo\"" [] [Whitespace(" ")],
                             },
-                            operator: PLUS@134..136 "+" [] [Whitespace(" ")],
+                            operator_token: PLUS@134..136 "+" [] [Whitespace(" ")],
                             right: JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@136..141 "\"bar\"" [] [],
                             },

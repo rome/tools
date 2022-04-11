@@ -70,7 +70,7 @@ JsModule {
                                                 left: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@62..66 "\"a\"" [] [Whitespace(" ")],
                                                 },
-                                                operator: PLUS@66..68 "+" [] [Whitespace(" ")],
+                                                operator_token: PLUS@66..68 "+" [] [Whitespace(" ")],
                                                 right: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@68..71 "\"b\"" [] [],
                                                 },

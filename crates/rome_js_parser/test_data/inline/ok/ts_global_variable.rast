@@ -33,7 +33,7 @@ JsModule {
                             value_token: IDENT@46..54 "console" [Newline("\n")] [],
                         },
                     },
-                    operator: DOT@54..55 "." [] [],
+                    operator_token: DOT@54..55 "." [] [],
                     member: JsName {
                         value_token: IDENT@55..58 "log" [] [],
                     },

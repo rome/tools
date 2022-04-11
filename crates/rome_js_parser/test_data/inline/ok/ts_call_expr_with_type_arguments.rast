@@ -128,7 +128,7 @@ JsModule {
                                 },
                                 r_paren_token: R_PAREN@51..52 ")" [] [],
                             },
-                            operator: DOT@52..53 "." [] [],
+                            operator_token: DOT@52..53 "." [] [],
                             member: JsName {
                                 value_token: IDENT@53..54 "a" [] [],
                             },

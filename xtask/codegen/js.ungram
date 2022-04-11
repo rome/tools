@@ -453,7 +453,7 @@ JsIdentifierExpression = name: JsReferenceIdentifier
 // a.#b
 JsStaticMemberExpression =
 	object: JsAnyExpression
-	operator: ('.' | '?.')
+	operator_token: ('.' | '?.')
 	member: JsAnyName
 
 // a[b]
@@ -466,7 +466,7 @@ JsComputedMemberExpression =
 
 JsBinaryExpression =
     left: JsAnyExpression
-    operator: (
+    operator_token: (
     	'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
     	| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
     	| '&' | '|' | '^'
@@ -489,21 +489,21 @@ JsAnyInProperty =
 
 JsLogicalExpression =
 	left: JsAnyExpression
-	operator: ('??' | '||' | '&&')
+	operator_token: ('??' | '||' | '&&')
 	right: JsAnyExpression
 
 // unary expression
 JsUnaryExpression =
-  operator: ('delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!')
+  operator_token: ('delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!')
   argument: JsAnyExpression
 
 JsPreUpdateExpression =
-    operator: ('++' | '--')
+    operator_token: ('++' | '--')
     operand: JsAnyAssignment
 
 JsPostUpdateExpression =
     operand: JsAnyAssignment
-    operator: ('++' | '--')
+    operator_token: ('++' | '--')
 
 
 ///////////////

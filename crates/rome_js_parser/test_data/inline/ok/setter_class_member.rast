@@ -118,7 +118,7 @@ JsModule {
                             left: JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@99..103 "\"a\"" [] [Whitespace(" ")],
                             },
-                            operator: PLUS@103..105 "+" [] [Whitespace(" ")],
+                            operator_token: PLUS@103..105 "+" [] [Whitespace(" ")],
                             right: JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@105..108 "\"b\"" [] [],
                             },

@@ -58,7 +58,7 @@ JsScript {
                                                     value_token: IDENT@41..53 "console" [Newline("\n"), Whitespace("    ")] [],
                                                 },
                                             },
-                                            operator: DOT@53..54 "." [] [],
+                                            operator_token: DOT@53..54 "." [] [],
                                             member: JsName {
                                                 value_token: IDENT@54..57 "log" [] [],
                                             },

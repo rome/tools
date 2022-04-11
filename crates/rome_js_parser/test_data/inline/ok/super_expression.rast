@@ -79,7 +79,7 @@ JsModule {
                                         object: JsSuperExpression {
                                             super_token: SUPER_KW@68..78 "super" [Newline("\n"), Whitespace("    ")] [],
                                         },
-                                        operator: DOT@78..79 "." [] [],
+                                        operator_token: DOT@78..79 "." [] [],
                                         member: JsName {
                                             value_token: IDENT@79..83 "test" [] [],
                                         },

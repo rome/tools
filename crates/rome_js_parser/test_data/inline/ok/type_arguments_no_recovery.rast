@@ -29,14 +29,14 @@ JsModule {
                         value_token: IDENT@17..19 "i" [] [Whitespace(" ")],
                     },
                 },
-                operator: L_ANGLE@19..21 "<" [] [Whitespace(" ")],
+                operator_token: L_ANGLE@19..21 "<" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@21..22 "3" [] [],
                 },
             },
             second_semi_token: SEMICOLON@22..24 ";" [] [Whitespace(" ")],
             update: JsPreUpdateExpression {
-                operator: PLUS2@24..26 "++" [] [],
+                operator_token: PLUS2@24..26 "++" [] [],
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@26..27 "i" [] [],
                 },
@@ -53,7 +53,7 @@ JsModule {
                                         value_token: IDENT@30..41 "verify" [Newline("\n"), Whitespace("    ")] [],
                                     },
                                 },
-                                operator: DOT@41..42 "." [] [],
+                                operator_token: DOT@41..42 "." [] [],
                                 member: JsName {
                                     value_token: IDENT@42..53 "completions" [] [],
                                 },
@@ -84,7 +84,7 @@ JsModule {
                                                                         value_token: IDENT@75..77 "i" [] [Whitespace(" ")],
                                                                     },
                                                                 },
-                                                                operator: PLUS@77..79 "+" [] [Whitespace(" ")],
+                                                                operator_token: PLUS@77..79 "+" [] [Whitespace(" ")],
                                                                 right: JsNumberLiteralExpression {
                                                                     value_token: JS_NUMBER_LITERAL@79..80 "1" [] [],
                                                                 },
@@ -130,7 +130,7 @@ JsModule {
                                                                                         value_token: IDENT@145..149 "test" [] [],
                                                                                     },
                                                                                 },
-                                                                                operator: DOT@149..150 "." [] [],
+                                                                                operator_token: DOT@149..150 "." [] [],
                                                                                 member: JsName {
                                                                                     value_token: IDENT@150..156 "ranges" [] [],
                                                                                 },
@@ -183,7 +183,7 @@ JsModule {
                                                                                         value_token: IDENT@209..213 "test" [] [],
                                                                                     },
                                                                                 },
-                                                                                operator: DOT@213..214 "." [] [],
+                                                                                operator_token: DOT@213..214 "." [] [],
                                                                                 member: JsName {
                                                                                     value_token: IDENT@214..220 "ranges" [] [],
                                                                                 },

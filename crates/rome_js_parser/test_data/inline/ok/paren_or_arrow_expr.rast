@@ -50,7 +50,7 @@ JsModule {
                     left: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@21..23 "5" [] [Whitespace(" ")],
                     },
-                    operator: PLUS@23..25 "+" [] [Whitespace(" ")],
+                    operator_token: PLUS@23..25 "+" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@25..26 "5" [] [],
                     },

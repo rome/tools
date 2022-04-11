@@ -73,7 +73,7 @@ JsModule {
                     ],
                     r_tick_token: BACKTICK@32..33 "`" [] [],
                 },
-                operator: DOT@33..34 "." [] [],
+                operator_token: DOT@33..34 "." [] [],
                 member: JsName {
                     value_token: IDENT@34..41 "_string" [] [],
                 },

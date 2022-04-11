@@ -94,7 +94,7 @@ JsModule {
                                                 left: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@46..52 "\"foo\"" [] [Whitespace(" ")],
                                                 },
-                                                operator: PLUS@52..54 "+" [] [Whitespace(" ")],
+                                                operator_token: PLUS@52..54 "+" [] [Whitespace(" ")],
                                                 right: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@54..59 "\"bar\"" [] [],
                                                 },

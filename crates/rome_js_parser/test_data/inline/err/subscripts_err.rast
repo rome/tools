@@ -20,7 +20,7 @@ JsModule {
                                 r_paren_token: R_PAREN@4..5 ")" [] [],
                             },
                         },
-                        operator: QUESTIONDOT@5..7 "?." [] [],
+                        operator_token: QUESTIONDOT@5..7 "?." [] [],
                         member: JsName {
                             value_token: IDENT@7..10 "baz" [] [],
                         },
@@ -30,7 +30,7 @@ JsModule {
                     member: missing (required),
                     r_brack_token: R_BRACK@11..12 "]" [] [],
                 },
-                operator: DOT@12..13 "." [] [],
+                operator_token: DOT@12..13 "." [] [],
                 member: missing (required),
             },
             semicolon_token: SEMICOLON@13..14 ";" [] [],

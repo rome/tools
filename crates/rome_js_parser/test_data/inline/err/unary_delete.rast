@@ -25,7 +25,7 @@ JsModule {
                                 value_token: IDENT@21..24 "obj" [] [],
                             },
                         },
-                        operator: DOT@24..25 "." [] [],
+                        operator_token: DOT@24..25 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@25..26 "#" [] [],
                             value_token: IDENT@26..32 "member" [] [],
@@ -54,7 +54,7 @@ JsModule {
                                 r_paren_token: R_PAREN@46..47 ")" [] [],
                             },
                         },
-                        operator: DOT@47..48 "." [] [],
+                        operator_token: DOT@47..48 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@48..49 "#" [] [],
                             value_token: IDENT@49..55 "member" [] [],
@@ -74,7 +74,7 @@ JsModule {
                                 value_token: IDENT@64..67 "obj" [] [],
                             },
                         },
-                        operator: QUESTIONDOT@67..69 "?." [] [],
+                        operator_token: QUESTIONDOT@67..69 "?." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@69..70 "#" [] [],
                             value_token: IDENT@70..76 "member" [] [],
@@ -95,12 +95,12 @@ JsModule {
                                     value_token: IDENT@85..88 "obj" [] [],
                                 },
                             },
-                            operator: QUESTIONDOT@88..90 "?." [] [],
+                            operator_token: QUESTIONDOT@88..90 "?." [] [],
                             member: JsName {
                                 value_token: IDENT@90..95 "inner" [] [],
                             },
                         },
-                        operator: DOT@95..96 "." [] [],
+                        operator_token: DOT@95..96 "." [] [],
                         member: JsPrivateName {
                             hash_token: HASH@96..97 "#" [] [],
                             value_token: IDENT@97..103 "member" [] [],

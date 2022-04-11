@@ -142,7 +142,7 @@ JsModule {
                                                 type_arguments: missing (optional),
                                             },
                                         },
-                                        operator: PLUS@131..133 "+" [] [Whitespace(" ")],
+                                        operator_token: PLUS@131..133 "+" [] [Whitespace(" ")],
                                         right: JsNumberLiteralExpression {
                                             value_token: JS_NUMBER_LITERAL@133..135 "3" [] [Whitespace(" ")],
                                         },

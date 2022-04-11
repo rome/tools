@@ -63,7 +63,7 @@ JsModule {
                                     r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
                                 },
                             },
-                            operator: PLUS@59..61 "+" [] [Whitespace(" ")],
+                            operator_token: PLUS@59..61 "+" [] [Whitespace(" ")],
                             right: JsAwaitExpression {
                                 await_token: AWAIT_KW@61..67 "await" [] [Whitespace(" ")],
                                 argument: JsCallExpression {

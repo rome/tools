@@ -6,14 +6,14 @@ JsModule {
             expression: JsUnknownExpression {
                 items: [
                     JsUnaryExpression {
-                        operator: DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
+                        operator_token: DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
                         argument: JsStaticMemberExpression {
                             object: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@7..8 "a" [] [],
                                 },
                             },
-                            operator: DOT@8..9 "." [] [],
+                            operator_token: DOT@8..9 "." [] [],
                             member: JsName {
                                 value_token: IDENT@9..11 "b" [] [Whitespace(" ")],
                             },
@@ -31,7 +31,7 @@ JsModule {
             expression: JsUnknownExpression {
                 items: [
                     JsUnaryExpression {
-                        operator: VOID_KW@16..22 "void" [Newline("\n")] [Whitespace(" ")],
+                        operator_token: VOID_KW@16..22 "void" [Newline("\n")] [Whitespace(" ")],
                         argument: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@22..28 "ident" [] [Whitespace(" ")],
@@ -50,7 +50,7 @@ JsModule {
             expression: JsUnknownExpression {
                 items: [
                     JsUnaryExpression {
-                        operator: TYPEOF_KW@33..41 "typeof" [Newline("\n")] [Whitespace(" ")],
+                        operator_token: TYPEOF_KW@33..41 "typeof" [Newline("\n")] [Whitespace(" ")],
                         argument: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@41..47 "ident" [] [Whitespace(" ")],
@@ -69,7 +69,7 @@ JsModule {
             expression: JsUnknownExpression {
                 items: [
                     JsUnaryExpression {
-                        operator: MINUS@52..54 "-" [Newline("\n")] [],
+                        operator_token: MINUS@52..54 "-" [Newline("\n")] [],
                         argument: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@54..56 "3" [] [Whitespace(" ")],
                         },
@@ -86,7 +86,7 @@ JsModule {
             expression: JsUnknownExpression {
                 items: [
                     JsUnaryExpression {
-                        operator: PLUS@61..63 "+" [Newline("\n")] [],
+                        operator_token: PLUS@61..63 "+" [Newline("\n")] [],
                         argument: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@63..65 "3" [] [Whitespace(" ")],
                         },
@@ -103,7 +103,7 @@ JsModule {
             expression: JsUnknownExpression {
                 items: [
                     JsUnaryExpression {
-                        operator: TILDE@70..72 "~" [Newline("\n")] [],
+                        operator_token: TILDE@70..72 "~" [Newline("\n")] [],
                         argument: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@72..74 "3" [] [Whitespace(" ")],
                         },
@@ -120,7 +120,7 @@ JsModule {
             expression: JsUnknownExpression {
                 items: [
                     JsUnaryExpression {
-                        operator: BANG@79..81 "!" [Newline("\n")] [],
+                        operator_token: BANG@79..81 "!" [Newline("\n")] [],
                         argument: JsBooleanLiteralExpression {
                             value_token: TRUE_KW@81..86 "true" [] [Whitespace(" ")],
                         },

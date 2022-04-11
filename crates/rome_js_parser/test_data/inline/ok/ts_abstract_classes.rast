@@ -124,7 +124,7 @@ JsModule {
                                                 value_token: IDENT@145..152 "console" [] [],
                                             },
                                         },
-                                        operator: DOT@152..153 "." [] [],
+                                        operator_token: DOT@152..153 "." [] [],
                                         member: JsName {
                                             value_token: IDENT@153..156 "log" [] [],
                                         },
@@ -138,7 +138,7 @@ JsModule {
                                                 object: JsThisExpression {
                                                     this_token: THIS_KW@157..161 "this" [] [],
                                                 },
-                                                operator: DOT@161..162 "." [] [],
+                                                operator_token: DOT@161..162 "." [] [],
                                                 member: JsName {
                                                     value_token: IDENT@162..166 "name" [] [],
                                                 },
@@ -176,7 +176,7 @@ JsModule {
                                     object: JsThisExpression {
                                         this_token: THIS_KW@205..209 "this" [] [],
                                     },
-                                    operator: DOT@209..210 "." [] [],
+                                    operator_token: DOT@209..210 "." [] [],
                                     member: JsName {
                                         value_token: IDENT@210..214 "name" [] [],
                                     },

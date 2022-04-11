@@ -69,7 +69,7 @@ JsModule {
                                     left: JsNumberLiteralExpression {
                                         value_token: JS_NUMBER_LITERAL@54..60 "5" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
                                     },
-                                    operator: PLUS@60..62 "+" [] [Whitespace(" ")],
+                                    operator_token: PLUS@60..62 "+" [] [Whitespace(" ")],
                                     right: JsUnknownExpression {
                                         items: [
                                             HASH@62..63 "#" [] [],
@@ -96,7 +96,7 @@ JsModule {
                                             IDENT@82..87 "prop" [] [Whitespace(" ")],
                                         ],
                                     },
-                                    operator: PLUS@87..89 "+" [] [Whitespace(" ")],
+                                    operator_token: PLUS@87..89 "+" [] [Whitespace(" ")],
                                     right: JsNumberLiteralExpression {
                                         value_token: JS_NUMBER_LITERAL@89..90 "5" [] [],
                                     },

@@ -60,7 +60,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: BANG@48..50 "!" [Newline("\n")] [],
+                operator_token: BANG@48..50 "!" [Newline("\n")] [],
                 argument: JsFunctionExpression {
                     async_token: missing (optional),
                     function_token: FUNCTION_KW@50..59 "function" [] [Whitespace(" ")],

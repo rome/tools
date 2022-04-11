@@ -127,7 +127,7 @@ JsModule {
                                             value_token: IDENT@82..84 "a" [Newline("\n")] [],
                                         },
                                     },
-                                    operator: DOT@84..85 "." [] [],
+                                    operator_token: DOT@84..85 "." [] [],
                                     member: JsName {
                                         value_token: IDENT@85..89 "call" [] [],
                                     },
@@ -140,7 +140,7 @@ JsModule {
                                     r_paren_token: R_PAREN@90..91 ")" [] [],
                                 },
                             },
-                            operator: DOT@91..92 "." [] [],
+                            operator_token: DOT@91..92 "." [] [],
                             member: JsName {
                                 value_token: IDENT@92..97 "chain" [] [],
                             },
@@ -170,12 +170,12 @@ JsModule {
         JsExpressionStatement {
             expression: JsBinaryExpression {
                 left: JsPreUpdateExpression {
-                    operator: PLUS2@111..114 "++" [Newline("\n")] [],
+                    operator_token: PLUS2@111..114 "++" [Newline("\n")] [],
                     operand: JsIdentifierAssignment {
                         name_token: IDENT@114..120 "count" [] [Whitespace(" ")],
                     },
                 },
-                operator: EQ3@120..124 "===" [] [Whitespace(" ")],
+                operator_token: EQ3@120..124 "===" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@124..125 "3" [] [],
                 },

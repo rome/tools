@@ -49,12 +49,12 @@ JsModule {
                                                     },
                                                 ],
                                             },
-                                            operator: L_ANGLE@33..34 "<" [] [],
+                                            operator_token: L_ANGLE@33..34 "<" [] [],
                                             right: JsBinaryExpression {
                                                 left: JsRegexLiteralExpression {
                                                     value_token: JS_REGEX_LITERAL@34..42 "/div>; /" [] [],
                                                 },
-                                                operator: SLASH@42..44 "/" [] [Whitespace(" ")],
+                                                operator_token: SLASH@42..44 "/" [] [Whitespace(" ")],
                                                 right: JsIdentifierExpression {
                                                     name: JsReferenceIdentifier {
                                                         value_token: IDENT@44..47 "JSX" [] [],
@@ -126,14 +126,14 @@ JsModule {
                                                         },
                                                     ],
                                                 },
-                                                operator: L_ANGLE@109..110 "<" [] [],
+                                                operator_token: L_ANGLE@109..110 "<" [] [],
                                                 right: JsIdentifierExpression {
                                                     name: JsReferenceIdentifier {
                                                         value_token: IDENT@110..111 "a" [] [],
                                                     },
                                                 },
                                             },
-                                            operator: R_ANGLE@111..112 ">" [] [],
+                                            operator_token: R_ANGLE@111..112 ">" [] [],
                                             right: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
                                                     value_token: IDENT@112..113 "d" [] [],
@@ -175,7 +175,7 @@ JsModule {
                                                     },
                                                 ],
                                             },
-                                            operator: L_ANGLE@151..152 "<" [] [],
+                                            operator_token: L_ANGLE@151..152 "<" [] [],
                                             right: JsRegexLiteralExpression {
                                                 value_token: JS_REGEX_LITERAL@152..158 "/div>/" [] [],
                                             },
@@ -212,7 +212,7 @@ JsModule {
                                                     },
                                                 ],
                                             },
-                                            operator: L_ANGLE@258..259 "<" [] [],
+                                            operator_token: L_ANGLE@258..259 "<" [] [],
                                             right: JsRegexLiteralExpression {
                                                 value_token: JS_REGEX_LITERAL@259..268 "/string>/" [] [],
                                             },

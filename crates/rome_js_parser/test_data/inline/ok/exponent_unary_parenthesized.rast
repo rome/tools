@@ -7,14 +7,14 @@ JsModule {
                 left: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@0..1 "(" [] [],
                     expression: JsUnaryExpression {
-                        operator: DELETE_KW@1..8 "delete" [] [Whitespace(" ")],
+                        operator_token: DELETE_KW@1..8 "delete" [] [Whitespace(" ")],
                         argument: JsStaticMemberExpression {
                             object: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@8..9 "a" [] [],
                                 },
                             },
-                            operator: DOT@9..10 "." [] [],
+                            operator_token: DOT@9..10 "." [] [],
                             member: JsName {
                                 value_token: IDENT@10..11 "b" [] [],
                             },
@@ -22,7 +22,7 @@ JsModule {
                     },
                     r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
                 },
-                operator: STAR2@13..16 "**" [] [Whitespace(" ")],
+                operator_token: STAR2@13..16 "**" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@16..17 "2" [] [],
                 },
@@ -34,7 +34,7 @@ JsModule {
                 left: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@18..20 "(" [Newline("\n")] [],
                     expression: JsUnaryExpression {
-                        operator: VOID_KW@20..25 "void" [] [Whitespace(" ")],
+                        operator_token: VOID_KW@20..25 "void" [] [Whitespace(" ")],
                         argument: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@25..30 "ident" [] [],
@@ -43,7 +43,7 @@ JsModule {
                     },
                     r_paren_token: R_PAREN@30..32 ")" [] [Whitespace(" ")],
                 },
-                operator: STAR2@32..35 "**" [] [Whitespace(" ")],
+                operator_token: STAR2@32..35 "**" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@35..36 "2" [] [],
                 },
@@ -55,7 +55,7 @@ JsModule {
                 left: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@37..39 "(" [Newline("\n")] [],
                     expression: JsUnaryExpression {
-                        operator: TYPEOF_KW@39..46 "typeof" [] [Whitespace(" ")],
+                        operator_token: TYPEOF_KW@39..46 "typeof" [] [Whitespace(" ")],
                         argument: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@46..51 "ident" [] [],
@@ -64,7 +64,7 @@ JsModule {
                     },
                     r_paren_token: R_PAREN@51..53 ")" [] [Whitespace(" ")],
                 },
-                operator: STAR2@53..56 "**" [] [Whitespace(" ")],
+                operator_token: STAR2@53..56 "**" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@56..57 "2" [] [],
                 },
@@ -76,14 +76,14 @@ JsModule {
                 left: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@58..60 "(" [Newline("\n")] [],
                     expression: JsUnaryExpression {
-                        operator: MINUS@60..61 "-" [] [],
+                        operator_token: MINUS@60..61 "-" [] [],
                         argument: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@61..62 "3" [] [],
                         },
                     },
                     r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
                 },
-                operator: STAR2@64..67 "**" [] [Whitespace(" ")],
+                operator_token: STAR2@64..67 "**" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@67..68 "2" [] [],
                 },
@@ -95,14 +95,14 @@ JsModule {
                 left: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@69..71 "(" [Newline("\n")] [],
                     expression: JsUnaryExpression {
-                        operator: PLUS@71..72 "+" [] [],
+                        operator_token: PLUS@71..72 "+" [] [],
                         argument: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@72..73 "3" [] [],
                         },
                     },
                     r_paren_token: R_PAREN@73..75 ")" [] [Whitespace(" ")],
                 },
-                operator: STAR2@75..78 "**" [] [Whitespace(" ")],
+                operator_token: STAR2@75..78 "**" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@78..79 "2" [] [],
                 },
@@ -114,14 +114,14 @@ JsModule {
                 left: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@80..82 "(" [Newline("\n")] [],
                     expression: JsUnaryExpression {
-                        operator: TILDE@82..83 "~" [] [],
+                        operator_token: TILDE@82..83 "~" [] [],
                         argument: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@83..84 "3" [] [],
                         },
                     },
                     r_paren_token: R_PAREN@84..86 ")" [] [Whitespace(" ")],
                 },
-                operator: STAR2@86..89 "**" [] [Whitespace(" ")],
+                operator_token: STAR2@86..89 "**" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@89..90 "2" [] [],
                 },
@@ -133,14 +133,14 @@ JsModule {
                 left: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@91..93 "(" [Newline("\n")] [],
                     expression: JsUnaryExpression {
-                        operator: BANG@93..94 "!" [] [],
+                        operator_token: BANG@93..94 "!" [] [],
                         argument: JsBooleanLiteralExpression {
                             value_token: TRUE_KW@94..98 "true" [] [],
                         },
                     },
                     r_paren_token: R_PAREN@98..100 ")" [] [Whitespace(" ")],
                 },
-                operator: STAR2@100..103 "**" [] [Whitespace(" ")],
+                operator_token: STAR2@100..103 "**" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@103..104 "2" [] [],
                 },

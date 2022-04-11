@@ -9,10 +9,10 @@ JsModule {
                         value_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
                     },
                 },
-                operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
+                operator_token: QUESTION2@4..7 "??" [] [Whitespace(" ")],
                 right: JsBinaryExpression {
                     left: missing (required),
-                    operator: STAR@7..9 "*" [] [Whitespace(" ")],
+                    operator_token: STAR@7..9 "*" [] [Whitespace(" ")],
                     right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@9..10 "2" [] [],
                     },
@@ -23,14 +23,14 @@ JsModule {
         JsExpressionStatement {
             expression: JsLogicalExpression {
                 left: JsUnaryExpression {
-                    operator: BANG@11..13 "!" [Newline("\n")] [],
+                    operator_token: BANG@11..13 "!" [Newline("\n")] [],
                     argument: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@13..17 "foo" [] [Whitespace(" ")],
                         },
                     },
                 },
-                operator: AMP2@17..20 "&&" [] [Whitespace(" ")],
+                operator_token: AMP2@17..20 "&&" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@20..23 "bar" [] [],
@@ -57,7 +57,7 @@ JsModule {
                                     value_token: IDENT@29..33 "foo" [] [Whitespace(" ")],
                                 },
                             },
-                            operator: PIPE2@33..35 "||" [] [],
+                            operator_token: PIPE2@33..35 "||" [] [],
                             right: missing (required),
                         },
                     ],

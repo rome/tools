@@ -4,21 +4,21 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsPreUpdateExpression {
-                operator: PLUS2@0..3 "++" [] [Whitespace(" ")],
+                operator_token: PLUS2@0..3 "++" [] [Whitespace(" ")],
                 operand: missing (required),
             },
             semicolon_token: SEMICOLON@3..4 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsPreUpdateExpression {
-                operator: MINUS2@4..8 "--" [Newline("\n")] [Whitespace(" ")],
+                operator_token: MINUS2@4..8 "--" [Newline("\n")] [Whitespace(" ")],
                 operand: missing (required),
             },
             semicolon_token: SEMICOLON@8..9 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsUnaryExpression {
-                operator: MINUS@9..11 "-" [Newline("\n")] [],
+                operator_token: MINUS@9..11 "-" [Newline("\n")] [],
                 argument: missing (required),
             },
             semicolon_token: SEMICOLON@11..12 ";" [] [],

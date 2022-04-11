@@ -187,14 +187,14 @@ JsModule {
                                                     return_token: RETURN_KW@128..135 "return" [] [Whitespace(" ")],
                                                     argument: JsBinaryExpression {
                                                         left: JsUnaryExpression {
-                                                            operator: TYPEOF_KW@135..142 "typeof" [] [Whitespace(" ")],
+                                                            operator_token: TYPEOF_KW@135..142 "typeof" [] [Whitespace(" ")],
                                                             argument: JsIdentifierExpression {
                                                                 name: JsReferenceIdentifier {
                                                                     value_token: IDENT@142..144 "x" [] [Whitespace(" ")],
                                                                 },
                                                             },
                                                         },
-                                                        operator: EQ3@144..148 "===" [] [Whitespace(" ")],
+                                                        operator_token: EQ3@144..148 "===" [] [Whitespace(" ")],
                                                         right: JsStringLiteralExpression {
                                                             value_token: JS_STRING_LITERAL@148..157 "\"string\"" [] [Whitespace(" ")],
                                                         },
@@ -268,14 +268,14 @@ JsModule {
                                 return_token: RETURN_KW@194..201 "return" [] [Whitespace(" ")],
                                 argument: JsBinaryExpression {
                                     left: JsUnaryExpression {
-                                        operator: TYPEOF_KW@201..208 "typeof" [] [Whitespace(" ")],
+                                        operator_token: TYPEOF_KW@201..208 "typeof" [] [Whitespace(" ")],
                                         argument: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@208..210 "x" [] [Whitespace(" ")],
                                             },
                                         },
                                     },
-                                    operator: EQ3@210..214 "===" [] [Whitespace(" ")],
+                                    operator_token: EQ3@210..214 "===" [] [Whitespace(" ")],
                                     right: JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@214..222 "\"string\"" [] [],
                                     },

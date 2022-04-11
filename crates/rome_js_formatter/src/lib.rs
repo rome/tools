@@ -405,11 +405,10 @@ mod test {
     use rome_js_parser::{parse, SourceType};
 
     #[test]
-    #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
- const functionName1 = <T,>(arg) => false;
+a + b * c > 65 + 5;
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax.clone());
@@ -423,7 +422,7 @@ mod test {
         });
         assert_eq!(
             result.as_code(),
-            r#"let g = [[], [0, 1], [0, 1]];
+            r#"(a + (b * c)) > (65 + 5);
 "#
         );
     }

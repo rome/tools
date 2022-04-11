@@ -7,10 +7,13 @@ use rome_js_syntax::JsPreUpdateExpressionFields;
 
 impl ToFormatElement for JsPreUpdateExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsPreUpdateExpressionFields { operator, operand } = self.as_fields();
+        let JsPreUpdateExpressionFields {
+            operator_token,
+            operand,
+        } = self.as_fields();
 
         Ok(format_elements![
-            operator.format(formatter)?,
+            operator_token.format(formatter)?,
             operand.format(formatter)?,
         ])
     }

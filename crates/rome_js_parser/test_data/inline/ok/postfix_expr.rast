@@ -7,7 +7,7 @@ JsModule {
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@0..3 "foo" [] [],
                 },
-                operator: PLUS2@3..5 "++" [] [],
+                operator_token: PLUS2@3..5 "++" [] [],
             },
             semicolon_token: missing (optional),
         },
@@ -16,7 +16,7 @@ JsModule {
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@5..9 "foo" [Newline("\n")] [],
                 },
-                operator: MINUS2@9..11 "--" [] [],
+                operator_token: MINUS2@9..11 "--" [] [],
             },
             semicolon_token: missing (optional),
         },

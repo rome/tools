@@ -42,12 +42,12 @@ JsModule {
                             value_token: IDENT@23..25 "a" [Newline("\n")] [],
                         },
                     },
-                    operator: DOT@25..26 "." [] [],
+                    operator_token: DOT@25..26 "." [] [],
                     member: JsName {
                         value_token: IDENT@26..30 "test" [] [],
                     },
                 },
-                operator: QUESTIONDOT@30..32 "?." [] [],
+                operator_token: QUESTIONDOT@30..32 "?." [] [],
                 member: missing (required),
             },
             semicolon_token: SEMICOLON@32..33 ";" [] [],
@@ -61,15 +61,15 @@ JsModule {
                                 value_token: IDENT@33..35 "a" [Newline("\n")] [],
                             },
                         },
-                        operator: DOT@35..36 "." [] [],
+                        operator_token: DOT@35..36 "." [] [],
                         member: JsName {
                             value_token: IDENT@36..40 "test" [] [],
                         },
                     },
-                    operator: QUESTIONDOT@40..42 "?." [] [],
+                    operator_token: QUESTIONDOT@40..42 "?." [] [],
                     member: missing (required),
                 },
-                operator: L_ANGLE@42..43 "<" [] [],
+                operator_token: L_ANGLE@42..43 "<" [] [],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@43..45 "ab" [] [],
