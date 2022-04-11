@@ -1,6 +1,7 @@
 //! Generate SyntaxKind definitions as well as typed AST definitions for nodes and tokens.
 //! This is derived from rust-analyzer/xtask/codegen
 
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::vec;
 
 use super::{
@@ -71,10 +72,68 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
     Ok(())
 }
 
+fn check_unions(unions: &Vec<AstEnumSrc>) -> bool {
+    // Setup a map to find the indices of unions quickly
+    let idx_map: HashMap<&String, usize> = unions
+            .into_iter()
+            .enumerate()
+            .map(|(idx, en)| -> (&String, usize) { (&en.name, idx) })
+            .collect();
+
+    // Iterate over all unions
+    for union in unions {
+        let mut union_set: HashSet<&String> = HashSet::from([&union.name]);
+        let mut union_queue: VecDeque<&String> = VecDeque::new();
+        println!("******** START ********\nChecking {}, variants : {:?}", union.name, union.variants);
+
+        // Init queue for BFS
+        for v in &union.variants {
+            union_queue.push_back(v);
+        }
+
+        while !union_queue.is_empty() {
+            // Get the first variant in the queue
+            // We can unwrap because the queue is never empty at this stage
+            let variant = union_queue.pop_front().unwrap();
+            if idx_map.contains_key(variant) {
+                // The variant is a compound variant
+                // Get the struct from the map
+                let current_union = &unions[idx_map[variant]];
+                println!("SUB-ENUM CHECK : {}, variants : {:?}", current_union.name, current_union.variants);
+                // Try to insert the current variant into the set
+                if union_set.insert(&current_union.name) {
+                    // Add all variants into the BFS queue
+                    for child in &current_union.variants {
+                        union_queue.push_back(child);
+                    }
+                } else {
+                    // We either have a circular dependency or 2 variants referencing the same type
+                    println!("Variant '{variant}' used twice or circular dependency");
+                    return false;
+                }
+            } else {
+                // The variant isn't another enum
+                println!("BASE-VAR CHECK : {}", variant);
+                if !union_set.insert(variant) {
+                    // The variant already used
+                    println!("Variant '{variant}' used twice");
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true
+}
+
 pub(crate) fn load_js_ast() -> AstSrc {
     let grammar_src = include_str!("../js.ungram");
     let grammar: Grammar = grammar_src.parse().unwrap();
-    make_ast(&grammar)
+    let ast : AstSrc = make_ast(&grammar);
+    if !check_unions(&ast.unions) {
+        panic!("Invalid Unions") // TODO Graceful error, not sure how it should be handled ?
+    }
+    return ast;
 }
 
 pub(crate) fn load_css_ast() -> AstSrc {
