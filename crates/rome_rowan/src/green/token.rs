@@ -124,24 +124,6 @@ impl GreenTokenData {
         &text[start..end]
     }
 
-    #[inline]
-    pub fn text_leading_trivia(&self) -> &str {
-        let leading_len = self.leading_trivia().text_len();
-
-        let end: usize = leading_len.into();
-        let text = unsafe { std::str::from_utf8_unchecked(self.data.slice()) };
-        &text[0..end]
-    }
-
-    #[inline]
-    pub fn text_trailing_trivia(&self) -> &str {
-        let (_, trailing_len, total_len) = self.leading_trailing_total_len();
-
-        let start: usize = (total_len - trailing_len).into();
-        let text = unsafe { std::str::from_utf8_unchecked(self.data.slice()) };
-        &text[start..]
-    }
-
     /// Returns the length of the text covered by this token.
     #[inline]
     pub fn text_len(&self) -> TextSize {
@@ -216,8 +198,6 @@ impl ops::Deref for GreenToken {
 
 #[cfg(test)]
 mod tests {
-    use crate::syntax::TriviaPiece;
-
     use super::*;
     use quickcheck_macros::*;
 
@@ -235,9 +215,6 @@ mod tests {
 
         assert_eq!("let", t.text_trimmed());
 
-        assert_eq!("\n\t ", t.text_leading_trivia());
-        assert_eq!(" \t\t", t.text_trailing_trivia());
-
         assert_eq!("\n\t let \t\t", format!("{}", t));
     }
 
@@ -251,27 +228,6 @@ mod tests {
         let len = TextSize::from(len);
         assert_eq!(len, GreenTrivia::whitespace(len).text_len());
         assert_eq!(len, GreenTrivia::single_line_comment(len).text_len());
-    }
-
-    #[test]
-    fn many_text_len_dont_panic() {
-        let trivia = GreenTrivia::new(vec![
-            TriviaPiece::whitespace(u32::MAX),
-            TriviaPiece::single_line_comment(1),
-        ]);
-        assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
-    }
-
-    #[quickcheck]
-    fn many_text_len(lengths: Vec<u32>) {
-        let trivia: Vec<_> = lengths
-            .iter()
-            .map(|x| TriviaPiece::whitespace(*x))
-            .collect();
-        let trivia = GreenTrivia::new(trivia);
-
-        let total_len = lengths.iter().fold(0u32, |acc, x| acc.saturating_add(*x));
-        assert_eq!(TextSize::from(total_len), trivia.text_len());
     }
 
     #[test]

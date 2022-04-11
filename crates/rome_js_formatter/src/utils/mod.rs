@@ -248,15 +248,9 @@ pub(crate) fn has_formatter_suppressions(node: &JsSyntaxNode) -> bool {
         .pieces()
         .filter_map(|trivia| trivia.as_comments())
         .any(|comment| {
-            for suppression in parse_suppression_comment(comment.text()) {
-                for (category, _) in suppression.categories {
-                    if category == CATEGORY_FORMAT {
-                        return true;
-                    }
-                }
-            }
-
-            false
+            parse_suppression_comment(comment.text())
+                .flat_map(|suppression| suppression.categories)
+                .any(|category| category.0 == CATEGORY_FORMAT)
         })
 }
 

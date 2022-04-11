@@ -6,55 +6,53 @@ use text_size::{TextRange, TextSize};
 
 #[derive(PartialEq, Eq, Clone, Hash)]
 pub(crate) struct SyntaxTrivia {
-    offset: TextSize,
     token: SyntaxToken,
     is_leading: bool,
 }
 
 impl SyntaxTrivia {
-    pub(super) fn leading(offset: TextSize, token: SyntaxToken) -> Self {
+    pub(super) fn leading(token: SyntaxToken) -> Self {
         Self {
-            offset,
             token,
             is_leading: true,
         }
     }
 
-    pub(super) fn trailing(offset: TextSize, token: SyntaxToken) -> Self {
+    pub(super) fn trailing(token: SyntaxToken) -> Self {
         Self {
-            offset,
             token,
             is_leading: false,
         }
     }
 
     pub(crate) fn text(&self) -> &str {
-        let green_token = self.token.green();
-        if self.is_leading {
-            green_token.text_leading_trivia()
-        } else {
-            green_token.text_trailing_trivia()
-        }
+        let trivia_range = self.text_range();
+
+        let relative_range = TextRange::at(
+            trivia_range.start() - self.token.data().offset,
+            trivia_range.len(),
+        );
+
+        &self.token.text()[relative_range]
+    }
+
+    pub(crate) fn token(&self) -> &SyntaxToken {
+        &self.token
     }
 
     pub(crate) fn text_range(&self) -> TextRange {
-        let green_token = self.token.green();
-        if self.is_leading {
-            TextRange::at(self.offset, green_token.leading_trivia().text_len())
-        } else {
-            let (_, trailing_len, total_len) = green_token.leading_trailing_total_len();
-            TextRange::at(self.offset + total_len - trailing_len, trailing_len)
+        let length = self.green_trivia().text_len();
+        let token_range = self.token.text_range();
+
+        match self.is_leading {
+            true => TextRange::at(token_range.start(), length),
+            false => TextRange::at(token_range.end() - length, length),
         }
     }
 
     /// Get the number of TriviaPiece inside this trivia
     fn len(&self) -> usize {
         self.green_trivia().len()
-    }
-
-    /// Get the total length of text of the TriviaPieces inside this trivia
-    fn text_len(&self) -> TextSize {
-        self.green_trivia().text_len()
     }
 
     /// Gets index-th trivia piece when the token associated with this trivia was created.
@@ -79,18 +77,14 @@ impl SyntaxTrivia {
     /// of the trivia as [TextSize] and its data as [Trivia], which contains its length.
     /// See [SyntaxTriviaPiece].
     pub(crate) fn pieces(&self) -> SyntaxTriviaPiecesIterator {
+        let range = self.text_range();
         SyntaxTriviaPiecesIterator {
             raw: self.clone(),
             next_index: 0,
-            next_offset: self.offset,
+            next_offset: range.start(),
             end_index: self.len(),
-            end_offset: self.offset + self.text_len(),
+            end_offset: range.end(),
         }
-    }
-
-    #[inline]
-    pub(crate) fn offset(&self) -> TextSize {
-        self.offset
     }
 }
 
@@ -151,3 +145,29 @@ impl DoubleEndedIterator for SyntaxTriviaPiecesIterator {
 }
 
 impl ExactSizeIterator for SyntaxTriviaPiecesIterator {}
+
+#[cfg(test)]
+mod tests {
+    use crate::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    use crate::{SyntaxNode, TriviaPiece, TriviaPieceKind};
+
+    #[test]
+    fn trivia_text() {
+        let mut builder = RawSyntaxTreeBuilder::new();
+        builder.start_node(RawLanguageKind::ROOT);
+        builder.token_with_trivia(
+            RawLanguageKind::WHITESPACE,
+            "\t let \t\t",
+            &[TriviaPiece::new(TriviaPieceKind::Whitespace, 2)],
+            &[TriviaPiece::new(TriviaPieceKind::Whitespace, 3)],
+        );
+        builder.finish_node();
+
+        let root = builder.finish_green();
+        let syntax: SyntaxNode<RawLanguage> = SyntaxNode::new_root(root);
+
+        let token = syntax.first_token().unwrap();
+        assert_eq!(token.leading_trivia().text(), "\t ");
+        assert_eq!(token.trailing_trivia().text(), " \t\t");
+    }
+}
