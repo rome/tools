@@ -34,6 +34,7 @@ pub enum RawLanguageKind {
     LET_TOKEN = 13,
     CONDITION = 14,
     PLUS_TOKEN = 15,
+    WHITESPACE = 16,
     __LAST,
 }
 

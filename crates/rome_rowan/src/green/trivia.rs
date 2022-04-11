@@ -81,14 +81,13 @@ impl GreenTrivia {
 
     /// Returns the total length of all pieces
     pub fn text_len(&self) -> TextSize {
-        let mut len: Option<TextSize> = Some(TextSize::default());
+        let mut len = TextSize::default();
 
         for piece in self.pieces() {
-            len = len.and_then(|len| len.checked_add(piece.length))
+            len += piece.length
         }
 
-        // Realistically we will never have files bigger than usize::MAX, nor u32::MAX
-        len.unwrap_or_else(|| TextSize::from(u32::MAX))
+        len
     }
 
     /// Returns the pieces count

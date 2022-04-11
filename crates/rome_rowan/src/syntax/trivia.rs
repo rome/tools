@@ -172,6 +172,7 @@ impl<L: Language> SyntaxTriviaPieceSkipped<L> {
 #[derive(Clone)]
 pub struct SyntaxTriviaPiece<L: Language> {
     raw: cursor::SyntaxTrivia,
+    /// Absolute offset from the beginning of the file
     offset: TextSize,
     trivia: TriviaPiece,
     _p: PhantomData<L>,
@@ -193,14 +194,22 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// });
-    /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
-    /// assert_eq!("\n\t ", pieces[0].text());
+    /// let leading: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
+    /// assert_eq!("\n\t ", leading[0].text());
+    /// assert_eq!("/**/", leading[1].text());
+    ///
+    /// let trailing: Vec<_> = node.last_trailing_trivia().unwrap().pieces().collect();
+    /// assert_eq!(" \t\t", trailing[0].text());
     /// ```
     pub fn text(&self) -> &str {
-        let txt = self.raw.text();
-        let start = self.offset - self.raw.offset();
+        let token = self.raw.token();
+        let txt = token.text();
+
+        // Compute the offset relative to the token
+        let start = self.offset - token.text_range().start();
         let end = start + self.text_len();
 
+        // Don't use self.raw.text(). It iterates over all pieces
         &txt[start.into()..end.into()]
     }
 

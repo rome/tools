@@ -151,12 +151,12 @@ impl SyntaxToken {
 
     #[inline]
     pub fn leading_trivia(&self) -> SyntaxTrivia {
-        SyntaxTrivia::leading(self.data().offset, self.clone())
+        SyntaxTrivia::leading(self.clone())
     }
 
     #[inline]
     pub fn trailing_trivia(&self) -> SyntaxTrivia {
-        SyntaxTrivia::trailing(self.data().offset, self.clone())
+        SyntaxTrivia::trailing(self.clone())
     }
 }
 
