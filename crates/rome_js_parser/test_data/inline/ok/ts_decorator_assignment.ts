@@ -1,0 +1,2 @@
+@test(--a)
+class Test {}
