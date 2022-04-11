@@ -23,7 +23,7 @@ use rome_diagnostics::{
 };
 use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_js_formatter::{FormatOptions, IndentStyle, QuoteStyle};
+use rome_js_formatter::{FormatOptions, IndentStyle};
 use rome_js_parser::{parse, SourceType};
 
 use crate::{CliSession, Termination};
@@ -66,14 +66,8 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
-    match quote_style {
-        Some(QuoteStyle::Double) => {
-            options.quote_style = QuoteStyle::Double;
-        }
-        Some(QuoteStyle::Single) => {
-            options.quote_style = QuoteStyle::Single;
-        }
-        None => {}
+    if let Some(quote_style) = quote_style {
+        options.quote_style = quote_style;
     }
 
     let line_width = session

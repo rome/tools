@@ -29,7 +29,7 @@ pub(crate) fn to_format_options(
     };
 
     let custom_ident_style =
-        IndentStyle::from_str(workspace_settings.indent_style.as_str()).unwrap_or(IndentStyle::Tab);
+        IndentStyle::from_str(workspace_settings.indent_style.as_str()).unwrap_or_default();
 
     if custom_ident_style != default_options.indent_style {
         // merge settings with the ones provided by the editor
@@ -45,7 +45,7 @@ pub(crate) fn to_format_options(
     }
 
     let custom_quote_style =
-        QuoteStyle::from_str(workspace_settings.quote_style.as_str()).unwrap_or(QuoteStyle::Double);
+        QuoteStyle::from_str(workspace_settings.quote_style.as_str()).unwrap_or_default();
     if custom_quote_style != default_options.quote_style {
         default_options.quote_style = custom_quote_style;
         info!(

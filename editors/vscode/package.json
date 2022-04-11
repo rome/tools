@@ -100,6 +100,18 @@
 					"minimum": 1,
 					"maximum": 12
 				},
+				"rome.formatter.quoteStyle": {
+					"type": "string",
+					"enum": [
+						"Double",
+						"Single"
+					],
+					"default": "Double",
+					"markdownEnumDescriptions": [
+						"**BETA**: applies **double** quotes while formatting",
+						"**BETA**: applies **single** quotes while formatting"
+					]
+				},
 				"rome.analysis.enableDiagnostics": {
 					"type": "boolean",
 					"default": false,
