@@ -27,17 +27,17 @@ pub use self::unicode::generate_tables;
 
 const JS_SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
 const JS_AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";
-const JS_SYNTAX_FACTORY: &str = "crates/rome_js_syntax/src/generated/syntax_factory.rs";
+const JS_SYNTAX_FACTORY: &str = "crates/rome_js_factory/src/generated/syntax_factory.rs";
 const JS_AST_MACROS: &str = "crates/rome_js_syntax/src/generated/macros.rs";
 
 const CSS_SYNTAX_KINDS: &str = "crates/rome_css_syntax/src/generated/kind.rs";
 const CSS_AST_NODES: &str = "crates/rome_css_syntax/src/generated/nodes.rs";
-const CSS_SYNTAX_FACTORY: &str = "crates/rome_css_syntax/src/generated/syntax_factory.rs";
+const CSS_SYNTAX_FACTORY: &str = "crates/rome_css_factory/src/generated/syntax_factory.rs";
 const CSS_AST_MACROS: &str = "crates/rome_css_syntax/src/generated/macros.rs";
 
 const JSON_SYNTAX_KINDS: &str = "crates/rome_json_syntax/src/generated/kind.rs";
 const JSON_AST_NODES: &str = "crates/rome_json_syntax/src/generated/nodes.rs";
-const JSON_SYNTAX_FACTORY: &str = "crates/rome_json_syntax/src/generated/syntax_factory.rs";
+const JSON_SYNTAX_FACTORY: &str = "crates/rome_json_factory/src/generated/syntax_factory.rs";
 const JSON_AST_MACROS: &str = "crates/rome_json_syntax/src/generated/macros.rs";
 
 enum UpdateResult {

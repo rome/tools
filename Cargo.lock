@@ -1323,6 +1323,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_css_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_css_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_css_syntax"
 version = "0.0.0"
 dependencies = [
@@ -1370,6 +1378,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_js_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_js_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_js_formatter"
 version = "0.0.0"
 dependencies = [
@@ -1385,6 +1401,7 @@ dependencies = [
  "rome_diagnostics",
  "rome_formatter",
  "rome_fs",
+ "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
@@ -1408,6 +1425,7 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rome_diagnostics",
+ "rome_js_factory",
  "rome_js_syntax",
  "rome_rowan",
  "smallvec",
@@ -1419,8 +1437,17 @@ dependencies = [
 name = "rome_js_syntax"
 version = "0.1.4"
 dependencies = [
+ "rome_js_factory",
  "rome_rowan",
  "serde",
+]
+
+[[package]]
+name = "rome_json_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_json_syntax",
+ "rome_rowan",
 ]
 
 [[package]]

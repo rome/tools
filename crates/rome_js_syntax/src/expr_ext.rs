@@ -19,7 +19,8 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a string literal
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsLiteralMemberName};
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
@@ -34,7 +35,8 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a number literal
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsLiteralMemberName};
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
@@ -49,7 +51,8 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing an identifier
     ///
     /// ```
-    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsSyntaxTreeBuilder, JsLiteralMemberName};
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsLiteralMemberName};
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {

@@ -16,6 +16,7 @@ tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 rome_fs = { path = "../rome_fs" }
 rome_core = { path = "../rome_core" }
 rome_js_parser = { path = "../rome_js_parser" }
+rome_js_factory = { path = "../rome_js_factory" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tests_macros = { path = "../tests_macros" }

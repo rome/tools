@@ -39,7 +39,8 @@ pub trait FormatOptional {
     /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token};
     /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
-    /// use rome_js_syntax::{JsSyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::JsSyntaxKind;
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     ///
     /// let formatter = Formatter::default();
     /// let empty_token: Option<JsSyntaxToken> = None;
@@ -109,7 +110,8 @@ pub trait FormatOptional {
     /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token};
     /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
-    /// use rome_js_syntax::{JsSyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::JsSyntaxKind;
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     ///
     /// let formatter = Formatter::default();
     /// let empty_token: Option<JsSyntaxToken> = None;
@@ -158,7 +160,8 @@ pub trait FormatWith {
     ///
     /// ```
     /// use rome_js_formatter::{Formatter, token, format_elements, space_token};
-    /// use rome_js_syntax::{JsSyntaxNode, JsSyntaxTreeBuilder, JsSyntaxKind};
+    /// use rome_js_syntax::{JsSyntaxNode, JsSyntaxKind};
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_js_formatter::prelude::*;
     ///
     /// let mut builder = JsSyntaxTreeBuilder::new();

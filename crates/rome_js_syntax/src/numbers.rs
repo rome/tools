@@ -29,10 +29,8 @@ pub fn parse_js_number(num: &str) -> Option<f64> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        JsNumberLiteralExpression, JsSyntaxTreeBuilder, JS_NUMBER_LITERAL,
-        JS_NUMBER_LITERAL_EXPRESSION,
-    };
+    use rome_js_factory::syntax::{JsNumberLiteralExpression, JsSyntaxKind::*};
+    use rome_js_factory::JsSyntaxTreeBuilder;
     use rome_rowan::AstNode;
 
     fn assert_float(literal: &str, value: f64) {
