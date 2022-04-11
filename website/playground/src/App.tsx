@@ -8,8 +8,9 @@ import prettier from "prettier";
 import parserBabel from "prettier/esm/parser-babel";
 import IndentStyleSelect from "./IndentStyleSelect";
 import LineWidthInput from "./LineWidthInput";
-import { IndentStyle, SourceType } from "./types";
+import { IndentStyle, QuoteStyle, SourceType } from "./types";
 import SourceTypeSelect from "./SourceTypeSelect";
+import QuoteStyleSelect from "./QuoteStyleSelect";
 
 enum LoadingState { Loading, Success, Error }
 
@@ -20,6 +21,7 @@ function formatWithPrettier(
 		indentStyle: IndentStyle,
 		indentWidth: number,
 		language: "js" | "ts",
+		quoteStyle: QuoteStyle,
 	},
 ) {
 	try {
@@ -31,6 +33,7 @@ function formatWithPrettier(
 				printWidth: options.lineWidth,
 				parser: getPrettierParser(options.language),
 				plugins: [parserBabel],
+				singleQuote: options.quoteStyle === QuoteStyle.Single,
 			},
 		);
 	} catch (err) {
@@ -88,6 +91,9 @@ function App() {
 	const [indentStyle, setIndentStyle] = useState(
 		(searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
 	);
+	const [quoteStyle, setQuoteStyle] = useState(
+		(searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
+	);
 	const [indentWidth, setIndentWidth] = useState(
 		parseInt(searchParams.get("indentWidth") ?? "2"),
 	);
@@ -103,12 +109,21 @@ function App() {
 
 	useEffect(
 		() => {
-			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}&sourceType=${sourceType}#${encodeCode(
+			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&quoteStyle=${quoteStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}&sourceType=${sourceType}#${encodeCode(
 				code,
 			)}`;
 			window.history.pushState({ path: url }, "", url);
 		},
-		[lineWidth, indentStyle, indentWidth, code, isTypeScript, isJsx, sourceType],
+		[
+			lineWidth,
+			indentStyle,
+			quoteStyle,
+			indentWidth,
+			code,
+			isTypeScript,
+			isJsx,
+			sourceType,
+		],
 	);
 
 	switch (loadingState) {
@@ -125,6 +140,7 @@ function App() {
 				code,
 				lineWidth,
 				indentStyle === IndentStyle.Space ? indentWidth : undefined,
+				quoteStyle,
 				isTypeScript,
 				isJsx,
 				sourceType,
@@ -140,6 +156,10 @@ function App() {
 							setIndentWidth={setIndentWidth}
 							indentStyle={indentStyle}
 							setIndentStyle={setIndentStyle}
+						/>
+						<QuoteStyleSelect
+							quoteStyle={quoteStyle}
+							setQuoteStyle={setQuoteStyle}
 						/>
 						<SourceTypeSelect
 							isTypeScript={isTypeScript}
@@ -176,8 +196,7 @@ function App() {
 									<Tab selectedClassName="bg-slate-300">Formatter IR</Tab>
 									<Tab
 										disabled={errors === ""}
-										selectedClassName="bg-slate-300"
-									>
+										selectedClassName="bg-slate-300">
 										Errors
 									</Tab>
 								</TabList>
@@ -201,8 +220,17 @@ function App() {
 											lineWidth,
 											indentStyle,
 											indentWidth,
-											language: isTypeScript ? "ts" : "js"
+											language: isTypeScript ? "ts" : "js",
+											quoteStyle,
 										})}
+										key={
+											code +
+											lineWidth +
+											indentStyle +
+											indentWidth +
+											language +
+											quoteStyle
+										}
 										language={language}
 										placeholder="Prettier Output"
 										style={{
