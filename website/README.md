@@ -3,13 +3,13 @@
 ## Installation
 
 ```
-$ npm install
+$ pnpm install
 ```
 
 ## Local Development
 
 ```
-$ npm start
+$ pnpm start
 ```
 
 This command starts a local development server. Most changes are reflected live without having to restart the server.
@@ -17,7 +17,7 @@ This command starts a local development server. Most changes are reflected live 
 ## Build
 
 ```
-$ npm build
+$ pnpm build
 ```
 
 This command generates static content into the build directory and can be served using any static contents hosting service.

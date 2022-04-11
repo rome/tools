@@ -8,13 +8,11 @@ Profile-*.json
 **/target
 # Ignore test files that contributors could create locally
 /test.*
-# Ignore lockfiles
-yarn.lock
-npm-shrinkwrap.json
-pnpm-lock.yaml
+# Ignore third-party files
 **/node_modules
 **/dist
 npm/cli-*
+.pnpm-debug.log
 
 # https://github.com/nnethercote/dhat-rs output file
 dhat-heap.json

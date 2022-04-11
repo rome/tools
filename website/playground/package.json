@@ -4,7 +4,7 @@
 	"scripts": {
 		"start": "vite",
 		"preview": "vite preview",
-		"build": "npm run build:wasm && npm run build:js",
+		"build": "pnpm build:wasm && pnpm build:js",
 		"build:js": "tsc && vite build",
 		"build:wasm": "wasm-pack build --target web --release",
 		"format": "cargo run -p rome_cli --release -- format --write ./src"
@@ -30,6 +30,6 @@
 		"vite": "^2.7.2"
 	},
 	"engines": {
-		"npm": "^8"
+		"pnpm": "^6.32.4"
 	}
 }
