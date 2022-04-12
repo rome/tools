@@ -75,8 +75,8 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
 fn check_unions(unions: &[AstEnumSrc]) {
     // Setup a map to find the unions quickly
     let union_map: HashMap<_, _> = unions
-            .into_iter()
-            .map(|en| -> (&str, &AstEnumSrc) { (&en.name.as_str(), en) })
+            .iter()
+            .map(|en| -> (&str, &AstEnumSrc) { (en.name.as_str(), en) })
             .collect();
 
     // Iterate over all unions
@@ -86,7 +86,7 @@ fn check_unions(unions: &[AstEnumSrc]) {
         let mut union_queue: VecDeque<&str> = VecDeque::new();
 
         // Init queue for BFS
-        union_queue.extend::<Vec<&str>>(union.variants.iter().map(|x| -> &str { &x.as_str() }).collect());
+        union_queue.extend::<Vec<&str>>(union.variants.iter().map(|x| -> &str { x.as_str() }).collect());
 
         // Loop over the queue getting the first variant
         while let Some(variant) = union_queue.pop_front() {
@@ -124,7 +124,7 @@ pub(crate) fn load_js_ast() -> AstSrc {
     let grammar: Grammar = grammar_src.parse().unwrap();
     let ast : AstSrc = make_ast(&grammar);
     check_unions(&ast.unions);
-    return ast;
+    ast
 }
 
 pub(crate) fn load_css_ast() -> AstSrc {
