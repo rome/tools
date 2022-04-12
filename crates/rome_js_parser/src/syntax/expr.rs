@@ -1010,7 +1010,7 @@ fn parse_call_arguments(p: &mut Parser) -> ParsedSyntax {
 // ((foo))
 // (foo)
 
-fn parse_parenthesized_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_parenthesized_expression(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
@@ -1018,6 +1018,8 @@ fn parse_parenthesized_expression(p: &mut Parser, context: ExpressionContext) ->
     let m = p.start();
     p.bump(T!['(']);
 
+    // test for_with_in_in_parenthesized_expression
+    // for((true,"selectionStart"in true);;) {}
     if p.at(T![')']) {
         // test_err empty_parenthesized_expression
         // ();
@@ -1029,7 +1031,7 @@ fn parse_parenthesized_expression(p: &mut Parser, context: ExpressionContext) ->
         let first = parse_assignment_expression_or_higher(p, ExpressionContext::default());
 
         if p.at(T![,]) {
-            parse_sequence_expression_recursive(p, first, context)
+            parse_sequence_expression_recursive(p, first, ExpressionContext::default())
                 .or_add_diagnostic(p, expected_expression);
         }
     }
@@ -1170,7 +1172,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         // test grouping_expr
         // ((foo))
         // (foo)
-        T!['('] => parse_parenthesized_expression(p, context).unwrap(),
+        T!['('] => parse_parenthesized_expression(p).unwrap(),
         T!['['] => parse_array_expr(p).unwrap(),
         T!['{'] if context.is_object_expression_allowed() => parse_object_expression(p).unwrap(),
 
