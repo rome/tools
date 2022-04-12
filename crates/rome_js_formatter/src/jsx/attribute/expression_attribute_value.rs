@@ -19,7 +19,9 @@ impl ToFormatElement for JsxExpressionAttributeValue {
 
         if matches!(
             expression,
-            JsAnyExpression::JsObjectExpression(_) | JsAnyExpression::JsArrayExpression(_)
+            JsAnyExpression::JsObjectExpression(_)
+                | JsAnyExpression::JsArrayExpression(_)
+                | JsAnyExpression::JsCallExpression(_)
         ) {
             Ok(group_elements(format_elements![
                 l_curly_token.format(formatter)?,
