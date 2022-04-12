@@ -73,11 +73,10 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
 }
 
 fn check_unions(unions: &[AstEnumSrc]) {
-    // Setup a map to find the indices of unions quickly
-    let idx_map: HashMap<_, _> = unions
+    // Setup a map to find the unions quickly
+    let union_map: HashMap<_, _> = unions
             .into_iter()
-            .enumerate()
-            .map(|(idx, en)| -> (&str, usize) { (&en.name.as_str(), idx) })
+            .map(|en| -> (&str, &AstEnumSrc) { (&en.name.as_str(), en) })
             .collect();
 
     // Iterate over all unions
@@ -91,10 +90,10 @@ fn check_unions(unions: &[AstEnumSrc]) {
 
         // Loop over the queue getting the first variant
         while let Some(variant) = union_queue.pop_front() {
-            if idx_map.contains_key(variant) {
+            if union_map.contains_key(variant) {
                 // The variant is a compound variant
                 // Get the struct from the map
-                let current_union = &unions[idx_map[variant]];
+                let current_union = union_map[variant];
                 stack_string.push_str(&format!("\nSUB-ENUM CHECK : {}, variants : {:?}", current_union.name, current_union.variants));
                 // Try to insert the current variant into the set
                 if union_set.insert(&current_union.name) {
