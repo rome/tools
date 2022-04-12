@@ -266,6 +266,7 @@ function App() {
 	}
 }
 
+
 // See https://developer.mozilla.org/en-US/docs/Web/API/btoa#unicode_strings
 function encodeCode(code: string): string {
 	return btoa(toBinary(code));

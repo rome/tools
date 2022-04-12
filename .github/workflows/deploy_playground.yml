@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - 'crates'
-      - 'website/playground'
+      - "crates/*"
+      - "website/playground/*"
     branches:
       - main
 
