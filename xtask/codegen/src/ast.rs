@@ -75,18 +75,27 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
 fn check_unions(unions: &[AstEnumSrc]) {
     // Setup a map to find the unions quickly
     let union_map: HashMap<_, _> = unions
-            .iter()
-            .map(|en| -> (&str, &AstEnumSrc) { (en.name.as_str(), en) })
-            .collect();
+        .iter()
+        .map(|en| -> (&str, &AstEnumSrc) { (en.name.as_str(), en) })
+        .collect();
 
     // Iterate over all unions
     for union in unions {
-        let mut stack_string = format!("\n******** START ERROR STACK ********\nChecking {}, variants : {:?}", union.name, union.variants);
+        let mut stack_string = format!(
+            "\n******** START ERROR STACK ********\nChecking {}, variants : {:?}",
+            union.name, union.variants
+        );
         let mut union_set: HashSet<&str> = HashSet::from([union.name.as_str()]);
         let mut union_queue: VecDeque<&str> = VecDeque::new();
 
         // Init queue for BFS
-        union_queue.extend::<Vec<&str>>(union.variants.iter().map(|x| -> &str { x.as_str() }).collect());
+        union_queue.extend::<Vec<&str>>(
+            union
+                .variants
+                .iter()
+                .map(|x| -> &str { x.as_str() })
+                .collect(),
+        );
 
         // Loop over the queue getting the first variant
         while let Some(variant) = union_queue.pop_front() {
@@ -94,7 +103,10 @@ fn check_unions(unions: &[AstEnumSrc]) {
                 // The variant is a compound variant
                 // Get the struct from the map
                 let current_union = union_map[variant];
-                stack_string.push_str(&format!("\nSUB-ENUM CHECK : {}, variants : {:?}", current_union.name, current_union.variants));
+                stack_string.push_str(&format!(
+                    "\nSUB-ENUM CHECK : {}, variants : {:?}",
+                    current_union.name, current_union.variants
+                ));
                 // Try to insert the current variant into the set
                 if union_set.insert(&current_union.name) {
                     // Add all variants into the BFS queue
@@ -122,7 +134,7 @@ fn check_unions(unions: &[AstEnumSrc]) {
 pub(crate) fn load_js_ast() -> AstSrc {
     let grammar_src = include_str!("../js.ungram");
     let grammar: Grammar = grammar_src.parse().unwrap();
-    let ast : AstSrc = make_ast(&grammar);
+    let ast: AstSrc = make_ast(&grammar);
     check_unions(&ast.unions);
     ast
 }
