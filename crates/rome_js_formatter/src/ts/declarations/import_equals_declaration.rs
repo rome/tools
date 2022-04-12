@@ -22,8 +22,8 @@ impl ToFormatElement for TsImportEqualsDeclaration {
                 import_token.format(formatter)?,
                 space_token(),
                 type_token.format_with_or_empty(formatter, |token| format_elements![
+                    token,
                     space_token(),
-                    token
                 ])?,
                 id.format(formatter)?,
                 space_token(),
