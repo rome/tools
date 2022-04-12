@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 149
+assertion_line: 153
 expression: template-literals.js
 
 ---
@@ -167,19 +167,19 @@ f(`${{ a: 4, b: 9 }}`);
 const makeBody = (store, assets, html) =>
   `<!doctype html>${ReactDOMServer.renderToStaticMarkup(
     <Html
-        headScripts={compact([ assets.javascript.head ])}
-        headStyles={compact([ assets.styles.body, assets.styles.head ])}
-        bodyScripts={compact([ assets.javascript.body ])}
-        bodyStyles={[]}
-        stringScripts={[
+      headScripts={compact([ assets.javascript.head ])}
+      headStyles={compact([ assets.styles.body, assets.styles.head ])}
+      bodyScripts={compact([ assets.javascript.body ])}
+      bodyStyles={[]}
+      stringScripts={[
           `window.__INITIAL_STATE__ = ${
             JSON.stringify(store.getState(), null, 2)
           };`,
         ]}
-        content={[
+      content={[
           { id: 'app-container', dangerouslySetInnerHTML: { __html: html } },
         ]}
-      />,
+    />,
   )}`;
 
 // https://github.com/prettier/prettier/issues/1626#issue-229655106
