@@ -167,18 +167,16 @@ f(`${{ a: 4, b: 9 }}`);
 const makeBody = (store, assets, html) =>
   `<!doctype html>${ReactDOMServer.renderToStaticMarkup(
     <Html
-      headScripts={compact([ assets.javascript.head ])}
-      headStyles={compact([ assets.styles.body, assets.styles.head ])}
-      bodyScripts={compact([ assets.javascript.body ])}
+      headScripts={compact([assets.javascript.head])}
+      headStyles={compact([assets.styles.body, assets.styles.head])}
+      bodyScripts={compact([assets.javascript.body])}
       bodyStyles={[]}
       stringScripts={[
-          `window.__INITIAL_STATE__ = ${
-            JSON.stringify(store.getState(), null, 2)
-          };`,
-        ]}
+        `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState(), null, 2)};`,
+      ]}
       content={[
-          { id: 'app-container', dangerouslySetInnerHTML: { __html: html } },
-        ]}
+        { id: "app-container", dangerouslySetInnerHTML: { __html: html } },
+      ]}
     />,
   )}`;
 

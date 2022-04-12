@@ -1,9 +1,11 @@
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, hard_group_elements, soft_block_indent, FormatElement, FormatResult,
-    Formatter, ToFormatElement,
+    format_elements, soft_block_indent, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rome_js_syntax::{JsxExpressionAttributeValue, JsxExpressionAttributeValueFields};
+use rome_formatter::group_elements;
+use rome_js_syntax::{
+    JsAnyExpression, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
+};
 
 impl ToFormatElement for JsxExpressionAttributeValue {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -13,10 +15,23 @@ impl ToFormatElement for JsxExpressionAttributeValue {
             r_curly_token,
         } = self.as_fields();
 
-        Ok(hard_group_elements(format_elements![
-            l_curly_token.format(formatter)?,
-            soft_block_indent(expression.format(formatter)?),
-            r_curly_token.format(formatter)?,
-        ]))
+        let expression = expression?;
+
+        if matches!(
+            expression,
+            JsAnyExpression::JsObjectExpression(_) | JsAnyExpression::JsArrayExpression(_)
+        ) {
+            Ok(group_elements(format_elements![
+                l_curly_token.format(formatter)?,
+                expression.format(formatter)?,
+                r_curly_token.format(formatter)?,
+            ]))
+        } else {
+            Ok(group_elements(format_elements![
+                l_curly_token.format(formatter)?,
+                soft_block_indent(expression.format(formatter)?),
+                r_curly_token.format(formatter)?,
+            ]))
+        }
     }
 }
