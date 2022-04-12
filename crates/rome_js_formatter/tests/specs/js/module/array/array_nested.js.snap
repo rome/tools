@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: array_nested.js
+
 ---
 # Input
 let a = [[]];
@@ -52,6 +54,7 @@ let o1 = [{ a, b }, { a, b, c }];
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 let a = [[]];
 let b = [[], []];

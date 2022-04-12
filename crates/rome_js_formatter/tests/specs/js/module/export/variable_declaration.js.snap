@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: variable_declaration.js
+
 ---
 # Input
 export let a, d, c;
@@ -13,6 +15,7 @@ export const foofoofoofoofoofoofoo = "ahah", barbarbarbarbarbarbar = {}, loremlo
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 export let a, d, c;
 

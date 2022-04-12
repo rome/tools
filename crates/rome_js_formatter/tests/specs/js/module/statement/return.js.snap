@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: return.js
+
 ---
 # Input
 function f1() {
@@ -17,6 +19,7 @@ function f2() {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 function f1() {
 	return 1;

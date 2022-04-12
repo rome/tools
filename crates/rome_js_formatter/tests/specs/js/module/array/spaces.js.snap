@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: spaces.js
+
 ---
 # Input
 let a = [,];
@@ -16,6 +18,7 @@ let e = [2,2,1,3];
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 let a = [,];
 let b = [, ,];

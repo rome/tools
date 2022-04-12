@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: suppressions.ts
+
 ---
 # Input
 
@@ -17,6 +19,7 @@ interface Suppressions {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 interface Suppressions {
 	// rome-ignore format: test

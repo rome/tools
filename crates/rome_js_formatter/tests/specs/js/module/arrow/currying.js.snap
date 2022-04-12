@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: currying.js
+
 ---
 # Input
 const fn = b => c => d => {
@@ -28,6 +30,7 @@ const middleware = options => (req, res, next) => {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 const fn = (b) => (c) => (d) => {
 	return 3;

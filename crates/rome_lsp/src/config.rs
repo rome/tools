@@ -18,6 +18,8 @@ pub struct FormatterWorkspaceSettings {
     pub quote_style: String,
     /// The number of spaces, specified by the user and applied only when using Spaces
     pub space_quantity: u8,
+    /// Enables the experimental sorting of imports
+    pub unstable_sort_imports: bool,
 }
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]

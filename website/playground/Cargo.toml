@@ -10,6 +10,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2.79"
+rome_formatter = { path = "../../crates/rome_formatter" }
 rome_js_formatter = { path = "../../crates/rome_js_formatter" }
 rome_js_parser = { path = "../../crates/rome_js_parser" }
 rome_diagnostics = { path = "../../crates/rome_diagnostics" }

@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: comments.js
+
 ---
 # Input
 // import {
@@ -67,6 +69,7 @@ function name(very, long, list, of_parameters, to, insert, a_break, in_the, para
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 // import {
 //     func, // trailing comma removal

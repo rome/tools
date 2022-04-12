@@ -22,6 +22,7 @@ OPTIONS:
     --indent-size <number>        If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
     --line-width <number>         Determine how many characters the formatter is allowed to print in a single line (default: 80)
     --quote-style <single|double> Determine whether the formatter should use single or double quotes for strings (default: double)
+    --unstable-sort-imports       Unstable feature that allows to sort import statements
 ";
 
 pub(crate) fn help(command: Option<&str>) -> Result<(), Termination> {

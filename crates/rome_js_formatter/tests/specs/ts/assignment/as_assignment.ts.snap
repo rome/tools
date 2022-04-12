@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: as_assignment.ts
+
 ---
 # Input
 let binding;
@@ -16,6 +18,7 @@ let binding;
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 let binding;
 

@@ -1,7 +1,7 @@
 use crate::capabilities::server_capabilities;
 use crate::handlers;
 use crate::handlers::formatting::{
-    to_format_options, FormatOnTypeParams, FormatParams, FormatRangeParams,
+    to_format_options, to_unstable_features, FormatOnTypeParams, FormatParams, FormatRangeParams,
 };
 use crate::line_index::LineIndex;
 use crate::requests::syntax_tree::{syntax_tree, SyntaxTreePayload, SYNTAX_TREE_REQUEST};
@@ -129,6 +129,7 @@ impl LanguageServer for LSPServer {
                 text: &doc.text,
                 source_type: doc.get_source_type(),
                 format_options: to_format_options(&params.options, &workspace_settings.formatter),
+                format_unstable_feature: to_unstable_features(&workspace_settings.formatter),
                 workspace_settings,
                 file_id: doc.file_id(),
             })
@@ -150,6 +151,7 @@ impl LanguageServer for LSPServer {
                 text: doc.text.as_ref(),
                 file_id: doc.file_id(),
                 format_options: to_format_options(&params.options, &workspace_settings.formatter),
+                format_unstable_feature: to_unstable_features(&workspace_settings.formatter),
                 range: params.range,
                 workspace_settings,
                 source_type: doc.get_source_type(),
@@ -172,6 +174,7 @@ impl LanguageServer for LSPServer {
                 text: doc.text.as_ref(),
                 file_id: doc.file_id(),
                 format_options: to_format_options(&params.options, &workspace_settings.formatter),
+                format_unstable_feature: to_unstable_features(&workspace_settings.formatter),
                 position: params.text_document_position.position,
                 workspace_settings,
                 source_type: doc.get_source_type(),

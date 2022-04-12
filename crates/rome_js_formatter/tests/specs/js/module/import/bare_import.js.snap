@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: bare_import.js
+
 ---
 # Input
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
@@ -30,6 +32,7 @@ import "very_long_import_very_long_import_very" assert {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert {

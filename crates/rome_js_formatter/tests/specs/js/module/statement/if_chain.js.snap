@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: if_chain.js
+
 ---
 # Input
 if(1)1;else if(2)2;else 3;
@@ -14,6 +16,7 @@ if(very_long_condition_1) very_long_statement_1(); else if (very_long_condition_
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 if (1) {
 	1;

@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: non_null_expression.ts
+
 ---
 # Input
 let a: any;
@@ -12,6 +14,7 @@ let  b  =   a   !;
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 let a: any;
 let b = a!;

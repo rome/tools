@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: type_assertion_assignment.ts
+
 ---
 # Input
 let x;
@@ -25,6 +27,7 @@ for (<boolean> x of []) {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 let x;
 

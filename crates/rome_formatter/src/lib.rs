@@ -198,6 +198,23 @@ impl Display for FormatOptions {
     }
 }
 
+/// Data structure that holds information of possible experimental features inside the formatter
+///  
+/// If an unstable feature becomes stable, it should be removed from there and the new logic should
+/// become the norm
+#[derive(Debug, Default, Clone, Copy)]
+pub struct FormatUnstableFeatures {
+    /// A feature to sort imports in a consistent way
+    pub unstable_sort_imports: bool,
+}
+
+impl Display for FormatUnstableFeatures {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        writeln!(f, "Unstable sort imports: {}", self.unstable_sort_imports)?;
+        Ok(())
+    }
+}
+
 /// Lightweight sourcemap marker between source and output tokens
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct SourceMarker {

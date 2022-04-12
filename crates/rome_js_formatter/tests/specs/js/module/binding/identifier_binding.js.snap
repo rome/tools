@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: identifier_binding.js
+
 ---
 # Input
 let x = y
@@ -14,6 +16,7 @@ let abcde = "very long value that will cause a line break", fghij = "this should
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 let x = y;
 

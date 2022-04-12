@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
 expression: for_in.js
+
 ---
 # Input
 for (a in b) {}
@@ -17,6 +19,7 @@ for (a in b) { // trailing
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Unstable sort imports: false
 -----
 for (a in b) {}
 
