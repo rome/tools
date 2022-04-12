@@ -9132,6 +9132,7 @@ pub enum JsAnyArrayAssignmentPatternElement {
     JsArrayAssignmentPatternRestElement(JsArrayAssignmentPatternRestElement),
     JsArrayHole(JsArrayHole),
     JsAssignmentWithDefault(JsAssignmentWithDefault),
+    JsUnknownAssignment(JsUnknownAssignment),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayBindingPatternElement {
@@ -18340,12 +18341,18 @@ impl From<JsAssignmentWithDefault> for JsAnyArrayAssignmentPatternElement {
         JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(node)
     }
 }
+impl From<JsUnknownAssignment> for JsAnyArrayAssignmentPatternElement {
+    fn from(node: JsUnknownAssignment) -> JsAnyArrayAssignmentPatternElement {
+        JsAnyArrayAssignmentPatternElement::JsUnknownAssignment(node)
+    }
+}
 impl AstNode<Language> for JsAnyArrayAssignmentPatternElement {
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT
             | JS_ARRAY_HOLE
-            | JS_ASSIGNMENT_WITH_DEFAULT => true,
+            | JS_ASSIGNMENT_WITH_DEFAULT
+            | JS_UNKNOWN_ASSIGNMENT => true,
             k if JsAnyAssignmentPattern::can_cast(k) => true,
             _ => false,
         }
@@ -18365,6 +18372,11 @@ impl AstNode<Language> for JsAnyArrayAssignmentPatternElement {
                     JsAssignmentWithDefault { syntax },
                 )
             }
+            JS_UNKNOWN_ASSIGNMENT => {
+                JsAnyArrayAssignmentPatternElement::JsUnknownAssignment(JsUnknownAssignment {
+                    syntax,
+                })
+            }
             _ => {
                 if let Some(js_any_assignment_pattern) = JsAnyAssignmentPattern::cast(syntax) {
                     return Some(JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(
@@ -18383,6 +18395,7 @@ impl AstNode<Language> for JsAnyArrayAssignmentPatternElement {
             }
             JsAnyArrayAssignmentPatternElement::JsArrayHole(it) => &it.syntax,
             JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => &it.syntax,
+            JsAnyArrayAssignmentPatternElement::JsUnknownAssignment(it) => &it.syntax,
             JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(it) => it.syntax(),
         }
     }
@@ -18400,6 +18413,9 @@ impl std::fmt::Debug for JsAnyArrayAssignmentPatternElement {
             JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
+            JsAnyArrayAssignmentPatternElement::JsUnknownAssignment(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
         }
     }
 }
@@ -18412,6 +18428,7 @@ impl From<JsAnyArrayAssignmentPatternElement> for SyntaxNode {
             }
             JsAnyArrayAssignmentPatternElement::JsArrayHole(it) => it.into(),
             JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => it.into(),
+            JsAnyArrayAssignmentPatternElement::JsUnknownAssignment(it) => it.into(),
         }
     }
 }
