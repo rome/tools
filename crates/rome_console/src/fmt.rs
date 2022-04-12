@@ -67,17 +67,46 @@ where
 {
     fn write_str(&mut self, elements: &MarkupElements, content: &str) -> io::Result<()> {
         with_format(&mut self.0, elements, |writer| {
-            SanitizeAdapter(writer)
-                .write_str(content)
-                .map_err(|_| io::Error::new(io::ErrorKind::Other, "formatter error"))
+            let mut adapter = SanitizeAdapter {
+                writer,
+                error: Ok(()),
+            };
+
+            match adapter.write_str(content) {
+                Ok(()) => Ok(()),
+                Err(..) => {
+                    if adapter.error.is_err() {
+                        adapter.error
+                    } else {
+                        // SanitizeAdapter can only fail if the underlying
+                        // writer returns an error
+                        unreachable!()
+                    }
+                }
+            }
         })
     }
 
     fn write_fmt(&mut self, elements: &MarkupElements, content: fmt::Arguments) -> io::Result<()> {
         with_format(&mut self.0, elements, |writer| {
-            SanitizeAdapter(writer)
-                .write_fmt(content)
-                .map_err(|_| io::Error::new(io::ErrorKind::Other, "formatter error"))
+            let mut adapter = SanitizeAdapter {
+                writer,
+                error: Ok(()),
+            };
+
+            match adapter.write_fmt(content) {
+                Ok(()) => Ok(()),
+                Err(..) => {
+                    if adapter.error.is_err() {
+                        adapter.error
+                    } else {
+                        Err(io::Error::new(
+                            io::ErrorKind::Other,
+                            "a Display formatter returned an error",
+                        ))
+                    }
+                }
+            }
         })
     }
 }
@@ -85,7 +114,10 @@ where
 /// Adapter [fmt::Write] calls to [io::Write] with sanitization,
 /// implemented as an internal struct to avoid exposing [fmt::Write] on
 /// [Termcolor]
-struct SanitizeAdapter<W>(W);
+struct SanitizeAdapter<W> {
+    writer: W,
+    error: io::Result<()>,
+}
 
 impl<W: io::Write> fmt::Write for SanitizeAdapter<W> {
     fn write_str(&mut self, content: &str) -> fmt::Result {
@@ -102,9 +134,10 @@ impl<W: io::Write> fmt::Write for SanitizeAdapter<W> {
             };
 
             item.encode_utf8(&mut buffer);
-            self.0
-                .write_all(&buffer[..item.len_utf8()])
-                .map_err(|_| fmt::Error)?;
+            if let Err(err) = self.writer.write_all(&buffer[..item.len_utf8()]) {
+                self.error = Err(err);
+                return Err(fmt::Error);
+            }
         }
 
         Ok(())
@@ -312,8 +345,13 @@ mod tests {
         let mut buffer = Vec::new();
 
         {
-            let mut adapter = SanitizeAdapter(&mut buffer);
+            let mut adapter = SanitizeAdapter {
+                writer: &mut buffer,
+                error: Ok(()),
+            };
+
             adapter.write_str(INPUT).unwrap();
+            adapter.error.unwrap();
         }
 
         assert_eq!(from_utf8(&buffer).unwrap(), OUTPUT);
