@@ -377,51 +377,36 @@ impl FlattenItems {
 
         let right = binary_like_expression.right()?;
 
-        // Format the parent operator
-        let (trailing_separator, parent_operator_has_comments) = if let Some(parent_operator) =
-            parent_operator.as_ref()
-        {
-            let previous_operator_has_trailing_comments = parent_operator.has_trailing_comments();
-            (
-                if previous_operator_has_trailing_comments {
-                    TrailingTerminator::HardLineBreak
-                } else {
-                    TrailingTerminator::None
-                },
-                // Here we care only about trailing comments that belong to the previous operator
-                previous_operator_has_trailing_comments || right.syntax().contains_comments(),
-            )
-        } else {
-            (
-                TrailingTerminator::None,
-                // Here we want to check only leading comments;
-                // trailing comments will be added after the end of the whole expression.
-                // We want to handle cases like `lorem && (3 + 5 == 9) // comment`.
-                // This part is a signal to the formatter to tell it if the whole expression should break.
-                right.syntax().has_leading_comments(),
-            )
-        };
-
         // Format the right node
         let (formatted_right, parenthesized) =
             format_with_or_without_parenthesis(operator, right.syntax(), right.format(formatter)?)?;
 
-        let right_item =
+        let parent_operator_has_comments = parent_operator
+            .as_ref()
+            .map(|operator| operator.has_leading_comments());
+
+        let mut right_item =
             if !parenthesized && matches!(right, JsAnyExpression::JsLogicalExpression(_)) {
-                FlattenItem::group(
-                    formatted_right,
-                    parent_operator,
-                    parent_operator_has_comments.into(),
-                )
-                .with_terminator(trailing_separator)
+                FlattenItem::group(formatted_right, parent_operator, Comments::NoComments)
             } else {
-                FlattenItem::regular(
-                    formatted_right,
-                    parent_operator,
-                    parent_operator_has_comments.into(),
-                )
-                .with_terminator(trailing_separator)
+                FlattenItem::regular(formatted_right, parent_operator, Comments::NoComments)
             };
+
+        // Format the parent operator
+        if let Some(parent_operator_has_comments) = parent_operator_has_comments {
+            // Here we care only about trailing comments that belong to the previous operator
+            if parent_operator_has_comments {
+                right_item = right_item
+                    .with_comments(true)
+                    .with_terminator(TrailingTerminator::HardLineBreak)
+            }
+        } else {
+            // Here we want to check only leading comments;
+            // trailing comments will be added after the end of the whole expression.
+            // We want to handle cases like `lorem && (3 + 5 == 9) // comment`.
+            // This part is a signal to the formatter to tell it if the whole expression should break.
+            right_item = right_item.with_comments(right.syntax().has_leading_comments())
+        };
 
         self.items.push(right_item);
 
@@ -574,6 +559,11 @@ impl FlattenItem {
         self.terminator = terminator;
         self
     }
+
+    fn with_comments<I: Into<Comments>>(mut self, comments: I) -> Self {
+        self.comments = comments.into();
+        self
+    }
 }
 
 #[derive(Debug)]
@@ -584,15 +574,50 @@ enum FlattenItemKind {
     Group,
 }
 
+/// The [PostorderIterator] visits every node twice. First on the way down to find the left most binary
+/// like expression, then on the way back up when it yields the binary like expressions.
+/// This enum encodes the information whatever the iterator is on its way down (`Enter`) or traversing
+/// upwards (`Exit`).
 #[derive(Debug)]
 enum VisitEvent {
     Enter(JsAnyBinaryLikeExpression),
     Exit(JsAnyBinaryLikeExpression),
 }
 
-/// Iterator that visits the left hand sides of all binary like expressions in post-order.
+/// Iterator that first returns the left-most binary-like expression and then traverses upwards to the start node.
+/// The binary like expression nodes are yielded when traversing upwards.
+///
+/// # Examples
+///
+/// ```js
+/// a && b && c && d
+/// ```
+/// This produces a tree with the following shape:
+///
+/// ```txt
+///         &&
+///        / \
+///       /   \
+///      &&   d
+///     / \
+///    /   \
+///   &&    c
+///  / \
+/// a   b
+/// ```
+///
+/// The iterator follows the left branches of the binary expressions without until it hits any non
+/// binary-like expression (in this case the reference identifier `a`). From there, the iterator starts
+/// traversing upwards again and yields the binary expression along the way. The returned nodes for the above
+/// examples are (in that exact order):
+/// 1. `a && b`
+/// 2. `a && b && c`
+/// 3. `a && b && c && d`
 struct PostorderIterator {
+    /// The next node to visit or [None] if the iterator passed the start node (is at its end).
     next: Option<VisitEvent>,
+
+    /// The start node. Necessary to know when to stop iterating.
     start: JsSyntaxNode,
 }
 
@@ -621,13 +646,15 @@ impl Iterator for PostorderIterator {
                     if let Some(expression) = left_expression {
                         self.next = Some(VisitEvent::Enter(expression));
                     } else {
-                        // If left is missing or it isn't a binary expression, then format it as part of the parent binary like expression
+                        // If left is missing or it isn't a binary like expression, then format it as part of the parent binary like expression
                         self.next = Some(VisitEvent::Exit(binary));
                     }
                 }
                 VisitEvent::Exit(node) => {
                     if node.syntax() != &self.start {
                         self.next = node.syntax().parent().map(|parent| {
+                            // SAFETY: Calling `unwrap` here is safe because the iterator only enters (traverses into) a node
+                            // if it is a valid binary like expression.
                             let expression = JsAnyBinaryLikeExpression::cast(parent).unwrap();
                             VisitEvent::Exit(expression)
                         });
@@ -749,6 +776,8 @@ impl AstNode<JsLanguage> for JsAnyBinaryLikeExpression {
 }
 
 impl JsAnyBinaryLikeExpression {
+    /// Determines if a binary like expression should be flattened or not. As a rule of thumb, an expression
+    /// can be flattened if it is of the same kind as the left-hand side sub-expression and uses the same operator.
     fn can_flatten(&self) -> SyntaxResult<bool> {
         Ok(match self {
             JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => match logical.left()? {
