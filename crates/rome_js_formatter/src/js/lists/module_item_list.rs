@@ -141,11 +141,19 @@ impl SortedImports {
             .drain(..)
             .enumerate()
             .map(|(index, import_item)| {
+                // When sorting, we might have a case where between the last import of the list and the next statement
+                // that is not an import, e.g. expression statement, we have various empty lines.
+                //
+                // After sorting occurs, that last import might shift in first position. While doing so, we want to keep
+                // the empty lines that we found consistent. This logic makes sure of that.
                 if import_item.has_trailing_lines() {
                     found_trailing_lines = true
                 }
                 let formatted = import_item.into_format_element();
                 if index + 1 == len {
+                    // this is needed to cover the edge case where the document terminates with only
+                    // import statements. In this case, we don't care about possible empty lines because
+                    // there aren't any other statements after that
                     if is_last {
                         format_elements![formatted, hard_line_break()]
                     } else if found_trailing_lines {
@@ -180,7 +188,8 @@ enum Import {
     },
 }
 
-/// Convenient enum to make the comparison of safe imports handier
+/// Convenient enum to make the comparison of safe imports simpler
+#[allow(clippy::enum_variant_names)]
 enum SafeImport {
     JsImportNamedClause(JsImportNamedClause),
     JsImportDefaultClause(JsImportDefaultClause),
@@ -232,6 +241,7 @@ impl Import {
         }
     }
 
+    /// Tells if the current import found some trailing lines
     pub fn has_trailing_lines(&self) -> bool {
         match self {
             Import::PossiblyWithSideEffects { trailing_lines, .. } => *trailing_lines > 1,
@@ -278,7 +288,7 @@ fn unstable_sort_imports(
     let mut sorted_imports = SortedImports::default();
     let mut peekable_list = list.into_iter().peekable();
     while let Some(item) = peekable_list.next() {
-        // before applying sorting, we want to know how many lines there are between the current node
+        // before applying sorting, we want to know how many empty lines there are between the current node
         // and the next one, so we maintain possible empty lines when we reformat the statements
         let next_item = peekable_list.peek();
         let trailing_lines = next_item.map_or(0, |next_item| {
