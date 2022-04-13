@@ -3,11 +3,7 @@
 name: Deploy Playground
 
 on:
-  workflow_dispatch:
   pull_request:
-    paths:
-      - "crates/*"
-      - "website/playground/*"
     branches:
       - main
 
