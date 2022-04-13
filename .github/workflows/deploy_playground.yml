@@ -63,7 +63,7 @@ jobs:
         id: previous-comment
         with:
           issue-number: ${{ steps.pr-number.outputs.pr }}
-          body-includes: Playground link
+          body-includes: Playground for commit
 
       - name: Update existing comment
         if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
