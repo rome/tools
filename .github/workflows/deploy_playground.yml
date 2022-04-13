@@ -30,7 +30,12 @@ jobs:
           version: 6
           run_install: |
             args: [--prefix website/playground]
-      - run: pnpm build --prefix website/playground -- --base=/$GITHUB_SHA/
+
+      - name: Set GitHub SHA
+          id: sha
+          run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
+
+      - run: pnpm build --prefix website/playground -- --base=/${{ steps.sha.outputs.sha }}/
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
         env:
@@ -38,11 +43,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: 'website/playground/dist' # optional: defaults to entire repository
-          DEST_DIR: $GITHUB_SHA
-
-      - name: Set GitHub SHA
-        id: sha
-        run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
+          DEST_DIR: ${{ steps.sha.outputs.sha }}
 
       - name: Set Playground URL
         if: github.event_name == 'pull_request'
