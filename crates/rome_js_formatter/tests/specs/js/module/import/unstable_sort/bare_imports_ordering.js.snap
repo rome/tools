@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
+expression: bare_imports_ordering.js
+
+---
+# Input
+import "polyfill"
+import "b"
+import "@scoped/side-effects"
+import "@aaa/side-effects"
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Unstable sort imports: false
+-----
+import "polyfill";
+import "b";
+import "@scoped/side-effects";
+import "@aaa/side-effects";
+## Output 2
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Unstable sort imports: true
+-----
+import "@aaa/side-effects";
+import "@scoped/side-effects";
+import "b";
+import "polyfill";
+
