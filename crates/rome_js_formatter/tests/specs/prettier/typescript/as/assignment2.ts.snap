@@ -40,7 +40,8 @@ const originalPrototype = originalConstructor.prototype as TComponent & Injectio
 ```js
 const defaultMaskGetter = $parse(attrs[directiveName]) as (scope: ng.IScope) => Mask;
 
-(this.configuration as any) = (this.editor as any) = (this.editorBody as any) = undefined;
+(this.configuration as any) =
+  (this.editor as any) = (this.editorBody as any) = undefined;
 
 angular
   .module("foo")
@@ -56,7 +57,8 @@ angular
     },
   );
 
-(this.selectorElem as any) = this.multiselectWidget = this.initialValues = undefined;
+(this.selectorElem as any) =
+  this.multiselectWidget = this.initialValues = undefined;
 
 const extraRendererAttrs = (
   (attrs.rendererAttrs && this.utils.safeParseJsonString(attrs.rendererAttrs)) || Object.create(
