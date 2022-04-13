@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: type-parameters.ts
-
 ---
 # Input
 ```js
@@ -62,7 +60,7 @@ function foo<
 interface Foo {
   <
     A, // comment
-  >(arg): any,
+  >(arg): any;
 }
 type T = <
   // comment

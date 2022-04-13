@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: issue-10352-consistency.ts
-
 ---
 # Input
 ```js
@@ -31,7 +29,7 @@ export interface Store {
   getRecord(collectionName: string, documentPath: string): TaskEither<
     Error,
     Option<GenericRecord>
-  >,
+  >;
 }
 
 export default class StoreImpl extends Service implements Store {
@@ -44,8 +42,8 @@ export default class StoreImpl extends Service implements Store {
 }
 
 export function loadPlugin(name: string, dirname: string): {
-  filepath: string,
-  value: mixed,
+  filepath: string;
+  value: mixed;
 } {
   // ...
 }

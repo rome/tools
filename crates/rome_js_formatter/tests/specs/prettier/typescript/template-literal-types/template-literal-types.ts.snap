@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: template-literal-types.ts
-
 ---
 # Input
 ```js
@@ -29,13 +27,13 @@ declare function setAlignment(
   value: `${VerticalAlignment}-${HorizontalAlignment}`,
 ): void;
 type PropEventSource<T> = {
-  on(eventName: `${string & keyof T}Changed`, callback: () => void): void,
+  on(eventName: `${string & keyof T}Changed`, callback: () => void): void;
 };
 type PropEventSource<T> = {
   on<K extends string & keyof T>(
     eventName: `${K}Changed`,
     callback: (newValue: T[K]) => void,
-  ): void,
+  ): void;
 };
 
 ```

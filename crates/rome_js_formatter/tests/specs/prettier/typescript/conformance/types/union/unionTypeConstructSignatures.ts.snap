@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: unionTypeConstructSignatures.ts
-
 ---
 # Input
 ```js
@@ -95,8 +93,8 @@ strOrBoolean = new unionOfDifferentReturnType("hello"); // error
 new unionOfDifferentReturnType1(true); // error in type of parameter
 
 var unionOfDifferentReturnType1:
-  | { new(a: number): number, new(a: string): string }
-  | { new(a: number): Date, new(a: string): boolean };
+  | { new(a: number): number; new(a: string): string }
+  | { new(a: number): Date; new(a: string): boolean };
 numOrDate = new unionOfDifferentReturnType1(10);
 strOrBoolean = new unionOfDifferentReturnType1("hello");
 new unionOfDifferentReturnType1(true); // error in type of parameter
@@ -111,7 +109,7 @@ new unionOfDifferentParameterTypes(); // error - no call signatures
 
 var unionOfDifferentNumberOfSignatures:
   | { new(a: number): number }
-  | { new(a: number): Date, new(a: string): boolean };
+  | { new(a: number): Date; new(a: string): boolean };
 new unionOfDifferentNumberOfSignatures(); // error - no call signatures
 new unionOfDifferentNumberOfSignatures(10); // error - no call signatures
 new unionOfDifferentNumberOfSignatures("hello"); // error - no call signatures

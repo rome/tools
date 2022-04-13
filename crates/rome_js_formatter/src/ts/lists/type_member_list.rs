@@ -25,9 +25,9 @@ impl ToFormatElement for TsTypeMemberList {
                     // Children don't format the separator on purpose, so it's up to the parent - this node,
                     // to decide to print their separator
                     if index == last_index {
-                        if_group_breaks(token(","))
+                        if_group_breaks(token(";"))
                     } else {
-                        token(",")
+                        token(";")
                     }
                 } else {
                     empty_element()

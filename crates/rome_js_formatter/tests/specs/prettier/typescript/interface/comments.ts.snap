@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: comments.ts
-
 ---
 # Input
 ```js
@@ -17,7 +15,7 @@ interface ScreenObject {
 ```js
 interface ScreenObject {
   // I make things weird.
-  at(point: Point): Screen | undefined,
+  at(point: Point): Screen | undefined;
 }
 
 ```

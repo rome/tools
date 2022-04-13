@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: declare_interface.ts
-
 ---
 # Input
 ```js
@@ -23,9 +21,9 @@ declare interface B {
 declare interface Dictionary<T> { [index: string]: T }
 
 declare interface B {
-  foo([]?): void,
-  bar({}, []?): any,
-  baz(a: string, b: number, []?): void,
+  foo([]?): void;
+  bar({}, []?): any;
+  baz(a: string, b: number, []?): void;
 }
 
 ```
