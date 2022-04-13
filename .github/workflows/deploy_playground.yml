@@ -32,8 +32,8 @@ jobs:
             args: [--prefix website/playground]
 
       - name: Set GitHub SHA
-          id: sha
-          run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
+        id: sha
+        run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
 
       - run: pnpm build --prefix website/playground -- --base=/${{ steps.sha.outputs.sha }}/
       - name: Publish
