@@ -17,6 +17,37 @@ impl ToFormatElement for JsxExpressionAttributeValue {
 
         let expression = expression?;
 
+        // When the inner expression for a prop is an object, array, or call expression, we want to combine the
+        // delimiters of the expression (`{`, `}`, `[`, `]`, or `(`, `)`) with the delimiters of the JSX
+        // attribute (`{`, `}`), so that we don't end up with redundant indents. Therefore we do not
+        // soft indent the expression
+        //
+        // Good:
+        // ```jsx
+        //  <ColorPickerPage
+        //     colors={[
+        //        "blue",
+        //        "brown",
+        //        "green",
+        //        "orange",
+        //        "purple",
+        //     ]} />
+        // ```
+        //
+        // Bad:
+        // ```jsx
+        //  <ColorPickerPage
+        //     colors={
+        //       [
+        //         "blue",
+        //          "brown",
+        //         "green",
+        //         "orange",
+        //         "purple",
+        //       ]
+        //     } />
+        // ```
+        //
         if matches!(
             expression,
             JsAnyExpression::JsObjectExpression(_)
