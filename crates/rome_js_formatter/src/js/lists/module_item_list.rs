@@ -79,7 +79,7 @@ impl SortedImports {
     ) {
         if let JsAnyImportClause::JsImportBareClause(import_clause) = import_clause {
             self.import_list.push(Import::PossiblyWithSideEffects {
-                node: import_clause.clone(),
+                node: import_clause,
                 formatted,
                 trailing_lines,
             })
