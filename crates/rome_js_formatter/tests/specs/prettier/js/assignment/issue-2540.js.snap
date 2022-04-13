@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 153
 expression: issue-2540.js
-
 ---
 # Input
 ```js
@@ -12,8 +11,10 @@ manifestCache[templateId] = readFileSync(`${MANIFESTS_PATH}/${templateId}.json`,
 
 # Output
 ```js
-manifestCache[templateId] =
-  readFileSync(`${MANIFESTS_PATH}/${templateId}.json`, { encoding: "utf-8" });
+manifestCache[templateId] = readFileSync(
+  `${MANIFESTS_PATH}/${templateId}.json`,
+  { encoding: "utf-8" },
+);
 
 ```
 

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 153
 expression: long-identifiers.ts
-
 ---
 # Input
 ```js
@@ -28,13 +27,11 @@ averredBathersBoxroomBuggyNurl(
 ```js
 const bifornCringerMoshedPerplexSawder = askTrovenaBeenaDependsRowans as glimseGlyphsHazardNoopsTieTie;
 
-averredBathersBoxroomBuggyNurl.anodyneCondosMalateOverateRetinol =
-  annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave;
+averredBathersBoxroomBuggyNurl.anodyneCondosMalateOverateRetinol = annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave;
 
-averredBathersBoxroomBuggyNurl =
-  {
-    anodyneCondosMalateOverateRetinol: annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
-  };
+averredBathersBoxroomBuggyNurl = {
+  anodyneCondosMalateOverateRetinol: annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
+};
 
 averredBathersBoxroomBuggyNurl(
   anodyneCondosMalateOverateRetinol.annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,

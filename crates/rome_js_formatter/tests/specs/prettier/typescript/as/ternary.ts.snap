@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 153
 expression: ternary.ts
-
 ---
 # Input
 ```js
@@ -51,10 +50,9 @@ bifornCringerMoshedPerplexSawder =
 
 # Output
 ```js
-foo =
-  (
-    coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-  ) as Fooooooooooo;
+foo = (
+  coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+) as Fooooooooooo;
 
 foo = (condition ? firstValue : secondValue) as SomeType;
 
@@ -82,19 +80,17 @@ function foo() {
   );
 }
 
-bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (
-      glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-    ) as AnnularCooeedSplicesWalksWayWay
-  );
+bifornCringerMoshedPerplexSawder = askTrovenaBeenaDependsRowans + (
+  (
+    glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  ) as AnnularCooeedSplicesWalksWayWay
+);
 
-bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (
-      glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-    ) as AnnularCooeedSplicesWalksWayWay
-  );
+bifornCringerMoshedPerplexSawder = askTrovenaBeenaDependsRowans + (
+  (
+    glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  ) as AnnularCooeedSplicesWalksWayWay
+);
 
 ```
 

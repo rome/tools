@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 153
 expression: binary-expressions-block-comments.js
-
 ---
 # Input
 ```js
@@ -51,56 +50,44 @@ a = b + /** TODO this is a very very very very long comment that makes it go > 8
 
 # Output
 ```js
-a =
-  b || /** Comment */
-  c;
+a = b || /** Comment */
+c;
 
 a = b /** Comment */ || c;
 
-a =
-  b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
-  c;
+a = b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
+c;
 
-a =
-  b /** TODO this is a very very very very long comment that makes it go > 80 columns */ || c;
+a = b /** TODO this is a very very very very long comment that makes it go > 80 columns */ || c;
 
-a =
-  b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
-  c;
+a = b || /** TODO this is a very very very very long comment that makes it go > 80 columns */
+c;
 
-a =
-  b && /** Comment */
-  c;
+a = b && /** Comment */
+c;
 
 a = b /** Comment */ && c;
 
-a =
-  b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
-  c;
+a = b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
+c;
 
-a =
-  b /** TODO this is a very very very very long comment that makes it go > 80 columns */ && c;
+a = b /** TODO this is a very very very very long comment that makes it go > 80 columns */ && c;
 
-a =
-  b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
-  c;
+a = b && /** TODO this is a very very very very long comment that makes it go > 80 columns */
+c;
 
-a =
-  b + /** Comment */
-  c;
+a = b + /** Comment */
+c;
 
 a = b /** Comment */ + c;
 
-a =
-  b + /** TODO this is a very very very very long comment that makes it go > 80 columns */
-  c;
+a = b + /** TODO this is a very very very very long comment that makes it go > 80 columns */
+c;
 
-a =
-  b /** TODO this is a very very very very long comment that makes it go > 80 columns */ + c;
+a = b /** TODO this is a very very very very long comment that makes it go > 80 columns */ + c;
 
-a =
-  b + /** TODO this is a very very very very long comment that makes it go > 80 columns */
-  c;
+a = b + /** TODO this is a very very very very long comment that makes it go > 80 columns */
+c;
 
 ```
 

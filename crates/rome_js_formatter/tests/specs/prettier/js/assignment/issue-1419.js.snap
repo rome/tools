@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 153
 expression: issue-1419.js
-
 ---
 # Input
 ```js
@@ -15,8 +14,7 @@ someReallyLongThingStoredInAMapWithAReallyBigName[pageletID] =
 
 # Output
 ```js
-someReallyLongThingStoredInAMapWithAReallyBigName[pageletID] =
-  _someVariableThatWeAreCheckingForFalsiness ? Date.now() - _someVariableThatWeAreCheckingForFalsiness : 0;
+someReallyLongThingStoredInAMapWithAReallyBigName[pageletID] = _someVariableThatWeAreCheckingForFalsiness ? Date.now() - _someVariableThatWeAreCheckingForFalsiness : 0;
 
 ```
 

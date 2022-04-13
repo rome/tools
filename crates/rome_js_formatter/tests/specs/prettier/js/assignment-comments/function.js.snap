@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 153
 expression: function.js
-
 ---
 # Input
 ```js
@@ -72,35 +71,31 @@ let f6 = /* comment */
 
 # Output
 ```js
-f1 =
-  (
-    a =
-    //comment
-    b,
-  ) => {};
+f1 = (
+  a =
+  //comment
+  b,
+) => {};
 
-f2 =
-  (
-    a = b, //comment
-  ) => {};
+f2 = (
+  a = b, //comment
+) => {};
 
-f3 =
-  (
-    a = b, //comment
-  ) => {};
+f3 = (
+  a = b, //comment
+) => {};
 
 f4 = () => {}; // Comment
 
 f5 =
-  // Comment
+// Comment
 
-  () => {};
+() => {};
 
-f6 =
-  /* comment */
-  // Comment
+f6 = /* comment */
+// Comment
 
-  () => {};
+() => {};
 
 let f1 = (
   a =

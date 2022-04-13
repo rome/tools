@@ -1,8 +1,7 @@
 use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{
-    format_elements, group_elements, soft_line_indent_or_space, space_token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, group_elements, space_token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
 use rome_js_syntax::JsAssignmentExpression;
@@ -20,7 +19,7 @@ impl ToFormatElement for JsAssignmentExpression {
             left.format(formatter)?,
             space_token(),
             operator_token.format(formatter)?,
-            group_elements(soft_line_indent_or_space(right.format(formatter)?)),
+            group_elements(format_elements![space_token(), right.format(formatter)?]),
         ]))
     }
 }

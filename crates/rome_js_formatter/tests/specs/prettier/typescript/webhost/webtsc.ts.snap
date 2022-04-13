@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 153
 expression: webtsc.ts
-
 ---
 # Input
 ```js
@@ -124,7 +123,7 @@ namespace TypeScript.WebTsc {
     const fso = new RealActiveXObject("Scripting.FileSystemObject");
 
     const fileStream = new ActiveXObject("ADODB.Stream");
-    fileStream.Type = 2 /*text*/ ;
+    fileStream.Type = 2; /*text*/
 
     const args: string[] = [];
     for (let i = 0; i < WScript.Arguments.length; i++) {
@@ -156,12 +155,11 @@ namespace TypeScript.WebTsc {
             // Position must be at 0 before encoding can be changed
             fileStream.Position = 0;
             // [0xFF,0xFE] and [0xFE,0xFF] mean utf-16 (little or big endian), otherwise default to utf-8
-            fileStream.Charset =
-              bom.length >= 2 && (
-                (bom.charCodeAt(0) === 0xFF && bom.charCodeAt(1) === 0xFE) || (
-                  bom.charCodeAt(0) === 0xFE && bom.charCodeAt(1) === 0xFF
-                )
-              ) ? "unicode" : "utf-8";
+            fileStream.Charset = bom.length >= 2 && (
+              (bom.charCodeAt(0) === 0xFF && bom.charCodeAt(1) === 0xFE) || (
+                bom.charCodeAt(0) === 0xFE && bom.charCodeAt(1) === 0xFF
+              )
+            ) ? "unicode" : "utf-8";
           }
           // ReadText method always strips byte order mark from resulting string
           return fileStream.ReadText();

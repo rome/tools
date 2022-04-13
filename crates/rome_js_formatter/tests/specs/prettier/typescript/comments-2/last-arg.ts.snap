@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 153
 expression: last-arg.ts
-
 ---
 # Input
 ```js
@@ -69,23 +68,20 @@ type f1 = (
   // TODO this is a very very very very long comment that makes it go > 80 columns
 ) => number;
 
-f2 =
-  (
-    currentRequest: { a: number },
-    // TODO this is a very very very very long comment that makes it go > 80 columns
-  ): number => {};
+f2 = (
+  currentRequest: { a: number },
+  // TODO this is a very very very very long comment that makes it go > 80 columns
+): number => {};
 
-f3 =
-  (
-    currentRequest: { a: number },
-    // TODO this is a very very very very long comment that makes it go > 80 columns
-  ) => {};
+f3 = (
+  currentRequest: { a: number },
+  // TODO this is a very very very very long comment that makes it go > 80 columns
+) => {};
 
-f4 =
-  function (
-    currentRequest: { a: number },
-    // TODO this is a very very very very long comment that makes it go > 80 columns
-  ) {};
+f4 = function (
+  currentRequest: { a: number },
+  // TODO this is a very very very very long comment that makes it go > 80 columns
+) {};
 
 class X {
   f(

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 153
 expression: issue-2482-1.js
-
 ---
 # Input
 ```js
@@ -26,20 +25,15 @@ aParticularlyLongAndObnoxiousNameForIllustrativePurposes =
 
 # Output
 ```js
-aParticularlyLongAndObnoxiousNameForIllustrativePurposes =
-  anotherVeryLongNameForIllustrativePurposes;
+aParticularlyLongAndObnoxiousNameForIllustrativePurposes = anotherVeryLongNameForIllustrativePurposes;
 
-aParticularlyLongAndObnoxiousNameForIllustrativePurposes =
-  "a very long string for illustrative purposes".length;
+aParticularlyLongAndObnoxiousNameForIllustrativePurposes = "a very long string for illustrative purposes".length;
 
-aParticularlyLongAndObnoxiousNameForIllustrativePurposes =
-  anotherVeryLongNameForIllustrativePurposes();
+aParticularlyLongAndObnoxiousNameForIllustrativePurposes = anotherVeryLongNameForIllustrativePurposes();
 
-aParticularlyLongAndObnoxiousNameForIllustrativePurposes =
-  anotherVeryLongNameForIllustrativePurposes.length;
+aParticularlyLongAndObnoxiousNameForIllustrativePurposes = anotherVeryLongNameForIllustrativePurposes.length;
 
-aParticularlyLongAndObnoxiousNameForIllustrativePurposes =
-  anotherVeryLongNameForIllustrativePurposes + 1;
+aParticularlyLongAndObnoxiousNameForIllustrativePurposes = anotherVeryLongNameForIllustrativePurposes + 1;
 
 ```
 

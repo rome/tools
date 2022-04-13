@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 153
 expression: break.js
-
 ---
 # Input
 ```js
@@ -39,36 +38,30 @@ a.then(
   ),
 );
 for (
-  aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName =
-    0;
+  aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0;
   test;
   update
 ) {}
 (
-  a =
-    b ? c : function () {
-      return 0;
-    }
+  a = b ? c : function () {
+    return 0;
+  }
 ), (
-  a =
-    b ? c : function () {
-      return 0;
-    }
+  a = b ? c : function () {
+    return 0;
+  }
 ), (
-  a =
-    b ? c : function () {
-      return 0;
-    }
+  a = b ? c : function () {
+    return 0;
+  }
 ), (
-  a =
-    b ? c : function () {
-      return 0;
-    }
+  a = b ? c : function () {
+    return 0;
+  }
 ), (
-  a =
-    b ? c : function () {
-      return 0;
-    }
+  a = b ? c : function () {
+    return 0;
+  }
 );
 
 ```

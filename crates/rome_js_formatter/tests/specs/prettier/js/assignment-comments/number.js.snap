@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 153
 expression: number.js
-
 ---
 # Input
 ```js
@@ -55,29 +54,28 @@ var fnNumber = /* comments0 */
 # Output
 ```js
 fnNumber =
-  // Comment
-  3;
+// Comment
+3;
 
 fnNumber =
-  // Comment
+// Comment
 
-  3;
+3;
 
 fnNumber =
-  // Comment0
-  // Comment1
-  3;
+// Comment0
+// Comment1
+3;
 
 fnNumber = /* comment */ 3;
 
-fnNumber =
-  /* comments0 */
-  /* comments1 */
-  3;
+fnNumber = /* comments0 */
+/* comments1 */
+3;
 
 fnNumber =
-  // Comment
-  3;
+// Comment
+3;
 
 var fnNumber =
 // Comment

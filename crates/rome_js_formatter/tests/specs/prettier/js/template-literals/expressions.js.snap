@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 153
 expression: expressions.js
-
 ---
 # Input
 ```js
@@ -78,10 +77,9 @@ console.log(
   ),
 );
 
-x =
-  `mdl-textfield mdl-js-textfield ${className} ${
-    content.length > 0 ? "is-dirty" : ""
-  } combo-box__input`;
+x = `mdl-textfield mdl-js-textfield ${className} ${
+  content.length > 0 ? "is-dirty" : ""
+} combo-box__input`;
 
 function testing() {
   const p = {};

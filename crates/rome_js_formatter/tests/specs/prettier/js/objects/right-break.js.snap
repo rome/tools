@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 153
 expression: right-break.js
-
 ---
 # Input
 ```js
@@ -40,8 +39,7 @@ const k = {
     "dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf",
 };
 
-somethingThatsAReallyLongPropName =
-  this.props.cardType === AwesomizerCardEnum.SEEFIRST;
+somethingThatsAReallyLongPropName = this.props.cardType === AwesomizerCardEnum.SEEFIRST;
 
 const o = {
   somethingThatsAReallyLongPropName: this.props.cardType === AwesomizerCardEnum.SEEFIRST,
