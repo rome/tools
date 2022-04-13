@@ -40,11 +40,15 @@ jobs:
           SOURCE_DIR: 'website/playground/dist' # optional: defaults to entire repository
           DEST_DIR: $GITHUB_SHA
 
+      - name: Set GitHub SHA
+        id: sha
+        run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
+
       - name: Set Playground URL
         if: github.event_name == "pull_request"
         id: url
         run: |
-          url="[Playground for commit](https://play.rome.tools/${{ GITHUB_SHA }}/)"
+          url="[Playground for commit](https://play.rome.tools/${{ steps.sha.outputs.sha }}/)"
           echo "::set-output name=url::$url"
 
       - name: Get the PR number
