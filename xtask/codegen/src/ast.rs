@@ -74,10 +74,7 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
 
 fn check_unions(unions: &[AstEnumSrc]) {
     // Setup a map to find the unions quickly
-    let union_map: HashMap<_, _> = unions
-        .iter()
-        .map(|en| { (&en.name, en) })
-        .collect();
+    let union_map: HashMap<_, _> = unions.iter().map(|en| (&en.name, en)).collect();
 
     // Iterate over all unions
     for union in unions {
@@ -85,8 +82,8 @@ fn check_unions(unions: &[AstEnumSrc]) {
             "\n******** START ERROR STACK ********\nChecking {}, variants : {:?}",
             union.name, union.variants
         );
-        let mut union_set: HashSet<&String> = HashSet::from([&union.name]);
-        let mut union_queue: VecDeque<&String> = VecDeque::new();
+        let mut union_set: HashSet<_> = HashSet::from([&union.name]);
+        let mut union_queue: VecDeque<_> = VecDeque::new();
 
         // Init queue for BFS
         union_queue.extend(&union.variants);
