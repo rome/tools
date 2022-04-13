@@ -62,3 +62,8 @@ const a = () => ({}?.() && a);
 
 (list || list2)?.[(list || list2)];
 
+
+## Lines exceeding width of 80 characters
+
+   12: 	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+

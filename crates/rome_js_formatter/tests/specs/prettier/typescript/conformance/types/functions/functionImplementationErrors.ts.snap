@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: functionImplementationErrors.ts
-
 ---
 # Input
 ```js
@@ -168,4 +166,11 @@ var f13 = () => {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    3: // FunctionExpression with no return type annotation with multiple return statements with unrelated types
+   17: // FunctionExpression with no return type annotation with return branch of number[] and other of string[]
+   30: // Function signature with parameter initializer referencing in scope local variable
+   38: // FunctionExpression with non -void return type annotation with a throw, no return, and other code
+```
 

@@ -32,3 +32,9 @@ for (
 
 for await (const a of b) {}
 
+
+## Lines exceeding width of 80 characters
+
+    6: 	const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
+    8: 	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
+

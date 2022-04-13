@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: issue-2322.ts
-
 ---
 # Input
 ```js
@@ -16,4 +14,8 @@ export const listAuthorizedSitesForDefaultHandler: ListAuthorizedSitesForHandler
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: export const listAuthorizedSitesForDefaultHandler: ListAuthorizedSitesForHandler = aListAuthorizedSitesForResponse;
+```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: parens.js
-
 ---
 # Input
 ```js
@@ -55,4 +53,9 @@ a * b % 10;
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   13: const rotateX = (((RANGE / rect.height) * refY) - (RANGE / 2)) * getXMultiplication(
+   16: const rotateY = (((RANGE / rect.width) * refX) - (RANGE / 2)) * getYMultiplication(
+```
 

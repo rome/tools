@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: empty_statement.js
-
 ---
 # Input
 ```js
@@ -28,4 +26,8 @@ switch (error.code) {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    6:         "Unable to write into settings. Correct errors/warnings in the file and try again.",
+```
 

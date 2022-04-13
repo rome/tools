@@ -30,3 +30,9 @@ for (a in b) {
 	// trailing
 }
 
+
+## Lines exceeding width of 80 characters
+
+    4: 	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
+    6: 	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
+

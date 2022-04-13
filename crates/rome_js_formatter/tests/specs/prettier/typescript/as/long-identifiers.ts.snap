@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: long-identifiers.ts
-
 ---
 # Input
 ```js
@@ -42,4 +40,10 @@ averredBathersBoxroomBuggyNurl(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const bifornCringerMoshedPerplexSawder = askTrovenaBeenaDependsRowans as glimseGlyphsHazardNoopsTieTie;
+    8:     anodyneCondosMalateOverateRetinol: annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
+   12:   anodyneCondosMalateOverateRetinol.annularCooeedSplicesWalksWayWay as kochabCooieGameOnOboleUnweave,
+```
 

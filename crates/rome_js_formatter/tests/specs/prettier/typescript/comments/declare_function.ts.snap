@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: declare_function.ts
-
 ---
 # Input
 ```js
@@ -25,4 +23,8 @@ declare function /* foo */ f( /* baz */ a /* taz */ ) /* bar */ ;
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    3:   // TODO this is a very very very very long comment that makes it go > 80 columns
+```
 

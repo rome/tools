@@ -181,4 +181,8 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   22: export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+```
 

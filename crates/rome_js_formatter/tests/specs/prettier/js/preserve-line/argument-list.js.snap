@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: argument-list.js
-
 ---
 # Input
 ```js
@@ -335,4 +333,8 @@ function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) 
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+  115: function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
+```
 

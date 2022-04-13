@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: test.js
-
 ---
 # Input
 ```js
@@ -73,4 +71,9 @@ ipsum`,
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    6:   "some-prop": this.state.longLongLongLongLongLongLongLongLongTooLongProp === true,
+   22:   "some-prop": longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
+```
 

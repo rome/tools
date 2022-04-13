@@ -129,3 +129,9 @@ const foo = `but where will ${
 }
 `;
 
+
+## Lines exceeding width of 80 characters
+
+   30: const bar =`but where will ${this.fanta} wrap ${baz} ${"hello"} template literal? ${bar.ff.sss} long long long long ${foo.[3]} long long long long long long`;
+   32: const foo = `but where will ${(a && b && bar) || (c && d && g)} wrap long long long long long long`;
+

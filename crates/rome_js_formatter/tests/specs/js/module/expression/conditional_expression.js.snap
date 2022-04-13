@@ -38,3 +38,8 @@ somethingThatsAReallyLongPropName
 		? somethingThatsAReallyLongPropName
 		: somethingThatsAReallyLongPropName;
 
+
+## Lines exceeding width of 80 characters
+
+    4: somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName;
+

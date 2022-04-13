@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: mobx.js
-
 ---
 # Input
 ```js
@@ -117,4 +115,8 @@ error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   29:   @computed @computed @computed @computed @computed @computed @computed get total() {
+```
 

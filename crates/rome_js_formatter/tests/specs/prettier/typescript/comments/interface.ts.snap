@@ -64,4 +64,12 @@ interface Foo {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    4:     // TODO this is a very very very very long comment that makes it go > 80 columns
+    8:     // TODO this is a very very very very long comment that makes it go > 80 columns
+   12:     // TODO this is a very very very very long comment that makes it go > 80 columns
+   17:       // TODO this is a very very very very long comment that makes it go > 80 columns
+   21:       // TODO this is a very very very very long comment that makes it go > 80 columns
+```
 

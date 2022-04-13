@@ -30,4 +30,8 @@ export const SUPPORTED_VEHICLE_TYPES: Array<
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const getUnusedAuthorizationHoldDocuments = async (): Promise<DocumentData[]> => {};
+```
 

@@ -16,4 +16,8 @@ import JSONContributionRegistry = require("vs/platform/jsonschemas/common/jsonCo
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    2: import JSONContributionRegistry = require("vs/platform/jsonschemas/common/jsonContributionRegistry");
+```
 

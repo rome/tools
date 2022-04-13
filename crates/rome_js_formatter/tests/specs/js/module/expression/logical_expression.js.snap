@@ -315,3 +315,10 @@ a in
 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean
 );
 
+
+## Lines exceeding width of 80 characters
+
+  108: 	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin) || (
+  119: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+  185: 	(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String) && (
+

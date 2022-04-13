@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: nested-in-condition.ts
-
 ---
 # Input
 ```js
@@ -44,4 +42,12 @@ type Foo3 = (
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    2:   ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
+    3: ) extends DoubleGobbledygookProvider ? UniqueDalgametreService : CompositeZamazingoResolver;
+    6:   ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
+   10:   ThingamabobberFactory extends AbstractThingamabobberFactory ? GobbledygookProvider : CompositeGobbledygookProvider
+   12:   DoubleGobbledygookProvider extends MockGobbledygookProvider ? MockThingamabobberFactory : ThingamabobberFactory
+```
 

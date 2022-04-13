@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: single-star-jsdoc.js
-
 ---
 # Input
 ```js
@@ -73,4 +71,8 @@ if (true) {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   24: * https://github.com/vuejs/vue/blob/cfd73c2386623341fdbb3ac636c4baf84ea89c2c/src/compiler/parser/html-parser.js
+```
 
