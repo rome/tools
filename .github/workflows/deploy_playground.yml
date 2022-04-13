@@ -45,7 +45,7 @@ jobs:
         run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
 
       - name: Set Playground URL
-        if: github.event_name == "pull_request"
+        if: github.event_name == 'pull_request'
         id: url
         run: |
           url="[Playground for commit](https://play.rome.tools/${{ steps.sha.outputs.sha }}/)"
