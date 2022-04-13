@@ -12,14 +12,12 @@ required to build the playground. Follow the [instructions](https://rustwasm.git
 
 ```shell
 cd website/playground
-npm run build:wasm
+pnpm build:wasm
 ```
 
 Then, if you want to run in development
 
 ```shell
-npm install # if you haven't ran this yet
-npm start
+pnpm install # if you haven't ran this yet
+pnpm start
 ```
-
-

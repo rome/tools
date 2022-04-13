@@ -8,8 +8,6 @@ on:
     branches:
       - main
 
-
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,14 +18,22 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install --prefix website/playground
       - uses: jetli/wasm-pack-action@v0.3.0
-      - run: npm run build --prefix website/playground
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v2.1.0
+        run_install: |
+          args: [--prefix website/playground]
+      - run: pnpm build --prefix website/playground
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: 'website/playground/dist'      # optional: defaults to entire repository
-
+          SOURCE_DIR: 'website/playground/dist' # optional: defaults to entire repository
