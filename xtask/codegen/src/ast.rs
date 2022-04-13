@@ -89,13 +89,7 @@ fn check_unions(unions: &[AstEnumSrc]) {
         let mut union_queue: VecDeque<&str> = VecDeque::new();
 
         // Init queue for BFS
-        union_queue.extend::<Vec<&str>>(
-            union
-                .variants
-                .iter()
-                .map(|x| -> &str { x.as_str() })
-                .collect(),
-        );
+        union_queue.extend::<Vec<&str>>(union.variants.iter().map(|x| x.as_str()).collect());
 
         // Loop over the queue getting the first variant
         while let Some(variant) = union_queue.pop_front() {
@@ -110,9 +104,9 @@ fn check_unions(unions: &[AstEnumSrc]) {
                 // Try to insert the current variant into the set
                 if union_set.insert(&current_union.name) {
                     // Add all variants into the BFS queue
-                    for child in &current_union.variants {
-                        union_queue.push_back(child);
-                    }
+                    union_queue.extend::<Vec<&str>>(
+                        current_union.variants.iter().map(|x| x.as_str()).collect(),
+                    );
                 } else {
                     // We either have a circular dependency or 2 variants referencing the same type
                     println!("{}", stack_string);
