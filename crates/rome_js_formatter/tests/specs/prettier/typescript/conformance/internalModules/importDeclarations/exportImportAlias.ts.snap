@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: exportImportAlias.ts
-
 ---
 # Input
 ```js
@@ -95,7 +93,7 @@ module C {
 }
 
 var a: string = C.a.x;
-var b: { x: number, y: number } = new C.a.Point(0, 0);
+var b: { x: number; y: number } = new C.a.Point(0, 0);
 var c: { name: string };
 var c: C.a.B.Id;
 
@@ -117,7 +115,7 @@ module Z {
 }
 
 var m: number = Z.y();
-var n: { x: number, y: number } = new Z.y.Point(0, 0);
+var n: { x: number; y: number } = new Z.y.Point(0, 0);
 
 module K {
   export class L {
@@ -126,7 +124,7 @@ module K {
 
   export module L {
     export var y = 12;
-    export interface Point { x: number, y: number }
+    export interface Point { x: number; y: number }
   }
 }
 
@@ -137,7 +135,7 @@ module M {
 var o: { name: string };
 var o = new M.D("Hello");
 
-var p: { x: number, y: number };
+var p: { x: number; y: number };
 var p: M.D.Point;
 
 ```

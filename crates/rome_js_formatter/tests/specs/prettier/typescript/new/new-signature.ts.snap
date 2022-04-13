@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: new-signature.ts
-
 ---
 # Input
 ```js
@@ -84,7 +82,7 @@ interface FooConstructor {
     f: number,
     g: number,
     h: number,
-  ): Foo,
+  ): Foo;
 }
 
 interface BarConstructor {
@@ -97,7 +95,7 @@ interface BarConstructor {
     f: number,
     g: number,
     h: number,
-  ): Foo,
+  ): Foo;
 }
 
 type BazConstructor = {
@@ -110,7 +108,7 @@ type BazConstructor = {
     f: number,
     g: number,
     h: number,
-  ): Foo,
+  ): Foo;
 };
 
 interface ConstructorBigGenerics {
@@ -128,17 +126,17 @@ interface ConstructorBigGenerics {
     f: number,
     g: number,
     h: number,
-  ): Foo,
+  ): Foo;
 }
 
 interface ConstructorInline {
   // https://github.com/prettier/prettier/issues/2163
-  (i): any,
+  (i): any;
 }
 
 interface TimerConstructor {
   // Line-splitting comment
-  new(interval: number, callback: (handler: Timer) => void): Timer,
+  new(interval: number, callback: (handler: Timer) => void): Timer;
 }
 
 ```

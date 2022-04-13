@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 151
 expression: issue-10848.tsx
-
 ---
 # Input
 ```js
@@ -101,9 +99,9 @@ const MyGenericComponent: React.VoidFunctionComponent<
 
 export const ExportToExcalidrawPlus: React.FC<
   {
-    elements: readonly NonDeletedExcalidrawElement[],
-    appState: AppState,
-    onError: (error: Error) => void,
+    elements: readonly NonDeletedExcalidrawElement[];
+    appState: AppState;
+    onError: (error: Error) => void;
   }
 > = ({ elements, appState, onError }) => {
   return null;

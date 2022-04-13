@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: anyIsAssignableToObject.ts
-
 ---
 # Input
 ```js
@@ -22,7 +20,7 @@ interface P { p: {} }
 
 interface Q extends P {
   // Check assignability here. Any is assignable to {}
-  p: any,
+  p: any;
 }
 
 ```

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: method-signature-with-wrapped-return-type.ts
-
 ---
 # Input
 ```js
@@ -24,14 +22,14 @@ type ReleaseToolConfig2 = {
 ```js
 type ReleaseToolConfig = {
   get(key: "changelog"): {
-    get(key: "repo"): string,
-    get(key: "labels"): Map<string, string>,
-  },
+    get(key: "repo"): string;
+    get(key: "labels"): Map<string, string>;
+  };
 };
 
 type ReleaseToolConfig2 = {
   get(key: "changelog"): `
-  `,
+  `;
 };
 
 ```

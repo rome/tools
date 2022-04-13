@@ -144,16 +144,16 @@ type U = 15;
 // @ts-ignore
 type V = infer U;
 type W = {
-	a: string,
-	b: symbol,
-	c: symbol,
-	d: symbol,
-	e: symbol,
-	f: symbol,
-	g: symbol,
+	a: string;
+	b: symbol;
+	c: symbol;
+	d: symbol;
+	e: symbol;
+	f: symbol;
+	g: symbol;
 };
-type X = { a: string, b: symbol };
-type Z = { a: string, b: symbol };
+type X = { a: string; b: symbol };
+type Z = { a: string; b: symbol };
 
 type OptionsFlags<Type> = {
 	+readonly [Property in keyof Type as string]-?: boolean;
@@ -195,12 +195,12 @@ type FunctionType = <
 	amet: string,
 	consectetur: symbol,
 ) => {
-	Lorem: string,
-	ipsum: symbol,
-	dolor: number,
-	sit: boolean,
-	amet: string,
-	consectetur: symbol,
+	Lorem: string;
+	ipsum: symbol;
+	dolor: number;
+	sit: boolean;
+	amet: string;
+	consectetur: symbol;
 };
 
 type FunctionTypeB = (loreum: string) => string;
@@ -214,7 +214,7 @@ function test(a: string): a is string {
 type AbstractCompositeThingamabobberFactoryProvider = string;
 
 type ConstructorType = new(
-	options: { a: string, b: AbstractCompositeThingamabobberFactoryProvider },
+	options: { a: string; b: AbstractCompositeThingamabobberFactoryProvider },
 ) => {};
 
 type Constructor<T> = new(...args: any[]) => T;

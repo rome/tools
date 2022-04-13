@@ -71,7 +71,7 @@ type C = {
 		consequence: symbol,
 		something_with_long_name: symbol,
 		some_other_time: symbol,
-	),
+	);
 };
 type D = {
 	<
@@ -90,7 +90,7 @@ type D = {
 		consequence: symbol,
 		something_with_long_name: symbol,
 		some_other_time: symbol,
-	),
+	);
 };
 
 type E = { <Aaaaaaaaaaaaaaaaaaaaa>(loreum: string) };
@@ -104,7 +104,7 @@ type F = {
 		deeeeeeeeeeeeeee,
 		deeeeeeeeeeeeeeee,
 		deeeeeeeewweeeeee,
-	>(loreum: string),
+	>(loreum: string);
 };
 
 type G = {
@@ -116,20 +116,20 @@ type G = {
 		consequence: symbol,
 		something_with_long_name: symbol,
 		some_other_time: symbol,
-	),
+	);
 };
 
 type H = {
-	a?(): number,
-	b?(): number,
-	c?(): number,
-	d(): string,
+	a?(): number;
+	b?(): number;
+	c?(): number;
+	d(): string;
 	bvvvvvvvvvvvvvvvvvvvvvv?(
 		loreum: string,
 		ipsum: symbol,
 		lapis: symbol,
 		emerald: symbol,
-	): G,
+	): G;
 };
 
 type LoooooooooooooongTypeReturneeeeeeeeed = "0";
@@ -142,7 +142,7 @@ type I = {
 		consequence: symbol,
 		something_with_long_name: symbol,
 		some_other_time: symbol,
-	): LoooooooooooooongTypeReturneeeeeeeeed,
+	): LoooooooooooooongTypeReturneeeeeeeeed;
 };
 
 type J = { get something(): LoooooooooooooongTypeReturneeeeeeeeed };
