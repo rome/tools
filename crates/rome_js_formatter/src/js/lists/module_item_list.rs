@@ -1,4 +1,5 @@
 use crate::formatter_traits::FormatTokenAndNode;
+use crate::utils::has_formatter_suppressions;
 use crate::{Format, FormatElement, Formatter};
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rome_formatter::format_element::get_lines_between_nodes;
@@ -7,7 +8,7 @@ use rome_formatter::{concat_elements, empty_line, format_elements, hard_line_bre
 use rome_js_syntax::JsModuleItemList;
 use rome_js_syntax::{
     JsAnyImportClause, JsAnyModuleItem, JsImportBareClause, JsImportDefaultClause,
-    JsImportNamedClause, JsImportNamespaceClause, JsModuleItemList,
+    JsImportNamedClause, JsImportNamespaceClause, JsModuleItemList, JsSyntaxNode,
 };
 use rome_rowan::AstNode;
 use std::cmp::Ordering;
@@ -77,15 +78,23 @@ impl SortedImports {
         formatted: FormatElement,
         trailing_lines: usize,
     ) {
-        if let JsAnyImportClause::JsImportBareClause(import_clause) = import_clause {
-            self.import_list.push(Import::PossiblyWithSideEffects {
-                node: import_clause,
-                formatted,
-                trailing_lines,
-            })
+        let has_suppression = has_formatter_suppressions(import_clause.syntax());
+        if !has_suppression {
+            if let JsAnyImportClause::JsImportBareClause(import_clause) = import_clause {
+                self.import_list.push(Import::PossiblyWithSideEffects {
+                    node: import_clause,
+                    formatted,
+                    trailing_lines,
+                })
+            } else {
+                self.import_list.push(Import::Safe {
+                    node: import_clause.into(),
+                    formatted,
+                    trailing_lines,
+                })
+            }
         } else {
-            self.import_list.push(Import::Safe {
-                node: import_clause.into(),
+            self.import_list.push(Import::Ignored {
                 formatted,
                 trailing_lines,
             })
@@ -186,6 +195,10 @@ enum Import {
         formatted: FormatElement,
         trailing_lines: usize,
     },
+    Ignored {
+        formatted: FormatElement,
+        trailing_lines: usize,
+    },
 }
 
 /// Convenient enum to make the comparison of safe imports simpler
@@ -238,6 +251,7 @@ impl Import {
         match self {
             Import::PossiblyWithSideEffects { formatted, .. } => formatted,
             Import::Safe { formatted, .. } => formatted,
+            Import::Ignored { formatted, .. } => formatted,
         }
     }
 

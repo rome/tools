@@ -1,0 +1,33 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 256
+expression: suppression.js
+
+---
+# Input
+import { something } from "else"
+// rome-ignore format: you should stay here
+import "bootstrap";
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Unstable sort imports: false
+-----
+import { something } from "else";
+// rome-ignore format: you should stay here
+import "bootstrap";
+## Output 2
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Unstable sort imports: true
+-----
+// rome-ignore format: you should stay here
+import "bootstrap";
+import { something } from "else";
+
