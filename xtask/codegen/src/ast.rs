@@ -76,7 +76,7 @@ fn check_unions(unions: &[AstEnumSrc]) {
     // Setup a map to find the unions quickly
     let union_map: HashMap<_, _> = unions
         .iter()
-        .map(|en| -> (&str, &AstEnumSrc) { (en.name.as_str(), en) })
+        .map(|en| { (&en.name, en) })
         .collect();
 
     // Iterate over all unions
@@ -85,11 +85,11 @@ fn check_unions(unions: &[AstEnumSrc]) {
             "\n******** START ERROR STACK ********\nChecking {}, variants : {:?}",
             union.name, union.variants
         );
-        let mut union_set: HashSet<&str> = HashSet::from([union.name.as_str()]);
-        let mut union_queue: VecDeque<&str> = VecDeque::new();
+        let mut union_set: HashSet<&String> = HashSet::from([&union.name]);
+        let mut union_queue: VecDeque<&String> = VecDeque::new();
 
         // Init queue for BFS
-        union_queue.extend::<Vec<&str>>(union.variants.iter().map(|x| x.as_str()).collect());
+        union_queue.extend(&union.variants);
 
         // Loop over the queue getting the first variant
         while let Some(variant) = union_queue.pop_front() {
@@ -104,9 +104,7 @@ fn check_unions(unions: &[AstEnumSrc]) {
                 // Try to insert the current variant into the set
                 if union_set.insert(&current_union.name) {
                     // Add all variants into the BFS queue
-                    union_queue.extend::<Vec<&str>>(
-                        current_union.variants.iter().map(|x| x.as_str()).collect(),
-                    );
+                    union_queue.extend(&current_union.variants);
                 } else {
                     // We either have a circular dependency or 2 variants referencing the same type
                     println!("{}", stack_string);
