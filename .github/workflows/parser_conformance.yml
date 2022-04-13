@@ -5,9 +5,10 @@ on:
     branches:
       - main
     paths:
-      - 'crates/rome_js**/'
-      - 'crates/rome_rowan'
-      - 'xtask/codegen'
+      - 'crates/rome_js**/*'
+      - 'crates/rome_rowan/*'
+      - 'xtask/codegen/*'
+      - 'xtask/coverage/*'
 
 env:
   RUST_LOG: info
@@ -21,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-       os: [ubuntu-latest]
+        os: [ ubuntu-latest ]
 
     steps:
       - name: Checkout PR Branch
@@ -37,9 +38,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Fetch Main Branch
-        run: git fetch --no-tags --prune --no-recurse-submodules --depth=1 origin main
-
       - name: Install toolchain
         run: rustup show
 
@@ -53,8 +51,12 @@ jobs:
         continue-on-error: true
         run: cargo coverage --json > new_results.json
 
-      - name: Checkout Main Branch
-        run: git checkout main
+      - name: Checkout main Branch
+        uses: actions/checkout@v2
+        with:
+          clean: false
+          ref: main
+          submodules: recursive
 
       - name: Run Test suites on main branch
         continue-on-error: true
