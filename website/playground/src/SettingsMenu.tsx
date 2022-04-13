@@ -2,41 +2,29 @@ import LineWidthInput from "./LineWidthInput";
 import IndentStyleSelect from "./IndentStyleSelect";
 import QuoteStyleSelect from "./QuoteStyleSelect";
 import SourceTypeSelect from "./SourceTypeSelect";
-import { PlaygroundProps } from "./types";
+import { PlaygroundSettings } from "./types";
 
-type Props = Pick<
-	PlaygroundProps,
-	| "lineWidth"
-	| "setLineWidth"
-	| "indentWidth"
-	| "setIndentWidth"
-	| "indentStyle"
-	| "setIndentStyle"
-	| "quoteStyle"
-	| "setQuoteStyle"
-	| "sourceType"
-	| "setSourceType"
-	| "isTypeScript"
-	| "setIsTypeScript"
-	| "isJsx"
-	| "setIsJsx"
->;
+interface Props {
+	settings: PlaygroundSettings;
+}
 
-export function PlaygroundSettings({
-	lineWidth,
-	setLineWidth,
-	indentWidth,
-	setIndentWidth,
-	indentStyle,
-	setIndentStyle,
-	quoteStyle,
-	setQuoteStyle,
-	sourceType,
-	setSourceType,
-	isTypeScript,
-	setIsTypeScript,
-	isJsx,
-	setIsJsx,
+export function SettingsMenu({
+	settings: {
+		lineWidth,
+		setLineWidth,
+		indentWidth,
+		setIndentWidth,
+		indentStyle,
+		setIndentStyle,
+		quoteStyle,
+		setQuoteStyle,
+		sourceType,
+		setSourceType,
+		isTypeScript,
+		setIsTypeScript,
+		isJsx,
+		setIsJsx,
+	},
 }: Props) {
 	return (
 		<div className="flex items-baseline">

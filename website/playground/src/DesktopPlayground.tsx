@@ -1,56 +1,23 @@
-import LineWidthInput from "./LineWidthInput";
-import IndentStyleSelect from "./IndentStyleSelect";
-import QuoteStyleSelect from "./QuoteStyleSelect";
-import SourceTypeSelect from "./SourceTypeSelect";
 import { PlaygroundProps } from "./types";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { formatWithPrettier, getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { PlaygroundSettings } from "./PlaygroundSettings";
+import { SettingsMenu } from "./SettingsMenu";
 
 export default function DesktopPlayground(
 	{
-		isTypeScript,
-		setIsTypeScript,
-		isJsx,
-		setIsJsx,
-		sourceType,
-		setSourceType,
-		indentWidth,
-		setIndentWidth,
-		indentStyle,
-		setIndentStyle,
-		quoteStyle,
-		setQuoteStyle,
-		lineWidth,
-		setLineWidth,
-		code,
-		setCode,
-		romeOutput,
+		playgroundState: { code, setCode, ...settings },
+		prettierOutput,
+		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
 ) {
+	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
-	const { cst, ast, formatted_code, formatter_ir, errors } = romeOutput;
 
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
-			<PlaygroundSettings
-				lineWidth={lineWidth}
-				setLineWidth={setLineWidth}
-				indentStyle={indentStyle}
-				setIndentStyle={setIndentStyle}
-				indentWidth={indentWidth}
-				setIndentWidth={setIndentWidth}
-				quoteStyle={quoteStyle}
-				setQuoteStyle={setQuoteStyle}
-				sourceType={sourceType}
-				setSourceType={setSourceType}
-				isTypeScript={isTypeScript}
-				setIsTypeScript={setIsTypeScript}
-				isJsx={isJsx}
-				setIsJsx={setIsJsx}
-			/>
+			<SettingsMenu settings={settings} />
 			<div className="box-border flex h-screen divide-x divide-slate-300">
 				<div className="w-1/2 p-5">
 					<CodeEditor
@@ -95,21 +62,7 @@ export default function DesktopPlayground(
 							/>
 							<h1>Prettier</h1>
 							<CodeEditor
-								value={formatWithPrettier(code, {
-									lineWidth,
-									indentStyle,
-									indentWidth,
-									language: isTypeScript ? "ts" : "js",
-									quoteStyle,
-								})}
-								key={
-									code +
-									lineWidth +
-									indentStyle +
-									indentWidth +
-									language +
-									quoteStyle
-								}
+								value={prettierOutput}
 								language={language}
 								placeholder="Prettier Output"
 								style={{

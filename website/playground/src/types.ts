@@ -1,9 +1,10 @@
-import { PlaygroundResult } from "../pkg";
+import { RomeOutput } from "../pkg";
 
 export enum IndentStyle { Tab = "tab", Space = "space" }
 export enum SourceType { Module = "module", Script = "script" }
 export enum QuoteStyle { Double = "double", Single = "single" }
-export interface PlaygroundProps {
+
+export interface PlaygroundState {
 	code: string,
 	setCode: (code: string) => void,
 	lineWidth: number,
@@ -20,5 +21,28 @@ export interface PlaygroundProps {
 	setIsTypeScript: (isTypeScript: boolean) => void,
 	isJsx: boolean,
 	setIsJsx: (isJsx: boolean) => void,
-	romeOutput: PlaygroundResult,
 }
+
+export interface PlaygroundProps {
+	playgroundState: PlaygroundState,
+	prettierOutput: string,
+	romeOutput: RomeOutput,
+}
+
+export type PlaygroundSettings = Pick<
+	PlaygroundState,
+		| "lineWidth"
+		| "setLineWidth"
+		| "indentWidth"
+		| "setIndentWidth"
+		| "indentStyle"
+		| "setIndentStyle"
+		| "quoteStyle"
+		| "setQuoteStyle"
+		| "sourceType"
+		| "setSourceType"
+		| "isTypeScript"
+		| "setIsTypeScript"
+		| "isJsx"
+		| "setIsJsx"
+>;

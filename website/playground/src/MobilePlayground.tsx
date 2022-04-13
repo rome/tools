@@ -2,31 +2,17 @@ import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { formatWithPrettier, getLanguage } from "./utils";
 import { PlaygroundProps } from "./types";
-import { PlaygroundSettings } from "./PlaygroundSettings";
+import { SettingsMenu } from "./SettingsMenu";
 
 export function MobilePlayground(
 	{
-		isTypeScript,
-		setIsTypeScript,
-		isJsx,
-		setIsJsx,
-		sourceType,
-		setSourceType,
-		indentWidth,
-		setIndentWidth,
-		indentStyle,
-		setIndentStyle,
-		quoteStyle,
-		setQuoteStyle,
-		lineWidth,
-		setLineWidth,
-		code,
-		setCode,
-		romeOutput,
+		playgroundState: { code, setCode, ...settings },
+		prettierOutput,
+		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
 ) {
+	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
-	const { cst, ast, formatted_code, formatter_ir, errors } = romeOutput;
 	return (
 		<div className="p-1">
 			<h1 className="p-3 text-xl pb-5">Rome Playground</h1>
@@ -59,22 +45,7 @@ export function MobilePlayground(
 					/>
 				</TabPanel>
 				<TabPanel>
-					<PlaygroundSettings
-						lineWidth={lineWidth}
-						setLineWidth={setLineWidth}
-						indentStyle={indentStyle}
-						setIndentStyle={setIndentStyle}
-						indentWidth={indentWidth}
-						setIndentWidth={setIndentWidth}
-						quoteStyle={quoteStyle}
-						setQuoteStyle={setQuoteStyle}
-						sourceType={sourceType}
-						setSourceType={setSourceType}
-						isTypeScript={isTypeScript}
-						setIsTypeScript={setIsTypeScript}
-						isJsx={isJsx}
-						setIsJsx={setIsJsx}
-					/>
+					<SettingsMenu settings={settings} />
 				</TabPanel>
 				<TabPanel>
 					<h1>Rome</h1>
@@ -92,21 +63,7 @@ export function MobilePlayground(
 					/>
 					<h1>Prettier</h1>
 					<CodeEditor
-						value={formatWithPrettier(code, {
-							lineWidth,
-							indentStyle,
-							indentWidth,
-							language: isTypeScript ? "ts" : "js",
-							quoteStyle,
-						})}
-						key={
-							code +
-							lineWidth +
-							indentStyle +
-							indentWidth +
-							language +
-							quoteStyle
-						}
+						value={prettierOutput}
 						language={language}
 						placeholder="Prettier Output"
 						style={{

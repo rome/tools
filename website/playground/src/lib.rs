@@ -9,7 +9,7 @@ use std::io;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub struct PlaygroundResult {
+pub struct RomeOutput {
     ast: String,
     cst: String,
     formatted_code: String,
@@ -18,7 +18,7 @@ pub struct PlaygroundResult {
 }
 
 #[wasm_bindgen]
-impl PlaygroundResult {
+impl RomeOutput {
     #[wasm_bindgen(getter)]
     pub fn ast(&self) -> String {
         self.ast.clone()
@@ -80,7 +80,7 @@ pub fn run(
     is_typescript: bool,
     is_jsx: bool,
     source_type: String,
-) -> PlaygroundResult {
+) -> RomeOutput {
     let mut simple_files = SimpleFiles::new();
     let main_file_id = simple_files.add("main.js".to_string(), code.clone());
 
@@ -132,7 +132,7 @@ pub fn run(
             .unwrap();
     }
 
-    PlaygroundResult {
+    RomeOutput {
         cst,
         ast,
         formatted_code,
