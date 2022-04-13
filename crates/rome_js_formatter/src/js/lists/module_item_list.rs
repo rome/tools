@@ -6,7 +6,8 @@ use rome_formatter::FormatResult;
 use rome_formatter::{concat_elements, empty_line, format_elements, hard_line_break};
 use rome_js_syntax::JsModuleItemList;
 use rome_js_syntax::{
-    JsAnyImportClause, JsAnyModuleItem, JsImportBareClause, JsModuleItemList, JsSyntaxNode,
+    JsAnyImportClause, JsAnyModuleItem, JsImportBareClause, JsImportDefaultClause,
+    JsImportNamedClause, JsImportNamespaceClause, JsModuleItemList,
 };
 use rome_rowan::AstNode;
 use std::cmp::Ordering;
@@ -84,7 +85,7 @@ impl SortedImports {
             })
         } else {
             self.import_list.push(Import::Safe {
-                node: import_clause.syntax().clone(),
+                node: import_clause.into(),
                 formatted,
                 trailing_lines,
             })
@@ -92,6 +93,8 @@ impl SortedImports {
     }
 
     /// It stores any module item that is not a [JsImport]
+    ///
+    /// [JsImport]: rome_js_syntax::JsImport
     pub fn store_formatted_module_item(
         &mut self,
         item: JsAnyModuleItem,
@@ -110,6 +113,7 @@ impl SortedImports {
         })
     }
 
+    /// It consumes and sort possible dangling imports, and then format the whole list
     pub fn into_format_element(mut self) -> FormatElement {
         // we retrieve potential dangling items inside the import list
         if !self.import_list.is_empty() {
@@ -120,6 +124,8 @@ impl SortedImports {
     }
 
     /// It sorts the [JsImport] stored so far and then empty them
+    ///
+    /// [JsImport]: rome_js_syntax::JsImport
     fn sort_and_store_import_list(&mut self, is_last: bool) {
         self.import_list
             .sort_unstable_by(|left, right| left.compare(right));
@@ -156,7 +162,11 @@ impl SortedImports {
     }
 }
 
-#[derive(Eq, PartialEq)]
+/// Convenient enum to categorize imports that might have side effects against the ones that
+/// might not.
+///
+/// Internally, we assume that bare import clauses **might** contain side effects, while the rest
+/// **might not** contain side effects
 enum Import {
     PossiblyWithSideEffects {
         node: JsImportBareClause,
@@ -164,10 +174,53 @@ enum Import {
         trailing_lines: usize,
     },
     Safe {
-        node: JsSyntaxNode,
+        node: SafeImport,
         formatted: FormatElement,
         trailing_lines: usize,
     },
+}
+
+/// Convenient enum to make the comparison of safe imports handier
+enum SafeImport {
+    JsImportNamedClause(JsImportNamedClause),
+    JsImportDefaultClause(JsImportDefaultClause),
+    JsImportNamespaceClause(JsImportNamespaceClause),
+}
+
+impl SafeImport {
+    pub fn get_source_text(&self) -> FormatResult<String> {
+        Ok(match self {
+            SafeImport::JsImportNamedClause(node) => node.source()?.text(),
+            SafeImport::JsImportDefaultClause(node) => node.source()?.text(),
+            SafeImport::JsImportNamespaceClause(node) => node.source()?.text(),
+        })
+    }
+
+    pub fn compare(&self, other: &Self) -> Ordering {
+        // In case the source is missing, we swallow the error and keep the ordering as it is
+        let self_source = self.get_source_text().ok();
+        let other_self_source = other.get_source_text().ok();
+        match (self_source, other_self_source) {
+            (Some(self_source), Some(other_self_source)) => self_source.cmp(&other_self_source),
+
+            _ => Ordering::Equal,
+        }
+    }
+}
+
+impl From<JsAnyImportClause> for SafeImport {
+    fn from(any_node: JsAnyImportClause) -> Self {
+        match any_node {
+            JsAnyImportClause::JsImportDefaultClause(node) => {
+                SafeImport::JsImportDefaultClause(node)
+            }
+            JsAnyImportClause::JsImportNamedClause(node) => SafeImport::JsImportNamedClause(node),
+            JsAnyImportClause::JsImportNamespaceClause(node) => {
+                SafeImport::JsImportNamespaceClause(node)
+            }
+            _ => unreachable!("JsImportBareClause should not be tracked as variant in this enum"),
+        }
+    }
 }
 
 impl Import {
@@ -196,7 +249,12 @@ impl Import {
             ) => node.text().cmp(&other_node.text()),
             (_, Import::PossiblyWithSideEffects { .. }) => Ordering::Greater,
             (Import::PossiblyWithSideEffects { .. }, _) => Ordering::Less,
-            _ => Ordering::Greater,
+            (
+                Import::Safe { node, .. },
+                Import::Safe {
+                    node: other_node, ..
+                },
+            ) => node.compare(other_node),
         }
     }
 }
