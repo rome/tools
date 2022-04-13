@@ -39,3 +39,5 @@
 						}}
 					/>;
 
+					let a = <test aVeryLongAttributeName={"WithAVeryLongValuethat exceeds the line width, what happens with ithis"} />;
+

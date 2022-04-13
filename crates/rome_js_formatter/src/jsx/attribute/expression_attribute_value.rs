@@ -48,23 +48,21 @@ impl ToFormatElement for JsxExpressionAttributeValue {
         //     } />
         // ```
         //
-        if matches!(
+        let formatted_expression = if matches!(
             expression,
             JsAnyExpression::JsObjectExpression(_)
                 | JsAnyExpression::JsArrayExpression(_)
                 | JsAnyExpression::JsCallExpression(_)
         ) {
-            Ok(group_elements(format_elements![
-                l_curly_token.format(formatter)?,
-                expression.format(formatter)?,
-                r_curly_token.format(formatter)?,
-            ]))
+            expression.format(formatter)?
         } else {
-            Ok(group_elements(format_elements![
-                l_curly_token.format(formatter)?,
-                soft_block_indent(expression.format(formatter)?),
-                r_curly_token.format(formatter)?,
-            ]))
-        }
+            soft_block_indent(expression.format(formatter)?)
+        };
+
+        Ok(group_elements(format_elements![
+            l_curly_token.format(formatter)?,
+            formatted_expression,
+            r_curly_token.format(formatter)?,
+        ]))
     }
 }

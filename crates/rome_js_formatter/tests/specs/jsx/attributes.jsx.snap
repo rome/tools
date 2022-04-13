@@ -46,6 +46,8 @@ expression: attributes.jsx
 						}}
 					/>;
 
+					let a = <test aVeryLongAttributeName={"WithAVeryLongValuethat exceeds the line width, what happens with ithis"} />;
+
 
 =============================
 # Outputs
@@ -87,5 +89,11 @@ Quote style: Double Quotes
 		overflowY: "scroll",
 		fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 	}}
+/>;
+
+let a = <test
+	aVeryLongAttributeName={
+		"WithAVeryLongValuethat exceeds the line width, what happens with ithis"
+	}
 />;
 
