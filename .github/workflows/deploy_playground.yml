@@ -36,7 +36,8 @@ jobs:
         id: sha
         run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
 
-      - run: pnpm build --prefix website/playground -- --base=/${{ steps.sha.outputs.sha }}/
+      - run: BASE_URL="/${{ steps.sha.outputs.sha }}/" pnpm --prefix website/playground build
+
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
         env:
@@ -50,7 +51,7 @@ jobs:
         if: github.event_name == 'pull_request'
         id: url
         run: |
-          url="[Playground for commit](https://play.rome.tools/${{ steps.sha.outputs.sha }}/)"
+          url="[Playground for commit ${{ steps.sha.outputs.sha }}](https://play.rome.tools/${{ steps.sha.outputs.sha }}/)"
           echo "::set-output name=url::$url"
 
       - name: Get the PR number
