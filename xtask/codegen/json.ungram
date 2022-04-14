@@ -1,0 +1,66 @@
+// JSON Un-Grammar.
+//
+// This grammar specifies the structure of JSON's concrete syntax tree.
+// It does not specify parsing rules (ambiguities, precedence, etc are out of scope).
+// Tokens are processed -- contextual keywords are recognised, compound operators glued.
+//
+// Legend:
+//
+//   //          				-- comment
+//   Name =      				-- non-terminal definition
+//   'ident'     				-- token (terminal)
+//   A B         				-- sequence
+//   A | B       				-- alternation
+//   A*          				-- zero or more repetition
+//   (A (',' A)* ','?)	        -- repetition of node A separated by ',' and allowing a trailing comma
+//   (A (',' A)*)	            -- repetition of node A separated by ',' without a trailing comma
+//   A?          				-- zero or one repetition
+//   (A)         				-- same as A
+//   label:A     				-- suggested name for field of AST node
+
+
+
+// {} or []
+JsonStatement =
+  JsonObjectStatement
+  | JsonArrayStatement
+
+// { } or {"a": "b"}
+JsonObjectStatement =
+  '{'
+  JsonObjectValueList
+  '}'
+
+JsonObjectValueList = (JsonObjectValue (',' JsonObjectValue)*)
+JsonObjectValue =  JsonStringLiteralExpression ':' JsonDataValue
+
+JsonArrayStatement =
+	'['
+	JsonArrayValueList
+	']'
+
+JsonArrayValueList = (JsonDataValue (',' JsonDataValue)*)
+
+JsonDataValue =
+	JsonDataLiteralExpression
+	| JsonObjectStatement
+	| JsonArrayStatement
+
+
+//////////////
+// LITERALS //
+//////////////
+
+
+JsonDataLiteralExpression =
+	JsonStringLiteralExpression
+	| JsonNumberLiteralExpression
+	| JsonBooleanLiteralExpression
+	| JsonNullLiteralExpression
+
+
+JsonStringLiteralExpression = value: 'json_string_literal'
+JsonNumberLiteralExpression = value: 'json_number_literal'
+JsonBooleanLiteralExpression = value: ('true' | 'false')
+JsonNullLiteralExpression = value: 'null'
+
