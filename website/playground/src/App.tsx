@@ -149,7 +149,7 @@ function App() {
 			return (
 				<div className="divide-y divide-slate-300">
 					<h1 className="p-4 text-xl">Rome Playground</h1>
-					<div>
+					<div className="flex items-baseline">
 						<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />
 						<IndentStyleSelect
 							indentWidth={indentWidth}
