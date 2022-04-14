@@ -36,7 +36,11 @@ jobs:
         id: sha
         run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
 
-      - run: pnpm build --prefix website/playground -- --base=/${{ steps.sha.outputs.sha }}/
+      - run: pnpm --prefix website/playground build:wasm
+
+      # We don't run the general build script because we need to pass in the base flag
+      # directly to the vite command.
+      - run: pnpm --prefix website/playground build:js --base=/${{ steps.sha.outputs.sha }}/
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
         env:
