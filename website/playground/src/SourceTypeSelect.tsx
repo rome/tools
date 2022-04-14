@@ -23,7 +23,7 @@ export default function SourceTypeSelect(
 							htmlFor="sourceType"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Source type:
+							Source Type
 						</label>
 						<span id="source-type-description" className="text-gray-500">
 							<span className="sr-only">Source type</span>

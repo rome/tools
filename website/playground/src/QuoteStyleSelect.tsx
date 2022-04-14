@@ -16,7 +16,7 @@ export default function QuoteStyleSelect({ setQuoteStyle, quoteStyle }: Props) {
 							htmlFor="quoteStyle"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Quote type:
+							Quote Type
 						</label>
 						<span id="quote-type-description" className="text-gray-500">
 							<span className="sr-only">Quote type</span>
