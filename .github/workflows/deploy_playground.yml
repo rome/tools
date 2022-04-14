@@ -31,6 +31,7 @@ jobs:
           run_install: |
             args: [--prefix website/playground]
 
+      # We use the short SHA for shorter, simpler links
       - name: Set GitHub SHA
         id: sha
         run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
