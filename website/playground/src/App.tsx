@@ -6,22 +6,21 @@ import { formatWithPrettier, usePlaygroundState, useWindowSize } from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";
 
-enum LoadingState {
-	Loading,
-	Success,
-	Error,
-}
+enum LoadingState { Loading, Success, Error }
 
 function App() {
-	useEffect(() => {
-		init()
-			.then(() => {
-				setLoadingState(LoadingState.Success);
-			})
-			.catch(() => {
-				setLoadingState(LoadingState.Error);
-			});
-	}, []);
+	useEffect(
+		() => {
+			init()
+				.then(() => {
+					setLoadingState(LoadingState.Success);
+				})
+				.catch(() => {
+					setLoadingState(LoadingState.Error);
+				});
+		},
+		[],
+	);
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
 	const playgroundState = usePlaygroundState();
 	const { width } = useWindowSize();
@@ -54,15 +53,18 @@ function App() {
 				quoteStyle,
 				isTypeScript,
 				isJsx,
-				sourceType
+				sourceType,
 			);
-			const prettierOutput = formatWithPrettier(code, {
-				lineWidth,
-				indentStyle,
-				indentWidth,
-				language: isTypeScript ? "ts" : "js",
-				quoteStyle,
-			});
+			const prettierOutput = formatWithPrettier(
+				code,
+				{
+					lineWidth,
+					indentStyle,
+					indentWidth,
+					language: isTypeScript ? "ts" : "js",
+					quoteStyle,
+				},
+			);
 
 			if (width && width < 480) {
 				return (

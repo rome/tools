@@ -4,28 +4,28 @@ import QuoteStyleSelect from "./QuoteStyleSelect";
 import SourceTypeSelect from "./SourceTypeSelect";
 import { PlaygroundSettings } from "./types";
 
-interface Props {
-	settings: PlaygroundSettings;
-}
+interface Props { settings: PlaygroundSettings }
 
-export function SettingsMenu({
-	settings: {
-		lineWidth,
-		setLineWidth,
-		indentWidth,
-		setIndentWidth,
-		indentStyle,
-		setIndentStyle,
-		quoteStyle,
-		setQuoteStyle,
-		sourceType,
-		setSourceType,
-		isTypeScript,
-		setIsTypeScript,
-		isJsx,
-		setIsJsx,
-	},
-}: Props) {
+export function SettingsMenu(
+	{
+		settings: {
+			lineWidth,
+			setLineWidth,
+			indentWidth,
+			setIndentWidth,
+			indentStyle,
+			setIndentStyle,
+			quoteStyle,
+			setQuoteStyle,
+			sourceType,
+			setSourceType,
+			isTypeScript,
+			setIsTypeScript,
+			isJsx,
+			setIsJsx,
+		},
+	}: Props,
+) {
 	return (
 		<div>
 			<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />
