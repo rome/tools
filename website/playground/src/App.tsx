@@ -24,7 +24,7 @@ function App() {
 	}, []);
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
 	const playgroundState = usePlaygroundState();
-	const { width, height } = useWindowSize();
+	const { width } = useWindowSize();
 
 	switch (loadingState) {
 		case LoadingState.Error:

@@ -27,7 +27,7 @@ export function SettingsMenu({
 	},
 }: Props) {
 	return (
-		<div className="flex items-baseline">
+		<div>
 			<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />
 			<IndentStyleSelect
 				indentWidth={indentWidth}
