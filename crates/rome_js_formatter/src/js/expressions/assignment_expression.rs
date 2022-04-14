@@ -3,7 +3,7 @@ use crate::{
     format_elements, group_elements, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
-use rome_formatter::soft_line_indent_or_space;
+use rome_formatter::{if_group_breaks, if_group_fits_on_single_line, soft_line_indent_or_space};
 use rome_js_syntax::{JsAnyExpression, JsAssignmentExpression, JsAssignmentExpressionFields};
 
 impl ToFormatElement for JsAssignmentExpression {
@@ -16,17 +16,17 @@ impl ToFormatElement for JsAssignmentExpression {
 
         let right = right?;
 
-        let right = if matches!(right, JsAnyExpression::JsAssignmentExpression(_)) {
-            soft_line_indent_or_space(right.format(formatter)?)
-        } else {
+        let right = if !matches!(right, JsAnyExpression::JsAssignmentExpression(_)) {
             format_elements![space_token(), right.format(formatter)?]
+        } else {
+            group_elements(soft_line_indent_or_space(right.format(formatter)?))
         };
 
         Ok(group_elements(format_elements![
             left.format(formatter)?,
             space_token(),
             operator_token.format(formatter)?,
-            group_elements(right),
+            right,
         ]))
     }
 }

@@ -1,0 +1,69 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 223
+expression: nested.js
+---
+# Input
+// Fits
+bifornCringerMoshedPerplex = bifornCringerMoshedPerplexSawder = arrayO = "test"
+
+// Exceeding:
+// One assignment
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumber.m= "test"
+
+// Two assignments
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumber = ab = "test"
+
+// More than two assignments and exceeding: Each assignment on their own line
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.array = p = ab = "tes"
+
+
+bifornCringerMoshedPerplex = bifornCringerMoshedPerplexSawder = arrayOfNumb = a = "test"
+
+tt.parenR.updateContext =    tt.braceR.updateContext =        tt.braceR.updateContext = function () {
+            function a() {
+                if (this.state.context.length === 1) {
+                    if (this.state.context.length === 1) {
+                        return;
+                    }
+                }
+            };
+        }
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+// Fits
+bifornCringerMoshedPerplex = bifornCringerMoshedPerplexSawder = arrayO = "test";
+
+// Exceeding:
+// One assignment
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumber.m = "test";
+
+// Two assignments
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.arrayOfNumber =
+	ab = "test";
+
+// More than two assignments and exceeding: Each assignment on their own line
+bifornCringerMoshedPerplex.bifornCringerMoshedPerplexSawder.array =
+	p = ab = "tes";
+
+bifornCringerMoshedPerplex =
+	bifornCringerMoshedPerplexSawder = arrayOfNumb = a = "test";
+
+tt.parenR.updateContext =
+	tt.braceR.updateContext =
+		tt.braceR.updateContext = function () {
+			function a() {
+				if (this.state.context.length === 1) {
+					if (this.state.context.length === 1) {
+						return;
+					}
+				}
+			}
+		};
+

@@ -400,21 +400,22 @@ mod check_reformat;
 #[cfg(test)]
 mod test {
     use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::format;
     use crate::FormatOptions;
+    use crate::{format, to_format_element};
     use rome_js_parser::{parse, SourceType};
 
     #[test]
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"
-a = function () {
-  console.log(1);
-};
-"#;
+        let x = r#"
+computedDescriptionLines = function () {
+  return "something";
+}"#;
+        let src = x;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax.clone());
+        let root_element = to_format_element(FormatOptions::default(), &tree.syntax()).unwrap();
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         check_reformat(CheckReformatParams {
             root: &tree.syntax(),

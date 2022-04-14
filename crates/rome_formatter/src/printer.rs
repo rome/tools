@@ -84,6 +84,7 @@ impl Default for PrinterOptions {
 
 /// Error returned if printing an item as a flat string fails because it either contains
 /// explicit line breaks or would otherwise exceed the specified line width.
+#[derive(Debug)]
 struct LineBreakRequiredError;
 
 /// Prints the format elements into a string
