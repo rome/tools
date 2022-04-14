@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 153
 expression: break.js
 
 ---
@@ -25,22 +25,35 @@ for (aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, 
 # Output
 ```js
 const f = (argument1, argument2, argument3) => (
-  doSomethingWithArgument(argument1), doSomethingWithArgument(argument2), argument1
+  doSomethingWithArgument(argument1),
+    doSomethingWithArgument(argument2),
+    argument1
 );
 (function () {
   return (
-    aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName
+    aLongIdentifierName,
+      aLongIdentifierName,
+      aLongIdentifierName,
+      aLongIdentifierName
   );
 });
-aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName;
+aLongIdentifierName,
+  aLongIdentifierName,
+  aLongIdentifierName,
+  aLongIdentifierName;
 a.then(
   () => (
-    aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName
+    aLongIdentifierName,
+      aLongIdentifierName,
+      aLongIdentifierName,
+      aLongIdentifierName
   ),
 );
 for (
-  aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName =
-    0;
+  aLongIdentifierName = 0,
+    aLongIdentifierName = 0,
+    aLongIdentifierName = 0,
+    aLongIdentifierName = 0;
   test;
   update
 ) {}
@@ -49,27 +62,31 @@ for (
     b ? c : function () {
       return 0;
     }
-), (
-  a =
-    b ? c : function () {
-      return 0;
-    }
-), (
-  a =
-    b ? c : function () {
-      return 0;
-    }
-), (
-  a =
-    b ? c : function () {
-      return 0;
-    }
-), (
-  a =
-    b ? c : function () {
-      return 0;
-    }
-);
+),
+  (
+    a =
+      b ? c : function () {
+        return 0;
+      }
+  ),
+  (
+    a =
+      b ? c : function () {
+        return 0;
+      }
+  ),
+  (
+    a =
+      b ? c : function () {
+        return 0;
+      }
+  ),
+  (
+    a =
+      b ? c : function () {
+        return 0;
+      }
+  );
 
 ```
 

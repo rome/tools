@@ -1,10 +1,16 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 223
 expression: sequence_expression.js
+
 ---
 # Input
 a,b
 
+
+abcdefghijklkmnopqrstufwkdsf, abcdefghijklkmnopqrstufwkdsfddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd;
+
+abcdefghijklkmnopqrstufwkdsf, abcdefghijklkmnopqrstufwkdsf, abcdefghijklkmnopqrstufwkdsf, abcdefghijklkmnopqrstufwkdsf, abcdefghijklkmnopqrstufwkdsf, abcdefghijklkmnopqrstufwkdsf, abcdefghijklkmnopqrstufwkdsf, abcdefghijklkmnopqrstufwkdsf;
 =============================
 # Outputs
 ## Output 1
@@ -14,4 +20,16 @@ Line width: 80
 Quote style: Double Quotes
 -----
 a, b;
+
+abcdefghijklkmnopqrstufwkdsf,
+	abcdefghijklkmnopqrstufwkdsfddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd;
+
+abcdefghijklkmnopqrstufwkdsf,
+	abcdefghijklkmnopqrstufwkdsf,
+	abcdefghijklkmnopqrstufwkdsf,
+	abcdefghijklkmnopqrstufwkdsf,
+	abcdefghijklkmnopqrstufwkdsf,
+	abcdefghijklkmnopqrstufwkdsf,
+	abcdefghijklkmnopqrstufwkdsf,
+	abcdefghijklkmnopqrstufwkdsf;
 

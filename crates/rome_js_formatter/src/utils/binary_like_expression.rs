@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
     join_elements, soft_block_indent, soft_line_break_or_space, soft_line_indent_or_space,
@@ -428,13 +428,13 @@ impl FlattenItems {
             // groups not like ["something &&", "something &&" ]
             // we want to add a space between them in case they don't break
             .map(|(index, element)| {
-                let operator = match &element.operator {
-                    Some(operator) => {
-                        // SAFETY: `syntax_token.format` never returns MissingToken.
-                        format_elements![space_token(), operator.format(formatter).unwrap()]
-                    }
-                    None => empty_element(),
-                };
+                // SAFETY: `syntax_token.format` never returns MissingToken.
+                let operator = element
+                    .operator
+                    .format_with_or_empty(formatter, |operator| {
+                        format_elements![space_token(), operator]
+                    })
+                    .unwrap();
 
                 let terminator = match &element.terminator {
                     // the last element doesn't need a space
