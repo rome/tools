@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 223
 expression: object_binding.js
+
 ---
 # Input
 let {a}=b
@@ -17,8 +19,16 @@ Line width: 80
 Quote style: Double Quotes
 -----
 let { a } = b;
-let { d, b: c } = d;
-let { x, y = c, z: pp = f, ...g } = h;
+let {
+	d,
+	b: c,
+} = d;
+let {
+	x,
+	y = c,
+	z: pp = f,
+	...g
+} = h;
 let {
 	aaaaaaaaaaaaaaaaaaaa,
 	bbbbbbbbbbbbbbbbbbbb = cccccccccccccccccccc,
