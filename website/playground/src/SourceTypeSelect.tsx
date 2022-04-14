@@ -1,22 +1,17 @@
 import { SourceType } from "./types";
 
 interface Props {
-	setIsTypeScript: (b: boolean) => void;
-	isTypeScript: boolean;
-	setIsJsx: (b: boolean) => void;
-	isJsx: boolean;
-	setSourceType: (v: SourceType) => void;
-	sourceType: SourceType;
+	setIsTypeScript: (b: boolean) => void,
+	isTypeScript: boolean,
+	setIsJsx: (b: boolean) => void,
+	isJsx: boolean,
+	setSourceType: (v: SourceType) => void,
+	sourceType: SourceType,
 }
 
-export default function SourceTypeSelect({
-	setIsTypeScript,
-	isTypeScript,
-	setIsJsx,
-	isJsx,
-	setSourceType,
-	sourceType,
-}: Props) {
+export default function SourceTypeSelect(
+	{ setIsTypeScript, isTypeScript, setIsJsx, isJsx, setSourceType, sourceType }: Props,
+) {
 	return (
 		<div className="p-5 sm:pr-0 sm:pt-0">
 			<fieldset className="flex items-center">

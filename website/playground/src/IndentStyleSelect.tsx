@@ -1,18 +1,15 @@
 import { IndentStyle } from "./types";
 
 interface Props {
-	setIndentStyle: (indentStyle: IndentStyle) => void;
-	indentStyle: IndentStyle;
-	indentWidth: number;
-	setIndentWidth: (indentWidth: number) => void;
+	setIndentStyle: (indentStyle: IndentStyle) => void,
+	indentStyle: IndentStyle,
+	indentWidth: number,
+	setIndentWidth: (indentWidth: number) => void,
 }
 
-export default function IndentStyleSelect({
-	indentStyle,
-	setIndentStyle,
-	indentWidth,
-	setIndentWidth,
-}: Props) {
+export default function IndentStyleSelect(
+	{ indentStyle, setIndentStyle, indentWidth, setIndentWidth }: Props,
+) {
 	return (
 		<div className="pl-5 pb-5 sm:p-5 flex">
 			<fieldset className="space-y-5">
