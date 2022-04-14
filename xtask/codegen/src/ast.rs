@@ -9,6 +9,7 @@ use super::{
     to_lower_snake_case, Mode,
 };
 use crate::css_kinds_src::CSS_KINDS_SRC;
+use crate::json_kinds_src::JSON_KINDS_SRC;
 use crate::generate_syntax_factory::generate_syntax_factory;
 use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
 use crate::{
@@ -33,6 +34,10 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
     ast.sort();
     generate_syntax(ast, &mode, LanguageKind::Css)?;
 
+    let mut ast = load_json_ast();
+    ast.sort();
+    generate_syntax(ast, &mode, LanguageKind::Json)?;
+
     Ok(())
 }
 
@@ -51,6 +56,13 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
             crate::CSS_SYNTAX_FACTORY,
             crate::CSS_AST_MACROS,
             CSS_KINDS_SRC,
+        ),
+        LanguageKind::Json => (
+            crate::JSON_AST_NODES,
+            crate::JSON_SYNTAX_KINDS,
+            crate::JSON_SYNTAX_FACTORY,
+            crate::JSON_AST_MACROS,
+            JSON_KINDS_SRC,
         ),
     };
     let ast_nodes_file = project_root().join(nodes);
@@ -126,6 +138,12 @@ pub(crate) fn load_js_ast() -> AstSrc {
     let ast: AstSrc = make_ast(&grammar);
     check_unions(&ast.unions);
     ast
+}
+
+pub(crate) fn load_json_ast() -> AstSrc {
+    let grammar_src = include_str!("../json.ungram");
+    let grammar: Grammar = grammar_src.parse().unwrap();
+    make_ast(&grammar)
 }
 
 pub(crate) fn load_css_ast() -> AstSrc {
