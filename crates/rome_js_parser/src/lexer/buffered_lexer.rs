@@ -144,10 +144,6 @@ impl<'l> BufferedLexer<'l> {
 
     /// Rewinds the lexer to the state stored in the checkpoint.
     pub fn rewind(&mut self, checkpoint: LexerCheckpoint) {
-        if self.inner.position as u32 == u32::from(checkpoint.position) {
-            return;
-        }
-
         self.inner.rewind(checkpoint);
         self.lookahead.clear();
         self.current = None;
