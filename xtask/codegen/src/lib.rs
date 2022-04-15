@@ -5,7 +5,9 @@ mod ast;
 mod css_kinds_src;
 mod formatter;
 mod generate_macros;
+mod generate_node_factory;
 mod generate_nodes;
+mod generate_nodes_mut;
 mod generate_syntax_factory;
 mod generate_syntax_kinds;
 mod json_kinds_src;
@@ -27,17 +29,23 @@ pub use self::unicode::generate_tables;
 
 const JS_SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
 const JS_AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";
+const JS_AST_NODES_MUT: &str = "crates/rome_js_syntax/src/generated/nodes_mut.rs";
 const JS_SYNTAX_FACTORY: &str = "crates/rome_js_factory/src/generated/syntax_factory.rs";
+const JS_NODE_FACTORY: &str = "crates/rome_js_factory/src/generated/node_factory.rs";
 const JS_AST_MACROS: &str = "crates/rome_js_syntax/src/generated/macros.rs";
 
 const CSS_SYNTAX_KINDS: &str = "crates/rome_css_syntax/src/generated/kind.rs";
 const CSS_AST_NODES: &str = "crates/rome_css_syntax/src/generated/nodes.rs";
+const CSS_AST_NODES_MUT: &str = "crates/rome_css_syntax/src/generated/nodes_mut.rs";
 const CSS_SYNTAX_FACTORY: &str = "crates/rome_css_factory/src/generated/syntax_factory.rs";
+const CSS_NODE_FACTORY: &str = "crates/rome_css_factory/src/generated/node_factory.rs";
 const CSS_AST_MACROS: &str = "crates/rome_css_syntax/src/generated/macros.rs";
 
 const JSON_SYNTAX_KINDS: &str = "crates/rome_json_syntax/src/generated/kind.rs";
 const JSON_AST_NODES: &str = "crates/rome_json_syntax/src/generated/nodes.rs";
+const JSON_AST_NODES_MUT: &str = "crates/rome_json_syntax/src/generated/nodes_mut.rs";
 const JSON_SYNTAX_FACTORY: &str = "crates/rome_json_factory/src/generated/syntax_factory.rs";
+const JSON_NODE_FACTORY: &str = "crates/rome_json_factory/src/generated/node_factory.rs";
 const JSON_AST_MACROS: &str = "crates/rome_json_syntax/src/generated/macros.rs";
 
 enum UpdateResult {
@@ -82,6 +90,14 @@ impl FromStr for LanguageKind {
 }
 
 impl LanguageKind {
+    pub(crate) fn syntax_crate(&self) -> TokenStream {
+        match self {
+            LanguageKind::Js => quote! { rome_js_syntax },
+            LanguageKind::Css => quote! { rome_css_syntax },
+            LanguageKind::Json => quote! { rome_json_syntax },
+        }
+    }
+
     pub(crate) fn syntax_kind(&self) -> TokenStream {
         match self {
             LanguageKind::Js => quote! { JsSyntaxKind },

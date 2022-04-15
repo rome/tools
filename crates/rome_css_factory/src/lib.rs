@@ -9,3 +9,5 @@ mod generated;
 pub use rome_css_syntax as syntax;
 
 pub type CssSyntaxTreeBuilder = TreeBuilder<'static, CssLanguage, CssSyntaxFactory>;
+
+pub use generated::node_factory as make;

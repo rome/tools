@@ -1,0 +1,150 @@
+use super::kinds_src::AstSrc;
+use crate::to_lower_snake_case;
+use crate::{kinds_src::Field, to_upper_snake_case, LanguageKind};
+use quote::{format_ident, quote};
+use xtask::Result;
+
+pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
+    let syntax_crate = language_kind.syntax_crate();
+    let syntax_kind = language_kind.syntax_kind();
+    let syntax_token = language_kind.syntax_token();
+    let syntax_node = language_kind.syntax_node();
+    let syntax_element = language_kind.syntax_element();
+
+    let nodes =
+        ast.nodes.iter().map(|node| {
+            let type_name = format_ident!("{}", node.name);
+            let kind = format_ident!("{}", to_upper_snake_case(&node.name));
+            let factory_name = format_ident!("{}", to_lower_snake_case(&node.name));
+
+            let (optional, required): (Vec<_>, Vec<_>) =
+                node.fields.iter().partition(|field| field.is_optional());
+
+            if optional.is_empty() {
+                let (args, slots): (Vec<_>, Vec<_>) = required
+                    .into_iter()
+                    .map(|field| {
+                        let name = field.method_name(language_kind);
+                        let type_name = field.ty();
+
+                        let arg = quote! { #name: #type_name };
+
+                        let slot = match field {
+                            Field::Token { .. } => {
+                                quote! { Some(SyntaxElement::Token(#name)) }
+                            }
+                            Field::Node { .. } => {
+                                quote! { Some(SyntaxElement::Node(#name.syntax().clone())) }
+                            }
+                        };
+
+                        (arg, slot)
+                    })
+                    .unzip();
+
+                return quote! {
+                    pub fn #factory_name( #( #args ),* ) -> #type_name {
+                        #type_name::unwrap_cast(SyntaxNode::new_detached(
+                            #syntax_kind::#kind,
+                            [#( #slots ),*],
+                        ))
+                    }
+                };
+            }
+
+            let builder_name = format_ident!("{}Builder", node.name);
+
+            let (required_args, required_fields): (Vec<_>, Vec<_>) = required
+                .into_iter()
+                .map(|field| {
+                    let name = field.method_name(language_kind);
+                    let type_name = field.ty();
+
+                    let arg = quote! { #name: #type_name };
+                    let field = quote! { #name };
+
+                    (arg, field)
+                })
+                .unzip();
+
+            let (optional_builder, optional_methods): (Vec<_>, Vec<_>) = optional
+                .into_iter()
+                .map(|field| {
+                    let name = field.method_name(language_kind);
+                    let method_name = format_ident!("with_{}", name);
+                    let type_name = field.ty();
+
+                    let field_type = quote! { #name: Option<#type_name> };
+                    let field_init = quote! { #name: None };
+
+                    let method = quote! {
+                        pub fn #method_name(mut self, #name: #type_name) -> Self {
+                            self.#name = Some(#name);
+                            self
+                        }
+                    };
+
+                    ((field_type, field_init), method)
+                })
+                .unzip();
+
+            let (optional_fields, optional_inits): (Vec<_>, Vec<_>) =
+                optional_builder.into_iter().unzip();
+
+            let slots: Vec<_> = node
+                .fields
+                .iter()
+                .map(|field| {
+                    let name = field.method_name(language_kind);
+                    match field {
+                        Field::Token { optional, .. } => if *optional {
+                            quote! { self.#name.map(|token| SyntaxElement::Token(token)) }
+                        } else {
+                            quote! { Some(SyntaxElement::Token(self.#name)) }
+                        }
+                        Field::Node { optional, .. } => if *optional {
+                            quote! { self.#name.map(|token| SyntaxElement::Node(token.syntax().clone())) }
+                        } else {
+                            quote! { Some(SyntaxElement::Node(self.#name.syntax().clone())) }
+                        }
+                    }
+                })
+                .collect();
+
+            quote! {
+                pub fn #factory_name( #( #required_args ),* ) -> #builder_name {
+                    #builder_name {
+                        #( #required_fields, )*
+                        #( #optional_inits, )*
+                    }
+                }
+
+                pub struct #builder_name {
+                    #( #required_args, )*
+                    #( #optional_fields, )*
+                }
+
+                impl #builder_name {
+                    #( #optional_methods )*
+                    pub fn build(self) -> #type_name {
+                        #type_name::unwrap_cast(SyntaxNode::new_detached(
+                            #syntax_kind::#kind,
+                            [#( #slots ),*],
+                        ))
+                    }
+                }
+            }
+        });
+
+    let output = quote! {
+        #![allow(clippy::redundant_closure)]
+        #![allow(clippy::too_many_arguments)]
+        use #syntax_crate::{*, #syntax_token as SyntaxToken, #syntax_node as SyntaxNode, #syntax_element as SyntaxElement};
+        use rome_rowan::AstNode;
+
+        #(#nodes)*
+    };
+
+    let pretty = xtask::reformat(output)?;
+    Ok(pretty)
+}

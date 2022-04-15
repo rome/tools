@@ -3,6 +3,7 @@ use rome_js_syntax::JsLanguage;
 use rome_rowan::TreeBuilder;
 
 mod generated;
+pub mod make;
 
 // Re-exported for tests
 #[doc(hidden)]

@@ -15,12 +15,12 @@ pub fn generate_syntax_factory(ast: &AstSrc, language_kind: LanguageKind) -> Res
         LanguageKind::Css => (
             quote! { rome_css_syntax },
             quote! { CssSyntaxKind },
-            quote! {CssSyntaxFactory},
+            quote! { CssSyntaxFactory },
         ),
         LanguageKind::Json => (
             quote! { rome_json_syntax },
             quote! { JsonSyntaxKind },
-            quote! {JsonSyntaxFactory},
+            quote! { JsonSyntaxFactory },
         ),
     };
     let normal_node_arms = ast.nodes.iter().map(|node| {
