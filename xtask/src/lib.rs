@@ -42,8 +42,6 @@ pub fn run_rustfmt(mode: Mode) -> Result<()> {
 }
 
 pub fn reformat(text: impl Display) -> Result<String> {
-    let mut file = File::create("foo.rs")?;
-    file.write_all(text.to_string().as_bytes())?;
     reformat_without_preamble(text).map(prepend_generated_preamble)
 }
 
