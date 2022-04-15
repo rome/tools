@@ -9,8 +9,8 @@ use super::{
     to_lower_snake_case, Mode,
 };
 use crate::css_kinds_src::CSS_KINDS_SRC;
-use crate::json_kinds_src::JSON_KINDS_SRC;
 use crate::generate_syntax_factory::generate_syntax_factory;
+use crate::json_kinds_src::JSON_KINDS_SRC;
 use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
 use crate::{
     generate_macros::generate_macros,

@@ -15,21 +15,19 @@ pub const JSON_KINDS_SRC: KindsSrc = KindsSrc {
         "JSON_BOOL_LITERAL",
         "JSON_NULL_LITERAL",
     ],
-    tokens: &[
-        "WHITESPACE",
-    ],
+    tokens: &["WHITESPACE"],
     nodes: &[
         "JSON_ROOT",
-        "JSON_OBJECT_STATEMENT", //
+        "JSON_OBJECT_STATEMENT",  //
         "JSON_OBJECT_VALUE_LIST", //
-        "JSON_OBJECT_VALUE", //
-        "JSON_ARRAY_STATEMENT", //
-        "JSON_ARRAY_VALUE_LIST", //
+        "JSON_OBJECT_VALUE",      //
+        "JSON_ARRAY_STATEMENT",   //
+        "JSON_ARRAY_VALUE_LIST",  //
         "JSON_DATA_VALUE",
         "JSON_DATA_LITERAL_EXPRESSION",
-        "JSON_STRING_LITERAL_EXPRESSION", //
-        "JSON_NUMBER_LITERAL_EXPRESSION", //
+        "JSON_STRING_LITERAL_EXPRESSION",  //
+        "JSON_NUMBER_LITERAL_EXPRESSION",  //
         "JSON_BOOLEAN_LITERAL_EXPRESSION", //
-        "JSON_NULL_LITERAL_EXPRESSION", //
+        "JSON_NULL_LITERAL_EXPRESSION",    //
     ],
 };
