@@ -6,11 +6,10 @@ use crate::{
 };
 #[cfg(feature = "serde")]
 use serde_crate::Serialize;
-use std::fmt;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
-use std::ops::Range;
+use std::{fmt, ops};
 use text_size::{TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -356,20 +355,29 @@ impl<L: Language> SyntaxNode<L> {
         SyntaxNode::from(self.raw.clone_subtree())
     }
 
-    pub fn clone_for_update(&self) -> SyntaxNode<L> {
-        SyntaxNode::from(self.raw.clone_for_update())
+    #[must_use]
+    pub fn detach(self) -> Self {
+        Self {
+            raw: self.raw.detach(),
+            _p: PhantomData,
+        }
     }
 
-    pub fn detach(&self) {
-        self.raw.detach()
-    }
-
-    pub fn splice_children(&self, to_delete: Range<usize>, to_insert: Vec<SyntaxElement<L>>) {
-        let to_insert = to_insert
-            .into_iter()
-            .map(cursor::SyntaxElement::from)
-            .collect::<Vec<_>>();
-        self.raw.splice_children(to_delete, to_insert)
+    #[must_use]
+    pub fn splice_slots<R, I>(self, range: R, replace_with: I) -> Self
+    where
+        R: ops::RangeBounds<usize>,
+        I: IntoIterator<Item = Option<SyntaxElement<L>>>,
+    {
+        Self {
+            raw: self.raw.splice_slots(
+                range,
+                replace_with
+                    .into_iter()
+                    .map(|element| element.map(cursor::SyntaxElement::from)),
+            ),
+            _p: PhantomData,
+        }
     }
 
     pub fn into_list(self) -> SyntaxList<L> {

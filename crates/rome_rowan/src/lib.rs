@@ -24,8 +24,6 @@ mod cow_mut;
 pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
-#[allow(unsafe_code)]
-mod sll;
 mod syntax_factory;
 mod syntax_token_text;
 mod tree_builder;

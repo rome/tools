@@ -3,7 +3,7 @@ use std::fmt::Formatter;
 use std::iter::Enumerate;
 use std::{
     borrow::{Borrow, Cow},
-    fmt, iter,
+    fmt,
     iter::FusedIterator,
     mem::{self, ManuallyDrop},
     ops, ptr, slice,
@@ -108,6 +108,13 @@ impl From<Cow<'_, GreenNodeData>> for GreenNode {
     }
 }
 
+impl From<&'_ GreenNodeData> for GreenNode {
+    #[inline]
+    fn from(borrow: &'_ GreenNodeData) -> Self {
+        borrow.to_owned()
+    }
+}
+
 impl fmt::Debug for GreenNodeData {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("GreenNode")
@@ -198,36 +205,11 @@ impl GreenNodeData {
         Some((idx, slot.rel_offset(), slot))
     }
 
-    /// Replaces the child in a slot with a new element or removes it
     #[must_use]
-    pub fn replace_child(&self, index: usize, replacement: Option<GreenElement>) -> GreenNode {
-        let mut replacement = replacement;
-        let slots = self.slots().enumerate().map(|(i, child)| {
-            if i == index {
-                replacement.take()
-            } else {
-                child.as_ref().map(|elem| elem.to_owned())
-            }
-        });
-        GreenNode::new(self.kind(), slots)
-    }
-
-    #[must_use]
-    pub fn insert_slot(&self, index: usize, new_slot: Option<GreenElement>) -> GreenNode {
-        // https://github.com/rust-lang/rust/issues/34433
-        self.splice_slots(index..index, iter::once(new_slot))
-    }
-
-    #[must_use]
-    pub fn remove_slot(&self, index: usize) -> GreenNode {
-        self.splice_slots(index..=index, iter::empty())
-    }
-
-    #[must_use]
-    pub fn splice_slots<R, I>(&self, range: R, replace_with: I) -> GreenNode
+    pub(crate) fn splice_slots<R, I>(&self, range: R, replace_with: I) -> GreenNode
     where
         R: ops::RangeBounds<usize>,
-        I: IntoIterator<Item = Option<GreenElement>>,
+        I: Iterator<Item = Option<GreenElement>>,
     {
         let mut slots: Vec<_> = self
             .slots()
@@ -300,14 +282,7 @@ impl GreenNode {
     }
 
     #[inline]
-    pub(crate) fn into_raw(this: GreenNode) -> ptr::NonNull<GreenNodeData> {
-        let green = ManuallyDrop::new(this);
-        let green: &GreenNodeData = &*green;
-        ptr::NonNull::from(&*green)
-    }
-
-    #[inline]
-    pub(crate) unsafe fn from_raw(ptr: ptr::NonNull<GreenNodeData>) -> GreenNode {
+    unsafe fn from_raw(ptr: ptr::NonNull<GreenNodeData>) -> GreenNode {
         let arc = Arc::from_raw(&ptr.as_ref().data as *const ReprThin);
         let arc = mem::transmute::<Arc<ReprThin>, ThinArc<GreenNodeHead, Slot>>(arc);
         GreenNode { ptr: arc }

@@ -98,10 +98,11 @@ impl SyntaxElement {
         }
     }
 
-    pub fn detach(&self) {
+    #[must_use]
+    pub fn detach(self) -> Self {
         match self {
-            NodeOrToken::Node(it) => it.detach(),
-            NodeOrToken::Token(it) => it.detach(),
+            NodeOrToken::Node(it) => Self::Node(it.detach()),
+            NodeOrToken::Token(it) => Self::Token(it.detach()),
         }
     }
 }

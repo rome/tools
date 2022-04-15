@@ -1,29 +1,14 @@
-use crate::cursor::{free, GreenElement, NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
+use crate::cursor::{NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
+use crate::green::GreenElement;
 use crate::{Direction, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
 use std::hash::{Hash, Hasher};
-use std::{fmt, iter, ptr};
+use std::rc::Rc;
+use std::{fmt, iter};
 use text_size::{TextRange, TextSize};
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub(crate) struct SyntaxToken {
-    ptr: ptr::NonNull<NodeData>,
-}
-
-impl Clone for SyntaxToken {
-    #[inline]
-    fn clone(&self) -> Self {
-        self.data().inc_rc();
-        SyntaxToken { ptr: self.ptr }
-    }
-}
-
-impl Drop for SyntaxToken {
-    #[inline]
-    fn drop(&mut self) {
-        if self.data().dec_rc() {
-            unsafe { free(self.ptr) }
-        }
-    }
+    ptr: Rc<NodeData>,
 }
 
 impl SyntaxToken {
@@ -33,10 +18,8 @@ impl SyntaxToken {
         index: u32,
         offset: TextSize,
     ) -> SyntaxToken {
-        let mutable = parent.data().mutable;
-        let green = GreenElement::Token { ptr: green.into() };
         SyntaxToken {
-            ptr: NodeData::new(Some(parent), index, offset, green, mutable),
+            ptr: NodeData::new(Some(parent.ptr), index, offset, green.to_owned().into()),
         }
     }
 
@@ -55,7 +38,15 @@ impl SyntaxToken {
 
     #[inline]
     pub(super) fn data(&self) -> &NodeData {
-        unsafe { self.ptr.as_ref() }
+        self.ptr.as_ref()
+    }
+
+    #[inline]
+    pub(super) fn into_green(self) -> GreenElement {
+        match Rc::try_unwrap(self.ptr) {
+            Ok(data) => data.green,
+            Err(ptr) => ptr.green.clone(),
+        }
     }
 
     #[inline]
@@ -149,9 +140,11 @@ impl SyntaxToken {
         }
     }
 
-    pub fn detach(&self) {
-        assert!(self.data().mutable, "immutable tree: {}", self);
-        self.data().detach()
+    #[must_use]
+    pub fn detach(self) -> Self {
+        Self {
+            ptr: self.ptr.detach(),
+        }
     }
 
     #[inline]

@@ -173,14 +173,7 @@ impl GreenToken {
     }
 
     #[inline]
-    pub(crate) fn into_raw(this: GreenToken) -> ptr::NonNull<GreenTokenData> {
-        let green = ManuallyDrop::new(this);
-        let green: &GreenTokenData = &*green;
-        ptr::NonNull::from(&*green)
-    }
-
-    #[inline]
-    pub(crate) unsafe fn from_raw(ptr: ptr::NonNull<GreenTokenData>) -> GreenToken {
+    unsafe fn from_raw(ptr: ptr::NonNull<GreenTokenData>) -> GreenToken {
         let arc = Arc::from_raw(&ptr.as_ref().data as *const ReprThin);
         let arc = mem::transmute::<Arc<ReprThin>, ThinArc<GreenTokenHead, u8>>(arc);
         GreenToken { ptr: arc }

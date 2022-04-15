@@ -86,22 +86,17 @@ mod node;
 mod token;
 mod trivia;
 
-use std::{
-    cell::Cell,
-    mem::{self, ManuallyDrop},
-    ptr,
-};
+use std::{iter, ops};
+use std::{ptr, rc::Rc};
 
 use countme::Count;
 pub(crate) use trivia::{SyntaxTrivia, SyntaxTriviaPiecesIterator};
 
-use crate::cursor::node::Siblings;
 pub(crate) use crate::cursor::token::SyntaxToken;
+use crate::{cursor::node::Siblings, green::GreenElement};
 use crate::{
-    green::{GreenElementRef, GreenNodeData, GreenTokenData, RawSyntaxKind},
-    sll,
-    utility_types::Delta,
-    GreenNode, GreenToken, NodeOrToken, TextRange, TextSize,
+    green::{GreenElementRef, RawSyntaxKind},
+    NodeOrToken, TextRange, TextSize,
 };
 pub(crate) use element::SyntaxElement;
 pub(crate) use node::{
@@ -109,193 +104,71 @@ pub(crate) use node::{
     SyntaxSlot, SyntaxSlots,
 };
 
-enum GreenElement {
-    Node {
-        ptr: Cell<ptr::NonNull<GreenNodeData>>,
-    },
-    Token {
-        ptr: ptr::NonNull<GreenTokenData>,
-    },
-}
-
+#[derive(Debug)]
 struct _SyntaxElement;
 
 pub(crate) fn has_live() -> bool {
     countme::get::<_SyntaxElement>().live > 0
 }
 
+#[derive(Debug)]
 struct NodeData {
     _c: Count<_SyntaxElement>,
 
-    rc: Cell<u32>,
-    parent: Cell<Option<ptr::NonNull<NodeData>>>,
-    slot: Cell<u32>,
+    parent: Option<Rc<NodeData>>,
+    slot: u32,
     green: GreenElement,
 
-    /// Invariant: never changes after NodeData is created.
-    mutable: bool,
     /// Absolute offset for immutable nodes, unused for mutable nodes.
     offset: TextSize,
-    // The following links only have meaning when `mutable` is true.
-    first: Cell<*const NodeData>,
-    /// Invariant: never null if mutable.
-    next: Cell<*const NodeData>,
-    /// Invariant: never null if mutable.
-    prev: Cell<*const NodeData>,
-}
-
-unsafe impl sll::Elem for NodeData {
-    fn prev(&self) -> &Cell<*const Self> {
-        &self.prev
-    }
-    fn next(&self) -> &Cell<*const Self> {
-        &self.next
-    }
-    fn key(&self) -> &Cell<u32> {
-        &self.slot
-    }
-}
-
-#[inline(never)]
-unsafe fn free(mut data: ptr::NonNull<NodeData>) {
-    loop {
-        debug_assert_eq!(data.as_ref().rc.get(), 0);
-        debug_assert!(data.as_ref().first.get().is_null());
-        let node = Box::from_raw(data.as_ptr());
-        match node.parent.take() {
-            Some(parent) => {
-                debug_assert!(parent.as_ref().rc.get() > 0);
-                if node.mutable {
-                    sll::unlink(&parent.as_ref().first, &*node)
-                }
-                if parent.as_ref().dec_rc() {
-                    data = parent;
-                } else {
-                    break;
-                }
-            }
-            None => {
-                match &node.green {
-                    GreenElement::Node { ptr } => {
-                        let _ = GreenNode::from_raw(ptr.get());
-                    }
-                    GreenElement::Token { ptr } => {
-                        let _ = GreenToken::from_raw(*ptr);
-                    }
-                }
-                break;
-            }
-        }
-    }
 }
 
 impl NodeData {
     #[inline]
     fn new(
-        parent: Option<SyntaxNode>,
+        parent: Option<Rc<NodeData>>,
         slot: u32,
         offset: TextSize,
         green: GreenElement,
-        mutable: bool,
-    ) -> ptr::NonNull<NodeData> {
-        let parent = ManuallyDrop::new(parent);
+    ) -> Rc<NodeData> {
         let res = NodeData {
             _c: Count::new(),
-            rc: Cell::new(1),
-            parent: Cell::new(parent.as_ref().map(|it| it.ptr)),
-            slot: Cell::new(slot),
+            parent,
+            slot,
             green,
-
-            mutable,
             offset,
-            first: Cell::new(ptr::null()),
-            next: Cell::new(ptr::null()),
-            prev: Cell::new(ptr::null()),
         };
-        unsafe {
-            if mutable {
-                let res_ptr: *const NodeData = &res;
-                match sll::init(
-                    (*res_ptr).parent().map(|it| &it.first),
-                    res_ptr.as_ref().unwrap(),
-                ) {
-                    sll::AddToSllResult::AlreadyInSll(node) => {
-                        if cfg!(debug_assertions) {
-                            assert_eq!((*node).slot(), (*res_ptr).slot());
-                            match ((*node).green(), (*res_ptr).green()) {
-                                (NodeOrToken::Node(lhs), NodeOrToken::Node(rhs)) => {
-                                    assert!(ptr::eq(lhs, rhs))
-                                }
-                                (NodeOrToken::Token(lhs), NodeOrToken::Token(rhs)) => {
-                                    assert!(ptr::eq(lhs, rhs))
-                                }
-                                it => {
-                                    panic!("node/token confusion: {:?}", it)
-                                }
-                            }
-                        }
 
-                        ManuallyDrop::into_inner(parent);
-                        let res = node as *mut NodeData;
-                        (*res).inc_rc();
-                        return ptr::NonNull::new_unchecked(res);
-                    }
-                    it => {
-                        let res = Box::into_raw(Box::new(res));
-                        it.add_to_sll(res);
-                        return ptr::NonNull::new_unchecked(res);
-                    }
-                }
-            }
-            ptr::NonNull::new_unchecked(Box::into_raw(Box::new(res)))
-        }
-    }
-
-    #[inline]
-    fn inc_rc(&self) {
-        let rc = match self.rc.get().checked_add(1) {
-            Some(it) => it,
-            None => std::process::abort(),
-        };
-        self.rc.set(rc)
-    }
-
-    #[inline]
-    fn dec_rc(&self) -> bool {
-        let rc = self.rc.get() - 1;
-        self.rc.set(rc);
-        rc == 0
+        Rc::new(res)
     }
 
     #[inline]
     fn key(&self) -> (ptr::NonNull<()>, TextSize) {
         let ptr = match &self.green {
-            GreenElement::Node { ptr } => ptr.get().cast(),
-            GreenElement::Token { ptr } => ptr.cast(),
+            GreenElement::Node(ptr) => ptr::NonNull::from(&**ptr).cast(),
+            GreenElement::Token(ptr) => ptr::NonNull::from(&**ptr).cast(),
         };
         (ptr, self.offset())
     }
 
     #[inline]
     fn parent_node(&self) -> Option<SyntaxNode> {
-        let parent = self.parent()?;
-        debug_assert!(matches!(parent.green, GreenElement::Node { .. }));
-        parent.inc_rc();
+        debug_assert!(matches!(self.parent()?.green, GreenElement::Node { .. }));
         Some(SyntaxNode {
-            ptr: ptr::NonNull::from(parent),
+            ptr: self.parent.as_ref()?.clone(),
         })
     }
 
     #[inline]
     fn parent(&self) -> Option<&NodeData> {
-        self.parent.get().map(|it| unsafe { &*it.as_ptr() })
+        self.parent.as_deref()
     }
 
     #[inline]
     fn green(&self) -> GreenElementRef<'_> {
         match &self.green {
-            GreenElement::Node { ptr } => GreenElementRef::Node(unsafe { &*ptr.get().as_ptr() }),
-            GreenElement::Token { ptr } => GreenElementRef::Token(unsafe { &*ptr.as_ref() }),
+            GreenElement::Node(ptr) => GreenElementRef::Node(&*ptr),
+            GreenElement::Token(ptr) => GreenElementRef::Token(&*ptr),
         }
     }
 
@@ -303,12 +176,8 @@ impl NodeData {
     #[inline]
     fn green_siblings(&self) -> Option<Siblings> {
         match &self.parent()?.green {
-            GreenElement::Node { ptr } => {
-                let parent = unsafe { &*ptr.get().as_ptr() };
-
-                Some(Siblings::new(parent, self.slot()))
-            }
-            GreenElement::Token { .. } => {
+            GreenElement::Node(ptr) => Some(Siblings::new(&*ptr, self.slot())),
+            GreenElement::Token(_) => {
                 debug_assert!(
                     false,
                     "A token should never be a parent of a token or node."
@@ -319,34 +188,12 @@ impl NodeData {
     }
     #[inline]
     fn slot(&self) -> u32 {
-        self.slot.get()
+        self.slot
     }
 
     #[inline]
     fn offset(&self) -> TextSize {
-        if self.mutable {
-            self.offset_mut()
-        } else {
-            self.offset
-        }
-    }
-
-    #[cold]
-    fn offset_mut(&self) -> TextSize {
-        let mut res = TextSize::from(0);
-
-        let mut node = self;
-        while let Some(parent) = node.parent() {
-            let green = parent.green().into_node().unwrap();
-            res += green
-                .slots()
-                .nth(node.slot() as usize)
-                .unwrap()
-                .rel_offset();
-            node = parent;
-        }
-
-        res
+        self.offset
     }
 
     #[inline]
@@ -411,99 +258,62 @@ impl NodeData {
         })
     }
 
-    fn detach(&self) {
-        assert!(self.mutable);
-        assert!(self.rc.get() > 0);
-        let parent_ptr = match self.parent.take() {
-            Some(parent) => parent,
-            None => return,
+    /// Return a clone of this subtree detached from its parent
+    #[must_use]
+    fn detach(self: Rc<Self>) -> Rc<Self> {
+        match self.parent.is_some() {
+            true => Self::new(None, 0, 0.into(), self.green().to_owned()),
+            // If this node is already detached, increment the reference count and return a clone
+            false => self.clone(),
+        }
+    }
+
+    /// Return a clone of this node with the specified range of slots replaced
+    /// with the elements of the provided iterator
+    #[must_use]
+    fn splice_slots<R, I>(self: Rc<Self>, range: R, replace_with: I) -> Rc<Self>
+    where
+        R: ops::RangeBounds<usize>,
+        I: Iterator<Item = Option<GreenElement>>,
+    {
+        let new_green = match self.green() {
+            NodeOrToken::Node(green) => GreenElement::Node(green.splice_slots(range, replace_with)),
+            NodeOrToken::Token(_) => unreachable!(),
         };
 
-        unsafe {
-            sll::adjust(self, self.slot() + 1, Delta::Sub(1));
-            let parent = parent_ptr.as_ref();
-            sll::unlink(&parent.first, self);
-
-            // Add strong ref to green
-            match self.green().to_owned() {
-                NodeOrToken::Node(it) => {
-                    GreenNode::into_raw(it);
-                }
-                NodeOrToken::Token(it) => {
-                    GreenToken::into_raw(it);
-                }
+        // If the reference count of self is 1, recycle the NodeData in place,
+        // otherwise create a new clone of the data
+        //
+        // This is similar to Rc::make_mut, but that function can't be called
+        // directly since NodeData doesn't implement Clone
+        let mut node = match Rc::try_unwrap(self) {
+            Ok(mut node) => {
+                node.green = new_green.clone();
+                node
             }
+            Err(ptr) => NodeData {
+                _c: Count::new(),
+                parent: ptr.parent.clone(),
+                slot: ptr.slot,
+                green: new_green.clone(),
+                offset: ptr.offset,
+            },
+        };
 
-            match parent.green() {
-                NodeOrToken::Node(green) => {
-                    let green = green.remove_slot(self.slot() as usize);
-                    parent.respine(green)
-                }
-                NodeOrToken::Token(_) => unreachable!(),
+        node.parent = match node.parent {
+            Some(parent) => {
+                // SAFETY: This conversion can only fail on 16-bits systems for nodes with more than 65 535 children
+                let index = usize::try_from(node.slot).expect("integer overflow");
+
+                let range = index..=index;
+                let replace_with = iter::once(Some(new_green));
+                let parent = parent.splice_slots(range, replace_with);
+
+                Some(parent)
             }
+            None => None,
+        };
 
-            if parent.dec_rc() {
-                free(parent_ptr)
-            }
-        }
-    }
-    fn attach_child(&self, index: usize, child: &NodeData) {
-        assert!(self.mutable && child.mutable && child.parent().is_none());
-        assert!(self.rc.get() > 0 && child.rc.get() > 0);
-
-        unsafe {
-            child.slot.set(index as u32);
-            child.parent.set(Some(self.into()));
-            self.inc_rc();
-
-            if !self.first.get().is_null() {
-                sll::adjust(&*self.first.get(), index as u32, Delta::Add(1));
-            }
-
-            match sll::link(&self.first, child) {
-                sll::AddToSllResult::AlreadyInSll(_) => {
-                    panic!("Child already in sorted linked list")
-                }
-                it => it.add_to_sll(child),
-            }
-
-            match self.green() {
-                NodeOrToken::Node(green) => {
-                    // Child is root, so it owns the green node. Steal it!
-                    let child_green = match &child.green {
-                        GreenElement::Node { ptr } => GreenNode::from_raw(ptr.get()).into(),
-                        GreenElement::Token { ptr } => GreenToken::from_raw(*ptr).into(),
-                    };
-
-                    let green = green.insert_slot(index, Some(child_green));
-                    self.respine(green);
-                }
-                NodeOrToken::Token(_) => unreachable!(),
-            }
-        }
-    }
-    unsafe fn respine(&self, mut new_green: GreenNode) {
-        let mut node = self;
-        loop {
-            let old_green = match &node.green {
-                GreenElement::Node { ptr } => ptr.replace(ptr::NonNull::from(&*new_green)),
-                GreenElement::Token { .. } => unreachable!(),
-            };
-            match node.parent() {
-                Some(parent) => match parent.green() {
-                    NodeOrToken::Node(parent_green) => {
-                        new_green = parent_green
-                            .replace_child(node.slot() as usize, Some(new_green.into()));
-                        node = parent;
-                    }
-                    _ => unreachable!(),
-                },
-                None => {
-                    mem::forget(new_green);
-                    let _ = GreenNode::from_raw(old_green);
-                    break;
-                }
-            }
-        }
+        Rc::new(node)
     }
 }

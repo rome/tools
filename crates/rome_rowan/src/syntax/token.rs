@@ -120,8 +120,12 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.prev_token().map(SyntaxToken::from)
     }
 
-    pub fn detach(&self) {
-        self.raw.detach()
+    #[must_use]
+    pub fn detach(self) -> Self {
+        Self {
+            raw: self.raw.detach(),
+            _p: PhantomData,
+        }
     }
 
     /// Returns the token leading trivia.
