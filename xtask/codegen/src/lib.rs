@@ -8,10 +8,10 @@ mod generate_macros;
 mod generate_nodes;
 mod generate_syntax_factory;
 mod generate_syntax_kinds;
+mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
 mod unicode;
-mod json_kinds_src;
 
 use proc_macro2::TokenStream;
 use quote::quote;
@@ -56,7 +56,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsSyntaxKind },
             LanguageKind::Css => quote! { CssSyntaxKind },
-            LanguageKind::Json => quote! { JsonSyntaxKind }
+            LanguageKind::Json => quote! { JsonSyntaxKind },
         }
     }
 
@@ -64,7 +64,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsSyntaxNode },
             LanguageKind::Css => quote! { CssSyntaxNode },
-            LanguageKind::Json => quote! { JsonSyntaxNode }
+            LanguageKind::Json => quote! { JsonSyntaxNode },
         }
     }
 

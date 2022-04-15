@@ -226,7 +226,7 @@ pub enum JsonDataValue {
     JsonObjectStatement(JsonObjectStatement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsonStatement {
+pub enum JsonRoot {
     JsonArrayStatement(JsonArrayStatement),
     JsonObjectStatement(JsonObjectStatement),
 }
@@ -597,53 +597,49 @@ impl From<JsonDataValue> for SyntaxElement {
         node.into()
     }
 }
-impl From<JsonArrayStatement> for JsonStatement {
-    fn from(node: JsonArrayStatement) -> JsonStatement { JsonStatement::JsonArrayStatement(node) }
+impl From<JsonArrayStatement> for JsonRoot {
+    fn from(node: JsonArrayStatement) -> JsonRoot { JsonRoot::JsonArrayStatement(node) }
 }
-impl From<JsonObjectStatement> for JsonStatement {
-    fn from(node: JsonObjectStatement) -> JsonStatement { JsonStatement::JsonObjectStatement(node) }
+impl From<JsonObjectStatement> for JsonRoot {
+    fn from(node: JsonObjectStatement) -> JsonRoot { JsonRoot::JsonObjectStatement(node) }
 }
-impl AstNode<Language> for JsonStatement {
+impl AstNode<Language> for JsonRoot {
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JSON_ARRAY_STATEMENT | JSON_OBJECT_STATEMENT)
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSON_ARRAY_STATEMENT => {
-                JsonStatement::JsonArrayStatement(JsonArrayStatement { syntax })
-            }
-            JSON_OBJECT_STATEMENT => {
-                JsonStatement::JsonObjectStatement(JsonObjectStatement { syntax })
-            }
+            JSON_ARRAY_STATEMENT => JsonRoot::JsonArrayStatement(JsonArrayStatement { syntax }),
+            JSON_OBJECT_STATEMENT => JsonRoot::JsonObjectStatement(JsonObjectStatement { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsonStatement::JsonArrayStatement(it) => &it.syntax,
-            JsonStatement::JsonObjectStatement(it) => &it.syntax,
+            JsonRoot::JsonArrayStatement(it) => &it.syntax,
+            JsonRoot::JsonObjectStatement(it) => &it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsonStatement {
+impl std::fmt::Debug for JsonRoot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsonStatement::JsonArrayStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsonStatement::JsonObjectStatement(it) => std::fmt::Debug::fmt(it, f),
+            JsonRoot::JsonArrayStatement(it) => std::fmt::Debug::fmt(it, f),
+            JsonRoot::JsonObjectStatement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsonStatement> for SyntaxNode {
-    fn from(n: JsonStatement) -> SyntaxNode {
+impl From<JsonRoot> for SyntaxNode {
+    fn from(n: JsonRoot) -> SyntaxNode {
         match n {
-            JsonStatement::JsonArrayStatement(it) => it.into(),
-            JsonStatement::JsonObjectStatement(it) => it.into(),
+            JsonRoot::JsonArrayStatement(it) => it.into(),
+            JsonRoot::JsonObjectStatement(it) => it.into(),
         }
     }
 }
-impl From<JsonStatement> for SyntaxElement {
-    fn from(n: JsonStatement) -> SyntaxElement {
+impl From<JsonRoot> for SyntaxElement {
+    fn from(n: JsonRoot) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -658,7 +654,7 @@ impl std::fmt::Display for JsonDataValue {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsonStatement {
+impl std::fmt::Display for JsonRoot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -697,6 +693,44 @@ impl std::fmt::Display for JsonStringLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsonUnknown {
+    syntax: SyntaxNode,
+}
+impl JsonUnknown {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+impl AstNode<Language> for JsonUnknown {
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_UNKNOWN }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsonUnknown {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsonUnknown")
+            .field("items", &DebugSyntaxElementChildren(self.items()))
+            .finish()
+    }
+}
+impl From<JsonUnknown> for SyntaxNode {
+    fn from(n: JsonUnknown) -> SyntaxNode { n.syntax }
+}
+impl From<JsonUnknown> for SyntaxElement {
+    fn from(n: JsonUnknown) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsonArrayValueList {

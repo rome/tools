@@ -19,9 +19,12 @@
 //   label:A     				-- suggested name for field of AST node
 
 
+SyntaxElement = SyntaxElement
+
+JsonUnknown = SyntaxElement*
 
 // {} or []
-JsonStatement =
+JsonRoot =
   JsonObjectStatement
   | JsonArrayStatement
 
