@@ -414,7 +414,7 @@ impl<'src> Lexer<'src> {
                                 )
                                 .primary(self.position..self.position + 1, ""),
                             );
-                            self.next_byte();
+                            self.advance(1);
                         }
                         b'}' => {
                             self.diagnostics.push(
@@ -425,11 +425,11 @@ impl<'src> Lexer<'src> {
                                 )
                                 .primary(self.position..self.position + 1, ""),
                             );
-                            self.next_byte();
+                            self.advance(1);
                         }
-                        _ => {
-                            if chr < 0x80 {
-                                self.next_byte();
+                        chr => {
+                            if chr.is_ascii() {
+                                self.advance(1);
                             } else {
                                 self.advance_char_unchecked();
                             }
@@ -450,7 +450,7 @@ impl<'src> Lexer<'src> {
 
         match chr {
             b'\'' | b'"' => {
-                self.read_str_literal(true);
+                self.consume_str_literal(true);
                 JSX_STRING_LITERAL
             }
             _ => self.lex_token(),
@@ -463,43 +463,47 @@ impl<'src> Lexer<'src> {
         tok
     }
 
+    /// Consume just one newline/line break.
+    ///
+    /// ## Safety
+    /// Must be called at a valid UT8 char boundary
     fn consume_newline(&mut self) -> bool {
         let start = self.position;
-        if let Some(chr) = self.current_byte() {
-            match chr {
-                b'\r' if self.peek_byte() == Some(b'\n') => self.advance(2),
-                b'\r' | b'\n' => {
-                    self.advance(1);
-                }
-                chr => {
-                    if chr >= 0x80 {
-                        let chr = self.current_char_unchecked();
-                        if is_linebreak(chr) {
-                            self.advance(chr.len_utf8());
-                        }
-                    }
+
+        match self.current_byte() {
+            Some(b'\r') if self.peek_byte() == Some(b'\n') => self.advance(2),
+            Some(b'\r' | b'\n') => self.advance(1),
+            Some(chr) if !chr.is_ascii() => {
+                let chr = self.current_char_unchecked();
+                if is_linebreak(chr) {
+                    self.advance(chr.len_utf8());
                 }
             }
+            _ => {}
         }
+
         self.position != start
     }
 
-    fn consume_whitespace_until_newline(&mut self) {
+    /// Consumes all whitespace until a non-whitespace or a newline is found.
+    ///
+    /// ## Safety
+    /// Must be called at a valid UT8 char boundary
+    fn consume_whitespaces(&mut self) {
         while let Some(chr) = self.current_byte() {
-            if let b'\r' | b'\n' = chr {
-                break;
-            }
             match lookup_byte(chr) {
-                self::bytes::Dispatch::WHS => {
-                    self.next_byte();
-                }
-                self::bytes::Dispatch::UNI => {
-                    let current = self.current_char_unchecked();
-
-                    if is_linebreak(current) {
+                Dispatch::WHS => {
+                    if let b'\r' | b'\n' = chr {
                         break;
-                    } else if UNICODE_SPACES.contains(&current) {
-                        self.advance(current.len_utf8());
+                    } else {
+                        self.next_byte();
+                    }
+                }
+                Dispatch::UNI => {
+                    let chr = self.current_char_unchecked();
+
+                    if UNICODE_SPACES.contains(&chr) {
+                        self.advance(chr.len_utf8());
                     } else {
                         break;
                     }
@@ -509,12 +513,16 @@ impl<'src> Lexer<'src> {
         }
     }
 
-    fn consume_newline_or_whitespace(&mut self) -> JsSyntaxKind {
+    /// Consume one newline or all whitespace until a non-whitespace or a newline is found.
+    ///
+    /// ## Safety
+    /// Must be called at a valid UT8 char boundary
+    fn consume_newline_or_whitespaces(&mut self) -> JsSyntaxKind {
         if self.consume_newline() {
             self.after_newline = true;
             NEWLINE
         } else {
-            self.consume_whitespace_until_newline();
+            self.consume_whitespaces();
             WHITESPACE
         }
     }
@@ -522,7 +530,7 @@ impl<'src> Lexer<'src> {
     /// Get the UTF8 char which starts at the current byte
     ///
     /// ## Safety
-    /// Must be called at the begining of a UTF8 char.
+    /// Must be called at a valid UT8 char boundary
     fn current_char_unchecked(&self) -> char {
         // This is unreachable for all intents and purposes, but this is just a precautionary measure
         debug_assert!(!self.is_eof());
@@ -622,7 +630,7 @@ impl<'src> Lexer<'src> {
     /// Advances the current position by the current char UTF8 length
     ///
     /// ## Safety
-    /// Must be called at the begining of a UTF8 char.
+    /// Must be called at a valid UT8 char boundary
     #[inline]
     fn advance_char_unchecked(&mut self) {
         let c = self.current_char_unchecked();
@@ -780,20 +788,23 @@ impl<'src> Lexer<'src> {
         true
     }
 
-    // Validate a `\..` escape sequence and advance the lexer based on it
-    fn validate_escape_sequence(&mut self) -> bool {
+    /// Consume a `\..` escape sequence.
+    ///
+    /// ## Safety
+    /// Must be called at a valid UT8 char boundary
+    fn consume_escape_sequence(&mut self) -> bool {
         self.assert_byte(b'\\');
         let cur = self.position;
-        self.next_byte(); // eat over the \
+        self.advance(1); // eats '\'
+
         if let Some(chr) = self.current_byte() {
             match chr {
-                // Single escape character
                 b'\\' | b'n' | b'r' | b't' | b'b' | b'v' | b'f' | b'\'' | b'"' => {
-                    self.next_byte();
+                    self.advance(1);
                     true
                 }
                 b'u' if self.peek_byte() == Some(b'{') => {
-                    self.next_byte(); // jump over '{'
+                    self.advance(1); // eats '{'
                     self.read_codepoint_escape().is_ok()
                 }
                 b'u' => self.read_unicode_escape(true).is_ok(),
@@ -804,9 +815,9 @@ impl<'src> Lexer<'src> {
                     }
                     true
                 }
-                _ => {
-                    if chr < 0x80 {
-                        self.next_byte();
+                chr => {
+                    if chr.is_ascii() {
+                        self.advance(1);
                     } else {
                         self.advance_char_unchecked();
                     }
@@ -862,17 +873,17 @@ impl<'src> Lexer<'src> {
     /// This could include unterminated string and invalid escape sequences
     ///
     /// ## Safety
-    /// Must be called at the begining of a UTF8 char.
-    fn read_str_literal(&mut self, jsx_attribute: bool) -> bool {
+    /// Must be called at a valid UT8 char boundary
+    fn consume_str_literal(&mut self, jsx_attribute: bool) -> bool {
         let quote = unsafe { self.current_unchecked() };
         let start = self.position;
         let mut valid = true;
 
-        self.next_byte(); // start quote
+        self.advance(1); // eats the start quote
         while let Some(chr) = self.current_byte() {
             match chr {
                 b'\\' if !jsx_attribute => {
-                    valid &= self.validate_escape_sequence();
+                    valid &= self.consume_escape_sequence();
                 }
                 b'\r' | b'\n' if !jsx_attribute => {
                     let unterminated =
@@ -883,12 +894,12 @@ impl<'src> Lexer<'src> {
                     return false;
                 }
                 chr if chr == quote => {
-                    self.next_byte();
+                    self.advance(1);
                     return valid;
                 }
-                _ => {
-                    if chr < 0x80 {
-                        self.next_byte();
+                chr => {
+                    if chr.is_ascii() {
+                        self.advance(1);
                     } else {
                         self.advance_char_unchecked();
                     }
@@ -1430,12 +1441,12 @@ impl<'src> Lexer<'src> {
         let start = self.position;
         match self.peek_byte() {
             Some(b'*') => {
-                self.advance(2);
+                self.advance(2); // eats /*
                 let mut has_newline = false;
                 while let Some(chr) = self.current_byte() {
                     match chr {
                         b'*' if self.peek_byte() == Some(b'/') => {
-                            self.advance(2);
+                            self.advance(2); // eats */
                             if has_newline {
                                 self.after_newline = true;
                                 return MULTILINE_COMMENT;
@@ -1444,7 +1455,7 @@ impl<'src> Lexer<'src> {
                             }
                         }
                         chr => {
-                            let step = if chr < 0x80 {
+                            let n = if chr.is_ascii() {
                                 has_newline |= matches!(chr, b'\r' | b'\n');
                                 1
                             } else {
@@ -1452,7 +1463,7 @@ impl<'src> Lexer<'src> {
                                 has_newline |= is_linebreak(chr);
                                 chr.len_utf8()
                             };
-                            self.advance(step);
+                            self.advance(n);
                         }
                     }
                 }
@@ -1468,11 +1479,11 @@ impl<'src> Lexer<'src> {
                 JsSyntaxKind::COMMENT
             }
             Some(b'/') => {
-                self.advance(2);
+                self.advance(2); // eats //
                 while let Some(chr) = self.current_byte() {
                     if let b'\r' | b'\n' = chr {
                         return COMMENT;
-                    } else if chr < 0x80 {
+                    } else if chr.is_ascii() {
                         self.advance(1);
                     } else {
                         let chr = self.current_char_unchecked();
@@ -1486,7 +1497,7 @@ impl<'src> Lexer<'src> {
                 COMMENT
             }
             Some(b'=') => {
-                self.advance(2);
+                self.advance(2); // eats /=
                 SLASHEQ
             }
             _ => self.eat_byte(T![/]),
@@ -1512,7 +1523,7 @@ impl<'src> Lexer<'src> {
         let start = self.position;
         let mut in_class = false;
 
-        self.next_byte(); // eat /
+        self.advance(1); // eats /
         while let Some(chr) = self.current_byte() {
             match chr {
                 b'[' => {
@@ -1620,8 +1631,8 @@ impl<'src> Lexer<'src> {
                     return JsSyntaxKind::JS_REGEX_LITERAL;
                 }
                 chr => {
-                    if chr < 0x80 {
-                        self.next_byte();
+                    if chr.is_ascii() {
+                        self.advance(1);
                     } else {
                         let chr = self.current_char_unchecked();
                         if is_linebreak(chr) {
@@ -1839,7 +1850,7 @@ impl<'src> Lexer<'src> {
         let dispatched = lookup_byte(byte);
 
         match dispatched {
-            WHS => self.consume_newline_or_whitespace(),
+            WHS => self.consume_newline_or_whitespaces(),
             EXL => self.resolve_bang(),
             HAS => self.read_shebang(),
             PRC => self.bin_or_assign(T![%], T![%=]),
@@ -1907,7 +1918,7 @@ impl<'src> Lexer<'src> {
                 }
             }
             QOT => {
-                if self.read_str_literal(false) {
+                if self.consume_str_literal(false) {
                     JS_STRING_LITERAL
                 } else {
                     ERROR_TOKEN
@@ -1937,7 +1948,7 @@ impl<'src> Lexer<'src> {
                 if is_linebreak(chr)
                     || (UNICODE_WHITESPACE_STARTS.contains(&byte) && UNICODE_SPACES.contains(&chr))
                 {
-                    self.consume_newline_or_whitespace()
+                    self.consume_newline_or_whitespaces()
                 } else {
                     self.advance(chr.len_utf8() - 1);
                     if is_id_start(chr) {
@@ -1990,7 +2001,7 @@ impl<'src> Lexer<'src> {
                 }
                 b'\\' => {
                     let diags_len = self.diagnostics.len();
-                    self.validate_escape_sequence();
+                    self.consume_escape_sequence();
 
                     if tagged {
                         self.diagnostics.truncate(diags_len);
@@ -2009,8 +2020,8 @@ impl<'src> Lexer<'src> {
                         self.advance_char_unchecked();
                     }
                 }
-                _ => {
-                    if chr < 0x80 {
+                chr => {
+                    if chr.is_ascii() {
                         self.next_byte();
                     } else {
                         self.advance_char_unchecked();
