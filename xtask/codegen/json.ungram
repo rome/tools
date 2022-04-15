@@ -31,7 +31,7 @@ JsonRoot =
 // { } or {"a": "b"}
 JsonObjectStatement =
   '{'
-  JsonObjectValueList
+  JsonObjectValueList?
   '}'
 
 JsonObjectValueList = (JsonObjectValue (',' JsonObjectValue)*)
@@ -39,7 +39,7 @@ JsonObjectValue =  JsonStringLiteralExpression ':' JsonDataValue
 
 JsonArrayStatement =
 	'['
-	JsonArrayValueList
+	JsonArrayValueList?
 	']'
 
 JsonArrayValueList = (JsonDataValue (',' JsonDataValue)*)
