@@ -1,6 +1,9 @@
+use crate::green::{GreenToken, GreenTrivia};
 use crate::syntax::SyntaxTrivia;
 use crate::syntax_token_text::SyntaxTokenText;
-use crate::{cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode};
+use crate::{
+    cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode, TriviaPiece,
+};
 use std::fmt;
 use std::marker::PhantomData;
 use text_size::TextRange;
@@ -12,6 +15,34 @@ pub struct SyntaxToken<L: Language> {
 }
 
 impl<L: Language> SyntaxToken<L> {
+    /// Create a new detached token
+    pub fn new_detached<Leading, Trailing>(
+        kind: L::Kind,
+        text: &str,
+        leading: Leading,
+        trailing: Trailing,
+    ) -> Self
+    where
+        Leading: IntoIterator<Item = TriviaPiece>,
+        Leading::IntoIter: ExactSizeIterator,
+        Trailing: IntoIterator<Item = TriviaPiece>,
+        Trailing::IntoIter: ExactSizeIterator,
+    {
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                kind.to_raw(),
+                text,
+                GreenTrivia::new(leading),
+                GreenTrivia::new(trailing),
+            )),
+            _p: PhantomData,
+        }
+    }
+
+    pub(super) fn green_token(&self) -> GreenToken {
+        self.raw.green().to_owned()
+    }
+
     pub fn kind(&self) -> L::Kind {
         L::Kind::from_raw(self.raw.kind())
     }

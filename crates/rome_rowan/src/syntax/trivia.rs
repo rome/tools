@@ -219,6 +219,11 @@ pub struct SyntaxTriviaPiece<L: Language> {
 }
 
 impl<L: Language> SyntaxTriviaPiece<L> {
+    /// Returns the internal kind of this trivia piece
+    pub fn kind(&self) -> TriviaPieceKind {
+        self.trivia.kind()
+    }
+
     /// Returns the associated text just for this trivia piece. This is different from [SyntaxTrivia::text()],
     /// which returns the text of the whole trivia.
     ///

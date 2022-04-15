@@ -1,6 +1,6 @@
 use crate::cursor::{NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
 use crate::green::GreenElement;
-use crate::{Direction, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
+use crate::{Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
 use std::hash::{Hash, Hasher};
 use std::rc::Rc;
 use std::{fmt, iter};
@@ -23,8 +23,14 @@ impl SyntaxToken {
         }
     }
 
+    pub(crate) fn new_detached(green: GreenToken) -> SyntaxToken {
+        SyntaxToken {
+            ptr: NodeData::new(None, 0, TextSize::from(0), green.into()),
+        }
+    }
+
     #[inline]
-    pub(super) fn green(&self) -> &GreenTokenData {
+    pub(crate) fn green(&self) -> &GreenTokenData {
         match self.data().green().as_token() {
             Some(token) => token,
             None => {

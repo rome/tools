@@ -1,3 +1,4 @@
+use crate::green::GreenElement;
 use crate::syntax::element::SyntaxElement;
 use crate::syntax::SyntaxTrivia;
 use crate::{
@@ -21,6 +22,26 @@ pub struct SyntaxNode<L: Language> {
 impl<L: Language> SyntaxNode<L> {
     pub(crate) fn new_root(green: GreenNode) -> SyntaxNode<L> {
         SyntaxNode::from(cursor::SyntaxNode::new_root(green))
+    }
+
+    pub fn new_detached<I>(kind: L::Kind, slots: I) -> SyntaxNode<L>
+    where
+        I: IntoIterator<Item = Option<SyntaxElement<L>>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        SyntaxNode::from(cursor::SyntaxNode::new_root(GreenNode::new(
+            kind.to_raw(),
+            slots.into_iter().map(|slot| {
+                slot.map(|element| match element {
+                    NodeOrToken::Node(node) => GreenElement::Node(node.green_node()),
+                    NodeOrToken::Token(token) => GreenElement::Token(token.green_token()),
+                })
+            }),
+        )))
+    }
+
+    fn green_node(&self) -> GreenNode {
+        self.raw.green().to_owned()
     }
 
     /// Returns the element stored in the slot with the given index. Returns [None] if the slot is empty.
