@@ -15,10 +15,10 @@ use rome_rowan::{
 };
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsonArrayStatement {
+pub struct JsonArray {
     pub(crate) syntax: SyntaxNode,
 }
-impl JsonArrayStatement {
+impl JsonArray {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -26,8 +26,8 @@ impl JsonArrayStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> JsonArrayStatementFields {
-        JsonArrayStatementFields {
+    pub fn as_fields(&self) -> JsonArrayFields {
+        JsonArrayFields {
             l_brack_token: self.l_brack_token(),
             json_array_value_list: self.json_array_value_list(),
             r_brack_token: self.r_brack_token(),
@@ -43,7 +43,7 @@ impl JsonArrayStatement {
         support::required_token(&self.syntax, 2usize)
     }
 }
-pub struct JsonArrayStatementFields {
+pub struct JsonArrayFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub json_array_value_list: JsonArrayValueList,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
@@ -71,6 +71,40 @@ impl JsonBooleanLiteralExpression {
 }
 pub struct JsonBooleanLiteralExpressionFields {
     pub value: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsonDocument {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsonDocument {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsonDocumentFields {
+        JsonDocumentFields {
+            value: self.value(),
+            json_unknown: self.json_unknown(),
+            eof_token: self.eof_token(),
+        }
+    }
+    pub fn value(&self) -> SyntaxResult<JsonAnyValue> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn json_unknown(&self) -> SyntaxResult<JsonUnknown> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+pub struct JsonDocumentFields {
+    pub value: SyntaxResult<JsonAnyValue>,
+    pub json_unknown: SyntaxResult<JsonUnknown>,
+    pub eof_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsonNullLiteralExpression {
@@ -121,10 +155,10 @@ pub struct JsonNumberLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsonObjectStatement {
+pub struct JsonObject {
     pub(crate) syntax: SyntaxNode,
 }
-impl JsonObjectStatement {
+impl JsonObject {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -132,8 +166,8 @@ impl JsonObjectStatement {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> JsonObjectStatementFields {
-        JsonObjectStatementFields {
+    pub fn as_fields(&self) -> JsonObjectFields {
+        JsonObjectFields {
             l_curly_token: self.l_curly_token(),
             json_object_value_list: self.json_object_value_list(),
             r_curly_token: self.r_curly_token(),
@@ -149,7 +183,7 @@ impl JsonObjectStatement {
         support::required_token(&self.syntax, 2usize)
     }
 }
-pub struct JsonObjectStatementFields {
+pub struct JsonObjectFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub json_object_value_list: JsonObjectValueList,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
@@ -170,7 +204,7 @@ impl JsonObjectValue {
         JsonObjectValueFields {
             json_string_literal_expression: self.json_string_literal_expression(),
             colon_token: self.colon_token(),
-            json_data_value: self.json_data_value(),
+            json_any_value: self.json_any_value(),
         }
     }
     pub fn json_string_literal_expression(&self) -> SyntaxResult<JsonStringLiteralExpression> {
@@ -179,14 +213,14 @@ impl JsonObjectValue {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn json_data_value(&self) -> SyntaxResult<JsonDataValue> {
+    pub fn json_any_value(&self) -> SyntaxResult<JsonAnyValue> {
         support::required_node(&self.syntax, 2usize)
     }
 }
 pub struct JsonObjectValueFields {
     pub json_string_literal_expression: SyntaxResult<JsonStringLiteralExpression>,
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub json_data_value: SyntaxResult<JsonDataValue>,
+    pub json_any_value: SyntaxResult<JsonAnyValue>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsonStringLiteralExpression {
@@ -213,25 +247,21 @@ pub struct JsonStringLiteralExpressionFields {
     pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsonDataLiteralExpression {
+pub enum JsonAnyValue {
+    JsonArray(JsonArray),
+    JsonLiteralExpression(JsonLiteralExpression),
+    JsonObject(JsonObject),
+    JsonUnknown(JsonUnknown),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsonLiteralExpression {
     JsonBooleanLiteralExpression(JsonBooleanLiteralExpression),
     JsonNullLiteralExpression(JsonNullLiteralExpression),
     JsonNumberLiteralExpression(JsonNumberLiteralExpression),
     JsonStringLiteralExpression(JsonStringLiteralExpression),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsonDataValue {
-    JsonArrayStatement(JsonArrayStatement),
-    JsonDataLiteralExpression(JsonDataLiteralExpression),
-    JsonObjectStatement(JsonObjectStatement),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsonRoot {
-    JsonArrayStatement(JsonArrayStatement),
-    JsonObjectStatement(JsonObjectStatement),
-}
-impl AstNode<Language> for JsonArrayStatement {
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ARRAY_STATEMENT }
+impl AstNode<Language> for JsonArray {
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ARRAY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -241,9 +271,9 @@ impl AstNode<Language> for JsonArrayStatement {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsonArrayStatement {
+impl std::fmt::Debug for JsonArray {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsonArrayStatement")
+        f.debug_struct("JsonArray")
             .field(
                 "l_brack_token",
                 &support::DebugSyntaxResult(self.l_brack_token()),
@@ -256,11 +286,11 @@ impl std::fmt::Debug for JsonArrayStatement {
             .finish()
     }
 }
-impl From<JsonArrayStatement> for SyntaxNode {
-    fn from(n: JsonArrayStatement) -> SyntaxNode { n.syntax }
+impl From<JsonArray> for SyntaxNode {
+    fn from(n: JsonArray) -> SyntaxNode { n.syntax }
 }
-impl From<JsonArrayStatement> for SyntaxElement {
-    fn from(n: JsonArrayStatement) -> SyntaxElement { n.syntax.into() }
+impl From<JsonArray> for SyntaxElement {
+    fn from(n: JsonArray) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode<Language> for JsonBooleanLiteralExpression {
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_BOOLEAN_LITERAL_EXPRESSION }
@@ -285,6 +315,35 @@ impl From<JsonBooleanLiteralExpression> for SyntaxNode {
 }
 impl From<JsonBooleanLiteralExpression> for SyntaxElement {
     fn from(n: JsonBooleanLiteralExpression) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode<Language> for JsonDocument {
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_DOCUMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsonDocument {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsonDocument")
+            .field("value", &support::DebugSyntaxResult(self.value()))
+            .field(
+                "json_unknown",
+                &support::DebugSyntaxResult(self.json_unknown()),
+            )
+            .field("eof_token", &support::DebugSyntaxResult(self.eof_token()))
+            .finish()
+    }
+}
+impl From<JsonDocument> for SyntaxNode {
+    fn from(n: JsonDocument) -> SyntaxNode { n.syntax }
+}
+impl From<JsonDocument> for SyntaxElement {
+    fn from(n: JsonDocument) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode<Language> for JsonNullLiteralExpression {
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_NULL_LITERAL_EXPRESSION }
@@ -340,8 +399,8 @@ impl From<JsonNumberLiteralExpression> for SyntaxNode {
 impl From<JsonNumberLiteralExpression> for SyntaxElement {
     fn from(n: JsonNumberLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsonObjectStatement {
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_OBJECT_STATEMENT }
+impl AstNode<Language> for JsonObject {
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_OBJECT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -351,9 +410,9 @@ impl AstNode<Language> for JsonObjectStatement {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsonObjectStatement {
+impl std::fmt::Debug for JsonObject {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsonObjectStatement")
+        f.debug_struct("JsonObject")
             .field(
                 "l_curly_token",
                 &support::DebugSyntaxResult(self.l_curly_token()),
@@ -366,11 +425,11 @@ impl std::fmt::Debug for JsonObjectStatement {
             .finish()
     }
 }
-impl From<JsonObjectStatement> for SyntaxNode {
-    fn from(n: JsonObjectStatement) -> SyntaxNode { n.syntax }
+impl From<JsonObject> for SyntaxNode {
+    fn from(n: JsonObject) -> SyntaxNode { n.syntax }
 }
-impl From<JsonObjectStatement> for SyntaxElement {
-    fn from(n: JsonObjectStatement) -> SyntaxElement { n.syntax.into() }
+impl From<JsonObject> for SyntaxElement {
+    fn from(n: JsonObject) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode<Language> for JsonObjectValue {
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_OBJECT_VALUE }
@@ -395,8 +454,8 @@ impl std::fmt::Debug for JsonObjectValue {
                 &support::DebugSyntaxResult(self.colon_token()),
             )
             .field(
-                "json_data_value",
-                &support::DebugSyntaxResult(self.json_data_value()),
+                "json_any_value",
+                &support::DebugSyntaxResult(self.json_any_value()),
             )
             .finish()
     }
@@ -434,27 +493,93 @@ impl From<JsonStringLiteralExpression> for SyntaxNode {
 impl From<JsonStringLiteralExpression> for SyntaxElement {
     fn from(n: JsonStringLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl From<JsonBooleanLiteralExpression> for JsonDataLiteralExpression {
-    fn from(node: JsonBooleanLiteralExpression) -> JsonDataLiteralExpression {
-        JsonDataLiteralExpression::JsonBooleanLiteralExpression(node)
+impl From<JsonArray> for JsonAnyValue {
+    fn from(node: JsonArray) -> JsonAnyValue { JsonAnyValue::JsonArray(node) }
+}
+impl From<JsonObject> for JsonAnyValue {
+    fn from(node: JsonObject) -> JsonAnyValue { JsonAnyValue::JsonObject(node) }
+}
+impl From<JsonUnknown> for JsonAnyValue {
+    fn from(node: JsonUnknown) -> JsonAnyValue { JsonAnyValue::JsonUnknown(node) }
+}
+impl AstNode<Language> for JsonAnyValue {
+    fn can_cast(kind: SyntaxKind) -> bool {
+        match kind {
+            JSON_ARRAY | JSON_OBJECT | JSON_UNKNOWN => true,
+            k if JsonLiteralExpression::can_cast(k) => true,
+            _ => false,
+        }
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JSON_ARRAY => JsonAnyValue::JsonArray(JsonArray { syntax }),
+            JSON_OBJECT => JsonAnyValue::JsonObject(JsonObject { syntax }),
+            JSON_UNKNOWN => JsonAnyValue::JsonUnknown(JsonUnknown { syntax }),
+            _ => {
+                if let Some(json_literal_expression) = JsonLiteralExpression::cast(syntax) {
+                    return Some(JsonAnyValue::JsonLiteralExpression(json_literal_expression));
+                }
+                return None;
+            }
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsonAnyValue::JsonArray(it) => &it.syntax,
+            JsonAnyValue::JsonObject(it) => &it.syntax,
+            JsonAnyValue::JsonUnknown(it) => &it.syntax,
+            JsonAnyValue::JsonLiteralExpression(it) => it.syntax(),
+        }
     }
 }
-impl From<JsonNullLiteralExpression> for JsonDataLiteralExpression {
-    fn from(node: JsonNullLiteralExpression) -> JsonDataLiteralExpression {
-        JsonDataLiteralExpression::JsonNullLiteralExpression(node)
+impl std::fmt::Debug for JsonAnyValue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsonAnyValue::JsonArray(it) => std::fmt::Debug::fmt(it, f),
+            JsonAnyValue::JsonLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsonAnyValue::JsonObject(it) => std::fmt::Debug::fmt(it, f),
+            JsonAnyValue::JsonUnknown(it) => std::fmt::Debug::fmt(it, f),
+        }
     }
 }
-impl From<JsonNumberLiteralExpression> for JsonDataLiteralExpression {
-    fn from(node: JsonNumberLiteralExpression) -> JsonDataLiteralExpression {
-        JsonDataLiteralExpression::JsonNumberLiteralExpression(node)
+impl From<JsonAnyValue> for SyntaxNode {
+    fn from(n: JsonAnyValue) -> SyntaxNode {
+        match n {
+            JsonAnyValue::JsonArray(it) => it.into(),
+            JsonAnyValue::JsonLiteralExpression(it) => it.into(),
+            JsonAnyValue::JsonObject(it) => it.into(),
+            JsonAnyValue::JsonUnknown(it) => it.into(),
+        }
     }
 }
-impl From<JsonStringLiteralExpression> for JsonDataLiteralExpression {
-    fn from(node: JsonStringLiteralExpression) -> JsonDataLiteralExpression {
-        JsonDataLiteralExpression::JsonStringLiteralExpression(node)
+impl From<JsonAnyValue> for SyntaxElement {
+    fn from(n: JsonAnyValue) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
     }
 }
-impl AstNode<Language> for JsonDataLiteralExpression {
+impl From<JsonBooleanLiteralExpression> for JsonLiteralExpression {
+    fn from(node: JsonBooleanLiteralExpression) -> JsonLiteralExpression {
+        JsonLiteralExpression::JsonBooleanLiteralExpression(node)
+    }
+}
+impl From<JsonNullLiteralExpression> for JsonLiteralExpression {
+    fn from(node: JsonNullLiteralExpression) -> JsonLiteralExpression {
+        JsonLiteralExpression::JsonNullLiteralExpression(node)
+    }
+}
+impl From<JsonNumberLiteralExpression> for JsonLiteralExpression {
+    fn from(node: JsonNumberLiteralExpression) -> JsonLiteralExpression {
+        JsonLiteralExpression::JsonNumberLiteralExpression(node)
+    }
+}
+impl From<JsonStringLiteralExpression> for JsonLiteralExpression {
+    fn from(node: JsonStringLiteralExpression) -> JsonLiteralExpression {
+        JsonLiteralExpression::JsonStringLiteralExpression(node)
+    }
+}
+impl AstNode<Language> for JsonLiteralExpression {
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -467,24 +592,24 @@ impl AstNode<Language> for JsonDataLiteralExpression {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JSON_BOOLEAN_LITERAL_EXPRESSION => {
-                JsonDataLiteralExpression::JsonBooleanLiteralExpression(
-                    JsonBooleanLiteralExpression { syntax },
-                )
+                JsonLiteralExpression::JsonBooleanLiteralExpression(JsonBooleanLiteralExpression {
+                    syntax,
+                })
             }
             JSON_NULL_LITERAL_EXPRESSION => {
-                JsonDataLiteralExpression::JsonNullLiteralExpression(JsonNullLiteralExpression {
+                JsonLiteralExpression::JsonNullLiteralExpression(JsonNullLiteralExpression {
                     syntax,
                 })
             }
             JSON_NUMBER_LITERAL_EXPRESSION => {
-                JsonDataLiteralExpression::JsonNumberLiteralExpression(
-                    JsonNumberLiteralExpression { syntax },
-                )
+                JsonLiteralExpression::JsonNumberLiteralExpression(JsonNumberLiteralExpression {
+                    syntax,
+                })
             }
             JSON_STRING_LITERAL_EXPRESSION => {
-                JsonDataLiteralExpression::JsonStringLiteralExpression(
-                    JsonStringLiteralExpression { syntax },
-                )
+                JsonLiteralExpression::JsonStringLiteralExpression(JsonStringLiteralExpression {
+                    syntax,
+                })
             }
             _ => return None,
         };
@@ -492,179 +617,60 @@ impl AstNode<Language> for JsonDataLiteralExpression {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsonDataLiteralExpression::JsonBooleanLiteralExpression(it) => &it.syntax,
-            JsonDataLiteralExpression::JsonNullLiteralExpression(it) => &it.syntax,
-            JsonDataLiteralExpression::JsonNumberLiteralExpression(it) => &it.syntax,
-            JsonDataLiteralExpression::JsonStringLiteralExpression(it) => &it.syntax,
+            JsonLiteralExpression::JsonBooleanLiteralExpression(it) => &it.syntax,
+            JsonLiteralExpression::JsonNullLiteralExpression(it) => &it.syntax,
+            JsonLiteralExpression::JsonNumberLiteralExpression(it) => &it.syntax,
+            JsonLiteralExpression::JsonStringLiteralExpression(it) => &it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsonDataLiteralExpression {
+impl std::fmt::Debug for JsonLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsonDataLiteralExpression::JsonBooleanLiteralExpression(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            JsonDataLiteralExpression::JsonNullLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsonDataLiteralExpression::JsonNumberLiteralExpression(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            JsonDataLiteralExpression::JsonStringLiteralExpression(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
+            JsonLiteralExpression::JsonBooleanLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsonLiteralExpression::JsonNullLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsonLiteralExpression::JsonNumberLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsonLiteralExpression::JsonStringLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsonDataLiteralExpression> for SyntaxNode {
-    fn from(n: JsonDataLiteralExpression) -> SyntaxNode {
+impl From<JsonLiteralExpression> for SyntaxNode {
+    fn from(n: JsonLiteralExpression) -> SyntaxNode {
         match n {
-            JsonDataLiteralExpression::JsonBooleanLiteralExpression(it) => it.into(),
-            JsonDataLiteralExpression::JsonNullLiteralExpression(it) => it.into(),
-            JsonDataLiteralExpression::JsonNumberLiteralExpression(it) => it.into(),
-            JsonDataLiteralExpression::JsonStringLiteralExpression(it) => it.into(),
+            JsonLiteralExpression::JsonBooleanLiteralExpression(it) => it.into(),
+            JsonLiteralExpression::JsonNullLiteralExpression(it) => it.into(),
+            JsonLiteralExpression::JsonNumberLiteralExpression(it) => it.into(),
+            JsonLiteralExpression::JsonStringLiteralExpression(it) => it.into(),
         }
     }
 }
-impl From<JsonDataLiteralExpression> for SyntaxElement {
-    fn from(n: JsonDataLiteralExpression) -> SyntaxElement {
+impl From<JsonLiteralExpression> for SyntaxElement {
+    fn from(n: JsonLiteralExpression) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsonArrayStatement> for JsonDataValue {
-    fn from(node: JsonArrayStatement) -> JsonDataValue { JsonDataValue::JsonArrayStatement(node) }
-}
-impl From<JsonObjectStatement> for JsonDataValue {
-    fn from(node: JsonObjectStatement) -> JsonDataValue { JsonDataValue::JsonObjectStatement(node) }
-}
-impl AstNode<Language> for JsonDataValue {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        match kind {
-            JSON_ARRAY_STATEMENT | JSON_OBJECT_STATEMENT => true,
-            k if JsonDataLiteralExpression::can_cast(k) => true,
-            _ => false,
-        }
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            JSON_ARRAY_STATEMENT => {
-                JsonDataValue::JsonArrayStatement(JsonArrayStatement { syntax })
-            }
-            JSON_OBJECT_STATEMENT => {
-                JsonDataValue::JsonObjectStatement(JsonObjectStatement { syntax })
-            }
-            _ => {
-                if let Some(json_data_literal_expression) = JsonDataLiteralExpression::cast(syntax)
-                {
-                    return Some(JsonDataValue::JsonDataLiteralExpression(
-                        json_data_literal_expression,
-                    ));
-                }
-                return None;
-            }
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            JsonDataValue::JsonArrayStatement(it) => &it.syntax,
-            JsonDataValue::JsonObjectStatement(it) => &it.syntax,
-            JsonDataValue::JsonDataLiteralExpression(it) => it.syntax(),
-        }
-    }
-}
-impl std::fmt::Debug for JsonDataValue {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            JsonDataValue::JsonArrayStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsonDataValue::JsonDataLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsonDataValue::JsonObjectStatement(it) => std::fmt::Debug::fmt(it, f),
-        }
-    }
-}
-impl From<JsonDataValue> for SyntaxNode {
-    fn from(n: JsonDataValue) -> SyntaxNode {
-        match n {
-            JsonDataValue::JsonArrayStatement(it) => it.into(),
-            JsonDataValue::JsonDataLiteralExpression(it) => it.into(),
-            JsonDataValue::JsonObjectStatement(it) => it.into(),
-        }
-    }
-}
-impl From<JsonDataValue> for SyntaxElement {
-    fn from(n: JsonDataValue) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
-}
-impl From<JsonArrayStatement> for JsonRoot {
-    fn from(node: JsonArrayStatement) -> JsonRoot { JsonRoot::JsonArrayStatement(node) }
-}
-impl From<JsonObjectStatement> for JsonRoot {
-    fn from(node: JsonObjectStatement) -> JsonRoot { JsonRoot::JsonObjectStatement(node) }
-}
-impl AstNode<Language> for JsonRoot {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        matches!(kind, JSON_ARRAY_STATEMENT | JSON_OBJECT_STATEMENT)
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            JSON_ARRAY_STATEMENT => JsonRoot::JsonArrayStatement(JsonArrayStatement { syntax }),
-            JSON_OBJECT_STATEMENT => JsonRoot::JsonObjectStatement(JsonObjectStatement { syntax }),
-            _ => return None,
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            JsonRoot::JsonArrayStatement(it) => &it.syntax,
-            JsonRoot::JsonObjectStatement(it) => &it.syntax,
-        }
-    }
-}
-impl std::fmt::Debug for JsonRoot {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            JsonRoot::JsonArrayStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsonRoot::JsonObjectStatement(it) => std::fmt::Debug::fmt(it, f),
-        }
-    }
-}
-impl From<JsonRoot> for SyntaxNode {
-    fn from(n: JsonRoot) -> SyntaxNode {
-        match n {
-            JsonRoot::JsonArrayStatement(it) => it.into(),
-            JsonRoot::JsonObjectStatement(it) => it.into(),
-        }
-    }
-}
-impl From<JsonRoot> for SyntaxElement {
-    fn from(n: JsonRoot) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
-}
-impl std::fmt::Display for JsonDataLiteralExpression {
+impl std::fmt::Display for JsonAnyValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsonDataValue {
+impl std::fmt::Display for JsonLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsonRoot {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for JsonArrayStatement {
+impl std::fmt::Display for JsonArray {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
 impl std::fmt::Display for JsonBooleanLiteralExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsonDocument {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -679,7 +685,7 @@ impl std::fmt::Display for JsonNumberLiteralExpression {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsonObjectStatement {
+impl std::fmt::Display for JsonObject {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -762,7 +768,7 @@ impl AstNode<Language> for JsonArrayValueList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsonDataValue> for JsonArrayValueList {
+impl AstSeparatedList<Language, JsonAnyValue> for JsonArrayValueList {
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsonArrayValueList {
@@ -772,13 +778,13 @@ impl Debug for JsonArrayValueList {
     }
 }
 impl IntoIterator for JsonArrayValueList {
-    type Item = SyntaxResult<JsonDataValue>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsonDataValue>;
+    type Item = SyntaxResult<JsonAnyValue>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, JsonAnyValue>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsonArrayValueList {
-    type Item = SyntaxResult<JsonDataValue>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsonDataValue>;
+    type Item = SyntaxResult<JsonAnyValue>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, JsonAnyValue>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]

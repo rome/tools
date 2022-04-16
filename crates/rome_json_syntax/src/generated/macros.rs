@@ -16,13 +16,17 @@ macro_rules! map_syntax_node {
     ($ node : expr , $ pattern : pat => $ body : expr) => {
         match $node {
             node => match $crate::JsonSyntaxNode::kind(&node) {
-                $crate::JsonSyntaxKind::JSON_ARRAY_STATEMENT => {
-                    let $pattern = unsafe { $crate::JsonArrayStatement::new_unchecked(node) };
+                $crate::JsonSyntaxKind::JSON_ARRAY => {
+                    let $pattern = unsafe { $crate::JsonArray::new_unchecked(node) };
                     $body
                 }
                 $crate::JsonSyntaxKind::JSON_BOOLEAN_LITERAL_EXPRESSION => {
                     let $pattern =
                         unsafe { $crate::JsonBooleanLiteralExpression::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsonSyntaxKind::JSON_DOCUMENT => {
+                    let $pattern = unsafe { $crate::JsonDocument::new_unchecked(node) };
                     $body
                 }
                 $crate::JsonSyntaxKind::JSON_NULL_LITERAL_EXPRESSION => {
@@ -35,8 +39,8 @@ macro_rules! map_syntax_node {
                         unsafe { $crate::JsonNumberLiteralExpression::new_unchecked(node) };
                     $body
                 }
-                $crate::JsonSyntaxKind::JSON_OBJECT_STATEMENT => {
-                    let $pattern = unsafe { $crate::JsonObjectStatement::new_unchecked(node) };
+                $crate::JsonSyntaxKind::JSON_OBJECT => {
+                    let $pattern = unsafe { $crate::JsonObject::new_unchecked(node) };
                     $body
                 }
                 $crate::JsonSyntaxKind::JSON_OBJECT_VALUE => {

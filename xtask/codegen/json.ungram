@@ -44,7 +44,7 @@ JsonArray =
 JsonArrayValueList = (JsonAnyValue (',' JsonAnyValue)*)
 
 JsonAnyValue =
-	JsonDataLiteralExpression
+	JsonLiteralExpression
 	| JsonObject
 	| JsonArray
 	| JsonUnknown
@@ -55,7 +55,7 @@ JsonAnyValue =
 //////////////
 
 
-JsonDataLiteralExpression =
+JsonLiteralExpression =
 	JsonStringLiteralExpression
 	| JsonNumberLiteralExpression
 	| JsonBooleanLiteralExpression
