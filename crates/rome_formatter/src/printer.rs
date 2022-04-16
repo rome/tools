@@ -171,9 +171,9 @@ impl<'a> Printer<'a> {
                     self.state.pending_space = false;
                 }
 
-                if let Some(range) = token.source() {
+                if let Some(source) = token.source() {
                     self.state.source_markers.push(SourceMarker {
-                        source: range.start(),
+                        source: *source,
                         dest: TextSize::from(self.state.buffer.len() as u32),
                     });
                 }
@@ -271,8 +271,11 @@ impl<'a> Printer<'a> {
             }
 
             FormatElement::Verbatim(verbatim) => {
-                if let VerbatimKind::Verbatim { range, text } = &verbatim.kind {
-                    self.state.verbatim_markers.push((text.clone(), *range));
+                if let VerbatimKind::Verbatim { length } = &verbatim.kind {
+                    self.state.verbatim_markers.push(TextRange::at(
+                        TextSize::from(self.state.buffer.len() as u32),
+                        *length,
+                    ));
                 }
 
                 queue.enqueue(PrintElementCall::new(&verbatim.element, args));
@@ -499,9 +502,8 @@ struct PrinterState<'a> {
     generated_column: usize,
     line_width: usize,
     has_empty_line: bool,
-    // mappings: Mapping[];
     line_suffixes: Vec<PrintElementCall<'a>>,
-    verbatim_markers: Vec<(String, TextRange)>,
+    verbatim_markers: Vec<TextRange>,
 }
 
 impl<'a> PrinterState<'a> {
