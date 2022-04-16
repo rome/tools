@@ -20,34 +20,34 @@
 
 
 SyntaxElement = SyntaxElement
-
 JsonUnknown = SyntaxElement*
 
 // {} or []
-JsonRoot =
-  JsonObjectStatement
-  | JsonArrayStatement
+JsonDocument =
+  value: JsonAnyValue
+  | JsonUnknown
+  eof: 'EOF'
 
-// { } or {"a": "b"}
-JsonObjectStatement =
+JsonObject =
   '{'
   JsonObjectValueList?
   '}'
 
 JsonObjectValueList = (JsonObjectValue (',' JsonObjectValue)*)
-JsonObjectValue =  JsonStringLiteralExpression ':' JsonDataValue
+JsonObjectValue =  JsonStringLiteralExpression ':' JsonAnyValue
 
-JsonArrayStatement =
+JsonArray =
 	'['
 	JsonArrayValueList?
 	']'
 
-JsonArrayValueList = (JsonDataValue (',' JsonDataValue)*)
+JsonArrayValueList = (JsonAnyValue (',' JsonAnyValue)*)
 
-JsonDataValue =
+JsonAnyValue =
 	JsonDataLiteralExpression
-	| JsonObjectStatement
-	| JsonArrayStatement
+	| JsonObject
+	| JsonArray
+	| JsonUnknown
 
 
 //////////////
