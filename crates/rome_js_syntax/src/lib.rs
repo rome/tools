@@ -15,7 +15,7 @@ pub use self::generated::*;
 pub use expr_ext::*;
 pub use modifier_ext::*;
 pub use rome_rowan::{
-    SyntaxText, TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent,
+    SyntaxNodeText, TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent,
 };
 pub use stmt_ext::*;
 pub use syntax_node::*;

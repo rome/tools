@@ -171,7 +171,7 @@ impl<'a> Printer<'a> {
                     self.state.pending_space = false;
                 }
 
-                if let Some(source) = token.source() {
+                if let Some(source) = token.source_position() {
                     self.state.source_markers.push(SourceMarker {
                         source: *source,
                         dest: TextSize::from(self.state.buffer.len() as u32),

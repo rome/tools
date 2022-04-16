@@ -1,7 +1,7 @@
 use crate::syntax::element::SyntaxElement;
 use crate::syntax::SyntaxTrivia;
 use crate::{
-    cursor, Direction, GreenNode, Language, NodeOrToken, SyntaxKind, SyntaxList, SyntaxText,
+    cursor, Direction, GreenNode, Language, NodeOrToken, SyntaxKind, SyntaxList, SyntaxNodeText,
     SyntaxToken, TokenAtOffset, WalkEvent,
 };
 use std::fmt;
@@ -56,7 +56,7 @@ impl<L: Language> SyntaxNode<L> {
     /// });
     /// assert_eq!("\n\t let \t\ta; \t\t", node.text());
     /// ```
-    pub fn text(&self) -> SyntaxText {
+    pub fn text(&self) -> SyntaxNodeText {
         self.raw.text()
     }
 
@@ -84,7 +84,7 @@ impl<L: Language> SyntaxNode<L> {
     /// });
     /// assert_eq!("let \t\ta;", node.text_trimmed());
     /// ```
-    pub fn text_trimmed(&self) -> SyntaxText {
+    pub fn text_trimmed(&self) -> SyntaxNodeText {
         self.raw.text_trimmed()
     }
 

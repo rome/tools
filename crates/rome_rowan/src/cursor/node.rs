@@ -1,7 +1,7 @@
 use crate::cursor::{free, GreenElement, NodeData, SyntaxElement, SyntaxToken, SyntaxTrivia};
 use crate::green::{Child, Children, Slot};
 use crate::{
-    Direction, GreenNode, GreenNodeData, NodeOrToken, RawSyntaxKind, SyntaxText, TokenAtOffset,
+    Direction, GreenNode, GreenNodeData, NodeOrToken, RawSyntaxKind, SyntaxNodeText, TokenAtOffset,
     WalkEvent,
 };
 use std::borrow::Cow;
@@ -173,13 +173,13 @@ impl SyntaxNode {
     }
 
     #[inline]
-    pub fn text(&self) -> SyntaxText {
-        SyntaxText::new(self.clone())
+    pub fn text(&self) -> SyntaxNodeText {
+        SyntaxNodeText::new(self.clone())
     }
 
     #[inline]
-    pub fn text_trimmed(&self) -> SyntaxText {
-        SyntaxText::with_range(self.clone(), self.text_trimmed_range())
+    pub fn text_trimmed(&self) -> SyntaxNodeText {
+        SyntaxNodeText::with_range(self.clone(), self.text_trimmed_range())
     }
 
     #[inline]

@@ -1,5 +1,5 @@
 use crate::cursor::{free, GreenElement, NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
-use crate::{Direction, GreenTokenData, RawSyntaxKind};
+use crate::{Direction, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
 use std::hash::{Hash, Hasher};
 use std::{fmt, iter, ptr};
 use text_size::{TextRange, TextSize};
@@ -86,6 +86,11 @@ impl SyntaxToken {
     #[inline]
     pub fn text(&self) -> &str {
         self.green().text()
+    }
+
+    #[inline]
+    pub fn token_text(&self) -> SyntaxTokenText {
+        SyntaxTokenText::new(self.green().to_owned())
     }
 
     #[inline]

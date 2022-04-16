@@ -1,4 +1,5 @@
 use crate::syntax::SyntaxTrivia;
+use crate::syntax_token_text::SyntaxTokenText;
 use crate::{cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode};
 use std::fmt;
 use std::marker::PhantomData;
@@ -44,6 +45,10 @@ impl<L: Language> SyntaxToken<L> {
     /// ```
     pub fn text(&self) -> &str {
         self.raw.text()
+    }
+
+    pub fn token_text(&self) -> SyntaxTokenText {
+        self.raw.token_text()
     }
 
     /// Returns the text of the token, excluding all trivia.

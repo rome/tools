@@ -7,7 +7,7 @@ use crate::{
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use rome_rowan::{
-    AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxText, TextRange, TextSize,
+    AstNode, AstSeparatedList, NodeOrToken, SyntaxNodeText, SyntaxResult, TextRange, TextSize,
 };
 use std::cmp::Ordering;
 
@@ -371,7 +371,7 @@ impl JsNumberLiteralExpression {
 
 impl JsStringLiteralExpression {
     /// Get the inner text of a string not including the quotes
-    pub fn inner_string_text(&self) -> SyntaxText {
+    pub fn inner_string_text(&self) -> SyntaxNodeText {
         let start = self.syntax().text_range().start() + TextSize::from(1);
         let end_char = self
             .syntax()

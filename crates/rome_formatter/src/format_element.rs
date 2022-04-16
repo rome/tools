@@ -1,6 +1,8 @@
 use crate::intersperse::{Intersperse, IntersperseFn};
-use crate::{format_elements, TextSize};
-use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
+use crate::{format_elements, TextRange, TextSize};
+use rome_rowan::{
+    Language, SyntaxNode, SyntaxToken, SyntaxTokenText, SyntaxTriviaPieceComments, TextLen,
+};
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
@@ -1058,7 +1060,7 @@ impl List {
 }
 
 impl Deref for List {
-    type Target = Vec<FormatElement>;
+    type Target = [FormatElement];
 
     fn deref(&self) -> &Self::Target {
         &self.content
@@ -1126,6 +1128,13 @@ pub enum Token {
         // The position of the dynamic token in the unformatted source code
         source_position: TextSize,
     },
+    // A token that is taken 1:1 from the source code
+    SyntaxTokenSlice {
+        /// The start position of the token in the unformatted source code
+        source_position: TextSize,
+        /// The token text
+        slice: SyntaxTokenText,
+    },
 }
 
 impl Debug for Token {
@@ -1135,6 +1144,11 @@ impl Debug for Token {
         match self {
             Token::Static { text } => write!(fmt, "StaticToken({:?})", text),
             Token::Dynamic { text, .. } => write!(fmt, "DynamicToken({:?})", text),
+            Token::SyntaxTokenSlice {
+                slice: token_text, ..
+            } => {
+                write!(fmt, "SyntaxTokenSlice({:?})", token_text)
+            }
         }
     }
 }
@@ -1147,19 +1161,67 @@ impl Token {
 
     /// Create a token from a dynamic string and a range of the input source
     pub fn new_dynamic(text: String, position: TextSize) -> Self {
-        debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
+        Self::assert_no_newlines(&text);
         Self::Dynamic {
             text: text.into_boxed_str(),
             source_position: position,
         }
     }
 
+    /// Creates a token from a [Cow] that is a sub-slice over the text of a token.
+    ///
+    /// The `start` is the absolute start of the token in the source text.
+    ///
+    /// ## Returns
+    /// * [Token::Dynamic] if `text` is a [Cow::Owned] (text doesn't match syntax token text)
+    /// * [Token::SyntaxTokenSlice] if `text` is borrowed. Avoids allocating a new string.
+    pub fn from_syntax_token_cow_slice<L: Language>(
+        text: Cow<str>,
+        token: &SyntaxToken<L>,
+        start: TextSize,
+    ) -> Self {
+        Self::assert_no_newlines(&text);
+
+        match text {
+            Cow::Owned(text) => Self::new_dynamic(text, start),
+            Cow::Borrowed(text) => {
+                let range = TextRange::at(start, text.text_len());
+                debug_assert_eq!(
+                    text,
+                    &token.text()[range - token.text_range().start()],
+                    "The borrowed string doesn't match the specified token substring"
+                );
+                Token::new_syntax_token_slice(token, range)
+            }
+        }
+    }
+
+    /// Creates a new [Token] with a text backed by the string of [SyntaxToken]
+    pub fn new_syntax_token_slice<L: Language>(token: &SyntaxToken<L>, range: TextRange) -> Self {
+        let relative_range = range - token.text_range().start();
+        let slice = token.token_text().slice(relative_range);
+
+        Self::assert_no_newlines(&slice);
+
+        Self::SyntaxTokenSlice {
+            slice,
+            source_position: range.start(),
+        }
+    }
+
+    fn assert_no_newlines(text: &str) {
+        debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
+    }
+
     /// Get the range of the input source covered by this token,
     /// or None if the token was synthesized by the formatter
-    pub fn source(&self) -> Option<&TextSize> {
+    pub fn source_position(&self) -> Option<&TextSize> {
         match self {
             Token::Static { .. } => None,
             Token::Dynamic {
+                source_position, ..
+            } => Some(source_position),
+            Token::SyntaxTokenSlice {
                 source_position, ..
             } => Some(source_position),
         }
@@ -1181,10 +1243,9 @@ impl<L: Language> From<SyntaxToken<L>> for Token {
 
 impl<'a, L: Language> From<&'a SyntaxToken<L>> for Token {
     fn from(token: &'a SyntaxToken<L>) -> Self {
-        Self::new_dynamic(
-            token.text_trimmed().into(),
-            token.text_trimmed_range().start(),
-        )
+        let trimmed_range = token.text_trimmed_range();
+
+        Self::new_syntax_token_slice(token, trimmed_range)
     }
 }
 
@@ -1222,9 +1283,11 @@ pub fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) ->
 
 impl<L: Language> From<SyntaxTriviaPieceComments<L>> for Token {
     fn from(trivia: SyntaxTriviaPieceComments<L>) -> Self {
-        Self::new_dynamic(
-            normalize_newlines(trivia.text().trim(), LINE_TERMINATORS).into_owned(),
-            trivia.text_range().start(),
+        let range = trivia.text_range();
+        Token::from_syntax_token_cow_slice(
+            normalize_newlines(trivia.text().trim(), LINE_TERMINATORS),
+            &trivia.as_piece().token(),
+            range.start(),
         )
     }
 }
@@ -1235,6 +1298,9 @@ impl Deref for Token {
         match self {
             Token::Static { text } => text,
             Token::Dynamic { text, .. } => text,
+            Token::SyntaxTokenSlice {
+                slice: token_text, ..
+            } => token_text.deref(),
         }
     }
 }
