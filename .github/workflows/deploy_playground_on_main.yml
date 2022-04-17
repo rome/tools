@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Deploy Playground on Main
 
 on:
@@ -7,6 +5,9 @@ on:
   push:
     branches:
       - main
+    paths: # Only deploy when changes are made to the crates or playground code
+      - 'crates/**'
+      - 'website/playground/**'
 
 jobs:
   deploy:

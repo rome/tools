@@ -5,6 +5,12 @@ on:
   pull_request:
     branches:
       - main
+    paths: # Only run when changes are made to rust or js code
+      - '**.rs'
+      - '**.js'
+      - '**.jsx'
+      - '**.ts'
+      - '**.tsx'
 
 env:
   RUST_LOG: info

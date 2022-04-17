@@ -6,6 +6,9 @@ on:
   pull_request:
     branches:
       - main
+    paths: # Only deploy when changes are made to the crates or playground code
+      - 'crates/**'
+      - 'website/playground/**'
 
 jobs:
   deploy:
