@@ -71,7 +71,7 @@ npm start
 ## Checks
 
 
-- `cargo lint` is a cargo alias that runs [`clippy'](https://github.com/rust-lang/rust-clippy) - rust official linter - under the hood;
+- `cargo lint` is a cargo alias that runs [`clippy`](https://github.com/rust-lang/rust-clippy) - rust official linter - under the hood;
 - `cargo format` is a cargo alias that runs [`rust-fmt`](https://github.com/rust-lang/rustfmt) - rust official formatter - under the hood;
 - `cargo test` will run the suite; make sure to run this command from the root of the project, so it will run the tests of all the internal crates;
 
@@ -164,7 +164,7 @@ from the main repository (not a fork), use these comments to run specific workfl
 ### Parser
 
 - To have a better understanding of our parsing infrastructure, please [read the in-depth section](/crates/rome_js_parser/docs/authoring_parse_rules.md)
-- [write tests for the parser][/crates/rome_js_parser/docs/write_tests.md]
+- [write tests for the parser](/crates/rome_js_parser/docs/write_tests.md)
 
 ### Formatter
 
