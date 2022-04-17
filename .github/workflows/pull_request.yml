@@ -18,7 +18,7 @@ env:
 
 jobs:
   format:
-    name: format
+    name: Format Rust Files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -49,7 +49,7 @@ jobs:
 
 
   lint:
-    name: lint
+    name: Lint Rust Files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR Branch
@@ -72,7 +72,7 @@ jobs:
           args: --workspace --all-targets --verbose -- --deny warnings
 
   test:
-    name: test
+    name: Test
     runs-on: ubuntu-latest
 
     steps:

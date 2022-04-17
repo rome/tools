@@ -1,4 +1,4 @@
-name: Deploy Playground on Main
+name: Deploy Playground
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: aws
-    name: Deploy
+    name: Deploy Playground
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v2

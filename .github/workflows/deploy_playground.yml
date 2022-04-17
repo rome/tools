@@ -1,6 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Deploy Playground
+name: Deploy Playground (Preview)
 
 on:
   pull_request:
@@ -14,7 +12,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: aws
-    name: Deploy
+    name: Deploy Playground (Preview)
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v2
