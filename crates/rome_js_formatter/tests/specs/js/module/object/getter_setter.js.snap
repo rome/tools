@@ -18,6 +18,10 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-let a = { get foo() {} };
-let b = { set foo(a) {} };
+let a = {
+	get foo() {},
+};
+let b = {
+	set foo(a) {},
+};
 

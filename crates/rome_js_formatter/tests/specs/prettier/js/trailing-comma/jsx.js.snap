@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 153
 expression: jsx.js
-
 ---
 # Input
 ```js
@@ -18,7 +16,14 @@ expression: jsx.js
 
 # Output
 ```js
-<div onClick={() => doSomething({ foo: bar })} />;
+<div
+  onClick={
+    () =>
+      doSomething({
+        foo: bar,
+      })
+  }
+/>;
 
 ```
 

@@ -61,7 +61,9 @@ Quote style: Double Quotes
 -----
 type A = { [a: string]: number };
 
-type B = { (a: string, b: symbol, c: symbol, d: symbol) };
+type B = {
+	(a: string, b: symbol, c: symbol, d: symbol);
+};
 
 type C = {
 	(
@@ -94,7 +96,9 @@ type D = {
 	);
 };
 
-type E = { <Aaaaaaaaaaaaaaaaaaaaa>(loreum: string) };
+type E = {
+	<Aaaaaaaaaaaaaaaaaaaaa>(loreum: string);
+};
 
 type F = {
 	<
@@ -146,7 +150,9 @@ type I = {
 	): LoooooooooooooongTypeReturneeeeeeeeed;
 };
 
-type J = { get something(): LoooooooooooooongTypeReturneeeeeeeeed };
+type J = {
+	get something(): LoooooooooooooongTypeReturneeeeeeeeed;
+};
 
 type K = { set something(something_with_long_name: string) };
 

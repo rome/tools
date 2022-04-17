@@ -46,7 +46,13 @@ it('should group messages with same created time', () => {
 ```js
 export default (store) => {
   return callApi(endpoint, schema).then(
-    (response) => next(actionWith({ response, type: successType })),
+    (response) =>
+      next(
+        actionWith({
+          response,
+          type: successType,
+        }),
+      ),
     (error) =>
       next(
         actionWith({

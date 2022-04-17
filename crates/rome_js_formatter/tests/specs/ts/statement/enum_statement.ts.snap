@@ -34,5 +34,11 @@ enum B {
 	f = "something",
 }
 
-const enum C { A, B, C, D, F }
+const enum C {
+	A,
+	B,
+	C,
+	D,
+	F,
+}
 

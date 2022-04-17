@@ -61,7 +61,10 @@ expression: jsx_parent.js
   style={
     !isJellyfishEnabled &&
       diffUpdateMessageInput &&
-      { fontSize: 14, color: "#fff" }
+      {
+        fontSize: 14,
+        color: "#fff",
+      }
   }
 />;
 
@@ -76,5 +79,3 @@ expression: jsx_parent.js
 </div>;
 
 ```
-
-

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: return.ts
-
 ---
 # Input
 ```js
@@ -18,7 +16,10 @@ function foo() {
 # Output
 ```js
 function foo() {
-  return { foo: 1, bar: 2 } as Foo;
+  return {
+    foo: 1,
+    bar: 2,
+  } as Foo;
 }
 
 ```
