@@ -12,37 +12,22 @@ impl ToFormatElement for JsSequenceExpression {
     }
 }
 
-#[derive(Debug)]
-enum FlattenItem {
-    SequenceExpression(JsSequenceExpression, FormatElement),
-    OtherNode(JsSyntaxNode, FormatElement),
-}
-
-impl FlattenItem {
-    pub fn into_format_element(self) -> FormatElement {
-        match self {
-            FlattenItem::SequenceExpression(_, element) => element,
-            FlattenItem::OtherNode(_, element) => element,
-        }
-    }
-}
-
 #[derive(Debug, Default)]
 struct FlattenItemList {
-    item_list: Vec<FlattenItem>,
+    item_list: Vec<FormatElement>,
 }
 
 impl FlattenItemList {
-    pub fn push(&mut self, item: FlattenItem) {
+    pub fn push(&mut self, item: FormatElement) {
         self.item_list.push(item);
     }
 
     pub fn into_format_element(self) -> FormatElement {
         let element_list = self.item_list.into_iter().enumerate().map(|(index, item)| {
             if index == 0 {
-                item.into_format_element()
+                item
             } else {
-                format_elements![soft_line_indent_or_space(item.into_format_element())]
+                format_elements![soft_line_indent_or_space(item)]
             }
         });
 
@@ -83,14 +68,11 @@ fn flat_sequence_expression(
             flat_sequence_expression(list, left.syntax().clone(), formatter, Some(comma))?;
             let formatted =
                 format_elements![space_token(), right.format(formatter)?, formatted_comma];
-            list.push(FlattenItem::SequenceExpression(
-                sequence_expression,
-                formatted,
-            ))
+            list.push(formatted)
         }
         _ => {
             let formatted = format_elements![node.to_format_element(formatter)?, formatted_comma];
-            list.push(FlattenItem::OtherNode(node, formatted))
+            list.push(formatted)
         }
     }
 
