@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout PR Branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: false
 
@@ -34,7 +34,7 @@ jobs:
         run: git config core.longpaths true
 
       - name: Checkout PR Branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
 
@@ -52,7 +52,7 @@ jobs:
         run: cargo coverage --json > new_results.json
 
       - name: Checkout main Branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           clean: false
           ref: main
