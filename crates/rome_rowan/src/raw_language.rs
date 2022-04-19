@@ -64,7 +64,9 @@ pub struct LiteralExpression {
     node: SyntaxNode<RawLanguage>,
 }
 
-impl AstNode<RawLanguage> for LiteralExpression {
+impl AstNode for LiteralExpression {
+    type Language = RawLanguage;
+
     fn can_cast(kind: RawLanguageKind) -> bool {
         kind == LITERAL_EXPRESSION
     }
@@ -96,7 +98,10 @@ impl SeparatedExpressionList {
     }
 }
 
-impl AstSeparatedList<RawLanguage, LiteralExpression> for SeparatedExpressionList {
+impl AstSeparatedList for SeparatedExpressionList {
+    type Language = RawLanguage;
+    type Node = LiteralExpression;
+
     fn syntax_list(&self) -> &SyntaxList<RawLanguage> {
         &self.syntax_list
     }

@@ -228,7 +228,7 @@ impl Formatter {
     /// Formats each child and returns the result as a list.
     ///
     /// Returns [None] if a child couldn't be formatted.
-    pub fn format_nodes<T: AstNode<JsLanguage> + ToFormatElement>(
+    pub fn format_nodes<T: AstNode<Language = JsLanguage> + ToFormatElement>(
         &self,
         nodes: impl IntoIterator<Item = T>,
     ) -> FormatResult<impl Iterator<Item = FormatElement>> {
@@ -259,8 +259,8 @@ impl Formatter {
         trailing_separator: TrailingSeparator,
     ) -> FormatResult<impl Iterator<Item = FormatElement>>
     where
-        T: AstNode<JsLanguage> + ToFormatElement + Clone,
-        L: AstSeparatedList<JsLanguage, T>,
+        T: AstNode<Language = JsLanguage> + ToFormatElement + Clone,
+        L: AstSeparatedList<Language = JsLanguage, Node = T>,
         F: Fn() -> FormatElement,
     {
         let mut result = Vec::with_capacity(list.len());
@@ -311,12 +311,12 @@ impl Formatter {
     /// end up separated by hard lines or empty lines.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
-    pub fn format_list<List, Node: AstNode<JsLanguage> + ToFormatElement>(
+    pub fn format_list<List, Node: AstNode<Language = JsLanguage> + ToFormatElement>(
         &self,
         list: List,
     ) -> FormatElement
     where
-        List: AstNodeList<JsLanguage, Node>,
+        List: AstNodeList<Language = JsLanguage, Node = Node>,
     {
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = self.snapshot();

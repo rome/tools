@@ -732,7 +732,8 @@ impl JsAnyBinaryLikeExpression {
     }
 }
 
-impl AstNode<JsLanguage> for JsAnyBinaryLikeExpression {
+impl AstNode for JsAnyBinaryLikeExpression {
+    type Language = JsLanguage;
     fn can_cast(kind: JsSyntaxKind) -> bool
     where
         Self: Sized,
@@ -821,7 +822,8 @@ impl JsAnyBinaryLikeLeftExpression {
     }
 }
 
-impl AstNode<JsLanguage> for JsAnyBinaryLikeLeftExpression {
+impl AstNode for JsAnyBinaryLikeLeftExpression {
+    type Language = JsLanguage;
     fn can_cast(kind: JsSyntaxKind) -> bool
     where
         Self: Sized,
