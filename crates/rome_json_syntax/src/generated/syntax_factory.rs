@@ -77,7 +77,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == T![json_string] {
+                    if JsonString::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -123,6 +123,25 @@ impl SyntaxFactory for JsonSyntaxFactory {
                     );
                 }
                 slots.into_node(JSON_NULL, children)
+            }
+            JSON_NUMBER => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == JSON_NUMBER_LITERAL {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JSON_NUMBER.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSON_NUMBER, children)
             }
             JSON_OBJECT => {
                 let mut elements = (&children).into_iter();
@@ -176,47 +195,12 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 }
                 slots.into_node(JSON_ROOT, children)
             }
-            JSON_VALUE => {
+            JSON_STRING => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == T![json_string] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if JsonBoolean::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if JsonNull::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T![json_number] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if JsonArray::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if JsonObject::can_cast(element.kind()) {
+                    if element.kind() == JSON_STRING_LITERAL {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -224,11 +208,11 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_VALUE.to_unknown(),
+                        JSON_STRING.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSON_VALUE, children)
+                slots.into_node(JSON_STRING, children)
             }
             JSON_ARRAY_ELEMENT_LIST => Self::make_separated_list_syntax(
                 kind,

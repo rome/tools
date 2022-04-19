@@ -41,13 +41,13 @@ JsonUnknown = SyntaxElement*
 
 JsonRoot = JsonValue
 
-JsonValue =  'json_string' | JsonBoolean | JsonNull | 'json_number' | JsonArray | JsonObject
+JsonValue =  JsonString | JsonBoolean | JsonNull | JsonNumber | JsonArray | JsonObject
 
 JsonObject = '{' JsonMemberList? '}'
 
 JsonMemberList = (JsonMember (',' JsonMember)* )
 
-JsonMember = key: 'json_string' ':' value: JsonValue
+JsonMember = key: JsonString ':' value: JsonValue
 
 JsonArray = '[' elements: JsonArrayElementList? ']'
 
@@ -56,3 +56,7 @@ JsonArrayElementList = (JsonValue (',' JsonValue)* )
 JsonBoolean = 'true' | 'false'
 
 JsonNull = 'null'
+
+JsonString = 'json_string_literal'
+
+JsonNumber = 'json_number_literal'

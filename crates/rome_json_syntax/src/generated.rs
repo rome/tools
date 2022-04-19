@@ -9,4 +9,4 @@ pub mod kind;
 
 pub use kind::*;
 pub use nodes::*;
-pub use syntax_factory::CssSyntaxFactory;
+pub use syntax_factory::JsonSyntaxFactory;

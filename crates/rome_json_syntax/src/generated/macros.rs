@@ -32,6 +32,10 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::JsonNull::new_unchecked(node) };
                     $body
                 }
+                $crate::JsonSyntaxKind::JSON_NUMBER => {
+                    let $pattern = unsafe { $crate::JsonNumber::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsonSyntaxKind::JSON_OBJECT => {
                     let $pattern = unsafe { $crate::JsonObject::new_unchecked(node) };
                     $body
@@ -40,8 +44,8 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::JsonRoot::new_unchecked(node) };
                     $body
                 }
-                $crate::JsonSyntaxKind::JSON_VALUE => {
-                    let $pattern = unsafe { $crate::JsonValue::new_unchecked(node) };
+                $crate::JsonSyntaxKind::JSON_STRING => {
+                    let $pattern = unsafe { $crate::JsonString::new_unchecked(node) };
                     $body
                 }
                 $crate::JsonSyntaxKind::JSON_UNKNOWN => {

@@ -5,21 +5,21 @@
 //!
 //! This is a simple wrapper around the `rowan` crate which does most of the heavy lifting and is language agnostic.
 
-use crate::{CssSyntaxFactory, CssSyntaxKind};
+use crate::{JsonSyntaxFactory, JsonSyntaxKind};
 use rome_rowan::{Language, TreeBuilder};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-pub struct CssLanguage;
+pub struct JsonLanguage;
 
-impl Language for CssLanguage {
-    type Kind = CssSyntaxKind;
+impl Language for JsonLanguage {
+    type Kind = JsonSyntaxKind;
 }
 
-pub type CssSyntaxNode = rome_rowan::SyntaxNode<CssLanguage>;
-pub type CssSyntaxToken = rome_rowan::SyntaxToken<CssLanguage>;
-pub type CssSyntaxElement = rome_rowan::SyntaxElement<CssLanguage>;
-pub type CssSyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<CssLanguage>;
-pub type CssSyntaxElementChildren = rome_rowan::SyntaxElementChildren<CssLanguage>;
-pub type CssSyntaxList = rome_rowan::SyntaxList<CssLanguage>;
+pub type JsonSyntaxNode = rome_rowan::SyntaxNode<JsonLanguage>;
+pub type JsonSyntaxToken = rome_rowan::SyntaxToken<JsonLanguage>;
+pub type JsonSyntaxElement = rome_rowan::SyntaxElement<JsonLanguage>;
+pub type JsonSyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<JsonLanguage>;
+pub type JsonSyntaxElementChildren = rome_rowan::SyntaxElementChildren<JsonLanguage>;
+pub type JsonSyntaxList = rome_rowan::SyntaxList<JsonLanguage>;
 
-pub type CssSyntaxTreeBuilder = TreeBuilder<'static, CssLanguage, CssSyntaxFactory>;
+pub type JsonSyntaxTreeBuilder = TreeBuilder<'static, JsonLanguage, JsonSyntaxFactory>;

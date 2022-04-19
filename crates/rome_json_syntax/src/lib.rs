@@ -8,27 +8,27 @@ pub use rome_rowan::{
 };
 pub use syntax_node::*;
 
-use crate::CssSyntaxKind::*;
+use crate::JsonSyntaxKind::*;
 use rome_rowan::RawSyntaxKind;
 
-impl From<u16> for CssSyntaxKind {
-    fn from(d: u16) -> CssSyntaxKind {
-        assert!(d <= (CssSyntaxKind::__LAST as u16));
-        unsafe { std::mem::transmute::<u16, CssSyntaxKind>(d) }
+impl From<u16> for JsonSyntaxKind {
+    fn from(d: u16) -> JsonSyntaxKind {
+        assert!(d <= (JsonSyntaxKind::__LAST as u16));
+        unsafe { std::mem::transmute::<u16, JsonSyntaxKind>(d) }
     }
 }
 
-impl From<CssSyntaxKind> for u16 {
-    fn from(k: CssSyntaxKind) -> u16 {
+impl From<JsonSyntaxKind> for u16 {
+    fn from(k: JsonSyntaxKind) -> u16 {
         k as u16
     }
 }
 
-impl CssSyntaxKind {
+impl JsonSyntaxKind {
     pub fn is_trivia(self) -> bool {
         matches!(
             self,
-            CssSyntaxKind::NEWLINE | CssSyntaxKind::WHITESPACE | CssSyntaxKind::COMMENT
+            JsonSyntaxKind::NEWLINE | JsonSyntaxKind::WHITESPACE | JsonSyntaxKind::COMMENT
         )
     }
 
@@ -38,22 +38,11 @@ impl CssSyntaxKind {
         true
     }
 
-    /// Returns `true` for contextual keywords (excluding strict mode contextual keywords)
-    #[inline]
-    pub const fn is_contextual_keyword(self) -> bool {
-        (self as u16) >= (ALICEBLUE_KW as u16) && (self as u16) <= (CSS_SELECTOR as u16)
-    }
-
-    /// Returns true for all non-contextual keywords (includes future reserved keywords)
-    #[inline]
-    pub const fn is_non_contextual_keyword(self) -> bool {
-        self.is_keyword() && !self.is_contextual_keyword()
-    }
 }
 
-impl rome_rowan::SyntaxKind for CssSyntaxKind {
+impl rome_rowan::SyntaxKind for JsonSyntaxKind {
     fn is_unknown(&self) -> bool {
-        matches!(self, CSS_UNKNOWN)
+        matches!(self, Json_UNKNOWN)
     }
 
     fn to_unknown(&self) -> Self {
@@ -71,15 +60,15 @@ impl rome_rowan::SyntaxKind for CssSyntaxKind {
     }
 }
 
-impl TryFrom<CssSyntaxKind> for TriviaPieceKind {
+impl TryFrom<JsonSyntaxKind> for TriviaPieceKind {
     type Error = ();
 
-    fn try_from(value: CssSyntaxKind) -> Result<Self, Self::Error> {
+    fn try_from(value: JsonSyntaxKind) -> Result<Self, Self::Error> {
         if value.is_trivia() {
             match value {
-                CssSyntaxKind::NEWLINE => Ok(TriviaPieceKind::Newline),
-                CssSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
-                CssSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
+                JsonSyntaxKind::NEWLINE => Ok(TriviaPieceKind::Newline),
+                JsonSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
+                JsonSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
                 _ => unreachable!("Not Trivia"),
             }
         } else {
