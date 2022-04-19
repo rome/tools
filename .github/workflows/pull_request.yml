@@ -5,12 +5,11 @@ on:
   pull_request:
     branches:
       - main
-    paths: # Only run when changes are made to rust or js code
-      - '**.rs'
-      - '**.js'
-      - '**.jsx'
-      - '**.ts'
-      - '**.tsx'
+    paths: # Only run when changes are made to rust code or root Cargo
+      - 'crates/**'
+      - 'xtask/**'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
 
 env:
   RUST_LOG: info
@@ -32,21 +31,6 @@ jobs:
         with:
           command: fmt
           args: --all --verbose -- --check
-  format-js:
-    name: Format JS Files
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install Rome
-        uses: rome/setup-rome@v0.1
-        with:
-          version: preview
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Run Rome Format
-        run: rome format --ci editors website
-
 
   lint:
     name: Lint Rust Files
