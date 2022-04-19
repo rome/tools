@@ -1448,6 +1448,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_json_syntax"
+version = "0.0.0"
+dependencies = [
+ "rome_rowan",
+ "thiserror",
+]
+
+[[package]]
 name = "rome_lsp"
 version = "0.1.0"
 dependencies = [

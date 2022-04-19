@@ -3,6 +3,7 @@
 //!
 mod ast;
 mod css_kinds_src;
+mod json_kinds_src;
 mod formatter;
 mod generate_macros;
 mod generate_nodes;
@@ -33,6 +34,11 @@ const CSS_AST_NODES: &str = "crates/rome_css_syntax/src/generated/nodes.rs";
 const CSS_SYNTAX_FACTORY: &str = "crates/rome_css_syntax/src/generated/syntax_factory.rs";
 const CSS_AST_MACROS: &str = "crates/rome_css_syntax/src/generated/macros.rs";
 
+const JSON_SYNTAX_KINDS: &str = "crates/rome_json_syntax/src/generated/kind.rs";
+const JSON_AST_NODES: &str = "crates/rome_json_syntax/src/generated/nodes.rs";
+const JSON_SYNTAX_FACTORY: &str = "crates/rome_json_syntax/src/generated/syntax_factory.rs";
+const JSON_AST_MACROS: &str = "crates/rome_json_syntax/src/generated/macros.rs";
+
 enum UpdateResult {
     NotUpdated,
     Updated,
@@ -42,6 +48,7 @@ enum UpdateResult {
 pub enum LanguageKind {
     Js,
     Css,
+    Json,
 }
 
 impl LanguageKind {
@@ -49,6 +56,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsSyntaxKind },
             LanguageKind::Css => quote! { CssSyntaxKind },
+            LanguageKind::Json => quote! {JsonSyntaxKind},
         }
     }
 
@@ -56,6 +64,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsSyntaxNode },
             LanguageKind::Css => quote! { CssSyntaxNode },
+            LanguageKind::Json => quote! { JsonSyntaxNode },
         }
     }
 
@@ -63,6 +72,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsSyntaxElement },
             LanguageKind::Css => quote! { CssSyntaxElement },
+            LanguageKind::Json => quote! { JsonSyntaxElement },
         }
     }
 
@@ -70,6 +80,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsSyntaxToken },
             LanguageKind::Css => quote! { CssSyntaxToken },
+            LanguageKind::Json => quote! { JsonSyntaxToken },
         }
     }
 
@@ -77,6 +88,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsSyntaxElementChildren },
             LanguageKind::Css => quote! { CssSyntaxElementChildren },
+            LanguageKind::Json => quote! { JsonSyntaxElementChildren },
         }
     }
 
@@ -84,6 +96,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsSyntaxList },
             LanguageKind::Css => quote! { CssSyntaxList },
+            LanguageKind::Json => quote! { JsonSyntaxList },
         }
     }
 
@@ -91,6 +104,7 @@ impl LanguageKind {
         match self {
             LanguageKind::Js => quote! { JsLanguage },
             LanguageKind::Css => quote! { CssLanguage },
+            LanguageKind::Json => quote! { JsonLanguage },
         }
     }
 }

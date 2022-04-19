@@ -9,6 +9,7 @@ pub fn generate_syntax_factory(ast: &AstSrc, language_kind: LanguageKind) -> Res
     let (syntax_kind, factory_kind) = match language_kind {
         LanguageKind::Js => (quote! { JsSyntaxKind }, quote! { JsSyntaxFactory }),
         LanguageKind::Css => (quote! { CssSyntaxKind }, quote! {CssSyntaxFactory}),
+        LanguageKind::Json => (quote! { JsonSyntaxKind }, quote! {JsonSyntaxFactory}),
     };
     let normal_node_arms = ast.nodes.iter().map(|node| {
         let kind = format_ident!("{}", to_upper_snake_case(&node.name));
