@@ -17,7 +17,9 @@ impl ToAsciiLowercaseCow for str {
             let chr = bytes[idx];
             if chr != chr.to_ascii_lowercase() {
                 let mut s = bytes.to_vec();
-                s.make_ascii_lowercase();
+                for b in &mut s[idx..] {
+                    b.make_ascii_lowercase();
+                }
                 return Cow::Owned(unsafe { String::from_utf8_unchecked(s) });
             }
         }
