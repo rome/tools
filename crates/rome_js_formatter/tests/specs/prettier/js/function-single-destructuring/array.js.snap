@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: array.js
-
 ---
 # Input
 ```js
@@ -76,4 +74,10 @@ promise.then(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: function excludeFirstFiveResults([first, second, third, fourth, fifth, ...rest]) {
+   12:   [firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest] = [
+   34:   ([firstResult, secondResult, thirdResult, fourthResult, fifthResult, ...rest]) => {
+```
 

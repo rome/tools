@@ -113,4 +113,11 @@ const iter2 = createIterator(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    3: (originalError ? wrappedError(errMsg, originalError) : Error(errMsg)) as InjectionError;
+   37: const value1 = thisIsAReallyReallyReallyReallyReallyLongIdentifier as SomeInterface;
+   38: const value2 = thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
+   47: const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
+```
 

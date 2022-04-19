@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: variables.ts
-
 ---
 # Input
 ```js
@@ -64,4 +62,16 @@ const fooooooooooooooo: SomeThing<string["anchor"]> = looooooooooooooooooooooooo
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    9: const fooooooooooooooo: SomeThing<boolean> = looooooooooooooooooooooooooooooongNameFunc();
+   10: const baaaaaaaaaaaaaaaaaaaaar: SomeThing<boolean, boolean> = looooooooooooooooooooooooooooooongNameFunc();
+   16: const baaaaaaaaaaaaaaaar: SomeThing<K extends T ? G : S> = looooooooooooooooooooooooooooooongNameFunc();
+   26: const isAnySuccessfulAttempt2$: Observable<boolean> = this._someMethodWithLongName();
+   27: const fooooooooooooooo: SomeThing<boolean | string> = looooooooooooooooooooooooooooooongNameFunc();
+   28: const fooooooooooooooo: SomeThing<boolean & string> = looooooooooooooooooooooooooooooongNameFunc();
+   29: const fooooooooooooooo: SomeThing<keyof string> = looooooooooooooooooooooooooooooongNameFunc();
+   30: const fooooooooooooooo: SomeThing<string[]> = looooooooooooooooooooooooooooooongNameFunc();
+   31: const fooooooooooooooo: SomeThing<string["anchor"]> = looooooooooooooooooooooooooooooongNameFunc();
+```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: trailing-jsdocs.js
-
 ---
 # Input
 ```js
@@ -59,4 +57,8 @@ const CONNECTION_STATUS = exports.CONNECTION_STATUS =
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   19: * A contract providing different interaction models per the [ReactiveSocket protocol]
+```
 

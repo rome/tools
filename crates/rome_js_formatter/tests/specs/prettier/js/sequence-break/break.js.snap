@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: break.js
-
 ---
 # Input
 ```js
@@ -73,4 +71,12 @@ for (
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    2:   doSomethingWithArgument(argument1), doSomethingWithArgument(argument2), argument1
+    6:     aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName
+    9: aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName;
+   12:     aLongIdentifierName, aLongIdentifierName, aLongIdentifierName, aLongIdentifierName
+   16:   aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName =
+```
 

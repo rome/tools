@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: expr_and_same_line_comments.js
-
 ---
 # Input
 ```js
@@ -72,4 +70,10 @@ if (a === 0) {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   34:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment A5
+   36:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment B5
+   38:   looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong; // comment C5
+```
 

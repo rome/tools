@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: destructuring-array.js
-
 ---
 # Input
 ```js
@@ -23,4 +21,8 @@ const [width = nextWidth, height = nextHeight, baseline = nextBaseline] = measur
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const [width = nextWidth, height = nextHeight, baseline = nextBaseline] = measureText(
+```
 

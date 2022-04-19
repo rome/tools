@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: assignment.js
-
 ---
 # Input
 ```js
@@ -81,4 +79,8 @@ module.exports =
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   25:   class extends aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 {
+```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: parameter-list.js
-
 ---
 # Input
 ```js
@@ -206,4 +204,10 @@ it(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    2:   constructor(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
+    5: function foo(one, two, three, four, five, six, seven, eight, nine, ten, eleven) {}
+   37:   "does something really long and complicated so I have to write a very long name for the test",
+```
 

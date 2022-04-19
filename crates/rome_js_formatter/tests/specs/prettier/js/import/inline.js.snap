@@ -20,4 +20,11 @@ import { a2, somethingSuperLongsomethingSuperLong3 } from "somethingSuperLongsom
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: import somethingSuperLongsomethingSuperLong from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+    2: import { somethingSuperLongsomethingSuperLong1 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+    3: import a, { somethingSuperLongsomethingSuperLong2 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+    4: import { a2, somethingSuperLongsomethingSuperLong3 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+```
 

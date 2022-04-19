@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: last-arg.js
-
 ---
 # Input
 ```js
@@ -84,4 +82,8 @@ class Foo {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    8:   d(lol /*string*/ , lol2 /*string*/ , lol3 /*string*/ , lol4 /*string*/ ) /*string*/ {}
+```
 

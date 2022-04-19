@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: functionOverloadErrorsSyntax.ts
-
 ---
 # Input
 ```js
@@ -45,4 +43,8 @@ error[SyntaxError]: rest elements may not have trailing commas
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: //Function overload signature with optional parameter followed by non-optional parameter
+```
 

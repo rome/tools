@@ -14,4 +14,8 @@ import someCoolUtilWithARatherLongName from "../../../../utils/someCoolUtilWithA
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: import someCoolUtilWithARatherLongName from "../../../../utils/someCoolUtilWithARatherLongName";
+```
 

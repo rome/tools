@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: issue-7346.js
-
 ---
 # Input
 ```js
@@ -22,4 +20,8 @@ expression: issue-7346.js
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    3: "bar"; // parens should be added, see https://github.com/prettier/prettier/issues/7346#issuecomment-574823604
+```
 

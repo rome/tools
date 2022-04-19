@@ -84,4 +84,10 @@ type FieldLayoutWith<T extends stringggggggggggg, S = stringggggggggggggggggg> =
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: type FieldLayoutWith<T extends string, S extends unknown = { width: string }> = {
+   19: type FieldLayoutWith<T extends stringggggggggggg, T extends stringggggggggggg> = {
+   25: type FieldLayoutWith<T extends stringggggggggggg, S = stringggggggggggggggggg> = {
+```
 

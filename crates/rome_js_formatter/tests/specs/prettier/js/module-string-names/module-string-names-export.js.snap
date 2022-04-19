@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: module-string-names-export.js
-
 ---
 # Input
 ```js
@@ -26,4 +24,8 @@ export { "smile4" } from "./emojis.js";
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    5: export { "學而時習之，不亦說乎？", "吾道一以貫之。" as "忠恕。" } from "Confucius";
+```
 

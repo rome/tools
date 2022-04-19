@@ -19,7 +19,7 @@ jobs:
       nightly: ${{ env.nightly }}
       version_changed: ${{ steps.version.outputs.changed }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Check nightly status
         id: nightly
@@ -83,7 +83,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
@@ -124,7 +124,7 @@ jobs:
 
       # Upload the CLI binary as a build artifact
       - name: Upload CLI artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: cli
           path: ./dist/rome-*
@@ -142,7 +142,7 @@ jobs:
           cp target/${{ matrix.target }}/release/rome_lsp editors/vscode/server/rome_lsp
 
       - name: Install Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 14.x
 
@@ -174,7 +174,7 @@ jobs:
         if: needs.check.outputs.prerelease == 'true'
 
       - name: Upload VSCode extension artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: vscode_packages
           path: ./dist/rome_lsp-${{ matrix.code-target }}.vsix
@@ -186,19 +186,19 @@ jobs:
     needs: build
     environment: marketplace
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Download CLI artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: cli
       - name: Download extension artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: vscode_packages
 
       - name: Install Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 14.x
           registry-url: 'https://registry.npmjs.org'

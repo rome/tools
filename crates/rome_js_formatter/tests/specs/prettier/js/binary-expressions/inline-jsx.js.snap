@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 153
 expression: inline-jsx.js
-
 ---
 # Input
 ```js
@@ -33,4 +31,9 @@ const avatar2 = (hasAvatar || showPlaceholder) && <Gravatar
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const user = renderedUser || <div><User name={this.state.user.name} age={this.state.user.age} /></div>;
+    4:   shouldRenderUser && <div><User name={this.state.user.name} age={this.state.user.age} /></div>
+```
 

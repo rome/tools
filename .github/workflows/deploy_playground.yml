@@ -15,12 +15,12 @@ jobs:
     name: Deploy Playground (Preview)
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: '14'
       - uses: jetli/wasm-pack-action@v0.3.0
       - name: Cache pnpm modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}

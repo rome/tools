@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: arrow-return-type.ts
-
 ---
 # Input
 ```js
@@ -120,4 +118,9 @@ export const getVehicleDescriptor = async (vehicleId: string): Promise<
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   30:   Collections.Parts.PrintedCircuitBoardAssembly["attributessssssssssssssssssssssss"]
+   38:   keyof Collections.Parts.PrintedCircuitBoardAssemblyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+```
 

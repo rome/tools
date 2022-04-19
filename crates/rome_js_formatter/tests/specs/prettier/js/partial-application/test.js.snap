@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: test.js
-
 ---
 # Input
 ```js
@@ -75,4 +73,8 @@ error[SyntaxError]: expected an expression but instead found '?'
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   10:   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+```
 

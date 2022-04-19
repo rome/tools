@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: break-last-member.js
-
 ---
 # Input
 ```js
@@ -53,4 +51,14 @@ const {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: SomeVeryLongUpperCaseConstant.someVeryLongCallExpression().some_very_long_member_expression;
+    2: weNeedToReachTheEightyCharacterLimitXXXXXXXXXXXXXXXXX.someNode.childrenInAnArray[0];
+    3: superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered;
+    4: superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered[0];
+    7:   findDOMNode(component.instance()).getElementsByClassName(styles.inner)[0].style.paddingRight,
+   10: const { course, conflicts = [], index, scheduleId, studentId, something } = a.this.props;
+   12: const { course2, conflicts2 = [], index2, scheduleId2, studentId2, something2 } = this.props;
+```
 

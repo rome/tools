@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: ternary.ts
-
 ---
 # Input
 ```js
@@ -98,4 +96,14 @@ bifornCringerMoshedPerplexSawder =
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    3:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+    9:   coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+   14:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+   20:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+   27:       coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+   35:       glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+   42:       glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+```
 

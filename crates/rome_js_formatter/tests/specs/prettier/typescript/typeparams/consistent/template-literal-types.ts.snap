@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: template-literal-types.ts
-
 ---
 # Input
 ```js
@@ -18,4 +16,8 @@ const foo1: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const foo1: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<
+```
 

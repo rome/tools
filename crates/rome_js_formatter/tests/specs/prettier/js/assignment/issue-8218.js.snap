@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: issue-8218.js
-
 ---
 # Input
 ```js
@@ -21,4 +19,9 @@ const pendingIndicatorz = shield.alarmGeneratorConfiguration.getPendingVersionCo
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const pendingIndicators = shield.alarmGeneratorConfiguration.getPendingVersionColumnValues;
+    3: const pendingIndicatorz = shield.alarmGeneratorConfiguration.getPendingVersionColumnValues();
+```
 
