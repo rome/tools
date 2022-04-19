@@ -828,10 +828,11 @@ where
         if let Some(leading_trivia) = next_node.first_leading_trivia() {
             leading_trivia
                 .pieces()
-                .take_while(|piece|
-                // Stop at the first comment piece, the comment printer
-                // will handle newlines between the comment and the node
-                !piece.is_comments())
+                .take_while(|piece| {
+                    // Stop at the first comment piece, the comment printer
+                    // will handle newlines between the comment and the node
+                    !piece.is_comments()
+                })
                 .filter(|piece| piece.is_newline())
                 .count()
         } else {
