@@ -1128,7 +1128,8 @@ pub enum Token {
         // The position of the dynamic token in the unformatted source code
         source_position: TextSize,
     },
-    // A token that is taken 1:1 from the source code
+    /// A token for a text that is taken as is from the source code (input text and formatted representation are identical).
+    /// Implementing by taking a slice from a `SyntaxToken` to avoid allocating a new string.
     SyntaxTokenSlice {
         /// The start position of the token in the unformatted source code
         source_position: TextSize,
@@ -1161,7 +1162,8 @@ impl Token {
 
     /// Create a token from a dynamic string and a range of the input source
     pub fn new_dynamic(text: String, position: TextSize) -> Self {
-        Self::assert_no_newlines(&text);
+        debug_assert_no_newlines(&text);
+
         Self::Dynamic {
             text: text.into_boxed_str(),
             source_position: position,
@@ -1180,8 +1182,6 @@ impl Token {
         token: &SyntaxToken<L>,
         start: TextSize,
     ) -> Self {
-        Self::assert_no_newlines(&text);
-
         match text {
             Cow::Owned(text) => Self::new_dynamic(text, start),
             Cow::Borrowed(text) => {
@@ -1189,7 +1189,7 @@ impl Token {
                 debug_assert_eq!(
                     text,
                     &token.text()[range - token.text_range().start()],
-                    "The borrowed string doesn't match the specified token substring"
+                    "The borrowed string doesn't match the specified token substring. Does the borrowed string belong to this token and range?"
                 );
                 Token::new_syntax_token_slice(token, range)
             }
@@ -1201,16 +1201,12 @@ impl Token {
         let relative_range = range - token.text_range().start();
         let slice = token.token_text().slice(relative_range);
 
-        Self::assert_no_newlines(&slice);
+        debug_assert_no_newlines(&slice);
 
         Self::SyntaxTokenSlice {
             slice,
             source_position: range.start(),
         }
-    }
-
-    fn assert_no_newlines(text: &str) {
-        debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
     }
 
     /// Get the range of the input source covered by this token,
@@ -1226,6 +1222,10 @@ impl Token {
             } => Some(source_position),
         }
     }
+}
+
+fn debug_assert_no_newlines(text: &str) {
+    debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
 }
 
 // Token equality only compares the text content

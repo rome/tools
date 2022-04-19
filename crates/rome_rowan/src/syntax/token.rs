@@ -47,6 +47,7 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.text()
     }
 
+    /// Returns the text of a token, including all trivia as an owned value.
     pub fn token_text(&self) -> SyntaxTokenText {
         self.raw.token_text()
     }
