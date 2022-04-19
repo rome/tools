@@ -11,7 +11,7 @@ use std::marker::PhantomData;
 use text_size::TextRange;
 
 use crate::syntax::{SyntaxSlot, SyntaxSlots};
-use crate::{ast, Language, SyntaxList, SyntaxNode, SyntaxToken};
+use crate::{Language, SyntaxList, SyntaxNode, SyntaxToken};
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
@@ -21,7 +21,7 @@ pub trait AstNode {
     type Language: Language;
 
     /// Returns `true` if a node with the given kind can be cased to this AST node.
-    fn can_cast(kind: <<Self as ast::AstNode>::Language as Language>::Kind) -> bool;
+    fn can_cast(kind: <Self::Language as Language>::Kind) -> bool;
 
     /// Tries to cast the passed syntax node to this AST node.
     ///
