@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: generic-cast.ts
-
 ---
 # Input
 ```js
@@ -243,4 +241,10 @@ function x() {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    7:   const breakAfterCast = <Immutable.Map<string, any>>someExistingConfigMap.mergeDeep(
+  110:   const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[receiverType];
+  138:   >(<any>permissions.someMethodWithLongName(parameter1, parameter2))[receiverTypeLongName];
+```
 

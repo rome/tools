@@ -110,3 +110,9 @@ romise.then(
 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
 );
 
+
+## Lines exceeding width of 80 characters
+
+   25: expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
+   52: 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 153
 expression: issues.js
-
 ---
 # Input
 ```js
@@ -159,4 +157,8 @@ foo(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   34: import path from "path"; // eslint-disable-line nuclide-internal/prefer-nuclide-uri
+```
 

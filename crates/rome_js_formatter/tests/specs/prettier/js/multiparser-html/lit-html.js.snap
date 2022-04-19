@@ -214,4 +214,9 @@ ${foo}:${bar};
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   68: const nestedFun = /* HTML */ `${outerExpr(1)} <script>const tpl = html\`<div>\${innerExpr( 1 )} ${outerExpr(
+   78: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
+```
 

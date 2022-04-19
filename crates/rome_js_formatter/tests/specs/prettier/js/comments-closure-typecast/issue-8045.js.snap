@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: issue-8045.js
-
 ---
 # Input
 ```js
@@ -64,4 +62,11 @@ function jsdocCastInReturn() {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
+    6:   return (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+    9: const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
+   20: const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
+```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: object.js
-
 ---
 # Input
 ```js
@@ -47,4 +45,8 @@ const bLong = {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    5:   cHasALongName: { c1: "a-really-long-value", c2: "a-really-really-long-value" },
+```
 

@@ -19,14 +19,14 @@ jobs:
     steps:
       - name: Get PR SHA
         id: sha
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           result-encoding: string
           script: |
             const response = await github.request(context.payload.issue.pull_request.url);
             return response.data.head.sha;
       - name: Checkout PR Branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: false
           ref: ${{ steps.sha.outputs.result }}
@@ -47,7 +47,7 @@ jobs:
         run: cargo bench_parser --save-baseline pr
 
       - name: Checkout Main Branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           clean: false
           ref: main

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: break.js
-
 ---
 # Input
 ```js
@@ -104,4 +102,8 @@ expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLon
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   38: expect(new LongLongLongLongLongRange([0, 0], [0, 0])).toEqualAtomLongLongLongLongRange(
+```
 

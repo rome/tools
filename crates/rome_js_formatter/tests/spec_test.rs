@@ -85,8 +85,9 @@ struct SnapshotContent {
 }
 
 impl SnapshotContent {
-    pub fn add_output(&mut self, formatted: Formatted, options: FormatOptions) {
-        let mut output: String = formatted.as_code().into();
+    fn add_output(&mut self, formatted: Formatted, options: FormatOptions) {
+        let code = formatted.as_code();
+        let mut output: String = code.to_string();
         if !formatted.verbatim_ranges().is_empty() {
             output.push_str("\n\n");
             output.push_str("## Unimplemented nodes/tokens");
@@ -95,14 +96,33 @@ impl SnapshotContent {
                 output.push_str(&format!("{:?} => {:?}\n", text, range));
             }
         }
+
+        let line_width_limit = options.line_width.value() as usize;
+        let mut exceeding_lines = code
+            .lines()
+            .enumerate()
+            .filter(|(_, line)| line.len() > line_width_limit)
+            .peekable();
+
+        if exceeding_lines.peek().is_some() {
+            output.push_str(&format!(
+                "\n\n## Lines exceeding width of {line_width_limit} characters\n\n"
+            ));
+
+            for (line_index, text) in exceeding_lines {
+                let line_number = line_index + 1;
+                output.push_str(&format!("{line_number:>5}: {text}\n"));
+            }
+        }
+
         self.output.push((output, options));
     }
 
-    pub fn set_input(&mut self, content: impl Into<String>) {
+    fn set_input(&mut self, content: impl Into<String>) {
         self.input = content.into();
     }
 
-    pub fn snap_content(&mut self) -> String {
+    fn snap_content(&mut self) -> String {
         let mut output = String::new();
         output.push_str("# Input");
         output.push('\n');

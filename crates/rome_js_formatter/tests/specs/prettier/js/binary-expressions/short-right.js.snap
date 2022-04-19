@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: short-right.js
-
 ---
 # Input
 ```js
@@ -50,4 +48,9 @@ defaultContent.filter(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    2:   this._cachedItemHeight(this._firstVisibleIndex + i) - this._provider.fastHeight(
+    7: foooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(aaaaaaaaaaaaaaaaaaa) + a;
+```
 

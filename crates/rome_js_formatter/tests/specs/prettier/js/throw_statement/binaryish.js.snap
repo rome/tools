@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: binaryish.js
-
 ---
 # Input
 ```js
@@ -59,4 +57,8 @@ function f() {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   16:     patternInfo.watch ? "Press `a` to run all tests, or run Jest with `--watchAll`." : "Run Jest without `-o` to run all tests.",
+```
 

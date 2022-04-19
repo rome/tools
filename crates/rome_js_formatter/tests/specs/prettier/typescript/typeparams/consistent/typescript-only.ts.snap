@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: typescript-only.ts
-
 ---
 # Input
 ```js
@@ -30,4 +28,11 @@ const foo4: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const foo1: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<
+    4: const foo2: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<
+    7: const foo3: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<
+   10: const foo4: Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo<
+```
 

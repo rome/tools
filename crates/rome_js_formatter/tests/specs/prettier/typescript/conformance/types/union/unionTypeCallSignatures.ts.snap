@@ -182,4 +182,13 @@ strOrNum = unionWithRestParameter4("hello", "world");
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    5: // If each type in U has call signatures and the sets of call signatures are identical ignoring return types,
+    6: // U has the same set of call signatures, but with return types that are unions of the return types of the respective call signatures from each type in U.
+   46: strOrNum = unionWithOptionalParameter1("hello", "hello"); // error in parameter type
+   54: strOrNum = unionWithOptionalParameter2("hello", "hello"); // error no call signature
+   62: strOrNum = unionWithOptionalParameter3("hello", "hello"); // error no call signature
+   95: strOrNum = unionWithRestParameter4("hello"); // error supplied parameters do not match any call signature
+```
 

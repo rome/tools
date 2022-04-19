@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: test.js
-
 ---
 # Input
 ```js
@@ -78,4 +76,10 @@ foo(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    5: const x1 = longVariable + longVariable + longVariable + longVariable - longVariable + longVariable;
+    6: const x2 = longVariable + (longVariable * longVariable) + longVariable - longVariable + longVariable;
+   44:   obj.property * new Class() && (obj instanceof Class) && longVariable ? number + 5 : false,
+```
 

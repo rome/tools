@@ -36,3 +36,8 @@ let x;
 for (<boolean>x of []) {}
 ({ x: <string>x } = { x: "test" });
 
+
+## Lines exceeding width of 80 characters
+
+    5: (x.very.long.chain.of.static.members.that.goes.on.for.ever.I.mean.it.for.ever as string) =
+

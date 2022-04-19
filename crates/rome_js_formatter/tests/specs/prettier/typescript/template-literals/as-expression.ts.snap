@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: as-expression.ts
-
 ---
 # Input
 ```js
@@ -34,4 +32,8 @@ const b = `${
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   13:     veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+```
 

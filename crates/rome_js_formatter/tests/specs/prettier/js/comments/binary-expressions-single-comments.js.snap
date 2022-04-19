@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: binary-expressions-single-comments.js
-
 ---
 # Input
 ```js
@@ -53,4 +51,10 @@ a =
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    6:   b || // TODO this is a very very very very long comment that makes it go > 80 columns
+   14:   b && // TODO this is a very very very very long comment that makes it go > 80 columns
+   22:   b + // TODO this is a very very very very long comment that makes it go > 80 columns
+```
 

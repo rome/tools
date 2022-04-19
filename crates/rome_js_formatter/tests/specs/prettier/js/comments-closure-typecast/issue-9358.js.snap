@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: issue-9358.js
-
 ---
 # Input
 ```js
@@ -22,4 +20,9 @@ const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const fooooba1 = /** @type {Array.<fooo.barr.baaaaaaz>} */ fooobaarbazzItems || foo;
+    2: const fooooba2 = /** @type {Array.<fooo.barr.baaaaaaz>} */ fooobaarbazzItems + foo;
+```
 

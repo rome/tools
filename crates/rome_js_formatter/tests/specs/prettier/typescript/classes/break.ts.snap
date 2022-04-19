@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: break.ts
-
 ---
 # Input
 ```js
@@ -96,4 +94,8 @@ export class VisTimelineComponent2
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   40: export class VisTimelineComponent implements AfterViewInit, OnChanges, OnDestroy {}
+```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 153
 expression: template-literals.js
-
 ---
 # Input
 ```js
@@ -193,4 +191,10 @@ const Bar = styled.div`
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   74:   `\n  ${chalk.dim(`\u203A and ${more} more ${more} more ${more} more ${more}`)}`,
+  105:         `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState(), null, 2)};`,
+  117:     props.highlight.length > 0 ? palette(["text", "dark", "tertiary"])(props) : palette([
+```
 

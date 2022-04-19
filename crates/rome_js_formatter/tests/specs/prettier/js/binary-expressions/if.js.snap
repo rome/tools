@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: if.js
-
 ---
 # Input
 ```js
@@ -37,4 +35,9 @@ if (
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    4: if (this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft) {
+    8:   this.hasPlugin("dynamicImports") && this.lookahead().type === tt.parenLeft.right
+```
 

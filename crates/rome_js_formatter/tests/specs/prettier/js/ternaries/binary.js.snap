@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 149
 expression: binary.js
-
 ---
 # Input
 ```js
@@ -47,4 +45,8 @@ room =
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    4:   report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
+```
 

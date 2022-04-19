@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: arrow_call.js
-
 ---
 # Input
 ```js
@@ -102,4 +100,12 @@ promise.then(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   18: expect(() => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" })).toThrowError(
+   23:   () => asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
+   26: expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
+   29:   () => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
+   48:     result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
+```
 

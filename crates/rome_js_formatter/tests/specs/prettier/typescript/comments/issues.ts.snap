@@ -64,4 +64,8 @@ export type AsyncExecuteOptions =
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    5:     // Not actually from Buck - this is to let the receiver know that the socket is connected.
+```
 

@@ -183,4 +183,11 @@ error[SyntaxError]: expected a statement but instead found '}'
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   11:   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+   13: type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
+   15: type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
+   20:   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
+```
 

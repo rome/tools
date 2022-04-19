@@ -69,4 +69,8 @@ const foo = call<
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   11: const foo = call<Foooooo, Foooooo, Foooooo, Foooooo, Foooooo, Foooooo, Foooooo>();
+```
 

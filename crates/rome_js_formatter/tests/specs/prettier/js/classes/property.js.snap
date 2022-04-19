@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: property.js
-
 ---
 # Input
 ```js
@@ -49,4 +47,8 @@ class B {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   10:   someInstanceProperty = this.props.foofoofoofoofoofoo && this.props.barbarbarbar;
+```
 

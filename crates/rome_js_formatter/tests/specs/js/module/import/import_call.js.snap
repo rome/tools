@@ -22,3 +22,8 @@ import(
 	{ assert: { type: "json" } },
 );
 
+
+## Lines exceeding width of 80 characters
+
+    4: 	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: styled-components.js
-
 ---
 # Input
 ```js
@@ -34,4 +32,8 @@ top: ${(p) => p.overlap === "next" && 0};
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    2: /** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
+```
 

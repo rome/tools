@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: expressions.ts
-
 ---
 # Input
 ```js
@@ -15,4 +13,8 @@ const bar = tag<number>`but where will prettier wrap such a long tagged template
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const bar = tag<number>`but where will prettier wrap such a long tagged template literal? ${foo.bar.baz} long long long long long long long long long long long long long long`;
+```
 

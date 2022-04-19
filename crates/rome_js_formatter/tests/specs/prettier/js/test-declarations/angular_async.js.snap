@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: angular_async.js
-
 ---
 # Input
 ```js
@@ -86,4 +84,8 @@ function x() {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   25:   "does something really long and complicated so I have to write a very long name for the test",
+```
 

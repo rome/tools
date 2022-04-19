@@ -82,4 +82,8 @@ expression: escaped.js
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   25: // Commented out to avoid `SyntaxError: Octal literals are not allowed in strict mode.`
+```
 
