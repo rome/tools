@@ -926,7 +926,6 @@ JsAnyArrayAssignmentPatternElement =
 	| JsAnyAssignmentPattern
 	| JsArrayAssignmentPatternRestElement
 	| JsArrayHole
-	| JsUnknownAssignment
 
 // [a, b, ...rest] = [];
 //        ^^^^^^^

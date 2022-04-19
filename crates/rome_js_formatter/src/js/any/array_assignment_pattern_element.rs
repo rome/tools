@@ -9,7 +9,6 @@ impl ToFormatElement for JsAnyArrayAssignmentPatternElement {
             Self::JsAnyAssignmentPattern(node) => node.to_format_element(formatter),
             Self::JsArrayAssignmentPatternRestElement(node) => node.to_format_element(formatter),
             Self::JsArrayHole(node) => node.to_format_element(formatter),
-            Self::JsUnknownAssignment(node) => node.to_format_element(formatter),
         }
     }
 }

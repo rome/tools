@@ -3,11 +3,7 @@
 name: Deploy Playground
 
 on:
-  workflow_dispatch:
   pull_request:
-    paths:
-      - "crates/*"
-      - "website/playground/*"
     branches:
       - main
 
@@ -34,7 +30,14 @@ jobs:
           version: 6
           run_install: |
             args: [--prefix website/playground]
-      - run: pnpm build --prefix website/playground -- --base=/$GITHUB_SHA/
+
+      # We use the short SHA for shorter, simpler links
+      - name: Set GitHub SHA
+        id: sha
+        run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
+
+      - run: BASE_URL="/${{ steps.sha.outputs.sha }}/" pnpm --prefix website/playground build
+
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
         env:
@@ -42,13 +45,13 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: 'website/playground/dist' # optional: defaults to entire repository
-          DEST_DIR: $GITHUB_SHA
+          DEST_DIR: ${{ steps.sha.outputs.sha }}
 
       - name: Set Playground URL
-        if: github.event_name == "pull_request"
+        if: github.event_name == 'pull_request'
         id: url
         run: |
-          url="[Playground for commit](https://play.rome.tools/${{ GITHUB_SHA }}/)"
+          url="[Playground for commit ${{ steps.sha.outputs.sha }}](https://play.rome.tools/${{ steps.sha.outputs.sha }}/)"
           echo "::set-output name=url::$url"
 
       - name: Get the PR number
@@ -62,7 +65,7 @@ jobs:
         id: previous-comment
         with:
           issue-number: ${{ steps.pr-number.outputs.pr }}
-          body-includes: Playground link
+          body-includes: Playground for commit
 
       - name: Update existing comment
         if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
