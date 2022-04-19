@@ -3,6 +3,10 @@ mod binary_like_expression;
 mod call_expression;
 mod format_conditional;
 mod simple;
+pub mod string_utils;
+
+#[cfg(test)]
+mod quickcheck_utils;
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
@@ -21,6 +25,7 @@ use rome_js_syntax::{
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 use std::borrow::Cow;
+use string_utils::ToAsciiLowercaseCow;
 
 pub(crate) use simple::*;
 
@@ -630,4 +635,18 @@ pub(crate) fn format_string_literal_token(
         Token::from_syntax_token_cow_slice(content, &token, token.text_trimmed_range().start())
             .into(),
     )
+}
+
+pub(crate) fn format_big_int_literal_token(
+    token: JsSyntaxToken,
+    formatter: &Formatter,
+) -> FormatElement {
+    let original = token.text_trimmed();
+    match original.to_ascii_lowercase_cow() {
+        Cow::Borrowed(_) => token.format(formatter).unwrap(),
+        Cow::Owned(lowercase) => formatter.format_replaced(
+            &token,
+            rome_formatter::Token::new_dynamic(lowercase, token.text_trimmed_range()).into(),
+        ),
+    }
 }
