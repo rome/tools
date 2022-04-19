@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: issue-10850.ts
-
 ---
 # Input
 ```js
@@ -31,4 +29,10 @@ const map: Map<Function, Foo<S>> = new Map();
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const map: Map<Function, Map<string | void, { value: UnloadedDescriptor }>> = new Map();
+    3: const map: Map<Function, Condition extends Foo ? FooFooFoo : BarBarBar> = new Map();
+    5: const map: Map<Function, FunctionFunctionFunctionFunctionffFunction> = new Map();
+```
 

@@ -347,4 +347,24 @@ var f12: (x: number) => any = (x) => {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    3: // FunctionExpression with no return type annotation and no return statement returns void
+    6: // FunctionExpression f with no return type annotation and directly references f in its body returns any
+   14: // FunctionExpression f with no return type annotation and indirectly references f in its body returns any
+   20: // Two mutually recursive function implementations with no return type annotations
+   30: // Two mutually recursive function implementations with return type annotation in one
+   58: // FunctionExpression with no return type annotation and returns a type parameter type
+   63: // FunctionExpression with no return type annotation and returns a constrained type parameter type
+   68: // FunctionExpression with no return type annotation with multiple return statements with identical types
+   74: // Otherwise, the inferred return type is the first of the types of the return statement expressions
+   77: // A compile - time error occurs if no return statement expression has a type that is a supertype of each of the others.
+   78: // FunctionExpression with no return type annotation with multiple return statements with subtype relation between returns
+   91: // FunctionExpression with no return type annotation with multiple return statements with one a recursive call
+   98: // FunctionExpression with non -void return type annotation with a single throw statement
+  109: // Function signature with optional parameter, no type annotation and initializer has initializer's type
+  115: // Function signature with optional parameter, no type annotation and initializer has initializer's widened type
+  130: // FunctionExpression with non -void return type annotation return with no expression
+  141: // if f is a contextually typed function expression, the inferred return type is the union type
+```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
 expression: test_declarations.js
-
 ---
 # Input
 ```js
@@ -371,4 +369,38 @@ it(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    4:   "does something really long and complicated so I have to write a very long name for the test",
+   11:   "does something really long and complicated so I have to write a very long name for the test",
+   18:   "does something really long and complicated so I have to write a very long name for the test",
+   25:   "does something really long and complicated so I have to write a very long name for the test",
+   32:   `does something really long and complicated so I have to write a very long name for the test`,
+   39:   `{foo + bar} does something really long and complicated so I have to write a very long name for the test`,
+   49:   does something really long and complicated so I have to write a very long name for the test`,
+   56:   "does something really long and complicated so I have to write a very long name for the test",
+   63:   `does something really long and complicated so I have to write a very long name for the test`,
+   70:   "does something really long and complicated so I have to write a very long name for the describe block",
+   82:   `does something really long and complicated so I have to write a very long name for the describe block`,
+   94:   "does something really long and complicated so I have to write a very long name for the describe block",
+   99:   "does something really long and complicated so I have to write a very long name for the describe block",
+  104:   `does something really long and complicated so I have to write a very long name for the test`,
+  109:   `does something really long and complicated so I have to write a very long name for the test`,
+  114:   "does something really long and complicated so I have to write a very long name for the describe block",
+  119:   "does something really long and complicated so I have to write a very long name for the describe block",
+  124:   "does something really long and complicated so I have to write a very long name for the test",
+  131:   `does something really long and complicated so I have to write a very long name for the test`,
+  138:   `does something really long and complicated so I have to write a very long name for the test`,
+  143:   `does something really long and complicated so I have to write a very long name for the test`,
+  148:   `does something really long and complicated so I have to write a very long name for the test`,
+  153:   "does something really long and complicated so I have to write a very long name for the describe block",
+  158:   "does something really long and complicated so I have to write a very long name for the describe block",
+  163:   `does something really long and complicated so I have to write a very long name for the test`,
+  168:   "does something really long and complicated so I have to write a very long name for the test",
+  175:   "does something really long and complicated so I have to write a very long name for the test",
+  183:   "does something really long and complicated so I have to write a very long name for the test",
+  190:   "does something really long and complicated so I have to write a very long name for the test",
+  197:   "does something really long and complicated so I have to write a very long name for the test",
+  207:   does something really long and complicated so I have to write a very long name for the test`,
+```
 

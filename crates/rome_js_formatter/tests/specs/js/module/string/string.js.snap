@@ -107,6 +107,11 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" asse
 	"type": "json",
 	"type2": "json3",
 };
+
+
+## Lines exceeding width of 80 characters
+
+   48: export * as something_bad_will_happen from "something_bad_might_not_happen" assert {
 ## Output 2
 -----
 Indent style: Tab
@@ -164,4 +169,9 @@ export * as something_bad_will_happen from 'something_bad_might_not_happen' asse
 	'type': 'json',
 	'type2': 'json3',
 };
+
+
+## Lines exceeding width of 80 characters
+
+   48: export * as something_bad_will_happen from 'something_bad_might_not_happen' assert {
 

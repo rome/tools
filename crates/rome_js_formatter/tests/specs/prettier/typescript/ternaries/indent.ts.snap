@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: indent.ts
-
 ---
 # Input
 ```js
@@ -112,4 +110,16 @@ foo =
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    3:     callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
+    8:     callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
+   13:     glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+   20:     callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
+   25:     callNode.parent?.type === AST_NODE_TYPES.ChainExpression ? callNode.parent.parent : callNode.parent
+   30:     glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+   37:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+   42:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+   47:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+```
 

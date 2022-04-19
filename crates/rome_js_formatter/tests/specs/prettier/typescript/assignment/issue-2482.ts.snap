@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: issue-2482.ts
-
 ---
 # Input
 ```js
@@ -23,4 +21,8 @@ export function countriesReceived(countries: Array<Country>): CountryActionType 
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: export function countriesReceived(countries: Array<Country>): CountryActionType {
+```
 

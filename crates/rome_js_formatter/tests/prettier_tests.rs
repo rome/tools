@@ -146,6 +146,28 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         writeln!(snapshot).unwrap();
     }
 
+    let max_width = options.line_width.value() as usize;
+    let mut lines_exceeding_max_width = formatted
+        .lines()
+        .enumerate()
+        .filter(|(_, line)| line.len() > max_width)
+        .peekable();
+
+    if lines_exceeding_max_width.peek().is_some() {
+        writeln!(
+            snapshot,
+            "# Lines exceeding max width of {max_width} characters"
+        )
+        .unwrap();
+        writeln!(snapshot, "```").unwrap();
+
+        for (index, line) in lines_exceeding_max_width {
+            let line_number = index + 1;
+            writeln!(snapshot, "{line_number:>5}: {line}").unwrap();
+        }
+        writeln!(snapshot, "```").unwrap();
+    }
+
     insta::with_settings!({
         prepend_module_to_snapshot => false,
         snapshot_path => input_file.parent().unwrap(),

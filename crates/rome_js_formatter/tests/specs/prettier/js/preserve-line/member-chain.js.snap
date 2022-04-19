@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: member-chain.js
-
 ---
 # Input
 ```js
@@ -114,4 +112,8 @@ const sel = this.connections.concat(this.activities.concat(this.operators)).filt
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   39: const sel = this.connections.concat(this.activities.concat(this.operators)).filter(
+```
 

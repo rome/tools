@@ -51,3 +51,10 @@ import "very_long_import_very_long_import_very" assert {
 	"typetypetypetypetypetypetypetypetypetypetype": "typetypetypetypetypetypetypetypetypetypetypetypetypetype", /****/
 };
 
+
+## Lines exceeding width of 80 characters
+
+    1: import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
+    2: import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert {
+   18: 	"typetypetypetypetypetypetypetypetypetypetype": "typetypetypetypetypetypetypetypetypetypetypetypetypetype", /****/
+

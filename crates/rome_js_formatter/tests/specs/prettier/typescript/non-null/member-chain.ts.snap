@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: member-chain.ts
-
 ---
 # Input
 ```js
@@ -28,4 +26,9 @@ foo!.bar().baz().what();
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const { somePropThatHasAReallyLongName, anotherPropThatHasALongName } = this.props.imReallySureAboutThis!;
+    3: const { somePropThatHasAReallyLongName2, anotherPropThatHasALongName2 } = this.props.imReallySureAboutThis!.anotherObject;
+```
 

@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: issue-10218.js
-
 ---
 # Input
 ```js
@@ -24,4 +22,10 @@ const { _id: id3 } = data.createTestMessageWithAReallyLongName.someVeryLongPrope
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const _id1 = data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty._id;
+    3: const { _id2 } = data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty;
+    5: const { _id: id3 } = data.createTestMessageWithAReallyLongName.someVeryLongProperty.thisIsAlsoALongProperty;
+```
 

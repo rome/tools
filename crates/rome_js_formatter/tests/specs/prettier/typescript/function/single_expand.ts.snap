@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
 expression: single_expand.ts
-
 ---
 # Input
 ```js
@@ -34,4 +32,8 @@ class X {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: function onDidInsertSuggestion({ editor, triggerPosition, re }): Promise<void> {}
+```
 

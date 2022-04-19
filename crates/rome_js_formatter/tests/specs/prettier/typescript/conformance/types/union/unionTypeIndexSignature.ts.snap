@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
 expression: unionTypeIndexSignature.ts
-
 ---
 # Input
 ```js
@@ -62,4 +60,11 @@ anyVar = unionOfTypesWithAndWithoutStringSignature1[10]; // any
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    5: // U has a string index signature of a union type of the types of the string index signatures from each type in U.
+   11: var unionOfTypesWithAndWithoutStringSignature: { [a: string]: number } | boolean;
+   16: // U has a numeric index signature of a union type of the types of the numeric index signatures from each type in U.
+   17: var unionOfDifferentReturnType1: { [a: number]: number } | { [a: number]: Date };
+```
 

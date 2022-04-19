@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 223
 expression: attributes.jsx
-
 ---
 # Input
 
@@ -96,4 +94,10 @@ let a = <test
 		"WithAVeryLongValuethat exceeds the line width, what happens with ithis"
 	}
 />;
+
+
+## Lines exceeding width of 80 characters
+
+    9: 		fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   31: 		fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
 

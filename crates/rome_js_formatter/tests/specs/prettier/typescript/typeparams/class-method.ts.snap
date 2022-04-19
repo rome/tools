@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
 expression: class-method.ts
-
 ---
 # Input
 ```js
@@ -290,4 +288,9 @@ const appIDs = createSelector(
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   57:       <Provider<Opts>>type.doSomething(withArgs, soIt, does, not, fit).extraCall(),
+  147:       return <Provider<Opts>>type.doSomething(withArgs, soIt, does, not, fit).extraCall();
+```
 

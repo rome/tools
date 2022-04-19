@@ -25,3 +25,8 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" asse
 	"type2": "json3",
 };
 
+
+## Lines exceeding width of 80 characters
+
+    5: export * as something_bad_will_happen from "something_bad_might_not_happen" assert {
+

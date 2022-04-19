@@ -127,4 +127,8 @@ const Query: FunctionComponent<QueryProps> = (
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    6: const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({ x, y }) => {
+```
 

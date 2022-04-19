@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: destructuring.js
-
 ---
 # Input
 ```js
@@ -108,4 +106,8 @@ class A {
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    9:   organisation: { address: { street: orgStreetAddress, postcode: orgPostcode } },
+```
 

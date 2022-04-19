@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
 expression: bracket_0-1.js
-
 ---
 # Input
 ```js
@@ -17,4 +15,8 @@ const thingamabobMetaAlias = path.scope.getProgramParent().path.get("body")[0].n
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const thingamabobMetaAlias = path.scope.getProgramParent().path.get("body")[0].node;
+```
 

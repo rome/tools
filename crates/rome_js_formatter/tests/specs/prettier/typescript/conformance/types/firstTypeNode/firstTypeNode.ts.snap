@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
 expression: firstTypeNode.ts
-
 ---
 # Input
 ```js
@@ -38,4 +36,9 @@ export function fooWithTypeTypePredicateAndRestParam(a: any, ...rest): a is numb
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    4: export function fooWithTypePredicateAndMulitpleParams(a: any, b: any, c: any): a is number {
+   10: export function fooWithTypeTypePredicateAndRestParam(a: any, ...rest): a is number {
+```
 
