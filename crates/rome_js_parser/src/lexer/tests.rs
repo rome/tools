@@ -1047,6 +1047,15 @@ fn unicode_ident_separated_by_unicode_whitespace() {
 }
 
 #[test]
+fn err_on_unterminated_unicode() {
+    assert_lex! {
+        "+\\u{A",
+        PLUS:1
+        ERROR_TOKEN:4
+    }
+}
+
+#[test]
 fn issue_30() {
     assert_lex! {
         "let foo = { α: true }",
