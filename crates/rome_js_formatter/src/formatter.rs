@@ -428,12 +428,9 @@ impl Formatter {
         let skipped_trivia_range = skipped_trivia_range.expect("Only call this method for leading trivia containing at least one skipped token trivia.");
 
         // Format the skipped token trivia range
-        // Compute the offsets relative to the tokens text
-        let relative_skipped_range = skipped_trivia_range - token.text_range().start();
-        let text = &token.text()[relative_skipped_range];
-        elements.push(FormatElement::from(Token::new_dynamic(
-            text.to_string(),
-            skipped_trivia_range.start(),
+        elements.push(FormatElement::from(Token::new_syntax_token_slice(
+            token,
+            skipped_trivia_range,
         )));
 
         // `print_trailing_trivia_pieces` and `format_leading_trivia_pieces` remove any whitespace except
@@ -647,8 +644,9 @@ impl Formatter {
         }
 
         fn trivia_token<L: Language>(piece: SyntaxTriviaPiece<L>) -> Token {
-            Token::new_dynamic(
-                normalize_newlines(piece.text(), LINE_TERMINATORS).into_owned(),
+            Token::from_syntax_token_cow_slice(
+                normalize_newlines(piece.text(), LINE_TERMINATORS),
+                &piece.token(),
                 piece.text_range().start(),
             )
         }

@@ -14,7 +14,7 @@ pub mod cursor;
 mod green;
 
 pub mod syntax;
-mod syntax_text;
+mod syntax_node_text;
 mod utility_types;
 
 #[allow(unsafe_code)]
@@ -27,6 +27,7 @@ mod serde_impls;
 #[allow(unsafe_code)]
 mod sll;
 mod syntax_factory;
+mod syntax_token_text;
 mod tree_builder;
 
 pub use text_size::{TextLen, TextRange, TextSize};
@@ -40,7 +41,8 @@ pub use crate::{
         TriviaPieceKind,
     },
     syntax_factory::*,
-    syntax_text::SyntaxText,
+    syntax_node_text::SyntaxNodeText,
+    syntax_token_text::SyntaxTokenText,
     tree_builder::{Checkpoint, TreeBuilder},
     utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };

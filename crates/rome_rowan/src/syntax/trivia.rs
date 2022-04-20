@@ -1,4 +1,4 @@
-use crate::{cursor, Language};
+use crate::{cursor, Language, SyntaxToken};
 use std::fmt;
 use std::marker::PhantomData;
 use text_size::{TextRange, TextSize};
@@ -104,6 +104,16 @@ impl<L: Language> SyntaxTriviaPieceNewline<L> {
     pub fn text_range(&self) -> TextRange {
         self.0.text_range()
     }
+
+    /// Returns a reference to its [SyntaxTriviaPiece]
+    pub fn as_piece(&self) -> &SyntaxTriviaPiece<L> {
+        &self.0
+    }
+
+    /// Returns its [SyntaxTriviaPiece]
+    pub fn into_piece(self) -> SyntaxTriviaPiece<L> {
+        self.0
+    }
 }
 
 impl<L: Language> SyntaxTriviaPieceWhitespace<L> {
@@ -117,6 +127,16 @@ impl<L: Language> SyntaxTriviaPieceWhitespace<L> {
 
     pub fn text_range(&self) -> TextRange {
         self.0.text_range()
+    }
+
+    /// Returns a reference to its [SyntaxTriviaPiece]
+    pub fn as_piece(&self) -> &SyntaxTriviaPiece<L> {
+        &self.0
+    }
+
+    /// Returns its [SyntaxTriviaPiece]
+    pub fn into_piece(self) -> SyntaxTriviaPiece<L> {
+        self.0
     }
 }
 
@@ -136,6 +156,16 @@ impl<L: Language> SyntaxTriviaPieceComments<L> {
     pub fn has_newline(&self) -> bool {
         self.0.trivia.kind.is_multiline_comment()
     }
+
+    /// Returns a reference to its [SyntaxTriviaPiece]
+    pub fn as_piece(&self) -> &SyntaxTriviaPiece<L> {
+        &self.0
+    }
+
+    /// Returns its [SyntaxTriviaPiece]
+    pub fn into_piece(self) -> SyntaxTriviaPiece<L> {
+        self.0
+    }
 }
 
 impl<L: Language> SyntaxTriviaPieceSkipped<L> {
@@ -149,6 +179,16 @@ impl<L: Language> SyntaxTriviaPieceSkipped<L> {
 
     pub fn text_range(&self) -> TextRange {
         self.0.text_range()
+    }
+
+    /// Returns a reference to its [SyntaxTriviaPiece]
+    pub fn as_piece(&self) -> &SyntaxTriviaPiece<L> {
+        &self.0
+    }
+
+    /// Returns its [SyntaxTriviaPiece]
+    pub fn into_piece(self) -> SyntaxTriviaPiece<L> {
+        self.0
     }
 }
 
@@ -417,6 +457,10 @@ impl<L: Language> SyntaxTriviaPiece<L> {
             TriviaPieceKind::Skipped => Some(SyntaxTriviaPieceSkipped(self.clone())),
             _ => None,
         }
+    }
+
+    pub fn token(&self) -> SyntaxToken<L> {
+        SyntaxToken::from(self.raw.token().clone())
     }
 }
 

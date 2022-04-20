@@ -6,19 +6,19 @@ use crate::{
 };
 
 #[derive(Clone)]
-pub struct SyntaxText {
+pub struct SyntaxNodeText {
     node: SyntaxNode,
     range: TextRange,
 }
 
-impl SyntaxText {
-    pub(crate) fn new(node: SyntaxNode) -> SyntaxText {
+impl SyntaxNodeText {
+    pub(crate) fn new(node: SyntaxNode) -> SyntaxNodeText {
         let range = node.text_range();
-        SyntaxText { node, range }
+        SyntaxNodeText { node, range }
     }
 
-    pub(crate) fn with_range(node: SyntaxNode, range: TextRange) -> SyntaxText {
-        SyntaxText { node, range }
+    pub(crate) fn with_range(node: SyntaxNode, range: TextRange) -> SyntaxNodeText {
+        SyntaxNodeText { node, range }
     }
 
     pub fn len(&self) -> TextSize {
@@ -61,7 +61,7 @@ impl SyntaxText {
         found(res)
     }
 
-    pub fn slice<R: private::SyntaxTextRange>(&self, range: R) -> SyntaxText {
+    pub fn slice<R: private::SyntaxTextRange>(&self, range: R) -> SyntaxNodeText {
         let start = range.start().unwrap_or_default();
         let end = range.end().unwrap_or_else(|| self.len());
         assert!(start <= end);
@@ -81,7 +81,7 @@ impl SyntaxText {
             self.range,
             range,
         );
-        SyntaxText {
+        SyntaxNodeText {
             node: self.node.clone(),
             range,
         }
@@ -135,25 +135,25 @@ fn found<T>(res: Result<(), T>) -> Option<T> {
     }
 }
 
-impl fmt::Debug for SyntaxText {
+impl fmt::Debug for SyntaxNodeText {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         fmt::Debug::fmt(&self.to_string(), f)
     }
 }
 
-impl fmt::Display for SyntaxText {
+impl fmt::Display for SyntaxNodeText {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         self.try_for_each_chunk(|chunk| fmt::Display::fmt(chunk, f))
     }
 }
 
-impl From<SyntaxText> for String {
-    fn from(text: SyntaxText) -> String {
+impl From<SyntaxNodeText> for String {
+    fn from(text: SyntaxNodeText) -> String {
         text.to_string()
     }
 }
 
-impl PartialEq<str> for SyntaxText {
+impl PartialEq<str> for SyntaxNodeText {
     fn eq(&self, mut rhs: &str) -> bool {
         self.try_for_each_chunk(|chunk| {
             if !rhs.starts_with(chunk) {
@@ -167,26 +167,26 @@ impl PartialEq<str> for SyntaxText {
     }
 }
 
-impl PartialEq<SyntaxText> for str {
-    fn eq(&self, rhs: &SyntaxText) -> bool {
+impl PartialEq<SyntaxNodeText> for str {
+    fn eq(&self, rhs: &SyntaxNodeText) -> bool {
         rhs == self
     }
 }
 
-impl PartialEq<&'_ str> for SyntaxText {
+impl PartialEq<&'_ str> for SyntaxNodeText {
     fn eq(&self, rhs: &&str) -> bool {
         self == *rhs
     }
 }
 
-impl PartialEq<SyntaxText> for &'_ str {
-    fn eq(&self, rhs: &SyntaxText) -> bool {
+impl PartialEq<SyntaxNodeText> for &'_ str {
+    fn eq(&self, rhs: &SyntaxNodeText) -> bool {
         rhs == self
     }
 }
 
-impl PartialEq for SyntaxText {
-    fn eq(&self, other: &SyntaxText) -> bool {
+impl PartialEq for SyntaxNodeText {
+    fn eq(&self, other: &SyntaxNodeText) -> bool {
         if self.range.len() != other.range.len() {
             return false;
         }
@@ -219,7 +219,7 @@ fn zip_texts<I: Iterator<Item = (SyntaxToken, TextRange)>>(xs: &mut I, ys: &mut 
     }
 }
 
-impl Eq for SyntaxText {}
+impl Eq for SyntaxNodeText {}
 
 mod private {
     use std::ops;

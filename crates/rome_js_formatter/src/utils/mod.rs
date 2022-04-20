@@ -388,8 +388,9 @@ pub(crate) fn format_template_chunk(
     // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
     Ok(formatter.format_replaced(
         &chunk,
-        FormatElement::from(Token::new_dynamic(
-            normalize_newlines(chunk.text_trimmed(), ['\r']).into_owned(),
+        FormatElement::from(Token::from_syntax_token_cow_slice(
+            normalize_newlines(chunk.text_trimmed(), ['\r']),
+            &chunk,
             chunk.text_trimmed_range().start(),
         )),
     ))
@@ -619,16 +620,14 @@ pub(crate) fn format_string_literal_token(
         if quoted.starts_with(secondary_quote_char) && !quoted.contains(primary_quote_char) {
             let s = &quoted[1..quoted.len() - 1];
             let s = format!("{}{}{}", primary_quote_char, s, primary_quote_char);
-            match normalize_newlines(&s, ['\r']) {
-                Cow::Borrowed(_) => s,
-                Cow::Owned(s) => s,
-            }
+            Cow::Owned(normalize_newlines(&s, ['\r']).into_owned())
         } else {
-            normalize_newlines(quoted, ['\r']).into_owned()
+            normalize_newlines(quoted, ['\r'])
         };
 
     formatter.format_replaced(
         &token,
-        Token::new_dynamic(content, token.text_trimmed_range().start()).into(),
+        Token::from_syntax_token_cow_slice(content, &token, token.text_trimmed_range().start())
+            .into(),
     )
 }
