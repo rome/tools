@@ -31,8 +31,8 @@ impl quickcheck::Arbitrary for AsciiString {
             if chr.is_ascii() {
                 ascii.push(chr);
             } else {
-                const WIDTH: u8 = '~' as u8 - ' ' as u8;
-                let chr = (' ' as u8) + (u8::arbitrary(g) % WIDTH);
+                const WIDTH: u8 = b'~' - b' ';
+                let chr = b' ' + (u8::arbitrary(g) % WIDTH);
                 ascii.push(chr as char);
             }
         }

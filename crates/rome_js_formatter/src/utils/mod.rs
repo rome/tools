@@ -25,7 +25,6 @@ use rome_js_syntax::{
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 use std::borrow::Cow;
-use string_utils::ToAsciiLowercaseCow;
 
 pub(crate) use simple::*;
 
@@ -636,4 +635,3 @@ pub(crate) fn format_string_literal_token(
             .into(),
     )
 }
-
