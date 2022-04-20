@@ -41,7 +41,7 @@ JsonUnknown = SyntaxElement*
 
 JsonRoot = JsonValue
 
-JsonValue =  JsonString | JsonBoolean | JsonNull | JsonNumber | JsonArray | JsonObject
+JsonValue =  JsonString | JsonBoolean | JsonNull | JsonNumber | JsonArray | JsonObject | JsonUnknown
 
 JsonObject = '{' JsonMemberList? '}'
 

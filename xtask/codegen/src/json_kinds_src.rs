@@ -14,7 +14,7 @@ pub const JSON_KINDS_SRC: KindsSrc = KindsSrc {
     keywords: &["null", "true", "false"],
     literals: &["JSON_STRING_LITERAL", "JSON_NUMBER_LITERAL"],
     // keep comment token for json 5 extension
-    tokens: &["ERROR_TOKEN", "NEWLINE", "WHITESPACE", "COMMENT"],
+    tokens: &["ERROR_TOKEN", "NEWLINE", "WHITESPACE"],
     nodes: &[
         "JSON_ROOT",
         "JSON_VALUE",

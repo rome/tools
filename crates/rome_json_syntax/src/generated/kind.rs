@@ -26,7 +26,6 @@ pub enum JsonSyntaxKind {
     ERROR_TOKEN,
     NEWLINE,
     WHITESPACE,
-    COMMENT,
     JSON_ROOT,
     JSON_VALUE,
     JSON_NUMBER,

@@ -25,13 +25,9 @@ impl From<JsonSyntaxKind> for u16 {
 
 impl JsonSyntaxKind {
     pub fn is_trivia(self) -> bool {
-        matches!(
-            self,
-            JsonSyntaxKind::NEWLINE | JsonSyntaxKind::WHITESPACE | JsonSyntaxKind::COMMENT
-        )
+        matches!(self, JsonSyntaxKind::NEWLINE | JsonSyntaxKind::WHITESPACE)
     }
 
-    /// Returns `true` for any contextual (await) or non-contextual keyword
     #[inline]
     pub const fn is_keyword(self) -> bool {
         matches!(self, T![null] | T![true] | T![false])
@@ -44,10 +40,7 @@ impl rome_rowan::SyntaxKind for JsonSyntaxKind {
     }
 
     fn to_unknown(&self) -> Self {
-        match self {
-            JsonSyntaxKind::JSON_UNKNOWN => JsonSyntaxKind::JSON_UNKNOWN,
-            _ => unreachable!(),
-        }
+        JsonSyntaxKind::JSON_UNKNOWN
     }
 
     #[inline]
@@ -69,7 +62,6 @@ impl TryFrom<JsonSyntaxKind> for TriviaPieceKind {
             match value {
                 JsonSyntaxKind::NEWLINE => Ok(TriviaPieceKind::Newline),
                 JsonSyntaxKind::WHITESPACE => Ok(TriviaPieceKind::Whitespace),
-                JsonSyntaxKind::COMMENT => Ok(TriviaPieceKind::SingleLineComment),
                 _ => unreachable!("Not Trivia"),
             }
         } else {
