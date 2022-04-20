@@ -679,10 +679,11 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             #syntax_kind::{self as SyntaxKind, *},
             #syntax_list as SyntaxList, #syntax_node as SyntaxNode, #syntax_token as SyntaxToken,
         };
+        #[allow(unused)]
         use rome_rowan::{
-            support, AstNode, AstNodeList, AstNodeListIterator, AstSeparatedList,
-            AstSeparatedListNodesIterator, SyntaxResult,
+            AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator
         };
+        use rome_rowan::{support, AstNode, SyntaxResult};
         use std::fmt::{Debug, Formatter};
 
         #(#node_defs)*
