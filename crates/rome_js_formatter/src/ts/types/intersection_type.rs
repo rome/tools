@@ -21,7 +21,7 @@ impl ToFormatElement for TsIntersectionType {
                 // if_group_breaks block to avoid removing comments when the
                 // group does not break
                 let replaced =
-                    if_group_breaks(format_elements![Token::from(token.clone()), space_token()]);
+                    if_group_breaks(format_elements![Token::from(&token), space_token()]);
                 formatter.format_replaced(&token, replaced)
             }
             None => if_group_breaks(format_elements![token("&"), space_token()]),

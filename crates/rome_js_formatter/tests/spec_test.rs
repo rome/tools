@@ -88,13 +88,12 @@ impl SnapshotContent {
     fn add_output(&mut self, formatted: Formatted, options: FormatOptions) {
         let code = formatted.as_code();
         let mut output: String = code.to_string();
-        if !formatted.verbatim().is_empty() {
+        if !formatted.verbatim_ranges().is_empty() {
             output.push_str("\n\n");
             output.push_str("## Unimplemented nodes/tokens");
             output.push_str("\n\n");
-            for (text, range) in formatted.verbatim() {
-                let string = format!("{:?} => {:?}\n", text, range);
-                output.push_str(string.as_str());
+            for (range, text) in formatted.verbatim() {
+                output.push_str(&format!("{:?} => {:?}\n", text, range));
             }
         }
 

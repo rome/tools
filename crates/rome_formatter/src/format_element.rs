@@ -1,6 +1,6 @@
-use crate::format_elements;
 use crate::intersperse::{Intersperse, IntersperseFn};
-use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments, TextRange};
+use crate::{format_elements, TextSize};
+use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
@@ -823,46 +823,29 @@ where
     L: Language,
 {
     /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
-    fn get_lines_between_nodes<L: Language>(
-        prev_node: &SyntaxNode<L>,
-        next_node: &SyntaxNode<L>,
-    ) -> usize {
-        // Ensure the two nodes are actually siblings on debug
-        debug_assert_eq!(prev_node.next_sibling().as_ref(), Some(next_node));
-        debug_assert_eq!(next_node.prev_sibling().as_ref(), Some(prev_node));
-
-        // Count the lines separating the two statements,
-        // starting with the trailing trivia of the previous node
-        let mut line_count = prev_node
-            .last_trailing_trivia()
-            .and_then(|prev_token| {
-                // Newline pieces can only come last in trailing trivias, skip to it directly
-                prev_token.pieces().next_back()?.as_newline()
-            })
-            .is_some() as usize;
-
-        // Then add the newlines in the leading trivia of the next node
+    fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
+        // Count the newlines in the leading trivia of the next node
         if let Some(leading_trivia) = next_node.first_leading_trivia() {
-            for piece in leading_trivia.pieces() {
-                if piece.is_newline() {
-                    line_count += 1;
-                } else if piece.is_comments() {
+            leading_trivia
+                .pieces()
+                .take_while(|piece| {
                     // Stop at the first comment piece, the comment printer
                     // will handle newlines between the comment and the node
-                    break;
-                }
-            }
+                    !piece.is_comments()
+                })
+                .filter(|piece| piece.is_newline())
+                .count()
+        } else {
+            0
         }
-
-        line_count
     }
 
     concat_elements(IntersperseFn::new(
         elements.into_iter(),
-        |prev_node, next_node, next_elem| {
+        |_, next_node, next_elem| {
             if next_elem.is_empty() {
                 empty_element()
-            } else if get_lines_between_nodes(prev_node, next_node) > 1 {
+            } else if get_lines_before(next_node) > 1 {
                 empty_line()
             } else {
                 separator()
@@ -928,10 +911,8 @@ pub enum VerbatimKind {
     Unknown,
     Suppressed,
     Verbatim {
-        /// the range that belongs to the node/token formatted verbatim
-        range: TextRange,
-        /// the text that belongs to the node/token formatted verbatim
-        text: String,
+        /// the length of the formatted node
+        length: TextSize,
     },
 }
 
@@ -945,10 +926,10 @@ pub struct Verbatim {
 }
 
 impl Verbatim {
-    pub fn new_verbatim(element: FormatElement, text: String, range: TextRange) -> Self {
+    pub fn new_verbatim(element: FormatElement, length: TextSize) -> Self {
         Self {
             element: Box::new(element),
-            kind: VerbatimKind::Verbatim { range, text },
+            kind: VerbatimKind::Verbatim { length },
         }
     }
 
@@ -1139,7 +1120,12 @@ pub enum Token {
     Static { text: &'static str },
     /// Token constructed from the input source as a dynamics
     /// string and a range of the input source
-    Dynamic { text: String, source: TextRange },
+    Dynamic {
+        // There's no need for the text to be mutable, using `Box<str>` safes 8 bytes over `String`.
+        text: Box<str>,
+        // The position of the dynamic token in the unformatted source code
+        source_position: TextSize,
+    },
 }
 
 impl Debug for Token {
@@ -1147,8 +1133,8 @@ impl Debug for Token {
         // This does not use debug_tuple so the tokens are
         // written on a single line even when pretty-printing
         match self {
-            Token::Static { text } => write!(fmt, "Token({:?})", text),
-            Token::Dynamic { text, source } => write!(fmt, "Token({:?}, {:?})", text, source),
+            Token::Static { text } => write!(fmt, "StaticToken({:?})", text),
+            Token::Dynamic { text, .. } => write!(fmt, "DynamicToken({:?})", text),
         }
     }
 }
@@ -1160,17 +1146,22 @@ impl Token {
     }
 
     /// Create a token from a dynamic string and a range of the input source
-    pub fn new_dynamic(text: String, source: TextRange) -> Self {
+    pub fn new_dynamic(text: String, position: TextSize) -> Self {
         debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
-        Self::Dynamic { text, source }
+        Self::Dynamic {
+            text: text.into_boxed_str(),
+            source_position: position,
+        }
     }
 
     /// Get the range of the input source covered by this token,
     /// or None if the token was synthesized by the formatter
-    pub fn source(&self) -> Option<&TextRange> {
+    pub fn source(&self) -> Option<&TextSize> {
         match self {
             Token::Static { .. } => None,
-            Token::Dynamic { source, .. } => Some(source),
+            Token::Dynamic {
+                source_position, ..
+            } => Some(source_position),
         }
     }
 }
@@ -1190,7 +1181,10 @@ impl<L: Language> From<SyntaxToken<L>> for Token {
 
 impl<'a, L: Language> From<&'a SyntaxToken<L>> for Token {
     fn from(token: &'a SyntaxToken<L>) -> Self {
-        Self::new_dynamic(token.text_trimmed().into(), token.text_trimmed_range())
+        Self::new_dynamic(
+            token.text_trimmed().into(),
+            token.text_trimmed_range().start(),
+        )
     }
 }
 
@@ -1230,7 +1224,7 @@ impl<L: Language> From<SyntaxTriviaPieceComments<L>> for Token {
     fn from(trivia: SyntaxTriviaPieceComments<L>) -> Self {
         Self::new_dynamic(
             normalize_newlines(trivia.text().trim(), LINE_TERMINATORS).into_owned(),
-            trivia.text_range(),
+            trivia.text_range().start(),
         )
     }
 }
@@ -1398,9 +1392,10 @@ impl From<Option<FormatElement>> for FormatElement {
 mod tests {
 
     use crate::format_element::{
-        empty_element, join_elements, normalize_newlines, List, LINE_TERMINATORS,
+        empty_element, join_elements, normalize_newlines, ConditionalGroupContent, List,
+        VerbatimKind, LINE_TERMINATORS,
     };
-    use crate::{concat_elements, space_token, token, FormatElement};
+    use crate::{concat_elements, space_token, token, FormatElement, TextRange, Token, Verbatim};
 
     #[test]
     fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {
@@ -1515,5 +1510,20 @@ mod tests {
         assert_eq!(normalize_newlines("a\r\nb", LINE_TERMINATORS), "a\nb");
         assert_eq!(normalize_newlines("a\u{2028}b", LINE_TERMINATORS), "a\nb");
         assert_eq!(normalize_newlines("a\u{2029}b", LINE_TERMINATORS), "a\nb");
+    }
+
+    #[test]
+    fn sizes() {
+        assert_eq!(8, std::mem::size_of::<TextRange>());
+        assert_eq!(8, std::mem::size_of::<VerbatimKind>());
+        assert_eq!(16, std::mem::size_of::<Verbatim>());
+        assert_eq!(24, std::mem::size_of::<Token>());
+        assert_eq!(16, std::mem::size_of::<ConditionalGroupContent>());
+        assert_eq!(24, std::mem::size_of::<List>());
+        // Increasing the size of FormatElement has serious consequences on runtime performance and memory footprint.
+        // Is there a more efficient way to encode the data to avoid increasing its size? Can the information
+        // be recomputed at a later point in time?
+        // You reduced the size of a format element? Excellent work!
+        assert_eq!(32, std::mem::size_of::<FormatElement>());
     }
 }

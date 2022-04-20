@@ -222,13 +222,13 @@ pub fn format_range(
     let input_range = TextRange::new(start_source, end_source);
     let output_range = TextRange::new(start_dest, end_dest);
     let sourcemap = Vec::from(formatted.sourcemap());
-    let verbatim = Vec::from(formatted.verbatim());
+    let verbatim_ranges = Vec::from(formatted.verbatim_ranges());
     let code = &formatted.into_code()[output_range];
     Ok(Formatted::new(
         code.into(),
         Some(input_range),
         sourcemap,
-        verbatim,
+        verbatim_ranges,
     ))
 }
 
@@ -294,12 +294,12 @@ pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<
     let element = Formatter::new(options).format_root(root)?;
     let formatted = Printer::new(options).print_with_indent(&element, initial_indent);
     let sourcemap = Vec::from(formatted.sourcemap());
-    let verbatim = Vec::from(formatted.verbatim());
+    let verbatim_ranges = Vec::from(formatted.verbatim_ranges());
     Ok(Formatted::new(
         formatted.into_code(),
         Some(root.text_range()),
         sourcemap,
-        verbatim,
+        verbatim_ranges,
     ))
 }
 

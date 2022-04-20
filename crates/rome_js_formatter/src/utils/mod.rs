@@ -390,7 +390,7 @@ pub(crate) fn format_template_chunk(
         &chunk,
         FormatElement::from(Token::new_dynamic(
             normalize_newlines(chunk.text_trimmed(), ['\r']).into_owned(),
-            chunk.text_trimmed_range(),
+            chunk.text_trimmed_range().start(),
         )),
     ))
 }
@@ -629,6 +629,6 @@ pub(crate) fn format_string_literal_token(
 
     formatter.format_replaced(
         &token,
-        Token::new_dynamic(content, token.text_trimmed_range()).into(),
+        Token::new_dynamic(content, token.text_trimmed_range().start()).into(),
     )
 }

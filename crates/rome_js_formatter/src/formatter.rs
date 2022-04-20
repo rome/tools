@@ -433,7 +433,7 @@ impl Formatter {
         let text = &token.text()[relative_skipped_range];
         elements.push(FormatElement::from(Token::new_dynamic(
             text.to_string(),
-            skipped_trivia_range,
+            skipped_trivia_range.start(),
         )));
 
         // `print_trailing_trivia_pieces` and `format_leading_trivia_pieces` remove any whitespace except
@@ -604,17 +604,13 @@ impl Formatter {
     /// "mess up" the developers, yet incomplete, work or accidentally introduce new syntax errors.
     ///
     /// You may be inclined to call `node.text` directly. However, using `text` doesn't track the nodes
-    ///nor its children source mapping information, resulting in incorrect source maps for this subtree.
+    /// nor its children source mapping information, resulting in incorrect source maps for this subtree.
     ///
     /// These nodes and tokens get tracked as [FormatElement::Verbatim], useful to understand
     /// if these nodes still need to have their own implementation.
     pub fn format_verbatim(&self, node: &JsSyntaxNode) -> FormatElement {
         let verbatim = self.format_verbatim_node_or_token(node);
-        FormatElement::Verbatim(Verbatim::new_verbatim(
-            verbatim,
-            node.to_string(),
-            node.text_range(),
-        ))
+        FormatElement::Verbatim(Verbatim::new_verbatim(verbatim, node.text_range().len()))
     }
 
     /// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
@@ -653,7 +649,7 @@ impl Formatter {
         fn trivia_token<L: Language>(piece: SyntaxTriviaPiece<L>) -> Token {
             Token::new_dynamic(
                 normalize_newlines(piece.text(), LINE_TERMINATORS).into_owned(),
-                piece.text_range(),
+                piece.text_range().start(),
             )
         }
 
@@ -666,7 +662,7 @@ impl Formatter {
 
         let content = Token::new_dynamic(
             normalize_newlines(&node.text_trimmed().to_string(), LINE_TERMINATORS).into_owned(),
-            node.text_trimmed_range(),
+            node.text_trimmed_range().start(),
         );
 
         // Clippy false positive: SkipWhile does not implement DoubleEndedIterator

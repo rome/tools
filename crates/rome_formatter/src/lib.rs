@@ -203,7 +203,7 @@ pub struct Formatted {
     code: String,
     range: Option<TextRange>,
     sourcemap: Vec<SourceMarker>,
-    verbatim_source: Vec<(String, TextRange)>,
+    verbatim_ranges: Vec<TextRange>,
 }
 
 impl Formatted {
@@ -211,13 +211,13 @@ impl Formatted {
         code: String,
         range: Option<TextRange>,
         sourcemap: Vec<SourceMarker>,
-        verbatim_source: Vec<(String, TextRange)>,
+        verbatim_source: Vec<TextRange>,
     ) -> Self {
         Self {
             code,
             range,
             sourcemap,
-            verbatim_source,
+            verbatim_ranges: verbatim_source,
         }
     }
 
@@ -227,7 +227,7 @@ impl Formatted {
             code: String::new(),
             range: None,
             sourcemap: Vec::new(),
-            verbatim_source: Vec::new(),
+            verbatim_ranges: Vec::new(),
         }
     }
 
@@ -259,12 +259,16 @@ impl Formatted {
         self.code
     }
 
-    pub fn verbatim(&self) -> &[(String, TextRange)] {
-        &self.verbatim_source
+    /// The text in the formatted code that has been formatted as verbatim.
+    pub fn verbatim(&self) -> impl Iterator<Item = (TextRange, &str)> {
+        self.verbatim_ranges
+            .iter()
+            .map(|range| (*range, &self.code[*range]))
     }
 
-    pub fn into_verbatim(self) -> Vec<(String, TextRange)> {
-        self.verbatim_source
+    /// Ranges of the formatted code that have been formatted as verbatim.
+    pub fn verbatim_ranges(&self) -> &[TextRange] {
+        &self.verbatim_ranges
     }
 }
 
