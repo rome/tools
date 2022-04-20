@@ -5,7 +5,7 @@ use crate::LanguageKind;
 use quote::format_ident;
 use std::collections::BTreeMap;
 
-const LANGUAGE_PREFIXES: [&str; 5] = ["js_", "ts_", "jsx_", "tsx_", "css_"];
+const LANGUAGE_PREFIXES: [&str; 6] = ["js_", "ts_", "jsx_", "tsx_", "css_", "json_"];
 
 pub struct KindsSrc<'a> {
     pub punct: &'a [(&'a str, &'a str)],

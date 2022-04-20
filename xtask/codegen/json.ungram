@@ -1,0 +1,62 @@
+// Json Un-Grammar.
+//
+// This grammar specifies the structure of Rust's concrete syntax tree.
+// It does not specify parsing rules (ambiguities, precedence, etc are out of scope).
+// Tokens are processed -- contextual keywords are recognised, compound operators glued.
+//
+// Legend:
+//
+//   //          				-- comment
+//   Name =      				-- non-terminal definition
+//   'ident'     				-- token (terminal)
+//   A B         				-- sequence
+//   A | B       				-- alternation
+//   A*          				-- zero or more repetition
+//   (A (',' A)* ','?)	        -- repetition of node A separated by ',' and allowing a trailing comma
+//   (A (',' A)*)	            -- repetition of node A separated by ',' without a trailing comma
+//   A?          				-- zero or one repetition
+//   (A)         				-- same as A
+//   label:A     				-- suggested name for field of AST node
+
+// NOTES
+//
+// - SyntaxNode, SyntaxToken and SyntaxElement will be stripped from the codegen
+// - Unknown nodes are special nodes used to keep track of broken code; they are
+//   not part of the grammar but they will appear inside the green tree
+
+
+///////////////
+// UNKNOWN NODES
+///////////////
+// SyntaxElement is a generic data structure that is meant to track nodes and tokens
+// in cases where we care about both types
+//
+// As Unknown* node will need to yield both tokens and nodes without discrimination,
+// and their children will need to yield nodes and tokens as well.
+// For this reason, SyntaxElement = SyntaxElement
+
+SyntaxElement = SyntaxElement
+
+JsonUnknown = SyntaxElement*
+
+JsonRoot = JsonValue
+
+JsonValue =  JsonString | JsonBoolean | JsonNull | JsonNumber | JsonArray | JsonObject | JsonUnknown
+
+JsonObject = '{' JsonMemberList? '}'
+
+JsonMemberList = (JsonMember (',' JsonMember)* )
+
+JsonMember = key: JsonString ':' value: JsonValue
+
+JsonArray = '[' elements: JsonArrayElementList? ']'
+
+JsonArrayElementList = (JsonValue (',' JsonValue)* )
+
+JsonBoolean = 'true' | 'false'
+
+JsonNull = 'null'
+
+JsonString = 'json_string_literal'
+
+JsonNumber = 'json_number_literal'
