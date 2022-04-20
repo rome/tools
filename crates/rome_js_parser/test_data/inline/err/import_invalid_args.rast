@@ -14,26 +14,34 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsImportCallExpression {
-                import_token: IMPORT_KW@8..15 "import" [Newline("\n")] [],
-                arguments: JsCallArguments {
-                    l_paren_token: L_PAREN@15..16 "(" [] [],
-                    args: JsCallArgumentList [
-                        JsSpread {
-                            dotdotdot_token: DOT3@16..19 "..." [] [],
-                            argument: JsArrayExpression {
-                                l_brack_token: L_BRACK@19..20 "[" [] [],
-                                elements: JsArrayElementList [
-                                    JsStringLiteralExpression {
-                                        value_token: JS_STRING_LITERAL@20..25 "\"foo\"" [] [],
+            expression: JsUnknownExpression {
+                items: [
+                    IMPORT_KW@8..15 "import" [Newline("\n")] [],
+                    JsUnknown {
+                        items: [
+                            L_PAREN@15..16 "(" [] [],
+                            JsUnknown {
+                                items: [
+                                    JsUnknown {
+                                        items: [
+                                            DOT3@16..19 "..." [] [],
+                                            JsArrayExpression {
+                                                l_brack_token: L_BRACK@19..20 "[" [] [],
+                                                elements: JsArrayElementList [
+                                                    JsStringLiteralExpression {
+                                                        value_token: JS_STRING_LITERAL@20..25 "\"foo\"" [] [],
+                                                    },
+                                                ],
+                                                r_brack_token: R_BRACK@25..26 "]" [] [],
+                                            },
+                                        ],
                                     },
                                 ],
-                                r_brack_token: R_BRACK@25..26 "]" [] [],
                             },
-                        },
-                    ],
-                    r_paren_token: R_PAREN@26..27 ")" [] [],
-                },
+                            R_PAREN@26..27 ")" [] [],
+                        ],
+                    },
+                ],
             },
             semicolon_token: missing (optional),
         },
@@ -101,12 +109,12 @@ JsModule {
           2: R_PAREN@7..8 ")" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..27
-      0: JS_IMPORT_CALL_EXPRESSION@8..27
+      0: JS_UNKNOWN_EXPRESSION@8..27
         0: IMPORT_KW@8..15 "import" [Newline("\n")] []
-        1: JS_CALL_ARGUMENTS@15..27
+        1: JS_UNKNOWN@15..27
           0: L_PAREN@15..16 "(" [] []
-          1: JS_CALL_ARGUMENT_LIST@16..26
-            0: JS_SPREAD@16..26
+          1: JS_UNKNOWN@16..26
+            0: JS_UNKNOWN@16..26
               0: DOT3@16..19 "..." [] []
               1: JS_ARRAY_EXPRESSION@19..26
                 0: L_BRACK@19..20 "[" [] []
@@ -161,7 +169,7 @@ error[SyntaxError]: `...` is not allowed in `import()`
   ┌─ import_invalid_args.js:2:8
   │
 2 │ import(...["foo"])
-  │        ^^^
+  │        ^^^^^^^^^^
 
 --
 error[SyntaxError]: `import()` requires exactly one or two arguments. 

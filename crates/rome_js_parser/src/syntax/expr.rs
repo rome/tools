@@ -1235,17 +1235,20 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                         error_range_start = p.cur_range().start();
                     }
 
-                    let expr = if p.at(T![...]) {
-                        let err = p
-                            .err_builder("`...` is not allowed in `import()`")
-                            .primary(p.cur_range(), "");
-                        p.error(err);
+                    if p.at(T![...]) {
                         parse_spread_element(p, context)
+                            .add_diagnostic_if_present(p, |p, range| {
+                                p.err_builder("`...` is not allowed in `import()`")
+                                    .primary(range, "")
+                            })
+                            .map(|mut marker| {
+                                marker.change_to_unknown(p);
+                                marker
+                            });
                     } else {
                         parse_assignment_expression_or_higher(p, ExpressionContext::default())
-                    };
-
-                    expr.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+                            .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+                    }
 
                     if p.at(T![,]) {
                         p.bump_any();
