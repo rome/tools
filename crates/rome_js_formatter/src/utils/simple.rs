@@ -83,7 +83,7 @@ pub(crate) fn is_simple_function_expression(func: JsAnyFunction) -> SyntaxResult
     }
 
     if let Some(id) = func.id()? {
-        if id.syntax().has_comments() {
+        if id.syntax().has_comments_direct() {
             return Ok(false);
         }
     }

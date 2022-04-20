@@ -505,8 +505,12 @@ impl TemplateElement {
 
     fn has_comments(&self) -> bool {
         match self {
-            TemplateElement::Js(template_element) => template_element.syntax().contains_comments(),
-            TemplateElement::Ts(template_element) => template_element.syntax().contains_comments(),
+            TemplateElement::Js(template_element) => {
+                template_element.syntax().has_comments_descendants()
+            }
+            TemplateElement::Ts(template_element) => {
+                template_element.syntax().has_comments_descendants()
+            }
         }
     }
 }

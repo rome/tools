@@ -318,7 +318,7 @@ pub fn node_contains_comments() {
     let root = parse_module(text, 0);
     let syntax = root.syntax();
 
-    assert!(syntax.contains_comments());
+    assert!(syntax.has_comments_descendants());
 }
 
 #[test]
@@ -385,5 +385,5 @@ pub fn node_has_comments() {
     let logical_expression = JsLogicalExpression::cast(node).unwrap();
     let right = logical_expression.right().unwrap();
 
-    assert!(right.syntax().has_comments());
+    assert!(right.syntax().has_comments_direct());
 }
