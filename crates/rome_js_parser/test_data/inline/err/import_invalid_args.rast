@@ -18,21 +18,22 @@ JsModule {
                 import_token: IMPORT_KW@8..15 "import" [Newline("\n")] [],
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@15..16 "(" [] [],
-                    args: JsCallArgumentList [],
-                    r_paren_token: missing (required),
+                    args: JsCallArgumentList [
+                        JsSpread {
+                            dotdotdot_token: DOT3@16..19 "..." [] [],
+                            argument: JsArrayExpression {
+                                l_brack_token: L_BRACK@19..20 "[" [] [],
+                                elements: JsArrayElementList [
+                                    JsStringLiteralExpression {
+                                        value_token: JS_STRING_LITERAL@20..25 "\"foo\"" [] [],
+                                    },
+                                ],
+                                r_brack_token: R_BRACK@25..26 "]" [] [],
+                            },
+                        },
+                    ],
+                    r_paren_token: R_PAREN@26..27 ")" [] [],
                 },
-            },
-            semicolon_token: missing (optional),
-        },
-        JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    DOT3@16..19 "..." [] [],
-                    L_BRACK@19..20 "[" [] [],
-                    JS_STRING_LITERAL@20..25 "\"foo\"" [] [],
-                    R_BRACK@25..26 "]" [] [],
-                    R_PAREN@26..27 ")" [] [],
-                ],
             },
             semicolon_token: missing (optional),
         },
@@ -99,23 +100,23 @@ JsModule {
           1: JS_CALL_ARGUMENT_LIST@7..7
           2: R_PAREN@7..8 ")" [] []
       1: (empty)
-    1: JS_EXPRESSION_STATEMENT@8..16
-      0: JS_IMPORT_CALL_EXPRESSION@8..16
+    1: JS_EXPRESSION_STATEMENT@8..27
+      0: JS_IMPORT_CALL_EXPRESSION@8..27
         0: IMPORT_KW@8..15 "import" [Newline("\n")] []
-        1: JS_CALL_ARGUMENTS@15..16
+        1: JS_CALL_ARGUMENTS@15..27
           0: L_PAREN@15..16 "(" [] []
-          1: JS_CALL_ARGUMENT_LIST@16..16
-          2: (empty)
+          1: JS_CALL_ARGUMENT_LIST@16..26
+            0: JS_SPREAD@16..26
+              0: DOT3@16..19 "..." [] []
+              1: JS_ARRAY_EXPRESSION@19..26
+                0: L_BRACK@19..20 "[" [] []
+                1: JS_ARRAY_ELEMENT_LIST@20..25
+                  0: JS_STRING_LITERAL_EXPRESSION@20..25
+                    0: JS_STRING_LITERAL@20..25 "\"foo\"" [] []
+                2: R_BRACK@25..26 "]" [] []
+          2: R_PAREN@26..27 ")" [] []
       1: (empty)
-    2: JS_EXPRESSION_STATEMENT@16..27
-      0: JS_UNKNOWN_EXPRESSION@16..27
-        0: DOT3@16..19 "..." [] []
-        1: L_BRACK@19..20 "[" [] []
-        2: JS_STRING_LITERAL@20..25 "\"foo\"" [] []
-        3: R_BRACK@25..26 "]" [] []
-        4: R_PAREN@26..27 ")" [] []
-      1: (empty)
-    3: JS_EXPRESSION_STATEMENT@27..78
+    2: JS_EXPRESSION_STATEMENT@27..78
       0: JS_IMPORT_CALL_EXPRESSION@27..78
         0: IMPORT_KW@27..34 "import" [Newline("\n")] []
         1: JS_CALL_ARGUMENTS@34..78
