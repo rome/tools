@@ -183,7 +183,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     }
                 },
                 quote! {
-                    impl AstNode<Language> for #name {
+                    impl AstNode for #name {
+                        type Language = Language;
+
                         fn can_cast(kind: SyntaxKind) -> bool {
                             kind == #node_kind
                         }
@@ -400,7 +402,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     }
                     )*
 
-                    impl AstNode<Language> for #name {
+                    impl AstNode for #name {
+                        type Language = Language;
+
                         fn can_cast(kind: SyntaxKind) -> bool {
                             #can_cast_fn
                         }
@@ -494,7 +498,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             }
 
-            impl AstNode<Language> for #name {
+            impl AstNode for #name {
+                type Language = Language;
                 fn can_cast(kind: SyntaxKind) -> bool {
                     kind == #kind
                 }
@@ -551,7 +556,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             }
 
-            impl AstNode<Language> for #list_name {
+            impl AstNode for #list_name {
+                type Language = Language;
                 fn can_cast(kind: SyntaxKind) -> bool {
                     kind == #list_kind
                 }
@@ -573,7 +579,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         let padded_name = format!("{} ", name);
         let list_impl = if list.separator.is_some() {
             quote! {
-                impl AstSeparatedList<Language, #element_type> for #list_name {
+                impl AstSeparatedList for #list_name {
+                    type Language = Language;
+                    type Node = #element_type;
                     fn syntax_list(&self) -> &SyntaxList {
                         &self.syntax_list
                     }
@@ -606,7 +614,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             }
         } else {
             quote! {
-                impl AstNodeList<Language, #element_type> for #list_name {
+                impl AstNodeList for #list_name {
+                    type Language = Language;
+                    type Node = #element_type;
                     fn syntax_list(&self) -> &SyntaxList {
                         &self.syntax_list
                     }

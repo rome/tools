@@ -17,7 +17,7 @@ pub(crate) fn format_array_node<N, I>(
     formatter: &Formatter,
 ) -> FormatResult<FormatElement>
 where
-    N: AstSeparatedList<JsLanguage, I>,
+    N: AstSeparatedList<Language = JsLanguage, Node = I>,
     I: ArrayNodeElement,
 {
     // Specifically do not use format_separated as arrays need separators
@@ -71,7 +71,9 @@ pub(crate) enum TrailingSeparatorMode {
     Force,
 }
 
-pub(crate) trait ArrayNodeElement: AstNode<JsLanguage> + Clone + ToFormatElement {
+pub(crate) trait ArrayNodeElement:
+    AstNode<Language = JsLanguage> + Clone + ToFormatElement
+{
     /// Determines how the trailing separator should be printer for this element
     fn separator_mode(&self) -> TrailingSeparatorMode;
 }

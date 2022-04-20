@@ -47,12 +47,15 @@ impl<'a> AnalyzerContext<'a> {
     }
 
     /// Iterate over syntax nodes in this file that can be cast to T
-    pub fn query_nodes<T: AstNode<JsLanguage>>(&self) -> impl Iterator<Item = T> {
+    pub fn query_nodes<T: AstNode<Language = JsLanguage>>(&self) -> impl Iterator<Item = T> {
         self.analysis_server.query_nodes(self.file_id)
     }
 
     /// Find the deepest AST node of type T that covers a TextRange
-    pub fn find_node_at_range<T: AstNode<JsLanguage>>(&self, range: TextRange) -> Option<T> {
+    pub fn find_node_at_range<T: AstNode<Language = JsLanguage>>(
+        &self,
+        range: TextRange,
+    ) -> Option<T> {
         self.analysis_server.find_node_at_range(self.file_id, range)
     }
 
