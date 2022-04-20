@@ -368,8 +368,8 @@ mod tests {
 /// This function consumes a list of modifiers and applies a predictable sorting.
 pub(crate) fn sort_modifiers_by_precedence<List, Node>(list: &List) -> Vec<Node>
 where
-    Node: AstNode<JsLanguage> + Clone,
-    List: AstNodeList<JsLanguage, Node>,
+    Node: AstNode<Language = JsLanguage> + Clone,
+    List: AstNodeList<Language = JsLanguage, Node = Node>,
     Modifiers: for<'a> From<&'a Node>,
 {
     let mut nodes_and_modifiers = list.iter().collect::<Vec<Node>>();
@@ -505,8 +505,12 @@ impl TemplateElement {
 
     fn has_comments(&self) -> bool {
         match self {
-            TemplateElement::Js(template_element) => template_element.syntax().contains_comments(),
-            TemplateElement::Ts(template_element) => template_element.syntax().contains_comments(),
+            TemplateElement::Js(template_element) => {
+                template_element.syntax().has_comments_descendants()
+            }
+            TemplateElement::Ts(template_element) => {
+                template_element.syntax().has_comments_descendants()
+            }
         }
     }
 }

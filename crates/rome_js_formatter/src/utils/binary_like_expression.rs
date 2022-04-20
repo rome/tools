@@ -125,7 +125,7 @@ pub(crate) fn format_binary_like_expression(
             let left = parent.left()?;
 
             let formatted = left.format(formatter)?;
-            let has_comments = left.syntax().contains_comments();
+            let has_comments = left.syntax().has_comments_direct();
 
             flatten_items.items.push(FlattenItem::regular(
                 formatted,
@@ -210,7 +210,7 @@ fn format_with_or_without_parenthesis(
     };
 
     let result = if operation_is_higher {
-        let formatted = if node.contains_comments() {
+        let formatted = if node.has_comments_direct() {
             let (leading, content, trailing) = formatted_node.split_trivia();
             format_elements![
                 leading,
@@ -322,7 +322,7 @@ impl FlattenItems {
         formatter: &Formatter,
     ) -> FormatResult<()> {
         let right = binary_like_expression.right()?;
-        let has_comments = right.syntax().contains_comments();
+        let has_comments = right.syntax().has_comments_direct();
         let right_formatted = right.format(formatter)?;
 
         let (formatted_node, _) = format_with_or_without_parenthesis(
@@ -732,7 +732,8 @@ impl JsAnyBinaryLikeExpression {
     }
 }
 
-impl AstNode<JsLanguage> for JsAnyBinaryLikeExpression {
+impl AstNode for JsAnyBinaryLikeExpression {
+    type Language = JsLanguage;
     fn can_cast(kind: JsSyntaxKind) -> bool
     where
         Self: Sized,
@@ -821,7 +822,8 @@ impl JsAnyBinaryLikeLeftExpression {
     }
 }
 
-impl AstNode<JsLanguage> for JsAnyBinaryLikeLeftExpression {
+impl AstNode for JsAnyBinaryLikeLeftExpression {
+    type Language = JsLanguage;
     fn can_cast(kind: JsSyntaxKind) -> bool
     where
         Self: Sized,

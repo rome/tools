@@ -278,7 +278,7 @@ impl FormatTokenAndNode for JsSyntaxToken {
     }
 }
 
-impl<N: AstNode<JsLanguage> + ToFormatElement> FormatTokenAndNode for N {
+impl<N: AstNode<Language = JsLanguage> + ToFormatElement> FormatTokenAndNode for N {
     fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,

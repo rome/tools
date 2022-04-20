@@ -9,9 +9,10 @@ use crate::{
     JsSyntaxKind::{self as SyntaxKind, *},
     JsSyntaxList as SyntaxList, JsSyntaxNode as SyntaxNode, JsSyntaxToken as SyntaxToken,
 };
+use rome_rowan::{support, AstNode, SyntaxResult};
+#[allow(unused)]
 use rome_rowan::{
-    support, AstNode, AstNodeList, AstNodeListIterator, AstSeparatedList,
-    AstSeparatedListNodesIterator, SyntaxResult,
+    AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
 };
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9667,7 +9668,8 @@ pub enum TsType {
     TsUnknownType(TsUnknownType),
     TsVoidType(TsVoidType),
 }
-impl AstNode<Language> for ImportMeta {
+impl AstNode for ImportMeta {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_META }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9696,7 +9698,8 @@ impl From<ImportMeta> for SyntaxNode {
 impl From<ImportMeta> for SyntaxElement {
     fn from(n: ImportMeta) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsArrayAssignmentPattern {
+impl AstNode for JsArrayAssignmentPattern {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9728,7 +9731,8 @@ impl From<JsArrayAssignmentPattern> for SyntaxNode {
 impl From<JsArrayAssignmentPattern> for SyntaxElement {
     fn from(n: JsArrayAssignmentPattern) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsArrayAssignmentPatternRestElement {
+impl AstNode for JsArrayAssignmentPatternRestElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9756,7 +9760,8 @@ impl From<JsArrayAssignmentPatternRestElement> for SyntaxNode {
 impl From<JsArrayAssignmentPatternRestElement> for SyntaxElement {
     fn from(n: JsArrayAssignmentPatternRestElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsArrayBindingPattern {
+impl AstNode for JsArrayBindingPattern {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9788,7 +9793,8 @@ impl From<JsArrayBindingPattern> for SyntaxNode {
 impl From<JsArrayBindingPattern> for SyntaxElement {
     fn from(n: JsArrayBindingPattern) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsArrayBindingPatternRestElement {
+impl AstNode for JsArrayBindingPatternRestElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_REST_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9816,7 +9822,8 @@ impl From<JsArrayBindingPatternRestElement> for SyntaxNode {
 impl From<JsArrayBindingPatternRestElement> for SyntaxElement {
     fn from(n: JsArrayBindingPatternRestElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsArrayExpression {
+impl AstNode for JsArrayExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9848,7 +9855,8 @@ impl From<JsArrayExpression> for SyntaxNode {
 impl From<JsArrayExpression> for SyntaxElement {
     fn from(n: JsArrayExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsArrayHole {
+impl AstNode for JsArrayHole {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_HOLE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9870,7 +9878,8 @@ impl From<JsArrayHole> for SyntaxNode {
 impl From<JsArrayHole> for SyntaxElement {
     fn from(n: JsArrayHole) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsArrowFunctionExpression {
+impl AstNode for JsArrowFunctionExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARROW_FUNCTION_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9911,7 +9920,8 @@ impl From<JsArrowFunctionExpression> for SyntaxNode {
 impl From<JsArrowFunctionExpression> for SyntaxElement {
     fn from(n: JsArrowFunctionExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsAssignmentExpression {
+impl AstNode for JsAssignmentExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ASSIGNMENT_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9940,7 +9950,8 @@ impl From<JsAssignmentExpression> for SyntaxNode {
 impl From<JsAssignmentExpression> for SyntaxElement {
     fn from(n: JsAssignmentExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsAssignmentWithDefault {
+impl AstNode for JsAssignmentWithDefault {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ASSIGNMENT_WITH_DEFAULT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9966,7 +9977,8 @@ impl From<JsAssignmentWithDefault> for SyntaxNode {
 impl From<JsAssignmentWithDefault> for SyntaxElement {
     fn from(n: JsAssignmentWithDefault) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsAwaitExpression {
+impl AstNode for JsAwaitExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_AWAIT_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -9994,7 +10006,8 @@ impl From<JsAwaitExpression> for SyntaxNode {
 impl From<JsAwaitExpression> for SyntaxElement {
     fn from(n: JsAwaitExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsBigIntLiteralExpression {
+impl AstNode for JsBigIntLiteralExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10021,7 +10034,8 @@ impl From<JsBigIntLiteralExpression> for SyntaxNode {
 impl From<JsBigIntLiteralExpression> for SyntaxElement {
     fn from(n: JsBigIntLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsBinaryExpression {
+impl AstNode for JsBinaryExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINARY_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10050,7 +10064,8 @@ impl From<JsBinaryExpression> for SyntaxNode {
 impl From<JsBinaryExpression> for SyntaxElement {
     fn from(n: JsBinaryExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsBindingPatternWithDefault {
+impl AstNode for JsBindingPatternWithDefault {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINDING_PATTERN_WITH_DEFAULT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10076,7 +10091,8 @@ impl From<JsBindingPatternWithDefault> for SyntaxNode {
 impl From<JsBindingPatternWithDefault> for SyntaxElement {
     fn from(n: JsBindingPatternWithDefault) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsBlockStatement {
+impl AstNode for JsBlockStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BLOCK_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10108,7 +10124,8 @@ impl From<JsBlockStatement> for SyntaxNode {
 impl From<JsBlockStatement> for SyntaxElement {
     fn from(n: JsBlockStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsBooleanLiteralExpression {
+impl AstNode for JsBooleanLiteralExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOOLEAN_LITERAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10135,7 +10152,8 @@ impl From<JsBooleanLiteralExpression> for SyntaxNode {
 impl From<JsBooleanLiteralExpression> for SyntaxElement {
     fn from(n: JsBooleanLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsBreakStatement {
+impl AstNode for JsBreakStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BREAK_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10170,7 +10188,8 @@ impl From<JsBreakStatement> for SyntaxNode {
 impl From<JsBreakStatement> for SyntaxElement {
     fn from(n: JsBreakStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsCallArguments {
+impl AstNode for JsCallArguments {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CALL_ARGUMENTS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10202,7 +10221,8 @@ impl From<JsCallArguments> for SyntaxNode {
 impl From<JsCallArguments> for SyntaxElement {
     fn from(n: JsCallArguments) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsCallExpression {
+impl AstNode for JsCallExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CALL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10235,7 +10255,8 @@ impl From<JsCallExpression> for SyntaxNode {
 impl From<JsCallExpression> for SyntaxElement {
     fn from(n: JsCallExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsCaseClause {
+impl AstNode for JsCaseClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CASE_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10265,7 +10286,8 @@ impl From<JsCaseClause> for SyntaxNode {
 impl From<JsCaseClause> for SyntaxElement {
     fn from(n: JsCaseClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsCatchClause {
+impl AstNode for JsCatchClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CATCH_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10297,7 +10319,8 @@ impl From<JsCatchClause> for SyntaxNode {
 impl From<JsCatchClause> for SyntaxElement {
     fn from(n: JsCatchClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsCatchDeclaration {
+impl AstNode for JsCatchDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CATCH_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10333,7 +10356,8 @@ impl From<JsCatchDeclaration> for SyntaxNode {
 impl From<JsCatchDeclaration> for SyntaxElement {
     fn from(n: JsCatchDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsClassDeclaration {
+impl AstNode for JsClassDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10386,7 +10410,8 @@ impl From<JsClassDeclaration> for SyntaxNode {
 impl From<JsClassDeclaration> for SyntaxElement {
     fn from(n: JsClassDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsClassExportDefaultDeclaration {
+impl AstNode for JsClassExportDefaultDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_EXPORT_DEFAULT_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10439,7 +10464,8 @@ impl From<JsClassExportDefaultDeclaration> for SyntaxNode {
 impl From<JsClassExportDefaultDeclaration> for SyntaxElement {
     fn from(n: JsClassExportDefaultDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsClassExpression {
+impl AstNode for JsClassExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10488,7 +10514,8 @@ impl From<JsClassExpression> for SyntaxNode {
 impl From<JsClassExpression> for SyntaxElement {
     fn from(n: JsClassExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsComputedMemberAssignment {
+impl AstNode for JsComputedMemberAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10521,7 +10548,8 @@ impl From<JsComputedMemberAssignment> for SyntaxNode {
 impl From<JsComputedMemberAssignment> for SyntaxElement {
     fn from(n: JsComputedMemberAssignment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsComputedMemberExpression {
+impl AstNode for JsComputedMemberExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10558,7 +10586,8 @@ impl From<JsComputedMemberExpression> for SyntaxNode {
 impl From<JsComputedMemberExpression> for SyntaxElement {
     fn from(n: JsComputedMemberExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsComputedMemberName {
+impl AstNode for JsComputedMemberName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10590,7 +10619,8 @@ impl From<JsComputedMemberName> for SyntaxNode {
 impl From<JsComputedMemberName> for SyntaxElement {
     fn from(n: JsComputedMemberName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsConditionalExpression {
+impl AstNode for JsConditionalExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONDITIONAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10624,7 +10654,8 @@ impl From<JsConditionalExpression> for SyntaxNode {
 impl From<JsConditionalExpression> for SyntaxElement {
     fn from(n: JsConditionalExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsConstructorClassMember {
+impl AstNode for JsConstructorClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10651,7 +10682,8 @@ impl From<JsConstructorClassMember> for SyntaxNode {
 impl From<JsConstructorClassMember> for SyntaxElement {
     fn from(n: JsConstructorClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsConstructorParameters {
+impl AstNode for JsConstructorParameters {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETERS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10683,7 +10715,8 @@ impl From<JsConstructorParameters> for SyntaxNode {
 impl From<JsConstructorParameters> for SyntaxElement {
     fn from(n: JsConstructorParameters) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsContinueStatement {
+impl AstNode for JsContinueStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONTINUE_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10718,7 +10751,8 @@ impl From<JsContinueStatement> for SyntaxNode {
 impl From<JsContinueStatement> for SyntaxElement {
     fn from(n: JsContinueStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsDebuggerStatement {
+impl AstNode for JsDebuggerStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEBUGGER_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10749,7 +10783,8 @@ impl From<JsDebuggerStatement> for SyntaxNode {
 impl From<JsDebuggerStatement> for SyntaxElement {
     fn from(n: JsDebuggerStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsDefaultClause {
+impl AstNode for JsDefaultClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEFAULT_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10781,7 +10816,8 @@ impl From<JsDefaultClause> for SyntaxNode {
 impl From<JsDefaultClause> for SyntaxElement {
     fn from(n: JsDefaultClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsDefaultImportSpecifier {
+impl AstNode for JsDefaultImportSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEFAULT_IMPORT_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10809,7 +10845,8 @@ impl From<JsDefaultImportSpecifier> for SyntaxNode {
 impl From<JsDefaultImportSpecifier> for SyntaxElement {
     fn from(n: JsDefaultImportSpecifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsDirective {
+impl AstNode for JsDirective {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DIRECTIVE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10840,7 +10877,8 @@ impl From<JsDirective> for SyntaxNode {
 impl From<JsDirective> for SyntaxElement {
     fn from(n: JsDirective) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsDoWhileStatement {
+impl AstNode for JsDoWhileStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DO_WHILE_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10882,7 +10920,8 @@ impl From<JsDoWhileStatement> for SyntaxNode {
 impl From<JsDoWhileStatement> for SyntaxElement {
     fn from(n: JsDoWhileStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsElseClause {
+impl AstNode for JsElseClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ELSE_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10907,7 +10946,8 @@ impl From<JsElseClause> for SyntaxNode {
 impl From<JsElseClause> for SyntaxElement {
     fn from(n: JsElseClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsEmptyClassMember {
+impl AstNode for JsEmptyClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EMPTY_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10934,7 +10974,8 @@ impl From<JsEmptyClassMember> for SyntaxNode {
 impl From<JsEmptyClassMember> for SyntaxElement {
     fn from(n: JsEmptyClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsEmptyStatement {
+impl AstNode for JsEmptyStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EMPTY_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10961,7 +11002,8 @@ impl From<JsEmptyStatement> for SyntaxNode {
 impl From<JsEmptyStatement> for SyntaxElement {
     fn from(n: JsEmptyStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExport {
+impl AstNode for JsExport {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -10992,7 +11034,8 @@ impl From<JsExport> for SyntaxNode {
 impl From<JsExport> for SyntaxElement {
     fn from(n: JsExport) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportAsClause {
+impl AstNode for JsExportAsClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_AS_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11020,7 +11063,8 @@ impl From<JsExportAsClause> for SyntaxNode {
 impl From<JsExportAsClause> for SyntaxElement {
     fn from(n: JsExportAsClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportDefaultDeclarationClause {
+impl AstNode for JsExportDefaultDeclarationClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_DEFAULT_DECLARATION_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11055,7 +11099,8 @@ impl From<JsExportDefaultDeclarationClause> for SyntaxNode {
 impl From<JsExportDefaultDeclarationClause> for SyntaxElement {
     fn from(n: JsExportDefaultDeclarationClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportDefaultExpressionClause {
+impl AstNode for JsExportDefaultExpressionClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11087,7 +11132,8 @@ impl From<JsExportDefaultExpressionClause> for SyntaxNode {
 impl From<JsExportDefaultExpressionClause> for SyntaxElement {
     fn from(n: JsExportDefaultExpressionClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportFromClause {
+impl AstNode for JsExportFromClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_FROM_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11125,7 +11171,8 @@ impl From<JsExportFromClause> for SyntaxNode {
 impl From<JsExportFromClause> for SyntaxElement {
     fn from(n: JsExportFromClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportNamedClause {
+impl AstNode for JsExportNamedClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_NAMED_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11165,7 +11212,8 @@ impl From<JsExportNamedClause> for SyntaxNode {
 impl From<JsExportNamedClause> for SyntaxElement {
     fn from(n: JsExportNamedClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportNamedFromClause {
+impl AstNode for JsExportNamedFromClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11211,7 +11259,8 @@ impl From<JsExportNamedFromClause> for SyntaxNode {
 impl From<JsExportNamedFromClause> for SyntaxElement {
     fn from(n: JsExportNamedFromClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportNamedFromSpecifier {
+impl AstNode for JsExportNamedFromSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11246,7 +11295,8 @@ impl From<JsExportNamedFromSpecifier> for SyntaxNode {
 impl From<JsExportNamedFromSpecifier> for SyntaxElement {
     fn from(n: JsExportNamedFromSpecifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportNamedShorthandSpecifier {
+impl AstNode for JsExportNamedShorthandSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SHORTHAND_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11274,7 +11324,8 @@ impl From<JsExportNamedShorthandSpecifier> for SyntaxNode {
 impl From<JsExportNamedShorthandSpecifier> for SyntaxElement {
     fn from(n: JsExportNamedShorthandSpecifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExportNamedSpecifier {
+impl AstNode for JsExportNamedSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11307,7 +11358,8 @@ impl From<JsExportNamedSpecifier> for SyntaxNode {
 impl From<JsExportNamedSpecifier> for SyntaxElement {
     fn from(n: JsExportNamedSpecifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExpressionSnipped {
+impl AstNode for JsExpressionSnipped {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPRESSION_SNIPPED }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11332,7 +11384,8 @@ impl From<JsExpressionSnipped> for SyntaxNode {
 impl From<JsExpressionSnipped> for SyntaxElement {
     fn from(n: JsExpressionSnipped) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExpressionStatement {
+impl AstNode for JsExpressionStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPRESSION_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11360,7 +11413,8 @@ impl From<JsExpressionStatement> for SyntaxNode {
 impl From<JsExpressionStatement> for SyntaxElement {
     fn from(n: JsExpressionStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsExtendsClause {
+impl AstNode for JsExtendsClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXTENDS_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11395,7 +11449,8 @@ impl From<JsExtendsClause> for SyntaxNode {
 impl From<JsExtendsClause> for SyntaxElement {
     fn from(n: JsExtendsClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsFinallyClause {
+impl AstNode for JsFinallyClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FINALLY_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11423,7 +11478,8 @@ impl From<JsFinallyClause> for SyntaxNode {
 impl From<JsFinallyClause> for SyntaxElement {
     fn from(n: JsFinallyClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsForInStatement {
+impl AstNode for JsForInStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_IN_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11462,7 +11518,8 @@ impl From<JsForInStatement> for SyntaxNode {
 impl From<JsForInStatement> for SyntaxElement {
     fn from(n: JsForInStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsForOfStatement {
+impl AstNode for JsForOfStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_OF_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11505,7 +11562,8 @@ impl From<JsForOfStatement> for SyntaxNode {
 impl From<JsForOfStatement> for SyntaxElement {
     fn from(n: JsForOfStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsForStatement {
+impl AstNode for JsForStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11552,7 +11610,8 @@ impl From<JsForStatement> for SyntaxNode {
 impl From<JsForStatement> for SyntaxElement {
     fn from(n: JsForStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsForVariableDeclaration {
+impl AstNode for JsForVariableDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_VARIABLE_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11577,7 +11636,8 @@ impl From<JsForVariableDeclaration> for SyntaxNode {
 impl From<JsForVariableDeclaration> for SyntaxElement {
     fn from(n: JsForVariableDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsFormalParameter {
+impl AstNode for JsFormalParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FORMAL_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11613,7 +11673,8 @@ impl From<JsFormalParameter> for SyntaxNode {
 impl From<JsFormalParameter> for SyntaxElement {
     fn from(n: JsFormalParameter) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsFunctionBody {
+impl AstNode for JsFunctionBody {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_BODY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11646,7 +11707,8 @@ impl From<JsFunctionBody> for SyntaxNode {
 impl From<JsFunctionBody> for SyntaxElement {
     fn from(n: JsFunctionBody) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsFunctionDeclaration {
+impl AstNode for JsFunctionDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11692,7 +11754,8 @@ impl From<JsFunctionDeclaration> for SyntaxNode {
 impl From<JsFunctionDeclaration> for SyntaxElement {
     fn from(n: JsFunctionDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsFunctionExportDefaultDeclaration {
+impl AstNode for JsFunctionExportDefaultDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_EXPORT_DEFAULT_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11738,7 +11801,8 @@ impl From<JsFunctionExportDefaultDeclaration> for SyntaxNode {
 impl From<JsFunctionExportDefaultDeclaration> for SyntaxElement {
     fn from(n: JsFunctionExportDefaultDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsFunctionExpression {
+impl AstNode for JsFunctionExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11784,7 +11848,8 @@ impl From<JsFunctionExpression> for SyntaxNode {
 impl From<JsFunctionExpression> for SyntaxElement {
     fn from(n: JsFunctionExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsGetterClassMember {
+impl AstNode for JsGetterClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_GETTER_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11823,7 +11888,8 @@ impl From<JsGetterClassMember> for SyntaxNode {
 impl From<JsGetterClassMember> for SyntaxElement {
     fn from(n: JsGetterClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsGetterObjectMember {
+impl AstNode for JsGetterObjectMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_GETTER_OBJECT_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11861,7 +11927,8 @@ impl From<JsGetterObjectMember> for SyntaxNode {
 impl From<JsGetterObjectMember> for SyntaxElement {
     fn from(n: JsGetterObjectMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsIdentifierAssignment {
+impl AstNode for JsIdentifierAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11885,7 +11952,8 @@ impl From<JsIdentifierAssignment> for SyntaxNode {
 impl From<JsIdentifierAssignment> for SyntaxElement {
     fn from(n: JsIdentifierAssignment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsIdentifierBinding {
+impl AstNode for JsIdentifierBinding {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_BINDING }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11909,7 +11977,8 @@ impl From<JsIdentifierBinding> for SyntaxNode {
 impl From<JsIdentifierBinding> for SyntaxElement {
     fn from(n: JsIdentifierBinding) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsIdentifierExpression {
+impl AstNode for JsIdentifierExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11933,7 +12002,8 @@ impl From<JsIdentifierExpression> for SyntaxNode {
 impl From<JsIdentifierExpression> for SyntaxElement {
     fn from(n: JsIdentifierExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsIfStatement {
+impl AstNode for JsIfStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IF_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -11971,7 +12041,8 @@ impl From<JsIfStatement> for SyntaxNode {
 impl From<JsIfStatement> for SyntaxElement {
     fn from(n: JsIfStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsImport {
+impl AstNode for JsImport {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12006,7 +12077,8 @@ impl From<JsImport> for SyntaxNode {
 impl From<JsImport> for SyntaxElement {
     fn from(n: JsImport) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsImportAssertion {
+impl AstNode for JsImportAssertion {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12042,7 +12114,8 @@ impl From<JsImportAssertion> for SyntaxNode {
 impl From<JsImportAssertion> for SyntaxElement {
     fn from(n: JsImportAssertion) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsImportAssertionEntry {
+impl AstNode for JsImportAssertionEntry {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12074,7 +12147,8 @@ impl From<JsImportAssertionEntry> for SyntaxNode {
 impl From<JsImportAssertionEntry> for SyntaxElement {
     fn from(n: JsImportAssertionEntry) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsImportBareClause {
+impl AstNode for JsImportBareClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_BARE_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12102,7 +12176,8 @@ impl From<JsImportBareClause> for SyntaxNode {
 impl From<JsImportBareClause> for SyntaxElement {
     fn from(n: JsImportBareClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsImportCallExpression {
+impl AstNode for JsImportCallExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_CALL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12130,7 +12205,8 @@ impl From<JsImportCallExpression> for SyntaxNode {
 impl From<JsImportCallExpression> for SyntaxElement {
     fn from(n: JsImportCallExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsImportDefaultClause {
+impl AstNode for JsImportDefaultClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_DEFAULT_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12164,7 +12240,8 @@ impl From<JsImportDefaultClause> for SyntaxNode {
 impl From<JsImportDefaultClause> for SyntaxElement {
     fn from(n: JsImportDefaultClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsImportNamedClause {
+impl AstNode for JsImportNamedClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_NAMED_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12205,7 +12282,8 @@ impl From<JsImportNamedClause> for SyntaxNode {
 impl From<JsImportNamedClause> for SyntaxElement {
     fn from(n: JsImportNamedClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsImportNamespaceClause {
+impl AstNode for JsImportNamespaceClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_NAMESPACE_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12241,7 +12319,8 @@ impl From<JsImportNamespaceClause> for SyntaxNode {
 impl From<JsImportNamespaceClause> for SyntaxElement {
     fn from(n: JsImportNamespaceClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsInExpression {
+impl AstNode for JsInExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IN_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12267,7 +12346,8 @@ impl From<JsInExpression> for SyntaxNode {
 impl From<JsInExpression> for SyntaxElement {
     fn from(n: JsInExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsInitializerClause {
+impl AstNode for JsInitializerClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_INITIALIZER_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12292,7 +12372,8 @@ impl From<JsInitializerClause> for SyntaxNode {
 impl From<JsInitializerClause> for SyntaxElement {
     fn from(n: JsInitializerClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsInstanceofExpression {
+impl AstNode for JsInstanceofExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_INSTANCEOF_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12321,7 +12402,8 @@ impl From<JsInstanceofExpression> for SyntaxNode {
 impl From<JsInstanceofExpression> for SyntaxElement {
     fn from(n: JsInstanceofExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsLabeledStatement {
+impl AstNode for JsLabeledStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LABELED_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12353,7 +12435,8 @@ impl From<JsLabeledStatement> for SyntaxNode {
 impl From<JsLabeledStatement> for SyntaxElement {
     fn from(n: JsLabeledStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsLiteralExportName {
+impl AstNode for JsLiteralExportName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LITERAL_EXPORT_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12377,7 +12460,8 @@ impl From<JsLiteralExportName> for SyntaxNode {
 impl From<JsLiteralExportName> for SyntaxElement {
     fn from(n: JsLiteralExportName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsLiteralMemberName {
+impl AstNode for JsLiteralMemberName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LITERAL_MEMBER_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12401,7 +12485,8 @@ impl From<JsLiteralMemberName> for SyntaxNode {
 impl From<JsLiteralMemberName> for SyntaxElement {
     fn from(n: JsLiteralMemberName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsLogicalExpression {
+impl AstNode for JsLogicalExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LOGICAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12430,7 +12515,8 @@ impl From<JsLogicalExpression> for SyntaxNode {
 impl From<JsLogicalExpression> for SyntaxElement {
     fn from(n: JsLogicalExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsMethodClassMember {
+impl AstNode for JsMethodClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12477,7 +12563,8 @@ impl From<JsMethodClassMember> for SyntaxNode {
 impl From<JsMethodClassMember> for SyntaxElement {
     fn from(n: JsMethodClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsMethodObjectMember {
+impl AstNode for JsMethodObjectMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_OBJECT_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12519,7 +12606,8 @@ impl From<JsMethodObjectMember> for SyntaxNode {
 impl From<JsMethodObjectMember> for SyntaxElement {
     fn from(n: JsMethodObjectMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsModule {
+impl AstNode for JsModule {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODULE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12549,7 +12637,8 @@ impl From<JsModule> for SyntaxNode {
 impl From<JsModule> for SyntaxElement {
     fn from(n: JsModule) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsModuleSource {
+impl AstNode for JsModuleSource {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODULE_SOURCE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12576,7 +12665,8 @@ impl From<JsModuleSource> for SyntaxNode {
 impl From<JsModuleSource> for SyntaxElement {
     fn from(n: JsModuleSource) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsName {
+impl AstNode for JsName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12603,7 +12693,8 @@ impl From<JsName> for SyntaxNode {
 impl From<JsName> for SyntaxElement {
     fn from(n: JsName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsNamedImportSpecifier {
+impl AstNode for JsNamedImportSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12633,7 +12724,8 @@ impl From<JsNamedImportSpecifier> for SyntaxNode {
 impl From<JsNamedImportSpecifier> for SyntaxElement {
     fn from(n: JsNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsNamedImportSpecifiers {
+impl AstNode for JsNamedImportSpecifiers {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIERS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12665,7 +12757,8 @@ impl From<JsNamedImportSpecifiers> for SyntaxNode {
 impl From<JsNamedImportSpecifiers> for SyntaxElement {
     fn from(n: JsNamedImportSpecifiers) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsNamespaceImportSpecifier {
+impl AstNode for JsNamespaceImportSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMESPACE_IMPORT_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12691,7 +12784,8 @@ impl From<JsNamespaceImportSpecifier> for SyntaxNode {
 impl From<JsNamespaceImportSpecifier> for SyntaxElement {
     fn from(n: JsNamespaceImportSpecifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsNewExpression {
+impl AstNode for JsNewExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NEW_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12724,7 +12818,8 @@ impl From<JsNewExpression> for SyntaxNode {
 impl From<JsNewExpression> for SyntaxElement {
     fn from(n: JsNewExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsNullLiteralExpression {
+impl AstNode for JsNullLiteralExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NULL_LITERAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12751,7 +12846,8 @@ impl From<JsNullLiteralExpression> for SyntaxNode {
 impl From<JsNullLiteralExpression> for SyntaxElement {
     fn from(n: JsNullLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsNumberLiteralExpression {
+impl AstNode for JsNumberLiteralExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12778,7 +12874,8 @@ impl From<JsNumberLiteralExpression> for SyntaxNode {
 impl From<JsNumberLiteralExpression> for SyntaxElement {
     fn from(n: JsNumberLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectAssignmentPattern {
+impl AstNode for JsObjectAssignmentPattern {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12810,7 +12907,8 @@ impl From<JsObjectAssignmentPattern> for SyntaxNode {
 impl From<JsObjectAssignmentPattern> for SyntaxElement {
     fn from(n: JsObjectAssignmentPattern) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectAssignmentPatternProperty {
+impl AstNode for JsObjectAssignmentPatternProperty {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12840,7 +12938,8 @@ impl From<JsObjectAssignmentPatternProperty> for SyntaxNode {
 impl From<JsObjectAssignmentPatternProperty> for SyntaxElement {
     fn from(n: JsObjectAssignmentPatternProperty) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectAssignmentPatternRest {
+impl AstNode for JsObjectAssignmentPatternRest {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_REST }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12868,7 +12967,8 @@ impl From<JsObjectAssignmentPatternRest> for SyntaxNode {
 impl From<JsObjectAssignmentPatternRest> for SyntaxElement {
     fn from(n: JsObjectAssignmentPatternRest) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectAssignmentPatternShorthandProperty {
+impl AstNode for JsObjectAssignmentPatternShorthandProperty {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         kind == JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
     }
@@ -12895,7 +12995,8 @@ impl From<JsObjectAssignmentPatternShorthandProperty> for SyntaxNode {
 impl From<JsObjectAssignmentPatternShorthandProperty> for SyntaxElement {
     fn from(n: JsObjectAssignmentPatternShorthandProperty) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectBindingPattern {
+impl AstNode for JsObjectBindingPattern {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12927,7 +13028,8 @@ impl From<JsObjectBindingPattern> for SyntaxNode {
 impl From<JsObjectBindingPattern> for SyntaxElement {
     fn from(n: JsObjectBindingPattern) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectBindingPatternProperty {
+impl AstNode for JsObjectBindingPatternProperty {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12957,7 +13059,8 @@ impl From<JsObjectBindingPatternProperty> for SyntaxNode {
 impl From<JsObjectBindingPatternProperty> for SyntaxElement {
     fn from(n: JsObjectBindingPatternProperty) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectBindingPatternRest {
+impl AstNode for JsObjectBindingPatternRest {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_REST }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -12985,7 +13088,8 @@ impl From<JsObjectBindingPatternRest> for SyntaxNode {
 impl From<JsObjectBindingPatternRest> for SyntaxElement {
     fn from(n: JsObjectBindingPatternRest) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectBindingPatternShorthandProperty {
+impl AstNode for JsObjectBindingPatternShorthandProperty {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13010,7 +13114,8 @@ impl From<JsObjectBindingPatternShorthandProperty> for SyntaxNode {
 impl From<JsObjectBindingPatternShorthandProperty> for SyntaxElement {
     fn from(n: JsObjectBindingPatternShorthandProperty) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsObjectExpression {
+impl AstNode for JsObjectExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13042,7 +13147,8 @@ impl From<JsObjectExpression> for SyntaxNode {
 impl From<JsObjectExpression> for SyntaxElement {
     fn from(n: JsObjectExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsParameters {
+impl AstNode for JsParameters {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARAMETERS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13074,7 +13180,8 @@ impl From<JsParameters> for SyntaxNode {
 impl From<JsParameters> for SyntaxElement {
     fn from(n: JsParameters) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsParenthesizedAssignment {
+impl AstNode for JsParenthesizedAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13106,7 +13213,8 @@ impl From<JsParenthesizedAssignment> for SyntaxNode {
 impl From<JsParenthesizedAssignment> for SyntaxElement {
     fn from(n: JsParenthesizedAssignment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsParenthesizedExpression {
+impl AstNode for JsParenthesizedExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13138,7 +13246,8 @@ impl From<JsParenthesizedExpression> for SyntaxNode {
 impl From<JsParenthesizedExpression> for SyntaxElement {
     fn from(n: JsParenthesizedExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsPostUpdateExpression {
+impl AstNode for JsPostUpdateExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_POST_UPDATE_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13166,7 +13275,8 @@ impl From<JsPostUpdateExpression> for SyntaxNode {
 impl From<JsPostUpdateExpression> for SyntaxElement {
     fn from(n: JsPostUpdateExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsPreUpdateExpression {
+impl AstNode for JsPreUpdateExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRE_UPDATE_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13194,7 +13304,8 @@ impl From<JsPreUpdateExpression> for SyntaxNode {
 impl From<JsPreUpdateExpression> for SyntaxElement {
     fn from(n: JsPreUpdateExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsPrivateClassMemberName {
+impl AstNode for JsPrivateClassMemberName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRIVATE_CLASS_MEMBER_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13219,7 +13330,8 @@ impl From<JsPrivateClassMemberName> for SyntaxNode {
 impl From<JsPrivateClassMemberName> for SyntaxElement {
     fn from(n: JsPrivateClassMemberName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsPrivateName {
+impl AstNode for JsPrivateName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRIVATE_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13247,7 +13359,8 @@ impl From<JsPrivateName> for SyntaxNode {
 impl From<JsPrivateName> for SyntaxElement {
     fn from(n: JsPrivateName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsPropertyClassMember {
+impl AstNode for JsPropertyClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13281,7 +13394,8 @@ impl From<JsPropertyClassMember> for SyntaxNode {
 impl From<JsPropertyClassMember> for SyntaxElement {
     fn from(n: JsPropertyClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsPropertyObjectMember {
+impl AstNode for JsPropertyObjectMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_OBJECT_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13310,7 +13424,8 @@ impl From<JsPropertyObjectMember> for SyntaxNode {
 impl From<JsPropertyObjectMember> for SyntaxElement {
     fn from(n: JsPropertyObjectMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsReferenceIdentifier {
+impl AstNode for JsReferenceIdentifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13337,7 +13452,8 @@ impl From<JsReferenceIdentifier> for SyntaxNode {
 impl From<JsReferenceIdentifier> for SyntaxElement {
     fn from(n: JsReferenceIdentifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsRegexLiteralExpression {
+impl AstNode for JsRegexLiteralExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REGEX_LITERAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13364,7 +13480,8 @@ impl From<JsRegexLiteralExpression> for SyntaxNode {
 impl From<JsRegexLiteralExpression> for SyntaxElement {
     fn from(n: JsRegexLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsRestParameter {
+impl AstNode for JsRestParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REST_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13396,7 +13513,8 @@ impl From<JsRestParameter> for SyntaxNode {
 impl From<JsRestParameter> for SyntaxElement {
     fn from(n: JsRestParameter) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsReturnStatement {
+impl AstNode for JsReturnStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_RETURN_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13428,7 +13546,8 @@ impl From<JsReturnStatement> for SyntaxNode {
 impl From<JsReturnStatement> for SyntaxElement {
     fn from(n: JsReturnStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsScript {
+impl AstNode for JsScript {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SCRIPT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13458,7 +13577,8 @@ impl From<JsScript> for SyntaxNode {
 impl From<JsScript> for SyntaxElement {
     fn from(n: JsScript) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsSequenceExpression {
+impl AstNode for JsSequenceExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SEQUENCE_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13487,7 +13607,8 @@ impl From<JsSequenceExpression> for SyntaxNode {
 impl From<JsSequenceExpression> for SyntaxElement {
     fn from(n: JsSequenceExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsSetterClassMember {
+impl AstNode for JsSetterClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SETTER_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13523,7 +13644,8 @@ impl From<JsSetterClassMember> for SyntaxNode {
 impl From<JsSetterClassMember> for SyntaxElement {
     fn from(n: JsSetterClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsSetterObjectMember {
+impl AstNode for JsSetterObjectMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SETTER_OBJECT_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13558,7 +13680,8 @@ impl From<JsSetterObjectMember> for SyntaxNode {
 impl From<JsSetterObjectMember> for SyntaxElement {
     fn from(n: JsSetterObjectMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsShorthandNamedImportSpecifier {
+impl AstNode for JsShorthandNamedImportSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SHORTHAND_NAMED_IMPORT_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13586,7 +13709,8 @@ impl From<JsShorthandNamedImportSpecifier> for SyntaxNode {
 impl From<JsShorthandNamedImportSpecifier> for SyntaxElement {
     fn from(n: JsShorthandNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsShorthandPropertyObjectMember {
+impl AstNode for JsShorthandPropertyObjectMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SHORTHAND_PROPERTY_OBJECT_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13610,7 +13734,8 @@ impl From<JsShorthandPropertyObjectMember> for SyntaxNode {
 impl From<JsShorthandPropertyObjectMember> for SyntaxElement {
     fn from(n: JsShorthandPropertyObjectMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsSpread {
+impl AstNode for JsSpread {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SPREAD }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13638,7 +13763,8 @@ impl From<JsSpread> for SyntaxNode {
 impl From<JsSpread> for SyntaxElement {
     fn from(n: JsSpread) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsStaticInitializationBlockClassMember {
+impl AstNode for JsStaticInitializationBlockClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13674,7 +13800,8 @@ impl From<JsStaticInitializationBlockClassMember> for SyntaxNode {
 impl From<JsStaticInitializationBlockClassMember> for SyntaxElement {
     fn from(n: JsStaticInitializationBlockClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsStaticMemberAssignment {
+impl AstNode for JsStaticMemberAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MEMBER_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13700,7 +13827,8 @@ impl From<JsStaticMemberAssignment> for SyntaxNode {
 impl From<JsStaticMemberAssignment> for SyntaxElement {
     fn from(n: JsStaticMemberAssignment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsStaticMemberExpression {
+impl AstNode for JsStaticMemberExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MEMBER_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13729,7 +13857,8 @@ impl From<JsStaticMemberExpression> for SyntaxNode {
 impl From<JsStaticMemberExpression> for SyntaxElement {
     fn from(n: JsStaticMemberExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsStaticModifier {
+impl AstNode for JsStaticModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MODIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13756,7 +13885,8 @@ impl From<JsStaticModifier> for SyntaxNode {
 impl From<JsStaticModifier> for SyntaxElement {
     fn from(n: JsStaticModifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsStringLiteralExpression {
+impl AstNode for JsStringLiteralExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13783,7 +13913,8 @@ impl From<JsStringLiteralExpression> for SyntaxNode {
 impl From<JsStringLiteralExpression> for SyntaxElement {
     fn from(n: JsStringLiteralExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsSuperExpression {
+impl AstNode for JsSuperExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SUPER_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13810,7 +13941,8 @@ impl From<JsSuperExpression> for SyntaxNode {
 impl From<JsSuperExpression> for SyntaxElement {
     fn from(n: JsSuperExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsSwitchStatement {
+impl AstNode for JsSwitchStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SWITCH_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13858,7 +13990,8 @@ impl From<JsSwitchStatement> for SyntaxNode {
 impl From<JsSwitchStatement> for SyntaxElement {
     fn from(n: JsSwitchStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsTemplate {
+impl AstNode for JsTemplate {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TEMPLATE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13895,7 +14028,8 @@ impl From<JsTemplate> for SyntaxNode {
 impl From<JsTemplate> for SyntaxElement {
     fn from(n: JsTemplate) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsTemplateChunkElement {
+impl AstNode for JsTemplateChunkElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TEMPLATE_CHUNK_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13922,7 +14056,8 @@ impl From<JsTemplateChunkElement> for SyntaxNode {
 impl From<JsTemplateChunkElement> for SyntaxElement {
     fn from(n: JsTemplateChunkElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsTemplateElement {
+impl AstNode for JsTemplateElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TEMPLATE_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13954,7 +14089,8 @@ impl From<JsTemplateElement> for SyntaxNode {
 impl From<JsTemplateElement> for SyntaxElement {
     fn from(n: JsTemplateElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsThisExpression {
+impl AstNode for JsThisExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THIS_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -13978,7 +14114,8 @@ impl From<JsThisExpression> for SyntaxNode {
 impl From<JsThisExpression> for SyntaxElement {
     fn from(n: JsThisExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsThrowStatement {
+impl AstNode for JsThrowStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THROW_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14010,7 +14147,8 @@ impl From<JsThrowStatement> for SyntaxNode {
 impl From<JsThrowStatement> for SyntaxElement {
     fn from(n: JsThrowStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsTryFinallyStatement {
+impl AstNode for JsTryFinallyStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TRY_FINALLY_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14043,7 +14181,8 @@ impl From<JsTryFinallyStatement> for SyntaxNode {
 impl From<JsTryFinallyStatement> for SyntaxElement {
     fn from(n: JsTryFinallyStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsTryStatement {
+impl AstNode for JsTryStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TRY_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14072,7 +14211,8 @@ impl From<JsTryStatement> for SyntaxNode {
 impl From<JsTryStatement> for SyntaxElement {
     fn from(n: JsTryStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsUnaryExpression {
+impl AstNode for JsUnaryExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNARY_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14100,7 +14240,8 @@ impl From<JsUnaryExpression> for SyntaxNode {
 impl From<JsUnaryExpression> for SyntaxElement {
     fn from(n: JsUnaryExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsVariableDeclaration {
+impl AstNode for JsVariableDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14125,7 +14266,8 @@ impl From<JsVariableDeclaration> for SyntaxNode {
 impl From<JsVariableDeclaration> for SyntaxElement {
     fn from(n: JsVariableDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsVariableDeclarationClause {
+impl AstNode for JsVariableDeclarationClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14156,7 +14298,8 @@ impl From<JsVariableDeclarationClause> for SyntaxNode {
 impl From<JsVariableDeclarationClause> for SyntaxElement {
     fn from(n: JsVariableDeclarationClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsVariableDeclarator {
+impl AstNode for JsVariableDeclarator {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATOR }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14188,7 +14331,8 @@ impl From<JsVariableDeclarator> for SyntaxNode {
 impl From<JsVariableDeclarator> for SyntaxElement {
     fn from(n: JsVariableDeclarator) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsVariableStatement {
+impl AstNode for JsVariableStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14219,7 +14363,8 @@ impl From<JsVariableStatement> for SyntaxNode {
 impl From<JsVariableStatement> for SyntaxElement {
     fn from(n: JsVariableStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsWhileStatement {
+impl AstNode for JsWhileStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_WHILE_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14256,7 +14401,8 @@ impl From<JsWhileStatement> for SyntaxNode {
 impl From<JsWhileStatement> for SyntaxElement {
     fn from(n: JsWhileStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsWithStatement {
+impl AstNode for JsWithStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_WITH_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14290,7 +14436,8 @@ impl From<JsWithStatement> for SyntaxNode {
 impl From<JsWithStatement> for SyntaxElement {
     fn from(n: JsWithStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsYieldArgument {
+impl AstNode for JsYieldArgument {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_YIELD_ARGUMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14318,7 +14465,8 @@ impl From<JsYieldArgument> for SyntaxNode {
 impl From<JsYieldArgument> for SyntaxElement {
     fn from(n: JsYieldArgument) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsYieldExpression {
+impl AstNode for JsYieldExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_YIELD_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14346,7 +14494,8 @@ impl From<JsYieldExpression> for SyntaxNode {
 impl From<JsYieldExpression> for SyntaxElement {
     fn from(n: JsYieldExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxAttribute {
+impl AstNode for JsxAttribute {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_ATTRIBUTE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14374,7 +14523,8 @@ impl From<JsxAttribute> for SyntaxNode {
 impl From<JsxAttribute> for SyntaxElement {
     fn from(n: JsxAttribute) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxAttributeInitializerClause {
+impl AstNode for JsxAttributeInitializerClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_ATTRIBUTE_INITIALIZER_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14399,7 +14549,8 @@ impl From<JsxAttributeInitializerClause> for SyntaxNode {
 impl From<JsxAttributeInitializerClause> for SyntaxElement {
     fn from(n: JsxAttributeInitializerClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxClosingElement {
+impl AstNode for JsxClosingElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_CLOSING_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14435,7 +14586,8 @@ impl From<JsxClosingElement> for SyntaxNode {
 impl From<JsxClosingElement> for SyntaxElement {
     fn from(n: JsxClosingElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxClosingFragment {
+impl AstNode for JsxClosingFragment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_CLOSING_FRAGMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14470,7 +14622,8 @@ impl From<JsxClosingFragment> for SyntaxNode {
 impl From<JsxClosingFragment> for SyntaxElement {
     fn from(n: JsxClosingFragment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxElement {
+impl AstNode for JsxElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14502,7 +14655,8 @@ impl From<JsxElement> for SyntaxNode {
 impl From<JsxElement> for SyntaxElement {
     fn from(n: JsxElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxExpressionAttributeValue {
+impl AstNode for JsxExpressionAttributeValue {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_EXPRESSION_ATTRIBUTE_VALUE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14534,7 +14688,8 @@ impl From<JsxExpressionAttributeValue> for SyntaxNode {
 impl From<JsxExpressionAttributeValue> for SyntaxElement {
     fn from(n: JsxExpressionAttributeValue) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxExpressionChild {
+impl AstNode for JsxExpressionChild {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_EXPRESSION_CHILD }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14569,7 +14724,8 @@ impl From<JsxExpressionChild> for SyntaxNode {
 impl From<JsxExpressionChild> for SyntaxElement {
     fn from(n: JsxExpressionChild) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxFragment {
+impl AstNode for JsxFragment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_FRAGMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14601,7 +14757,8 @@ impl From<JsxFragment> for SyntaxNode {
 impl From<JsxFragment> for SyntaxElement {
     fn from(n: JsxFragment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxMemberName {
+impl AstNode for JsxMemberName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_MEMBER_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14627,7 +14784,8 @@ impl From<JsxMemberName> for SyntaxNode {
 impl From<JsxMemberName> for SyntaxElement {
     fn from(n: JsxMemberName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxName {
+impl AstNode for JsxName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14654,7 +14812,8 @@ impl From<JsxName> for SyntaxNode {
 impl From<JsxName> for SyntaxElement {
     fn from(n: JsxName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxNamespaceName {
+impl AstNode for JsxNamespaceName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_NAMESPACE_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14683,7 +14842,8 @@ impl From<JsxNamespaceName> for SyntaxNode {
 impl From<JsxNamespaceName> for SyntaxElement {
     fn from(n: JsxNamespaceName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxOpeningElement {
+impl AstNode for JsxOpeningElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_OPENING_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14720,7 +14880,8 @@ impl From<JsxOpeningElement> for SyntaxNode {
 impl From<JsxOpeningElement> for SyntaxElement {
     fn from(n: JsxOpeningElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxOpeningFragment {
+impl AstNode for JsxOpeningFragment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_OPENING_FRAGMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14751,7 +14912,8 @@ impl From<JsxOpeningFragment> for SyntaxNode {
 impl From<JsxOpeningFragment> for SyntaxElement {
     fn from(n: JsxOpeningFragment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxReferenceIdentifier {
+impl AstNode for JsxReferenceIdentifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_REFERENCE_IDENTIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14778,7 +14940,8 @@ impl From<JsxReferenceIdentifier> for SyntaxNode {
 impl From<JsxReferenceIdentifier> for SyntaxElement {
     fn from(n: JsxReferenceIdentifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxSelfClosingElement {
+impl AstNode for JsxSelfClosingElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_SELF_CLOSING_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14819,7 +14982,8 @@ impl From<JsxSelfClosingElement> for SyntaxNode {
 impl From<JsxSelfClosingElement> for SyntaxElement {
     fn from(n: JsxSelfClosingElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxSpreadAttribute {
+impl AstNode for JsxSpreadAttribute {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_SPREAD_ATTRIBUTE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14855,7 +15019,8 @@ impl From<JsxSpreadAttribute> for SyntaxNode {
 impl From<JsxSpreadAttribute> for SyntaxElement {
     fn from(n: JsxSpreadAttribute) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxSpreadChild {
+impl AstNode for JsxSpreadChild {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_SPREAD_CHILD }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14891,7 +15056,8 @@ impl From<JsxSpreadChild> for SyntaxNode {
 impl From<JsxSpreadChild> for SyntaxElement {
     fn from(n: JsxSpreadChild) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxString {
+impl AstNode for JsxString {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_STRING }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14918,7 +15084,8 @@ impl From<JsxString> for SyntaxNode {
 impl From<JsxString> for SyntaxElement {
     fn from(n: JsxString) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxTagExpression {
+impl AstNode for JsxTagExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_TAG_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14942,7 +15109,8 @@ impl From<JsxTagExpression> for SyntaxNode {
 impl From<JsxTagExpression> for SyntaxElement {
     fn from(n: JsxTagExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsxText {
+impl AstNode for JsxText {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_TEXT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14969,7 +15137,8 @@ impl From<JsxText> for SyntaxNode {
 impl From<JsxText> for SyntaxElement {
     fn from(n: JsxText) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for NewTarget {
+impl AstNode for NewTarget {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == NEW_TARGET }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -14998,7 +15167,8 @@ impl From<NewTarget> for SyntaxNode {
 impl From<NewTarget> for SyntaxElement {
     fn from(n: NewTarget) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsAbstractModifier {
+impl AstNode for TsAbstractModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ABSTRACT_MODIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15025,7 +15195,8 @@ impl From<TsAbstractModifier> for SyntaxNode {
 impl From<TsAbstractModifier> for SyntaxElement {
     fn from(n: TsAbstractModifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsAccessibilityModifier {
+impl AstNode for TsAccessibilityModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ACCESSIBILITY_MODIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15052,7 +15223,8 @@ impl From<TsAccessibilityModifier> for SyntaxNode {
 impl From<TsAccessibilityModifier> for SyntaxElement {
     fn from(n: TsAccessibilityModifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsAnyType {
+impl AstNode for TsAnyType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ANY_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15076,7 +15248,8 @@ impl From<TsAnyType> for SyntaxNode {
 impl From<TsAnyType> for SyntaxElement {
     fn from(n: TsAnyType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsArrayType {
+impl AstNode for TsArrayType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ARRAY_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15111,7 +15284,8 @@ impl From<TsArrayType> for SyntaxNode {
 impl From<TsArrayType> for SyntaxElement {
     fn from(n: TsArrayType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsAsAssignment {
+impl AstNode for TsAsAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_AS_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15137,7 +15311,8 @@ impl From<TsAsAssignment> for SyntaxNode {
 impl From<TsAsAssignment> for SyntaxElement {
     fn from(n: TsAsAssignment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsAsExpression {
+impl AstNode for TsAsExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_AS_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15163,7 +15338,8 @@ impl From<TsAsExpression> for SyntaxNode {
 impl From<TsAsExpression> for SyntaxElement {
     fn from(n: TsAsExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsAssertsCondition {
+impl AstNode for TsAssertsCondition {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ASSERTS_CONDITION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15188,7 +15364,8 @@ impl From<TsAssertsCondition> for SyntaxNode {
 impl From<TsAssertsCondition> for SyntaxElement {
     fn from(n: TsAssertsCondition) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsAssertsReturnType {
+impl AstNode for TsAssertsReturnType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ASSERTS_RETURN_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15223,7 +15400,8 @@ impl From<TsAssertsReturnType> for SyntaxNode {
 impl From<TsAssertsReturnType> for SyntaxElement {
     fn from(n: TsAssertsReturnType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsBigIntLiteralType {
+impl AstNode for TsBigIntLiteralType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BIG_INT_LITERAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15254,7 +15432,8 @@ impl From<TsBigIntLiteralType> for SyntaxNode {
 impl From<TsBigIntLiteralType> for SyntaxElement {
     fn from(n: TsBigIntLiteralType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsBigintType {
+impl AstNode for TsBigintType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BIGINT_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15281,7 +15460,8 @@ impl From<TsBigintType> for SyntaxNode {
 impl From<TsBigintType> for SyntaxElement {
     fn from(n: TsBigintType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsBooleanLiteralType {
+impl AstNode for TsBooleanLiteralType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BOOLEAN_LITERAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15305,7 +15485,8 @@ impl From<TsBooleanLiteralType> for SyntaxNode {
 impl From<TsBooleanLiteralType> for SyntaxElement {
     fn from(n: TsBooleanLiteralType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsBooleanType {
+impl AstNode for TsBooleanType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BOOLEAN_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15332,7 +15513,8 @@ impl From<TsBooleanType> for SyntaxNode {
 impl From<TsBooleanType> for SyntaxElement {
     fn from(n: TsBooleanType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsCallSignatureTypeMember {
+impl AstNode for TsCallSignatureTypeMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CALL_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15368,7 +15550,8 @@ impl From<TsCallSignatureTypeMember> for SyntaxNode {
 impl From<TsCallSignatureTypeMember> for SyntaxElement {
     fn from(n: TsCallSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsConditionalType {
+impl AstNode for TsConditionalType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONDITIONAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15410,7 +15593,8 @@ impl From<TsConditionalType> for SyntaxNode {
 impl From<TsConditionalType> for SyntaxElement {
     fn from(n: TsConditionalType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsConstructSignatureTypeMember {
+impl AstNode for TsConstructSignatureTypeMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15447,7 +15631,8 @@ impl From<TsConstructSignatureTypeMember> for SyntaxNode {
 impl From<TsConstructSignatureTypeMember> for SyntaxElement {
     fn from(n: TsConstructSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsConstructorSignatureClassMember {
+impl AstNode for TsConstructorSignatureClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15477,7 +15662,8 @@ impl From<TsConstructorSignatureClassMember> for SyntaxNode {
 impl From<TsConstructorSignatureClassMember> for SyntaxElement {
     fn from(n: TsConstructorSignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsConstructorType {
+impl AstNode for TsConstructorType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCTOR_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15518,7 +15704,8 @@ impl From<TsConstructorType> for SyntaxNode {
 impl From<TsConstructorType> for SyntaxElement {
     fn from(n: TsConstructorType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsDeclareFunctionDeclaration {
+impl AstNode for TsDeclareFunctionDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DECLARE_FUNCTION_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15563,7 +15750,8 @@ impl From<TsDeclareFunctionDeclaration> for SyntaxNode {
 impl From<TsDeclareFunctionDeclaration> for SyntaxElement {
     fn from(n: TsDeclareFunctionDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsDeclareModifier {
+impl AstNode for TsDeclareModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DECLARE_MODIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15590,7 +15778,8 @@ impl From<TsDeclareModifier> for SyntaxNode {
 impl From<TsDeclareModifier> for SyntaxElement {
     fn from(n: TsDeclareModifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsDeclareStatement {
+impl AstNode for TsDeclareStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DECLARE_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15621,7 +15810,8 @@ impl From<TsDeclareStatement> for SyntaxNode {
 impl From<TsDeclareStatement> for SyntaxElement {
     fn from(n: TsDeclareStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsDefaultTypeClause {
+impl AstNode for TsDefaultTypeClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DEFAULT_TYPE_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15646,7 +15836,8 @@ impl From<TsDefaultTypeClause> for SyntaxNode {
 impl From<TsDefaultTypeClause> for SyntaxElement {
     fn from(n: TsDefaultTypeClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsDefinitePropertyAnnotation {
+impl AstNode for TsDefinitePropertyAnnotation {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DEFINITE_PROPERTY_ANNOTATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15674,7 +15865,8 @@ impl From<TsDefinitePropertyAnnotation> for SyntaxNode {
 impl From<TsDefinitePropertyAnnotation> for SyntaxElement {
     fn from(n: TsDefinitePropertyAnnotation) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsDefiniteVariableAnnotation {
+impl AstNode for TsDefiniteVariableAnnotation {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DEFINITE_VARIABLE_ANNOTATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15702,7 +15894,8 @@ impl From<TsDefiniteVariableAnnotation> for SyntaxNode {
 impl From<TsDefiniteVariableAnnotation> for SyntaxElement {
     fn from(n: TsDefiniteVariableAnnotation) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsEmptyExternalModuleDeclarationBody {
+impl AstNode for TsEmptyExternalModuleDeclarationBody {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15729,7 +15922,8 @@ impl From<TsEmptyExternalModuleDeclarationBody> for SyntaxNode {
 impl From<TsEmptyExternalModuleDeclarationBody> for SyntaxElement {
     fn from(n: TsEmptyExternalModuleDeclarationBody) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsEnumDeclaration {
+impl AstNode for TsEnumDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15767,7 +15961,8 @@ impl From<TsEnumDeclaration> for SyntaxNode {
 impl From<TsEnumDeclaration> for SyntaxElement {
     fn from(n: TsEnumDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsEnumMember {
+impl AstNode for TsEnumMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15795,7 +15990,8 @@ impl From<TsEnumMember> for SyntaxNode {
 impl From<TsEnumMember> for SyntaxElement {
     fn from(n: TsEnumMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsExportAsNamespaceClause {
+impl AstNode for TsExportAsNamespaceClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPORT_AS_NAMESPACE_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15828,7 +16024,8 @@ impl From<TsExportAsNamespaceClause> for SyntaxNode {
 impl From<TsExportAsNamespaceClause> for SyntaxElement {
     fn from(n: TsExportAsNamespaceClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsExportAssignmentClause {
+impl AstNode for TsExportAssignmentClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPORT_ASSIGNMENT_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15857,7 +16054,8 @@ impl From<TsExportAssignmentClause> for SyntaxNode {
 impl From<TsExportAssignmentClause> for SyntaxElement {
     fn from(n: TsExportAssignmentClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsExportDeclareClause {
+impl AstNode for TsExportDeclareClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPORT_DECLARE_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15888,7 +16086,8 @@ impl From<TsExportDeclareClause> for SyntaxNode {
 impl From<TsExportDeclareClause> for SyntaxElement {
     fn from(n: TsExportDeclareClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsExtendsClause {
+impl AstNode for TsExtendsClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXTENDS_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15916,7 +16115,8 @@ impl From<TsExtendsClause> for SyntaxNode {
 impl From<TsExtendsClause> for SyntaxElement {
     fn from(n: TsExtendsClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsExternalModuleDeclaration {
+impl AstNode for TsExternalModuleDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15945,7 +16145,8 @@ impl From<TsExternalModuleDeclaration> for SyntaxNode {
 impl From<TsExternalModuleDeclaration> for SyntaxElement {
     fn from(n: TsExternalModuleDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsExternalModuleReference {
+impl AstNode for TsExternalModuleReference {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_REFERENCE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -15981,7 +16182,8 @@ impl From<TsExternalModuleReference> for SyntaxNode {
 impl From<TsExternalModuleReference> for SyntaxElement {
     fn from(n: TsExternalModuleReference) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsFunctionType {
+impl AstNode for TsFunctionType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_FUNCTION_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16017,7 +16219,8 @@ impl From<TsFunctionType> for SyntaxNode {
 impl From<TsFunctionType> for SyntaxElement {
     fn from(n: TsFunctionType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsGetterSignatureClassMember {
+impl AstNode for TsGetterSignatureClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_GETTER_SIGNATURE_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16059,7 +16262,8 @@ impl From<TsGetterSignatureClassMember> for SyntaxNode {
 impl From<TsGetterSignatureClassMember> for SyntaxElement {
     fn from(n: TsGetterSignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsGetterSignatureTypeMember {
+impl AstNode for TsGetterSignatureTypeMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_GETTER_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16100,7 +16304,8 @@ impl From<TsGetterSignatureTypeMember> for SyntaxNode {
 impl From<TsGetterSignatureTypeMember> for SyntaxElement {
     fn from(n: TsGetterSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsGlobalDeclaration {
+impl AstNode for TsGlobalDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_GLOBAL_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16128,7 +16333,8 @@ impl From<TsGlobalDeclaration> for SyntaxNode {
 impl From<TsGlobalDeclaration> for SyntaxElement {
     fn from(n: TsGlobalDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsIdentifierBinding {
+impl AstNode for TsIdentifierBinding {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IDENTIFIER_BINDING }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16152,7 +16358,8 @@ impl From<TsIdentifierBinding> for SyntaxNode {
 impl From<TsIdentifierBinding> for SyntaxElement {
     fn from(n: TsIdentifierBinding) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsImplementsClause {
+impl AstNode for TsImplementsClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPLEMENTS_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16180,7 +16387,8 @@ impl From<TsImplementsClause> for SyntaxNode {
 impl From<TsImplementsClause> for SyntaxElement {
     fn from(n: TsImplementsClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsImportEqualsDeclaration {
+impl AstNode for TsImportEqualsDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT_EQUALS_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16221,7 +16429,8 @@ impl From<TsImportEqualsDeclaration> for SyntaxNode {
 impl From<TsImportEqualsDeclaration> for SyntaxElement {
     fn from(n: TsImportEqualsDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsImportType {
+impl AstNode for TsImportType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16272,7 +16481,8 @@ impl From<TsImportType> for SyntaxNode {
 impl From<TsImportType> for SyntaxElement {
     fn from(n: TsImportType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsImportTypeQualifier {
+impl AstNode for TsImportTypeQualifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT_TYPE_QUALIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16297,7 +16507,8 @@ impl From<TsImportTypeQualifier> for SyntaxNode {
 impl From<TsImportTypeQualifier> for SyntaxElement {
     fn from(n: TsImportTypeQualifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsIndexSignatureClassMember {
+impl AstNode for TsIndexSignatureClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16338,7 +16549,8 @@ impl From<TsIndexSignatureClassMember> for SyntaxNode {
 impl From<TsIndexSignatureClassMember> for SyntaxElement {
     fn from(n: TsIndexSignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsIndexSignatureParameter {
+impl AstNode for TsIndexSignatureParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16366,7 +16578,8 @@ impl From<TsIndexSignatureParameter> for SyntaxNode {
 impl From<TsIndexSignatureParameter> for SyntaxElement {
     fn from(n: TsIndexSignatureParameter) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsIndexSignatureTypeMember {
+impl AstNode for TsIndexSignatureTypeMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16410,7 +16623,8 @@ impl From<TsIndexSignatureTypeMember> for SyntaxNode {
 impl From<TsIndexSignatureTypeMember> for SyntaxElement {
     fn from(n: TsIndexSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsIndexedAccessType {
+impl AstNode for TsIndexedAccessType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEXED_ACCESS_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16446,7 +16660,8 @@ impl From<TsIndexedAccessType> for SyntaxNode {
 impl From<TsIndexedAccessType> for SyntaxElement {
     fn from(n: TsIndexedAccessType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsInferType {
+impl AstNode for TsInferType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INFER_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16477,7 +16692,8 @@ impl From<TsInferType> for SyntaxNode {
 impl From<TsInferType> for SyntaxElement {
     fn from(n: TsInferType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsInterfaceDeclaration {
+impl AstNode for TsInterfaceDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERFACE_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16522,7 +16738,8 @@ impl From<TsInterfaceDeclaration> for SyntaxNode {
 impl From<TsInterfaceDeclaration> for SyntaxElement {
     fn from(n: TsInterfaceDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsIntersectionType {
+impl AstNode for TsIntersectionType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERSECTION_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16550,7 +16767,8 @@ impl From<TsIntersectionType> for SyntaxNode {
 impl From<TsIntersectionType> for SyntaxElement {
     fn from(n: TsIntersectionType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsMappedType {
+impl AstNode for TsMappedType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16615,7 +16833,8 @@ impl From<TsMappedType> for SyntaxNode {
 impl From<TsMappedType> for SyntaxElement {
     fn from(n: TsMappedType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsMappedTypeAsClause {
+impl AstNode for TsMappedTypeAsClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE_AS_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16640,7 +16859,8 @@ impl From<TsMappedTypeAsClause> for SyntaxNode {
 impl From<TsMappedTypeAsClause> for SyntaxElement {
     fn from(n: TsMappedTypeAsClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsMappedTypeOptionalModifierClause {
+impl AstNode for TsMappedTypeOptionalModifierClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16671,7 +16891,8 @@ impl From<TsMappedTypeOptionalModifierClause> for SyntaxNode {
 impl From<TsMappedTypeOptionalModifierClause> for SyntaxElement {
     fn from(n: TsMappedTypeOptionalModifierClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsMappedTypeReadonlyModifierClause {
+impl AstNode for TsMappedTypeReadonlyModifierClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16702,7 +16923,8 @@ impl From<TsMappedTypeReadonlyModifierClause> for SyntaxNode {
 impl From<TsMappedTypeReadonlyModifierClause> for SyntaxElement {
     fn from(n: TsMappedTypeReadonlyModifierClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsMethodSignatureClassMember {
+impl AstNode for TsMethodSignatureClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16748,7 +16970,8 @@ impl From<TsMethodSignatureClassMember> for SyntaxNode {
 impl From<TsMethodSignatureClassMember> for SyntaxElement {
     fn from(n: TsMethodSignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsMethodSignatureTypeMember {
+impl AstNode for TsMethodSignatureTypeMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16789,7 +17012,8 @@ impl From<TsMethodSignatureTypeMember> for SyntaxNode {
 impl From<TsMethodSignatureTypeMember> for SyntaxElement {
     fn from(n: TsMethodSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsModuleBlock {
+impl AstNode for TsModuleBlock {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MODULE_BLOCK }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16821,7 +17045,8 @@ impl From<TsModuleBlock> for SyntaxNode {
 impl From<TsModuleBlock> for SyntaxElement {
     fn from(n: TsModuleBlock) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsModuleDeclaration {
+impl AstNode for TsModuleDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MODULE_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16850,7 +17075,8 @@ impl From<TsModuleDeclaration> for SyntaxNode {
 impl From<TsModuleDeclaration> for SyntaxElement {
     fn from(n: TsModuleDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNameWithTypeArguments {
+impl AstNode for TsNameWithTypeArguments {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAME_WITH_TYPE_ARGUMENTS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16878,7 +17104,8 @@ impl From<TsNameWithTypeArguments> for SyntaxNode {
 impl From<TsNameWithTypeArguments> for SyntaxElement {
     fn from(n: TsNameWithTypeArguments) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNamedTupleTypeElement {
+impl AstNode for TsNamedTupleTypeElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMED_TUPLE_TYPE_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16915,7 +17142,8 @@ impl From<TsNamedTupleTypeElement> for SyntaxNode {
 impl From<TsNamedTupleTypeElement> for SyntaxElement {
     fn from(n: TsNamedTupleTypeElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNeverType {
+impl AstNode for TsNeverType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NEVER_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16942,7 +17170,8 @@ impl From<TsNeverType> for SyntaxNode {
 impl From<TsNeverType> for SyntaxElement {
     fn from(n: TsNeverType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNonNullAssertionAssignment {
+impl AstNode for TsNonNullAssertionAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NON_NULL_ASSERTION_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16967,7 +17196,8 @@ impl From<TsNonNullAssertionAssignment> for SyntaxNode {
 impl From<TsNonNullAssertionAssignment> for SyntaxElement {
     fn from(n: TsNonNullAssertionAssignment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNonNullAssertionExpression {
+impl AstNode for TsNonNullAssertionExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NON_NULL_ASSERTION_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -16992,7 +17222,8 @@ impl From<TsNonNullAssertionExpression> for SyntaxNode {
 impl From<TsNonNullAssertionExpression> for SyntaxElement {
     fn from(n: TsNonNullAssertionExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNonPrimitiveType {
+impl AstNode for TsNonPrimitiveType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NON_PRIMITIVE_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17019,7 +17250,8 @@ impl From<TsNonPrimitiveType> for SyntaxNode {
 impl From<TsNonPrimitiveType> for SyntaxElement {
     fn from(n: TsNonPrimitiveType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNullLiteralType {
+impl AstNode for TsNullLiteralType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NULL_LITERAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17046,7 +17278,8 @@ impl From<TsNullLiteralType> for SyntaxNode {
 impl From<TsNullLiteralType> for SyntaxElement {
     fn from(n: TsNullLiteralType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNumberLiteralType {
+impl AstNode for TsNumberLiteralType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NUMBER_LITERAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17077,7 +17310,8 @@ impl From<TsNumberLiteralType> for SyntaxNode {
 impl From<TsNumberLiteralType> for SyntaxElement {
     fn from(n: TsNumberLiteralType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsNumberType {
+impl AstNode for TsNumberType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NUMBER_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17104,7 +17338,8 @@ impl From<TsNumberType> for SyntaxNode {
 impl From<TsNumberType> for SyntaxElement {
     fn from(n: TsNumberType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsObjectType {
+impl AstNode for TsObjectType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OBJECT_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17136,7 +17371,8 @@ impl From<TsObjectType> for SyntaxNode {
 impl From<TsObjectType> for SyntaxElement {
     fn from(n: TsObjectType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsOptionalPropertyAnnotation {
+impl AstNode for TsOptionalPropertyAnnotation {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OPTIONAL_PROPERTY_ANNOTATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17167,7 +17403,8 @@ impl From<TsOptionalPropertyAnnotation> for SyntaxNode {
 impl From<TsOptionalPropertyAnnotation> for SyntaxElement {
     fn from(n: TsOptionalPropertyAnnotation) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsOptionalTupleTypeElement {
+impl AstNode for TsOptionalTupleTypeElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OPTIONAL_TUPLE_TYPE_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17195,7 +17432,8 @@ impl From<TsOptionalTupleTypeElement> for SyntaxNode {
 impl From<TsOptionalTupleTypeElement> for SyntaxElement {
     fn from(n: TsOptionalTupleTypeElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsOverrideModifier {
+impl AstNode for TsOverrideModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OVERRIDE_MODIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17222,7 +17460,8 @@ impl From<TsOverrideModifier> for SyntaxNode {
 impl From<TsOverrideModifier> for SyntaxElement {
     fn from(n: TsOverrideModifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsParenthesizedType {
+impl AstNode for TsParenthesizedType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PARENTHESIZED_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17254,7 +17493,8 @@ impl From<TsParenthesizedType> for SyntaxNode {
 impl From<TsParenthesizedType> for SyntaxElement {
     fn from(n: TsParenthesizedType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsPredicateReturnType {
+impl AstNode for TsPredicateReturnType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PREDICATE_RETURN_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17283,7 +17523,8 @@ impl From<TsPredicateReturnType> for SyntaxNode {
 impl From<TsPredicateReturnType> for SyntaxElement {
     fn from(n: TsPredicateReturnType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsPropertyParameter {
+impl AstNode for TsPropertyParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PROPERTY_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17311,7 +17552,8 @@ impl From<TsPropertyParameter> for SyntaxNode {
 impl From<TsPropertyParameter> for SyntaxElement {
     fn from(n: TsPropertyParameter) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsPropertySignatureClassMember {
+impl AstNode for TsPropertySignatureClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17344,7 +17586,8 @@ impl From<TsPropertySignatureClassMember> for SyntaxNode {
 impl From<TsPropertySignatureClassMember> for SyntaxElement {
     fn from(n: TsPropertySignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsPropertySignatureTypeMember {
+impl AstNode for TsPropertySignatureTypeMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17384,7 +17627,8 @@ impl From<TsPropertySignatureTypeMember> for SyntaxNode {
 impl From<TsPropertySignatureTypeMember> for SyntaxElement {
     fn from(n: TsPropertySignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsQualifiedModuleName {
+impl AstNode for TsQualifiedModuleName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_QUALIFIED_MODULE_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17410,7 +17654,8 @@ impl From<TsQualifiedModuleName> for SyntaxNode {
 impl From<TsQualifiedModuleName> for SyntaxElement {
     fn from(n: TsQualifiedModuleName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsQualifiedName {
+impl AstNode for TsQualifiedName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_QUALIFIED_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17436,7 +17681,8 @@ impl From<TsQualifiedName> for SyntaxNode {
 impl From<TsQualifiedName> for SyntaxElement {
     fn from(n: TsQualifiedName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsReadonlyModifier {
+impl AstNode for TsReadonlyModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_READONLY_MODIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17463,7 +17709,8 @@ impl From<TsReadonlyModifier> for SyntaxNode {
 impl From<TsReadonlyModifier> for SyntaxElement {
     fn from(n: TsReadonlyModifier) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsReferenceType {
+impl AstNode for TsReferenceType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_REFERENCE_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17491,7 +17738,8 @@ impl From<TsReferenceType> for SyntaxNode {
 impl From<TsReferenceType> for SyntaxElement {
     fn from(n: TsReferenceType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsRestTupleTypeElement {
+impl AstNode for TsRestTupleTypeElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_REST_TUPLE_TYPE_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17519,7 +17767,8 @@ impl From<TsRestTupleTypeElement> for SyntaxNode {
 impl From<TsRestTupleTypeElement> for SyntaxElement {
     fn from(n: TsRestTupleTypeElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsReturnTypeAnnotation {
+impl AstNode for TsReturnTypeAnnotation {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_RETURN_TYPE_ANNOTATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17547,7 +17796,8 @@ impl From<TsReturnTypeAnnotation> for SyntaxNode {
 impl From<TsReturnTypeAnnotation> for SyntaxElement {
     fn from(n: TsReturnTypeAnnotation) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsSetterSignatureClassMember {
+impl AstNode for TsSetterSignatureClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_SETTER_SIGNATURE_CLASS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17586,7 +17836,8 @@ impl From<TsSetterSignatureClassMember> for SyntaxNode {
 impl From<TsSetterSignatureClassMember> for SyntaxElement {
     fn from(n: TsSetterSignatureClassMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsSetterSignatureTypeMember {
+impl AstNode for TsSetterSignatureTypeMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_SETTER_SIGNATURE_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17624,7 +17875,8 @@ impl From<TsSetterSignatureTypeMember> for SyntaxNode {
 impl From<TsSetterSignatureTypeMember> for SyntaxElement {
     fn from(n: TsSetterSignatureTypeMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsStringLiteralType {
+impl AstNode for TsStringLiteralType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_STRING_LITERAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17651,7 +17903,8 @@ impl From<TsStringLiteralType> for SyntaxNode {
 impl From<TsStringLiteralType> for SyntaxElement {
     fn from(n: TsStringLiteralType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsStringType {
+impl AstNode for TsStringType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_STRING_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17678,7 +17931,8 @@ impl From<TsStringType> for SyntaxNode {
 impl From<TsStringType> for SyntaxElement {
     fn from(n: TsStringType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsSymbolType {
+impl AstNode for TsSymbolType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_SYMBOL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17705,7 +17959,8 @@ impl From<TsSymbolType> for SyntaxNode {
 impl From<TsSymbolType> for SyntaxElement {
     fn from(n: TsSymbolType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTemplateChunkElement {
+impl AstNode for TsTemplateChunkElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TEMPLATE_CHUNK_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17732,7 +17987,8 @@ impl From<TsTemplateChunkElement> for SyntaxNode {
 impl From<TsTemplateChunkElement> for SyntaxElement {
     fn from(n: TsTemplateChunkElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTemplateElement {
+impl AstNode for TsTemplateElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TEMPLATE_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17764,7 +18020,8 @@ impl From<TsTemplateElement> for SyntaxNode {
 impl From<TsTemplateElement> for SyntaxElement {
     fn from(n: TsTemplateElement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTemplateLiteralType {
+impl AstNode for TsTemplateLiteralType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TEMPLATE_LITERAL_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17796,7 +18053,8 @@ impl From<TsTemplateLiteralType> for SyntaxNode {
 impl From<TsTemplateLiteralType> for SyntaxElement {
     fn from(n: TsTemplateLiteralType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsThisParameter {
+impl AstNode for TsThisParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_THIS_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17824,7 +18082,8 @@ impl From<TsThisParameter> for SyntaxNode {
 impl From<TsThisParameter> for SyntaxElement {
     fn from(n: TsThisParameter) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsThisType {
+impl AstNode for TsThisType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_THIS_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17848,7 +18107,8 @@ impl From<TsThisType> for SyntaxNode {
 impl From<TsThisType> for SyntaxElement {
     fn from(n: TsThisType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTupleType {
+impl AstNode for TsTupleType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TUPLE_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17880,7 +18140,8 @@ impl From<TsTupleType> for SyntaxNode {
 impl From<TsTupleType> for SyntaxElement {
     fn from(n: TsTupleType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeAliasDeclaration {
+impl AstNode for TsTypeAliasDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ALIAS_DECLARATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17918,7 +18179,8 @@ impl From<TsTypeAliasDeclaration> for SyntaxNode {
 impl From<TsTypeAliasDeclaration> for SyntaxElement {
     fn from(n: TsTypeAliasDeclaration) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeAnnotation {
+impl AstNode for TsTypeAnnotation {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ANNOTATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17946,7 +18208,8 @@ impl From<TsTypeAnnotation> for SyntaxNode {
 impl From<TsTypeAnnotation> for SyntaxElement {
     fn from(n: TsTypeAnnotation) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeArguments {
+impl AstNode for TsTypeArguments {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ARGUMENTS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -17978,7 +18241,8 @@ impl From<TsTypeArguments> for SyntaxNode {
 impl From<TsTypeArguments> for SyntaxElement {
     fn from(n: TsTypeArguments) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeAssertionAssignment {
+impl AstNode for TsTypeAssertionAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ASSERTION_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18011,7 +18275,8 @@ impl From<TsTypeAssertionAssignment> for SyntaxNode {
 impl From<TsTypeAssertionAssignment> for SyntaxElement {
     fn from(n: TsTypeAssertionAssignment) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeAssertionExpression {
+impl AstNode for TsTypeAssertionExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ASSERTION_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18044,7 +18309,8 @@ impl From<TsTypeAssertionExpression> for SyntaxNode {
 impl From<TsTypeAssertionExpression> for SyntaxElement {
     fn from(n: TsTypeAssertionExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeConstraintClause {
+impl AstNode for TsTypeConstraintClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_CONSTRAINT_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18072,7 +18338,8 @@ impl From<TsTypeConstraintClause> for SyntaxNode {
 impl From<TsTypeConstraintClause> for SyntaxElement {
     fn from(n: TsTypeConstraintClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeOperatorType {
+impl AstNode for TsTypeOperatorType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_OPERATOR_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18100,7 +18367,8 @@ impl From<TsTypeOperatorType> for SyntaxNode {
 impl From<TsTypeOperatorType> for SyntaxElement {
     fn from(n: TsTypeOperatorType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeParameter {
+impl AstNode for TsTypeParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18129,7 +18397,8 @@ impl From<TsTypeParameter> for SyntaxNode {
 impl From<TsTypeParameter> for SyntaxElement {
     fn from(n: TsTypeParameter) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeParameterName {
+impl AstNode for TsTypeParameterName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAMETER_NAME }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18156,7 +18425,8 @@ impl From<TsTypeParameterName> for SyntaxNode {
 impl From<TsTypeParameterName> for SyntaxElement {
     fn from(n: TsTypeParameterName) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeParameters {
+impl AstNode for TsTypeParameters {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAMETERS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18188,7 +18458,8 @@ impl From<TsTypeParameters> for SyntaxNode {
 impl From<TsTypeParameters> for SyntaxElement {
     fn from(n: TsTypeParameters) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsTypeofType {
+impl AstNode for TsTypeofType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPEOF_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18219,7 +18490,8 @@ impl From<TsTypeofType> for SyntaxNode {
 impl From<TsTypeofType> for SyntaxElement {
     fn from(n: TsTypeofType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsUndefinedType {
+impl AstNode for TsUndefinedType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNDEFINED_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18246,7 +18518,8 @@ impl From<TsUndefinedType> for SyntaxNode {
 impl From<TsUndefinedType> for SyntaxElement {
     fn from(n: TsUndefinedType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsUnionType {
+impl AstNode for TsUnionType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNION_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18274,7 +18547,8 @@ impl From<TsUnionType> for SyntaxNode {
 impl From<TsUnionType> for SyntaxElement {
     fn from(n: TsUnionType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsUnknownType {
+impl AstNode for TsUnknownType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNKNOWN_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18301,7 +18575,8 @@ impl From<TsUnknownType> for SyntaxNode {
 impl From<TsUnknownType> for SyntaxElement {
     fn from(n: TsUnknownType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for TsVoidType {
+impl AstNode for TsVoidType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_VOID_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -18340,7 +18615,8 @@ impl From<JsAssignmentWithDefault> for JsAnyArrayAssignmentPatternElement {
         JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(node)
     }
 }
-impl AstNode<Language> for JsAnyArrayAssignmentPatternElement {
+impl AstNode for JsAnyArrayAssignmentPatternElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT
@@ -18436,7 +18712,8 @@ impl From<JsBindingPatternWithDefault> for JsAnyArrayBindingPatternElement {
         JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(node)
     }
 }
-impl AstNode<Language> for JsAnyArrayBindingPatternElement {
+impl AstNode for JsAnyArrayBindingPatternElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_BINDING_PATTERN_REST_ELEMENT
@@ -18515,7 +18792,8 @@ impl From<JsArrayHole> for JsAnyArrayElement {
 impl From<JsSpread> for JsAnyArrayElement {
     fn from(node: JsSpread) -> JsAnyArrayElement { JsAnyArrayElement::JsSpread(node) }
 }
-impl AstNode<Language> for JsAnyArrayElement {
+impl AstNode for JsAnyArrayElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_HOLE | JS_SPREAD => true,
@@ -18573,7 +18851,8 @@ impl From<JsParameters> for JsAnyArrowFunctionParameters {
         JsAnyArrowFunctionParameters::JsParameters(node)
     }
 }
-impl AstNode<Language> for JsAnyArrowFunctionParameters {
+impl AstNode for JsAnyArrowFunctionParameters {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_PARAMETERS => true,
@@ -18660,7 +18939,8 @@ impl From<TsTypeAssertionAssignment> for JsAnyAssignment {
         JsAnyAssignment::TsTypeAssertionAssignment(node)
     }
 }
-impl AstNode<Language> for JsAnyAssignment {
+impl AstNode for JsAnyAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -18761,7 +19041,8 @@ impl From<JsObjectAssignmentPattern> for JsAnyAssignmentPattern {
         JsAnyAssignmentPattern::JsObjectAssignmentPattern(node)
     }
 }
-impl AstNode<Language> for JsAnyAssignmentPattern {
+impl AstNode for JsAnyAssignmentPattern {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_ASSIGNMENT_PATTERN | JS_OBJECT_ASSIGNMENT_PATTERN => true,
@@ -18828,7 +19109,8 @@ impl From<JsIdentifierBinding> for JsAnyBinding {
 impl From<JsUnknownBinding> for JsAnyBinding {
     fn from(node: JsUnknownBinding) -> JsAnyBinding { JsAnyBinding::JsUnknownBinding(node) }
 }
-impl AstNode<Language> for JsAnyBinding {
+impl AstNode for JsAnyBinding {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JS_IDENTIFIER_BINDING | JS_UNKNOWN_BINDING)
     }
@@ -18881,7 +19163,8 @@ impl From<JsObjectBindingPattern> for JsAnyBindingPattern {
         JsAnyBindingPattern::JsObjectBindingPattern(node)
     }
 }
-impl AstNode<Language> for JsAnyBindingPattern {
+impl AstNode for JsAnyBindingPattern {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN => true,
@@ -18941,7 +19224,8 @@ impl From<JsAnyBindingPattern> for SyntaxElement {
 impl From<JsSpread> for JsAnyCallArgument {
     fn from(node: JsSpread) -> JsAnyCallArgument { JsAnyCallArgument::JsSpread(node) }
 }
-impl AstNode<Language> for JsAnyCallArgument {
+impl AstNode for JsAnyCallArgument {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_SPREAD => true,
@@ -19001,7 +19285,8 @@ impl From<JsClassExportDefaultDeclaration> for JsAnyClass {
 impl From<JsClassExpression> for JsAnyClass {
     fn from(node: JsClassExpression) -> JsAnyClass { JsAnyClass::JsClassExpression(node) }
 }
-impl AstNode<Language> for JsAnyClass {
+impl AstNode for JsAnyClass {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -19121,7 +19406,8 @@ impl From<TsSetterSignatureClassMember> for JsAnyClassMember {
         JsAnyClassMember::TsSetterSignatureClassMember(node)
     }
 }
-impl AstNode<Language> for JsAnyClassMember {
+impl AstNode for JsAnyClassMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -19283,7 +19569,8 @@ impl From<JsPrivateClassMemberName> for JsAnyClassMemberName {
         JsAnyClassMemberName::JsPrivateClassMemberName(node)
     }
 }
-impl AstNode<Language> for JsAnyClassMemberName {
+impl AstNode for JsAnyClassMemberName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -19347,7 +19634,8 @@ impl From<TsPropertyParameter> for JsAnyConstructorParameter {
         JsAnyConstructorParameter::TsPropertyParameter(node)
     }
 }
-impl AstNode<Language> for JsAnyConstructorParameter {
+impl AstNode for JsAnyConstructorParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_REST_PARAMETER | TS_PROPERTY_PARAMETER => true,
@@ -19461,7 +19749,8 @@ impl From<TsTypeAliasDeclaration> for JsAnyDeclaration {
         JsAnyDeclaration::TsTypeAliasDeclaration(node)
     }
 }
-impl AstNode<Language> for JsAnyDeclaration {
+impl AstNode for JsAnyDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -19632,7 +19921,8 @@ impl From<TsTypeAliasDeclaration> for JsAnyDeclarationClause {
         JsAnyDeclarationClause::TsTypeAliasDeclaration(node)
     }
 }
-impl AstNode<Language> for JsAnyDeclarationClause {
+impl AstNode for JsAnyDeclarationClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -19792,7 +20082,8 @@ impl From<TsExportDeclareClause> for JsAnyExportClause {
         JsAnyExportClause::TsExportDeclareClause(node)
     }
 }
-impl AstNode<Language> for JsAnyExportClause {
+impl AstNode for JsAnyExportClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_EXPORT_DEFAULT_DECLARATION_CLAUSE
@@ -19918,7 +20209,8 @@ impl From<TsInterfaceDeclaration> for JsAnyExportDefaultDeclaration {
         JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node)
     }
 }
-impl AstNode<Language> for JsAnyExportDefaultDeclaration {
+impl AstNode for JsAnyExportDefaultDeclaration {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -20007,7 +20299,8 @@ impl From<JsExportNamedSpecifier> for JsAnyExportNamedSpecifier {
         JsAnyExportNamedSpecifier::JsExportNamedSpecifier(node)
     }
 }
-impl AstNode<Language> for JsAnyExportNamedSpecifier {
+impl AstNode for JsAnyExportNamedSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -20199,7 +20492,8 @@ impl From<TsTypeAssertionExpression> for JsAnyExpression {
         JsAnyExpression::TsTypeAssertionExpression(node)
     }
 }
-impl AstNode<Language> for JsAnyExpression {
+impl AstNode for JsAnyExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             IMPORT_META
@@ -20460,7 +20754,8 @@ impl From<JsForVariableDeclaration> for JsAnyForInOrOfInitializer {
         JsAnyForInOrOfInitializer::JsForVariableDeclaration(node)
     }
 }
-impl AstNode<Language> for JsAnyForInOrOfInitializer {
+impl AstNode for JsAnyForInOrOfInitializer {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_FOR_VARIABLE_DECLARATION => true,
@@ -20520,7 +20815,8 @@ impl From<JsVariableDeclaration> for JsAnyForInitializer {
         JsAnyForInitializer::JsVariableDeclaration(node)
     }
 }
-impl AstNode<Language> for JsAnyForInitializer {
+impl AstNode for JsAnyForInitializer {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_VARIABLE_DECLARATION => true,
@@ -20581,7 +20877,8 @@ impl From<JsUnknownParameter> for JsAnyFormalParameter {
         JsAnyFormalParameter::JsUnknownParameter(node)
     }
 }
-impl AstNode<Language> for JsAnyFormalParameter {
+impl AstNode for JsAnyFormalParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JS_FORMAL_PARAMETER | JS_UNKNOWN_PARAMETER)
     }
@@ -20646,7 +20943,8 @@ impl From<JsFunctionExpression> for JsAnyFunction {
         JsAnyFunction::JsFunctionExpression(node)
     }
 }
-impl AstNode<Language> for JsAnyFunction {
+impl AstNode for JsAnyFunction {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -20714,7 +21012,8 @@ impl From<JsAnyFunction> for SyntaxElement {
 impl From<JsFunctionBody> for JsAnyFunctionBody {
     fn from(node: JsFunctionBody) -> JsAnyFunctionBody { JsAnyFunctionBody::JsFunctionBody(node) }
 }
-impl AstNode<Language> for JsAnyFunctionBody {
+impl AstNode for JsAnyFunctionBody {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_FUNCTION_BODY => true,
@@ -20773,7 +21072,8 @@ impl From<JsUnknownImportAssertionEntry> for JsAnyImportAssertionEntry {
         JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(node)
     }
 }
-impl AstNode<Language> for JsAnyImportAssertionEntry {
+impl AstNode for JsAnyImportAssertionEntry {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -20845,7 +21145,8 @@ impl From<JsImportNamespaceClause> for JsAnyImportClause {
         JsAnyImportClause::JsImportNamespaceClause(node)
     }
 }
-impl AstNode<Language> for JsAnyImportClause {
+impl AstNode for JsAnyImportClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -20911,7 +21212,8 @@ impl From<JsAnyImportClause> for SyntaxElement {
 impl From<JsPrivateName> for JsAnyInProperty {
     fn from(node: JsPrivateName) -> JsAnyInProperty { JsAnyInProperty::JsPrivateName(node) }
 }
-impl AstNode<Language> for JsAnyInProperty {
+impl AstNode for JsAnyInProperty {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_PRIVATE_NAME => true,
@@ -20990,7 +21292,8 @@ impl From<JsStringLiteralExpression> for JsAnyLiteralExpression {
         JsAnyLiteralExpression::JsStringLiteralExpression(node)
     }
 }
-impl AstNode<Language> for JsAnyLiteralExpression {
+impl AstNode for JsAnyLiteralExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -21092,7 +21395,8 @@ impl From<TsOverrideModifier> for JsAnyMethodModifier {
         JsAnyMethodModifier::TsOverrideModifier(node)
     }
 }
-impl AstNode<Language> for JsAnyMethodModifier {
+impl AstNode for JsAnyMethodModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -21152,7 +21456,8 @@ impl From<JsExport> for JsAnyModuleItem {
 impl From<JsImport> for JsAnyModuleItem {
     fn from(node: JsImport) -> JsAnyModuleItem { JsAnyModuleItem::JsImport(node) }
 }
-impl AstNode<Language> for JsAnyModuleItem {
+impl AstNode for JsAnyModuleItem {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_EXPORT | JS_IMPORT => true,
@@ -21211,7 +21516,8 @@ impl From<JsName> for JsAnyName {
 impl From<JsPrivateName> for JsAnyName {
     fn from(node: JsPrivateName) -> JsAnyName { JsAnyName::JsPrivateName(node) }
 }
-impl AstNode<Language> for JsAnyName {
+impl AstNode for JsAnyName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_NAME | JS_PRIVATE_NAME) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
@@ -21260,7 +21566,8 @@ impl From<JsNamespaceImportSpecifier> for JsAnyNamedImport {
         JsAnyNamedImport::JsNamespaceImportSpecifier(node)
     }
 }
-impl AstNode<Language> for JsAnyNamedImport {
+impl AstNode for JsAnyNamedImport {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -21323,7 +21630,8 @@ impl From<JsUnknownNamedImportSpecifier> for JsAnyNamedImportSpecifier {
         JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(node)
     }
 }
-impl AstNode<Language> for JsAnyNamedImportSpecifier {
+impl AstNode for JsAnyNamedImportSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -21409,7 +21717,8 @@ impl From<JsUnknownAssignment> for JsAnyObjectAssignmentPatternMember {
         JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(node)
     }
 }
-impl AstNode<Language> for JsAnyObjectAssignmentPatternMember {
+impl AstNode for JsAnyObjectAssignmentPatternMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -21517,7 +21826,8 @@ impl From<JsUnknownBinding> for JsAnyObjectBindingPatternMember {
         JsAnyObjectBindingPatternMember::JsUnknownBinding(node)
     }
 }
-impl AstNode<Language> for JsAnyObjectBindingPatternMember {
+impl AstNode for JsAnyObjectBindingPatternMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -21634,7 +21944,8 @@ impl From<JsSpread> for JsAnyObjectMember {
 impl From<JsUnknownMember> for JsAnyObjectMember {
     fn from(node: JsUnknownMember) -> JsAnyObjectMember { JsAnyObjectMember::JsUnknownMember(node) }
 }
-impl AstNode<Language> for JsAnyObjectMember {
+impl AstNode for JsAnyObjectMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -21726,7 +22037,8 @@ impl From<JsLiteralMemberName> for JsAnyObjectMemberName {
         JsAnyObjectMemberName::JsLiteralMemberName(node)
     }
 }
-impl AstNode<Language> for JsAnyObjectMemberName {
+impl AstNode for JsAnyObjectMemberName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JS_COMPUTED_MEMBER_NAME | JS_LITERAL_MEMBER_NAME)
     }
@@ -21777,7 +22089,8 @@ impl From<JsRestParameter> for JsAnyParameter {
 impl From<TsThisParameter> for JsAnyParameter {
     fn from(node: TsThisParameter) -> JsAnyParameter { JsAnyParameter::TsThisParameter(node) }
 }
-impl AstNode<Language> for JsAnyParameter {
+impl AstNode for JsAnyParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_REST_PARAMETER | TS_THIS_PARAMETER => true,
@@ -21852,7 +22165,8 @@ impl From<TsReadonlyModifier> for JsAnyPropertyModifier {
         JsAnyPropertyModifier::TsReadonlyModifier(node)
     }
 }
-impl AstNode<Language> for JsAnyPropertyModifier {
+impl AstNode for JsAnyPropertyModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -21924,7 +22238,8 @@ impl From<JsModule> for JsAnyRoot {
 impl From<JsScript> for JsAnyRoot {
     fn from(node: JsScript) -> JsAnyRoot { JsAnyRoot::JsScript(node) }
 }
-impl AstNode<Language> for JsAnyRoot {
+impl AstNode for JsAnyRoot {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JS_EXPRESSION_SNIPPED | JS_MODULE | JS_SCRIPT)
     }
@@ -22091,7 +22406,8 @@ impl From<TsTypeAliasDeclaration> for JsAnyStatement {
         JsAnyStatement::TsTypeAliasDeclaration(node)
     }
 }
-impl AstNode<Language> for JsAnyStatement {
+impl AstNode for JsAnyStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -22330,7 +22646,8 @@ impl From<JsCaseClause> for JsAnySwitchClause {
 impl From<JsDefaultClause> for JsAnySwitchClause {
     fn from(node: JsDefaultClause) -> JsAnySwitchClause { JsAnySwitchClause::JsDefaultClause(node) }
 }
-impl AstNode<Language> for JsAnySwitchClause {
+impl AstNode for JsAnySwitchClause {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
@@ -22379,7 +22696,8 @@ impl From<JsTemplateElement> for JsAnyTemplateElement {
         JsAnyTemplateElement::JsTemplateElement(node)
     }
 }
-impl AstNode<Language> for JsAnyTemplateElement {
+impl AstNode for JsAnyTemplateElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JS_TEMPLATE_CHUNK_ELEMENT | JS_TEMPLATE_ELEMENT)
     }
@@ -22432,7 +22750,8 @@ impl From<JsxSpreadAttribute> for JsxAnyAttribute {
         JsxAnyAttribute::JsxSpreadAttribute(node)
     }
 }
-impl AstNode<Language> for JsxAnyAttribute {
+impl AstNode for JsxAnyAttribute {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JSX_ATTRIBUTE | JSX_SPREAD_ATTRIBUTE) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
@@ -22481,7 +22800,8 @@ impl From<JsxNamespaceName> for JsxAnyAttributeName {
         JsxAnyAttributeName::JsxNamespaceName(node)
     }
 }
-impl AstNode<Language> for JsxAnyAttributeName {
+impl AstNode for JsxAnyAttributeName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JSX_NAME | JSX_NAMESPACE_NAME) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
@@ -22530,7 +22850,8 @@ impl From<JsxExpressionAttributeValue> for JsxAnyAttributeValue {
 impl From<JsxString> for JsxAnyAttributeValue {
     fn from(node: JsxString) -> JsxAnyAttributeValue { JsxAnyAttributeValue::JsxString(node) }
 }
-impl AstNode<Language> for JsxAnyAttributeValue {
+impl AstNode for JsxAnyAttributeValue {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JSX_EXPRESSION_ATTRIBUTE_VALUE | JSX_STRING => true,
@@ -22605,7 +22926,8 @@ impl From<JsxSpreadChild> for JsxAnyChild {
 impl From<JsxText> for JsxAnyChild {
     fn from(node: JsxText) -> JsxAnyChild { JsxAnyChild::JsxText(node) }
 }
-impl AstNode<Language> for JsxAnyChild {
+impl AstNode for JsxAnyChild {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -22688,7 +23010,8 @@ impl From<JsxReferenceIdentifier> for JsxAnyElementName {
         JsxAnyElementName::JsxReferenceIdentifier(node)
     }
 }
-impl AstNode<Language> for JsxAnyElementName {
+impl AstNode for JsxAnyElementName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -22748,7 +23071,8 @@ impl From<JsxName> for JsxAnyName {
 impl From<JsxNamespaceName> for JsxAnyName {
     fn from(node: JsxNamespaceName) -> JsxAnyName { JsxAnyName::JsxNamespaceName(node) }
 }
-impl AstNode<Language> for JsxAnyName {
+impl AstNode for JsxAnyName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JSX_NAME | JSX_NAMESPACE_NAME) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
@@ -22798,7 +23122,8 @@ impl From<JsxReferenceIdentifier> for JsxAnyObjectName {
         JsxAnyObjectName::JsxReferenceIdentifier(node)
     }
 }
-impl AstNode<Language> for JsxAnyObjectName {
+impl AstNode for JsxAnyObjectName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -22857,7 +23182,8 @@ impl From<JsxFragment> for JsxAnyTag {
 impl From<JsxSelfClosingElement> for JsxAnyTag {
     fn from(node: JsxSelfClosingElement) -> JsxAnyTag { JsxAnyTag::JsxSelfClosingElement(node) }
 }
-impl AstNode<Language> for JsxAnyTag {
+impl AstNode for JsxAnyTag {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JSX_ELEMENT | JSX_FRAGMENT | JSX_SELF_CLOSING_ELEMENT)
     }
@@ -22914,7 +23240,8 @@ impl From<TsModuleBlock> for TsAnyExternalModuleDeclarationBody {
         TsAnyExternalModuleDeclarationBody::TsModuleBlock(node)
     }
 }
-impl AstNode<Language> for TsAnyExternalModuleDeclarationBody {
+impl AstNode for TsAnyExternalModuleDeclarationBody {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -22980,7 +23307,8 @@ impl From<TsReadonlyModifier> for TsAnyIndexSignatureModifier {
         TsAnyIndexSignatureModifier::TsReadonlyModifier(node)
     }
 }
-impl AstNode<Language> for TsAnyIndexSignatureModifier {
+impl AstNode for TsAnyIndexSignatureModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JS_STATIC_MODIFIER | TS_READONLY_MODIFIER)
     }
@@ -23045,7 +23373,8 @@ impl From<TsOverrideModifier> for TsAnyMethodSignatureModifier {
         TsAnyMethodSignatureModifier::TsOverrideModifier(node)
     }
 }
-impl AstNode<Language> for TsAnyMethodSignatureModifier {
+impl AstNode for TsAnyMethodSignatureModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -23122,7 +23451,8 @@ impl From<TsQualifiedModuleName> for TsAnyModuleName {
         TsAnyModuleName::TsQualifiedModuleName(node)
     }
 }
-impl AstNode<Language> for TsAnyModuleName {
+impl AstNode for TsAnyModuleName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, TS_IDENTIFIER_BINDING | TS_QUALIFIED_MODULE_NAME)
     }
@@ -23172,7 +23502,8 @@ impl From<TsExternalModuleReference> for TsAnyModuleReference {
         TsAnyModuleReference::TsExternalModuleReference(node)
     }
 }
-impl AstNode<Language> for TsAnyModuleReference {
+impl AstNode for TsAnyModuleReference {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             TS_EXTERNAL_MODULE_REFERENCE => true,
@@ -23231,7 +23562,8 @@ impl From<JsReferenceIdentifier> for TsAnyName {
 impl From<TsQualifiedName> for TsAnyName {
     fn from(node: TsQualifiedName) -> TsAnyName { TsAnyName::TsQualifiedName(node) }
 }
-impl AstNode<Language> for TsAnyName {
+impl AstNode for TsAnyName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, JS_REFERENCE_IDENTIFIER | TS_QUALIFIED_NAME)
     }
@@ -23289,7 +23621,8 @@ impl From<TsTypeAnnotation> for TsAnyPropertyAnnotation {
         TsAnyPropertyAnnotation::TsTypeAnnotation(node)
     }
 }
-impl AstNode<Language> for TsAnyPropertyAnnotation {
+impl AstNode for TsAnyPropertyAnnotation {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -23366,7 +23699,8 @@ impl From<TsReadonlyModifier> for TsAnyPropertyParameterModifier {
         TsAnyPropertyParameterModifier::TsReadonlyModifier(node)
     }
 }
-impl AstNode<Language> for TsAnyPropertyParameterModifier {
+impl AstNode for TsAnyPropertyParameterModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -23434,7 +23768,8 @@ impl From<TsTypeAnnotation> for TsAnyPropertySignatureAnnotation {
         TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node)
     }
 }
-impl AstNode<Language> for TsAnyPropertySignatureAnnotation {
+impl AstNode for TsAnyPropertySignatureAnnotation {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, TS_OPTIONAL_PROPERTY_ANNOTATION | TS_TYPE_ANNOTATION)
     }
@@ -23513,7 +23848,8 @@ impl From<TsReadonlyModifier> for TsAnyPropertySignatureModifier {
         TsAnyPropertySignatureModifier::TsReadonlyModifier(node)
     }
 }
-impl AstNode<Language> for TsAnyPropertySignatureModifier {
+impl AstNode for TsAnyPropertySignatureModifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -23604,7 +23940,8 @@ impl From<TsPredicateReturnType> for TsAnyReturnType {
         TsAnyReturnType::TsPredicateReturnType(node)
     }
 }
-impl AstNode<Language> for TsAnyReturnType {
+impl AstNode for TsAnyReturnType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             TS_ASSERTS_RETURN_TYPE | TS_PREDICATE_RETURN_TYPE => true,
@@ -23671,7 +24008,8 @@ impl From<TsTemplateElement> for TsAnyTemplateElement {
         TsAnyTemplateElement::TsTemplateElement(node)
     }
 }
-impl AstNode<Language> for TsAnyTemplateElement {
+impl AstNode for TsAnyTemplateElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, TS_TEMPLATE_CHUNK_ELEMENT | TS_TEMPLATE_ELEMENT)
     }
@@ -23731,7 +24069,8 @@ impl From<TsRestTupleTypeElement> for TsAnyTupleTypeElement {
         TsAnyTupleTypeElement::TsRestTupleTypeElement(node)
     }
 }
-impl AstNode<Language> for TsAnyTupleTypeElement {
+impl AstNode for TsAnyTupleTypeElement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             TS_NAMED_TUPLE_TYPE_ELEMENT
@@ -23836,7 +24175,8 @@ impl From<TsSetterSignatureTypeMember> for TsAnyTypeMember {
         TsAnyTypeMember::TsSetterSignatureTypeMember(node)
     }
 }
-impl AstNode<Language> for TsAnyTypeMember {
+impl AstNode for TsAnyTypeMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -23939,7 +24279,8 @@ impl From<TsThisType> for TsAnyTypePredicateParameterName {
         TsAnyTypePredicateParameterName::TsThisType(node)
     }
 }
-impl AstNode<Language> for TsAnyTypePredicateParameterName {
+impl AstNode for TsAnyTypePredicateParameterName {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_REFERENCE_IDENTIFIER | TS_THIS_TYPE) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
@@ -23994,7 +24335,8 @@ impl From<TsTypeAnnotation> for TsAnyVariableAnnotation {
         TsAnyVariableAnnotation::TsTypeAnnotation(node)
     }
 }
-impl AstNode<Language> for TsAnyVariableAnnotation {
+impl AstNode for TsAnyVariableAnnotation {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(kind, TS_DEFINITE_VARIABLE_ANNOTATION | TS_TYPE_ANNOTATION)
     }
@@ -24145,7 +24487,8 @@ impl From<TsUnknownType> for TsType {
 impl From<TsVoidType> for TsType {
     fn from(node: TsVoidType) -> TsType { TsType::TsVoidType(node) }
 }
-impl AstNode<Language> for TsType {
+impl AstNode for TsType {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -26078,7 +26421,8 @@ impl JsUnknown {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknown {
+impl AstNode for JsUnknown {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26116,7 +26460,8 @@ impl JsUnknownAssignment {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknownAssignment {
+impl AstNode for JsUnknownAssignment {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26154,7 +26499,8 @@ impl JsUnknownBinding {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknownBinding {
+impl AstNode for JsUnknownBinding {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_BINDING }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26192,7 +26538,8 @@ impl JsUnknownExpression {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknownExpression {
+impl AstNode for JsUnknownExpression {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26230,7 +26577,8 @@ impl JsUnknownImportAssertionEntry {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknownImportAssertionEntry {
+impl AstNode for JsUnknownImportAssertionEntry {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_IMPORT_ASSERTION_ENTRY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26268,7 +26616,8 @@ impl JsUnknownMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknownMember {
+impl AstNode for JsUnknownMember {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26306,7 +26655,8 @@ impl JsUnknownNamedImportSpecifier {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknownNamedImportSpecifier {
+impl AstNode for JsUnknownNamedImportSpecifier {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_NAMED_IMPORT_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26344,7 +26694,8 @@ impl JsUnknownParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknownParameter {
+impl AstNode for JsUnknownParameter {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26382,7 +26733,8 @@ impl JsUnknownStatement {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsUnknownStatement {
+impl AstNode for JsUnknownStatement {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
@@ -26423,7 +26775,8 @@ impl JsArrayAssignmentPatternElementList {
         }
     }
 }
-impl AstNode<Language> for JsArrayAssignmentPatternElementList {
+impl AstNode for JsArrayAssignmentPatternElementList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsArrayAssignmentPatternElementList> {
         if Self::can_cast(syntax.kind()) {
@@ -26436,9 +26789,9 @@ impl AstNode<Language> for JsArrayAssignmentPatternElementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyArrayAssignmentPatternElement>
-    for JsArrayAssignmentPatternElementList
-{
+impl AstSeparatedList for JsArrayAssignmentPatternElementList {
+    type Language = Language;
+    type Node = JsAnyArrayAssignmentPatternElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsArrayAssignmentPatternElementList {
@@ -26474,7 +26827,8 @@ impl JsArrayBindingPatternElementList {
         }
     }
 }
-impl AstNode<Language> for JsArrayBindingPatternElementList {
+impl AstNode for JsArrayBindingPatternElementList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsArrayBindingPatternElementList> {
         if Self::can_cast(syntax.kind()) {
@@ -26487,9 +26841,9 @@ impl AstNode<Language> for JsArrayBindingPatternElementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyArrayBindingPatternElement>
-    for JsArrayBindingPatternElementList
-{
+impl AstSeparatedList for JsArrayBindingPatternElementList {
+    type Language = Language;
+    type Node = JsAnyArrayBindingPatternElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsArrayBindingPatternElementList {
@@ -26525,7 +26879,8 @@ impl JsArrayElementList {
         }
     }
 }
-impl AstNode<Language> for JsArrayElementList {
+impl AstNode for JsArrayElementList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsArrayElementList> {
         if Self::can_cast(syntax.kind()) {
@@ -26538,7 +26893,9 @@ impl AstNode<Language> for JsArrayElementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyArrayElement> for JsArrayElementList {
+impl AstSeparatedList for JsArrayElementList {
+    type Language = Language;
+    type Node = JsAnyArrayElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsArrayElementList {
@@ -26574,7 +26931,8 @@ impl JsCallArgumentList {
         }
     }
 }
-impl AstNode<Language> for JsCallArgumentList {
+impl AstNode for JsCallArgumentList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CALL_ARGUMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsCallArgumentList> {
         if Self::can_cast(syntax.kind()) {
@@ -26587,7 +26945,9 @@ impl AstNode<Language> for JsCallArgumentList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyCallArgument> for JsCallArgumentList {
+impl AstSeparatedList for JsCallArgumentList {
+    type Language = Language;
+    type Node = JsAnyCallArgument;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsCallArgumentList {
@@ -26623,7 +26983,8 @@ impl JsClassMemberList {
         }
     }
 }
-impl AstNode<Language> for JsClassMemberList {
+impl AstNode for JsClassMemberList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_MEMBER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsClassMemberList> {
         if Self::can_cast(syntax.kind()) {
@@ -26636,7 +26997,9 @@ impl AstNode<Language> for JsClassMemberList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsAnyClassMember> for JsClassMemberList {
+impl AstNodeList for JsClassMemberList {
+    type Language = Language;
+    type Node = JsAnyClassMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsClassMemberList {
@@ -26672,7 +27035,8 @@ impl JsConstructorModifierList {
         }
     }
 }
-impl AstNode<Language> for JsConstructorModifierList {
+impl AstNode for JsConstructorModifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_MODIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsConstructorModifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -26685,7 +27049,9 @@ impl AstNode<Language> for JsConstructorModifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, TsAccessibilityModifier> for JsConstructorModifierList {
+impl AstNodeList for JsConstructorModifierList {
+    type Language = Language;
+    type Node = TsAccessibilityModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsConstructorModifierList {
@@ -26721,7 +27087,8 @@ impl JsConstructorParameterList {
         }
     }
 }
-impl AstNode<Language> for JsConstructorParameterList {
+impl AstNode for JsConstructorParameterList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsConstructorParameterList> {
         if Self::can_cast(syntax.kind()) {
@@ -26734,7 +27101,9 @@ impl AstNode<Language> for JsConstructorParameterList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyConstructorParameter> for JsConstructorParameterList {
+impl AstSeparatedList for JsConstructorParameterList {
+    type Language = Language;
+    type Node = JsAnyConstructorParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsConstructorParameterList {
@@ -26770,7 +27139,8 @@ impl JsDirectiveList {
         }
     }
 }
-impl AstNode<Language> for JsDirectiveList {
+impl AstNode for JsDirectiveList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DIRECTIVE_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsDirectiveList> {
         if Self::can_cast(syntax.kind()) {
@@ -26783,7 +27153,9 @@ impl AstNode<Language> for JsDirectiveList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsDirective> for JsDirectiveList {
+impl AstNodeList for JsDirectiveList {
+    type Language = Language;
+    type Node = JsDirective;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsDirectiveList {
@@ -26819,7 +27191,8 @@ impl JsExportNamedFromSpecifierList {
         }
     }
 }
-impl AstNode<Language> for JsExportNamedFromSpecifierList {
+impl AstNode for JsExportNamedFromSpecifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_SPECIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsExportNamedFromSpecifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -26832,7 +27205,9 @@ impl AstNode<Language> for JsExportNamedFromSpecifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsExportNamedFromSpecifier> for JsExportNamedFromSpecifierList {
+impl AstSeparatedList for JsExportNamedFromSpecifierList {
+    type Language = Language;
+    type Node = JsExportNamedFromSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsExportNamedFromSpecifierList {
@@ -26868,7 +27243,8 @@ impl JsExportNamedSpecifierList {
         }
     }
 }
-impl AstNode<Language> for JsExportNamedSpecifierList {
+impl AstNode for JsExportNamedSpecifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SPECIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsExportNamedSpecifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -26881,7 +27257,9 @@ impl AstNode<Language> for JsExportNamedSpecifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyExportNamedSpecifier> for JsExportNamedSpecifierList {
+impl AstSeparatedList for JsExportNamedSpecifierList {
+    type Language = Language;
+    type Node = JsAnyExportNamedSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsExportNamedSpecifierList {
@@ -26917,7 +27295,8 @@ impl JsImportAssertionEntryList {
         }
     }
 }
-impl AstNode<Language> for JsImportAssertionEntryList {
+impl AstNode for JsImportAssertionEntryList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsImportAssertionEntryList> {
         if Self::can_cast(syntax.kind()) {
@@ -26930,7 +27309,9 @@ impl AstNode<Language> for JsImportAssertionEntryList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyImportAssertionEntry> for JsImportAssertionEntryList {
+impl AstSeparatedList for JsImportAssertionEntryList {
+    type Language = Language;
+    type Node = JsAnyImportAssertionEntry;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsImportAssertionEntryList {
@@ -26966,7 +27347,8 @@ impl JsMethodModifierList {
         }
     }
 }
-impl AstNode<Language> for JsMethodModifierList {
+impl AstNode for JsMethodModifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_MODIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsMethodModifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -26979,7 +27361,9 @@ impl AstNode<Language> for JsMethodModifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsAnyMethodModifier> for JsMethodModifierList {
+impl AstNodeList for JsMethodModifierList {
+    type Language = Language;
+    type Node = JsAnyMethodModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsMethodModifierList {
@@ -27015,7 +27399,8 @@ impl JsModuleItemList {
         }
     }
 }
-impl AstNode<Language> for JsModuleItemList {
+impl AstNode for JsModuleItemList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODULE_ITEM_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsModuleItemList> {
         if Self::can_cast(syntax.kind()) {
@@ -27028,7 +27413,9 @@ impl AstNode<Language> for JsModuleItemList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsAnyModuleItem> for JsModuleItemList {
+impl AstNodeList for JsModuleItemList {
+    type Language = Language;
+    type Node = JsAnyModuleItem;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsModuleItemList {
@@ -27064,7 +27451,8 @@ impl JsNamedImportSpecifierList {
         }
     }
 }
-impl AstNode<Language> for JsNamedImportSpecifierList {
+impl AstNode for JsNamedImportSpecifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsNamedImportSpecifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -27077,7 +27465,9 @@ impl AstNode<Language> for JsNamedImportSpecifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyNamedImportSpecifier> for JsNamedImportSpecifierList {
+impl AstSeparatedList for JsNamedImportSpecifierList {
+    type Language = Language;
+    type Node = JsAnyNamedImportSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsNamedImportSpecifierList {
@@ -27113,7 +27503,8 @@ impl JsObjectAssignmentPatternPropertyList {
         }
     }
 }
-impl AstNode<Language> for JsObjectAssignmentPatternPropertyList {
+impl AstNode for JsObjectAssignmentPatternPropertyList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsObjectAssignmentPatternPropertyList> {
         if Self::can_cast(syntax.kind()) {
@@ -27126,9 +27517,9 @@ impl AstNode<Language> for JsObjectAssignmentPatternPropertyList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyObjectAssignmentPatternMember>
-    for JsObjectAssignmentPatternPropertyList
-{
+impl AstSeparatedList for JsObjectAssignmentPatternPropertyList {
+    type Language = Language;
+    type Node = JsAnyObjectAssignmentPatternMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsObjectAssignmentPatternPropertyList {
@@ -27164,7 +27555,8 @@ impl JsObjectBindingPatternPropertyList {
         }
     }
 }
-impl AstNode<Language> for JsObjectBindingPatternPropertyList {
+impl AstNode for JsObjectBindingPatternPropertyList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsObjectBindingPatternPropertyList> {
         if Self::can_cast(syntax.kind()) {
@@ -27177,9 +27569,9 @@ impl AstNode<Language> for JsObjectBindingPatternPropertyList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyObjectBindingPatternMember>
-    for JsObjectBindingPatternPropertyList
-{
+impl AstSeparatedList for JsObjectBindingPatternPropertyList {
+    type Language = Language;
+    type Node = JsAnyObjectBindingPatternMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsObjectBindingPatternPropertyList {
@@ -27215,7 +27607,8 @@ impl JsObjectMemberList {
         }
     }
 }
-impl AstNode<Language> for JsObjectMemberList {
+impl AstNode for JsObjectMemberList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_MEMBER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsObjectMemberList> {
         if Self::can_cast(syntax.kind()) {
@@ -27228,7 +27621,9 @@ impl AstNode<Language> for JsObjectMemberList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyObjectMember> for JsObjectMemberList {
+impl AstSeparatedList for JsObjectMemberList {
+    type Language = Language;
+    type Node = JsAnyObjectMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsObjectMemberList {
@@ -27264,7 +27659,8 @@ impl JsParameterList {
         }
     }
 }
-impl AstNode<Language> for JsParameterList {
+impl AstNode for JsParameterList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARAMETER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsParameterList> {
         if Self::can_cast(syntax.kind()) {
@@ -27277,7 +27673,9 @@ impl AstNode<Language> for JsParameterList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsAnyParameter> for JsParameterList {
+impl AstSeparatedList for JsParameterList {
+    type Language = Language;
+    type Node = JsAnyParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsParameterList {
@@ -27313,7 +27711,8 @@ impl JsPropertyModifierList {
         }
     }
 }
-impl AstNode<Language> for JsPropertyModifierList {
+impl AstNode for JsPropertyModifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_MODIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsPropertyModifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -27326,7 +27725,9 @@ impl AstNode<Language> for JsPropertyModifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsAnyPropertyModifier> for JsPropertyModifierList {
+impl AstNodeList for JsPropertyModifierList {
+    type Language = Language;
+    type Node = JsAnyPropertyModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsPropertyModifierList {
@@ -27362,7 +27763,8 @@ impl JsStatementList {
         }
     }
 }
-impl AstNode<Language> for JsStatementList {
+impl AstNode for JsStatementList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsStatementList> {
         if Self::can_cast(syntax.kind()) {
@@ -27375,7 +27777,9 @@ impl AstNode<Language> for JsStatementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsAnyStatement> for JsStatementList {
+impl AstNodeList for JsStatementList {
+    type Language = Language;
+    type Node = JsAnyStatement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsStatementList {
@@ -27411,7 +27815,8 @@ impl JsSwitchCaseList {
         }
     }
 }
-impl AstNode<Language> for JsSwitchCaseList {
+impl AstNode for JsSwitchCaseList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SWITCH_CASE_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsSwitchCaseList> {
         if Self::can_cast(syntax.kind()) {
@@ -27424,7 +27829,9 @@ impl AstNode<Language> for JsSwitchCaseList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsAnySwitchClause> for JsSwitchCaseList {
+impl AstNodeList for JsSwitchCaseList {
+    type Language = Language;
+    type Node = JsAnySwitchClause;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsSwitchCaseList {
@@ -27460,7 +27867,8 @@ impl JsTemplateElementList {
         }
     }
 }
-impl AstNode<Language> for JsTemplateElementList {
+impl AstNode for JsTemplateElementList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TEMPLATE_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsTemplateElementList> {
         if Self::can_cast(syntax.kind()) {
@@ -27473,7 +27881,9 @@ impl AstNode<Language> for JsTemplateElementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsAnyTemplateElement> for JsTemplateElementList {
+impl AstNodeList for JsTemplateElementList {
+    type Language = Language;
+    type Node = JsAnyTemplateElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsTemplateElementList {
@@ -27509,7 +27919,8 @@ impl JsVariableDeclaratorList {
         }
     }
 }
-impl AstNode<Language> for JsVariableDeclaratorList {
+impl AstNode for JsVariableDeclaratorList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATOR_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsVariableDeclaratorList> {
         if Self::can_cast(syntax.kind()) {
@@ -27522,7 +27933,9 @@ impl AstNode<Language> for JsVariableDeclaratorList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsVariableDeclarator> for JsVariableDeclaratorList {
+impl AstSeparatedList for JsVariableDeclaratorList {
+    type Language = Language;
+    type Node = JsVariableDeclarator;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsVariableDeclaratorList {
@@ -27558,7 +27971,8 @@ impl JsxAttributeList {
         }
     }
 }
-impl AstNode<Language> for JsxAttributeList {
+impl AstNode for JsxAttributeList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_ATTRIBUTE_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsxAttributeList> {
         if Self::can_cast(syntax.kind()) {
@@ -27571,7 +27985,9 @@ impl AstNode<Language> for JsxAttributeList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsxAnyAttribute> for JsxAttributeList {
+impl AstNodeList for JsxAttributeList {
+    type Language = Language;
+    type Node = JsxAnyAttribute;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsxAttributeList {
@@ -27607,7 +28023,8 @@ impl JsxChildList {
         }
     }
 }
-impl AstNode<Language> for JsxChildList {
+impl AstNode for JsxChildList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSX_CHILD_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsxChildList> {
         if Self::can_cast(syntax.kind()) {
@@ -27620,7 +28037,9 @@ impl AstNode<Language> for JsxChildList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, JsxAnyChild> for JsxChildList {
+impl AstNodeList for JsxChildList {
+    type Language = Language;
+    type Node = JsxAnyChild;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsxChildList {
@@ -27656,7 +28075,8 @@ impl TsEnumMemberList {
         }
     }
 }
-impl AstNode<Language> for TsEnumMemberList {
+impl AstNode for TsEnumMemberList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM_MEMBER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsEnumMemberList> {
         if Self::can_cast(syntax.kind()) {
@@ -27669,7 +28089,9 @@ impl AstNode<Language> for TsEnumMemberList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, TsEnumMember> for TsEnumMemberList {
+impl AstSeparatedList for TsEnumMemberList {
+    type Language = Language;
+    type Node = TsEnumMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsEnumMemberList {
@@ -27705,7 +28127,8 @@ impl TsIndexSignatureModifierList {
         }
     }
 }
-impl AstNode<Language> for TsIndexSignatureModifierList {
+impl AstNode for TsIndexSignatureModifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE_MODIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsIndexSignatureModifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -27718,7 +28141,9 @@ impl AstNode<Language> for TsIndexSignatureModifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, TsAnyIndexSignatureModifier> for TsIndexSignatureModifierList {
+impl AstNodeList for TsIndexSignatureModifierList {
+    type Language = Language;
+    type Node = TsAnyIndexSignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsIndexSignatureModifierList {
@@ -27754,7 +28179,8 @@ impl TsIntersectionTypeElementList {
         }
     }
 }
-impl AstNode<Language> for TsIntersectionTypeElementList {
+impl AstNode for TsIntersectionTypeElementList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERSECTION_TYPE_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsIntersectionTypeElementList> {
         if Self::can_cast(syntax.kind()) {
@@ -27767,7 +28193,9 @@ impl AstNode<Language> for TsIntersectionTypeElementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, TsType> for TsIntersectionTypeElementList {
+impl AstSeparatedList for TsIntersectionTypeElementList {
+    type Language = Language;
+    type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsIntersectionTypeElementList {
@@ -27803,7 +28231,8 @@ impl TsMethodSignatureModifierList {
         }
     }
 }
-impl AstNode<Language> for TsMethodSignatureModifierList {
+impl AstNode for TsMethodSignatureModifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE_MODIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsMethodSignatureModifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -27816,7 +28245,9 @@ impl AstNode<Language> for TsMethodSignatureModifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, TsAnyMethodSignatureModifier> for TsMethodSignatureModifierList {
+impl AstNodeList for TsMethodSignatureModifierList {
+    type Language = Language;
+    type Node = TsAnyMethodSignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsMethodSignatureModifierList {
@@ -27852,7 +28283,8 @@ impl TsPropertyParameterModifierList {
         }
     }
 }
-impl AstNode<Language> for TsPropertyParameterModifierList {
+impl AstNode for TsPropertyParameterModifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PROPERTY_PARAMETER_MODIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsPropertyParameterModifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -27865,7 +28297,9 @@ impl AstNode<Language> for TsPropertyParameterModifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, TsAnyPropertyParameterModifier> for TsPropertyParameterModifierList {
+impl AstNodeList for TsPropertyParameterModifierList {
+    type Language = Language;
+    type Node = TsAnyPropertyParameterModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsPropertyParameterModifierList {
@@ -27901,7 +28335,8 @@ impl TsPropertySignatureModifierList {
         }
     }
 }
-impl AstNode<Language> for TsPropertySignatureModifierList {
+impl AstNode for TsPropertySignatureModifierList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_MODIFIER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsPropertySignatureModifierList> {
         if Self::can_cast(syntax.kind()) {
@@ -27914,7 +28349,9 @@ impl AstNode<Language> for TsPropertySignatureModifierList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, TsAnyPropertySignatureModifier> for TsPropertySignatureModifierList {
+impl AstNodeList for TsPropertySignatureModifierList {
+    type Language = Language;
+    type Node = TsAnyPropertySignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsPropertySignatureModifierList {
@@ -27950,7 +28387,8 @@ impl TsTemplateElementList {
         }
     }
 }
-impl AstNode<Language> for TsTemplateElementList {
+impl AstNode for TsTemplateElementList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TEMPLATE_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsTemplateElementList> {
         if Self::can_cast(syntax.kind()) {
@@ -27963,7 +28401,9 @@ impl AstNode<Language> for TsTemplateElementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, TsAnyTemplateElement> for TsTemplateElementList {
+impl AstNodeList for TsTemplateElementList {
+    type Language = Language;
+    type Node = TsAnyTemplateElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsTemplateElementList {
@@ -27999,7 +28439,8 @@ impl TsTupleTypeElementList {
         }
     }
 }
-impl AstNode<Language> for TsTupleTypeElementList {
+impl AstNode for TsTupleTypeElementList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TUPLE_TYPE_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsTupleTypeElementList> {
         if Self::can_cast(syntax.kind()) {
@@ -28012,7 +28453,9 @@ impl AstNode<Language> for TsTupleTypeElementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, TsAnyTupleTypeElement> for TsTupleTypeElementList {
+impl AstSeparatedList for TsTupleTypeElementList {
+    type Language = Language;
+    type Node = TsAnyTupleTypeElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsTupleTypeElementList {
@@ -28048,7 +28491,8 @@ impl TsTypeArgumentList {
         }
     }
 }
-impl AstNode<Language> for TsTypeArgumentList {
+impl AstNode for TsTypeArgumentList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ARGUMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsTypeArgumentList> {
         if Self::can_cast(syntax.kind()) {
@@ -28061,7 +28505,9 @@ impl AstNode<Language> for TsTypeArgumentList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, TsType> for TsTypeArgumentList {
+impl AstSeparatedList for TsTypeArgumentList {
+    type Language = Language;
+    type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsTypeArgumentList {
@@ -28097,7 +28543,8 @@ impl TsTypeList {
         }
     }
 }
-impl AstNode<Language> for TsTypeList {
+impl AstNode for TsTypeList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsTypeList> {
         if Self::can_cast(syntax.kind()) {
@@ -28110,7 +28557,9 @@ impl AstNode<Language> for TsTypeList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, TsNameWithTypeArguments> for TsTypeList {
+impl AstSeparatedList for TsTypeList {
+    type Language = Language;
+    type Node = TsNameWithTypeArguments;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsTypeList {
@@ -28146,7 +28595,8 @@ impl TsTypeMemberList {
         }
     }
 }
-impl AstNode<Language> for TsTypeMemberList {
+impl AstNode for TsTypeMemberList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_MEMBER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsTypeMemberList> {
         if Self::can_cast(syntax.kind()) {
@@ -28159,7 +28609,9 @@ impl AstNode<Language> for TsTypeMemberList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<Language, TsAnyTypeMember> for TsTypeMemberList {
+impl AstNodeList for TsTypeMemberList {
+    type Language = Language;
+    type Node = TsAnyTypeMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsTypeMemberList {
@@ -28195,7 +28647,8 @@ impl TsTypeParameterList {
         }
     }
 }
-impl AstNode<Language> for TsTypeParameterList {
+impl AstNode for TsTypeParameterList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAMETER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsTypeParameterList> {
         if Self::can_cast(syntax.kind()) {
@@ -28208,7 +28661,9 @@ impl AstNode<Language> for TsTypeParameterList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, TsTypeParameter> for TsTypeParameterList {
+impl AstSeparatedList for TsTypeParameterList {
+    type Language = Language;
+    type Node = TsTypeParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsTypeParameterList {
@@ -28244,7 +28699,8 @@ impl TsUnionTypeVariantList {
         }
     }
 }
-impl AstNode<Language> for TsUnionTypeVariantList {
+impl AstNode for TsUnionTypeVariantList {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNION_TYPE_VARIANT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<TsUnionTypeVariantList> {
         if Self::can_cast(syntax.kind()) {
@@ -28257,7 +28713,9 @@ impl AstNode<Language> for TsUnionTypeVariantList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, TsType> for TsUnionTypeVariantList {
+impl AstSeparatedList for TsUnionTypeVariantList {
+    type Language = Language;
+    type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsUnionTypeVariantList {

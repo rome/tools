@@ -1,0 +1,30 @@
+
+# Jobs run on pull request in js folders
+name: Pull request JS
+on:
+  pull_request:
+    branches:
+      - main
+    paths: # Only run when changes are made to js code
+      - 'website/**'
+      - 'editors/**'
+
+env:
+  RUST_LOG: info
+  RUST_BACKTRACE: 1
+
+jobs:
+  format-js:
+    name: Format JS Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Rome
+        uses: rome/setup-rome@v0.1
+        with:
+          version: preview
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Rome Format
+        run: rome format --ci editors website

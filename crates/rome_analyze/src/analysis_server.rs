@@ -46,13 +46,16 @@ impl AnalysisServer {
         suppressions::compute(tree)
     }
 
-    pub fn query_nodes<T: AstNode<JsLanguage>>(&self, file_id: FileId) -> impl Iterator<Item = T> {
+    pub fn query_nodes<T: AstNode<Language = JsLanguage>>(
+        &self,
+        file_id: FileId,
+    ) -> impl Iterator<Item = T> {
         trace!("Query nodes: {:?}", std::any::type_name::<T>());
         let tree = self.parse(file_id);
         tree.descendants().filter_map(|n| T::cast(n))
     }
 
-    pub fn find_node_at_range<T: AstNode<JsLanguage>>(
+    pub fn find_node_at_range<T: AstNode<Language = JsLanguage>>(
         &self,
         file_id: FileId,
         range: TextRange,

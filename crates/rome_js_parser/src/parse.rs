@@ -34,7 +34,7 @@ impl<T> Parse<T> {
         }
     }
 
-    pub fn cast<N: AstNode<JsLanguage>>(self) -> Option<Parse<N>> {
+    pub fn cast<N: AstNode<Language = JsLanguage>>(self) -> Option<Parse<N>> {
         if N::can_cast(self.syntax().kind()) {
             Some(Parse::new(self.root, self.errors))
         } else {
@@ -81,7 +81,7 @@ impl<T> Parse<T> {
     }
 }
 
-impl<T: AstNode<JsLanguage>> Parse<T> {
+impl<T: AstNode<Language = JsLanguage>> Parse<T> {
     /// Convert this parse result into a typed AST node.
     ///
     /// # Panics

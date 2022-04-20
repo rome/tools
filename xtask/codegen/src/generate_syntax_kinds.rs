@@ -103,6 +103,19 @@ pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> 
                 }
             }
         }
+        LanguageKind::Json => {
+            quote! {
+                pub const fn to_string(&self) -> Option<&'static str> {
+                    let tok = match self {
+                        #(#punctuation => #punctuation_strings,)*
+                        #(#all_keywords => #all_keyword_strings,)*
+                        JSON_STRING_LITERAL => "string literal",
+                        _ => return None,
+                    };
+                    Some(tok)
+                }
+            }
+        }
     };
 
     let ast = quote! {

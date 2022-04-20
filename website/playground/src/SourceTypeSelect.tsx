@@ -13,17 +13,17 @@ export default function SourceTypeSelect(
 	{ setIsTypeScript, isTypeScript, setIsJsx, isJsx, setSourceType, sourceType }: Props,
 ) {
 	return (
-		<div className="pl-5 pb-5">
-			<fieldset className="space-y-5">
+		<div className="p-5 sm:pr-0 sm:pt-0">
+			<fieldset className="flex items-center">
 				<legend className="sr-only">File Type</legend>
 
 				<div className="relative flex items-start">
-					<div className="">
+					<div>
 						<label
 							htmlFor="sourceType"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Source type:
+							Source Type
 						</label>
 						<span id="source-type-description" className="text-gray-500">
 							<span className="sr-only">Source type</span>
@@ -42,7 +42,7 @@ export default function SourceTypeSelect(
 					</div>
 				</div>
 
-				<div className="relative flex items-start">
+				<div className="relative flex p-5 pb-0">
 					<div className="flex items-center h-5">
 						<input
 							id="typescript"
@@ -57,7 +57,7 @@ export default function SourceTypeSelect(
 							disabled={sourceType == SourceType.Script}
 						/>
 					</div>
-					<div className="ml-3 text-sm">
+					<div className="ml-1 text-sm">
 						<label htmlFor="typescript" className="font-medium text-gray-700">
 							TypeScript
 						</label>
@@ -66,7 +66,7 @@ export default function SourceTypeSelect(
 						</span>
 					</div>
 				</div>
-				<div className="relative flex items-start">
+				<div className="relative flex p-5 pl-1 pb-0">
 					<div className="flex items-center h-5">
 						<input
 							id="jsx"
@@ -79,7 +79,7 @@ export default function SourceTypeSelect(
 							disabled={sourceType == SourceType.Script}
 						/>
 					</div>
-					<div className="ml-3 text-sm">
+					<div className="ml-1 text-sm">
 						<label htmlFor="jsx" className="font-medium text-gray-700">
 							JSX
 						</label>

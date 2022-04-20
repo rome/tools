@@ -508,7 +508,7 @@ impl<'src> Lexer<'src> {
     /// Get the UTF8 char which starts at the current byte
     /// Safety: Must be called at the begining of a UTF8 char.
     fn current_char_unchecked(&self) -> char {
-        // This is unreachable for all intents and purposes, but this is just a precautionary measure
+        // Precautionary measure for making sure the unsafe code below does not read over memory boundary
         debug_assert!(!self.is_eof());
 
         // Safety: We know this is safe because we require the input to the lexer to be valid utf8 and we always call this when we are at a char
@@ -628,7 +628,14 @@ impl<'src> Lexer<'src> {
         let start = self.position + 1;
         self.read_hexnumber();
 
-        if self.current_byte() != Some(b'}') {
+        let current_byte = self.current_byte();
+
+        // Abort on EOF
+        if current_byte.is_none() {
+            return Err(());
+        }
+
+        if current_byte != Some(b'}') {
             // We should not yield diagnostics on a unicode char boundary. That wont make codespan panic
             // but it may cause a panic for other crates which just consume the diagnostics
             let invalid = self.current_char_unchecked();
