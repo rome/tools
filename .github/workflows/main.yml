@@ -15,7 +15,7 @@ env:
 
 jobs:
   format:
-    name: format
+    name: Format Rust Files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR Branch
@@ -37,7 +37,7 @@ jobs:
           args: --all --verbose -- --check
 
   lint:
-    name: lint
+    name: Lint Rust Files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -65,7 +65,7 @@ jobs:
           - os: ubuntu-20.04
           - os: macos-11
 
-    name: test
+    name: Test
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
@@ -90,7 +90,7 @@ jobs:
         run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
 
   coverage:
-    name: Test262 coverage
+    name: Test262 Coverage
     runs-on: ${{ matrix.os }}
 
     strategy:

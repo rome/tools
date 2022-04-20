@@ -1,18 +1,19 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Deploy Playground on Main
+name: Deploy Playground
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+    paths: # Only deploy when changes are made to the crates or playground code
+      - 'crates/**'
+      - 'website/playground/**'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: aws
-    name: Deploy
+    name: Deploy Playground
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v3

@@ -5,6 +5,13 @@ on:
   pull_request:
     branches:
       - main
+    paths: # Only run when changes are made to rust code or root Cargo
+      - 'crates/**'
+      - 'xtask/**'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'rust-toolchain.toml'
+      - 'rustfmt.toml'
 
 env:
   RUST_LOG: info
@@ -12,7 +19,7 @@ env:
 
 jobs:
   format:
-    name: format
+    name: Format Rust Files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -26,24 +33,9 @@ jobs:
         with:
           command: fmt
           args: --all --verbose -- --check
-  format-js:
-    name: Format JS Files
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install Rome
-        uses: rome/setup-rome@v0.1
-        with:
-          version: preview
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Run Rome Format
-        run: rome format --ci editors website
-
 
   lint:
-    name: lint
+    name: Lint Rust Files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR Branch
@@ -66,7 +58,7 @@ jobs:
           args: --workspace --all-targets --verbose -- --deny warnings
 
   test:
-    name: test
+    name: Test
     runs-on: ubuntu-latest
 
     steps:
