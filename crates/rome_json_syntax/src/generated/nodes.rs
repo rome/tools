@@ -10,7 +10,7 @@ use crate::{
     JsonSyntaxList as SyntaxList, JsonSyntaxNode as SyntaxNode, JsonSyntaxToken as SyntaxToken,
 };
 use rome_rowan::{
-    support, AstNode, AstNodeList, AstNodeListIterator, AstSeparatedList,
+    support, AstNode, AstSeparatedList,
     AstSeparatedListNodesIterator, SyntaxResult,
 };
 use std::fmt::{Debug, Formatter};
