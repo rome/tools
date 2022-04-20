@@ -10,6 +10,8 @@ on:
       - 'xtask/**'
       - 'Cargo.toml'
       - 'Cargo.lock'
+      - 'rust-toolchain.toml'
+      - 'rustfmt.toml'
 
 env:
   RUST_LOG: info
