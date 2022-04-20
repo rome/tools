@@ -3,6 +3,10 @@ mod binary_like_expression;
 mod call_expression;
 mod format_conditional;
 mod simple;
+pub mod string_utils;
+
+#[cfg(test)]
+mod quickcheck_utils;
 
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{

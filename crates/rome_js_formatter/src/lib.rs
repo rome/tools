@@ -7,7 +7,7 @@ mod js;
 mod jsx;
 pub mod prelude;
 mod ts;
-mod utils;
+pub mod utils;
 use std::error::Error;
 use std::fmt::{self, Display};
 

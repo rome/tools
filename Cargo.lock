@@ -701,6 +701,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "02296996cb8796d7c6e3bc2d9211b7802812d36999a51bb754123ead7d37d026"
 
 [[package]]
+name = "iai"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "71a816c97c42258aa5834d07590b718b4c9a598944cd39a52dc25b351185d678"
+
+[[package]]
 name = "idna"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1404,8 +1410,11 @@ version = "0.0.0"
 dependencies = [
  "cfg-if",
  "ctor",
+ "iai",
  "insta",
  "parking_lot 0.12.0",
+ "quickcheck",
+ "quickcheck_macros",
  "rome_core",
  "rome_diagnostics",
  "rome_formatter",
