@@ -1407,6 +1407,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_json_parser"
+version = "0.1.0"
+dependencies = [
+ "drop_bomb",
+ "rome_diagnostics",
+ "rome_js_parser",
+ "rome_js_syntax",
+ "rome_json_syntax",
+]
+
+[[package]]
 name = "rome_json_syntax"
 version = "0.0.0"
 dependencies = [
