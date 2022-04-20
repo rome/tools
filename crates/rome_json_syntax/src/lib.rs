@@ -3,9 +3,7 @@ mod generated;
 mod syntax_node;
 
 pub use self::generated::*;
-pub use rome_rowan::{
-    SyntaxText, TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent,
-};
+pub use rome_rowan::{TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent};
 pub use syntax_node::*;
 
 use rome_rowan::RawSyntaxKind;
