@@ -637,16 +637,3 @@ pub(crate) fn format_string_literal_token(
     )
 }
 
-pub(crate) fn format_big_int_literal_token(
-    token: JsSyntaxToken,
-    formatter: &Formatter,
-) -> FormatElement {
-    let original = token.text_trimmed();
-    match original.to_ascii_lowercase_cow() {
-        Cow::Borrowed(_) => token.format(formatter).unwrap(),
-        Cow::Owned(lowercase) => formatter.format_replaced(
-            &token,
-            rome_formatter::Token::new_dynamic(lowercase, token.text_trimmed_range()).into(),
-        ),
-    }
-}
