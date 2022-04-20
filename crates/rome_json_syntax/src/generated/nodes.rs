@@ -9,7 +9,11 @@ use crate::{
     JsonSyntaxKind::{self as SyntaxKind, *},
     JsonSyntaxList as SyntaxList, JsonSyntaxNode as SyntaxNode, JsonSyntaxToken as SyntaxToken,
 };
-use rome_rowan::{support, AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxResult};
+use rome_rowan::{support, AstNode, SyntaxResult};
+#[allow(unused)]
+use rome_rowan::{
+    AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
+};
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsonArray {
@@ -22,9 +26,7 @@ impl JsonArray {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonArrayFields {
         JsonArrayFields {
             l_brack_token: self.l_brack_token(),
@@ -35,9 +37,7 @@ impl JsonArray {
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn elements(&self) -> JsonArrayElementList {
-        support::list(&self.syntax, 1usize)
-    }
+    pub fn elements(&self) -> JsonArrayElementList { support::list(&self.syntax, 1usize) }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -58,9 +58,7 @@ impl JsonBoolean {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonBooleanFields {
         JsonBooleanFields {
             true_token: self.true_token(),
@@ -89,9 +87,7 @@ impl JsonMember {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonMemberFields {
         JsonMemberFields {
             key: self.key(),
@@ -99,15 +95,11 @@ impl JsonMember {
             value: self.value(),
         }
     }
-    pub fn key(&self) -> SyntaxResult<JsonString> {
-        support::required_node(&self.syntax, 0usize)
-    }
+    pub fn key(&self) -> SyntaxResult<JsonString> { support::required_node(&self.syntax, 0usize) }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn value(&self) -> SyntaxResult<JsonValue> {
-        support::required_node(&self.syntax, 2usize)
-    }
+    pub fn value(&self) -> SyntaxResult<JsonValue> { support::required_node(&self.syntax, 2usize) }
 }
 pub struct JsonMemberFields {
     pub key: SyntaxResult<JsonString>,
@@ -125,9 +117,7 @@ impl JsonNull {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonNullFields {
         JsonNullFields {
             null_token: self.null_token(),
@@ -151,9 +141,7 @@ impl JsonNumber {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonNumberFields {
         JsonNumberFields {
             json_number_literal_token: self.json_number_literal_token(),
@@ -177,9 +165,7 @@ impl JsonObject {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonObjectFields {
         JsonObjectFields {
             l_curly_token: self.l_curly_token(),
@@ -190,9 +176,7 @@ impl JsonObject {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn json_member_list(&self) -> JsonMemberList {
-        support::list(&self.syntax, 1usize)
-    }
+    pub fn json_member_list(&self) -> JsonMemberList { support::list(&self.syntax, 1usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -213,9 +197,7 @@ impl JsonRoot {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonRootFields {
         JsonRootFields {
             json_value: self.json_value(),
@@ -239,9 +221,7 @@ impl JsonString {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonStringFields {
         JsonStringFields {
             json_string_literal_token: self.json_string_literal_token(),
@@ -264,10 +244,9 @@ pub enum JsonValue {
     JsonString(JsonString),
     JsonUnknown(JsonUnknown),
 }
-impl AstNode<Language> for JsonArray {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_ARRAY
-    }
+impl AstNode for JsonArray {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ARRAY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -275,9 +254,7 @@ impl AstNode<Language> for JsonArray {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonArray {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -295,19 +272,14 @@ impl std::fmt::Debug for JsonArray {
     }
 }
 impl From<JsonArray> for SyntaxNode {
-    fn from(n: JsonArray) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonArray) -> SyntaxNode { n.syntax }
 }
 impl From<JsonArray> for SyntaxElement {
-    fn from(n: JsonArray) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonArray) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsonBoolean {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_BOOLEAN
-    }
+impl AstNode for JsonBoolean {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_BOOLEAN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -315,9 +287,7 @@ impl AstNode<Language> for JsonBoolean {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonBoolean {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -331,19 +301,14 @@ impl std::fmt::Debug for JsonBoolean {
     }
 }
 impl From<JsonBoolean> for SyntaxNode {
-    fn from(n: JsonBoolean) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonBoolean) -> SyntaxNode { n.syntax }
 }
 impl From<JsonBoolean> for SyntaxElement {
-    fn from(n: JsonBoolean) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonBoolean) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsonMember {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_MEMBER
-    }
+impl AstNode for JsonMember {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -351,9 +316,7 @@ impl AstNode<Language> for JsonMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -368,19 +331,14 @@ impl std::fmt::Debug for JsonMember {
     }
 }
 impl From<JsonMember> for SyntaxNode {
-    fn from(n: JsonMember) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonMember) -> SyntaxNode { n.syntax }
 }
 impl From<JsonMember> for SyntaxElement {
-    fn from(n: JsonMember) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonMember) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsonNull {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_NULL
-    }
+impl AstNode for JsonNull {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_NULL }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -388,9 +346,7 @@ impl AstNode<Language> for JsonNull {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonNull {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -400,19 +356,14 @@ impl std::fmt::Debug for JsonNull {
     }
 }
 impl From<JsonNull> for SyntaxNode {
-    fn from(n: JsonNull) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonNull) -> SyntaxNode { n.syntax }
 }
 impl From<JsonNull> for SyntaxElement {
-    fn from(n: JsonNull) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonNull) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsonNumber {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_NUMBER
-    }
+impl AstNode for JsonNumber {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_NUMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -420,9 +371,7 @@ impl AstNode<Language> for JsonNumber {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonNumber {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -435,19 +384,14 @@ impl std::fmt::Debug for JsonNumber {
     }
 }
 impl From<JsonNumber> for SyntaxNode {
-    fn from(n: JsonNumber) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonNumber) -> SyntaxNode { n.syntax }
 }
 impl From<JsonNumber> for SyntaxElement {
-    fn from(n: JsonNumber) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonNumber) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsonObject {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_OBJECT
-    }
+impl AstNode for JsonObject {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_OBJECT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -455,9 +399,7 @@ impl AstNode<Language> for JsonObject {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonObject {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -475,19 +417,14 @@ impl std::fmt::Debug for JsonObject {
     }
 }
 impl From<JsonObject> for SyntaxNode {
-    fn from(n: JsonObject) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonObject) -> SyntaxNode { n.syntax }
 }
 impl From<JsonObject> for SyntaxElement {
-    fn from(n: JsonObject) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonObject) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsonRoot {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_ROOT
-    }
+impl AstNode for JsonRoot {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ROOT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -495,9 +432,7 @@ impl AstNode<Language> for JsonRoot {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonRoot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -507,19 +442,14 @@ impl std::fmt::Debug for JsonRoot {
     }
 }
 impl From<JsonRoot> for SyntaxNode {
-    fn from(n: JsonRoot) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonRoot) -> SyntaxNode { n.syntax }
 }
 impl From<JsonRoot> for SyntaxElement {
-    fn from(n: JsonRoot) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonRoot) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode<Language> for JsonString {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_STRING
-    }
+impl AstNode for JsonString {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_STRING }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -527,9 +457,7 @@ impl AstNode<Language> for JsonString {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonString {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -542,51 +470,34 @@ impl std::fmt::Debug for JsonString {
     }
 }
 impl From<JsonString> for SyntaxNode {
-    fn from(n: JsonString) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonString) -> SyntaxNode { n.syntax }
 }
 impl From<JsonString> for SyntaxElement {
-    fn from(n: JsonString) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonString) -> SyntaxElement { n.syntax.into() }
 }
 impl From<JsonArray> for JsonValue {
-    fn from(node: JsonArray) -> JsonValue {
-        JsonValue::JsonArray(node)
-    }
+    fn from(node: JsonArray) -> JsonValue { JsonValue::JsonArray(node) }
 }
 impl From<JsonBoolean> for JsonValue {
-    fn from(node: JsonBoolean) -> JsonValue {
-        JsonValue::JsonBoolean(node)
-    }
+    fn from(node: JsonBoolean) -> JsonValue { JsonValue::JsonBoolean(node) }
 }
 impl From<JsonNull> for JsonValue {
-    fn from(node: JsonNull) -> JsonValue {
-        JsonValue::JsonNull(node)
-    }
+    fn from(node: JsonNull) -> JsonValue { JsonValue::JsonNull(node) }
 }
 impl From<JsonNumber> for JsonValue {
-    fn from(node: JsonNumber) -> JsonValue {
-        JsonValue::JsonNumber(node)
-    }
+    fn from(node: JsonNumber) -> JsonValue { JsonValue::JsonNumber(node) }
 }
 impl From<JsonObject> for JsonValue {
-    fn from(node: JsonObject) -> JsonValue {
-        JsonValue::JsonObject(node)
-    }
+    fn from(node: JsonObject) -> JsonValue { JsonValue::JsonObject(node) }
 }
 impl From<JsonString> for JsonValue {
-    fn from(node: JsonString) -> JsonValue {
-        JsonValue::JsonString(node)
-    }
+    fn from(node: JsonString) -> JsonValue { JsonValue::JsonString(node) }
 }
 impl From<JsonUnknown> for JsonValue {
-    fn from(node: JsonUnknown) -> JsonValue {
-        JsonValue::JsonUnknown(node)
-    }
+    fn from(node: JsonUnknown) -> JsonValue { JsonValue::JsonUnknown(node) }
 }
-impl AstNode<Language> for JsonValue {
+impl AstNode for JsonValue {
+    type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
@@ -712,17 +623,12 @@ impl JsonUnknown {
     #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
-        Self { syntax }
-    }
-    pub fn items(&self) -> SyntaxElementChildren {
-        support::elements(&self.syntax)
-    }
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode<Language> for JsonUnknown {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_UNKNOWN
-    }
+impl AstNode for JsonUnknown {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_UNKNOWN }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -730,9 +636,7 @@ impl AstNode<Language> for JsonUnknown {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        &self.syntax
-    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl std::fmt::Debug for JsonUnknown {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -742,14 +646,10 @@ impl std::fmt::Debug for JsonUnknown {
     }
 }
 impl From<JsonUnknown> for SyntaxNode {
-    fn from(n: JsonUnknown) -> SyntaxNode {
-        n.syntax
-    }
+    fn from(n: JsonUnknown) -> SyntaxNode { n.syntax }
 }
 impl From<JsonUnknown> for SyntaxElement {
-    fn from(n: JsonUnknown) -> SyntaxElement {
-        n.syntax.into()
-    }
+    fn from(n: JsonUnknown) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsonArrayElementList {
@@ -768,10 +668,9 @@ impl JsonArrayElementList {
         }
     }
 }
-impl AstNode<Language> for JsonArrayElementList {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_ARRAY_ELEMENT_LIST
-    }
+impl AstNode for JsonArrayElementList {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ARRAY_ELEMENT_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsonArrayElementList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsonArrayElementList {
@@ -781,14 +680,12 @@ impl AstNode<Language> for JsonArrayElementList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        self.syntax_list.node()
-    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsonValue> for JsonArrayElementList {
-    fn syntax_list(&self) -> &SyntaxList {
-        &self.syntax_list
-    }
+impl AstSeparatedList for JsonArrayElementList {
+    type Language = Language;
+    type Node = JsonValue;
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsonArrayElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -799,16 +696,12 @@ impl Debug for JsonArrayElementList {
 impl IntoIterator for JsonArrayElementList {
     type Item = SyntaxResult<JsonValue>;
     type IntoIter = AstSeparatedListNodesIterator<Language, JsonValue>;
-    fn into_iter(self) -> Self::IntoIter {
-        self.iter()
-    }
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsonArrayElementList {
     type Item = SyntaxResult<JsonValue>;
     type IntoIter = AstSeparatedListNodesIterator<Language, JsonValue>;
-    fn into_iter(self) -> Self::IntoIter {
-        self.iter()
-    }
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsonMemberList {
@@ -827,10 +720,9 @@ impl JsonMemberList {
         }
     }
 }
-impl AstNode<Language> for JsonMemberList {
-    fn can_cast(kind: SyntaxKind) -> bool {
-        kind == JSON_MEMBER_LIST
-    }
+impl AstNode for JsonMemberList {
+    type Language = Language;
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_MEMBER_LIST }
     fn cast(syntax: SyntaxNode) -> Option<JsonMemberList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsonMemberList {
@@ -840,14 +732,12 @@ impl AstNode<Language> for JsonMemberList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode {
-        self.syntax_list.node()
-    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Language, JsonMember> for JsonMemberList {
-    fn syntax_list(&self) -> &SyntaxList {
-        &self.syntax_list
-    }
+impl AstSeparatedList for JsonMemberList {
+    type Language = Language;
+    type Node = JsonMember;
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsonMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -858,16 +748,12 @@ impl Debug for JsonMemberList {
 impl IntoIterator for JsonMemberList {
     type Item = SyntaxResult<JsonMember>;
     type IntoIter = AstSeparatedListNodesIterator<Language, JsonMember>;
-    fn into_iter(self) -> Self::IntoIter {
-        self.iter()
-    }
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsonMemberList {
     type Item = SyntaxResult<JsonMember>;
     type IntoIter = AstSeparatedListNodesIterator<Language, JsonMember>;
-    fn into_iter(self) -> Self::IntoIter {
-        self.iter()
-    }
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone)]
 pub struct DebugSyntaxElementChildren(pub SyntaxElementChildren);

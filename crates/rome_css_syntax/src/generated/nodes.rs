@@ -9,9 +9,10 @@ use crate::{
     CssSyntaxKind::{self as SyntaxKind, *},
     CssSyntaxList as SyntaxList, CssSyntaxNode as SyntaxNode, CssSyntaxToken as SyntaxToken,
 };
+use rome_rowan::{support, AstNode, SyntaxResult};
+#[allow(unused)]
 use rome_rowan::{
-    support, AstNode, AstNodeList, AstNodeListIterator, AstSeparatedList,
-    AstSeparatedListNodesIterator, SyntaxResult,
+    AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
 };
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
