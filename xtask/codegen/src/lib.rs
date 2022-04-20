@@ -3,12 +3,12 @@
 //!
 mod ast;
 mod css_kinds_src;
-mod json_kinds_src;
 mod formatter;
 mod generate_macros;
 mod generate_nodes;
 mod generate_syntax_factory;
 mod generate_syntax_kinds;
+mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
 mod unicode;

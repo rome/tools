@@ -34,7 +34,6 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
     ast.sort();
     generate_syntax(ast, &mode, LanguageKind::Css)?;
 
-
     let mut ast = load_json_ast();
     ast.sort();
     generate_syntax(ast, &mode, LanguageKind::Json)?;
@@ -58,13 +57,13 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
             crate::CSS_AST_MACROS,
             CSS_KINDS_SRC,
         ),
-        LanguageKind::Json => ( 
+        LanguageKind::Json => (
             crate::JSON_AST_NODES,
             crate::JSON_SYNTAX_KINDS,
             crate::JSON_SYNTAX_FACTORY,
             crate::JSON_AST_MACROS,
-            JSON_KINDS_SRC
-         ),
+            JSON_KINDS_SRC,
+        ),
     };
     let ast_nodes_file = project_root().join(nodes);
     let contents = generate_nodes(&ast, language_kind)?;

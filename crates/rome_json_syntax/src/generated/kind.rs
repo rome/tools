@@ -24,7 +24,6 @@ pub enum JsonSyntaxKind {
     JSON_STRING_LITERAL,
     JSON_NUMBER_LITERAL,
     ERROR_TOKEN,
-    IDENT,
     NEWLINE,
     WHITESPACE,
     COMMENT,

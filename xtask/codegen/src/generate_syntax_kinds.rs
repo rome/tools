@@ -115,7 +115,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> 
                     Some(tok)
                 }
             }
-        },
+        }
     };
 
     let ast = quote! {

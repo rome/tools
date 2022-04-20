@@ -8,7 +8,6 @@ pub use rome_rowan::{
 };
 pub use syntax_node::*;
 
-use crate::JsonSyntaxKind::*;
 use rome_rowan::RawSyntaxKind;
 
 impl From<u16> for JsonSyntaxKind {
@@ -35,18 +34,20 @@ impl JsonSyntaxKind {
     /// Returns `true` for any contextual (await) or non-contextual keyword
     #[inline]
     pub const fn is_keyword(self) -> bool {
-        true
+        matches!(self, T![null] | T![true] | T![false])
     }
-
 }
 
 impl rome_rowan::SyntaxKind for JsonSyntaxKind {
     fn is_unknown(&self) -> bool {
-        matches!(self, Json_UNKNOWN)
+        matches!(self, JsonSyntaxKind::JSON_UNKNOWN)
     }
 
     fn to_unknown(&self) -> Self {
-        todo!()
+        match self {
+            JsonSyntaxKind::JSON_UNKNOWN => JsonSyntaxKind::JSON_UNKNOWN,
+            _ => unreachable!(),
+        }
     }
 
     #[inline]

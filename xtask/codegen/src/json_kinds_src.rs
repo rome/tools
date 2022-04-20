@@ -12,11 +12,9 @@ pub const JSON_KINDS_SRC: KindsSrc = KindsSrc {
         ("]", "R_BRACK"),
     ],
     keywords: &["null", "true", "false"],
-    literals: &[
-        "JSON_STRING_LITERAL",
-        "JSON_NUMBER_LITERAL",
-    ],
-    tokens: &["ERROR_TOKEN", "IDENT", "NEWLINE", "WHITESPACE", "COMMENT"],
+    literals: &["JSON_STRING_LITERAL", "JSON_NUMBER_LITERAL"],
+    // keep comment token for json 5 extension
+    tokens: &["ERROR_TOKEN", "NEWLINE", "WHITESPACE", "COMMENT"],
     nodes: &[
         "JSON_ROOT",
         "JSON_VALUE",
