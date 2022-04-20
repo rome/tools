@@ -318,7 +318,7 @@ pub fn node_contains_comments() {
     let root = parse_module(text, 0);
     let syntax = root.syntax();
 
-    assert!(syntax.contains_comments());
+    assert!(syntax.has_comments_descendants());
 }
 
 #[test]
@@ -368,4 +368,22 @@ pub fn node_contains_leading_comments() {
 
     assert!(right.syntax().has_leading_comments());
     assert!(!right.syntax().has_trailing_comments());
+}
+
+#[test]
+pub fn node_has_comments() {
+    let text = r"true &&
+// comment
+(3 - 2 == 0)";
+    let root = parse_module(text, 0);
+    let syntax = root.syntax();
+    let node = syntax
+        .descendants()
+        .find(|n| n.kind() == JsSyntaxKind::JS_LOGICAL_EXPRESSION)
+        .unwrap();
+
+    let logical_expression = JsLogicalExpression::cast(node).unwrap();
+    let right = logical_expression.right().unwrap();
+
+    assert!(right.syntax().has_comments_direct());
 }
