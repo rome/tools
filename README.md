@@ -1,5 +1,6 @@
 <p align="center">
-	<img alt="Rome's logo depicting an ancient Roman arch with the word Rome to its side" src="assets/PNG/logo_transparent_outlined.png" width="700">
+	<img alt="Rome's logo depicting an ancient Roman arch with the word Rome to its side" src="assets/PNG/logo_transparent.png#gh-light-mode-only" width="700">
+	<img alt="Rome's logo depicting an ancient Roman arch with the word Rome to its side" src="assets/PNG/logo_white_yellow_transparent.png#gh-dark-mode-only" width="700">
 </p>
 
 
