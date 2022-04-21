@@ -18,6 +18,9 @@ use quote::quote;
 use std::path::Path;
 use std::str::FromStr;
 
+use termcolor::Color;
+use termcolor::{ColorChoice, ColorSpec, StandardStream, WriteColor};
+
 use xtask::{glue::fs2, Mode, Result};
 
 pub use self::ast::generate_ast;
@@ -53,14 +56,17 @@ pub enum LanguageKind {
 }
 
 impl FromStr for LanguageKind {
-    type Err = ();
+    type Err = String;
 
     fn from_str(kind: &str) -> Result<Self, Self::Err> {
         match kind {
             "js" => Ok(LanguageKind::Js),
             "css" => Ok(LanguageKind::Css),
             "json" => Ok(LanguageKind::Json),
-            _ => Err(()),
+            _ => Err(format!(
+                "Language {} not supported, please use: `js`, `css` or `json`",
+                kind
+            )),
         }
     }
 }
@@ -168,4 +174,14 @@ pub fn to_lower_snake_case(s: &str) -> String {
         buf.push(c.to_ascii_lowercase());
     }
     buf
+}
+
+pub fn println_string_with_fg_color(content: String, color: Color) -> std::io::Result<()> {
+    let mut stdout = StandardStream::stdout(ColorChoice::Auto);
+    stdout
+        .set_color(ColorSpec::new().set_fg(Some(color)))
+        .unwrap();
+    println!("{}", content);
+    stdout.set_color(ColorSpec::new().set_fg(None)).unwrap();
+    Ok(())
 }

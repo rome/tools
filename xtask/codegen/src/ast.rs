@@ -13,6 +13,7 @@ use crate::css_kinds_src::CSS_KINDS_SRC;
 use crate::generate_syntax_factory::generate_syntax_factory;
 use crate::json_kinds_src::JSON_KINDS_SRC;
 use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
+use crate::println_string_with_fg_color;
 use crate::{
     generate_macros::generate_macros,
     generate_nodes::generate_nodes,
@@ -20,9 +21,6 @@ use crate::{
     kinds_src::{AstEnumSrc, AstNodeSrc, JS_KINDS_SRC},
     update, LanguageKind,
 };
-use std::io::Write;
-use termcolor::{ColorChoice, ColorSpec, StandardStream, WriteColor};
-
 use pico_args::Arguments;
 use termcolor::Color;
 use ungrammar::{Grammar, Rule, Token};
@@ -41,18 +39,25 @@ pub fn generate_ast(mode: Mode, args: Arguments) -> Result<()> {
     } else {
         arg_list
             .iter()
-            .filter_map(|kind| LanguageKind::from_str(kind.to_str().unwrap()).ok())
+            .filter_map(
+                |kind| match LanguageKind::from_str(kind.to_str().unwrap()) {
+                    Ok(kind) => Some(kind),
+                    Err(err) => {
+                        println_string_with_fg_color(err, Color::Red).unwrap();
+                        None
+                    }
+                },
+            )
             .collect::<Vec<_>>()
     };
     for kind in codegen_language_kinds {
-        let mut stdout = StandardStream::stdout(ColorChoice::Auto);
-        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)))?;
-        writeln!(
-            &mut stdout,
-            "-------------------Generating AST for {:?}-------------------",
-            kind
+        println_string_with_fg_color(
+            format!(
+                "-------------------Generating AST for {:?}-------------------",
+                kind
+            ),
+            Color::Green,
         )?;
-        stdout.set_color(ColorSpec::new().set_fg(None))?;
         let mut ast = match kind {
             LanguageKind::Js => load_js_ast(),
             LanguageKind::Css => load_css_ast(),
