@@ -39,25 +39,29 @@ impl SyntaxTokenText {
         self.range = range;
         self
     }
+
+    pub fn text(&self) -> &str {
+        &self.token.text()[self.range]
+    }
 }
 
 impl Deref for SyntaxTokenText {
     type Target = str;
 
     fn deref(&self) -> &Self::Target {
-        &self.token.text()[self.range]
+        self.text()
     }
 }
 
 impl std::fmt::Display for SyntaxTokenText {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", *self)
+        write!(f, "{}", self.text())
     }
 }
 
 impl std::fmt::Debug for SyntaxTokenText {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", *self)
+        write!(f, "{:?}", self.text())
     }
 }
 impl PartialEq for SyntaxTokenText {
