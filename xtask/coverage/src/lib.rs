@@ -4,6 +4,7 @@ pub mod jsx;
 mod reporters;
 pub mod results;
 mod runner;
+mod symbols;
 pub mod ts;
 mod util;
 
@@ -19,6 +20,7 @@ use jsx::jsx_babel::BabelJsxTestSuite;
 use rome_js_parser::ParseDiagnostic;
 use serde::{Deserialize, Serialize};
 use std::any::Any;
+use symbols::msts::SymbolsMicrosoftTsTestSuite;
 use ts::ts_babel::BabelTypescriptTestSuite;
 use ts::ts_microsoft::MicrosoftTypescriptTestSuite;
 use util::decode_maybe_utf16_string;
@@ -174,6 +176,8 @@ fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
             "ts/microsoft" => suites.push(Box::new(MicrosoftTypescriptTestSuite)),
             "ts/babel" => suites.push(Box::new(BabelTypescriptTestSuite)),
             "jsx/babel" => suites.push(Box::new(BabelJsxTestSuite)),
+
+            "symbols/msts" => suites.push(Box::new(SymbolsMicrosoftTsTestSuite)),
 
             _ => {}
         }

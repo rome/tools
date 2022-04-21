@@ -183,6 +183,20 @@ pub fn parse(text: &str, file_id: usize, source_type: SourceType) -> Parse<JsAny
     })
 }
 
+#[derive(Debug)]
+pub struct Symbol {
+    pub name: String,
+}
+
+#[derive(Debug)]
+pub struct Symbols {
+    pub symbols: Vec<Symbol>,
+}
+
+pub fn symbols(root: JsSyntaxNode) -> Symbols {
+    Symbols { symbols: vec![] }
+}
+
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
 /// Or turned into a typed [`Expr`](Expr) with [`tree`](Parse::tree).
 pub fn parse_expression(text: &str, file_id: usize) -> Parse<JsExpressionSnipped> {
