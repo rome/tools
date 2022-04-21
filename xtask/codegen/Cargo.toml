@@ -15,4 +15,4 @@ walkdir = "2.3.2"
 ureq = "2.4.0"
 git2 = { version = "0.13.25", default-features = false }
 filetime = "0.2.15"
-colored = "2.0.0"
+termcolor = "1.1.3"

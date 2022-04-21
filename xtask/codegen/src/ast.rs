@@ -19,8 +19,11 @@ use crate::{
     kinds_src::{AstEnumSrc, AstNodeSrc, JS_KINDS_SRC},
     update, LanguageKind,
 };
-use colored::Colorize;
+use std::io::Write;
+use termcolor::{ColorChoice, ColorSpec, StandardStream, WriteColor};
+
 use pico_args::Arguments;
+use termcolor::Color;
 use ungrammar::{Grammar, Rule, Token};
 use xtask::{project_root, Result};
 
@@ -41,10 +44,14 @@ pub fn generate_ast(mode: Mode, args: Arguments) -> Result<()> {
             .collect::<Vec<_>>()
     };
     for kind in codegen_language_kinds {
-        println!(
+        let mut stdout = StandardStream::stdout(ColorChoice::Auto);
+        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)))?;
+        writeln!(
+            &mut stdout,
             "-------------------{}-------------------",
-            format!("Generating AST for {:?}", kind).green()
-        );
+            format!("Generating AST for {:?}", kind)
+        )?;
+        stdout.set_color(ColorSpec::new().set_fg(None))?;
         let mut ast = match kind {
             LanguageKind::Js => load_js_ast(),
             LanguageKind::Css => load_css_ast(),
