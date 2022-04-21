@@ -1,3 +1,5 @@
+//! Generated file, do not edit by hand, see `xtask/codegen`
+
 use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 impl Format for rome_js_syntax::JsScript {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

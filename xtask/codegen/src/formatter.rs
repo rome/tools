@@ -415,7 +415,7 @@ impl FormatImpls {
             #( #impls )*
         };
 
-        let content = xtask::reformat_without_preamble(tokens).unwrap();
+        let content = xtask::reformat(tokens).unwrap();
         let mut file = File::create(&self.path).unwrap();
         file.write_all(content.as_bytes()).unwrap();
 

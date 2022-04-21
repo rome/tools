@@ -9,10 +9,8 @@ pub mod prelude;
 mod ts;
 pub mod utils;
 
-use std::cell::{Ref, RefMut};
 use std::error::Error;
 use std::fmt::{self, Display};
-use std::ops::Deref;
 
 use crate::utils::has_formatter_suppressions;
 pub use formatter::Formatter;
@@ -31,15 +29,37 @@ use rome_rowan::{AstNode, TextSize};
 use rome_rowan::{SyntaxError, TextRange};
 use rome_rowan::{SyntaxResult, TokenAtOffset};
 
-/// This trait should be implemented on each node/value that should have a formatted representation
+/// Formatting trait for types that can create a formatted representation. The `rome_formatter` equivalent
+/// to [std::fmt::Display].
+///
+/// ## Example
+/// Implementing `Format` for a custom struct
+///
+/// ```
+/// use rome_formatter::{format_elements, FormatElement, FormatOptions, hard_line_break, Token};
+/// use rome_js_formatter::{Format, format, FormatResult, Formatter};
+/// use rome_rowan::TextSize;
+///
+/// struct Paragraph(String);
+///
+/// impl Format for Paragraph {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+///         Ok(format_elements![
+///             hard_line_break(),
+///             Token::new_dynamic(self.0.clone(), TextSize::from(0)),
+///             hard_line_break(),
+///         ])
+///     }
+/// }
+///
+/// let paragraph = Paragraph(String::from("test"));
+/// ```
 pub trait Format {
-    /// Formats the value
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
 }
 
 impl<T> Format for &T
 where
-    T: Format + ?Sized,
+    T: ?Sized + Format,
 {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Format::format(&**self, formatter)
@@ -52,18 +72,6 @@ where
 {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Format::format(&**self, formatter)
-    }
-}
-
-impl<T: ?Sized + Format> Format for Ref<'_, T> {
-    fn format(&self, f: &Formatter) -> FormatResult<FormatElement> {
-        Format::format(&**self, f)
-    }
-}
-
-impl<T: ?Sized + Format> Format for RefMut<'_, T> {
-    fn format(&self, f: &Formatter) -> FormatResult<FormatElement> {
-        Format::format(&*(self.deref()), f)
     }
 }
 
@@ -91,13 +99,13 @@ where
     }
 }
 
-/// Formatting of a JS AST Node. Must be implemented for each JS Ast node.
+/// Formatting trait for JS AST Nodes.
 ///
-/// Implements the JavaScrip
-///
-/// The code-gen generates a [Format] implementation for each `FormatNode`.
+/// The code-gen generates a [Format] implementation for each `FormatNode` into the `format.rs` file.
 pub trait FormatNode: AstNode<Language = JsLanguage> {
-    /// Performs the formatting that applies to all nodes.
+    /// Formats the node by calling into [FormatNode::format_fields] if the first token has no leading `rome-ignore` suppression comment.
+    ///
+    /// Formats the node "as is" if the node has a suppression comment.
     fn format_node(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let node = self.syntax();
         let element = if has_formatter_suppressions(node) {
@@ -109,7 +117,7 @@ pub trait FormatNode: AstNode<Language = JsLanguage> {
         Ok(element)
     }
 
-    /// Formats the fields of a specific AST node.
+    /// Formats the node's fields.
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
 }
 
