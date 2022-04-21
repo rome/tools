@@ -468,6 +468,8 @@ impl<'src> Lexer<'src> {
     /// ## Safety
     /// Must be called at a valid UT8 char boundary
     fn consume_newline(&mut self) -> bool {
+        self.assert_at_char_boundary();
+
         let start = self.position;
 
         match self.current_byte() {
@@ -490,6 +492,8 @@ impl<'src> Lexer<'src> {
     /// ## Safety
     /// Must be called at a valid UT8 char boundary
     fn consume_whitespaces(&mut self) {
+        self.assert_at_char_boundary();
+
         while let Some(chr) = self.current_byte() {
             match lookup_byte(chr) {
                 Dispatch::WHS => {
@@ -534,6 +538,7 @@ impl<'src> Lexer<'src> {
     fn current_char_unchecked(&self) -> char {
         // This is unreachable for all intents and purposes, but this is just a precautionary measure
         debug_assert!(!self.is_eof());
+        self.assert_at_char_boundary();
 
         // Safety: We know this is safe because we require the input to the lexer to be valid utf8 and we always call this when we are at a char
         let string = unsafe {
@@ -564,6 +569,12 @@ impl<'src> Lexer<'src> {
         }
     }
 
+    /// Asserts that the lexer is at a UTF8 char boundary
+    #[inline]
+    fn assert_at_char_boundary(&self) {
+        debug_assert!(self.source.is_char_boundary(self.position));
+    }
+
     /// Asserts that the lexer is currently positioned at `byte`
     #[inline]
     fn assert_byte(&self, byte: u8) {
@@ -576,6 +587,7 @@ impl<'src> Lexer<'src> {
     /// Calling this function if the lexer is at or passed the end of file is undefined behaviour.
     #[inline]
     unsafe fn current_unchecked(&self) -> u8 {
+        self.assert_at_char_boundary();
         *self.source.as_bytes().get_unchecked(self.position)
     }
 
@@ -793,6 +805,7 @@ impl<'src> Lexer<'src> {
     /// ## Safety
     /// Must be called at a valid UT8 char boundary
     fn consume_escape_sequence(&mut self) -> bool {
+        self.assert_at_char_boundary();
         self.assert_byte(b'\\');
         let cur = self.position;
         self.advance(1); // eats '\'
@@ -875,6 +888,7 @@ impl<'src> Lexer<'src> {
     /// ## Safety
     /// Must be called at a valid UT8 char boundary
     fn consume_str_literal(&mut self, jsx_attribute: bool) -> bool {
+        self.assert_at_char_boundary();
         let quote = unsafe { self.current_unchecked() };
         let start = self.position;
         let mut valid = true;
