@@ -48,8 +48,8 @@ pub fn generate_ast(mode: Mode, args: Arguments) -> Result<()> {
         stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)))?;
         writeln!(
             &mut stdout,
-            "-------------------{}-------------------",
-            format!("Generating AST for {:?}", kind)
+            "-------------------Generating AST for {:?}-------------------",
+            kind
         )?;
         stdout.set_color(ColorSpec::new().set_fg(None))?;
         let mut ast = match kind {
