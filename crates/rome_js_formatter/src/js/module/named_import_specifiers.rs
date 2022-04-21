@@ -1,11 +1,10 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsNamedImportSpecifiers;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
 
-impl ToFormatElement for JsNamedImportSpecifiers {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsNamedImportSpecifiers {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsNamedImportSpecifiersFields {
             l_curly_token,
             specifiers,

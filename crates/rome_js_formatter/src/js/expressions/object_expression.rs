@@ -1,11 +1,10 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsObjectExpression;
 use rome_js_syntax::JsObjectExpressionFields;
 
-impl ToFormatElement for JsObjectExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsObjectExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsObjectExpressionFields {
             l_curly_token,
             members,

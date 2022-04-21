@@ -1,13 +1,12 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, group_elements, if_group_breaks, indent, soft_line_break, space_token, token,
-    FormatElement, FormatResult, Formatter, ToFormatElement, Token,
+    Format, FormatElement, FormatNode, FormatResult, Formatter, Token,
 };
 use rome_js_syntax::TsUnionType;
 use rome_js_syntax::TsUnionTypeFields;
 
-impl ToFormatElement for TsUnionType {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsUnionType {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsUnionTypeFields {
             leading_separator_token,
             types,

@@ -1,16 +1,16 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 
 use crate::{
-    format_elements, group_elements, soft_line_break_or_space, space_token, token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, group_elements, soft_line_break_or_space, space_token, token, Format,
+    FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsForStatement;
 use rome_js_syntax::JsForStatementFields;
 
-impl ToFormatElement for JsForStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsForStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsForStatementFields {
             for_token,
             l_paren_token,

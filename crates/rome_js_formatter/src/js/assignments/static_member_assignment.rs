@@ -1,12 +1,10 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsStaticMemberAssignment;
 use rome_js_syntax::JsStaticMemberAssignmentFields;
 
-impl ToFormatElement for JsStaticMemberAssignment {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsStaticMemberAssignment {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsStaticMemberAssignmentFields {
             object,
             dot_token,

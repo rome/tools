@@ -1,13 +1,12 @@
 use crate::utils::format_interpreter;
 use crate::{
-    format_elements, formatter_traits::FormatTokenAndNode, hard_line_break, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_line_break, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 use rome_js_syntax::JsModule;
 use rome_js_syntax::JsModuleFields;
 
-impl ToFormatElement for JsModule {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsModule {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsModuleFields {
             interpreter_token,
             directives,

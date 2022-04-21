@@ -1,17 +1,17 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::utils::is_simple_expression;
 use crate::{
     concat_elements, empty_element, format_elements, group_elements, hard_group_elements,
-    if_group_breaks, soft_block_indent, soft_line_indent_or_space, space_token, token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    if_group_breaks, soft_block_indent, soft_line_indent_or_space, space_token, token, Format,
+    FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
 };
 
-impl ToFormatElement for JsAnyFunction {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsAnyFunction {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let mut tokens = vec![];
 
         tokens.push(
@@ -44,7 +44,7 @@ impl ToFormatElement for JsAnyFunction {
                     token(")"),
                 ])
             }
-            JsAnyArrowFunctionParameters::JsParameters(params) => params.format(formatter)?,
+            JsAnyArrowFunctionParameters::JsParameters(params) => params.format_node(formatter)?,
         });
 
         tokens.push(self.return_type_annotation().format_or_empty(formatter)?);

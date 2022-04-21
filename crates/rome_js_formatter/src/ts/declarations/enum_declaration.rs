@@ -1,13 +1,13 @@
+use crate::format_traits::{FormatOptional, FormatWith};
 use crate::formatter::TrailingSeparator;
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, join_elements, soft_line_break_or_space, space_token, token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    FormatNode, FormatResult, Formatter,
 };
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
 
-impl ToFormatElement for TsEnumDeclaration {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsEnumDeclaration {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsEnumDeclarationFields {
             const_token,
             enum_token,

@@ -1,18 +1,17 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::{
     block_indent, concat_elements, group_elements, hard_group_elements, hard_line_break, token,
+    Format,
 };
 
-use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
-};
+use crate::{format_elements, space_token, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
 use rome_js_syntax::{JsElseClause, JsIfStatementFields};
 
-impl ToFormatElement for JsIfStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsIfStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let (head, mut else_clause) = format_if_element(formatter, None, self)?;
 
         let mut if_chain = vec![head];

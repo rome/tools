@@ -1,10 +1,10 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::utils::format_type_member_separator;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::{TsConstructSignatureTypeMember, TsConstructSignatureTypeMemberFields};
 
-impl ToFormatElement for TsConstructSignatureTypeMember {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsConstructSignatureTypeMember {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsConstructSignatureTypeMemberFields {
             new_token,
             type_parameters,

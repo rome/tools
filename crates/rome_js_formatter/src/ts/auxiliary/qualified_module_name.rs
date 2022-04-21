@@ -1,10 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsQualifiedModuleName;
 use rome_js_syntax::TsQualifiedModuleNameFields;
 
-impl ToFormatElement for TsQualifiedModuleName {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsQualifiedModuleName {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsQualifiedModuleNameFields {
             left,
             dot_token,

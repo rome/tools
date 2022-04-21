@@ -1,14 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::format_with_semicolon;
 use crate::{
-    empty_element, format_elements, group_elements, soft_block_indent, space_token, token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    empty_element, format_elements, group_elements, soft_block_indent, space_token, token, Format,
+    FormatElement, FormatNode, FormatResult, Formatter,
 };
 use rome_js_syntax::{JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
-impl ToFormatElement for JsReturnStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsReturnStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsReturnStatementFields {
             return_token,
             argument,

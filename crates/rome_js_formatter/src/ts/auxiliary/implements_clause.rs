@@ -1,13 +1,12 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     block_indent, format_elements, group_elements, if_group_breaks, if_group_fits_on_single_line,
-    soft_block_indent, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    soft_block_indent, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 use rome_js_syntax::TsImplementsClause;
 use rome_js_syntax::TsImplementsClauseFields;
 
-impl ToFormatElement for TsImplementsClause {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsImplementsClause {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsImplementsClauseFields {
             implements_token,
             types,

@@ -1,7 +1,7 @@
 # Implement the formatter
 
 Our formatter is node based. Meaning that each AST node knows how to format itself. In order to implement
-the formatting, a node has to implement the trait `ToFormatElement`.
+the formatting, a node has to implement the trait `FormatNode`.
 
 `rome` has an automatic code generation that creates automatically the files out of the grammar.
 By default, all implementations will format verbatim,
@@ -31,8 +31,8 @@ This will automatically build and open a browser tab to the documentation.
 
 1. Use the `*Fields` struct to extract all the tokens/nodes
    ```rust
-    impl ToFormatElement for JsExportDefaultExpressionClause {
-        fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    impl FormatNode for JsExportDefaultExpressionClause {
+        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression,
@@ -44,8 +44,8 @@ This will automatically build and open a browser tab to the documentation.
 2. When using `.as_fields()` with the destructuring, don't use the `..` feature. Prefer extracting all fields and ignore them
    using the `_`
    ```rust
-   impl ToFormatElement for JsExportDefaultExpressionClause {
-        fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+   impl FormatNode for JsExportDefaultExpressionClause {
+        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression: _,
@@ -55,16 +55,16 @@ This will automatically build and open a browser tab to the documentation.
    }
    ```
    The reason why we want to promote this pattern is because we want to make explicit when a token/node is excluded;
-3. Use the APIs provided by `format_element.rs` and `formatter` and `formatter_traits.rs`.
+3. Use the APIs provided by `format_element.rs` and `formatter` and `format_traits.rs`.
    1. `formatter_element.rs` exposes a series of utilities to craft the formatter IR; please refer to their internal
    documentation to understand what the utilities are for;
    2. `formatter` exposes a set of functions to help to format some recurring patterns; please refer to their internal
    documentation to understand how to use them and when;
-   3. `formatter_traits.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
+   3. `format_traits.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
    that are exposed based on its type. If you have a good IDE support, this feature will help you. For example:
    ```rust
-      impl ToFormatElement for JsExportDefaultExpressionClause {
-        fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+      impl FormatNode for JsExportDefaultExpressionClause {
+        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
             let JsExportDefaultExpressionClauseFields {
                 default_token,
                 expression, // it's a mandatory node
@@ -82,8 +82,7 @@ This will automatically build and open a browser tab to the documentation.
         }
    }
    ```
-   Traits are much safer and, they have an additional checks around nodes e.g. comments suppression; the golden rule
-   is that when you have a **typed node at hand**, prefer the `format*` traits instead of `.to_format_element`
+
 4. Use our [playground](https://play.rome.tools) to inspect the code that you want to format. You can inspect
 the AST given by a certain snippet. This will help you to understand which nodes need to be implemented/modified
 in order to implement formatting. Alternatively, you can locally run the playground by following

@@ -1,10 +1,8 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::utils::has_formatter_suppressions;
 use crate::{
     block_indent, concat_elements, empty_element, empty_line, format_elements, group_elements,
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
     join_elements_hard_line, line_suffix, soft_block_indent, soft_line_break_or_space, space_token,
-    FormatElement, FormatOptions, FormatResult, TextRange, ToFormatElement, Token, Verbatim,
+    Format, FormatElement, FormatOptions, FormatResult, TextRange, Token, Verbatim,
 };
 use rome_formatter::{normalize_newlines, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
@@ -16,7 +14,7 @@ use std::collections::HashSet;
 use std::iter::once;
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
-/// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
+/// The formatter is passed to the [Format] implementation of every node in the CST so that they
 /// can use it to format their children.
 #[derive(Debug, Default)]
 pub struct Formatter {
@@ -68,7 +66,7 @@ impl Formatter {
     /// Formats a CST
     pub(crate) fn format_root(self, root: &JsSyntaxNode) -> FormatResult<FormatElement> {
         tracing::debug_span!("Formatter::format_root").in_scope(move || {
-            let element = self.format_syntax_node(root)?;
+            let element = root.format(&self)?;
 
             cfg_if::cfg_if! {
                 if #[cfg(debug_assertions)] {
@@ -85,14 +83,6 @@ impl Formatter {
 
             Ok(element)
         })
-    }
-
-    fn format_syntax_node(&self, node: &JsSyntaxNode) -> FormatResult<FormatElement> {
-        if has_formatter_suppressions(node) {
-            return Ok(self.format_suppressed(node));
-        }
-
-        node.to_format_element(self)
     }
 
     /// Formats a group delimited by an opening and closing token,
@@ -228,7 +218,7 @@ impl Formatter {
     /// Formats each child and returns the result as a list.
     ///
     /// Returns [None] if a child couldn't be formatted.
-    pub fn format_nodes<T: AstNode<Language = JsLanguage> + ToFormatElement>(
+    pub fn format_nodes<T: AstNode<Language = JsLanguage> + Format>(
         &self,
         nodes: impl IntoIterator<Item = T>,
     ) -> FormatResult<impl Iterator<Item = FormatElement>> {
@@ -259,7 +249,7 @@ impl Formatter {
         trailing_separator: TrailingSeparator,
     ) -> FormatResult<impl Iterator<Item = FormatElement>>
     where
-        T: AstNode<Language = JsLanguage> + ToFormatElement + Clone,
+        T: AstNode<Language = JsLanguage> + Format + Clone,
         L: AstSeparatedList<Language = JsLanguage, Node = T>,
         F: Fn() -> FormatElement,
     {
@@ -284,7 +274,7 @@ impl Formatter {
                         empty_element()
                     }
                 } else {
-                    FormatTokenAndNode::format(&separator, self)?
+                    separator.format(self)?
                 }
             } else if index == last_index {
                 if trailing_separator.is_allowed() {
@@ -311,7 +301,7 @@ impl Formatter {
     /// end up separated by hard lines or empty lines.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
-    pub fn format_list<List, Node: AstNode<Language = JsLanguage> + ToFormatElement>(
+    pub fn format_list<List, Node: AstNode<Language = JsLanguage> + Format>(
         &self,
         list: List,
     ) -> FormatElement

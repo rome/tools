@@ -1,15 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::FormatResult;
 use crate::{
-    format_elements, hard_line_break, indent, space_token, FormatElement, Formatter,
-    ToFormatElement,
+    format_elements, hard_line_break, indent, space_token, FormatElement, FormatNode, Formatter,
 };
+use crate::{Format, FormatResult};
 
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::JsDefaultClauseFields;
 
-impl ToFormatElement for JsDefaultClause {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsDefaultClause {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsDefaultClauseFields {
             default_token,
             colon_token,

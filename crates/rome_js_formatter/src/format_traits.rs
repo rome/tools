@@ -1,17 +1,13 @@
-use crate::formatter::TriviaPrintMode;
-use crate::utils::has_formatter_suppressions;
-use crate::Token;
-use crate::{
-    empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
-};
-use rome_js_syntax::{JsLanguage, JsSyntaxToken};
-use rome_rowan::{AstNode, SyntaxResult};
+use crate::Format;
+use crate::{empty_element, FormatElement, FormatResult, Formatter};
+
+use rome_rowan::SyntaxResult;
 
 /// Utility trait used to simplify the formatting of optional tokens
 ///
 /// In order to take advantage of all the functions, you only need to implement the [FormatOptionalTokenAndNode::format_with_or]
 /// function.
-pub trait FormatOptionalTokenAndNode {
+pub trait FormatOptional {
     /// This function tries to format an optional [token](rome_js_syntax::SyntaxToken) or [node](rome_js_syntax::AstNode).
     /// If the token doesn't exist, an [empty token](FormatElement::Empty) is created
     ///
@@ -149,34 +145,7 @@ pub trait FormatOptionalTokenAndNode {
 }
 
 /// Utility trait to help to format nodes and tokens
-pub trait FormatTokenAndNode {
-    /// Simply format a token or node by calling [self::FormatTokenAndNode::format_with]
-    /// respectively.
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_js_formatter::{Formatter, token, space_token};
-    /// use rome_js_formatter::prelude::*;
-    /// use rome_js_syntax::{JsSyntaxTreeBuilder, JsSyntaxKind};
-    ///
-    /// let mut builder = JsSyntaxTreeBuilder::new();
-    ///
-    /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
-    /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
-    /// builder.finish_node();
-    /// let node = builder.finish();
-    /// let syntax_token = node.first_token().unwrap();
-    ///
-    /// let formatter = Formatter::default();
-    /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
-    /// let result = Ok(syntax_token).format(&formatter);
-    ///
-    /// assert_eq!(Ok(token("'abc'")), result)
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.format_with(formatter, |token| token)
-    }
-
+pub trait FormatWith {
     /// Allows to chain a formatted token/node with another [elements](FormatElement)
     ///
     /// The function will decorate the result with [Ok]
@@ -236,7 +205,7 @@ impl IntoFormatResult for FormatResult<FormatElement> {
     }
 }
 
-impl<F: FormatTokenAndNode> FormatTokenAndNode for SyntaxResult<F> {
+impl<F: Format> FormatWith for F {
     fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,
@@ -246,60 +215,13 @@ impl<F: FormatTokenAndNode> FormatTokenAndNode for SyntaxResult<F> {
         With: FnOnce(FormatElement) -> WithResult,
         WithResult: IntoFormatResult,
     {
-        match self {
-            Ok(token) => with(token.format(formatter)?).into_format_result(),
-            Err(err) => Err(err.into()),
-        }
-    }
-}
-
-impl FormatTokenAndNode for JsSyntaxToken {
-    fn format_with<With, WithResult>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> WithResult,
-        WithResult: IntoFormatResult,
-    {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()), "You tried to print the token '{:?}' twice, and this is not valid.", self);
-            }
-        }
-
-        with(format_elements![
-            formatter.print_leading_trivia(self, TriviaPrintMode::Full),
-            Token::from(self),
-            formatter.print_trailing_trivia(self),
-        ])
-        .into_format_result()
-    }
-}
-
-impl<N: AstNode<Language = JsLanguage> + ToFormatElement> FormatTokenAndNode for N {
-    fn format_with<With, WithResult>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> WithResult,
-        WithResult: IntoFormatResult,
-    {
-        let node = self.syntax();
-        let element = if has_formatter_suppressions(node) {
-            formatter.format_suppressed(node)
-        } else {
-            self.to_format_element(formatter)?
-        };
+        let element = self.format(formatter)?;
 
         with(element).into_format_result()
     }
 }
 
-impl<F: FormatOptionalTokenAndNode> FormatOptionalTokenAndNode for SyntaxResult<F> {
+impl<F: FormatOptional> FormatOptional for SyntaxResult<F> {
     fn format_with_or<With, Or, WithResult, OrResult>(
         &self,
         formatter: &Formatter,
@@ -319,7 +241,7 @@ impl<F: FormatOptionalTokenAndNode> FormatOptionalTokenAndNode for SyntaxResult<
     }
 }
 
-impl<F: FormatTokenAndNode> FormatOptionalTokenAndNode for Option<F> {
+impl<F: FormatWith> FormatOptional for Option<F> {
     fn format_with_or<With, Or, WithResult, OrResult>(
         &self,
         formatter: &Formatter,

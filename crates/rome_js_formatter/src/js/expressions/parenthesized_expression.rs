@@ -1,8 +1,7 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::{is_simple_expression, FormatPrecedence};
 use crate::{
-    empty_element, format_elements, group_elements, hard_group_elements, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    empty_element, format_elements, group_elements, hard_group_elements, Format, FormatElement,
+    FormatNode, FormatResult, Formatter,
 };
 use rome_js_syntax::{
     JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxKind,
@@ -10,8 +9,8 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
-impl ToFormatElement for JsParenthesizedExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsParenthesizedExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsParenthesizedExpressionFields {
             l_paren_token,
             expression,

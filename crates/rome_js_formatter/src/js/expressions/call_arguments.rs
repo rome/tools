@@ -1,15 +1,13 @@
 use crate::utils::{is_simple_expression, token_has_comments};
-use crate::{format_elements, hard_group_elements};
-use crate::{
-    formatter_traits::FormatTokenAndNode, FormatElement, FormatResult, Formatter, ToFormatElement,
-};
+use crate::{format_elements, hard_group_elements, Format};
+use crate::{FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsCallArgumentsFields;
 use rome_js_syntax::{JsAnyCallArgument, JsCallArguments};
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
-impl ToFormatElement for JsCallArguments {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsCallArguments {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsCallArgumentsFields {
             l_paren_token,
             args,

@@ -1,12 +1,12 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatResult, Formatter};
 use rome_js_syntax::JsAnyCallArgument;
-impl ToFormatElement for JsAnyCallArgument {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsAnyCallArgument {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            Self::JsAnyExpression(node) => node.to_format_element(formatter),
-            Self::JsSpread(node) => node.to_format_element(formatter),
+            Self::JsAnyExpression(node) => node.format(formatter),
+            Self::JsSpread(node) => node.format(formatter),
         }
     }
 }

@@ -1,15 +1,15 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 
 use crate::{
-    format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode,
+    FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsNamedImportSpecifier;
 use rome_js_syntax::JsNamedImportSpecifierFields;
 
-impl ToFormatElement for JsNamedImportSpecifier {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsNamedImportSpecifier {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsNamedImportSpecifierFields {
             type_token,
             name,

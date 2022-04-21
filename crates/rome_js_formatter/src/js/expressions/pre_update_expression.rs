@@ -1,12 +1,10 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsPreUpdateExpression;
 use rome_js_syntax::JsPreUpdateExpressionFields;
 
-impl ToFormatElement for JsPreUpdateExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsPreUpdateExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsPreUpdateExpressionFields {
             operator_token,
             operand,

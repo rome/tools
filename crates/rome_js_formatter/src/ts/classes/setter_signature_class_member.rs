@@ -1,12 +1,12 @@
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, formatter_traits::FormatTokenAndNode, hard_group_elements, space_token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode,
+    FormatResult, Formatter,
 };
 use rome_js_syntax::{TsSetterSignatureClassMember, TsSetterSignatureClassMemberFields};
 
-impl ToFormatElement for TsSetterSignatureClassMember {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsSetterSignatureClassMember {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsSetterSignatureClassMemberFields {
             modifiers,
             set_token,

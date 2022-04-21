@@ -1,14 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode,
+    FormatResult, Formatter,
 };
 use rome_js_syntax::TsConstructorSignatureClassMember;
 use rome_js_syntax::TsConstructorSignatureClassMemberFields;
 
-impl ToFormatElement for TsConstructorSignatureClassMember {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsConstructorSignatureClassMember {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsConstructorSignatureClassMemberFields {
             modifiers,
             name,

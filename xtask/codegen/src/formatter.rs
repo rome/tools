@@ -7,7 +7,7 @@ use std::{
 };
 
 use git2::{Repository, Status, StatusOptions};
-use proc_macro2::{Ident, Span};
+use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
 use xtask::project_root;
 
@@ -241,6 +241,8 @@ pub fn generate_formatter() {
     // Store references to all the files created by the codegen
     // script to build the module import files
     let mut modules = ModuleIndex::new(project_root().join("crates/rome_js_formatter/src"));
+    let mut format_impls =
+        FormatImpls::new(project_root().join("crates/rome_js_formatter/src/format.rs"));
 
     // Build an unified iterator over all the AstNode types
     let names = ast
@@ -277,6 +279,9 @@ pub fn generate_formatter() {
         let path = name_to_path(&kind, &name);
         modules.insert(&repo, &path);
 
+        let id = Ident::new(&name, Span::call_site());
+        format_impls.push(&kind, &id);
+
         // Union nodes except for AnyFunction and AnyClass have a generated
         // implementation, the codegen will always overwrite any existing file
         let allow_overwrite = matches!(kind, NodeKind::Union { .. })
@@ -292,31 +297,42 @@ pub fn generate_formatter() {
         let dir = path.parent().unwrap();
         create_dir_all(dir).unwrap();
 
-        let id = Ident::new(&name, Span::call_site());
-
-        // Generate a default implementation of ToFormatElement using format_list on
-        // non-separated lists, to_format_element on the wrapped node for unions and
+        // Generate a default implementation of Format/FormatNode using format_list on
+        // non-separated lists, format on the wrapped node for unions and
         // format_verbatim for all the other nodes
         let tokens = match kind {
             NodeKind::List { separated: false } => quote! {
-                use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+                use crate::{FormatElement, FormatResult, Formatter, Format};
                 use rome_js_syntax::#id;
 
-                impl ToFormatElement for #id {
-                    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                impl Format for #id {
+                    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
                         Ok(formatter.format_list(self.clone()))
                     }
                 }
             },
-            NodeKind::Node | NodeKind::Unknown | NodeKind::List { separated: true } => {
+            NodeKind::Node | NodeKind::List { separated: true } => {
                 quote! {
-                    use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+                    use crate::{FormatElement, FormatResult, Formatter, FormatNode};
                     use rome_rowan::AstNode;
                     use rome_js_syntax::{#id};
 
-                    impl ToFormatElement for #id {
-                        fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                    impl FormatNode for #id {
+                        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
                             Ok(formatter.format_verbatim(self.syntax()))
+                        }
+                    }
+                }
+            }
+            NodeKind::Unknown => {
+                quote! {
+                    use crate::{FormatElement, FormatResult, Formatter, FormatNode};
+                    use rome_rowan::AstNode;
+                    use rome_js_syntax::{#id};
+
+                    impl FormatNode for #id {
+                        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                            Ok(formatter.format_unknown(self.syntax()))
                         }
                     }
                 }
@@ -327,16 +343,16 @@ pub fn generate_formatter() {
                     .into_iter()
                     .map(|variant| {
                         let variant = Ident::new(&variant, Span::call_site());
-                        quote! { Self::#variant(node) => node.to_format_element(formatter), }
+                        quote! { Self::#variant(node) => node.format(formatter), }
                     })
                     .collect();
 
                 quote! {
-                    use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+                    use crate::{FormatElement, FormatResult, Formatter, Format};
                     use rome_js_syntax::#id;
 
-                    impl ToFormatElement for #id {
-                        fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                    impl Format for #id {
+                        fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
                             match self {
                                 #( #match_arms )*
                             }
@@ -360,7 +376,51 @@ pub fn generate_formatter() {
     }
 
     modules.print(&mut stage);
+    format_impls.print(&mut stage);
+
     repo.stage_paths(&stage);
+}
+
+struct FormatImpls {
+    path: PathBuf,
+    impls: Vec<TokenStream>,
+}
+
+impl FormatImpls {
+    fn new(file_name: PathBuf) -> Self {
+        Self {
+            path: file_name,
+            impls: vec![],
+        }
+    }
+
+    fn push(&mut self, kind: &NodeKind, id: &Ident) {
+        if matches!(kind, NodeKind::Node | NodeKind::Unknown) {
+            self.impls.push(quote! {
+                impl Format for rome_js_syntax::#id {
+                    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                        self.format_node(formatter)
+                    }
+                }
+            });
+        }
+    }
+
+    fn print(self, stage: &mut Vec<PathBuf>) {
+        let impls = self.impls;
+
+        let tokens = quote! {
+            use crate::{FormatElement, FormatResult, Formatter, Format, FormatNode};
+
+            #( #impls )*
+        };
+
+        let content = xtask::reformat_without_preamble(tokens).unwrap();
+        let mut file = File::create(&self.path).unwrap();
+        file.write_all(content.as_bytes()).unwrap();
+
+        stage.push(self.path);
+    }
 }
 
 enum NodeLanguage {

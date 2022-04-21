@@ -1,12 +1,12 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::utils::format_type_member_separator;
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 use rome_js_syntax::TsIndexSignatureTypeMember;
 
-impl ToFormatElement for TsIndexSignatureTypeMember {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsIndexSignatureTypeMember {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let readonly = self
             .readonly_token()
             .format_with_or_empty(formatter, |readonly_token| {

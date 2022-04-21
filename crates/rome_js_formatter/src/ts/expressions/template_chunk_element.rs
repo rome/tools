@@ -1,9 +1,9 @@
 use crate::utils::format_template_chunk;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::{TsTemplateChunkElement, TsTemplateChunkElementFields};
 
-impl ToFormatElement for TsTemplateChunkElement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsTemplateChunkElement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsTemplateChunkElementFields {
             template_chunk_token,
         } = self.as_fields();

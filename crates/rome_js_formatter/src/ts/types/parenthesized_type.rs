@@ -1,10 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsParenthesizedType;
 use rome_js_syntax::TsParenthesizedTypeFields;
 
-impl ToFormatElement for TsParenthesizedType {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsParenthesizedType {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsParenthesizedTypeFields {
             l_paren_token,
             ty,

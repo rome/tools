@@ -1,14 +1,15 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 
 use crate::{
-    format_elements, hard_group_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_group_elements, Format, FormatElement, FormatNode, FormatResult,
+    Formatter,
 };
 
 use rome_js_syntax::JsTemplate;
 use rome_js_syntax::JsTemplateFields;
 
-impl ToFormatElement for JsTemplate {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsTemplate {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsTemplateFields {
             tag,
             type_arguments,

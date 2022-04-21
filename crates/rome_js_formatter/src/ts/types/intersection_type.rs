@@ -1,13 +1,12 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, group_elements, if_group_breaks, indent, soft_line_break, space_token, token,
-    FormatElement, FormatResult, Formatter, ToFormatElement, Token,
+    Format, FormatElement, FormatNode, FormatResult, Formatter, Token,
 };
 use rome_js_syntax::TsIntersectionType;
 use rome_js_syntax::TsIntersectionTypeFields;
 
-impl ToFormatElement for TsIntersectionType {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsIntersectionType {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsIntersectionTypeFields {
             leading_separator_token,
             types,

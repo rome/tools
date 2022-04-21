@@ -1,10 +1,10 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::utils::format_type_member_separator;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsMethodSignatureTypeMember;
 
-impl ToFormatElement for TsMethodSignatureTypeMember {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsMethodSignatureTypeMember {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let name = self.name().format(formatter)?;
         let optional_token = self.optional_token().format_or_empty(formatter)?;
         let type_arguments = self.type_parameters().format_or_empty(formatter)?;

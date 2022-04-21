@@ -8,9 +8,9 @@ pub mod string_utils;
 #[cfg(test)]
 mod quickcheck_utils;
 
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::{
-    empty_element, empty_line, format_elements, hard_group_elements, space_token, token,
+    empty_element, empty_line, format_elements, hard_group_elements, space_token, token, Format,
     FormatElement, FormatResult, Formatter, QuoteStyle, Token,
 };
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};

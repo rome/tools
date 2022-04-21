@@ -1,10 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_formatter::format_elements;
 use rome_js_syntax::{JsxNamespaceName, JsxNamespaceNameFields};
 
-impl ToFormatElement for JsxNamespaceName {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsxNamespaceName {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsxNamespaceNameFields {
             namespace,
             colon_token,

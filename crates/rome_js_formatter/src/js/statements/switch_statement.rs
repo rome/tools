@@ -1,14 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, join_elements_hard_line, space_token, FormatElement, Formatter,
-    ToFormatElement,
+    format_elements, join_elements_hard_line, space_token, Format, FormatElement, FormatNode,
+    Formatter,
 };
 use crate::{hard_group_elements, FormatResult};
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
 use rome_rowan::AstNode;
 
-impl ToFormatElement for JsSwitchStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsSwitchStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsSwitchStatementFields {
             switch_token,
             l_paren_token,

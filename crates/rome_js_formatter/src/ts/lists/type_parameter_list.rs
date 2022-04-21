@@ -1,13 +1,12 @@
 use crate::formatter::TrailingSeparator;
 use crate::{
-    join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    join_elements, soft_line_break_or_space, token, Format, FormatElement, FormatResult, Formatter,
 };
 use rome_js_syntax::TsTypeParameterList;
 use rome_rowan::AstSeparatedList;
 
-impl ToFormatElement for TsTypeParameterList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for TsTypeParameterList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         // nodes and formatter are not aware of the source type (TSX vs TS), which means we can't
         // exactly pin point the exact case.
         //

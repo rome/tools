@@ -1,17 +1,15 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::FormatResult;
 
 use crate::{
-    format_elements, hard_line_break, indent, space_token, FormatElement, Formatter,
-    ToFormatElement,
+    format_elements, hard_line_break, indent, space_token, Format, FormatElement, FormatNode,
+    Formatter,
 };
 
 use rome_js_syntax::JsCaseClause;
 use rome_js_syntax::JsCaseClauseFields;
 
-impl ToFormatElement for JsCaseClause {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsCaseClause {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsCaseClauseFields {
             case_token,
             test,

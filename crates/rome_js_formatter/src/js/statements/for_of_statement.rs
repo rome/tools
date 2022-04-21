@@ -1,16 +1,16 @@
 use rome_js_syntax::JsForOfStatement;
 
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 
 use crate::utils::format_head_body_statement;
 use crate::{
-    format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode,
+    FormatResult, Formatter,
 };
 use rome_js_syntax::JsForOfStatementFields;
 
-impl ToFormatElement for JsForOfStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsForOfStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsForOfStatementFields {
             for_token,
             await_token,

@@ -1,12 +1,11 @@
 use crate::formatter::TrailingSeparator;
 use crate::{
-    join_elements, soft_line_break_or_space, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    join_elements, soft_line_break_or_space, token, Format, FormatElement, FormatResult, Formatter,
 };
 use rome_js_syntax::{JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatternPropertyList};
 
-impl ToFormatElement for JsObjectAssignmentPatternPropertyList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsObjectAssignmentPatternPropertyList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         // The trailing separator is disallowed after a rest element
         let has_trailing_rest = match self.into_iter().last() {
             Some(elem) => matches!(

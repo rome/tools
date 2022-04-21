@@ -1,17 +1,15 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::utils::is_simple_expression;
 use crate::{
-    format_elements, group_elements, soft_block_indent, space_token, token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, group_elements, soft_block_indent, space_token, token, Format, FormatElement,
+    FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsPreUpdateOperator;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
-impl ToFormatElement for JsUnaryExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsUnaryExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsUnaryExpressionFields {
             operator_token,
             argument,

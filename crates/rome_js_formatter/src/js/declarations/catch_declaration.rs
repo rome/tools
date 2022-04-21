@@ -1,12 +1,12 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsCatchDeclaration;
 use rome_js_syntax::JsCatchDeclarationFields;
 
-impl ToFormatElement for JsCatchDeclaration {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsCatchDeclaration {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsCatchDeclarationFields {
             l_paren_token,
             binding,

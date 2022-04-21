@@ -1,16 +1,14 @@
 use rome_js_syntax::JsForInStatement;
 
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::utils::format_head_body_statement;
 use crate::{
-    format_elements, soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode,
+    FormatResult, Formatter,
 };
 use rome_js_syntax::JsForInStatementFields;
 
-impl ToFormatElement for JsForInStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsForInStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsForInStatementFields {
             for_token,
             l_paren_token,

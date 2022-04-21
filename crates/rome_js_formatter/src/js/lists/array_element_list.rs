@@ -3,15 +3,15 @@ use std::convert::Infallible;
 use crate::formatter::TrailingSeparator;
 use crate::utils::array::format_array_node;
 use crate::{
-    fill_elements, token, utils::has_formatter_trivia, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    fill_elements, token, utils::has_formatter_trivia, Format, FormatElement, FormatResult,
+    Formatter,
 };
 
 use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
 use rome_rowan::{AstNode, AstSeparatedList};
 
-impl ToFormatElement for JsArrayElementList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsArrayElementList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         if !has_formatter_trivia(self.syntax()) && can_print_fill(self) {
             return Ok(fill_elements(
                 // Using format_separated is valid in this case as can_print_fill does not allow holes

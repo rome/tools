@@ -1,13 +1,11 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use crate::utils::format_string_literal_token;
 use rome_js_syntax::JsLiteralMemberNameFields;
 use rome_js_syntax::{JsLiteralMemberName, JsSyntaxKind};
 
-impl ToFormatElement for JsLiteralMemberName {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsLiteralMemberName {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsLiteralMemberNameFields { value } = self.as_fields();
 
         let value = value?;

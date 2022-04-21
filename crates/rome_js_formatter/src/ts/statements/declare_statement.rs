@@ -1,12 +1,11 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 use rome_js_syntax::TsDeclareStatement;
 use rome_js_syntax::TsDeclareStatementFields;
 
-impl ToFormatElement for TsDeclareStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsDeclareStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsDeclareStatementFields {
             declaration,
             declare_token,

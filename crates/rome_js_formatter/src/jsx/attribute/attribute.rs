@@ -1,9 +1,9 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::format_traits::FormatOptional;
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::{JsxAttribute, JsxAttributeFields};
 
-impl ToFormatElement for JsxAttribute {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsxAttribute {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsxAttributeFields { name, initializer } = self.as_fields();
 
         Ok(format_elements![

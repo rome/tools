@@ -1,6 +1,5 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, group_elements, hard_line_break, indent, space_token, FormatElement,
+    format_elements, group_elements, hard_line_break, indent, space_token, Format, FormatElement,
     FormatResult, Formatter,
 };
 use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};

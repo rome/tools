@@ -1,14 +1,14 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::group_elements;
 use crate::{
-    format_elements, soft_block_indent, soft_line_break_or_space, space_token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, soft_block_indent, soft_line_break_or_space, space_token, Format,
+    FormatElement, FormatNode, FormatResult, Formatter,
 };
 use rome_formatter::join_elements;
 use rome_js_syntax::JsxSelfClosingElement;
 
-impl ToFormatElement for JsxSelfClosingElement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsxSelfClosingElement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let attributes = join_elements(
             soft_line_break_or_space(),
             formatter.format_nodes(self.attributes())?,
