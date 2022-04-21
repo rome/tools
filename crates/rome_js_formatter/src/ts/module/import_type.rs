@@ -1,13 +1,13 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::utils::format_string_literal_token;
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 use rome_js_syntax::TsImportType;
 use rome_js_syntax::TsImportTypeFields;
 
-impl ToFormatElement for TsImportType {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsImportType {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsImportTypeFields {
             typeof_token,
             import_token,

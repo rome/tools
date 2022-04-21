@@ -1,15 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{
-    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode,
+    FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsSetterClassMember;
 use rome_js_syntax::JsSetterClassMemberFields;
 
-impl ToFormatElement for JsSetterClassMember {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsSetterClassMember {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsSetterClassMemberFields {
             modifiers,
             set_token,

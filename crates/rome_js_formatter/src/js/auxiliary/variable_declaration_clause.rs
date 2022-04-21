@@ -1,12 +1,11 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::format_with_semicolon;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsVariableDeclarationClause;
 use rome_js_syntax::JsVariableDeclarationClauseFields;
 
-impl ToFormatElement for JsVariableDeclarationClause {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsVariableDeclarationClause {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsVariableDeclarationClauseFields {
             declaration,
             semicolon_token,

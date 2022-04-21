@@ -1,14 +1,12 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsAssignmentWithDefault;
 use rome_js_syntax::JsAssignmentWithDefaultFields;
 
-impl ToFormatElement for JsAssignmentWithDefault {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsAssignmentWithDefault {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsAssignmentWithDefaultFields {
             pattern,
             eq_token,

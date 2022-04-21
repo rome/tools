@@ -1,8 +1,7 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     empty_element, format_elements, group_elements, hard_group_elements, hard_line_break,
     join_elements, soft_block_indent, soft_line_break_or_space, soft_line_indent_or_space,
-    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    space_token, token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::{
@@ -124,7 +123,7 @@ pub(crate) fn format_binary_like_expression(
 
             let left = parent.left()?;
 
-            let formatted = left.format(formatter)?;
+            let formatted = left.format_node(formatter)?;
             let has_comments = left.syntax().has_comments_direct();
 
             flatten_items.items.push(FlattenItem::regular(
@@ -843,14 +842,14 @@ impl AstNode for JsAnyBinaryLikeLeftExpression {
     }
 }
 
-impl ToFormatElement for JsAnyBinaryLikeLeftExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsAnyBinaryLikeLeftExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                expression.to_format_element(formatter)
+                expression.format(formatter)
             }
             JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => {
-                private_name.to_format_element(formatter)
+                private_name.format_fields(formatter)
             }
         }
     }

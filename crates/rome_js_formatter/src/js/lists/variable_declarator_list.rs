@@ -1,14 +1,13 @@
 use crate::{
-    concat_elements, empty_element, format_elements,
-    formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
-    group_elements, indent, join_elements, soft_line_break_or_space, token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    concat_elements, empty_element, format_elements, format_traits::FormatOptional, group_elements,
+    indent, join_elements, soft_line_break_or_space, token, Format, FormatElement, FormatResult,
+    Formatter,
 };
 use rome_js_syntax::JsVariableDeclaratorList;
 use rome_rowan::AstSeparatedList;
 
-impl ToFormatElement for JsVariableDeclaratorList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsVariableDeclaratorList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let last_index = self.len().saturating_sub(1);
 
         let declarators = self

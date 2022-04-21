@@ -1,14 +1,12 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsNamespaceImportSpecifier;
 use rome_js_syntax::JsNamespaceImportSpecifierFields;
 
-impl ToFormatElement for JsNamespaceImportSpecifier {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsNamespaceImportSpecifier {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsNamespaceImportSpecifierFields {
             star_token,
             as_token,

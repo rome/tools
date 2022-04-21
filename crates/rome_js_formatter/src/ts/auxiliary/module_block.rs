@@ -1,10 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsModuleBlock;
 use rome_js_syntax::TsModuleBlockFields;
 
-impl ToFormatElement for TsModuleBlock {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsModuleBlock {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsModuleBlockFields {
             l_curly_token,
             items,

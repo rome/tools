@@ -1,7 +1,7 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::{
     concat_elements, format_elements, group_elements, indent, join_elements, soft_line_break,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    Format, FormatElement, FormatResult, Formatter,
 };
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsImportCallExpression, JsStaticMemberExpression,
@@ -341,7 +341,7 @@ fn flatten_call_expression(
         }
 
         _ => {
-            let formatted = node.to_format_element(formatter)?;
+            let formatted = node.format(formatter)?;
             queue.push(FlattenItem::Node(node, formatted));
         }
     }

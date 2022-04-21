@@ -1,12 +1,10 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsSpread;
 use rome_js_syntax::JsSpreadFields;
 
-impl ToFormatElement for JsSpread {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsSpread {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsSpreadFields {
             dotdotdot_token,
             argument,

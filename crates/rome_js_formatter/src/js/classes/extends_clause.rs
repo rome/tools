@@ -1,14 +1,14 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsExtendsClause;
 use rome_js_syntax::JsExtendsClauseFields;
 
-impl ToFormatElement for JsExtendsClause {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsExtendsClause {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsExtendsClauseFields {
             extends_token,
             super_class,

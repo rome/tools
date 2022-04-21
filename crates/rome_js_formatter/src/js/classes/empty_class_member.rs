@@ -1,10 +1,10 @@
-use crate::{empty_element, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{empty_element, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsEmptyClassMember;
 use rome_js_syntax::JsEmptyClassMemberFields;
 
-impl ToFormatElement for JsEmptyClassMember {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsEmptyClassMember {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsEmptyClassMemberFields { semicolon_token } = self.as_fields();
 
         Ok(formatter.format_replaced(&semicolon_token?, empty_element()))

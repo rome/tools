@@ -1,12 +1,10 @@
-use crate::{
-    formatter_traits::FormatTokenAndNode, FormatElement, FormatResult, Formatter, ToFormatElement,
-};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsArrayBindingPattern;
 use rome_js_syntax::JsArrayBindingPatternFields;
 
-impl ToFormatElement for JsArrayBindingPattern {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsArrayBindingPattern {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsArrayBindingPatternFields {
             l_brack_token,
             elements,

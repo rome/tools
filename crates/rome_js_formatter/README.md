@@ -12,22 +12,22 @@ rome_js_formatter = { version = "0.0.0", path = "../rome_js_formatter" }
 
 The foundation of the formatter relies on two pillars:
 
-- the usage of a [*trait*](https://doc.rust-lang.org/reference/items/traits.html) called `ToFormatElement`;
+- the usage of the [*trait*](https://doc.rust-lang.org/reference/items/traits.html) generic `Format` trait and `FormatNode` for nodes.
 - the creation of an intermediate IR via a series of helpers
 
-Import the `ToFormatElement` trait and implement it for the data structure you need.
+Import the `FormatNode` trait and implement it for your Node.
 
 ```rust
-use rome_js_formatter::{ToFormatElement, FormatElement, format_elements, token}
+use rome_js_formatter::{Format, FormatNode, FormatElement, format_elements, token};
 
 struct Buzz {
  blast: String
 }
 
-impl ToFormatElement for Buzz {
- fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
- // implementation goes here
- format_elements![token("_"), blast.as_str(), token("_")]
+impl FormatNode for Buzz {
+ fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+ 	// implementation goes here
+ 	format_elements![token("_"), blast.as_str(), token("_")]
  }
 }
 
@@ -38,8 +38,8 @@ impl ToFormatElement for Buzz {
 1. if a token is mandatory and the AST has that information, please use that token instead, for example:
 
 	```rust
-	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let l_paren_yes = formatter.format_token(&self.l_paren_token()?)?; // yes
+	fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		let l_paren_yes = &self.l_paren_token()?.format(formatter)?; // yes
 		let l_paren_no = toke("("); // no
 	}
 	```

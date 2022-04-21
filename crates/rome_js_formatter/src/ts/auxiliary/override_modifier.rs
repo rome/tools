@@ -1,10 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsOverrideModifier;
 use rome_js_syntax::TsOverrideModifierFields;
 
-impl ToFormatElement for TsOverrideModifier {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsOverrideModifier {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsOverrideModifierFields { modifier_token } = self.as_fields();
         modifier_token.format(formatter)
     }

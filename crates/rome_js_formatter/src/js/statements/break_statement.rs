@@ -1,14 +1,14 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsBreakStatement;
 use rome_js_syntax::JsBreakStatementFields;
 
-impl ToFormatElement for JsBreakStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsBreakStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsBreakStatementFields {
             break_token,
             label_token,

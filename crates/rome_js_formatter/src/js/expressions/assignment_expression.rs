@@ -1,15 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{
-    format_elements, group_elements, soft_line_indent_or_space, space_token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, group_elements, soft_line_indent_or_space, space_token, Format, FormatElement,
+    FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsAssignmentExpression;
 use rome_js_syntax::JsAssignmentExpressionFields;
 
-impl ToFormatElement for JsAssignmentExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsAssignmentExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsAssignmentExpressionFields {
             left,
             operator_token,

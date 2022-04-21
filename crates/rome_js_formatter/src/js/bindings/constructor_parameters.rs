@@ -1,12 +1,10 @@
-use crate::{
-    formatter_traits::FormatTokenAndNode, FormatElement, FormatResult, Formatter, ToFormatElement,
-};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsConstructorParameters;
 use rome_js_syntax::JsConstructorParametersFields;
 
-impl ToFormatElement for JsConstructorParameters {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsConstructorParameters {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsConstructorParametersFields {
             l_paren_token,
             parameters,

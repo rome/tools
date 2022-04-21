@@ -1,9 +1,8 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsUndefinedType;
 
-impl ToFormatElement for TsUndefinedType {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsUndefinedType {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         self.undefined_token().format(formatter)
     }
 }

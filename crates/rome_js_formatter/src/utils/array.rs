@@ -5,10 +5,8 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, AstSeparatedList};
 
 use crate::{
-    empty_element, format_elements,
-    formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode},
-    if_group_breaks, join_elements_soft_line, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    empty_element, format_elements, format_traits::FormatOptional, if_group_breaks,
+    join_elements_soft_line, token, Format, FormatElement, FormatResult, Formatter,
 };
 
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
@@ -71,9 +69,7 @@ pub(crate) enum TrailingSeparatorMode {
     Force,
 }
 
-pub(crate) trait ArrayNodeElement:
-    AstNode<Language = JsLanguage> + Clone + ToFormatElement
-{
+pub(crate) trait ArrayNodeElement: AstNode<Language = JsLanguage> + Format + Clone {
     /// Determines how the trailing separator should be printer for this element
     fn separator_mode(&self) -> TrailingSeparatorMode;
 }

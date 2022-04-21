@@ -1,9 +1,9 @@
 use crate::utils::sort_modifiers_by_precedence;
-use crate::{join_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{join_elements, space_token, Format, FormatElement, FormatResult, Formatter};
 use rome_js_syntax::TsPropertyParameterModifierList;
 
-impl ToFormatElement for TsPropertyParameterModifierList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for TsPropertyParameterModifierList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),
             formatter.format_nodes(sort_modifiers_by_precedence(self))?,

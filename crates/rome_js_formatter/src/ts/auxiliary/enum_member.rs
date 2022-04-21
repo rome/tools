@@ -1,10 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::format_initializer_clause;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsEnumMember;
 
-impl ToFormatElement for TsEnumMember {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsEnumMember {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let name = self.name().format(formatter)?;
         let initializer = format_initializer_clause(formatter, self.initializer())?;
 

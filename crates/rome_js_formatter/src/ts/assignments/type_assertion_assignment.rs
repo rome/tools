@@ -1,11 +1,10 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsTypeAssertionAssignmentFields;
 
 use rome_js_syntax::TsTypeAssertionAssignment;
 
-impl ToFormatElement for TsTypeAssertionAssignment {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsTypeAssertionAssignment {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsTypeAssertionAssignmentFields {
             l_angle_token,
             ty,

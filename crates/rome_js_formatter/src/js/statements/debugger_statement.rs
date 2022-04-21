@@ -1,12 +1,11 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::format_with_semicolon;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsDebuggerStatement;
 use rome_js_syntax::JsDebuggerStatementFields;
 
-impl ToFormatElement for JsDebuggerStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsDebuggerStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsDebuggerStatementFields {
             debugger_token,
             semicolon_token,

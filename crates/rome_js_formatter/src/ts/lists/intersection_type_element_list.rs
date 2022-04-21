@@ -1,13 +1,12 @@
 use crate::{
-    concat_elements, empty_element, format_elements, formatter_traits::FormatTokenAndNode,
-    soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    concat_elements, empty_element, format_elements, soft_line_break_or_space, space_token, token,
+    Format, FormatElement, FormatResult, Formatter,
 };
 use rome_js_syntax::TsIntersectionTypeElementList;
 use rome_rowan::AstSeparatedList;
 
-impl ToFormatElement for TsIntersectionTypeElementList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for TsIntersectionTypeElementList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let mut elements = Vec::with_capacity(self.len());
         let last_index = self.len().saturating_sub(1);
 

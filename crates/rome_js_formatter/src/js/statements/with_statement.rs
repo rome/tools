@@ -1,15 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::utils::format_head_body_statement;
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsWithStatement;
 use rome_js_syntax::JsWithStatementFields;
 
-impl ToFormatElement for JsWithStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsWithStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsWithStatementFields {
             with_token,
             l_paren_token,

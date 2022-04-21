@@ -1,10 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsIndexedAccessType;
 use rome_js_syntax::TsIndexedAccessTypeFields;
 
-impl ToFormatElement for TsIndexedAccessType {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsIndexedAccessType {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsIndexedAccessTypeFields {
             object_type,
             l_brack_token,

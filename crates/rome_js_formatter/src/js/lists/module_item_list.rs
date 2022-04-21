@@ -1,7 +1,7 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatResult, Formatter};
 use rome_js_syntax::JsModuleItemList;
-impl ToFormatElement for JsModuleItemList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsModuleItemList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(formatter.format_list(self.clone()))
     }
 }

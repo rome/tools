@@ -1,15 +1,14 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use rome_formatter::concat_elements;
 
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields};
 use rome_rowan::AstNode;
 
-impl ToFormatElement for JsSequenceExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsSequenceExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let mut current = self.clone();
 
         // Find the left most sequence expression

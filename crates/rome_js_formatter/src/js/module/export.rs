@@ -1,14 +1,12 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsExport;
 use rome_js_syntax::JsExportFields;
 
-impl ToFormatElement for JsExport {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsExport {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsExportFields {
             export_token,
             export_clause,

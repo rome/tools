@@ -1,13 +1,12 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     empty_element, format_elements, if_group_breaks, join_elements, soft_line_break_or_space,
-    token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    token, Format, FormatElement, FormatResult, Formatter,
 };
 use rome_js_syntax::TsTypeMemberList;
 use rome_rowan::AstNodeList;
 
-impl ToFormatElement for TsTypeMemberList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for TsTypeMemberList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let items = self.iter();
         let last_index = items.len().saturating_sub(1);
 

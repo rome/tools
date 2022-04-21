@@ -1,13 +1,13 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, hard_group_elements, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode,
+    FormatResult, Formatter,
 };
 use rome_js_syntax::{TsTypeAliasDeclaration, TsTypeAliasDeclarationFields};
 
-impl ToFormatElement for TsTypeAliasDeclaration {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsTypeAliasDeclaration {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsTypeAliasDeclarationFields {
             type_token,
             binding_identifier,

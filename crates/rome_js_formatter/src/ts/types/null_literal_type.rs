@@ -1,9 +1,8 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsNullLiteralType;
 
-impl ToFormatElement for TsNullLiteralType {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsNullLiteralType {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         self.literal_token().format(formatter)
     }
 }

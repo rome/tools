@@ -1,16 +1,18 @@
 //! Rome's official JavaScript formatter.
 
 mod cst;
+mod format_traits;
 mod formatter;
-mod formatter_traits;
 mod js;
 mod jsx;
 pub mod prelude;
 mod ts;
 pub mod utils;
+
 use std::error::Error;
 use std::fmt::{self, Display};
 
+use crate::utils::has_formatter_suppressions;
 pub use formatter::Formatter;
 pub use rome_formatter::intersperse::{Intersperse, IntersperseFn};
 pub use rome_formatter::printer::{Printer, PrinterOptions};
@@ -22,14 +24,118 @@ pub use rome_formatter::{
     soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
     FormatOptions, Formatted, IndentStyle, QuoteStyle, Token, Verbatim, LINE_TERMINATORS,
 };
-use rome_js_syntax::JsSyntaxNode;
-use rome_rowan::TextSize;
-use rome_rowan::TokenAtOffset;
+use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
+use rome_rowan::{AstNode, TextSize};
 use rome_rowan::{SyntaxError, TextRange};
+use rome_rowan::{SyntaxResult, TokenAtOffset};
 
-/// This trait should be implemented on each node/value that should have a formatted representation
-pub trait ToFormatElement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
+/// Formatting trait for types that can create a formatted representation. The `rome_formatter` equivalent
+/// to [std::fmt::Display].
+///
+/// ## Example
+/// Implementing `Format` for a custom struct
+///
+/// ```
+/// use rome_formatter::{format_elements, FormatElement, FormatOptions, hard_line_break, Token};
+/// use rome_js_formatter::{Format, format, FormatResult, Formatter};
+/// use rome_rowan::TextSize;
+///
+/// struct Paragraph(String);
+///
+/// impl Format for Paragraph {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+///         Ok(format_elements![
+///             hard_line_break(),
+///             Token::new_dynamic(self.0.clone(), TextSize::from(0)),
+///             hard_line_break(),
+///         ])
+///     }
+/// }
+///
+/// let paragraph = Paragraph(String::from("test"));
+/// ```
+pub trait Format {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+impl<T> Format for &T
+where
+    T: ?Sized + Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Format::format(&**self, formatter)
+    }
+}
+
+impl<T> Format for &mut T
+where
+    T: ?Sized + Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Format::format(&**self, formatter)
+    }
+}
+
+impl<T> Format for Option<T>
+where
+    T: Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match self {
+            Some(value) => value.format(formatter),
+            None => Ok(empty_element()),
+        }
+    }
+}
+
+impl<T> Format for SyntaxResult<T>
+where
+    T: Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match self {
+            Ok(value) => value.format(formatter),
+            Err(err) => Err(err.into()),
+        }
+    }
+}
+
+/// Formatting trait for JS AST Nodes.
+///
+/// The code-gen generates a [Format] implementation for each `FormatNode` into the `format.rs` file.
+pub trait FormatNode: AstNode<Language = JsLanguage> {
+    /// Formats the node by calling into [FormatNode::format_fields] if the first token has no leading `rome-ignore` suppression comment.
+    ///
+    /// Formats the node "as is" if the node has a suppression comment.
+    fn format_node(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let node = self.syntax();
+        let element = if has_formatter_suppressions(node) {
+            formatter.format_suppressed(node)
+        } else {
+            self.format_fields(formatter)?
+        };
+
+        Ok(element)
+    }
+
+    /// Formats the node's fields.
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+/// Format implementation specific to JavaScript tokens.
+impl Format for JsSyntaxToken {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()), "You tried to print the token '{:?}' twice, and this is not valid.", self);
+            }
+        }
+
+        Ok(format_elements![
+            formatter.print_leading_trivia(self, formatter::TriviaPrintMode::Full),
+            Token::from(self),
+            formatter.print_trailing_trivia(self),
+        ])
+    }
 }
 
 /// Public return type of the formatter
@@ -61,10 +167,8 @@ impl Display for FormatError {
 impl Error for FormatError {}
 
 impl From<SyntaxError> for FormatError {
-    fn from(syntax_error: SyntaxError) -> Self {
-        match syntax_error {
-            SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
-        }
+    fn from(error: SyntaxError) -> Self {
+        FormatError::from(&error)
     }
 }
 
@@ -396,6 +500,7 @@ function() {
 
 #[cfg(test)]
 mod check_reformat;
+mod format;
 
 #[cfg(test)]
 mod test {

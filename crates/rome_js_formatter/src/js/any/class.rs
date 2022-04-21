@@ -1,14 +1,13 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
-use crate::hard_group_elements;
+use crate::format_traits::FormatOptional;
 use crate::{
     format_elements, join_elements_hard_line, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
 };
+use crate::{hard_group_elements, Format};
 use rome_js_syntax::JsAnyClass;
 use rome_rowan::AstNode;
 
-impl ToFormatElement for JsAnyClass {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsAnyClass {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let abstract_token = self
             .abstract_token()
             .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;

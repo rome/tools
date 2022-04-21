@@ -1,15 +1,14 @@
 use std::borrow::Cow;
 
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::string_utils::ToAsciiLowercaseCow;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_formatter::Token;
 use rome_js_syntax::JsBigIntLiteralExpression;
 use rome_js_syntax::JsBigIntLiteralExpressionFields;
 
-impl ToFormatElement for JsBigIntLiteralExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsBigIntLiteralExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsBigIntLiteralExpressionFields { value_token } = self.as_fields();
         let value_token = value_token?;
 

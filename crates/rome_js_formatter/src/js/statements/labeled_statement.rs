@@ -1,14 +1,12 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{
-    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsLabeledStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsLabeledStatement};
 
-impl ToFormatElement for JsLabeledStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsLabeledStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsLabeledStatementFields {
             label_token,
             colon_token,

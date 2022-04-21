@@ -1,14 +1,14 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsObjectAssignmentPatternShorthandProperty;
 use rome_js_syntax::JsObjectAssignmentPatternShorthandPropertyFields;
 
-impl ToFormatElement for JsObjectAssignmentPatternShorthandProperty {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsObjectAssignmentPatternShorthandProperty {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsObjectAssignmentPatternShorthandPropertyFields { identifier, init } =
             self.as_fields();
 

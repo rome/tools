@@ -1,7 +1,7 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatResult, Formatter};
 use rome_js_syntax::JsxChildList;
-impl ToFormatElement for JsxChildList {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl Format for JsxChildList {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(formatter.format_list(self.clone()))
     }
 }

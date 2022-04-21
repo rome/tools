@@ -1,15 +1,15 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::format_traits::FormatOptional;
 
 use crate::{
-    format_elements, hard_group_elements, space_token, token, FormatElement, FormatResult,
-    Formatter, ToFormatElement,
+    format_elements, hard_group_elements, space_token, token, Format, FormatElement, FormatNode,
+    FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsDoWhileStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
 
-impl ToFormatElement for JsDoWhileStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsDoWhileStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsDoWhileStatementFields {
             do_token,
             body,

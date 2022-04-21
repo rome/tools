@@ -1,9 +1,8 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsNumberType;
 
-impl ToFormatElement for TsNumberType {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsNumberType {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         self.number_token().format(formatter)
     }
 }

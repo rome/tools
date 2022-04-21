@@ -1,14 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
-    format_elements, soft_block_indent, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, soft_block_indent, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 use rome_formatter::group_elements;
 use rome_js_syntax::{
     JsAnyExpression, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
 };
 
-impl ToFormatElement for JsxExpressionAttributeValue {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsxExpressionAttributeValue {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsxExpressionAttributeValueFields {
             l_curly_token,
             expression,

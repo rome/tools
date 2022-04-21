@@ -1,7 +1,5 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
 use crate::{
-    format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, hard_line_break, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsBlockStatement;
@@ -10,8 +8,8 @@ use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
-impl ToFormatElement for JsBlockStatement {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsBlockStatement {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsBlockStatementFields {
             l_curly_token,
             statements,

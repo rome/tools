@@ -1,12 +1,10 @@
-use crate::formatter_traits::FormatTokenAndNode;
-
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
 
 use rome_js_syntax::JsArrayExpression;
 use rome_js_syntax::JsArrayExpressionFields;
 
-impl ToFormatElement for JsArrayExpression {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsArrayExpression {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsArrayExpressionFields {
             l_brack_token,
             elements,

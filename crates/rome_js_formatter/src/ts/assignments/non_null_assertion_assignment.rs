@@ -1,10 +1,9 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
 use rome_js_syntax::TsNonNullAssertionAssignment;
 use rome_js_syntax::TsNonNullAssertionAssignmentFields;
 
-impl ToFormatElement for TsNonNullAssertionAssignment {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for TsNonNullAssertionAssignment {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsNonNullAssertionAssignmentFields {
             assignment,
             excl_token,

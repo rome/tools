@@ -1,14 +1,13 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
 };
 
 use rome_js_syntax::JsImport;
 use rome_js_syntax::JsImportFields;
 
-impl ToFormatElement for JsImport {
-    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNode for JsImport {
+    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsImportFields {
             import_token,
             import_clause,
