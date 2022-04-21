@@ -1,4 +1,5 @@
-use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsSuperExpression;
 use rome_js_syntax::JsSuperExpressionFields;

@@ -1,9 +1,8 @@
 use crate::format_traits::FormatOptional;
+use rome_formatter::FormatResult;
 
 use crate::utils::format_with_semicolon;
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
-};
+use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
 
 use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;

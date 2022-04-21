@@ -1,4 +1,5 @@
-use crate::{empty_element, FormatElement, FormatNode, FormatResult, Formatter};
+use crate::{empty_element, FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsArrayHole;
 

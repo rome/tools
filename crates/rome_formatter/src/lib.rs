@@ -11,7 +11,8 @@ pub use format_element::{
     soft_block_indent, soft_line_break, soft_line_break_or_space, soft_line_indent_or_space,
     space_token, token, FormatElement, Token, Verbatim, LINE_TERMINATORS,
 };
-use rome_rowan::{TextRange, TextSize};
+use rome_rowan::{SyntaxError, TextRange, TextSize};
+use std::error::Error;
 use std::fmt::{self, Display, Formatter};
 use std::num::ParseIntError;
 use std::str::FromStr;
@@ -198,15 +199,39 @@ pub struct SourceMarker {
     pub dest: TextSize,
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone)]
 pub struct Formatted {
+    root: FormatElement,
+    options: FormatOptions,
+}
+
+impl Formatted {
+    pub fn new(root: FormatElement, options: FormatOptions) -> Self {
+        Self { root, options }
+    }
+
+    pub fn print(&self) -> Printed {
+        Printer::new(self.options).print(&self.root)
+    }
+
+    pub fn print_with_indent(&self, indent: u16) -> Printed {
+        Printer::new(self.options).print_with_indent(&self.root, indent)
+    }
+
+    pub fn into_format_element(self) -> FormatElement {
+        self.root
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct Printed {
     code: String,
     range: Option<TextRange>,
     sourcemap: Vec<SourceMarker>,
     verbatim_ranges: Vec<TextRange>,
 }
 
-impl Formatted {
+impl Printed {
     pub fn new(
         code: String,
         range: Option<TextRange>,
@@ -272,7 +297,44 @@ impl Formatted {
     }
 }
 
-pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
-    let printer = Printer::new(options);
-    printer.print(element)
+/// Public return type of the formatter
+pub type FormatResult<F> = Result<F, FormatError>;
+
+#[derive(Debug, PartialEq)]
+/// Series of errors encountered during formatting
+pub enum FormatError {
+    /// Node is missing and it should be required for a correct formatting
+    MissingRequiredChild,
+
+    /// In case our formatter doesn't know how to format a certain language
+    UnsupportedLanguage,
+
+    /// When the ability to format the current file has been turned off on purpose
+    CapabilityDisabled,
+}
+
+impl Display for FormatError {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            FormatError::MissingRequiredChild => fmt.write_str("missing required child"),
+            FormatError::UnsupportedLanguage => fmt.write_str("language is not supported"),
+            FormatError::CapabilityDisabled => fmt.write_str("formatting capability is disabled"),
+        }
+    }
+}
+
+impl Error for FormatError {}
+
+impl From<SyntaxError> for FormatError {
+    fn from(error: SyntaxError) -> Self {
+        FormatError::from(&error)
+    }
+}
+
+impl From<&SyntaxError> for FormatError {
+    fn from(syntax_error: &SyntaxError) -> Self {
+        match syntax_error {
+            SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
+        }
+    }
 }

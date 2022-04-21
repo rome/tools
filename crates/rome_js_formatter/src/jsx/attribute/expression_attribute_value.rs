@@ -1,7 +1,5 @@
-use crate::{
-    format_elements, soft_block_indent, Format, FormatElement, FormatNode, FormatResult, Formatter,
-};
-use rome_formatter::group_elements;
+use crate::{format_elements, soft_block_indent, Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::{group_elements, FormatResult};
 use rome_js_syntax::{
     JsAnyExpression, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
 };

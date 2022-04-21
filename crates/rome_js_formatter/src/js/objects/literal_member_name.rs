@@ -1,4 +1,5 @@
-use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 
 use crate::utils::format_string_literal_token;
 use rome_js_syntax::JsLiteralMemberNameFields;

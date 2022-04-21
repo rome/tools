@@ -1,5 +1,6 @@
 use crate::format_traits::FormatOptional;
-use crate::{format_elements, Format, FormatElement, FormatNode, FormatResult, Formatter};
+use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 use rome_js_syntax::{TsNameWithTypeArguments, TsNameWithTypeArgumentsFields};
 
 impl FormatNode for TsNameWithTypeArguments {

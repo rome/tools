@@ -1,5 +1,6 @@
 use crate::Format;
-use crate::{empty_element, FormatElement, FormatResult, Formatter};
+use crate::{empty_element, FormatElement, Formatter};
+use rome_formatter::FormatResult;
 
 use rome_rowan::SyntaxResult;
 

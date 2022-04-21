@@ -1,7 +1,6 @@
 use crate::format_traits::FormatOptional;
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
-};
+use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 use rome_js_syntax::{TsNamedTupleTypeElement, TsNamedTupleTypeElementFields};
 
 impl FormatNode for TsNamedTupleTypeElement {

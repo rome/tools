@@ -1,7 +1,6 @@
 use crate::formatter::TrailingSeparator;
-use crate::{
-    join_elements, soft_line_break_or_space, token, Format, FormatElement, FormatResult, Formatter,
-};
+use crate::{join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter};
+use rome_formatter::FormatResult;
 use rome_js_syntax::TsTypeList;
 
 impl Format for TsTypeList {

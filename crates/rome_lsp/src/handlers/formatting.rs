@@ -91,7 +91,9 @@ pub(crate) fn format(params: FormatParams) -> Result<Option<Vec<TextEdit>>> {
         return Ok(None);
     }
 
-    let new_text = rome_js_formatter::format(format_options, &parse_result.syntax())?.into_code();
+    let new_text = rome_js_formatter::format_node(format_options, &parse_result.syntax())?
+        .print()
+        .into_code();
 
     let num_lines: u32 = line_index::LineIndex::new(text).newlines.len().try_into()?;
 
@@ -216,7 +218,7 @@ pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Option<Vec<Te
         None => bail!("found a token with no parent"),
     };
 
-    let formatted = rome_js_formatter::format_node(params.format_options, &root_node)?;
+    let formatted = rome_js_formatter::format_sub_tree(params.format_options, &root_node)?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {

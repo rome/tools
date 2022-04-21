@@ -1,7 +1,8 @@
+use crate::Format;
 use crate::{
     format_elements, hard_line_break, indent, space_token, FormatElement, FormatNode, Formatter,
 };
-use crate::{Format, FormatResult};
+use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::JsDefaultClauseFields;

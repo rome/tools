@@ -1,7 +1,8 @@
 use crate::{
     format_elements, group_elements, hard_line_break, indent, space_token, Format, FormatElement,
-    FormatResult, Formatter,
+    Formatter,
 };
+use rome_formatter::FormatResult;
 use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
 use rome_rowan::AstNode;
 

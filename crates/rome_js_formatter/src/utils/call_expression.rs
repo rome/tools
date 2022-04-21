@@ -1,8 +1,9 @@
 use crate::format_traits::FormatOptional;
 use crate::{
     concat_elements, format_elements, group_elements, indent, join_elements, soft_line_break,
-    Format, FormatElement, FormatResult, Formatter,
+    Format, FormatElement, Formatter,
 };
+use rome_formatter::FormatResult;
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsImportCallExpression, JsStaticMemberExpression,
 };

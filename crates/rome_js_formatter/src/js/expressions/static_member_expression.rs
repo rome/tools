@@ -1,6 +1,5 @@
-use crate::{
-    format_elements, group_elements, Format, FormatElement, FormatNode, FormatResult, Formatter,
-};
+use crate::{format_elements, group_elements, Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsStaticMemberExpression;
 use rome_js_syntax::JsStaticMemberExpressionFields;

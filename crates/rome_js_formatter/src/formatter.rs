@@ -2,9 +2,9 @@ use crate::{
     block_indent, concat_elements, empty_element, empty_line, format_elements, group_elements,
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
     join_elements_hard_line, line_suffix, soft_block_indent, soft_line_break_or_space, space_token,
-    Format, FormatElement, FormatOptions, FormatResult, TextRange, Token, Verbatim,
+    Format, FormatElement, FormatOptions, TextRange, Token, Verbatim,
 };
-use rome_formatter::{normalize_newlines, LINE_TERMINATORS};
+use rome_formatter::{normalize_newlines, FormatResult, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaPiece};
 #[cfg(debug_assertions)]
@@ -61,28 +61,6 @@ impl Formatter {
     #[inline]
     pub fn options(&self) -> &FormatOptions {
         &self.options
-    }
-
-    /// Formats a CST
-    pub(crate) fn format_root(self, root: &JsSyntaxNode) -> FormatResult<FormatElement> {
-        tracing::debug_span!("Formatter::format_root").in_scope(move || {
-            let element = root.format(&self)?;
-
-            cfg_if::cfg_if! {
-                if #[cfg(debug_assertions)] {
-                    let printed_tokens = self.printed_tokens.into_inner();
-                    for token in root.descendants_tokens() {
-                        assert!(
-                            printed_tokens.contains(&token),
-                            "token was not seen by the formatter: {:?}",
-                            token
-                        );
-                    }
-                }
-            }
-
-            Ok(element)
-        })
     }
 
     /// Formats a group delimited by an opening and closing token,

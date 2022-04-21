@@ -3,7 +3,7 @@ use crate::format_element::{
 };
 use crate::intersperse::Intersperse;
 use crate::{
-    hard_line_break, space_token, FormatElement, FormatOptions, Formatted, IndentStyle, LineWidth,
+    hard_line_break, space_token, FormatElement, FormatOptions, IndentStyle, LineWidth, Printed,
     SourceMarker, TextRange,
 };
 use rome_rowan::TextSize;
@@ -102,13 +102,13 @@ impl<'a> Printer<'a> {
     }
 
     /// Prints the passed in element as well as all its content
-    pub fn print(self, element: &'a FormatElement) -> Formatted {
+    pub fn print(self, element: &'a FormatElement) -> Printed {
         tracing::debug_span!("Printer::print").in_scope(move || self.print_with_indent(element, 0))
     }
 
     /// Prints the passed in element as well as all its content,
     /// starting at the specified indentation level
-    pub fn print_with_indent(mut self, element: &'a FormatElement, indent: u16) -> Formatted {
+    pub fn print_with_indent(mut self, element: &'a FormatElement, indent: u16) -> Printed {
         let mut queue = ElementCallQueue::new();
 
         queue.enqueue(PrintElementCall::new(
@@ -131,7 +131,7 @@ impl<'a> Printer<'a> {
             }
         }
 
-        Formatted::new(
+        Printed::new(
             self.state.buffer,
             None,
             self.state.source_markers,
@@ -646,11 +646,11 @@ mod tests {
     use crate::{
         block_indent, empty_line, format_elements, group_elements, hard_line_break,
         if_group_breaks, soft_block_indent, soft_line_break, soft_line_break_or_space, token,
-        FormatElement, Formatted, LineWidth,
+        FormatElement, LineWidth, Printed,
     };
 
     /// Prints the given element with the default printer options
-    fn print_element<T: Into<FormatElement>>(element: T) -> Formatted {
+    fn print_element<T: Into<FormatElement>>(element: T) -> Printed {
         let options = PrinterOptions {
             indent_string: String::from("  "),
             ..PrinterOptions::default()

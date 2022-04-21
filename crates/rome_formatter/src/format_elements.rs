@@ -21,7 +21,7 @@
 /// You would write it like the following:
 ///
 /// ```rust
-/// use rome_formatter::{format_elements, format_element, FormatOptions, space_token, token};
+/// use rome_formatter::{format_elements, Formatted, FormatOptions, space_token, token};
 /// let element = format_elements![
 ///   token("foo:"),
 ///   space_token(),
@@ -33,13 +33,13 @@
 ///   space_token(),
 ///   token("}")
 /// ];
-/// assert_eq!(r#"foo: { bar: lorem }"#, format_element(&element, FormatOptions::default()).as_code());
+/// assert_eq!(r#"foo: { bar: lorem }"#, Formatted::new(element, FormatOptions::default()).print().as_code());
 /// ```
 /// Or you can also create single element:
 /// ```
-/// use rome_formatter::{format_elements, format_element, FormatOptions, token};
+/// use rome_formatter::{format_elements, Formatted, FormatOptions, token};
 /// let element = format_elements![token("single")];
-/// assert_eq!(r#"single"#, format_element(&element, FormatOptions::default()).as_code());
+/// assert_eq!(r#"single"#, Formatted::new(element, FormatOptions::default()).print().as_code());
 /// ```
 #[macro_export]
 macro_rules! format_elements {
