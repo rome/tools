@@ -48,6 +48,22 @@ impl<L: Language> SyntaxToken<L> {
     }
 
     /// Returns the text of a token, including all trivia as an owned value.
+    ///  
+    /// ```
+    /// use rome_rowan::*;
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n\t let \t\t",
+    ///         &[TriviaPiece::whitespace(3)],
+    ///         &[TriviaPiece::whitespace(3)],
+    ///     );
+    /// }).first_token().unwrap();
+    /// assert_eq!("\n\t let \t\t", token.token_text());
+    /// assert_eq!(format!("{}", "\n\t let \t\t"), format!("{}", token.token_text()));
+    /// assert_eq!(format!("{:?}", "\n\t let \t\t"), format!("{:?}", token.token_text()));
+    /// ```
     pub fn token_text(&self) -> SyntaxTokenText {
         self.raw.token_text()
     }
