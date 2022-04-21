@@ -8,10 +8,9 @@ fn main() -> Result<()> {
 
     let mut args = Arguments::from_env();
     let command = args.subcommand()?.unwrap_or_default();
-
     match command.as_str() {
         "grammar" => {
-            generate_ast(Mode::Overwrite)?;
+            generate_ast(Mode::Overwrite, args)?;
             Ok(())
         }
         "formatter" => {

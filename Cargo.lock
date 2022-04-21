@@ -2301,6 +2301,7 @@ name = "xtask_codegen"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "colored",
  "filetime",
  "git2",
  "pico-args",

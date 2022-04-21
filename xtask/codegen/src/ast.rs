@@ -19,24 +19,40 @@ use crate::{
     kinds_src::{AstEnumSrc, AstNodeSrc, JS_KINDS_SRC},
     update, LanguageKind,
 };
+use colored::Colorize;
+use pico_args::Arguments;
 use ungrammar::{Grammar, Rule, Token};
 use xtask::{project_root, Result};
 
 // these node won't generate any code
 pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 
-pub fn generate_ast(mode: Mode) -> Result<()> {
-    let mut ast = load_js_ast();
-    ast.sort();
-    generate_syntax(ast, &mode, LanguageKind::Js)?;
+pub const ALL_LANGUAGE_KIND: [LanguageKind; 3] =
+    [LanguageKind::Js, LanguageKind::Css, LanguageKind::Json];
 
-    let mut ast = load_css_ast();
-    ast.sort();
-    generate_syntax(ast, &mode, LanguageKind::Css)?;
-
-    let mut ast = load_json_ast();
-    ast.sort();
-    generate_syntax(ast, &mode, LanguageKind::Json)?;
+pub fn generate_ast(mode: Mode, args: Arguments) -> Result<()> {
+    let arg_list = args.finish();
+    let codegen_language_kinds = if arg_list.is_empty() {
+        ALL_LANGUAGE_KIND.clone().to_vec()
+    } else {
+        arg_list
+            .iter()
+            .filter_map(|kind| LanguageKind::from_string(kind.to_str().unwrap()))
+            .collect::<Vec<_>>()
+    };
+    for kind in codegen_language_kinds {
+        println!(
+            "-------------------{}-------------------",
+            format!("Generating AST for {:?}", kind).green()
+        );
+        let mut ast = match kind {
+            LanguageKind::Js => load_js_ast(),
+            LanguageKind::Css => load_css_ast(),
+            LanguageKind::Json => load_json_ast(),
+        };
+        ast.sort();
+        generate_syntax(ast, &mode, kind)?;
+    }
 
     Ok(())
 }

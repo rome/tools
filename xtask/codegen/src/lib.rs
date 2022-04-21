@@ -52,6 +52,14 @@ pub enum LanguageKind {
 }
 
 impl LanguageKind {
+    pub(crate) fn from_string(kind: &str) -> Option<Self> {
+        match kind {
+            "js" => Some(LanguageKind::Js),
+            "css" => Some(LanguageKind::Css),
+            "json" => Some(LanguageKind::Json),
+            _ => None,
+        }
+    }
     pub(crate) fn syntax_kind(&self) -> TokenStream {
         match self {
             LanguageKind::Js => quote! { JsSyntaxKind },
