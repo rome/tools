@@ -16,6 +16,7 @@ mod unicode;
 use proc_macro2::TokenStream;
 use quote::quote;
 use std::path::Path;
+use std::str::FromStr;
 
 use xtask::{glue::fs2, Mode, Result};
 
@@ -51,15 +52,20 @@ pub enum LanguageKind {
     Json,
 }
 
-impl LanguageKind {
-    pub(crate) fn from_string(kind: &str) -> Option<Self> {
+impl FromStr for LanguageKind {
+    type Err = ();
+
+    fn from_str(kind: &str) -> Result<Self, Self::Err> {
         match kind {
-            "js" => Some(LanguageKind::Js),
-            "css" => Some(LanguageKind::Css),
-            "json" => Some(LanguageKind::Json),
-            _ => None,
+            "js" => Ok(LanguageKind::Js),
+            "css" => Ok(LanguageKind::Css),
+            "json" => Ok(LanguageKind::Json),
+            _ => Err(()),
         }
     }
+}
+
+impl LanguageKind {
     pub(crate) fn syntax_kind(&self) -> TokenStream {
         match self {
             LanguageKind::Js => quote! { JsSyntaxKind },

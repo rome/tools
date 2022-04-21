@@ -2,6 +2,7 @@
 //! This is derived from rust-analyzer/xtask/codegen
 
 use std::collections::{HashMap, HashSet, VecDeque};
+use std::str::FromStr;
 use std::vec;
 
 use super::{
@@ -40,7 +41,7 @@ pub fn generate_ast(mode: Mode, args: Arguments) -> Result<()> {
     } else {
         arg_list
             .iter()
-            .filter_map(|kind| LanguageKind::from_string(kind.to_str().unwrap()))
+            .filter_map(|kind| LanguageKind::from_str(kind.to_str().unwrap()).ok())
             .collect::<Vec<_>>()
     };
     for kind in codegen_language_kinds {
