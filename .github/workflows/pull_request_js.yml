@@ -24,7 +24,7 @@ jobs:
           version: preview
 
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Run Rome Format
         run: rome format --ci editors website
