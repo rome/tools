@@ -125,7 +125,7 @@ impl Format for JsSyntaxToken {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()), "You tried to print the token '{:?}' twice, and this is not valid.", self);
+                formatter.printed_tokens.borrow_mut().track_formatted(self);
             }
         }
 
@@ -159,13 +159,8 @@ pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 let printed_tokens = formatter.printed_tokens.into_inner();
-                for token in root.descendants_tokens() {
-                    assert!(
-                        printed_tokens.contains(&token),
-                        "token was not seen by the formatter: {:?}",
-                        token
-                    );
-                }
+
+                printed_tokens.assert_all_tracked(root);
             }
         }
 
@@ -474,6 +469,9 @@ function() {
 #[cfg(test)]
 mod check_reformat;
 mod format;
+
+#[cfg(debug_assertions)]
+mod printed_tokens;
 
 #[cfg(test)]
 mod test {

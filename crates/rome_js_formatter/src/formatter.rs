@@ -1,3 +1,5 @@
+#[cfg(debug_assertions)]
+use crate::printed_tokens::PrintedTokens;
 use crate::{
     block_indent, concat_elements, empty_element, empty_line, format_elements, group_elements,
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
@@ -9,8 +11,6 @@ use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaPiece};
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
-#[cfg(debug_assertions)]
-use std::collections::HashSet;
 use std::iter::once;
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
@@ -22,7 +22,7 @@ pub struct Formatter {
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
-    pub(super) printed_tokens: RefCell<HashSet<JsSyntaxToken>>,
+    pub(super) printed_tokens: RefCell<PrintedTokens>,
 }
 
 #[derive(Debug)]
@@ -77,8 +77,8 @@ impl Formatter {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 let mut printed_tokens = self.printed_tokens.borrow_mut();
-                assert!(printed_tokens.insert(open_token.clone()));
-                assert!(printed_tokens.insert(close_token.clone()));
+                printed_tokens.track_formatted(open_token);
+                printed_tokens.track_formatted(close_token);
                 drop(printed_tokens);
             }
         }
@@ -182,7 +182,7 @@ impl Formatter {
     ) -> FormatElement {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                assert!(self.printed_tokens.borrow_mut().insert(current_token.clone()));
+                self.printed_tokens.borrow_mut().track_replaced(current_token);
             }
         }
 
@@ -602,7 +602,7 @@ impl Formatter {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 for token in node.descendants_tokens() {
-                    assert!(self.printed_tokens.borrow_mut().insert(token.clone()));
+                    self.printed_tokens.borrow_mut().track_verbatim(&token);
                 }
             }
         }
@@ -666,7 +666,7 @@ pub(super) enum TriviaPrintMode {
 /// mode and compiled to nothing in release mode
 pub struct FormatterSnapshot {
     #[cfg(debug_assertions)]
-    printed_tokens: HashSet<JsSyntaxToken>,
+    printed_tokens: PrintedTokens,
 }
 
 impl Formatter {
