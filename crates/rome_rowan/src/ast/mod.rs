@@ -163,13 +163,20 @@ pub struct AstSeparatedElement<L: Language, N> {
     trailing_separator: SyntaxResult<Option<SyntaxToken<L>>>,
 }
 
-impl<L: Language, N: AstNode<Language = L> + Clone> AstSeparatedElement<L, N> {
-    pub fn node(&self) -> SyntaxResult<N> {
-        self.node.clone()
+impl<L: Language, N: AstNode<Language = L>> AstSeparatedElement<L, N> {
+    pub fn node(&self) -> SyntaxResult<&N> {
+        match &self.node {
+            Ok(node) => Ok(&node),
+            Err(err) => Err(*err),
+        }
     }
 
-    pub fn trailing_separator(&self) -> SyntaxResult<Option<SyntaxToken<L>>> {
-        self.trailing_separator.clone()
+    pub fn trailing_separator(&self) -> SyntaxResult<Option<&SyntaxToken<L>>> {
+        match &self.trailing_separator {
+            Ok(Some(sep)) => Ok(Some(sep)),
+            Ok(_) => Ok(None),
+            Err(err) => Err(*err),
+        }
     }
 }
 
@@ -331,7 +338,7 @@ impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstSeparatedListNo
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy)]
 pub enum SyntaxError {
     /// Error thrown when a mandatory node is not found
     MissingRequiredChild,
