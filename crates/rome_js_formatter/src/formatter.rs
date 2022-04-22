@@ -563,21 +563,6 @@ impl Formatter {
         concat_elements(elements)
     }
 
-    /// "Formats" a node according to its original formatting in the source text. Being able to format
-    /// a node "as is" is useful if a node contains syntax errors. Formatting a node with syntax errors
-    /// has the risk that Rome misinterprets the structure of the code and formatting it could
-    /// "mess up" the developers, yet incomplete, work or accidentally introduce new syntax errors.
-    ///
-    /// You may be inclined to call `node.text` directly. However, using `text` doesn't track the nodes
-    /// nor its children source mapping information, resulting in incorrect source maps for this subtree.
-    ///
-    /// These nodes and tokens get tracked as [FormatElement::Verbatim], useful to understand
-    /// if these nodes still need to have their own implementation.
-    pub fn format_verbatim(&self, node: &JsSyntaxNode) -> FormatElement {
-        let verbatim = self.format_verbatim_node_or_token(node);
-        FormatElement::Verbatim(Verbatim::new_verbatim(verbatim, node.text_range().len()))
-    }
-
     /// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
     /// doesn't track nodes/tokens as [FormatElement::Verbatim]. They are just printed as they are.
     pub fn format_unknown(&self, node: &JsSyntaxNode) -> FormatElement {
@@ -687,4 +672,33 @@ impl Formatter {
     #[cfg(not(debug_assertions))]
     /// Restore the state of the formatter to a previous snapshot
     pub fn restore(&self, _: FormatterSnapshot) {}
+}
+
+/// "Formats" a node according to its original formatting in the source text. Being able to format
+/// a node "as is" is useful if a node contains syntax errors. Formatting a node with syntax errors
+/// has the risk that Rome misinterprets the structure of the code and formatting it could
+/// "mess up" the developers, yet incomplete, work or accidentally introduce new syntax errors.
+///
+/// You may be inclined to call `node.text` directly. However, using `text` doesn't track the nodes
+/// nor its children source mapping information, resulting in incorrect source maps for this subtree.
+///
+/// These nodes and tokens get tracked as [FormatElement::Verbatim], useful to understand
+/// if these nodes still need to have their own implementation.
+pub fn verbatim_node(node: &JsSyntaxNode) -> VerbatimNode {
+    VerbatimNode { node }
+}
+
+#[derive(Debug, Clone)]
+pub struct VerbatimNode<'node> {
+    node: &'node JsSyntaxNode,
+}
+
+impl Format for VerbatimNode<'_> {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let verbatim = formatter.format_verbatim_node_or_token(self.node);
+        Ok(FormatElement::Verbatim(Verbatim::new_verbatim(
+            verbatim,
+            self.node.text_range().len(),
+        )))
+    }
 }
