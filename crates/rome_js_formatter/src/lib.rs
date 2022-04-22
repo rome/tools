@@ -125,7 +125,7 @@ impl Format for JsSyntaxToken {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                formatter.printed_tokens.borrow_mut().track_formatted(self);
+                formatter.printed_tokens.borrow_mut().track_token(self);
             }
         }
 

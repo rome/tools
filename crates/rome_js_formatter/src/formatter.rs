@@ -77,8 +77,8 @@ impl Formatter {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 let mut printed_tokens = self.printed_tokens.borrow_mut();
-                printed_tokens.track_formatted(open_token);
-                printed_tokens.track_formatted(close_token);
+                printed_tokens.track_token(open_token);
+                printed_tokens.track_token(close_token);
                 drop(printed_tokens);
             }
         }
@@ -182,7 +182,7 @@ impl Formatter {
     ) -> FormatElement {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                self.printed_tokens.borrow_mut().track_replaced(current_token);
+                self.printed_tokens.borrow_mut().track_token(current_token);
             }
         }
 
@@ -602,7 +602,7 @@ impl Formatter {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 for token in node.descendants_tokens() {
-                    self.printed_tokens.borrow_mut().track_verbatim(&token);
+                    self.printed_tokens.borrow_mut().track_token(&token);
                 }
             }
         }

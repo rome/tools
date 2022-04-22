@@ -1,12 +1,5 @@
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, TextSize};
-use std::collections::BTreeMap;
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
-enum TokenTrackMode {
-    Replaced,
-    Formatted,
-    Verbatim,
-}
+use std::collections::BTreeSet;
 
 /// Tracks the ranges of the formatted (including replaced or tokens formatted as verbatim) tokens.
 ///
@@ -14,41 +7,21 @@ enum TokenTrackMode {
 /// Thus, testing if a token has already been formatted only requires testing if a token starting at the same offset has been formatted.
 #[derive(Debug, Clone, Default)]
 pub(crate) struct PrintedTokens {
-    /// Key: Start of range, value: whatever this is formatted or replaced
-    offsets: BTreeMap<TextSize, TokenTrackMode>,
+    /// Key: Start of a token's range
+    offsets: BTreeSet<TextSize>,
 }
 
 impl PrintedTokens {
-    fn track_token<L: Language>(&mut self, token: &SyntaxToken<L>, mode: TokenTrackMode) {
-        let range = token.text_trimmed_range();
-
-        if let Some(previous_mode) = self.offsets.insert(range.start(), mode) {
-            panic!("You tried to print the token '{token:?}' twice, and this is not valid. Printed now as {mode:?}, previously printed as {previous_mode:?}.");
-        }
-    }
-
     /// Tracks a formatted token
     ///
     /// ## Panics
     /// If this token has been formatted before.
-    pub(crate) fn track_formatted<L: Language>(&mut self, token: &SyntaxToken<L>) {
-        self.track_token(token, TokenTrackMode::Formatted)
-    }
+    pub(crate) fn track_token<L: Language>(&mut self, token: &SyntaxToken<L>) {
+        let range = token.text_trimmed_range();
 
-    /// Tracks a token that has been replaced with other content
-    ///
-    /// ## Panics
-    /// If this token has been formatted before.
-    pub(crate) fn track_replaced<L: Language>(&mut self, token: &SyntaxToken<L>) {
-        self.track_token(token, TokenTrackMode::Replaced)
-    }
-
-    /// Tracks a verbatim formatted token
-    ///
-    /// ## Panics
-    /// If this token has been formatted before.
-    pub(crate) fn track_verbatim<L: Language>(&mut self, token: &SyntaxToken<L>) {
-        self.track_token(token, TokenTrackMode::Verbatim)
+        if !self.offsets.insert(range.start()) {
+            panic!("You tried to print the token '{token:?}' twice, and this is not valid.");
+        }
     }
 
     /// Asserts that all tokens of the passed in node have been tracked
@@ -61,22 +34,20 @@ impl PrintedTokens {
 
         loop {
             match (descendants.next(), offsets.next()) {
-                (Some(descendant), Some((offset, mode))) => {
-                    match descendant.text_trimmed_range().start() {
-                        descendant_offset if descendant_offset < *offset => {
-                            panic!("token has not been seen by the formatter: {descendant:#?}")
-                        }
-                        descendant_offset if descendant_offset > *offset => {
-                            panic!("tracked offset {offset:?} formatted with {mode:?} doesn't match any token of {root:#?}");
-                        }
-                        _ => {}
+                (Some(descendant), Some(offset)) => match descendant.text_trimmed_range().start() {
+                    descendant_offset if descendant_offset < *offset => {
+                        panic!("token has not been seen by the formatter: {descendant:#?}.\nUse `formatter.format_replaced` if you intentionally remove or replace a token from the formatted output.")
                     }
-                }
+                    descendant_offset if descendant_offset > *offset => {
+                        panic!("tracked offset {offset:?} doesn't match any token of {root:#?}. Have you passed a token from another tree?");
+                    }
+                    _ => {}
+                },
                 (Some(descendant), None) => {
-                    panic!("token has not been seen by the formatter: {descendant:#?}")
+                    panic!("token has not been seen by the formatter: {descendant:#?}.\n Use `formatter.format_replaced` if you intentionally remove or replace a token from the formatted output.")
                 }
-                (None, Some((offset, mode))) => {
-                    panic!("tracked offset {offset:?} formatted with {mode:?} doesn't match any token of {root:#?}");
+                (None, Some(offset)) => {
+                    panic!("tracked offset {offset:?} doesn't match any token of {root:#?}. Have you passed a token from another tree?");
                 }
                 (None, None) => break,
             };
