@@ -34,7 +34,7 @@ pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Resul
                                 quote! { Some(SyntaxElement::Token(#name)) }
                             }
                             Field::Node { .. } => {
-                                quote! { Some(SyntaxElement::Node(#name.syntax().clone())) }
+                                quote! { Some(SyntaxElement::Node(#name.into_syntax())) }
                             }
                         };
 
@@ -103,9 +103,9 @@ pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Resul
                             quote! { Some(SyntaxElement::Token(self.#name)) }
                         }
                         Field::Node { optional, .. } => if *optional {
-                            quote! { self.#name.map(|token| SyntaxElement::Node(token.syntax().clone())) }
+                            quote! { self.#name.map(|token| SyntaxElement::Node(token.into_syntax())) }
                         } else {
-                            quote! { Some(SyntaxElement::Node(self.#name.syntax().clone())) }
+                            quote! { Some(SyntaxElement::Node(self.#name.into_syntax())) }
                         }
                     }
                 })

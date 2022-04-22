@@ -204,6 +204,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                             if Self::can_cast(syntax.kind()) { Some(Self { syntax }) } else { None }
                         }
                         fn syntax(&self) -> &SyntaxNode { &self.syntax }
+                        fn into_syntax(self) -> SyntaxNode { self.syntax }
                     }
 
                     impl std::fmt::Debug for #name {
@@ -343,6 +344,10 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         quote! {
                             #name::#variant_name(it) => it.syntax()
                         },
+                        // into_syntax() code
+                        quote! {
+                            #name::#variant_name(it) => it.into_syntax()
+                        },
                     )
                 })
                 .collect();
@@ -351,6 +356,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
             let vv_can_cast = vv.iter().map(|v| v.1.clone());
             let vv_syntax = vv.iter().map(|v| v.2.clone());
+            let vv_into_syntax = vv.iter().map(|v| v.3.clone());
 
             let all_kinds = if !kinds.is_empty() {
                 quote! {
@@ -398,14 +404,19 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             };
 
-            let variant_can_cast: Vec<_> = simple_variants
+            let (variant_syntax, variant_into_syntax): (Vec<_>, Vec<_>) = simple_variants
                 .iter()
                 .map(|_| {
-                    quote! {
-                        &it.syntax
-                    }
+                    (
+                        quote! {
+                            &it.syntax
+                        },
+                        quote! {
+                            it.syntax
+                        },
+                    )
                 })
-                .collect();
+                .unzip();
 
             let all_variant_names: Vec<_> = union
                 .variants
@@ -448,12 +459,21 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         fn syntax(&self) -> &SyntaxNode {
                             match self {
                                 #(
-                                #name::#variants(it) => #variant_can_cast,
+                                #name::#variants(it) => #variant_syntax,
                                 )*
                                 #(
                                     #vv_syntax
                                 ),*
-
+                            }
+                        }
+                        fn into_syntax(self) -> SyntaxNode {
+                            match self {
+                                #(
+                                #name::#variants(it) => #variant_into_syntax,
+                                )*
+                                #(
+                                    #vv_into_syntax
+                                ),*
                             }
                         }
                     }
@@ -550,6 +570,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 fn syntax(&self) -> &SyntaxNode {
                     &self.syntax
                 }
+                fn into_syntax(self) -> SyntaxNode {
+                    self.syntax
+                }
             }
 
             impl std::fmt::Debug for #name {
@@ -608,6 +631,9 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
                 fn syntax(&self) -> &SyntaxNode {
                     self.syntax_list.node()
+                }
+                fn into_syntax(self) -> SyntaxNode {
+                    self.syntax_list.into_node()
                 }
             }
         };

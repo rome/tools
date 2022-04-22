@@ -23,7 +23,7 @@ pub fn generate_nodes_mut(ast: &AstSrc, language_kind: LanguageKind) -> Result<S
                             quote! { element }
                         }
                         Field::Node { .. } => {
-                            quote! { element.syntax().clone() }
+                            quote! { element.into_syntax() }
                         }
                     };
 

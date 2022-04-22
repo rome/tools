@@ -8,7 +8,7 @@ use crate::{
 #[cfg(feature = "serde")]
 use serde_crate::Serialize;
 use std::fmt::{Debug, Formatter};
-use std::iter::FusedIterator;
+use std::iter::{self, FusedIterator};
 use std::marker::PhantomData;
 use std::{fmt, ops};
 use text_size::{TextRange, TextSize};
@@ -236,6 +236,12 @@ impl<L: Language> SyntaxNode<L> {
         self.raw.parent().map(Self::from)
     }
 
+    /// Returns the index of this node inside of its parent
+    #[inline]
+    fn index(&self) -> usize {
+        self.raw.index()
+    }
+
     pub fn ancestors(&self) -> impl Iterator<Item = SyntaxNode<L>> {
         self.raw.ancestors().map(SyntaxNode::from)
     }
@@ -376,6 +382,7 @@ impl<L: Language> SyntaxNode<L> {
         SyntaxNode::from(self.raw.clone_subtree())
     }
 
+    /// Return a new version of this node detached from its parent node
     #[must_use]
     pub fn detach(self) -> Self {
         Self {
@@ -398,6 +405,41 @@ impl<L: Language> SyntaxNode<L> {
                     .map(|element| element.map(cursor::SyntaxElement::from)),
             ),
             _p: PhantomData,
+        }
+    }
+
+    /// Return a new version of this node with the element `prev_elem` replaced with `next_elem`
+    ///
+    /// `prev_elem` can be a direct child of this node, or an indirect child through any descendant node
+    ///
+    /// Returns `None` if `prev_elem` is not a descendant of this node
+    #[must_use]
+    pub fn replace_child(
+        self,
+        prev_elem: SyntaxElement<L>,
+        next_elem: SyntaxElement<L>,
+    ) -> Option<Self> {
+        let (depth, prev_parent, index) = match prev_elem {
+            NodeOrToken::Node(prev_node) => (
+                prev_node
+                    .ancestors()
+                    .position(move |node| node == self)?
+                    .checked_sub(1)?,
+                prev_node.parent()?,
+                prev_node.index(),
+            ),
+            NodeOrToken::Token(prev_token) => (
+                prev_token.ancestors().position(move |node| node == self)?,
+                prev_token.parent()?,
+                prev_token.index(),
+            ),
+        };
+
+        let next_parent = prev_parent.splice_slots(index..=index, iter::once(Some(next_elem)));
+
+        match depth {
+            0 => Some(next_parent),
+            index => next_parent.ancestors().nth(index),
         }
     }
 

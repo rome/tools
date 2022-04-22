@@ -10,9 +10,7 @@ use rome_rowan::AstNode;
 pub fn css_any_function(css_simple_function: CssSimpleFunction) -> CssAnyFunction {
     CssAnyFunction::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_ANY_FUNCTION,
-        [Some(SyntaxElement::Node(
-            css_simple_function.syntax().clone(),
-        ))],
+        [Some(SyntaxElement::Node(css_simple_function.into_syntax()))],
     ))
 }
 pub fn css_at_keyframes(
@@ -27,9 +25,9 @@ pub fn css_at_keyframes(
         [
             Some(SyntaxElement::Token(at_token)),
             Some(SyntaxElement::Token(keyframes_token)),
-            Some(SyntaxElement::Node(name.syntax().clone())),
-            Some(SyntaxElement::Node(css_string.syntax().clone())),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
+            Some(SyntaxElement::Node(css_string.into_syntax())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -42,7 +40,7 @@ pub fn css_at_keyframes_body(
         CssSyntaxKind::CSS_AT_KEYFRAMES_BODY,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(items.syntax().clone())),
+            Some(SyntaxElement::Node(items.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -60,9 +58,9 @@ pub fn css_at_media(
         [
             Some(SyntaxElement::Token(at_token)),
             Some(SyntaxElement::Token(media_token)),
-            Some(SyntaxElement::Node(query_list.syntax().clone())),
+            Some(SyntaxElement::Node(query_list.into_syntax())),
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -103,9 +101,9 @@ impl CssAtMediaQueryBuilder {
                 Some(SyntaxElement::Token(self.condition_token)),
                 Some(SyntaxElement::Token(self.or_token)),
                 self.only_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.ty.syntax().clone())),
+                Some(SyntaxElement::Node(self.ty.into_syntax())),
                 self.consequent
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -137,7 +135,7 @@ impl CssAtMediaQueryConsequentBuilder {
                 Some(SyntaxElement::Token(self.and_token)),
                 self.condition_token
                     .map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.ty.syntax().clone())),
+                Some(SyntaxElement::Node(self.ty.into_syntax())),
             ],
         ))
     }
@@ -151,7 +149,7 @@ pub fn css_at_media_query_feature(
         CssSyntaxKind::CSS_AT_MEDIA_QUERY_FEATURE,
         [
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(feature.syntax().clone())),
+            Some(SyntaxElement::Node(feature.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -161,7 +159,7 @@ pub fn css_at_media_query_feature_boolean(
 ) -> CssAtMediaQueryFeatureBoolean {
     CssAtMediaQueryFeatureBoolean::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_AT_MEDIA_QUERY_FEATURE_BOOLEAN,
-        [Some(SyntaxElement::Node(css_identifier.syntax().clone()))],
+        [Some(SyntaxElement::Node(css_identifier.into_syntax()))],
     ))
 }
 pub fn css_at_media_query_feature_compare(
@@ -172,9 +170,9 @@ pub fn css_at_media_query_feature_compare(
     CssAtMediaQueryFeatureCompare::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_AT_MEDIA_QUERY_FEATURE_COMPARE,
         [
-            Some(SyntaxElement::Node(name.syntax().clone())),
-            Some(SyntaxElement::Node(range.syntax().clone())),
-            Some(SyntaxElement::Node(value.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
+            Some(SyntaxElement::Node(range.into_syntax())),
+            Some(SyntaxElement::Node(value.into_syntax())),
         ],
     ))
 }
@@ -186,9 +184,9 @@ pub fn css_at_media_query_feature_plain(
     CssAtMediaQueryFeaturePlain::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_AT_MEDIA_QUERY_FEATURE_PLAIN,
         [
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(value.syntax().clone())),
+            Some(SyntaxElement::Node(value.into_syntax())),
         ],
     ))
 }
@@ -202,11 +200,11 @@ pub fn css_at_media_query_feature_range(
     CssAtMediaQueryFeatureRange::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_AT_MEDIA_QUERY_FEATURE_RANGE,
         [
-            Some(SyntaxElement::Node(first_value.syntax().clone())),
-            Some(SyntaxElement::Node(first_range.syntax().clone())),
-            Some(SyntaxElement::Node(name.syntax().clone())),
-            Some(SyntaxElement::Node(second_value.syntax().clone())),
-            Some(SyntaxElement::Node(second_range.syntax().clone())),
+            Some(SyntaxElement::Node(first_value.into_syntax())),
+            Some(SyntaxElement::Node(first_range.into_syntax())),
+            Some(SyntaxElement::Node(name.into_syntax())),
+            Some(SyntaxElement::Node(second_value.into_syntax())),
+            Some(SyntaxElement::Node(second_range.into_syntax())),
         ],
     ))
 }
@@ -254,9 +252,9 @@ impl CssAttributeBuilder {
             CssSyntaxKind::CSS_ATTRIBUTE,
             [
                 Some(SyntaxElement::Token(self.l_brack_token)),
-                Some(SyntaxElement::Node(self.attribute_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.attribute_name.into_syntax())),
                 self.attribute_meta
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.r_brack_token)),
             ],
         ))
@@ -281,8 +279,8 @@ pub fn css_attribute_matcher(
             Some(SyntaxElement::Token(suffix_token)),
             Some(SyntaxElement::Token(times_assign_token)),
             Some(SyntaxElement::Token(eq_token)),
-            Some(SyntaxElement::Node(matcher_name.syntax().clone())),
-            Some(SyntaxElement::Node(css_identifier.syntax().clone())),
+            Some(SyntaxElement::Node(matcher_name.into_syntax())),
+            Some(SyntaxElement::Node(css_identifier.into_syntax())),
         ],
     ))
 }
@@ -310,9 +308,9 @@ impl CssAttributeMetaBuilder {
             CssSyntaxKind::CSS_ATTRIBUTE_META,
             [
                 self.attribute_matcher
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.attribute_modifier
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -326,7 +324,7 @@ pub fn css_attribute_modifier(i_token: SyntaxToken) -> CssAttributeModifier {
 pub fn css_attribute_name(css_string: CssString) -> CssAttributeName {
     CssAttributeName::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_ATTRIBUTE_NAME,
-        [Some(SyntaxElement::Node(css_string.syntax().clone()))],
+        [Some(SyntaxElement::Node(css_string.into_syntax()))],
     ))
 }
 pub fn css_attribute_selector_pattern(
@@ -336,8 +334,8 @@ pub fn css_attribute_selector_pattern(
     CssAttributeSelectorPattern::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_ATTRIBUTE_SELECTOR_PATTERN,
         [
-            Some(SyntaxElement::Node(name.syntax().clone())),
-            Some(SyntaxElement::Node(attribute_list.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
+            Some(SyntaxElement::Node(attribute_list.into_syntax())),
         ],
     ))
 }
@@ -350,7 +348,7 @@ pub fn css_block(
         CssSyntaxKind::CSS_BLOCK,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(declaration_list.syntax().clone())),
+            Some(SyntaxElement::Node(declaration_list.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -363,7 +361,7 @@ pub fn css_class_selector_pattern(
         CssSyntaxKind::CSS_CLASS_SELECTOR_PATTERN,
         [
             Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
         ],
     ))
 }
@@ -378,12 +376,12 @@ pub fn css_combinator_selector_pattern(
     CssCombinatorSelectorPattern::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_COMBINATOR_SELECTOR_PATTERN,
         [
-            Some(SyntaxElement::Node(left.syntax().clone())),
+            Some(SyntaxElement::Node(left.into_syntax())),
             Some(SyntaxElement::Token(combinator_token)),
             Some(SyntaxElement::Token(plus_token)),
             Some(SyntaxElement::Token(bitwise_not_token)),
             Some(SyntaxElement::Token(css_space_literal_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -423,14 +421,12 @@ impl CssDeclarationBuilder {
         CssDeclaration::unwrap_cast(SyntaxNode::new_detached(
             CssSyntaxKind::CSS_DECLARATION,
             [
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
-                Some(SyntaxElement::Node(
-                    self.css_custom_property.syntax().clone(),
-                )),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
+                Some(SyntaxElement::Node(self.css_custom_property.into_syntax())),
                 Some(SyntaxElement::Token(self.colon_token)),
-                Some(SyntaxElement::Node(self.value.syntax().clone())),
+                Some(SyntaxElement::Node(self.value.into_syntax())),
                 self.important
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -451,8 +447,8 @@ pub fn css_dimension(value: CssNumber, unit: CssIdentifier) -> CssDimension {
     CssDimension::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_DIMENSION,
         [
-            Some(SyntaxElement::Node(value.syntax().clone())),
-            Some(SyntaxElement::Node(unit.syntax().clone())),
+            Some(SyntaxElement::Node(value.into_syntax())),
+            Some(SyntaxElement::Node(unit.into_syntax())),
         ],
     ))
 }
@@ -464,7 +460,7 @@ pub fn css_id_selector_pattern(
         CssSyntaxKind::CSS_ID_SELECTOR_PATTERN,
         [
             Some(SyntaxElement::Token(hash_token)),
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
         ],
     ))
 }
@@ -483,9 +479,9 @@ pub fn css_keyframes_block(
     CssKeyframesBlock::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_KEYFRAMES_BLOCK,
         [
-            Some(SyntaxElement::Node(selectors.syntax().clone())),
+            Some(SyntaxElement::Node(selectors.into_syntax())),
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(declarations.syntax().clone())),
+            Some(SyntaxElement::Node(declarations.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -500,7 +496,7 @@ pub fn css_keyframes_selector(
         [
             Some(SyntaxElement::Token(from_token)),
             Some(SyntaxElement::Token(to_token)),
-            Some(SyntaxElement::Node(css_percentage.syntax().clone())),
+            Some(SyntaxElement::Node(css_percentage.into_syntax())),
         ],
     ))
 }
@@ -513,14 +509,14 @@ pub fn css_number(value_token: SyntaxToken) -> CssNumber {
 pub fn css_parameter(css_any_value: CssAnyValue) -> CssParameter {
     CssParameter::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_PARAMETER,
-        [Some(SyntaxElement::Node(css_any_value.syntax().clone()))],
+        [Some(SyntaxElement::Node(css_any_value.into_syntax()))],
     ))
 }
 pub fn css_percentage(value: CssNumber, reminder_token: SyntaxToken) -> CssPercentage {
     CssPercentage::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_PERCENTAGE,
         [
-            Some(SyntaxElement::Node(value.syntax().clone())),
+            Some(SyntaxElement::Node(value.into_syntax())),
             Some(SyntaxElement::Token(reminder_token)),
         ],
     ))
@@ -550,9 +546,9 @@ impl CssPseudoClassSelectorPatternBuilder {
             CssSyntaxKind::CSS_PSEUDO_CLASS_SELECTOR_PATTERN,
             [
                 Some(SyntaxElement::Token(self.colon_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -566,7 +562,7 @@ pub fn css_pseudo_class_selector_pattern_parameters(
         CssSyntaxKind::CSS_PSEUDO_CLASS_SELECTOR_PATTERN_PARAMETERS,
         [
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(parameter.syntax().clone())),
+            Some(SyntaxElement::Node(parameter.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -575,8 +571,8 @@ pub fn css_ratio(numerator: CssNumber, denominator: CssNumber) -> CssRatio {
     CssRatio::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_RATIO,
         [
-            Some(SyntaxElement::Node(numerator.syntax().clone())),
-            Some(SyntaxElement::Node(denominator.syntax().clone())),
+            Some(SyntaxElement::Node(numerator.into_syntax())),
+            Some(SyntaxElement::Node(denominator.into_syntax())),
         ],
     ))
 }
@@ -584,15 +580,15 @@ pub fn css_rule(prelude: CssSelectorList, block: CssBlock) -> CssRule {
     CssRule::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_RULE,
         [
-            Some(SyntaxElement::Node(prelude.syntax().clone())),
-            Some(SyntaxElement::Node(block.syntax().clone())),
+            Some(SyntaxElement::Node(prelude.into_syntax())),
+            Some(SyntaxElement::Node(block.into_syntax())),
         ],
     ))
 }
 pub fn css_selector(pattern_list: CssAnySelectorPatternList) -> CssSelector {
     CssSelector::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_SELECTOR,
-        [Some(SyntaxElement::Node(pattern_list.syntax().clone()))],
+        [Some(SyntaxElement::Node(pattern_list.into_syntax()))],
     ))
 }
 pub fn css_simple_function(
@@ -604,9 +600,9 @@ pub fn css_simple_function(
     CssSimpleFunction::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_SIMPLE_FUNCTION,
         [
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(items.syntax().clone())),
+            Some(SyntaxElement::Node(items.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -620,7 +616,7 @@ pub fn css_string(value_token: SyntaxToken) -> CssString {
 pub fn css_type_selector_pattern(ident: CssIdentifier) -> CssTypeSelectorPattern {
     CssTypeSelectorPattern::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_TYPE_SELECTOR_PATTERN,
-        [Some(SyntaxElement::Node(ident.syntax().clone()))],
+        [Some(SyntaxElement::Node(ident.into_syntax()))],
     ))
 }
 pub fn css_universal_selector_pattern(star_token: SyntaxToken) -> CssUniversalSelectorPattern {
@@ -661,9 +657,9 @@ impl CssVarFunctionBuilder {
             [
                 Some(SyntaxElement::Token(self.var_token)),
                 Some(SyntaxElement::Token(self.l_paren_token)),
-                Some(SyntaxElement::Node(self.property.syntax().clone())),
+                Some(SyntaxElement::Node(self.property.into_syntax())),
                 self.value
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.r_paren_token)),
             ],
         ))
@@ -677,7 +673,7 @@ pub fn css_var_function_value(
         CssSyntaxKind::CSS_VAR_FUNCTION_VALUE,
         [
             Some(SyntaxElement::Token(comma_token)),
-            Some(SyntaxElement::Node(value.syntax().clone())),
+            Some(SyntaxElement::Node(value.into_syntax())),
         ],
     ))
 }

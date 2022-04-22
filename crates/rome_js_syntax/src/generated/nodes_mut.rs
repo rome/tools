@@ -33,7 +33,7 @@ impl JsArrayAssignmentPattern {
     pub fn with_elements(self, element: JsArrayAssignmentPatternElementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -53,7 +53,7 @@ impl JsArrayAssignmentPatternRestElement {
     pub fn with_pattern(self, element: JsAnyAssignmentPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -67,7 +67,7 @@ impl JsArrayBindingPattern {
     pub fn with_elements(self, element: JsArrayBindingPatternElementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -87,7 +87,7 @@ impl JsArrayBindingPatternRestElement {
     pub fn with_pattern(self, element: JsAnyBindingPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -101,7 +101,7 @@ impl JsArrayExpression {
     pub fn with_elements(self, element: JsArrayElementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -122,19 +122,19 @@ impl JsArrowFunctionExpression {
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsAnyArrowFunctionParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_fat_arrow_token(self, element: SyntaxToken) -> Self {
@@ -146,7 +146,7 @@ impl JsArrowFunctionExpression {
     pub fn with_body(self, element: JsAnyFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -154,7 +154,7 @@ impl JsAssignmentExpression {
     pub fn with_left(self, element: JsAnyAssignmentPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_operator_token_token(self, element: SyntaxToken) -> Self {
@@ -166,7 +166,7 @@ impl JsAssignmentExpression {
     pub fn with_right(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -174,7 +174,7 @@ impl JsAssignmentWithDefault {
     pub fn with_pattern(self, element: JsAnyAssignmentPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_eq_token(self, element: SyntaxToken) -> Self {
@@ -186,7 +186,7 @@ impl JsAssignmentWithDefault {
     pub fn with_default(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -200,7 +200,7 @@ impl JsAwaitExpression {
     pub fn with_argument(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -216,7 +216,7 @@ impl JsBinaryExpression {
     pub fn with_left(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_operator_token_token(self, element: SyntaxToken) -> Self {
@@ -228,7 +228,7 @@ impl JsBinaryExpression {
     pub fn with_right(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -236,7 +236,7 @@ impl JsBindingPatternWithDefault {
     pub fn with_pattern(self, element: JsAnyBindingPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_eq_token(self, element: SyntaxToken) -> Self {
@@ -248,7 +248,7 @@ impl JsBindingPatternWithDefault {
     pub fn with_default(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -262,7 +262,7 @@ impl JsBlockStatement {
     pub fn with_statements(self, element: JsStatementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -310,7 +310,7 @@ impl JsCallArguments {
     pub fn with_args(self, element: JsCallArgumentList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -324,7 +324,7 @@ impl JsCallExpression {
     pub fn with_callee(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_optional_chain_token(self, element: Option<SyntaxToken>) -> Self {
@@ -336,13 +336,13 @@ impl JsCallExpression {
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_arguments(self, element: JsCallArguments) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -356,7 +356,7 @@ impl JsCaseClause {
     pub fn with_test(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_colon_token(self, element: SyntaxToken) -> Self {
@@ -368,7 +368,7 @@ impl JsCaseClause {
     pub fn with_consequent(self, element: JsStatementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -382,13 +382,13 @@ impl JsCatchClause {
     pub fn with_declaration(self, element: Option<JsCatchDeclaration>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_body(self, element: JsBlockStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -402,13 +402,13 @@ impl JsCatchDeclaration {
     pub fn with_binding(self, element: JsAnyBindingPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -434,25 +434,25 @@ impl JsClassDeclaration {
     pub fn with_id(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_extends_clause(self, element: Option<JsExtendsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_implements_clause(self, element: Option<TsImplementsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_l_curly_token(self, element: SyntaxToken) -> Self {
@@ -464,7 +464,7 @@ impl JsClassDeclaration {
     pub fn with_members(self, element: JsClassMemberList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(7usize..=7usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(7usize..=7usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -490,25 +490,25 @@ impl JsClassExportDefaultDeclaration {
     pub fn with_id(self, element: Option<JsAnyBinding>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_extends_clause(self, element: Option<JsExtendsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_implements_clause(self, element: Option<TsImplementsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_l_curly_token(self, element: SyntaxToken) -> Self {
@@ -520,7 +520,7 @@ impl JsClassExportDefaultDeclaration {
     pub fn with_members(self, element: JsClassMemberList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(7usize..=7usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(7usize..=7usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -540,25 +540,25 @@ impl JsClassExpression {
     pub fn with_id(self, element: Option<JsAnyBinding>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_extends_clause(self, element: Option<JsExtendsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_implements_clause(self, element: Option<TsImplementsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_l_curly_token(self, element: SyntaxToken) -> Self {
@@ -570,7 +570,7 @@ impl JsClassExpression {
     pub fn with_members(self, element: JsClassMemberList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(6usize..=6usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(6usize..=6usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -584,7 +584,7 @@ impl JsComputedMemberAssignment {
     pub fn with_object(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_brack_token(self, element: SyntaxToken) -> Self {
@@ -596,7 +596,7 @@ impl JsComputedMemberAssignment {
     pub fn with_member(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -610,7 +610,7 @@ impl JsComputedMemberExpression {
     pub fn with_object(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_optional_chain_token(self, element: Option<SyntaxToken>) -> Self {
@@ -628,7 +628,7 @@ impl JsComputedMemberExpression {
     pub fn with_member(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -648,7 +648,7 @@ impl JsComputedMemberName {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -662,7 +662,7 @@ impl JsConditionalExpression {
     pub fn with_test(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_question_mark_token(self, element: SyntaxToken) -> Self {
@@ -674,7 +674,7 @@ impl JsConditionalExpression {
     pub fn with_consequent(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_colon_token(self, element: SyntaxToken) -> Self {
@@ -686,7 +686,7 @@ impl JsConditionalExpression {
     pub fn with_alternate(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -694,25 +694,25 @@ impl JsConstructorClassMember {
     pub fn with_modifiers(self, element: JsConstructorModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_name(self, element: JsLiteralMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_parameters(self, element: JsConstructorParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -726,7 +726,7 @@ impl JsConstructorParameters {
     pub fn with_parameters(self, element: JsConstructorParameterList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -786,7 +786,7 @@ impl JsDefaultClause {
     pub fn with_consequent(self, element: JsStatementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -794,7 +794,7 @@ impl JsDefaultImportSpecifier {
     pub fn with_local_name(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_trailing_comma_token(self, element: SyntaxToken) -> Self {
@@ -828,7 +828,7 @@ impl JsDoWhileStatement {
     pub fn with_body(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_while_token(self, element: SyntaxToken) -> Self {
@@ -846,7 +846,7 @@ impl JsDoWhileStatement {
     pub fn with_test(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -872,7 +872,7 @@ impl JsElseClause {
     pub fn with_alternate(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -902,7 +902,7 @@ impl JsExport {
     pub fn with_export_clause(self, element: JsAnyExportClause) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -916,7 +916,7 @@ impl JsExportAsClause {
     pub fn with_exported_name(self, element: JsLiteralExportName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -930,7 +930,7 @@ impl JsExportDefaultDeclarationClause {
     pub fn with_declaration(self, element: JsAnyExportDefaultDeclaration) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -950,7 +950,7 @@ impl JsExportDefaultExpressionClause {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -970,7 +970,7 @@ impl JsExportFromClause {
     pub fn with_export_as(self, element: Option<JsExportAsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_from_token(self, element: SyntaxToken) -> Self {
@@ -982,13 +982,13 @@ impl JsExportFromClause {
     pub fn with_source(self, element: JsModuleSource) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_assertion(self, element: Option<JsImportAssertion>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -1014,7 +1014,7 @@ impl JsExportNamedClause {
     pub fn with_specifiers(self, element: JsExportNamedSpecifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -1046,7 +1046,7 @@ impl JsExportNamedFromClause {
     pub fn with_specifiers(self, element: JsExportNamedFromSpecifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -1064,13 +1064,13 @@ impl JsExportNamedFromClause {
     pub fn with_source(self, element: JsModuleSource) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_assertion(self, element: Option<JsImportAssertion>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -1090,13 +1090,13 @@ impl JsExportNamedFromSpecifier {
     pub fn with_source_name(self, element: JsLiteralExportName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_export_as(self, element: Option<JsExportAsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -1110,7 +1110,7 @@ impl JsExportNamedShorthandSpecifier {
     pub fn with_name(self, element: JsReferenceIdentifier) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1124,7 +1124,7 @@ impl JsExportNamedSpecifier {
     pub fn with_local_name(self, element: JsReferenceIdentifier) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_as_token(self, element: SyntaxToken) -> Self {
@@ -1136,7 +1136,7 @@ impl JsExportNamedSpecifier {
     pub fn with_exported_name(self, element: JsLiteralExportName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1144,7 +1144,7 @@ impl JsExpressionSnipped {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_eof_token(self, element: SyntaxToken) -> Self {
@@ -1158,7 +1158,7 @@ impl JsExpressionStatement {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -1178,13 +1178,13 @@ impl JsExtendsClause {
     pub fn with_super_class(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -1198,7 +1198,7 @@ impl JsFinallyClause {
     pub fn with_body(self, element: JsBlockStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1218,7 +1218,7 @@ impl JsForInStatement {
     pub fn with_initializer(self, element: JsAnyForInOrOfInitializer) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_in_token(self, element: SyntaxToken) -> Self {
@@ -1230,7 +1230,7 @@ impl JsForInStatement {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -1242,7 +1242,7 @@ impl JsForInStatement {
     pub fn with_body(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(6usize..=6usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(6usize..=6usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1268,7 +1268,7 @@ impl JsForOfStatement {
     pub fn with_initializer(self, element: JsAnyForInOrOfInitializer) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_of_token(self, element: SyntaxToken) -> Self {
@@ -1280,7 +1280,7 @@ impl JsForOfStatement {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -1292,7 +1292,7 @@ impl JsForOfStatement {
     pub fn with_body(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(7usize..=7usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(7usize..=7usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1312,7 +1312,7 @@ impl JsForStatement {
     pub fn with_initializer(self, element: Option<JsAnyForInitializer>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_first_semi_token(self, element: SyntaxToken) -> Self {
@@ -1324,7 +1324,7 @@ impl JsForStatement {
     pub fn with_test(self, element: Option<JsAnyExpression>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_second_semi_token(self, element: SyntaxToken) -> Self {
@@ -1336,7 +1336,7 @@ impl JsForStatement {
     pub fn with_update(self, element: Option<JsAnyExpression>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -1348,7 +1348,7 @@ impl JsForStatement {
     pub fn with_body(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(8usize..=8usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(8usize..=8usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1362,7 +1362,7 @@ impl JsForVariableDeclaration {
     pub fn with_declarator(self, element: JsVariableDeclarator) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1370,7 +1370,7 @@ impl JsFormalParameter {
     pub fn with_binding(self, element: JsAnyBindingPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_question_mark_token(self, element: Option<SyntaxToken>) -> Self {
@@ -1382,13 +1382,13 @@ impl JsFormalParameter {
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_initializer(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -1402,13 +1402,13 @@ impl JsFunctionBody {
     pub fn with_directives(self, element: JsDirectiveList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_statements(self, element: JsStatementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -1440,31 +1440,31 @@ impl JsFunctionDeclaration {
     pub fn with_id(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(7usize..=7usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(7usize..=7usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1490,31 +1490,31 @@ impl JsFunctionExportDefaultDeclaration {
     pub fn with_id(self, element: Option<JsAnyBinding>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(7usize..=7usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(7usize..=7usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1540,31 +1540,31 @@ impl JsFunctionExpression {
     pub fn with_id(self, element: Option<JsAnyBinding>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(7usize..=7usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(7usize..=7usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1572,7 +1572,7 @@ impl JsGetterClassMember {
     pub fn with_modifiers(self, element: JsMethodModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_get_token(self, element: SyntaxToken) -> Self {
@@ -1584,7 +1584,7 @@ impl JsGetterClassMember {
     pub fn with_name(self, element: JsAnyClassMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_paren_token(self, element: SyntaxToken) -> Self {
@@ -1602,13 +1602,13 @@ impl JsGetterClassMember {
     pub fn with_return_type(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(6usize..=6usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(6usize..=6usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1622,7 +1622,7 @@ impl JsGetterObjectMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_paren_token(self, element: SyntaxToken) -> Self {
@@ -1640,13 +1640,13 @@ impl JsGetterObjectMember {
     pub fn with_return_type(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1670,7 +1670,7 @@ impl JsIdentifierExpression {
     pub fn with_name(self, element: JsReferenceIdentifier) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1690,7 +1690,7 @@ impl JsIfStatement {
     pub fn with_test(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -1702,13 +1702,13 @@ impl JsIfStatement {
     pub fn with_consequent(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_else_clause(self, element: Option<JsElseClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -1722,7 +1722,7 @@ impl JsImport {
     pub fn with_import_clause(self, element: JsAnyImportClause) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -1748,7 +1748,7 @@ impl JsImportAssertion {
     pub fn with_assertions(self, element: JsImportAssertionEntryList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -1782,13 +1782,13 @@ impl JsImportBareClause {
     pub fn with_source(self, element: JsModuleSource) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_assertion(self, element: Option<JsImportAssertion>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -1802,7 +1802,7 @@ impl JsImportCallExpression {
     pub fn with_arguments(self, element: JsCallArguments) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1816,7 +1816,7 @@ impl JsImportDefaultClause {
     pub fn with_local_name(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_from_token(self, element: SyntaxToken) -> Self {
@@ -1828,13 +1828,13 @@ impl JsImportDefaultClause {
     pub fn with_source(self, element: JsModuleSource) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_assertion(self, element: Option<JsImportAssertion>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -1848,13 +1848,13 @@ impl JsImportNamedClause {
     pub fn with_default_specifier(self, element: Option<JsDefaultImportSpecifier>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_named_import(self, element: JsAnyNamedImport) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_from_token(self, element: SyntaxToken) -> Self {
@@ -1866,13 +1866,13 @@ impl JsImportNamedClause {
     pub fn with_source(self, element: JsModuleSource) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_assertion(self, element: Option<JsImportAssertion>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -1898,7 +1898,7 @@ impl JsImportNamespaceClause {
     pub fn with_local_name(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_from_token(self, element: SyntaxToken) -> Self {
@@ -1910,13 +1910,13 @@ impl JsImportNamespaceClause {
     pub fn with_source(self, element: JsModuleSource) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_assertion(self, element: Option<JsImportAssertion>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -1924,7 +1924,7 @@ impl JsInExpression {
     pub fn with_property(self, element: JsAnyInProperty) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_in_token(self, element: SyntaxToken) -> Self {
@@ -1936,7 +1936,7 @@ impl JsInExpression {
     pub fn with_object(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1950,7 +1950,7 @@ impl JsInitializerClause {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1958,7 +1958,7 @@ impl JsInstanceofExpression {
     pub fn with_left(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_instanceof_token(self, element: SyntaxToken) -> Self {
@@ -1970,7 +1970,7 @@ impl JsInstanceofExpression {
     pub fn with_right(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -1990,7 +1990,7 @@ impl JsLabeledStatement {
     pub fn with_body(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2014,7 +2014,7 @@ impl JsLogicalExpression {
     pub fn with_left(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_operator_token_token(self, element: SyntaxToken) -> Self {
@@ -2026,7 +2026,7 @@ impl JsLogicalExpression {
     pub fn with_right(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2034,7 +2034,7 @@ impl JsMethodClassMember {
     pub fn with_modifiers(self, element: JsMethodModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_async_token(self, element: Option<SyntaxToken>) -> Self {
@@ -2052,7 +2052,7 @@ impl JsMethodClassMember {
     pub fn with_name(self, element: JsAnyClassMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_question_mark_token(self, element: Option<SyntaxToken>) -> Self {
@@ -2064,25 +2064,25 @@ impl JsMethodClassMember {
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(6usize..=6usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(6usize..=6usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             7usize..=7usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(8usize..=8usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(8usize..=8usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2102,31 +2102,31 @@ impl JsMethodObjectMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(6usize..=6usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(6usize..=6usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2140,13 +2140,13 @@ impl JsModule {
     pub fn with_directives(self, element: JsDirectiveList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_items(self, element: JsModuleItemList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_eof_token(self, element: SyntaxToken) -> Self {
@@ -2182,7 +2182,7 @@ impl JsNamedImportSpecifier {
     pub fn with_name(self, element: JsLiteralExportName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_as_token(self, element: SyntaxToken) -> Self {
@@ -2194,7 +2194,7 @@ impl JsNamedImportSpecifier {
     pub fn with_local_name(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2208,7 +2208,7 @@ impl JsNamedImportSpecifiers {
     pub fn with_specifiers(self, element: JsNamedImportSpecifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -2234,7 +2234,7 @@ impl JsNamespaceImportSpecifier {
     pub fn with_local_name(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2248,19 +2248,19 @@ impl JsNewExpression {
     pub fn with_callee(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_arguments(self, element: Option<JsCallArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -2290,7 +2290,7 @@ impl JsObjectAssignmentPattern {
     pub fn with_properties(self, element: JsObjectAssignmentPatternPropertyList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -2304,7 +2304,7 @@ impl JsObjectAssignmentPatternProperty {
     pub fn with_member(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_colon_token(self, element: SyntaxToken) -> Self {
@@ -2316,13 +2316,13 @@ impl JsObjectAssignmentPatternProperty {
     pub fn with_pattern(self, element: JsAnyAssignmentPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_init(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -2336,7 +2336,7 @@ impl JsObjectAssignmentPatternRest {
     pub fn with_target(self, element: JsAnyAssignment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2344,13 +2344,13 @@ impl JsObjectAssignmentPatternShorthandProperty {
     pub fn with_identifier(self, element: JsIdentifierAssignment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_init(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -2364,7 +2364,7 @@ impl JsObjectBindingPattern {
     pub fn with_properties(self, element: JsObjectBindingPatternPropertyList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -2378,7 +2378,7 @@ impl JsObjectBindingPatternProperty {
     pub fn with_member(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_colon_token(self, element: SyntaxToken) -> Self {
@@ -2390,13 +2390,13 @@ impl JsObjectBindingPatternProperty {
     pub fn with_pattern(self, element: JsAnyBindingPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_init(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -2410,7 +2410,7 @@ impl JsObjectBindingPatternRest {
     pub fn with_binding(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2418,13 +2418,13 @@ impl JsObjectBindingPatternShorthandProperty {
     pub fn with_identifier(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_init(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -2438,7 +2438,7 @@ impl JsObjectExpression {
     pub fn with_members(self, element: JsObjectMemberList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -2458,7 +2458,7 @@ impl JsParameters {
     pub fn with_items(self, element: JsParameterList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -2478,7 +2478,7 @@ impl JsParenthesizedAssignment {
     pub fn with_assignment(self, element: JsAnyAssignment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -2498,7 +2498,7 @@ impl JsParenthesizedExpression {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -2512,7 +2512,7 @@ impl JsPostUpdateExpression {
     pub fn with_operand(self, element: JsAnyAssignment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_operator_token_token(self, element: SyntaxToken) -> Self {
@@ -2532,7 +2532,7 @@ impl JsPreUpdateExpression {
     pub fn with_operand(self, element: JsAnyAssignment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2568,25 +2568,25 @@ impl JsPropertyClassMember {
     pub fn with_modifiers(self, element: JsPropertyModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_name(self, element: JsAnyClassMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_property_annotation(self, element: Option<TsAnyPropertyAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_value(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -2600,7 +2600,7 @@ impl JsPropertyObjectMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_colon_token(self, element: SyntaxToken) -> Self {
@@ -2612,7 +2612,7 @@ impl JsPropertyObjectMember {
     pub fn with_value(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2642,13 +2642,13 @@ impl JsRestParameter {
     pub fn with_binding(self, element: JsAnyBindingPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -2662,7 +2662,7 @@ impl JsReturnStatement {
     pub fn with_argument(self, element: Option<JsAnyExpression>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -2682,13 +2682,13 @@ impl JsScript {
     pub fn with_directives(self, element: JsDirectiveList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_statements(self, element: JsStatementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_eof_token(self, element: SyntaxToken) -> Self {
@@ -2702,7 +2702,7 @@ impl JsSequenceExpression {
     pub fn with_left(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_comma_token(self, element: SyntaxToken) -> Self {
@@ -2714,7 +2714,7 @@ impl JsSequenceExpression {
     pub fn with_right(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2722,7 +2722,7 @@ impl JsSetterClassMember {
     pub fn with_modifiers(self, element: JsMethodModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_set_token(self, element: SyntaxToken) -> Self {
@@ -2734,7 +2734,7 @@ impl JsSetterClassMember {
     pub fn with_name(self, element: JsAnyClassMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_paren_token(self, element: SyntaxToken) -> Self {
@@ -2746,7 +2746,7 @@ impl JsSetterClassMember {
     pub fn with_parameter(self, element: JsAnyFormalParameter) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -2758,7 +2758,7 @@ impl JsSetterClassMember {
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(6usize..=6usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(6usize..=6usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2772,7 +2772,7 @@ impl JsSetterObjectMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_paren_token(self, element: SyntaxToken) -> Self {
@@ -2784,7 +2784,7 @@ impl JsSetterObjectMember {
     pub fn with_parameter(self, element: JsAnyFormalParameter) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -2796,7 +2796,7 @@ impl JsSetterObjectMember {
     pub fn with_body(self, element: JsFunctionBody) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2810,7 +2810,7 @@ impl JsShorthandNamedImportSpecifier {
     pub fn with_local_name(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2818,7 +2818,7 @@ impl JsShorthandPropertyObjectMember {
     pub fn with_name(self, element: JsReferenceIdentifier) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2832,7 +2832,7 @@ impl JsSpread {
     pub fn with_argument(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2852,7 +2852,7 @@ impl JsStaticInitializationBlockClassMember {
     pub fn with_statements(self, element: JsStatementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -2866,7 +2866,7 @@ impl JsStaticMemberAssignment {
     pub fn with_object(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_dot_token(self, element: SyntaxToken) -> Self {
@@ -2878,7 +2878,7 @@ impl JsStaticMemberAssignment {
     pub fn with_member(self, element: JsAnyName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2886,7 +2886,7 @@ impl JsStaticMemberExpression {
     pub fn with_object(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_operator_token_token(self, element: SyntaxToken) -> Self {
@@ -2898,7 +2898,7 @@ impl JsStaticMemberExpression {
     pub fn with_member(self, element: JsAnyName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -2942,7 +2942,7 @@ impl JsSwitchStatement {
     pub fn with_discriminant(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -2960,7 +2960,7 @@ impl JsSwitchStatement {
     pub fn with_cases(self, element: JsSwitchCaseList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -2974,13 +2974,13 @@ impl JsTemplate {
     pub fn with_tag(self, element: Option<JsAnyExpression>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             0usize..=0usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_l_tick_token(self, element: SyntaxToken) -> Self {
@@ -2992,7 +2992,7 @@ impl JsTemplate {
     pub fn with_elements(self, element: JsTemplateElementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_tick_token(self, element: SyntaxToken) -> Self {
@@ -3020,7 +3020,7 @@ impl JsTemplateElement {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -3048,7 +3048,7 @@ impl JsThrowStatement {
     pub fn with_argument(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -3068,19 +3068,19 @@ impl JsTryFinallyStatement {
     pub fn with_body(self, element: JsBlockStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_catch_clause(self, element: Option<JsCatchClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_finally_clause(self, element: JsFinallyClause) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3094,13 +3094,13 @@ impl JsTryStatement {
     pub fn with_body(self, element: JsBlockStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_catch_clause(self, element: JsCatchClause) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3114,7 +3114,7 @@ impl JsUnaryExpression {
     pub fn with_argument(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3128,7 +3128,7 @@ impl JsVariableDeclaration {
     pub fn with_declarators(self, element: JsVariableDeclaratorList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3136,7 +3136,7 @@ impl JsVariableDeclarationClause {
     pub fn with_declaration(self, element: JsVariableDeclaration) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -3150,19 +3150,19 @@ impl JsVariableDeclarator {
     pub fn with_id(self, element: JsAnyBindingPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_variable_annotation(self, element: Option<TsAnyVariableAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_initializer(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -3170,7 +3170,7 @@ impl JsVariableStatement {
     pub fn with_declaration(self, element: JsVariableDeclaration) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -3196,7 +3196,7 @@ impl JsWhileStatement {
     pub fn with_test(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -3208,7 +3208,7 @@ impl JsWhileStatement {
     pub fn with_body(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3228,7 +3228,7 @@ impl JsWithStatement {
     pub fn with_object(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -3240,7 +3240,7 @@ impl JsWithStatement {
     pub fn with_body(self, element: JsAnyStatement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3254,7 +3254,7 @@ impl JsYieldArgument {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3268,7 +3268,7 @@ impl JsYieldExpression {
     pub fn with_argument(self, element: Option<JsYieldArgument>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -3276,13 +3276,13 @@ impl JsxAttribute {
     pub fn with_name(self, element: JsxAnyAttributeName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_initializer(self, element: Option<JsxAttributeInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -3296,7 +3296,7 @@ impl JsxAttributeInitializerClause {
     pub fn with_value(self, element: JsxAnyAttributeValue) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3316,7 +3316,7 @@ impl JsxClosingElement {
     pub fn with_name(self, element: JsxAnyElementName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_angle_token(self, element: SyntaxToken) -> Self {
@@ -3350,19 +3350,19 @@ impl JsxElement {
     pub fn with_opening_element(self, element: JsxOpeningElement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_children(self, element: JsxChildList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_closing_element(self, element: JsxClosingElement) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3376,7 +3376,7 @@ impl JsxExpressionAttributeValue {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -3396,7 +3396,7 @@ impl JsxExpressionChild {
     pub fn with_expression(self, element: Option<JsAnyExpression>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -3410,19 +3410,19 @@ impl JsxFragment {
     pub fn with_opening_fragment(self, element: JsxOpeningFragment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_children(self, element: JsxChildList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_closing_fragment(self, element: JsxClosingFragment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3430,7 +3430,7 @@ impl JsxMemberName {
     pub fn with_object(self, element: JsxAnyObjectName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_dot_token(self, element: SyntaxToken) -> Self {
@@ -3442,7 +3442,7 @@ impl JsxMemberName {
     pub fn with_member(self, element: JsName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3458,7 +3458,7 @@ impl JsxNamespaceName {
     pub fn with_namespace(self, element: JsxName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_colon_token(self, element: SyntaxToken) -> Self {
@@ -3470,7 +3470,7 @@ impl JsxNamespaceName {
     pub fn with_name(self, element: JsxName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3484,19 +3484,19 @@ impl JsxOpeningElement {
     pub fn with_name(self, element: JsxAnyElementName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_attributes(self, element: JsxAttributeList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_angle_token(self, element: SyntaxToken) -> Self {
@@ -3538,19 +3538,19 @@ impl JsxSelfClosingElement {
     pub fn with_name(self, element: JsxAnyElementName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_attributes(self, element: JsxAttributeList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_slash_token(self, element: SyntaxToken) -> Self {
@@ -3582,7 +3582,7 @@ impl JsxSpreadAttribute {
     pub fn with_argument(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -3608,7 +3608,7 @@ impl JsxSpreadChild {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -3630,7 +3630,7 @@ impl JsxTagExpression {
     pub fn with_tag(self, element: JsxAnyTag) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3690,7 +3690,7 @@ impl TsArrayType {
     pub fn with_element_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_brack_token(self, element: SyntaxToken) -> Self {
@@ -3710,7 +3710,7 @@ impl TsAsAssignment {
     pub fn with_assignment(self, element: JsAnyAssignment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_as_token(self, element: SyntaxToken) -> Self {
@@ -3722,7 +3722,7 @@ impl TsAsAssignment {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3730,7 +3730,7 @@ impl TsAsExpression {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_as_token(self, element: SyntaxToken) -> Self {
@@ -3742,7 +3742,7 @@ impl TsAsExpression {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3756,7 +3756,7 @@ impl TsAssertsCondition {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3770,13 +3770,13 @@ impl TsAssertsReturnType {
     pub fn with_parameter_name(self, element: TsAnyTypePredicateParameterName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_predicate(self, element: Option<TsAssertsCondition>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -3822,19 +3822,19 @@ impl TsCallSignatureTypeMember {
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             0usize..=0usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_separator_token_token(self, element: Option<SyntaxToken>) -> Self {
@@ -3848,7 +3848,7 @@ impl TsConditionalType {
     pub fn with_check_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_extends_token(self, element: SyntaxToken) -> Self {
@@ -3860,7 +3860,7 @@ impl TsConditionalType {
     pub fn with_extends_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_question_mark_token(self, element: SyntaxToken) -> Self {
@@ -3872,7 +3872,7 @@ impl TsConditionalType {
     pub fn with_true_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_colon_token(self, element: SyntaxToken) -> Self {
@@ -3884,7 +3884,7 @@ impl TsConditionalType {
     pub fn with_false_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(6usize..=6usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(6usize..=6usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -3898,19 +3898,19 @@ impl TsConstructSignatureTypeMember {
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_separator_token_token(self, element: Option<SyntaxToken>) -> Self {
@@ -3924,19 +3924,19 @@ impl TsConstructorSignatureClassMember {
     pub fn with_modifiers(self, element: JsConstructorModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_name(self, element: JsLiteralMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_parameters(self, element: JsConstructorParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -3962,13 +3962,13 @@ impl TsConstructorType {
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_fat_arrow_token(self, element: SyntaxToken) -> Self {
@@ -3980,7 +3980,7 @@ impl TsConstructorType {
     pub fn with_return_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4000,25 +4000,25 @@ impl TsDeclareFunctionDeclaration {
     pub fn with_id(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4046,7 +4046,7 @@ impl TsDeclareStatement {
     pub fn with_declaration(self, element: JsAnyDeclarationClause) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4060,7 +4060,7 @@ impl TsDefaultTypeClause {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4074,7 +4074,7 @@ impl TsDefinitePropertyAnnotation {
     pub fn with_type_annotation(self, element: TsTypeAnnotation) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4088,7 +4088,7 @@ impl TsDefiniteVariableAnnotation {
     pub fn with_type_annotation(self, element: TsTypeAnnotation) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4116,7 +4116,7 @@ impl TsEnumDeclaration {
     pub fn with_id(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_curly_token(self, element: SyntaxToken) -> Self {
@@ -4128,7 +4128,7 @@ impl TsEnumDeclaration {
     pub fn with_members(self, element: TsEnumMemberList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -4142,13 +4142,13 @@ impl TsEnumMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_initializer(self, element: Option<JsInitializerClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -4168,7 +4168,7 @@ impl TsExportAsNamespaceClause {
     pub fn with_name(self, element: JsName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4188,7 +4188,7 @@ impl TsExportAssignmentClause {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4208,7 +4208,7 @@ impl TsExportDeclareClause {
     pub fn with_declaration(self, element: JsAnyDeclarationClause) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4222,7 +4222,7 @@ impl TsExtendsClause {
     pub fn with_types(self, element: TsTypeList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4236,13 +4236,13 @@ impl TsExternalModuleDeclaration {
     pub fn with_source(self, element: JsModuleSource) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_body(self, element: Option<TsAnyExternalModuleDeclarationBody>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -4262,7 +4262,7 @@ impl TsExternalModuleReference {
     pub fn with_source(self, element: JsModuleSource) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -4276,13 +4276,13 @@ impl TsFunctionType {
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             0usize..=0usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_fat_arrow_token(self, element: SyntaxToken) -> Self {
@@ -4294,7 +4294,7 @@ impl TsFunctionType {
     pub fn with_return_type(self, element: TsAnyReturnType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4302,7 +4302,7 @@ impl TsGetterSignatureClassMember {
     pub fn with_modifiers(self, element: TsMethodSignatureModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_get_token(self, element: SyntaxToken) -> Self {
@@ -4314,7 +4314,7 @@ impl TsGetterSignatureClassMember {
     pub fn with_name(self, element: JsAnyClassMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_paren_token(self, element: SyntaxToken) -> Self {
@@ -4332,7 +4332,7 @@ impl TsGetterSignatureClassMember {
     pub fn with_return_type(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4352,7 +4352,7 @@ impl TsGetterSignatureTypeMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_paren_token(self, element: SyntaxToken) -> Self {
@@ -4370,7 +4370,7 @@ impl TsGetterSignatureTypeMember {
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_separator_token_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4390,7 +4390,7 @@ impl TsGlobalDeclaration {
     pub fn with_body(self, element: TsModuleBlock) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4412,7 +4412,7 @@ impl TsImplementsClause {
     pub fn with_types(self, element: TsTypeList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4432,7 +4432,7 @@ impl TsImportEqualsDeclaration {
     pub fn with_id(self, element: JsAnyBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_eq_token(self, element: SyntaxToken) -> Self {
@@ -4444,7 +4444,7 @@ impl TsImportEqualsDeclaration {
     pub fn with_module_reference(self, element: TsAnyModuleReference) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4488,13 +4488,13 @@ impl TsImportType {
     pub fn with_qualifier_clause(self, element: Option<TsImportTypeQualifier>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             5usize..=5usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -4508,7 +4508,7 @@ impl TsImportTypeQualifier {
     pub fn with_right(self, element: TsAnyName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4516,7 +4516,7 @@ impl TsIndexSignatureClassMember {
     pub fn with_modifiers(self, element: TsIndexSignatureModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_brack_token(self, element: SyntaxToken) -> Self {
@@ -4528,7 +4528,7 @@ impl TsIndexSignatureClassMember {
     pub fn with_parameter(self, element: TsIndexSignatureParameter) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -4540,7 +4540,7 @@ impl TsIndexSignatureClassMember {
     pub fn with_type_annotation(self, element: TsTypeAnnotation) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4554,13 +4554,13 @@ impl TsIndexSignatureParameter {
     pub fn with_binding(self, element: JsIdentifierBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_annotation(self, element: TsTypeAnnotation) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4580,7 +4580,7 @@ impl TsIndexSignatureTypeMember {
     pub fn with_parameter(self, element: TsIndexSignatureParameter) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -4592,7 +4592,7 @@ impl TsIndexSignatureTypeMember {
     pub fn with_type_annotation(self, element: TsTypeAnnotation) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_separator_token_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4606,7 +4606,7 @@ impl TsIndexedAccessType {
     pub fn with_object_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_brack_token(self, element: SyntaxToken) -> Self {
@@ -4618,7 +4618,7 @@ impl TsIndexedAccessType {
     pub fn with_index_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -4638,7 +4638,7 @@ impl TsInferType {
     pub fn with_type_parameter(self, element: TsTypeParameterName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4652,19 +4652,19 @@ impl TsInterfaceDeclaration {
     pub fn with_id(self, element: TsIdentifierBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_extends_clause(self, element: Option<TsExtendsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_l_curly_token(self, element: SyntaxToken) -> Self {
@@ -4676,7 +4676,7 @@ impl TsInterfaceDeclaration {
     pub fn with_members(self, element: TsTypeMemberList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -4696,7 +4696,7 @@ impl TsIntersectionType {
     pub fn with_types(self, element: TsIntersectionTypeElementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4713,7 +4713,7 @@ impl TsMappedType {
     ) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_l_brack_token(self, element: SyntaxToken) -> Self {
@@ -4725,7 +4725,7 @@ impl TsMappedType {
     pub fn with_property_name(self, element: TsTypeParameterName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_in_token(self, element: SyntaxToken) -> Self {
@@ -4737,13 +4737,13 @@ impl TsMappedType {
     pub fn with_keys_type(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_as_clause(self, element: Option<TsMappedTypeAsClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -4758,13 +4758,13 @@ impl TsMappedType {
     ) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             8usize..=8usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_mapped_type(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             9usize..=9usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4790,7 +4790,7 @@ impl TsMappedTypeAsClause {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4826,7 +4826,7 @@ impl TsMethodSignatureClassMember {
     pub fn with_modifiers(self, element: TsMethodSignatureModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_async_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4838,7 +4838,7 @@ impl TsMethodSignatureClassMember {
     pub fn with_name(self, element: JsAnyClassMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_question_mark_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4850,19 +4850,19 @@ impl TsMethodSignatureClassMember {
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(5usize..=5usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             6usize..=6usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4876,7 +4876,7 @@ impl TsMethodSignatureTypeMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_optional_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4888,19 +4888,19 @@ impl TsMethodSignatureTypeMember {
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_parameters(self, element: JsParameters) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_return_type_annotation(self, element: Option<TsReturnTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             4usize..=4usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_separator_token_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4920,7 +4920,7 @@ impl TsModuleBlock {
     pub fn with_items(self, element: JsModuleItemList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -4940,13 +4940,13 @@ impl TsModuleDeclaration {
     pub fn with_name(self, element: TsAnyModuleName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_body(self, element: TsModuleBlock) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -4954,13 +4954,13 @@ impl TsNameWithTypeArguments {
     pub fn with_name(self, element: TsAnyName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -4974,7 +4974,7 @@ impl TsNamedTupleTypeElement {
     pub fn with_name(self, element: JsName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_question_mark_token(self, element: Option<SyntaxToken>) -> Self {
@@ -4992,7 +4992,7 @@ impl TsNamedTupleTypeElement {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5008,7 +5008,7 @@ impl TsNonNullAssertionAssignment {
     pub fn with_assignment(self, element: JsAnyAssignment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_excl_token(self, element: SyntaxToken) -> Self {
@@ -5022,7 +5022,7 @@ impl TsNonNullAssertionExpression {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_excl_token(self, element: SyntaxToken) -> Self {
@@ -5080,7 +5080,7 @@ impl TsObjectType {
     pub fn with_members(self, element: TsTypeMemberList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -5100,7 +5100,7 @@ impl TsOptionalPropertyAnnotation {
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -5108,7 +5108,7 @@ impl TsOptionalTupleTypeElement {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_question_mark_token(self, element: SyntaxToken) -> Self {
@@ -5136,7 +5136,7 @@ impl TsParenthesizedType {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -5150,7 +5150,7 @@ impl TsPredicateReturnType {
     pub fn with_parameter_name(self, element: TsAnyTypePredicateParameterName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_is_token(self, element: SyntaxToken) -> Self {
@@ -5162,7 +5162,7 @@ impl TsPredicateReturnType {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5170,13 +5170,13 @@ impl TsPropertyParameter {
     pub fn with_modifiers(self, element: TsPropertyParameterModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_formal_parameter(self, element: JsAnyFormalParameter) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5184,13 +5184,13 @@ impl TsPropertySignatureClassMember {
     pub fn with_modifiers(self, element: TsPropertySignatureModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_name(self, element: JsAnyClassMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_property_annotation(
@@ -5199,7 +5199,7 @@ impl TsPropertySignatureClassMember {
     ) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -5219,7 +5219,7 @@ impl TsPropertySignatureTypeMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_optional_token(self, element: Option<SyntaxToken>) -> Self {
@@ -5231,7 +5231,7 @@ impl TsPropertySignatureTypeMember {
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             3usize..=3usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_separator_token_token(self, element: Option<SyntaxToken>) -> Self {
@@ -5245,7 +5245,7 @@ impl TsQualifiedModuleName {
     pub fn with_left(self, element: TsAnyModuleName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_dot_token(self, element: SyntaxToken) -> Self {
@@ -5257,7 +5257,7 @@ impl TsQualifiedModuleName {
     pub fn with_right(self, element: JsName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5265,7 +5265,7 @@ impl TsQualifiedName {
     pub fn with_left(self, element: TsAnyName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_dot_token(self, element: SyntaxToken) -> Self {
@@ -5277,7 +5277,7 @@ impl TsQualifiedName {
     pub fn with_right(self, element: JsName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5293,13 +5293,13 @@ impl TsReferenceType {
     pub fn with_name(self, element: TsAnyName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -5313,7 +5313,7 @@ impl TsRestTupleTypeElement {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5327,7 +5327,7 @@ impl TsReturnTypeAnnotation {
     pub fn with_ty(self, element: TsAnyReturnType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5335,7 +5335,7 @@ impl TsSetterSignatureClassMember {
     pub fn with_modifiers(self, element: TsMethodSignatureModifierList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_set_token(self, element: SyntaxToken) -> Self {
@@ -5347,7 +5347,7 @@ impl TsSetterSignatureClassMember {
     pub fn with_name(self, element: JsAnyClassMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(2usize..=2usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_paren_token(self, element: SyntaxToken) -> Self {
@@ -5359,7 +5359,7 @@ impl TsSetterSignatureClassMember {
     pub fn with_parameter(self, element: JsAnyFormalParameter) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -5385,7 +5385,7 @@ impl TsSetterSignatureTypeMember {
     pub fn with_name(self, element: JsAnyObjectMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_l_paren_token(self, element: SyntaxToken) -> Self {
@@ -5397,7 +5397,7 @@ impl TsSetterSignatureTypeMember {
     pub fn with_parameter(self, element: JsAnyFormalParameter) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_paren_token(self, element: SyntaxToken) -> Self {
@@ -5455,7 +5455,7 @@ impl TsTemplateElement {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_curly_token(self, element: SyntaxToken) -> Self {
@@ -5475,7 +5475,7 @@ impl TsTemplateLiteralType {
     pub fn with_elements(self, element: TsTemplateElementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_tick_token(self, element: SyntaxToken) -> Self {
@@ -5495,7 +5495,7 @@ impl TsThisParameter {
     pub fn with_type_annotation(self, element: Option<TsTypeAnnotation>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -5517,7 +5517,7 @@ impl TsTupleType {
     pub fn with_elements(self, element: TsTupleTypeElementList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_brack_token(self, element: SyntaxToken) -> Self {
@@ -5537,13 +5537,13 @@ impl TsTypeAliasDeclaration {
     pub fn with_binding_identifier(self, element: TsIdentifierBinding) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_type_parameters(self, element: Option<TsTypeParameters>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_eq_token(self, element: SyntaxToken) -> Self {
@@ -5555,7 +5555,7 @@ impl TsTypeAliasDeclaration {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(4usize..=4usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
@@ -5575,7 +5575,7 @@ impl TsTypeAnnotation {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5589,7 +5589,7 @@ impl TsTypeArguments {
     pub fn with_ts_type_argument_list(self, element: TsTypeArgumentList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_angle_token(self, element: SyntaxToken) -> Self {
@@ -5609,7 +5609,7 @@ impl TsTypeAssertionAssignment {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_angle_token(self, element: SyntaxToken) -> Self {
@@ -5621,7 +5621,7 @@ impl TsTypeAssertionAssignment {
     pub fn with_assignment(self, element: JsAnyAssignment) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5635,7 +5635,7 @@ impl TsTypeAssertionExpression {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_angle_token(self, element: SyntaxToken) -> Self {
@@ -5647,7 +5647,7 @@ impl TsTypeAssertionExpression {
     pub fn with_expression(self, element: JsAnyExpression) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5661,7 +5661,7 @@ impl TsTypeConstraintClause {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5675,7 +5675,7 @@ impl TsTypeOperatorType {
     pub fn with_ty(self, element: TsType) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5683,19 +5683,19 @@ impl TsTypeParameter {
     pub fn with_name(self, element: TsTypeParameterName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(0usize..=0usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_constraint(self, element: Option<TsTypeConstraintClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             1usize..=1usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
     pub fn with_default(self, element: Option<TsDefaultTypeClause>) -> Self {
         Self::unwrap_cast(self.syntax.splice_slots(
             2usize..=2usize,
-            once(element.map(|element| element.syntax().clone().into())),
+            once(element.map(|element| element.into_syntax().into())),
         ))
     }
 }
@@ -5717,7 +5717,7 @@ impl TsTypeParameters {
     pub fn with_items(self, element: TsTypeParameterList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
     pub fn with_r_angle_token(self, element: SyntaxToken) -> Self {
@@ -5737,7 +5737,7 @@ impl TsTypeofType {
     pub fn with_expression_name(self, element: TsAnyName) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
@@ -5759,7 +5759,7 @@ impl TsUnionType {
     pub fn with_types(self, element: TsUnionTypeVariantList) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(1usize..=1usize, once(Some(element.syntax().clone().into()))),
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
 }

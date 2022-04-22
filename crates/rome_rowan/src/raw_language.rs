@@ -85,6 +85,10 @@ impl AstNode for LiteralExpression {
     fn syntax(&self) -> &SyntaxNode<RawLanguage> {
         &self.node
     }
+
+    fn into_syntax(self) -> SyntaxNode<RawLanguage> {
+        self.node
+    }
 }
 
 #[doc(hidden)]

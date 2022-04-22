@@ -29,7 +29,7 @@ pub fn js_array_assignment_pattern(
         JsSyntaxKind::JS_ARRAY_ASSIGNMENT_PATTERN,
         [
             Some(SyntaxElement::Token(l_brack_token)),
-            Some(SyntaxElement::Node(elements.syntax().clone())),
+            Some(SyntaxElement::Node(elements.into_syntax())),
             Some(SyntaxElement::Token(r_brack_token)),
         ],
     ))
@@ -42,7 +42,7 @@ pub fn js_array_assignment_pattern_rest_element(
         JsSyntaxKind::JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT,
         [
             Some(SyntaxElement::Token(dotdotdot_token)),
-            Some(SyntaxElement::Node(pattern.syntax().clone())),
+            Some(SyntaxElement::Node(pattern.into_syntax())),
         ],
     ))
 }
@@ -55,7 +55,7 @@ pub fn js_array_binding_pattern(
         JsSyntaxKind::JS_ARRAY_BINDING_PATTERN,
         [
             Some(SyntaxElement::Token(l_brack_token)),
-            Some(SyntaxElement::Node(elements.syntax().clone())),
+            Some(SyntaxElement::Node(elements.into_syntax())),
             Some(SyntaxElement::Token(r_brack_token)),
         ],
     ))
@@ -68,7 +68,7 @@ pub fn js_array_binding_pattern_rest_element(
         JsSyntaxKind::JS_ARRAY_BINDING_PATTERN_REST_ELEMENT,
         [
             Some(SyntaxElement::Token(dotdotdot_token)),
-            Some(SyntaxElement::Node(pattern.syntax().clone())),
+            Some(SyntaxElement::Node(pattern.into_syntax())),
         ],
     ))
 }
@@ -81,7 +81,7 @@ pub fn js_array_expression(
         JsSyntaxKind::JS_ARRAY_EXPRESSION,
         [
             Some(SyntaxElement::Token(l_brack_token)),
-            Some(SyntaxElement::Node(elements.syntax().clone())),
+            Some(SyntaxElement::Node(elements.into_syntax())),
             Some(SyntaxElement::Token(r_brack_token)),
         ],
     ))
@@ -133,12 +133,12 @@ impl JsArrowFunctionExpressionBuilder {
             [
                 self.async_token.map(|token| SyntaxElement::Token(token)),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.fat_arrow_token)),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -151,9 +151,9 @@ pub fn js_assignment_expression(
     JsAssignmentExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION,
         [
-            Some(SyntaxElement::Node(left.syntax().clone())),
+            Some(SyntaxElement::Node(left.into_syntax())),
             Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -165,9 +165,9 @@ pub fn js_assignment_with_default(
     JsAssignmentWithDefault::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ASSIGNMENT_WITH_DEFAULT,
         [
-            Some(SyntaxElement::Node(pattern.syntax().clone())),
+            Some(SyntaxElement::Node(pattern.into_syntax())),
             Some(SyntaxElement::Token(eq_token)),
-            Some(SyntaxElement::Node(default.syntax().clone())),
+            Some(SyntaxElement::Node(default.into_syntax())),
         ],
     ))
 }
@@ -179,7 +179,7 @@ pub fn js_await_expression(
         JsSyntaxKind::JS_AWAIT_EXPRESSION,
         [
             Some(SyntaxElement::Token(await_token)),
-            Some(SyntaxElement::Node(argument.syntax().clone())),
+            Some(SyntaxElement::Node(argument.into_syntax())),
         ],
     ))
 }
@@ -197,9 +197,9 @@ pub fn js_binary_expression(
     JsBinaryExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_BINARY_EXPRESSION,
         [
-            Some(SyntaxElement::Node(left.syntax().clone())),
+            Some(SyntaxElement::Node(left.into_syntax())),
             Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -211,9 +211,9 @@ pub fn js_binding_pattern_with_default(
     JsBindingPatternWithDefault::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_BINDING_PATTERN_WITH_DEFAULT,
         [
-            Some(SyntaxElement::Node(pattern.syntax().clone())),
+            Some(SyntaxElement::Node(pattern.into_syntax())),
             Some(SyntaxElement::Token(eq_token)),
-            Some(SyntaxElement::Node(default.syntax().clone())),
+            Some(SyntaxElement::Node(default.into_syntax())),
         ],
     ))
 }
@@ -226,7 +226,7 @@ pub fn js_block_statement(
         JsSyntaxKind::JS_BLOCK_STATEMENT,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(statements.syntax().clone())),
+            Some(SyntaxElement::Node(statements.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -279,7 +279,7 @@ pub fn js_call_arguments(
         JsSyntaxKind::JS_CALL_ARGUMENTS,
         [
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(args.syntax().clone())),
+            Some(SyntaxElement::Node(args.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -314,12 +314,12 @@ impl JsCallExpressionBuilder {
         JsCallExpression::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_CALL_EXPRESSION,
             [
-                Some(SyntaxElement::Node(self.callee.syntax().clone())),
+                Some(SyntaxElement::Node(self.callee.into_syntax())),
                 self.optional_chain_token
                     .map(|token| SyntaxElement::Token(token)),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.arguments.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.arguments.into_syntax())),
             ],
         ))
     }
@@ -334,9 +334,9 @@ pub fn js_case_clause(
         JsSyntaxKind::JS_CASE_CLAUSE,
         [
             Some(SyntaxElement::Token(case_token)),
-            Some(SyntaxElement::Node(test.syntax().clone())),
+            Some(SyntaxElement::Node(test.into_syntax())),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(consequent.syntax().clone())),
+            Some(SyntaxElement::Node(consequent.into_syntax())),
         ],
     ))
 }
@@ -363,8 +363,8 @@ impl JsCatchClauseBuilder {
             [
                 Some(SyntaxElement::Token(self.catch_token)),
                 self.declaration
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -397,9 +397,9 @@ impl JsCatchDeclarationBuilder {
             JsSyntaxKind::JS_CATCH_DECLARATION,
             [
                 Some(SyntaxElement::Token(self.l_paren_token)),
-                Some(SyntaxElement::Node(self.binding.syntax().clone())),
+                Some(SyntaxElement::Node(self.binding.into_syntax())),
                 self.type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.r_paren_token)),
             ],
         ))
@@ -458,15 +458,15 @@ impl JsClassDeclarationBuilder {
             [
                 self.abstract_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.class_token)),
-                Some(SyntaxElement::Node(self.id.syntax().clone())),
+                Some(SyntaxElement::Node(self.id.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.extends_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.implements_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.l_curly_token)),
-                Some(SyntaxElement::Node(self.members.syntax().clone())),
+                Some(SyntaxElement::Node(self.members.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
             ],
         ))
@@ -529,15 +529,15 @@ impl JsClassExportDefaultDeclarationBuilder {
                 self.abstract_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.class_token)),
                 self.id
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.extends_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.implements_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.l_curly_token)),
-                Some(SyntaxElement::Node(self.members.syntax().clone())),
+                Some(SyntaxElement::Node(self.members.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
             ],
         ))
@@ -593,15 +593,15 @@ impl JsClassExpressionBuilder {
             [
                 Some(SyntaxElement::Token(self.class_token)),
                 self.id
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.extends_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.implements_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.l_curly_token)),
-                Some(SyntaxElement::Node(self.members.syntax().clone())),
+                Some(SyntaxElement::Node(self.members.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
             ],
         ))
@@ -616,9 +616,9 @@ pub fn js_computed_member_assignment(
     JsComputedMemberAssignment::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_COMPUTED_MEMBER_ASSIGNMENT,
         [
-            Some(SyntaxElement::Node(object.syntax().clone())),
+            Some(SyntaxElement::Node(object.into_syntax())),
             Some(SyntaxElement::Token(l_brack_token)),
-            Some(SyntaxElement::Node(member.syntax().clone())),
+            Some(SyntaxElement::Node(member.into_syntax())),
             Some(SyntaxElement::Token(r_brack_token)),
         ],
     ))
@@ -653,11 +653,11 @@ impl JsComputedMemberExpressionBuilder {
         JsComputedMemberExpression::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION,
             [
-                Some(SyntaxElement::Node(self.object.syntax().clone())),
+                Some(SyntaxElement::Node(self.object.into_syntax())),
                 self.optional_chain_token
                     .map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.l_brack_token)),
-                Some(SyntaxElement::Node(self.member.syntax().clone())),
+                Some(SyntaxElement::Node(self.member.into_syntax())),
                 Some(SyntaxElement::Token(self.r_brack_token)),
             ],
         ))
@@ -672,7 +672,7 @@ pub fn js_computed_member_name(
         JsSyntaxKind::JS_COMPUTED_MEMBER_NAME,
         [
             Some(SyntaxElement::Token(l_brack_token)),
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(r_brack_token)),
         ],
     ))
@@ -687,11 +687,11 @@ pub fn js_conditional_expression(
     JsConditionalExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_CONDITIONAL_EXPRESSION,
         [
-            Some(SyntaxElement::Node(test.syntax().clone())),
+            Some(SyntaxElement::Node(test.into_syntax())),
             Some(SyntaxElement::Token(question_mark_token)),
-            Some(SyntaxElement::Node(consequent.syntax().clone())),
+            Some(SyntaxElement::Node(consequent.into_syntax())),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(alternate.syntax().clone())),
+            Some(SyntaxElement::Node(alternate.into_syntax())),
         ],
     ))
 }
@@ -704,10 +704,10 @@ pub fn js_constructor_class_member(
     JsConstructorClassMember::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER,
         [
-            Some(SyntaxElement::Node(modifiers.syntax().clone())),
-            Some(SyntaxElement::Node(name.syntax().clone())),
-            Some(SyntaxElement::Node(parameters.syntax().clone())),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(modifiers.into_syntax())),
+            Some(SyntaxElement::Node(name.into_syntax())),
+            Some(SyntaxElement::Node(parameters.into_syntax())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -720,7 +720,7 @@ pub fn js_constructor_parameters(
         JsSyntaxKind::JS_CONSTRUCTOR_PARAMETERS,
         [
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(parameters.syntax().clone())),
+            Some(SyntaxElement::Node(parameters.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -794,7 +794,7 @@ pub fn js_default_clause(
         [
             Some(SyntaxElement::Token(default_token)),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(consequent.syntax().clone())),
+            Some(SyntaxElement::Node(consequent.into_syntax())),
         ],
     ))
 }
@@ -805,7 +805,7 @@ pub fn js_default_import_specifier(
     JsDefaultImportSpecifier::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_DEFAULT_IMPORT_SPECIFIER,
         [
-            Some(SyntaxElement::Node(local_name.syntax().clone())),
+            Some(SyntaxElement::Node(local_name.into_syntax())),
             Some(SyntaxElement::Token(trailing_comma_token)),
         ],
     ))
@@ -873,10 +873,10 @@ impl JsDoWhileStatementBuilder {
             JsSyntaxKind::JS_DO_WHILE_STATEMENT,
             [
                 Some(SyntaxElement::Token(self.do_token)),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
                 Some(SyntaxElement::Token(self.while_token)),
                 Some(SyntaxElement::Token(self.l_paren_token)),
-                Some(SyntaxElement::Node(self.test.syntax().clone())),
+                Some(SyntaxElement::Node(self.test.into_syntax())),
                 Some(SyntaxElement::Token(self.r_paren_token)),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
@@ -889,7 +889,7 @@ pub fn js_else_clause(else_token: SyntaxToken, alternate: JsAnyStatement) -> JsE
         JsSyntaxKind::JS_ELSE_CLAUSE,
         [
             Some(SyntaxElement::Token(else_token)),
-            Some(SyntaxElement::Node(alternate.syntax().clone())),
+            Some(SyntaxElement::Node(alternate.into_syntax())),
         ],
     ))
 }
@@ -910,7 +910,7 @@ pub fn js_export(export_token: SyntaxToken, export_clause: JsAnyExportClause) ->
         JsSyntaxKind::JS_EXPORT,
         [
             Some(SyntaxElement::Token(export_token)),
-            Some(SyntaxElement::Node(export_clause.syntax().clone())),
+            Some(SyntaxElement::Node(export_clause.into_syntax())),
         ],
     ))
 }
@@ -922,7 +922,7 @@ pub fn js_export_as_clause(
         JsSyntaxKind::JS_EXPORT_AS_CLAUSE,
         [
             Some(SyntaxElement::Token(as_token)),
-            Some(SyntaxElement::Node(exported_name.syntax().clone())),
+            Some(SyntaxElement::Node(exported_name.into_syntax())),
         ],
     ))
 }
@@ -951,7 +951,7 @@ impl JsExportDefaultDeclarationClauseBuilder {
             JsSyntaxKind::JS_EXPORT_DEFAULT_DECLARATION_CLAUSE,
             [
                 Some(SyntaxElement::Token(self.default_token)),
-                Some(SyntaxElement::Node(self.declaration.syntax().clone())),
+                Some(SyntaxElement::Node(self.declaration.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -983,7 +983,7 @@ impl JsExportDefaultExpressionClauseBuilder {
             JsSyntaxKind::JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE,
             [
                 Some(SyntaxElement::Token(self.default_token)),
-                Some(SyntaxElement::Node(self.expression.syntax().clone())),
+                Some(SyntaxElement::Node(self.expression.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -1031,11 +1031,11 @@ impl JsExportFromClauseBuilder {
             [
                 Some(SyntaxElement::Token(self.star_token)),
                 self.export_as
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.from_token)),
-                Some(SyntaxElement::Node(self.source.syntax().clone())),
+                Some(SyntaxElement::Node(self.source.into_syntax())),
                 self.assertion
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -1077,7 +1077,7 @@ impl JsExportNamedClauseBuilder {
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.l_curly_token)),
-                Some(SyntaxElement::Node(self.specifiers.syntax().clone())),
+                Some(SyntaxElement::Node(self.specifiers.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
@@ -1132,12 +1132,12 @@ impl JsExportNamedFromClauseBuilder {
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.l_curly_token)),
-                Some(SyntaxElement::Node(self.specifiers.syntax().clone())),
+                Some(SyntaxElement::Node(self.specifiers.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
                 Some(SyntaxElement::Token(self.from_token)),
-                Some(SyntaxElement::Node(self.source.syntax().clone())),
+                Some(SyntaxElement::Node(self.source.into_syntax())),
                 self.assertion
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -1172,9 +1172,9 @@ impl JsExportNamedFromSpecifierBuilder {
             JsSyntaxKind::JS_EXPORT_NAMED_FROM_SPECIFIER,
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.source_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.source_name.into_syntax())),
                 self.export_as
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -1201,7 +1201,7 @@ impl JsExportNamedShorthandSpecifierBuilder {
             JsSyntaxKind::JS_EXPORT_NAMED_SHORTHAND_SPECIFIER,
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
             ],
         ))
     }
@@ -1234,9 +1234,9 @@ impl JsExportNamedSpecifierBuilder {
             JsSyntaxKind::JS_EXPORT_NAMED_SPECIFIER,
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.local_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.local_name.into_syntax())),
                 Some(SyntaxElement::Token(self.as_token)),
-                Some(SyntaxElement::Node(self.exported_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.exported_name.into_syntax())),
             ],
         ))
     }
@@ -1248,7 +1248,7 @@ pub fn js_expression_snipped(
     JsExpressionSnipped::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_EXPRESSION_SNIPPED,
         [
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(eof_token)),
         ],
     ))
@@ -1272,7 +1272,7 @@ impl JsExpressionStatementBuilder {
         JsExpressionStatement::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_EXPRESSION_STATEMENT,
             [
-                Some(SyntaxElement::Node(self.expression.syntax().clone())),
+                Some(SyntaxElement::Node(self.expression.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -1304,9 +1304,9 @@ impl JsExtendsClauseBuilder {
             JsSyntaxKind::JS_EXTENDS_CLAUSE,
             [
                 Some(SyntaxElement::Token(self.extends_token)),
-                Some(SyntaxElement::Node(self.super_class.syntax().clone())),
+                Some(SyntaxElement::Node(self.super_class.into_syntax())),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -1316,7 +1316,7 @@ pub fn js_finally_clause(finally_token: SyntaxToken, body: JsBlockStatement) -> 
         JsSyntaxKind::JS_FINALLY_CLAUSE,
         [
             Some(SyntaxElement::Token(finally_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -1334,11 +1334,11 @@ pub fn js_for_in_statement(
         [
             Some(SyntaxElement::Token(for_token)),
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(initializer.syntax().clone())),
+            Some(SyntaxElement::Node(initializer.into_syntax())),
             Some(SyntaxElement::Token(in_token)),
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -1384,11 +1384,11 @@ impl JsForOfStatementBuilder {
                 Some(SyntaxElement::Token(self.for_token)),
                 self.await_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.l_paren_token)),
-                Some(SyntaxElement::Node(self.initializer.syntax().clone())),
+                Some(SyntaxElement::Node(self.initializer.into_syntax())),
                 Some(SyntaxElement::Token(self.of_token)),
-                Some(SyntaxElement::Node(self.expression.syntax().clone())),
+                Some(SyntaxElement::Node(self.expression.into_syntax())),
                 Some(SyntaxElement::Token(self.r_paren_token)),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -1444,15 +1444,15 @@ impl JsForStatementBuilder {
                 Some(SyntaxElement::Token(self.for_token)),
                 Some(SyntaxElement::Token(self.l_paren_token)),
                 self.initializer
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.first_semi_token)),
                 self.test
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.second_semi_token)),
                 self.update
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.r_paren_token)),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -1465,7 +1465,7 @@ pub fn js_for_variable_declaration(
         JsSyntaxKind::JS_FOR_VARIABLE_DECLARATION,
         [
             Some(SyntaxElement::Token(kind_token_token)),
-            Some(SyntaxElement::Node(declarator.syntax().clone())),
+            Some(SyntaxElement::Node(declarator.into_syntax())),
         ],
     ))
 }
@@ -1500,13 +1500,13 @@ impl JsFormalParameterBuilder {
         JsFormalParameter::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_FORMAL_PARAMETER,
             [
-                Some(SyntaxElement::Node(self.binding.syntax().clone())),
+                Some(SyntaxElement::Node(self.binding.into_syntax())),
                 self.question_mark_token
                     .map(|token| SyntaxElement::Token(token)),
                 self.type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.initializer
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -1521,8 +1521,8 @@ pub fn js_function_body(
         JsSyntaxKind::JS_FUNCTION_BODY,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(directives.syntax().clone())),
-            Some(SyntaxElement::Node(statements.syntax().clone())),
+            Some(SyntaxElement::Node(directives.into_syntax())),
+            Some(SyntaxElement::Node(statements.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -1581,13 +1581,13 @@ impl JsFunctionDeclarationBuilder {
                 self.async_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.function_token)),
                 self.star_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.id.syntax().clone())),
+                Some(SyntaxElement::Node(self.id.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -1650,13 +1650,13 @@ impl JsFunctionExportDefaultDeclarationBuilder {
                 Some(SyntaxElement::Token(self.function_token)),
                 self.star_token.map(|token| SyntaxElement::Token(token)),
                 self.id
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -1719,13 +1719,13 @@ impl JsFunctionExpressionBuilder {
                 Some(SyntaxElement::Token(self.function_token)),
                 self.star_token.map(|token| SyntaxElement::Token(token)),
                 self.id
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -1766,14 +1766,14 @@ impl JsGetterClassMemberBuilder {
         JsGetterClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_GETTER_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
                 Some(SyntaxElement::Token(self.get_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 Some(SyntaxElement::Token(self.l_paren_token)),
                 Some(SyntaxElement::Token(self.r_paren_token)),
                 self.return_type
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -1812,12 +1812,12 @@ impl JsGetterObjectMemberBuilder {
             JsSyntaxKind::JS_GETTER_OBJECT_MEMBER,
             [
                 Some(SyntaxElement::Token(self.get_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 Some(SyntaxElement::Token(self.l_paren_token)),
                 Some(SyntaxElement::Token(self.r_paren_token)),
                 self.return_type
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -1837,7 +1837,7 @@ pub fn js_identifier_binding(name_token: SyntaxToken) -> JsIdentifierBinding {
 pub fn js_identifier_expression(name: JsReferenceIdentifier) -> JsIdentifierExpression {
     JsIdentifierExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_IDENTIFIER_EXPRESSION,
-        [Some(SyntaxElement::Node(name.syntax().clone()))],
+        [Some(SyntaxElement::Node(name.into_syntax()))],
     ))
 }
 pub fn js_if_statement(
@@ -1875,11 +1875,11 @@ impl JsIfStatementBuilder {
             [
                 Some(SyntaxElement::Token(self.if_token)),
                 Some(SyntaxElement::Token(self.l_paren_token)),
-                Some(SyntaxElement::Node(self.test.syntax().clone())),
+                Some(SyntaxElement::Node(self.test.into_syntax())),
                 Some(SyntaxElement::Token(self.r_paren_token)),
-                Some(SyntaxElement::Node(self.consequent.syntax().clone())),
+                Some(SyntaxElement::Node(self.consequent.into_syntax())),
                 self.else_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -1906,7 +1906,7 @@ impl JsImportBuilder {
             JsSyntaxKind::JS_IMPORT,
             [
                 Some(SyntaxElement::Token(self.import_token)),
-                Some(SyntaxElement::Node(self.import_clause.syntax().clone())),
+                Some(SyntaxElement::Node(self.import_clause.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -1924,7 +1924,7 @@ pub fn js_import_assertion(
         [
             Some(SyntaxElement::Token(assert_token)),
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(assertions.syntax().clone())),
+            Some(SyntaxElement::Node(assertions.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -1962,9 +1962,9 @@ impl JsImportBareClauseBuilder {
         JsImportBareClause::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_IMPORT_BARE_CLAUSE,
             [
-                Some(SyntaxElement::Node(self.source.syntax().clone())),
+                Some(SyntaxElement::Node(self.source.into_syntax())),
                 self.assertion
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -1977,7 +1977,7 @@ pub fn js_import_call_expression(
         JsSyntaxKind::JS_IMPORT_CALL_EXPRESSION,
         [
             Some(SyntaxElement::Token(import_token)),
-            Some(SyntaxElement::Node(arguments.syntax().clone())),
+            Some(SyntaxElement::Node(arguments.into_syntax())),
         ],
     ))
 }
@@ -2015,11 +2015,11 @@ impl JsImportDefaultClauseBuilder {
             JsSyntaxKind::JS_IMPORT_DEFAULT_CLAUSE,
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.local_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.local_name.into_syntax())),
                 Some(SyntaxElement::Token(self.from_token)),
-                Some(SyntaxElement::Node(self.source.syntax().clone())),
+                Some(SyntaxElement::Node(self.source.into_syntax())),
                 self.assertion
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2065,12 +2065,12 @@ impl JsImportNamedClauseBuilder {
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
                 self.default_specifier
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.named_import.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.named_import.into_syntax())),
                 Some(SyntaxElement::Token(self.from_token)),
-                Some(SyntaxElement::Node(self.source.syntax().clone())),
+                Some(SyntaxElement::Node(self.source.into_syntax())),
                 self.assertion
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2117,11 +2117,11 @@ impl JsImportNamespaceClauseBuilder {
                 self.type_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.star_token)),
                 Some(SyntaxElement::Token(self.as_token)),
-                Some(SyntaxElement::Node(self.local_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.local_name.into_syntax())),
                 Some(SyntaxElement::Token(self.from_token)),
-                Some(SyntaxElement::Node(self.source.syntax().clone())),
+                Some(SyntaxElement::Node(self.source.into_syntax())),
                 self.assertion
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2134,9 +2134,9 @@ pub fn js_in_expression(
     JsInExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_IN_EXPRESSION,
         [
-            Some(SyntaxElement::Node(property.syntax().clone())),
+            Some(SyntaxElement::Node(property.into_syntax())),
             Some(SyntaxElement::Token(in_token)),
-            Some(SyntaxElement::Node(object.syntax().clone())),
+            Some(SyntaxElement::Node(object.into_syntax())),
         ],
     ))
 }
@@ -2148,7 +2148,7 @@ pub fn js_initializer_clause(
         JsSyntaxKind::JS_INITIALIZER_CLAUSE,
         [
             Some(SyntaxElement::Token(eq_token)),
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
         ],
     ))
 }
@@ -2160,9 +2160,9 @@ pub fn js_instanceof_expression(
     JsInstanceofExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_INSTANCEOF_EXPRESSION,
         [
-            Some(SyntaxElement::Node(left.syntax().clone())),
+            Some(SyntaxElement::Node(left.into_syntax())),
             Some(SyntaxElement::Token(instanceof_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -2176,7 +2176,7 @@ pub fn js_labeled_statement(
         [
             Some(SyntaxElement::Token(label_token)),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -2200,9 +2200,9 @@ pub fn js_logical_expression(
     JsLogicalExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_LOGICAL_EXPRESSION,
         [
-            Some(SyntaxElement::Node(left.syntax().clone())),
+            Some(SyntaxElement::Node(left.into_syntax())),
             Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -2263,18 +2263,18 @@ impl JsMethodClassMemberBuilder {
         JsMethodClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_METHOD_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
                 self.async_token.map(|token| SyntaxElement::Token(token)),
                 self.star_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.question_mark_token
                     .map(|token| SyntaxElement::Token(token)),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -2329,13 +2329,13 @@ impl JsMethodObjectMemberBuilder {
             [
                 self.async_token.map(|token| SyntaxElement::Token(token)),
                 self.star_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
             ],
         ))
     }
@@ -2369,8 +2369,8 @@ impl JsModuleBuilder {
             [
                 self.interpreter_token
                     .map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.directives.syntax().clone())),
-                Some(SyntaxElement::Node(self.items.syntax().clone())),
+                Some(SyntaxElement::Node(self.directives.into_syntax())),
+                Some(SyntaxElement::Node(self.items.into_syntax())),
                 Some(SyntaxElement::Token(self.eof_token)),
             ],
         ))
@@ -2416,9 +2416,9 @@ impl JsNamedImportSpecifierBuilder {
             JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIER,
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 Some(SyntaxElement::Token(self.as_token)),
-                Some(SyntaxElement::Node(self.local_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.local_name.into_syntax())),
             ],
         ))
     }
@@ -2432,7 +2432,7 @@ pub fn js_named_import_specifiers(
         JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIERS,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(specifiers.syntax().clone())),
+            Some(SyntaxElement::Node(specifiers.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -2447,7 +2447,7 @@ pub fn js_namespace_import_specifier(
         [
             Some(SyntaxElement::Token(star_token)),
             Some(SyntaxElement::Token(as_token)),
-            Some(SyntaxElement::Node(local_name.syntax().clone())),
+            Some(SyntaxElement::Node(local_name.into_syntax())),
         ],
     ))
 }
@@ -2482,11 +2482,11 @@ impl JsNewExpressionBuilder {
             JsSyntaxKind::JS_NEW_EXPRESSION,
             [
                 Some(SyntaxElement::Token(self.new_token)),
-                Some(SyntaxElement::Node(self.callee.syntax().clone())),
+                Some(SyntaxElement::Node(self.callee.into_syntax())),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2512,7 +2512,7 @@ pub fn js_object_assignment_pattern(
         JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(properties.syntax().clone())),
+            Some(SyntaxElement::Node(properties.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -2544,11 +2544,11 @@ impl JsObjectAssignmentPatternPropertyBuilder {
         JsObjectAssignmentPatternProperty::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY,
             [
-                Some(SyntaxElement::Node(self.member.syntax().clone())),
+                Some(SyntaxElement::Node(self.member.into_syntax())),
                 Some(SyntaxElement::Token(self.colon_token)),
-                Some(SyntaxElement::Node(self.pattern.syntax().clone())),
+                Some(SyntaxElement::Node(self.pattern.into_syntax())),
                 self.init
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2561,7 +2561,7 @@ pub fn js_object_assignment_pattern_rest(
         JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_REST,
         [
             Some(SyntaxElement::Token(dotdotdot_token)),
-            Some(SyntaxElement::Node(target.syntax().clone())),
+            Some(SyntaxElement::Node(target.into_syntax())),
         ],
     ))
 }
@@ -2586,9 +2586,9 @@ impl JsObjectAssignmentPatternShorthandPropertyBuilder {
         JsObjectAssignmentPatternShorthandProperty::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY,
             [
-                Some(SyntaxElement::Node(self.identifier.syntax().clone())),
+                Some(SyntaxElement::Node(self.identifier.into_syntax())),
                 self.init
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2602,7 +2602,7 @@ pub fn js_object_binding_pattern(
         JsSyntaxKind::JS_OBJECT_BINDING_PATTERN,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(properties.syntax().clone())),
+            Some(SyntaxElement::Node(properties.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -2634,11 +2634,11 @@ impl JsObjectBindingPatternPropertyBuilder {
         JsObjectBindingPatternProperty::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_OBJECT_BINDING_PATTERN_PROPERTY,
             [
-                Some(SyntaxElement::Node(self.member.syntax().clone())),
+                Some(SyntaxElement::Node(self.member.into_syntax())),
                 Some(SyntaxElement::Token(self.colon_token)),
-                Some(SyntaxElement::Node(self.pattern.syntax().clone())),
+                Some(SyntaxElement::Node(self.pattern.into_syntax())),
                 self.init
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2651,7 +2651,7 @@ pub fn js_object_binding_pattern_rest(
         JsSyntaxKind::JS_OBJECT_BINDING_PATTERN_REST,
         [
             Some(SyntaxElement::Token(dotdotdot_token)),
-            Some(SyntaxElement::Node(binding.syntax().clone())),
+            Some(SyntaxElement::Node(binding.into_syntax())),
         ],
     ))
 }
@@ -2676,9 +2676,9 @@ impl JsObjectBindingPatternShorthandPropertyBuilder {
         JsObjectBindingPatternShorthandProperty::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY,
             [
-                Some(SyntaxElement::Node(self.identifier.syntax().clone())),
+                Some(SyntaxElement::Node(self.identifier.into_syntax())),
                 self.init
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2692,7 +2692,7 @@ pub fn js_object_expression(
         JsSyntaxKind::JS_OBJECT_EXPRESSION,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(members.syntax().clone())),
+            Some(SyntaxElement::Node(members.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -2706,7 +2706,7 @@ pub fn js_parameters(
         JsSyntaxKind::JS_PARAMETERS,
         [
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(items.syntax().clone())),
+            Some(SyntaxElement::Node(items.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -2720,7 +2720,7 @@ pub fn js_parenthesized_assignment(
         JsSyntaxKind::JS_PARENTHESIZED_ASSIGNMENT,
         [
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(assignment.syntax().clone())),
+            Some(SyntaxElement::Node(assignment.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -2734,7 +2734,7 @@ pub fn js_parenthesized_expression(
         JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION,
         [
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -2746,7 +2746,7 @@ pub fn js_post_update_expression(
     JsPostUpdateExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_POST_UPDATE_EXPRESSION,
         [
-            Some(SyntaxElement::Node(operand.syntax().clone())),
+            Some(SyntaxElement::Node(operand.into_syntax())),
             Some(SyntaxElement::Token(operator_token_token)),
         ],
     ))
@@ -2759,7 +2759,7 @@ pub fn js_pre_update_expression(
         JsSyntaxKind::JS_PRE_UPDATE_EXPRESSION,
         [
             Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Node(operand.syntax().clone())),
+            Some(SyntaxElement::Node(operand.into_syntax())),
         ],
     ))
 }
@@ -2823,12 +2823,12 @@ impl JsPropertyClassMemberBuilder {
         JsPropertyClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_PROPERTY_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.property_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.value
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -2843,9 +2843,9 @@ pub fn js_property_object_member(
     JsPropertyObjectMember::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER,
         [
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(value.syntax().clone())),
+            Some(SyntaxElement::Node(value.into_syntax())),
         ],
     ))
 }
@@ -2886,9 +2886,9 @@ impl JsRestParameterBuilder {
             JsSyntaxKind::JS_REST_PARAMETER,
             [
                 Some(SyntaxElement::Token(self.dotdotdot_token)),
-                Some(SyntaxElement::Node(self.binding.syntax().clone())),
+                Some(SyntaxElement::Node(self.binding.into_syntax())),
                 self.type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -2920,7 +2920,7 @@ impl JsReturnStatementBuilder {
             [
                 Some(SyntaxElement::Token(self.return_token)),
                 self.argument
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -2956,8 +2956,8 @@ impl JsScriptBuilder {
             [
                 self.interpreter_token
                     .map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.directives.syntax().clone())),
-                Some(SyntaxElement::Node(self.statements.syntax().clone())),
+                Some(SyntaxElement::Node(self.directives.into_syntax())),
+                Some(SyntaxElement::Node(self.statements.into_syntax())),
                 Some(SyntaxElement::Token(self.eof_token)),
             ],
         ))
@@ -2971,9 +2971,9 @@ pub fn js_sequence_expression(
     JsSequenceExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_SEQUENCE_EXPRESSION,
         [
-            Some(SyntaxElement::Node(left.syntax().clone())),
+            Some(SyntaxElement::Node(left.into_syntax())),
             Some(SyntaxElement::Token(comma_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -2989,13 +2989,13 @@ pub fn js_setter_class_member(
     JsSetterClassMember::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_SETTER_CLASS_MEMBER,
         [
-            Some(SyntaxElement::Node(modifiers.syntax().clone())),
+            Some(SyntaxElement::Node(modifiers.into_syntax())),
             Some(SyntaxElement::Token(set_token)),
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(parameter.syntax().clone())),
+            Some(SyntaxElement::Node(parameter.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -3011,11 +3011,11 @@ pub fn js_setter_object_member(
         JsSyntaxKind::JS_SETTER_OBJECT_MEMBER,
         [
             Some(SyntaxElement::Token(set_token)),
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(parameter.syntax().clone())),
+            Some(SyntaxElement::Node(parameter.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -3041,7 +3041,7 @@ impl JsShorthandNamedImportSpecifierBuilder {
             JsSyntaxKind::JS_SHORTHAND_NAMED_IMPORT_SPECIFIER,
             [
                 self.type_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.local_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.local_name.into_syntax())),
             ],
         ))
     }
@@ -3051,7 +3051,7 @@ pub fn js_shorthand_property_object_member(
 ) -> JsShorthandPropertyObjectMember {
     JsShorthandPropertyObjectMember::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_SHORTHAND_PROPERTY_OBJECT_MEMBER,
-        [Some(SyntaxElement::Node(name.syntax().clone()))],
+        [Some(SyntaxElement::Node(name.into_syntax()))],
     ))
 }
 pub fn js_spread(dotdotdot_token: SyntaxToken, argument: JsAnyExpression) -> JsSpread {
@@ -3059,7 +3059,7 @@ pub fn js_spread(dotdotdot_token: SyntaxToken, argument: JsAnyExpression) -> JsS
         JsSyntaxKind::JS_SPREAD,
         [
             Some(SyntaxElement::Token(dotdotdot_token)),
-            Some(SyntaxElement::Node(argument.syntax().clone())),
+            Some(SyntaxElement::Node(argument.into_syntax())),
         ],
     ))
 }
@@ -3074,7 +3074,7 @@ pub fn js_static_initialization_block_class_member(
         [
             Some(SyntaxElement::Token(static_token)),
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(statements.syntax().clone())),
+            Some(SyntaxElement::Node(statements.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -3087,9 +3087,9 @@ pub fn js_static_member_assignment(
     JsStaticMemberAssignment::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT,
         [
-            Some(SyntaxElement::Node(object.syntax().clone())),
+            Some(SyntaxElement::Node(object.into_syntax())),
             Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Node(member.syntax().clone())),
+            Some(SyntaxElement::Node(member.into_syntax())),
         ],
     ))
 }
@@ -3101,9 +3101,9 @@ pub fn js_static_member_expression(
     JsStaticMemberExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION,
         [
-            Some(SyntaxElement::Node(object.syntax().clone())),
+            Some(SyntaxElement::Node(object.into_syntax())),
             Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Node(member.syntax().clone())),
+            Some(SyntaxElement::Node(member.into_syntax())),
         ],
     ))
 }
@@ -3139,10 +3139,10 @@ pub fn js_switch_statement(
         [
             Some(SyntaxElement::Token(switch_token)),
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(discriminant.syntax().clone())),
+            Some(SyntaxElement::Node(discriminant.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(cases.syntax().clone())),
+            Some(SyntaxElement::Node(cases.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -3181,11 +3181,11 @@ impl JsTemplateBuilder {
             JsSyntaxKind::JS_TEMPLATE,
             [
                 self.tag
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.l_tick_token)),
-                Some(SyntaxElement::Node(self.elements.syntax().clone())),
+                Some(SyntaxElement::Node(self.elements.into_syntax())),
                 Some(SyntaxElement::Token(self.r_tick_token)),
             ],
         ))
@@ -3206,7 +3206,7 @@ pub fn js_template_element(
         JsSyntaxKind::JS_TEMPLATE_ELEMENT,
         [
             Some(SyntaxElement::Token(dollar_curly_token)),
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -3242,7 +3242,7 @@ impl JsThrowStatementBuilder {
             JsSyntaxKind::JS_THROW_STATEMENT,
             [
                 Some(SyntaxElement::Token(self.throw_token)),
-                Some(SyntaxElement::Node(self.argument.syntax().clone())),
+                Some(SyntaxElement::Node(self.argument.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -3277,10 +3277,10 @@ impl JsTryFinallyStatementBuilder {
             JsSyntaxKind::JS_TRY_FINALLY_STATEMENT,
             [
                 Some(SyntaxElement::Token(self.try_token)),
-                Some(SyntaxElement::Node(self.body.syntax().clone())),
+                Some(SyntaxElement::Node(self.body.into_syntax())),
                 self.catch_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.finally_clause.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.finally_clause.into_syntax())),
             ],
         ))
     }
@@ -3294,8 +3294,8 @@ pub fn js_try_statement(
         JsSyntaxKind::JS_TRY_STATEMENT,
         [
             Some(SyntaxElement::Token(try_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
-            Some(SyntaxElement::Node(catch_clause.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
+            Some(SyntaxElement::Node(catch_clause.into_syntax())),
         ],
     ))
 }
@@ -3307,7 +3307,7 @@ pub fn js_unary_expression(
         JsSyntaxKind::JS_UNARY_EXPRESSION,
         [
             Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Node(argument.syntax().clone())),
+            Some(SyntaxElement::Node(argument.into_syntax())),
         ],
     ))
 }
@@ -3319,7 +3319,7 @@ pub fn js_variable_declaration(
         JsSyntaxKind::JS_VARIABLE_DECLARATION,
         [
             Some(SyntaxElement::Token(kind_token)),
-            Some(SyntaxElement::Node(declarators.syntax().clone())),
+            Some(SyntaxElement::Node(declarators.into_syntax())),
         ],
     ))
 }
@@ -3344,7 +3344,7 @@ impl JsVariableDeclarationClauseBuilder {
         JsVariableDeclarationClause::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE,
             [
-                Some(SyntaxElement::Node(self.declaration.syntax().clone())),
+                Some(SyntaxElement::Node(self.declaration.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -3379,11 +3379,11 @@ impl JsVariableDeclaratorBuilder {
         JsVariableDeclarator::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_VARIABLE_DECLARATOR,
             [
-                Some(SyntaxElement::Node(self.id.syntax().clone())),
+                Some(SyntaxElement::Node(self.id.into_syntax())),
                 self.variable_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.initializer
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -3407,7 +3407,7 @@ impl JsVariableStatementBuilder {
         JsVariableStatement::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_VARIABLE_STATEMENT,
             [
-                Some(SyntaxElement::Node(self.declaration.syntax().clone())),
+                Some(SyntaxElement::Node(self.declaration.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -3426,9 +3426,9 @@ pub fn js_while_statement(
         [
             Some(SyntaxElement::Token(while_token)),
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(test.syntax().clone())),
+            Some(SyntaxElement::Node(test.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -3444,9 +3444,9 @@ pub fn js_with_statement(
         [
             Some(SyntaxElement::Token(with_token)),
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(object.syntax().clone())),
+            Some(SyntaxElement::Node(object.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -3470,7 +3470,7 @@ impl JsYieldArgumentBuilder {
             JsSyntaxKind::JS_YIELD_ARGUMENT,
             [
                 self.star_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.expression.syntax().clone())),
+                Some(SyntaxElement::Node(self.expression.into_syntax())),
             ],
         ))
     }
@@ -3496,7 +3496,7 @@ impl JsYieldExpressionBuilder {
             [
                 Some(SyntaxElement::Token(self.yield_token)),
                 self.argument
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -3520,9 +3520,9 @@ impl JsxAttributeBuilder {
         JsxAttribute::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JSX_ATTRIBUTE,
             [
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.initializer
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -3535,7 +3535,7 @@ pub fn jsx_attribute_initializer_clause(
         JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE,
         [
             Some(SyntaxElement::Token(eq_token)),
-            Some(SyntaxElement::Node(value.syntax().clone())),
+            Some(SyntaxElement::Node(value.into_syntax())),
         ],
     ))
 }
@@ -3550,7 +3550,7 @@ pub fn jsx_closing_element(
         [
             Some(SyntaxElement::Token(l_angle_token)),
             Some(SyntaxElement::Token(slash_token)),
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
             Some(SyntaxElement::Token(r_angle_token)),
         ],
     ))
@@ -3577,9 +3577,9 @@ pub fn jsx_element(
     JsxElement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_ELEMENT,
         [
-            Some(SyntaxElement::Node(opening_element.syntax().clone())),
-            Some(SyntaxElement::Node(children.syntax().clone())),
-            Some(SyntaxElement::Node(closing_element.syntax().clone())),
+            Some(SyntaxElement::Node(opening_element.into_syntax())),
+            Some(SyntaxElement::Node(children.into_syntax())),
+            Some(SyntaxElement::Node(closing_element.into_syntax())),
         ],
     ))
 }
@@ -3592,7 +3592,7 @@ pub fn jsx_expression_attribute_value(
         JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -3623,7 +3623,7 @@ impl JsxExpressionChildBuilder {
             [
                 Some(SyntaxElement::Token(self.l_curly_token)),
                 self.expression
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
             ],
         ))
@@ -3637,9 +3637,9 @@ pub fn jsx_fragment(
     JsxFragment::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_FRAGMENT,
         [
-            Some(SyntaxElement::Node(opening_fragment.syntax().clone())),
-            Some(SyntaxElement::Node(children.syntax().clone())),
-            Some(SyntaxElement::Node(closing_fragment.syntax().clone())),
+            Some(SyntaxElement::Node(opening_fragment.into_syntax())),
+            Some(SyntaxElement::Node(children.into_syntax())),
+            Some(SyntaxElement::Node(closing_fragment.into_syntax())),
         ],
     ))
 }
@@ -3651,9 +3651,9 @@ pub fn jsx_member_name(
     JsxMemberName::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_MEMBER_NAME,
         [
-            Some(SyntaxElement::Node(object.syntax().clone())),
+            Some(SyntaxElement::Node(object.into_syntax())),
             Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Node(member.syntax().clone())),
+            Some(SyntaxElement::Node(member.into_syntax())),
         ],
     ))
 }
@@ -3671,9 +3671,9 @@ pub fn jsx_namespace_name(
     JsxNamespaceName::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_NAMESPACE_NAME,
         [
-            Some(SyntaxElement::Node(namespace.syntax().clone())),
+            Some(SyntaxElement::Node(namespace.into_syntax())),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(name.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
         ],
     ))
 }
@@ -3708,10 +3708,10 @@ impl JsxOpeningElementBuilder {
             JsSyntaxKind::JSX_OPENING_ELEMENT,
             [
                 Some(SyntaxElement::Token(self.l_angle_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.attributes.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.attributes.into_syntax())),
                 Some(SyntaxElement::Token(self.r_angle_token)),
             ],
         ))
@@ -3769,10 +3769,10 @@ impl JsxSelfClosingElementBuilder {
             JsSyntaxKind::JSX_SELF_CLOSING_ELEMENT,
             [
                 Some(SyntaxElement::Token(self.l_angle_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.attributes.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.attributes.into_syntax())),
                 Some(SyntaxElement::Token(self.slash_token)),
                 Some(SyntaxElement::Token(self.r_angle_token)),
             ],
@@ -3790,7 +3790,7 @@ pub fn jsx_spread_attribute(
         [
             Some(SyntaxElement::Token(l_curly_token)),
             Some(SyntaxElement::Token(dotdotdot_token)),
-            Some(SyntaxElement::Node(argument.syntax().clone())),
+            Some(SyntaxElement::Node(argument.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -3806,7 +3806,7 @@ pub fn jsx_spread_child(
         [
             Some(SyntaxElement::Token(l_curly_token)),
             Some(SyntaxElement::Token(dotdotdot_token)),
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -3820,7 +3820,7 @@ pub fn jsx_string(value_token: SyntaxToken) -> JsxString {
 pub fn jsx_tag_expression(tag: JsxAnyTag) -> JsxTagExpression {
     JsxTagExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_TAG_EXPRESSION,
-        [Some(SyntaxElement::Node(tag.syntax().clone()))],
+        [Some(SyntaxElement::Node(tag.into_syntax()))],
     ))
 }
 pub fn jsx_text(value_token: SyntaxToken) -> JsxText {
@@ -3869,7 +3869,7 @@ pub fn ts_array_type(
     TsArrayType::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_ARRAY_TYPE,
         [
-            Some(SyntaxElement::Node(element_type.syntax().clone())),
+            Some(SyntaxElement::Node(element_type.into_syntax())),
             Some(SyntaxElement::Token(l_brack_token)),
             Some(SyntaxElement::Token(r_brack_token)),
         ],
@@ -3883,9 +3883,9 @@ pub fn ts_as_assignment(
     TsAsAssignment::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_AS_ASSIGNMENT,
         [
-            Some(SyntaxElement::Node(assignment.syntax().clone())),
+            Some(SyntaxElement::Node(assignment.into_syntax())),
             Some(SyntaxElement::Token(as_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -3897,9 +3897,9 @@ pub fn ts_as_expression(
     TsAsExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_AS_EXPRESSION,
         [
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(as_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -3908,7 +3908,7 @@ pub fn ts_asserts_condition(is_token: SyntaxToken, ty: TsType) -> TsAssertsCondi
         JsSyntaxKind::TS_ASSERTS_CONDITION,
         [
             Some(SyntaxElement::Token(is_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -3937,9 +3937,9 @@ impl TsAssertsReturnTypeBuilder {
             JsSyntaxKind::TS_ASSERTS_RETURN_TYPE,
             [
                 Some(SyntaxElement::Token(self.asserts_token)),
-                Some(SyntaxElement::Node(self.parameter_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.parameter_name.into_syntax())),
                 self.predicate
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -4022,10 +4022,10 @@ impl TsCallSignatureTypeMemberBuilder {
             JsSyntaxKind::TS_CALL_SIGNATURE_TYPE_MEMBER,
             [
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.separator_token_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4044,13 +4044,13 @@ pub fn ts_conditional_type(
     TsConditionalType::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_CONDITIONAL_TYPE,
         [
-            Some(SyntaxElement::Node(check_type.syntax().clone())),
+            Some(SyntaxElement::Node(check_type.into_syntax())),
             Some(SyntaxElement::Token(extends_token)),
-            Some(SyntaxElement::Node(extends_type.syntax().clone())),
+            Some(SyntaxElement::Node(extends_type.into_syntax())),
             Some(SyntaxElement::Token(question_mark_token)),
-            Some(SyntaxElement::Node(true_type.syntax().clone())),
+            Some(SyntaxElement::Node(true_type.into_syntax())),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(false_type.syntax().clone())),
+            Some(SyntaxElement::Node(false_type.into_syntax())),
         ],
     ))
 }
@@ -4092,10 +4092,10 @@ impl TsConstructSignatureTypeMemberBuilder {
             [
                 Some(SyntaxElement::Token(self.new_token)),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.separator_token_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4129,9 +4129,9 @@ impl TsConstructorSignatureClassMemberBuilder {
         TsConstructorSignatureClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4177,10 +4177,10 @@ impl TsConstructorTypeBuilder {
                 self.abstract_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.new_token)),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 Some(SyntaxElement::Token(self.fat_arrow_token)),
-                Some(SyntaxElement::Node(self.return_type.syntax().clone())),
+                Some(SyntaxElement::Node(self.return_type.into_syntax())),
             ],
         ))
     }
@@ -4235,12 +4235,12 @@ impl TsDeclareFunctionDeclarationBuilder {
             [
                 self.async_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.function_token)),
-                Some(SyntaxElement::Node(self.id.syntax().clone())),
+                Some(SyntaxElement::Node(self.id.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4261,7 +4261,7 @@ pub fn ts_declare_statement(
         JsSyntaxKind::TS_DECLARE_STATEMENT,
         [
             Some(SyntaxElement::Token(declare_token)),
-            Some(SyntaxElement::Node(declaration.syntax().clone())),
+            Some(SyntaxElement::Node(declaration.into_syntax())),
         ],
     ))
 }
@@ -4270,7 +4270,7 @@ pub fn ts_default_type_clause(eq_token: SyntaxToken, ty: TsType) -> TsDefaultTyp
         JsSyntaxKind::TS_DEFAULT_TYPE_CLAUSE,
         [
             Some(SyntaxElement::Token(eq_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -4282,7 +4282,7 @@ pub fn ts_definite_property_annotation(
         JsSyntaxKind::TS_DEFINITE_PROPERTY_ANNOTATION,
         [
             Some(SyntaxElement::Token(excl_token)),
-            Some(SyntaxElement::Node(type_annotation.syntax().clone())),
+            Some(SyntaxElement::Node(type_annotation.into_syntax())),
         ],
     ))
 }
@@ -4294,7 +4294,7 @@ pub fn ts_definite_variable_annotation(
         JsSyntaxKind::TS_DEFINITE_VARIABLE_ANNOTATION,
         [
             Some(SyntaxElement::Token(excl_token)),
-            Some(SyntaxElement::Node(type_annotation.syntax().clone())),
+            Some(SyntaxElement::Node(type_annotation.into_syntax())),
         ],
     ))
 }
@@ -4341,9 +4341,9 @@ impl TsEnumDeclarationBuilder {
             [
                 self.const_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.enum_token)),
-                Some(SyntaxElement::Node(self.id.syntax().clone())),
+                Some(SyntaxElement::Node(self.id.into_syntax())),
                 Some(SyntaxElement::Token(self.l_curly_token)),
-                Some(SyntaxElement::Node(self.members.syntax().clone())),
+                Some(SyntaxElement::Node(self.members.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
             ],
         ))
@@ -4368,9 +4368,9 @@ impl TsEnumMemberBuilder {
         TsEnumMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_ENUM_MEMBER,
             [
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.initializer
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -4404,7 +4404,7 @@ impl TsExportAsNamespaceClauseBuilder {
             [
                 Some(SyntaxElement::Token(self.as_token)),
                 Some(SyntaxElement::Token(self.namespace_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4436,7 +4436,7 @@ impl TsExportAssignmentClauseBuilder {
             JsSyntaxKind::TS_EXPORT_ASSIGNMENT_CLAUSE,
             [
                 Some(SyntaxElement::Token(self.eq_token)),
-                Some(SyntaxElement::Node(self.expression.syntax().clone())),
+                Some(SyntaxElement::Node(self.expression.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4451,7 +4451,7 @@ pub fn ts_export_declare_clause(
         JsSyntaxKind::TS_EXPORT_DECLARE_CLAUSE,
         [
             Some(SyntaxElement::Token(declare_token)),
-            Some(SyntaxElement::Node(declaration.syntax().clone())),
+            Some(SyntaxElement::Node(declaration.into_syntax())),
         ],
     ))
 }
@@ -4460,7 +4460,7 @@ pub fn ts_extends_clause(extends_token: SyntaxToken, types: TsTypeList) -> TsExt
         JsSyntaxKind::TS_EXTENDS_CLAUSE,
         [
             Some(SyntaxElement::Token(extends_token)),
-            Some(SyntaxElement::Node(types.syntax().clone())),
+            Some(SyntaxElement::Node(types.into_syntax())),
         ],
     ))
 }
@@ -4489,9 +4489,9 @@ impl TsExternalModuleDeclarationBuilder {
             JsSyntaxKind::TS_EXTERNAL_MODULE_DECLARATION,
             [
                 Some(SyntaxElement::Token(self.module_token)),
-                Some(SyntaxElement::Node(self.source.syntax().clone())),
+                Some(SyntaxElement::Node(self.source.into_syntax())),
                 self.body
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -4507,7 +4507,7 @@ pub fn ts_external_module_reference(
         [
             Some(SyntaxElement::Token(require_token)),
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(source.syntax().clone())),
+            Some(SyntaxElement::Node(source.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -4540,10 +4540,10 @@ impl TsFunctionTypeBuilder {
             JsSyntaxKind::TS_FUNCTION_TYPE,
             [
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 Some(SyntaxElement::Token(self.fat_arrow_token)),
-                Some(SyntaxElement::Node(self.return_type.syntax().clone())),
+                Some(SyntaxElement::Node(self.return_type.into_syntax())),
             ],
         ))
     }
@@ -4587,13 +4587,13 @@ impl TsGetterSignatureClassMemberBuilder {
         TsGetterSignatureClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_GETTER_SIGNATURE_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
                 Some(SyntaxElement::Token(self.get_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 Some(SyntaxElement::Token(self.l_paren_token)),
                 Some(SyntaxElement::Token(self.r_paren_token)),
                 self.return_type
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4637,11 +4637,11 @@ impl TsGetterSignatureTypeMemberBuilder {
             JsSyntaxKind::TS_GETTER_SIGNATURE_TYPE_MEMBER,
             [
                 Some(SyntaxElement::Token(self.get_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 Some(SyntaxElement::Token(self.l_paren_token)),
                 Some(SyntaxElement::Token(self.r_paren_token)),
                 self.type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.separator_token_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4656,7 +4656,7 @@ pub fn ts_global_declaration(
         JsSyntaxKind::TS_GLOBAL_DECLARATION,
         [
             Some(SyntaxElement::Token(global_token)),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -4674,7 +4674,7 @@ pub fn ts_implements_clause(
         JsSyntaxKind::TS_IMPLEMENTS_CLAUSE,
         [
             Some(SyntaxElement::Token(implements_token)),
-            Some(SyntaxElement::Node(types.syntax().clone())),
+            Some(SyntaxElement::Node(types.into_syntax())),
         ],
     ))
 }
@@ -4716,9 +4716,9 @@ impl TsImportEqualsDeclarationBuilder {
             [
                 Some(SyntaxElement::Token(self.import_token)),
                 self.type_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.id.syntax().clone())),
+                Some(SyntaxElement::Node(self.id.into_syntax())),
                 Some(SyntaxElement::Token(self.eq_token)),
-                Some(SyntaxElement::Node(self.module_reference.syntax().clone())),
+                Some(SyntaxElement::Node(self.module_reference.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4773,9 +4773,9 @@ impl TsImportTypeBuilder {
                 Some(SyntaxElement::Token(self.argument_token)),
                 Some(SyntaxElement::Token(self.r_paren_token)),
                 self.qualifier_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -4785,7 +4785,7 @@ pub fn ts_import_type_qualifier(dot_token: SyntaxToken, right: TsAnyName) -> TsI
         JsSyntaxKind::TS_IMPORT_TYPE_QUALIFIER,
         [
             Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -4822,11 +4822,11 @@ impl TsIndexSignatureClassMemberBuilder {
         TsIndexSignatureClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_INDEX_SIGNATURE_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
                 Some(SyntaxElement::Token(self.l_brack_token)),
-                Some(SyntaxElement::Node(self.parameter.syntax().clone())),
+                Some(SyntaxElement::Node(self.parameter.into_syntax())),
                 Some(SyntaxElement::Token(self.r_brack_token)),
-                Some(SyntaxElement::Node(self.type_annotation.syntax().clone())),
+                Some(SyntaxElement::Node(self.type_annotation.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4840,8 +4840,8 @@ pub fn ts_index_signature_parameter(
     TsIndexSignatureParameter::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER,
         [
-            Some(SyntaxElement::Node(binding.syntax().clone())),
-            Some(SyntaxElement::Node(type_annotation.syntax().clone())),
+            Some(SyntaxElement::Node(binding.into_syntax())),
+            Some(SyntaxElement::Node(type_annotation.into_syntax())),
         ],
     ))
 }
@@ -4883,9 +4883,9 @@ impl TsIndexSignatureTypeMemberBuilder {
             [
                 self.readonly_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.l_brack_token)),
-                Some(SyntaxElement::Node(self.parameter.syntax().clone())),
+                Some(SyntaxElement::Node(self.parameter.into_syntax())),
                 Some(SyntaxElement::Token(self.r_brack_token)),
-                Some(SyntaxElement::Node(self.type_annotation.syntax().clone())),
+                Some(SyntaxElement::Node(self.type_annotation.into_syntax())),
                 self.separator_token_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -4901,9 +4901,9 @@ pub fn ts_indexed_access_type(
     TsIndexedAccessType::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_INDEXED_ACCESS_TYPE,
         [
-            Some(SyntaxElement::Node(object_type.syntax().clone())),
+            Some(SyntaxElement::Node(object_type.into_syntax())),
             Some(SyntaxElement::Token(l_brack_token)),
-            Some(SyntaxElement::Node(index_type.syntax().clone())),
+            Some(SyntaxElement::Node(index_type.into_syntax())),
             Some(SyntaxElement::Token(r_brack_token)),
         ],
     ))
@@ -4913,7 +4913,7 @@ pub fn ts_infer_type(infer_token: SyntaxToken, type_parameter: TsTypeParameterNa
         JsSyntaxKind::TS_INFER_TYPE,
         [
             Some(SyntaxElement::Token(infer_token)),
-            Some(SyntaxElement::Node(type_parameter.syntax().clone())),
+            Some(SyntaxElement::Node(type_parameter.into_syntax())),
         ],
     ))
 }
@@ -4957,13 +4957,13 @@ impl TsInterfaceDeclarationBuilder {
             JsSyntaxKind::TS_INTERFACE_DECLARATION,
             [
                 Some(SyntaxElement::Token(self.interface_token)),
-                Some(SyntaxElement::Node(self.id.syntax().clone())),
+                Some(SyntaxElement::Node(self.id.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.extends_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.l_curly_token)),
-                Some(SyntaxElement::Node(self.members.syntax().clone())),
+                Some(SyntaxElement::Node(self.members.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
             ],
         ))
@@ -4990,7 +4990,7 @@ impl TsIntersectionTypeBuilder {
             [
                 self.leading_separator_token
                     .map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.types.syntax().clone())),
+                Some(SyntaxElement::Node(self.types.into_syntax())),
             ],
         ))
     }
@@ -5066,18 +5066,18 @@ impl TsMappedTypeBuilder {
             [
                 Some(SyntaxElement::Token(self.l_curly_token)),
                 self.readonly_modifier
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.l_brack_token)),
-                Some(SyntaxElement::Node(self.property_name.syntax().clone())),
+                Some(SyntaxElement::Node(self.property_name.into_syntax())),
                 Some(SyntaxElement::Token(self.in_token)),
-                Some(SyntaxElement::Node(self.keys_type.syntax().clone())),
+                Some(SyntaxElement::Node(self.keys_type.into_syntax())),
                 self.as_clause
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.r_brack_token)),
                 self.optional_modifier
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.mapped_type
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.r_curly_token)),
@@ -5090,7 +5090,7 @@ pub fn ts_mapped_type_as_clause(as_token: SyntaxToken, ty: TsType) -> TsMappedTy
         JsSyntaxKind::TS_MAPPED_TYPE_AS_CLAUSE,
         [
             Some(SyntaxElement::Token(as_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -5172,16 +5172,16 @@ impl TsMethodSignatureClassMemberBuilder {
         TsMethodSignatureClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_METHOD_SIGNATURE_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
                 self.async_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.question_mark_token
                     .map(|token| SyntaxElement::Token(token)),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -5233,13 +5233,13 @@ impl TsMethodSignatureTypeMemberBuilder {
         TsMethodSignatureTypeMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_METHOD_SIGNATURE_TYPE_MEMBER,
             [
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.optional_token.map(|token| SyntaxElement::Token(token)),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
-                Some(SyntaxElement::Node(self.parameters.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Node(self.parameters.into_syntax())),
                 self.return_type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.separator_token_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -5255,7 +5255,7 @@ pub fn ts_module_block(
         JsSyntaxKind::TS_MODULE_BLOCK,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(items.syntax().clone())),
+            Some(SyntaxElement::Node(items.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -5269,8 +5269,8 @@ pub fn ts_module_declaration(
         JsSyntaxKind::TS_MODULE_DECLARATION,
         [
             Some(SyntaxElement::Token(module_or_namespace_token)),
-            Some(SyntaxElement::Node(name.syntax().clone())),
-            Some(SyntaxElement::Node(body.syntax().clone())),
+            Some(SyntaxElement::Node(name.into_syntax())),
+            Some(SyntaxElement::Node(body.into_syntax())),
         ],
     ))
 }
@@ -5293,9 +5293,9 @@ impl TsNameWithTypeArgumentsBuilder {
         TsNameWithTypeArguments::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_NAME_WITH_TYPE_ARGUMENTS,
             [
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -5335,11 +5335,11 @@ impl TsNamedTupleTypeElementBuilder {
             [
                 self.dotdotdot_token
                     .map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.question_mark_token
                     .map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.colon_token)),
-                Some(SyntaxElement::Node(self.ty.syntax().clone())),
+                Some(SyntaxElement::Node(self.ty.into_syntax())),
             ],
         ))
     }
@@ -5357,7 +5357,7 @@ pub fn ts_non_null_assertion_assignment(
     TsNonNullAssertionAssignment::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_NON_NULL_ASSERTION_ASSIGNMENT,
         [
-            Some(SyntaxElement::Node(assignment.syntax().clone())),
+            Some(SyntaxElement::Node(assignment.into_syntax())),
             Some(SyntaxElement::Token(excl_token)),
         ],
     ))
@@ -5369,7 +5369,7 @@ pub fn ts_non_null_assertion_expression(
     TsNonNullAssertionExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION,
         [
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
             Some(SyntaxElement::Token(excl_token)),
         ],
     ))
@@ -5426,7 +5426,7 @@ pub fn ts_object_type(
         JsSyntaxKind::TS_OBJECT_TYPE,
         [
             Some(SyntaxElement::Token(l_curly_token)),
-            Some(SyntaxElement::Node(members.syntax().clone())),
+            Some(SyntaxElement::Node(members.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -5454,7 +5454,7 @@ impl TsOptionalPropertyAnnotationBuilder {
             [
                 Some(SyntaxElement::Token(self.question_mark_token)),
                 self.type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -5466,7 +5466,7 @@ pub fn ts_optional_tuple_type_element(
     TsOptionalTupleTypeElement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_OPTIONAL_TUPLE_TYPE_ELEMENT,
         [
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
             Some(SyntaxElement::Token(question_mark_token)),
         ],
     ))
@@ -5486,7 +5486,7 @@ pub fn ts_parenthesized_type(
         JsSyntaxKind::TS_PARENTHESIZED_TYPE,
         [
             Some(SyntaxElement::Token(l_paren_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
             Some(SyntaxElement::Token(r_paren_token)),
         ],
     ))
@@ -5499,9 +5499,9 @@ pub fn ts_predicate_return_type(
     TsPredicateReturnType::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_PREDICATE_RETURN_TYPE,
         [
-            Some(SyntaxElement::Node(parameter_name.syntax().clone())),
+            Some(SyntaxElement::Node(parameter_name.into_syntax())),
             Some(SyntaxElement::Token(is_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -5512,8 +5512,8 @@ pub fn ts_property_parameter(
     TsPropertyParameter::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_PROPERTY_PARAMETER,
         [
-            Some(SyntaxElement::Node(modifiers.syntax().clone())),
-            Some(SyntaxElement::Node(formal_parameter.syntax().clone())),
+            Some(SyntaxElement::Node(modifiers.into_syntax())),
+            Some(SyntaxElement::Node(formal_parameter.into_syntax())),
         ],
     ))
 }
@@ -5550,10 +5550,10 @@ impl TsPropertySignatureClassMemberBuilder {
         TsPropertySignatureClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_PROPERTY_SIGNATURE_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.property_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -5600,10 +5600,10 @@ impl TsPropertySignatureTypeMemberBuilder {
             JsSyntaxKind::TS_PROPERTY_SIGNATURE_TYPE_MEMBER,
             [
                 self.readonly_token.map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.optional_token.map(|token| SyntaxElement::Token(token)),
                 self.type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.separator_token_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -5618,9 +5618,9 @@ pub fn ts_qualified_module_name(
     TsQualifiedModuleName::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_QUALIFIED_MODULE_NAME,
         [
-            Some(SyntaxElement::Node(left.syntax().clone())),
+            Some(SyntaxElement::Node(left.into_syntax())),
             Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -5632,9 +5632,9 @@ pub fn ts_qualified_name(
     TsQualifiedName::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_QUALIFIED_NAME,
         [
-            Some(SyntaxElement::Node(left.syntax().clone())),
+            Some(SyntaxElement::Node(left.into_syntax())),
             Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Node(right.syntax().clone())),
+            Some(SyntaxElement::Node(right.into_syntax())),
         ],
     ))
 }
@@ -5663,9 +5663,9 @@ impl TsReferenceTypeBuilder {
         TsReferenceType::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_REFERENCE_TYPE,
             [
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -5678,7 +5678,7 @@ pub fn ts_rest_tuple_type_element(
         JsSyntaxKind::TS_REST_TUPLE_TYPE_ELEMENT,
         [
             Some(SyntaxElement::Token(dotdotdot_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -5690,7 +5690,7 @@ pub fn ts_return_type_annotation(
         JsSyntaxKind::TS_RETURN_TYPE_ANNOTATION,
         [
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -5730,11 +5730,11 @@ impl TsSetterSignatureClassMemberBuilder {
         TsSetterSignatureClassMember::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_SETTER_SIGNATURE_CLASS_MEMBER,
             [
-                Some(SyntaxElement::Node(self.modifiers.syntax().clone())),
+                Some(SyntaxElement::Node(self.modifiers.into_syntax())),
                 Some(SyntaxElement::Token(self.set_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 Some(SyntaxElement::Token(self.l_paren_token)),
-                Some(SyntaxElement::Node(self.parameter.syntax().clone())),
+                Some(SyntaxElement::Node(self.parameter.into_syntax())),
                 Some(SyntaxElement::Token(self.r_paren_token)),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
@@ -5776,9 +5776,9 @@ impl TsSetterSignatureTypeMemberBuilder {
             JsSyntaxKind::TS_SETTER_SIGNATURE_TYPE_MEMBER,
             [
                 Some(SyntaxElement::Token(self.set_token)),
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 Some(SyntaxElement::Token(self.l_paren_token)),
-                Some(SyntaxElement::Node(self.parameter.syntax().clone())),
+                Some(SyntaxElement::Node(self.parameter.into_syntax())),
                 Some(SyntaxElement::Token(self.r_paren_token)),
                 self.separator_token_token
                     .map(|token| SyntaxElement::Token(token)),
@@ -5819,7 +5819,7 @@ pub fn ts_template_element(
         JsSyntaxKind::TS_TEMPLATE_ELEMENT,
         [
             Some(SyntaxElement::Token(dollar_curly_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
@@ -5833,7 +5833,7 @@ pub fn ts_template_literal_type(
         JsSyntaxKind::TS_TEMPLATE_LITERAL_TYPE,
         [
             Some(SyntaxElement::Token(l_tick_token)),
-            Some(SyntaxElement::Node(elements.syntax().clone())),
+            Some(SyntaxElement::Node(elements.into_syntax())),
             Some(SyntaxElement::Token(r_tick_token)),
         ],
     ))
@@ -5859,7 +5859,7 @@ impl TsThisParameterBuilder {
             [
                 Some(SyntaxElement::Token(self.this_token)),
                 self.type_annotation
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -5879,7 +5879,7 @@ pub fn ts_tuple_type(
         JsSyntaxKind::TS_TUPLE_TYPE,
         [
             Some(SyntaxElement::Token(l_brack_token)),
-            Some(SyntaxElement::Node(elements.syntax().clone())),
+            Some(SyntaxElement::Node(elements.into_syntax())),
             Some(SyntaxElement::Token(r_brack_token)),
         ],
     ))
@@ -5921,13 +5921,11 @@ impl TsTypeAliasDeclarationBuilder {
             JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION,
             [
                 Some(SyntaxElement::Token(self.type_token)),
-                Some(SyntaxElement::Node(
-                    self.binding_identifier.syntax().clone(),
-                )),
+                Some(SyntaxElement::Node(self.binding_identifier.into_syntax())),
                 self.type_parameters
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.eq_token)),
-                Some(SyntaxElement::Node(self.ty.syntax().clone())),
+                Some(SyntaxElement::Node(self.ty.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
             ],
@@ -5939,7 +5937,7 @@ pub fn ts_type_annotation(colon_token: SyntaxToken, ty: TsType) -> TsTypeAnnotat
         JsSyntaxKind::TS_TYPE_ANNOTATION,
         [
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -5952,7 +5950,7 @@ pub fn ts_type_arguments(
         JsSyntaxKind::TS_TYPE_ARGUMENTS,
         [
             Some(SyntaxElement::Token(l_angle_token)),
-            Some(SyntaxElement::Node(ts_type_argument_list.syntax().clone())),
+            Some(SyntaxElement::Node(ts_type_argument_list.into_syntax())),
             Some(SyntaxElement::Token(r_angle_token)),
         ],
     ))
@@ -5967,9 +5965,9 @@ pub fn ts_type_assertion_assignment(
         JsSyntaxKind::TS_TYPE_ASSERTION_ASSIGNMENT,
         [
             Some(SyntaxElement::Token(l_angle_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
             Some(SyntaxElement::Token(r_angle_token)),
-            Some(SyntaxElement::Node(assignment.syntax().clone())),
+            Some(SyntaxElement::Node(assignment.into_syntax())),
         ],
     ))
 }
@@ -5983,9 +5981,9 @@ pub fn ts_type_assertion_expression(
         JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION,
         [
             Some(SyntaxElement::Token(l_angle_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
             Some(SyntaxElement::Token(r_angle_token)),
-            Some(SyntaxElement::Node(expression.syntax().clone())),
+            Some(SyntaxElement::Node(expression.into_syntax())),
         ],
     ))
 }
@@ -5994,7 +5992,7 @@ pub fn ts_type_constraint_clause(extends_token: SyntaxToken, ty: TsType) -> TsTy
         JsSyntaxKind::TS_TYPE_CONSTRAINT_CLAUSE,
         [
             Some(SyntaxElement::Token(extends_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -6003,7 +6001,7 @@ pub fn ts_type_operator_type(operator_token_token: SyntaxToken, ty: TsType) -> T
         JsSyntaxKind::TS_TYPE_OPERATOR_TYPE,
         [
             Some(SyntaxElement::Token(operator_token_token)),
-            Some(SyntaxElement::Node(ty.syntax().clone())),
+            Some(SyntaxElement::Node(ty.into_syntax())),
         ],
     ))
 }
@@ -6032,11 +6030,11 @@ impl TsTypeParameterBuilder {
         TsTypeParameter::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_TYPE_PARAMETER,
             [
-                Some(SyntaxElement::Node(self.name.syntax().clone())),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.constraint
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.default
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
             ],
         ))
     }
@@ -6056,7 +6054,7 @@ pub fn ts_type_parameters(
         JsSyntaxKind::TS_TYPE_PARAMETERS,
         [
             Some(SyntaxElement::Token(l_angle_token)),
-            Some(SyntaxElement::Node(items.syntax().clone())),
+            Some(SyntaxElement::Node(items.into_syntax())),
             Some(SyntaxElement::Token(r_angle_token)),
         ],
     ))
@@ -6066,7 +6064,7 @@ pub fn ts_typeof_type(typeof_token: SyntaxToken, expression_name: TsAnyName) -> 
         JsSyntaxKind::TS_TYPEOF_TYPE,
         [
             Some(SyntaxElement::Token(typeof_token)),
-            Some(SyntaxElement::Node(expression_name.syntax().clone())),
+            Some(SyntaxElement::Node(expression_name.into_syntax())),
         ],
     ))
 }
@@ -6097,7 +6095,7 @@ impl TsUnionTypeBuilder {
             [
                 self.leading_separator_token
                     .map(|token| SyntaxElement::Token(token)),
-                Some(SyntaxElement::Node(self.types.syntax().clone())),
+                Some(SyntaxElement::Node(self.types.into_syntax())),
             ],
         ))
     }

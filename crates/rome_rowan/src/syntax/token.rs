@@ -3,10 +3,11 @@ use crate::syntax::SyntaxTrivia;
 use crate::syntax_token_text::SyntaxTokenText;
 use crate::{
     cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode, TriviaPiece,
+    TriviaPieceKind,
 };
 use std::fmt;
 use std::marker::PhantomData;
-use text_size::TextRange;
+use text_size::{TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxToken<L: Language> {
@@ -151,10 +152,71 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.prev_token().map(SyntaxToken::from)
     }
 
+    /// Return a new version of this token detached from its parent node
     #[must_use]
     pub fn detach(self) -> Self {
         Self {
             raw: self.raw.detach(),
+            _p: PhantomData,
+        }
+    }
+
+    /// Return a new version of this token with its leading trivia replaced with `trivia`
+    #[must_use]
+    pub fn with_leading_trivia<'a, I>(self, trivia: I) -> Self
+    where
+        I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
+    {
+        let mut text = String::new();
+        for (_, piece) in trivia.clone() {
+            text.push_str(piece);
+        }
+
+        text.push_str(self.text_trimmed());
+
+        for piece in self.trailing_trivia().pieces() {
+            text.push_str(piece.text());
+        }
+
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                self.kind().to_raw(),
+                &text,
+                GreenTrivia::new(
+                    trivia.map(|(kind, text)| TriviaPiece::new(kind, TextSize::of(text))),
+                ),
+                self.green_token().trailing_trivia().clone(),
+            )),
+            _p: PhantomData,
+        }
+    }
+
+    /// Return a new version of this token with its trailing trivia replaced with `trivia`
+    #[must_use]
+    pub fn with_trailing_trivia<'a, I>(self, trivia: I) -> Self
+    where
+        I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
+    {
+        let mut text = String::new();
+        for piece in self.leading_trivia().pieces() {
+            text.push_str(piece.text());
+        }
+
+        text.push_str(self.text_trimmed());
+
+        for (_, piece) in trivia.clone() {
+            text.push_str(piece);
+        }
+
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                self.kind().to_raw(),
+                &text,
+                self.green_token().leading_trivia().clone(),
+                GreenTrivia::new(
+                    trivia.map(|(kind, text)| TriviaPiece::new(kind, TextSize::of(text))),
+                ),
+            )),
             _p: PhantomData,
         }
     }

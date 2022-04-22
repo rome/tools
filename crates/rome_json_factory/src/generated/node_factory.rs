@@ -30,7 +30,7 @@ impl JsonArrayBuilder {
             [
                 Some(SyntaxElement::Token(self.l_brack_token)),
                 self.elements
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.r_brack_token)),
             ],
         ))
@@ -49,9 +49,9 @@ pub fn json_member(key: JsonString, colon_token: SyntaxToken, value: JsonValue) 
     JsonMember::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_MEMBER,
         [
-            Some(SyntaxElement::Node(key.syntax().clone())),
+            Some(SyntaxElement::Node(key.into_syntax())),
             Some(SyntaxElement::Token(colon_token)),
-            Some(SyntaxElement::Node(value.syntax().clone())),
+            Some(SyntaxElement::Node(value.into_syntax())),
         ],
     ))
 }
@@ -90,7 +90,7 @@ impl JsonObjectBuilder {
             [
                 Some(SyntaxElement::Token(self.l_curly_token)),
                 self.json_member_list
-                    .map(|token| SyntaxElement::Node(token.syntax().clone())),
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
                 Some(SyntaxElement::Token(self.r_curly_token)),
             ],
         ))
@@ -99,7 +99,7 @@ impl JsonObjectBuilder {
 pub fn json_root(json_value: JsonValue) -> JsonRoot {
     JsonRoot::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_ROOT,
-        [Some(SyntaxElement::Node(json_value.syntax().clone()))],
+        [Some(SyntaxElement::Node(json_value.into_syntax()))],
     ))
 }
 pub fn json_string(json_string_literal_token: SyntaxToken) -> JsonString {

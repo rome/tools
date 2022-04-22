@@ -12,8 +12,11 @@ use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use text_size::TextRange;
 
+mod mutation;
+
 use crate::syntax::{SyntaxSlot, SyntaxSlots};
 use crate::{Language, SyntaxList, SyntaxNode, SyntaxToken};
+pub use mutation::AstNodeExt;
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
@@ -36,6 +39,9 @@ pub trait AstNode {
 
     /// Returns the underlying syntax node.
     fn syntax(&self) -> &SyntaxNode<Self::Language>;
+
+    /// Returns the underlying syntax node.
+    fn into_syntax(self) -> SyntaxNode<Self::Language>;
 
     /// Cast this node to this AST node
     ///
