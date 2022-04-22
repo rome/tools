@@ -1,8 +1,7 @@
 use crate::format_traits::FormatOptional;
+use rome_formatter::FormatResult;
 
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
-};
+use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
 
 use rome_js_syntax::JsImportNamespaceClause;
 use rome_js_syntax::JsImportNamespaceClauseFields;

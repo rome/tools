@@ -1,6 +1,5 @@
-use crate::{
-    format_elements, space_token, token, Format, FormatElement, FormatNode, FormatResult, Formatter,
-};
+use crate::{format_elements, space_token, token, Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsLabeledStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsLabeledStatement};

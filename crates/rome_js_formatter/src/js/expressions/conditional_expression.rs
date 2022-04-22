@@ -1,5 +1,6 @@
 use crate::utils::{format_conditional, Conditional};
-use crate::{FormatElement, FormatNode, FormatResult, Formatter};
+use crate::{FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 use rome_js_syntax::JsConditionalExpression;
 
 impl FormatNode for JsConditionalExpression {

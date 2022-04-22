@@ -1,5 +1,6 @@
 use crate::utils::sort_modifiers_by_precedence;
-use crate::{join_elements, space_token, Format, FormatElement, FormatResult, Formatter};
+use crate::{join_elements, space_token, Format, FormatElement, Formatter};
+use rome_formatter::FormatResult;
 use rome_js_syntax::TsPropertySignatureModifierList;
 
 impl Format for TsPropertySignatureModifierList {

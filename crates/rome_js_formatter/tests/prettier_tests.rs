@@ -73,7 +73,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                 ),
             )
         }
-        _ => rome_js_formatter::format(options, &syntax),
+        _ => rome_js_formatter::format_node(options, &syntax).map(|formatted| formatted.print()),
     };
 
     let formatted = result.expect("formatting failed");

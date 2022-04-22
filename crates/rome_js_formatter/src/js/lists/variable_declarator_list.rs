@@ -1,8 +1,8 @@
 use crate::{
     concat_elements, empty_element, format_elements, format_traits::FormatOptional, group_elements,
-    indent, join_elements, soft_line_break_or_space, token, Format, FormatElement, FormatResult,
-    Formatter,
+    indent, join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter,
 };
+use rome_formatter::FormatResult;
 use rome_js_syntax::JsVariableDeclaratorList;
 use rome_rowan::AstSeparatedList;
 

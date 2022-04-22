@@ -9,24 +9,20 @@ pub mod prelude;
 mod ts;
 pub mod utils;
 
-use std::error::Error;
-use std::fmt::{self, Display};
-
 use crate::utils::has_formatter_suppressions;
 pub use formatter::Formatter;
-pub use rome_formatter::intersperse::{Intersperse, IntersperseFn};
-pub use rome_formatter::printer::{Printer, PrinterOptions};
 pub use rome_formatter::{
     block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
     format_element, format_elements, group_elements, hard_group_elements, hard_line_break,
     if_group_breaks, if_group_fits_on_single_line, indent, join_elements, join_elements_hard_line,
     join_elements_soft_line, join_elements_with, line_suffix, soft_block_indent, soft_line_break,
     soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
-    FormatOptions, Formatted, IndentStyle, QuoteStyle, Token, Verbatim, LINE_TERMINATORS,
+    FormatOptions, IndentStyle, Printed, QuoteStyle, Token, Verbatim, LINE_TERMINATORS,
 };
+use rome_formatter::{FormatResult, Formatted};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
+use rome_rowan::TextRange;
 use rome_rowan::{AstNode, TextSize};
-use rome_rowan::{SyntaxError, TextRange};
 use rome_rowan::{SyntaxResult, TokenAtOffset};
 
 /// Formatting trait for types that can create a formatted representation. The `rome_formatter` equivalent
@@ -36,8 +32,8 @@ use rome_rowan::{SyntaxResult, TokenAtOffset};
 /// Implementing `Format` for a custom struct
 ///
 /// ```
-/// use rome_formatter::{format_elements, FormatElement, FormatOptions, hard_line_break, Token};
-/// use rome_js_formatter::{Format, format, FormatResult, Formatter};
+/// use rome_formatter::{format_elements, FormatElement, FormatOptions, hard_line_break, Token, FormatResult};
+/// use rome_js_formatter::{Format, format, Formatter};
 /// use rome_rowan::TextSize;
 ///
 /// struct Paragraph(String);
@@ -52,6 +48,9 @@ use rome_rowan::{SyntaxResult, TokenAtOffset};
 /// }
 ///
 /// let paragraph = Paragraph(String::from("test"));
+/// let printed = format(FormatOptions::default(), &paragraph).unwrap().print();
+///
+/// assert_eq!("test\n", printed.as_code())
 /// ```
 pub trait Format {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
@@ -138,66 +137,40 @@ impl Format for JsSyntaxToken {
     }
 }
 
-/// Public return type of the formatter
-pub type FormatResult<F> = Result<F, FormatError>;
-
-#[derive(Debug, PartialEq)]
-/// Series of errors encountered during formatting
-pub enum FormatError {
-    /// Node is missing and it should be required for a correct formatting
-    MissingRequiredChild,
-
-    /// In case our formatter doesn't know how to format a certain language
-    UnsupportedLanguage,
-
-    /// When the ability to format the current file has been turned off on purpose
-    CapabilityDisabled,
-}
-
-impl Display for FormatError {
-    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            FormatError::MissingRequiredChild => fmt.write_str("missing required child"),
-            FormatError::UnsupportedLanguage => fmt.write_str("language is not supported"),
-            FormatError::CapabilityDisabled => fmt.write_str("formatting capability is disabled"),
-        }
-    }
-}
-
-impl Error for FormatError {}
-
-impl From<SyntaxError> for FormatError {
-    fn from(error: SyntaxError) -> Self {
-        FormatError::from(&error)
-    }
-}
-
-impl From<&SyntaxError> for FormatError {
-    fn from(syntax_error: &SyntaxError) -> Self {
-        match syntax_error {
-            SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
-        }
-    }
+/// Formats any value that implements [Format].
+///
+/// Please note that [format_node] is preferred to format a [JsSyntaxNode]
+pub fn format(options: FormatOptions, root: &dyn Format) -> FormatResult<Formatted> {
+    tracing::trace_span!("format").in_scope(move || {
+        let formatter = Formatter::new(options);
+        let element = root.format(&formatter)?;
+        Ok(Formatted::new(element, options))
+    })
 }
 
 /// Formats a JavaScript (and its super languages) file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format(options: FormatOptions, syntax: &JsSyntaxNode) -> FormatResult<Formatted> {
-    tracing::trace_span!("format").in_scope(move || {
-        let element = Formatter::new(options).format_root(syntax)?;
-        Ok(Printer::new(options).print(&element))
-    })
-}
+pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<Formatted> {
+    tracing::trace_span!("format_node").in_scope(move || {
+        let formatter = Formatter::new(options);
+        let element = root.format(&formatter)?;
 
-/// Outputs formatter IR for a JavaScript (and its super languages) file
-///
-/// It returns a [FormatElement] result. Mostly for debugging purposes.
-pub fn to_format_element(
-    options: FormatOptions,
-    syntax: &JsSyntaxNode,
-) -> FormatResult<FormatElement> {
-    Formatter::new(options).format_root(syntax)
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                let printed_tokens = formatter.printed_tokens.into_inner();
+                for token in root.descendants_tokens() {
+                    assert!(
+                        printed_tokens.contains(&token),
+                        "token was not seen by the formatter: {:?}",
+                        token
+                    );
+                }
+            }
+        }
+
+        Ok(Formatted::new(element, options))
+    })
 }
 
 /// Formats a range within a file, supported by Rome
@@ -215,7 +188,7 @@ pub fn format_range(
     options: FormatOptions,
     root: &JsSyntaxNode,
     range: TextRange,
-) -> FormatResult<Formatted> {
+) -> FormatResult<Printed> {
     // Find the tokens corresponding to the start and end of the range
     let start_token = root.token_at_offset(range.start());
     let end_token = root.token_at_offset(range.end());
@@ -233,7 +206,7 @@ pub fn format_range(
         TokenAtOffset::None => match root.first_token() {
             Some(token) => token,
             // root node is empty
-            None => return Ok(Formatted::new_empty()),
+            None => return Ok(Printed::new_empty()),
         },
     };
     let end_token = match end_token {
@@ -244,7 +217,7 @@ pub fn format_range(
         TokenAtOffset::None => match root.last_token() {
             Some(token) => token,
             // root node is empty
-            None => return Ok(Formatted::new_empty()),
+            None => return Ok(Printed::new_empty()),
         },
     };
 
@@ -269,7 +242,7 @@ pub fn format_range(
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let formatted = format_node(options, common_root)?;
+    let formatted = format_sub_tree(options, common_root)?;
 
     // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest
@@ -328,7 +301,7 @@ pub fn format_range(
     let sourcemap = Vec::from(formatted.sourcemap());
     let verbatim_ranges = Vec::from(formatted.verbatim_ranges());
     let code = &formatted.into_code()[output_range];
-    Ok(Formatted::new(
+    Ok(Printed::new(
         code.into(),
         Some(input_range),
         sourcemap,
@@ -336,7 +309,7 @@ pub fn format_range(
     ))
 }
 
-/// Formats a single node within a file, supported by Rome
+/// Formats a single node within a file, supported by Rome.
 ///
 /// This runs a simple heuristic to determine the initial indentation
 /// level of the node based on the provided [FormatOptions], which
@@ -346,14 +319,14 @@ pub fn format_range(
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<Formatted> {
-    // Determine the initial indentation level for the printer by inspecting the trivias
+pub fn format_sub_tree(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<Printed> {
+    // Determine the initial indentation level for the printer by inspecting the trivia pieces
     // of each token from the first token of the common root towards the start of the file
     let mut tokens = std::iter::successors(root.first_token(), |token| token.prev_token());
 
     // From the iterator of tokens, build an iterator of trivia pieces (once again the iterator is
     // reversed, starting from the last trailing trivia towards the first leading trivia).
-    // The first token is handled specially as we only wan to consider its leading trivias
+    // The first token is handled specially as we only wan to consider its leading trivia pieces
     let first_token = tokens.next();
     let first_token_trivias = first_token
         .into_iter()
@@ -395,12 +368,12 @@ pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<
         None => 0,
     };
 
-    let element = Formatter::new(options).format_root(root)?;
-    let formatted = Printer::new(options).print_with_indent(&element, initial_indent);
-    let sourcemap = Vec::from(formatted.sourcemap());
-    let verbatim_ranges = Vec::from(formatted.verbatim_ranges());
-    Ok(Formatted::new(
-        formatted.into_code(),
+    let formatted = format_node(options, root)?;
+    let printed = formatted.print_with_indent(initial_indent);
+    let sourcemap = Vec::from(printed.sourcemap());
+    let verbatim_ranges = Vec::from(printed.verbatim_ranges());
+    Ok(Printed::new(
+        printed.into_code(),
         Some(root.text_range()),
         sourcemap,
         verbatim_ranges,
@@ -505,7 +478,7 @@ mod format;
 #[cfg(test)]
 mod test {
     use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::format;
+    use crate::format_node;
     use crate::FormatOptions;
     use rome_js_parser::{parse, SourceType};
 
@@ -517,7 +490,9 @@ a + b * c > 65 + 5;
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax.clone());
-        let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
+        let result = format_node(FormatOptions::default(), &tree.syntax())
+            .unwrap()
+            .print();
         check_reformat(CheckReformatParams {
             root: &tree.syntax(),
             text: result.as_code(),

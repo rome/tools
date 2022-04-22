@@ -1,4 +1,4 @@
-use crate::FormatResult;
+use rome_formatter::FormatResult;
 
 use crate::{
     format_elements, hard_line_break, indent, space_token, Format, FormatElement, FormatNode,

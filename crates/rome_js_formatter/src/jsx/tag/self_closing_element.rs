@@ -2,9 +2,9 @@ use crate::format_traits::FormatOptional;
 use crate::group_elements;
 use crate::{
     format_elements, soft_block_indent, soft_line_break_or_space, space_token, Format,
-    FormatElement, FormatNode, FormatResult, Formatter,
+    FormatElement, FormatNode, Formatter,
 };
-use rome_formatter::join_elements;
+use rome_formatter::{join_elements, FormatResult};
 use rome_js_syntax::JsxSelfClosingElement;
 
 impl FormatNode for JsxSelfClosingElement {

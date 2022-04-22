@@ -1,6 +1,5 @@
-use crate::{
-    empty_element, format_elements, hard_line_break, Format, FormatElement, FormatResult, Formatter,
-};
+use crate::{empty_element, format_elements, hard_line_break, Format, FormatElement, Formatter};
+use rome_formatter::FormatResult;
 use rome_js_syntax::JsDirectiveList;
 use rome_rowan::AstNodeList;
 

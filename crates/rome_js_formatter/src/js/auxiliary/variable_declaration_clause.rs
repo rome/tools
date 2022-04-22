@@ -1,5 +1,6 @@
 use crate::utils::format_with_semicolon;
-use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsVariableDeclarationClause;
 use rome_js_syntax::JsVariableDeclarationClauseFields;

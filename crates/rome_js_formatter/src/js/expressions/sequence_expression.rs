@@ -1,8 +1,6 @@
-use rome_formatter::concat_elements;
+use rome_formatter::{concat_elements, FormatResult};
 
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
-};
+use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
 
 use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields};
 use rome_rowan::AstNode;

@@ -1,9 +1,9 @@
 use std::borrow::Cow;
 
 use crate::utils::string_utils::ToAsciiLowercaseCow;
-use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
 
-use rome_formatter::Token;
+use rome_formatter::{FormatResult, Token};
 use rome_js_syntax::JsBigIntLiteralExpression;
 use rome_js_syntax::JsBigIntLiteralExpressionFields;
 

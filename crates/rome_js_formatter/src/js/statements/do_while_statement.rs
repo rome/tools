@@ -1,8 +1,9 @@
 use crate::format_traits::FormatOptional;
+use rome_formatter::FormatResult;
 
 use crate::{
     format_elements, hard_group_elements, space_token, token, Format, FormatElement, FormatNode,
-    FormatResult, Formatter,
+    Formatter,
 };
 
 use rome_js_syntax::JsDoWhileStatementFields;

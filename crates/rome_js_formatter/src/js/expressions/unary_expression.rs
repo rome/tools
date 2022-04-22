@@ -1,8 +1,9 @@
 use crate::utils::is_simple_expression;
 use crate::{
     format_elements, group_elements, soft_block_indent, space_token, token, Format, FormatElement,
-    FormatNode, FormatResult, Formatter,
+    FormatNode, Formatter,
 };
+use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsPreUpdateOperator;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};

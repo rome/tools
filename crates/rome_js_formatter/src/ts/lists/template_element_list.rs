@@ -1,4 +1,5 @@
-use crate::{concat_elements, Format, FormatElement, FormatResult, Formatter};
+use crate::{concat_elements, Format, FormatElement, Formatter};
+use rome_formatter::FormatResult;
 use rome_js_syntax::TsTemplateElementList;
 use rome_rowan::AstNodeList;
 

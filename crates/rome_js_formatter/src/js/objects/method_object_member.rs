@@ -1,9 +1,8 @@
 use crate::format_traits::FormatOptional;
 use crate::hard_group_elements;
+use rome_formatter::FormatResult;
 
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, FormatResult, Formatter,
-};
+use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
 
 use rome_js_syntax::JsMethodObjectMember;
 use rome_js_syntax::JsMethodObjectMemberFields;

@@ -1,11 +1,9 @@
+use rome_formatter::FormatResult;
 use std::convert::Infallible;
 
 use crate::formatter::TrailingSeparator;
 use crate::utils::array::format_array_node;
-use crate::{
-    fill_elements, token, utils::has_formatter_trivia, Format, FormatElement, FormatResult,
-    Formatter,
-};
+use crate::{fill_elements, token, utils::has_formatter_trivia, Format, FormatElement, Formatter};
 
 use rome_js_syntax::{JsAnyExpression, JsArrayElementList};
 use rome_rowan::{AstNode, AstSeparatedList};

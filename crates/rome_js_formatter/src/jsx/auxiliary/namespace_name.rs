@@ -1,5 +1,5 @@
-use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter};
-use rome_formatter::format_elements;
+use crate::{Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::{format_elements, FormatResult};
 use rome_js_syntax::{JsxNamespaceName, JsxNamespaceNameFields};
 
 impl FormatNode for JsxNamespaceName {

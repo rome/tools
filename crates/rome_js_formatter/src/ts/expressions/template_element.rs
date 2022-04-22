@@ -1,5 +1,6 @@
 use crate::utils::{format_template_literal, TemplateElement};
-use crate::{FormatElement, FormatNode, FormatResult, Formatter};
+use crate::{FormatElement, FormatNode, Formatter};
+use rome_formatter::FormatResult;
 use rome_js_syntax::TsTemplateElement;
 
 impl FormatNode for TsTemplateElement {

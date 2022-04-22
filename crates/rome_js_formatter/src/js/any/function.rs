@@ -3,8 +3,9 @@ use crate::utils::is_simple_expression;
 use crate::{
     concat_elements, empty_element, format_elements, group_elements, hard_group_elements,
     if_group_breaks, soft_block_indent, soft_line_indent_or_space, space_token, token, Format,
-    FormatElement, FormatNode, FormatResult, Formatter,
+    FormatElement, FormatNode, Formatter,
 };
+use rome_formatter::FormatResult;
 
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,

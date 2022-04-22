@@ -302,7 +302,8 @@ pub fn generate_formatter() {
         // format_verbatim for all the other nodes
         let tokens = match kind {
             NodeKind::List { separated: false } => quote! {
-                use crate::{FormatElement, FormatResult, Formatter, Format};
+                use rome_formatter::{FormatResult, FormatElement};
+                use crate::{Formatter, Format};
                 use rome_js_syntax::#id;
 
                 impl Format for #id {
@@ -313,8 +314,9 @@ pub fn generate_formatter() {
             },
             NodeKind::Node | NodeKind::List { separated: true } => {
                 quote! {
-                    use crate::{FormatElement, FormatResult, Formatter, FormatNode};
+                    use crate::{Formatter, FormatNode};
                     use rome_rowan::AstNode;
+                    use rome_formatter::{FormatResult, FormatElement};
                     use rome_js_syntax::{#id};
 
                     impl FormatNode for #id {
@@ -326,8 +328,9 @@ pub fn generate_formatter() {
             }
             NodeKind::Unknown => {
                 quote! {
-                    use crate::{FormatElement, FormatResult, Formatter, FormatNode};
+                    use crate::{Formatter, FormatNode};
                     use rome_rowan::AstNode;
+                    use rome_formatter::{FormatResult, FormatElement};
                     use rome_js_syntax::{#id};
 
                     impl FormatNode for #id {
@@ -348,7 +351,8 @@ pub fn generate_formatter() {
                     .collect();
 
                 quote! {
-                    use crate::{FormatElement, FormatResult, Formatter, Format};
+                    use crate::{Formatter, Format};
+                    use rome_formatter::{FormatResult, FormatElement};
                     use rome_js_syntax::#id;
 
                     impl Format for #id {
@@ -410,7 +414,8 @@ impl FormatImpls {
         let impls = self.impls;
 
         let tokens = quote! {
-            use crate::{FormatElement, FormatResult, Formatter, Format, FormatNode};
+            use crate::{FormatElement, Formatter, Format, FormatNode};
+            use rome_formatter::FormatResult;
 
             #( #impls )*
         };

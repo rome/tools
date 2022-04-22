@@ -1,7 +1,8 @@
 use crate::{
     format_elements, group_elements, if_group_breaks, indent, soft_line_break, space_token, token,
-    Format, FormatElement, FormatNode, FormatResult, Formatter, Token,
+    Format, FormatElement, FormatNode, Formatter, Token,
 };
+use rome_formatter::FormatResult;
 use rome_js_syntax::TsUnionType;
 use rome_js_syntax::TsUnionTypeFields;
 

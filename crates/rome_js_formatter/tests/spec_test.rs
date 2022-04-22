@@ -1,7 +1,7 @@
 use rome_core::App;
 use rome_formatter::LineWidth;
 use rome_fs::RomePath;
-use rome_js_formatter::{format, FormatOptions, Formatted, IndentStyle, QuoteStyle};
+use rome_js_formatter::{format_node, FormatOptions, IndentStyle, Printed, QuoteStyle};
 use rome_js_parser::{parse, ModuleKind, SourceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
@@ -85,7 +85,7 @@ struct SnapshotContent {
 }
 
 impl SnapshotContent {
-    fn add_output(&mut self, formatted: Formatted, options: FormatOptions) {
+    fn add_output(&mut self, formatted: Printed, options: FormatOptions) {
         let code = formatted.as_code();
         let mut output: String = code.to_string();
         if !formatted.verbatim_ranges().is_empty() {
@@ -189,23 +189,22 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let has_errors = parsed.has_errors();
         let root = parsed.syntax();
 
-        let formatted_result = format(FormatOptions::default(), &root);
-
-        let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
         // we ignore the error for now
-        let result = formatted_result.unwrap();
+        let formatted = format_node(FormatOptions::default(), &root).unwrap();
+        let printed = formatted.print();
+        let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
         if !has_errors {
             check_reformat::check_reformat(check_reformat::CheckReformatParams {
                 root: &root,
-                text: result.as_code(),
+                text: printed.as_code(),
                 source_type: source_type.clone(),
                 file_name,
                 format_options: FormatOptions::default(),
             });
         }
 
-        snapshot_content.add_output(result, FormatOptions::default());
+        snapshot_content.add_output(printed, FormatOptions::default());
 
         let test_directory = PathBuf::from(test_directory);
         let options_path = test_directory.join("options.json");
@@ -218,19 +217,20 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
 
                 for test_case in options.cases {
                     let format_options: FormatOptions = test_case.into();
-                    let formatted_result = format(format_options, &root).unwrap();
+                    let formatted = format_node(format_options, &root).unwrap();
+                    let printed = formatted.print();
 
                     if !has_errors {
                         check_reformat::check_reformat(check_reformat::CheckReformatParams {
                             root: &root,
-                            text: formatted_result.as_code(),
+                            text: printed.as_code(),
                             source_type: source_type.clone(),
                             file_name,
                             format_options,
                         });
                     }
 
-                    snapshot_content.add_output(formatted_result, format_options);
+                    snapshot_content.add_output(printed, format_options);
                 }
             }
         }

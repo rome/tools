@@ -1,4 +1,4 @@
-use crate::{format_element, to_format_element, FormatOptions};
+use crate::{format_node, FormatOptions};
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
 use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::JsSyntaxNode;
@@ -44,22 +44,18 @@ pub fn check_reformat(params: CheckReformatParams) {
         )
     }
 
-    let output_format_element = to_format_element(format_options, &re_parse.syntax()).unwrap();
-    let output_formatted = format_element(&output_format_element, format_options);
+    let formatted = format_node(format_options, &re_parse.syntax()).unwrap();
+    let printed = formatted.print();
 
-    if text != output_formatted.as_code() {
-        let input_format_element = to_format_element(format_options, root).unwrap();
+    if text != printed.as_code() {
+        let input_formatted = format_node(format_options, root).unwrap();
 
         // Print a diff of the Formatter IR emitted for the input and the output
-        let diff = similar_asserts::Diff::from_debug(
-            &input_format_element,
-            &output_format_element,
-            "input",
-            "output",
-        );
+        let diff =
+            similar_asserts::Diff::from_debug(&input_formatted, &formatted, "input", "output");
 
         println!("{diff}");
 
-        similar_asserts::assert_str_eq!(text, output_formatted.as_code());
+        similar_asserts::assert_str_eq!(text, printed.as_code());
     }
 }

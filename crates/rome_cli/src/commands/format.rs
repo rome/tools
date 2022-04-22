@@ -511,8 +511,9 @@ fn format_file(params: FormatFileParams) -> FormatResult {
             });
         }
 
-        let result = rome_js_formatter::format(params.options, &root.syntax())
-            .with_file_id_and_code(params.file_id, "Format")?;
+        let result = rome_js_formatter::format_node(params.options, &root.syntax())
+            .with_file_id_and_code(params.file_id, "Format")?
+            .print();
 
         let output = result.as_code().as_bytes();
 
