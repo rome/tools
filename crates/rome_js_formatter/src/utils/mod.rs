@@ -19,7 +19,7 @@ pub(crate) use member_chain::format_call_expression;
 use rome_formatter::{normalize_newlines, FormatResult};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause, JsLanguage,
-    JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
+    JsTemplateElement, JsTemplateElementFields, JsxText, Modifiers, TsTemplateElement,
     TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
