@@ -35,7 +35,7 @@ impl FormatNode for JsSwitchStatement {
                         .clone()
                         .into_iter()
                         .map(|node| node.syntax().clone())
-                        .zip(formatter.format_nodes(cases)?)
+                        .zip(formatter.format_all(cases)?)
                 ),
                 &r_curly_token?
             )?

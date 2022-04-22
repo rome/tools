@@ -11,7 +11,7 @@ impl FormatNode for JsxSelfClosingElement {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let attributes = join_elements(
             soft_line_break_or_space(),
-            formatter.format_nodes(self.attributes())?,
+            formatter.format_all(self.attributes())?,
         );
 
         let type_arguments = self.type_arguments().format_or_empty(formatter)?;

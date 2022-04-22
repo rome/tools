@@ -25,7 +25,7 @@ impl FormatNode for JsTemplate {
             tag,
             type_arguments,
             l_tick,
-            concat_elements(formatter.format_nodes(elements)?),
+            concat_elements(formatter.format_all(elements)?),
             r_tick
         ]))
     }

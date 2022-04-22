@@ -314,28 +314,28 @@ pub fn generate_formatter() {
             },
             NodeKind::Node | NodeKind::List { separated: true } => {
                 quote! {
-                    use crate::{Formatter, FormatNode};
+                    use crate::{Formatter, FormatNode, verbatim_node, Format};
                     use rome_rowan::AstNode;
                     use rome_formatter::{FormatResult, FormatElement};
                     use rome_js_syntax::{#id};
 
                     impl FormatNode for #id {
                         fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-                            Ok(formatter.format_verbatim(self.syntax()))
+                            verbatim_node(self.syntax()).format(formatter)
                         }
                     }
                 }
             }
             NodeKind::Unknown => {
                 quote! {
-                    use crate::{Formatter, FormatNode};
+                    use crate::{Formatter, FormatNode, unknown_node, Format};
                     use rome_rowan::AstNode;
                     use rome_formatter::{FormatResult, FormatElement};
                     use rome_js_syntax::{#id};
 
                     impl FormatNode for #id {
                         fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-                            Ok(formatter.format_unknown(self.syntax()))
+                            unknown_node(self.syntax()).format(formatter)
                         }
                     }
                 }

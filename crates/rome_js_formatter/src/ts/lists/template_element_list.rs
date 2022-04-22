@@ -5,6 +5,6 @@ use rome_rowan::AstNodeList;
 
 impl Format for TsTemplateElementList {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(concat_elements(formatter.format_nodes(self.iter())?))
+        Ok(concat_elements(formatter.format_all(self.iter())?))
     }
 }

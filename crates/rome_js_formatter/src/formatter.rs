@@ -196,7 +196,7 @@ impl Formatter {
     /// Formats each child and returns the result as a list.
     ///
     /// Returns [None] if a child couldn't be formatted.
-    pub fn format_nodes<T: AstNode<Language = JsLanguage> + Format>(
+    pub fn format_all<T: Format>(
         &self,
         nodes: impl IntoIterator<Item = T>,
     ) -> FormatResult<impl Iterator<Item = FormatElement>> {
@@ -292,9 +292,11 @@ impl Formatter {
                 Ok(result) => result,
                 Err(_) => {
                     self.restore(snapshot);
+
                     // Lists that yield errors are formatted as they were unknown nodes.
                     // Doing so, the formatter formats the nodes/tokens as is.
-                    self.format_unknown(module_item.syntax())
+                    // SAFETY: `FormatUnknownNode` always returns Ok
+                    unknown_node(module_item.syntax()).format(self).unwrap()
                 }
             };
 
@@ -562,77 +564,6 @@ impl Formatter {
 
         concat_elements(elements)
     }
-
-    /// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
-    /// doesn't track nodes/tokens as [FormatElement::Verbatim]. They are just printed as they are.
-    pub fn format_unknown(&self, node: &JsSyntaxNode) -> FormatElement {
-        FormatElement::Verbatim(Verbatim::new_unknown(
-            self.format_verbatim_node_or_token(node),
-        ))
-    }
-
-    /// Format a node having formatter suppression comment applied to it
-    pub fn format_suppressed(&self, node: &JsSyntaxNode) -> FormatElement {
-        format_elements![
-            // Insert a force a line break to ensure the suppression comment is on its own line
-            // and correctly registers as a leading trivia on the opening token of this node
-            hard_line_break(),
-            FormatElement::Verbatim(Verbatim::new_suppressed(
-                self.format_verbatim_node_or_token(node)
-            )),
-        ]
-    }
-
-    fn format_verbatim_node_or_token(&self, node: &JsSyntaxNode) -> FormatElement {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                for token in node.descendants_tokens() {
-                    self.printed_tokens.borrow_mut().track_token(&token);
-                }
-            }
-        }
-
-        fn skip_whitespace<L: Language>(piece: &SyntaxTriviaPiece<L>) -> bool {
-            piece.is_newline() || piece.is_whitespace()
-        }
-
-        fn trivia_token<L: Language>(piece: SyntaxTriviaPiece<L>) -> Token {
-            Token::from_syntax_token_cow_slice(
-                normalize_newlines(piece.text(), LINE_TERMINATORS),
-                &piece.token(),
-                piece.text_range().start(),
-            )
-        }
-
-        let leading_trivia = node
-            .first_leading_trivia()
-            .into_iter()
-            .flat_map(|trivia| trivia.pieces())
-            .skip_while(skip_whitespace)
-            .map(trivia_token);
-
-        let content = Token::new_dynamic(
-            normalize_newlines(&node.text_trimmed().to_string(), LINE_TERMINATORS).into_owned(),
-            node.text_trimmed_range().start(),
-        );
-
-        // Clippy false positive: SkipWhile does not implement DoubleEndedIterator
-        #[allow(clippy::needless_collect)]
-        let trailing_trivia = node
-            .last_trailing_trivia()
-            .into_iter()
-            .flat_map(|trivia| trivia.pieces().rev())
-            .skip_while(skip_whitespace)
-            .map(trivia_token)
-            .collect::<Vec<_>>();
-
-        concat_elements(
-            leading_trivia
-                .chain(once(content))
-                .chain(trailing_trivia.into_iter().rev())
-                .map(FormatElement::from),
-        )
-    }
 }
 
 /// Determines if the whitespace separating comment trivias
@@ -684,21 +615,114 @@ impl Formatter {
 ///
 /// These nodes and tokens get tracked as [FormatElement::Verbatim], useful to understand
 /// if these nodes still need to have their own implementation.
-pub fn verbatim_node(node: &JsSyntaxNode) -> VerbatimNode {
-    VerbatimNode { node }
+pub fn verbatim_node(node: &JsSyntaxNode) -> FormatVerbatimNode {
+    FormatVerbatimNode { node }
 }
 
 #[derive(Debug, Clone)]
-pub struct VerbatimNode<'node> {
+pub struct FormatVerbatimNode<'node> {
     node: &'node JsSyntaxNode,
 }
 
-impl Format for VerbatimNode<'_> {
+impl Format for FormatVerbatimNode<'_> {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let verbatim = formatter.format_verbatim_node_or_token(self.node);
+        let verbatim = format_verbatim_node_or_token(self.node, formatter);
         Ok(FormatElement::Verbatim(Verbatim::new_verbatim(
             verbatim,
             self.node.text_range().len(),
         )))
     }
+}
+
+/// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
+/// doesn't track nodes/tokens as [FormatElement::Verbatim]. They are just printed as they are.
+pub fn unknown_node(node: &JsSyntaxNode) -> FormatUnknownNode {
+    FormatUnknownNode { node }
+}
+
+#[derive(Debug, Clone)]
+pub struct FormatUnknownNode<'node> {
+    node: &'node JsSyntaxNode,
+}
+
+impl Format for FormatUnknownNode<'_> {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Ok(FormatElement::Verbatim(Verbatim::new_unknown(
+            format_verbatim_node_or_token(self.node, formatter),
+        )))
+    }
+}
+
+/// Format a node having formatter suppression comment applied to it
+pub fn suppressed_node(node: &JsSyntaxNode) -> FormatSuppressedNode {
+    FormatSuppressedNode { node }
+}
+
+#[derive(Debug, Clone)]
+pub struct FormatSuppressedNode<'node> {
+    node: &'node JsSyntaxNode,
+}
+
+impl Format for FormatSuppressedNode<'_> {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Ok(format_elements![
+            // Insert a force a line break to ensure the suppression comment is on its own line
+            // and correctly registers as a leading trivia on the opening token of this node
+            hard_line_break(),
+            FormatElement::Verbatim(Verbatim::new_suppressed(format_verbatim_node_or_token(
+                self.node, formatter
+            ))),
+        ])
+    }
+}
+
+fn format_verbatim_node_or_token(node: &JsSyntaxNode, formatter: &Formatter) -> FormatElement {
+    cfg_if::cfg_if! {
+        if #[cfg(debug_assertions)] {
+            for token in node.descendants_tokens() {
+                formatter.printed_tokens.borrow_mut().track_token(&token);
+            }
+        }
+    }
+
+    fn skip_whitespace<L: Language>(piece: &SyntaxTriviaPiece<L>) -> bool {
+        piece.is_newline() || piece.is_whitespace()
+    }
+
+    fn trivia_token<L: Language>(piece: SyntaxTriviaPiece<L>) -> Token {
+        Token::from_syntax_token_cow_slice(
+            normalize_newlines(piece.text(), LINE_TERMINATORS),
+            &piece.token(),
+            piece.text_range().start(),
+        )
+    }
+
+    let leading_trivia = node
+        .first_leading_trivia()
+        .into_iter()
+        .flat_map(|trivia| trivia.pieces())
+        .skip_while(skip_whitespace)
+        .map(trivia_token);
+
+    let content = Token::new_dynamic(
+        normalize_newlines(&node.text_trimmed().to_string(), LINE_TERMINATORS).into_owned(),
+        node.text_trimmed_range().start(),
+    );
+
+    // Clippy false positive: SkipWhile does not implement DoubleEndedIterator
+    #[allow(clippy::needless_collect)]
+    let trailing_trivia = node
+        .last_trailing_trivia()
+        .into_iter()
+        .flat_map(|trivia| trivia.pieces().rev())
+        .skip_while(skip_whitespace)
+        .map(trivia_token)
+        .collect::<Vec<_>>();
+
+    concat_elements(
+        leading_trivia
+            .chain(once(content))
+            .chain(trailing_trivia.into_iter().rev())
+            .map(FormatElement::from),
+    )
 }

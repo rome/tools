@@ -43,7 +43,7 @@ impl Format for JsAnyClass {
                     self.members()
                         .into_iter()
                         .map(|node| node.syntax().clone())
-                        .zip(formatter.format_nodes(self.members())?)
+                        .zip(formatter.format_all(self.members())?)
                 ),
                 &self.r_curly_token()?
             )?

@@ -9,6 +9,7 @@ pub mod prelude;
 mod ts;
 pub mod utils;
 
+use crate::formatter::suppressed_node;
 use crate::utils::has_formatter_suppressions;
 pub use formatter::Formatter;
 pub use rome_formatter::{
@@ -108,7 +109,7 @@ pub trait FormatNode: AstNode<Language = JsLanguage> {
     fn format_node(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let node = self.syntax();
         let element = if has_formatter_suppressions(node) {
-            formatter.format_suppressed(node)
+            suppressed_node(node).format(formatter)?
         } else {
             self.format_fields(formatter)?
         };
