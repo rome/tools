@@ -29,7 +29,7 @@ use rome_rowan::TextRange;
 /// This is a custom enum over using `Option` because [ParsedSyntax::Absent] values must be handled by the caller.
 #[derive(Debug, PartialEq, Eq)]
 #[must_use = "this `ParsedSyntax` may be an `Absent` variant, which should be handled"]
-pub(crate) enum ParsedSyntax {
+pub enum ParsedSyntax {
     /// A syntax that isn't present in the source code. Used when a parse rule can't match the current
     /// token of the parser.
     Absent,

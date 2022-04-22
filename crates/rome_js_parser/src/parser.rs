@@ -6,7 +6,7 @@
 pub(crate) mod parse_error;
 mod parse_lists;
 mod parse_recovery;
-mod parsed_syntax;
+pub mod parsed_syntax;
 pub(crate) mod rewrite_parser;
 pub(crate) mod single_token_parse_recovery;
 

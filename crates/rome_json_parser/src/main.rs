@@ -1,11 +1,7 @@
 use rome_js_parser::lexer::Lexer;
-use rome_js_parser::LexContext;
+use rome_js_parser::{LexContext, Parser, SourceType};
 use rome_js_syntax::T;
+use rome_json_parser::parse_json_root;
 fn main() {
-    let mut lexer = Lexer::from_str(r#"{"tes": -20}"#, 0);
-    while lexer.current() != T![EOF] {
-        let a = lexer.next_token(LexContext::default());
-        println!("{:?}, {:?}", a, lexer.current_range());
-    }
-    println!("{:#?}", lexer.finish());
+    parse_json_root();
 }
