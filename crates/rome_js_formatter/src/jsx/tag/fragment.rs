@@ -1,12 +1,7 @@
-use crate::formatter_traits::FormatTokenAndNode;
-use crate::{FormatElement, FormatNode, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::format_elements;
 use rome_formatter::FormatResult;
-use rome_formatter::{
-    block_indent, format_elements, group_elements, hard_line_break, indent, soft_block_indent,
-    soft_line_break, soft_line_break_or_space,
-};
 use rome_js_syntax::{JsxFragment, JsxFragmentFields};
-use rome_rowan::AstNode;
 
 impl FormatNode for JsxFragment {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -19,7 +14,7 @@ impl FormatNode for JsxFragment {
         let children = children.format(formatter)?;
         Ok(format_elements![
             opening_fragment.format(formatter)?,
-            soft_block_indent(children),
+            children,
             closing_fragment.format(formatter)?
         ])
     }
