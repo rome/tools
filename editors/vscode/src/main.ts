@@ -10,7 +10,7 @@ let client: LanguageClient;
 const IN_ROME_PROJECT = "inRomeProject";
 
 export async function activate(context: ExtensionContext) {
-	const command = await getServerPath(context);
+	const command = process.env.DEBUG_SERVER_PATH || (await getServerPath(context));
 	if (!command) {
 		await window.showErrorMessage(
 			"The Rome extensions doesn't ship with prebuilt binaries for your platform yet. " +
@@ -24,6 +24,16 @@ export async function activate(context: ExtensionContext) {
 		command,
 		transport: TransportKind.stdio,
 	};
+
+	// only override serverOptions.options when developing extension,
+	// this is convenient for debugging
+	if (process.env.DEBUG_SERVER_PATH) {
+		serverOptions.options = {
+			env: {
+				...process.env
+			},
+		};
+	}
 
 	const clientOptions: LanguageClientOptions = {
 		documentSelector: [

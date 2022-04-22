@@ -1,8 +1,8 @@
 use crate::documents::Document;
 use anyhow::Result;
-use lspower::lsp::TextDocumentIdentifier;
 use rome_js_parser::parse;
 use serde::{Deserialize, Serialize};
+use tower_lsp::lsp_types::TextDocumentIdentifier;
 use tracing::{info, trace};
 
 pub const SYNTAX_TREE_REQUEST: &str = "rome/syntaxTree";
