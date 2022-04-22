@@ -16,7 +16,6 @@ rome_analyze = { path = "../rome_analyze" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 rome_js_parser = { path = "../rome_js_parser" }
 rome_js_syntax = { path = "../rome_js_syntax" }
-# lspower = "1.5"
 tower-lsp = { version = "0.17.0"}
 tokio = { version = "1.15.0", features = ["full" ] }
 tracing = { version = "0.1.31", default-features = false, features = ["std", "max_level_trace", "release_max_level_warn"] }

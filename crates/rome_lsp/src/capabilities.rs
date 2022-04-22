@@ -1,8 +1,3 @@
-// use tower_lsp::lsp::{
-//     CodeActionProviderCapability, DocumentOnTypeFormattingOptions, OneOf, ServerCapabilities,
-//     TextDocumentSyncCapability, TextDocumentSyncKind,
-// };
-
 use tower_lsp::lsp_types::{
     CodeActionProviderCapability, DocumentOnTypeFormattingOptions, OneOf, ServerCapabilities,
     TextDocumentSyncCapability, TextDocumentSyncKind,
