@@ -145,6 +145,7 @@ impl<T> Iterator for TokenAtOffset<T> {
 
 impl<T> ExactSizeIterator for TokenAtOffset<T> {}
 
+#[cfg(target_pointer_width = "64")]
 macro_rules! _static_assert {
     ($expr:expr) => {
         const _: i32 = 0 / $expr as i32;

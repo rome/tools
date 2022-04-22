@@ -1,146 +1,123 @@
-use std::{collections::HashMap, sync::Arc};
-
-use rome_js_parser::parse_script;
-use rome_js_syntax::{JsLanguage, JsSyntaxNode, TextRange};
-use rome_rowan::AstNode;
-use tracing::trace;
+use rome_console::MarkupBuf;
+use rome_diagnostics::Severity;
+use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, TextRange};
+use rome_rowan::{AstNode, SyntaxNode};
 
 use crate::{
-    analyzers, assists,
-    signals::AnalyzeDiagnostic,
-    suppressions::{self, Suppressions},
-    Action, Analysis, AnalyzerContext, AssistContext,
+    analyzers::*,
+    assists::*,
+    categories::ActionCategory,
+    signals::{AnalyzerSignal, RuleSignal},
 };
 
-pub type FileId = usize;
-
-#[derive(Default)]
-pub struct AnalysisServer {
-    file_map: HashMap<FileId, Arc<str>>,
+/// The rule registry holds type-erased instances of all active analysis rules
+pub(crate) struct RuleRegistry {
+    rules: Vec<RegistryRule>,
 }
 
-impl AnalysisServer {
-    pub fn new() -> Self {
-        Self {
-            file_map: Default::default(),
-        }
-    }
-
-    pub fn set_file_text(&mut self, file_id: FileId, text: impl Into<Arc<str>>) {
-        self.file_map.insert(file_id, text.into());
-    }
-
-    pub fn get_file_text(&self, file_id: FileId) -> Option<Arc<str>> {
-        self.file_map.get(&file_id).cloned()
-    }
-
-    pub fn parse(&self, file_id: FileId) -> JsSyntaxNode {
-        let text = self
-            .get_file_text(file_id)
-            .expect("File contents missing while parsing");
-        parse_script(&text, file_id).syntax()
-    }
-
-    pub fn suppressions(&self, file_id: FileId) -> Suppressions {
-        let tree = self.parse(file_id);
-        suppressions::compute(tree)
-    }
-
-    pub fn query_nodes<T: AstNode<Language = JsLanguage>>(
-        &self,
-        file_id: FileId,
-    ) -> impl Iterator<Item = T> {
-        trace!("Query nodes: {:?}", std::any::type_name::<T>());
-        let tree = self.parse(file_id);
-        tree.descendants().filter_map(|n| T::cast(n))
-    }
-
-    pub fn find_node_at_range<T: AstNode<Language = JsLanguage>>(
-        &self,
-        file_id: FileId,
-        range: TextRange,
-    ) -> Option<T> {
-        trace!("Find {:?} range: {:?}", std::any::type_name::<T>(), range);
-        let tree = self.parse(file_id);
-        tree.covering_element(range).ancestors().find_map(T::cast)
-    }
-
-    /// Returns a combined [`Analysis`] from running every [`AssistProvider`] on
-    /// the file matching the provided [`FileId`]. The file contents must have
-    /// been previously set using the [`AnalysisServer::set_file_text`] method.
-    ///
-    /// [`AssistProvider`]: crate::assists::AssistProvider
-    pub fn assists(&self, file_id: FileId, cursor_range: TextRange) -> Analysis {
-        trace!("Assists range: {:?}", cursor_range);
-
-        let mut signals = vec![];
-
-        for provider in assists::all() {
-            let ctx = AssistContext::new(self, file_id, cursor_range, provider);
-            let analyze_fn = provider.analyze;
-            if let Some(analysis) = analyze_fn(&ctx) {
-                signals.extend(analysis.signals.into_iter())
-            }
-        }
-        signals.into()
-    }
-
-    /// Returns diagnostics from running every [`Analyzer`] on the file matching the
-    /// provided [`FileId`]. The file contents must have been previously set using
-    /// the [`AnalysisServer::set_file_text`] method.
-    ///
-    /// [`Analyzer`]: crate::Analyzer
-    pub fn diagnostics(&self, file_id: FileId) -> impl Iterator<Item = AnalyzeDiagnostic> {
-        self.analyze(file_id).into_diagnostics()
-    }
-
-    /// Returns actions from running every [`Analyzer`] on the file matching the
-    /// provided [`FileId`]. The file contents must have been previously set using
-    /// the [`AnalysisServer::set_file_text`] method.
-    ///
-    /// [`Analyzer`]: crate::Analyzer
-    pub fn analyzer_actions(&self, file_id: FileId) -> impl Iterator<Item = Action> {
-        self.analyze(file_id).into_actions()
-    }
-
-    /// Returns actions from running every [`Analyzer`] and [`AssistProvider`] on
-    /// the file matching the provided [`FileId`]. The file contents must have been
-    /// previously set using the [`AnalysisServer::set_file_text`] method.
-    ///
-    /// [`Analyzer`]: crate::Analyzer
-    /// [`AssistProvider`]: crate::assists::AssistProvider
-    pub fn actions(
-        &self,
-        file_id: FileId,
-        cursor_range: Option<TextRange>,
-    ) -> impl Iterator<Item = Action> {
-        let analyzer_actions = self.analyzer_actions(file_id);
-        let assist_actions = match cursor_range {
-            Some(range) => self.assists(file_id, range).into_actions(),
-            None => Analysis::default().into_actions(),
-        };
-        analyzer_actions.chain(assist_actions)
-    }
-
-    pub fn analyze(&self, file_id: FileId) -> Analysis {
-        let suppressions = self.suppressions(file_id);
-
-        let mut signals = vec![];
-
-        for analyzer in analyzers::all() {
-            let ctx = AnalyzerContext::new(self, file_id, analyzer);
-            let analyze_fn = analyzer.analyze;
-            if let Some(analysis) = analyze_fn(&ctx) {
-                for s in analysis.signals {
-                    if let Some(range) = s.range() {
-                        if s.is_diagnostic() && suppressions.match_range(analyzer.name, range) {
-                            continue;
-                        }
-                        signals.push(s);
-                    }
+/// Utility macro for implementing the `default` and `with_rules` methods of [RuleRegistry]
+macro_rules! impl_registry_builders {
+    ( $( $rule:ident ),* ) => {
+        impl Default for RuleRegistry {
+            fn default() -> Self {
+                Self {
+                    rules: vec![
+                        $( run::<$rule>, )*
+                    ],
                 }
             }
         }
-        signals.into()
+
+        impl RuleRegistry {
+            pub(crate) fn with_rules(filter: &[&str]) -> Self {
+                let mut rules: Vec<RegistryRule> = Vec::new();
+
+                $( if filter.contains(&$rule::NAME) {
+                    rules.push(run::<$rule>);
+                } )*
+
+                Self { rules }
+            }
+        }
+    };
+}
+
+impl_registry_builders!(
+    // Analyzers
+    NoDelete,
+    NoDoubleEquals,
+    UseWhile,
+    // Assists
+    FlipBinExp
+);
+
+impl RuleRegistry {
+    // Run all rules known to the registry associated with nodes of type N
+    pub(crate) fn analyze(
+        &self,
+        root: &JsAnyRoot,
+        node: JsSyntaxNode,
+        callback: &mut impl FnMut(&dyn AnalyzerSignal),
+    ) {
+        for rule in &self.rules {
+            if let Some(event) = (rule)(root, &node) {
+                callback(&*event);
+            }
+        }
     }
+}
+
+/// Representation of a single rule in the registry as a generic function pointer
+type RegistryRule =
+    for<'a> fn(&'a JsAnyRoot, &'a JsSyntaxNode) -> Option<Box<dyn AnalyzerSignal + 'a>>;
+
+/// Generic implementation of RegistryRule for any rule type R
+fn run<'a, R: Rule + 'static>(
+    root: &'a JsAnyRoot,
+    node: &'a SyntaxNode<<R::Query as AstNode>::Language>,
+) -> Option<Box<dyn AnalyzerSignal + 'a>> {
+    if !<R::Query>::can_cast(node.kind()) {
+        return None;
+    }
+
+    let node = <R::Query>::cast(node.clone())?;
+    let result = R::run(&node)?;
+    Some(RuleSignal::<R>::new_boxed(root, node, result))
+}
+
+/// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
+/// and a callback function to be executed on all nodes matching the query to possibly
+/// raise an analysis event
+pub(crate) trait Rule {
+    const NAME: &'static str;
+    const ACTION_CATEGORIES: &'static [ActionCategory];
+
+    type Query: AstNode + 'static;
+    type Result: 'static;
+
+    fn run(node: &Self::Query) -> Option<Self::Result>;
+
+    fn diagnostic(_node: &Self::Query, _result: &Self::Result) -> Option<RuleDiagnostic> {
+        None
+    }
+
+    fn code_fix(
+        _root: &JsAnyRoot,
+        _node: &Self::Query,
+        _result: &Self::Result,
+    ) -> Option<RuleCodeFix> {
+        None
+    }
+}
+
+/// Diagnostic object returned by a single analysis rule
+pub struct RuleDiagnostic {
+    pub severity: Severity,
+    pub range: TextRange,
+    pub message: MarkupBuf,
+}
+
+/// Code fix object returned by a single analysis rule
+pub struct RuleCodeFix {
+    pub root: JsAnyRoot,
 }

@@ -1,5 +1,7 @@
-use rome_analyze::{AnalysisServer, FileId};
-use rome_js_syntax::TextRange;
+use rome_analyze::AnalysisFilter;
+use rome_diagnostics::file::FileId;
+use rome_js_parser::parse_script;
+use rome_js_syntax::{JsAnyRoot, TextRange};
 use tower_lsp::lsp_types::CodeActionOrCommand;
 use tower_lsp::{jsonrpc, lsp_types};
 
@@ -10,40 +12,56 @@ use crate::utils;
 ///
 /// If the `AnalysisServer` has no matching file, results in error.
 pub(crate) fn diagnostics(
-    analysis_server: AnalysisServer,
     file_id: FileId,
+    text: &str,
 ) -> jsonrpc::Result<Vec<lsp_types::Diagnostic>> {
-    let text = analysis_server
-        .get_file_text(file_id)
-        .ok_or_else(jsonrpc::Error::internal_error)?;
-    let line_index = LineIndex::new(&text);
+    let parse = parse_script(text, file_id);
+    let root = JsAnyRoot::from(parse.tree());
 
-    let diagnostics: Vec<_> = analysis_server
-        .diagnostics(file_id)
-        .filter_map(|d| utils::diagnostic_to_lsp(d.diagnostic, &line_index))
-        .collect();
-    Ok(diagnostics)
+    let mut result = Vec::new();
+    let line_index = LineIndex::new(text);
+
+    rome_analyze::analyze(&root, AnalysisFilter::default(), |event| {
+        if let Some(d) = event.diagnostic() {
+            result.push(utils::diagnostic_to_lsp(d, &line_index));
+        }
+    });
+
+    Ok(result)
 }
 
 /// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
 ///
 /// If the AnalysisServer has no matching file, results in error.
 pub(crate) fn code_actions(
-    analysis_server: AnalysisServer,
     file_id: FileId,
+    text: &str,
     url: lsp_types::Url,
+    diagnostics: &[lsp_types::Diagnostic],
     cursor_range: TextRange,
 ) -> jsonrpc::Result<Vec<lsp_types::CodeActionOrCommand>> {
-    let text = analysis_server
-        .get_file_text(file_id)
-        .ok_or_else(jsonrpc::Error::internal_error)?;
-    let line_index = LineIndex::new(&text);
+    let parse = parse_script(text, file_id);
+    let root = JsAnyRoot::from(parse.tree());
 
-    let code_actions: Vec<_> = analysis_server
-        .actions(file_id, Some(cursor_range))
-        .map(|a| utils::text_action_to_lsp(&a.into(), &line_index, url.to_owned(), None))
-        .map(CodeActionOrCommand::CodeAction)
-        .collect();
+    let filter = AnalysisFilter {
+        range: Some(cursor_range),
+        ..AnalysisFilter::default()
+    };
 
-    Ok(code_actions)
+    let mut result = Vec::new();
+    let line_index = LineIndex::new(text);
+
+    rome_analyze::analyze(&root, filter, |event| {
+        if let Some(code_fix) = event.code_fix() {
+            result.push(CodeActionOrCommand::CodeAction(utils::code_fix_to_lsp(
+                &url,
+                text,
+                &line_index,
+                diagnostics,
+                code_fix,
+            )));
+        }
+    });
+
+    Ok(result)
 }

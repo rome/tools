@@ -1,0 +1,56 @@
+---
+source: crates/rome_analyze/tests/spec_tests.rs
+assertion_line: 77
+expression: noDoubleEquals.js
+
+---
+# Input
+```js
+const isZero = a == 0;
+const isNonZero = a != 0;
+
+const isNull = a == null;
+const isNonNull = a != null;
+
+```
+
+# Diagnostics
+```
+  ┌─ noDoubleEquals.js:1:18
+  │
+1 │ const isZero = a == 0;
+  │                  ^^ Do not use the == operator
+
+```
+
+```
+  ┌─ noDoubleEquals.js:2:21
+  │
+2 │ const isNonZero = a != 0;
+  │                     ^^ Do not use the != operator
+
+```
+
+# Code Fixes
+```
+    | @@ -1,4 +1,4 @@
+0   | - const isZero = a == 0;
+  0 | + const isZero = a === 0;
+1 1 |   const isNonZero = a != 0;
+2 2 |   
+3 3 |   const isNull = a == null;
+
+```
+
+```
+    | @@ -1,5 +1,5 @@
+0 0 |   const isZero = a == 0;
+1   | - const isNonZero = a != 0;
+  1 | + const isNonZero = a !== 0;
+2 2 |   
+3 3 |   const isNull = a == null;
+4 4 |   const isNonNull = a != null;
+
+```
+
+

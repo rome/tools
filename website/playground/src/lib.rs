@@ -1,8 +1,13 @@
 #![allow(clippy::unused_unit)] // Bug in wasm_bindgen creates unused unit warnings. See wasm_bindgen#2774
 
-use rome_diagnostics::file::SimpleFiles;
+use rome_analyze::AnalysisFilter;
+use rome_console::codespan::{Codespan, Label, LabelStyle, Locus};
+use rome_console::diff::{Diff, DiffMode};
+use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::markup;
+use rome_diagnostics::file::{Files, SimpleFiles};
 use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
-use rome_diagnostics::Emitter;
+use rome_diagnostics::{DiagnosticHeader, Emitter};
 use rome_js_formatter::{format_node, FormatOptions, IndentStyle};
 use rome_js_parser::{parse, LanguageVariant, SourceType};
 use serde_json::json;
@@ -175,6 +180,51 @@ pub fn run(
             .emit_with_writer(diag, &mut errors)
             .unwrap();
     }
+
+    let mut fmt = Termcolor(&mut errors);
+    let mut fmt = Formatter::new(&mut fmt);
+
+    rome_analyze::analyze(&parse.tree(), AnalysisFilter::default(), |signal| {
+        if let Some(diag) = signal.diagnostic() {
+            let source_file = simple_files.source(main_file_id).unwrap();
+
+            let severity = diag.severity;
+            let locus = Locus::FileLocation {
+                name: simple_files.name(main_file_id).unwrap(),
+                location: source_file.location(diag.range.start()).unwrap(),
+            };
+
+            fmt.write_markup(markup! {
+                {DiagnosticHeader {
+                    code: Some(diag.rule),
+                    locus: None,
+                    severity,
+                    title: markup! { {diag.message} },
+                }}"\n"
+            })
+            .unwrap();
+
+            let labels = [Label {
+                style: LabelStyle::Primary,
+                message: diag.message,
+                range: diag.range,
+            }];
+
+            fmt.write_markup(markup! {
+                {Codespan { source_file, severity, locus: Some(locus), labels: &labels }}"\n"
+            })
+            .unwrap();
+
+            if let Some(code_fix) = signal.code_fix() {
+                let output = code_fix.root.to_string();
+                fmt.write_markup(markup! {
+                    "Suggested fix:\n"
+                    {Diff { mode: DiffMode::Unified, left: &code, right: &output }}"\n"
+                })
+                .unwrap();
+            }
+        }
+    });
 
     RomeOutput {
         cst: cst_json.to_string(),
