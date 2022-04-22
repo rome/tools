@@ -2,7 +2,7 @@ use crate::format_traits::{FormatOptional, FormatWith};
 use crate::formatter::TrailingSeparator;
 use crate::{
     format_elements, join_elements, soft_line_break_or_space, space_token, token, FormatElement,
-    FormatNode, Formatter,
+    FormatNode, Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};

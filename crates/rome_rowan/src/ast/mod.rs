@@ -166,7 +166,7 @@ pub struct AstSeparatedElement<L: Language, N> {
 impl<L: Language, N: AstNode<Language = L>> AstSeparatedElement<L, N> {
     pub fn node(&self) -> SyntaxResult<&N> {
         match &self.node {
-            Ok(node) => Ok(&node),
+            Ok(node) => Ok(node),
             Err(err) => Err(*err),
         }
     }

@@ -1,4 +1,4 @@
-use crate::{empty_element, FormatElement, FormatNode, Formatter};
+use crate::{empty_element, FormatElement, FormatNode, Formatter, JsFormatter};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsEmptyStatement;

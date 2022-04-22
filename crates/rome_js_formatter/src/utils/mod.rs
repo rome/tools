@@ -11,7 +11,7 @@ mod quickcheck_utils;
 use crate::format_traits::FormatOptional;
 use crate::{
     empty_element, empty_line, format_elements, hard_group_elements, space_token, token, Format,
-    FormatElement, Formatter, QuoteStyle, Token,
+    FormatElement, Formatter, JsFormatter, QuoteStyle, Token,
 };
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};

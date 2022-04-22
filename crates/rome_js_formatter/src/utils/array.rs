@@ -7,7 +7,7 @@ use rome_rowan::{AstNode, AstSeparatedList};
 
 use crate::{
     empty_element, format_elements, format_traits::FormatOptional, if_group_breaks,
-    join_elements_soft_line, token, Format, FormatElement, Formatter,
+    join_elements_soft_line, token, Format, FormatElement, Formatter, JsFormatter,
 };
 
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
@@ -37,7 +37,7 @@ where
             let separator = if is_disallow {
                 // Trailing separators are disallowed, replace it with an empty element
                 if let Some(separator) = element.trailing_separator()? {
-                    formatter.format_replaced(&separator, empty_element())
+                    formatter.format_replaced(separator, empty_element())
                 } else {
                     empty_element()
                 }
@@ -47,7 +47,7 @@ where
                     .trailing_separator()
                     .format_or(formatter, || token(","))?
             } else if let Some(separator) = element.trailing_separator()? {
-                formatter.format_replaced(&separator, if_group_breaks(token(",")))
+                formatter.format_replaced(separator, if_group_breaks(token(",")))
             } else {
                 if_group_breaks(token(","))
             };

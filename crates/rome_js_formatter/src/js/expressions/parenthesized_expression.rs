@@ -1,7 +1,7 @@
 use crate::utils::{is_simple_expression, FormatPrecedence};
 use crate::{
     empty_element, format_elements, group_elements, hard_group_elements, Format, FormatElement,
-    FormatNode, Formatter,
+    FormatNode, Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::{

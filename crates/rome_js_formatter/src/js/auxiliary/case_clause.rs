@@ -2,7 +2,7 @@ use rome_formatter::FormatResult;
 
 use crate::{
     format_elements, hard_line_break, indent, space_token, Format, FormatElement, FormatNode,
-    Formatter,
+    Formatter, JsFormatter,
 };
 
 use rome_js_syntax::JsCaseClause;

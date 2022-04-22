@@ -1,5 +1,7 @@
 use crate::format_traits::FormatOptional;
-use crate::{format_elements, join_elements_hard_line, space_token, FormatElement, Formatter};
+use crate::{
+    format_elements, join_elements_hard_line, space_token, FormatElement, Formatter, JsFormatter,
+};
 use crate::{hard_group_elements, Format};
 use rome_formatter::FormatResult;
 use rome_js_syntax::JsAnyClass;

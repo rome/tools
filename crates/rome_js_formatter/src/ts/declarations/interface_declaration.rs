@@ -1,6 +1,7 @@
 use crate::format_traits::FormatOptional;
 use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
+    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode,
+    Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};

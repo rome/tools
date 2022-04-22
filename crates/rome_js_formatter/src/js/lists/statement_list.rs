@@ -1,4 +1,4 @@
-use crate::{Format, FormatElement, Formatter};
+use crate::{Format, FormatElement, Formatter, JsFormatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::JsStatementList;
 impl Format for JsStatementList {

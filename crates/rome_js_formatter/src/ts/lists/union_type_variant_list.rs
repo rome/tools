@@ -1,6 +1,6 @@
 use crate::{
     concat_elements, empty_element, format_elements, soft_line_break_or_space, space_token, token,
-    Format, FormatElement, Formatter,
+    Format, FormatElement, Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsUnionTypeVariantList;
@@ -18,7 +18,7 @@ impl Format for TsUnionTypeVariantList {
             let separator = match separator {
                 Some(token) => {
                     if index == last_index {
-                        formatter.format_replaced(&token, empty_element())
+                        formatter.format_replaced(token, empty_element())
                     } else {
                         format_elements![
                             soft_line_break_or_space(),

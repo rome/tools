@@ -1,5 +1,7 @@
 use crate::utils::format_head_body_statement;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    format_elements, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
+};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsWhileStatement;
