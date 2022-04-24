@@ -17,11 +17,14 @@ pub fn set_flags(flags: FeatureFlags) {
 }
 
 macro_rules! declare_feature_flags {
-    ( $( $feature:ident),* ) => {
+    ( $( $(#[doc = $doc:tt])* $feature:ident ),* )=> {
         #[derive(Debug, Default)]
         /// State of all feature flags
         pub struct FeatureFlags {
-            $( pub $feature: bool, )*
+            $(
+                $(#[doc = $doc])*
+                pub $feature: bool,
+            )*
         }
 
         impl FeatureFlags {
@@ -57,5 +60,11 @@ macro_rules! declare_feature_flags {
         }
     };
 }
+
 // EXAMPLE: Remove dummy feature flags before merging
-declare_feature_flags!(new_linebreaking, new_spacing);
+declare_feature_flags!(
+    /// A new way of linebreaking
+    new_linebreaking,
+    /// A new way of spacing
+    new_spacing
+);
