@@ -620,13 +620,6 @@ impl<'src> Lexer<'src> {
         self.byte_at(1)
     }
 
-    fn peek_char(&self) -> Option<char> {
-        let string = unsafe {
-            std::str::from_utf8_unchecked(self.source.as_bytes().get_unchecked(self.position..))
-        };
-        string.chars().nth(1)
-    }
-
     /// Returns the byte at position `self.position + offset` or `None` if it is out of bounds.
     #[inline]
     fn byte_at(&self, offset: usize) -> Option<u8> {
@@ -637,6 +630,15 @@ impl<'src> Lexer<'src> {
     #[inline]
     fn advance(&mut self, n: usize) {
         self.position += n;
+    }
+
+    #[inline]
+    fn advance_byte_or_char(&mut self, chr: u8) {
+        if chr.is_ascii() {
+            self.advance(1);
+        } else {
+            self.advance_char_unchecked();
+        }
     }
 
     /// Advances the current position by the current char UTF8 length
@@ -829,11 +831,7 @@ impl<'src> Lexer<'src> {
                     true
                 }
                 chr => {
-                    if chr.is_ascii() {
-                        self.advance(1);
-                    } else {
-                        self.advance_char_unchecked();
-                    }
+                    self.advance_byte_or_char(chr);
                     true
                 }
             }
@@ -2022,7 +2020,7 @@ impl<'src> Lexer<'src> {
                     }
                 }
                 b'$' => {
-                    if let Some('{') = self.peek_char() {
+                    if let Some(b'{') = self.peek_byte() {
                         if self.position == start {
                             self.advance(2);
                             token = Some(JsSyntaxKind::DOLLAR_CURLY);
