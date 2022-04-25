@@ -37,18 +37,6 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
     let experimental = session.args.contains("--experimental");
     if experimental {
         rome_features::set_flags(FeatureFlags::ALL);
-    } else {
-        // Must be a comma-separated list (no spaces) of features declared in rome_features
-        let features: FeatureFlags = session
-            .args
-            .opt_value_from_str("--features")
-            .map_err(|source| Termination::ParseError {
-                argument: "--features",
-                source,
-            })?
-            .unwrap_or(FeatureFlags::NONE);
-
-        rome_features::set_flags(features);
     }
 
     let has_help = session.args.contains("--help");
