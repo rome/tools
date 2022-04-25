@@ -66,6 +66,10 @@ impl LanguageServer for LSPServer {
     async fn initialized(&self, _: InitializedParams) {
         self.session.fetch_client_configuration().await;
 
+        if self.session.config.read().get_workspace_settings().unstable {
+            rome_flags::set_unstable_flags(rome_flags::FeatureFlags::ALL);
+        }
+
         let msg = format!("Server initialized with PID: {}", std::process::id());
         self.client.log_message(MessageType::INFO, msg).await;
 

@@ -41,6 +41,10 @@ pub struct WorkspaceSettings {
     /// Analysis settings
     #[serde(default)]
     pub analysis: AnalysisWorkspaceSettings,
+
+    /// Unstable features enabled
+    #[serde(default)]
+    pub unstable: bool,
 }
 
 #[derive(Debug)]
