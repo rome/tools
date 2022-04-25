@@ -21,7 +21,7 @@
 //! ```
 //!
 //! The current implementation doesn't allow for runtime modification of flags. They can only
-//! be set once using [set_flags].
+//! be set once using [set_unstable_flags].
 
 use std::str::FromStr;
 
