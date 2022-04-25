@@ -78,6 +78,15 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
+    let use_gitignore = session
+        .args
+        .opt_value_from_str("--use-gitignore")
+        .map_err(|source| Termination::ParseError {
+            argument: "--use-gitignore",
+            source,
+        })?
+        .unwrap_or(true);
+
     if let Some(line_width) = line_width {
         options.line_width = line_width;
     }
@@ -93,7 +102,6 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         (false, false) => FormatMode::Print,
     };
 
-    // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
 
     for input in session.args.finish() {
@@ -111,6 +119,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         inputs.push(input);
     }
 
+    // Check that at least one input file / directory was specified in the command line
     if inputs.is_empty() {
         return Err(Termination::MissingArgument {
             argument: "<INPUT>",
@@ -142,6 +151,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
                     mode,
                     ignore_errors,
                     interner,
+                    use_gitignore,
                     formatted: &formatted,
                     skipped: &skipped,
                     messages: send_msgs,
@@ -368,6 +378,8 @@ struct FormatCommandOptions<'ctx, 'app> {
     skipped: &'ctx AtomicUsize,
     /// Channel sending messages to the display thread
     messages: Sender<Message>,
+    /// Do we use .gitignore files to filter
+    use_gitignore: bool,
 }
 
 impl<'ctx, 'app> FormatCommandOptions<'ctx, 'app> {
@@ -402,6 +414,10 @@ impl<'ctx, 'app> TraversalContext for FormatCommandOptions<'ctx, 'app> {
 
     fn handle_file(&self, path: &Path, file_id: FileId) {
         handle_file(self, path, file_id)
+    }
+
+    fn use_gitignore(&self) -> bool {
+        self.use_gitignore
     }
 }
 

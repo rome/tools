@@ -67,6 +67,9 @@ pub trait TraversalContext: Sync {
     /// This method will be called by the traversal for each file it finds
     /// where [TraversalContext::can_handle] returned true
     fn handle_file(&self, path: &Path, file_id: FileId);
+
+    /// Checks if we use .gitignore files for traversal
+    fn use_gitignore(&self) -> bool;
 }
 
 impl<T> FileSystem for Arc<T>

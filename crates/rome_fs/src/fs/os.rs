@@ -119,10 +119,12 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 
 /// Default list of ignored directories, in the future will be supplanted by
 /// detecting and parsing .ignore files
-const DEFAULT_IGNORE: &[&str] = &[".git", "node_modules"];
+const DEFAULT_IGNORE: &[&str] = &[".git", "node_modules", "."];
 
 /// Traverse a single directory, scheduling any file to execute the context
 /// handler and sub-directories for subsequent traversal
+use ignore::{Walk, WalkBuilder};
+
 fn handle_dir<'scope>(
     scope: &Scope<'scope>,
     ctx: &'scope dyn TraversalContext,
@@ -135,12 +137,14 @@ fn handle_dir<'scope>(
         }
     }
 
-    let iter = match fs::read_dir(path) {
-        Ok(iter) => iter,
-        Err(err) => {
-            ctx.push_diagnostic(file_id, "IO", err.to_string());
-            return;
-        }
+    let iter = if ctx.use_gitignore() {
+        Walk::new(path)
+    } else {
+        WalkBuilder::new(path)
+            .ignore(false)
+            .git_ignore(false)
+            .git_exclude(false)
+            .build()
     };
 
     for entry in iter {
@@ -152,20 +156,25 @@ fn handle_dir<'scope>(
             }
         };
 
-        let path = entry.path();
-        let file_id = ctx.interner().intern_path(path.clone());
+        let entry_path = entry.path().to_path_buf();
+
+        if entry_path == path {
+            continue;
+        }
+
+        let file_id = ctx.interner().intern_path(entry_path.clone());
 
         let file_type = match entry.file_type() {
-            Ok(file_type) => file_type,
-            Err(err) => {
-                ctx.push_diagnostic(file_id, "IO", err.to_string());
+            Some(file_type) => file_type,
+            None => {
+                ctx.push_diagnostic(file_id, "IO", "file type does not exist".to_string());
                 continue;
             }
         };
 
         if file_type.is_dir() {
             scope.spawn(move |scope| {
-                handle_dir(scope, ctx, &path, file_id);
+                handle_dir(scope, ctx, &entry_path, file_id);
             });
             continue;
         }
@@ -175,12 +184,12 @@ fn handle_dir<'scope>(
             // files entirely as well as silently ignore unsupported files when
             // doing a directory traversal but printing an error message if the
             // user explicitly requests an unsupported file to be formatted
-            if !ctx.can_handle(&RomePath::new(&path)) {
+            if !ctx.can_handle(&RomePath::new(&entry_path)) {
                 continue;
             }
 
             scope.spawn(move |_| {
-                ctx.handle_file(&path, file_id);
+                ctx.handle_file(&entry_path, file_id);
             });
             continue;
         }
