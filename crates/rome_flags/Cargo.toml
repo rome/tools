@@ -1,5 +1,5 @@
 [package]
-name = "rome_features"
+name = "rome_flags"
 version = "0.0.0"
 edition = "2021"
 

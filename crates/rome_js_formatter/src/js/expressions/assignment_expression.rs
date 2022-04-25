@@ -16,7 +16,7 @@ impl FormatNode for JsAssignmentExpression {
         } = self.as_fields();
 
         // EXAMPLE: Remove feature flag example before merging
-        if rome_features::flags().new_linebreaking() {
+        if rome_flags::unstable().new_linebreaking() {
             Ok(group_elements(format_elements![
                 left.format(formatter)?,
                 space_token(),

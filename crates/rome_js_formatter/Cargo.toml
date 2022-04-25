@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 rome_js_syntax = { path = "../rome_js_syntax" }
-rome_features = { path = "../rome_features" }
+rome_flags = { path = "../rome_flags" }
 rome_formatter = { path = "../rome_formatter" }
 rome_rowan = { path = "../rome_rowan" }
 cfg-if = "1.0.0"

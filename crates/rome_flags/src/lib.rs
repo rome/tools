@@ -5,12 +5,12 @@ use once_cell::sync::OnceCell;
 static FLAGS: OnceCell<FeatureFlags> = OnceCell::new();
 
 /// Returns the feature flags for this program run. Flags are all disabled until [set_flags] is called.
-pub fn flags() -> &'static FeatureFlags {
+pub fn unstable() -> &'static FeatureFlags {
     FLAGS.get().unwrap_or(&FeatureFlags::NONE)
 }
 
 /// Sets feature flags for this program run if they weren't previously set.
-pub fn set_flags(flags: FeatureFlags) {
+pub fn set_unstable_flags(flags: FeatureFlags) {
     if FLAGS.set(flags).is_err() {
         eprintln!("Attempted to set rome_feature FLAGS more than once")
     }

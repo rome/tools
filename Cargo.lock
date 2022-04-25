@@ -1277,7 +1277,7 @@ dependencies = [
  "rome_console",
  "rome_core",
  "rome_diagnostics",
- "rome_features",
+ "rome_flags",
  "rome_fs",
  "rome_js_formatter",
  "rome_js_parser",
@@ -1329,7 +1329,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome_features"
+name = "rome_flags"
 version = "0.0.0"
 dependencies = [
  "once_cell",
@@ -1367,7 +1367,7 @@ dependencies = [
  "quickcheck_macros",
  "rome_core",
  "rome_diagnostics",
- "rome_features",
+ "rome_flags",
  "rome_formatter",
  "rome_fs",
  "rome_js_parser",
