@@ -8,13 +8,13 @@ use crate::requests::syntax_tree::{syntax_tree, SyntaxTreePayload, SYNTAX_TREE_R
 use crate::session::Session;
 use crate::utils;
 use crate::utils::into_lsp_error;
-use lspower::jsonrpc::Result as LspResult;
-use lspower::lsp::*;
-use lspower::{Client, LanguageServer, LspService, Server};
 use rome_analyze::AnalysisServer;
 use serde_json::Value;
 use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};
+use tower_lsp::jsonrpc::Result as LspResult;
+use tower_lsp::lsp_types::*;
+use tower_lsp::{Client, LanguageServer, LspService, Server};
 use tracing::{error, info, trace};
 
 struct LSPServer {
@@ -27,9 +27,25 @@ impl LSPServer {
         let session = Arc::new(Session::new(client.clone()));
         Self { client, session }
     }
+
+    async fn syntax_tree_request(&self, params: SyntaxTreePayload) -> LspResult<Option<Value>> {
+        trace!(
+            "Calling method: {}\n with params: {:?}",
+            SYNTAX_TREE_REQUEST,
+            &params
+        );
+
+        let params: SyntaxTreePayload = params;
+        let url = params.text_document.uri.clone();
+        let document = self.session.document(&url)?;
+        let task = utils::spawn_blocking_task(move || syntax_tree(document));
+        let result = task.await?;
+        let result = serde_json::to_value(result).map_err(into_lsp_error)?;
+        Ok(Some(result))
+    }
 }
 
-#[lspower::async_trait]
+#[tower_lsp::async_trait]
 impl LanguageServer for LSPServer {
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
         info!("Starting Rome Language Server...");
@@ -71,27 +87,6 @@ impl LanguageServer for LSPServer {
 
     async fn shutdown(&self) -> LspResult<()> {
         Ok(())
-    }
-
-    async fn request_else(&self, method: &str, params: Option<Value>) -> LspResult<Option<Value>> {
-        trace!("Calling method: {}\n with params: {:?}", method, &params);
-
-        match method {
-            SYNTAX_TREE_REQUEST => match params.map(serde_json::from_value) {
-                Some(Ok(params)) => {
-                    let params: SyntaxTreePayload = params;
-                    let url = params.text_document.uri.clone();
-                    let document = self.session.document(&url)?;
-                    let task = utils::spawn_blocking_task(move || syntax_tree(document));
-                    let result = task.await?;
-                    let result = serde_json::to_value(result).map_err(into_lsp_error)?;
-                    Ok(Some(result))
-                }
-                _ => Ok(None),
-            },
-
-            _ => Ok(None),
-        }
     }
 
     async fn code_action(&self, params: CodeActionParams) -> LspResult<Option<CodeActionResponse>> {
@@ -209,9 +204,8 @@ impl LanguageServer for LSPServer {
 }
 
 pub async fn run_server(stdin: Stdin, stdout: Stdout) {
-    let (service, messages) = LspService::new(LSPServer::new);
-    Server::new(stdin, stdout)
-        .interleave(messages)
-        .serve(service)
-        .await;
+    let (service, messages) = LspService::build(LSPServer::new)
+        .custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request)
+        .finish();
+    Server::new(stdin, stdout, messages).serve(service).await;
 }

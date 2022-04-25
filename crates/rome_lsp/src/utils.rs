@@ -2,26 +2,28 @@ use std::collections::HashMap;
 use std::fmt::Display;
 
 use crate::line_index::{LineCol, LineIndex};
-use lspower::jsonrpc::Error as LspError;
-use lspower::jsonrpc::Result as LspResult;
-use lspower::lsp::{self, CodeAction, CodeActionKind, Diagnostic, TextEdit, Url, WorkspaceEdit};
 use rome_analyze::{DiagnosticExt, Indel, TextAction};
+use tower_lsp::jsonrpc::Error as LspError;
+use tower_lsp::jsonrpc::Result as LspResult;
+use tower_lsp::lsp_types::{
+    self, CodeAction, CodeActionKind, Diagnostic, TextEdit, Url, WorkspaceEdit,
+};
 use tracing::{error, trace};
 
 use rome_js_syntax::{TextRange, TextSize};
 
-pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp::Position {
+pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp_types::Position {
     let line_col = line_index.line_col(offset);
-    lsp::Position::new(line_col.line, line_col.col)
+    lsp_types::Position::new(line_col.line, line_col.col)
 }
 
-pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp::Range {
+pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp_types::Range {
     let start = position(line_index, range.start());
     let end = position(line_index, range.end());
-    lsp::Range::new(start, end)
+    lsp_types::Range::new(start, end)
 }
 
-pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> TextSize {
+pub(crate) fn offset(line_index: &LineIndex, position: lsp_types::Position) -> TextSize {
     let line_col = LineCol {
         line: position.line as u32,
         col: position.character as u32,
@@ -29,7 +31,7 @@ pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> TextSiz
     line_index.offset(line_col)
 }
 
-pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> TextRange {
+pub(crate) fn text_range(line_index: &LineIndex, range: lsp_types::Range) -> TextRange {
     let start = offset(line_index, range.start);
     let end = offset(line_index, range.end);
     TextRange::new(start, end)
@@ -76,24 +78,26 @@ pub(crate) fn text_action_to_lsp(
     }
 }
 
-/// Convert an [rome_diagnostics::Diagnostic] to a [lsp::Diagnostic], using the span
+/// Convert an [rome_diagnostics::Diagnostic] to a [lsp_types::Diagnostic], using the span
 /// of the diagnostic's primary label as the diagnostic range.
 /// Requires a [LineIndex] to convert a byte offset range to the line/col range
 /// expected by LSP.
 pub(crate) fn diagnostic_to_lsp(
     diagnostic: rome_diagnostics::Diagnostic,
     line_index: &LineIndex,
-) -> Option<lsp::Diagnostic> {
+) -> Option<lsp_types::Diagnostic> {
     let text_range = diagnostic.primary_text_range()?;
     let lsp_range = crate::utils::range(line_index, text_range);
     let message = diagnostic.title;
-    let code = diagnostic.code.map(lspower::lsp::NumberOrString::String);
+    let code = diagnostic
+        .code
+        .map(tower_lsp::lsp_types::NumberOrString::String);
     let source = Some("rome".into());
     let diagnostic = Diagnostic::new(lsp_range, None, code, source, message, None, None);
     Some(diagnostic)
 }
 
-/// Helper to create a [lspower::jsonrpc::Error] from a message
+/// Helper to create a [tower_lsp::jsonrpc::Error] from a message
 pub(crate) fn into_lsp_error(msg: impl Display) -> LspError {
     let mut error = LspError::internal_error();
     error!("Error: {}", msg);

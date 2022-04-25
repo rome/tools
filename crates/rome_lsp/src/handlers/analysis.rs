@@ -1,7 +1,7 @@
-use lspower::lsp::CodeActionOrCommand;
-use lspower::{jsonrpc, lsp};
 use rome_analyze::{AnalysisServer, FileId};
 use rome_js_syntax::TextRange;
+use tower_lsp::lsp_types::CodeActionOrCommand;
+use tower_lsp::{jsonrpc, lsp_types};
 
 use crate::line_index::LineIndex;
 use crate::utils;
@@ -12,7 +12,7 @@ use crate::utils;
 pub(crate) fn diagnostics(
     analysis_server: AnalysisServer,
     file_id: FileId,
-) -> jsonrpc::Result<Vec<lsp::Diagnostic>> {
+) -> jsonrpc::Result<Vec<lsp_types::Diagnostic>> {
     let text = analysis_server
         .get_file_text(file_id)
         .ok_or_else(jsonrpc::Error::internal_error)?;
@@ -31,9 +31,9 @@ pub(crate) fn diagnostics(
 pub(crate) fn code_actions(
     analysis_server: AnalysisServer,
     file_id: FileId,
-    url: lsp::Url,
+    url: lsp_types::Url,
     cursor_range: TextRange,
-) -> jsonrpc::Result<Vec<lsp::CodeActionOrCommand>> {
+) -> jsonrpc::Result<Vec<lsp_types::CodeActionOrCommand>> {
     let text = analysis_server
         .get_file_text(file_id)
         .ok_or_else(jsonrpc::Error::internal_error)?;

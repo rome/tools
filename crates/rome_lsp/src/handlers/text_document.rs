@@ -1,12 +1,12 @@
-use lspower::lsp;
 use rome_fs::RomePath;
 use std::sync::Arc;
+use tower_lsp::lsp_types;
 use tracing::error;
 
 use crate::{documents::Document, session::Session};
 
 /// Handler for `textDocument/didOpen` LSP notification
-pub(crate) async fn did_open(session: Arc<Session>, params: lsp::DidOpenTextDocumentParams) {
+pub(crate) async fn did_open(session: Arc<Session>, params: lsp_types::DidOpenTextDocumentParams) {
     let url = params.text_document.uri.clone();
     let file_id = session.file_id(url.clone());
     let version = params.text_document.version;
@@ -25,7 +25,10 @@ pub(crate) async fn did_open(session: Arc<Session>, params: lsp::DidOpenTextDocu
 }
 
 /// Handler for `textDocument/didChange` LSP notification
-pub(crate) async fn did_change(session: Arc<Session>, params: lsp::DidChangeTextDocumentParams) {
+pub(crate) async fn did_change(
+    session: Arc<Session>,
+    params: lsp_types::DidChangeTextDocumentParams,
+) {
     let url = params.text_document.uri;
     let version = params.text_document.version;
 
@@ -50,7 +53,10 @@ pub(crate) async fn did_change(session: Arc<Session>, params: lsp::DidChangeText
 }
 
 /// Handler for `textDocument/didClose` LSP notification
-pub(crate) async fn did_close(session: Arc<Session>, params: lsp::DidCloseTextDocumentParams) {
+pub(crate) async fn did_close(
+    session: Arc<Session>,
+    params: lsp_types::DidCloseTextDocumentParams,
+) {
     let url = params.text_document.uri;
     session.remove_document(&url);
     let diagnostics = vec![];

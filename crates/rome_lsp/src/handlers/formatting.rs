@@ -1,12 +1,12 @@
 use crate::config::{FormatterWorkspaceSettings, WorkspaceSettings};
 use crate::line_index::{self, LineCol};
 use anyhow::{bail, Result};
-use lspower::lsp::*;
 use rome_analyze::FileId;
 use rome_js_formatter::{FormatOptions, IndentStyle, QuoteStyle};
 use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::{TextRange, TokenAtOffset};
 use std::str::FromStr;
+use tower_lsp::lsp_types::*;
 use tracing::info;
 
 /// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)

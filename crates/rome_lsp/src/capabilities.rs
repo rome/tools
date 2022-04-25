@@ -1,4 +1,4 @@
-use lspower::lsp::{
+use tower_lsp::lsp_types::{
     CodeActionProviderCapability, DocumentOnTypeFormattingOptions, OneOf, ServerCapabilities,
     TextDocumentSyncCapability, TextDocumentSyncKind,
 };
