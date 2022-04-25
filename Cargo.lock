@@ -1266,7 +1266,7 @@ dependencies = [
 
 [[package]]
 name = "rome_cli"
-version = "0.0.0"
+version = "0.5.0"
 dependencies = [
  "crossbeam",
  "hdrhistogram",
