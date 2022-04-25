@@ -119,7 +119,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 
 /// Default list of ignored directories, in the future will be supplanted by
 /// detecting and parsing .ignore files
-const DEFAULT_IGNORE: &[&str] = &[".git", "node_modules", "."];
+const DEFAULT_IGNORE: &[&str] = &[".git"];
 
 /// Traverse a single directory, scheduling any file to execute the context
 /// handler and sub-directories for subsequent traversal
