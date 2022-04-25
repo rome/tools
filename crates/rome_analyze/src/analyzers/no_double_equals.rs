@@ -5,7 +5,7 @@ use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinar
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
-use crate::analysis_server::{Rule, RuleCodeFix, RuleDiagnostic};
+use crate::registry::{Rule, RuleCodeFix, RuleDiagnostic};
 
 pub(crate) enum NoDoubleEquals {}
 
@@ -14,9 +14,9 @@ impl Rule for NoDoubleEquals {
     const ACTION_CATEGORIES: &'static [crate::ActionCategory] = &[];
 
     type Query = JsBinaryExpression;
-    type Result = JsSyntaxToken;
+    type State = JsSyntaxToken;
 
-    fn run(n: &Self::Query) -> Option<Self::Result> {
+    fn run(n: &Self::Query) -> Option<Self::State> {
         let op = n.operator_token().ok()?;
 
         if !matches!(op.kind(), EQ2 | NEQ) {
@@ -31,7 +31,7 @@ impl Rule for NoDoubleEquals {
         Some(op)
     }
 
-    fn diagnostic(_: &Self::Query, op: &Self::Result) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &Self::Query, op: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
             severity: Severity::Error,
             message: markup! {
@@ -42,8 +42,8 @@ impl Rule for NoDoubleEquals {
         })
     }
 
-    fn code_fix(root: &JsAnyRoot, _: &Self::Query, op: &Self::Result) -> Option<RuleCodeFix> {
-        let root = root.clone().replace_token_retain_trivia(
+    fn code_fix(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<RuleCodeFix> {
+        let root = root.replace_token_retain_trivia(
             op.clone(),
             make::token(if op.kind() == EQ2 { T![===] } else { T![!==] }),
         )?;

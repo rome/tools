@@ -1,17 +1,18 @@
 use rome_js_syntax::{JsAnyRoot, TextRange};
 use rome_rowan::AstNode;
 
-mod analysis_server;
 mod analyzers;
 mod assists;
 mod categories;
+mod registry;
 mod signals;
 
-use crate::analysis_server::RuleRegistry;
 pub use crate::categories::ActionCategory;
+use crate::registry::RuleRegistry;
 pub use crate::signals::{AnalyzerCodeFix, AnalyzerDiagnostic, AnalyzerSignal};
 
-/// Allows filtering the list of rules and source code range to emit diagnostics or code fixes for
+/// Allows filtering the list of rules that will be executed in a run of the analyzer,
+/// and at what source code range signals (diagnostics or code fixes) may be raised
 #[derive(Default)]
 pub struct AnalysisFilter<'a> {
     /// Only allow rules with these names to emit diagnostics

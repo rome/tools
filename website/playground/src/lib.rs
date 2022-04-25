@@ -196,7 +196,7 @@ pub fn run(
 
             fmt.write_markup(markup! {
                 {DiagnosticHeader {
-                    code: Some(diag.rule),
+                    code: Some(diag.rule_name),
                     locus: None,
                     severity,
                     title: markup! { {diag.message} },

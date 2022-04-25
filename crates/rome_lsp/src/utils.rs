@@ -56,7 +56,7 @@ pub(crate) fn code_fix_to_lsp(
                 lsp_types::NumberOrString::Number(_) => None,
             })?;
 
-            if code == code_fix.rule {
+            if code == code_fix.rule_name {
                 Some(d.clone())
             } else {
                 None
@@ -90,7 +90,7 @@ pub(crate) fn code_fix_to_lsp(
         .contains(&ActionCategory::Refactor);
 
     lsp_types::CodeAction {
-        title: String::from(code_fix.rule),
+        title: String::from(code_fix.rule_name),
         kind: if is_safe_fix {
             Some(lsp_types::CodeActionKind::QUICKFIX)
         } else if is_refactor {
@@ -121,7 +121,7 @@ pub(crate) fn diagnostic_to_lsp(
 ) -> lsp_types::Diagnostic {
     let text_range = diagnostic.range;
     let lsp_range = crate::utils::range(line_index, text_range);
-    let code = tower_lsp::lsp_types::NumberOrString::String(diagnostic.rule.into());
+    let code = tower_lsp::lsp_types::NumberOrString::String(diagnostic.rule_name.into());
     let source = Some("rome".into());
 
     let mut message = Vec::new();

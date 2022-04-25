@@ -262,18 +262,24 @@ impl DiffReport {
             state: const_mutex(Vec::new()),
         };
 
+        // Use an atomic Once to register an exit callback the first time any
+        // testing thread requests an instance of the Reporter
         static ONCE: Once = Once::new();
         ONCE.call_once(|| {
+            // Import the atexit function from libc
             extern "C" {
                 fn atexit(f: extern "C" fn()) -> c_int;
             }
 
+            // Trampoline function into the reporter printing logic with the
+            // correct extern C ABI
             extern "C" fn print_report() {
                 REPORTER.print();
             }
 
             countme::enable(true);
 
+            // Register the print_report function to be called when the process exits
             unsafe {
                 atexit(print_report);
             }

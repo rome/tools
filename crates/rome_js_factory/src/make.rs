@@ -19,7 +19,7 @@ pub fn token(kind: JsSyntaxKind) -> JsSyntaxToken {
 
 /// Create a new token with the specified syntax kind, and a whitespace trivia
 /// piece on both the leading and trailing positions
-pub fn token_with_space(kind: JsSyntaxKind) -> JsSyntaxToken {
+pub fn token_decorated_with_space(kind: JsSyntaxKind) -> JsSyntaxToken {
     if let Some(text) = kind.to_string() {
         JsSyntaxToken::new_detached(
             kind,

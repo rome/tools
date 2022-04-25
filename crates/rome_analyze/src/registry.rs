@@ -93,18 +93,18 @@ pub(crate) trait Rule {
     const ACTION_CATEGORIES: &'static [ActionCategory];
 
     type Query: AstNode + 'static;
-    type Result: 'static;
+    type State: 'static;
 
-    fn run(node: &Self::Query) -> Option<Self::Result>;
+    fn run(node: &Self::Query) -> Option<Self::State>;
 
-    fn diagnostic(_node: &Self::Query, _result: &Self::Result) -> Option<RuleDiagnostic> {
+    fn diagnostic(_node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
         None
     }
 
     fn code_fix(
-        _root: &JsAnyRoot,
+        _root: JsAnyRoot,
         _node: &Self::Query,
-        _result: &Self::Result,
+        _state: &Self::State,
     ) -> Option<RuleCodeFix> {
         None
     }

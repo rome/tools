@@ -10,7 +10,7 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::categories::ActionCategory;
 
-use crate::analysis_server::{Rule, RuleCodeFix, RuleDiagnostic};
+use crate::registry::{Rule, RuleCodeFix, RuleDiagnostic};
 
 pub(crate) enum NoDelete {}
 
@@ -19,9 +19,9 @@ impl Rule for NoDelete {
     const ACTION_CATEGORIES: &'static [ActionCategory] = &[];
 
     type Query = JsUnaryExpression;
-    type Result = MemberExpression;
+    type State = MemberExpression;
 
-    fn run(node: &Self::Query) -> Option<Self::Result> {
+    fn run(node: &Self::Query) -> Option<Self::State> {
         let op = node.operator().ok()?;
         if op != JsUnaryOperator::Delete {
             return None;
@@ -31,7 +31,7 @@ impl Rule for NoDelete {
         MemberExpression::try_from(argument).ok()
     }
 
-    fn diagnostic(node: &Self::Query, _result: &Self::Result) -> Option<RuleDiagnostic> {
+    fn diagnostic(node: &Self::Query, _state: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
             severity: Severity::Warning,
             range: node.syntax().text_trimmed_range(),
@@ -42,16 +42,12 @@ impl Rule for NoDelete {
         })
     }
 
-    fn code_fix(
-        root: &JsAnyRoot,
-        node: &Self::Query,
-        result: &Self::Result,
-    ) -> Option<RuleCodeFix> {
-        let root = root.clone().replace_node_retain_trivia(
+    fn code_fix(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleCodeFix> {
+        let root = root.replace_node_retain_trivia(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
-                result.clone().try_into().ok()?,
-                make::token_with_space(T![=]),
+                state.clone().try_into().ok()?,
+                make::token_decorated_with_space(T![=]),
                 JsAnyExpression::from(make::js_identifier_expression(
                     make::js_reference_identifier(make::ident("undefined")),
                 )),

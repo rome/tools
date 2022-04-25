@@ -4,7 +4,7 @@ use rome_console::MarkupBuf;
 use rome_diagnostics::Severity;
 use rome_js_syntax::{JsAnyRoot, TextRange};
 
-use crate::{analysis_server::Rule, ActionCategory};
+use crate::{registry::Rule, ActionCategory};
 
 /// Event raised by the analyzer when a [Rule](crate::analysis_server::Rule)
 /// emits a diagnostic, a code fix, or both
@@ -17,7 +17,7 @@ pub trait AnalyzerSignal {
 /// with additional informations about the rule injected by the analyzer
 #[derive(Debug, PartialEq, Eq)]
 pub struct AnalyzerDiagnostic {
-    pub rule: &'static str,
+    pub rule_name: &'static str,
     pub severity: Severity,
     pub range: TextRange,
     pub message: MarkupBuf,
@@ -27,7 +27,7 @@ pub struct AnalyzerDiagnostic {
 /// with additional informations about the rule injected by the analyzer
 #[derive(Debug, PartialEq, Eq)]
 pub struct AnalyzerCodeFix {
-    pub rule: &'static str,
+    pub rule_name: &'static str,
     pub action_categories: &'static [ActionCategory],
     pub root: JsAnyRoot,
 }
@@ -36,7 +36,7 @@ pub struct AnalyzerCodeFix {
 pub(crate) struct RuleSignal<'a, R: Rule> {
     root: &'a JsAnyRoot,
     node: R::Query,
-    result: R::Result,
+    state: R::State,
     _rule: PhantomData<R>,
 }
 
@@ -44,12 +44,12 @@ impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
     pub(crate) fn new_boxed(
         root: &'a JsAnyRoot,
         node: R::Query,
-        result: R::Result,
+        state: R::State,
     ) -> Box<dyn AnalyzerSignal + 'a> {
         Box::new(Self {
             root,
             node,
-            result,
+            state,
             _rule: PhantomData,
         })
     }
@@ -57,8 +57,8 @@ impl<'a, R: Rule + 'static> RuleSignal<'a, R> {
 
 impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        R::diagnostic(&self.node, &self.result).map(|diag| AnalyzerDiagnostic {
-            rule: R::NAME,
+        R::diagnostic(&self.node, &self.state).map(|diag| AnalyzerDiagnostic {
+            rule_name: R::NAME,
             severity: diag.severity,
             range: diag.range,
             message: diag.message,
@@ -66,8 +66,8 @@ impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
     }
 
     fn code_fix(&self) -> Option<AnalyzerCodeFix> {
-        R::code_fix(self.root, &self.node, &self.result).map(|code_fix| AnalyzerCodeFix {
-            rule: R::NAME,
+        R::code_fix(self.root.clone(), &self.node, &self.state).map(|code_fix| AnalyzerCodeFix {
+            rule_name: R::NAME,
             action_categories: R::ACTION_CATEGORIES,
             root: code_fix.root,
         })

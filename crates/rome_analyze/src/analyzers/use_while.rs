@@ -4,7 +4,7 @@ use rome_js_factory::make;
 use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::analysis_server::{Rule, RuleCodeFix, RuleDiagnostic};
+use crate::registry::{Rule, RuleCodeFix, RuleDiagnostic};
 
 pub(crate) enum UseWhile {}
 
@@ -13,9 +13,9 @@ impl Rule for UseWhile {
     const ACTION_CATEGORIES: &'static [crate::ActionCategory] = &[];
 
     type Query = JsForStatement;
-    type Result = ();
+    type State = ();
 
-    fn run(n: &Self::Query) -> Option<Self::Result> {
+    fn run(n: &Self::Query) -> Option<Self::State> {
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -41,7 +41,7 @@ impl Rule for UseWhile {
         }
     }
 
-    fn diagnostic(node: &Self::Query, _: &Self::Result) -> Option<RuleDiagnostic> {
+    fn diagnostic(node: &Self::Query, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic {
             severity: Severity::Error,
             message: markup! {
@@ -52,7 +52,7 @@ impl Rule for UseWhile {
         })
     }
 
-    fn code_fix(root: &JsAnyRoot, node: &Self::Query, _: &Self::Result) -> Option<RuleCodeFix> {
+    fn code_fix(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<RuleCodeFix> {
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -65,10 +65,10 @@ impl Rule for UseWhile {
             body,
         } = node.as_fields();
 
-        let root = root.clone().replace_node_retain_trivia(
+        let root = root.replace_node_retain_trivia(
             JsAnyStatement::from(node.clone()),
             JsAnyStatement::from(make::js_while_statement(
-                make::token_with_space(T![while]),
+                make::token_decorated_with_space(T![while]),
                 l_paren_token.ok()?,
                 test?,
                 r_paren_token.ok()?,
