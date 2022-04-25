@@ -29,6 +29,8 @@ export async function activate(context: ExtensionContext) {
 
 	// only override serverOptions.options when developing extension,
 	// this is convenient for debugging
+	// Before, every time we modify the client package, we need to rebuild vscode extension and install, for now, we could use Launching Client or press F5 to open a separate debug window and doing some check, finally we could bundle the vscode and do some final check.
+	// Passing such variable via `Launch.json`, you need not to add an extra environment variable or change the setting.json `rome.lspBin`,
 	if (process.env.DEBUG_SERVER_PATH) {
 		serverOptions.options = { env: { ...process.env } };
 	}
