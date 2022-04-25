@@ -10,6 +10,8 @@ use std::convert::TryFrom;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
+use super::utils::{parse_separated_list, parse_str, parse_until_chr, parse_whitespace0};
+
 const CASES_PATH: &str = "xtask/coverage/Typescript/tests/baselines/reference";
 const BASE_PATH: &str = "xtask/coverage/Typescript";
 
@@ -99,8 +101,17 @@ impl TestSuite for SymbolsMicrosoftTsTestSuite {
 }
 
 #[derive(Debug)]
+struct Decl {
+    file: String,
+    row_start: Option<usize>,
+    col_start: Option<usize>,
+}
+
+#[derive(Debug)]
 struct Symbol {
     name: String,
+    path: String,
+    decls: Vec<Decl>,
 }
 
 #[derive(Debug)]
@@ -109,29 +120,76 @@ struct SymbolsFile {
     symbols: Vec<Symbol>,
 }
 
-/// see xtask\coverage\Typescript\src\harness\typeWriter.ts
-fn load_symbols_file(txt: &str) -> SymbolsFile {
-    // const declText = `Decl(${ fileName }, ${ isLibFile ? "--" : declLineAndCharacter.line }, ${ isLibFile ? "--" : declLineAndCharacter.character })`;
+fn parse_decl(input: &str) -> Option<(&str, Decl)> {
+    let (input, _) = parse_str(input, "Decl")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, "(")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, file) = parse_until_chr(input, |x| x.is_whitespace() || x == ',')?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, ",")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, row_start) = parse_until_chr(input, |x| x.is_whitespace() || x == ',')?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, ",")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, col_start) = parse_until_chr(input, |x| x.is_whitespace() || x == ')')?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, ")")?;
+    Some((
+        input,
+        Decl {
+            file: file.to_string(),
+            row_start: row_start.parse().ok(),
+            col_start: col_start.parse().ok(),
+        },
+    ))
+}
 
+/// see xtask\coverage\Typescript\src\harness\typeWriter.ts
+/// to understand how the symbol line is generated
+/// example:
+/// >Cell : Symbol(Cell, Decl(2dArrays.ts, 0, 0))
+fn parse_symbol(input: &str) -> Option<Symbol> {
+    let (input, _) = parse_str(input, ">")?;
+    let (input, name) = parse_until_chr(input, |x| x.is_whitespace() || x == ':')?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, ":")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, "Symbol")?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, "(")?;
+    let (input, path) = parse_until_chr(input, |x| x.is_whitespace() || x == ',')?;
+    let (input, _) = parse_whitespace0(input);
+    let (input, _) = parse_str(input, ",")?;
+    let (input, _) = parse_whitespace0(input);
+
+    let (_, decls) = parse_separated_list(
+        input,
+        parse_decl,
+        |s| parse_str(s, ",").map(|x| x.0).unwrap_or(s),
+        |s| parse_whitespace0(s).0,
+    );
+
+    Some(Symbol {
+        name: name.to_string(),
+        path: path.to_string(),
+        decls,
+    })
+}
+
+fn load_symbols_file(txt: &str) -> SymbolsFile {
     let mut lines = txt.lines();
 
+    // first line example
     // === tests/cases/compiler/2dArrays.ts ===
     let code_file = lines.next().unwrap().replace("===", "").trim().to_string();
 
     let mut symbols = vec![];
 
     while let Some(line) = lines.next() {
-        // >Cell : Symbol(Cell, Decl(2dArrays.ts, 0, 0))
-        if line.starts_with(">") {
-            let name = line
-                .split(":")
-                .next()
-                .unwrap()
-                .trim()
-                .trim_start_matches(">");
-            symbols.push(Symbol {
-                name: name.to_string(),
-            });
+        if let Some(symbol) = parse_symbol(line) {
+            symbols.push(symbol);
         }
     }
 
