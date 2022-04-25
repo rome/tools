@@ -11,15 +11,12 @@ mod generate_syntax_kinds;
 mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
+mod termcolorful;
 mod unicode;
-
 use proc_macro2::TokenStream;
 use quote::quote;
 use std::path::Path;
 use std::str::FromStr;
-
-use termcolor::Color;
-use termcolor::{ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 use xtask::{glue::fs2, Mode, Result};
 
@@ -54,6 +51,19 @@ pub enum LanguageKind {
     Css,
     Json,
 }
+
+impl std::fmt::Display for LanguageKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            LanguageKind::Js => write!(f, "js"),
+            LanguageKind::Css => write!(f, "css"),
+            LanguageKind::Json => write!(f, "json"),
+        }
+    }
+}
+
+pub const ALL_LANGUAGE_KIND: [LanguageKind; 3] =
+    [LanguageKind::Js, LanguageKind::Css, LanguageKind::Json];
 
 impl FromStr for LanguageKind {
     type Err = String;
@@ -174,14 +184,4 @@ pub fn to_lower_snake_case(s: &str) -> String {
         buf.push(c.to_ascii_lowercase());
     }
     buf
-}
-
-pub fn println_string_with_fg_color(content: String, color: Color) -> std::io::Result<()> {
-    let mut stdout = StandardStream::stdout(ColorChoice::Auto);
-    stdout
-        .set_color(ColorSpec::new().set_fg(Some(color)))
-        .unwrap();
-    println!("{}", content);
-    stdout.set_color(ColorSpec::new().set_fg(None)).unwrap();
-    Ok(())
 }
