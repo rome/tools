@@ -15,7 +15,7 @@ impl FormatNode for JsObjectExpression {
         let members = members.format(formatter)?;
 
         // EXAMPLE: Remove feature flag example before merging
-        if members.is_empty() || rome_features::flags().new_spacing {
+        if members.is_empty() || rome_features::flags().new_spacing() {
             formatter.format_delimited_soft_block_indent(&l_curly_token?, members, &r_curly_token?)
         } else {
             formatter.format_delimited_soft_block_spaces(&l_curly_token?, members, &r_curly_token?)

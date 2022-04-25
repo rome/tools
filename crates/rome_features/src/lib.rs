@@ -22,8 +22,7 @@ macro_rules! declare_feature_flags {
         /// State of all feature flags
         pub struct FeatureFlags {
             $(
-                $(#[doc = $doc])*
-                pub $feature: bool,
+                $feature: bool,
             )*
         }
 
@@ -35,6 +34,11 @@ macro_rules! declare_feature_flags {
             pub const NONE: Self = Self {
                 $( $feature: false, )*
             };
+
+            $(
+                $(#[doc = $doc])*
+                pub fn $feature(&self) -> bool { self.$feature }
+            )*
         }
 
         impl FromStr for FeatureFlags {
