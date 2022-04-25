@@ -34,8 +34,7 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
         crate::metrics::init_metrics();
     }
 
-    let experimental = session.args.contains("--experimental");
-    if experimental {
+    if session.args.contains("--unstable") {
         rome_features::set_flags(FeatureFlags::ALL);
     }
 
