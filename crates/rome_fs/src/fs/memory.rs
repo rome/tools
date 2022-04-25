@@ -191,6 +191,10 @@ mod tests {
             fn handle_file(&self, path: &Path, _: FileId) {
                 self.visited.lock().push(path.into())
             }
+
+            fn use_gitignore(&self) -> bool {
+                true
+            }
         }
 
         let (interner, _) = AtomicInterner::new();
