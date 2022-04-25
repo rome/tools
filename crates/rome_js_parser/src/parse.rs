@@ -193,7 +193,7 @@ pub struct Symbols {
     pub symbols: Vec<Symbol>,
 }
 
-pub fn symbols(root: JsSyntaxNode) -> Symbols {
+pub fn symbols(_root: JsSyntaxNode) -> Symbols {
     Symbols { symbols: vec![] }
 }
 

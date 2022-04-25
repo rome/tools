@@ -1,16 +1,13 @@
 pub fn parse_str<'a>(input: &'a str, s: &'a str) -> Option<(&'a str, &'a str)> {
-    if input.starts_with(s) {
-        Some((&input[s.len()..], &input[0..s.len()]))
-    } else {
-        None
-    }
+    input
+        .strip_prefix(s)
+        .map(|stripped| (stripped, &input[0..s.len()]))
 }
 
-pub fn parse_until_chr<'a>(input: &'a str, f: impl Fn(char) -> bool) -> Option<(&'a str, &'a str)> {
+pub fn parse_until_chr(input: &'_ str, f: impl Fn(char) -> bool) -> Option<(&'_ str, &'_ str)> {
     let mut qty = 0;
 
-    let mut chars = input.chars();
-    while let Some(chr) = chars.next() {
+    for chr in input.chars() {
         if f(chr) {
             break;
         }
@@ -25,7 +22,7 @@ pub fn parse_until_chr<'a>(input: &'a str, f: impl Fn(char) -> bool) -> Option<(
     }
 }
 
-pub fn parse_whitespace0<'a>(input: &'a str) -> (&'a str, &'a str) {
+pub fn parse_whitespace0(input: &'_ str) -> (&'_ str, &'_ str) {
     parse_until_chr(input, |x| !x.is_whitespace()).unwrap_or((input, ""))
 }
 
@@ -35,7 +32,6 @@ pub fn parse_separated_list<T>(
     separator: impl Fn(&str) -> &str,
     trivia: impl Fn(&str) -> &str,
 ) -> (&str, Vec<T>) {
-    let mut qty = 0;
     let mut list = vec![];
 
     let mut input = input;
@@ -54,5 +50,5 @@ pub fn parse_separated_list<T>(
         input = s;
     }
 
-    (&input[..qty], list)
+    (input, list)
 }

@@ -1,12 +1,6 @@
 use crate::check_file_encoding;
-use crate::runner::{
-    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFile, TestCaseFiles, TestRunOutcome,
-    TestSuite,
-};
-use regex::Regex;
-use rome_js_parser::{ModuleKind, SourceType};
-use rome_rowan::{AstNode, SyntaxKind};
-use std::convert::TryFrom;
+use crate::runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite};
+use rome_js_parser::SourceType;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
@@ -63,7 +57,10 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
             }
         } else {
             for (expected, actual) in expected.symbols.iter().zip(actual.symbols) {
-                if expected.name != actual.name {
+                let are_names_eq = expected.name == actual.name;
+                let are_paths_eq = expected.name == actual.name;
+                //TODO check decls
+                if !are_names_eq || !are_paths_eq {
                     return TestRunOutcome::IncorrectlyErrored {
                         files: t,
                         errors: vec![],
@@ -100,21 +97,20 @@ impl TestSuite for SymbolsMicrosoftTsTestSuite {
     }
 }
 
-#[derive(Debug)]
+#[allow(dead_code)]
 struct Decl {
     file: String,
     row_start: Option<usize>,
     col_start: Option<usize>,
 }
 
-#[derive(Debug)]
+#[allow(dead_code)]
 struct Symbol {
     name: String,
     path: String,
     decls: Vec<Decl>,
 }
 
-#[derive(Debug)]
 struct SymbolsFile {
     code_file: PathBuf,
     symbols: Vec<Symbol>,
@@ -187,7 +183,7 @@ fn load_symbols_file(txt: &str) -> SymbolsFile {
 
     let mut symbols = vec![];
 
-    while let Some(line) = lines.next() {
+    for line in lines {
         if let Some(symbol) = parse_symbol(line) {
             symbols.push(symbol);
         }
