@@ -158,6 +158,7 @@ const ALL_SUITES: &str = "*";
 const ALL_JS_SUITES: &str = "js";
 const ALL_TS_SUITES: &str = "ts";
 const ALL_JSX_SUITES: &str = "jsx";
+const ALL_SYMBOLS_SUITES: &str = "symbols";
 
 fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
     let suites = suites.unwrap_or("*").to_lowercase();
@@ -170,7 +171,8 @@ fn get_test_suites(suites: Option<&str>) -> Vec<Box<dyn TestSuite>> {
             ALL_JS_SUITES | "javascript" => ids.extend(["js/262"]),
             ALL_TS_SUITES | "typescript" => ids.extend(["ts/microsoft", "ts/babel"]),
             ALL_JSX_SUITES => ids.extend(["jsx/babel"]),
-            ALL_SUITES => ids.extend(["js", "ts", "jsx"]),
+            ALL_SYMBOLS_SUITES => ids.extend(["symbols/msts"]),
+            ALL_SUITES => ids.extend(["js", "ts", "jsx", "symbols"]),
 
             "js/262" => suites.push(Box::new(Test262TestSuite)),
             "ts/microsoft" => suites.push(Box::new(MicrosoftTypescriptTestSuite)),
