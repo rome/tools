@@ -1,12 +1,12 @@
 import { SourceType } from "./types";
 
 interface Props {
-	setIsTypeScript: (b: boolean) => void,
-	isTypeScript: boolean,
-	setIsJsx: (b: boolean) => void,
-	isJsx: boolean,
-	setSourceType: (v: SourceType) => void,
-	sourceType: SourceType,
+	setIsTypeScript: (b: boolean) => void;
+	isTypeScript: boolean;
+	setIsJsx: (b: boolean) => void;
+	isJsx: boolean;
+	setSourceType: (v: SourceType) => void;
+	sourceType: SourceType;
 }
 
 export default function SourceTypeSelect(
