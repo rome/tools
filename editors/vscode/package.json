@@ -125,7 +125,7 @@
 				"rome.unstable": {
 					"type": "boolean",
 					"default": false,
-					"markdownDescription": "Enables unstable features"
+					"markdownDescription": "**BETA**: enables unstable features"
 				}
 			}
 		}
