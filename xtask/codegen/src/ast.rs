@@ -46,7 +46,7 @@ pub fn generate_ast(mode: Mode, language_kind_list: Vec<String>) -> Result<()> {
     for kind in codegen_language_kinds {
         println_string_with_fg_color(
             format!(
-                "-------------------Generating AST for {}-------------------",
+                "-------------------Generating Grammar for {}-------------------",
                 kind
             ),
             Color::Green,
