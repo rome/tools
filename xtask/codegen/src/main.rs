@@ -8,10 +8,14 @@ fn main() -> Result<()> {
 
     let mut args = Arguments::from_env();
     let command = args.subcommand()?.unwrap_or_default();
-
     match command.as_str() {
         "grammar" => {
-            generate_ast(Mode::Overwrite)?;
+            let arg_list = args.finish();
+            let language_list = arg_list
+                .into_iter()
+                .filter_map(|arg| arg.to_str().map(|item| item.to_string()))
+                .collect::<Vec<_>>();
+            generate_ast(Mode::Overwrite, language_list)?;
             Ok(())
         }
         "formatter" => {

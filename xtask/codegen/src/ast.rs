@@ -2,6 +2,7 @@
 //! This is derived from rust-analyzer/xtask/codegen
 
 use std::collections::{HashMap, HashSet, VecDeque};
+use std::str::FromStr;
 use std::vec;
 
 use super::{
@@ -12,6 +13,8 @@ use crate::css_kinds_src::CSS_KINDS_SRC;
 use crate::generate_syntax_factory::generate_syntax_factory;
 use crate::json_kinds_src::JSON_KINDS_SRC;
 use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
+use crate::termcolorful::{println_string_with_fg_color, Color};
+use crate::ALL_LANGUAGE_KIND;
 use crate::{
     generate_macros::generate_macros,
     generate_nodes::generate_nodes,
@@ -25,18 +28,37 @@ use xtask::{project_root, Result};
 // these node won't generate any code
 pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 
-pub fn generate_ast(mode: Mode) -> Result<()> {
-    let mut ast = load_js_ast();
-    ast.sort();
-    generate_syntax(ast, &mode, LanguageKind::Js)?;
-
-    let mut ast = load_css_ast();
-    ast.sort();
-    generate_syntax(ast, &mode, LanguageKind::Css)?;
-
-    let mut ast = load_json_ast();
-    ast.sort();
-    generate_syntax(ast, &mode, LanguageKind::Json)?;
+pub fn generate_ast(mode: Mode, language_kind_list: Vec<String>) -> Result<()> {
+    let codegen_language_kinds = if language_kind_list.is_empty() {
+        ALL_LANGUAGE_KIND.clone().to_vec()
+    } else {
+        language_kind_list
+            .iter()
+            .filter_map(|kind| match LanguageKind::from_str(kind) {
+                Ok(kind) => Some(kind),
+                Err(err) => {
+                    println_string_with_fg_color(err, Color::Red);
+                    None
+                }
+            })
+            .collect::<Vec<_>>()
+    };
+    for kind in codegen_language_kinds {
+        println_string_with_fg_color(
+            format!(
+                "-------------------Generating AST for {}-------------------",
+                kind
+            ),
+            Color::Green,
+        );
+        let mut ast = match kind {
+            LanguageKind::Js => load_js_ast(),
+            LanguageKind::Css => load_css_ast(),
+            LanguageKind::Json => load_json_ast(),
+        };
+        ast.sort();
+        generate_syntax(ast, &mode, kind)?;
+    }
 
     Ok(())
 }

@@ -11,11 +11,12 @@ mod generate_syntax_kinds;
 mod json_kinds_src;
 mod kinds_src;
 mod parser_tests;
+mod termcolorful;
 mod unicode;
-
 use proc_macro2::TokenStream;
 use quote::quote;
 use std::path::Path;
+use std::str::FromStr;
 
 use xtask::{glue::fs2, Mode, Result};
 
@@ -49,6 +50,35 @@ pub enum LanguageKind {
     Js,
     Css,
     Json,
+}
+
+impl std::fmt::Display for LanguageKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            LanguageKind::Js => write!(f, "js"),
+            LanguageKind::Css => write!(f, "css"),
+            LanguageKind::Json => write!(f, "json"),
+        }
+    }
+}
+
+pub const ALL_LANGUAGE_KIND: [LanguageKind; 3] =
+    [LanguageKind::Js, LanguageKind::Css, LanguageKind::Json];
+
+impl FromStr for LanguageKind {
+    type Err = String;
+
+    fn from_str(kind: &str) -> Result<Self, Self::Err> {
+        match kind {
+            "js" => Ok(LanguageKind::Js),
+            "css" => Ok(LanguageKind::Css),
+            "json" => Ok(LanguageKind::Json),
+            _ => Err(format!(
+                "Language {} not supported, please use: `js`, `css` or `json`",
+                kind
+            )),
+        }
+    }
 }
 
 impl LanguageKind {
