@@ -852,6 +852,7 @@ impl AstSeparatedList for JsonArrayElementList {
     type Language = Language;
     type Node = JsonValue;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsonArrayElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -918,6 +919,7 @@ impl AstSeparatedList for JsonMemberList {
     type Language = Language;
     type Node = JsonMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsonMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

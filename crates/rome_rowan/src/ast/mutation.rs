@@ -1,4 +1,6 @@
-use crate::{AstNode, SyntaxToken};
+use std::ops;
+
+use crate::{AstNode, AstNodeList, AstSeparatedList, SyntaxToken};
 
 pub trait AstNodeExt: AstNode {
     /// Return a new version of this node with the node `prev_node` replaced with `next_node`
@@ -143,5 +145,89 @@ where
                         .map(|piece| (piece.kind(), piece.text())),
                 ),
         )
+    }
+}
+
+pub trait AstNodeListExt: AstNodeList {
+    /// Replace a range of the children of this list with the content of an iterator
+    fn splice<R, I>(self, range: R, replace_with: I) -> Self
+    where
+        Self: AstNode<Language = <Self as AstNodeList>::Language> + Sized,
+        R: ops::RangeBounds<usize>,
+        I: IntoIterator<Item = Self::Node>;
+}
+
+impl<T> AstNodeListExt for T
+where
+    T: AstNodeList,
+{
+    fn splice<R, I>(self, range: R, replace_with: I) -> Self
+    where
+        Self: AstNode<Language = <Self as AstNodeList>::Language> + Sized,
+        R: ops::RangeBounds<usize>,
+        I: IntoIterator<Item = Self::Node>,
+    {
+        Self::unwrap_cast(
+            self.into_syntax_list().into_node().splice_slots(
+                range,
+                replace_with
+                    .into_iter()
+                    .map(|node| Some(node.into_syntax().into())),
+            ),
+        )
+    }
+}
+
+pub trait AstSeparatedListExt: AstSeparatedList {
+    /// Replace a range of the children of this list with the content of an iterator
+    ///
+    /// Both the range and iterator work on pairs of node and separator token
+    fn splice<R, I>(self, range: R, replace_with: I) -> Self
+    where
+        Self: AstNode<Language = <Self as AstSeparatedList>::Language> + Sized,
+        R: ops::RangeBounds<usize>,
+        I: IntoIterator<
+            Item = (
+                Self::Node,
+                Option<SyntaxToken<<Self as AstSeparatedList>::Language>>,
+            ),
+        >;
+}
+
+impl<T> AstSeparatedListExt for T
+where
+    T: AstSeparatedList,
+{
+    fn splice<R, I>(self, range: R, replace_with: I) -> Self
+    where
+        Self: AstNode<Language = <Self as AstSeparatedList>::Language> + Sized,
+        R: ops::RangeBounds<usize>,
+        I: IntoIterator<
+            Item = (
+                Self::Node,
+                Option<SyntaxToken<<Self as AstSeparatedList>::Language>>,
+            ),
+        >,
+    {
+        let start_bound = match range.start_bound() {
+            ops::Bound::Included(index) => ops::Bound::Included(*index * 2),
+            ops::Bound::Excluded(index) => ops::Bound::Excluded(*index * 2),
+            ops::Bound::Unbounded => ops::Bound::Unbounded,
+        };
+        let end_bound = match range.end_bound() {
+            ops::Bound::Included(index) => ops::Bound::Included(*index * 2),
+            ops::Bound::Excluded(index) => ops::Bound::Excluded(*index * 2),
+            ops::Bound::Unbounded => ops::Bound::Unbounded,
+        };
+
+        Self::unwrap_cast(self.into_syntax_list().into_node().splice_slots(
+            (start_bound, end_bound),
+            replace_with.into_iter().flat_map(|(node, separator)| {
+                [
+                    Some(node.into_syntax().into()),
+                    separator.map(|token| token.into()),
+                ]
+            }),
+        ))
     }
 }

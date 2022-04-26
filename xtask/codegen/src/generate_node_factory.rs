@@ -136,6 +136,53 @@ pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Resul
             }
         });
 
+    let lists = ast.lists().map(|(name, list)| {
+        let list_name = format_ident!("{}", name);
+        let kind = format_ident!("{}", to_upper_snake_case(name));
+        let factory_name = format_ident!("{}", to_lower_snake_case(name));
+        let item = format_ident!("{}", list.element_name);
+
+        if list.separator.is_some() {
+            quote! {
+                pub fn #factory_name<I>(items: I) -> #list_name
+                where
+                    I: IntoIterator<Item = (#item, Option<#syntax_token>)>,
+                    I::IntoIter: ExactSizeIterator,
+                {
+                    let items = items.into_iter();
+                    let length = items.len() * 2;
+
+                    let mut iter = items.flat_map(|(item, separator)| [
+                        Some(item.into_syntax().into()),
+                        separator.map(|token| token.into()),
+                    ]);
+
+                    #list_name::unwrap_cast(SyntaxNode::new_detached(
+                        #syntax_kind::#kind,
+                        // Wrap the iterator in fixed size Range since FlatMap doesn't
+                        // implement ExactSizeIterator (required by new_detached)
+                        (0..length).map(|_| iter.next().unwrap()),
+                    ))
+                }
+            }
+        } else {
+            quote! {
+                pub fn #factory_name<I>(items: I) -> #list_name
+                where
+                    I: IntoIterator<Item = #item>,
+                    I::IntoIter: ExactSizeIterator,
+                {
+                    #list_name::unwrap_cast(SyntaxNode::new_detached(
+                        #syntax_kind::#kind,
+                        items
+                            .into_iter()
+                            .map(|item| Some(item.into_syntax().into())),
+                    ))
+                }
+            }
+        }
+    });
+
     let output = quote! {
         #![allow(clippy::redundant_closure)]
         #![allow(clippy::too_many_arguments)]
@@ -143,6 +190,7 @@ pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Resul
         use rome_rowan::AstNode;
 
         #(#nodes)*
+        #(#lists)*
     };
 
     let pretty = xtask::reformat(output)?;

@@ -108,3 +108,39 @@ pub fn json_string(json_string_literal_token: SyntaxToken) -> JsonString {
         [Some(SyntaxElement::Token(json_string_literal_token))],
     ))
 }
+pub fn json_array_element_list<I>(items: I) -> JsonArrayElementList
+where
+    I: IntoIterator<Item = (JsonValue, Option<JsonSyntaxToken>)>,
+    I::IntoIter: ExactSizeIterator,
+{
+    let items = items.into_iter();
+    let length = items.len() * 2;
+    let mut iter = items.flat_map(|(item, separator)| {
+        [
+            Some(item.into_syntax().into()),
+            separator.map(|token| token.into()),
+        ]
+    });
+    JsonArrayElementList::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_ARRAY_ELEMENT_LIST,
+        (0..length).map(|_| iter.next().unwrap()),
+    ))
+}
+pub fn json_member_list<I>(items: I) -> JsonMemberList
+where
+    I: IntoIterator<Item = (JsonMember, Option<JsonSyntaxToken>)>,
+    I::IntoIter: ExactSizeIterator,
+{
+    let items = items.into_iter();
+    let length = items.len() * 2;
+    let mut iter = items.flat_map(|(item, separator)| {
+        [
+            Some(item.into_syntax().into()),
+            separator.map(|token| token.into()),
+        ]
+    });
+    JsonMemberList::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_MEMBER_LIST,
+        (0..length).map(|_| iter.next().unwrap()),
+    ))
+}

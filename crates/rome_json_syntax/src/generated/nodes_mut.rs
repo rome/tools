@@ -109,5 +109,3 @@ impl JsonString {
         )
     }
 }
-impl JsonArrayElementList {}
-impl JsonMemberList {}

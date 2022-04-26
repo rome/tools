@@ -109,6 +109,10 @@ impl AstSeparatedList for SeparatedExpressionList {
     fn syntax_list(&self) -> &SyntaxList<RawLanguage> {
         &self.syntax_list
     }
+
+    fn into_syntax_list(self) -> SyntaxList<RawLanguage> {
+        self.syntax_list
+    }
 }
 
 #[doc(hidden)]

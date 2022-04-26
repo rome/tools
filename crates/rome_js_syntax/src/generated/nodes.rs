@@ -32807,6 +32807,7 @@ impl AstSeparatedList for JsArrayAssignmentPatternElementList {
     type Language = Language;
     type Node = JsAnyArrayAssignmentPatternElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsArrayAssignmentPatternElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -32873,6 +32874,7 @@ impl AstSeparatedList for JsArrayBindingPatternElementList {
     type Language = Language;
     type Node = JsAnyArrayBindingPatternElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsArrayBindingPatternElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -32939,6 +32941,7 @@ impl AstSeparatedList for JsArrayElementList {
     type Language = Language;
     type Node = JsAnyArrayElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsArrayElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33005,6 +33008,7 @@ impl AstSeparatedList for JsCallArgumentList {
     type Language = Language;
     type Node = JsAnyCallArgument;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsCallArgumentList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33071,6 +33075,7 @@ impl AstNodeList for JsClassMemberList {
     type Language = Language;
     type Node = JsAnyClassMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsClassMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33137,6 +33142,7 @@ impl AstNodeList for JsConstructorModifierList {
     type Language = Language;
     type Node = TsAccessibilityModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsConstructorModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33203,6 +33209,7 @@ impl AstSeparatedList for JsConstructorParameterList {
     type Language = Language;
     type Node = JsAnyConstructorParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsConstructorParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33269,6 +33276,7 @@ impl AstNodeList for JsDirectiveList {
     type Language = Language;
     type Node = JsDirective;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsDirectiveList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33335,6 +33343,7 @@ impl AstSeparatedList for JsExportNamedFromSpecifierList {
     type Language = Language;
     type Node = JsExportNamedFromSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsExportNamedFromSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33401,6 +33410,7 @@ impl AstSeparatedList for JsExportNamedSpecifierList {
     type Language = Language;
     type Node = JsAnyExportNamedSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsExportNamedSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33467,6 +33477,7 @@ impl AstSeparatedList for JsImportAssertionEntryList {
     type Language = Language;
     type Node = JsAnyImportAssertionEntry;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsImportAssertionEntryList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33533,6 +33544,7 @@ impl AstNodeList for JsMethodModifierList {
     type Language = Language;
     type Node = JsAnyMethodModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsMethodModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33599,6 +33611,7 @@ impl AstNodeList for JsModuleItemList {
     type Language = Language;
     type Node = JsAnyModuleItem;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsModuleItemList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33665,6 +33678,7 @@ impl AstSeparatedList for JsNamedImportSpecifierList {
     type Language = Language;
     type Node = JsAnyNamedImportSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsNamedImportSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33731,6 +33745,7 @@ impl AstSeparatedList for JsObjectAssignmentPatternPropertyList {
     type Language = Language;
     type Node = JsAnyObjectAssignmentPatternMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsObjectAssignmentPatternPropertyList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33797,6 +33812,7 @@ impl AstSeparatedList for JsObjectBindingPatternPropertyList {
     type Language = Language;
     type Node = JsAnyObjectBindingPatternMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsObjectBindingPatternPropertyList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33863,6 +33879,7 @@ impl AstSeparatedList for JsObjectMemberList {
     type Language = Language;
     type Node = JsAnyObjectMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsObjectMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33929,6 +33946,7 @@ impl AstSeparatedList for JsParameterList {
     type Language = Language;
     type Node = JsAnyParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -33995,6 +34013,7 @@ impl AstNodeList for JsPropertyModifierList {
     type Language = Language;
     type Node = JsAnyPropertyModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsPropertyModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34061,6 +34080,7 @@ impl AstNodeList for JsStatementList {
     type Language = Language;
     type Node = JsAnyStatement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsStatementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34127,6 +34147,7 @@ impl AstNodeList for JsSwitchCaseList {
     type Language = Language;
     type Node = JsAnySwitchClause;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsSwitchCaseList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34193,6 +34214,7 @@ impl AstNodeList for JsTemplateElementList {
     type Language = Language;
     type Node = JsAnyTemplateElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsTemplateElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34259,6 +34281,7 @@ impl AstSeparatedList for JsVariableDeclaratorList {
     type Language = Language;
     type Node = JsVariableDeclarator;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsVariableDeclaratorList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34325,6 +34348,7 @@ impl AstNodeList for JsxAttributeList {
     type Language = Language;
     type Node = JsxAnyAttribute;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsxAttributeList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34391,6 +34415,7 @@ impl AstNodeList for JsxChildList {
     type Language = Language;
     type Node = JsxAnyChild;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for JsxChildList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34457,6 +34482,7 @@ impl AstSeparatedList for TsEnumMemberList {
     type Language = Language;
     type Node = TsEnumMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsEnumMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34523,6 +34549,7 @@ impl AstNodeList for TsIndexSignatureModifierList {
     type Language = Language;
     type Node = TsAnyIndexSignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsIndexSignatureModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34589,6 +34616,7 @@ impl AstSeparatedList for TsIntersectionTypeElementList {
     type Language = Language;
     type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsIntersectionTypeElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34655,6 +34683,7 @@ impl AstNodeList for TsMethodSignatureModifierList {
     type Language = Language;
     type Node = TsAnyMethodSignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsMethodSignatureModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34721,6 +34750,7 @@ impl AstNodeList for TsPropertyParameterModifierList {
     type Language = Language;
     type Node = TsAnyPropertyParameterModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsPropertyParameterModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34787,6 +34817,7 @@ impl AstNodeList for TsPropertySignatureModifierList {
     type Language = Language;
     type Node = TsAnyPropertySignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsPropertySignatureModifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34853,6 +34884,7 @@ impl AstNodeList for TsTemplateElementList {
     type Language = Language;
     type Node = TsAnyTemplateElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTemplateElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34919,6 +34951,7 @@ impl AstSeparatedList for TsTupleTypeElementList {
     type Language = Language;
     type Node = TsAnyTupleTypeElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTupleTypeElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -34985,6 +35018,7 @@ impl AstSeparatedList for TsTypeArgumentList {
     type Language = Language;
     type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTypeArgumentList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -35051,6 +35085,7 @@ impl AstSeparatedList for TsTypeList {
     type Language = Language;
     type Node = TsNameWithTypeArguments;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTypeList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -35117,6 +35152,7 @@ impl AstNodeList for TsTypeMemberList {
     type Language = Language;
     type Node = TsAnyTypeMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTypeMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -35183,6 +35219,7 @@ impl AstSeparatedList for TsTypeParameterList {
     type Language = Language;
     type Node = TsTypeParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsTypeParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -35249,6 +35286,7 @@ impl AstSeparatedList for TsUnionTypeVariantList {
     type Language = Language;
     type Node = TsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for TsUnionTypeVariantList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

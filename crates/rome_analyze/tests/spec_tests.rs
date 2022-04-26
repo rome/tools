@@ -27,11 +27,18 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let parsed = parse(&input_code, 0, source_type);
     let root = parsed.tree();
 
-    // The test runner for the analyzer is currently designed to have a one-to-one
-    // mapping between test case and analyzer rules, so each testing file will be
-    // run through the analyzer with only the rule corresponding to the file name
-    // enabled, eg. `useWhile.js` will be analyzed with just the `useWhile` rule
-    let rule_name = input_file.file_stem().and_then(OsStr::to_str).unwrap();
+    // The test runner for the analyzer is currently designed to have a
+    // one-to-one mapping between test case and analyzer rules, so each testing
+    // file will be run through the analyzer with only the rule corresponding
+    // to the file name (or the name of the parent directory if it's not "specs")
+    // enabled, eg. `useWhile.js` and `useWhile/test.js` will be analyzed with
+    // just the `useWhile` rule
+    let rule_name = input_file
+        .parent()
+        .and_then(|parent| parent.file_name()?.to_str())
+        .filter(|parent| *parent != "specs")
+        .or_else(|| input_file.file_stem()?.to_str())
+        .unwrap();
     let filter = AnalysisFilter {
         rules: Some(slice::from_ref(&rule_name)),
         ..AnalysisFilter::default()

@@ -677,3 +677,129 @@ pub fn css_var_function_value(
         ],
     ))
 }
+pub fn css_any_selector_pattern_list<I>(items: I) -> CssAnySelectorPatternList
+where
+    I: IntoIterator<Item = CssAnySelectorPattern>,
+    I::IntoIter: ExactSizeIterator,
+{
+    CssAnySelectorPatternList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_ANY_SELECTOR_PATTERN_LIST,
+        items
+            .into_iter()
+            .map(|item| Some(item.into_syntax().into())),
+    ))
+}
+pub fn css_at_keyframes_item_list<I>(items: I) -> CssAtKeyframesItemList
+where
+    I: IntoIterator<Item = CssKeyframesBlock>,
+    I::IntoIter: ExactSizeIterator,
+{
+    CssAtKeyframesItemList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_AT_KEYFRAMES_ITEM_LIST,
+        items
+            .into_iter()
+            .map(|item| Some(item.into_syntax().into())),
+    ))
+}
+pub fn css_at_media_query_list<I>(items: I) -> CssAtMediaQueryList
+where
+    I: IntoIterator<Item = (CssAtMediaQuery, Option<CssSyntaxToken>)>,
+    I::IntoIter: ExactSizeIterator,
+{
+    let items = items.into_iter();
+    let length = items.len() * 2;
+    let mut iter = items.flat_map(|(item, separator)| {
+        [
+            Some(item.into_syntax().into()),
+            separator.map(|token| token.into()),
+        ]
+    });
+    CssAtMediaQueryList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_AT_MEDIA_QUERY_LIST,
+        (0..length).map(|_| iter.next().unwrap()),
+    ))
+}
+pub fn css_attribute_list<I>(items: I) -> CssAttributeList
+where
+    I: IntoIterator<Item = CssAttribute>,
+    I::IntoIter: ExactSizeIterator,
+{
+    CssAttributeList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_ATTRIBUTE_LIST,
+        items
+            .into_iter()
+            .map(|item| Some(item.into_syntax().into())),
+    ))
+}
+pub fn css_declaration_list<I>(items: I) -> CssDeclarationList
+where
+    I: IntoIterator<Item = CssDeclaration>,
+    I::IntoIter: ExactSizeIterator,
+{
+    CssDeclarationList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_DECLARATION_LIST,
+        items
+            .into_iter()
+            .map(|item| Some(item.into_syntax().into())),
+    ))
+}
+pub fn css_keyframes_selector_list<I>(items: I) -> CssKeyframesSelectorList
+where
+    I: IntoIterator<Item = (CssKeyframesSelector, Option<CssSyntaxToken>)>,
+    I::IntoIter: ExactSizeIterator,
+{
+    let items = items.into_iter();
+    let length = items.len() * 2;
+    let mut iter = items.flat_map(|(item, separator)| {
+        [
+            Some(item.into_syntax().into()),
+            separator.map(|token| token.into()),
+        ]
+    });
+    CssKeyframesSelectorList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_KEYFRAMES_SELECTOR_LIST,
+        (0..length).map(|_| iter.next().unwrap()),
+    ))
+}
+pub fn css_parameter_list<I>(items: I) -> CssParameterList
+where
+    I: IntoIterator<Item = CssParameter>,
+    I::IntoIter: ExactSizeIterator,
+{
+    CssParameterList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_PARAMETER_LIST,
+        items
+            .into_iter()
+            .map(|item| Some(item.into_syntax().into())),
+    ))
+}
+pub fn css_root<I>(items: I) -> CssRoot
+where
+    I: IntoIterator<Item = CssAnyRule>,
+    I::IntoIter: ExactSizeIterator,
+{
+    CssRoot::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_ROOT,
+        items
+            .into_iter()
+            .map(|item| Some(item.into_syntax().into())),
+    ))
+}
+pub fn css_selector_list<I>(items: I) -> CssSelectorList
+where
+    I: IntoIterator<Item = (CssSelector, Option<CssSyntaxToken>)>,
+    I::IntoIter: ExactSizeIterator,
+{
+    let items = items.into_iter();
+    let length = items.len() * 2;
+    let mut iter = items.flat_map(|(item, separator)| {
+        [
+            Some(item.into_syntax().into()),
+            separator.map(|token| token.into()),
+        ]
+    });
+    CssSelectorList::unwrap_cast(SyntaxNode::new_detached(
+        CssSyntaxKind::CSS_SELECTOR_LIST,
+        (0..length).map(|_| iter.next().unwrap()),
+    ))
+}

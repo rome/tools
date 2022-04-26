@@ -54,16 +54,6 @@ pub fn generate_nodes_mut(ast: &AstSrc, language_kind: LanguageKind) -> Result<S
         })
         .collect();
 
-    let lists = ast.lists().map(|(name, _)| {
-        let list_name = format_ident!("{}", name);
-
-        quote! {
-            impl #list_name {
-                // TODO
-            }
-        }
-    });
-
     let syntax_token = language_kind.syntax_token();
 
     let ast = quote! {
@@ -72,7 +62,6 @@ pub fn generate_nodes_mut(ast: &AstSrc, language_kind: LanguageKind) -> Result<S
         use crate::{generated::nodes::*, #syntax_token as SyntaxToken};
 
         #(#node_boilerplate_impls)*
-        #(#lists)*
     };
 
     let ast = ast

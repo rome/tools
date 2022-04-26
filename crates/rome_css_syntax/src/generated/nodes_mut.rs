@@ -809,12 +809,3 @@ impl CssVarFunctionValue {
         )
     }
 }
-impl CssAnySelectorPatternList {}
-impl CssAtKeyframesItemList {}
-impl CssAtMediaQueryList {}
-impl CssAttributeList {}
-impl CssDeclarationList {}
-impl CssKeyframesSelectorList {}
-impl CssParameterList {}
-impl CssRoot {}
-impl CssSelectorList {}

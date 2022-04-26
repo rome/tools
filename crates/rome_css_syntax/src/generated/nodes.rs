@@ -4286,6 +4286,7 @@ impl AstNodeList for CssAnySelectorPatternList {
     type Language = Language;
     type Node = CssAnySelectorPattern;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssAnySelectorPatternList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4352,6 +4353,7 @@ impl AstNodeList for CssAtKeyframesItemList {
     type Language = Language;
     type Node = CssKeyframesBlock;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssAtKeyframesItemList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4418,6 +4420,7 @@ impl AstSeparatedList for CssAtMediaQueryList {
     type Language = Language;
     type Node = CssAtMediaQuery;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssAtMediaQueryList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4484,6 +4487,7 @@ impl AstNodeList for CssAttributeList {
     type Language = Language;
     type Node = CssAttribute;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssAttributeList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4550,6 +4554,7 @@ impl AstNodeList for CssDeclarationList {
     type Language = Language;
     type Node = CssDeclaration;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssDeclarationList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4616,6 +4621,7 @@ impl AstSeparatedList for CssKeyframesSelectorList {
     type Language = Language;
     type Node = CssKeyframesSelector;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssKeyframesSelectorList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4682,6 +4688,7 @@ impl AstNodeList for CssParameterList {
     type Language = Language;
     type Node = CssParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4748,6 +4755,7 @@ impl AstNodeList for CssRoot {
     type Language = Language;
     type Node = CssAnyRule;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssRoot {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -4814,6 +4822,7 @@ impl AstSeparatedList for CssSelectorList {
     type Language = Language;
     type Node = CssSelector;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
 impl Debug for CssSelectorList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
