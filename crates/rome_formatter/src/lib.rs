@@ -187,6 +187,18 @@ impl FormatOptions {
             IndentStyle::Space(quantity) => quantity,
         }
     }
+    pub fn with_line_width(mut self, line_width: LineWidth) -> Self {
+        self.line_width = line_width;
+        self
+    }
+    pub fn with_indent_style(mut self, indent_style: IndentStyle) -> Self {
+        self.indent_style = indent_style;
+        self
+    }
+    pub fn with_quote_style(mut self, quote_style: QuoteStyle) -> Self {
+        self.quote_style = quote_style;
+        self
+    }
 }
 
 impl Display for FormatOptions {
