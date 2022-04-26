@@ -1,5 +1,6 @@
 use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
+use rome_formatter::group_elements;
 
 use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
 
@@ -33,12 +34,14 @@ impl FormatNode for JsImportNamedClause {
         Ok(format_elements![
             type_token,
             default,
-            name,
-            space_token(),
-            from,
-            space_token(),
-            source,
-            assertion
+            group_elements(format_elements![
+                name,
+                space_token(),
+                from,
+                space_token(),
+                source,
+                assertion
+            ]),
         ])
     }
 }
