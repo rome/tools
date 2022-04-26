@@ -173,7 +173,7 @@ impl GreenToken {
     }
 
     #[inline]
-    unsafe fn from_raw(ptr: ptr::NonNull<GreenTokenData>) -> GreenToken {
+    pub(crate) unsafe fn from_raw(ptr: ptr::NonNull<GreenTokenData>) -> GreenToken {
         let arc = Arc::from_raw(&ptr.as_ref().data as *const ReprThin);
         let arc = mem::transmute::<Arc<ReprThin>, ThinArc<GreenTokenHead, u8>>(arc);
         GreenToken { ptr: arc }

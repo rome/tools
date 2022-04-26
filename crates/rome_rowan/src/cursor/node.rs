@@ -1,5 +1,5 @@
 use crate::cursor::{NodeData, SyntaxElement, SyntaxToken, SyntaxTrivia};
-use crate::green::{Child, Children, GreenElement, Slot};
+use crate::green::{Child, Children, GreenElementRef, Slot};
 use crate::{
     Direction, GreenNode, GreenNodeData, NodeOrToken, RawSyntaxKind, SyntaxNodeText, TokenAtOffset,
     WalkEvent,
@@ -11,6 +11,8 @@ use std::rc::Rc;
 use std::{fmt, iter};
 use text_size::{TextRange, TextSize};
 
+use super::{GreenElement, NodeKind, WeakGreenElement};
+
 #[derive(Clone)]
 pub(crate) struct SyntaxNode {
     pub(super) ptr: Rc<NodeData>,
@@ -19,7 +21,13 @@ pub(crate) struct SyntaxNode {
 impl SyntaxNode {
     pub(crate) fn new_root(green: GreenNode) -> SyntaxNode {
         SyntaxNode {
-            ptr: NodeData::new(None, 0, 0.into(), green.into()),
+            ptr: NodeData::new(
+                NodeKind::Root {
+                    green: GreenElement::Node(green),
+                },
+                0,
+                0.into(),
+            ),
         }
     }
 
@@ -30,7 +38,14 @@ impl SyntaxNode {
         offset: TextSize,
     ) -> SyntaxNode {
         SyntaxNode {
-            ptr: NodeData::new(Some(parent.ptr), slot, offset, green.to_owned().into()),
+            ptr: NodeData::new(
+                NodeKind::Child {
+                    green: WeakGreenElement::new(GreenElementRef::Node(green)),
+                    parent: parent.ptr,
+                },
+                slot,
+                offset,
+            ),
         }
     }
 
@@ -41,14 +56,6 @@ impl SyntaxNode {
     #[inline]
     pub(super) fn data(&self) -> &NodeData {
         self.ptr.as_ref()
-    }
-
-    #[inline]
-    fn into_green(self) -> GreenElement {
-        match Rc::try_unwrap(self.ptr) {
-            Ok(data) => data.green,
-            Err(ptr) => ptr.green.clone(),
-        }
     }
 
     #[inline]
@@ -383,7 +390,7 @@ impl SyntaxNode {
                 range,
                 replace_with.into_iter().map(|element| {
                     element.map(|child| match child.detach() {
-                        NodeOrToken::Node(it) => it.into_green(),
+                        NodeOrToken::Node(it) => it.ptr.into_green(),
                         NodeOrToken::Token(it) => it.into_green(),
                     })
                 }),

@@ -1,10 +1,12 @@
 use crate::cursor::{NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
-use crate::green::GreenElement;
-use crate::{Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
+use crate::green::GreenElementRef;
+use crate::{green, Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
 use std::hash::{Hash, Hasher};
 use std::rc::Rc;
 use std::{fmt, iter};
 use text_size::{TextRange, TextSize};
+
+use super::{GreenElement, NodeKind, WeakGreenElement};
 
 #[derive(Clone, Debug)]
 pub(crate) struct SyntaxToken {
@@ -19,13 +21,26 @@ impl SyntaxToken {
         offset: TextSize,
     ) -> SyntaxToken {
         SyntaxToken {
-            ptr: NodeData::new(Some(parent.ptr), index, offset, green.to_owned().into()),
+            ptr: NodeData::new(
+                NodeKind::Child {
+                    green: WeakGreenElement::new(GreenElementRef::Token(green)),
+                    parent: parent.ptr,
+                },
+                index,
+                offset,
+            ),
         }
     }
 
     pub(crate) fn new_detached(green: GreenToken) -> SyntaxToken {
         SyntaxToken {
-            ptr: NodeData::new(None, 0, TextSize::from(0), green.into()),
+            ptr: NodeData::new(
+                NodeKind::Root {
+                    green: GreenElement::Token(green),
+                },
+                0,
+                TextSize::from(0),
+            ),
         }
     }
 
@@ -48,11 +63,8 @@ impl SyntaxToken {
     }
 
     #[inline]
-    pub(super) fn into_green(self) -> GreenElement {
-        match Rc::try_unwrap(self.ptr) {
-            Ok(data) => data.green,
-            Err(ptr) => ptr.green.clone(),
-        }
+    pub(super) fn into_green(self) -> green::GreenElement {
+        self.ptr.into_green()
     }
 
     #[inline]
