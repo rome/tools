@@ -14,6 +14,7 @@ indexmap = "1.8.0"
 rome_js_formatter = { path = "../rome_js_formatter" }
 rome_analyze = { path = "../rome_analyze" }
 rome_diagnostics = { path = "../rome_diagnostics" }
+rome_flags = { path = "../rome_flags" }
 rome_js_parser = { path = "../rome_js_parser" }
 rome_js_syntax = { path = "../rome_js_syntax" }
 tower-lsp = { version = "0.17.0"}

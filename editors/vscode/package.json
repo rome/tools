@@ -121,6 +121,11 @@
 					"type": "boolean",
 					"default": false,
 					"markdownDescription": "Allows rome to compute and provide code actions"
+				},
+				"rome.unstable": {
+					"type": "boolean",
+					"default": false,
+					"markdownDescription": "**BETA**: enables unstable features"
 				}
 			}
 		}

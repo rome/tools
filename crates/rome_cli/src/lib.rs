@@ -1,5 +1,6 @@
 use pico_args::Arguments;
 use rome_core::App;
+use rome_flags::FeatureFlags;
 
 mod commands;
 mod metrics;
@@ -31,6 +32,10 @@ pub fn run_cli(mut session: CliSession) -> Result<(), Termination> {
     let has_metrics = session.args.contains("--show-metrics");
     if has_metrics {
         crate::metrics::init_metrics();
+    }
+
+    if session.args.contains("--unstable") {
+        rome_flags::set_unstable_flags(FeatureFlags::ALL);
     }
 
     let has_help = session.args.contains("--help");
