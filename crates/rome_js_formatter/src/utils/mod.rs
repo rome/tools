@@ -11,7 +11,7 @@ mod quickcheck_utils;
 use crate::format_traits::FormatOptional;
 use crate::{
     empty_element, empty_line, format_elements, hard_group_elements, space_token, token, Format,
-    FormatElement, Formatter, JsFormatter, QuoteStyle, Token,
+    FormatElement, Formatter, JsFormatter, QuoteStyle, TextSize, Token,
 };
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
@@ -25,6 +25,7 @@ use rome_js_syntax::{
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 use std::borrow::Cow;
+use std::ops::Add;
 
 pub(crate) use simple::*;
 
@@ -710,9 +711,10 @@ pub(crate) fn format_property_name<Member: Into<PropertyName>>(
                 Ok(formatter.format_replaced(
                     &name,
                     Token::from_syntax_token_cow_slice(
-                        Cow::Owned(quote_less_text.to_string()),
+                        Cow::Borrowed(quote_less_text),
                         &name,
-                        name.text_trimmed_range().start(),
+                        // slide the offset of one as we removed a character from the beginning
+                        name.text_trimmed_range().start().add(TextSize::from(1)),
                     )
                     .into(),
                 ))
