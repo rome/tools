@@ -5,7 +5,7 @@ import prettier from "prettier";
 import parserBabel from "prettier/esm/parser-babel";
 import { IndentStyle, PlaygroundState, QuoteStyle, SourceType } from "./types";
 
-interface Size { width: number | undefined, height: number | undefined }
+interface Size { width: number | undefined; height: number | undefined }
 
 // Hook
 export function useWindowSize(): Size {
@@ -104,11 +104,11 @@ export function usePlaygroundState(): PlaygroundState {
 export function formatWithPrettier(
 	code: string,
 	options: {
-		lineWidth: number,
-		indentStyle: IndentStyle,
-		indentWidth: number,
-		language: "js" | "ts",
-		quoteStyle: QuoteStyle,
+		lineWidth: number;
+		indentStyle: IndentStyle;
+		indentWidth: number;
+		language: "js" | "ts";
+		quoteStyle: QuoteStyle;
 	},
 ) {
 	try {

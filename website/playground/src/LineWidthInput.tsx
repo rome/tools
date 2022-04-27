@@ -1,4 +1,4 @@
-interface Props { lineWidth: number, setLineWidth: (lineWidth: number) => void }
+interface Props { lineWidth: number; setLineWidth: (lineWidth: number) => void }
 
 export default function LineWidthInput({ lineWidth, setLineWidth }: Props) {
 	return (
