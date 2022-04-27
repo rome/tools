@@ -1,8 +1,8 @@
 import { QuoteStyle } from "./types";
 
 interface Props {
-	setQuoteStyle: (v: QuoteStyle) => void,
-	quoteStyle: QuoteStyle,
+	setQuoteStyle: (v: QuoteStyle) => void;
+	quoteStyle: QuoteStyle;
 }
 
 export default function QuoteStyleSelect({ setQuoteStyle, quoteStyle }: Props) {

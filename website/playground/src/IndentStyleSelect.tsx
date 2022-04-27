@@ -1,10 +1,10 @@
 import { IndentStyle } from "./types";
 
 interface Props {
-	setIndentStyle: (indentStyle: IndentStyle) => void,
-	indentStyle: IndentStyle,
-	indentWidth: number,
-	setIndentWidth: (indentWidth: number) => void,
+	setIndentStyle: (indentStyle: IndentStyle) => void;
+	indentStyle: IndentStyle;
+	indentWidth: number;
+	setIndentWidth: (indentWidth: number) => void;
 }
 
 export default function IndentStyleSelect(
