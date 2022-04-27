@@ -1,9 +1,10 @@
 import { PlaygroundProps } from "./types";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { getLanguage } from "./utils";
+import { cleanUpAst, getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import ReactJson from "react-json-view";
+import AstView from "./AstView";
 
 export default function DesktopPlayground(
 	{
@@ -78,7 +79,7 @@ export default function DesktopPlayground(
 							<ReactJson src={JSON.parse(cst)} />
 						</TabPanel>
 						<TabPanel>
-							<ReactJson src={JSON.parse(ast)} />
+							<AstView ast={ast} />
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>

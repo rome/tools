@@ -4,6 +4,7 @@ import { getLanguage } from "./utils";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
 import ReactJson from "react-json-view";
+import AstView from "./AstView";
 
 export function MobilePlayground(
 	{
@@ -80,7 +81,7 @@ export function MobilePlayground(
 					<ReactJson src={JSON.parse(cst)} />
 				</TabPanel>
 				<TabPanel>
-					<ReactJson src={JSON.parse(ast)} />
+					<AstView ast={ast} />
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
