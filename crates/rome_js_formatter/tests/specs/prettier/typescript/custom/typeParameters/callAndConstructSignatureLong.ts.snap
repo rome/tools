@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: callAndConstructSignatureLong.ts
 ---
 # Input
@@ -28,7 +29,7 @@ interface Interface {
     InViewHumbleVaudevillianVeteran,
     CastVicariouslyAsBothVictimAndVillainByTheVicissitudesOfFate,
   >(): V;
-  new<
+  new <
     ThisVisage,
     NoMereVeneerOfVanity,
     IsAVestigeOfTheVoxPopuliNowVacant,
