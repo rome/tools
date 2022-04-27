@@ -71,13 +71,19 @@ impl<L: Language> Serialize for Children<&'_ SyntaxNode<L>> {
     }
 }
 
-#[test]
-pub fn serialization() {
-    let mut builder: crate::TreeBuilder<crate::syntax::RawLanguage> = crate::TreeBuilder::new();
-    builder.start_node(crate::RawSyntaxKind(0));
-    builder.token(crate::RawSyntaxKind(0), "\n\tlet ");
-    builder.finish_node();
-    let root = builder.finish();
+#[cfg(test)]
+mod test {
+    use crate::raw_language::{RawLanguage, RawLanguageKind, RawLanguageSyntaxFactory};
 
-    assert!(serde_json::to_string(&root).is_ok());
+    #[test]
+    pub fn serialization() {
+        let mut builder: crate::TreeBuilder<RawLanguage, RawLanguageSyntaxFactory> =
+            crate::TreeBuilder::new();
+        builder.start_node(RawLanguageKind::ROOT);
+        builder.token(RawLanguageKind::LET_TOKEN, "\n\tlet ");
+        builder.finish_node();
+        let root = builder.finish();
+
+        assert!(serde_json::to_string(&root).is_ok());
+    }
 }

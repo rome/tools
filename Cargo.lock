@@ -1470,6 +1470,7 @@ dependencies = [
  "quickcheck_macros",
  "rustc-hash",
  "serde",
+ "serde_json",
  "text-size",
  "thiserror",
 ]
