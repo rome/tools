@@ -3,6 +3,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
+use super::jsx::jsx_parse_errors::jsx_only_syntax_error;
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -1290,7 +1291,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         T![<] => {
             let checkpoint = p.checkpoint();
             Jsx.parse_exclusive_syntax(p, parse_jsx_tag_expression, |p, assertion| {
-                ts_only_syntax_error(p, "JSX", assertion.range(p))
+                jsx_only_syntax_error(p, "JSX tags", assertion.range(p))
             })
             .or_else(|| {
                 p.rewind(checkpoint);
