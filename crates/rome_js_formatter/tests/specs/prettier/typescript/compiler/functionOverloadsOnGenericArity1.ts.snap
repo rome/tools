@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: functionOverloadsOnGenericArity1.ts
 ---
 # Input
@@ -26,8 +27,8 @@ interface C {
   f<T, U>(): string;
   <T>(): string;
   <T, U>(): string;
-  new<T>(): string;
-  new<T, U>(): string;
+  new <T>(): string;
+  new <T, U>(): string;
 }
 
 ```

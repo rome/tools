@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: webtsc.ts
 ---
 # Input
@@ -116,7 +117,7 @@ namespace TypeScript.WebTsc {
 /// <reference path='..\..\src\compiler\tsc.ts'/>
 
 namespace TypeScript.WebTsc {
-  declare var RealActiveXObject: { new(s: string): any };
+  declare var RealActiveXObject: { new (s: string): any };
 
   function getWScriptSystem() {
     const fso = new RealActiveXObject("Scripting.FileSystemObject");

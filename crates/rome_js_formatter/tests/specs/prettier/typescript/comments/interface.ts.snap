@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: interface.ts
 ---
 # Input
@@ -46,7 +47,7 @@ interface Foo {
     currentRequest: { a: number },
     // TODO this is a very very very very long comment that makes it go > 80 columns
   ): number;
-  new(
+  new (
     currentRequest: { a: number },
     // TODO this is a very very very very long comment that makes it go > 80 columns
   ): number;

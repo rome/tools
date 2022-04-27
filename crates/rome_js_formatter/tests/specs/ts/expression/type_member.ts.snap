@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: type_member.ts
 ---
 # Input
@@ -134,7 +135,7 @@ type H = {
 
 type LoooooooooooooongTypeReturneeeeeeeeed = "0";
 type I = {
-	new(
+	new (
 		loreum: string,
 		ipsum: symbol,
 		lapis: symbol,
