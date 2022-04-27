@@ -1,14 +1,11 @@
 use crate::Termination;
 
-const MAIN: &str = concat!(
-    "Rome v",
-    env!("CARGO_PKG_VERSION"),
-    "
+const MAIN_HEAD: &str = "Rome v";
+const MAIN_BODY: &str = "
 Available commands:
 - format
 - help
-",
-);
+";
 
 const FORMAT: &str = "Rome Formatter
 
@@ -30,7 +27,10 @@ OPTIONS:
 pub(crate) fn help(command: Option<&str>) -> Result<(), Termination> {
     match command {
         Some("help") | None => {
-            print!("{MAIN}");
+            print!(
+                "{MAIN_HEAD}{}{MAIN_BODY}",
+                option_env!("ROME_VERSION").unwrap_or(env!("CARGO_PKG_VERSION"))
+            );
             Ok(())
         }
         Some("format") => {

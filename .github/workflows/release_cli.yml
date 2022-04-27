@@ -1,0 +1,182 @@
+name: Release CLI
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 0 * * 2-6'
+  push:
+    branches:
+      - main
+    paths:
+      - npm/rome/package.json
+
+jobs:
+  check:
+    name: Check version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ env.version }}
+      prerelease: ${{ env.prerelease }}
+      nightly: ${{ env.nightly }}
+      version_changed: ${{ steps.version.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check nightly status
+        id: nightly
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: echo "nightly=true" >> $GITHUB_ENV
+
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        if: env.nightly != 'true'
+        id: version
+        with:
+          diff-search: true
+          file-name: npm/rome/package.json
+
+      - name: Set version name
+        run: echo "version=${{ steps.version.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Check prerelease status
+        id: prerelease
+        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        run: echo "prerelease=true" >> $GITHUB_ENV
+
+      - name: Check version status
+        if: steps.version.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
+
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-2022
+            target: x86_64-pc-windows-msvc
+            code-target: win32-x64
+          - os: windows-2022
+            target: aarch64-pc-windows-msvc
+            code-target: win32-arm64
+          - os: ubuntu-20.04
+            target: x86_64-unknown-linux-gnu
+            code-target: linux-x64
+          - os: ubuntu-20.04
+            target: aarch64-unknown-linux-gnu
+            code-target: linux-arm64
+          - os: macos-11
+            target: x86_64-apple-darwin
+            code-target: darwin-x64
+          - os: macos-11
+            target: aarch64-apple-darwin
+            code-target: darwin-arm64
+
+    name: Package ${{ matrix.code-target }}
+    runs-on: ${{ matrix.os }}
+
+    needs: check
+    if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
+    outputs:
+      version: ${{ env.version }}
+      prerelease: ${{ env.prerelease }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Install Rust toolchain
+        run: rustup target add ${{ matrix.target }}
+
+      - name: Install arm64 toolchain
+        if: matrix.code-target == 'linux-arm64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu
+
+      - name: Audit crates.io dependencies
+        if: matrix.code-target == 'linux-x64'
+        run: cargo audit
+
+      # Build the CLI binary
+      - name: Build binaries
+        run: cargo build -p rome_cli --release --target ${{ matrix.target }}
+        env:
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
+          # Perform full Link-Time Optimizations
+          CARGO_PROFILE_RELEASE_LTO: "true"
+          # Strip all debug symbols from the resulting binaries
+          RUSTFLAGS: "-C strip=symbols"
+          # Inline the version of the npm package in the CLI binary
+          ROME_VERSION: ${{ env.version }}
+
+      # Copy the CLI binary and rename it to include the name of the target platform
+      - name: Copy CLI binary
+        if: matrix.os == 'windows-2022'
+        run: |
+          mkdir dist
+          cp target/${{ matrix.target }}/release/rome.exe ./dist/rome-${{ matrix.code-target }}.exe
+      - name: Copy CLI binary
+        if: matrix.os != 'windows-2022'
+        run: |
+          mkdir dist
+          cp target/${{ matrix.target }}/release/rome ./dist/rome-${{ matrix.code-target }}
+
+      # Upload the CLI binary as a build artifact
+      - name: Upload CLI artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cli
+          path: ./dist/rome-*
+          if-no-files-found: error
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+
+      - name: Set release infos
+        run: |
+          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
+          echo "prerelease=${{ needs.check.outputs.prerelease }}" >> $GITHUB_ENV
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    needs: build
+    environment: marketplace
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download CLI artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: cli
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Generate npm packages
+        run: node npm/rome/scripts/generate-packages.mjs
+
+      - name: Publish npm packages
+        # For now always publish the CLI to the "next" tag
+        run: for package in npm/*; do npm publish $package --tag next --access public; done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+      - name: Create GitHub release and tag
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: CLI v${{ needs.build.outputs.version }}
+          tag_name: cli/v${{ needs.build.outputs.version }}
+          draft: false
+          prerelease: ${{ needs.build.outputs.prerelease == 'true' }}
+          files: |
+            rome-*
+          fail_on_unmatched_files: true
+          generate_release_notes: true

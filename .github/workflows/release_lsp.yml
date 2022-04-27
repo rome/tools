@@ -1,4 +1,4 @@
-name: Release
+name: Release LSP
 on:
   workflow_dispatch:
   # schedule:
@@ -100,35 +100,15 @@ jobs:
         if: matrix.code-target == 'linux-x64'
         run: cargo audit
 
-      # Build the LSP and CLI binaries
+      # Build the LSP binary
       - name: Build binaries
-        run: cargo build -p rome_lsp -p rome_cli --release --target ${{ matrix.target }}
+        run: cargo build -p rome_lsp --release --target ${{ matrix.target }}
         env:
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
           # Perform full Link-Time Optimizations
           CARGO_PROFILE_RELEASE_LTO: "true"
           # Strip all debug symbols from the resulting binaries
           RUSTFLAGS: "-C strip=symbols"
-
-      # Copy the CLI binary and rename it to include the name of the target platform
-      - name: Copy CLI binary
-        if: matrix.os == 'windows-2022'
-        run: |
-          mkdir dist
-          cp target/${{ matrix.target }}/release/rome.exe ./dist/rome-${{ matrix.code-target }}.exe
-      - name: Copy CLI binary
-        if: matrix.os != 'windows-2022'
-        run: |
-          mkdir dist
-          cp target/${{ matrix.target }}/release/rome ./dist/rome-${{ matrix.code-target }}
-
-      # Upload the CLI binary as a build artifact
-      - name: Upload CLI artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: cli
-          path: ./dist/rome-*
-          if-no-files-found: error
 
       - name: Copy LSP binary
         if: matrix.os == 'windows-2022'
@@ -188,10 +168,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Download CLI artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: cli
       - name: Download extension artifacts
         uses: actions/download-artifact@v3
         with:
@@ -202,15 +178,6 @@ jobs:
         with:
           node-version: 14.x
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Generate npm packages
-        run: node npm/rome/scripts/generate-packages.mjs
-
-      - name: Publish npm packages
-        # For now always publish the CLI to the "next" tag
-        run: for package in npm/*; do npm publish $package --tag next --access public; done
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: Publish extension (pre-release)
         run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix
@@ -228,12 +195,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: v${{ needs.build.outputs.version }}
-          tag_name: v${{ needs.build.outputs.version }}
+          name: VSCode Extension v${{ needs.build.outputs.version }}
+          tag_name: lsp/v${{ needs.build.outputs.version }}
           draft: false
           prerelease: ${{ needs.build.outputs.prerelease == 'true' }}
           files: |
             rome_lsp-*.vsix
-            rome-*
           fail_on_unmatched_files: true
           generate_release_notes: true
