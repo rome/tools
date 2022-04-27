@@ -1,10 +1,11 @@
 use crate::format_traits::FormatOptional;
+use crate::{
+    format_elements, hard_group_elements, space_token, utils::format_property_name, Format,
+    FormatElement, FormatNode, Formatter,
+};
 use rome_formatter::FormatResult;
 
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-
+use crate::utils::PropertyNameCheckMode;
 use rome_js_syntax::JsGetterClassMember;
 use rome_js_syntax::JsGetterClassMemberFields;
 
@@ -25,7 +26,7 @@ impl FormatNode for JsGetterClassMember {
             space_token(),
             get_token.format(formatter)?,
             space_token(),
-            name.format(formatter)?,
+            format_property_name(name?, formatter, PropertyNameCheckMode::Alphanumeric)?,
             l_paren_token.format(formatter)?,
             r_paren_token.format(formatter)?,
             return_type.format_or_empty(formatter)?,

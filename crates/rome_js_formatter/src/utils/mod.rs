@@ -18,9 +18,9 @@ pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
 use rome_formatter::{normalize_newlines, FormatResult};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause, JsLanguage,
-    JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
-    TsTemplateElementFields, TsType,
+    JsAnyClassMemberName, JsAnyExpression, JsAnyFunction, JsAnyObjectMemberName, JsAnyRoot,
+    JsAnyStatement, JsInitializerClause, JsLanguage, JsLiteralMemberName, JsTemplateElement,
+    JsTemplateElementFields, Modifiers, TsTemplateElement, TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
@@ -648,4 +648,98 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
             | JsAnyExpression::JsImportCallExpression(_)
             | JsAnyExpression::JsCallExpression(_)
     )
+}
+
+pub(crate) enum PropertyName {
+    Object(JsAnyObjectMemberName),
+    Class(JsAnyClassMemberName),
+    Literal(JsLiteralMemberName),
+}
+
+impl From<JsAnyClassMemberName> for PropertyName {
+    fn from(node: JsAnyClassMemberName) -> Self {
+        Self::Class(node)
+    }
+}
+
+impl From<JsAnyObjectMemberName> for PropertyName {
+    fn from(node: JsAnyObjectMemberName) -> Self {
+        Self::Object(node)
+    }
+}
+
+impl From<JsLiteralMemberName> for PropertyName {
+    fn from(literal: JsLiteralMemberName) -> Self {
+        Self::Literal(literal)
+    }
+}
+
+const QUOTES_TO_OMIT: [char; 2] = ['\"', '\''];
+
+pub(crate) enum PropertyNameCheckMode {
+    Alphabetic,
+    Alphanumeric,
+}
+
+impl PropertyNameCheckMode {
+    fn text_can_be_replaced(&self, text_to_check: &str) -> bool {
+        match self {
+            PropertyNameCheckMode::Alphabetic => !text_to_check.chars().any(|c| !c.is_alphabetic()),
+            PropertyNameCheckMode::Alphanumeric => {
+                !text_to_check.chars().any(|c| !c.is_alphanumeric())
+            }
+        }
+    }
+}
+
+pub(crate) fn format_property_name<Member: Into<PropertyName>>(
+    member_name: Member,
+    formatter: &Formatter,
+    checker: PropertyNameCheckMode,
+) -> FormatResult<FormatElement> {
+    fn replace_node(
+        name: JsSyntaxToken,
+        formatter: &Formatter,
+        checker: PropertyNameCheckMode,
+    ) -> FormatResult<FormatElement> {
+        let text = name.text_trimmed();
+
+        if text.starts_with(QUOTES_TO_OMIT) && text.ends_with(QUOTES_TO_OMIT) {
+            let quote_less_text = &text[1..text.len() - 1];
+            if checker.text_can_be_replaced(quote_less_text) {
+                Ok(formatter.format_replaced(
+                    &name,
+                    Token::from_syntax_token_cow_slice(
+                        Cow::Owned(quote_less_text.to_string()),
+                        &name,
+                        name.text_trimmed_range().start(),
+                    )
+                    .into(),
+                ))
+            } else {
+                Ok(format_string_literal_token(name, formatter))
+            }
+        } else {
+            Ok(format_string_literal_token(name, formatter))
+        }
+    }
+
+    let name = match member_name.into() {
+        PropertyName::Object(object) => match object {
+            JsAnyObjectMemberName::JsComputedMemberName(name) => name.format(formatter)?,
+            JsAnyObjectMemberName::JsLiteralMemberName(name) => {
+                replace_node(name.value()?, formatter, checker)?
+            }
+        },
+        PropertyName::Class(class) => match class {
+            JsAnyClassMemberName::JsComputedMemberName(node) => node.format(formatter)?,
+            JsAnyClassMemberName::JsLiteralMemberName(node) => {
+                replace_node(node.value()?, formatter, checker)?
+            }
+            JsAnyClassMemberName::JsPrivateClassMemberName(node) => node.format(formatter)?,
+        },
+        PropertyName::Literal(literal) => replace_node(literal.value()?, formatter, checker)?,
+    };
+
+    Ok(name)
 }

@@ -1,8 +1,9 @@
+use crate::utils::PropertyNameCheckMode;
 use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
+    format_elements, hard_group_elements, space_token, utils::format_property_name, Format,
+    FormatElement, FormatNode, Formatter,
 };
 use rome_formatter::FormatResult;
-
 use rome_js_syntax::JsSetterClassMember;
 use rome_js_syntax::JsSetterClassMemberFields;
 
@@ -23,7 +24,7 @@ impl FormatNode for JsSetterClassMember {
             space_token(),
             set_token.format(formatter)?,
             space_token(),
-            name.format(formatter)?,
+            format_property_name(name?, formatter, PropertyNameCheckMode::Alphanumeric)?,
             l_paren_token.format(formatter)?,
             parameter.format(formatter)?,
             r_paren_token.format(formatter)?,

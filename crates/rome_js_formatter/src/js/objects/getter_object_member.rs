@@ -4,7 +4,6 @@ use rome_formatter::FormatResult;
 use crate::{
     format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
 };
-
 use rome_js_syntax::JsGetterObjectMember;
 use rome_js_syntax::JsGetterObjectMemberFields;
 

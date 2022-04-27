@@ -1,0 +1,99 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
+expression: properties_quotes.js
+---
+# Input
+class Y {
+    "other" = 4;
+    "method"() {}
+    "another_method"() {}
+    "camelMethod"() {}
+    "stay-like-this"() {}
+    get "getter"() {}
+    set "setterr"(value) {}
+    "constructor"() {}
+}
+
+let value = { "a": "test", "quotes-required": "test" };
+
+({ "a": test } = value);
+
+let { "a": test } = value;
+
+// you guys stay like this
+
+({ "$$_": test } = value);
+
+({ "%{}": test } = value);
+
+({ "[]": test } = value);
+
+let { "fff--fff": test } = value;
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+class Y {
+	other = 4;
+	method() {}
+	"another_method"() {}
+	camelMethod() {}
+	"stay-like-this"() {}
+	get getter() {}
+	set setterr(value) {}
+	constructor() {}
+}
+
+let value = { a: "test", "quotes-required": "test" };
+
+({ a: test } = value);
+
+let { a: test } = value;
+
+// you guys stay like this
+
+({ "$$_": test } = value);
+
+({ "%{}": test } = value);
+
+({ "[]": test } = value);
+
+let { "fff--fff": test } = value;
+## Output 2
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Single Quotes
+-----
+class Y {
+	other = 4;
+	method() {}
+	'another_method'() {}
+	camelMethod() {}
+	'stay-like-this'() {}
+	get getter() {}
+	set setterr(value) {}
+	constructor() {}
+}
+
+let value = { a: 'test', 'quotes-required': 'test' };
+
+({ a: test } = value);
+
+let { a: test } = value;
+
+// you guys stay like this
+
+({ '$$_': test } = value);
+
+({ '%{}': test } = value);
+
+({ '[]': test } = value);
+
+let { 'fff--fff': test } = value;
+

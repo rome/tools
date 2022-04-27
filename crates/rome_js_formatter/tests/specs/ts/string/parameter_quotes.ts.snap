@@ -1,0 +1,49 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
+expression: parameter_quotes.ts
+---
+# Input
+type X = {
+    "a": string;
+    b: number;
+};
+
+
+interface Y {
+    "member": string;
+    // you stay like this
+    "member-member": number,
+    "4": number
+}
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+type X = { a: string; b: number };
+
+interface Y {
+	member: string;
+	// you stay like this
+	"member-member": number;
+	"4": number;
+}
+## Output 2
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Single Quotes
+-----
+type X = { a: string; b: number };
+
+interface Y {
+	member: string;
+	// you stay like this
+	'member-member': number;
+	'4': number;
+}
+
