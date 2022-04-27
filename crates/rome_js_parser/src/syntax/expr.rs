@@ -1289,11 +1289,9 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         // let a = <number>undefined;
         T![<] => {
             let checkpoint = p.checkpoint();
-            Jsx.parse_exclusive_syntax(
-                p,
-                |p| parse_jsx_tag_expression(p),
-                |p, assertion| ts_only_syntax_error(p, "JSX", assertion.range(p)),
-            )
+            Jsx.parse_exclusive_syntax(p, parse_jsx_tag_expression, |p, assertion| {
+                ts_only_syntax_error(p, "JSX", assertion.range(p))
+            })
             .or_else(|| {
                 p.rewind(checkpoint);
                 TypeScript.parse_exclusive_syntax(
