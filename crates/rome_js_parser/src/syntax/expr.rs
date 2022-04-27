@@ -1284,7 +1284,26 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         T![ident] => parse_identifier_expression(p).unwrap(),
         // test jsx jsx_primary_expression
         // let a = <test>abcd</test>.c;
-        T![<] if Jsx.is_supported(p) => return parse_jsx_tag_expression(p),
+
+        // test ts type_assertion_primary_expression
+        // let a = <number>undefined;
+        T![<] => {
+            let checkpoint = p.checkpoint();
+            Jsx.parse_exclusive_syntax(
+                p,
+                |p| parse_jsx_tag_expression(p),
+                |p, assertion| ts_only_syntax_error(p, "JSX", assertion.range(p)),
+            )
+            .or_else(|| {
+                p.rewind(checkpoint);
+                TypeScript.parse_exclusive_syntax(
+                    p,
+                    |p| parse_ts_type_assertion_expression(p, context),
+                    |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
+                )
+            })
+            .unwrap()
+        }
         // test_err primary_expr_invalid_recovery
         // let a = \; foo();
         t if t.is_contextual_keyword() || t.is_future_reserved_keyword() => {
