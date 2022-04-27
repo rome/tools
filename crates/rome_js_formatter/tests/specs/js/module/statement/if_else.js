@@ -1,3 +1,6 @@
+if(a);
+if(a); else ;
+
 if (Math.random() > 0.5) {
 	console.log(1)
 } else if (Math.random() > 0.5) {

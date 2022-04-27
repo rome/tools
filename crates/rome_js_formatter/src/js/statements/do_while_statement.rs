@@ -19,7 +19,7 @@ impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement>
             semicolon_token,
         } = node.as_fields();
 
-        let head = formatted![formatter, [do_token.format(), space_token(),]]?;
+        let head = formatted![formatter, [do_token.format()]]?;
 
         let tail = formatted![
             formatter,
@@ -40,5 +40,26 @@ impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement>
         ]?;
 
         formatted![formatter, [head, body.format(), tail,]]
+        let body = body?;
+        if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
+            Ok(hard_group_elements(format_elements![
+                head,
+                space_token(),
+                body.format(formatter)?,
+                tail,
+            ]))
+        } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+            Ok(format_elements![
+                hard_group_elements(format_elements![head, body.format(formatter)?,]),
+                hard_line_break(),
+                tail,
+            ])
+        } else {
+            Ok(format_elements![
+                hard_group_elements(format_elements![head, space_token()]),
+                body.format(formatter)?,
+                hard_group_elements(tail),
+            ])
+        }
     }
 }
