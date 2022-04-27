@@ -1,5 +1,4 @@
 use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatError;
 use rome_formatter::FormatResult;
 
 use rome_formatter::Token;
@@ -13,13 +12,13 @@ impl FormatNode for JsRegexLiteralExpression {
         let trimmed_raw_string = value_token.text_trimmed();
         // find end slash, so we could split our regex literal to two part `body`: raw_string[0..end_slash_pos + 1] and `flags`: raw_string[end_slash_pos + 1..]
         // reference https://tc39.es/ecma262/#prod-RegularExpressionLiteral
-        let end_slash_pos = trimmed_raw_string
-            .rfind('/')
-            .ok_or(FormatError::MissingRequiredChild)?;
+        let ends_with_slash = trimmed_raw_string.ends_with('/');
         // this means that we have a regex literal with no flags
-        if end_slash_pos == trimmed_raw_string.len() - 1 {
+        if ends_with_slash {
             return value_token.format(formatter);
         }
+        // SAFETY: a valid regex literal must have a end slash
+        let end_slash_pos = trimmed_raw_string.rfind('/').unwrap();
         let mut flag_char_vec = trimmed_raw_string[end_slash_pos + 1..]
             .chars()
             .collect::<Vec<_>>();
