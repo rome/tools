@@ -1,9 +1,7 @@
 use crate::format_traits::FormatOptional;
 use crate::{block_indent, concat_elements, group_elements, hard_group_elements, token, Format};
-use rome_formatter::{hard_line_break, FormatResult};
-
 use crate::{format_elements, space_token, FormatElement, FormatNode, Formatter};
-
+use rome_formatter::FormatResult;
 use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
 use rome_js_syntax::{JsElseClause, JsIfStatementFields};
@@ -30,6 +28,7 @@ impl FormatNode for JsIfStatement {
                     if_chain.push(format_elements![
                         space_token(),
                         else_token.format(formatter)?,
+                        space_token(),
                         into_block(formatter, alternate)?,
                     ]);
                 }
@@ -68,6 +67,7 @@ fn format_if_element(
             test.format(formatter)?,
             &r_paren_token?,
         )?,
+        space_token(),
         into_block(formatter, consequent?)?,
     ];
 
@@ -77,21 +77,18 @@ fn format_if_element(
 /// Wraps the statement into a block if its not already a JsBlockStatement
 fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<FormatElement> {
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
-        return Ok(format_elements![space_token(), stmt.format(formatter)?]);
+        return stmt.format(formatter);
     }
 
     // If the body is an empty statement, force a line break to ensure behavior
     // is coherent with `is_non_collapsable_empty_block`
     if matches!(stmt, JsAnyStatement::JsEmptyStatement(_)) {
-        return Ok(format_elements![stmt.format(formatter)?, hard_line_break()]);
+        return Ok(format_elements![stmt.format(formatter)?]);
     }
 
-    Ok(format_elements![
-        space_token(),
-        group_elements(format_elements![
-            token("{"),
-            block_indent(stmt.format(formatter)?),
-            token("}"),
-        ])
-    ])
+    Ok(group_elements(format_elements![
+        token("{"),
+        block_indent(stmt.format(formatter)?),
+        token("}"),
+    ]))
 }

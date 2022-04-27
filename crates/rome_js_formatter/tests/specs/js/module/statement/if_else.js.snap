@@ -76,9 +76,11 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-if (a);
-if (a);
-else;
+if (a) {
+}
+if (a) {
+} else {
+}
 
 if (Math.random() > 0.5) {
 	console.log(1);
@@ -131,5 +133,6 @@ if (true) {
 
 if (true) {
 	that();
-} else;
+} else {
+}
 

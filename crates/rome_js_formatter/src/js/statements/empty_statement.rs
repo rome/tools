@@ -1,5 +1,5 @@
-use crate::{empty_element, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::{empty_element, FormatElement, FormatNode, Formatter};
+use rome_formatter::{format_elements, hard_line_break, token, FormatResult};
 use rome_js_syntax::JsEmptyStatementFields;
 use rome_js_syntax::{JsEmptyStatement, JsSyntaxKind};
 use rome_rowan::AstNode;
@@ -14,7 +14,8 @@ impl FormatNode for JsEmptyStatement {
                 | Some(JsSyntaxKind::JS_IF_STATEMENT)
                 | Some(JsSyntaxKind::JS_ELSE_CLAUSE)
         ) {
-            semicolon_token.format(formatter)
+            let new_body = format_elements![token("{"), hard_line_break(), token("}")];
+            Ok(formatter.format_replaced(&semicolon_token?, new_body))
         } else {
             Ok(formatter.format_replaced(&semicolon_token?, empty_element()))
         }
