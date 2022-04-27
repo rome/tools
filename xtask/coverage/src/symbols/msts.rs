@@ -48,7 +48,42 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
 
         let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
-        let actual = rome_js_parser::symbols(r.syntax());
+        let mut actual = rome_js_parser::symbols(r.syntax());
+        actual
+            .symbols
+            .sort_by(|l, r| l.range.start().cmp(&r.range.start()));
+
+        if let Ok(_) = std::env::var("PRINT_CMP") {
+            let mut expecteds = expected.symbols.iter();
+            let mut actuals = actual.symbols.iter();
+            loop {
+                let e = expecteds.next();
+                let a = actuals.next();
+
+                if e.is_none() && a.is_none() {
+                    break;
+                }
+
+                if let Some(s) = e {
+                    print!("{}", s.name);
+                }
+
+                print!(" - ");
+
+                if let Some(s) = a {
+                    print!("{}@{:?}", s.name, s.range);
+                }
+
+                match (e, a) {
+                    (Some(e), Some(a)) if e.name != a.name => {
+                        println!(" <<<<<<<<<<<<<<<<<<<< Diff here")
+                    }
+                    _ => {}
+                }
+
+                println!("");
+            }
+        }
 
         if expected.symbols.len() != actual.symbols.len() {
             TestRunOutcome::IncorrectlyErrored {
@@ -58,9 +93,11 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
         } else {
             for (expected, actual) in expected.symbols.iter().zip(actual.symbols) {
                 let are_names_eq = expected.name == actual.name;
-                let are_paths_eq = expected.name == actual.name;
+                // let are_paths_eq = expected.name == actual.name;
                 //TODO check decls
-                if !are_names_eq || !are_paths_eq {
+                if !are_names_eq
+                /*|| !are_paths_eq*/
+                {
                     return TestRunOutcome::IncorrectlyErrored {
                         files: t,
                         errors: vec![],
@@ -87,8 +124,12 @@ impl TestSuite for SymbolsMicrosoftTsTestSuite {
 
     fn is_test(&self, path: &Path) -> bool {
         match path.extension() {
-            None => false,
-            Some(ext) => ext == "symbols",
+            Some(ext) if ext == "symbols" => {
+                // only accepts if there is no *.errors.txt file
+                let fullpath = path.with_extension("errors.txt");
+                std::fs::metadata(fullpath).is_err()
+            }
+            _ => false,
         }
     }
 
@@ -97,6 +138,7 @@ impl TestSuite for SymbolsMicrosoftTsTestSuite {
     }
 }
 
+#[derive(Debug)]
 #[allow(dead_code)]
 struct Decl {
     file: String,
@@ -105,6 +147,7 @@ struct Decl {
 }
 
 #[allow(dead_code)]
+#[derive(Debug)]
 struct Symbol {
     name: String,
     path: String,
