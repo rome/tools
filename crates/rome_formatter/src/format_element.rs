@@ -819,30 +819,30 @@ where
     join_elements_with(elements, hard_line_break)
 }
 
+/// Get the number of line breaks between two consecutive SyntaxNodes in the tree
+pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
+    // Count the newlines in the leading trivia of the next node
+    if let Some(leading_trivia) = next_node.first_leading_trivia() {
+        leading_trivia
+            .pieces()
+            .take_while(|piece| {
+                // Stop at the first comment piece, the comment printer
+                // will handle newlines between the comment and the node
+                !piece.is_comments()
+            })
+            .filter(|piece| piece.is_newline())
+            .count()
+    } else {
+        0
+    }
+}
+
 #[inline]
 pub fn join_elements_with<I, L>(elements: I, separator: fn() -> FormatElement) -> FormatElement
 where
     I: IntoIterator<Item = (SyntaxNode<L>, FormatElement)>,
     L: Language,
 {
-    /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
-    fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
-        // Count the newlines in the leading trivia of the next node
-        if let Some(leading_trivia) = next_node.first_leading_trivia() {
-            leading_trivia
-                .pieces()
-                .take_while(|piece| {
-                    // Stop at the first comment piece, the comment printer
-                    // will handle newlines between the comment and the node
-                    !piece.is_comments()
-                })
-                .filter(|piece| piece.is_newline())
-                .count()
-        } else {
-            0
-        }
-    }
-
     concat_elements(IntersperseFn::new(
         elements.into_iter(),
         |_, next_node, next_elem| {
