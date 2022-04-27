@@ -20,7 +20,6 @@ impl FormatNode for JsRegexLiteralExpression {
         if end_slash_pos == trimmed_raw_string.len() - 1 {
             return value_token.format(formatter);
         }
-        // let regex_literal_range = value_token.text_range();
         let mut flag_char_vec = trimmed_raw_string[end_slash_pos + 1..]
             .chars()
             .collect::<Vec<_>>();
