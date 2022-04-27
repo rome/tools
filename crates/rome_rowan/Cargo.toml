@@ -17,11 +17,11 @@ memoffset = "0.6.5"
 countme = "3.0.0"
 thiserror = "1.0.30"
 
-serde = { version = "1.0.133", optional = true, default-features = false }
+serde_crate = { package = "serde", version = "1.0.133", optional = true, default-features = false }
 
 [dev-dependencies]
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 
 [features]
-serde1 = ["serde", "text-size/serde"]
+serde = ["serde_crate", "text-size/serde"]

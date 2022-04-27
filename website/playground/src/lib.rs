@@ -115,8 +115,10 @@ pub fn run(
         quote_style: quote_style.parse().unwrap_or_default(),
     };
 
-    let cst = format!("{:#?}", syntax);
-    let ast = format!("{:#?}", parse.tree());
+    let cst = serde_json::to_string(&syntax)
+        .unwrap_or_else(|_| "{ error: \"CST could not be serialized\" }".to_string());
+    let ast = serde_json::to_string(&parse.tree())
+        .unwrap_or_else(|_| "{ error: \"AST could not be serialized\" }".to_string());
     let formatted = format_node(options, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
 

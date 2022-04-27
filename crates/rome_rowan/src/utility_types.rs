@@ -155,6 +155,7 @@ macro_rules! _static_assert {
     };
 }
 
+#[cfg(target_pointer_width = "64")]
 pub(crate) use _static_assert as static_assert;
 
 #[derive(Copy, Clone, Debug)]

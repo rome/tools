@@ -1,8 +1,8 @@
-use serde::ser::{Serialize, SerializeMap, SerializeSeq, Serializer};
+use serde_crate::ser::{Serialize, SerializeMap, SerializeSeq, Serializer};
 use std::fmt;
 
 use crate::{
-    syntax::{Language, RawLanguage, SyntaxNode, SyntaxToken},
+    syntax::{Language, SyntaxNode, SyntaxToken},
     NodeOrToken,
 };
 

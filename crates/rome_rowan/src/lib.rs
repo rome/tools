@@ -22,7 +22,7 @@ mod arc;
 mod ast;
 mod cow_mut;
 pub mod raw_language;
-#[cfg(feature = "serde1")]
+#[cfg(feature = "serde")]
 mod serde_impls;
 #[allow(unsafe_code)]
 mod sll;

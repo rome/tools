@@ -4,6 +4,8 @@ use crate::{
     cursor, Direction, GreenNode, Language, NodeOrToken, SyntaxKind, SyntaxList, SyntaxNodeText,
     SyntaxToken, TokenAtOffset, WalkEvent,
 };
+#[cfg(feature = "serde")]
+use serde_crate::Serialize;
 use std::fmt;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
@@ -538,6 +540,8 @@ impl<L: Language> Iterator for PreorderWithTokens<L> {
 /// A child that isn't present either because it's optional or because of a syntax error
 /// is stored in an [SyntaxSlot::Empty] to preserve the index of each child.
 #[derive(Debug, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum SyntaxSlot<L: Language> {
     /// Slot that stores a node child
     Node(SyntaxNode<L>),

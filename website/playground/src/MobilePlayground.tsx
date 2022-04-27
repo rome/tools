@@ -1,8 +1,9 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { formatWithPrettier, getLanguage } from "./utils";
+import { getLanguage } from "./utils";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
+import ReactJson from "react-json-view";
 
 export function MobilePlayground(
 	{
@@ -76,10 +77,10 @@ export function MobilePlayground(
 					/>
 				</TabPanel>
 				<TabPanel>
-					<pre className="h-screen overflow-y-scroll">{cst}</pre>
+					<ReactJson src={JSON.parse(cst)} />
 				</TabPanel>
 				<TabPanel>
-					<pre className="h-screen overflow-y-scroll">{ast}</pre>
+					<ReactJson src={JSON.parse(ast)} />
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
