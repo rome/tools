@@ -1,5 +1,5 @@
 use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
+use rome_formatter::{hard_line_break, FormatResult};
 
 use crate::{
     format_elements, hard_group_elements, space_token, token, Format, FormatElement, FormatNode,
@@ -21,7 +21,7 @@ impl FormatNode for JsDoWhileStatement {
             semicolon_token,
         } = self.as_fields();
 
-        let head = format_elements![do_token.format(formatter)?, space_token(),];
+        let head = do_token.format(formatter)?;
 
         let tail = format_elements![
             space_token(),
@@ -39,12 +39,19 @@ impl FormatNode for JsDoWhileStatement {
         if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
             Ok(hard_group_elements(format_elements![
                 head,
+                space_token(),
                 body.format(formatter)?,
                 tail,
             ]))
+        } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+            Ok(format_elements![
+                hard_group_elements(format_elements![head, body.format(formatter)?,]),
+                hard_line_break(),
+                tail,
+            ])
         } else {
             Ok(format_elements![
-                hard_group_elements(head),
+                hard_group_elements(format_elements![head, space_token()]),
                 body.format(formatter)?,
                 hard_group_elements(tail),
             ])

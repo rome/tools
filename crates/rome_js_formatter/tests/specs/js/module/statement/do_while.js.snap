@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: do_while.js
+
 ---
 # Input
 do {
@@ -15,6 +17,9 @@ do { // trailing
 }
 
 while (something)
+
+
+do; while(true);
 =============================
 # Outputs
 ## Output 1
@@ -31,4 +36,7 @@ do {
 	// trailing
 	var foo = 4;
 } while (something);
+
+do;
+while (true);
 
