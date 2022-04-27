@@ -156,6 +156,7 @@ pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<
         let formatter = Formatter::new(options);
         let element = root.format(&formatter)?;
 
+        // dbg!(&element);
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 let printed_tokens = formatter.printed_tokens.into_inner();
@@ -481,10 +482,11 @@ mod test {
     use rome_js_parser::{parse, SourceType};
 
     #[test]
+    #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"
-a + b * c > 65 + 5;
+        let src = r#"xyz.a(b!).a(b!).a(b!)
+
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax.clone());

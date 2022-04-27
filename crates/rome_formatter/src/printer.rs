@@ -31,7 +31,7 @@ pub struct PrinterOptions {
 
 impl From<FormatOptions> for PrinterOptions {
     fn from(options: FormatOptions) -> Self {
-        let tab_width = 2;
+        let tab_width = options.tab_width();
 
         let indent_string = match options.indent_style {
             IndentStyle::Tab => String::from("\t"),

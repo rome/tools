@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 175
 expression: multiple-members.js
-
 ---
 # Input
 ```js
@@ -51,14 +50,16 @@ if (testConfig.ENABLE_ONLINE_TESTS === "true") {
         "saves pet",
         function () {
           function assert(pet) {
-            expect(pet).to.have.property("OwnerAddress").that.deep.equals({
-              AddressLine1: "Alexanderstrasse",
-              AddressLine2: "",
-              PostalCode: "10999",
-              Region: "Berlin",
-              City: "Berlin",
-              Country: "DE",
-            });
+            expect(pet).to.have
+              .property("OwnerAddress")
+              .that.deep.equals({
+                AddressLine1: "Alexanderstrasse",
+                AddressLine2: "",
+                PostalCode: "10999",
+                Region: "Berlin",
+                City: "Berlin",
+                Country: "DE",
+              });
           }
         },
       );

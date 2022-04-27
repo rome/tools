@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: issues.js
 ---
 # Input
@@ -116,8 +117,7 @@ const regex = new RegExp(
 import path from "path"; // eslint-disable-line nuclide-internal/prefer-nuclide-uri
 
 // Comments disappear in-between MemberExpressions
-Observable
-  .of(process)
+Observable.of(process)
   // Don't complete until we say so!
   .merge(Observable.never())
   // Get the errors.

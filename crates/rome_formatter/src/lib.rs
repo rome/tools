@@ -179,6 +179,14 @@ impl FormatOptions {
             ..Self::default()
         }
     }
+
+    /// Given the current ident style, it returns its width
+    pub fn tab_width(&self) -> u8 {
+        match self.indent_style {
+            IndentStyle::Tab => 2,
+            IndentStyle::Space(quantity) => quantity,
+        }
+    }
 }
 
 impl Display for FormatOptions {

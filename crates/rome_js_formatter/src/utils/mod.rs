@@ -635,3 +635,17 @@ pub(crate) fn format_string_literal_token(
             .into(),
     )
 }
+
+/// A call like expression is one of:
+///
+/// - [JsNewExpression]
+/// - [JsImportCallExpression]
+/// - [JsCallExpression]
+pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
+    matches!(
+        expression,
+        JsAnyExpression::JsNewExpression(_)
+            | JsAnyExpression::JsImportCallExpression(_)
+            | JsAnyExpression::JsCallExpression(_)
+    )
+}

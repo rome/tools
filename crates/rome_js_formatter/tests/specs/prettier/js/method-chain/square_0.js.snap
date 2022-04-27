@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 175
 expression: square_0.js
-
 ---
 # Input
 ```js
@@ -20,16 +19,16 @@ const component = find('.org-lclp-edit-copy-url-banner__link')[0]
 
 # Output
 ```js
-const version = someLongString
-  .split("jest version =")
-  .pop()
-  .split(EOL)[0]
-  .trim();
+const version = someLongString.split("jest version =").pop().split(EOL)[0].trim();
 
-const component = find(".org-lclp-edit-copy-url-banner__link")[0].getAttribute(
-  "href",
-).indexOf(this.landingPageLink);
+const component = find(".org-lclp-edit-copy-url-banner__link")[0]
+  .getAttribute("href")
+  .indexOf(this.landingPageLink);
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+    1: const version = someLongString.split("jest version =").pop().split(EOL)[0].trim();
+```
 

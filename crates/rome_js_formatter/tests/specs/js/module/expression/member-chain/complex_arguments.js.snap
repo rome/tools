@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
+expression: complex_arguments.js
+
+---
+# Input
+client.execute(
+    Post.selectAll()
+        .where(Post.id.eq(42))
+        .where(Post.published.eq(true))
+);
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+client.execute(
+	Post.selectAll()
+		.where(Post.id.eq(42))
+		.where(Post.published.eq(true)),
+);
+

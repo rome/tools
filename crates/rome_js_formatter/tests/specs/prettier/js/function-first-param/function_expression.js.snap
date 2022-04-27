@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 175
 expression: function_expression.js
-
 ---
 # Input
 ```js
@@ -36,12 +35,14 @@ db.collection('indexOptionDefault').createIndex({ a: 1 }, {
 # Output
 ```js
 //https://github.com/prettier/prettier/issues/3002
-beep.boop().baz(
-  "foo",
-  { some: { thing: { nested: true } } },
-  { another: { thing: true } },
-  () => {},
-);
+beep
+  .boop()
+  .baz(
+    "foo",
+    { some: { thing: { nested: true } } },
+    { another: { thing: true } },
+    () => {},
+  );
 
 //https://github.com/prettier/prettier/issues/2984
 db
