@@ -6,11 +6,13 @@ import { SettingsMenu } from "./SettingsMenu";
 import ReactJson from "react-json-view";
 import AstView from "./AstView";
 
-export default function DesktopPlayground({
-	playgroundState: { code, setCode, ...settings },
-	prettierOutput,
-	romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
-}: PlaygroundProps) {
+export default function DesktopPlayground(
+	{
+		playgroundState: { code, setCode, ...settings },
+		prettierOutput,
+		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+	}: PlaygroundProps,
+) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
 	return (
