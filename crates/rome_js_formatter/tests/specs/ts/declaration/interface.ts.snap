@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: interface.ts
 ---
 # Input
@@ -34,7 +35,9 @@ Line width: 80
 Quote style: Double Quotes
 -----
 interface A {}
-interface B extends A /** comment **/ { something: string }
+interface B extends A /** comment **/ {
+	something: string;
+}
 
 interface C<
 	Foo,
@@ -45,7 +48,9 @@ interface C<
 	But,
 	Maybe,
 	Not,
-> extends B { something: string }
+> extends B {
+	something: string;
+}
 
 // @ts-ignore
 interface D

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 175
 expression: comments-declare.ts
-
 ---
 # Input
 ```js
@@ -18,7 +17,9 @@ declare interface a
   // 1
   extends
     b // 2
-{ foo: boolean }
+{
+  foo: boolean;
+}
 
 ```
 

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: methods.ts
 ---
 # Input
@@ -24,7 +25,10 @@ class X {
   optionalMethod?() {}
 }
 
-interface Iterable<T> { export; [Symbol.iterator](): Iterator<T> }
+interface Iterable<T> {
+  export;
+  [Symbol.iterator](): Iterator<T>;
+}
 
 export class Check {
   private static property = "test";

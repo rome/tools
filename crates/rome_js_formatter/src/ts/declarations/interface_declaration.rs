@@ -22,7 +22,7 @@ impl FormatNode for TsInterfaceDeclaration {
         let extends = extends_clause.format_with_or_empty(formatter, |extends| {
             format_elements![extends, space_token()]
         })?;
-        let members = formatter.format_delimited_soft_block_spaces(
+        let members = formatter.format_delimited_block_indent(
             &l_curly_token?,
             members.format(formatter)?,
             &r_curly_token?,

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: interfaceDeclaration.ts
 ---
 # Input
@@ -19,9 +20,14 @@ interface nil {}
 
 # Output
 ```js
-interface abstract { abstract(): void; concrete(): number }
+interface abstract {
+  abstract(): void;
+  concrete(): number;
+}
 
-interface X { x }
+interface X {
+  x;
+}
 
 interface nil {}
 

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 124
+assertion_line: 175
 expression: default.ts
-
 ---
 # Input
 ```js
@@ -14,7 +13,9 @@ export default interface Foo {
 
 # Output
 ```js
-export default interface Foo { readonly bar?: string }
+export default interface Foo {
+  readonly bar?: string;
+}
 
 ```
 

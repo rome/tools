@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: callSignature.ts
 ---
 # Input
@@ -17,7 +18,12 @@ Promise.all<void>([]);
 
 # Output
 ```js
-interface I { (); (): void; <T, U>(arg: T); <T, U>(arg: T): U }
+interface I {
+  ();
+  (): void;
+  <T, U>(arg: T);
+  <T, U>(arg: T): U;
+}
 
 Promise.all<void>([]);
 
