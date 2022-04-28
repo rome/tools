@@ -39,7 +39,7 @@ type T = <
 
 # Output
 ```js
-functionName<A /* A comment */ >();
+functionName<A /* A comment */>();
 const a: T</* comment */ > = 1;
 functionName</* comment */ >();
 function foo</* comment */ >() {}

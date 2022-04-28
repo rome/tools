@@ -22,10 +22,10 @@ class C {
 # Output
 ```js
 class C {
-  name/*comment*/ () {}
+  name/*comment*/() {}
 }
 
-({ name/*comment*/ () {} });
+({ name/*comment*/() {} });
 
 ```
 

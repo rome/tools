@@ -86,7 +86,7 @@ let foo10: new /* foo */ (a: /* bar */ string) /* baz */ => string;
 abstract class Test {
   abstract foo12 /* foo */ (a: /* bar */ string): /* baz */ void;
 
-  abstract foo13 /* foo */ (/* bar */ ) /* baz */ ;
+  abstract foo13 /* foo */ (/* bar */ ) /* baz */;
 }
 
 ```

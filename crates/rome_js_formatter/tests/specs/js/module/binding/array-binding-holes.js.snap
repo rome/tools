@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: array-binding-holes.js
 ---
 # Input
@@ -13,5 +14,5 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-function foo([foo, /* not used */ , /* not used */ ]) {}
+function foo([foo, /* not used */ , /* not used */]) {}
 

@@ -11,7 +11,7 @@ expression: backslash_2029.js
 
 # Output
 ```js
-1;/*a*/ //b
+1;/*a*///b
 /*c*/ 2;
 
 ```

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: union_type.ts
 ---
 # Input
@@ -61,5 +62,5 @@ type Comments =
 	// leading type
 	A
 	| B /*
-trailing type */ ;
+trailing type */;
 

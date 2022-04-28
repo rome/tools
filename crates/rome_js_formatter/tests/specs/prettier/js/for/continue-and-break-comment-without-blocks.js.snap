@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 175
 expression: continue-and-break-comment-without-blocks.js
-
 ---
 # Input
 ```js
@@ -144,9 +143,9 @@ for (const f in {}) continue; // comment
 
 for (const f in {}) break; // comment
 
-for (;;) continue /* comment */ ;
+for (;;) continue /* comment */;
 
-for (;;) break /* comment */ ;
+for (;;) break /* comment */;
 
 for (const f of []) continue; /* comment */
 
@@ -180,7 +179,7 @@ for (const f in {}) break
 /* comment */
 ;
 
-label1: for (;;) continue label1 /* comment */ ;
+label1: for (;;) continue label1 /* comment */;
 
 label1: for (;;) continue label1
 /* comment */

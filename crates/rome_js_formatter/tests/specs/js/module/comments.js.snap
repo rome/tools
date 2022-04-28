@@ -93,7 +93,7 @@ expression(
 );
 
 class C {
-	name/*comment*/ () {}
+	name/*comment*/() {}
 }
 
 expression(
@@ -110,8 +110,8 @@ expression(
 );
 
 const array0 = [/*0*/ ];
-const array1 = [/*0*/ ,/*1*/ ];
-const array2 = [/*0*/ ,/*1*/ ,/*2*/ ];
+const array1 = [/*0*/ ,/*1*/];
+const array2 = [/*0*/ ,/*1*/ ,/*2*/];
 
 /* block comment */
 statement();

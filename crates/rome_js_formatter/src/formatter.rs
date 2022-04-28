@@ -1,4 +1,3 @@
-use crate::format_traits::FormatWith;
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
 use crate::{
@@ -536,10 +535,13 @@ impl Formatter {
 
         let mut previous_piece: Option<SyntaxTriviaPiece<JsLanguage>> = None;
 
-        for piece in pieces {
+        let mut pieces = pieces.peekable();
+
+        while let Some(piece) = pieces.next() {
             if let Some(comment) = piece.as_comments() {
                 let is_single_line = comment.text().trim_start().starts_with("//");
 
+                let next_piece = pieces.peek();
                 let leading_trivia = if let Some(previous_piece) = previous_piece {
                     if previous_piece.is_whitespace() {
                         space_token()
@@ -549,6 +551,17 @@ impl Formatter {
                 } else {
                     empty_element()
                 };
+
+                let trailing_trivia = if let Some(next_piece) = next_piece {
+                    if next_piece.is_whitespace() {
+                        space_token()
+                    } else {
+                        empty_element()
+                    }
+                } else {
+                    empty_element()
+                };
+
                 let comment = Token::from(comment);
 
                 let content = if !is_single_line {
@@ -556,12 +569,12 @@ impl Formatter {
                         if_group_breaks(line_suffix(format_elements![
                             leading_trivia.clone(),
                             comment.clone(),
-                            space_token(),
+                            trailing_trivia.clone(),
                         ])),
                         if_group_fits_on_single_line(format_elements![
                             leading_trivia,
                             comment,
-                            space_token(),
+                            trailing_trivia,
                         ]),
                     ]
                 } else {
