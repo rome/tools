@@ -533,7 +533,7 @@ impl Formatter {
     {
         let mut elements = Vec::new();
 
-        let mut previous_piece: Option<SyntaxTriviaPiece<JsLanguage>> = None;
+        let mut has_seen_whitespace = false;
 
         let mut pieces = pieces.peekable();
 
@@ -542,22 +542,15 @@ impl Formatter {
                 let is_single_line = comment.text().trim_start().starts_with("//");
 
                 let next_piece = pieces.peek();
-                let leading_trivia = if let Some(previous_piece) = previous_piece {
-                    if previous_piece.is_whitespace() {
-                        space_token()
-                    } else {
-                        empty_element()
-                    }
+                let leading_trivia = if has_seen_whitespace {
+                    space_token()
                 } else {
                     empty_element()
                 };
 
-                let trailing_trivia = if let Some(next_piece) = next_piece {
-                    if next_piece.is_whitespace() {
-                        space_token()
-                    } else {
-                        empty_element()
-                    }
+                let trailing_trivia = if next_piece.map_or(false, SyntaxTriviaPiece::is_whitespace)
+                {
+                    space_token()
                 } else {
                     empty_element()
                 };
@@ -584,8 +577,8 @@ impl Formatter {
                 };
 
                 elements.push(crate::comment(content));
+                has_seen_whitespace = true;
             }
-            previous_piece = Some(piece.clone());
         }
 
         concat_elements(elements)
