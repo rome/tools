@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 175
 expression: comment.js
-
 ---
 # Input
 ```js
@@ -97,14 +96,18 @@ var a = x(
     bifornCringerMoshedPerplexSawder,
 );
 
-foo[a +
-  a + // comment
+foo[
   a +
-  bar[b +
-    b +
-    b + // comment
-    b +
-    b]];
+    a + // comment
+    a +
+    bar[
+      b +
+        b +
+        b + // comment
+        b +
+        b
+    ]
+];
 
 !(
   a +
