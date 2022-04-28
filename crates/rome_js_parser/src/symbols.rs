@@ -1,4 +1,4 @@
-use rome_js_syntax::{JsSyntaxElement, JsSyntaxKind, JsSyntaxNode, TextRange};
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TextRange};
 use rome_rowan::NodeOrToken;
 use std::collections::VecDeque;
 

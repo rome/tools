@@ -110,7 +110,7 @@ fn run_and_expect_no_errors(path: &str, _: &str, _: &str, _: &str) {
 
     // Assert Symbols
     let mut symbols: Vec<_> = crate::symbols::symbols(parse.syntax()).collect();
-    symbols.sort_by(|l, r| l.range().start().cmp(&r.range().start()));
+    symbols.sort_by_key(|x| x.range().start());
     let actual = format!("{:#?}", symbols);
     expect_file![symbols_file].assert_eq(&actual);
 }
@@ -147,7 +147,7 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
 
     // Assert Symbols
     let mut symbols: Vec<_> = crate::symbols::symbols(parse.syntax()).collect();
-    symbols.sort_by(|l, r| l.range().start().cmp(&r.range().start()));
+    symbols.sort_by_key(|x| x.range().start());
     let actual = format!("{:#?}", symbols);
     expect_file![symbols_file].assert_eq(&actual);
 }

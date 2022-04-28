@@ -49,9 +49,9 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
 
         let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
         let mut actual: Vec<_> = rome_js_parser::symbols::symbols(r.syntax())
-            .filter(|x| !x.name().contains("\"") && !x.name().contains("'"))
+            .filter(|x| !x.name().contains('\"') && !x.name().contains('\''))
             .collect();
-        actual.sort_by(|l, r| l.range().start().cmp(&r.range().start()));
+        actual.sort_by_key(|x| x.range().start());
 
         if std::env::var("PRINT_CMP").is_ok() {
             let mut expecteds = expected.symbols.iter();
@@ -192,10 +192,10 @@ fn parse_decl(input: &str) -> Option<(&str, Decl)> {
 fn parse_symbol(input: &str) -> Option<Symbol> {
     let (input, _) = parse_str(input, ">")?;
     let (input, name) = parse_until_chr(input, |x| x.is_whitespace() || x == ':')?;
-    if name.contains(".")
-        || name.contains("[")
-        || name.contains("\"")
-        || name.contains("'")
+    if name.contains('.')
+        || name.contains('[')
+        || name.contains('\"')
+        || name.contains('\'')
         || name == "undefined"
     {
         return None;
@@ -208,7 +208,7 @@ fn parse_symbol(input: &str) -> Option<Symbol> {
     let (input, _) = parse_str(input, "(")?;
     let (input, path) = parse_until_chr(input, |x| x.is_whitespace() || x == ',' || x == ')')?;
     let (input, _) = parse_whitespace0(input);
-    let decls = if !input.starts_with(")") {
+    let decls = if !input.starts_with(')') {
         let (input, _) = parse_str(input, ",")?;
         let (input, _) = parse_whitespace0(input);
 
