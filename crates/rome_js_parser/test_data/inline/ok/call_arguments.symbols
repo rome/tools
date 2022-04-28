@@ -1,0 +1,96 @@
+[
+    Declaration {
+        name: "foo",
+        range: 9..12,
+    },
+    Declaration {
+        name: "args",
+        range: 16..20,
+    },
+    Declaration {
+        name: "a",
+        range: 29..30,
+    },
+    Declaration {
+        name: "b",
+        range: 32..33,
+    },
+    Declaration {
+        name: "c",
+        range: 35..36,
+    },
+    Declaration {
+        name: "d",
+        range: 38..39,
+    },
+    Reference {
+        name: "foo",
+        range: 40..44,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 45..46,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 48..52,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 53..54,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 56..57,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 60..64,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 65..66,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 68..69,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 74..75,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 77..81,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 85..86,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 91..92,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 94..95,
+        declared_at: None,
+    },
+    Reference {
+        name: "d",
+        range: 100..101,
+        declared_at: None,
+    },
+]

@@ -1,0 +1,11 @@
+[
+    Declaration {
+        name: "a",
+        range: 4..6,
+    },
+    Reference {
+        name: "async",
+        range: 8..13,
+        declared_at: None,
+    },
+]

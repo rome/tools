@@ -1,0 +1,22 @@
+[
+    Reference {
+        name: "eval",
+        range: 0..4,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 5..9,
+        declared_at: None,
+    },
+    Reference {
+        name: "arguments",
+        range: 13..23,
+        declared_at: None,
+    },
+    Reference {
+        name: "eval",
+        range: 34..39,
+        declared_at: None,
+    },
+]

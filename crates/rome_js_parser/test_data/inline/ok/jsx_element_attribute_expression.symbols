@@ -1,0 +1,7 @@
+[
+    Reference {
+        name: "prefix",
+        range: 32..38,
+        declared_at: None,
+    },
+]

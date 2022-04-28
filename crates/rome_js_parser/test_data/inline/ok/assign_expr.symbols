@@ -1,0 +1,116 @@
+[
+    Reference {
+        name: "foo",
+        range: 0..4,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 7..11,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 13..15,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 21..26,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 29..32,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 35..39,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 41..44,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 48..51,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 53..56,
+        declared_at: None,
+    },
+    Reference {
+        name: "baz",
+        range: 60..63,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 66..69,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 71..75,
+        declared_at: None,
+    },
+    Reference {
+        name: "rest",
+        range: 91..95,
+        declared_at: None,
+    },
+    Reference {
+        name: "baz",
+        range: 99..102,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 108..111,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 112..115,
+        declared_at: None,
+    },
+    Reference {
+        name: "baz",
+        range: 119..122,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 127..130,
+        declared_at: None,
+    },
+    Reference {
+        name: "baz",
+        range: 132..136,
+        declared_at: None,
+    },
+    Declaration {
+        name: "bar",
+        range: 148..151,
+    },
+    Reference {
+        name: "baz",
+        range: 154..158,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 168..172,
+        declared_at: None,
+    },
+    Reference {
+        name: "rest",
+        range: 184..189,
+        declared_at: None,
+    },
+]

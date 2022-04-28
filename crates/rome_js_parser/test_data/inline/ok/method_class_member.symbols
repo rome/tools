@@ -1,0 +1,94 @@
+[
+    Declaration {
+        name: "Test",
+        range: 6..11,
+    },
+    Declaration {
+        name: "method",
+        range: 12..21,
+    },
+    Declaration {
+        name: "asyncMethod",
+        range: 35..46,
+    },
+    Declaration {
+        name: "asyncGeneratorMethod",
+        range: 61..81,
+    },
+    Declaration {
+        name: "generatorMethod",
+        range: 91..106,
+    },
+    Declaration {
+        name: "5",
+        range: 147..151,
+    },
+    Declaration {
+        name: "ContextualKeywords",
+        range: 181..200,
+    },
+    Declaration {
+        name: "static",
+        range: 201..238,
+    },
+    Declaration {
+        name: "static",
+        range: 252..258,
+    },
+    Declaration {
+        name: "static",
+        range: 268..274,
+    },
+    Declaration {
+        name: "static",
+        range: 289..295,
+    },
+    Declaration {
+        name: "declare",
+        range: 300..310,
+    },
+    Declaration {
+        name: "get",
+        range: 315..321,
+    },
+    Declaration {
+        name: "set",
+        range: 347..353,
+    },
+    Declaration {
+        name: "Static",
+        range: 388..395,
+    },
+    Declaration {
+        name: "method",
+        range: 406..412,
+    },
+    Declaration {
+        name: "asyncMethod",
+        range: 433..444,
+    },
+    Declaration {
+        name: "asyncGeneratorMethod",
+        range: 466..486,
+    },
+    Declaration {
+        name: "generatorMethod",
+        range: 503..518,
+    },
+    Declaration {
+        name: "static",
+        range: 533..539,
+    },
+    Declaration {
+        name: "static",
+        range: 560..566,
+    },
+    Declaration {
+        name: "static",
+        range: 588..594,
+    },
+    Declaration {
+        name: "static",
+        range: 611..617,
+    },
+]

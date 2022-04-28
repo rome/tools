@@ -1,0 +1,92 @@
+[
+    Reference {
+        name: "abcd",
+        range: 6..11,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 15..16,
+        declared_at: None,
+    },
+    Reference {
+        name: "abcd",
+        range: 26..30,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 36..37,
+        declared_at: None,
+    },
+    Reference {
+        name: "m",
+        range: 46..47,
+        declared_at: None,
+    },
+    Reference {
+        name: "test",
+        range: 48..53,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 57..58,
+        declared_at: None,
+    },
+    Reference {
+        name: "m",
+        range: 67..68,
+        declared_at: None,
+    },
+    Reference {
+        name: "call",
+        range: 69..73,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 81..82,
+        declared_at: None,
+    },
+    Reference {
+        name: "any",
+        range: 91..94,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 108..110,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 114..115,
+        declared_at: None,
+    },
+    Reference {
+        name: "x",
+        range: 125..126,
+        declared_at: None,
+    },
+    Reference {
+        name: "y",
+        range: 128..129,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 135..136,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 150..152,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 158..159,
+        declared_at: None,
+    },
+]

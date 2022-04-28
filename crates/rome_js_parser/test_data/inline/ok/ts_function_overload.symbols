@@ -1,0 +1,50 @@
+[
+    Declaration {
+        name: "test",
+        range: 9..13,
+    },
+    Declaration {
+        name: "a",
+        range: 14..15,
+    },
+    Declaration {
+        name: "test",
+        range: 41..45,
+    },
+    Declaration {
+        name: "a",
+        range: 46..47,
+    },
+    Declaration {
+        name: "no_semi",
+        range: 87..94,
+    },
+    Declaration {
+        name: "a",
+        range: 95..96,
+    },
+    Declaration {
+        name: "no_semi",
+        range: 115..122,
+    },
+    Declaration {
+        name: "a",
+        range: 123..124,
+    },
+    Declaration {
+        name: "async_overload",
+        range: 152..166,
+    },
+    Declaration {
+        name: "a",
+        range: 167..168,
+    },
+    Declaration {
+        name: "async_overload",
+        range: 193..207,
+    },
+    Declaration {
+        name: "a",
+        range: 208..209,
+    },
+]

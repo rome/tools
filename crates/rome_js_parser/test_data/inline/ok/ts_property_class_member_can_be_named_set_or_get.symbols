@@ -1,0 +1,24 @@
+[
+    Declaration {
+        name: "B",
+        range: 6..8,
+    },
+    Declaration {
+        name: "set",
+        range: 10..13,
+    },
+    Reference {
+        name: "String",
+        range: 15..21,
+        declared_at: None,
+    },
+    Declaration {
+        name: "get",
+        range: 23..26,
+    },
+    Reference {
+        name: "Number",
+        range: 28..35,
+        declared_at: None,
+    },
+]

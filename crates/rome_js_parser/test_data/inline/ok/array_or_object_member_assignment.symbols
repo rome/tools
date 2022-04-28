@@ -1,0 +1,74 @@
+[
+    Declaration {
+        name: "y",
+        range: 9..10,
+    },
+    Reference {
+        name: "Test262Error",
+        range: 29..41,
+        declared_at: None,
+    },
+    Declaration {
+        name: "y",
+        range: 94..95,
+    },
+    Declaration {
+        name: "val",
+        range: 96..99,
+    },
+    Reference {
+        name: "setValue",
+        range: 102..116,
+        declared_at: None,
+    },
+    Reference {
+        name: "val",
+        range: 118..121,
+        declared_at: None,
+    },
+    Reference {
+        name: "y",
+        range: 129..131,
+        declared_at: None,
+    },
+    Declaration {
+        name: "x",
+        range: 148..149,
+    },
+    Declaration {
+        name: "y",
+        range: 159..160,
+    },
+    Reference {
+        name: "Test262Error",
+        range: 179..191,
+        declared_at: None,
+    },
+    Declaration {
+        name: "y",
+        range: 244..245,
+    },
+    Declaration {
+        name: "val",
+        range: 246..249,
+    },
+    Reference {
+        name: "setValue",
+        range: 252..266,
+        declared_at: None,
+    },
+    Reference {
+        name: "val",
+        range: 268..271,
+        declared_at: None,
+    },
+    Reference {
+        name: "y",
+        range: 279..281,
+        declared_at: None,
+    },
+    Declaration {
+        name: "x",
+        range: 292..293,
+    },
+]

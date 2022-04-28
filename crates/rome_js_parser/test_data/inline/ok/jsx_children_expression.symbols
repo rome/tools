@@ -1,0 +1,189 @@
+[
+    Declaration {
+        name: "x",
+        range: 4..5,
+    },
+    Declaration {
+        name: "a",
+        range: 11..12,
+    },
+    Declaration {
+        name: "b",
+        range: 18..19,
+    },
+    Declaration {
+        name: "key",
+        range: 25..28,
+    },
+    Declaration {
+        name: "f",
+        range: 34..36,
+    },
+    Reference {
+        name: "undefined",
+        range: 110..119,
+        declared_at: None,
+    },
+    Declaration {
+        name: "x",
+        range: 139..141,
+    },
+    Reference {
+        name: "console",
+        range: 144..151,
+        declared_at: None,
+    },
+    Reference {
+        name: "x",
+        range: 156..157,
+        declared_at: None,
+    },
+    Reference {
+        name: "x",
+        range: 163..165,
+        declared_at: None,
+    },
+    Reference {
+        name: "x",
+        range: 179..180,
+        declared_at: None,
+    },
+    Reference {
+        name: "f",
+        range: 195..196,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 203..204,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 205..206,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 212..213,
+        declared_at: None,
+    },
+    Declaration {
+        name: "f",
+        range: 231..232,
+    },
+    Reference {
+        name: "a",
+        range: 261..262,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 286..290,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 293..294,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 299..301,
+        declared_at: None,
+    },
+    Reference {
+        name: "Object",
+        range: 312..318,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 323..325,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 328..329,
+        declared_at: None,
+    },
+    Reference {
+        name: "f",
+        range: 338..339,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 354..355,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 361..362,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 371..372,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 377..378,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 379..380,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 385..386,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 423..424,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 436..437,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 449..450,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 456..457,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 463..464,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 470..471,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 477..478,
+        declared_at: None,
+    },
+    Declaration {
+        name: "f",
+        range: 562..563,
+    },
+    Reference {
+        name: "a",
+        range: 600..601,
+        declared_at: None,
+    },
+]

@@ -1,0 +1,23 @@
+[
+    Declaration {
+        name: "B",
+        range: 6..8,
+    },
+    Declaration {
+        name: "declare",
+        range: 10..17,
+    },
+    Declaration {
+        name: "B",
+        range: 31..33,
+    },
+    Declaration {
+        name: "declare",
+        range: 35..43,
+    },
+    Reference {
+        name: "foo",
+        range: 45..49,
+        declared_at: None,
+    },
+]

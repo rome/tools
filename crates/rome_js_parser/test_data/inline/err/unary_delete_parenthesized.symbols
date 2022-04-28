@@ -1,0 +1,52 @@
+[
+    Reference {
+        name: "ident",
+        range: 8..13,
+        declared_at: None,
+    },
+    Reference {
+        name: "ident",
+        range: 25..30,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 42..45,
+        declared_at: None,
+    },
+    Reference {
+        name: "ident",
+        range: 51..56,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 67..70,
+        declared_at: None,
+    },
+    Reference {
+        name: "func",
+        range: 89..93,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 114..117,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 137..140,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 166..169,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 175..178,
+        declared_at: None,
+    },
+]

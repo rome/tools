@@ -1,0 +1,37 @@
+[
+    Declaration {
+        name: "x",
+        range: 4..6,
+    },
+    Reference {
+        name: "const",
+        range: 9..14,
+        declared_at: None,
+    },
+    Declaration {
+        name: "y",
+        range: 28..30,
+    },
+    Reference {
+        name: "x",
+        range: 41..42,
+        declared_at: None,
+    },
+    Declaration {
+        name: "d",
+        range: 48..50,
+    },
+    Reference {
+        name: "Error",
+        range: 53..58,
+        declared_at: None,
+    },
+    Declaration {
+        name: "name",
+        range: 62..66,
+    },
+    Declaration {
+        name: "message",
+        range: 75..82,
+    },
+]

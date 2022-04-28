@@ -1,0 +1,17 @@
+[
+    Reference {
+        name: "B",
+        range: 45..46,
+        declared_at: None,
+    },
+    Reference {
+        name: "B",
+        range: 104..105,
+        declared_at: None,
+    },
+    Reference {
+        name: "C",
+        range: 106..107,
+        declared_at: None,
+    },
+]

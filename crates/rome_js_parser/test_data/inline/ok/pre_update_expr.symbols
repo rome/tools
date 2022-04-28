@@ -1,0 +1,12 @@
+[
+    Reference {
+        name: "foo",
+        range: 2..5,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 8..11,
+        declared_at: None,
+    },
+]

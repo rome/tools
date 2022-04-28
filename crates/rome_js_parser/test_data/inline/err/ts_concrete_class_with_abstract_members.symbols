@@ -1,0 +1,26 @@
+[
+    Declaration {
+        name: "A",
+        range: 6..8,
+    },
+    Declaration {
+        name: "my_age",
+        range: 22..28,
+    },
+    Declaration {
+        name: "name",
+        range: 50..54,
+    },
+    Declaration {
+        name: "age",
+        range: 82..85,
+    },
+    Declaration {
+        name: "age",
+        range: 113..116,
+    },
+    Declaration {
+        name: "v",
+        range: 117..118,
+    },
+]

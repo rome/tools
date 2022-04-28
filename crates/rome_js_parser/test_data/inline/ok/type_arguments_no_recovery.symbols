@@ -1,0 +1,70 @@
+[
+    Declaration {
+        name: "i",
+        range: 9..11,
+    },
+    Reference {
+        name: "i",
+        range: 17..19,
+        declared_at: None,
+    },
+    Reference {
+        name: "i",
+        range: 26..27,
+        declared_at: None,
+    },
+    Reference {
+        name: "verify",
+        range: 30..41,
+        declared_at: None,
+    },
+    Declaration {
+        name: "marker",
+        range: 55..70,
+    },
+    Reference {
+        name: "i",
+        range: 75..77,
+        declared_at: None,
+    },
+    Declaration {
+        name: "exact",
+        range: 83..97,
+    },
+    Declaration {
+        name: "name",
+        range: 115..119,
+    },
+    Declaration {
+        name: "replacementSpan",
+        range: 128..143,
+    },
+    Reference {
+        name: "test",
+        range: 145..149,
+        declared_at: None,
+    },
+    Reference {
+        name: "i",
+        range: 159..160,
+        declared_at: None,
+    },
+    Declaration {
+        name: "name",
+        range: 179..183,
+    },
+    Declaration {
+        name: "replacementSpan",
+        range: 192..207,
+    },
+    Reference {
+        name: "test",
+        range: 209..213,
+        declared_at: None,
+    },
+    Reference {
+        name: "i",
+        range: 223..224,
+        declared_at: None,
+    },
+]

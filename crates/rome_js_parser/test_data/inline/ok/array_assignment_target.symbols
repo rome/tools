@@ -1,0 +1,72 @@
+[
+    Reference {
+        name: "foo",
+        range: 1..4,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 6..9,
+        declared_at: None,
+    },
+    Reference {
+        name: "baz",
+        range: 13..16,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 22..23,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 25..26,
+        declared_at: None,
+    },
+    Reference {
+        name: "baz",
+        range: 31..34,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 37..39,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 49..50,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 51..52,
+        declared_at: None,
+    },
+    Reference {
+        name: "call",
+        range: 54..58,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 61..62,
+        declared_at: None,
+    },
+    Reference {
+        name: "baz",
+        range: 66..69,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 74..75,
+        declared_at: None,
+    },
+    Reference {
+        name: "baz",
+        range: 81..84,
+        declared_at: None,
+    },
+]

@@ -1,0 +1,82 @@
+[
+    Declaration {
+        name: "A",
+        range: 5..7,
+    },
+    Declaration {
+        name: "OptionsFlags",
+        range: 38..50,
+    },
+    Reference {
+        name: "Type",
+        range: 82..86,
+        declared_at: None,
+    },
+    Declaration {
+        name: "CreateMutable",
+        range: 106..119,
+    },
+    Reference {
+        name: "Type",
+        range: 160..164,
+        declared_at: None,
+    },
+    Reference {
+        name: "Type",
+        range: 167..171,
+        declared_at: None,
+    },
+    Reference {
+        name: "Property",
+        range: 172..180,
+        declared_at: None,
+    },
+    Declaration {
+        name: "Concrete",
+        range: 191..199,
+    },
+    Reference {
+        name: "Type",
+        range: 231..235,
+        declared_at: None,
+    },
+    Reference {
+        name: "Type",
+        range: 240..244,
+        declared_at: None,
+    },
+    Reference {
+        name: "Property",
+        range: 245..253,
+        declared_at: None,
+    },
+    Declaration {
+        name: "Getters",
+        range: 263..270,
+    },
+    Reference {
+        name: "Type",
+        range: 304..309,
+        declared_at: None,
+    },
+    Reference {
+        name: "Capitalize",
+        range: 318..328,
+        declared_at: None,
+    },
+    Reference {
+        name: "Property",
+        range: 338..346,
+        declared_at: None,
+    },
+    Reference {
+        name: "Type",
+        range: 358..362,
+        declared_at: None,
+    },
+    Reference {
+        name: "Property",
+        range: 363..371,
+        declared_at: None,
+    },
+]

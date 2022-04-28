@@ -1,0 +1,10 @@
+[
+    Declaration {
+        name: "assert",
+        range: 44..50,
+    },
+    Declaration {
+        name: "type",
+        range: 54..58,
+    },
+]

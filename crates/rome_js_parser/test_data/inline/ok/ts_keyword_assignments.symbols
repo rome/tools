@@ -1,0 +1,32 @@
+[
+    Reference {
+        name: "declare",
+        range: 0..8,
+        declared_at: None,
+    },
+    Reference {
+        name: "abstract",
+        range: 12..22,
+        declared_at: None,
+    },
+    Reference {
+        name: "namespace",
+        range: 26..37,
+        declared_at: None,
+    },
+    Reference {
+        name: "type",
+        range: 41..47,
+        declared_at: None,
+    },
+    Reference {
+        name: "module",
+        range: 51..59,
+        declared_at: None,
+    },
+    Reference {
+        name: "global",
+        range: 63..71,
+        declared_at: None,
+    },
+]

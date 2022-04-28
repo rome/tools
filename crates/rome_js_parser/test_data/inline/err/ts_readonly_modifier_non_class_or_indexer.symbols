@@ -1,0 +1,26 @@
+[
+    Declaration {
+        name: "Test",
+        range: 6..11,
+    },
+    Declaration {
+        name: "constructor",
+        range: 24..35,
+    },
+    Declaration {
+        name: "method",
+        range: 52..58,
+    },
+    Declaration {
+        name: "test",
+        range: 79..83,
+    },
+    Declaration {
+        name: "test",
+        range: 117..121,
+    },
+    Declaration {
+        name: "value",
+        range: 122..127,
+    },
+]

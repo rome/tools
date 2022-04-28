@@ -1,0 +1,61 @@
+[
+    Declaration {
+        name: "x",
+        range: 2..8,
+    },
+    Declaration {
+        name: "maybeA",
+        range: 12..18,
+    },
+    Reference {
+        name: "maybeA",
+        range: 26..33,
+        declared_at: None,
+    },
+    Reference {
+        name: "A",
+        range: 36..38,
+        declared_at: None,
+    },
+    Declaration {
+        name: "y",
+        range: 54..60,
+    },
+    Declaration {
+        name: "a",
+        range: 61..62,
+    },
+    Declaration {
+        name: "id",
+        range: 113..115,
+    },
+    Declaration {
+        name: "param",
+        range: 119..124,
+    },
+    Reference {
+        name: "Promise",
+        range: 126..133,
+        declared_at: None,
+    },
+    Reference {
+        name: "R",
+        range: 134..135,
+        declared_at: None,
+    },
+    Reference {
+        name: "AsyncIterableIterator",
+        range: 139..160,
+        declared_at: None,
+    },
+    Reference {
+        name: "R",
+        range: 161..162,
+        declared_at: None,
+    },
+    Reference {
+        name: "param",
+        range: 178..184,
+        declared_at: None,
+    },
+]

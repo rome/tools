@@ -1,0 +1,84 @@
+[
+    Declaration {
+        name: "A",
+        range: 5..7,
+    },
+    Declaration {
+        name: "a",
+        range: 11..12,
+    },
+    Declaration {
+        name: "b",
+        range: 23..24,
+    },
+    Declaration {
+        name: "B",
+        range: 43..45,
+    },
+    Declaration {
+        name: "a",
+        range: 49..50,
+    },
+    Declaration {
+        name: "b",
+        range: 60..61,
+    },
+    Declaration {
+        name: "C",
+        range: 79..81,
+    },
+    Declaration {
+        name: "m",
+        range: 85..86,
+    },
+    Declaration {
+        name: "a",
+        range: 87..88,
+    },
+    Declaration {
+        name: "b",
+        range: 98..99,
+    },
+    Declaration {
+        name: "c",
+        range: 109..110,
+    },
+    Declaration {
+        name: "D",
+        range: 132..134,
+    },
+    Declaration {
+        name: "readonly",
+        range: 138..146,
+    },
+    Declaration {
+        name: "a",
+        range: 165..166,
+    },
+    Declaration {
+        name: "E",
+        range: 182..184,
+    },
+    Declaration {
+        name: "m",
+        range: 188..189,
+    },
+    Declaration {
+        name: "a",
+        range: 196..197,
+    },
+    Reference {
+        name: "A",
+        range: 199..200,
+        declared_at: None,
+    },
+    Declaration {
+        name: "b",
+        range: 202..203,
+    },
+    Reference {
+        name: "B",
+        range: 205..206,
+        declared_at: None,
+    },
+]

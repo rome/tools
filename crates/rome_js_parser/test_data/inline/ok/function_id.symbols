@@ -1,0 +1,38 @@
+[
+    Declaration {
+        name: "test",
+        range: 19..23,
+    },
+    Declaration {
+        name: "await",
+        range: 38..43,
+    },
+    Declaration {
+        name: "test",
+        range: 44..48,
+    },
+    Declaration {
+        name: "await",
+        range: 68..73,
+    },
+    Declaration {
+        name: "test",
+        range: 74..78,
+    },
+    Declaration {
+        name: "yield",
+        range: 92..97,
+    },
+    Declaration {
+        name: "test",
+        range: 98..102,
+    },
+    Declaration {
+        name: "yield",
+        range: 117..122,
+    },
+    Declaration {
+        name: "test",
+        range: 123..127,
+    },
+]

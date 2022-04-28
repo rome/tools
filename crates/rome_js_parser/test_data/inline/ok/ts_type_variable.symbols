@@ -1,0 +1,31 @@
+[
+    Declaration {
+        name: "type",
+        range: 4..8,
+    },
+    Reference {
+        name: "type",
+        range: 9..15,
+        declared_at: None,
+    },
+    Reference {
+        name: "getFlowTypeInConstructor",
+        range: 17..41,
+        declared_at: None,
+    },
+    Reference {
+        name: "symbol",
+        range: 42..48,
+        declared_at: None,
+    },
+    Reference {
+        name: "getDeclaringConstructor",
+        range: 50..73,
+        declared_at: None,
+    },
+    Reference {
+        name: "symbol",
+        range: 74..80,
+        declared_at: None,
+    },
+]

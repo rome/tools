@@ -1,0 +1,30 @@
+[
+    Declaration {
+        name: "foo",
+        range: 6..10,
+    },
+    Declaration {
+        name: "property",
+        range: 11..22,
+    },
+    Declaration {
+        name: "declare",
+        range: 22..32,
+    },
+    Declaration {
+        name: "initializedProperty",
+        range: 33..56,
+    },
+    Declaration {
+        name: "5",
+        range: 68..72,
+    },
+    Declaration {
+        name: "staticProperty",
+        range: 96..110,
+    },
+    Declaration {
+        name: "staticInitializedProperty",
+        range: 120..146,
+    },
+]

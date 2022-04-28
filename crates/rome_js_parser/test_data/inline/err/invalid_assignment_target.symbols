@@ -1,0 +1,62 @@
+[
+    Reference {
+        name: "a",
+        range: 2..4,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 6..7,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 12..13,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 17..18,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 21..23,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 25..26,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 27..29,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 35..36,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 37..39,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 49..50,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 53..55,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 60..61,
+        declared_at: None,
+    },
+]

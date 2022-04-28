@@ -1,0 +1,47 @@
+[
+    Declaration {
+        name: "Base",
+        range: 6..11,
+    },
+    Declaration {
+        name: "name",
+        range: 13..17,
+    },
+    Declaration {
+        name: "other",
+        range: 28..33,
+    },
+    Declaration {
+        name: "Sub",
+        range: 51..55,
+    },
+    Reference {
+        name: "Base",
+        range: 63..68,
+        declared_at: None,
+    },
+    Declaration {
+        name: "priv",
+        range: 91..95,
+    },
+    Declaration {
+        name: "prot",
+        range: 115..119,
+    },
+    Declaration {
+        name: "pub",
+        range: 136..139,
+    },
+    Declaration {
+        name: "name",
+        range: 158..162,
+    },
+    Declaration {
+        name: "read",
+        range: 181..185,
+    },
+    Declaration {
+        name: "other",
+        range: 223..228,
+    },
+]

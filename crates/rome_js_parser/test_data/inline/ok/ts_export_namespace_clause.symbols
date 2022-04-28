@@ -1,0 +1,10 @@
+[
+    Declaration {
+        name: "isPrime",
+        range: 16..23,
+    },
+    Declaration {
+        name: "x",
+        range: 24..25,
+    },
+]

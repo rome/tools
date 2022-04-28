@@ -1,0 +1,19 @@
+[
+    Declaration {
+        name: "test",
+        range: 26..30,
+    },
+    Declaration {
+        name: "A",
+        range: 43..45,
+    },
+    Declaration {
+        name: "prop",
+        range: 46..56,
+    },
+    Reference {
+        name: "await",
+        range: 58..63,
+        declared_at: None,
+    },
+]

@@ -1,0 +1,6 @@
+[
+    Declaration {
+        name: "helper",
+        range: 26..32,
+    },
+]

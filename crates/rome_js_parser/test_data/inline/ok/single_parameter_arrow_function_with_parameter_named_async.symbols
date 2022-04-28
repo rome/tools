@@ -1,0 +1,15 @@
+[
+    Declaration {
+        name: "id",
+        range: 4..7,
+    },
+    Declaration {
+        name: "async",
+        range: 9..15,
+    },
+    Reference {
+        name: "async",
+        range: 18..23,
+        declared_at: None,
+    },
+]

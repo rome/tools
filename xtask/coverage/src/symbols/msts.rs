@@ -49,7 +49,7 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
 
         let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
         let mut actual: Vec<_> = rome_js_parser::symbols::symbols(r.syntax()).collect();
-        actual.sort_by(|l, r| l.range.start().cmp(&r.range.start()));
+        actual.sort_by(|l, r| l.range().start().cmp(&r.range().start()));
 
         if std::env::var("PRINT_CMP").is_ok() {
             let mut expecteds = expected.symbols.iter();
@@ -69,11 +69,11 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
                 print!(" - ");
 
                 if let Some(s) = a {
-                    print!("{}@{:?}", s.name, s.range);
+                    print!("{:?}", s);
                 }
 
                 match (e, a) {
-                    (Some(e), Some(a)) if e.name != a.name => {
+                    (Some(e), Some(a)) if e.name != a.name() => {
                         println!(" <<<<<<<<<<<<<<<<<<<< Diff here")
                     }
                     _ => {}
@@ -90,7 +90,7 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
             }
         } else {
             for (expected, actual) in expected.symbols.iter().zip(actual) {
-                let are_names_eq = expected.name == actual.name;
+                let are_names_eq = expected.name == actual.name();
                 // let are_paths_eq = expected.name == actual.name;
                 //TODO check decls
                 if !are_names_eq
@@ -190,6 +190,9 @@ fn parse_decl(input: &str) -> Option<(&str, Decl)> {
 fn parse_symbol(input: &str) -> Option<Symbol> {
     let (input, _) = parse_str(input, ">")?;
     let (input, name) = parse_until_chr(input, |x| x.is_whitespace() || x == ':')?;
+    if name.contains(".") || name.contains("[") || name.contains("\"") {
+        return None;
+    }
     let (input, _) = parse_whitespace0(input);
     let (input, _) = parse_str(input, ":")?;
     let (input, _) = parse_whitespace0(input);

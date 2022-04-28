@@ -1,0 +1,27 @@
+[
+    Reference {
+        name: "interface",
+        range: 0..20,
+        declared_at: None,
+    },
+    Reference {
+        name: "private",
+        range: 24..33,
+        declared_at: None,
+    },
+    Reference {
+        name: "protected",
+        range: 37..48,
+        declared_at: None,
+    },
+    Reference {
+        name: "public",
+        range: 52..60,
+        declared_at: None,
+    },
+    Reference {
+        name: "implements",
+        range: 64..76,
+        declared_at: None,
+    },
+]

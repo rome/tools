@@ -1,0 +1,7 @@
+[
+    Reference {
+        name: "type",
+        range: 7..11,
+        declared_at: None,
+    },
+]

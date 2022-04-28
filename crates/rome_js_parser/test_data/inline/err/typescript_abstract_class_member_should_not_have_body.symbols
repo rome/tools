@@ -1,0 +1,26 @@
+[
+    Declaration {
+        name: "AbstractMembers",
+        range: 15..31,
+    },
+    Declaration {
+        name: "constructor",
+        range: 46..57,
+    },
+    Declaration {
+        name: "display",
+        range: 77..84,
+    },
+    Declaration {
+        name: "my_name",
+        range: 114..121,
+    },
+    Declaration {
+        name: "my_name",
+        range: 145..152,
+    },
+    Declaration {
+        name: "name",
+        range: 153..157,
+    },
+]

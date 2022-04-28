@@ -1,0 +1,7 @@
+[
+    Reference {
+        name: "arrow",
+        range: 3..9,
+        declared_at: None,
+    },
+]

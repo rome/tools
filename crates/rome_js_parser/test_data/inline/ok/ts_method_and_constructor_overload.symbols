@@ -1,0 +1,84 @@
+[
+    Declaration {
+        name: "Test",
+        range: 6..11,
+    },
+    Declaration {
+        name: "a",
+        range: 50..51,
+    },
+    Reference {
+        name: "String",
+        range: 53..59,
+        declared_at: None,
+    },
+    Declaration {
+        name: "a",
+        range: 85..86,
+    },
+    Reference {
+        name: "String",
+        range: 89..95,
+        declared_at: None,
+    },
+    Declaration {
+        name: "method",
+        range: 111..117,
+    },
+    Reference {
+        name: "Promise",
+        range: 121..128,
+        declared_at: None,
+    },
+    Reference {
+        name: "String",
+        range: 129..135,
+        declared_at: None,
+    },
+    Declaration {
+        name: "method",
+        range: 137..149,
+    },
+    Declaration {
+        name: "a",
+        range: 150..151,
+    },
+    Reference {
+        name: "String",
+        range: 153..159,
+        declared_at: None,
+    },
+    Reference {
+        name: "Promise",
+        range: 162..169,
+        declared_at: None,
+    },
+    Reference {
+        name: "String",
+        range: 170..176,
+        declared_at: None,
+    },
+    Declaration {
+        name: "method",
+        range: 196..202,
+    },
+    Declaration {
+        name: "a",
+        range: 203..204,
+    },
+    Reference {
+        name: "String",
+        range: 207..213,
+        declared_at: None,
+    },
+    Reference {
+        name: "Promise",
+        range: 216..223,
+        declared_at: None,
+    },
+    Reference {
+        name: "String",
+        range: 224..230,
+        declared_at: None,
+    },
+]

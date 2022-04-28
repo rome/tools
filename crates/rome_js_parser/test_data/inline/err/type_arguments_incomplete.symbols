@@ -1,0 +1,12 @@
+[
+    Reference {
+        name: "func",
+        range: 0..4,
+        declared_at: None,
+    },
+    Reference {
+        name: "T",
+        range: 5..6,
+        declared_at: None,
+    },
+]

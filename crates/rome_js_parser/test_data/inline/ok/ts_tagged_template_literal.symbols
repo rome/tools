@@ -1,0 +1,32 @@
+[
+    Reference {
+        name: "html",
+        range: 0..4,
+        declared_at: None,
+    },
+    Reference {
+        name: "A",
+        range: 5..6,
+        declared_at: None,
+    },
+    Reference {
+        name: "B",
+        range: 8..9,
+        declared_at: None,
+    },
+    Reference {
+        name: "html",
+        range: 16..21,
+        declared_at: None,
+    },
+    Reference {
+        name: "A",
+        range: 22..23,
+        declared_at: None,
+    },
+    Reference {
+        name: "B",
+        range: 25..26,
+        declared_at: None,
+    },
+]

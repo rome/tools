@@ -1,0 +1,38 @@
+[
+    Declaration {
+        name: "Getters",
+        range: 6..14,
+    },
+    Declaration {
+        name: "foo",
+        range: 22..25,
+    },
+    Declaration {
+        name: "static",
+        range: 37..43,
+    },
+    Declaration {
+        name: "bar",
+        range: 62..65,
+    },
+    Declaration {
+        name: "5",
+        range: 117..118,
+    },
+    Declaration {
+        name: "NotGetters",
+        range: 152..163,
+    },
+    Declaration {
+        name: "get",
+        range: 164..170,
+    },
+    Declaration {
+        name: "get",
+        range: 184..187,
+    },
+    Declaration {
+        name: "get",
+        range: 202..205,
+    },
+]

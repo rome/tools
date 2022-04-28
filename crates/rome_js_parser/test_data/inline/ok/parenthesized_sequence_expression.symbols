@@ -1,0 +1,102 @@
+[
+    Reference {
+        name: "a",
+        range: 1..2,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 4..5,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 9..10,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 12..13,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 15..16,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 20..21,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 23..24,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 26..27,
+        declared_at: None,
+    },
+    Reference {
+        name: "d",
+        range: 29..30,
+        declared_at: None,
+    },
+    Reference {
+        name: "e",
+        range: 32..33,
+        declared_at: None,
+    },
+    Reference {
+        name: "f",
+        range: 35..36,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 40..41,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 43..44,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 46..47,
+        declared_at: None,
+    },
+    Reference {
+        name: "d",
+        range: 49..50,
+        declared_at: None,
+    },
+    Reference {
+        name: "e",
+        range: 52..53,
+        declared_at: None,
+    },
+    Reference {
+        name: "f",
+        range: 55..56,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 59..60,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 62..63,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 65..66,
+        declared_at: None,
+    },
+]

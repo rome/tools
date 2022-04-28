@@ -1,0 +1,54 @@
+[
+    Declaration {
+        name: "Test",
+        range: 14..19,
+    },
+    Declaration {
+        name: "constructor",
+        range: 20..36,
+    },
+    Declaration {
+        name: "name",
+        range: 41..50,
+    },
+    Declaration {
+        name: "test",
+        range: 64..68,
+    },
+    Declaration {
+        name: "test",
+        range: 102..106,
+    },
+    Declaration {
+        name: "v",
+        range: 107..108,
+    },
+    Declaration {
+        name: "n",
+        range: 133..135,
+    },
+    Declaration {
+        name: "Test",
+        range: 148..153,
+    },
+    Declaration {
+        name: "constructor",
+        range: 154..175,
+    },
+    Declaration {
+        name: "name",
+        range: 180..194,
+    },
+    Declaration {
+        name: "test",
+        range: 213..217,
+    },
+    Declaration {
+        name: "test",
+        range: 256..260,
+    },
+    Declaration {
+        name: "v",
+        range: 261..262,
+    },
+]

@@ -1,0 +1,56 @@
+[
+    Reference {
+        name: "a",
+        range: 14..15,
+        declared_at: None,
+    },
+    Declaration {
+        name: "c",
+        range: 26..28,
+    },
+    Reference {
+        name: "a",
+        range: 44..45,
+        declared_at: None,
+    },
+    Declaration {
+        name: "a",
+        range: 57..58,
+    },
+    Reference {
+        name: "b",
+        range: 64..65,
+        declared_at: None,
+    },
+    Declaration {
+        name: "rest",
+        range: 76..80,
+    },
+    Declaration {
+        name: "other_assignment",
+        range: 82..99,
+    },
+    Reference {
+        name: "a",
+        range: 103..104,
+        declared_at: None,
+    },
+    Declaration {
+        name: "rest2",
+        range: 115..120,
+    },
+    Reference {
+        name: "a",
+        range: 126..127,
+        declared_at: None,
+    },
+    Declaration {
+        name: "test",
+        range: 144..148,
+    },
+    Reference {
+        name: "a",
+        range: 174..175,
+        declared_at: None,
+    },
+]

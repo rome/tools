@@ -1,0 +1,30 @@
+[
+    Declaration {
+        name: "Test",
+        range: 6..11,
+    },
+    Declaration {
+        name: "prop",
+        range: 12..25,
+    },
+    Declaration {
+        name: "method",
+        range: 34..49,
+    },
+    Declaration {
+        name: "getter",
+        range: 67..73,
+    },
+    Declaration {
+        name: "setter",
+        range: 91..97,
+    },
+    Declaration {
+        name: "a",
+        range: 98..99,
+    },
+    Declaration {
+        name: "prop",
+        range: 145..149,
+    },
+]

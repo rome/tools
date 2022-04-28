@@ -1,0 +1,26 @@
+[
+    Declaration {
+        name: "A",
+        range: 6..8,
+    },
+    Declaration {
+        name: "public",
+        range: 10..16,
+    },
+    Declaration {
+        name: "A",
+        range: 30..32,
+    },
+    Declaration {
+        name: "protected",
+        range: 41..50,
+    },
+    Declaration {
+        name: "A",
+        range: 64..66,
+    },
+    Declaration {
+        name: "static",
+        range: 68..75,
+    },
+]

@@ -1,0 +1,167 @@
+[
+    Reference {
+        name: "obj",
+        range: 7..10,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 24..27,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 41..44,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 66..69,
+        declared_at: None,
+    },
+    Reference {
+        name: "func",
+        range: 91..95,
+        declared_at: None,
+    },
+    Reference {
+        name: "func",
+        range: 119..123,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 147..150,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 173..176,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 199..202,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 231..234,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 263..266,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 267..270,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 281..284,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 286..289,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 299..302,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 311..314,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 325..328,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 338..341,
+        declared_at: None,
+    },
+    Reference {
+        name: "func",
+        range: 351..355,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 366..369,
+        declared_at: None,
+    },
+    Reference {
+        name: "func",
+        range: 380..384,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 396..399,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 409..412,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 422..425,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 436..439,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 450..453,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 463..466,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 482..485,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 496..499,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 516..519,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 530..533,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 540..543,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 566..569,
+        declared_at: None,
+    },
+]

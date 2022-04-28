@@ -1,0 +1,15 @@
+[
+    Declaration {
+        name: "evalInComputedPropertyKey",
+        range: 9..34,
+    },
+    Reference {
+        name: "computed",
+        range: 38..46,
+        declared_at: None,
+    },
+    Declaration {
+        name: "ignored",
+        range: 49..57,
+    },
+]

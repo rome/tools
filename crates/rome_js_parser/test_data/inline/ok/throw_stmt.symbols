@@ -1,0 +1,7 @@
+[
+    Reference {
+        name: "Error",
+        range: 10..15,
+        declared_at: None,
+    },
+]

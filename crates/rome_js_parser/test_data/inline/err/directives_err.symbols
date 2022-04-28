@@ -1,0 +1,18 @@
+[
+    Declaration {
+        name: "test",
+        range: 19..23,
+    },
+    Declaration {
+        name: "inner_a",
+        range: 55..62,
+    },
+    Declaration {
+        name: "inner_b",
+        range: 100..107,
+    },
+    Declaration {
+        name: "inner_inner",
+        range: 125..136,
+    },
+]

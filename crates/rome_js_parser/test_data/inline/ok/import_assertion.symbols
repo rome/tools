@@ -1,0 +1,14 @@
+[
+    Declaration {
+        name: "foo",
+        range: 82..86,
+    },
+    Declaration {
+        name: "test",
+        range: 135..139,
+    },
+    Declaration {
+        name: "foo_json",
+        range: 186..195,
+    },
+]

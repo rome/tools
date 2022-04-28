@@ -1,0 +1,17 @@
+[
+    Reference {
+        name: "foo",
+        range: 0..13,
+        declared_at: None,
+    },
+    Reference {
+        name: "yield",
+        range: 14..20,
+        declared_at: None,
+    },
+    Reference {
+        name: "await",
+        range: 21..27,
+        declared_at: None,
+    },
+]

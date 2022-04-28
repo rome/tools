@@ -1,0 +1,16 @@
+[
+    Declaration {
+        name: "global",
+        range: 4..10,
+    },
+    Reference {
+        name: "global",
+        range: 11..46,
+        declared_at: None,
+    },
+    Reference {
+        name: "console",
+        range: 46..54,
+        declared_at: None,
+    },
+]

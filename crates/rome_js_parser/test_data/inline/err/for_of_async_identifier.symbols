@@ -1,0 +1,6 @@
+[
+    Declaration {
+        name: "async",
+        range: 4..9,
+    },
+]

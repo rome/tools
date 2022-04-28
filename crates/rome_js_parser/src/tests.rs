@@ -98,21 +98,31 @@ fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, Stri
 #[cfg(test)]
 fn run_and_expect_no_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
+    let rast_file = path.with_extension("rast");
+    let symbols_file = path.with_extension("symbols");
     let text = std::fs::read_to_string(&path).unwrap();
 
+    // Assert CST
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
     assert_errors_are_absent(&parse, &path);
     let actual = format!("{}\n\n{:#?}", ast, parse.syntax());
+    expect_file![rast_file].assert_eq(&actual);
 
-    let path = path.with_extension("rast");
-    expect_file![path].assert_eq(&actual)
+    // Assert Symbols
+    let mut symbols: Vec<_> = crate::symbols::symbols(parse.syntax()).collect();
+    symbols.sort_by(|l, r| l.range().start().cmp(&r.range().start()));
+    let actual = format!("{:#?}", symbols);
+    expect_file![symbols_file].assert_eq(&actual);
 }
 
 #[cfg(test)]
 fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
+    let rast_file = path.with_extension("rast");
+    let symbols_file = path.with_extension("symbols");
     let text = std::fs::read_to_string(&path).unwrap();
 
+    // Assert CST
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
     assert_errors_are_present(&parse, &path);
     let mut files = SimpleFiles::new();
@@ -133,9 +143,13 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
         ));
     }
     actual.push_str(&format!("--\n{}", text));
+    expect_file![rast_file].assert_eq(&actual);
 
-    let path = path.with_extension("rast");
-    expect_file![path].assert_eq(&actual)
+    // Assert Symbols
+    let mut symbols: Vec<_> = crate::symbols::symbols(parse.syntax()).collect();
+    symbols.sort_by(|l, r| l.range().start().cmp(&r.range().start()));
+    let actual = format!("{:#?}", symbols);
+    expect_file![symbols_file].assert_eq(&actual);
 }
 
 mod parser {

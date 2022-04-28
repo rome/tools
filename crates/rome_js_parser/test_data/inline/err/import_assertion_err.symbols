@@ -1,0 +1,23 @@
+[
+    Declaration {
+        name: "foo",
+        range: 90..94,
+    },
+    Reference {
+        name: "assert",
+        range: 135..143,
+        declared_at: None,
+    },
+    Declaration {
+        name: "foo2",
+        range: 167..172,
+    },
+    Declaration {
+        name: "ipsum",
+        range: 269..275,
+    },
+    Declaration {
+        name: "a",
+        range: 355..357,
+    },
+]

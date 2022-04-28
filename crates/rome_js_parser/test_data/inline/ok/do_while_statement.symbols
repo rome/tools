@@ -1,0 +1,36 @@
+[
+    Reference {
+        name: "console",
+        range: 3..10,
+        declared_at: None,
+    },
+    Reference {
+        name: "console",
+        range: 40..50,
+        declared_at: None,
+    },
+    Declaration {
+        name: "a",
+        range: 83..85,
+    },
+    Reference {
+        name: "a",
+        range: 97..102,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 104..106,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 118..120,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 132..134,
+        declared_at: None,
+    },
+]

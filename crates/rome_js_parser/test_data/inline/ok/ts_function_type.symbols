@@ -1,0 +1,97 @@
+[
+    Declaration {
+        name: "A",
+        range: 5..7,
+    },
+    Declaration {
+        name: "B",
+        range: 28..30,
+    },
+    Declaration {
+        name: "a",
+        range: 33..34,
+    },
+    Declaration {
+        name: "C",
+        range: 60..62,
+    },
+    Declaration {
+        name: "b",
+        range: 65..67,
+    },
+    Declaration {
+        name: "D",
+        range: 93..95,
+    },
+    Declaration {
+        name: "c",
+        range: 98..99,
+    },
+    Declaration {
+        name: "d",
+        range: 101..102,
+    },
+    Declaration {
+        name: "E",
+        range: 119..121,
+    },
+    Declaration {
+        name: "a",
+        range: 125..126,
+    },
+    Declaration {
+        name: "F",
+        range: 144..146,
+    },
+    Declaration {
+        name: "a",
+        range: 150..151,
+    },
+    Declaration {
+        name: "G",
+        range: 169..171,
+    },
+    Declaration {
+        name: "a",
+        range: 180..181,
+    },
+    Reference {
+        name: "A",
+        range: 183..184,
+        declared_at: None,
+    },
+    Declaration {
+        name: "b",
+        range: 186..187,
+    },
+    Reference {
+        name: "B",
+        range: 189..190,
+        declared_at: None,
+    },
+    Declaration {
+        name: "H",
+        range: 207..209,
+    },
+    Declaration {
+        name: "a",
+        range: 212..213,
+    },
+    Reference {
+        name: "a",
+        range: 223..225,
+        declared_at: None,
+    },
+    Declaration {
+        name: "I",
+        range: 241..243,
+    },
+    Declaration {
+        name: "a",
+        range: 248..249,
+    },
+    Declaration {
+        name: "b",
+        range: 251..253,
+    },
+]

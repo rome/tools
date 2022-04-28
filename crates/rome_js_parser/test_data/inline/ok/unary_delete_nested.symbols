@@ -1,0 +1,63 @@
+[
+    Declaration {
+        name: "TestClass",
+        range: 6..16,
+    },
+    Declaration {
+        name: "method",
+        range: 34..40,
+    },
+    Reference {
+        name: "func",
+        range: 52..56,
+        declared_at: None,
+    },
+    Declaration {
+        name: "TestClass",
+        range: 81..91,
+    },
+    Declaration {
+        name: "method",
+        range: 109..115,
+    },
+    Declaration {
+        name: "TestClass",
+        range: 152..162,
+    },
+    Declaration {
+        name: "method",
+        range: 180..186,
+    },
+    Declaration {
+        name: "key",
+        range: 200..203,
+    },
+    Declaration {
+        name: "TestClass",
+        range: 230..240,
+    },
+    Declaration {
+        name: "method",
+        range: 258..264,
+    },
+    Declaration {
+        name: "TestClass",
+        range: 312..322,
+    },
+    Declaration {
+        name: "method",
+        range: 340..346,
+    },
+    Declaration {
+        name: "param",
+        range: 359..365,
+    },
+    Declaration {
+        name: "TestClass",
+        range: 397..407,
+    },
+    Declaration {
+        name: "method",
+        range: 425..431,
+    },
+]

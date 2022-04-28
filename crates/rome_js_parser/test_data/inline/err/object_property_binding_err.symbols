@@ -1,0 +1,22 @@
+[
+    Declaration {
+        name: "foo",
+        range: 6..9,
+    },
+    Declaration {
+        name: "bar",
+        range: 13..17,
+    },
+    Declaration {
+        name: "lorem",
+        range: 32..38,
+    },
+    Declaration {
+        name: "ipsum",
+        range: 62..67,
+    },
+    Declaration {
+        name: "bazz",
+        range: 69..74,
+    },
+]

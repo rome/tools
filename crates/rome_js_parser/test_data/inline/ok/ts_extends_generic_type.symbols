@@ -1,0 +1,24 @@
+[
+    Declaration {
+        name: "IHasVisualizationModel",
+        range: 5..28,
+    },
+    Declaration {
+        name: "D",
+        range: 44..46,
+    },
+    Reference {
+        name: "C",
+        range: 54..55,
+        declared_at: None,
+    },
+    Reference {
+        name: "IHasVisualizationModel",
+        range: 56..78,
+        declared_at: None,
+    },
+    Declaration {
+        name: "x",
+        range: 81..88,
+    },
+]

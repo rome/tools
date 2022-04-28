@@ -1,0 +1,6 @@
+[
+    Declaration {
+        name: "VERSION",
+        range: 45..52,
+    },
+]

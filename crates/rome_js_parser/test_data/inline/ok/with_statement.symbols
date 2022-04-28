@@ -1,0 +1,29 @@
+[
+    Declaration {
+        name: "f",
+        range: 19..20,
+    },
+    Declaration {
+        name: "x",
+        range: 21..22,
+    },
+    Declaration {
+        name: "o",
+        range: 24..25,
+    },
+    Reference {
+        name: "o",
+        range: 37..38,
+        declared_at: None,
+    },
+    Reference {
+        name: "console",
+        range: 41..53,
+        declared_at: None,
+    },
+    Reference {
+        name: "x",
+        range: 58..59,
+        declared_at: None,
+    },
+]

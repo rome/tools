@@ -1,0 +1,78 @@
+[
+    Declaration {
+        name: "Setters",
+        range: 6..14,
+    },
+    Declaration {
+        name: "foo",
+        range: 22..25,
+    },
+    Declaration {
+        name: "a",
+        range: 26..27,
+    },
+    Declaration {
+        name: "static",
+        range: 38..44,
+    },
+    Declaration {
+        name: "a",
+        range: 45..46,
+    },
+    Declaration {
+        name: "bar",
+        range: 64..67,
+    },
+    Declaration {
+        name: "a",
+        range: 68..69,
+    },
+    Declaration {
+        name: "a",
+        range: 86..87,
+    },
+    Declaration {
+        name: "a",
+        range: 110..111,
+    },
+    Declaration {
+        name: "5",
+        range: 122..123,
+    },
+    Declaration {
+        name: "a",
+        range: 124..125,
+    },
+    Declaration {
+        name: "a",
+        range: 145..146,
+    },
+    Declaration {
+        name: "NotSetters",
+        range: 159..170,
+    },
+    Declaration {
+        name: "set",
+        range: 171..177,
+    },
+    Declaration {
+        name: "a",
+        range: 178..179,
+    },
+    Declaration {
+        name: "set",
+        range: 192..195,
+    },
+    Declaration {
+        name: "a",
+        range: 196..197,
+    },
+    Declaration {
+        name: "set",
+        range: 211..214,
+    },
+    Declaration {
+        name: "a",
+        range: 215..216,
+    },
+]

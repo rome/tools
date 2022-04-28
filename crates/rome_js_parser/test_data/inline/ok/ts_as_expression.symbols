@@ -1,0 +1,52 @@
+[
+    Declaration {
+        name: "x",
+        range: 4..5,
+    },
+    Declaration {
+        name: "y",
+        range: 27..29,
+    },
+    Reference {
+        name: "x",
+        range: 31..33,
+        declared_at: None,
+    },
+    Declaration {
+        name: "z",
+        range: 48..50,
+    },
+    Reference {
+        name: "x",
+        range: 52..54,
+        declared_at: None,
+    },
+    Reference {
+        name: "const",
+        range: 57..62,
+        declared_at: None,
+    },
+    Declaration {
+        name: "not_an_as_expression",
+        range: 68..89,
+    },
+    Reference {
+        name: "x",
+        range: 91..92,
+        declared_at: None,
+    },
+    Reference {
+        name: "as",
+        range: 92..95,
+        declared_at: None,
+    },
+    Declaration {
+        name: "precedence",
+        range: 101..112,
+    },
+    Reference {
+        name: "const",
+        range: 125..131,
+        declared_at: None,
+    },
+]

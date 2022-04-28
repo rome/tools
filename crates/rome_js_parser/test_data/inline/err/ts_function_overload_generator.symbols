@@ -1,0 +1,18 @@
+[
+    Declaration {
+        name: "test",
+        range: 10..14,
+    },
+    Declaration {
+        name: "a",
+        range: 15..16,
+    },
+    Declaration {
+        name: "test",
+        range: 37..41,
+    },
+    Declaration {
+        name: "a",
+        range: 42..43,
+    },
+]

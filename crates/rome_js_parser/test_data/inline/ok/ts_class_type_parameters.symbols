@@ -1,0 +1,6 @@
+[
+    Declaration {
+        name: "BuildError",
+        range: 6..16,
+    },
+]

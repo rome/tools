@@ -1,0 +1,26 @@
+[
+    Declaration {
+        name: "Test",
+        range: 15..20,
+    },
+    Declaration {
+        name: "method",
+        range: 21..36,
+    },
+    Declaration {
+        name: "index",
+        range: 49..54,
+    },
+    Declaration {
+        name: "method2",
+        range: 90..97,
+    },
+    Declaration {
+        name: "getter",
+        range: 122..128,
+    },
+    Declaration {
+        name: "setter",
+        range: 153..159,
+    },
+]

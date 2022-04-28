@@ -1,0 +1,55 @@
+[
+    Reference {
+        name: "foo",
+        range: 52..55,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 55..60,
+        declared_at: None,
+    },
+    Reference {
+        name: "Array",
+        range: 71..76,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 76..81,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 84..87,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 87..90,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 93..94,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 94..97,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 101..102,
+        declared_at: None,
+    },
+    Declaration {
+        name: "Test",
+        range: 146..151,
+    },
+    Declaration {
+        name: "test",
+        range: 160..164,
+    },
+]

@@ -1,0 +1,10 @@
+[
+    Declaration {
+        name: "test",
+        range: 15..20,
+    },
+    Declaration {
+        name: "X",
+        range: 28..29,
+    },
+]

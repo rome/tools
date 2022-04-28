@@ -1,0 +1,74 @@
+[
+    Declaration {
+        name: "a",
+        range: 4..6,
+    },
+    Declaration {
+        name: "foo",
+        range: 17..20,
+    },
+    Declaration {
+        name: "bar",
+        range: 22..26,
+    },
+    Declaration {
+        name: "bar2",
+        range: 37..41,
+    },
+    Declaration {
+        name: "foo2",
+        range: 43..47,
+    },
+    Declaration {
+        name: "b",
+        range: 55..57,
+    },
+    Declaration {
+        name: "foo5",
+        range: 70..74,
+    },
+    Declaration {
+        name: "bar11",
+        range: 77..82,
+    },
+    Declaration {
+        name: "baz6",
+        range: 85..90,
+    },
+    Declaration {
+        name: "foo6",
+        range: 102..107,
+    },
+    Declaration {
+        name: "bar7",
+        range: 118..123,
+    },
+    Declaration {
+        name: "third8",
+        range: 134..141,
+    },
+    Declaration {
+        name: "fourth",
+        range: 152..159,
+    },
+    Declaration {
+        name: "q",
+        range: 168..169,
+    },
+    Declaration {
+        name: "w",
+        range: 171..172,
+    },
+    Declaration {
+        name: "e",
+        range: 174..175,
+    },
+    Declaration {
+        name: "r",
+        range: 177..178,
+    },
+    Declaration {
+        name: "t",
+        range: 180..181,
+    },
+]

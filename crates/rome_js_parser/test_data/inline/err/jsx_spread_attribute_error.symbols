@@ -1,0 +1,26 @@
+[
+    Declaration {
+        name: "obj",
+        range: 4..8,
+    },
+    Reference {
+        name: "obj",
+        range: 21..24,
+        declared_at: None,
+    },
+    Reference {
+        name: "other",
+        range: 26..31,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 43..46,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 56..59,
+        declared_at: None,
+    },
+]

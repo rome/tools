@@ -1,0 +1,30 @@
+[
+    Declaration {
+        name: "5",
+        range: 6..8,
+    },
+    Declaration {
+        name: "eval",
+        range: 48..52,
+    },
+    Declaration {
+        name: "5",
+        range: 69..70,
+    },
+    Declaration {
+        name: "6",
+        range: 72..74,
+    },
+    Declaration {
+        name: "eval",
+        range: 80..84,
+    },
+    Declaration {
+        name: "default",
+        range: 101..109,
+    },
+    Declaration {
+        name: "eval",
+        range: 111..115,
+    },
+]

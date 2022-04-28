@@ -1,0 +1,59 @@
+[
+    Declaration {
+        name: "Base",
+        range: 6..11,
+    },
+    Declaration {
+        name: "base1",
+        range: 12..20,
+    },
+    Declaration {
+        name: "Test",
+        range: 39..44,
+    },
+    Reference {
+        name: "Base",
+        range: 52..57,
+        declared_at: None,
+    },
+    Declaration {
+        name: "a",
+        range: 71..72,
+    },
+    Declaration {
+        name: "c",
+        range: 102..103,
+    },
+    Declaration {
+        name: "d",
+        range: 133..134,
+    },
+    Declaration {
+        name: "e",
+        range: 173..174,
+    },
+    Declaration {
+        name: "f",
+        range: 213..214,
+    },
+    Declaration {
+        name: "g",
+        range: 260..261,
+    },
+    Declaration {
+        name: "h",
+        range: 307..308,
+    },
+    Declaration {
+        name: "i",
+        range: 350..351,
+    },
+    Declaration {
+        name: "j",
+        range: 393..394,
+    },
+    Declaration {
+        name: "base1",
+        range: 436..441,
+    },
+]

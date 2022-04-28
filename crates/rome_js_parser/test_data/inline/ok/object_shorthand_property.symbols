@@ -1,0 +1,33 @@
+[
+    Declaration {
+        name: "a",
+        range: 6..7,
+    },
+    Declaration {
+        name: "b",
+        range: 9..11,
+    },
+    Reference {
+        name: "c",
+        range: 15..16,
+        declared_at: None,
+    },
+    Declaration {
+        name: "d",
+        range: 23..25,
+    },
+    Declaration {
+        name: "e",
+        range: 38..40,
+    },
+    Reference {
+        name: "call",
+        range: 42..46,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 53..54,
+        declared_at: None,
+    },
+]

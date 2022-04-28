@@ -1,0 +1,21 @@
+[
+    Reference {
+        name: "o",
+        range: 80..81,
+        declared_at: None,
+    },
+    Declaration {
+        name: "foo",
+        range: 86..89,
+    },
+    Reference {
+        name: "eval",
+        range: 93..98,
+        declared_at: None,
+    },
+    Reference {
+        name: "o",
+        range: 104..105,
+        declared_at: None,
+    },
+]

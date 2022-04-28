@@ -1,0 +1,27 @@
+[
+    Reference {
+        name: "obj",
+        range: 0..3,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 23..27,
+        declared_at: None,
+    },
+    Reference {
+        name: "expr",
+        range: 34..38,
+        declared_at: None,
+    },
+    Reference {
+        name: "obj",
+        range: 49..53,
+        declared_at: None,
+    },
+    Reference {
+        name: "args",
+        range: 61..65,
+        declared_at: None,
+    },
+]

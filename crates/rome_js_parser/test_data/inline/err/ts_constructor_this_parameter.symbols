@@ -1,0 +1,6 @@
+[
+    Declaration {
+        name: "C",
+        range: 6..8,
+    },
+]
