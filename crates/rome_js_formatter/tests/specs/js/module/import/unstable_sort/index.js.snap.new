@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 258
+expression: index.js
+---
+# Input
+import { a } from "b";
+import "bootstrap";
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+**Using experimental flags** 
+-----
+import { a } from "b";
+import "bootstrap";
+## Output 2
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+**Using experimental flags** 
+-----
+import "bootstrap";
+import { a } from "b";
+

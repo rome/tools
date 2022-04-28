@@ -1,0 +1,53 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 258
+expression: import_and_expressions.js
+---
+# Input
+import {sort} from "lodash";
+import "bootstrap";
+import "polyfill";
+
+window.kickOffPolyfill();
+
+import {createStore} from "redux";
+import * as fs from "node:fs";
+
+import "angular";
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+**Using experimental flags** 
+-----
+
+import "bootstrap";
+import "polyfill";
+import { sort } from "lodash";
+
+window.kickOffPolyfill();
+
+import "angular";
+import * as fs from "node:fs";
+import { createStore } from "redux";
+## Output 2
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+**Using experimental flags** 
+-----
+
+import "bootstrap";
+import "polyfill";
+import { sort } from "lodash";
+
+window.kickOffPolyfill();
+
+import "angular";
+import * as fs from "node:fs";
+import { createStore } from "redux";
+

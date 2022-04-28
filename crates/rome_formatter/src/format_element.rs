@@ -857,42 +857,6 @@ where
     ))
 }
 
-/// Get the number of line breaks between two consecutive SyntaxNodes in the tree
-#[inline]
-pub fn get_lines_between_nodes<L: Language>(
-    prev_node: &SyntaxNode<L>,
-    next_node: &SyntaxNode<L>,
-) -> usize {
-    // Ensure the two nodes are actually siblings on debug
-    debug_assert_eq!(prev_node.next_sibling().as_ref(), Some(next_node));
-    debug_assert_eq!(next_node.prev_sibling().as_ref(), Some(prev_node));
-
-    // Count the lines separating the two statements,
-    // starting with the trailing trivia of the previous node
-    let mut line_count = prev_node
-        .last_trailing_trivia()
-        .and_then(|prev_token| {
-            // Newline pieces can only come last in trailing trivias, skip to it directly
-            prev_token.pieces().next_back()?.as_newline()
-        })
-        .is_some() as usize;
-
-    // Then add the newlines in the leading trivia of the next node
-    if let Some(leading_trivia) = next_node.first_leading_trivia() {
-        for piece in leading_trivia.pieces() {
-            if piece.is_newline() {
-                line_count += 1;
-            } else if piece.is_comments() {
-                // Stop at the first comment piece, the comment printer
-                // will handle newlines between the comment and the node
-                break;
-            }
-        }
-    }
-
-    line_count
-}
-
 /// Language agnostic IR for formatting source code.
 ///
 /// Use the helper functions like [crate::space_token], [crate::soft_line_break] etc. defined in this file to create elements.

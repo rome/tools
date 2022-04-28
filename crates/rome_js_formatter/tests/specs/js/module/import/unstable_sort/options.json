@@ -1,7 +1,7 @@
 {
   "cases": [
     {
-      "unstable_sort_imports": true
+      "experimental": true
     }
   ]
 }
