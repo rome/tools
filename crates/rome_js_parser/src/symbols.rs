@@ -53,11 +53,10 @@ impl Iterator for SymbolIterator {
                         None => false,
                     };
 
-                    let first_child_ok = match node.first_token().map(|token| token.kind()) {
-                        Some(JsSyntaxKind::JS_STRING_LITERAL) => false,
-                        _ => true,
-                    };
-
+                    let first_child_ok = !matches!(
+                        node.first_token().map(|token| token.kind()),
+                        Some(JsSyntaxKind::JS_STRING_LITERAL)
+                    );
                     if parent_ok && first_child_ok {
                         Some(Symbol {
                             name: node.text_trimmed().to_string(),
@@ -97,13 +96,10 @@ impl Iterator for SymbolIterator {
                     },
                     _ => None,
                 },
-                JsSyntaxKind::TS_GLOBAL_DECLARATION => match node.first_token() {
-                    Some(token) => Some(Symbol {
-                        name: token.text_trimmed().to_string(),
-                        range: token.text_range(),
-                    }),
-                    None => None,
-                },
+                JsSyntaxKind::TS_GLOBAL_DECLARATION => node.first_token().map(|token| Symbol {
+                    name: token.text_trimmed().to_string(),
+                    range: token.text_range(),
+                }),
                 _ => None,
             };
 

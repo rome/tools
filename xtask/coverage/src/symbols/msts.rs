@@ -51,7 +51,7 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
         let mut actual: Vec<_> = rome_js_parser::symbols::symbols(r.syntax()).collect();
         actual.sort_by(|l, r| l.range.start().cmp(&r.range.start()));
 
-        if let Ok(_) = std::env::var("PRINT_CMP") {
+        if std::env::var("PRINT_CMP").is_ok() {
             let mut expecteds = expected.symbols.iter();
             let mut actuals = actual.iter();
             loop {
@@ -79,7 +79,7 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
                     _ => {}
                 }
 
-                println!("");
+                println!();
             }
         }
 
