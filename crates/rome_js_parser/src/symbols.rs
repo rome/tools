@@ -1,4 +1,4 @@
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TextRange};
+use rome_js_syntax::{JsSyntaxElement, JsSyntaxKind, JsSyntaxNode, TextRange};
 use rome_rowan::NodeOrToken;
 use std::collections::VecDeque;
 
@@ -53,15 +53,16 @@ impl Iterator for SymbolIterator {
             // };
 
             let symbol = match node.kind() {
-                JsSyntaxKind::JS_IDENTIFIER_BINDING | JsSyntaxKind::TS_IDENTIFIER_BINDING => {
-                    Some(Symbol::Declaration {
-                        name: node.text_trimmed().to_string(),
-                        range: node.text_range(),
-                    })
-                }
+                JsSyntaxKind::JS_IDENTIFIER_BINDING
+                | JsSyntaxKind::TS_IDENTIFIER_BINDING
+                | JsSyntaxKind::JS_LITERAL_EXPORT_NAME => Some(Symbol::Declaration {
+                    name: node.text_trimmed().to_string(),
+                    range: node.text_range(),
+                }),
                 JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT
                 | JsSyntaxKind::JS_SUPER_EXPRESSION
-                | JsSyntaxKind::JS_THIS_EXPRESSION => Some(Symbol::Reference {
+                | JsSyntaxKind::JS_THIS_EXPRESSION
+                | JsSyntaxKind::JS_MODULE_SOURCE => Some(Symbol::Reference {
                     name: node.text_trimmed().to_string(),
                     range: node.text_range(),
                     declared_at: None,

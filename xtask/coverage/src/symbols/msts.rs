@@ -49,7 +49,7 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
 
         let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
         let mut actual: Vec<_> = rome_js_parser::symbols::symbols(r.syntax())
-            .filter(|x| !x.name().contains("\""))
+            .filter(|x| !x.name().contains("\"") && !x.name().contains("'"))
             .collect();
         actual.sort_by(|l, r| l.range().start().cmp(&r.range().start()));
 
@@ -192,7 +192,12 @@ fn parse_decl(input: &str) -> Option<(&str, Decl)> {
 fn parse_symbol(input: &str) -> Option<Symbol> {
     let (input, _) = parse_str(input, ">")?;
     let (input, name) = parse_until_chr(input, |x| x.is_whitespace() || x == ':')?;
-    if name.contains(".") || name.contains("[") || name.contains("\"") || name == "undefined" {
+    if name.contains(".")
+        || name.contains("[")
+        || name.contains("\"")
+        || name.contains("'")
+        || name == "undefined"
+    {
         return None;
     }
     let (input, _) = parse_whitespace0(input);
