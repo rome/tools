@@ -93,4 +93,7 @@ macro_rules! declare_feature_flags {
 
 // Flags for unstable features are declared below and are intended to be temporary.
 // When it's no longer necessary to gate a feature, remove the flag from this list.
-declare_feature_flags!();
+declare_feature_flags!(
+    /// Allows to re arranges imports in a consistent way inside the formatter
+    sort_imports
+);

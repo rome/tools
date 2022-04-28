@@ -1,4 +1,5 @@
 use rome_core::App;
+use rome_flags::FeatureFlags;
 use rome_formatter::LineWidth;
 use rome_fs::RomePath;
 use rome_js_formatter::{format_node, FormatOptions, IndentStyle, Printed, QuoteStyle};
@@ -52,8 +53,11 @@ pub struct SerializableFormatOptions {
     /// What's the max width of a line. Defaults to 80.
     pub line_width: Option<u16>,
 
-    // The style for quotes. Defaults to double.
+    /// The style for quotes. Defaults to double.
     pub quote_style: Option<SerializableQuoteStyle>,
+
+    /// Enable experimental flags
+    pub experimental: Option<bool>,
 }
 
 impl From<SerializableFormatOptions> for FormatOptions {
@@ -82,6 +86,7 @@ struct TestOptions {
 struct SnapshotContent {
     input: String,
     output: Vec<(String, FormatOptions)>,
+    experimental: bool,
 }
 
 impl SnapshotContent {
@@ -118,6 +123,10 @@ impl SnapshotContent {
         self.output.push((output, options));
     }
 
+    fn experimental(&mut self) {
+        self.experimental = true;
+    }
+
     fn set_input(&mut self, content: impl Into<String>) {
         self.input = content.into();
     }
@@ -136,6 +145,15 @@ impl SnapshotContent {
             output.push_str(format!("## Output {formal_index}\n").as_str());
             output.push_str("-----\n");
             output.push_str(format!("{}", options).as_str());
+            if self.experimental {
+                output.push_str(
+                    format!(
+                        "**Using experimental flags: {}** \n",
+                        rome_flags::unstable().sort_imports()
+                    )
+                    .as_str(),
+                );
+            }
             output.push_str("-----\n");
             output.push_str(content.as_str());
         }
@@ -175,6 +193,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
 
     let mut rome_path = RomePath::new(file_path);
     if app.features.can_format(&rome_path) {
+        rome_flags::set_unstable_flags(FeatureFlags::NONE);
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
         let mut source_type: SourceType = rome_path.as_path().try_into().unwrap();
@@ -216,6 +235,10 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                     serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
 
                 for test_case in options.cases {
+                    if test_case.experimental == Some(true) {
+                        rome_flags::set_unstable_flags(FeatureFlags::ALL);
+                        snapshot_content.experimental();
+                    }
                     let format_options: FormatOptions = test_case.into();
                     let formatted = format_node(format_options, &root).unwrap();
                     let printed = formatted.print();

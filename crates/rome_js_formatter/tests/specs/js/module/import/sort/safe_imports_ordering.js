@@ -1,0 +1,5 @@
+import { a} from "lodash"
+import { b} from "@scoped/lodash"
+import { c} from "@aaa/lodash"
+import * as foo from "@aaa/lodash"
+import foo from "@bb/lodash"

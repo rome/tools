@@ -16,7 +16,7 @@ impl FormatNode for JsModule {
         Ok(format_elements![
             format_interpreter(interpreter_token, formatter)?,
             directives.format(formatter)?,
-            formatter.format_list(items),
+            items.format(formatter)?,
             eof_token.format(formatter)?,
             hard_line_break()
         ])
