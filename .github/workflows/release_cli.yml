@@ -39,7 +39,7 @@ jobs:
 
       - name: Check prerelease status
         id: prerelease
-        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        if: env.nightly == 'true'
         run: echo "prerelease=true" >> $GITHUB_ENV
 
       - name: Check version status
@@ -107,7 +107,7 @@ jobs:
           # Strip all debug symbols from the resulting binaries
           RUSTFLAGS: "-C strip=symbols"
           # Inline the version of the npm package in the CLI binary
-          ROME_VERSION: ${{ env.version }}
+          ROME_VERSION: ${{ needs.check.outputs.version }}
 
       # Copy the CLI binary and rename it to include the name of the target platform
       - name: Copy CLI binary

@@ -113,11 +113,13 @@ jobs:
       - name: Copy LSP binary
         if: matrix.os == 'windows-2022'
         run: |
+          mkdir dist
           mkdir editors/vscode/server
           cp target/${{ matrix.target }}/release/rome_lsp.exe editors/vscode/server/rome_lsp.exe
       - name: Copy LSP binary
         if: matrix.os != 'windows-2022'
         run: |
+          mkdir dist
           mkdir editors/vscode/server
           cp target/${{ matrix.target }}/release/rome_lsp editors/vscode/server/rome_lsp
 
