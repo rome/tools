@@ -118,7 +118,9 @@ impl ExpressionContext {
 impl Default for ExpressionContext {
     fn default() -> Self {
         ExpressionContext(
-            ExpressionContextFlags::INCLUDE_IN | ExpressionContextFlags::ALLOW_OBJECT_EXPRESSION,
+            ExpressionContextFlags::INCLUDE_IN
+                | ExpressionContextFlags::ALLOW_OBJECT_EXPRESSION
+                | ExpressionContextFlags::ALLOW_TS_TYPE_ASSERTION,
         )
     }
 }
