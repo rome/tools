@@ -4,6 +4,7 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
 use super::jsx::jsx_parse_errors::jsx_only_syntax_error;
+use super::typescript::ts_parse_error::ts_type_assertion_on_new_expr;
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
@@ -60,6 +61,10 @@ bitflags! {
         /// If `true` then, don't parse computed member expressions because they can as well indicate
         /// the start of a computed class member.
         const IN_TS_DECORATOR = 1 << 2;
+
+        /// If `true` allows a typescript type assertion.
+        /// Currently disabled on "new" expressions.
+        const ALLOW_TS_TYPE_ASSERTION = 1 << 3;
     }
 }
 
@@ -76,6 +81,10 @@ impl ExpressionContext {
         self.and(ExpressionContextFlags::IN_TS_DECORATOR, in_decorator)
     }
 
+    pub(crate) fn and_ts_type_assertion_allowed(self, allowed: bool) -> Self {
+        self.and(ExpressionContextFlags::ALLOW_TS_TYPE_ASSERTION, allowed)
+    }
+
     /// Returns true if object expressions or object patterns are valid in this context
     pub(crate) const fn is_object_expression_allowed(&self) -> bool {
         self.0
@@ -90,6 +99,12 @@ impl ExpressionContext {
     /// Returns `true` if currently parsing a decorator expression `@<expr>`.
     pub(crate) const fn is_in_ts_decorator(&self) -> bool {
         self.0.contains(ExpressionContextFlags::IN_TS_DECORATOR)
+    }
+
+    /// Returns true if typescript type assertion are valid in this context
+    pub(crate) const fn is_ts_type_assertion_allowed(&self) -> bool {
+        self.0
+            .contains(ExpressionContextFlags::ALLOW_TS_TYPE_ASSERTION)
     }
 
     /// Adds the `flag` if `set` is `true`, otherwise removes the `flag`
@@ -729,7 +744,8 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         return Present(m.complete(p, NEW_TARGET));
     }
 
-    let expression = parse_primary_expression(p, context).or_add_diagnostic(p, expected_expression);
+    let expression = parse_primary_expression(p, context.and_ts_type_assertion_allowed(false))
+        .or_add_diagnostic(p, expected_expression);
 
     if let Some(lhs) = expression {
         parse_member_expression_rest(p, lhs, context, false, &mut false);
@@ -1289,17 +1305,33 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
         // test ts type_assertion_primary_expression
         // let a = <number>undefined;
         T![<] => {
+            // Checkpoint in case we are not at a JSX tag
             let checkpoint = p.checkpoint();
             Jsx.parse_exclusive_syntax(p, parse_jsx_tag_expression, |p, assertion| {
                 jsx_only_syntax_error(p, "JSX tags", assertion.range(p))
             })
             .or_else(|| {
+                // Try to parse typescript type assertions
                 p.rewind(checkpoint);
-                TypeScript.parse_exclusive_syntax(
-                    p,
-                    |p| parse_ts_type_assertion_expression(p, context),
-                    |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p)),
-                )
+                TypeScript
+                    .parse_exclusive_syntax(
+                        p,
+                        |p| parse_ts_type_assertion_expression(p, context),
+                        |p, assertion| {
+                            ts_only_syntax_error(p, "type assertions", assertion.range(p))
+                        },
+                    )
+                    .map(|m| {
+                        // we parsed a type assertion, but we need an error
+                        // if type assertions are not allowed
+
+                        // test_err ts ts_type_assertions_not_valid_at_new_expr
+                        // var test2 = new <any>Test2();
+                        if !context.is_ts_type_assertion_allowed() {
+                            p.error(ts_type_assertion_on_new_expr(p, &m))
+                        }
+                        m
+                    })
             })
             .unwrap()
         }
