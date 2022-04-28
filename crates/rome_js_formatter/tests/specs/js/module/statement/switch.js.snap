@@ -20,7 +20,6 @@ switch (key) {
 
 }
 
-
 switch ("test") {
   case "test": {}
 }
@@ -47,7 +46,6 @@ switch (key) {
 }
 
 switch ("test") {
-	case "test":
-		{}
+	case "test": {}
 }
 

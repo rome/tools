@@ -4,6 +4,7 @@ use rome_formatter::FormatResult;
 use rome_js_syntax::JsBlockStatement;
 
 use rome_js_syntax::JsBlockStatementFields;
+use rome_js_syntax::JsCatchClause;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
@@ -49,8 +50,21 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
         return false;
     }
 
-    matches!(
-        block.syntax().parent().map(|p| p.kind()),
-        Some(JsSyntaxKind::JS_IF_STATEMENT | JsSyntaxKind::JS_ELSE_CLAUSE)
-    )
+    match block.syntax().parent().map(|p| p.kind()) {
+        Some(
+            JsSyntaxKind::JS_FUNCTION_BODY
+            | JsSyntaxKind::JS_FOR_STATEMENT
+            | JsSyntaxKind::JS_WHILE_STATEMENT
+            | JsSyntaxKind::JS_DO_WHILE_STATEMENT
+            | JsSyntaxKind::TS_MODULE_DECLARATION
+            | JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION
+        ) => false,
+        Some(JsSyntaxKind::JS_CATCH_CLAUSE) => {
+            let parent = block.syntax().parent().unwrap();
+            matches!(parent.parent().map(|p| p.kind()), Some(JsSyntaxKind::JS_FINALLY_CLAUSE))
+        }
+        Some(_) => true,
+        None => false,
+    }
+
 }

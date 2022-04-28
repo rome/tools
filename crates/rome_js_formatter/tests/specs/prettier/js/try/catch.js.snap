@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 175
 expression: catch.js
-
 ---
 # Input
 ```js
@@ -36,22 +35,27 @@ catch(
 
 # Output
 ```js
-try {} catch (
+try {
+} catch (
   // comment
   foo
 ) {}
 
-try {} catch (
+try {
+} catch (
   foo //comment
 ) {}
 
-try {} catch (
+try {
+} catch (
   /* comment */ foo
 ) {}
 
-try {} catch (foo /* comment */ ) {}
+try {
+} catch (foo /* comment */ ) {}
 
-try {} catch (
+try {
+} catch (
   foo
   /* comment */
 ) {}

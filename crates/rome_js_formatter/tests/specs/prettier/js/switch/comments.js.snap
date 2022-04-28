@@ -83,11 +83,13 @@ switch (true) {
 }
 
 switch (x) {
-  case x: {}
+  case x: {
+  }
 
   // other
 
-  case y: {}
+  case y: {
+  }
 }
 
 switch (x) {
