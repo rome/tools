@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 175
 expression: symbolProperty15.ts
-
 ---
 # Input
 ```js
@@ -27,7 +26,9 @@ bar(i);
 ```js
 //@target: ES6
 class C {}
-interface I { [Symbol.iterator]?: { x } }
+interface I {
+  [Symbol.iterator]?: { x };
+}
 
 declare function foo(i: I): I;
 declare function foo(a: any): any;

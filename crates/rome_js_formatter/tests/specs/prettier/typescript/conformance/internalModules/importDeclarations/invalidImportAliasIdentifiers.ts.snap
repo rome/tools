@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 175
 expression: invalidImportAliasIdentifiers.ts
-
 ---
 # Input
 ```js
@@ -50,7 +49,9 @@ enum E { Red, Blue }
 
 import e = E;
 
-interface I { id: number }
+interface I {
+  id: number;
+}
 
 import i = I;
 

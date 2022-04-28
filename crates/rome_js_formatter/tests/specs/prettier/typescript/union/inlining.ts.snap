@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: inlining.ts
 ---
 # Input
@@ -50,8 +51,12 @@ type T8 = number | (((((arg: any) => void))));
 
 # Output
 ```js
-interface RelayProps { articles: a | null }
-interface RelayProps { articles: Array<{ __id: string } | null> | null | void }
+interface RelayProps {
+  articles: a | null;
+}
+interface RelayProps {
+  articles: Array<{ __id: string } | null> | null | void;
+}
 
 type UploadState<E, EM, D>
 // The upload hasnt begun yet

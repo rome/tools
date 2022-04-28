@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 151
+assertion_line: 175
 expression: type-parameters.tsx
-
 ---
 # Input
 ```js
@@ -42,9 +41,13 @@ function functionName4<T>() {
 
 functionName5<T>();
 
-interface Interface1<T> { one: "one" }
+interface Interface1<T> {
+  one: "one";
+}
 
-interface Interface2 { two: Two<T> }
+interface Interface2 {
+  two: Two<T>;
+}
 
 type Type1<T> = "type1";
 

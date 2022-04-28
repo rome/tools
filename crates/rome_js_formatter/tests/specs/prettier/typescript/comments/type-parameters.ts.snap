@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: type-parameters.ts
 ---
 # Input
@@ -42,7 +43,9 @@ functionName<A /* A comment */ >();
 const a: T< /* comment */ > = 1;
 functionName< /* comment */ >();
 function foo< /* comment */ >() {}
-interface Foo { < /* comment */ >(arg): any }
+interface Foo {
+  < /* comment */ >(arg): any;
+}
 type T = < /* comment */ >(arg) => any;
 
 functionName<

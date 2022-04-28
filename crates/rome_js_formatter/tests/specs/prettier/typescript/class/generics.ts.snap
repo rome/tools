@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 175
 expression: generics.ts
-
 ---
 # Input
 ```js
@@ -18,7 +17,9 @@ interface AudioBufferList {
 ```js
 class<T> implements Map<T> {}
 
-interface AudioBufferList { mBuffers: interop.Reference<any /*AudioBuffer*/ > }
+interface AudioBufferList {
+  mBuffers: interop.Reference<any /*AudioBuffer*/ >;
+}
 
 ```
 

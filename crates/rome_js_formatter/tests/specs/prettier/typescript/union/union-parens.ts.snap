@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: union-parens.ts
 ---
 # Input
@@ -147,7 +148,10 @@ var y: ((string | number));
 
 class Foo<T extends (string | number)> {}
 
-interface Interface { i: (X | Y) & Z; j: Partial<(X | Y)> }
+interface Interface {
+  i: (X | Y) & Z;
+  j: Partial<(X | Y)>;
+}
 
 type State =
   & { sharedProperty: any }

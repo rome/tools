@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 175
 expression: break.ts
-
 ---
 # Input
 ```js
@@ -97,12 +96,16 @@ export class Environment2 extends GenericEnvironment<
 }
 
 // Declare Interface Break
-declare interface ExtendsOne extends ASingleInterface { x: string }
+declare interface ExtendsOne extends ASingleInterface {
+  x: string;
+}
 
 declare interface ExtendsLarge
   extends
     ASingleInterfaceWithAReallyReallyReallyReallyLongName
-{ x: string }
+{
+  x: string;
+}
 
 declare interface ExtendsMany
   extends
@@ -113,15 +116,21 @@ declare interface ExtendsMany
     Interface5,
     Interface6,
     Interface7
-{ x: string }
+{
+  x: string;
+}
 
 // Interface declaration break
-interface ExtendsOne extends ASingleInterface { x: string }
+interface ExtendsOne extends ASingleInterface {
+  x: string;
+}
 
 interface ExtendsLarge
   extends
     ASingleInterfaceWithAReallyReallyReallyReallyLongName
-{ x: string }
+{
+  x: string;
+}
 
 interface ExtendsMany
   extends
@@ -132,15 +141,21 @@ interface ExtendsMany
     Interface5,
     Interface6,
     Interface7
-{ s: string }
+{
+  s: string;
+}
 
 // Generic Types
-interface ExtendsOne extends ASingleInterface<string> { x: string }
+interface ExtendsOne extends ASingleInterface<string> {
+  x: string;
+}
 
 interface ExtendsLarge
   extends
     ASingleInterfaceWithAReallyReallyReallyReallyLongName<string>
-{ x: string }
+{
+  x: string;
+}
 
 interface ExtendsMany
   extends
@@ -153,7 +168,9 @@ interface ExtendsMany
       Interface6,
       Interface7
     >
-{ x: string }
+{
+  x: string;
+}
 
 interface ExtendsManyWithGenerics
   extends
@@ -169,7 +186,9 @@ interface ExtendsManyWithGenerics
       Interface7
     >,
     InterfaceThree
-{ x: string }
+{
+  x: string;
+}
 
 export interface ExtendsLongOneWithGenerics
   extends

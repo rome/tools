@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 123
+assertion_line: 175
 expression: symbol.ts
-
 ---
 # Input
 ```js
@@ -18,7 +17,9 @@ type T = {
 
 # Output
 ```js
-interface I { [Symbol.toStringTag]: "I" }
+interface I {
+  [Symbol.toStringTag]: "I";
+}
 
 type T = { [Symbol.toStringTag]: "T" };
 

@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: type-member-get-set.ts
 ---
 # Input
@@ -22,11 +23,16 @@ interface Foo {
 
 # Output
 ```js
-interface Foo { get foo(): string; set bar(v) }
+interface Foo {
+  get foo(): string;
+  set bar(v);
+}
 
 type Foo = { get foo(): string; set bar(v) };
 
-interface Foo { set bar(foo: string) }
+interface Foo {
+  set bar(foo: string);
+}
 
 ```
 

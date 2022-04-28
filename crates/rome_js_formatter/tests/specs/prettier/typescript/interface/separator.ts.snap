@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: separator.ts
 ---
 # Input
@@ -31,9 +32,15 @@ declare module "selenium-webdriver" {
   };
 }
 
-export interface Edge { cursor: {}; node: { id: {} } }
+export interface Edge {
+  cursor: {};
+  node: { id: {} };
+}
 
-interface Test { one: string; two: any[] }
+interface Test {
+  one: string;
+  two: any[];
+}
 
 ```
 

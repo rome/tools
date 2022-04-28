@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: shadowedInternalModule.ts
 ---
 # Input
@@ -45,7 +46,10 @@ module Z {
 
 module A {
   export var Point = { x: 0, y: 0 };
-  export interface Point { x: number; y: number }
+  export interface Point {
+    x: number;
+    y: number;
+  }
 }
 
 module B {
@@ -55,7 +59,10 @@ module B {
 
 module X {
   export module Y {
-    export interface Point { x: number; y: number }
+    export interface Point {
+      x: number;
+      y: number;
+    }
   }
 
   export class Y {
