@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: comment.js
+
 ---
 # Input
 ```js
@@ -19,17 +21,12 @@ alert(1)
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the left hand side of the `<` operator.
+error[SyntaxError]: type assertions are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ comment.js:1:1
-  │
-1 │ <!--
-  │ ^ This operator requires a left hand side value
-
-error[SyntaxError]: Invalid assignment to `alert(1)`
-  ┌─ comment.js:2:1
-  │
-2 │ alert(1)
-  │ ^^^^^^^^ This expression cannot be assigned to
+  │  
+1 │ ┌ <!--
+2 │ │ alert(1)
+  │ └────────^ TypeScript only syntax
 
 error[SyntaxError]: expected an identifier, or a member expression but instead found '>'
   ┌─ comment.js:3:3
