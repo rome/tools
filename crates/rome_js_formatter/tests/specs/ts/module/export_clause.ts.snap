@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: export_clause.ts
-
 ---
 # Input
 export  type   A  =   string;
@@ -31,7 +30,6 @@ export  declare  class   E {  }
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 export type A = string;
 

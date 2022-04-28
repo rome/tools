@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: index.js
-
 ---
 # Input
 import { a } from "b";
@@ -14,7 +13,6 @@ import "bootstrap";
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 import { a } from "b";
 import "bootstrap";
@@ -23,8 +21,7 @@ import "bootstrap";
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: true
 -----
-import "bootstrap";
 import { a } from "b";
+import "bootstrap";
 

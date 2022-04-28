@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: named_from_clause.js
-
 ---
 # Input
 export {a,
@@ -21,7 +20,6 @@ export {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 export { a, b as c } from "fancy" assert { type: "json" };
 

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: for_of.js
-
 ---
 # Input
 for (a of b) {}
@@ -21,7 +20,6 @@ for await ( const a of b ) {}
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 for (a of b) {}
 

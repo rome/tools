@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: as_expression.ts
-
 ---
 # Input
 
@@ -16,7 +15,6 @@ let b =
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 let a: any;
 let b = a as string;

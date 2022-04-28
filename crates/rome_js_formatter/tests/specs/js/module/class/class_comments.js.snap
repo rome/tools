@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: class_comments.js
-
 ---
 # Input
 class A extends B { // leading comment
@@ -19,7 +18,6 @@ class A extends B { // leading comment
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 class A extends B {
 	// leading comment

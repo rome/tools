@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: module_declaration.ts
-
 ---
 # Input
 module singleName { }
@@ -17,7 +16,6 @@ module qualified.name { }
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 module singleName {}
 

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: safe_imports_ordering.js
-
 ---
 # Input
 import { a} from "lodash"
@@ -17,7 +16,6 @@ import foo from "@bb/lodash"
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 import { a } from "lodash";
 import { b } from "@scoped/lodash";
@@ -29,11 +27,10 @@ import foo from "@bb/lodash";
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: true
 -----
+import { a } from "lodash";
+import { b } from "@scoped/lodash";
 import { c } from "@aaa/lodash";
 import * as foo from "@aaa/lodash";
 import foo from "@bb/lodash";
-import { b } from "@scoped/lodash";
-import { a } from "lodash";
 

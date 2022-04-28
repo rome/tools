@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: property_key.js
-
 ---
 # Input
 const foo = {
@@ -21,7 +20,6 @@ const foo = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 const foo = {
 	"foo-bar": true,

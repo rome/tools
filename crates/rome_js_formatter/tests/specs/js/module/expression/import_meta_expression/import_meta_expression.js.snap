@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: import_meta_expression.js
-
 ---
 # Input
 console.log(import.meta);
@@ -16,7 +15,6 @@ import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherR
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 console.log(import.meta);
 import.meta.field =
@@ -33,7 +31,6 @@ import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherR
 Indent style: Spaces, size: 4
 Line width: 120
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 console.log(import.meta);
 import.meta.field =

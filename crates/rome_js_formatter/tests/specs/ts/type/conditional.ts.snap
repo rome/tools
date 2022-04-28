@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: conditional.ts
-
 ---
 # Input
 type test = string;
@@ -29,7 +28,6 @@ type T4 = test extends string
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 type test = string;
 

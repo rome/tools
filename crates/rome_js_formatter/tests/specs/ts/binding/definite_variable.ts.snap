@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: definite_variable.ts
-
 ---
 # Input
 let definiteVariable!: TypeName;
@@ -14,7 +13,6 @@ let definiteVariable!: TypeName;
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 let definiteVariable!: TypeName;
 

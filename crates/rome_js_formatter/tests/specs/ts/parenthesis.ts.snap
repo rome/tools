@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: parenthesis.ts
-
 ---
 # Input
 const a = (c && b) as boolean;
@@ -15,7 +14,6 @@ const a = !(c && b) as boolean;
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 const a = (c && b) as boolean;
 const a = <any>(c && b) as boolean;

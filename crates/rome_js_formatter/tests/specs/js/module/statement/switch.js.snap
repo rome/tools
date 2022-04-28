@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: switch.js
-
 ---
 # Input
 switch (key) {
@@ -28,7 +27,6 @@ switch (key) {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 switch (key) {
 	case value: // comment

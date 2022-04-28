@@ -1368,6 +1368,7 @@ dependencies = [
  "quickcheck_macros",
  "rome_core",
  "rome_diagnostics",
+ "rome_flags",
  "rome_formatter",
  "rome_fs",
  "rome_js_parser",

@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: if_else.js
-
 ---
 # Input
 if (Math.random() > 0.5) {
@@ -72,7 +71,6 @@ if (true) that(); else;
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 if (Math.random() > 0.5) {
 	console.log(1);

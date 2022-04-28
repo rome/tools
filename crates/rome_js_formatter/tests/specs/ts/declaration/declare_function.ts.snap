@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 256
+assertion_line: 242
 expression: declare_function.ts
-
 ---
 # Input
 declare function
@@ -16,7 +15,6 @@ declare function looooooooooooooooooooooooooooong_naaaaaame<FirstType, SecondTyp
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Unstable sort imports: false
 -----
 declare function test(): Promise<string>;
 

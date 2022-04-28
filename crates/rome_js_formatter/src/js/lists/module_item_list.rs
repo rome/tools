@@ -1,11 +1,7 @@
-use crate::formatter_traits::FormatTokenAndNode;
 use crate::utils::has_formatter_suppressions;
-use crate::{Format, FormatElement, Formatter};
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rome_formatter::format_element::get_lines_between_nodes;
-use rome_formatter::FormatResult;
+use crate::{Format, FormatElement, FormatResult, Formatter};
+use rome_formatter::format_element::get_lines_before;
 use rome_formatter::{concat_elements, empty_line, format_elements, hard_line_break};
-use rome_js_syntax::JsModuleItemList;
 use rome_js_syntax::{
     JsAnyImportClause, JsAnyModuleItem, JsImportBareClause, JsImportDefaultClause,
     JsImportNamedClause, JsImportNamespaceClause, JsModuleItemList, JsSyntaxNode,
@@ -14,10 +10,9 @@ use rome_rowan::AstNode;
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
-impl ToFormatElement for JsModuleItemList {
+impl Format for JsModuleItemList {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let unstable_features = formatter.unstable_features();
-        if unstable_features.unstable_sort_imports {
+        if rome_flags::unstable().sort_imports() {
             unstable_sort_imports(self.clone(), formatter)
         } else {
             Ok(formatter.format_list(self.clone()))
@@ -260,6 +255,7 @@ impl Import {
         match self {
             Import::PossiblyWithSideEffects { trailing_lines, .. } => *trailing_lines > 1,
             Import::Safe { trailing_lines, .. } => *trailing_lines > 1,
+            Import::Ignored { trailing_lines, .. } => *trailing_lines > 1,
         }
     }
 
@@ -279,6 +275,7 @@ impl Import {
                     node: other_node, ..
                 },
             ) => node.compare(other_node),
+            _ => Ordering::Equal,
         }
     }
 }
@@ -290,6 +287,7 @@ impl Debug for Import {
                 write!(f, "Side effects {trailing_lines}")
             }
             Import::Safe { trailing_lines, .. } => write!(f, "Safe {trailing_lines}"),
+            Import::Ignored { trailing_lines, .. } => write!(f, "Ignored {trailing_lines}"),
         }
     }
 }
@@ -305,9 +303,7 @@ fn unstable_sort_imports(
         // before applying sorting, we want to know how many empty lines there are between the current node
         // and the next one, so we maintain possible empty lines when we reformat the statements
         let next_item = peekable_list.peek();
-        let trailing_lines = next_item.map_or(0, |next_item| {
-            get_lines_between_nodes(item.syntax(), next_item.syntax())
-        });
+        let trailing_lines = next_item.map_or(0, |next_item| get_lines_before(next_item.syntax()));
 
         if let JsAnyModuleItem::JsImport(import) = item {
             let formatted = import.format(formatter)?;
