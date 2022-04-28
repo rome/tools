@@ -62,7 +62,7 @@ function foo<
 >() {}
 interface Foo {
   <
-    A, // comment
+    A,// comment
   >(arg): any;
 }
 type T = <

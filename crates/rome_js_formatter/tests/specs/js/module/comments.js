@@ -17,6 +17,10 @@ expression(
     // line comment
 );
 
+class C {
+    name/*comment*/() {
+    }
+};
 
 expression( "something" // line comment 
 );
@@ -54,3 +58,5 @@ statement(); // inline
 function name() /* comment */ {}
 
 function name(very, long, list, of_parameters, to, insert, a_break, in_the, parameters, group) /* comment */ {}
+
+unionWithDifferentParameterCount("hello", 10);// no space comment

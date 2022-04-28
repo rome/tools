@@ -1,3 +1,4 @@
+use crate::format_traits::FormatWith;
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
 use crate::{
@@ -533,6 +534,8 @@ impl Formatter {
     {
         let mut elements = Vec::new();
 
+        let mut previous_piece: Option<SyntaxTriviaPiece<JsLanguage>> = None;
+
         for piece in pieces {
             if let Some(comment) = piece.as_comments() {
                 let is_single_line = comment.text().trim_start().starts_with("//");
@@ -553,11 +556,33 @@ impl Formatter {
                         ]),
                     ]
                 } else {
-                    line_suffix(format_elements![space_token(), comment, space_token()])
+                    dbg!(&previous_piece);
+                    dbg!(&comment);
+                    let prefix = if let Some(previous_piece) = previous_piece {
+                        if previous_piece.is_whitespace() {
+                            space_token()
+                        } else {
+                            empty_element()
+                        }
+                    } else {
+                        empty_element()
+                    };
+                    // let suffix = if let Some(next_piece) = &peekable_pieces.peek() {
+                    //     if next_piece.is_whitespace() {
+                    //         space_token()
+                    //     } else {
+                    //         empty_element()
+                    //     }
+                    // } else {
+                    //     empty_element()
+                    // };
+                    dbg!(&prefix);
+                    line_suffix(format_elements![prefix, comment, space_token()])
                 };
 
                 elements.push(crate::comment(content));
             }
+            previous_piece = Some(piece.clone());
         }
 
         concat_elements(elements)

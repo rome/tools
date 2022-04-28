@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 175
 expression: numbers-negative-comment-after-minus.js
-
 ---
 # Input
 ```js
@@ -32,7 +31,7 @@ const numbers = [
   -708.4,
   -174023963.52,
   -40385,
-  -380014, // comment1
+  -380014,// comment1
   -253951682,
   -728,
   -15.84,

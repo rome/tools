@@ -57,7 +57,7 @@ throw new Error(`pretty-format: Option "theme" has a key "${key}" whose value "$
 # Output
 ```js
 const long1 = `long ${
-  a.b //comment
+  a.b//comment
 } long longlong ${a.b.c.d.e} long longlong ${a.b.c.d.e} long longlong ${a.b.c.d.e} long long`;
 const long2 = `long ${a.b.c.d.e} long longlong ${loooooooooooooooooong} long longlong ${loooooooooooooooooong} long longlong ${loooooooooooooooooong} long long`;
 

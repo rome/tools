@@ -485,7 +485,7 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"xyz.a(b!).a(b!).a(b!)
+        let src = r#"strOrNum = unionWithRestParameter3(); // error no call signature
 
 "#;
         let syntax = SourceType::tsx();

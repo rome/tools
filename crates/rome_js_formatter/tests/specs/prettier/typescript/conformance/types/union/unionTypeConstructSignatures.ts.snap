@@ -104,9 +104,9 @@ new unionOfDifferentReturnType1(); // error missing parameter
 var unionOfDifferentParameterTypes:
   | { new (a: number): number }
   | { new (a: string): Date };
-new unionOfDifferentParameterTypes(10); // error - no call signatures
-new unionOfDifferentParameterTypes("hello"); // error - no call signatures
-new unionOfDifferentParameterTypes(); // error - no call signatures
+new unionOfDifferentParameterTypes(10);// error - no call signatures
+new unionOfDifferentParameterTypes("hello");// error - no call signatures
+new unionOfDifferentParameterTypes();// error - no call signatures
 
 var unionOfDifferentNumberOfSignatures:
   | { new (a: number): number }
@@ -118,9 +118,9 @@ new unionOfDifferentNumberOfSignatures("hello"); // error - no call signatures
 var unionWithDifferentParameterCount:
   | { new (a: string): string }
   | { new (a: string, b: number): number };
-new unionWithDifferentParameterCount(); // no  call signature
-new unionWithDifferentParameterCount("hello"); // no  call signature
-new unionWithDifferentParameterCount("hello", 10); // no  call signature
+new unionWithDifferentParameterCount();// no  call signature
+new unionWithDifferentParameterCount("hello");// no  call signature
+new unionWithDifferentParameterCount("hello", 10);// no  call signature
 
 var unionWithOptionalParameter1:
   | { new (a: string, b?: number): string }

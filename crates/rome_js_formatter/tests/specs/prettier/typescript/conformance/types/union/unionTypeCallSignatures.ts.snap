@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: unionTypeCallSignatures.ts
 ---
 # Input
@@ -105,9 +106,9 @@ unionOfDifferentReturnType1(); // error missing parameter
 var unionOfDifferentParameterTypes:
   | { (a: number): number }
   | { (a: string): Date };
-unionOfDifferentParameterTypes(10); // error - no call signatures
-unionOfDifferentParameterTypes("hello"); // error - no call signatures
-unionOfDifferentParameterTypes(); // error - no call signatures
+unionOfDifferentParameterTypes(10);// error - no call signatures
+unionOfDifferentParameterTypes("hello");// error - no call signatures
+unionOfDifferentParameterTypes();// error - no call signatures
 
 var unionOfDifferentNumberOfSignatures:
   | { (a: number): number }
@@ -119,9 +120,9 @@ unionOfDifferentNumberOfSignatures("hello"); // error - no call signatures
 var unionWithDifferentParameterCount:
   | { (a: string): string }
   | { (a: string, b: number): number };
-unionWithDifferentParameterCount(); // no  call signature
-unionWithDifferentParameterCount("hello"); // no  call signature
-unionWithDifferentParameterCount("hello", 10); // no  call signature
+unionWithDifferentParameterCount();// no  call signature
+unionWithDifferentParameterCount("hello");// no  call signature
+unionWithDifferentParameterCount("hello", 10);// no  call signature
 
 var unionWithOptionalParameter1:
   | { (a: string, b?: number): string }
