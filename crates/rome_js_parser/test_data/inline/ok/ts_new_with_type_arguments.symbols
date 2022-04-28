@@ -3,6 +3,18 @@
         name: "Test",
         range: 6..10,
     },
+    Declaration {
+        name: "A",
+        range: 11..12,
+    },
+    Declaration {
+        name: "B",
+        range: 14..15,
+    },
+    Declaration {
+        name: "C",
+        range: 17..18,
+    },
     Reference {
         name: "Test",
         range: 27..31,

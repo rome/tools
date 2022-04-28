@@ -1,14 +1,44 @@
 [
+    Reference {
+        name: "\"x\"",
+        range: 7..11,
+        declared_at: None,
+    },
+    Reference {
+        name: "\"foo\"",
+        range: 42..48,
+        declared_at: None,
+    },
     Declaration {
         name: "foo",
         range: 82..86,
+    },
+    Reference {
+        name: "\"foo.json\"",
+        range: 91..102,
+        declared_at: None,
     },
     Declaration {
         name: "test",
         range: 135..139,
     },
+    Reference {
+        name: "\"foo.json\"",
+        range: 146..157,
+        declared_at: None,
+    },
     Declaration {
         name: "foo_json",
         range: 186..195,
+    },
+    Reference {
+        name: "\"foo.json\"",
+        range: 200..211,
+        declared_at: None,
+    },
+    Reference {
+        name: "\"x\"",
+        range: 267..271,
+        declared_at: None,
     },
 ]

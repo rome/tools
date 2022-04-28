@@ -7,9 +7,29 @@
         name: "a",
         range: 41..42,
     },
+    Reference {
+        name: "b",
+        range: 43..44,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 45..46,
+        declared_at: None,
+    },
+    Reference {
+        name: "d",
+        range: 47..49,
+        declared_at: None,
+    },
     Declaration {
         name: "a",
         range: 70..71,
+    },
+    Reference {
+        name: "b",
+        range: 72..74,
+        declared_at: None,
     },
     Declaration {
         name: "test",

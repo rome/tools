@@ -1,1 +1,12 @@
-[]
+[
+    Reference {
+        name: "\"test\"",
+        range: 7..13,
+        declared_at: None,
+    },
+    Reference {
+        name: "\"no_semicolon\"",
+        range: 22..36,
+        declared_at: None,
+    },
+]

@@ -11,4 +11,9 @@
         name: "C",
         range: 20..22,
     },
+    Reference {
+        name: "'./a'",
+        range: 29..34,
+        declared_at: None,
+    },
 ]

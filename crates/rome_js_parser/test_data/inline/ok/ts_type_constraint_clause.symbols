@@ -3,6 +3,10 @@
         name: "A",
         range: 5..6,
     },
+    Declaration {
+        name: "X",
+        range: 7..9,
+    },
     Reference {
         name: "X",
         range: 27..28,
@@ -11,6 +15,10 @@
     Declaration {
         name: "B",
         range: 35..36,
+    },
+    Declaration {
+        name: "X",
+        range: 37..39,
     },
     Declaration {
         name: "a",

@@ -5,6 +5,11 @@
         declared_at: None,
     },
     Reference {
+        name: "b",
+        range: 10..11,
+        declared_at: None,
+    },
+    Reference {
         name: "ident",
         range: 25..30,
         declared_at: None,

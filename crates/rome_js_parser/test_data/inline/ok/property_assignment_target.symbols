@@ -23,6 +23,11 @@
         declared_at: None,
     },
     Reference {
+        name: "test",
+        range: 32..36,
+        declared_at: None,
+    },
+    Reference {
         name: "z",
         range: 39..40,
         declared_at: None,

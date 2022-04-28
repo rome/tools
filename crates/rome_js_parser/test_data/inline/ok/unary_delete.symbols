@@ -5,8 +5,18 @@
         declared_at: None,
     },
     Reference {
+        name: "key",
+        range: 11..14,
+        declared_at: None,
+    },
+    Reference {
         name: "obj",
         range: 24..27,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 29..32,
         declared_at: None,
     },
     Reference {
@@ -15,8 +25,18 @@
         declared_at: None,
     },
     Reference {
+        name: "key",
+        range: 53..56,
+        declared_at: None,
+    },
+    Reference {
         name: "obj",
         range: 66..69,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 79..82,
         declared_at: None,
     },
     Reference {
@@ -25,8 +45,18 @@
         declared_at: None,
     },
     Reference {
+        name: "key",
+        range: 106..109,
+        declared_at: None,
+    },
+    Reference {
         name: "func",
         range: 119..123,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 135..138,
         declared_at: None,
     },
     Reference {
@@ -35,8 +65,18 @@
         declared_at: None,
     },
     Reference {
+        name: "key",
+        range: 160..163,
+        declared_at: None,
+    },
+    Reference {
         name: "obj",
         range: 173..176,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 187..190,
         declared_at: None,
     },
     Reference {
@@ -45,8 +85,28 @@
         declared_at: None,
     },
     Reference {
+        name: "inner",
+        range: 204..209,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 218..221,
+        declared_at: None,
+    },
+    Reference {
         name: "obj",
         range: 231..234,
+        declared_at: None,
+    },
+    Reference {
+        name: "inner",
+        range: 236..241,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 251..254,
         declared_at: None,
     },
     Reference {
@@ -135,6 +195,11 @@
         declared_at: None,
     },
     Reference {
+        name: "inner",
+        range: 468..473,
+        declared_at: None,
+    },
+    Reference {
         name: "key",
         range: 482..485,
         declared_at: None,
@@ -142,6 +207,11 @@
     Reference {
         name: "obj",
         range: 496..499,
+        declared_at: None,
+    },
+    Reference {
+        name: "inner",
+        range: 501..506,
         declared_at: None,
     },
     Reference {
@@ -157,6 +227,11 @@
     Reference {
         name: "obj",
         range: 540..543,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 544..547,
         declared_at: None,
     },
     Reference {

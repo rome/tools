@@ -21,15 +21,27 @@
         range: 51..56,
         declared_at: None,
     },
+    Declaration {
+        name: "as",
+        range: 59..62,
+    },
     Reference {
         name: "as",
         range: 74..77,
         declared_at: None,
     },
+    Declaration {
+        name: "as",
+        range: 80..83,
+    },
     Reference {
         name: "as",
         range: 100..103,
         declared_at: None,
+    },
+    Declaration {
+        name: "as",
+        range: 106..109,
     },
     Reference {
         name: "type",
@@ -45,5 +57,9 @@
         name: "a",
         range: 167..169,
         declared_at: None,
+    },
+    Declaration {
+        name: "aa",
+        range: 172..175,
     },
 ]

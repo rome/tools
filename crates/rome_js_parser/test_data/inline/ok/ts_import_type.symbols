@@ -16,6 +16,31 @@
         range: 88..89,
         declared_at: None,
     },
+    Reference {
+        name: "b",
+        range: 90..91,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 92..93,
+        declared_at: None,
+    },
+    Reference {
+        name: "d",
+        range: 94..95,
+        declared_at: None,
+    },
+    Reference {
+        name: "e",
+        range: 96..97,
+        declared_at: None,
+    },
+    Reference {
+        name: "f",
+        range: 98..99,
+        declared_at: None,
+    },
     Declaration {
         name: "D",
         range: 106..108,

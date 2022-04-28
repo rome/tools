@@ -16,6 +16,10 @@
         name: "C",
         range: 38..39,
     },
+    Declaration {
+        name: "X",
+        range: 40..42,
+    },
     Reference {
         name: "X",
         range: 64..65,

@@ -21,4 +21,9 @@
         range: 56..59,
         declared_at: None,
     },
+    Reference {
+        name: "bar",
+        range: 60..64,
+        declared_at: None,
+    },
 ]

@@ -5,8 +5,18 @@
         declared_at: None,
     },
     Reference {
+        name: "bar",
+        range: 4..7,
+        declared_at: None,
+    },
+    Reference {
         name: "foo",
         range: 7..11,
+        declared_at: None,
+    },
+    Reference {
+        name: "await",
+        range: 12..17,
         declared_at: None,
     },
     Reference {
@@ -15,8 +25,18 @@
         declared_at: None,
     },
     Reference {
+        name: "yield",
+        range: 22..27,
+        declared_at: None,
+    },
+    Reference {
         name: "foo",
         range: 27..31,
+        declared_at: None,
+    },
+    Reference {
+        name: "for",
+        range: 32..35,
         declared_at: None,
     },
     Reference {
@@ -25,8 +45,18 @@
         declared_at: None,
     },
     Reference {
+        name: "for",
+        range: 41..44,
+        declared_at: None,
+    },
+    Reference {
         name: "foo",
         range: 44..48,
+        declared_at: None,
+    },
+    Reference {
+        name: "bar",
+        range: 50..53,
         declared_at: None,
     },
     Declaration {
@@ -40,6 +70,16 @@
     Declaration {
         name: "other",
         range: 81..86,
+    },
+    Reference {
+        name: "this",
+        range: 89..98,
+        declared_at: None,
+    },
+    Reference {
+        name: "this",
+        range: 104..113,
+        declared_at: None,
     },
     Reference {
         name: "other",

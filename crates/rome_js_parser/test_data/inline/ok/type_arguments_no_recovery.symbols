@@ -18,6 +18,11 @@
         range: 30..41,
         declared_at: None,
     },
+    Reference {
+        name: "completions",
+        range: 42..53,
+        declared_at: None,
+    },
     Declaration {
         name: "marker",
         range: 55..70,
@@ -45,6 +50,11 @@
         declared_at: None,
     },
     Reference {
+        name: "ranges",
+        range: 150..156,
+        declared_at: None,
+    },
+    Reference {
         name: "i",
         range: 159..160,
         declared_at: None,
@@ -60,6 +70,11 @@
     Reference {
         name: "test",
         range: 209..213,
+        declared_at: None,
+    },
+    Reference {
+        name: "ranges",
+        range: 214..220,
         declared_at: None,
     },
     Reference {

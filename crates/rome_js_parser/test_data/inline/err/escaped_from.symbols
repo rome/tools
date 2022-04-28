@@ -1,1 +1,7 @@
-[]
+[
+    Reference {
+        name: "\"./escaped-from.js\"",
+        range: 20..39,
+        declared_at: None,
+    },
+]

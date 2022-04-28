@@ -1,1 +1,88 @@
-[]
+[
+    Declaration {
+        name: "a",
+        range: 9..10,
+    },
+    Declaration {
+        name: "default",
+        range: 12..20,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 27..32,
+        declared_at: None,
+    },
+    Declaration {
+        name: "a",
+        range: 43..45,
+    },
+    Declaration {
+        name: "z",
+        range: 48..49,
+    },
+    Declaration {
+        name: "b",
+        range: 51..53,
+    },
+    Declaration {
+        name: "\"y\"",
+        range: 56..59,
+    },
+    Declaration {
+        name: "c",
+        range: 61..63,
+    },
+    Declaration {
+        name: "default",
+        range: 66..74,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 81..86,
+        declared_at: None,
+    },
+    Declaration {
+        name: "as",
+        range: 96..99,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 106..111,
+        declared_at: None,
+    },
+    Declaration {
+        name: "default",
+        range: 122..130,
+    },
+    Declaration {
+        name: "\"b\"",
+        range: 133..137,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 144..149,
+        declared_at: None,
+    },
+    Declaration {
+        name: "\"a\"",
+        range: 160..164,
+    },
+    Declaration {
+        name: "b",
+        range: 167..169,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 176..181,
+        declared_at: None,
+    },
+    Declaration {
+        name: "a",
+        range: 192..194,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 201..207,
+        declared_at: None,
+    },
+]

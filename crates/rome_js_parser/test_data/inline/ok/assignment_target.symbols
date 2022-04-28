@@ -65,6 +65,16 @@
         declared_at: None,
     },
     Reference {
+        name: "call",
+        range: 85..89,
+        declared_at: None,
+    },
+    Reference {
+        name: "chain",
+        range: 92..97,
+        declared_at: None,
+    },
+    Reference {
         name: "member",
         range: 100..107,
         declared_at: None,

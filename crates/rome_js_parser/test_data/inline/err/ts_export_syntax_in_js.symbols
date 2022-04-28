@@ -26,4 +26,39 @@
         range: 65..67,
         declared_at: None,
     },
+    Declaration {
+        name: "cc",
+        range: 70..73,
+    },
+    Declaration {
+        name: "d",
+        range: 90..92,
+    },
+    Reference {
+        name: "\"./d\"",
+        range: 99..104,
+        declared_at: None,
+    },
+    Declaration {
+        name: "e",
+        range: 120..122,
+    },
+    Reference {
+        name: "\"./e\"",
+        range: 129..134,
+        declared_at: None,
+    },
+    Declaration {
+        name: "e",
+        range: 150..152,
+    },
+    Declaration {
+        name: "ee",
+        range: 155..158,
+    },
+    Reference {
+        name: "\"./e\"",
+        range: 165..170,
+        declared_at: None,
+    },
 ]

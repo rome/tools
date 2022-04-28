@@ -12,6 +12,11 @@
         range: 52..56,
         declared_at: None,
     },
+    Reference {
+        name: "this",
+        range: 57..61,
+        declared_at: None,
+    },
     Declaration {
         name: "TestClass",
         range: 81..91,
@@ -19,6 +24,11 @@
     Declaration {
         name: "method",
         range: 109..115,
+    },
+    Reference {
+        name: "this",
+        range: 128..132,
+        declared_at: None,
     },
     Declaration {
         name: "TestClass",
@@ -32,6 +42,11 @@
         name: "key",
         range: 200..203,
     },
+    Reference {
+        name: "this",
+        range: 205..209,
+        declared_at: None,
+    },
     Declaration {
         name: "TestClass",
         range: 230..240,
@@ -39,6 +54,11 @@
     Declaration {
         name: "method",
         range: 258..264,
+    },
+    Reference {
+        name: "this",
+        range: 285..289,
+        declared_at: None,
     },
     Declaration {
         name: "TestClass",
@@ -52,6 +72,11 @@
         name: "param",
         range: 359..365,
     },
+    Reference {
+        name: "this",
+        range: 370..374,
+        declared_at: None,
+    },
     Declaration {
         name: "TestClass",
         range: 397..407,
@@ -59,5 +84,10 @@
     Declaration {
         name: "method",
         range: 425..431,
+    },
+    Reference {
+        name: "this",
+        range: 458..462,
+        declared_at: None,
     },
 ]

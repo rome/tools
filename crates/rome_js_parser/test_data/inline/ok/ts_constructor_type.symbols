@@ -28,6 +28,14 @@
         range: 106..108,
     },
     Declaration {
+        name: "A",
+        range: 114..115,
+    },
+    Declaration {
+        name: "B",
+        range: 117..118,
+    },
+    Declaration {
         name: "a",
         range: 120..121,
     },
@@ -48,6 +56,14 @@
     Declaration {
         name: "D",
         range: 148..150,
+    },
+    Declaration {
+        name: "A",
+        range: 165..166,
+    },
+    Declaration {
+        name: "B",
+        range: 168..169,
     },
     Declaration {
         name: "a",

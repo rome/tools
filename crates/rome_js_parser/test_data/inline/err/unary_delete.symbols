@@ -24,4 +24,9 @@
         range: 85..88,
         declared_at: None,
     },
+    Reference {
+        name: "inner",
+        range: 90..95,
+        declared_at: None,
+    },
 ]

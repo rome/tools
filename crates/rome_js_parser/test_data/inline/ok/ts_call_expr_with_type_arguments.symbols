@@ -3,6 +3,18 @@
         name: "a",
         range: 9..10,
     },
+    Declaration {
+        name: "A",
+        range: 11..12,
+    },
+    Declaration {
+        name: "B",
+        range: 14..15,
+    },
+    Declaration {
+        name: "C",
+        range: 17..18,
+    },
     Reference {
         name: "a",
         range: 24..26,
@@ -26,6 +38,11 @@
     Reference {
         name: "a",
         range: 48..50,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 53..54,
         declared_at: None,
     },
     Reference {
@@ -67,6 +84,10 @@
         name: "A",
         range: 93..94,
     },
+    Declaration {
+        name: "T",
+        range: 95..96,
+    },
     Reference {
         name: "T",
         range: 100..101,
@@ -76,6 +97,10 @@
         name: "a",
         range: 102..104,
         declared_at: None,
+    },
+    Declaration {
+        name: "T",
+        range: 106..107,
     },
     Declaration {
         name: "arg",

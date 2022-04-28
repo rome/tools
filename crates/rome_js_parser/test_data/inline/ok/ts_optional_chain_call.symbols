@@ -1,4 +1,12 @@
 [
+    Declaration {
+        name: "A",
+        range: 2..3,
+    },
+    Declaration {
+        name: "B",
+        range: 5..6,
+    },
     Reference {
         name: "A",
         range: 19..20,

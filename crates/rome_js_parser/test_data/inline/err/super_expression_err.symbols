@@ -12,4 +12,9 @@
         name: "test",
         range: 22..29,
     },
+    Reference {
+        name: "test",
+        range: 58..62,
+        declared_at: None,
+    },
 ]

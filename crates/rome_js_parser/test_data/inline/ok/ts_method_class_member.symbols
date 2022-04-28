@@ -7,10 +7,22 @@
         name: "test",
         range: 12..19,
     },
+    Declaration {
+        name: "A",
+        range: 20..21,
+    },
+    Declaration {
+        name: "B",
+        range: 23..25,
+    },
     Reference {
         name: "A",
         range: 33..34,
         declared_at: None,
+    },
+    Declaration {
+        name: "R",
+        range: 36..37,
     },
     Declaration {
         name: "a",

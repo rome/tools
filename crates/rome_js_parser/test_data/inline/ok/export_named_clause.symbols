@@ -9,15 +9,27 @@
         range: 23..25,
         declared_at: None,
     },
+    Declaration {
+        name: "z",
+        range: 28..29,
+    },
     Reference {
         name: "b",
         range: 31..33,
         declared_at: None,
     },
+    Declaration {
+        name: "\"y\"",
+        range: 36..39,
+    },
     Reference {
         name: "c",
         range: 41..43,
         declared_at: None,
+    },
+    Declaration {
+        name: "default",
+        range: 46..54,
     },
     Reference {
         name: "as",

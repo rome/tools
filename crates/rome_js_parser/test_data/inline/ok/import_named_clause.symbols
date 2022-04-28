@@ -1,4 +1,9 @@
 [
+    Reference {
+        name: "\"a\"",
+        range: 15..18,
+        declared_at: None,
+    },
     Declaration {
         name: "a",
         range: 29..30,
@@ -11,6 +16,11 @@
         name: "c",
         range: 35..36,
     },
+    Reference {
+        name: "\"b\"",
+        range: 45..48,
+        declared_at: None,
+    },
     Declaration {
         name: "e",
         range: 57..58,
@@ -18,6 +28,11 @@
     Declaration {
         name: "f",
         range: 62..64,
+    },
+    Reference {
+        name: "\"b\"",
+        range: 71..74,
+        declared_at: None,
     },
     Declaration {
         name: "g",
@@ -27,16 +42,38 @@
         name: "lorem",
         range: 91..97,
     },
+    Reference {
+        name: "\"c\"",
+        range: 102..105,
+        declared_at: None,
+    },
+    Declaration {
+        name: "f",
+        range: 116..118,
+    },
     Declaration {
         name: "x",
         range: 121..122,
+    },
+    Declaration {
+        name: "default",
+        range: 124..132,
     },
     Declaration {
         name: "w",
         range: 135..136,
     },
     Declaration {
+        name: "\"a-b-c\"",
+        range: 138..146,
+    },
+    Declaration {
         name: "y",
         range: 149..151,
+    },
+    Reference {
+        name: "\"b\"",
+        range: 158..161,
+        declared_at: None,
     },
 ]

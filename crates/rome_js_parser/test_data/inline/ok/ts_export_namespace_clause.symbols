@@ -7,4 +7,9 @@
         name: "x",
         range: 24..25,
     },
+    Reference {
+        name: "mathLib",
+        range: 65..72,
+        declared_at: None,
+    },
 ]

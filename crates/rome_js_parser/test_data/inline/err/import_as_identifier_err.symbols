@@ -3,4 +3,9 @@
         name: "c",
         range: 12..14,
     },
+    Reference {
+        name: "\"test\"",
+        range: 21..27,
+        declared_at: None,
+    },
 ]

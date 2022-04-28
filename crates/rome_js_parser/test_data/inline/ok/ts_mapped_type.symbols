@@ -4,8 +4,20 @@
         range: 5..7,
     },
     Declaration {
+        name: "test",
+        range: 12..17,
+    },
+    Declaration {
         name: "OptionsFlags",
         range: 38..50,
+    },
+    Declaration {
+        name: "Type",
+        range: 51..55,
+    },
+    Declaration {
+        name: "Property",
+        range: 64..73,
     },
     Reference {
         name: "Type",
@@ -15,6 +27,14 @@
     Declaration {
         name: "CreateMutable",
         range: 106..119,
+    },
+    Declaration {
+        name: "Type",
+        range: 120..124,
+    },
+    Declaration {
+        name: "Property",
+        range: 142..151,
     },
     Reference {
         name: "Type",
@@ -35,6 +55,14 @@
         name: "Concrete",
         range: 191..199,
     },
+    Declaration {
+        name: "Type",
+        range: 200..204,
+    },
+    Declaration {
+        name: "Property",
+        range: 213..222,
+    },
     Reference {
         name: "Type",
         range: 231..235,
@@ -53,6 +81,14 @@
     Declaration {
         name: "Getters",
         range: 263..270,
+    },
+    Declaration {
+        name: "Type",
+        range: 271..275,
+    },
+    Declaration {
+        name: "Property",
+        range: 286..295,
     },
     Reference {
         name: "Type",

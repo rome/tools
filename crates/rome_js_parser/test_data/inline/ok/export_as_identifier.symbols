@@ -9,4 +9,8 @@
         range: 24..27,
         declared_at: None,
     },
+    Declaration {
+        name: "as",
+        range: 30..33,
+    },
 ]

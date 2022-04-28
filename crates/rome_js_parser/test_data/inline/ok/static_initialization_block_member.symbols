@@ -8,6 +8,11 @@
         range: 19..20,
     },
     Reference {
+        name: "this",
+        range: 32..41,
+        declared_at: None,
+    },
+    Reference {
         name: "a",
         range: 42..44,
         declared_at: None,

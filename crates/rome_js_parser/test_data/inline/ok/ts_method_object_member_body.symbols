@@ -4,6 +4,10 @@
         range: 2..8,
     },
     Declaration {
+        name: "A",
+        range: 9..10,
+    },
+    Declaration {
         name: "maybeA",
         range: 12..18,
     },
@@ -28,6 +32,10 @@
     Declaration {
         name: "id",
         range: 113..115,
+    },
+    Declaration {
+        name: "R",
+        range: 116..117,
     },
     Declaration {
         name: "param",

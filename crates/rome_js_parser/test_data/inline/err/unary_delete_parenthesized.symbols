@@ -15,6 +15,11 @@
         declared_at: None,
     },
     Reference {
+        name: "key",
+        range: 46..49,
+        declared_at: None,
+    },
+    Reference {
         name: "ident",
         range: 51..56,
         declared_at: None,
@@ -40,8 +45,18 @@
         declared_at: None,
     },
     Reference {
+        name: "inner",
+        range: 142..147,
+        declared_at: None,
+    },
+    Reference {
         name: "obj",
         range: 166..169,
+        declared_at: None,
+    },
+    Reference {
+        name: "key",
+        range: 170..173,
         declared_at: None,
     },
     Reference {

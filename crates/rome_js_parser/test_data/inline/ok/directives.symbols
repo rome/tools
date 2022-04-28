@@ -11,6 +11,11 @@
         name: "b",
         range: 105..107,
     },
+    Reference {
+        name: "length",
+        range: 201..207,
+        declared_at: None,
+    },
     Declaration {
         name: "c",
         range: 234..236,

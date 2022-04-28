@@ -29,4 +29,9 @@
         range: 25..26,
         declared_at: None,
     },
+    Reference {
+        name: "_string",
+        range: 34..41,
+        declared_at: None,
+    },
 ]

@@ -5,8 +5,18 @@
         declared_at: None,
     },
     Reference {
+        name: "log",
+        range: 11..14,
+        declared_at: None,
+    },
+    Reference {
         name: "console",
         range: 40..50,
+        declared_at: None,
+    },
+    Reference {
+        name: "log",
+        range: 51..54,
         declared_at: None,
     },
     Declaration {

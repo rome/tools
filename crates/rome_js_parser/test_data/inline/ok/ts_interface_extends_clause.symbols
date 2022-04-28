@@ -4,6 +4,10 @@
         range: 10..11,
     },
     Declaration {
+        name: "Prop",
+        range: 12..16,
+    },
+    Declaration {
         name: "prop",
         range: 20..24,
     },

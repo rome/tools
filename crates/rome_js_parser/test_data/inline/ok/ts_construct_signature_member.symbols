@@ -20,6 +20,14 @@
         range: 74..76,
     },
     Declaration {
+        name: "A",
+        range: 85..86,
+    },
+    Declaration {
+        name: "B",
+        range: 88..89,
+    },
+    Declaration {
         name: "a",
         range: 91..92,
     },

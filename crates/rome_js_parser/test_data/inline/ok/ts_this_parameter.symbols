@@ -4,7 +4,15 @@
         range: 9..10,
     },
     Declaration {
+        name: "this",
+        range: 11..15,
+    },
+    Declaration {
         name: "b",
         range: 29..30,
+    },
+    Declaration {
+        name: "this",
+        range: 31..35,
     },
 ]

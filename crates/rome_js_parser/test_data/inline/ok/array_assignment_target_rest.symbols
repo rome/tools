@@ -55,6 +55,11 @@
         declared_at: None,
     },
     Reference {
+        name: "expression",
+        range: 95..105,
+        declared_at: None,
+    },
+    Reference {
         name: "b",
         range: 108..110,
         declared_at: None,

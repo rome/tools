@@ -1,1 +1,42 @@
-[]
+[
+    Declaration {
+        name: "b",
+        range: 12..14,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 21..26,
+        declared_at: None,
+    },
+    Declaration {
+        name: "a",
+        range: 37..39,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 51..56,
+        declared_at: None,
+    },
+    Declaration {
+        name: "a",
+        range: 67..69,
+    },
+    Declaration {
+        name: "b",
+        range: 69..71,
+    },
+    Declaration {
+        name: "c",
+        range: 71..73,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 80..85,
+        declared_at: None,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 110..115,
+        declared_at: None,
+    },
+]

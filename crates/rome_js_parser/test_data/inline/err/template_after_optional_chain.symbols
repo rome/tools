@@ -5,8 +5,23 @@
         declared_at: None,
     },
     Reference {
+        name: "val",
+        range: 4..7,
+        declared_at: None,
+    },
+    Reference {
+        name: "prop",
+        range: 9..13,
+        declared_at: None,
+    },
+    Reference {
         name: "obj",
         range: 23..27,
+        declared_at: None,
+    },
+    Reference {
+        name: "val",
+        range: 28..31,
         declared_at: None,
     },
     Reference {
@@ -17,6 +32,11 @@
     Reference {
         name: "obj",
         range: 49..53,
+        declared_at: None,
+    },
+    Reference {
+        name: "func",
+        range: 54..58,
         declared_at: None,
     },
     Reference {

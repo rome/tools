@@ -3,4 +3,14 @@
         name: "A",
         range: 6..8,
     },
+    Reference {
+        name: "super",
+        range: 40..45,
+        declared_at: None,
+    },
+    Reference {
+        name: "super",
+        range: 61..66,
+        declared_at: None,
+    },
 ]

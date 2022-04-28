@@ -5,6 +5,11 @@
         declared_at: None,
     },
     Reference {
+        name: "baz",
+        range: 7..10,
+        declared_at: None,
+    },
+    Reference {
         name: "BAR",
         range: 14..18,
         declared_at: None,

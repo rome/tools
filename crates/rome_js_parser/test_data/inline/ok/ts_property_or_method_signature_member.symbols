@@ -64,6 +64,14 @@
         range: 188..189,
     },
     Declaration {
+        name: "A",
+        range: 190..191,
+    },
+    Declaration {
+        name: "B",
+        range: 193..194,
+    },
+    Declaration {
         name: "a",
         range: 196..197,
     },

@@ -1,7 +1,22 @@
 [
+    Reference {
+        name: "\"foo\"",
+        range: 7..13,
+        declared_at: None,
+    },
+    Reference {
+        name: "\"bar\"",
+        range: 45..51,
+        declared_at: None,
+    },
     Declaration {
         name: "foo",
         range: 90..94,
+    },
+    Reference {
+        name: "\"lorem\"",
+        range: 128..135,
+        declared_at: None,
     },
     Reference {
         name: "assert",
@@ -12,12 +27,32 @@
         name: "foo2",
         range: 167..172,
     },
+    Reference {
+        name: "\"foo.json\"",
+        range: 177..188,
+        declared_at: None,
+    },
+    Reference {
+        name: "\"x\"",
+        range: 250..254,
+        declared_at: None,
+    },
     Declaration {
         name: "ipsum",
         range: 269..275,
     },
+    Reference {
+        name: "\"ipsum.json\"",
+        range: 280..293,
+        declared_at: None,
+    },
     Declaration {
         name: "a",
         range: 355..357,
+    },
+    Reference {
+        name: "\"a.json\"",
+        range: 364..373,
+        declared_at: None,
     },
 ]

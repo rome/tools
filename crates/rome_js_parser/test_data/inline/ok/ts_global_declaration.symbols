@@ -1,4 +1,13 @@
 [
+    Reference {
+        name: "\"./test\"",
+        range: 15..24,
+        declared_at: None,
+    },
+    Declaration {
+        name: "global",
+        range: 25..34,
+    },
     Declaration {
         name: "VERSION",
         range: 45..52,

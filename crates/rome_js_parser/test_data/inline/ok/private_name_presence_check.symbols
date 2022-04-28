@@ -7,4 +7,9 @@
         name: "test",
         range: 17..23,
     },
+    Reference {
+        name: "this",
+        range: 40..44,
+        declared_at: None,
+    },
 ]

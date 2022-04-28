@@ -21,11 +21,6 @@
         range: 52..54,
         declared_at: None,
     },
-    Reference {
-        name: "const",
-        range: 57..62,
-        declared_at: None,
-    },
     Declaration {
         name: "not_an_as_expression",
         range: 68..89,
@@ -43,10 +38,5 @@
     Declaration {
         name: "precedence",
         range: 101..112,
-    },
-    Reference {
-        name: "const",
-        range: 125..131,
-        declared_at: None,
     },
 ]

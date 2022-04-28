@@ -1,1 +1,17 @@
-[]
+[
+    Reference {
+        name: "this",
+        range: 0..4,
+        declared_at: None,
+    },
+    Reference {
+        name: "this",
+        range: 4..9,
+        declared_at: None,
+    },
+    Reference {
+        name: "foo",
+        range: 10..13,
+        declared_at: None,
+    },
+]

@@ -3,4 +3,16 @@
         name: "BuildError",
         range: 6..16,
     },
+    Declaration {
+        name: "A",
+        range: 17..18,
+    },
+    Declaration {
+        name: "B",
+        range: 20..21,
+    },
+    Declaration {
+        name: "C",
+        range: 23..24,
+    },
 ]

@@ -3,16 +3,36 @@
         name: "type",
         range: 7..12,
     },
+    Reference {
+        name: "\"./mod\"",
+        range: 17..24,
+        declared_at: None,
+    },
     Declaration {
         name: "foo",
         range: 52..56,
+    },
+    Reference {
+        name: "\"./mod\"",
+        range: 61..68,
+        declared_at: None,
     },
     Declaration {
         name: "foo2",
         range: 87..92,
     },
+    Reference {
+        name: "\"./mod\"",
+        range: 97..104,
+        declared_at: None,
+    },
     Declaration {
         name: "foo3",
         range: 120..125,
+    },
+    Reference {
+        name: "\"mod\"",
+        range: 132..137,
+        declared_at: None,
     },
 ]

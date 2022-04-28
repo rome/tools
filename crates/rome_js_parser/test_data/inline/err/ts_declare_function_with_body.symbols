@@ -4,6 +4,10 @@
         range: 17..21,
     },
     Declaration {
+        name: "A",
+        range: 22..23,
+    },
+    Declaration {
         name: "a",
         range: 25..26,
     },

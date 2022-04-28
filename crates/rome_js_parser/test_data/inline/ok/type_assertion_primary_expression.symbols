@@ -3,9 +3,4 @@
         name: "a",
         range: 4..6,
     },
-    Reference {
-        name: "undefined",
-        range: 16..25,
-        declared_at: None,
-    },
 ]

@@ -1,1 +1,38 @@
-[]
+[
+    Declaration {
+        name: "default",
+        range: 9..17,
+    },
+    Reference {
+        name: "\"./mod\"",
+        range: 24..31,
+        declared_at: None,
+    },
+    Declaration {
+        name: "default",
+        range: 47..55,
+    },
+    Reference {
+        name: "\"./mod\"",
+        range: 62..69,
+        declared_at: None,
+    },
+    Declaration {
+        name: "\"literal-name\"",
+        range: 80..95,
+    },
+    Reference {
+        name: "\"./mod\"",
+        range: 102..109,
+        declared_at: None,
+    },
+    Declaration {
+        name: "\"literal-name\"",
+        range: 125..140,
+    },
+    Reference {
+        name: "\"./mod\"",
+        range: 147..154,
+        declared_at: None,
+    },
+]

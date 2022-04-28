@@ -3,4 +3,14 @@
         name: "a",
         range: 15..16,
     },
+    Reference {
+        name: "\"a\"",
+        range: 49..53,
+        declared_at: None,
+    },
+    Reference {
+        name: "\"b\"",
+        range: 68..71,
+        declared_at: None,
+    },
 ]

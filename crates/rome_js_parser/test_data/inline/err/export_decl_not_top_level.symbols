@@ -1,1 +1,11 @@
-[]
+[
+    Declaration {
+        name: "pain",
+        range: 12..17,
+    },
+    Reference {
+        name: "\"life\"",
+        range: 24..30,
+        declared_at: None,
+    },
+]

@@ -19,10 +19,22 @@
         name: "test2",
         range: 62..67,
     },
+    Declaration {
+        name: "A",
+        range: 68..69,
+    },
+    Declaration {
+        name: "B",
+        range: 71..73,
+    },
     Reference {
         name: "A",
         range: 81..82,
         declared_at: None,
+    },
+    Declaration {
+        name: "C",
+        range: 84..86,
     },
     Reference {
         name: "A",

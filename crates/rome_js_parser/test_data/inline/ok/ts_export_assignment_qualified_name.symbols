@@ -12,4 +12,9 @@
         range: 40..41,
         declared_at: None,
     },
+    Reference {
+        name: "b",
+        range: 42..43,
+        declared_at: None,
+    },
 ]

@@ -25,6 +25,11 @@
         range: 55..56,
         declared_at: None,
     },
+    Reference {
+        name: "a",
+        range: 57..58,
+        declared_at: None,
+    },
     Declaration {
         name: "E",
         range: 65..67,
@@ -32,6 +37,21 @@
     Reference {
         name: "D",
         range: 69..70,
+        declared_at: None,
+    },
+    Reference {
+        name: "c",
+        range: 71..72,
+        declared_at: None,
+    },
+    Reference {
+        name: "b",
+        range: 73..74,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 75..76,
         declared_at: None,
     },
 ]

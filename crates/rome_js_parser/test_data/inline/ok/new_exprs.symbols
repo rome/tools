@@ -48,4 +48,9 @@
         range: 105..108,
         declared_at: None,
     },
+    Reference {
+        name: "bar",
+        range: 110..113,
+        declared_at: None,
+    },
 ]

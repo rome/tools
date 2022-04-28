@@ -3,11 +3,6 @@
         name: "x",
         range: 4..6,
     },
-    Reference {
-        name: "const",
-        range: 9..14,
-        declared_at: None,
-    },
     Declaration {
         name: "y",
         range: 28..30,

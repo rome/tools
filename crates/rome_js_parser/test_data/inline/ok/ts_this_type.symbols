@@ -15,4 +15,9 @@
         name: "predicate",
         range: 53..67,
     },
+    Reference {
+        name: "this",
+        range: 110..115,
+        declared_at: None,
+    },
 ]

@@ -22,6 +22,11 @@
         declared_at: None,
     },
     Reference {
+        name: "log",
+        range: 54..57,
+        declared_at: None,
+    },
+    Reference {
         name: "x",
         range: 58..59,
         declared_at: None,

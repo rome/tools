@@ -3,4 +3,8 @@
         name: "A",
         range: 5..6,
     },
+    Declaration {
+        name: "T",
+        range: 7..8,
+    },
 ]

@@ -1,1 +1,12 @@
-[]
+[
+    Reference {
+        name: "\"a\"",
+        range: 15..18,
+        declared_at: None,
+    },
+    Reference {
+        name: "\"./import\"",
+        range: 35..46,
+        declared_at: None,
+    },
+]

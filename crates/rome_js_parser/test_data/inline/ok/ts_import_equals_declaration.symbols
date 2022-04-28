@@ -3,9 +3,19 @@
         name: "x",
         range: 7..9,
     },
+    Reference {
+        name: "\"./test\"",
+        range: 19..27,
+        declared_at: None,
+    },
     Declaration {
         name: "a",
         range: 40..41,
+    },
+    Reference {
+        name: "b",
+        range: 42..44,
+        declared_at: None,
     },
     Declaration {
         name: "y",
@@ -25,9 +35,19 @@
         range: 72..73,
         declared_at: None,
     },
+    Reference {
+        name: "b",
+        range: 74..75,
+        declared_at: None,
+    },
     Declaration {
         name: "A",
         range: 89..91,
+    },
+    Reference {
+        name: "\"./a\"",
+        range: 101..106,
+        declared_at: None,
     },
     Declaration {
         name: "n",

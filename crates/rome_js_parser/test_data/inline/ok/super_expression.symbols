@@ -8,9 +8,24 @@
         range: 19..21,
         declared_at: None,
     },
+    Reference {
+        name: "super",
+        range: 40..50,
+        declared_at: None,
+    },
     Declaration {
         name: "test",
         range: 57..64,
+    },
+    Reference {
+        name: "super",
+        range: 68..78,
+        declared_at: None,
+    },
+    Reference {
+        name: "test",
+        range: 79..83,
+        declared_at: None,
     },
     Reference {
         name: "a",
@@ -20,6 +35,11 @@
     Reference {
         name: "b",
         range: 87..88,
+        declared_at: None,
+    },
+    Reference {
+        name: "super",
+        range: 90..100,
         declared_at: None,
     },
 ]

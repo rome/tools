@@ -7,20 +7,61 @@
         name: "as",
         range: 20..23,
     },
+    Reference {
+        name: "\"./mod\"",
+        range: 30..37,
+        declared_at: None,
+    },
+    Declaration {
+        name: "type",
+        range: 48..53,
+    },
     Declaration {
         name: "other",
         range: 56..62,
+    },
+    Reference {
+        name: "\"./mod\"",
+        range: 69..76,
+        declared_at: None,
+    },
+    Declaration {
+        name: "type",
+        range: 86..91,
     },
     Declaration {
         name: "as",
         range: 94..97,
     },
+    Reference {
+        name: "\"./mod\"",
+        range: 104..111,
+        declared_at: None,
+    },
+    Declaration {
+        name: "as",
+        range: 127..130,
+    },
     Declaration {
         name: "as",
         range: 133..136,
     },
+    Reference {
+        name: "\"./mod\"",
+        range: 143..150,
+        declared_at: None,
+    },
+    Declaration {
+        name: "\"test-abcd\"",
+        range: 165..177,
+    },
     Declaration {
         name: "test",
         range: 180..185,
+    },
+    Reference {
+        name: "\"./mod\"",
+        range: 192..199,
+        declared_at: None,
     },
 ]

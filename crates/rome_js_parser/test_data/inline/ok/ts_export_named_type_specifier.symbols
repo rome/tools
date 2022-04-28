@@ -14,4 +14,8 @@
         range: 46..51,
         declared_at: None,
     },
+    Declaration {
+        name: "somethingElse",
+        range: 54..68,
+    },
 ]

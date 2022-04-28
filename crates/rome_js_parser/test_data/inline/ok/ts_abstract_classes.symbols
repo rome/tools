@@ -16,6 +16,11 @@
         range: 87..91,
     },
     Reference {
+        name: "this",
+        range: 103..107,
+        declared_at: None,
+    },
+    Reference {
         name: "name",
         range: 108..113,
         declared_at: None,
@@ -34,9 +39,34 @@
         range: 145..152,
         declared_at: None,
     },
+    Reference {
+        name: "log",
+        range: 153..156,
+        declared_at: None,
+    },
+    Reference {
+        name: "this",
+        range: 157..161,
+        declared_at: None,
+    },
+    Reference {
+        name: "name",
+        range: 162..166,
+        declared_at: None,
+    },
     Declaration {
         name: "my_name",
         range: 186..193,
+    },
+    Reference {
+        name: "this",
+        range: 205..209,
+        declared_at: None,
+    },
+    Reference {
+        name: "name",
+        range: 210..214,
+        declared_at: None,
     },
     Declaration {
         name: "my_name",
@@ -45,6 +75,11 @@
     Declaration {
         name: "name",
         range: 241..245,
+    },
+    Reference {
+        name: "this",
+        range: 249..253,
+        declared_at: None,
     },
     Reference {
         name: "name",

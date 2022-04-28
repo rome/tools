@@ -19,11 +19,6 @@
         name: "f",
         range: 34..36,
     },
-    Reference {
-        name: "undefined",
-        range: 110..119,
-        declared_at: None,
-    },
     Declaration {
         name: "x",
         range: 139..141,
@@ -31,6 +26,11 @@
     Reference {
         name: "console",
         range: 144..151,
+        declared_at: None,
+    },
+    Reference {
+        name: "log",
+        range: 152..155,
         declared_at: None,
     },
     Reference {
@@ -143,8 +143,33 @@
         declared_at: None,
     },
     Reference {
+        name: "b",
+        range: 387..388,
+        declared_at: None,
+    },
+    Reference {
+        name: "super",
+        range: 393..398,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 399..400,
+        declared_at: None,
+    },
+    Reference {
+        name: "this",
+        range: 407..411,
+        declared_at: None,
+    },
+    Reference {
         name: "a",
         range: 423..424,
+        declared_at: None,
+    },
+    Reference {
+        name: "a",
+        range: 425..426,
         declared_at: None,
     },
     Reference {

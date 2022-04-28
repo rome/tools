@@ -44,4 +44,9 @@
         name: "other",
         range: 223..228,
     },
+    Reference {
+        name: "super",
+        range: 239..250,
+        declared_at: None,
+    },
 ]

@@ -8,6 +8,11 @@
         range: 26..27,
     },
     Reference {
+        name: "this",
+        range: 30..39,
+        declared_at: None,
+    },
+    Reference {
         name: "a",
         range: 40..42,
         declared_at: None,
@@ -24,6 +29,11 @@
     Declaration {
         name: "b",
         range: 81..82,
+    },
+    Reference {
+        name: "this",
+        range: 85..94,
+        declared_at: None,
     },
     Reference {
         name: "b",

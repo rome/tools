@@ -20,6 +20,11 @@
         declared_at: None,
     },
     Reference {
+        name: "\"bar\"",
+        range: 24..29,
+        declared_at: None,
+    },
+    Reference {
         name: "foo",
         range: 30..34,
         declared_at: None,

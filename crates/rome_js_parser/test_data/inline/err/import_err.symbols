@@ -26,6 +26,11 @@
         name: "dd",
         range: 70..73,
     },
+    Reference {
+        name: "\"c\"",
+        range: 80..83,
+        declared_at: None,
+    },
     Declaration {
         name: "ab",
         range: 94..96,
@@ -34,9 +39,37 @@
         name: "ac",
         range: 98..101,
     },
+    Reference {
+        name: "\"c\"",
+        range: 108..111,
+        declared_at: None,
+    },
+    Declaration {
+        name: "default",
+        range: 122..130,
+    },
+    Reference {
+        name: "\"c\"",
+        range: 137..140,
+        declared_at: None,
+    },
+    Declaration {
+        name: "\"a\"",
+        range: 151..155,
+    },
+    Reference {
+        name: "\"c\"",
+        range: 162..165,
+        declared_at: None,
+    },
     Declaration {
         name: "x",
         range: 179..181,
+    },
+    Reference {
+        name: "\"c\"",
+        range: 188..191,
+        declared_at: None,
     },
     Reference {
         name: "from",

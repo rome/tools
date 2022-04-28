@@ -4,6 +4,11 @@
         range: 7..9,
     },
     Reference {
+        name: "\"b\"",
+        range: 14..17,
+        declared_at: None,
+    },
+    Reference {
         name: "a",
         range: 28..30,
         declared_at: None,
@@ -16,5 +21,10 @@
     Declaration {
         name: "c",
         range: 47..49,
+    },
+    Reference {
+        name: "\"c\"",
+        range: 56..59,
+        declared_at: None,
     },
 ]
