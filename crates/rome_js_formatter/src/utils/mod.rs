@@ -685,10 +685,8 @@ pub(crate) enum PropertyNameCheckMode {
 impl PropertyNameCheckMode {
     fn text_can_be_replaced(&self, text_to_check: &str) -> bool {
         match self {
-            PropertyNameCheckMode::Alphabetic => !text_to_check.chars().any(|c| !c.is_alphabetic()),
-            PropertyNameCheckMode::Alphanumeric => {
-                !text_to_check.chars().any(|c| !c.is_alphanumeric())
-            }
+            PropertyNameCheckMode::Alphabetic => text_to_check.chars().all(char::is_alphabetic),
+            PropertyNameCheckMode::Alphanumeric => text_to_check.chars().all(char::is_alphanumeric),
         }
     }
 }

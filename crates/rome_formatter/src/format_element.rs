@@ -5,7 +5,7 @@ use rome_rowan::{
 };
 use std::borrow::Cow;
 use std::fmt::{self, Debug, Formatter};
-use std::ops::{Add, Deref};
+use std::ops::Deref;
 
 type Content = Box<FormatElement>;
 
