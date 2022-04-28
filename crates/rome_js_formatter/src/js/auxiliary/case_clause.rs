@@ -1,9 +1,6 @@
 use rome_formatter::FormatResult;
-use rome_js_syntax::JsBlockStatement;
-use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::AstNode;
-use rome_rowan::AstNodeList;
 
 use crate::{
     format_elements, hard_line_break, indent, space_token, Format, FormatElement, FormatNode,

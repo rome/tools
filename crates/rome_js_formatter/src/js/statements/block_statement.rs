@@ -4,7 +4,6 @@ use rome_formatter::FormatResult;
 use rome_js_syntax::JsBlockStatement;
 
 use rome_js_syntax::JsBlockStatementFields;
-use rome_js_syntax::JsCatchClause;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
@@ -57,7 +56,7 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
             | JsSyntaxKind::JS_WHILE_STATEMENT
             | JsSyntaxKind::JS_DO_WHILE_STATEMENT
             | JsSyntaxKind::TS_MODULE_DECLARATION
-            | JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION
+            | JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION,
         ) => false,
         // Some(JsSyntaxKind::JS_CATCH_CLAUSE) => {
         //     let parent = block.syntax().parent().unwrap();
@@ -66,5 +65,4 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
         Some(_) => true,
         None => false,
     }
-
 }
