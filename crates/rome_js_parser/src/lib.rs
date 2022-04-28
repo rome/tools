@@ -71,6 +71,7 @@ mod tests;
 
 pub mod syntax;
 mod token_source;
+pub mod symbols;
 
 pub use crate::{
     event::{process, Event},

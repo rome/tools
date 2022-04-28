@@ -48,14 +48,12 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
 
         let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
-        let mut actual = rome_js_parser::symbols(r.syntax());
-        actual
-            .symbols
-            .sort_by(|l, r| l.range.start().cmp(&r.range.start()));
+        let mut actual: Vec<_> = rome_js_parser::symbols::symbols(r.syntax()).collect();
+        actual.sort_by(|l, r| l.range.start().cmp(&r.range.start()));
 
         if let Ok(_) = std::env::var("PRINT_CMP") {
             let mut expecteds = expected.symbols.iter();
-            let mut actuals = actual.symbols.iter();
+            let mut actuals = actual.iter();
             loop {
                 let e = expecteds.next();
                 let a = actuals.next();
@@ -85,13 +83,13 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
             }
         }
 
-        if expected.symbols.len() != actual.symbols.len() {
+        if expected.symbols.len() != actual.len() {
             TestRunOutcome::IncorrectlyErrored {
                 files: t,
                 errors: vec![],
             }
         } else {
-            for (expected, actual) in expected.symbols.iter().zip(actual.symbols) {
+            for (expected, actual) in expected.symbols.iter().zip(actual) {
                 let are_names_eq = expected.name == actual.name;
                 // let are_paths_eq = expected.name == actual.name;
                 //TODO check decls

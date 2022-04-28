@@ -4,10 +4,10 @@ use crate::token_source::Trivia;
 use crate::*;
 use rome_diagnostics::Severity;
 use rome_js_syntax::{
-    JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, JsSyntaxToken,
+    JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode,
 };
-use rome_rowan::{AstNode, NodeOrToken};
-use std::{collections::VecDeque, marker::PhantomData};
+use rome_rowan::AstNode;
+use std::marker::PhantomData;
 
 /// A utility struct for managing the result of a parser job
 #[derive(Debug, Clone)]
@@ -181,164 +181,6 @@ pub fn parse(text: &str, file_id: usize, source_type: SourceType) -> Parse<JsAny
         let (green, parse_errors) = tree_sink.finish();
         Parse::new(green, parse_errors)
     })
-}
-
-#[derive(Debug)]
-pub struct Symbol {
-    pub name: String,
-    pub range: rome_js_syntax::TextRange,
-}
-
-#[derive(Debug)]
-pub struct Symbols {
-    pub symbols: Vec<Symbol>,
-}
-
-macro_rules! symbol_at {
-    ($node:expr, $($slot:expr),*; $token:expr) => {
-        Some(&$node)$(.and_then(|x| x.element_in_slot($slot)).and_then(|x| x.into_node()))*
-        .and_then(|x| x.element_in_slot($token)).and_then(|x| x.into_token())
-        .map(|x| Symbol {
-            name: x.text_trimmed().to_string(),
-            range: x.text_range()
-        })
-    };
-}
-
-pub fn symbols(root: JsSyntaxNode) -> Symbols {
-    let mut symbols = vec![];
-
-    let mut queue = VecDeque::new();
-    queue.push_back(root);
-
-    while let Some(node) = queue.pop_front() {
-        let symbol = match node.kind() {
-            JsSyntaxKind::JS_THIS_EXPRESSION
-            | JsSyntaxKind::JS_NAME
-            | JsSyntaxKind::JS_IDENTIFIER_BINDING
-            | JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT
-            | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
-            | JsSyntaxKind::TS_TYPE_PARAMETER_NAME
-            | JsSyntaxKind::TS_IDENTIFIER_BINDING
-            | JsSyntaxKind::TS_QUALIFIED_NAME
-            | JsSyntaxKind::JS_COMPUTED_MEMBER_NAME
-            | JsSyntaxKind::JS_SUPER_EXPRESSION
-            | JsSyntaxKind::TS_IDENTIFIER_BINDING => Some(Symbol {
-                name: node.text_trimmed().to_string(),
-                range: node.text_range(),
-            }),
-            JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => match node.element_in_slot(0) {
-                Some(NodeOrToken::Node(first_child)) => match first_child.kind() {
-                    JsSyntaxKind::JS_IDENTIFIER_EXPRESSION
-                    | JsSyntaxKind::JS_THIS_EXPRESSION
-                    | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-                    | JsSyntaxKind::JS_CALL_EXPRESSION => Some(Symbol {
-                        name: node.text_trimmed().to_string(),
-                        range: node.text_range(),
-                    }),
-                    _ => None,
-                },
-                _ => None,
-            },
-            JsSyntaxKind::JS_LITERAL_MEMBER_NAME => {
-                let parent_kind = node.parent().map(|parent| parent.kind());
-                let parent_ok = match parent_kind {
-                    Some(
-                        JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER
-                        | JsSyntaxKind::TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER,
-                    ) => false,
-                    Some(_) => true,
-                    None => false,
-                };
-
-                let first_child_ok = match node.first_token().map(|token| token.kind()) {
-                    Some(JsSyntaxKind::JS_STRING_LITERAL) => false,
-                    _ => true,
-                };
-
-                if parent_ok && first_child_ok {
-                    Some(Symbol {
-                        name: node.text_trimmed().to_string(),
-                        range: node.text_range(),
-                    })
-                } else {
-                    None
-                }
-            }
-            JsSyntaxKind::TS_THIS_PARAMETER => {
-                let token = node
-                    .element_in_slot(0)
-                    .and_then(NodeOrToken::into_token)
-                    .unwrap();
-                Some(Symbol {
-                    name: token.text_trimmed().to_string(),
-                    range: token.text_range(),
-                })
-            }
-            JsSyntaxKind::JS_REFERENCE_IDENTIFIER => match node.first_token() {
-                Some(token) => match token.text_trimmed() {
-                    "const" | "undefined" => None,
-                    _ => Some(Symbol {
-                        name: token.text_trimmed().to_string(),
-                        range: token.text_range(),
-                    }),
-                },
-                _ => None,
-            },
-            JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => match node.element_in_slot(3) {
-                Some(NodeOrToken::Node(node)) => match node.kind() {
-                    JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION => Some(Symbol {
-                        name: node.text_trimmed().to_string(),
-                        range: node.text_range(),
-                    }),
-                    _ => None,
-                },
-                _ => None,
-            },
-            JsSyntaxKind::TS_GLOBAL_DECLARATION => match node.first_token() {
-                Some(token) => Some(Symbol {
-                    name: token.text_trimmed().to_string(),
-                    range: token.text_range(),
-                }),
-                None => None,
-            },
-            _ => None,
-        };
-
-        if let Some(s) = symbol {
-            symbols.push(s);
-        }
-
-        for child in node.children() {
-            queue.push_back(child);
-        }
-    }
-
-    // for node in root.descendants_with_tokens() {
-    //     use rome_rowan::NodeOrToken;
-    //     match node {
-    //         NodeOrToken::Node(node) => match node {
-    //             JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {}
-    //         },
-    //         NodeOrToken::Token(token) => match token.kind() {
-    //             JsSyntaxKind::IDENT => {
-    //                 let name = token.text_trimmed();
-    //                 symbols.push(Symbol {
-    //                     name: name.to_string(),
-    //                 });
-    //             }
-    //             JsSyntaxKind::THIS_KW => {
-    //                 let name = token.text_trimmed();
-    //                 symbols.push(Symbol {
-    //                     name: name.to_string(),
-    //                 });
-    //             }
-    //             _ => {}
-    //         },
-    //     }
-    // }
-
-    Symbols { symbols }
 }
 
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
