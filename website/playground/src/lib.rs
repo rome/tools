@@ -5,8 +5,24 @@ use rome_diagnostics::termcolor::{ColorSpec, WriteColor};
 use rome_diagnostics::Emitter;
 use rome_js_formatter::{format_node, FormatOptions, IndentStyle};
 use rome_js_parser::{parse, LanguageVariant, SourceType};
+use serde_json::json;
 use std::io;
 use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+extern "C" {
+    // Use `js_namespace` here to bind `console.log(..)` instead of just
+    // `log(..)`
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+}
+
+#[allow(unused_macros)]
+macro_rules! console_log {
+    // Note that this is using the `log` function imported above during
+    // `bare_bones`
+    ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
+}
 
 #[wasm_bindgen]
 pub struct RomeOutput {
@@ -71,6 +87,31 @@ impl WriteColor for ErrorOutput {
     }
 }
 
+fn clean_up_json(json: serde_json::Value) -> serde_json::Value {
+    match json {
+        serde_json::Value::Array(mut entries) => {
+            if entries.len() == 1 {
+                clean_up_json(entries.pop().unwrap())
+            } else {
+                serde_json::Value::Array(entries.into_iter().map(clean_up_json).collect())
+            }
+        }
+        serde_json::Value::Object(mut fields) => {
+            if fields.len() == 1 && fields.contains_key("Ok") {
+                clean_up_json(fields.remove("Ok").unwrap())
+            } else {
+                serde_json::Value::Object(
+                    fields
+                        .into_iter()
+                        .map(|(key, value)| (key, clean_up_json(value)))
+                        .collect(),
+                )
+            }
+        }
+        s => s,
+    }
+}
+
 #[wasm_bindgen]
 pub fn run(
     code: String,
@@ -115,10 +156,15 @@ pub fn run(
         quote_style: quote_style.parse().unwrap_or_default(),
     };
 
-    let cst = serde_json::to_string(&syntax)
-        .unwrap_or_else(|_| "{ error: \"CST could not be serialized\" }".to_string());
-    let ast = serde_json::to_string(&parse.tree())
-        .unwrap_or_else(|_| "{ error: \"AST could not be serialized\" }".to_string());
+    let cst_json = serde_json::to_value(&syntax)
+        .unwrap_or_else(|_| json!({ "error": "CST could not be serialized" }));
+
+    let ast_json = serde_json::to_value(&parse.tree())
+        .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" }));
+
+    let cst_json = clean_up_json(cst_json);
+    let ast_json = clean_up_json(ast_json);
+
     let formatted = format_node(options, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
 
@@ -133,8 +179,8 @@ pub fn run(
     }
 
     RomeOutput {
-        cst,
-        ast,
+        cst: cst_json.to_string(),
+        ast: ast_json.to_string(),
         formatted_code,
         formatter_ir,
         errors: String::from_utf8(errors.0).unwrap(),

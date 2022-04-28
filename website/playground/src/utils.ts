@@ -7,43 +7,6 @@ import { IndentStyle, PlaygroundState, QuoteStyle, SourceType } from "./types";
 
 interface Size { width: number | undefined; height: number | undefined }
 
-function isObject(n: any): boolean {
-	return typeof n === "object" && n !== null;
-}
-
-/** Simple helper function to clean up the AST object.
- *  Serde's serialization means that Result types serialize to:
- *
- *  ```js
- *     { "Ok": {...} }
- *  ```
- *
- *  And single element Vecs become:
- *
- *  ```js
- *    { "0": {...} }
- *  ```
- *
- * This adds a lot of clutter to the AST, so we just flatten it out
- */
-export function cleanUpAst(ast: any): any {
-	const keys = Object.keys(ast);
-
-	if (keys.length === 1 && (keys[0] === "Ok" || keys[0] === "0")) {
-		return cleanUpAst(ast[keys[0]]);
-	}
-	return Object.fromEntries(
-		Object
-			.entries(ast)
-			.map(
-				([key, value]) => {
-					const cleanedValue = isObject(value) ? cleanUpAst(value) : value;
-					return [key, cleanedValue];
-				},
-			),
-	);
-}
-
 // Hook
 export function useWindowSize(): Size {
 	// Initialize state with undefined width/height so server and client renders match

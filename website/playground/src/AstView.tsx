@@ -4,5 +4,5 @@ import { cleanUpAst } from "./utils";
 interface Props { ast: string }
 
 export default function AstView({ ast }: Props) {
-	return <ReactJson src={cleanUpAst(JSON.parse(ast))} />;
+	return <ReactJson src={JSON.parse(ast)} />;
 }
