@@ -59,10 +59,10 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
             | JsSyntaxKind::TS_MODULE_DECLARATION
             | JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION
         ) => false,
-        Some(JsSyntaxKind::JS_CATCH_CLAUSE) => {
-            let parent = block.syntax().parent().unwrap();
-            matches!(parent.parent().map(|p| p.kind()), Some(JsSyntaxKind::JS_FINALLY_CLAUSE))
-        }
+        // Some(JsSyntaxKind::JS_CATCH_CLAUSE) => {
+        //     let parent = block.syntax().parent().unwrap();
+        //     matches!(parent.parent().map(|p| p.kind()), Some(JsSyntaxKind::JS_FINALLY_CLAUSE))
+        // }
         Some(_) => true,
         None => false,
     }

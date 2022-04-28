@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 175
 expression: empty.js
-
 ---
 # Input
 ```js
@@ -20,9 +19,14 @@ try {
 
 # Output
 ```js
-try {} catch (e) {} finally {}
+try {
+} catch (e) {
+} finally {
+}
 
-try {} catch (e) {}
+try {
+} catch (e) {
+}
 
 ```
 

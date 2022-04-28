@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 175
 expression: optional_catch_binding.js
-
 ---
 # Input
 ```js
@@ -20,7 +19,10 @@ finally {
 
 # Output
 ```js
-try {} catch {} finally {}
+try {
+} catch {
+} finally {
+}
 
 ```
 
