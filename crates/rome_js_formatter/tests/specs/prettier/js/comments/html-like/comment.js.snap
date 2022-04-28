@@ -21,7 +21,7 @@ alert(1)
 
 # Errors
 ```
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+error[SyntaxError]: type assertions are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ comment.js:1:1
   │  
 1 │ ┌ <!--
