@@ -50,17 +50,17 @@ abstract class Test {
 # Output
 ```js
 interface foo1 {
-  bar3( /* baz */ ); /* foo */ // bat
-  bar?( /* baz */ ); /* foo */ /* bar */ /* bat */
-  bar2( /* baz */ ); /* foo */ /* bat */
+  bar3(/* baz */ );/* foo */ // bat
+  bar?(/* baz */ );/* foo */ /* bar */ /* bat */
+  bar2(/* baz */ );/* foo */ /* bat */
 }
 
 interface foo2 {
-  bar?(bar: /* baz */ string): string; /* foo */ /* bar */ /* bat */
+  bar?(bar: /* baz */ string): string;/* foo */ /* bar */ /* bat */
 }
 
 interface foo3 {
-  /* foo */ ( /* bar */ ): string; /* baz */
+  /* foo */ (/* bar */ ): string; /* baz */
 }
 
 interface foo4 {
@@ -72,21 +72,21 @@ interface foo5 {
 }
 
 interface foo6 {
-  /* foo */ new ( /* baz */ ): string; /* bar */ /* bat */
+  /* foo */ new (/* baz */ ): string; /* bar */ /* bat */
 }
 
-type foo7 = /* foo */ ( /* bar */ ) /* baz */ => void;
+type foo7 = /* foo */ (/* bar */ ) /* baz */ => void;
 
 type foo8 = /* foo */ (a: /* bar */ string) /* baz */ => void;
 
-let foo9: new /* foo */ ( /* bar */ ) /* baz */ => string;
+let foo9: new /* foo */ (/* bar */ ) /* baz */ => string;
 
 let foo10: new /* foo */ (a: /* bar */ string) /* baz */ => string;
 
 abstract class Test {
   abstract foo12 /* foo */ (a: /* bar */ string): /* baz */ void;
 
-  abstract foo13 /* foo */ ( /* bar */ ) /* baz */ ;
+  abstract foo13 /* foo */ (/* bar */ ) /* baz */ ;
 }
 
 ```

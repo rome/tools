@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: array-assignment-holes.js
 ---
 # Input
@@ -15,5 +16,5 @@ Line width: 80
 Quote style: Double Quotes
 -----
 let a, b;
-[a, /*empty*/ ,] = b;
+[a,/*empty*/ ,] = b;
 

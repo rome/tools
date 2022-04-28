@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 175
 expression: method.js
-
 ---
 # Input
 ```js
@@ -23,10 +22,10 @@ class C {
 # Output
 ```js
 class C {
-  name /*comment*/ () {}
+  name/*comment*/ () {}
 }
 
-({ name /*comment*/ () {} });
+({ name/*comment*/ () {} });
 
 ```
 

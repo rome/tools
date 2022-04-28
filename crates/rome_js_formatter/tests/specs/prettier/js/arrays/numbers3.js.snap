@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 121
+assertion_line: 175
 expression: numbers3.js
-
 ---
 # Input
 ```js
@@ -44,7 +43,7 @@ let test_case = [
     15,
     70,
     10,
-    90, /*21,*/
+    90,/*21,*/
     48,
     39,
     76,

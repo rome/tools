@@ -540,44 +540,34 @@ impl Formatter {
             if let Some(comment) = piece.as_comments() {
                 let is_single_line = comment.text().trim_start().starts_with("//");
 
+                let leading_trivia = if let Some(previous_piece) = previous_piece {
+                    if previous_piece.is_whitespace() {
+                        space_token()
+                    } else {
+                        empty_element()
+                    }
+                } else {
+                    empty_element()
+                };
                 let comment = Token::from(comment);
 
                 let content = if !is_single_line {
                     format_elements![
                         if_group_breaks(line_suffix(format_elements![
-                            space_token(),
+                            leading_trivia.clone(),
                             comment.clone(),
                             space_token(),
                         ])),
                         if_group_fits_on_single_line(format_elements![
-                            space_token(),
+                            leading_trivia,
                             comment,
                             space_token(),
                         ]),
                     ]
                 } else {
-                    dbg!(&previous_piece);
-                    dbg!(&comment);
-                    let prefix = if let Some(previous_piece) = previous_piece {
-                        if previous_piece.is_whitespace() {
-                            space_token()
-                        } else {
-                            empty_element()
-                        }
-                    } else {
-                        empty_element()
-                    };
-                    // let suffix = if let Some(next_piece) = &peekable_pieces.peek() {
-                    //     if next_piece.is_whitespace() {
-                    //         space_token()
-                    //     } else {
-                    //         empty_element()
-                    //     }
-                    // } else {
-                    //     empty_element()
-                    // };
-                    dbg!(&prefix);
-                    line_suffix(format_elements![prefix, comment, space_token()])
+                    // comments that starts with // can't have a trailing space because the code is always
+                    // on a new line
+                    line_suffix(format_elements![leading_trivia, comment])
                 };
 
                 elements.push(crate::comment(content));

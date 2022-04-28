@@ -42,7 +42,7 @@ while (true) {}// Comment
 
 while (true) {}// Comment
 
-while (true) /*Comment*/ {}
+while (true)/*Comment*/ {}
 
 while (
   true && true // Comment // Comment

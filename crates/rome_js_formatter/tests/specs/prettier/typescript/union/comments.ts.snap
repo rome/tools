@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 119
+assertion_line: 175
 expression: comments.ts
-
 ---
 # Input
 ```js
@@ -24,7 +23,7 @@ type B3 = a | /* 1 */ /* 2 */ b;
 type A1 = a /* 1 */ | b;
 type A2 = a | /* 1 */ b;
 type A3 = (a /* 1 */ ) | b;
-type A4 = a | ( /* 1 */ b);
+type A4 = a | (/* 1 */ b);
 type A5 = (a) /* 1 */ | b;
 type A6 = a | /* 1 */ (b);
 

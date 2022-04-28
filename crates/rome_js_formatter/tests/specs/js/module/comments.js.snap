@@ -78,7 +78,7 @@ Quote style: Double Quotes
 //     func, // trailing comma removal
 // } from 'module';
 
-expression( /* block comment */ );
+expression(/* block comment */ );
 
 expression(
 	/* block comment */
@@ -93,7 +93,7 @@ expression(
 );
 
 class C {
-	name /*comment*/ () {}
+	name/*comment*/ () {}
 }
 
 expression(
@@ -102,16 +102,16 @@ expression(
 
 expression("something" /** something **/ );
 
-expression( /** something **/ "something");
+expression(/** something **/ "something");
 
 expression(
 	/** something **/
 	"something",
 );
 
-const array0 = [ /*0*/ ];
-const array1 = [ /*0*/ , /*1*/ ];
-const array2 = [ /*0*/ , /*1*/ , /*2*/ ];
+const array0 = [/*0*/ ];
+const array1 = [/*0*/ ,/*1*/ ];
+const array2 = [/*0*/ ,/*1*/ ,/*2*/ ];
 
 /* block comment */
 statement();

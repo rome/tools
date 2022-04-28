@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 175
 expression: intersection-parens.ts
-
 ---
 # Input
 ```js
@@ -67,7 +66,7 @@ let b5: ((C));
 let b6: /*1*/ C;
 let b7: /*1*/ (C);
 let b8: /*1*/ (C);
-let b9: ( /*1*/ C);
+let b9: (/*1*/ C);
 let b10: /*1*/ /*2*/ C;
 let b11: /*1*/ ( /*2*/ C);
 
@@ -82,7 +81,7 @@ type B5 = ((C));
 type B6 = /*1*/ C;
 type B7 = /*1*/ (C);
 type B8 = /*1*/ (C);
-type B9 = ( /*1*/ C);
+type B9 = (/*1*/ C);
 type B10 = /*1*/ /*2*/ C;
 type B11 = /*1*/ ( /*2*/ C);
 type B12 = /*1*/ ((C));

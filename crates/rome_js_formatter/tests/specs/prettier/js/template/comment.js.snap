@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 175
 expression: comment.js
-
 ---
 # Input
 ```js
@@ -33,7 +32,7 @@ g
 })[^${escapeChar}])+)+
 `;
 
-`a${ /* b */ c /* d */ }e${
+`a${/* b */ c/* d */ }e${
   // f
   g
   // h

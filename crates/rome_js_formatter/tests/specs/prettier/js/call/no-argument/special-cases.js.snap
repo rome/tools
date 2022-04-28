@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 175
 expression: special-cases.js
-
 ---
 # Input
 ```js
@@ -17,12 +16,12 @@ new it(/* comment */)
 
 # Output
 ```js
-require( /* comment */ );
-new require( /* comment */ );
-define( /* comment */ );
-new define( /* comment */ );
-it( /* comment */ );
-new it( /* comment */ );
+require(/* comment */ );
+new require(/* comment */ );
+define(/* comment */ );
+new define(/* comment */ );
+it(/* comment */ );
+new it(/* comment */ );
 
 ```
 

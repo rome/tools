@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 175
 expression: template-literal.js
-
 ---
 # Input
 ```js
@@ -30,7 +29,7 @@ ${
 
 ${b /* comment */ }
 
-${ /* comment */ c /* comment */ }
+${/* comment */ c /* comment */ }
 
 ${
   // comment
