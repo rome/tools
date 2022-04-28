@@ -48,7 +48,7 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
     if !block.statements().is_empty() {
         return false;
     }
-
+    // reference https://github.com/prettier/prettier/blob/main/src/language-js/print/block.js#L19
     match block.syntax().parent().map(|p| p.kind()) {
         Some(
             JsSyntaxKind::JS_FUNCTION_BODY
