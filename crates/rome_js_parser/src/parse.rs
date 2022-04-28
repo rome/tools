@@ -222,7 +222,8 @@ pub fn symbols(root: JsSyntaxNode) -> Symbols {
             | JsSyntaxKind::TS_IDENTIFIER_BINDING
             | JsSyntaxKind::TS_QUALIFIED_NAME
             | JsSyntaxKind::JS_COMPUTED_MEMBER_NAME
-            | JsSyntaxKind::JS_SUPER_EXPRESSION => Some(Symbol {
+            | JsSyntaxKind::JS_SUPER_EXPRESSION
+            | JsSyntaxKind::TS_IDENTIFIER_BINDING => Some(Symbol {
                 name: node.text_trimmed().to_string(),
                 range: node.text_range(),
             }),
@@ -241,13 +242,27 @@ pub fn symbols(root: JsSyntaxNode) -> Symbols {
             },
             JsSyntaxKind::JS_LITERAL_MEMBER_NAME => {
                 let parent_kind = node.parent().map(|parent| parent.kind());
-                match parent_kind {
-                    Some(JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER) => None,
-                    Some(_) => Some(Symbol {
+                let parent_ok = match parent_kind {
+                    Some(
+                        JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER
+                        | JsSyntaxKind::TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER,
+                    ) => false,
+                    Some(_) => true,
+                    None => false,
+                };
+
+                let first_child_ok = match node.first_token().map(|token| token.kind()) {
+                    Some(JsSyntaxKind::JS_STRING_LITERAL) => false,
+                    _ => true,
+                };
+
+                if parent_ok && first_child_ok {
+                    Some(Symbol {
                         name: node.text_trimmed().to_string(),
                         range: node.text_range(),
-                    }),
-                    None => None,
+                    })
+                } else {
+                    None
                 }
             }
             JsSyntaxKind::TS_THIS_PARAMETER => {
@@ -279,6 +294,13 @@ pub fn symbols(root: JsSyntaxNode) -> Symbols {
                     _ => None,
                 },
                 _ => None,
+            },
+            JsSyntaxKind::TS_GLOBAL_DECLARATION => match node.first_token() {
+                Some(token) => Some(Symbol {
+                    name: token.text_trimmed().to_string(),
+                    range: token.text_range(),
+                }),
+                None => None,
             },
             _ => None,
         };
