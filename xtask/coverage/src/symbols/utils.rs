@@ -12,7 +12,7 @@ pub fn parse_until_chr(input: &'_ str, f: impl Fn(char) -> bool) -> Option<(&'_ 
             break;
         }
 
-        qty += 1;
+        qty += chr.len_utf8();
     }
 
     if qty > 0 {

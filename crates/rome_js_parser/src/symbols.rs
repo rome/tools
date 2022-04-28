@@ -160,12 +160,16 @@ impl Iterator for SymbolIterator {
                     _ => None,
                 },
                 JsSyntaxKind::TS_TYPE_PARAMETER_NAME => {
-                    let is_type_parameter_list = matches!(
+                    let is_in_type_parameter_list = matches!(
                         node.parent().and_then(|x| x.parent()).map(|x| x.kind()),
                         Some(JsSyntaxKind::TS_TYPE_PARAMETER_LIST)
                     );
+                    let is_in_mapped_type = matches!(
+                        node.parent().map(|x| x.kind()),
+                        Some(JsSyntaxKind::TS_MAPPED_TYPE)
+                    );
 
-                    if is_type_parameter_list {
+                    if is_in_type_parameter_list || is_in_mapped_type {
                         Some(Symbol::Declaration {
                             name: node.text_trimmed().to_string(),
                             range: node.text_range(),

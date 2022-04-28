@@ -48,7 +48,9 @@ impl TestCase for SymbolsMicrosoftTsTestCase {
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
 
         let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
-        let mut actual: Vec<_> = rome_js_parser::symbols::symbols(r.syntax()).collect();
+        let mut actual: Vec<_> = rome_js_parser::symbols::symbols(r.syntax())
+            .filter(|x| !x.name().contains("\""))
+            .collect();
         actual.sort_by(|l, r| l.range().start().cmp(&r.range().start()));
 
         if std::env::var("PRINT_CMP").is_ok() {
@@ -190,7 +192,7 @@ fn parse_decl(input: &str) -> Option<(&str, Decl)> {
 fn parse_symbol(input: &str) -> Option<Symbol> {
     let (input, _) = parse_str(input, ">")?;
     let (input, name) = parse_until_chr(input, |x| x.is_whitespace() || x == ':')?;
-    if name.contains(".") || name.contains("[") || name.contains("\"") {
+    if name.contains(".") || name.contains("[") || name.contains("\"") || name == "undefined" {
         return None;
     }
     let (input, _) = parse_whitespace0(input);
@@ -199,17 +201,22 @@ fn parse_symbol(input: &str) -> Option<Symbol> {
     let (input, _) = parse_str(input, "Symbol")?;
     let (input, _) = parse_whitespace0(input);
     let (input, _) = parse_str(input, "(")?;
-    let (input, path) = parse_until_chr(input, |x| x.is_whitespace() || x == ',')?;
+    let (input, path) = parse_until_chr(input, |x| x.is_whitespace() || x == ',' || x == ')')?;
     let (input, _) = parse_whitespace0(input);
-    let (input, _) = parse_str(input, ",")?;
-    let (input, _) = parse_whitespace0(input);
+    let decls = if !input.starts_with(")") {
+        let (input, _) = parse_str(input, ",")?;
+        let (input, _) = parse_whitespace0(input);
 
-    let (_, decls) = parse_separated_list(
-        input,
-        parse_decl,
-        |s| parse_str(s, ",").map(|x| x.0).unwrap_or(s),
-        |s| parse_whitespace0(s).0,
-    );
+        let (_, decls) = parse_separated_list(
+            input,
+            parse_decl,
+            |s| parse_str(s, ",").map(|x| x.0).unwrap_or(s),
+            |s| parse_whitespace0(s).0,
+        );
+        decls
+    } else {
+        vec![]
+    };
 
     Some(Symbol {
         name: name.to_string(),
