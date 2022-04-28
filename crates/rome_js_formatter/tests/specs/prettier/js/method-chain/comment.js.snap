@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: comment.js
 ---
 # Input
@@ -69,23 +70,21 @@ function f() {
     .debounceTime(debounceInterval);
 }
 
-_
-  .a(a)
+_.a(a)
   /* very very very very very very very long such that it is longer than 80 columns */
   .a();
 
-_
-  .a(a) /* very very very very very very very long such that it is longer than 80 columns */
+_.a(a)
+  /* very very very very very very very long such that it is longer than 80 columns */
   .a();
 
-_
-  .a(a) /* very very very very very very very long such that it is longer than 80 columns */
+_.a(a)
+  /* very very very very very very very long such that it is longer than 80 columns */
   .a();
 
 Something
-  // $FlowFixMe(>=0.41.0)
-  .getInstance(this.props.dao)
-  .getters();
+// $FlowFixMe(>=0.41.0)
+.getInstance(this.props.dao).getters();
 
 // Warm-up first
 measure()
@@ -104,8 +103,8 @@ const configModel = this.baseConfigurationService
   .consolidated // global/default values (do NOT modify)
   .merge(this.cachedWorkspaceConfig);
 
-this
-  .doWriteConfiguration(target, value, options) // queue up writes to prevent race conditions
+this.doWriteConfiguration(target, value, options)
+  // queue up writes to prevent race conditions
   .then(
     () => null,
     (error) => {
@@ -132,10 +131,9 @@ angular
 # Lines exceeding max width of 80 characters
 ```
     3:     // Debounce manually rather than using editor.onDidStopChanging so that the debounce time is
-   10:   /* very very very very very very very long such that it is longer than 80 columns */
-   14:   .a(a) /* very very very very very very very long such that it is longer than 80 columns */
-   18:   .a(a) /* very very very very very very very long such that it is longer than 80 columns */
-   44:   .doWriteConfiguration(target, value, options) // queue up writes to prevent race conditions
-   48:       return options.donotNotifyError ? TPromise.wrapError(error) : this.onError(
+    9:   /* very very very very very very very long such that it is longer than 80 columns */
+   13:   /* very very very very very very very long such that it is longer than 80 columns */
+   17:   /* very very very very very very very long such that it is longer than 80 columns */
+   46:       return options.donotNotifyError ? TPromise.wrapError(error) : this.onError(
 ```
 

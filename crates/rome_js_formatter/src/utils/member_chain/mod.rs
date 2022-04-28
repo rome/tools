@@ -1,16 +1,19 @@
+mod flatten_item;
+mod groups;
+mod simple_argument;
+
 use crate::format_traits::FormatOptional;
+use crate::utils::member_chain::flatten_item::FlattenItem;
+use crate::utils::member_chain::groups::{Groups, HeadGroup};
 use crate::{
-    concat_elements, format_elements, group_elements, indent, join_elements, soft_line_break,
-    Format, FormatElement, Formatter,
+    format_elements, group_elements, hard_line_break, indent, Format, FormatElement, FormatResult,
+    Formatter,
 };
-use rome_formatter::FormatResult;
 use rome_js_syntax::{
-    JsCallExpression, JsComputedMemberExpression, JsImportCallExpression, JsStaticMemberExpression,
+    JsCallExpression, JsComputedMemberExpression, JsExpressionStatement, JsStaticMemberExpression,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode};
 use rome_rowan::AstNode;
-use std::fmt::Debug;
-use std::slice;
 
 /// Utility function that applies some heuristic to format chain member expressions and call expressions
 ///
@@ -123,6 +126,9 @@ pub fn format_call_expression(
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
     let mut flattened_items = vec![];
+    let parent_is_expression_statement = syntax_node.parent().map_or(false, |parent| {
+        JsExpressionStatement::can_cast(parent.kind())
+    });
 
     flatten_call_expression(&mut flattened_items, syntax_node.clone(), formatter)?;
 
@@ -136,16 +142,25 @@ pub fn format_call_expression(
     // as explained before, the first group is particular, so we calculate it
     let index_to_split_at = compute_first_group_index(&flattened_items);
     let mut flattened_items = flattened_items.into_iter();
+
     // we have the index where we want to take the first group
-    let first_group = concat_elements(
-        (&mut flattened_items)
-            .take(index_to_split_at)
-            .map(FlattenItem::into),
-    );
+    let first_group: Vec<_> = (&mut flattened_items).take(index_to_split_at).collect();
+
+    let mut head_group = HeadGroup::new(first_group);
+
     // `flattened_items` now contains only the nodes that should have a sequence of
     // `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
-    let rest_of_groups = compute_groups(flattened_items)?;
-    Ok(format_groups(calls_count, first_group, rest_of_groups))
+    let mut rest_of_groups =
+        compute_groups(flattened_items, parent_is_expression_statement, formatter)?;
+
+    // Here we check if the first element of Groups::groups can be moved inside the head.
+    // If so, then we extract it and concatenate it together with the head.
+    if let Some(group_to_merge) = rest_of_groups.should_merge_with_first_group(&head_group) {
+        let group_to_merge = group_to_merge.into_iter().flatten().collect();
+        head_group.expand_group(group_to_merge);
+    }
+
+    format_groups(calls_count, head_group, rest_of_groups)
 }
 
 /// Retrieves the index where we want to calculate the first group.
@@ -220,11 +235,15 @@ fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
 }
 
 /// computes groups coming after the first group
-fn compute_groups(flatten_items: impl Iterator<Item = FlattenItem>) -> FormatResult<Groups> {
+fn compute_groups(
+    flatten_items: impl Iterator<Item = FlattenItem>,
+    in_expression_statement: bool,
+    formatter: &Formatter,
+) -> FormatResult<Groups> {
     let mut has_seen_call_expression = false;
-    let mut groups = Groups::default();
+    let mut groups = Groups::new(formatter, in_expression_statement);
     for item in flatten_items {
-        let has_trailing_comments = item.syntax().has_trailing_comments();
+        let has_trailing_comments = item.as_syntax().has_trailing_comments();
 
         match item {
             FlattenItem::StaticMember(_, _) => {
@@ -271,19 +290,25 @@ fn compute_groups(flatten_items: impl Iterator<Item = FlattenItem>) -> FormatRes
 /// Formats together the first group and the rest of groups
 fn format_groups(
     calls_count: usize,
-    first_formatted_group: FormatElement,
+    head_group: HeadGroup,
     groups: Groups,
-) -> FormatElement {
-    if groups.groups_should_break(calls_count) {
-        group_elements(format_elements![
-            first_formatted_group,
-            indent(format_elements![
-                soft_line_break(),
-                groups.into_joined_groups()
-            ]),
+) -> FormatResult<FormatElement> {
+    if groups.groups_should_break(calls_count, &head_group)? {
+        Ok(format_elements![
+            head_group.into_format_element(),
+            group_elements(indent(format_elements![
+                hard_line_break(),
+                groups.into_joined_hard_line_groups()
+            ]),)
         ])
     } else {
-        format_elements![first_formatted_group, groups.into_concatenated_groups()]
+        let head_formatted = head_group.into_format_element();
+        let (one_line, _) = groups.into_format_elements();
+
+        // TODO: this is not the definitive solution, as there are few restrictions due to how the printer works:
+        // - groups that contains other groups with hard lines break all the groups
+        // - conditionally print one single line is subject to how the printer works (by default, multiline)
+        Ok(format_elements![head_formatted, one_line])
     }
 }
 
@@ -348,163 +373,4 @@ fn flatten_call_expression(
     }
 
     Ok(())
-}
-
-#[derive(Clone)]
-/// Data structure that holds the node with its formatted version
-pub(crate) enum FlattenItem {
-    /// Holds onto a [rome_js_syntax::JsStaticMemberExpression]
-    StaticMember(JsStaticMemberExpression, Vec<FormatElement>),
-    /// Holds onto a [rome_js_syntax::JsCallExpression]
-    CallExpression(JsCallExpression, Vec<FormatElement>),
-    /// Holds onto a [rome_js_syntax::JsComputedMemberExpression]
-    ComputedExpression(JsComputedMemberExpression, Vec<FormatElement>),
-    /// Any other node that are not  [rome_js_syntax::JsCallExpression] or [rome_js_syntax::JsStaticMemberExpression]
-    /// Are tracked using this variant
-    Node(JsSyntaxNode, FormatElement),
-}
-
-impl FlattenItem {
-    /// checks if the current node is a [rome_js_syntax::JsCallExpression] or a [rome_js_syntax::JsImportExpression]
-    pub fn is_loose_call_expression(&self) -> bool {
-        match self {
-            FlattenItem::CallExpression(_, _) => true,
-            FlattenItem::Node(node, _) => JsImportCallExpression::can_cast(node.kind()),
-            _ => false,
-        }
-    }
-
-    fn as_format_elements(&self) -> &[FormatElement] {
-        match self {
-            FlattenItem::StaticMember(_, elements) => elements,
-            FlattenItem::CallExpression(_, elements) => elements,
-            FlattenItem::ComputedExpression(_, elements) => elements,
-            FlattenItem::Node(_, element) => slice::from_ref(element),
-        }
-    }
-
-    fn syntax(&self) -> &JsSyntaxNode {
-        match self {
-            FlattenItem::StaticMember(node, _) => node.syntax(),
-            FlattenItem::CallExpression(node, _) => node.syntax(),
-            FlattenItem::ComputedExpression(node, _) => node.syntax(),
-            FlattenItem::Node(node, _) => node,
-        }
-    }
-}
-
-impl Debug for FlattenItem {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            FlattenItem::StaticMember(_, formatted) => write!(f, "StaticMember: {:?}", formatted),
-            FlattenItem::CallExpression(_, formatted) => {
-                write!(f, "CallExpression: {:?}", formatted)
-            }
-            FlattenItem::ComputedExpression(_, formatted) => {
-                write!(f, "ComputedExpression: {:?}", formatted)
-            }
-            FlattenItem::Node(_, formatted) => write!(f, "{:?}", formatted),
-        }
-    }
-}
-
-impl From<FlattenItem> for FormatElement {
-    fn from(flatten_item: FlattenItem) -> Self {
-        match flatten_item {
-            FlattenItem::StaticMember(_, formatted) => concat_elements(formatted),
-            FlattenItem::CallExpression(_, formatted) => concat_elements(formatted),
-            FlattenItem::ComputedExpression(_, formatted) => concat_elements(formatted),
-            FlattenItem::Node(_, formatted) => formatted,
-        }
-    }
-}
-
-#[derive(Default, Clone)]
-/// Handles creation of groups while scanning the flatten items
-struct Groups {
-    /// keeps track of the groups created
-    groups: Vec<Vec<FlattenItem>>,
-    /// keeps track of the current group that is being created/updated
-    current_group: Vec<FlattenItem>,
-}
-
-impl Groups {
-    /// starts a new group
-    pub fn start_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
-        debug_assert!(self.current_group.is_empty());
-        self.current_group.push(flatten_item.into());
-    }
-
-    /// continues of starts a new group
-    pub fn start_or_continue_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
-        if self.current_group.is_empty() {
-            self.start_group(flatten_item);
-        } else {
-            self.continue_group(flatten_item);
-        }
-    }
-
-    /// adds the passed element to the current group
-    pub fn continue_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
-        debug_assert!(!self.current_group.is_empty());
-        self.current_group.push(flatten_item.into());
-    }
-
-    /// clears the current group, and adds a new group to the groups
-    pub fn close_group(&mut self) {
-        if !self.current_group.is_empty() {
-            let mut elements = vec![];
-            std::mem::swap(&mut elements, &mut self.current_group);
-            self.groups.push(elements);
-        }
-    }
-
-    /// It tells if the groups should be break on multiple lines
-    pub fn groups_should_break(&self, calls_count: usize) -> bool {
-        // Do not allow the group to break if it only contains a single call expression
-        if calls_count <= 1 {
-            return false;
-        }
-
-        // This emulates a simplified version of the similar logic found in the
-        // printer to force groups to break if they contain any "hard line
-        // break" (these not only include hard_line_break elements but also
-        // empty_line or tokens containing the "\n" character): The idea is
-        // that since any of these will force the group to break when it gets
-        // printed, the formatter needs to emit a group element for the call
-        // chain in the first place or it will not be printed correctly
-        let has_line_breaks = self
-            .groups
-            .iter()
-            .flat_map(|group| group.iter())
-            .flat_map(|item| item.as_format_elements())
-            .any(|element| element.has_hard_line_breaks());
-
-        if has_line_breaks {
-            return true;
-        }
-
-        // Otherwise, use a simple complexity threshold to
-        // determine whether the group should be allow to break
-        self.groups.len() > 3
-    }
-
-    fn into_formatted_groups(self) -> Vec<FormatElement> {
-        self.groups
-            .into_iter()
-            .map(|group| concat_elements(group.into_iter().map(|flatten_item| flatten_item.into())))
-            .collect()
-    }
-
-    /// Concatenate groups, without fancy formatting
-    pub fn into_concatenated_groups(self) -> FormatElement {
-        let formatted_groups = self.into_formatted_groups();
-        concat_elements(formatted_groups)
-    }
-
-    /// Format groups on multiple lines
-    pub fn into_joined_groups(self) -> FormatElement {
-        let formatted_groups = self.into_formatted_groups();
-        join_elements(soft_line_break(), formatted_groups)
-    }
 }

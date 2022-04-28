@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 175
 expression: computed-merge.js
-
 ---
 # Input
 ```js
@@ -29,21 +28,23 @@ window.Data[key]("foo")
 ```js
 [].forEach(
   (key) => {
-    data[key]("foo").then(() => console.log("bar")).catch(
-      () => console.log("baz"),
-    );
+    data[key]("foo")
+      .then(() => console.log("bar"))
+      .catch(() => console.log("baz"));
   },
 );
 
 [].forEach(
   (key) => {
-    data("foo")[key]("bar").then(() => console.log("bar")).catch(
-      () => console.log("baz"),
-    );
+    data("foo")[key]("bar")
+      .then(() => console.log("bar"))
+      .catch(() => console.log("baz"));
   },
 );
 
-window.Data[key]("foo").then(() => a).catch(() => b);
+window.Data[key]("foo")
+  .then(() => a)
+  .catch(() => b);
 
 ```
 

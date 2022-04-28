@@ -1,10 +1,10 @@
 pub(crate) mod array;
 mod binary_like_expression;
-mod call_expression;
 mod format_conditional;
 mod simple;
 pub mod string_utils;
 
+mod member_chain;
 #[cfg(test)]
 mod quickcheck_utils;
 
@@ -14,8 +14,8 @@ use crate::{
     FormatElement, Formatter, QuoteStyle, Token,
 };
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
-pub(crate) use call_expression::format_call_expression;
 pub(crate) use format_conditional::{format_conditional, Conditional};
+pub(crate) use member_chain::format_call_expression;
 use rome_formatter::{normalize_newlines, FormatResult};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause, JsLanguage,
@@ -633,5 +633,19 @@ pub(crate) fn format_string_literal_token(
         &token,
         Token::from_syntax_token_cow_slice(content, &token, token.text_trimmed_range().start())
             .into(),
+    )
+}
+
+/// A call like expression is one of:
+///
+/// - [JsNewExpression]
+/// - [JsImportCallExpression]
+/// - [JsCallExpression]
+pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
+    matches!(
+        expression,
+        JsAnyExpression::JsNewExpression(_)
+            | JsAnyExpression::JsImportCallExpression(_)
+            | JsAnyExpression::JsCallExpression(_)
     )
 }

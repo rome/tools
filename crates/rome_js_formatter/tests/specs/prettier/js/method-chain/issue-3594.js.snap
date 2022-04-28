@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 175
 expression: issue-3594.js
-
 ---
 # Input
 ```js
@@ -24,7 +23,9 @@ fetched.then((response) => response.json()).then(
   (json) => processThings(json.data.things),
 );
 
-let column = new Column(null, conn).table(data.table).json(data.column);
+let column = new Column(null, conn)
+  .table(data.table)
+  .json(data.column);
 
 ```
 

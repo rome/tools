@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 125
+assertion_line: 175
 expression: inline_merge.js
-
 ---
 # Input
 ```js
@@ -29,8 +28,7 @@ var jqxhr = $.ajax("example.php")
 
 # Output
 ```js
-Object
-  .keys(availableLocales({ test: true }))
+Object.keys(availableLocales({ test: true }))
   .forEach(
     (locale) => {
       // ...
@@ -39,9 +37,9 @@ Object
 
 this.layoutPartsToHide =
   this.utils.hashset(
-    _.flatMap(this.visibilityHandlers, (fn) => fn()).concat(
-      this.record.resolved_legacy_visrules,
-    ).filter(Boolean),
+    _.flatMap(this.visibilityHandlers, (fn) => fn())
+      .concat(this.record.resolved_legacy_visrules)
+      .filter(Boolean),
   );
 
 var jqxhr = $.ajax("example.php").done(doneFn).fail(failFn);
