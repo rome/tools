@@ -1,6 +1,8 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: literal_expression.js
+
 ---
 # Input
 "a"
@@ -9,7 +11,7 @@ expression: literal_expression.js
 true
 false
 null
-
+;/[/]\/\u0aBc/mgi;
 =============================
 # Outputs
 ## Output 1
@@ -24,4 +26,5 @@ Quote style: Double Quotes
 true;
 false;
 null;
+/[/]\/\u0aBc/gim;
 
