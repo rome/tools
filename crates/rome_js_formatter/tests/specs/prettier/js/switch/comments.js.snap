@@ -99,19 +99,17 @@ switch (x) {
 }
 
 switch (x) {
-  default:
+  default: {
     // comment
-    {
-      break;
-    }
+    break;
+  }
 }
 
 switch (x) {
-  default:
-    {
-      // comment
-      break;
-    }
+  default: {
+    // comment
+    break;
+  }
 }
 
 switch (x) {
@@ -121,27 +119,24 @@ switch (x) {
 }
 
 switch (x) {
-  default:
+  default: {
     /* comment */
-    {
-      break;
-    }
+    break;
+  }
 }
 
 switch (x) {
-  default:
-    {
-      /* comment */
-      break;
-    }
+  default: {
+    /* comment */
+    break;
+  }
 }
 
 switch (x) {
-  default:
+  default: {
     /* comment */
-    {
-      break;
-    }
+    break;
+  }
 }
 
 ```
