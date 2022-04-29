@@ -1,11 +1,7 @@
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression,
-    JsComputedMemberExpressionFields, JsLiteralMemberName, JsLiteralMemberNameFields,
-    JsReferenceIdentifier, JsReferenceIdentifierFields, JsStringLiteralExpression,
-    JsStringLiteralExpressionFields, JsSyntaxKind, JsSyntaxNode, TextRange, TsGlobalDeclaration,
-    TsGlobalDeclarationFields, TsThisParameter, TsThisParameterFields,
+    JsComputedMemberExpression, JsLiteralMemberName, JsReferenceIdentifier, JsSyntaxKind,
+    JsSyntaxNode, TextRange, TsGlobalDeclaration, TsThisParameter,
 };
-use rome_rowan::NodeOrToken;
 use std::collections::VecDeque;
 
 #[derive(Debug)]
