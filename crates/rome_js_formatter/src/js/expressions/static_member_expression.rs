@@ -1,4 +1,7 @@
-use crate::{format_elements, group_elements, Format, FormatElement, FormatNode, Formatter};
+use rome_js_syntax::JsSyntaxKind;
+use rome_rowan::AstNode;
+
+use crate::{format_elements, group_elements, token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsStaticMemberExpression;
@@ -12,10 +15,35 @@ impl FormatNode for JsStaticMemberExpression {
             member,
         } = self.as_fields();
 
-        Ok(group_elements(format_elements![
-            object.format(formatter)?,
-            operator_token.format(formatter)?,
-            member.format(formatter)?,
-        ]))
+        let object_syntax = object.clone()?.syntax().clone();
+
+        let is_object_number_literal =
+            object_syntax.kind() == JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION;
+
+        let has_object_trailing_whitespace = object_syntax
+            .text()
+            .to_string()
+            .chars()
+            .last()
+            .unwrap()
+            .is_whitespace();
+
+        let formatted_object = object?.format(formatter)?;
+
+        if is_object_number_literal && has_object_trailing_whitespace {
+            Ok(group_elements(format_elements![
+                token("("),
+                formatted_object,
+                token(")"),
+                operator_token.format(formatter)?,
+                member.format(formatter)?,
+            ]))
+        } else {
+            Ok(group_elements(format_elements![
+                formatted_object,
+                operator_token.format(formatter)?,
+                member.format(formatter)?,
+            ]))
+        }
     }
 }
