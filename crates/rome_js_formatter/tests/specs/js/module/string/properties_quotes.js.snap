@@ -30,6 +30,10 @@ let { "a": test } = value;
 ({ "[]": test } = value);
 
 let { "fff--fff": test } = value;
+
+let a = { "": 10, "c_d": 30 }
+
+let b = { "'": 10, "c_d": 30 }
 =============================
 # Outputs
 ## Output 1
@@ -64,6 +68,10 @@ let { a: test } = value;
 ({ "[]": test } = value);
 
 let { "fff--fff": test } = value;
+
+let a = { "": 10, "c_d": 30 };
+
+let b = { "'": 10, "c_d": 30 };
 ## Output 2
 -----
 Indent style: Tab
@@ -96,4 +104,8 @@ let { a: test } = value;
 ({ '[]': test } = value);
 
 let { 'fff--fff': test } = value;
+
+let a = { '': 10, 'c_d': 30 };
+
+let b = { "'": 10, 'c_d': 30 };
 

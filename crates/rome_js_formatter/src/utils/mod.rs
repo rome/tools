@@ -703,7 +703,9 @@ pub(crate) fn format_property_name<Member: Into<PropertyName>>(
     ) -> FormatResult<FormatElement> {
         let text = name.text_trimmed();
 
-        if text.starts_with(QUOTES_TO_OMIT) && text.ends_with(QUOTES_TO_OMIT) {
+        // there are cases where we might have an empty string, which means that if the text length
+        // is higher than 2, it means that the text has something in it
+        if text.starts_with(QUOTES_TO_OMIT) && text.ends_with(QUOTES_TO_OMIT) && text.len() > 2 {
             let quote_less_text = &text[1..text.len() - 1];
             if checker.text_can_be_replaced(quote_less_text) {
                 Ok(formatter.format_replaced(
