@@ -69,7 +69,7 @@ fn main() {
     ];
     println!(
         "{}",
-        Formatted::new(elements, FormatOptions::default().with_line_width(113.try_into().unwrap()))
+        Formatted::new(elements, FormatOptions::default().with_line_width(114.try_into().unwrap()))
             .print()
             .as_code()
     );

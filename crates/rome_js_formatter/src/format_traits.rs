@@ -35,7 +35,7 @@ pub trait FormatOptional {
     ///
     /// ## Examples
     ///
-    /// ```
+    /// ```rust
     /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token};
     /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
@@ -60,6 +60,7 @@ pub trait FormatOptional {
     ///
     /// assert_eq!(Ok(empty_element()), empty_result);
     /// assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
+    /// ```
     fn format_with_or_empty<With, WithResult>(
         &self,
         formatter: &Formatter,

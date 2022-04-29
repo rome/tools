@@ -107,6 +107,43 @@ impl Formatter {
         ])
     }
 
+    pub(crate) fn format_delimited_without_group(
+        &self,
+        open_token: &JsSyntaxToken,
+        content: impl FnOnce(FormatElement, FormatElement) -> FormatElement,
+        close_token: &JsSyntaxToken,
+    ) -> FormatResult<FormatElement> {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                let mut printed_tokens = self.printed_tokens.borrow_mut();
+                printed_tokens.track_token(open_token);
+                printed_tokens.track_token(close_token);
+                drop(printed_tokens);
+            }
+        }
+        let open_token_trailing_trivia = self.print_trailing_trivia(open_token);
+        let close_token_leading_trivia =
+            self.print_leading_trivia(close_token, TriviaPrintMode::Trim);
+
+        let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
+            format_elements![open_token_trailing_trivia, soft_line_break_or_space()]
+        } else {
+            empty_element()
+        };
+        let close_token_leading_trivia = if !close_token_leading_trivia.is_empty() {
+            format_elements![soft_line_break_or_space(), close_token_leading_trivia]
+        } else {
+            empty_element()
+        };
+        Ok(format_elements![
+            self.print_leading_trivia(open_token, TriviaPrintMode::Full),
+            Token::from(open_token),
+            content(open_token_trailing_trivia, close_token_leading_trivia),
+            Token::from(close_token),
+            self.print_trailing_trivia(close_token),
+        ])
+    }
+
     /// Formats a group delimited by an opening and closing token, placing the
     /// content in a [block_indent] group
     pub(crate) fn format_delimited_block_indent(
