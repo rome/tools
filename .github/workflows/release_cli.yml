@@ -84,6 +84,22 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+
+      - name: Set release infos
+        if: needs.check.outputs.prerelease == 'true'
+        run: |
+          echo "prerelease=true" >> $GITHUB_ENV
+          node npm/rome/scripts/update-nightly-version.mjs >> $GITHUB_ENV
+      - name: Set release infos
+        if: needs.check.outputs.prerelease != 'true'
+        run: |
+          echo "prerelease=false" >> $GITHUB_ENV
+          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
+
       - name: Install Rust toolchain
         run: rustup target add ${{ matrix.target }}
 
@@ -107,7 +123,7 @@ jobs:
           # Strip all debug symbols from the resulting binaries
           RUSTFLAGS: "-C strip=symbols"
           # Inline the version of the npm package in the CLI binary
-          ROME_VERSION: ${{ needs.check.outputs.version }}
+          ROME_VERSION: ${{ env.version }}
 
       # Copy the CLI binary and rename it to include the name of the target platform
       - name: Copy CLI binary
@@ -129,16 +145,6 @@ jobs:
           path: ./dist/rome-*
           if-no-files-found: error
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14.x
-
-      - name: Set release infos
-        run: |
-          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
-          echo "prerelease=${{ needs.check.outputs.prerelease }}" >> $GITHUB_ENV
-
   publish:
     name: Publish
     runs-on: ubuntu-latest
@@ -158,6 +164,9 @@ jobs:
           node-version: 14.x
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Set release infos
+        if: needs.build.outputs.prerelease == 'true'
+        run: node npm/rome/scripts/update-nightly-version.mjs
       - name: Generate npm packages
         run: node npm/rome/scripts/generate-packages.mjs
 
