@@ -651,6 +651,14 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
     )
 }
 
+/// Data structure used to merge into one the following nodes:
+///
+/// - [JsAnyObjectMemberName]
+/// - [JsAnyClassMemberName]
+/// - [JsLiteralMemberName]
+///
+/// Once merged, the enum is used to get specific members (the literal ones) and elide
+/// the quotes from them, when the algorithm sees fit
 pub(crate) enum PropertyName {
     Object(JsAnyObjectMemberName),
     Class(JsAnyClassMemberName),
@@ -683,6 +691,7 @@ pub(crate) enum PropertyNameCheckMode {
 }
 
 impl PropertyNameCheckMode {
+    /// We can change the text only if there alphanumeric or alphabetic characters, depending on the mode
     fn text_can_be_replaced(&self, text_to_check: &str) -> bool {
         match self {
             PropertyNameCheckMode::Alphabetic => text_to_check.chars().all(char::is_alphabetic),
@@ -691,6 +700,8 @@ impl PropertyNameCheckMode {
     }
 }
 
+/// Function used by the formatter, where we pass a complaint member and it returns a [FormatElement[
+/// where the text has its quotes removed.
 pub(crate) fn format_property_name<Member: Into<PropertyName>>(
     member_name: Member,
     formatter: &Formatter,
