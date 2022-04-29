@@ -4,13 +4,11 @@ import { formatWithPrettier, getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 
-export default function DesktopPlayground(
-	{
-		playgroundState: { code, setCode, ...settings },
-		prettierOutput,
-		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
-	}: PlaygroundProps,
-) {
+export default function DesktopPlayground({
+	playgroundState: { code, setCode, ...settings },
+	prettierOutput,
+	romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+}: PlaygroundProps) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
 
@@ -84,7 +82,7 @@ export default function DesktopPlayground(
 							<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-sm">
+							<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
 								{errors}
 							</pre>
 						</TabPanel>
