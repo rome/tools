@@ -21,7 +21,6 @@ function App() {
 		},
 		[],
 	);
-
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
 	const playgroundState = usePlaygroundState();
 	const { width } = useWindowSize();
