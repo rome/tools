@@ -26,7 +26,7 @@ impl FormatNode for JsCaseClause {
         let case_word = case_token.format(formatter)?;
         let colon = colon_token.format(formatter)?;
         let test = test.format(formatter)?;
-        let cons = formatter.format_list(consequent.clone());
+        let cons = formatter.format_list(consequent);
 
         let cons = if cons.is_empty() {
             // Skip inserting an indent block is the consequent is empty to print
