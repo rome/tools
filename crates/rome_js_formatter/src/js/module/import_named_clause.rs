@@ -1,7 +1,6 @@
 use crate::format_traits::FormatOptional;
 use rome_formatter::group_elements;
 use rome_formatter::FormatResult;
-use rome_js_syntax::JsNamedImportSpecifier;
 use rome_js_syntax::JsNamedImportSpecifiers;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::AstNode;
@@ -36,23 +35,30 @@ impl FormatNode for JsImportNamedClause {
         let assertion = assertion.format_with_or_empty(formatter, |assertion| {
             format_elements![space_token(), assertion]
         })?;
+        // only wrap the name_and_rest elements when named_specifiers is bigger than 1,
+        // else we only wrap the JsNamedImportSpecifiers. this let us match the prettier test case:
+        // ```js
+        // import {somethingSuperLongsomethingSuperLo} from 'somethingSuperLongsomethingSuperLongsomethingSuperLong'
+        // ```
+        // although this import has been exceeding the max line length, prettier still keep them all in one line
+        // see: https://play.rome.tools/?lineWidth=80&indentStyle=tab&quoteStyle=double&indentWidth=2&typescript=false&jsx=false&sourceType=module#aQBtAHAAbwByAHQAIABzAG8AbQBlAHQAaABpAG4AZwBTAHUAcABlAHIATABvAG4AZwBzAG8AbQBlAHQAaABpAG4AZwBTAHUAcABlAHIATABvAG4AZwAgAGYAcgBvAG0AIAAnAHMAbwBtAGUAdABoAGkAbgBnAFMAdQBwAGUAcgBMAG8AbgBnAHMAbwBtAGUAdABoAGkAbgBnAFMAdQBwAGUAcgBMAG8AbgBnAHMAbwBtAGUAdABoAGkAbgBnAFMAdQBwAGUAcgBMAG8AbgBnACcACgBpAG0AcABvAHIAdAAgAHsAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwB9ACAAZgByAG8AbQAgACcAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAJwAKAGkAbQBwAG8AcgB0ACAAYQAsACAAewBzAG8AbQBlAHQAaABpAG4AZwBTAHUAcABlAHIATABvAG4AZwBzAG8AbQBlAHQAaABpAG4AZwBTAHUAcABlAHIATABvAG4AZwAyAH0AIABmAHIAbwBtACAAJwBzAG8AbQBlAHQAaABpAG4AZwBTAHUAcABlAHIATABvAG4AZwBzAG8AbQBlAHQAaABpAG4AZwBTAHUAcABlAHIATABvAG4AZwBzAG8AbQBlAHQAaABpAG4AZwBTAHUAcABlAHIATABvAG4AZwAnAAoAaQBtAHAAbwByAHQAIAB7AGEAMgAsACAAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAMwB9ACAAZgByAG8AbQAgACcAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAcwBvAG0AZQB0AGgAaQBuAGcAUwB1AHAAZQByAEwAbwBuAGcAJwAKAA==
+        let need_to_wrap_group_elements = {
+            let named_import = named_import?;
+            let syntax_node = named_import.syntax();
+            match syntax_node.kind() {
+                JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIERS => {
+                    let specifiers =
+                        JsNamedImportSpecifiers::unwrap_cast(syntax_node.clone()).as_fields();
+                    specifiers.specifiers.syntax().children().count() > 1 || !default.is_empty()
+                }
+                _ => true,
+            }
+        };
 
-        // let need_to_wrap_group_elements = {
-        //     let named_import = named_import?;
-        //     let syntax_node = named_import.syntax();
-        //     match syntax_node.kind() {
-        //         JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIERS => {
-        //             let specifiers =
-        //                 JsNamedImportSpecifiers::unwrap_cast(syntax_node.clone()).as_fields();
-        //             specifiers.specifiers.syntax().children().count() > 1
-        //         }
-        //         _ => true,
-        //     }
-        // };
         Ok(format_elements![
             type_token,
             default,
-            // if need_to_wrap_group_elements {
+            if need_to_wrap_group_elements {
                 group_elements(format_elements![
                     name,
                     space_token(),
@@ -61,9 +67,18 @@ impl FormatNode for JsImportNamedClause {
                     source,
                     assertion,
                 ])
-            // } else {
-            //     format_elements![name, space_token(), from, space_token(), source, assertion,]
-            // }
+            } else {
+                format_elements![
+                    group_elements(name),
+                    space_token(),
+                    from,
+                    space_token(),
+                    source,
+                    assertion,
+                ] // )
+            } // } else {
+              //     format_elements![name, space_token(), from, space_token(), source, assertion,]
+              // }
         ])
     }
 }

@@ -15,9 +15,7 @@ import {a2, somethingSuperLongsomethingSuperLong3} from 'somethingSuperLongsomet
 # Output
 ```js
 import somethingSuperLongsomethingSuperLong from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
-import {
-  somethingSuperLongsomethingSuperLong1,
-} from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+import { somethingSuperLongsomethingSuperLong1 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
 import a, {
   somethingSuperLongsomethingSuperLong2,
 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
@@ -31,5 +29,6 @@ import {
 # Lines exceeding max width of 80 characters
 ```
     1: import somethingSuperLongsomethingSuperLong from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
+    2: import { somethingSuperLongsomethingSuperLong1 } from "somethingSuperLongsomethingSuperLongsomethingSuperLong";
 ```
 
