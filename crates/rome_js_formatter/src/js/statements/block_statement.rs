@@ -1,6 +1,7 @@
 use crate::{format_elements, hard_line_break, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
+use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsBlockStatement;
 
 use rome_js_syntax::JsBlockStatementFields;
@@ -44,8 +45,37 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
     {
         return false;
     }
-
-    if !block.statements().is_empty() {
+    // add extra branch to avoid formatting the same code twice and generating different code,
+    // here is a example:
+    // ```js
+    //     try
+    // /* missing comment */
+    // {;}
+    // finally {}
+    // ```
+    // if we don't add the extra branch, this function will return false, because  `block.statement` has one empty statement,
+    // and would be formatted as :
+    // ```js
+    //     try
+    // /* missing comment */
+    // {}
+    // finally {}
+    // ```
+    // for the second time, the function would return true, because the block is empty and `parent.syntax.kind` is  `JS_TRY_FINALLY_STATEMENT`, which would hit the branch `Some(_) => true`,
+    // finally the code would be formatted as:
+    // ```js
+    // try
+    /* missing comment */
+    // {
+    // } finally {
+    // }
+    // ```
+    if !block.statements().is_empty()
+        && block
+            .statements()
+            .iter()
+            .any(|s| !matches!(s, JsAnyStatement::JsEmptyStatement(_)))
+    {
         return false;
     }
     // reference https://github.com/prettier/prettier/blob/main/src/language-js/print/block.js#L19
@@ -58,10 +88,7 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
             | JsSyntaxKind::TS_MODULE_DECLARATION
             | JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION,
         ) => false,
-        // Some(JsSyntaxKind::JS_CATCH_CLAUSE) => {
-        //     let parent = block.syntax().parent().unwrap();
-        //     matches!(parent.parent().map(|p| p.kind()), Some(JsSyntaxKind::JS_FINALLY_CLAUSE))
-        // }
+
         Some(_) => true,
         None => false,
     }

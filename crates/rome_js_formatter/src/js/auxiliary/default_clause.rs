@@ -17,20 +17,19 @@ impl FormatNode for JsDefaultClause {
         } = self.as_fields();
 
         let syntax_node = consequent.syntax();
-        let is_first_child_block_stmt = match syntax_node.first_child() {
-            Some(stmt) => stmt.kind() == JsSyntaxKind::JS_BLOCK_STATEMENT,
-            None => false,
-        };
+
+        let first_child_is_block_stmt = matches!(
+            syntax_node.first_child().map(|n| n.kind()),
+            Some(JsSyntaxKind::JS_BLOCK_STATEMENT)
+        );
+
         let default = default_token.format(formatter)?;
         let colon = colon_token.format(formatter)?;
         let statements = formatter.format_list(consequent);
 
-        let cons = if statements.is_empty() {
-            // Skip inserting an indent block is the consequent is empty to print
-            // the trailing comments for the case clause inline if there is no
-            // block to push them into
+        let formatted_cons = if statements.is_empty() {
             hard_line_break()
-        } else if is_first_child_block_stmt {
+        } else if first_child_is_block_stmt {
             format_elements![space_token(), statements]
         } else {
             // no line break needed after because it is added by the indent in the switch statement
@@ -41,7 +40,7 @@ impl FormatNode for JsDefaultClause {
             colon,
             space_token(),
             // no line break needed after because it is added by the indent in the switch statement
-            cons
+            formatted_cons
         ])
     }
 }
