@@ -3,15 +3,15 @@ use crate::state::{EnterType, SignatureFlags};
 use crate::syntax::expr::{
     is_at_identifier, is_nth_at_identifier, is_nth_at_identifier_or_keyword,
     parse_big_int_literal_expression, parse_identifier, parse_literal_expression, parse_name,
-    parse_number_literal_expression, parse_reference_identifier, parse_template_elements,
-    ExpressionContext, parse_private_name,
+    parse_number_literal_expression, parse_private_name, parse_reference_identifier,
+    parse_template_elements, ExpressionContext,
 };
 use crate::syntax::function::{
     parse_formal_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
 };
 use crate::syntax::js_parse_error::{
     expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
-    expected_property_or_signature, expected_private_field_name,
+    expected_private_field_name, expected_property_or_signature,
 };
 use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_type_member_name, parse_object_member_name,
@@ -518,8 +518,8 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
 // class C {
 //     #a = 'a';
 //     constructor() {
-//         const a: typeof this.#a = ''; 
-//         const b: typeof this.#a = 1; 
+//         const a: typeof this.#a = '';
+//         const b: typeof this.#a = 1;
 //     }
 // }
 // const c = new C();
