@@ -1271,7 +1271,6 @@ dependencies = [
 name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
- "anyhow",
  "countme",
  "insta",
  "rome_console",
@@ -1281,7 +1280,6 @@ dependencies = [
  "rome_js_syntax",
  "rome_rowan",
  "tests_macros",
- "tracing",
 ]
 
 [[package]]
@@ -1340,7 +1338,6 @@ name = "rome_css_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
- "thiserror",
 ]
 
 [[package]]
@@ -1460,7 +1457,6 @@ name = "rome_json_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
- "thiserror",
 ]
 
 [[package]]
@@ -1524,7 +1520,6 @@ dependencies = [
  "serde",
  "serde_json",
  "text-size",
- "thiserror",
 ]
 
 [[package]]
