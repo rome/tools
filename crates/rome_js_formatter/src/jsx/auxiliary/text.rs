@@ -17,7 +17,7 @@ impl FormatNode for JsxText {
 }
 
 fn clean_jsx_text(text: &str) -> Cow<str> {
-    if text.len() == 0 {
+    if text.is_empty() {
         Cow::Borrowed(text)
     } else {
         let terminators = [' ', '\n', '\t'];
