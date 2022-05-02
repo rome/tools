@@ -2129,7 +2129,7 @@ TsAnyName =
 TsQualifiedName =
 	left: TsAnyName
 	'.'
-	right: JsName
+	right: JsAnyName
 
 TsTypeArguments =
 	'<'

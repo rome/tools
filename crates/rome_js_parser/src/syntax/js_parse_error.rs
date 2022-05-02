@@ -23,6 +23,10 @@ pub(crate) fn expected_class_member_name(p: &Parser, range: TextRange) -> Diagno
     .to_diagnostic(p)
 }
 
+pub(crate) fn expected_private_field_name(p: &Parser, range: TextRange) -> Diagnostic {
+    expected_node("private field name", range).to_diagnostic(p)
+}
+
 pub(crate) fn expected_arrow_body(p: &Parser, range: TextRange) -> Diagnostic {
     expected_any(&["function body", "expression"], range).to_diagnostic(p)
 }

@@ -8223,12 +8223,12 @@ impl TsQualifiedName {
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn right(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
+    pub fn right(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
 }
 pub struct TsQualifiedNameFields {
     pub left: SyntaxResult<TsAnyName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
-    pub right: SyntaxResult<JsName>,
+    pub right: SyntaxResult<JsAnyName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsReadonlyModifier {

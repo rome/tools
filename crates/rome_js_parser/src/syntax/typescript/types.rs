@@ -4,14 +4,14 @@ use crate::syntax::expr::{
     is_at_identifier, is_nth_at_identifier, is_nth_at_identifier_or_keyword,
     parse_big_int_literal_expression, parse_identifier, parse_literal_expression, parse_name,
     parse_number_literal_expression, parse_reference_identifier, parse_template_elements,
-    ExpressionContext,
+    ExpressionContext, parse_private_name,
 };
 use crate::syntax::function::{
     parse_formal_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
 };
 use crate::syntax::js_parse_error::{
     expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
-    expected_property_or_signature,
+    expected_property_or_signature, expected_private_field_name,
 };
 use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_type_member_name, parse_object_member_name,
@@ -501,7 +501,11 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
     while p.at(T![.]) {
         let m = left.precede_or_add_diagnostic(p, expected_identifier);
         p.bump(T![.]);
-        parse_name(p).or_add_diagnostic(p, expected_identifier);
+        if p.at(T![#]) {
+            parse_private_name(p).or_add_diagnostic(p, expected_private_field_name);
+        } else {
+            parse_name(p).or_add_diagnostic(p, expected_identifier);
+        }
         left = Present(m.complete(p, TS_QUALIFIED_NAME));
     }
 
@@ -511,6 +515,15 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_typeof_type
 // let a = "test";
 // type B = typeof a;
+// class C {
+//     #a = 'a';
+//     constructor() {
+//         const a: typeof this.#a = ''; 
+//         const b: typeof this.#a = 1; 
+//     }
+// }
+// const c = new C();
+// const a: typeof c.#a = '';
 fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![typeof]) {
         return Absent;
