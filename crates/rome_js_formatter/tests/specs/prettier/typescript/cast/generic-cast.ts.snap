@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: generic-cast.ts
 ---
 # Input
@@ -172,7 +173,9 @@ function x() {
   const fitsObjLiteral = <PermissionsChecker<any> | undefined>{ a: "test" };
   const fitsArrayLiteral = <PermissionsChecker<any> | undefined>["t1", "t2"];
 
-  const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[receiverType];
+  const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[
+    receiverType
+  ];
 
   const stillTooLong = <
     PermissionsChecker<object> | undefined | number | string | boolean
@@ -200,7 +203,9 @@ function x() {
       | boolean
       | null
       | never
-  >(<any>permissions.someMethodWithLongName(parameter1, parameter2))[receiverTypeLongName];
+  >(<any>permissions.someMethodWithLongName(parameter1, parameter2))[
+    receiverTypeLongName
+  ];
 
   const testObjLiteral = <PermissionsChecker<any> | undefined>{
     prop1: "myPropVal",
@@ -244,7 +249,6 @@ function x() {
 # Lines exceeding max width of 80 characters
 ```
     7:   const breakAfterCast = <Immutable.Map<string, any>>someExistingConfigMap.mergeDeep(
-  110:   const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[receiverType];
-  138:   >(<any>permissions.someMethodWithLongName(parameter1, parameter2))[receiverTypeLongName];
+  110:   const breakAfterCast = <PermissionsChecker<any> | undefined>(<any>permissions)[
 ```
 
