@@ -1,6 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-assertion_line: 88
+assertion_line: 92
 expression: useSingleVarDeclarator.js
 
 ---
@@ -22,7 +22,7 @@ function test() {
 
 ```
 
-# Code Fixes
+# Actions
 ```
     | @@ -1,4 +1,5 @@
 0 0 |   function test() {

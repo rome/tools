@@ -93,22 +93,22 @@ pub(crate) trait Rule {
     /// The name of this rule, displayed in the diagnostics it emits
     const NAME: &'static str;
     /// The set of categories this rule belong to, this will influence how
-    /// clients may chose to present diagnostics and code fixes emitted by this
+    /// clients may chose to present diagnostics and actions emitted by this
     /// rule to the user
     const ACTION_CATEGORIES: &'static [ActionCategory];
 
     /// The type of AstNode this rule is interested in
     type Query: AstNode + 'static;
     /// A generic type that will be kept in memory between a call to `run` and
-    /// subsequent executions of `diagnostic` or `code_fix`, allows the rule to
+    /// subsequent executions of `diagnostic` or `action`, allows the rule to
     /// hold some temporary state between the moment a signal is raised and
-    /// when a diagnostic or code fix needs to be built
+    /// when a diagnostic or action needs to be built
     type State: 'static;
 
     /// This function is called once for each node matching `Query` in the tree
     /// being analyzed. If it returns `Some` the state object will be wrapped
     /// in a generic `AnalyzerSignal`, and the consumer of the analyzer may call
-    /// `diagnostic` or `code_fix` on it
+    /// `diagnostic` or `action` on it
     fn run(node: &Self::Query) -> Option<Self::State>;
 
     /// Called by the consumer of the analyzer to try to generate a diagnostic
@@ -119,15 +119,11 @@ pub(crate) trait Rule {
         None
     }
 
-    /// Called by the consumer of the analyzer to try to generate a code fix
+    /// Called by the consumer of the analyzer to try to generate a code action
     /// from a signal raised by `run`
     ///
     /// The default implementation returns None
-    fn code_fix(
-        _root: JsAnyRoot,
-        _node: &Self::Query,
-        _state: &Self::State,
-    ) -> Option<RuleCodeFix> {
+    fn action(_root: JsAnyRoot, _node: &Self::Query, _state: &Self::State) -> Option<RuleAction> {
         None
     }
 }
@@ -139,7 +135,7 @@ pub struct RuleDiagnostic {
     pub message: MarkupBuf,
 }
 
-/// Code fix object returned by a single analysis rule
-pub struct RuleCodeFix {
+/// Code Action object returned by a single analysis rule
+pub struct RuleAction {
     pub root: JsAnyRoot,
 }

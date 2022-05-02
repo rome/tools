@@ -1,6 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-assertion_line: 77
+assertion_line: 92
 expression: noDoubleEquals.js
 
 ---
@@ -31,7 +31,7 @@ const isNonNull = a != null;
 
 ```
 
-# Code Fixes
+# Actions
 ```
     | @@ -1,4 +1,4 @@
 0   | - const isZero = a == 0;

@@ -52,13 +52,13 @@ pub(crate) fn code_actions(
     let line_index = LineIndex::new(text);
 
     rome_analyze::analyze(&root, filter, |event| {
-        if let Some(code_fix) = event.code_fix() {
+        if let Some(action) = event.action() {
             result.push(CodeActionOrCommand::CodeAction(utils::code_fix_to_lsp(
                 &url,
                 text,
                 &line_index,
                 diagnostics,
-                code_fix,
+                action,
             )));
         }
     });

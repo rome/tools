@@ -5,7 +5,7 @@ use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyRoot, JsBinar
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
-use crate::registry::{Rule, RuleCodeFix, RuleDiagnostic};
+use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 
 pub(crate) enum NoDoubleEquals {}
 
@@ -42,13 +42,13 @@ impl Rule for NoDoubleEquals {
         })
     }
 
-    fn code_fix(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<RuleCodeFix> {
+    fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<RuleAction> {
         let root = root.replace_token_retain_trivia(
             op.clone(),
             make::token(if op.kind() == EQ2 { T![===] } else { T![!==] }),
         )?;
 
-        Some(RuleCodeFix { root })
+        Some(RuleAction { root })
     }
 }
 

@@ -2,7 +2,7 @@ use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
 };
 
-use rome_analyze::{AnalysisFilter, AnalyzerCodeFix, AnalyzerDiagnostic};
+use rome_analyze::{AnalysisFilter, AnalyzerAction, AnalyzerDiagnostic};
 use rome_console::{
     codespan::{Codespan, Label, LabelStyle, Locus, SourceFile},
     diff::{Diff, DiffMode},
@@ -52,8 +52,8 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             diagnostics.push(diagnostic_to_string(file_name, &input_code, diag));
         }
 
-        if let Some(code_fix) = event.code_fix() {
-            code_fixes.push(code_fix_to_string(&input_code, code_fix));
+        if let Some(action) = event.action() {
+            code_fixes.push(code_fix_to_string(&input_code, action));
         }
     });
 
@@ -76,10 +76,10 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     }
 
     if !code_fixes.is_empty() {
-        writeln!(snapshot, "# Code Fixes").unwrap();
-        for code_fix in code_fixes {
+        writeln!(snapshot, "# Actions").unwrap();
+        for action in code_fixes {
             writeln!(snapshot, "```").unwrap();
-            writeln!(snapshot, "{}", code_fix).unwrap();
+            writeln!(snapshot, "{}", action).unwrap();
             writeln!(snapshot, "```").unwrap();
             writeln!(snapshot).unwrap();
         }
@@ -123,8 +123,8 @@ fn diagnostic_to_string(name: &str, source: &str, diag: AnalyzerDiagnostic) -> S
     })
 }
 
-fn code_fix_to_string(source: &str, code_fix: AnalyzerCodeFix) -> String {
-    let output = code_fix.root.syntax().to_string();
+fn code_fix_to_string(source: &str, action: AnalyzerAction) -> String {
+    let output = action.root.syntax().to_string();
 
     markup_to_string(markup! {
         {Diff { mode: DiffMode::Unified, left: source, right: &output }}

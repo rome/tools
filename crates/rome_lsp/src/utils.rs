@@ -3,7 +3,7 @@ use std::fmt::Display;
 
 use crate::line_index::{LineCol, LineIndex};
 use rome_analyze::ActionCategory;
-use rome_analyze::AnalyzerCodeFix;
+use rome_analyze::AnalyzerAction;
 use rome_analyze::AnalyzerDiagnostic;
 use rome_console::fmt::{self, Formatter, Termcolor};
 use rome_diagnostics::termcolor::NoColor;
@@ -45,9 +45,9 @@ pub(crate) fn code_fix_to_lsp(
     text: &str,
     line_index: &LineIndex,
     diagnostics: &[lsp_types::Diagnostic],
-    code_fix: AnalyzerCodeFix,
+    action: AnalyzerAction,
 ) -> lsp_types::CodeAction {
-    // Mark diagnostics emitted by the same rule as resolved by this code fix
+    // Mark diagnostics emitted by the same rule as resolved by this action
     let diagnostics: Vec<_> = diagnostics
         .iter()
         .filter_map(|d| {
@@ -56,7 +56,7 @@ pub(crate) fn code_fix_to_lsp(
                 lsp_types::NumberOrString::Number(_) => None,
             })?;
 
-            if code == code_fix.rule_name {
+            if code == action.rule_name {
                 Some(d.clone())
             } else {
                 None
@@ -72,7 +72,7 @@ pub(crate) fn code_fix_to_lsp(
                 position(line_index, 0.into()),
                 position(line_index, TextSize::of(text)),
             ),
-            new_text: code_fix.root.syntax().to_string(),
+            new_text: action.root.syntax().to_string(),
         }],
     );
 
@@ -82,15 +82,11 @@ pub(crate) fn code_fix_to_lsp(
         change_annotations: None,
     };
 
-    let is_safe_fix = code_fix
-        .action_categories
-        .contains(&ActionCategory::SafeFix);
-    let is_refactor = code_fix
-        .action_categories
-        .contains(&ActionCategory::Refactor);
+    let is_safe_fix = action.action_categories.contains(&ActionCategory::SafeFix);
+    let is_refactor = action.action_categories.contains(&ActionCategory::Refactor);
 
     lsp_types::CodeAction {
-        title: String::from(code_fix.rule_name),
+        title: String::from(action.rule_name),
         kind: if is_safe_fix {
             Some(lsp_types::CodeActionKind::QUICKFIX)
         } else if is_refactor {

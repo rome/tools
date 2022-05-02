@@ -215,8 +215,8 @@ pub fn run(
             })
             .unwrap();
 
-            if let Some(code_fix) = signal.code_fix() {
-                let output = code_fix.root.to_string();
+            if let Some(action) = signal.action() {
+                let output = action.root.to_string();
                 fmt.write_markup(markup! {
                     "Suggested fix:\n"
                     {Diff { mode: DiffMode::Unified, left: &code, right: &output }}"\n"

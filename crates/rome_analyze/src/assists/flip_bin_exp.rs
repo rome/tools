@@ -5,7 +5,7 @@ use rome_js_syntax::{
 use rome_rowan::AstNodeExt;
 
 use crate::{
-    registry::{Rule, RuleCodeFix},
+    registry::{Rule, RuleAction},
     ActionCategory,
 };
 
@@ -32,7 +32,7 @@ impl Rule for FlipBinExp {
         invert_op(node.operator().ok()?)
     }
 
-    fn code_fix(root: JsAnyRoot, node: &Self::Query, op: &Self::State) -> Option<RuleCodeFix> {
+    fn action(root: JsAnyRoot, node: &Self::Query, op: &Self::State) -> Option<RuleAction> {
         let prev_left = node.left().ok()?;
         let new_left = node.right().ok()?;
         let new_node = node
@@ -47,7 +47,7 @@ impl Rule for FlipBinExp {
         let new_right = node.left().ok()?;
         let new_node = new_node.replace_node_retain_trivia(prev_right, new_right)?;
 
-        Some(RuleCodeFix {
+        Some(RuleAction {
             root: root.replace_node_retain_trivia(node.clone(), new_node)?,
         })
     }

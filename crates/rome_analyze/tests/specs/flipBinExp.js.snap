@@ -1,6 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-assertion_line: 77
+assertion_line: 92
 expression: flipBinExp.js
 
 ---
@@ -39,7 +39,7 @@ const a = b ^ c;
 
 ```
 
-# Code Fixes
+# Actions
 ```
     | @@ -1,4 +1,4 @@
 0   | - if (a < b) {

@@ -11,7 +11,7 @@ use rome_rowan::{AstNode, AstNodeExt, AstNodeList, AstNodeListExt, AstSeparatedL
 
 use crate::categories::ActionCategory;
 
-use crate::registry::{Rule, RuleCodeFix, RuleDiagnostic};
+use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 
 pub(crate) enum UseSingleVarDeclarator {}
 
@@ -54,7 +54,7 @@ impl Rule for UseSingleVarDeclarator {
         })
     }
 
-    fn code_fix(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleCodeFix> {
+    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
         let (kind, declarators, semicolon_token) = state;
 
         let prev_parent = JsStatementList::cast(node.syntax().parent()?)?;
@@ -90,7 +90,7 @@ impl Rule for UseSingleVarDeclarator {
             }),
         );
 
-        Some(RuleCodeFix {
+        Some(RuleAction {
             root: root.replace_node(prev_parent, next_parent)?,
         })
     }

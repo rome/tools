@@ -9,10 +9,10 @@ mod signals;
 
 pub use crate::categories::ActionCategory;
 use crate::registry::RuleRegistry;
-pub use crate::signals::{AnalyzerCodeFix, AnalyzerDiagnostic, AnalyzerSignal};
+pub use crate::signals::{AnalyzerAction, AnalyzerDiagnostic, AnalyzerSignal};
 
 /// Allows filtering the list of rules that will be executed in a run of the analyzer,
-/// and at what source code range signals (diagnostics or code fixes) may be raised
+/// and at what source code range signals (diagnostics or actions) may be raised
 #[derive(Default)]
 pub struct AnalysisFilter<'a> {
     /// Only allow rules with these names to emit diagnostics
@@ -23,7 +23,7 @@ pub struct AnalysisFilter<'a> {
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
-/// then call the `callback` when an analysis rule emits a diagnostic or code fix
+/// then call the `callback` when an analysis rule emits a diagnostic or action
 pub fn analyze<B>(root: &JsAnyRoot, filter: AnalysisFilter, mut callback: B)
 where
     B: FnMut(&dyn AnalyzerSignal),

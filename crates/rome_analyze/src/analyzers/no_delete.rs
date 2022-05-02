@@ -10,7 +10,7 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::categories::ActionCategory;
 
-use crate::registry::{Rule, RuleCodeFix, RuleDiagnostic};
+use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 
 pub(crate) enum NoDelete {}
 
@@ -42,7 +42,7 @@ impl Rule for NoDelete {
         })
     }
 
-    fn code_fix(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleCodeFix> {
+    fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
         let root = root.replace_node_retain_trivia(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
@@ -54,7 +54,7 @@ impl Rule for NoDelete {
             )),
         )?;
 
-        Some(RuleCodeFix { root })
+        Some(RuleAction { root })
     }
 }
 

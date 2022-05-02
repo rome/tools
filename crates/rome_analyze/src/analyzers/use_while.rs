@@ -4,7 +4,7 @@ use rome_js_factory::make;
 use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::registry::{Rule, RuleCodeFix, RuleDiagnostic};
+use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 
 pub(crate) enum UseWhile {}
 
@@ -52,7 +52,7 @@ impl Rule for UseWhile {
         })
     }
 
-    fn code_fix(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<RuleCodeFix> {
+    fn action(root: JsAnyRoot, node: &Self::Query, _: &Self::State) -> Option<RuleAction> {
         let JsForStatementFields {
             for_token: _,
             l_paren_token,
@@ -76,6 +76,6 @@ impl Rule for UseWhile {
             )),
         )?;
 
-        Some(RuleCodeFix { root })
+        Some(RuleAction { root })
     }
 }

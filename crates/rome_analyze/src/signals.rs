@@ -7,10 +7,10 @@ use rome_js_syntax::{JsAnyRoot, TextRange};
 use crate::{registry::Rule, ActionCategory};
 
 /// Event raised by the analyzer when a [Rule](crate::analysis_server::Rule)
-/// emits a diagnostic, a code fix, or both
+/// emits a diagnostic, a code action, or both
 pub trait AnalyzerSignal {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic>;
-    fn code_fix(&self) -> Option<AnalyzerCodeFix>;
+    fn action(&self) -> Option<AnalyzerAction>;
 }
 
 /// Diagnostic object returned by the analyzer, generated from a [RuleDiagnostic](crate::analysis_server::RuleDiagnostic)
@@ -23,10 +23,10 @@ pub struct AnalyzerDiagnostic {
     pub message: MarkupBuf,
 }
 
-/// Code fix object returned by the analyzer, generated from a [RuleCodeFix](crate::analysis_server::RuleCodeFix)
+/// Code Action object returned by the analyzer, generated from a [RuleAction](crate::analysis_server::RuleAction)
 /// with additional informations about the rule injected by the analyzer
 #[derive(Debug, PartialEq, Eq)]
-pub struct AnalyzerCodeFix {
+pub struct AnalyzerAction {
     pub rule_name: &'static str,
     pub action_categories: &'static [ActionCategory],
     pub root: JsAnyRoot,
@@ -65,11 +65,11 @@ impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
         })
     }
 
-    fn code_fix(&self) -> Option<AnalyzerCodeFix> {
-        R::code_fix(self.root.clone(), &self.node, &self.state).map(|code_fix| AnalyzerCodeFix {
+    fn action(&self) -> Option<AnalyzerAction> {
+        R::action(self.root.clone(), &self.node, &self.state).map(|action| AnalyzerAction {
             rule_name: R::NAME,
             action_categories: R::ACTION_CATEGORIES,
-            root: code_fix.root,
+            root: action.root,
         })
     }
 }

@@ -24,7 +24,7 @@ pub fn benchmark_analyze_lib(id: &str, root: &JsAnyRoot) -> BenchmarkSummary {
 pub fn run_analyzer(root: &JsAnyRoot) {
     analyze(root, AnalysisFilter::default(), |event| {
         black_box(event.diagnostic());
-        black_box(event.code_fix());
+        black_box(event.action());
     });
 }
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_analyze/tests/spec_tests.rs
-assertion_line: 77
+assertion_line: 92
 expression: noDelete.js
 
 ---
@@ -39,7 +39,7 @@ delete a?.["b"];
 
 ```
 
-# Code Fixes
+# Actions
 ```
     | @@ -1,5 +1,5 @@
 0 0 |   delete a;
