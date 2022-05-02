@@ -6,12 +6,13 @@ use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoDoubleEquals {}
 
 impl Rule for NoDoubleEquals {
     const NAME: &'static str = "noDoubleEquals";
-    const ACTION_CATEGORIES: &'static [crate::ActionCategory] = &[];
+    const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsBinaryExpression;
     type State = JsSyntaxToken;
@@ -48,7 +49,10 @@ impl Rule for NoDoubleEquals {
             make::token(if op.kind() == EQ2 { T![===] } else { T![!==] }),
         )?;
 
-        Some(RuleAction { root })
+        Some(RuleAction {
+            category: ActionCategory::empty(),
+            root,
+        })
     }
 }
 

@@ -82,8 +82,8 @@ pub(crate) fn code_fix_to_lsp(
         change_annotations: None,
     };
 
-    let is_safe_fix = action.action_categories.contains(&ActionCategory::SafeFix);
-    let is_refactor = action.action_categories.contains(&ActionCategory::Refactor);
+    let is_safe_fix = action.category.contains(ActionCategory::SAFE_FIX);
+    let is_refactor = action.category.contains(ActionCategory::REFACTOR);
 
     lsp_types::CodeAction {
         title: String::from(action.rule_name),

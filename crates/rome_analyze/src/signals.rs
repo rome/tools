@@ -28,7 +28,7 @@ pub struct AnalyzerDiagnostic {
 #[derive(Debug, PartialEq, Eq)]
 pub struct AnalyzerAction {
     pub rule_name: &'static str,
-    pub action_categories: &'static [ActionCategory],
+    pub category: ActionCategory,
     pub root: JsAnyRoot,
 }
 
@@ -68,7 +68,7 @@ impl<'a, R: Rule> AnalyzerSignal for RuleSignal<'a, R> {
     fn action(&self) -> Option<AnalyzerAction> {
         R::action(self.root.clone(), &self.node, &self.state).map(|action| AnalyzerAction {
             rule_name: R::NAME,
-            action_categories: R::ACTION_CATEGORIES,
+            category: action.category,
             root: action.root,
         })
     }

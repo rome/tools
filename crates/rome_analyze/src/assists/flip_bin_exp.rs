@@ -5,6 +5,7 @@ use rome_js_syntax::{
 use rome_rowan::AstNodeExt;
 
 use crate::{
+    categories::RuleCategory,
     registry::{Rule, RuleAction},
     ActionCategory,
 };
@@ -13,7 +14,7 @@ pub(crate) enum FlipBinExp {}
 
 impl Rule for FlipBinExp {
     const NAME: &'static str = "flipBinExp";
-    const ACTION_CATEGORIES: &'static [ActionCategory] = &[ActionCategory::Refactor];
+    const CATEGORY: RuleCategory = RuleCategory::Action;
 
     type Query = JsBinaryExpression;
     type State = JsSyntaxKind;
@@ -48,6 +49,7 @@ impl Rule for FlipBinExp {
         let new_node = new_node.replace_node_retain_trivia(prev_right, new_right)?;
 
         Some(RuleAction {
+            category: ActionCategory::REFACTOR,
             root: root.replace_node_retain_trivia(node.clone(), new_node)?,
         })
     }

@@ -8,15 +8,14 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::categories::ActionCategory;
-
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::{ActionCategory, RuleCategory};
 
 pub(crate) enum NoDelete {}
 
 impl Rule for NoDelete {
     const NAME: &'static str = "noDelete";
-    const ACTION_CATEGORIES: &'static [ActionCategory] = &[];
+    const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsUnaryExpression;
     type State = MemberExpression;
@@ -54,7 +53,10 @@ impl Rule for NoDelete {
             )),
         )?;
 
-        Some(RuleAction { root })
+        Some(RuleAction {
+            category: ActionCategory::empty(),
+            root,
+        })
     }
 }
 

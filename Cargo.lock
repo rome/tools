@@ -1271,6 +1271,7 @@ dependencies = [
 name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
+ "bitflags",
  "countme",
  "insta",
  "rome_console",

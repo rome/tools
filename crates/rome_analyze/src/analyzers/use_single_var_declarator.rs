@@ -9,7 +9,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, AstNodeListExt, AstSeparatedList};
 
-use crate::categories::ActionCategory;
+use crate::{ActionCategory, RuleCategory};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 
@@ -17,7 +17,7 @@ pub(crate) enum UseSingleVarDeclarator {}
 
 impl Rule for UseSingleVarDeclarator {
     const NAME: &'static str = "useSingleVarDeclarator";
-    const ACTION_CATEGORIES: &'static [ActionCategory] = &[];
+    const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsVariableStatement;
     type State = (
@@ -91,6 +91,7 @@ impl Rule for UseSingleVarDeclarator {
         );
 
         Some(RuleAction {
+            category: ActionCategory::empty(),
             root: root.replace_node(prev_parent, next_parent)?,
         })
     }

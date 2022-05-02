@@ -4,13 +4,16 @@ use rome_js_factory::make;
 use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::{AstNode, AstNodeExt};
 
-use crate::registry::{Rule, RuleAction, RuleDiagnostic};
+use crate::{
+    registry::{Rule, RuleAction, RuleDiagnostic},
+    ActionCategory, RuleCategory,
+};
 
 pub(crate) enum UseWhile {}
 
 impl Rule for UseWhile {
     const NAME: &'static str = "useWhile";
-    const ACTION_CATEGORIES: &'static [crate::ActionCategory] = &[];
+    const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = JsForStatement;
     type State = ();
@@ -76,6 +79,9 @@ impl Rule for UseWhile {
             )),
         )?;
 
-        Some(RuleAction { root })
+        Some(RuleAction {
+            category: ActionCategory::empty(),
+            root,
+        })
     }
 }

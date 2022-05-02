@@ -6,8 +6,9 @@ use rome_rowan::{AstNode, SyntaxNode};
 use crate::{
     analyzers::*,
     assists::*,
-    categories::ActionCategory,
+    categories::{ActionCategory, RuleCategory},
     signals::{AnalyzerSignal, RuleSignal},
+    AnalysisFilter,
 };
 
 /// The rule registry holds type-erased instances of all active analysis rules
@@ -15,24 +16,14 @@ pub(crate) struct RuleRegistry {
     rules: Vec<RegistryRule>,
 }
 
-/// Utility macro for implementing the `default` and `with_rules` methods of [RuleRegistry]
+/// Utility macro for implementing the `with_filter` method of [RuleRegistry]
 macro_rules! impl_registry_builders {
     ( $( $rule:ident ),* ) => {
-        impl Default for RuleRegistry {
-            fn default() -> Self {
-                Self {
-                    rules: vec![
-                        $( run::<$rule>, )*
-                    ],
-                }
-            }
-        }
-
         impl RuleRegistry {
-            pub(crate) fn with_rules(filter: &[&str]) -> Self {
+            pub(crate) fn with_filter(filter: &AnalysisFilter) -> Self {
                 let mut rules: Vec<RegistryRule> = Vec::new();
 
-                $( if filter.contains(&$rule::NAME) {
+                $( if filter.categories.contains($rule::CATEGORY.into()) && filter.rules.map_or(true, |rules| rules.contains(&$rule::NAME)) {
                     rules.push(run::<$rule>);
                 } )*
 
@@ -92,10 +83,9 @@ fn run<'a, R: Rule + 'static>(
 pub(crate) trait Rule {
     /// The name of this rule, displayed in the diagnostics it emits
     const NAME: &'static str;
-    /// The set of categories this rule belong to, this will influence how
-    /// clients may chose to present diagnostics and actions emitted by this
-    /// rule to the user
-    const ACTION_CATEGORIES: &'static [ActionCategory];
+    /// The category this rule belong to, this is used for broadly filtering
+    /// rules when running the analyzer
+    const CATEGORY: RuleCategory;
 
     /// The type of AstNode this rule is interested in
     type Query: AstNode + 'static;
@@ -137,5 +127,8 @@ pub struct RuleDiagnostic {
 
 /// Code Action object returned by a single analysis rule
 pub struct RuleAction {
+    /// The category this action belongs to, this will influence how clients
+    /// may chose to present this action to the user
+    pub category: ActionCategory,
     pub root: JsAnyRoot,
 }

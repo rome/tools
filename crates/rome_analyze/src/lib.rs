@@ -7,7 +7,7 @@ mod categories;
 mod registry;
 mod signals;
 
-pub use crate::categories::ActionCategory;
+pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 use crate::registry::RuleRegistry;
 pub use crate::signals::{AnalyzerAction, AnalyzerDiagnostic, AnalyzerSignal};
 
@@ -15,9 +15,11 @@ pub use crate::signals::{AnalyzerAction, AnalyzerDiagnostic, AnalyzerSignal};
 /// and at what source code range signals (diagnostics or actions) may be raised
 #[derive(Default)]
 pub struct AnalysisFilter<'a> {
-    /// Only allow rules with these names to emit diagnostics
+    /// Only allow rules with these categories to emit signals
+    pub categories: RuleCategories,
+    /// Only allow rules with these names to emit signals
     pub rules: Option<&'a [&'a str]>,
-    /// Only emit diagnostics matching this text range
+    /// Only emit signals matching this text range
     pub range: Option<TextRange>,
 }
 
@@ -28,10 +30,7 @@ pub fn analyze<B>(root: &JsAnyRoot, filter: AnalysisFilter, mut callback: B)
 where
     B: FnMut(&dyn AnalyzerSignal),
 {
-    let registry = filter
-        .rules
-        .map(RuleRegistry::with_rules)
-        .unwrap_or_default();
+    let registry = RuleRegistry::with_filter(&filter);
 
     for node in root.syntax().descendants() {
         if let Some(range) = filter.range {
