@@ -83,7 +83,7 @@ impl<'a> TextInfo<'a> {
                 self.leading_whitespace_type,
                 Some(WhitespaceType::HasNewline) | Some(WhitespaceType::NoNewline)
             ) {
-                while let Some((_, c)) = char_indices.next() {
+                for (_, c) in char_indices.by_ref() {
                     if !TERMINATORS.contains(&c) {
                         output_string.push(c);
                         break;
@@ -104,7 +104,7 @@ impl<'a> TextInfo<'a> {
                     if idx == range.end {
                         output_string.push(' ');
                         output_string.push(c);
-                        current_whitespace_range_idx = current_whitespace_range_idx + 1;
+                        current_whitespace_range_idx += 1;
                     }
 
                     // If our index is less than the start of the current whitespace range
@@ -162,7 +162,7 @@ enum WhitespaceType {
 fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> Option<WhitespaceType> {
     let mut leading_type = None;
 
-    while let Some((_, c)) = char_indices.next() {
+    for (_, c) in char_indices.by_ref() {
         if !TERMINATORS.contains(&c) {
             return leading_type;
         }
