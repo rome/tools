@@ -4,6 +4,12 @@ expression: number-with-space.js
 ---
 # Input
 123 .toString
+123
+/****/.toString
+123/**/.toString
+123
+.toString
+
 =============================
 # Outputs
 ## Output 1
@@ -12,5 +18,9 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
+(123).toString;
+(123)
+/****/ .toString;
+(123) /**/ .toString;
 (123).toString;
 

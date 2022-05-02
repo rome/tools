@@ -20,21 +20,23 @@ impl FormatNode for JsStaticMemberExpression {
         let is_object_number_literal =
             object_syntax.kind() == JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION;
 
-        let has_object_trailing_whitespace = object_syntax
-            .text()
-            .to_string()
-            .chars()
-            .last()
-            .unwrap()
-            .is_whitespace();
+        let has_object_trailing_trivia =
+            object_syntax.last_trailing_trivia().unwrap().pieces().len() > 0;
+        let has_operator_leading_trivia =
+            operator_token.clone()?.leading_trivia().pieces().len() > 0;
 
         let formatted_object = object?.format(formatter)?;
 
-        if is_object_number_literal && has_object_trailing_whitespace {
+        if is_object_number_literal && (has_object_trailing_trivia || has_operator_leading_trivia) {
+            let (object_leading, object_content, object_trailing) =
+                formatted_object.clone().split_trivia();
+
             Ok(group_elements(format_elements![
+                object_leading,
                 token("("),
-                formatted_object,
+                object_content,
                 token(")"),
+                object_trailing,
                 operator_token.format(formatter)?,
                 member.format(formatter)?,
             ]))
