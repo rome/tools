@@ -529,7 +529,7 @@ enum DelimitedContent {
 
 /// JS specific formatter extensions
 pub(crate) trait JsFormatter {
-    fn formatter(&self) -> &Formatter;
+    fn as_formatter(&self) -> &Formatter;
 
     /// Formats a group delimited by an opening and closing token, placing the
     /// content in a [block_indent] group
@@ -540,7 +540,7 @@ pub(crate) trait JsFormatter {
         close_token: &JsSyntaxToken,
     ) -> FormatResult<FormatElement> {
         format_delimited(
-            self.formatter(),
+            self.as_formatter(),
             open_token,
             DelimitedContent::BlockIndent(content),
             close_token,
@@ -556,7 +556,7 @@ pub(crate) trait JsFormatter {
         close_token: &JsSyntaxToken,
     ) -> FormatResult<FormatElement> {
         format_delimited(
-            self.formatter(),
+            self.as_formatter(),
             open_token,
             DelimitedContent::SoftBlockIndent(content),
             close_token,
@@ -573,7 +573,7 @@ pub(crate) trait JsFormatter {
         close_token: &JsSyntaxToken,
     ) -> FormatResult<FormatElement> {
         format_delimited(
-            self.formatter(),
+            self.as_formatter(),
             open_token,
             DelimitedContent::SoftBlockSpaces(content),
             close_token,
@@ -589,7 +589,7 @@ pub(crate) trait JsFormatter {
         current_token: &JsSyntaxToken,
         content_to_replace_with: FormatElement,
     ) -> FormatElement {
-        self.formatter().track_token(current_token);
+        self.as_formatter().track_token(current_token);
 
         format_elements![
             format_leading_trivia(current_token, TriviaPrintMode::Full),
@@ -617,7 +617,7 @@ pub(crate) trait JsFormatter {
     {
         let mut result = Vec::with_capacity(list.len());
         let last_index = list.len().saturating_sub(1);
-        let formatter = self.formatter();
+        let formatter = self.as_formatter();
 
         for (index, element) in list.elements().enumerate() {
             let node = element.node()?.format(formatter)?;
@@ -671,7 +671,7 @@ pub(crate) trait JsFormatter {
     where
         List: AstNodeList<Language = JsLanguage, Node = Node>,
     {
-        let formatter = self.formatter();
+        let formatter = self.as_formatter();
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = formatter.snapshot();
             let elem = match module_item.format(formatter) {
@@ -695,7 +695,7 @@ pub(crate) trait JsFormatter {
 }
 
 impl JsFormatter for Formatter {
-    fn formatter(&self) -> &Formatter {
+    fn as_formatter(&self) -> &Formatter {
         self
     }
 }
