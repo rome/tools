@@ -444,13 +444,18 @@ impl<'a> Printer<'a> {
             FormatElement::ConditionalContentInGroup(ConditionalContentInGroup {
                 mode: GroupPrintMode::Flat,
                 content,
-            }) => queue.enqueue(PrintElementCall::new(content, args)),
+            }) => {
+                dbg!("found flat");
+                queue.enqueue(PrintElementCall::new(content, args))
+            }
 
             // Omit if there's no flat_contents
             FormatElement::ConditionalContentInGroup(ConditionalContentInGroup {
                 mode: GroupPrintMode::Multiline,
                 ..
-            }) => {}
+            }) => {
+                dbg!("found multiline ");
+            }
 
             FormatElement::Comment(content) => {
                 queue.enqueue(PrintElementCall::new(content.as_ref(), args));
@@ -716,8 +721,9 @@ mod tests {
     use crate::printer::{LineEnding, Printer, PrinterOptions};
     use crate::{
         block_indent, conditional_group, empty_line, format_elements, group_elements,
-        hard_line_break, if_group_breaks, soft_block_indent, soft_line_break,
-        soft_line_break_or_space, space_token, token, FormatElement, LineWidth, Printed,
+        hard_group_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line,
+        soft_block_indent, soft_line_break, soft_line_break_or_space, space_token, token,
+        FormatElement, LineWidth, Printed,
     };
 
     /// Prints the given element with the default printer options
@@ -914,6 +920,17 @@ two lines`,
         ]);
 
         assert_eq!("a\n\nb", result.as_code())
+    }
+
+    #[test]
+    fn it_prints_hard_groups() {
+        let result = print_element(group_elements(hard_group_elements(format_elements![
+            if_group_breaks(token("not printed")),
+            empty_line(),
+            if_group_fits_on_single_line(token("printed")),
+        ])));
+
+        assert_eq!("\nprinted", result.as_code())
     }
 
     #[test]

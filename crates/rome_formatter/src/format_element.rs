@@ -669,13 +669,7 @@ pub fn conditional_group<Tries>(elements: Tries) -> FormatElement
 where
     Tries: IntoIterator<Item = FormatElement>,
 {
-    let elements: Vec<_> = elements
-        .into_iter()
-        .map(|element| {
-            let (leading, content, trailing) = element.split_trivia();
-            format_elements![leading, Group::new(content), trailing]
-        })
-        .collect();
+    let elements: Vec<_> = elements.into_iter().collect();
 
     Group::new_conditional(elements).into()
 }
@@ -701,11 +695,11 @@ where
 ///   FormatOptions, empty_line, if_group_breaks, if_group_fits_on_single_line
 /// };
 ///
-/// let elements = hard_group_elements(format_elements![
+/// let elements = group_elements(hard_group_elements(format_elements![
 ///   if_group_breaks(token("not printed")),
 ///   empty_line(),
 ///   if_group_fits_on_single_line(token("printed")),
-/// ]);
+/// ]));
 ///
 /// assert_eq!("\nprinted", Formatted::new(elements, FormatOptions::default()).print().as_code());
 /// ```
@@ -717,7 +711,7 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
         content
     } else {
         let (leading, content, trailing) = content.split_trivia();
-        let group = Group::new(format_elements![content, trailing]).with_never_break();
+        let group = Group::new_hard_group(format_elements![content, trailing]);
         format_elements![leading, group]
     }
 }
@@ -1024,13 +1018,13 @@ impl Debug for FormatElement {
             FormatElement::Space => write!(fmt, "Space"),
             FormatElement::Line(content) => content.fmt(fmt),
             FormatElement::Indent(content) => content.fmt(fmt),
-            FormatElement::Group(content) => {
-                if let Some(expanded) = &content.expanded {
+            FormatElement::Group(group) => {
+                if let Some(expanded) = &group.expanded {
                     write!(fmt, "Group [Conditional]")?;
                     expanded.fmt(fmt)
                 } else {
-                    write!(fmt, "Group [{}] ", content.mode)?;
-                    content.fmt(fmt)
+                    write!(fmt, "Group [{}] ", group.mode)?;
+                    group.fmt(fmt)
                 }
             }
 
@@ -1155,7 +1149,6 @@ impl Display for GroupMode {
 #[derive(Clone, PartialEq, Eq)]
 pub struct Group {
     pub(crate) content: Content,
-    // pub(crate) content: Vec<FormatElement>,
     pub(crate) mode: GroupMode,
 
     /// A conditional group is a rare state where we define a series of states of the same element.
@@ -1183,19 +1176,20 @@ impl Group {
         }
     }
 
+    pub fn new_hard_group(element: FormatElement) -> Self {
+        Self {
+            content: Box::new(element),
+            mode: GroupMode::NeverBreak,
+            expanded: None,
+        }
+    }
+
     pub fn new_conditional(content: Vec<FormatElement>) -> Self {
         debug_assert!(content.len() >= 2);
         Self {
             content: Box::new(content.get(0).unwrap().clone()),
             mode: GroupMode::MaybeBreak,
             expanded: Some(content),
-        }
-    }
-
-    pub fn with_never_break(self) -> Self {
-        Self {
-            mode: GroupMode::NeverBreak,
-            ..self
         }
     }
 }
@@ -1489,12 +1483,18 @@ impl FormatElement {
             }
 
             FormatElement::Group(Group {
-                content, expanded, ..
+                content,
+                expanded,
+                mode,
             }) => {
                 if expanded.is_none() {
                     let (leading, content, trailing) = content.split_trivia();
                     // re-create the grouping around the content only
-                    (leading, group_elements(content), trailing)
+                    let content = match mode {
+                        GroupMode::NeverBreak => hard_group_elements(content),
+                        GroupMode::MaybeBreak => group_elements(content),
+                    };
+                    (leading, content, trailing)
                 } else {
                     // TODO: implement the pick of trivias on conditional groups
                     let (_leading, content, _trailing) = content.split_trivia();
