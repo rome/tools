@@ -670,8 +670,6 @@ pub fn alternatives<Tries>(elements: Tries) -> FormatElement
 where
     Tries: IntoIterator<Item = FormatElement>,
 {
-    let elements: Vec<_> = elements.into_iter().collect();
-
     FormatElement::Alternatives(elements.into_iter().collect())
 }
 
@@ -1380,8 +1378,14 @@ impl FormatElement {
         matches!(self, FormatElement::Empty)
     }
 
-    /// Returns true if this [FormatElement] recursively contains any hard line break
+    /// Returns true if this [FormatElement] will break definitely break,
     /// ([hard_line_break], [empty_line], [Token] containing the '\n' character)
+    ///
+    /// Some primitives can't know ahead of time if they contain primitive that breaks.
+    /// Because of that, they will assume that don't have line breaks.
+    ///
+    /// An example if the [FormatElement::Alternatives] where it holds different versions
+    /// of an element, and only the printer will know which one to use.
     pub fn has_hard_line_breaks(&self) -> bool {
         match self {
             FormatElement::Empty => false,
