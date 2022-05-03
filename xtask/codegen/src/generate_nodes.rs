@@ -230,6 +230,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         .unions
         .iter()
         .map(|union| {
+            let name = format_ident!("{}", union.name);
+
             // here we collect all the variants because this will generate the enums
             // so we don't care about filtered variants
             let variants_for_union: Vec<_> = union
@@ -237,9 +239,25 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 .iter()
                 .map(|variant| {
                     let variant_name = format_ident!("{}", variant);
-
                     quote! {
                         #variant_name(#variant_name)
+                    }
+                })
+                .collect();
+
+            let as_method_for_variants_for_union: Vec<_> = union
+                .variants
+                .iter()
+                .map(|variant| {
+                    let variant_name = format_ident!("{}", variant);
+                    let fn_name = format_ident!("as_{}", to_lower_snake_case(variant));
+                    quote! {
+                        pub fn #fn_name(&self) -> Option<&#variant_name> {
+                           match &self {
+                            #name::#variant_name(item) => Some(item),
+                               _ => None
+                           }
+                        }
                     }
                 })
                 .collect();
@@ -262,7 +280,6 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 .map(|var| format_ident!("{}", var))
                 .collect();
 
-            let name = format_ident!("{}", union.name);
             let kinds: Vec<_> = variants
                 .iter()
                 .map(|name| format_ident!("{}", to_upper_snake_case(&name.to_string())))
@@ -391,6 +408,10 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                     #[derive(Clone, PartialEq, Eq, Hash)]
                     pub enum #name {
                         #(#variants_for_union),*
+                    }
+
+                    impl #name {
+                        #(#as_method_for_variants_for_union)*
                     }
                 },
                 quote! {

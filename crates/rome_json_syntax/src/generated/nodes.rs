@@ -244,6 +244,50 @@ pub enum JsonValue {
     JsonString(JsonString),
     JsonUnknown(JsonUnknown),
 }
+impl JsonValue {
+    pub fn as_json_array(&self) -> Option<&JsonArray> {
+        match &self {
+            JsonValue::JsonArray(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_boolean(&self) -> Option<&JsonBoolean> {
+        match &self {
+            JsonValue::JsonBoolean(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_null(&self) -> Option<&JsonNull> {
+        match &self {
+            JsonValue::JsonNull(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_number(&self) -> Option<&JsonNumber> {
+        match &self {
+            JsonValue::JsonNumber(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_object(&self) -> Option<&JsonObject> {
+        match &self {
+            JsonValue::JsonObject(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_string(&self) -> Option<&JsonString> {
+        match &self {
+            JsonValue::JsonString(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_json_unknown(&self) -> Option<&JsonUnknown> {
+        match &self {
+            JsonValue::JsonUnknown(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 impl AstNode for JsonArray {
     type Language = Language;
     fn can_cast(kind: SyntaxKind) -> bool { kind == JSON_ARRAY }
