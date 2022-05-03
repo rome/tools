@@ -5,10 +5,7 @@ mod simple_argument;
 use crate::format_traits::FormatOptional;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::groups::{Groups, HeadGroup};
-use crate::{
-    format_elements, group_elements, hard_line_break, indent, Format, FormatElement, FormatResult,
-    Formatter,
-};
+use crate::{format_elements, Format, FormatElement, FormatResult, Formatter};
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsExpressionStatement, JsStaticMemberExpression,
 };
@@ -295,20 +292,18 @@ fn format_groups(
 ) -> FormatResult<FormatElement> {
     if groups.groups_should_break(calls_count, &head_group)? {
         Ok(format_elements![
-            head_group.into_format_element(),
-            group_elements(indent(format_elements![
-                hard_line_break(),
-                groups.into_joined_hard_line_groups()
-            ]),)
+            head_group.as_format_element(),
+            groups.multi_line_element(&head_group)
         ])
     } else {
-        let head_formatted = head_group.into_format_element();
-        let (one_line, _) = groups.into_format_elements();
+        let head_formatted = head_group.as_format_element();
+        let body = groups.one_line_element();
 
         // TODO: this is not the definitive solution, as there are few restrictions due to how the printer works:
         // - groups that contains other groups with hard lines break all the groups
         // - conditionally print one single line is subject to how the printer works (by default, multiline)
-        Ok(format_elements![head_formatted, one_line])
+        // let body = groups.into_format_elements(&head_group);
+        Ok(format_elements![head_formatted, body])
     }
 }
 

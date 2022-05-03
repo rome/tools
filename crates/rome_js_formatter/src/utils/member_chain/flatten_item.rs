@@ -89,6 +89,13 @@ impl FlattenItem {
         }
     }
 
+    pub(crate) fn should_insert_empty_line_after(&self) -> bool {
+        // TODO: prettier does a text based search to figure out the first newline?
+        // Need to figure out this logic first before implementing it
+        // https://github.com/prettier/prettier/blob/a9de2a128cc8eea84ddd90efdc210378a894ab6b/src/language-js/print/member-chain.js#L71-L90
+        true
+    }
+
     /// There are cases like Object.keys(), Observable.of(), _.values() where
     /// they are the subject of all the chained calls and therefore should
     /// be kept on the same line:
@@ -140,6 +147,7 @@ impl FlattenItem {
         }
     }
 
+    /// A short name is whether the identifier has a length that is smaller than the actual tab width
     pub(crate) fn has_short_name(&self, tab_width: u8) -> SyntaxResult<bool> {
         if let FlattenItem::StaticMember(static_member, ..) = self {
             if let JsAnyExpression::JsIdentifierExpression(identifier_expression) =

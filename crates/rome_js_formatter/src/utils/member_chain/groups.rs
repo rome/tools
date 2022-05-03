@@ -2,7 +2,8 @@ use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
 use crate::Formatter;
 use rome_formatter::{
-    concat_elements, hard_line_break, join_elements, soft_line_break, FormatElement,
+    concat_elements, conditional_group, format_elements, group_elements, hard_line_break, indent,
+    join_elements, FormatElement,
 };
 use rome_js_syntax::{JsAnyCallArgument, JsAnyExpression, JsCallExpression};
 use rome_rowan::{AstSeparatedList, SyntaxResult};
@@ -124,29 +125,37 @@ impl<'f> Groups<'f> {
         Ok(should_break)
     }
 
-    fn into_formatted_groups(self) -> Vec<FormatElement> {
+    fn formatted_groups(&self) -> Vec<FormatElement> {
         self.groups
-            .into_iter()
-            .map(|group| concat_elements(group.into_iter().map(|flatten_item| flatten_item.into())))
+            .iter()
+            .map(|group| {
+                concat_elements(group.iter().map(|flatten_item| flatten_item.clone().into()))
+            })
             .collect()
     }
 
-    /// Format groups on multiple lines
-    pub fn into_joined_hard_line_groups(self) -> FormatElement {
-        let formatted_groups = self.into_formatted_groups();
-        join_elements(hard_line_break(), formatted_groups)
+    pub fn one_line_element(&self) -> FormatElement {
+        concat_elements(self.formatted_groups())
+    }
+
+    pub fn multi_line_element(&self, _head_group: &HeadGroup) -> FormatElement {
+        let formatted_groups = self.formatted_groups();
+        group_elements(indent(format_elements![
+            hard_line_break(),
+            join_elements(hard_line_break(), formatted_groups),
+        ]))
     }
 
     /// Creates two different versions of the formatted groups, one that goes in one line
     /// and the other one that goes on multiple lines.
     ///
     /// It's up to the printer to decide which one to use.
-    pub fn into_format_elements(self) -> (FormatElement, FormatElement) {
-        let formatted_groups = self.into_formatted_groups();
-        (
-            concat_elements(formatted_groups.clone()),
-            join_elements(soft_line_break(), formatted_groups),
-        )
+    #[allow(dead_code)]
+    pub fn into_format_elements(self, head_group: &HeadGroup) -> FormatElement {
+        conditional_group(vec![
+            self.one_line_element(),
+            self.multi_line_element(head_group),
+        ])
     }
 
     /// Checks if the groups contain comments.
@@ -316,26 +325,44 @@ impl<'f> Groups<'f> {
 #[derive(Debug)]
 pub(crate) struct HeadGroup {
     items: Vec<FlattenItem>,
+    was_expanded: bool,
 }
 
 impl HeadGroup {
     pub(crate) fn new(items: Vec<FlattenItem>) -> Self {
-        Self { items }
+        Self {
+            items,
+            was_expanded: false,
+        }
     }
 
-    fn items(&self) -> &[FlattenItem] {
+    pub(crate) fn items(&self) -> &[FlattenItem] {
         &self.items
     }
 
-    pub fn into_format_element(self) -> FormatElement {
-        concat_elements(self.items.into_iter().map(FlattenItem::into))
+    pub(crate) fn as_format_element(&self) -> FormatElement {
+        concat_elements(self.items.iter().map(|element| element.clone().into()))
     }
 
-    pub fn expand_group(&mut self, group: Vec<FlattenItem>) {
-        self.items.extend(group)
+    pub(crate) fn expand_group(&mut self, group: Vec<FlattenItem>) {
+        self.items.extend(group);
+        self.was_expanded = true;
     }
 
-    fn has_comments(&self) -> bool {
+    pub(crate) fn has_comments(&self) -> bool {
         self.items.iter().any(|item| item.has_trailing_comments())
+    }
+
+    // TODO: figure out what's this logic about
+    #[allow(dead_code)]
+    pub(crate) fn should_have_line_break_before_ident(&self) -> bool {
+        let item_to_check = if self.was_expanded {
+            self.items.first()
+        } else {
+            self.items.last()
+        };
+        item_to_check.map_or(true, |last_item| {
+            !last_item.is_loose_call_expression() && last_item.should_insert_empty_line_after()
+        })
     }
 }

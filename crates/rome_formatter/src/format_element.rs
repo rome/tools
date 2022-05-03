@@ -4,7 +4,7 @@ use rome_rowan::{
     Language, SyntaxNode, SyntaxToken, SyntaxTokenText, SyntaxTriviaPieceComments, TextLen,
 };
 use std::borrow::Cow;
-use std::fmt::{self, Debug, Formatter};
+use std::fmt::{self, Debug, Display, Formatter};
 use std::ops::Deref;
 
 type Content = Box<FormatElement>;
@@ -613,6 +613,73 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
     format_elements![leading, Group::new(content), trailing]
 }
 
+/// A conditional group instructs the printer to try to print all the elements passed into flat mode.
+/// If none of the elements can't be printed in flat mode, then the last group is printed in multiline
+/// mode.
+/// This mean that also the last element is printed in flat mode.
+///
+/// This is different from conditional content, where some content is printed if already inside a group.
+///
+/// ## Examples
+///
+/// The first element can be printed one single line
+///
+/// ```
+/// use rome_formatter::{conditional_group, Formatted, format_elements, space_token, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
+///
+/// let elements = conditional_group(vec![
+///     format_elements![token("summer"), token(","), space_token(), token("spring")],
+///     format_elements![
+///         group_elements(
+///             format_elements![
+///                 token("summer"), token(","), space_token(), token("spring")
+///             ]
+///         )
+///     ]
+/// ]);
+///
+/// assert_eq!("summer, spring", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// ```
+/// The first element can be printed one single line, so the last one is used
+///
+/// ```
+/// use rome_formatter::{conditional_group, Formatted, space_token, LineWidth, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
+///
+/// let elements = conditional_group(vec![
+///     format_elements![token("summer"), token(","), space_token(), token("spring")],
+///     format_elements![
+///         group_elements(
+///             format_elements![
+///                 token("summer"), token(","), soft_line_break_or_space(), token("spring")
+///             ]
+///         )
+///     ]
+/// ]);
+///
+/// let options = FormatOptions {
+///   line_width: LineWidth::try_from(10).unwrap(),
+///   ..FormatOptions::default()
+/// };
+///
+/// assert_eq!("summer,\nspring", Formatted::new(elements, options).print().as_code());
+/// ```
+///
+#[inline]
+pub fn conditional_group<Tries>(elements: Tries) -> FormatElement
+where
+    Tries: IntoIterator<Item = FormatElement>,
+{
+    let elements: Vec<_> = elements
+        .into_iter()
+        .map(|element| {
+            let (leading, content, trailing) = element.split_trivia();
+            format_elements![leading, Group::new(content), trailing]
+        })
+        .collect();
+
+    Group::new_conditional(elements).into()
+}
+
 /// Creates a group that forces all elements inside it to be printed on a
 /// single line. This behavior can in turn be escaped by introducing an inner
 /// `Group` element that will resume the normal breaking behavior of the printer.
@@ -634,11 +701,11 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   FormatOptions, empty_line, if_group_breaks, if_group_fits_on_single_line
 /// };
 ///
-/// let elements = group_elements(hard_group_elements(format_elements![
+/// let elements = hard_group_elements(format_elements![
 ///   if_group_breaks(token("not printed")),
 ///   empty_line(),
 ///   if_group_fits_on_single_line(token("printed")),
-/// ]));
+/// ]);
 ///
 /// assert_eq!("\nprinted", Formatted::new(elements, FormatOptions::default()).print().as_code());
 /// ```
@@ -650,10 +717,8 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
         content
     } else {
         let (leading, content, trailing) = content.split_trivia();
-        format_elements![
-            leading,
-            FormatElement::HardGroup(Group::new(format_elements![content, trailing])),
-        ]
+        let group = Group::new(format_elements![content, trailing]).with_never_break();
+        format_elements![leading, group]
     }
 }
 
@@ -716,7 +781,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
     if content.is_empty() {
         content
     } else {
-        FormatElement::from(ConditionalGroupContent::new(
+        FormatElement::from(ConditionalContentInGroup::new(
             content,
             GroupPrintMode::Multiline,
         ))
@@ -782,7 +847,7 @@ where
     if flat_content.is_empty() {
         flat_content
     } else {
-        FormatElement::from(ConditionalGroupContent::new(
+        FormatElement::from(ConditionalContentInGroup::new(
             flat_content,
             GroupPrintMode::Flat,
         ))
@@ -880,12 +945,9 @@ pub enum FormatElement {
     /// See [crate::group_elements] for documentation and examples.
     Group(Group),
 
-    /// See [crate::hard_group_elements] for documentation and examples.
-    HardGroup(Group),
-
     /// Allows to specify content that gets printed depending on whatever the enclosing group
     /// is printed on a single line or multiple lines. See [crate::if_group_breaks] for examples.
-    ConditionalGroupContent(ConditionalGroupContent),
+    ConditionalContentInGroup(ConditionalContentInGroup),
 
     /// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
     List(List),
@@ -963,14 +1025,16 @@ impl Debug for FormatElement {
             FormatElement::Line(content) => content.fmt(fmt),
             FormatElement::Indent(content) => content.fmt(fmt),
             FormatElement::Group(content) => {
-                write!(fmt, "Group")?;
-                content.fmt(fmt)
+                if let Some(expanded) = &content.expanded {
+                    write!(fmt, "Group [Conditional]")?;
+                    expanded.fmt(fmt)
+                } else {
+                    write!(fmt, "Group [{}] ", content.mode)?;
+                    content.fmt(fmt)
+                }
             }
-            FormatElement::HardGroup(content) => {
-                write!(fmt, "HardGroup")?;
-                content.fmt(fmt)
-            }
-            FormatElement::ConditionalGroupContent(content) => content.fmt(fmt),
+
+            FormatElement::ConditionalContentInGroup(content) => content.fmt(fmt),
             FormatElement::List(content) => {
                 write!(fmt, "List ")?;
                 content.fmt(fmt)
@@ -1068,6 +1132,22 @@ impl Deref for List {
     }
 }
 
+/// When creating a group, we instruct it with a mode, which tells
+/// the printer how it should be printed.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub(crate) enum GroupMode {
+    /// An hard group, it should never break
+    NeverBreak,
+    /// The group can break
+    MaybeBreak,
+}
+
+impl Display for GroupMode {
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> fmt::Result {
+        write!(fmt, "{self:?}")
+    }
+}
+
 /// Group is a special token that controls how the child tokens are printed.
 ///
 /// The printer first tries to print all tokens in the group onto a single line (ignoring soft line wraps)
@@ -1075,6 +1155,17 @@ impl Deref for List {
 #[derive(Clone, PartialEq, Eq)]
 pub struct Group {
     pub(crate) content: Content,
+    // pub(crate) content: Vec<FormatElement>,
+    pub(crate) mode: GroupMode,
+
+    /// A conditional group is a rare state where we define a series of states of the same element.
+    ///
+    /// The states from the most flat to the least flat. Essentially, the first one is the state that
+    /// should fit the whole line, while the last one should be the one that fits multiple lines.
+    ///
+    /// When the printer will decided which element to use, it would try to fits them one  by one.
+    /// If none of them fits, it will use the last one, printed using [GroupPrintMode::Multiline] moode
+    pub(crate) expanded: Option<Vec<FormatElement>>,
 }
 
 impl Debug for Group {
@@ -1084,9 +1175,27 @@ impl Debug for Group {
 }
 
 impl Group {
-    pub fn new(content: FormatElement) -> Self {
+    pub fn new(element: FormatElement) -> Self {
         Self {
-            content: Box::new(content),
+            content: Box::new(element),
+            mode: GroupMode::MaybeBreak,
+            expanded: None,
+        }
+    }
+
+    pub fn new_conditional(content: Vec<FormatElement>) -> Self {
+        debug_assert!(content.len() >= 2);
+        Self {
+            content: Box::new(content.get(0).unwrap().clone()),
+            mode: GroupMode::MaybeBreak,
+            expanded: Some(content),
+        }
+    }
+
+    pub fn with_never_break(self) -> Self {
+        Self {
+            mode: GroupMode::NeverBreak,
+            ..self
         }
     }
 }
@@ -1098,7 +1207,7 @@ pub enum GroupPrintMode {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct ConditionalGroupContent {
+pub struct ConditionalContentInGroup {
     pub(crate) content: Content,
 
     /// In what mode the content should be printed.
@@ -1107,7 +1216,7 @@ pub struct ConditionalGroupContent {
     pub(crate) mode: GroupPrintMode,
 }
 
-impl ConditionalGroupContent {
+impl ConditionalContentInGroup {
     pub fn new(content: FormatElement, mode: GroupPrintMode) -> Self {
         Self {
             content: Box::new(content),
@@ -1320,10 +1429,12 @@ impl FormatElement {
             FormatElement::Space => false,
             FormatElement::Line(line) => matches!(line.mode, LineMode::Hard | LineMode::Empty),
             FormatElement::Indent(indent) => indent.content.has_hard_line_breaks(),
-            FormatElement::Group(group) | FormatElement::HardGroup(group) => {
-                group.content.has_hard_line_breaks()
-            }
-            FormatElement::ConditionalGroupContent(group) => group.content.has_hard_line_breaks(),
+            FormatElement::Group(Group { mode, content, .. }) => match mode {
+                GroupMode::NeverBreak => content.has_hard_line_breaks(),
+                // TODO: review when there's an expanded state
+                GroupMode::MaybeBreak => content.has_hard_line_breaks(),
+            },
+            FormatElement::ConditionalContentInGroup(group) => group.content.has_hard_line_breaks(),
             FormatElement::List(list) | FormatElement::Fill(list) => {
                 list.content.iter().any(FormatElement::has_hard_line_breaks)
             }
@@ -1376,16 +1487,20 @@ impl FormatElement {
                     (FormatElement::List(list), empty_element(), empty_element())
                 }
             }
-            FormatElement::HardGroup(group) => {
-                let (leading, content, trailing) = group.content.split_trivia();
-                // re-create the grouping around the content only
-                (leading, hard_group_elements(content), trailing)
-            }
 
-            FormatElement::Group(group) => {
-                let (leading, content, trailing) = group.content.split_trivia();
-                // re-create the grouping around the content only
-                (leading, group_elements(content), trailing)
+            FormatElement::Group(Group {
+                content, expanded, ..
+            }) => {
+                if expanded.is_none() {
+                    let (leading, content, trailing) = content.split_trivia();
+                    // re-create the grouping around the content only
+                    (leading, group_elements(content), trailing)
+                } else {
+                    // TODO: implement the pick of trivias on conditional groups
+                    let (_leading, content, _trailing) = content.split_trivia();
+
+                    (empty_element(), group_elements(content), empty_element())
+                }
             }
             // Non-list elements are returned directly
             _ => (empty_element(), self, empty_element()),
@@ -1404,9 +1519,7 @@ impl FormatElement {
             FormatElement::Empty | FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
             FormatElement::Indent(indent) => indent.content.last_element(),
-            FormatElement::Group(group) | FormatElement::HardGroup(group) => {
-                group.content.last_element()
-            }
+            FormatElement::Group(group) => group.content.last_element(),
 
             _ => Some(self),
         }
@@ -1431,9 +1544,9 @@ impl From<List> for FormatElement {
     }
 }
 
-impl From<ConditionalGroupContent> for FormatElement {
-    fn from(token: ConditionalGroupContent) -> Self {
-        FormatElement::ConditionalGroupContent(token)
+impl From<ConditionalContentInGroup> for FormatElement {
+    fn from(token: ConditionalContentInGroup) -> Self {
+        FormatElement::ConditionalContentInGroup(token)
     }
 }
 
@@ -1459,7 +1572,7 @@ impl From<Option<FormatElement>> for FormatElement {
 mod tests {
 
     use crate::format_element::{
-        empty_element, join_elements, normalize_newlines, ConditionalGroupContent, List,
+        empty_element, join_elements, normalize_newlines, ConditionalContentInGroup, List,
         VerbatimKind, LINE_TERMINATORS,
     };
     use crate::{concat_elements, space_token, token, FormatElement, TextRange, Token, Verbatim};
@@ -1585,12 +1698,12 @@ mod tests {
         assert_eq!(8, std::mem::size_of::<VerbatimKind>());
         assert_eq!(16, std::mem::size_of::<Verbatim>());
         assert_eq!(24, std::mem::size_of::<Token>());
-        assert_eq!(16, std::mem::size_of::<ConditionalGroupContent>());
+        assert_eq!(16, std::mem::size_of::<ConditionalContentInGroup>());
         assert_eq!(24, std::mem::size_of::<List>());
         // Increasing the size of FormatElement has serious consequences on runtime performance and memory footprint.
         // Is there a more efficient way to encode the data to avoid increasing its size? Can the information
         // be recomputed at a later point in time?
         // You reduced the size of a format element? Excellent work!
-        assert_eq!(32, std::mem::size_of::<FormatElement>());
+        assert_eq!(48, std::mem::size_of::<FormatElement>());
     }
 }

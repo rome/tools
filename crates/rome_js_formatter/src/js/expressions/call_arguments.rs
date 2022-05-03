@@ -2,7 +2,6 @@ use crate::utils::{is_simple_expression, token_has_comments};
 use crate::{format_elements, hard_group_elements, Format};
 use crate::{FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
-
 use rome_js_syntax::JsCallArgumentsFields;
 use rome_js_syntax::{JsAnyCallArgument, JsCallArguments};
 use rome_rowan::{AstSeparatedList, SyntaxResult};

@@ -193,7 +193,7 @@ impl SimpleArgument {
                         | JsAnyExpression::JsSuperExpression(_)
                 )
             }
-            SimpleArgument::Name(JsAnyName::JsPrivateName(_)) => true,
+            SimpleArgument::Name(JsAnyName::JsPrivateName(_) | JsAnyName::JsName(_)) => true,
             _ => false,
         }
     }
