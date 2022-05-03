@@ -388,11 +388,19 @@ impl<'a> Printer<'a> {
             FormatElement::Alternatives(alternatives) => {
                 for (index, alternative) in alternatives.iter().enumerate() {
                     if index + 1 == alternatives.len() {
-                        let args = args.clone().with_hard_group(false);
-                        // Flat printing didn't work, print with line breaks
-                        queue.enqueue(PrintElementCall::new(alternative, args));
+                        // we try to print the last one in flat mode and if we fail, we print it
+                        // on multiple lines (the default mode)
+                        if self
+                            .try_print_flat(queue, alternative, args.clone())
+                            .is_err()
+                        {
+                            let args = args.clone().with_hard_group(false);
+                            queue.enqueue(PrintElementCall::new(alternative, args));
+                        }
+                        break;
                     }
 
+                    // we try to print all the alternatives in flat mode
                     let args = args.clone().with_hard_group(false);
                     if self
                         .try_print_flat(queue, alternative, args.clone())

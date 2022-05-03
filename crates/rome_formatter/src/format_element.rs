@@ -613,16 +613,17 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
     format_elements![leading, Group::new(content), trailing]
 }
 
-/// A conditional group instructs the printer to try to print all the elements passed into flat mode.
-/// If none of the elements can't be printed in flat mode, then the last group is printed in multiline
+/// This function instructs the printer to try to print all the elements passed into flat mode.
+/// If none of the elements can't be printed in flat mode, then the last one is printed in multiline
 /// mode.
-/// This mean that also the last element is printed in flat mode.
+///
+/// This means that the last element is printed in flat mode.
 ///
 /// This is different from conditional content, where some content is printed if already inside a group.
 ///
 /// ## Examples
 ///
-/// The first element can be printed one single line
+/// The first element can be printed in one single line
 ///
 /// ```
 /// use rome_formatter::{alternatives, Formatted, format_elements, space_token, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
@@ -666,9 +667,9 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 ///
 #[inline]
-pub fn alternatives<Tries>(elements: Tries) -> FormatElement
+pub fn alternatives<Alternatives>(elements: Alternatives) -> FormatElement
 where
-    Tries: IntoIterator<Item = FormatElement>,
+    Alternatives: IntoIterator<Item = FormatElement>,
 {
     FormatElement::Alternatives(elements.into_iter().collect())
 }
