@@ -83,9 +83,9 @@ impl Formatter {
         }
     }
 
-    /// Formats all elements and returns the formatted result
+    /// Formats all items of the iterator and returns the formatted result
     ///
-    /// Returns [Err] if any child couldn't be formatted.
+    /// Returns the [Err] of the first item that failed to format.
     pub fn format_all<T: Format>(
         &self,
         nodes: impl IntoIterator<Item = T>,
