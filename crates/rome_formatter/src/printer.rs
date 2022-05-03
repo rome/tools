@@ -230,11 +230,18 @@ impl<'a> Printer<'a> {
             FormatElement::Alternatives(alternatives) => {
                 for (index, alternative) in alternatives.iter().enumerate() {
                     if index + 1 == alternatives.len() {
-                        // Flat printing didn't work, print with line breaks
-                        queue.enqueue(PrintElementCall::new(alternative, args.clone()));
+                        if self
+                            .try_print_flat(queue, alternative, args.clone())
+                            .is_err()
+                        {
+                            queue.enqueue(PrintElementCall::new(alternative, args.clone()));
+                        }
                         break;
                     }
-                    if self.try_print_flat(queue, element, args.clone()).is_ok() {
+                    if self
+                        .try_print_flat(queue, alternative, args.clone())
+                        .is_ok()
+                    {
                         break;
                     }
                 }
