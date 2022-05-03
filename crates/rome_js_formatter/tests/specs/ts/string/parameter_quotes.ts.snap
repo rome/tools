@@ -14,7 +14,8 @@ interface Y {
     "member": string;
     // you stay like this
     "member-member": number,
-    "4": number
+    "4": number,
+    "with_underscore": number
 }
 =============================
 # Outputs
@@ -31,6 +32,7 @@ interface Y {
 	// you stay like this
 	"member-member": number;
 	"4": number;
+	with_underscore: number;
 }
 ## Output 2
 -----
@@ -45,5 +47,6 @@ interface Y {
 	// you stay like this
 	'member-member': number;
 	'4': number;
+	with_underscore: number;
 }
 

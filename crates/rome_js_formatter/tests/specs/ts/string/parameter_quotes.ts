@@ -8,5 +8,6 @@ interface Y {
     "member": string;
     // you stay like this
     "member-member": number,
-    "4": number
+    "4": number,
+    "with_underscore": number
 }

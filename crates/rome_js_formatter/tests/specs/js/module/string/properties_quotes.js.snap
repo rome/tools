@@ -31,6 +31,8 @@ let { "a": test } = value;
 
 let { "fff--fff": test } = value;
 
+let { "with_underscore": test } = value;
+
 let a = { "": 10, "c_d": 30 }
 
 let b = { "'": 10, "c_d": 30 }
@@ -45,7 +47,7 @@ Quote style: Double Quotes
 class Y {
 	other = 4;
 	method() {}
-	"another_method"() {}
+	another_method() {}
 	camelMethod() {}
 	"stay-like-this"() {}
 	get getter() {}
@@ -69,9 +71,11 @@ let { a: test } = value;
 
 let { "fff--fff": test } = value;
 
-let a = { "": 10, "c_d": 30 };
+let { with_underscore: test } = value;
 
-let b = { "'": 10, "c_d": 30 };
+let a = { "": 10, c_d: 30 };
+
+let b = { "'": 10, c_d: 30 };
 ## Output 2
 -----
 Indent style: Tab
@@ -81,7 +85,7 @@ Quote style: Single Quotes
 class Y {
 	other = 4;
 	method() {}
-	'another_method'() {}
+	another_method() {}
 	camelMethod() {}
 	'stay-like-this'() {}
 	get getter() {}
@@ -105,7 +109,9 @@ let { a: test } = value;
 
 let { 'fff--fff': test } = value;
 
-let a = { '': 10, 'c_d': 30 };
+let { with_underscore: test } = value;
 
-let b = { "'": 10, 'c_d': 30 };
+let a = { '': 10, c_d: 30 };
+
+let b = { "'": 10, c_d: 30 };
 

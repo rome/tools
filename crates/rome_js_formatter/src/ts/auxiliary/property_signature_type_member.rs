@@ -1,5 +1,5 @@
 use crate::format_traits::FormatOptional;
-use crate::utils::{format_property_name, format_type_member_separator, PropertyNameCheckMode};
+use crate::utils::{format_property_name, format_type_member_separator, MemberContext};
 use crate::{format_elements, space_token, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsPropertySignatureTypeMember;
@@ -14,7 +14,7 @@ impl FormatNode for TsPropertySignatureTypeMember {
         Ok(format_elements![
             readonly,
             space_token(),
-            format_property_name(self.name()?, formatter, PropertyNameCheckMode::Alphabetic)?,
+            format_property_name(self.name()?, formatter, MemberContext::Type)?,
             optional,
             type_annotation,
             separator

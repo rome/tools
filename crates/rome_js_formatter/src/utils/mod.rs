@@ -685,17 +685,21 @@ impl From<JsLiteralMemberName> for PropertyName {
 
 const QUOTES_TO_OMIT: [char; 2] = ['\"', '\''];
 
-pub(crate) enum PropertyNameCheckMode {
-    Alphabetic,
-    Alphanumeric,
+pub(crate) enum MemberContext {
+    Type,
+    Member,
 }
 
-impl PropertyNameCheckMode {
+impl MemberContext {
     /// We can change the text only if there alphanumeric or alphabetic characters, depending on the mode
     fn text_can_be_replaced(&self, text_to_check: &str) -> bool {
         match self {
-            PropertyNameCheckMode::Alphabetic => text_to_check.chars().all(char::is_alphabetic),
-            PropertyNameCheckMode::Alphanumeric => text_to_check.chars().all(char::is_alphanumeric),
+            MemberContext::Type => text_to_check
+                .split('_')
+                .all(|sub_text| sub_text.chars().all(char::is_alphabetic)),
+            MemberContext::Member => text_to_check
+                .split('_')
+                .all(|sub_text| sub_text.chars().all(char::is_alphanumeric)),
         }
     }
 }
@@ -705,14 +709,18 @@ impl PropertyNameCheckMode {
 pub(crate) fn format_property_name<Member: Into<PropertyName>>(
     member_name: Member,
     formatter: &Formatter,
-    checker: PropertyNameCheckMode,
+    checker: MemberContext,
 ) -> FormatResult<FormatElement> {
     fn replace_node(
         name: JsSyntaxToken,
         formatter: &Formatter,
-        checker: PropertyNameCheckMode,
+        checker: MemberContext,
     ) -> FormatResult<FormatElement> {
         let text = name.text_trimmed();
+
+        if text.is_empty() {
+            return Ok(format_string_literal_token(name, formatter));
+        }
 
         // there are cases where we might have an empty string, which means that if the text length
         // is higher than 2, it means that the text has something in it

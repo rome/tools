@@ -25,6 +25,8 @@ let { "a": test } = value;
 
 let { "fff--fff": test } = value;
 
+let { "with_underscore": test } = value;
+
 let a = { "": 10, "c_d": 30 }
 
 let b = { "'": 10, "c_d": 30 }

@@ -1,5 +1,5 @@
 use crate::format_traits::FormatOptional;
-use crate::utils::PropertyNameCheckMode;
+use crate::utils::MemberContext;
 use crate::{
     format_elements, space_token, utils::format_property_name, FormatElement, FormatNode, Formatter,
 };
@@ -37,7 +37,7 @@ impl FormatNode for JsMethodClassMember {
             space_token(),
             async_token,
             star_token,
-            format_property_name(name?, formatter, PropertyNameCheckMode::Alphanumeric)?,
+            format_property_name(name?, formatter, MemberContext::Member)?,
             question_mark_token,
             type_parameters,
             params,

@@ -13,11 +13,7 @@ impl FormatNode for JsPropertyObjectMember {
             value,
         } = self.as_fields();
 
-        let key = format_property_name(
-            name?,
-            formatter,
-            crate::utils::PropertyNameCheckMode::Alphanumeric,
-        )?;
+        let key = format_property_name(name?, formatter, crate::utils::MemberContext::Member)?;
         let colon = colon_token.format(formatter)?;
         let value = value.format(formatter)?;
         Ok(format_elements![key, colon, space_token(), value])

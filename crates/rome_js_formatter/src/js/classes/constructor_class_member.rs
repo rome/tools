@@ -4,7 +4,7 @@ use crate::{
 };
 use rome_formatter::FormatResult;
 
-use crate::utils::PropertyNameCheckMode;
+use crate::utils::MemberContext;
 use rome_js_syntax::JsConstructorClassMember;
 use rome_js_syntax::JsConstructorClassMemberFields;
 
@@ -20,7 +20,7 @@ impl FormatNode for JsConstructorClassMember {
         Ok(hard_group_elements(format_elements![
             modifiers.format(formatter)?,
             space_token(),
-            format_property_name(name?, formatter, PropertyNameCheckMode::Alphanumeric)?,
+            format_property_name(name?, formatter, MemberContext::Member)?,
             parameters.format(formatter)?,
             space_token(),
             body.format(formatter)?
