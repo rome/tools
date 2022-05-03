@@ -625,9 +625,9 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// The first element can be printed one single line
 ///
 /// ```
-/// use rome_formatter::{conditional_group, Formatted, format_elements, space_token, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
+/// use rome_formatter::{format_alternatives, Formatted, format_elements, space_token, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
 ///
-/// let elements = conditional_group(vec![
+/// let elements = format_alternatives(vec![
 ///     format_elements![token("summer"), token(","), space_token(), token("spring")],
 ///     format_elements![
 ///         group_elements(
@@ -644,9 +644,9 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// width, there are line suffix, etc.), so the last one is used
 ///
 /// ```
-/// use rome_formatter::{conditional_group, Formatted, space_token, LineWidth, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
+/// use rome_formatter::{format_alternatives, Formatted, space_token, LineWidth, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
 ///
-/// let elements = conditional_group(vec![
+/// let elements = format_alternatives(vec![
 ///     format_elements![token("summer"), token(","), space_token(), token("spring")],
 ///     format_elements![
 ///         group_elements(
@@ -666,7 +666,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 ///
 #[inline]
-pub fn conditional_group<Tries>(elements: Tries) -> FormatElement
+pub fn format_alternatives<Tries>(elements: Tries) -> FormatElement
 where
     Tries: IntoIterator<Item = FormatElement>,
 {
@@ -692,7 +692,6 @@ where
 /// ```
 /// use rome_formatter::{
 ///   group_elements, Formatted, format_elements, token, hard_group_elements,
-///
 ///   FormatOptions, empty_line, if_group_breaks, if_group_fits_on_single_line
 /// };
 ///
@@ -1425,7 +1424,8 @@ impl FormatElement {
             FormatElement::Indent(indent) => indent.content.has_hard_line_breaks(),
             FormatElement::Group(Group { mode, content, .. }) => match mode {
                 GroupMode::NeverBreak => content.has_hard_line_breaks(),
-                // TODO: review when there's an expanded state
+                // TODO: #2533 this will likely change when the `expanded` state will be removed and baked
+                // inside the actual content
                 GroupMode::MaybeBreak => content.has_hard_line_breaks(),
             },
             FormatElement::ConditionalContentInGroup(group) => group.content.has_hard_line_breaks(),
@@ -1496,7 +1496,7 @@ impl FormatElement {
                     };
                     (leading, content, trailing)
                 } else {
-                    // TODO: implement the pick of trivias on conditional groups
+                    // TODO: #2533 implement the pick of trivia on conditional groups
                     let (_leading, content, _trailing) = content.split_trivia();
 
                     (empty_element(), group_elements(content), empty_element())
@@ -1519,6 +1519,7 @@ impl FormatElement {
             FormatElement::Empty | FormatElement::Line(_) | FormatElement::Comment(_) => None,
 
             FormatElement::Indent(indent) => indent.content.last_element(),
+            // TODO: #2533 figure out the alternative that will be printed inside conditional groups
             FormatElement::Group(group) => group.content.last_element(),
 
             _ => Some(self),

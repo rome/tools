@@ -2,7 +2,7 @@ use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
 use crate::Formatter;
 use rome_formatter::{
-    concat_elements, conditional_group, format_elements, group_elements, hard_line_break, indent,
+    concat_elements, format_alternatives, format_elements, group_elements, hard_line_break, indent,
     join_elements, FormatElement,
 };
 use rome_js_syntax::{JsAnyCallArgument, JsAnyExpression, JsCallExpression};
@@ -150,9 +150,10 @@ impl<'f> Groups<'f> {
     /// and the other one that goes on multiple lines.
     ///
     /// It's up to the printer to decide which one to use.
+    // TODO: #2421 enable when correct multi line comment is ready
     #[allow(dead_code)]
     pub fn into_format_elements(self, head_group: &HeadGroup) -> FormatElement {
-        conditional_group(vec![
+        format_alternatives(vec![
             self.one_line_element(),
             self.multi_line_element(head_group),
         ])
@@ -325,14 +326,16 @@ impl<'f> Groups<'f> {
 #[derive(Debug)]
 pub(crate) struct HeadGroup {
     items: Vec<FlattenItem>,
-    was_expanded: bool,
+    /// This flag tracks when the head group was "extended", meaning new elements
+    /// were added to it
+    was_extended: bool,
 }
 
 impl HeadGroup {
     pub(crate) fn new(items: Vec<FlattenItem>) -> Self {
         Self {
             items,
-            was_expanded: false,
+            was_extended: false,
         }
     }
 
@@ -344,19 +347,19 @@ impl HeadGroup {
         concat_elements(self.items.iter().map(|element| element.clone().into()))
     }
 
-    pub(crate) fn expand_group(&mut self, group: Vec<FlattenItem>) {
+    pub(crate) fn extend_group(&mut self, group: Vec<FlattenItem>) {
         self.items.extend(group);
-        self.was_expanded = true;
+        self.was_extended = true;
     }
 
     pub(crate) fn has_comments(&self) -> bool {
         self.items.iter().any(|item| item.has_trailing_comments())
     }
 
-    // TODO: figure out what's this logic about
+    // TODO: #2421 figure out what's this logic about
     #[allow(dead_code)]
     pub(crate) fn should_have_line_break_before_ident(&self) -> bool {
-        let item_to_check = if self.was_expanded {
+        let item_to_check = if self.was_extended {
             self.items.first()
         } else {
             self.items.last()

@@ -154,7 +154,7 @@ pub fn format_call_expression(
     // If so, then we extract it and concatenate it together with the head.
     if let Some(group_to_merge) = rest_of_groups.should_merge_with_first_group(&head_group) {
         let group_to_merge = group_to_merge.into_iter().flatten().collect();
-        head_group.expand_group(group_to_merge);
+        head_group.extend_group(group_to_merge);
     }
 
     format_groups(calls_count, head_group, rest_of_groups)
@@ -299,7 +299,7 @@ fn format_groups(
         let head_formatted = head_group.as_format_element();
         let body = groups.one_line_element();
 
-        // TODO: this is not the definitive solution, as there are few restrictions due to how the printer works:
+        // TODO: #2421 this is not the definitive solution, as there are few restrictions due to how the printer works:
         // - groups that contains other groups with hard lines break all the groups
         // - conditionally print one single line is subject to how the printer works (by default, multiline)
         // let body = groups.into_format_elements(&head_group);
