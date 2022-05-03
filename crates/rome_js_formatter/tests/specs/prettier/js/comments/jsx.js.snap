@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: jsx.js
 ---
 # Input
@@ -130,59 +131,59 @@ onClick={() => {}}>
 # Output
 ```js
 <div>
-  {
+{
     /* comment */
   }
 </div>;
 
 <div>
-  {/* comment */
+{/* comment */
   }
 </div>;
 
 <div>
-  {/* comment
+{/* comment
 */
   }
 </div>;
 
 <div>
-  {a/* comment
+{a/* comment
 */
   }
 </div>;
 
 <div>
-  {/* comment
+{/* comment
 */
   a
   }
 </div>;
 
 <div>
-  {/* comment */
+{/* comment */
   }
 </div>;
 
 <div>
-  {/* comment */}
+{/* comment */}
 </div>;
 
 <div>
-  {
+{
     // single line comment
   }
 </div>;
 
 <div>
-  {
+{
     // multiple line comments 1
     // multiple line comments 2
   }
 </div>;
 
 <div>
-  {
+{
     // multiple mixed comments 1
     /* multiple mixed comments 2 */
     /* multiple mixed comments 3 */
@@ -191,7 +192,7 @@ onClick={() => {}}>
 </div>;
 
 <div>
-  {
+{
     // Some very v  ery very very merry (xmas) very very long line to break line width limit
   }
 </div>;
@@ -199,13 +200,13 @@ onClick={() => {}}>
 <div>{/*<div>  Some very v  ery very very long line to break line width limit </div>*/}</div>;
 
 <div>
-  {/**
+{/**
    * JSDoc-y comment in JSX. I wonder what will happen to it?
   */}
 </div>;
 
 <div>
-  {
+{
     /**
    * Another JSDoc comment in JSX.
   */
@@ -213,41 +214,34 @@ onClick={() => {}}>
 </div>;
 
 <div
-  /**
+/**
  * Handles clicks.
 */
-onClick={() => {}}>
-
-</div>;
+onClick={() => {}}></div>;
 
 <div
-  // comment
+// comment
 >
-  {foo}
+{foo}
 </div>;
 
-<div
-  className="foo" // comment
->
-  {foo}
+<div className="foo"> // comment
+{foo}
 </div>;
 
-<div
-  className="foo"
-  // comment
+<div className="foo"
+// comment
 >
-  {foo}
+{foo}
 </div>;
 
-<div // comment
-  id="foo"
->
-  {children}
+<div id="foo"> // comment
+{children}
 </div>;
 
 <Wrapper>
-  {}
-  <Component />
+{}
+<Component />
 </Wrapper>;
 
 ```
