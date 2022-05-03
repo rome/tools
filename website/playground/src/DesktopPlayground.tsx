@@ -3,8 +3,7 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
-import ReactJson from "react-json-view";
-import AstView from "./AstView";
+import TreeView from "./TreeView";
 
 export default function DesktopPlayground(
 	{
@@ -76,10 +75,10 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-							<ReactJson src={JSON.parse(cst)} />
+							<TreeView tree={cst} />
 						</TabPanel>
 						<TabPanel>
-							<AstView ast={ast} />
+							<TreeView tree={ast} />
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>

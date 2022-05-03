@@ -3,8 +3,7 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import { getLanguage } from "./utils";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
-import ReactJson from "react-json-view";
-import AstView from "./AstView";
+import TreeView from "./TreeView";
 
 export function MobilePlayground(
 	{
@@ -78,10 +77,10 @@ export function MobilePlayground(
 					/>
 				</TabPanel>
 				<TabPanel>
-					<ReactJson src={JSON.parse(cst)} />
+					<TreeView tree={cst} />
 				</TabPanel>
 				<TabPanel>
-					<AstView ast={ast} />
+					<TreeView tree={ast} />
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
