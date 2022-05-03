@@ -17,7 +17,7 @@ impl FormatNode for JsxText {
     }
 }
 
-static TERMINATORS: [char; 4] = [' ', '\n', '\t', '\r'];
+static WHITESPACE: [char; 4] = [' ', '\n', '\t', '\r'];
 
 struct TextCleaner<'a> {
     pub text: &'a str,
@@ -49,7 +49,7 @@ impl<'a> TextCleaner<'a> {
                 //
                 //  input:  "Yi  Yi"
                 //               ^
-                if !TERMINATORS.contains(&c) {
+                if !WHITESPACE.contains(&c) {
                     // We push the range into the vector
                     whitespace_ranges.push(start..idx);
                     current_whitespace_range_start = None;
@@ -60,7 +60,7 @@ impl<'a> TextCleaner<'a> {
                 //
                 //  input: "Yi   Yi"
                 //            ^
-                if TERMINATORS.contains(&c) {
+                if WHITESPACE.contains(&c) {
                     // We start a whitespace range
                     current_whitespace_range_start = Some(idx);
                 }
@@ -100,7 +100,7 @@ impl<'a> TextCleaner<'a> {
 
         if self.leading_whitespace_type.is_some() {
             for (_, c) in char_indices.by_ref() {
-                if !TERMINATORS.contains(&c) {
+                if !WHITESPACE.contains(&c) {
                     output_string.push(c);
                     break;
                 }
@@ -144,7 +144,7 @@ impl<'a> TextCleaner<'a> {
                 //
                 // If the character is not whitespace, we push it on.
                 // If it is whitespace, it is trailing whitespace, so we ignore it.
-                if !TERMINATORS.contains(&c) {
+                if !WHITESPACE.contains(&c) {
                     output_string.push(c)
                 }
             }
@@ -200,7 +200,7 @@ fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> Option<Whitesp
     let mut leading_type = None;
 
     for (_, c) in char_indices.by_ref() {
-        if !TERMINATORS.contains(&c) {
+        if !WHITESPACE.contains(&c) {
             return leading_type;
         }
         if c == '\n' {
@@ -219,7 +219,7 @@ fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> Option<Whitesp
 fn get_trailing_whitespace_type(end_whitespace: &str) -> Option<WhitespaceType> {
     let mut trailing_type = None;
     for c in end_whitespace.chars() {
-        if TERMINATORS.contains(&c) {
+        if WHITESPACE.contains(&c) {
             if c == '\n' {
                 trailing_type = Some(WhitespaceType::HasNewline);
             } else if trailing_type.is_none() {
