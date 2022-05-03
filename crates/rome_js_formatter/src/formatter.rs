@@ -66,7 +66,8 @@ impl Formatter {
     }
 
     /// Tracks the given token as formatted
-    pub fn track_token<L: Language>(&self, token: &SyntaxToken<L>) {
+
+    pub fn track_token<L: Language>(&self, #[allow(unused_variables)] token: &SyntaxToken<L>) {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 self.printed_tokens.borrow_mut().track_token(token);
@@ -74,7 +75,10 @@ impl Formatter {
         }
     }
 
-    pub fn assert_formatted_all_tokens<L: Language>(&self, root: &SyntaxNode<L>) {
+    pub fn assert_formatted_all_tokens<L: Language>(
+        &self,
+        #[allow(unused_variables)] root: &SyntaxNode<L>,
+    ) {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 let printed_tokens = self.printed_tokens.borrow();
