@@ -4,7 +4,7 @@ use rome_rowan::{
     Language, SyntaxNode, SyntaxToken, SyntaxTokenText, SyntaxTriviaPieceComments, TextLen,
 };
 use std::borrow::Cow;
-use std::fmt::{self, Debug, Display, Formatter};
+use std::fmt::{self, Debug, Formatter};
 use std::ops::Deref;
 
 type Content = Box<FormatElement>;
@@ -640,7 +640,8 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// assert_eq!("summer, spring", Formatted::new(elements, FormatOptions::default()).print().as_code());
 /// ```
-/// The first element can be printed one single line, so the last one is used
+/// The first element can't be printed on a single line (there are line breaks, exceeds line
+/// width, there are line suffix, etc.), so the last one is used
 ///
 /// ```
 /// use rome_formatter::{conditional_group, Formatted, space_token, LineWidth, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
@@ -1023,8 +1024,13 @@ impl Debug for FormatElement {
                     write!(fmt, "Group [Conditional]")?;
                     expanded.fmt(fmt)
                 } else {
-                    write!(fmt, "Group [{}] ", group.mode)?;
-                    group.fmt(fmt)
+                    fmt.debug_tuple("Group")
+                        .field(&group.mode)
+                        .field(group)
+                        .finish()
+                    // group.mode.fmt(fmt)?;
+                    // write!(fmt, "Group [{}] ", group.mode)?;
+                    // group.fmt(fmt)
                 }
             }
 
@@ -1134,12 +1140,6 @@ pub(crate) enum GroupMode {
     NeverBreak,
     /// The group can break
     MaybeBreak,
-}
-
-impl Display for GroupMode {
-    fn fmt(&self, fmt: &mut Formatter<'_>) -> fmt::Result {
-        write!(fmt, "{self:?}")
-    }
 }
 
 /// Group is a special token that controls how the child tokens are printed.

@@ -156,7 +156,7 @@ pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<
         let formatter = Formatter::new(options);
         let element = root.format(&formatter)?;
 
-        dbg!(&element);
+        // dbg!(&element);
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 let printed_tokens = formatter.printed_tokens.into_inner();
