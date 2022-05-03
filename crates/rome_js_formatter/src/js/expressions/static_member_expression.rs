@@ -28,8 +28,7 @@ impl FormatNode for JsStaticMemberExpression {
         let formatted_object = object?.format(formatter)?;
 
         if is_object_number_literal && (has_object_trailing_trivia || has_operator_leading_trivia) {
-            let (object_leading, object_content, object_trailing) =
-                formatted_object.clone().split_trivia();
+            let (object_leading, object_content, object_trailing) = formatted_object.split_trivia();
 
             Ok(group_elements(format_elements![
                 object_leading,
