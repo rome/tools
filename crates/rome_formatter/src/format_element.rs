@@ -626,9 +626,9 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// The first element can be printed in one single line
 ///
 /// ```
-/// use rome_formatter::{alternatives, Formatted, format_elements, space_token, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
+/// use rome_formatter::{try_fit_elements, Formatted, format_elements, space_token, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
 ///
-/// let elements = alternatives(vec![
+/// let elements = try_fit_elements(vec![
 ///     format_elements![token("summer"), token(","), space_token(), token("spring")],
 ///     format_elements![
 ///         group_elements(
@@ -645,9 +645,9 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// width, there are line suffix, etc.), so the last one is used
 ///
 /// ```
-/// use rome_formatter::{alternatives, Formatted, space_token, LineWidth, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
+/// use rome_formatter::{try_fit_elements, Formatted, space_token, LineWidth, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
 ///
-/// let elements = alternatives(vec![
+/// let elements = try_fit_elements(vec![
 ///     format_elements![token("summer"), token(","), space_token(), token("spring")],
 ///     format_elements![
 ///         group_elements(
@@ -667,7 +667,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 ///
 #[inline]
-pub fn alternatives<Alternatives>(elements: Alternatives) -> FormatElement
+pub fn try_fit_elements<Alternatives>(elements: Alternatives) -> FormatElement
 where
     Alternatives: IntoIterator<Item = FormatElement>,
 {

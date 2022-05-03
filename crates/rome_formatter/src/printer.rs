@@ -696,9 +696,9 @@ mod tests {
     use crate::format_element::join_elements;
     use crate::printer::{LineEnding, Printer, PrinterOptions};
     use crate::{
-        alternatives, block_indent, empty_line, format_elements, group_elements,
-        hard_group_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line,
-        soft_block_indent, soft_line_break, soft_line_break_or_space, space_token, token,
+        block_indent, empty_line, format_elements, group_elements, hard_group_elements,
+        hard_line_break, if_group_breaks, if_group_fits_on_single_line, soft_block_indent,
+        soft_line_break, soft_line_break_or_space, space_token, token, try_fit_elements,
         FormatElement, LineWidth, Printed,
     };
 
@@ -911,7 +911,7 @@ two lines`,
 
     #[test]
     fn it_prints_conditional_groups() {
-        let result = print_element(alternatives(vec![
+        let result = print_element(try_fit_elements(vec![
             format_elements![token("summer"), token(","), space_token(), token("spring")],
             format_elements![group_elements(format_elements![
                 token("summer"),
@@ -929,7 +929,7 @@ two lines`,
             ..PrinterOptions::default()
         };
         let result = print_element_with_options(
-            alternatives(vec![
+            try_fit_elements(vec![
                 format_elements![token("summer"), token(","), space_token(), token("spring")],
                 format_elements![group_elements(format_elements![
                     token("summer"),
