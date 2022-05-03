@@ -84,7 +84,20 @@ impl Default for PrinterOptions {
 
 /// Error returned if printing an item as a flat string fails because it either contains
 /// explicit line breaks or would otherwise exceed the specified line width.
-struct LineBreakRequiredError;
+#[derive(Debug)]
+enum FlatError {
+    /// A line is too long
+    LineTooLong,
+
+    /// There's a hard line break
+    LineBreakRequired,
+
+    /// A line break was printed
+    LineBreakWasPrinted,
+
+    /// Found a line suffix, which contains comments
+    HasLineSuffix,
+}
 
 /// Prints the format elements into a string
 #[derive(Debug, Clone, Default)]
@@ -214,6 +227,19 @@ impl<'a> Printer<'a> {
                 }
             }
 
+            FormatElement::Alternatives(alternatives) => {
+                for (index, alternative) in alternatives.iter().enumerate() {
+                    if index + 1 == alternatives.len() {
+                        // Flat printing didn't work, print with line breaks
+                        queue.enqueue(PrintElementCall::new(alternative, args.clone()));
+                        break;
+                    }
+                    if self.try_print_flat(queue, element, args.clone()).is_ok() {
+                        break;
+                    }
+                }
+            }
+
             FormatElement::Line(line) => {
                 if args.hard_group && matches!(line.mode, LineMode::Soft | LineMode::SoftOrSpace) {
                     self.state.pending_space |= line.mode == LineMode::SoftOrSpace;
@@ -291,7 +317,7 @@ impl<'a> Printer<'a> {
         queue: &mut ElementCallQueue<'a>,
         element: &'a FormatElement,
         args: PrintElementArgs,
-    ) -> Result<(), LineBreakRequiredError> {
+    ) -> Result<(), FlatError> {
         let snapshot = self.state.snapshot();
         let min_queue_length = queue.0.len();
 
@@ -319,7 +345,7 @@ impl<'a> Printer<'a> {
         queue: &mut ElementCallQueue<'a>,
         element: &'a FormatElement,
         args: PrintElementArgs,
-    ) -> Result<(), LineBreakRequiredError> {
+    ) -> Result<(), FlatError> {
         match element {
             FormatElement::Token(_) => {
                 let current_line = self.state.generated_line;
@@ -329,12 +355,12 @@ impl<'a> Printer<'a> {
 
                 // If the line is too long, break the group
                 if self.state.line_width > self.options.print_width.value().into() {
-                    return Err(LineBreakRequiredError);
+                    return Err(FlatError::LineTooLong);
                 }
 
                 // If a new line was printed, break the group
                 if current_line != self.state.generated_line {
-                    return Err(LineBreakRequiredError);
+                    return Err(FlatError::LineBreakWasPrinted);
                 }
             }
             FormatElement::Line(line) => {
@@ -346,7 +372,7 @@ impl<'a> Printer<'a> {
                     }
                     // We want a flat structure, so omit soft line wraps
                     LineMode::Soft => {}
-                    LineMode::Hard | LineMode::Empty => return Err(LineBreakRequiredError),
+                    LineMode::Hard | LineMode::Empty => return Err(FlatError::LineBreakRequired),
                 }
             }
 
@@ -358,6 +384,24 @@ impl<'a> Printer<'a> {
                 group.content.as_ref(),
                 args.with_hard_group(false),
             )),
+
+            FormatElement::Alternatives(alternatives) => {
+                for (index, alternative) in alternatives.iter().enumerate() {
+                    if index + 1 == alternatives.len() {
+                        let args = args.clone().with_hard_group(false);
+                        // Flat printing didn't work, print with line breaks
+                        queue.enqueue(PrintElementCall::new(alternative, args));
+                    }
+
+                    let args = args.clone().with_hard_group(false);
+                    if self
+                        .try_print_flat(queue, alternative, args.clone())
+                        .is_ok()
+                    {
+                        break;
+                    }
+                }
+            }
 
             // Fill elements are printed as space-separated lists in flat mode
             FormatElement::Fill(list) => {
@@ -387,7 +431,7 @@ impl<'a> Printer<'a> {
                 queue.enqueue(PrintElementCall::new(content.as_ref(), args));
             }
 
-            FormatElement::LineSuffix { .. } => return Err(LineBreakRequiredError),
+            FormatElement::LineSuffix { .. } => return Err(FlatError::HasLineSuffix),
 
             FormatElement::Empty
             | FormatElement::Space
@@ -644,8 +688,9 @@ mod tests {
     use crate::format_element::join_elements;
     use crate::printer::{LineEnding, Printer, PrinterOptions};
     use crate::{
-        block_indent, empty_line, format_elements, group_elements, hard_line_break,
-        if_group_breaks, soft_block_indent, soft_line_break, soft_line_break_or_space, token,
+        alternatives, block_indent, empty_line, format_elements, group_elements,
+        hard_group_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line,
+        soft_block_indent, soft_line_break, soft_line_break_or_space, space_token, token,
         FormatElement, LineWidth, Printed,
     };
 
@@ -656,6 +701,14 @@ mod tests {
             ..PrinterOptions::default()
         };
 
+        Printer::new(options).print(&element.into())
+    }
+
+    /// Prints the given element with the given options
+    fn print_element_with_options<T: Into<FormatElement>>(
+        element: T,
+        options: PrinterOptions,
+    ) -> Printed {
         Printer::new(options).print(&element.into())
     }
 
@@ -835,5 +888,51 @@ two lines`,
         ]);
 
         assert_eq!("a\n\nb", result.as_code())
+    }
+
+    #[test]
+    fn it_prints_hard_groups() {
+        let result = print_element(group_elements(hard_group_elements(format_elements![
+            if_group_breaks(token("not printed")),
+            empty_line(),
+            if_group_fits_on_single_line(token("printed")),
+        ])));
+
+        assert_eq!("\nprinted", result.as_code())
+    }
+
+    #[test]
+    fn it_prints_conditional_groups() {
+        let result = print_element(alternatives(vec![
+            format_elements![token("summer"), token(","), space_token(), token("spring")],
+            format_elements![group_elements(format_elements![
+                token("summer"),
+                token(","),
+                space_token(),
+                token("spring")
+            ])],
+        ]));
+
+        assert_eq!("summer, spring", result.as_code());
+
+        let options = PrinterOptions {
+            indent_string: String::from("  "),
+            print_width: LineWidth::try_from(10).unwrap(),
+            ..PrinterOptions::default()
+        };
+        let result = print_element_with_options(
+            alternatives(vec![
+                format_elements![token("summer"), token(","), space_token(), token("spring")],
+                format_elements![group_elements(format_elements![
+                    token("summer"),
+                    token(","),
+                    soft_line_break_or_space(),
+                    token("spring")
+                ])],
+            ]),
+            options,
+        );
+
+        assert_eq!("summer,\nspring", result.as_code())
     }
 }

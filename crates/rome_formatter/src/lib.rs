@@ -4,7 +4,7 @@ pub mod intersperse;
 pub mod printer;
 use crate::printer::Printer;
 pub use format_element::{
-    block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
+    alternatives, block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
     group_elements, hard_group_elements, hard_line_break, if_group_breaks,
     if_group_fits_on_single_line, indent, join_elements, join_elements_hard_line,
     join_elements_soft_line, join_elements_with, line_suffix, normalize_newlines,

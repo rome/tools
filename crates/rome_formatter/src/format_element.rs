@@ -613,6 +613,68 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
     format_elements![leading, Group::new(content), trailing]
 }
 
+/// A conditional group instructs the printer to try to print all the elements passed into flat mode.
+/// If none of the elements can't be printed in flat mode, then the last group is printed in multiline
+/// mode.
+/// This mean that also the last element is printed in flat mode.
+///
+/// This is different from conditional content, where some content is printed if already inside a group.
+///
+/// ## Examples
+///
+/// The first element can be printed one single line
+///
+/// ```
+/// use rome_formatter::{alternatives, Formatted, format_elements, space_token, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
+///
+/// let elements = alternatives(vec![
+///     format_elements![token("summer"), token(","), space_token(), token("spring")],
+///     format_elements![
+///         group_elements(
+///             format_elements![
+///                 token("summer"), token(","), space_token(), token("spring")
+///             ]
+///         )
+///     ]
+/// ]);
+///
+/// assert_eq!("summer, spring", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// ```
+/// The first element can't be printed on a single line (there are line breaks, exceeds line
+/// width, there are line suffix, etc.), so the last one is used
+///
+/// ```
+/// use rome_formatter::{alternatives, Formatted, space_token, LineWidth, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, group_elements};
+///
+/// let elements = alternatives(vec![
+///     format_elements![token("summer"), token(","), space_token(), token("spring")],
+///     format_elements![
+///         group_elements(
+///             format_elements![
+///                 token("summer"), token(","), soft_line_break_or_space(), token("spring")
+///             ]
+///         )
+///     ]
+/// ]);
+///
+/// let options = FormatOptions {
+///   line_width: LineWidth::try_from(10).unwrap(),
+///   ..FormatOptions::default()
+/// };
+///
+/// assert_eq!("summer,\nspring", Formatted::new(elements, options).print().as_code());
+/// ```
+///
+#[inline]
+pub fn alternatives<Tries>(elements: Tries) -> FormatElement
+where
+    Tries: IntoIterator<Item = FormatElement>,
+{
+    let elements: Vec<_> = elements.into_iter().collect();
+
+    FormatElement::Alternatives(elements.into_iter().collect())
+}
+
 /// Creates a group that forces all elements inside it to be printed on a
 /// single line. This behavior can in turn be escaped by introducing an inner
 /// `Group` element that will resume the normal breaking behavior of the printer.
@@ -883,6 +945,9 @@ pub enum FormatElement {
     /// See [crate::hard_group_elements] for documentation and examples.
     HardGroup(Group),
 
+    /// See [crate::alternatives] for documentation and examples.
+    Alternatives(Vec<FormatElement>),
+
     /// Allows to specify content that gets printed depending on whatever the enclosing group
     /// is printed on a single line or multiple lines. See [crate::if_group_breaks] for examples.
     ConditionalGroupContent(ConditionalGroupContent),
@@ -988,6 +1053,9 @@ impl Debug for FormatElement {
                 .debug_tuple("Verbatim")
                 .field(&verbatim.element)
                 .finish(),
+            FormatElement::Alternatives(alternatives) => {
+                fmt.debug_tuple("Alternatives").field(alternatives).finish()
+            }
         }
     }
 }
@@ -1331,6 +1399,8 @@ impl FormatElement {
             FormatElement::LineSuffix(_) => true,
             FormatElement::Comment(content) => content.has_hard_line_breaks(),
             FormatElement::Verbatim(verbatim) => verbatim.element.has_hard_line_breaks(),
+            // it's not possible to be retrieve to hard line breaks from alternatives, we return false
+            FormatElement::Alternatives(_) => false,
         }
     }
 
