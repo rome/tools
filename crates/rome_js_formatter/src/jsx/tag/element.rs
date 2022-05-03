@@ -1,6 +1,4 @@
-use crate::{
-    soft_block_indent, Format, FormatElement, FormatNode, FormatResult, Formatter, JsFormatter,
-};
+use crate::{Format, FormatElement, FormatNode, FormatResult, Formatter, JsFormatter};
 use rome_formatter::format_elements;
 use rome_js_syntax::{JsxElement, JsxElementFields};
 
@@ -14,7 +12,7 @@ impl FormatNode for JsxElement {
 
         Ok(format_elements![
             opening_element.format(formatter)?,
-            soft_block_indent(formatter.format_list(children)),
+            formatter.format_list(children),
             closing_element.format(formatter)?
         ])
     }

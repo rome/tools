@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: do.js
 ---
 # Input
@@ -90,17 +91,20 @@ do {
 function foo() {
   return (
     <nav>
-      <Home />
-      {
-        do {
-          if (loggedIn) {
+    <Home />
+    
+    {
+    do 
+    {
+    if (loggedIn) 
+    {
             <LogoutButton />
-          } else {
+          }
+     else 
+    {
             <LoginButton />
           }
-        }
-      }
-    </nav>
+    } }</nav>
   );
 }
 

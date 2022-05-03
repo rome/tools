@@ -19,16 +19,20 @@ impl FormatNode for JsxText {
 
 static TERMINATORS: [char; 4] = [' ', '\n', '\t', '\r'];
 
-struct TextInfo<'a> {
+struct TextCleaner<'a> {
     pub text: &'a str,
     pub leading_whitespace_type: Option<WhitespaceType>,
     /// Whitespace ranges are the ranges of text that contain whitespace. We keep track of them
     /// so that on our second pass, we strip them out.
+    ///
+    ///  "A  Brighter \n\t Summer  \n\n Day"
+    ///    ^^        ^^^^^^      ^^^^^^^
+    ///
     pub whitespace_ranges: Vec<Range<usize>>,
     pub trailing_whitespace_type: Option<WhitespaceType>,
 }
 
-impl<'a> TextInfo<'a> {
+impl<'a> TextCleaner<'a> {
     fn build(text: &'a str) -> Self {
         let mut char_indices = text.char_indices();
 
@@ -42,6 +46,9 @@ impl<'a> TextInfo<'a> {
             // If we've already started a whitespace range...
             if let Some(start) = current_whitespace_range_start {
                 // If the character is *not* a whitespace character...
+                //
+                //  input:  "Yi  Yi"
+                //               ^
                 if !TERMINATORS.contains(&c) {
                     // We push the range into the vector
                     whitespace_ranges.push(start..idx);
@@ -50,6 +57,9 @@ impl<'a> TextInfo<'a> {
             } else {
                 // If we have not started a whitespace range
                 // and we come across a whitespace character,
+                //
+                //  input: "Yi   Yi"
+                //            ^
                 if TERMINATORS.contains(&c) {
                     // We start a whitespace range
                     current_whitespace_range_start = Some(idx);
@@ -57,10 +67,16 @@ impl<'a> TextInfo<'a> {
             }
         }
 
+        // If, at the end of the loop, we still have a `current_whitespace_range_start` that is
+        // Some, this indicates we have trailing whitespace:
+        //
+        //  input: "Taipei  Story   \t"
+        //                       ^ started unterminated whitespace range here
+        //
         let trailing_whitespace_type = current_whitespace_range_start
             .and_then(|start| get_trailing_whitespace_type(&text[start..]));
 
-        TextInfo {
+        TextCleaner {
             text,
             leading_whitespace_type,
             whitespace_ranges,
@@ -68,67 +84,85 @@ impl<'a> TextInfo<'a> {
         }
     }
 
-    fn create_normalized_text(&self) -> Option<String> {
+    /// Tries to clean the text with the whitespace ranges. If we have no ranges, we return None
+    /// because there's no cleaning to be done.
+    fn clean_text(&self) -> Option<String> {
         if self.whitespace_ranges.is_empty() {
-            None
-        } else {
-            let mut char_indices = self.text.char_indices();
+            return None;
+        }
 
-            let mut output_string = match self.leading_whitespace_type {
-                None | Some(WhitespaceType::HasNewline) => String::new(),
-                Some(WhitespaceType::NoNewline) => " ".to_string(),
-            };
+        let mut char_indices = self.text.char_indices();
 
-            if matches!(
-                self.leading_whitespace_type,
-                Some(WhitespaceType::HasNewline) | Some(WhitespaceType::NoNewline)
-            ) {
-                for (_, c) in char_indices.by_ref() {
-                    if !TERMINATORS.contains(&c) {
-                        output_string.push(c);
-                        break;
-                    }
+        let mut output_string = match self.leading_whitespace_type {
+            None | Some(WhitespaceType::HasNewline) => String::new(),
+            Some(WhitespaceType::NoNewline) => " ".to_string(),
+        };
+
+        if self.leading_whitespace_type.is_some() {
+            for (_, c) in char_indices.by_ref() {
+                if !TERMINATORS.contains(&c) {
+                    output_string.push(c);
+                    break;
                 }
             }
+        }
 
-            let mut current_whitespace_range_idx = 0;
+        let mut current_whitespace_range_idx = 0;
 
-            // Invariant: idx is **never** larger than the end of the current whitespace range
-            for (idx, c) in char_indices {
-                let current_whitespace_range =
-                    self.whitespace_ranges.get(current_whitespace_range_idx);
+        // Invariant: idx is **never** larger than the end of the current whitespace range
+        for (idx, c) in char_indices {
+            let current_whitespace_range = self.whitespace_ranges.get(current_whitespace_range_idx);
+            if let Some(range) = current_whitespace_range {
                 // If the index is the end of the current whitespace range,
                 // then we increment the whitespace range index and
-                // push on an empty string
-                if let Some(range) = current_whitespace_range {
-                    if idx == range.end {
-                        output_string.push(' ');
-                        output_string.push(c);
-                        current_whitespace_range_idx += 1;
-                    }
+                // push on an empty string.
+                //
+                //   input:  "hello    world"
+                //                    ^
+                //   output: "hello "
+                if idx == range.end - 1 {
+                    output_string.push(' ');
+                    current_whitespace_range_idx += 1;
+                }
 
-                    // If our index is less than the start of the current whitespace range
-                    // we push on characters
-                    if idx < range.start {
-                        output_string.push(c)
-                    }
-                } else if !TERMINATORS.contains(&c) {
+                // If our index is less than the start of the current whitespace range
+                // we push on characters.
+                //
+                //   input: "hello  world"
+                //             ^
+                //   output: "hel"
+                //
+                if idx < range.start {
+                    output_string.push(c)
+                }
+            } else {
+                // If None, we are past the whitespace ranges
+                //
+                //   input: "hello  world"
+                //                    ^
+                //   output: "hello wor"
+                //
+                // If the character is not whitespace, we push it on.
+                // If it is whitespace, it is trailing whitespace, so we ignore it.
+                if !TERMINATORS.contains(&c) {
                     output_string.push(c)
                 }
             }
-
-            if matches!(
-                self.trailing_whitespace_type,
-                Some(WhitespaceType::NoNewline)
-            ) {
-                output_string.push(' ');
-            }
-
-            Some(output_string)
         }
+
+        if matches!(
+            self.trailing_whitespace_type,
+            Some(WhitespaceType::NoNewline)
+        ) {
+            output_string.push(' ');
+        }
+
+        Some(output_string)
     }
 }
 
+/// We cannot have this inside the TextCleaner because the text reference
+/// cannot be moved out of the struct, which it is via the Cow<str>
 fn get_trimmed_text(
     text: &str,
     leading_whitespace_type: Option<WhitespaceType>,
@@ -159,6 +193,9 @@ enum WhitespaceType {
 }
 
 /// We push the CharIndices iterator forward until we get to a non-whitespace character
+///
+/// NOTE: It's okay that we consume this non-whitespace character, as it won't affect our
+///       whitespace group finding logic.
 fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> Option<WhitespaceType> {
     let mut leading_type = None;
 
@@ -176,10 +213,13 @@ fn get_leading_whitespace_type(char_indices: &mut CharIndices) -> Option<Whitesp
     leading_type
 }
 
+/// Get the whitespace type for the trailing whitespace.
+/// This uses a slice instead of an iterator because we cannot know what is the trailing
+/// whitespace a priori.
 fn get_trailing_whitespace_type(end_whitespace: &str) -> Option<WhitespaceType> {
     let mut trailing_type = None;
     for c in end_whitespace.chars() {
-        if c.is_whitespace() {
+        if TERMINATORS.contains(&c) {
             if c == '\n' {
                 trailing_type = Some(WhitespaceType::HasNewline);
             } else if trailing_type.is_none() {
@@ -196,15 +236,15 @@ fn clean_jsx_text(text: &str) -> Cow<str> {
         return Cow::Borrowed(text);
     }
 
-    let text_info = TextInfo::build(text);
+    let text_cleaner = TextCleaner::build(text);
 
-    if let Some(normalized_text) = text_info.create_normalized_text() {
+    if let Some(normalized_text) = text_cleaner.clean_text() {
         Cow::Owned(normalized_text)
     } else {
         get_trimmed_text(
-            text_info.text,
-            text_info.leading_whitespace_type,
-            text_info.trailing_whitespace_type,
+            text_cleaner.text,
+            text_cleaner.leading_whitespace_type,
+            text_cleaner.trailing_whitespace_type,
         )
     }
 }
