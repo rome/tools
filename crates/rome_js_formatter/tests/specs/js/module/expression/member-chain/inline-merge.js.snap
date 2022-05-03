@@ -2,7 +2,6 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 assertion_line: 242
 expression: inline-merge.js
-
 ---
 # Input
 _.flatMap(this.visibilityHandlers, fn => fn())
@@ -26,9 +25,9 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-_.flatMap(this.visibilityHandlers, (fn) => fn())
-	.concat(this.record.resolved_legacy_visrules)
-	.filter(Boolean);
+_.flatMap(this.visibilityHandlers, (fn) => fn()).concat(
+	this.record.resolved_legacy_visrules,
+).filter(Boolean);
 
 Object.keys(availableLocales({ test: true }))
 	.forEach(

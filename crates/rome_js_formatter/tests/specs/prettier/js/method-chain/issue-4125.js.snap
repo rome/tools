@@ -317,12 +317,7 @@ const a4 = x
   .m([n, o]);
 class X {
   y() {
-    const j = x
-      .a(this)
-      .b(super.cde())
-      .f(/g/)
-      .h(new i())
-      .j();
+    const j = x.a(this).b(super.cde()).f(/g/).h(new i()).j();
   }
 }
 
