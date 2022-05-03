@@ -149,28 +149,6 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 })
                 .unzip();
 
-            let (serialize_impl, slots_derive) = if language_kind == LanguageKind::Js {
-                (
-                    Some(quote! {
-                        #[cfg(feature = "serde")]
-                        impl Serialize for #name {
-                            fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-                            where
-                            S: Serializer,
-                            {
-                                self.as_fields().serialize(serializer)
-                            }
-                        }
-                    }),
-                    Some(quote! {
-                        #[cfg_attr(feature = "serde", derive(Serialize))]
-                        #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
-                    }),
-                )
-            } else {
-                (None, None)
-            };
-
             (
                 quote! {
                     // TODO: review documentation
@@ -200,9 +178,17 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                         #(#methods)*
                     }
 
-                    #serialize_impl
+                    #[cfg(feature = "serde")]
+                        impl Serialize for #name {
+                            fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+                            where
+                            S: Serializer,
+                            {
+                                self.as_fields().serialize(serializer)
+                            }
+                    }
 
-                    #slots_derive
+                    #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
                     pub struct #slots_name {
                         #( pub #slot_fields, )*
                     }
@@ -412,13 +398,6 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             };
 
-            let serialize_derive = (language_kind == LanguageKind::Js).then(|| {
-                quote! {
-                    #[cfg_attr(feature = "serde", derive(Serialize))]
-                    #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
-                }
-            });
-
             let variant_can_cast: Vec<_> = simple_variants
                 .iter()
                 .map(|_| {
@@ -438,7 +417,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 quote! {
                     // #[doc = #doc]
                     #[derive(Clone, PartialEq, Eq, Hash)]
-                    #serialize_derive
+                    #[cfg_attr(feature = "serde", derive(Serialize))]
+                    #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
                     pub enum #name {
                         #(#variants_for_union),*
                     }
@@ -525,13 +505,6 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             }
         });
 
-    let serialize_derive = (language_kind == LanguageKind::Js).then(|| {
-        quote! {
-            #[cfg_attr(feature = "serde", derive(Serialize))]
-            #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
-        }
-    });
-
     let unknowns = ast.unknowns.iter().map(|unknown| {
         let name = format_ident!("{}", unknown);
         let string_name = unknown;
@@ -539,7 +512,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
 
         quote! {
             #[derive(Clone, PartialEq, Eq, Hash)]
-            #serialize_derive
+            #[cfg_attr(feature = "serde", derive(Serialize))]
+            #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
             pub struct #name {
                 syntax: SyntaxNode
             }
@@ -639,7 +613,8 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         };
 
         let padded_name = format!("{} ", name);
-        let serialize_impl = (language_kind == LanguageKind::Js).then(|| {
+
+        let list_impl = if list.separator.is_some() {
             quote! {
                 #[cfg(feature = "serde")]
                 impl Serialize for #list_name {
@@ -654,12 +629,6 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                             seq.end()
                         }
                 }
-            }
-        });
-
-        let list_impl = if list.separator.is_some() {
-            quote! {
-                #serialize_impl
 
                 impl AstSeparatedList for #list_name {
                     type Language = Language;
@@ -696,7 +665,19 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             }
         } else {
             quote! {
-                #serialize_impl
+                #[cfg(feature = "serde")]
+                impl Serialize for #list_name {
+                    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+                        where
+                        S: Serializer,
+                        {
+                            let mut seq = serializer.serialize_seq(Some(self.len()))?;
+                            for e in self.iter() {
+                                seq.serialize_element(&e)?;
+                            }
+                            seq.end()
+                        }
+                }
 
                 impl AstNodeList for #list_name {
                     type Language = Language;
@@ -753,14 +734,12 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
     let syntax_token = language_kind.syntax_token();
     let language = language_kind.language();
 
-    let serde_import = (language_kind == LanguageKind::Js).then(|| {
-        quote! {
-            #[cfg(feature = "serde")]
-            use serde_crate::{Serialize, Serializer};
-            #[cfg(feature = "serde")]
-            use serde_crate::ser::SerializeSeq;
-        }
-    });
+    let serde_import = quote! {
+        #[cfg(feature = "serde")]
+        use serde_crate::{Serialize, Serializer};
+        #[cfg(feature = "serde")]
+        use serde_crate::ser::SerializeSeq;
+    };
 
     let ast = quote! {
         #![allow(clippy::enum_variant_names)]
