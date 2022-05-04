@@ -1,7 +1,7 @@
 use crate::hard_group_elements;
 use crate::{
     format_elements, join_elements_hard_line, space_token, Format, FormatElement, FormatNode,
-    Formatter,
+    Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
@@ -35,7 +35,7 @@ impl FormatNode for JsSwitchStatement {
                         .clone()
                         .into_iter()
                         .map(|node| node.syntax().clone())
-                        .zip(formatter.format_nodes(cases)?)
+                        .zip(formatter.format_all(cases)?)
                 ),
                 &r_curly_token?
             )?

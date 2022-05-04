@@ -1,7 +1,10 @@
 pub mod format_element;
 pub mod format_elements;
 pub mod intersperse;
+#[cfg(debug_assertions)]
+pub mod printed_tokens;
 pub mod printer;
+
 use crate::printer::Printer;
 pub use format_element::{
     block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,

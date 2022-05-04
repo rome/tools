@@ -1,7 +1,7 @@
-use crate::Format;
 use crate::{
     format_elements, hard_line_break, indent, space_token, FormatElement, FormatNode, Formatter,
 };
+use crate::{Format, JsFormatter};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsDefaultClause;

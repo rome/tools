@@ -9,17 +9,19 @@ pub mod prelude;
 mod ts;
 pub mod utils;
 
+use crate::formatter::suppressed_node;
 use crate::utils::has_formatter_suppressions;
 pub use formatter::Formatter;
+pub(crate) use formatter::{format_leading_trivia, format_trailing_trivia, JsFormatter};
 pub use rome_formatter::{
     block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
     format_element, format_elements, group_elements, hard_group_elements, hard_line_break,
     if_group_breaks, if_group_fits_on_single_line, indent, join_elements, join_elements_hard_line,
     join_elements_soft_line, join_elements_with, line_suffix, soft_block_indent, soft_line_break,
     soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
-    FormatOptions, IndentStyle, Printed, QuoteStyle, Token, Verbatim, LINE_TERMINATORS,
+    FormatOptions, FormatResult, Formatted, IndentStyle, Printed, QuoteStyle, Token, Verbatim,
+    LINE_TERMINATORS,
 };
-use rome_formatter::{FormatResult, Formatted};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, TextSize};
@@ -108,7 +110,7 @@ pub trait FormatNode: AstNode<Language = JsLanguage> {
     fn format_node(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let node = self.syntax();
         let element = if has_formatter_suppressions(node) {
-            formatter.format_suppressed(node)
+            suppressed_node(node).format(formatter)?
         } else {
             self.format_fields(formatter)?
         };
@@ -123,16 +125,12 @@ pub trait FormatNode: AstNode<Language = JsLanguage> {
 /// Format implementation specific to JavaScript tokens.
 impl Format for JsSyntaxToken {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                formatter.printed_tokens.borrow_mut().track_token(self);
-            }
-        }
+        formatter.track_token(self);
 
         Ok(format_elements![
-            formatter.print_leading_trivia(self, formatter::TriviaPrintMode::Full),
+            format_leading_trivia(self, formatter::TriviaPrintMode::Full),
             Token::from(self),
-            formatter.print_trailing_trivia(self),
+            format_trailing_trivia(self),
         ])
     }
 }
@@ -156,14 +154,7 @@ pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<
         let formatter = Formatter::new(options);
         let element = root.format(&formatter)?;
 
-        // dbg!(&element);
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                let printed_tokens = formatter.printed_tokens.into_inner();
-
-                printed_tokens.assert_all_tracked(root);
-            }
-        }
+        formatter.assert_formatted_all_tokens(root);
 
         Ok(Formatted::new(element, options))
     })
@@ -470,9 +461,6 @@ function() {
 #[cfg(test)]
 mod check_reformat;
 mod format;
-
-#[cfg(debug_assertions)]
-mod printed_tokens;
 
 #[cfg(test)]
 mod test {

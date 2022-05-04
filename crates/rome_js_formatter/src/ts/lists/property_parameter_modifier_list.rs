@@ -7,7 +7,7 @@ impl Format for TsPropertyParameterModifierList {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),
-            formatter.format_nodes(sort_modifiers_by_precedence(self))?,
+            formatter.format_all(sort_modifiers_by_precedence(self))?,
         ))
     }
 }

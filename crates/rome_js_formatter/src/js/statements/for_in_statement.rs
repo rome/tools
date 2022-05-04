@@ -4,7 +4,7 @@ use rome_js_syntax::JsForInStatement;
 use crate::utils::format_head_body_statement;
 use crate::{
     format_elements, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode,
-    Formatter,
+    Formatter, JsFormatter,
 };
 use rome_js_syntax::JsForInStatementFields;
 

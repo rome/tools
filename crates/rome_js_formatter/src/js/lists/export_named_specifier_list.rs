@@ -1,5 +1,7 @@
 use crate::formatter::TrailingSeparator;
-use crate::{join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter};
+use crate::{
+    join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter, JsFormatter,
+};
 use rome_formatter::FormatResult;
 use rome_js_syntax::JsExportNamedSpecifierList;
 

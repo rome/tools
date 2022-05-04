@@ -3,7 +3,7 @@ use rome_formatter::FormatResult;
 
 use crate::{
     format_elements, hard_group_elements, space_token, token, Format, FormatElement, FormatNode,
-    Formatter,
+    Formatter, JsFormatter,
 };
 
 use rome_js_syntax::JsDoWhileStatementFields;
