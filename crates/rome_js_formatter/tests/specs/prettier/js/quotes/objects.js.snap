@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: objects.js
 ---
 # Input
@@ -14,7 +15,7 @@ const obj = {
 
 # Output
 ```js
-const obj = { "a": true, b: true, "𐊧": true };
+const obj = { a: true, b: true, 𐊧: true };
 
 ```
 
