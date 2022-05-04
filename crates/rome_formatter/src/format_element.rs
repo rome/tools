@@ -613,6 +613,9 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
     format_elements![leading, Group::new(content), trailing]
 }
 
+/// The idea behind `Alternatives` is that in the first place you put the alternative that takes the most space horizontally,
+/// essentially the ones that fits one line, or less lines possible (vertically), from another point of view, the one that doesn't break at all.
+///
 /// This function instructs the printer to try to print all the elements passed into flat mode.
 /// If none of the elements can't be printed in flat mode, then the last one is printed in multiline
 /// mode.
@@ -620,6 +623,20 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// This means that the last element is printed in flat mode.
 ///
 /// This is different from conditional content, where some content is printed if already inside a group.
+///
+///
+/// `Group` is just one representation of one state of the IR. We can use `ConditionalGroupContent`,
+/// but as the names says, that is used to show/hide content if an element **is already inside a group**.
+///
+/// `Alternatives` allows you to represent different versions of an IR.
+/// Essentially, there are cases (like member chains) where we can't use groups for conditional content.
+///
+///
+/// Use `if_group_breaks` and `if_group_fits_single_line` only when you rely on the breaking
+/// logic of an existing group.
+///
+/// Use `try_fit_elements` if you can't rely on groups (you can't insert one) and you want to rely on the
+/// flat/normal printing mode of the printer.
 ///
 /// ## Examples
 ///
