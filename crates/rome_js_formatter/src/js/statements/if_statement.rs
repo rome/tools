@@ -1,7 +1,7 @@
 use crate::format_traits::FormatOptional;
 use crate::{
     block_indent, concat_elements, group_elements, hard_group_elements, hard_line_break, token,
-    Format, JsFormatter,
+    AsFormat, Format, FormatNodeRule, FormatRefWithRule, FormatWithRule, IntoFormat, JsFormatter,
 };
 use rome_formatter::FormatResult;
 
@@ -10,6 +10,43 @@ use crate::{format_elements, space_token, FormatElement, FormatNode, Formatter};
 use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
 use rome_js_syntax::{JsElseClause, JsIfStatementFields};
+
+impl FormatNodeRule<JsIfStatement> for FormatIfStatementRule {
+    fn format_fields(
+        &self,
+        _item: &JsIfStatement,
+        _formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        todo!()
+    }
+}
+
+// Boilerplate
+
+/// Rule to format a `JsIfStatement`
+pub struct FormatIfStatementRule;
+
+impl<'a> AsFormat<'a> for JsIfStatement {
+    type Format = FormatRefWithRule<'a, JsIfStatement, FormatIfStatementRule>;
+
+    fn as_format(&'a self) -> Self::Format {
+        FormatRefWithRule {
+            item: self,
+            rule: FormatIfStatementRule,
+        }
+    }
+}
+
+impl IntoFormat for JsIfStatement {
+    type Format = FormatWithRule<JsIfStatement, FormatIfStatementRule>;
+
+    fn into_format(self) -> Self::Format {
+        FormatWithRule {
+            item: self,
+            rule: FormatIfStatementRule,
+        }
+    }
+}
 
 impl FormatNode for JsIfStatement {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

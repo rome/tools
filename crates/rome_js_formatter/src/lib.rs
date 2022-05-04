@@ -26,6 +26,7 @@ use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, TextSize};
 use rome_rowan::{SyntaxResult, TokenAtOffset};
+use std::iter::FusedIterator;
 
 /// Formatting trait for types that can create a formatted representation. The `rome_formatter` equivalent
 /// to [std::fmt::Display].
@@ -97,6 +98,157 @@ where
             Ok(value) => value.format(formatter),
             Err(err) => Err(err.into()),
         }
+    }
+}
+
+/// Rule that knows how to format an object of type [T].
+///
+/// Implementing [Format] on the object itself is preferred over implementing [FormatRule] but
+/// this isn't possible inside of a dependent crate for external type.
+///
+/// For example, the `rome_js_formatter` crate isn't able to implement [Format] on `JsIfStatement`
+/// because both the [Format] trait and `JsIfStatement` are external types (Rust's orphan rule).
+///
+/// That's why the `rome_js_formatter` crate must define a new-type that implements the formatting
+/// of `JsIfStatement`.
+pub trait FormatRule<T> {
+    fn format(&self, item: &T, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+/// Formats the `item` with the specified rule.
+pub struct FormatWithRule<T, R> {
+    item: T,
+    rule: R,
+}
+
+impl<T, R> Format for FormatWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        self.rule.format(&self.item, formatter)
+    }
+}
+
+/// Formats the referenced `item` with the specified rule.
+pub struct FormatRefWithRule<'a, T, R> {
+    item: &'a T,
+    rule: R,
+}
+
+impl<T, R> Format for FormatRefWithRule<'_, T, R>
+where
+    R: FormatRule<T>,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        self.rule.format(self.item, formatter)
+    }
+}
+
+// The following types must pe per crate to work around Rust's orphan rule
+// * `AsFormat` / `IntoFormat`: Traits must be crate local to implement them on the JS AST nodes
+// * `FormattedIterExt`: Uses `IntoFormat`
+// * `FormatNodeRule`: Defines language specific formatting
+
+/// Used to get an object that knows how to format this object.
+pub trait AsFormat<'a> {
+    type Format: Format;
+
+    /// Returns an object that is able to format this object.
+    fn as_format(&'a self) -> Self::Format;
+
+    /// Returns the formatter IR for this object
+    fn formatted(&'a self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        self.as_format().format(formatter)
+    }
+}
+
+impl<'a, T> AsFormat<'a> for &'a T
+where
+    T: AsFormat<'a>,
+{
+    type Format = T::Format;
+
+    fn as_format(&'a self) -> Self::Format {
+        AsFormat::as_format(&**self)
+    }
+}
+
+/// Used to convert this object into an object that can be formatted.
+pub trait IntoFormat {
+    type Format: Format;
+
+    fn into_format(self) -> Self::Format;
+}
+
+/// Formatting specific [Iterator] extensions
+pub trait FormattedIterExt {
+    /// Converts every item to an object that knows how to format it.
+    fn formatted(self) -> FormattedIter<Self, Self::Item>
+    where
+        Self: Iterator + Sized,
+        Self::Item: IntoFormat,
+    {
+        FormattedIter { inner: self }
+    }
+}
+
+impl<I> FormattedIterExt for I where I: Iterator {}
+
+pub struct FormattedIter<Iter, Item>
+where
+    Iter: Iterator<Item = Item>,
+{
+    inner: Iter,
+}
+
+impl<Iter, Item> Iterator for FormattedIter<Iter, Item>
+where
+    Iter: Iterator<Item = Item>,
+    Item: IntoFormat,
+{
+    type Item = Item::Format;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        Some(self.inner.next()?.into_format())
+    }
+}
+
+impl<Iter, Item> FusedIterator for FormattedIter<Iter, Item>
+where
+    Iter: FusedIterator<Item = Item>,
+    Item: IntoFormat,
+{
+}
+
+impl<Iter, Item> ExactSizeIterator for FormattedIter<Iter, Item>
+where
+    Iter: Iterator<Item = Item> + ExactSizeIterator,
+    Item: IntoFormat,
+{
+}
+
+pub trait FormatNodeRule<T>
+where
+    T: AstNode<Language = JsLanguage>,
+{
+    fn format_fields(&self, item: &T, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+impl<T, Item> FormatRule<Item> for T
+where
+    T: FormatNodeRule<Item>,
+    Item: AstNode<Language = JsLanguage>,
+{
+    fn format(&self, item: &Item, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let node = item.syntax();
+        let element = if has_formatter_suppressions(node) {
+            suppressed_node(node).format(formatter)?
+        } else {
+            self.format_fields(item, formatter)?
+        };
+
+        Ok(element)
     }
 }
 
