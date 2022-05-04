@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 144
+assertion_line: 175
 expression: comment-in-the-middle.js
-
 ---
 # Input
 ```js
@@ -31,7 +30,7 @@ var a =
 * bla bla bla
  */
 //2
-((window["s"])).toString();
+(window["s"]).toString();
 console.log(a.foo());
 
 ```

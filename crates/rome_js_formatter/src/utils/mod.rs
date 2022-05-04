@@ -583,6 +583,18 @@ impl FormatPrecedence {
             | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
             | JsSyntaxKind::JS_COMPUTED_MEMBER_ASSIGNMENT => FormatPrecedence::High,
 
+            JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
+                let parent_kind = node.parent().map(|p| p.kind());
+                if matches!(
+                    parent_kind,
+                    Some(JsSyntaxKind::JS_FOR_STATEMENT | JsSyntaxKind::JS_RETURN_STATEMENT)
+                ) {
+                    FormatPrecedence::Low
+                } else {
+                    FormatPrecedence::High
+                }
+            }
+
             _ => FormatPrecedence::None,
         })
     }

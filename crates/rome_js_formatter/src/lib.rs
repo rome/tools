@@ -473,7 +473,9 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"class A extends Something! {}
+        let src = r#"for ((i = 0), (len = arr.length); i < len; i++) {
+  console.log(arr[i])
+}
 
 "#;
         let syntax = SourceType::tsx();

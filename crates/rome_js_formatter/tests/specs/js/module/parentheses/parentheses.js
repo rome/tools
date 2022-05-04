@@ -22,3 +22,7 @@ async function *f() {
 const a = () => ({}?.() && a);
 
 (list || list2)?.[(list || list2)];
+
+for ((i = 0), (len = arr.length); i < len; i++) {
+  console.log(arr[i])
+}

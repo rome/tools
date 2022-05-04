@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: issue-8045.js
 ---
 # Input
@@ -45,7 +46,7 @@ const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWr
 function jsdocCastInReturn() {
   return (
     /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-    (fooBarBaz)
+    fooBarBaz
   );
 }
 
@@ -56,7 +57,7 @@ const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWr
 function jsdocCastInReturn() {
   return (
     /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-    (fooBarBaz)
+    fooBarBaz
   );
 }
 

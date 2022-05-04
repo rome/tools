@@ -1,8 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 175
 expression: sequence.js
-
 ---
 # Input
 ```js
@@ -18,7 +17,7 @@ for (i = 0, len = arr.length; i < len; i++) {
 
 # Output
 ```js
-for ((i = 0), (len = arr.length); i < len; i++) {
+for (i = 0, len = arr.length; i < len; i++) {
   console.log(arr[i]);
 }
 

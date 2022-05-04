@@ -9,6 +9,7 @@ use rome_js_syntax::{
     JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
+use std::cmp::Ordering;
 
 impl FormatNode for JsParenthesizedExpression {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -75,8 +76,10 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
     let parent_precedence = FormatPrecedence::with_precedence_for_parenthesis(parent.as_ref());
     let node_precedence = FormatPrecedence::with_precedence_for_parenthesis(Some(node.syntax()));
 
-    if parent_precedence > node_precedence {
-        return Ok(false);
+    match parent_precedence.cmp(&node_precedence) {
+        Ordering::Greater => return Ok(false),
+        Ordering::Equal => return Ok(true),
+        Ordering::Less => {}
     }
 
     // Here we handle cases where we have binary/logical expressions.

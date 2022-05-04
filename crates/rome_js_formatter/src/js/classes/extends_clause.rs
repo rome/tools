@@ -1,11 +1,8 @@
 use crate::format_traits::{FormatOptional, FormatWith};
-use rome_formatter::FormatResult;
-
 use crate::{format_elements, space_token, token, Format, FormatElement, FormatNode, Formatter};
-
-use crate::utils::needs_parenthesis;
-use rome_js_syntax::JsExtendsClause;
+use rome_formatter::FormatResult;
 use rome_js_syntax::JsExtendsClauseFields;
+use rome_js_syntax::{JsExtendsClause, JsSyntaxKind};
 use rome_rowan::AstNode;
 
 impl FormatNode for JsExtendsClause {
@@ -17,9 +14,15 @@ impl FormatNode for JsExtendsClause {
         } = self.as_fields();
 
         let super_class = super_class?;
-        let clause_needs_parens = needs_parenthesis(super_class.syntax());
+        let needs_parens = matches!(
+            super_class.syntax().kind(),
+            JsSyntaxKind::JS_NEW_EXPRESSION
+                | JsSyntaxKind::JS_YIELD_EXPRESSION
+                | JsSyntaxKind::JS_OBJECT_EXPRESSION
+                | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION
+        );
         let super_class = super_class.format_with(formatter, |super_class| {
-            if clause_needs_parens {
+            if needs_parens {
                 format_elements![token("("), super_class, token(")")]
             } else {
                 super_class
