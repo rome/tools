@@ -112,6 +112,7 @@ impl Formatter {
         open_token: &JsSyntaxToken,
         content: impl FnOnce(FormatElement, FormatElement) -> FormatElement,
         close_token: &JsSyntaxToken,
+        space_after_open_close_trivial: bool,
     ) -> FormatResult<FormatElement> {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
@@ -126,12 +127,26 @@ impl Formatter {
             self.print_leading_trivia(close_token, TriviaPrintMode::Trim);
 
         let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
-            format_elements![open_token_trailing_trivia, soft_line_break_or_space()]
+            format_elements![
+                open_token_trailing_trivia,
+                if space_after_open_close_trivial {
+                    space_token()
+                } else {
+                    soft_line_break_or_space()
+                }
+            ]
         } else {
             empty_element()
         };
         let close_token_leading_trivia = if !close_token_leading_trivia.is_empty() {
-            format_elements![soft_line_break_or_space(), close_token_leading_trivia]
+            format_elements![
+                if space_after_open_close_trivial {
+                    space_token()
+                } else {
+                    soft_line_break_or_space()
+                },
+                close_token_leading_trivia
+            ]
         } else {
             empty_element()
         };

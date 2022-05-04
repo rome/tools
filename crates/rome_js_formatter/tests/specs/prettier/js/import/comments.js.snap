@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: comments.js
 ---
 # Input
@@ -54,34 +55,26 @@ import x, {
 
 # Output
 ```js
-import {
-  a //comment1
-  //comment2
-  //comment3
-  as
-  b,
-} from "";
+import { a //comment1
+//comment2
+//comment3
+as
+b, } from "";
 
-import {
-  a
-  as //comment1
-  //comment2
-  //comment3
-  b1,
-} from "";
+import { a
+as //comment1
+//comment2
+//comment3
+b1, } from "";
 
-import {
-  a
-  as //comment2 //comment1
-  //comment3
-  b2,
-} from "";
+import { a
+as //comment2 //comment1
+//comment3
+b2, } from "";
 
-import {
-  a
-  as //comment3 //comment2 //comment1
-  b3,
-} from "";
+import { a
+as //comment3 //comment2 //comment1
+b3, } from "";
 
 import {
   // comment 1
@@ -102,9 +95,8 @@ import {
 } from "graphql";
 
 import x, {
-  // comment
-  y,
-} from "z";
+// comment
+y, } from "z";
 
 ```
 

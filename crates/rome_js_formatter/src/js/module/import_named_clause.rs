@@ -1,9 +1,11 @@
 use crate::format_traits::FormatOptional;
 use rome_formatter::group_elements;
 use rome_formatter::FormatResult;
+use rome_js_syntax::JsAnyNamedImport;
 use rome_js_syntax::JsNamedImportSpecifiers;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::AstNode;
+use rome_rowan::AstSeparatedList;
 
 use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
 
@@ -43,12 +45,11 @@ impl FormatNode for JsImportNamedClause {
         // although this import has been exceeding the max line length, prettier still keep them all in one line
         let need_to_wrap_group_elements = {
             let named_import = named_import?;
-            let syntax_node = named_import.syntax();
-            match syntax_node.kind() {
-                JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIERS => {
-                    let specifiers =
-                        JsNamedImportSpecifiers::unwrap_cast(syntax_node.clone()).as_fields();
-                    specifiers.specifiers.syntax().children().count() > 1 || !default.is_empty()
+            match named_import {
+                JsAnyNamedImport::JsNamedImportSpecifiers(
+                    named_specifiers @ JsNamedImportSpecifiers { .. },
+                ) => {
+                    named_specifiers.specifiers().iter().count() > 1 || !default_specifier.is_none()
                 }
                 _ => true,
             }
@@ -74,10 +75,8 @@ impl FormatNode for JsImportNamedClause {
                     space_token(),
                     source,
                     assertion,
-                ] // )
-            } // } else {
-              //     format_elements![name, space_token(), from, space_token(), source, assertion,]
-              // }
+                ]
+            }
         ])
     }
 }
