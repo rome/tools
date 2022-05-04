@@ -87,6 +87,8 @@ impl WriteColor for ErrorOutput {
     }
 }
 
+/// Serde's default serialization results in a lot of nesting because of how it serializes
+/// Results and Vectors. We flatten this nesting to make the JSON easier to read
 fn clean_up_json(json: serde_json::Value) -> serde_json::Value {
     match json {
         serde_json::Value::Array(mut entries) => {
@@ -162,8 +164,8 @@ pub fn run(
     let ast_json = serde_json::to_value(&parse.tree())
         .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" }));
 
-    let cst_json = clean_up_json(cst_json);
-    let ast_json = clean_up_json(ast_json);
+    let cst_json = cst_json;
+    let ast_json = ast_json;
 
     let formatted = format_node(options, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
