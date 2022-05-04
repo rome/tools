@@ -115,7 +115,7 @@ impl<'a> TextCleaner<'a> {
             if let Some(range) = current_whitespace_range {
                 // If the index is the end of the current whitespace range,
                 // then we increment the whitespace range index and
-                // push on an empty string.
+                // push on a space character.
                 //
                 //   input:  "hello    world"
                 //                    ^
