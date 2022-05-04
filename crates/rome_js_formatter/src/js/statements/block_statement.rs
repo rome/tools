@@ -46,7 +46,7 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
         return false;
     }
     // add extra branch to avoid formatting the same code twice and generating different code,
-    // here is a example:
+    // here is an example:
     // ```js
     //     try
     // /* missing comment */
