@@ -1,6 +1,6 @@
 use crate::format_traits::FormatOptional;
 use crate::{
-    format_elements, hard_group_elements, space_token, utils::format_property_name, Format,
+    format_elements, hard_group_elements, space_token, utils::format_member_name, Format,
     FormatElement, FormatNode, Formatter,
 };
 use rome_formatter::FormatResult;
@@ -26,7 +26,7 @@ impl FormatNode for JsGetterClassMember {
             space_token(),
             get_token.format(formatter)?,
             space_token(),
-            format_property_name(name?, formatter, MemberContext::Member)?,
+            format_member_name(name?, formatter, MemberContext::Member)?,
             l_paren_token.format(formatter)?,
             r_paren_token.format(formatter)?,
             return_type.format_or_empty(formatter)?,

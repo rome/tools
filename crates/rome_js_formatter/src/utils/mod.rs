@@ -659,25 +659,25 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
 ///
 /// Once merged, the enum is used to get specific members (the literal ones) and elide
 /// the quotes from them, when the algorithm sees fit
-pub(crate) enum PropertyName {
+pub(crate) enum MemberName {
     Object(JsAnyObjectMemberName),
     Class(JsAnyClassMemberName),
     Literal(JsLiteralMemberName),
 }
 
-impl From<JsAnyClassMemberName> for PropertyName {
+impl From<JsAnyClassMemberName> for MemberName {
     fn from(node: JsAnyClassMemberName) -> Self {
         Self::Class(node)
     }
 }
 
-impl From<JsAnyObjectMemberName> for PropertyName {
+impl From<JsAnyObjectMemberName> for MemberName {
     fn from(node: JsAnyObjectMemberName) -> Self {
         Self::Object(node)
     }
 }
 
-impl From<JsLiteralMemberName> for PropertyName {
+impl From<JsLiteralMemberName> for MemberName {
     fn from(literal: JsLiteralMemberName) -> Self {
         Self::Literal(literal)
     }
@@ -693,6 +693,11 @@ pub(crate) enum MemberContext {
 impl MemberContext {
     /// We can change the text only if there alphanumeric or alphabetic characters, depending on the mode
     fn text_can_be_replaced(&self, text_to_check: &str) -> bool {
+        // Text here is quoteless. If it's empty, it means it is an empty string and we can't
+        // do any transformation
+        if text_to_check.is_empty() {
+            return false;
+        }
         match self {
             MemberContext::Type => text_to_check
                 .split('_')
@@ -706,7 +711,7 @@ impl MemberContext {
 
 /// Function used by the formatter, where we pass a complaint member and it returns a [FormatElement[
 /// where the text has its quotes removed.
-pub(crate) fn format_property_name<Member: Into<PropertyName>>(
+pub(crate) fn format_member_name<Member: Into<MemberName>>(
     member_name: Member,
     formatter: &Formatter,
     checker: MemberContext,
@@ -718,13 +723,7 @@ pub(crate) fn format_property_name<Member: Into<PropertyName>>(
     ) -> FormatResult<FormatElement> {
         let text = name.text_trimmed();
 
-        if text.is_empty() {
-            return Ok(format_string_literal_token(name, formatter));
-        }
-
-        // there are cases where we might have an empty string, which means that if the text length
-        // is higher than 2, it means that the text has something in it
-        if text.starts_with(QUOTES_TO_OMIT) && text.ends_with(QUOTES_TO_OMIT) && text.len() > 2 {
+        if text.starts_with(QUOTES_TO_OMIT) && text.ends_with(QUOTES_TO_OMIT) {
             let quote_less_text = &text[1..text.len() - 1];
             if checker.text_can_be_replaced(quote_less_text) {
                 Ok(formatter.format_replaced(
@@ -746,20 +745,20 @@ pub(crate) fn format_property_name<Member: Into<PropertyName>>(
     }
 
     let name = match member_name.into() {
-        PropertyName::Object(object) => match object {
+        MemberName::Object(object) => match object {
             JsAnyObjectMemberName::JsComputedMemberName(name) => name.format(formatter)?,
             JsAnyObjectMemberName::JsLiteralMemberName(name) => {
                 replace_node(name.value()?, formatter, checker)?
             }
         },
-        PropertyName::Class(class) => match class {
+        MemberName::Class(class) => match class {
             JsAnyClassMemberName::JsComputedMemberName(node) => node.format(formatter)?,
             JsAnyClassMemberName::JsLiteralMemberName(node) => {
                 replace_node(node.value()?, formatter, checker)?
             }
             JsAnyClassMemberName::JsPrivateClassMemberName(node) => node.format(formatter)?,
         },
-        PropertyName::Literal(literal) => replace_node(literal.value()?, formatter, checker)?,
+        MemberName::Literal(literal) => replace_node(literal.value()?, formatter, checker)?,
     };
 
     Ok(name)

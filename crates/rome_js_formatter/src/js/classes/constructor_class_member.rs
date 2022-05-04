@@ -1,5 +1,5 @@
 use crate::{
-    format_elements, hard_group_elements, space_token, utils::format_property_name, Format,
+    format_elements, hard_group_elements, space_token, utils::format_member_name, Format,
     FormatElement, FormatNode, Formatter,
 };
 use rome_formatter::FormatResult;
@@ -20,7 +20,7 @@ impl FormatNode for JsConstructorClassMember {
         Ok(hard_group_elements(format_elements![
             modifiers.format(formatter)?,
             space_token(),
-            format_property_name(name?, formatter, MemberContext::Member)?,
+            format_member_name(name?, formatter, MemberContext::Member)?,
             parameters.format(formatter)?,
             space_token(),
             body.format(formatter)?
