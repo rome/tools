@@ -30,3 +30,5 @@ let { "with_underscore": test } = value;
 let a = { "": 10, "c_d": 30 }
 
 let b = { "'": 10, "c_d": 30 }
+
+let { "_$_ff$_morning_not_quotes": test, "_$_ff$_morning_yes_quotes_@": test } = value;

@@ -36,6 +36,8 @@ let { "with_underscore": test } = value;
 let a = { "": 10, "c_d": 30 }
 
 let b = { "'": 10, "c_d": 30 }
+
+let { "_$_ff$_morning_not_quotes": test, "_$_ff$_morning_yes_quotes_@": test } = value;
 =============================
 # Outputs
 ## Output 1
@@ -63,7 +65,7 @@ let { a: test } = value;
 
 // you guys stay like this
 
-({ "$$_": test } = value);
+({ $$_: test } = value);
 
 ({ "%{}": test } = value);
 
@@ -76,6 +78,13 @@ let { with_underscore: test } = value;
 let a = { "": 10, c_d: 30 };
 
 let b = { "'": 10, c_d: 30 };
+
+let { _$_ff$_morning_not_quotes: test, "_$_ff$_morning_yes_quotes_@": test } = value;
+
+
+## Lines exceeding width of 80 characters
+
+   34: let { _$_ff$_morning_not_quotes: test, "_$_ff$_morning_yes_quotes_@": test } = value;
 ## Output 2
 -----
 Indent style: Tab
@@ -101,7 +110,7 @@ let { a: test } = value;
 
 // you guys stay like this
 
-({ '$$_': test } = value);
+({ $$_: test } = value);
 
 ({ '%{}': test } = value);
 
@@ -114,4 +123,11 @@ let { with_underscore: test } = value;
 let a = { '': 10, c_d: 30 };
 
 let b = { "'": 10, c_d: 30 };
+
+let { _$_ff$_morning_not_quotes: test, '_$_ff$_morning_yes_quotes_@': test } = value;
+
+
+## Lines exceeding width of 80 characters
+
+   34: let { _$_ff$_morning_not_quotes: test, '_$_ff$_morning_yes_quotes_@': test } = value;
 

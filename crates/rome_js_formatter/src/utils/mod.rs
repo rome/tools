@@ -701,9 +701,9 @@ impl MemberContext {
         // we split by the characters that can be considered valid identifiers
         let mut patterns = text_to_check.split(['_', '$']);
         match self {
-            MemberContext::Type => {
-                patterns.all(|sub_text| sub_text.chars().all(char::is_alphabetic))
-            }
+            // TODO: #2405 implement number literals on JS and TS
+            // patterns.all(|sub_text| sub_text.chars().all(char::is_alphabetic))
+            MemberContext::Type => false,
             MemberContext::Member => {
                 patterns.all(|sub_text| sub_text.chars().all(char::is_alphanumeric))
             }
