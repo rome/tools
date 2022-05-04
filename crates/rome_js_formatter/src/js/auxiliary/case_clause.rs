@@ -1,6 +1,6 @@
 use rome_formatter::FormatResult;
-use rome_js_syntax::JsSyntaxKind;
-use rome_rowan::AstNode;
+use rome_js_syntax::JsAnyStatement;
+use rome_rowan::AstNodeList;
 
 use crate::{
     format_elements, hard_line_break, indent, space_token, Format, FormatElement, FormatNode,
@@ -18,11 +18,11 @@ impl FormatNode for JsCaseClause {
             colon_token,
             consequent,
         } = self.as_fields();
-        let syntax_node = consequent.syntax();
-        let is_first_child_block_stmt = match syntax_node.first_child() {
-            Some(stmt) => stmt.kind() == JsSyntaxKind::JS_BLOCK_STATEMENT,
-            None => false,
-        };
+
+        let is_first_child_block_stmt = matches!(
+            consequent.iter().next(),
+            Some(JsAnyStatement::JsBlockStatement(_))
+        );
         let case_word = case_token.format(formatter)?;
         let colon = colon_token.format(formatter)?;
         let test = test.format(formatter)?;

@@ -78,7 +78,7 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
     {
         return false;
     }
-    // reference https://github.com/prettier/prettier/blob/main/src/language-js/print/block.js#L19
+    // reference https://github.com/prettier/prettier/blob/b188c905cfaeb238a122b4a95c230da83f2f3226/src/language-js/print/block.js#L19
     match block.syntax().parent().map(|p| p.kind()) {
         Some(
             JsSyntaxKind::JS_FUNCTION_BODY
