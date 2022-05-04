@@ -698,13 +698,15 @@ impl MemberContext {
         if text_to_check.is_empty() {
             return false;
         }
+        // we split by the characters that can be considered valid identifiers
+        let mut patterns = text_to_check.split(['_', '$']);
         match self {
-            MemberContext::Type => text_to_check
-                .split('_')
-                .all(|sub_text| sub_text.chars().all(char::is_alphabetic)),
-            MemberContext::Member => text_to_check
-                .split('_')
-                .all(|sub_text| sub_text.chars().all(char::is_alphanumeric)),
+            MemberContext::Type => {
+                patterns.all(|sub_text| sub_text.chars().all(char::is_alphabetic))
+            }
+            MemberContext::Member => {
+                patterns.all(|sub_text| sub_text.chars().all(char::is_alphanumeric))
+            }
         }
     }
 }
