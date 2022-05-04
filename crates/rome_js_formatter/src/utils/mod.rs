@@ -5,6 +5,7 @@ mod simple;
 pub mod string_utils;
 
 mod member_chain;
+mod needs_parenthesis;
 #[cfg(test)]
 mod quickcheck_utils;
 
@@ -16,6 +17,7 @@ use crate::{
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
+pub(crate) use needs_parenthesis::needs_parenthesis;
 use rome_formatter::{normalize_newlines, FormatResult};
 use rome_js_syntax::{
     JsAnyClassMemberName, JsAnyExpression, JsAnyFunction, JsAnyObjectMemberName, JsAnyRoot,

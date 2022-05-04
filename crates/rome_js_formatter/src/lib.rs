@@ -473,7 +473,7 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"let { 'with_underscore': test } = value;
+        let src = r#"class A extends Something! {}
 
 "#;
         let syntax = SourceType::tsx();

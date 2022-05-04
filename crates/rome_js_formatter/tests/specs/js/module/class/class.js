@@ -55,3 +55,8 @@ x = class foo extends Boar {
 
 x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb {
 }
+
+
+class A extends new A() {}
+class C extends Something! {}
+class B extends { a: b } {}
