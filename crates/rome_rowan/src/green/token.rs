@@ -22,6 +22,10 @@ struct GreenTokenHead {
     _c: Count<GreenToken>,
 }
 
+pub(crate) fn has_live() -> bool {
+    countme::get::<GreenToken>().live > 0
+}
+
 type Repr = HeaderSlice<GreenTokenHead, [u8]>;
 type ReprThin = HeaderSlice<GreenTokenHead, [u8; 0]>;
 #[repr(transparent)]

@@ -48,3 +48,11 @@ pub use crate::{
 };
 
 pub(crate) use crate::green::{GreenNode, GreenNodeData, GreenToken, GreenTokenData};
+
+pub fn check_live() -> Option<String> {
+    if cursor::has_live() || green::has_live() {
+        Some(countme::get_all().to_string())
+    } else {
+        None
+    }
+}

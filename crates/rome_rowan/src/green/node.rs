@@ -27,6 +27,10 @@ pub(super) struct GreenNodeHead {
     _c: Count<GreenNode>,
 }
 
+pub(crate) fn has_live() -> bool {
+    countme::get::<GreenNode>().live > 0
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub(crate) enum Slot {
     Node {

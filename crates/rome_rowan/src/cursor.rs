@@ -120,6 +120,10 @@ enum GreenElement {
 
 struct _SyntaxElement;
 
+pub(crate) fn has_live() -> bool {
+    countme::get::<_SyntaxElement>().live > 0
+}
+
 struct NodeData {
     _c: Count<_SyntaxElement>,
 
