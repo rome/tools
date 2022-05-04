@@ -130,12 +130,11 @@ const StorybookLoader = ({ match }) => (
             ? <DealListStory />
             : (
               <Message>
-              <Title>{'Missing story book'}</Title>
-              
-              <Content>
-              <BackButton />
-              </Content>
-              </Message>
+        <Title>{'Missing story book'}</Title>
+        <Content>
+          <BackButton/>
+        </Content>
+      </Message>
             )
 );
 
@@ -168,14 +167,8 @@ const paymentMessage2 = state == "success"
         ? 4 //'Expiry must be sometime in the past.'
         : 5; // 'There was an issue with the payment.  Please contact support.'
 
-const foo = <div className={
-  "match-achievement-medal-type type" + (
-    medals[0].record ? "-record" : (
-      medals[0].unique ? "-unique" : medals[0].type
-    )
-  )
-}>
-{medals[0].record ? (
+const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+	{medals[0].record ? (
 		i18n('Record')
 	) : medals[0].unique ? (
 		i18n('Unique')
@@ -198,4 +191,8 @@ a
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   63: const foo = <div className={'match-achievement-medal-type type' + (medals[0].record ? '-record' : (medals[0].unique ? '-unique' : medals[0].type))}>
+```
 

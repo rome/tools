@@ -52,7 +52,7 @@ expression: jsx_parent.js
 />;
 
 <div>
-{!isJellyfishEnabled &&
+  {!isJellyfishEnabled &&
     diffUpdateMessageInput != null &&
     this.state.isUpdateMessageEmpty}
 </div>;
@@ -66,12 +66,12 @@ expression: jsx_parent.js
 />;
 
 <div>
-{!isJellyfishEnabled &&
+  {!isJellyfishEnabled &&
     diffUpdateMessageInput != null && <div><span>Text</span></div>}
 </div>;
 
 <div>
-{!isJellyfishEnabled &&
+  {!isJellyfishEnabled &&
     diffUpdateMessageInput != null && child || <div><span>Text</span></div>}
 </div>;
 

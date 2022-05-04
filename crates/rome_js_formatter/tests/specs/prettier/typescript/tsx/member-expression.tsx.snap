@@ -40,22 +40,22 @@ expression: member-expression.tsx
 (<a />)["computed"]();
 (
   <div>
-  <a>foo</a>
+    <a>foo</a>
   </div>
 ).method();
 (
   <div>
-  <a>foo</a>
+    <a>foo</a>
   </div>
 ).property;
 (
   <div>
-  <a>foo</a>
+    <a>foo</a>
   </div>
 )["computed"];
 (
   <div>
-  <a>foo</a>
+    <a>foo</a>
   </div>
 )["computed"]();
 

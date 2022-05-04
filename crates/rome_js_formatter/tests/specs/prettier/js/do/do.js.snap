@@ -91,20 +91,17 @@ do {
 function foo() {
   return (
     <nav>
-    <Home />
-    
-    {
-    do 
-    {
-    if (loggedIn) 
-    {
+      <Home />
+      {
+        do {
+          if (loggedIn) {
             <LogoutButton />
-          }
-     else 
-    {
+          } else {
             <LoginButton />
           }
-    } }</nav>
+        }
+      }
+    </nav>
   );
 }
 
