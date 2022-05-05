@@ -58,5 +58,4 @@ x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbb
 
 
 class A extends new A() {}
-class C extends Something! {}
 class B extends { a: b } {}
