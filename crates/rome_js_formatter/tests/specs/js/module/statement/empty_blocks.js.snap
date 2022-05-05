@@ -13,8 +13,7 @@ for (x of []) {}
 
 
 
-switch ("test") {
-}
+switch ("test") {}
 
 switch ("test") {
   case "test": {}
@@ -55,7 +54,9 @@ for (x in []) {
 for (x of []) {
 }
 
-switch ("test") {}
+switch ("test") {
+
+}
 
 switch ("test") {
 	case "test": {
