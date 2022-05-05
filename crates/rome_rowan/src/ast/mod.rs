@@ -342,7 +342,7 @@ impl<L: Language, N: AstNode<Language = L>> FusedIterator for AstSeparatedListNo
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy)]
 #[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub enum SyntaxError {
     /// Error thrown when a mandatory node is not found
