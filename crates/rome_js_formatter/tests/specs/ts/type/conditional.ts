@@ -15,3 +15,5 @@ type T4 = test extends string
     ? unknown : test extends number ? undefined :
         // else
         undefined;
+
+type A = B extends String ?  C extends number ? never : never : never

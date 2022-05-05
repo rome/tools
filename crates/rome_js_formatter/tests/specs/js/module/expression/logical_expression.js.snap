@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: logical_expression.js
 ---
 # Input
@@ -115,7 +116,7 @@ a in LongClassName in LongClassName in LongClassName in LongClassName in LongCla
 
 veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String && veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number || veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean
 
-
+await f() || await f()
 =============================
 # Outputs
 ## Output 1
@@ -314,6 +315,8 @@ a in
 ) || (
 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean
 );
+
+(await f()) || (await f());
 
 
 ## Lines exceeding width of 80 characters

@@ -53,6 +53,7 @@ impl FormatNode for JsUnaryExpression {
                         | (JsUnaryOperator::Minus, JsPreUpdateOperator::Decrement)
                 )
             }
+            JsAnyExpression::JsAwaitExpression(_) => true,
             _ => false,
         };
 

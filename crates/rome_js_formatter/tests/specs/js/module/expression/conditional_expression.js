@@ -8,3 +8,6 @@ somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethin
 somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName
 
 somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName
+
+await f() ? d : e
+

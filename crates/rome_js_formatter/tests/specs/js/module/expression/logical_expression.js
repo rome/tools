@@ -110,3 +110,4 @@ a in LongClassName in LongClassName in LongClassName in LongClassName in LongCla
 
 veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String && veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number || veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean
 
+await f() || await f()

@@ -16,3 +16,6 @@ x = !aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 + ++f;
 - --f;
+
+- await fn();
+typeof await fn();

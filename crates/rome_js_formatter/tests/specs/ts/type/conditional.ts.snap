@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: conditional.ts
 ---
 # Input
@@ -20,6 +21,8 @@ type T4 = test extends string
     ? unknown : test extends number ? undefined :
         // else
         undefined;
+
+type A = B extends String ?  C extends number ? never : never : never
 =============================
 # Outputs
 ## Output 1
@@ -60,4 +63,10 @@ type T4 = test extends string
 		:
 		// else
 		undefined;
+
+type A = B extends String
+	? C extends number
+		? never
+		: never
+	: never;
 

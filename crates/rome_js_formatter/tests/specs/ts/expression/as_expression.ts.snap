@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: as_expression.ts
 ---
 # Input
@@ -7,6 +8,9 @@ expression: as_expression.ts
 let a: any;
 let b =
     a   as  string;
+
+let b = await fn() as string;
+let b = !await fn()
 =============================
 # Outputs
 ## Output 1
@@ -17,4 +21,7 @@ Quote style: Double Quotes
 -----
 let a: any;
 let b = a as string;
+
+let b = (await fn()) as string;
+let b = !(await fn());
 

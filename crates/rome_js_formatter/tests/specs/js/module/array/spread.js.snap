@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: spread.js
 ---
 # Input
@@ -8,7 +9,8 @@ let b = [...a, ...b];
 [...a]
 let a = [...baaaaaaaaaaaaaaaaaaaaaaaaaaaaa,...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,...cccccccccccccccccccccccccccccc]
 
-
+let a = [ b, ...await fn()]
+let a = { b, ...await fn() }
 =============================
 # Outputs
 ## Output 1
@@ -25,4 +27,7 @@ let a = [
 	...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
 	...cccccccccccccccccccccccccccccc,
 ];
+
+let a = [b, ...(await fn())];
+let a = { b, ...(await fn()) };
 

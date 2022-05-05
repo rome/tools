@@ -22,6 +22,9 @@ x = !aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 + ++f;
 - --f;
+
+- await fn();
+typeof await fn();
 =============================
 # Outputs
 ## Output 1
@@ -51,6 +54,9 @@ x =
 
 +(++f);
 -(--f);
+
+-(await fn());
+typeof await fn();
 
 
 ## Lines exceeding width of 80 characters

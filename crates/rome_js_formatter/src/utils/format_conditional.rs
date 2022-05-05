@@ -2,13 +2,53 @@ use crate::{
     format_elements, group_elements, hard_line_break, indent, space_token, Format, FormatElement,
     Formatter,
 };
-use rome_formatter::FormatResult;
-use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, TsConditionalType, TsType};
+use rome_formatter::{token, FormatResult};
+use rome_js_syntax::{
+    JsAnyExpression, JsAwaitExpression, JsConditionalExpression, JsLanguage, JsSyntaxKind,
+    JsSyntaxNode, TsConditionalType, TsType,
+};
 use rome_rowan::AstNode;
 
 pub enum Conditional {
     Expression(JsConditionalExpression),
     Type(TsConditionalType),
+}
+
+impl AstNode for Conditional {
+    type Language = JsLanguage;
+
+    fn can_cast(kind: JsSyntaxKind) -> bool
+    where
+        Self: Sized,
+    {
+        matches!(
+            kind,
+            JsSyntaxKind::JS_CONDITIONAL_EXPRESSION | JsSyntaxKind::TS_CONDITIONAL_TYPE
+        )
+    }
+
+    fn cast(syntax: JsSyntaxNode) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        match syntax.kind() {
+            JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
+                JsConditionalExpression::cast(syntax).map(Conditional::Expression)
+            }
+            JsSyntaxKind::TS_CONDITIONAL_TYPE => {
+                TsConditionalType::cast(syntax).map(Conditional::Type)
+            }
+
+            _ => None,
+        }
+    }
+
+    fn syntax(&self) -> &JsSyntaxNode {
+        match self {
+            Conditional::Expression(node) => node.syntax(),
+            Conditional::Type(node) => node.syntax(),
+        }
+    }
 }
 
 impl Conditional {
@@ -52,10 +92,19 @@ impl Conditional {
 
     fn format_head(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            Conditional::Expression(expr) => Ok(format_elements![
-                expr.test()?.format(formatter)?,
-                space_token(),
-            ]),
+            Conditional::Expression(expr) => {
+                let test = expr.test()?;
+                if JsAwaitExpression::can_cast(test.syntax().kind()) {
+                    Ok(format_elements![
+                        token("("),
+                        expr.test()?.format(formatter)?,
+                        token(")"),
+                        space_token(),
+                    ])
+                } else {
+                    Ok(format_elements![test.format(formatter)?, space_token(),])
+                }
+            }
             Conditional::Type(t) => Ok(format_elements![
                 t.check_type()?.format(formatter)?,
                 space_token(),
@@ -99,6 +148,10 @@ impl Conditional {
 
         let consequent = if let Some(consequent) = consequent {
             left_or_right_is_conditional = true;
+            // TODO: at the moment we can't insert parenthesis because the current formatting
+            // doesn't match prettier
+            // Fix #2411 and then we can add conditionally parenthesis to `consequent`
+            let _needs_parens = TsConditionalType::can_cast(consequent.syntax().kind());
             let consequent = format_conditional(consequent, formatter, true)?;
             self.format_with_consequent(formatter, Some(consequent))?
         } else {
@@ -222,5 +275,7 @@ pub fn format_conditional(
     formatter: &Formatter,
     parent_is_conditional: bool,
 ) -> FormatResult<FormatElement> {
-    conditional.into_format_element(formatter, parent_is_conditional)
+    let element = conditional.into_format_element(formatter, parent_is_conditional)?;
+
+    Ok(group_elements(element))
 }
