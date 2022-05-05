@@ -16,12 +16,10 @@ catch (e: unknown) {}
 # Output
 ```js
 try {
-} catch (e: any) {
-}
+} catch (e: any) {}
 
 try {
-} catch (e: unknown) {
-}
+} catch (e: unknown) {}
 
 ```
 

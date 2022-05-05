@@ -25,8 +25,7 @@ try {
 }
 
 try {
-} catch (e) {
-}
+} catch (e) {}
 
 ```
 

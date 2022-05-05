@@ -79,7 +79,8 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
         return false;
     }
     // reference https://github.com/prettier/prettier/blob/b188c905cfaeb238a122b4a95c230da83f2f3226/src/language-js/print/block.js#L19
-    match block.syntax().parent().map(|p| p.kind()) {
+    let parent = block.syntax().parent();
+    match parent.clone().map(|p| p.kind()) {
         Some(
             JsSyntaxKind::JS_FUNCTION_BODY
             | JsSyntaxKind::JS_FOR_STATEMENT
@@ -88,7 +89,16 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
             | JsSyntaxKind::TS_MODULE_DECLARATION
             | JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION,
         ) => false,
-
+        // prettier collapse the catch block when it don't have `finalizer`, insert a new line when it has `finalizer`
+        Some(JsSyntaxKind::JS_CATCH_CLAUSE) => {
+            // SAFETY: since parent node have `Some(kind)`, this must not be `None`
+            let parent_unwrap = parent.unwrap();
+            let finally_clause = parent_unwrap.next_sibling();
+            matches!(
+                finally_clause.map(|finally| finally.kind()),
+                Some(JsSyntaxKind::JS_FINALLY_CLAUSE),
+            )
+        }
         Some(_) => true,
         None => false,
     }
