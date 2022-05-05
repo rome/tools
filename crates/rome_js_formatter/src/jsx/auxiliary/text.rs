@@ -22,6 +22,22 @@ impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
 
 static WHITESPACE: [char; 4] = [' ', '\n', '\t', '\r'];
 
+pub fn is_meaningful_jsx_text(text: &str) -> bool {
+    let mut has_newline = false;
+    let mut has_non_whitespace = false;
+    for c in text.chars() {
+        // If there is a non-whitespace character
+        if !WHITESPACE.contains(&c) {
+            has_non_whitespace = true;
+        }
+        if c == '\n' {
+            has_newline = true;
+        }
+    }
+
+    has_non_whitespace || !has_newline
+}
+
 struct TextCleaner<'a> {
     pub text: &'a str,
     pub leading_whitespace_type: Option<WhitespaceType>,

@@ -10,7 +10,7 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
         node: &JsxChildList,
         formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
-        Ok(group_elements(join_elements(
+        Ok(group_elements(fill_elements(
             soft_line_break(),
             formatter.format_nodes(node.clone())?,
         )))
