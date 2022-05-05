@@ -25,6 +25,8 @@ x = !aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 - await fn();
 typeof await fn();
+void await fn();
+delete await fn();
 =============================
 # Outputs
 ## Output 1
@@ -56,7 +58,9 @@ x =
 -(--f);
 
 -(await fn());
-typeof await fn();
+typeof (await fn());
+void (await fn());
+delete (await fn());
 
 
 ## Lines exceeding width of 80 characters

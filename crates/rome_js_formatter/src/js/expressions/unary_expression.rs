@@ -5,9 +5,11 @@ use crate::{
 };
 use rome_formatter::FormatResult;
 
-use rome_js_syntax::JsPreUpdateOperator;
+use crate::format_traits::FormatWith;
 use rome_js_syntax::{JsAnyExpression, JsUnaryExpression};
+use rome_js_syntax::{JsAwaitExpression, JsPreUpdateOperator};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
+use rome_rowan::AstNode;
 
 impl FormatNode for JsUnaryExpression {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -27,10 +29,18 @@ impl FormatNode for JsUnaryExpression {
         );
 
         if is_keyword_operator {
+            let needs_parenthesis = JsAwaitExpression::can_cast(argument.syntax().kind());
+
             return Ok(format_elements![
                 operator_token.format(formatter)?,
                 space_token(),
-                argument.format(formatter)?,
+                argument.format_with(formatter, |argument| {
+                    if needs_parenthesis {
+                        format_elements![token("("), argument, token(")"),]
+                    } else {
+                        argument
+                    }
+                })?,
             ]);
         }
 
@@ -57,6 +67,7 @@ impl FormatNode for JsUnaryExpression {
             _ => false,
         };
 
+        dbg!(&is_ambiguous_expression);
         if is_ambiguous_expression {
             let parenthesized = if is_simple_expression(argument.clone())? {
                 format_elements![

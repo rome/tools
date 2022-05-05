@@ -19,3 +19,5 @@ x = !aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 - await fn();
 typeof await fn();
+void await fn();
+delete await fn();

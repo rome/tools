@@ -473,15 +473,7 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"type T = test extends B
-  ? foo
-  : /* comment 
-  
-  comment */
-  test extends B
-  ? foo
-  : /**/
-    bar
+        let src = r#"typeof await fn();
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax.clone());
