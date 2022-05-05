@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@tailwindcss/forms': ^0.4.0
@@ -19,7 +19,7 @@ specifiers:
   vite: ^2.7.2
 
 dependencies:
-  '@uiw/react-textarea-code-editor': 1.4.16_react-dom@17.0.2+react@17.0.2
+  '@uiw/react-textarea-code-editor': 1.4.16_sfoxds7t5ydpegc3knd667wn6m
   prettier: 2.5.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -34,7 +34,7 @@ devDependencies:
   '@vitejs/plugin-react': 1.1.4
   autoprefixer: 10.4.2_postcss@8.4.6
   postcss: 8.4.6
-  tailwindcss: 3.0.19_833e1018ad0d7954aa80c53675939269
+  tailwindcss: 3.0.19_qm7bagfnbv4vjkuayu3hle4sne
   typescript: 4.5.5
   vite: 2.7.13
 
@@ -388,7 +388,7 @@ packages:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.3
-      tailwindcss: 3.0.19_833e1018ad0d7954aa80c53675939269
+      tailwindcss: 3.0.19_qm7bagfnbv4vjkuayu3hle4sne
     dev: true
 
   /@types/hast/2.3.4:
@@ -441,7 +441,7 @@ packages:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
     dev: false
 
-  /@uiw/react-textarea-code-editor/1.4.16_react-dom@17.0.2+react@17.0.2:
+  /@uiw/react-textarea-code-editor/1.4.16_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-vJAjrVKlvdJ+eduW2zEMCg00/dZIMYNT4lJGn6Q8ZyqzdmrKq2hPpCeM2x0UTHBtZz2qPB+R5L2KkNs9LDG2rw==}
     peerDependencies:
       react: '>=16.9.0'
@@ -2869,7 +2869,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /tailwindcss/3.0.19_833e1018ad0d7954aa80c53675939269:
+  /tailwindcss/3.0.19_qm7bagfnbv4vjkuayu3hle4sne:
     resolution: {integrity: sha512-rjsdfz/qZya5xQ0OVynEMETgWq1CacmftgMYeXXh6bRM5vxsNwRSbMJsCCIjq/w67om9VP/AFMolOwiE+5VKig==}
     engines: {node: '>=12.13.0'}
     hasBin: true
