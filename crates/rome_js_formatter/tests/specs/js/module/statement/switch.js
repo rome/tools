@@ -1,7 +1,7 @@
 switch (key) {
 	case // comment
 	value:
-		
+
 	case value:
 		// fallthrough
 
@@ -12,4 +12,8 @@ switch (key) {
 		break;
 
 
+}
+
+switch ("test") {
+  case "test": {}
 }

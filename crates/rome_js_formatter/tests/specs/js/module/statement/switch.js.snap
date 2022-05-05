@@ -1,12 +1,13 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
 expression: switch.js
 ---
 # Input
 switch (key) {
 	case // comment
 	value:
-		
+
 	case value:
 		// fallthrough
 
@@ -17,6 +18,10 @@ switch (key) {
 		break;
 
 
+}
+
+switch ("test") {
+  case "test": {}
 }
 
 =============================
@@ -38,5 +43,10 @@ switch (key) {
 
 	default:
 		break;
+}
+
+switch ("test") {
+	case "test": {
+	}
 }
 

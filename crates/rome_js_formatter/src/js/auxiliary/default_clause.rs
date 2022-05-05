@@ -5,7 +5,8 @@ use crate::{Format, JsFormatter};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsDefaultClause;
-use rome_js_syntax::JsDefaultClauseFields;
+use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
+use rome_rowan::AstNodeList;
 
 impl FormatNode for JsDefaultClause {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -15,16 +16,28 @@ impl FormatNode for JsDefaultClause {
             consequent,
         } = self.as_fields();
 
+        let first_child_is_block_stmt = matches!(
+            consequent.iter().next(),
+            Some(JsAnyStatement::JsBlockStatement(_))
+        );
+
         let default = default_token.format(formatter)?;
         let colon = colon_token.format(formatter)?;
         let statements = formatter.format_list(consequent);
 
+        let formatted_cons = if statements.is_empty() {
+            hard_line_break()
+        } else if first_child_is_block_stmt {
+            format_elements![space_token(), statements]
+        } else {
+            // no line break needed after because it is added by the indent in the switch statement
+            indent(format_elements![hard_line_break(), statements])
+        };
         Ok(format_elements![
             default,
             colon,
             space_token(),
-            // no line break needed after because it is added by the indent in the switch statement
-            indent(format_elements![hard_line_break(), statements])
+            formatted_cons
         ])
     }
 }
