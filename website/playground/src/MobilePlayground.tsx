@@ -24,7 +24,8 @@ export function MobilePlayground(
 					<Tab selectedClassName="bg-slate-300">Formatter Output</Tab>
 					<Tab selectedClassName="bg-slate-300">CST</Tab>
 					<Tab selectedClassName="bg-slate-300">AST</Tab>
-					<Tab selectedClassName="bg-slate-300">Formatter IR</Tab>
+					<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
+					<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
 					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
 						Errors
 					</Tab>
@@ -64,7 +65,7 @@ export function MobilePlayground(
 					/>
 					<h1>Prettier</h1>
 					<CodeEditor
-						value={prettierOutput}
+						value={prettierOutput.code}
 						language={language}
 						placeholder="Prettier Output"
 						style={{
@@ -84,6 +85,11 @@ export function MobilePlayground(
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
+				</TabPanel>
+				<TabPanel>
+					<pre className="h-screen overflow-y-scroll">
+						{JSON.stringify(prettierOutput.ir)}
+					</pre>
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">

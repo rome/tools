@@ -5,13 +5,11 @@ import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
 
-export default function DesktopPlayground(
-	{
-		playgroundState: { code, setCode, ...settings },
-		prettierOutput,
-		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
-	}: PlaygroundProps,
-) {
+export default function DesktopPlayground({
+	playgroundState: { code, setCode, ...settings },
+	prettierOutput,
+	romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+}: PlaygroundProps) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
 	return (
@@ -41,7 +39,8 @@ export default function DesktopPlayground(
 							<Tab selectedClassName="bg-slate-300">Formatter</Tab>
 							<Tab selectedClassName="bg-slate-300">CST</Tab>
 							<Tab selectedClassName="bg-slate-300">AST</Tab>
-							<Tab selectedClassName="bg-slate-300">Formatter IR</Tab>
+							<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
+							<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
 							<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
 								Errors
 							</Tab>
@@ -62,7 +61,7 @@ export default function DesktopPlayground(
 							/>
 							<h1>Prettier</h1>
 							<CodeEditor
-								value={prettierOutput}
+								value={prettierOutput.code}
 								language={language}
 								placeholder="Prettier Output"
 								style={{
@@ -82,6 +81,11 @@ export default function DesktopPlayground(
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
+						</TabPanel>
+						<TabPanel>
+							<pre className="h-screen overflow-scroll">
+								{JSON.stringify(prettierOutput.ir, null, 1)}
+							</pre>
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs">
