@@ -287,7 +287,7 @@ impl NodeData {
     }
 
     /// Return a clone of this subtree detached from its parent
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     fn detach(self: Rc<Self>) -> Rc<Self> {
         match &self.kind {
             NodeKind::Child { green, .. } => Self::new(
@@ -302,9 +302,9 @@ impl NodeData {
         }
     }
 
-    /// Clone or mutate this node with the specified range of slots replaced
+    /// Return a clone of this node with the specified range of slots replaced
     /// with the elements of the provided iterator
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     fn splice_slots<R, I>(mut self: Rc<Self>, range: R, replace_with: I) -> Rc<Self>
     where
         R: ops::RangeBounds<usize>,

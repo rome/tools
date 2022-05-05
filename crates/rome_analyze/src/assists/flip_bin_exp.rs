@@ -36,21 +36,19 @@ impl Rule for FlipBinExp {
     fn action(root: JsAnyRoot, node: &Self::Query, op: &Self::State) -> Option<RuleAction> {
         let prev_left = node.left().ok()?;
         let new_left = node.right().ok()?;
-        let new_node = node
-            .clone()
-            .replace_node_retain_trivia(prev_left, new_left)?;
+        let new_node = node.clone().replace_node(prev_left, new_left)?;
 
         let prev_op = new_node.operator_token().ok()?;
         let new_op = make::token(*op);
-        let new_node = new_node.replace_token_retain_trivia(prev_op, new_op)?;
+        let new_node = new_node.replace_token(prev_op, new_op)?;
 
         let prev_right = new_node.right().ok()?;
         let new_right = node.left().ok()?;
-        let new_node = new_node.replace_node_retain_trivia(prev_right, new_right)?;
+        let new_node = new_node.replace_node(prev_right, new_right)?;
 
         Some(RuleAction {
             category: ActionCategory::REFACTOR,
-            root: root.replace_node_retain_trivia(node.clone(), new_node)?,
+            root: root.replace_node(node.clone(), new_node)?,
         })
     }
 }

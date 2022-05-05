@@ -372,14 +372,14 @@ impl SyntaxNode {
             })
     }
 
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn detach(self) -> Self {
         Self {
             ptr: self.ptr.detach(),
         }
     }
 
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn splice_slots<R, I>(self, range: R, replace_with: I) -> Self
     where
         R: ops::RangeBounds<usize>,

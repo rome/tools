@@ -98,7 +98,7 @@ impl SyntaxElement {
         }
     }
 
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn detach(self) -> Self {
         match self {
             NodeOrToken::Node(it) => Self::Node(it.detach()),

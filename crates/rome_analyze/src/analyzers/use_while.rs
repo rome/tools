@@ -68,7 +68,7 @@ impl Rule for UseWhile {
             body,
         } = node.as_fields();
 
-        let root = root.replace_node_retain_trivia(
+        let root = root.replace_node(
             JsAnyStatement::from(node.clone()),
             JsAnyStatement::from(make::js_while_statement(
                 make::token_decorated_with_space(T![while]),

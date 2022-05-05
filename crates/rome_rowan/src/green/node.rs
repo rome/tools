@@ -207,7 +207,7 @@ impl GreenNodeData {
         Some((idx, slot.rel_offset(), slot))
     }
 
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub(crate) fn splice_slots<R, I>(&self, range: R, replace_with: I) -> GreenNode
     where
         R: ops::RangeBounds<usize>,

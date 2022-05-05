@@ -44,7 +44,7 @@ impl Rule for NoDoubleEquals {
     }
 
     fn action(root: JsAnyRoot, _: &Self::Query, op: &Self::State) -> Option<RuleAction> {
-        let root = root.replace_token_retain_trivia(
+        let root = root.replace_token(
             op.clone(),
             make::token(if op.kind() == EQ2 { T![===] } else { T![!==] }),
         )?;

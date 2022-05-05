@@ -8,7 +8,7 @@ pub trait AstNodeExt: AstNode {
     /// `prev_node` can be a direct child of this node, or an indirect child through any descendant node
     ///
     /// Returns `None` if `prev_node` is not a descendant of this node
-    fn replace_node<N>(self, prev_node: N, next_node: N) -> Option<Self>
+    fn replace_node_discard_trivia<N>(self, prev_node: N, next_node: N) -> Option<Self>
     where
         N: AstNode<Language = Self::Language>,
         Self: Sized;
@@ -19,7 +19,7 @@ pub trait AstNodeExt: AstNode {
     /// `prev_node` can be a direct child of this node, or an indirect child through any descendant node
     ///
     /// Returns `None` if `prev_node` is not a descendant of this node
-    fn replace_node_retain_trivia<N>(self, prev_node: N, next_node: N) -> Option<Self>
+    fn replace_node<N>(self, prev_node: N, next_node: N) -> Option<Self>
     where
         N: AstNode<Language = Self::Language>,
         Self: Sized;
@@ -29,7 +29,7 @@ pub trait AstNodeExt: AstNode {
     /// `prev_token` can be a direct child of this node, or an indirect child through any descendant node
     ///
     /// Returns `None` if `prev_token` is not a descendant of this node
-    fn replace_token(
+    fn replace_token_discard_trivia(
         self,
         prev_token: SyntaxToken<Self::Language>,
         next_token: SyntaxToken<Self::Language>,
@@ -43,7 +43,7 @@ pub trait AstNodeExt: AstNode {
     /// `prev_token` can be a direct child of this node, or an indirect child through any descendant node
     ///
     /// Returns `None` if `prev_token` is not a descendant of this node
-    fn replace_token_retain_trivia(
+    fn replace_token(
         self,
         prev_token: SyntaxToken<Self::Language>,
         next_token: SyntaxToken<Self::Language>,
@@ -56,7 +56,7 @@ impl<T> AstNodeExt for T
 where
     T: AstNode,
 {
-    fn replace_node<N>(self, prev_node: N, next_node: N) -> Option<Self>
+    fn replace_node_discard_trivia<N>(self, prev_node: N, next_node: N) -> Option<Self>
     where
         N: AstNode<Language = Self::Language>,
         Self: Sized,
@@ -67,7 +67,7 @@ where
         )?))
     }
 
-    fn replace_node_retain_trivia<N>(self, prev_node: N, mut next_node: N) -> Option<Self>
+    fn replace_node<N>(self, prev_node: N, mut next_node: N) -> Option<Self>
     where
         N: AstNode<Language = Self::Language>,
         Self: Sized,
@@ -80,7 +80,7 @@ where
         if let (Some(prev_first), Some(next_first)) = (prev_first, next_first) {
             let pieces: Vec<_> = prev_first.leading_trivia().pieces().collect();
 
-            next_node = next_node.replace_token(
+            next_node = next_node.replace_token_discard_trivia(
                 next_first.clone(),
                 next_first
                     .with_leading_trivia(pieces.iter().map(|piece| (piece.kind(), piece.text()))),
@@ -95,7 +95,7 @@ where
         if let (Some(prev_last), Some(next_last)) = (prev_last, next_last) {
             let pieces: Vec<_> = prev_last.trailing_trivia().pieces().collect();
 
-            next_node = next_node.replace_token(
+            next_node = next_node.replace_token_discard_trivia(
                 next_last.clone(),
                 next_last
                     .with_trailing_trivia(pieces.iter().map(|piece| (piece.kind(), piece.text()))),
@@ -103,10 +103,10 @@ where
         }
 
         // Call replace node with the modified `next_node`
-        self.replace_node(prev_node, next_node)
+        self.replace_node_discard_trivia(prev_node, next_node)
     }
 
-    fn replace_token(
+    fn replace_token_discard_trivia(
         self,
         prev_token: SyntaxToken<Self::Language>,
         next_token: SyntaxToken<Self::Language>,
@@ -120,7 +120,7 @@ where
         ))
     }
 
-    fn replace_token_retain_trivia(
+    fn replace_token(
         self,
         prev_token: SyntaxToken<Self::Language>,
         next_token: SyntaxToken<Self::Language>,
@@ -131,7 +131,7 @@ where
         let leading_trivia: Vec<_> = prev_token.leading_trivia().pieces().collect();
         let trailing_trivia: Vec<_> = prev_token.trailing_trivia().pieces().collect();
 
-        self.replace_token(
+        self.replace_token_discard_trivia(
             prev_token,
             next_token
                 .with_leading_trivia(

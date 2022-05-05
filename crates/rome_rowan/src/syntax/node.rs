@@ -383,7 +383,7 @@ impl<L: Language> SyntaxNode<L> {
     }
 
     /// Return a new version of this node detached from its parent node
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn detach(self) -> Self {
         Self {
             raw: self.raw.detach(),
@@ -391,7 +391,9 @@ impl<L: Language> SyntaxNode<L> {
         }
     }
 
-    #[must_use]
+    /// Return a clone of this node with the specified range of slots replaced
+    /// with the elements of the provided iterator
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn splice_slots<R, I>(self, range: R, replace_with: I) -> Self
     where
         R: ops::RangeBounds<usize>,
@@ -413,7 +415,7 @@ impl<L: Language> SyntaxNode<L> {
     /// `prev_elem` can be a direct child of this node, or an indirect child through any descendant node
     ///
     /// Returns `None` if `prev_elem` is not a descendant of this node
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn replace_child(
         self,
         prev_elem: SyntaxElement<L>,

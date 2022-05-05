@@ -42,7 +42,7 @@ impl Rule for NoDelete {
     }
 
     fn action(root: JsAnyRoot, node: &Self::Query, state: &Self::State) -> Option<RuleAction> {
-        let root = root.replace_node_retain_trivia(
+        let root = root.replace_node(
             JsAnyExpression::from(node.clone()),
             JsAnyExpression::from(make::js_assignment_expression(
                 state.clone().try_into().ok()?,

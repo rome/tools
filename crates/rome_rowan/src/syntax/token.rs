@@ -153,7 +153,7 @@ impl<L: Language> SyntaxToken<L> {
     }
 
     /// Return a new version of this token detached from its parent node
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn detach(self) -> Self {
         Self {
             raw: self.raw.detach(),
@@ -162,7 +162,7 @@ impl<L: Language> SyntaxToken<L> {
     }
 
     /// Return a new version of this token with its leading trivia replaced with `trivia`
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn with_leading_trivia<'a, I>(self, trivia: I) -> Self
     where
         I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
@@ -192,7 +192,7 @@ impl<L: Language> SyntaxToken<L> {
     }
 
     /// Return a new version of this token with its trailing trivia replaced with `trivia`
-    #[must_use]
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn with_trailing_trivia<'a, I>(self, trivia: I) -> Self
     where
         I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,

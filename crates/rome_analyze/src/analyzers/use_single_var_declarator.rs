@@ -92,7 +92,7 @@ impl Rule for UseSingleVarDeclarator {
 
         Some(RuleAction {
             category: ActionCategory::empty(),
-            root: root.replace_node(prev_parent, next_parent)?,
+            root: root.replace_node_discard_trivia(prev_parent, next_parent)?,
         })
     }
 }
