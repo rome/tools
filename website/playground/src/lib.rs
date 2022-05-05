@@ -164,6 +164,9 @@ pub fn run(
     let ast_json = serde_json::to_value(&parse.tree())
         .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" }));
 
+    let cst_json = clean_up_json(cst_json);
+    let ast_json = clean_up_json(ast_json);
+
     let formatted = format_node(options, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
 
