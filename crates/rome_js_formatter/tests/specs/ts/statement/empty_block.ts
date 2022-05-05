@@ -1,0 +1,2 @@
+interface X {}
+type X = {};
