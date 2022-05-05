@@ -4,6 +4,7 @@ mod format_conditional;
 mod simple;
 pub mod string_utils;
 
+mod format_sequence_expression;
 mod member_chain;
 #[cfg(test)]
 mod quickcheck_utils;
@@ -11,6 +12,7 @@ mod quickcheck_utils;
 use crate::prelude::*;
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
+pub(crate) use format_sequence_expression::{format_sequence_expression, SequenceContext};
 pub(crate) use member_chain::format_call_expression;
 use rome_formatter::normalize_newlines;
 use rome_js_syntax::suppression::{has_suppressions_category, SuppressionCategory};
