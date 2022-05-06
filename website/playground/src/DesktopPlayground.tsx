@@ -3,7 +3,11 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
+<<<<<<< HEAD
 import TreeView from "./TreeView";
+=======
+import ReactJson from "react-json-view";
+>>>>>>> f60a74b0f4 (Added react-json-view)
 
 export default function DesktopPlayground({
 	playgroundState: { code, setCode, ...settings },
@@ -84,7 +88,7 @@ export default function DesktopPlayground({
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll">
-								{JSON.stringify(prettierOutput.ir, null, 1)}
+								{<ReactJson src={prettierOutput.ir} />}
 							</pre>
 						</TabPanel>
 						<TabPanel>

@@ -110,7 +110,7 @@ export function formatWithPrettier(
 		language: "js" | "ts";
 		quoteStyle: QuoteStyle;
 	},
-) {
+): { code: string; ir: object } {
 	try {
 		const prettierOptions = {
 			useTabs: options.indentStyle === IndentStyle.Tab,
@@ -126,7 +126,7 @@ export function formatWithPrettier(
 		return { code: formattedCode, ir };
 	} catch (err) {
 		console.error(err);
-		return { code, ir: "" };
+		return { code, ir: { error: "Invalid code" } };
 	}
 }
 
