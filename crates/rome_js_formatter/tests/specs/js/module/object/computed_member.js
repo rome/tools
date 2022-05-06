@@ -12,3 +12,5 @@ x["very"]["long"]["chain"]["of"]["computed"]["members"]["that"]["goes"]["on"]["f
 x.very.long.chain.of.static.members.that.goes.on.for.ever.I.mean.it.for.ever["and"].even.longer.than.that.and["rofefefeeffeme"].doesnt.supportit
 
 x.very.long.chain.of.static.members.that.goes.on.for.ever.I.mean.it.for.ever[and()].even.longer.than.that.and["rofefefeefefme"].doesnt.supportit
+
+x[b["test"]]

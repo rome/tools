@@ -41,28 +41,33 @@ impl FormatNode for JsComputedMemberExpression {
         ]];
 
         // Traverse upwards again and concatenate the computed expression until we find the first non-computed expression
-        while let Some(parent) = current.syntax().parent() {
-            if let Some(parent_computed) = JsComputedMemberExpression::cast(parent) {
-                let JsComputedMemberExpressionFields {
-                    object: _,
-                    optional_chain_token,
-                    l_brack_token,
-                    member,
-                    r_brack_token,
-                } = parent_computed.as_fields();
-
-                formatted.push(group_elements(format_elements![
-                    optional_chain_token.format_or_empty(formatter)?,
-                    l_brack_token.format(formatter)?,
-                    soft_line_break(),
-                    soft_block_indent(member.format(formatter)?),
-                    r_brack_token.format(formatter)?,
-                ]));
-
-                current = parent_computed;
-            } else {
+        while let Some(parent) = current
+            .syntax()
+            .parent()
+            .and_then(JsComputedMemberExpression::cast)
+        {
+            // Don't traverse up if self is a member of a computed member expression
+            if current == *self {
                 break;
             }
+
+            let JsComputedMemberExpressionFields {
+                object: _,
+                optional_chain_token,
+                l_brack_token,
+                member,
+                r_brack_token,
+            } = parent.as_fields();
+
+            formatted.push(group_elements(format_elements![
+                optional_chain_token.format_or_empty(formatter)?,
+                l_brack_token.format(formatter)?,
+                soft_line_break(),
+                soft_block_indent(member.format(formatter)?),
+                r_brack_token.format(formatter)?,
+            ]));
+
+            current = parent;
         }
 
         Ok(concat_elements(formatted))
