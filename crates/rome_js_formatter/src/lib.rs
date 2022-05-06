@@ -476,7 +476,7 @@ mod test {
         let src = r#"xyz.a(b!).a(b!).a(b!)
 
 "#;
-        let syntax = SourceType::tsx();
+        let syntax = SourceType::jsx();
         let tree = parse(src, 0, syntax.clone());
         let result = format_node(FormatOptions::default(), &tree.syntax())
             .unwrap()
