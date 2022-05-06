@@ -1,8 +1,9 @@
 import { PlaygroundProps } from "./types";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { formatWithPrettier, getLanguage } from "./utils";
+import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
+import TreeView from "./TreeView";
 
 export default function DesktopPlayground(
 	{
@@ -13,7 +14,6 @@ export default function DesktopPlayground(
 ) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
-
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
@@ -75,16 +75,16 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll">{cst}</pre>
+							<TreeView tree={cst} />
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll">{ast}</pre>
+							<TreeView tree={ast} />
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
+							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
+							<pre className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs">
 								{errors}
 							</pre>
 						</TabPanel>

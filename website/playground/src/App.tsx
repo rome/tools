@@ -1,7 +1,7 @@
 import "react-tabs/style/react-tabs.css";
 import init, { run } from "../pkg/rome_playground";
 import { useEffect, useState } from "react";
-import { IndentStyle, QuoteStyle, SourceType } from "./types";
+import { IndentStyle } from "./types";
 import { formatWithPrettier, usePlaygroundState, useWindowSize } from "./utils";
 import DesktopPlayground from "./DesktopPlayground";
 import { MobilePlayground } from "./MobilePlayground";

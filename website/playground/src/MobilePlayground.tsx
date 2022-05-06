@@ -1,8 +1,9 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { formatWithPrettier, getLanguage } from "./utils";
+import { getLanguage } from "./utils";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
+import TreeView from "./TreeView";
 
 export function MobilePlayground(
 	{
@@ -76,10 +77,10 @@ export function MobilePlayground(
 					/>
 				</TabPanel>
 				<TabPanel>
-					<pre className="h-screen overflow-y-scroll">{cst}</pre>
+					<TreeView tree={cst} />
 				</TabPanel>
 				<TabPanel>
-					<pre className="h-screen overflow-y-scroll">{ast}</pre>
+					<TreeView tree={ast} />
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>

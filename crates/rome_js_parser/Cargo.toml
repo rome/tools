@@ -23,3 +23,6 @@ tests_macros = { path = "../tests_macros" }
 expect-test = "1.2.2"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
+
+[features]
+serde = ["rome_js_syntax/serde"]
