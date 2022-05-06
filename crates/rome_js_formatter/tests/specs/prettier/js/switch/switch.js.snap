@@ -82,13 +82,11 @@ switch (
 switch (
   $veryLongAndVeryVerboseVariableName && $anotherVeryLongAndVeryVerboseVariableName
 ) {
-
 }
 
 switch (
   $longButSlightlyShorterVariableName && $anotherSlightlyShorterVariableName
 ) {
-
 }
 
 ```

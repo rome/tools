@@ -3,7 +3,7 @@ use crate::{
     format_elements, join_elements_hard_line, space_token, Format, FormatElement, FormatNode,
     Formatter, JsFormatter,
 };
-use rome_formatter::{empty_line, FormatResult};
+use rome_formatter::{hard_line_break, FormatResult};
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
 use rome_rowan::AstNode;
 
@@ -32,7 +32,7 @@ impl FormatNode for JsSwitchStatement {
             formatter.format_delimited_block_indent(
                 &l_curly_token?,
                 if is_cases_empty {
-                    empty_line()
+                    hard_line_break()
                 } else {
                     join_elements_hard_line(
                         cases
