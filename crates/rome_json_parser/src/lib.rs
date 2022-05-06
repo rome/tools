@@ -1,5 +1,5 @@
 mod lexer;
-pub fn parse_json_root()  {
+pub fn parse_json_root() {
     // let parser = rome_js_parser::Parser::new("", 0, SourceType::js_module());
     // let source = "(void b)";
 
@@ -153,7 +153,7 @@ impl<'l> TokenSource<'l> {
     }
 
     #[inline]
-    fn next_non_trivia_token(&self, first_token: bool) {
+    fn next_non_trivia_token(&mut self, first_token: bool) {
         let mut processed_tokens = 0;
         let mut trailing = !first_token;
 
@@ -173,9 +173,9 @@ impl<'l> TokenSource<'l> {
                     if trivia_kind.is_newline() {
                         trailing = false;
                     }
-
+                    let current_range = self.current_range();
                     self.trivia_list
-                        .push(Trivia::new(trivia_kind, self.current_range(), trailing));
+                        .push(Trivia::new(trivia_kind, current_range, trailing));
                 }
             }
         }
@@ -339,7 +339,7 @@ impl<'l> TokenSource<'l> {
 
     /// Returns the byte offset of the current token from the start of the source document
     #[inline(always)]
-    pub fn position(&self) -> TextSize {
+    pub fn position(&mut self) -> TextSize {
         self.current_range().start()
     }
 

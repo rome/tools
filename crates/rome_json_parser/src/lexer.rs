@@ -80,6 +80,7 @@ pub struct Lexer<'a> {
     inner: Peekable<LogosLexer<'a>>,
     source: &'a str,
     file_id: usize,
+    cache_slot: Option<TokenKind>
 }
 
 impl<'a> Lexer<'a> {
@@ -95,24 +96,33 @@ impl<'a> Lexer<'a> {
             inner: LogosLexer::new(source).peekable(),
             source,
             file_id,
+            cache_slot: None
         }
     }
 
     pub fn next_token(&mut self) -> JsonSyntaxKind {
-        self.inner
-            .next()
-            .map(|(kind, _)| kind.into())
-            .unwrap_or(JsonSyntaxKind::EOF)
+        // self.cache_slot.take().unwrap_or_else(|| {
+            
+        // };
+        // self.inner
+        //     .next()
+        //     .map(|(kind, _)| kind.into())
+        //     .unwrap_or(JsonSyntaxKind::EOF)
+        JsonSyntaxKind::COLON
     }
 
-    pub fn current(&self) -> JsonSyntaxKind {
+    fn current_token() {
+
+    }
+
+    pub fn current(&mut self) -> JsonSyntaxKind {
         match self.inner.peek() {
             Some((kind, _)) => (*kind).into(),
             None => JsonSyntaxKind::EOF,
         }
     }
-    pub fn current_range(& self) -> TextRange {
-        match self.inner.peek() {
+    pub fn current_range(&mut self) -> TextRange {
+        match self.inner.next() {
             Some((_, range)) => TextRange::new(
                 range.start.try_into().unwrap(),
                 range.end.try_into().unwrap(),

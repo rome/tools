@@ -51,7 +51,7 @@ pub(crate) type RecoveryResult = Result<CompletedMarker, RecoveryError>;
 /// Recovers the parser by finding a token/point (depending on the configuration) from where
 /// the caller knows how to proceed parsing. The recovery wraps all the skipped tokens inside of an `Unknown` node.
 /// A safe recovery point for an array element could by finding the next `,` or `]`.
-pub struct ParseRecovery {
+pub(crate) struct ParseRecovery {
     node_kind: JsSyntaxKind,
     recovery_set: TokenSet,
     line_break: bool,
