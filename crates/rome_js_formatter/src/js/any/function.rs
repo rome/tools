@@ -1,9 +1,9 @@
 use crate::format_traits::FormatOptional;
 use crate::utils::is_simple_expression;
 use crate::{
-    concat_elements, empty_element, formatted, group_elements,
-    hard_group_elements, if_group_breaks, soft_block_indent, soft_line_indent_or_space,
-    space_token, token, Format, FormatElement, FormatNode, Formatter,
+    concat_elements, empty_element, formatted, group_elements, hard_group_elements,
+    if_group_breaks, soft_block_indent, soft_line_indent_or_space, space_token, token, Format,
+    FormatElement, FormatNode, Formatter,
 };
 use rome_formatter::FormatResult;
 
@@ -22,8 +22,8 @@ impl Format for JsAnyFunction {
                 })?,
         );
 
-        tokens.push(self.function_token().format_or_empty(formatter)?);
-        tokens.push(self.star_token().format_or_empty(formatter)?);
+        tokens.push(self.function_token().format(formatter)?);
+        tokens.push(self.star_token().format(formatter)?);
 
         tokens.push(match self {
             JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
@@ -34,7 +34,7 @@ impl Format for JsAnyFunction {
             )?,
         });
 
-        tokens.push(self.type_parameters().format_or_empty(formatter)?);
+        tokens.push(self.type_parameters().format(formatter)?);
 
         tokens.push(match self.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => group_elements(formatted![
@@ -50,7 +50,7 @@ impl Format for JsAnyFunction {
             JsAnyArrowFunctionParameters::JsParameters(params) => params.format_node(formatter)?,
         });
 
-        tokens.push(self.return_type_annotation().format_or_empty(formatter)?);
+        tokens.push(self.return_type_annotation().format(formatter)?);
 
         tokens.push(space_token());
 

@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+
 use crate::utils::format_initializer_clause;
 use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
@@ -14,13 +14,12 @@ impl FormatNode for JsFormalParameter {
             initializer,
         } = self.as_fields();
 
-        let type_annotation = type_annotation.format_or_empty(formatter)?;
         let initializer = format_initializer_clause(formatter, initializer)?;
 
         formatted![
             formatter,
             binding.format(formatter)?,
-            question_mark_token.format_or_empty(formatter)?,
+            question_mark_token,
             type_annotation,
             initializer
         ]

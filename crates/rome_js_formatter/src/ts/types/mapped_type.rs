@@ -1,8 +1,6 @@
 use crate::format_traits::FormatOptional;
 use crate::utils::format_with_semicolon;
-use crate::{
-    space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
+use crate::{space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
 
@@ -34,8 +32,6 @@ impl FormatNode for TsMappedType {
             formatted![formatter, space_token(), clause]
         })?;
         let r_square = r_brack_token.format(formatter)?;
-        let optional_modifier = optional_modifier.format_or_empty(formatter)?;
-        let mapped_type = mapped_type.format_or_empty(formatter)?;
 
         formatter.format_delimited_block_indent(
             &l_curly_token?,

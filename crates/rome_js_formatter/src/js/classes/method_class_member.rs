@@ -25,12 +25,8 @@ impl FormatNode for JsMethodClassMember {
             formatted![formatter, token, space_token()]
         })?;
 
-        let star_token = star_token.format_or_empty(formatter)?;
         let name = name.format(formatter)?;
-        let question_mark_token = question_mark_token.format_or_empty(formatter)?;
-        let type_parameters = type_parameters.format_or_empty(formatter)?;
         let params = parameters.format(formatter)?;
-        let return_type_annotation = return_type_annotation.format_or_empty(formatter)?;
         let body = body.format(formatter)?;
 
         Ok(hard_group_elements(formatted![

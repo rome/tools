@@ -2,7 +2,7 @@ mod flatten_item;
 mod groups;
 mod simple_argument;
 
-use crate::format_traits::FormatOptional;
+
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::groups::{Groups, HeadGroup};
 use crate::{
@@ -325,12 +325,8 @@ fn flatten_call_expression(
             let callee = call_expression.callee()?;
             flatten_call_expression(queue, callee.syntax().clone(), formatter)?;
             let formatted = vec![
-                call_expression
-                    .optional_chain_token()
-                    .format_or_empty(formatter)?,
-                call_expression
-                    .type_arguments()
-                    .format_or_empty(formatter)?,
+                formatted!(formatter, call_expression.optional_chain_token())?,
+                formatted!(formatter, call_expression.type_arguments())?,
                 call_expression.arguments().format(formatter)?,
             ];
 
@@ -352,9 +348,7 @@ fn flatten_call_expression(
             let object = computed_expression.object()?;
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
             let formatted = vec![
-                computed_expression
-                    .optional_chain_token()
-                    .format_or_empty(formatter)?,
+                formatted!(formatter, computed_expression.optional_chain_token())?,
                 computed_expression.l_brack_token().format(formatter)?,
                 computed_expression.member().format(formatter)?,
                 computed_expression.r_brack_token().format(formatter)?,

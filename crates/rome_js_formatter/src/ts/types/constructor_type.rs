@@ -22,7 +22,7 @@ impl FormatNode for TsConstructorType {
             formatter,
             abstract_token,
             new_token.format(formatter)?,
-            type_parameters.format_or_empty(formatter)?,
+            type_parameters,
             parameters.format(formatter)?,
             space_token(),
             fat_arrow_token.format(formatter)?,

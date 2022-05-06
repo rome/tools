@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+
 use rome_formatter::FormatResult;
 
 use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
@@ -18,7 +18,7 @@ impl FormatNode for JsRestParameter {
             formatter,
             dotdotdot_token.format(formatter)?,
             binding.format(formatter)?,
-            type_annotation.format_or_empty(formatter)?
+            type_annotation
         ]
     }
 }

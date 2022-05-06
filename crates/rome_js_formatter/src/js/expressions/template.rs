@@ -1,9 +1,8 @@
-use crate::format_traits::FormatOptional;
+
 use rome_formatter::FormatResult;
 
 use crate::{
-    concat_elements, formatted, hard_group_elements, Format, FormatElement,
-    FormatNode, Formatter,
+    concat_elements, formatted, hard_group_elements, Format, FormatElement, FormatNode, Formatter,
 };
 
 use rome_js_syntax::JsTemplate;
@@ -19,8 +18,6 @@ impl FormatNode for JsTemplate {
             r_tick_token,
         } = self.as_fields();
 
-        let tag = tag.format_or_empty(formatter)?;
-        let type_arguments = type_arguments.format_or_empty(formatter)?;
         let l_tick = l_tick_token.format(formatter)?;
         let r_tick = r_tick_token.format(formatter)?;
 

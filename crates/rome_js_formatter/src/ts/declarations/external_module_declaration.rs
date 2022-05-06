@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+
 use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsExternalModuleDeclaration;
@@ -14,7 +14,6 @@ impl FormatNode for TsExternalModuleDeclaration {
 
         let module_token = module_token.format(formatter)?;
         let source = source.format(formatter)?;
-        let body = body.format_or_empty(formatter)?;
 
         formatted![
             formatter,

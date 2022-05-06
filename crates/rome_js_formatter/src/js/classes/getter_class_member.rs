@@ -1,9 +1,8 @@
-use crate::format_traits::FormatOptional;
+
 use rome_formatter::FormatResult;
 
 use crate::{
-    formatted, hard_group_elements, space_token, Format, FormatElement,
-    FormatNode, Formatter,
+    formatted, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
 };
 
 use rome_js_syntax::JsGetterClassMember;
@@ -30,7 +29,7 @@ impl FormatNode for JsGetterClassMember {
             name.format(formatter)?,
             l_paren_token.format(formatter)?,
             r_paren_token.format(formatter)?,
-            return_type.format_or_empty(formatter)?,
+            return_type,
             space_token(),
             body.format(formatter)?
         ]?))

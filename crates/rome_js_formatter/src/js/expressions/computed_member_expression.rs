@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+
 use rome_formatter::{
     concat_elements, group_elements, soft_block_indent, soft_line_break, FormatResult,
 };
@@ -34,7 +34,7 @@ impl FormatNode for JsComputedMemberExpression {
             object.format(formatter)?,
             group_elements(formatted![
                 formatter,
-                optional_chain_token.format_or_empty(formatter)?,
+                optional_chain_token,
                 l_brack_token.format(formatter)?,
                 soft_line_break(),
                 soft_block_indent(member.format(formatter)?),
@@ -63,7 +63,7 @@ impl FormatNode for JsComputedMemberExpression {
 
             formatted.push(group_elements(formatted![
                 formatter,
-                optional_chain_token.format_or_empty(formatter)?,
+                optional_chain_token,
                 l_brack_token.format(formatter)?,
                 soft_line_break(),
                 soft_block_indent(member.format(formatter)?),

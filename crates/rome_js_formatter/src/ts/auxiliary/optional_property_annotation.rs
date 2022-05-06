@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+
 use crate::{Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsOptionalPropertyAnnotation;
@@ -14,7 +14,7 @@ impl FormatNode for TsOptionalPropertyAnnotation {
         formatted![
             formatter,
             question_mark_token.format(formatter)?,
-            type_annotation.format_or_empty(formatter)?
+            type_annotation
         ]
     }
 }

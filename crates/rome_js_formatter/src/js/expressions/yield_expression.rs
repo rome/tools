@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+
 use rome_formatter::FormatResult;
 
 use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
@@ -12,8 +12,6 @@ impl FormatNode for JsYieldExpression {
             yield_token,
             argument,
         } = self.as_fields();
-
-        let argument = argument.format_or_empty(formatter)?;
 
         formatted![formatter, yield_token.format(formatter)?, argument]
     }

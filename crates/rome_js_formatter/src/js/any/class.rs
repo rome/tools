@@ -1,7 +1,6 @@
 use crate::format_traits::FormatOptional;
 use crate::{
-    formatted, join_elements_hard_line, space_token, FormatElement, Formatter,
-    JsFormatter,
+    formatted, join_elements_hard_line, space_token, FormatElement, Formatter, JsFormatter,
 };
 use crate::{hard_group_elements, Format};
 use rome_formatter::FormatResult;
@@ -20,8 +19,6 @@ impl Format for JsAnyClass {
             .id()
             .format_with_or_empty(formatter, |id| formatted![formatter, space_token(), id])?;
 
-        let type_parameters = self.type_parameters().format_or_empty(formatter)?;
-
         let extends = self
             .extends_clause()
             .format_with_or_empty(formatter, |extends_clause| {
@@ -39,7 +36,7 @@ impl Format for JsAnyClass {
             abstract_token,
             self.class_token().format(formatter)?,
             id,
-            type_parameters,
+            self.type_parameters(),
             extends,
             implements_clause,
             space_token(),

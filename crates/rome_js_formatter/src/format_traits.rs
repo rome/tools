@@ -9,26 +9,6 @@ use rome_rowan::SyntaxResult;
 /// In order to take advantage of all the functions, you only need to implement the [FormatOptionalTokenAndNode::format_with_or]
 /// function.
 pub trait FormatOptional {
-    /// This function tries to format an optional [token](rome_js_syntax::SyntaxToken) or [node](rome_js_syntax::AstNode).
-    /// If the token doesn't exist, an [empty token](FormatElement::Empty) is created
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_js_formatter::{Formatter, empty_element};
-    /// use rome_js_syntax::{JsSyntaxToken};
-    /// use rome_js_formatter::prelude::*;
-    ///
-    /// let formatter = Formatter::default();
-    /// let token: Option<JsSyntaxToken> = None;
-    /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
-    /// let result = token.format_or_empty(&formatter);
-    ///
-    /// assert_eq!(Ok(empty_element()), result)
-    fn format_or_empty(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.format_or(formatter, empty_element)
-    }
-
     /// This function tries to format an optional [token](rome_js_syntax::SyntaxToken). If the token doesn't exist,
     /// an [empty token](crate::FormatElement::Empty) is created. If exists, the utility
     /// formats the token and passes it to the closure.

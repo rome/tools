@@ -1,7 +1,5 @@
-use crate::format_traits::FormatOptional;
-use crate::{
-    hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
+
+use crate::{hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsFunctionType;
 use rome_js_syntax::TsFunctionTypeFields;
@@ -17,7 +15,7 @@ impl FormatNode for TsFunctionType {
 
         Ok(hard_group_elements(formatted![
             formatter,
-            type_parameters.format_or_empty(formatter)?,
+            type_parameters,
             parameters.format(formatter)?,
             space_token(),
             fat_arrow_token.format(formatter)?,

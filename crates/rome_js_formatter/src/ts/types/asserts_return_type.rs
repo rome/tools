@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+
 use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsAssertsReturnType;
@@ -17,7 +17,7 @@ impl FormatNode for TsAssertsReturnType {
             space_token(),
             parameter_name.format(formatter)?,
             space_token(),
-            predicate.format_or_empty(formatter)?
+            predicate
         ]
     }
 }

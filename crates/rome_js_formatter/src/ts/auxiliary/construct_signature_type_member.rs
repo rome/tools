@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+
 use crate::utils::format_type_member_separator;
 use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
@@ -15,9 +15,9 @@ impl FormatNode for TsConstructSignatureTypeMember {
         } = self.as_fields();
 
         let new = new_token.format(formatter)?;
-        let type_parameters = type_parameters.format_or_empty(formatter)?;
+        let type_parameters = type_parameters;
         let parameters = parameters.format(formatter)?;
-        let type_annotation = type_annotation.format_or_empty(formatter)?;
+        let type_annotation = type_annotation;
         let separator_token = format_type_member_separator(separator_token, formatter);
 
         formatted![

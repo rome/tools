@@ -1,9 +1,9 @@
-use crate::format_traits::FormatOptional;
+
 use rome_formatter::FormatResult;
 
 use crate::{
-    formatted, group_elements, soft_line_break_or_space, space_token, token,
-    Format, FormatElement, FormatNode, Formatter, JsFormatter,
+    formatted, group_elements, soft_line_break_or_space, space_token, token, Format, FormatElement,
+    FormatNode, Formatter, JsFormatter,
 };
 
 use rome_js_syntax::JsAnyStatement;
@@ -27,13 +27,13 @@ impl FormatNode for JsForStatement {
         let inner = if initializer.is_some() || test.is_some() || update.is_some() {
             formatted![
                 formatter,
-                initializer.format_or_empty(formatter)?,
+                initializer,
                 first_semi_token.format(formatter)?,
                 soft_line_break_or_space(),
-                test.format_or_empty(formatter)?,
+                test,
                 second_semi_token.format(formatter)?,
                 soft_line_break_or_space(),
-                update.format_or_empty(formatter)?,
+                update,
             ]?
         } else {
             formatted![
