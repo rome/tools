@@ -10,6 +10,7 @@ on:
 
 jobs:
   deploy:
+    if: ${{ !github.event.pull_request.head.repo.fork }}
     runs-on: ubuntu-latest
     environment: aws
     name: Deploy Playground (Preview)
@@ -28,7 +29,7 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2.1.0
         with:
-          version: 6
+          version: 7
           run_install: |
             args: [--prefix website/playground]
 
@@ -41,7 +42,6 @@ jobs:
 
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
-        if: github.repository_owner == 'rome'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -57,12 +57,12 @@ jobs:
           echo "::set-output name=url::$url"
 
       - name: Get the PR number
-        if: github.event_name == 'pull_request' && github.repository_owner == 'rome'
+        if: github.event_name == 'pull_request'
         id: pr-number
         uses: kkak10/pr-number-action@v1.3
 
       - name: Find Previous Comment
-        if: github.event_name == 'pull_request' && github.repository_owner == 'rome'
+        if: github.event_name == 'pull_request'
         uses: peter-evans/find-comment@v1.3.0
         id: previous-comment
         with:
@@ -70,7 +70,7 @@ jobs:
           body-includes: Playground for commit
 
       - name: Update existing comment
-        if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id && github.repository_owner == 'rome'
+        if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
         uses: peter-evans/create-or-update-comment@v1.4.5
         continue-on-error: true
         with:
@@ -80,7 +80,7 @@ jobs:
           edit-mode: replace
 
       - name: Write a new comment
-        if: github.event_name == 'pull_request' && !steps.previous-comment.outputs.comment-id && github.repository_owner == 'rome'
+        if: github.event_name == 'pull_request' && !steps.previous-comment.outputs.comment-id
         uses: peter-evans/create-or-update-comment@v1.4.5
         continue-on-error: true
         with:

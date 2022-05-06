@@ -1,4 +1,4 @@
-use crate::{Format, FormatElement, Formatter};
+use crate::{Format, FormatElement, Formatter, JsFormatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::JsSwitchCaseList;
 impl Format for JsSwitchCaseList {

@@ -6,7 +6,7 @@ use std::collections::BTreeSet;
 /// This implementation uses the fact that no two tokens can have an overlapping range to avoid the need for an interval tree.
 /// Thus, testing if a token has already been formatted only requires testing if a token starting at the same offset has been formatted.
 #[derive(Debug, Clone, Default)]
-pub(crate) struct PrintedTokens {
+pub struct PrintedTokens {
     /// Key: Start of a token's range
     offsets: BTreeSet<TextSize>,
 }
@@ -16,7 +16,7 @@ impl PrintedTokens {
     ///
     /// ## Panics
     /// If this token has been formatted before.
-    pub(crate) fn track_token<L: Language>(&mut self, token: &SyntaxToken<L>) {
+    pub fn track_token<L: Language>(&mut self, token: &SyntaxToken<L>) {
         let range = token.text_trimmed_range();
 
         if !self.offsets.insert(range.start()) {
@@ -28,7 +28,7 @@ impl PrintedTokens {
     ///
     /// ## Panics
     /// If any descendant token of `root` hasn't been tracked
-    pub(crate) fn assert_all_tracked<L: Language>(&self, root: &SyntaxNode<L>) {
+    pub fn assert_all_tracked<L: Language>(&self, root: &SyntaxNode<L>) {
         let mut descendants = root.descendants_tokens();
         let mut offsets = self.offsets.iter();
 

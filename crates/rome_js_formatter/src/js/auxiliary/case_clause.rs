@@ -1,8 +1,10 @@
 use rome_formatter::FormatResult;
+use rome_js_syntax::JsAnyStatement;
+use rome_rowan::AstNodeList;
 
 use crate::{
     format_elements, hard_line_break, indent, space_token, Format, FormatElement, FormatNode,
-    Formatter,
+    Formatter, JsFormatter,
 };
 
 use rome_js_syntax::JsCaseClause;
@@ -17,6 +19,10 @@ impl FormatNode for JsCaseClause {
             consequent,
         } = self.as_fields();
 
+        let is_first_child_block_stmt = matches!(
+            consequent.iter().next(),
+            Some(JsAnyStatement::JsBlockStatement(_))
+        );
         let case_word = case_token.format(formatter)?;
         let colon = colon_token.format(formatter)?;
         let test = test.format(formatter)?;
@@ -27,6 +33,8 @@ impl FormatNode for JsCaseClause {
             // the trailing comments for the case clause inline if there is no
             // block to push them into
             hard_line_break()
+        } else if is_first_child_block_stmt {
+            format_elements![space_token(), cons]
         } else {
             // no line break needed after because it is added by the indent in the switch statement
             indent(format_elements![hard_line_break(), cons])

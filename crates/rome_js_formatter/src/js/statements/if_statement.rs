@@ -1,7 +1,7 @@
 use crate::format_traits::FormatOptional;
 use crate::{
     block_indent, concat_elements, group_elements, hard_group_elements, hard_line_break, token,
-    Format,
+    Format, JsFormatter,
 };
 use rome_formatter::FormatResult;
 

@@ -1,5 +1,5 @@
 use crate::utils::{is_simple_expression, token_has_comments};
-use crate::{format_elements, hard_group_elements, Format};
+use crate::{format_elements, hard_group_elements, Format, JsFormatter};
 use crate::{FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 

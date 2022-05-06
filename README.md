@@ -24,7 +24,9 @@ and top-notch error recovery.
 
 ## Status
 
-The current area of focus is **formatting**. See the umbrella task [#1996](https://github.com/rome/tools/issues/1996) for tracking.
+The current areas of focus are: 
+- to make the formatter **more compatible with Prettier** and format JSX. See [#2262](https://github.com/rome/tools/issues/2262) and [#2403](https://github.com/rome/tools/issues/2403).
+- starts the foundations for analyzers (linting). See [2488](https://github.com/rome/tools/issues/2488)
 
 ## Philosophy
 

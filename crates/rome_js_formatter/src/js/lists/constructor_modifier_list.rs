@@ -7,7 +7,7 @@ impl Format for JsConstructorModifierList {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(join_elements(
             space_token(),
-            formatter.format_nodes(self.iter())?,
+            formatter.format_all(self.iter())?,
         ))
     }
 }

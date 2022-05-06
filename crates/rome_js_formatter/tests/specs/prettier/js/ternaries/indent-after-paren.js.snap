@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+assertion_line: 175
 expression: indent-after-paren.js
 ---
 # Input
@@ -519,7 +520,9 @@ foo =
   )()()();
 
 foo =
-  foo.bar.baz[coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz];
+  foo.bar.baz[
+    coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+  ];
 
 const decorated = (arg, ignoreRequestError) => {
   return (
@@ -559,22 +562,30 @@ fn?.(
 );
 
 bifornCringerMoshedPerplexSawder =
-  fn[(
-    glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-  ).prop];
+  fn[
+    (
+      glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+    ).prop
+  ];
 
-fn[(
-  glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-).prop];
+fn[
+  (
+    glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  ).prop
+];
 
 bifornCringerMoshedPerplexSawder =
-  fn?.[(
-    glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-  ).prop];
+  fn?.[
+    (
+      glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+    ).prop
+  ];
 
-fn?.[(
-  glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-).prop];
+fn?.[
+  (
+    glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  ).prop
+];
 
 ```
 
@@ -618,14 +629,14 @@ fn?.[(
   203:     glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
   210:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
   215:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
-  219:   foo.bar.baz[coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz];
-  235:       glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-  241:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-  248:       glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-  254:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-  260:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-  264:   glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  220:     coooooooooooooooooooooooooooooooooooooooooooooooooooond ? baaaaaaaaaaaaaaaaaaaaar : baaaaaaaaaaaaaaaaaaaaaz
+  237:       glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  243:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  250:       glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  256:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  263:       glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
   269:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
-  273:   glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  276:       glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
+  282:     glimseGlyphsHazardNoopsTieTie === 0 ? averredBathersBoxroomBuggyNurl : anodyneCondosMalateOverateRetinol
 ```
 

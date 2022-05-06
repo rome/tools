@@ -9134,6 +9134,36 @@ pub enum JsAnyArrayAssignmentPatternElement {
     JsArrayHole(JsArrayHole),
     JsAssignmentWithDefault(JsAssignmentWithDefault),
 }
+impl JsAnyArrayAssignmentPatternElement {
+    pub fn as_js_any_assignment_pattern(&self) -> Option<&JsAnyAssignmentPattern> {
+        match &self {
+            JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_array_assignment_pattern_rest_element(
+        &self,
+    ) -> Option<&JsArrayAssignmentPatternRestElement> {
+        match &self {
+            JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(item) => {
+                Some(item)
+            }
+            _ => None,
+        }
+    }
+    pub fn as_js_array_hole(&self) -> Option<&JsArrayHole> {
+        match &self {
+            JsAnyArrayAssignmentPatternElement::JsArrayHole(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_assignment_with_default(&self) -> Option<&JsAssignmentWithDefault> {
+        match &self {
+            JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayBindingPatternElement {
     JsAnyBindingPattern(JsAnyBindingPattern),
@@ -9141,16 +9171,78 @@ pub enum JsAnyArrayBindingPatternElement {
     JsArrayHole(JsArrayHole),
     JsBindingPatternWithDefault(JsBindingPatternWithDefault),
 }
+impl JsAnyArrayBindingPatternElement {
+    pub fn as_js_any_binding_pattern(&self) -> Option<&JsAnyBindingPattern> {
+        match &self {
+            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_array_binding_pattern_rest_element(
+        &self,
+    ) -> Option<&JsArrayBindingPatternRestElement> {
+        match &self {
+            JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_array_hole(&self) -> Option<&JsArrayHole> {
+        match &self {
+            JsAnyArrayBindingPatternElement::JsArrayHole(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_binding_pattern_with_default(&self) -> Option<&JsBindingPatternWithDefault> {
+        match &self {
+            JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayElement {
     JsAnyExpression(JsAnyExpression),
     JsArrayHole(JsArrayHole),
     JsSpread(JsSpread),
 }
+impl JsAnyArrayElement {
+    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+        match &self {
+            JsAnyArrayElement::JsAnyExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_array_hole(&self) -> Option<&JsArrayHole> {
+        match &self {
+            JsAnyArrayElement::JsArrayHole(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_spread(&self) -> Option<&JsSpread> {
+        match &self {
+            JsAnyArrayElement::JsSpread(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrowFunctionParameters {
     JsAnyBinding(JsAnyBinding),
     JsParameters(JsParameters),
+}
+impl JsAnyArrowFunctionParameters {
+    pub fn as_js_any_binding(&self) -> Option<&JsAnyBinding> {
+        match &self {
+            JsAnyArrowFunctionParameters::JsAnyBinding(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_parameters(&self) -> Option<&JsParameters> {
+        match &self {
+            JsAnyArrowFunctionParameters::JsParameters(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyAssignment {
@@ -9163,16 +9255,100 @@ pub enum JsAnyAssignment {
     TsNonNullAssertionAssignment(TsNonNullAssertionAssignment),
     TsTypeAssertionAssignment(TsTypeAssertionAssignment),
 }
+impl JsAnyAssignment {
+    pub fn as_js_computed_member_assignment(&self) -> Option<&JsComputedMemberAssignment> {
+        match &self {
+            JsAnyAssignment::JsComputedMemberAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_identifier_assignment(&self) -> Option<&JsIdentifierAssignment> {
+        match &self {
+            JsAnyAssignment::JsIdentifierAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_parenthesized_assignment(&self) -> Option<&JsParenthesizedAssignment> {
+        match &self {
+            JsAnyAssignment::JsParenthesizedAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_static_member_assignment(&self) -> Option<&JsStaticMemberAssignment> {
+        match &self {
+            JsAnyAssignment::JsStaticMemberAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_assignment(&self) -> Option<&JsUnknownAssignment> {
+        match &self {
+            JsAnyAssignment::JsUnknownAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_as_assignment(&self) -> Option<&TsAsAssignment> {
+        match &self {
+            JsAnyAssignment::TsAsAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_non_null_assertion_assignment(&self) -> Option<&TsNonNullAssertionAssignment> {
+        match &self {
+            JsAnyAssignment::TsNonNullAssertionAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_assertion_assignment(&self) -> Option<&TsTypeAssertionAssignment> {
+        match &self {
+            JsAnyAssignment::TsTypeAssertionAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyAssignmentPattern {
     JsAnyAssignment(JsAnyAssignment),
     JsArrayAssignmentPattern(JsArrayAssignmentPattern),
     JsObjectAssignmentPattern(JsObjectAssignmentPattern),
 }
+impl JsAnyAssignmentPattern {
+    pub fn as_js_any_assignment(&self) -> Option<&JsAnyAssignment> {
+        match &self {
+            JsAnyAssignmentPattern::JsAnyAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_array_assignment_pattern(&self) -> Option<&JsArrayAssignmentPattern> {
+        match &self {
+            JsAnyAssignmentPattern::JsArrayAssignmentPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_object_assignment_pattern(&self) -> Option<&JsObjectAssignmentPattern> {
+        match &self {
+            JsAnyAssignmentPattern::JsObjectAssignmentPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyBinding {
     JsIdentifierBinding(JsIdentifierBinding),
     JsUnknownBinding(JsUnknownBinding),
+}
+impl JsAnyBinding {
+    pub fn as_js_identifier_binding(&self) -> Option<&JsIdentifierBinding> {
+        match &self {
+            JsAnyBinding::JsIdentifierBinding(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_binding(&self) -> Option<&JsUnknownBinding> {
+        match &self {
+            JsAnyBinding::JsUnknownBinding(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyBindingPattern {
@@ -9180,16 +9356,72 @@ pub enum JsAnyBindingPattern {
     JsArrayBindingPattern(JsArrayBindingPattern),
     JsObjectBindingPattern(JsObjectBindingPattern),
 }
+impl JsAnyBindingPattern {
+    pub fn as_js_any_binding(&self) -> Option<&JsAnyBinding> {
+        match &self {
+            JsAnyBindingPattern::JsAnyBinding(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_array_binding_pattern(&self) -> Option<&JsArrayBindingPattern> {
+        match &self {
+            JsAnyBindingPattern::JsArrayBindingPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_object_binding_pattern(&self) -> Option<&JsObjectBindingPattern> {
+        match &self {
+            JsAnyBindingPattern::JsObjectBindingPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyCallArgument {
     JsAnyExpression(JsAnyExpression),
     JsSpread(JsSpread),
+}
+impl JsAnyCallArgument {
+    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+        match &self {
+            JsAnyCallArgument::JsAnyExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_spread(&self) -> Option<&JsSpread> {
+        match &self {
+            JsAnyCallArgument::JsSpread(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClass {
     JsClassDeclaration(JsClassDeclaration),
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
     JsClassExpression(JsClassExpression),
+}
+impl JsAnyClass {
+    pub fn as_js_class_declaration(&self) -> Option<&JsClassDeclaration> {
+        match &self {
+            JsAnyClass::JsClassDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_class_export_default_declaration(
+        &self,
+    ) -> Option<&JsClassExportDefaultDeclaration> {
+        match &self {
+            JsAnyClass::JsClassExportDefaultDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_class_expression(&self) -> Option<&JsClassExpression> {
+        match &self {
+            JsAnyClass::JsClassExpression(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMember {
@@ -9208,17 +9440,147 @@ pub enum JsAnyClassMember {
     TsPropertySignatureClassMember(TsPropertySignatureClassMember),
     TsSetterSignatureClassMember(TsSetterSignatureClassMember),
 }
+impl JsAnyClassMember {
+    pub fn as_js_constructor_class_member(&self) -> Option<&JsConstructorClassMember> {
+        match &self {
+            JsAnyClassMember::JsConstructorClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_empty_class_member(&self) -> Option<&JsEmptyClassMember> {
+        match &self {
+            JsAnyClassMember::JsEmptyClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_getter_class_member(&self) -> Option<&JsGetterClassMember> {
+        match &self {
+            JsAnyClassMember::JsGetterClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_method_class_member(&self) -> Option<&JsMethodClassMember> {
+        match &self {
+            JsAnyClassMember::JsMethodClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_property_class_member(&self) -> Option<&JsPropertyClassMember> {
+        match &self {
+            JsAnyClassMember::JsPropertyClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_setter_class_member(&self) -> Option<&JsSetterClassMember> {
+        match &self {
+            JsAnyClassMember::JsSetterClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_static_initialization_block_class_member(
+        &self,
+    ) -> Option<&JsStaticInitializationBlockClassMember> {
+        match &self {
+            JsAnyClassMember::JsStaticInitializationBlockClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_member(&self) -> Option<&JsUnknownMember> {
+        match &self {
+            JsAnyClassMember::JsUnknownMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_constructor_signature_class_member(
+        &self,
+    ) -> Option<&TsConstructorSignatureClassMember> {
+        match &self {
+            JsAnyClassMember::TsConstructorSignatureClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_getter_signature_class_member(&self) -> Option<&TsGetterSignatureClassMember> {
+        match &self {
+            JsAnyClassMember::TsGetterSignatureClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_index_signature_class_member(&self) -> Option<&TsIndexSignatureClassMember> {
+        match &self {
+            JsAnyClassMember::TsIndexSignatureClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_method_signature_class_member(&self) -> Option<&TsMethodSignatureClassMember> {
+        match &self {
+            JsAnyClassMember::TsMethodSignatureClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_property_signature_class_member(&self) -> Option<&TsPropertySignatureClassMember> {
+        match &self {
+            JsAnyClassMember::TsPropertySignatureClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_setter_signature_class_member(&self) -> Option<&TsSetterSignatureClassMember> {
+        match &self {
+            JsAnyClassMember::TsSetterSignatureClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMemberName {
     JsComputedMemberName(JsComputedMemberName),
     JsLiteralMemberName(JsLiteralMemberName),
     JsPrivateClassMemberName(JsPrivateClassMemberName),
 }
+impl JsAnyClassMemberName {
+    pub fn as_js_computed_member_name(&self) -> Option<&JsComputedMemberName> {
+        match &self {
+            JsAnyClassMemberName::JsComputedMemberName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_literal_member_name(&self) -> Option<&JsLiteralMemberName> {
+        match &self {
+            JsAnyClassMemberName::JsLiteralMemberName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_private_class_member_name(&self) -> Option<&JsPrivateClassMemberName> {
+        match &self {
+            JsAnyClassMemberName::JsPrivateClassMemberName(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyConstructorParameter {
     JsAnyFormalParameter(JsAnyFormalParameter),
     JsRestParameter(JsRestParameter),
     TsPropertyParameter(TsPropertyParameter),
+}
+impl JsAnyConstructorParameter {
+    pub fn as_js_any_formal_parameter(&self) -> Option<&JsAnyFormalParameter> {
+        match &self {
+            JsAnyConstructorParameter::JsAnyFormalParameter(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_rest_parameter(&self) -> Option<&JsRestParameter> {
+        match &self {
+            JsAnyConstructorParameter::JsRestParameter(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_property_parameter(&self) -> Option<&TsPropertyParameter> {
+        match &self {
+            JsAnyConstructorParameter::TsPropertyParameter(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyDeclaration {
@@ -9234,6 +9596,74 @@ pub enum JsAnyDeclaration {
     TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
+impl JsAnyDeclaration {
+    pub fn as_js_class_declaration(&self) -> Option<&JsClassDeclaration> {
+        match &self {
+            JsAnyDeclaration::JsClassDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_declaration(&self) -> Option<&JsFunctionDeclaration> {
+        match &self {
+            JsAnyDeclaration::JsFunctionDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_variable_declaration(&self) -> Option<&JsVariableDeclaration> {
+        match &self {
+            JsAnyDeclaration::JsVariableDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_declare_function_declaration(&self) -> Option<&TsDeclareFunctionDeclaration> {
+        match &self {
+            JsAnyDeclaration::TsDeclareFunctionDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_enum_declaration(&self) -> Option<&TsEnumDeclaration> {
+        match &self {
+            JsAnyDeclaration::TsEnumDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_external_module_declaration(&self) -> Option<&TsExternalModuleDeclaration> {
+        match &self {
+            JsAnyDeclaration::TsExternalModuleDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_global_declaration(&self) -> Option<&TsGlobalDeclaration> {
+        match &self {
+            JsAnyDeclaration::TsGlobalDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_import_equals_declaration(&self) -> Option<&TsImportEqualsDeclaration> {
+        match &self {
+            JsAnyDeclaration::TsImportEqualsDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_interface_declaration(&self) -> Option<&TsInterfaceDeclaration> {
+        match &self {
+            JsAnyDeclaration::TsInterfaceDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_module_declaration(&self) -> Option<&TsModuleDeclaration> {
+        match &self {
+            JsAnyDeclaration::TsModuleDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_alias_declaration(&self) -> Option<&TsTypeAliasDeclaration> {
+        match &self {
+            JsAnyDeclaration::TsTypeAliasDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyDeclarationClause {
     JsClassDeclaration(JsClassDeclaration),
@@ -9248,6 +9678,74 @@ pub enum JsAnyDeclarationClause {
     TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
+impl JsAnyDeclarationClause {
+    pub fn as_js_class_declaration(&self) -> Option<&JsClassDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::JsClassDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_declaration(&self) -> Option<&JsFunctionDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::JsFunctionDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_variable_declaration_clause(&self) -> Option<&JsVariableDeclarationClause> {
+        match &self {
+            JsAnyDeclarationClause::JsVariableDeclarationClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_declare_function_declaration(&self) -> Option<&TsDeclareFunctionDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_enum_declaration(&self) -> Option<&TsEnumDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::TsEnumDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_external_module_declaration(&self) -> Option<&TsExternalModuleDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::TsExternalModuleDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_global_declaration(&self) -> Option<&TsGlobalDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::TsGlobalDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_import_equals_declaration(&self) -> Option<&TsImportEqualsDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::TsImportEqualsDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_interface_declaration(&self) -> Option<&TsInterfaceDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::TsInterfaceDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_module_declaration(&self) -> Option<&TsModuleDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::TsModuleDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_alias_declaration(&self) -> Option<&TsTypeAliasDeclaration> {
+        match &self {
+            JsAnyDeclarationClause::TsTypeAliasDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExportClause {
     JsAnyDeclarationClause(JsAnyDeclarationClause),
@@ -9260,6 +9758,66 @@ pub enum JsAnyExportClause {
     TsExportAssignmentClause(TsExportAssignmentClause),
     TsExportDeclareClause(TsExportDeclareClause),
 }
+impl JsAnyExportClause {
+    pub fn as_js_any_declaration_clause(&self) -> Option<&JsAnyDeclarationClause> {
+        match &self {
+            JsAnyExportClause::JsAnyDeclarationClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_export_default_declaration_clause(
+        &self,
+    ) -> Option<&JsExportDefaultDeclarationClause> {
+        match &self {
+            JsAnyExportClause::JsExportDefaultDeclarationClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_export_default_expression_clause(
+        &self,
+    ) -> Option<&JsExportDefaultExpressionClause> {
+        match &self {
+            JsAnyExportClause::JsExportDefaultExpressionClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_export_from_clause(&self) -> Option<&JsExportFromClause> {
+        match &self {
+            JsAnyExportClause::JsExportFromClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_export_named_clause(&self) -> Option<&JsExportNamedClause> {
+        match &self {
+            JsAnyExportClause::JsExportNamedClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_export_named_from_clause(&self) -> Option<&JsExportNamedFromClause> {
+        match &self {
+            JsAnyExportClause::JsExportNamedFromClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_export_as_namespace_clause(&self) -> Option<&TsExportAsNamespaceClause> {
+        match &self {
+            JsAnyExportClause::TsExportAsNamespaceClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_export_assignment_clause(&self) -> Option<&TsExportAssignmentClause> {
+        match &self {
+            JsAnyExportClause::TsExportAssignmentClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_export_declare_clause(&self) -> Option<&TsExportDeclareClause> {
+        match &self {
+            JsAnyExportClause::TsExportDeclareClause(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExportDefaultDeclaration {
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
@@ -9267,10 +9825,56 @@ pub enum JsAnyExportDefaultDeclaration {
     TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration),
     TsInterfaceDeclaration(TsInterfaceDeclaration),
 }
+impl JsAnyExportDefaultDeclaration {
+    pub fn as_js_class_export_default_declaration(
+        &self,
+    ) -> Option<&JsClassExportDefaultDeclaration> {
+        match &self {
+            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_export_default_declaration(
+        &self,
+    ) -> Option<&JsFunctionExportDefaultDeclaration> {
+        match &self {
+            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_declare_function_declaration(&self) -> Option<&TsDeclareFunctionDeclaration> {
+        match &self {
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_interface_declaration(&self) -> Option<&TsInterfaceDeclaration> {
+        match &self {
+            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExportNamedSpecifier {
     JsExportNamedShorthandSpecifier(JsExportNamedShorthandSpecifier),
     JsExportNamedSpecifier(JsExportNamedSpecifier),
+}
+impl JsAnyExportNamedSpecifier {
+    pub fn as_js_export_named_shorthand_specifier(
+        &self,
+    ) -> Option<&JsExportNamedShorthandSpecifier> {
+        match &self {
+            JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_export_named_specifier(&self) -> Option<&JsExportNamedSpecifier> {
+        match &self {
+            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExpression {
@@ -9310,20 +9914,274 @@ pub enum JsAnyExpression {
     TsNonNullAssertionExpression(TsNonNullAssertionExpression),
     TsTypeAssertionExpression(TsTypeAssertionExpression),
 }
+impl JsAnyExpression {
+    pub fn as_import_meta(&self) -> Option<&ImportMeta> {
+        match &self {
+            JsAnyExpression::ImportMeta(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_any_literal_expression(&self) -> Option<&JsAnyLiteralExpression> {
+        match &self {
+            JsAnyExpression::JsAnyLiteralExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_array_expression(&self) -> Option<&JsArrayExpression> {
+        match &self {
+            JsAnyExpression::JsArrayExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_arrow_function_expression(&self) -> Option<&JsArrowFunctionExpression> {
+        match &self {
+            JsAnyExpression::JsArrowFunctionExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_assignment_expression(&self) -> Option<&JsAssignmentExpression> {
+        match &self {
+            JsAnyExpression::JsAssignmentExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_await_expression(&self) -> Option<&JsAwaitExpression> {
+        match &self {
+            JsAnyExpression::JsAwaitExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_binary_expression(&self) -> Option<&JsBinaryExpression> {
+        match &self {
+            JsAnyExpression::JsBinaryExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_call_expression(&self) -> Option<&JsCallExpression> {
+        match &self {
+            JsAnyExpression::JsCallExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_class_expression(&self) -> Option<&JsClassExpression> {
+        match &self {
+            JsAnyExpression::JsClassExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_computed_member_expression(&self) -> Option<&JsComputedMemberExpression> {
+        match &self {
+            JsAnyExpression::JsComputedMemberExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_conditional_expression(&self) -> Option<&JsConditionalExpression> {
+        match &self {
+            JsAnyExpression::JsConditionalExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_expression(&self) -> Option<&JsFunctionExpression> {
+        match &self {
+            JsAnyExpression::JsFunctionExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_identifier_expression(&self) -> Option<&JsIdentifierExpression> {
+        match &self {
+            JsAnyExpression::JsIdentifierExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_import_call_expression(&self) -> Option<&JsImportCallExpression> {
+        match &self {
+            JsAnyExpression::JsImportCallExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_in_expression(&self) -> Option<&JsInExpression> {
+        match &self {
+            JsAnyExpression::JsInExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_instanceof_expression(&self) -> Option<&JsInstanceofExpression> {
+        match &self {
+            JsAnyExpression::JsInstanceofExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_logical_expression(&self) -> Option<&JsLogicalExpression> {
+        match &self {
+            JsAnyExpression::JsLogicalExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_new_expression(&self) -> Option<&JsNewExpression> {
+        match &self {
+            JsAnyExpression::JsNewExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_object_expression(&self) -> Option<&JsObjectExpression> {
+        match &self {
+            JsAnyExpression::JsObjectExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_parenthesized_expression(&self) -> Option<&JsParenthesizedExpression> {
+        match &self {
+            JsAnyExpression::JsParenthesizedExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_post_update_expression(&self) -> Option<&JsPostUpdateExpression> {
+        match &self {
+            JsAnyExpression::JsPostUpdateExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_pre_update_expression(&self) -> Option<&JsPreUpdateExpression> {
+        match &self {
+            JsAnyExpression::JsPreUpdateExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_sequence_expression(&self) -> Option<&JsSequenceExpression> {
+        match &self {
+            JsAnyExpression::JsSequenceExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_static_member_expression(&self) -> Option<&JsStaticMemberExpression> {
+        match &self {
+            JsAnyExpression::JsStaticMemberExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_super_expression(&self) -> Option<&JsSuperExpression> {
+        match &self {
+            JsAnyExpression::JsSuperExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_template(&self) -> Option<&JsTemplate> {
+        match &self {
+            JsAnyExpression::JsTemplate(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_this_expression(&self) -> Option<&JsThisExpression> {
+        match &self {
+            JsAnyExpression::JsThisExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unary_expression(&self) -> Option<&JsUnaryExpression> {
+        match &self {
+            JsAnyExpression::JsUnaryExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_expression(&self) -> Option<&JsUnknownExpression> {
+        match &self {
+            JsAnyExpression::JsUnknownExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_yield_expression(&self) -> Option<&JsYieldExpression> {
+        match &self {
+            JsAnyExpression::JsYieldExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_tag_expression(&self) -> Option<&JsxTagExpression> {
+        match &self {
+            JsAnyExpression::JsxTagExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_new_target(&self) -> Option<&NewTarget> {
+        match &self {
+            JsAnyExpression::NewTarget(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_as_expression(&self) -> Option<&TsAsExpression> {
+        match &self {
+            JsAnyExpression::TsAsExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_non_null_assertion_expression(&self) -> Option<&TsNonNullAssertionExpression> {
+        match &self {
+            JsAnyExpression::TsNonNullAssertionExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_assertion_expression(&self) -> Option<&TsTypeAssertionExpression> {
+        match &self {
+            JsAnyExpression::TsTypeAssertionExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyForInOrOfInitializer {
     JsAnyAssignmentPattern(JsAnyAssignmentPattern),
     JsForVariableDeclaration(JsForVariableDeclaration),
+}
+impl JsAnyForInOrOfInitializer {
+    pub fn as_js_any_assignment_pattern(&self) -> Option<&JsAnyAssignmentPattern> {
+        match &self {
+            JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_for_variable_declaration(&self) -> Option<&JsForVariableDeclaration> {
+        match &self {
+            JsAnyForInOrOfInitializer::JsForVariableDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyForInitializer {
     JsAnyExpression(JsAnyExpression),
     JsVariableDeclaration(JsVariableDeclaration),
 }
+impl JsAnyForInitializer {
+    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+        match &self {
+            JsAnyForInitializer::JsAnyExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_variable_declaration(&self) -> Option<&JsVariableDeclaration> {
+        match &self {
+            JsAnyForInitializer::JsVariableDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyFormalParameter {
     JsFormalParameter(JsFormalParameter),
     JsUnknownParameter(JsUnknownParameter),
+}
+impl JsAnyFormalParameter {
+    pub fn as_js_formal_parameter(&self) -> Option<&JsFormalParameter> {
+        match &self {
+            JsAnyFormalParameter::JsFormalParameter(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_parameter(&self) -> Option<&JsUnknownParameter> {
+        match &self {
+            JsAnyFormalParameter::JsUnknownParameter(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyFunction {
@@ -9332,15 +10190,71 @@ pub enum JsAnyFunction {
     JsFunctionExportDefaultDeclaration(JsFunctionExportDefaultDeclaration),
     JsFunctionExpression(JsFunctionExpression),
 }
+impl JsAnyFunction {
+    pub fn as_js_arrow_function_expression(&self) -> Option<&JsArrowFunctionExpression> {
+        match &self {
+            JsAnyFunction::JsArrowFunctionExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_declaration(&self) -> Option<&JsFunctionDeclaration> {
+        match &self {
+            JsAnyFunction::JsFunctionDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_export_default_declaration(
+        &self,
+    ) -> Option<&JsFunctionExportDefaultDeclaration> {
+        match &self {
+            JsAnyFunction::JsFunctionExportDefaultDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_expression(&self) -> Option<&JsFunctionExpression> {
+        match &self {
+            JsAnyFunction::JsFunctionExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyFunctionBody {
     JsAnyExpression(JsAnyExpression),
     JsFunctionBody(JsFunctionBody),
 }
+impl JsAnyFunctionBody {
+    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+        match &self {
+            JsAnyFunctionBody::JsAnyExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_body(&self) -> Option<&JsFunctionBody> {
+        match &self {
+            JsAnyFunctionBody::JsFunctionBody(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyImportAssertionEntry {
     JsImportAssertionEntry(JsImportAssertionEntry),
     JsUnknownImportAssertionEntry(JsUnknownImportAssertionEntry),
+}
+impl JsAnyImportAssertionEntry {
+    pub fn as_js_import_assertion_entry(&self) -> Option<&JsImportAssertionEntry> {
+        match &self {
+            JsAnyImportAssertionEntry::JsImportAssertionEntry(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_import_assertion_entry(&self) -> Option<&JsUnknownImportAssertionEntry> {
+        match &self {
+            JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyImportClause {
@@ -9349,10 +10263,50 @@ pub enum JsAnyImportClause {
     JsImportNamedClause(JsImportNamedClause),
     JsImportNamespaceClause(JsImportNamespaceClause),
 }
+impl JsAnyImportClause {
+    pub fn as_js_import_bare_clause(&self) -> Option<&JsImportBareClause> {
+        match &self {
+            JsAnyImportClause::JsImportBareClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_import_default_clause(&self) -> Option<&JsImportDefaultClause> {
+        match &self {
+            JsAnyImportClause::JsImportDefaultClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_import_named_clause(&self) -> Option<&JsImportNamedClause> {
+        match &self {
+            JsAnyImportClause::JsImportNamedClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_import_namespace_clause(&self) -> Option<&JsImportNamespaceClause> {
+        match &self {
+            JsAnyImportClause::JsImportNamespaceClause(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyInProperty {
     JsAnyExpression(JsAnyExpression),
     JsPrivateName(JsPrivateName),
+}
+impl JsAnyInProperty {
+    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+        match &self {
+            JsAnyInProperty::JsAnyExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_private_name(&self) -> Option<&JsPrivateName> {
+        match &self {
+            JsAnyInProperty::JsPrivateName(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyLiteralExpression {
@@ -9363,11 +10317,69 @@ pub enum JsAnyLiteralExpression {
     JsRegexLiteralExpression(JsRegexLiteralExpression),
     JsStringLiteralExpression(JsStringLiteralExpression),
 }
+impl JsAnyLiteralExpression {
+    pub fn as_js_big_int_literal_expression(&self) -> Option<&JsBigIntLiteralExpression> {
+        match &self {
+            JsAnyLiteralExpression::JsBigIntLiteralExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_boolean_literal_expression(&self) -> Option<&JsBooleanLiteralExpression> {
+        match &self {
+            JsAnyLiteralExpression::JsBooleanLiteralExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_null_literal_expression(&self) -> Option<&JsNullLiteralExpression> {
+        match &self {
+            JsAnyLiteralExpression::JsNullLiteralExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_number_literal_expression(&self) -> Option<&JsNumberLiteralExpression> {
+        match &self {
+            JsAnyLiteralExpression::JsNumberLiteralExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_regex_literal_expression(&self) -> Option<&JsRegexLiteralExpression> {
+        match &self {
+            JsAnyLiteralExpression::JsRegexLiteralExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_string_literal_expression(&self) -> Option<&JsStringLiteralExpression> {
+        match &self {
+            JsAnyLiteralExpression::JsStringLiteralExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyMethodModifier {
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
+}
+impl JsAnyMethodModifier {
+    pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
+        match &self {
+            JsAnyMethodModifier::JsStaticModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
+        match &self {
+            JsAnyMethodModifier::TsAccessibilityModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
+        match &self {
+            JsAnyMethodModifier::TsOverrideModifier(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyModuleItem {
@@ -9375,21 +10387,91 @@ pub enum JsAnyModuleItem {
     JsExport(JsExport),
     JsImport(JsImport),
 }
+impl JsAnyModuleItem {
+    pub fn as_js_any_statement(&self) -> Option<&JsAnyStatement> {
+        match &self {
+            JsAnyModuleItem::JsAnyStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_export(&self) -> Option<&JsExport> {
+        match &self {
+            JsAnyModuleItem::JsExport(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_import(&self) -> Option<&JsImport> {
+        match &self {
+            JsAnyModuleItem::JsImport(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyName {
     JsName(JsName),
     JsPrivateName(JsPrivateName),
+}
+impl JsAnyName {
+    pub fn as_js_name(&self) -> Option<&JsName> {
+        match &self {
+            JsAnyName::JsName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_private_name(&self) -> Option<&JsPrivateName> {
+        match &self {
+            JsAnyName::JsPrivateName(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyNamedImport {
     JsNamedImportSpecifiers(JsNamedImportSpecifiers),
     JsNamespaceImportSpecifier(JsNamespaceImportSpecifier),
 }
+impl JsAnyNamedImport {
+    pub fn as_js_named_import_specifiers(&self) -> Option<&JsNamedImportSpecifiers> {
+        match &self {
+            JsAnyNamedImport::JsNamedImportSpecifiers(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_namespace_import_specifier(&self) -> Option<&JsNamespaceImportSpecifier> {
+        match &self {
+            JsAnyNamedImport::JsNamespaceImportSpecifier(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyNamedImportSpecifier {
     JsNamedImportSpecifier(JsNamedImportSpecifier),
     JsShorthandNamedImportSpecifier(JsShorthandNamedImportSpecifier),
     JsUnknownNamedImportSpecifier(JsUnknownNamedImportSpecifier),
+}
+impl JsAnyNamedImportSpecifier {
+    pub fn as_js_named_import_specifier(&self) -> Option<&JsNamedImportSpecifier> {
+        match &self {
+            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_shorthand_named_import_specifier(
+        &self,
+    ) -> Option<&JsShorthandNamedImportSpecifier> {
+        match &self {
+            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_named_import_specifier(&self) -> Option<&JsUnknownNamedImportSpecifier> {
+        match &self {
+            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectAssignmentPatternMember {
@@ -9398,6 +10480,40 @@ pub enum JsAnyObjectAssignmentPatternMember {
     JsObjectAssignmentPatternShorthandProperty(JsObjectAssignmentPatternShorthandProperty),
     JsUnknownAssignment(JsUnknownAssignment),
 }
+impl JsAnyObjectAssignmentPatternMember {
+    pub fn as_js_object_assignment_pattern_property(
+        &self,
+    ) -> Option<&JsObjectAssignmentPatternProperty> {
+        match &self {
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(item) => {
+                Some(item)
+            }
+            _ => None,
+        }
+    }
+    pub fn as_js_object_assignment_pattern_rest(&self) -> Option<&JsObjectAssignmentPatternRest> {
+        match &self {
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_object_assignment_pattern_shorthand_property(
+        &self,
+    ) -> Option<&JsObjectAssignmentPatternShorthandProperty> {
+        match &self {
+            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
+                item,
+            ) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_assignment(&self) -> Option<&JsUnknownAssignment> {
+        match &self {
+            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectBindingPatternMember {
     JsIdentifierBinding(JsIdentifierBinding),
@@ -9405,6 +10521,42 @@ pub enum JsAnyObjectBindingPatternMember {
     JsObjectBindingPatternRest(JsObjectBindingPatternRest),
     JsObjectBindingPatternShorthandProperty(JsObjectBindingPatternShorthandProperty),
     JsUnknownBinding(JsUnknownBinding),
+}
+impl JsAnyObjectBindingPatternMember {
+    pub fn as_js_identifier_binding(&self) -> Option<&JsIdentifierBinding> {
+        match &self {
+            JsAnyObjectBindingPatternMember::JsIdentifierBinding(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_object_binding_pattern_property(&self) -> Option<&JsObjectBindingPatternProperty> {
+        match &self {
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_object_binding_pattern_rest(&self) -> Option<&JsObjectBindingPatternRest> {
+        match &self {
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_object_binding_pattern_shorthand_property(
+        &self,
+    ) -> Option<&JsObjectBindingPatternShorthandProperty> {
+        match &self {
+            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(item) => {
+                Some(item)
+            }
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_binding(&self) -> Option<&JsUnknownBinding> {
+        match &self {
+            JsAnyObjectBindingPatternMember::JsUnknownBinding(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMember {
@@ -9416,16 +10568,96 @@ pub enum JsAnyObjectMember {
     JsSpread(JsSpread),
     JsUnknownMember(JsUnknownMember),
 }
+impl JsAnyObjectMember {
+    pub fn as_js_getter_object_member(&self) -> Option<&JsGetterObjectMember> {
+        match &self {
+            JsAnyObjectMember::JsGetterObjectMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_method_object_member(&self) -> Option<&JsMethodObjectMember> {
+        match &self {
+            JsAnyObjectMember::JsMethodObjectMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_property_object_member(&self) -> Option<&JsPropertyObjectMember> {
+        match &self {
+            JsAnyObjectMember::JsPropertyObjectMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_setter_object_member(&self) -> Option<&JsSetterObjectMember> {
+        match &self {
+            JsAnyObjectMember::JsSetterObjectMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_shorthand_property_object_member(
+        &self,
+    ) -> Option<&JsShorthandPropertyObjectMember> {
+        match &self {
+            JsAnyObjectMember::JsShorthandPropertyObjectMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_spread(&self) -> Option<&JsSpread> {
+        match &self {
+            JsAnyObjectMember::JsSpread(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_member(&self) -> Option<&JsUnknownMember> {
+        match &self {
+            JsAnyObjectMember::JsUnknownMember(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMemberName {
     JsComputedMemberName(JsComputedMemberName),
     JsLiteralMemberName(JsLiteralMemberName),
+}
+impl JsAnyObjectMemberName {
+    pub fn as_js_computed_member_name(&self) -> Option<&JsComputedMemberName> {
+        match &self {
+            JsAnyObjectMemberName::JsComputedMemberName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_literal_member_name(&self) -> Option<&JsLiteralMemberName> {
+        match &self {
+            JsAnyObjectMemberName::JsLiteralMemberName(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyParameter {
     JsAnyFormalParameter(JsAnyFormalParameter),
     JsRestParameter(JsRestParameter),
     TsThisParameter(TsThisParameter),
+}
+impl JsAnyParameter {
+    pub fn as_js_any_formal_parameter(&self) -> Option<&JsAnyFormalParameter> {
+        match &self {
+            JsAnyParameter::JsAnyFormalParameter(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_rest_parameter(&self) -> Option<&JsRestParameter> {
+        match &self {
+            JsAnyParameter::JsRestParameter(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_this_parameter(&self) -> Option<&TsThisParameter> {
+        match &self {
+            JsAnyParameter::TsThisParameter(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyPropertyModifier {
@@ -9434,11 +10666,57 @@ pub enum JsAnyPropertyModifier {
     TsOverrideModifier(TsOverrideModifier),
     TsReadonlyModifier(TsReadonlyModifier),
 }
+impl JsAnyPropertyModifier {
+    pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
+        match &self {
+            JsAnyPropertyModifier::JsStaticModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
+        match &self {
+            JsAnyPropertyModifier::TsAccessibilityModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
+        match &self {
+            JsAnyPropertyModifier::TsOverrideModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_readonly_modifier(&self) -> Option<&TsReadonlyModifier> {
+        match &self {
+            JsAnyPropertyModifier::TsReadonlyModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyRoot {
     JsExpressionSnipped(JsExpressionSnipped),
     JsModule(JsModule),
     JsScript(JsScript),
+}
+impl JsAnyRoot {
+    pub fn as_js_expression_snipped(&self) -> Option<&JsExpressionSnipped> {
+        match &self {
+            JsAnyRoot::JsExpressionSnipped(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_module(&self) -> Option<&JsModule> {
+        match &self {
+            JsAnyRoot::JsModule(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_script(&self) -> Option<&JsScript> {
+        match &self {
+            JsAnyRoot::JsScript(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyStatement {
@@ -9475,31 +10753,301 @@ pub enum JsAnyStatement {
     TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
+impl JsAnyStatement {
+    pub fn as_js_block_statement(&self) -> Option<&JsBlockStatement> {
+        match &self {
+            JsAnyStatement::JsBlockStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_break_statement(&self) -> Option<&JsBreakStatement> {
+        match &self {
+            JsAnyStatement::JsBreakStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_class_declaration(&self) -> Option<&JsClassDeclaration> {
+        match &self {
+            JsAnyStatement::JsClassDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_continue_statement(&self) -> Option<&JsContinueStatement> {
+        match &self {
+            JsAnyStatement::JsContinueStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_debugger_statement(&self) -> Option<&JsDebuggerStatement> {
+        match &self {
+            JsAnyStatement::JsDebuggerStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_do_while_statement(&self) -> Option<&JsDoWhileStatement> {
+        match &self {
+            JsAnyStatement::JsDoWhileStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_empty_statement(&self) -> Option<&JsEmptyStatement> {
+        match &self {
+            JsAnyStatement::JsEmptyStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_expression_statement(&self) -> Option<&JsExpressionStatement> {
+        match &self {
+            JsAnyStatement::JsExpressionStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_for_in_statement(&self) -> Option<&JsForInStatement> {
+        match &self {
+            JsAnyStatement::JsForInStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_for_of_statement(&self) -> Option<&JsForOfStatement> {
+        match &self {
+            JsAnyStatement::JsForOfStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_for_statement(&self) -> Option<&JsForStatement> {
+        match &self {
+            JsAnyStatement::JsForStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_function_declaration(&self) -> Option<&JsFunctionDeclaration> {
+        match &self {
+            JsAnyStatement::JsFunctionDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_if_statement(&self) -> Option<&JsIfStatement> {
+        match &self {
+            JsAnyStatement::JsIfStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_labeled_statement(&self) -> Option<&JsLabeledStatement> {
+        match &self {
+            JsAnyStatement::JsLabeledStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_return_statement(&self) -> Option<&JsReturnStatement> {
+        match &self {
+            JsAnyStatement::JsReturnStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_switch_statement(&self) -> Option<&JsSwitchStatement> {
+        match &self {
+            JsAnyStatement::JsSwitchStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_throw_statement(&self) -> Option<&JsThrowStatement> {
+        match &self {
+            JsAnyStatement::JsThrowStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_try_finally_statement(&self) -> Option<&JsTryFinallyStatement> {
+        match &self {
+            JsAnyStatement::JsTryFinallyStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_try_statement(&self) -> Option<&JsTryStatement> {
+        match &self {
+            JsAnyStatement::JsTryStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_unknown_statement(&self) -> Option<&JsUnknownStatement> {
+        match &self {
+            JsAnyStatement::JsUnknownStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_variable_statement(&self) -> Option<&JsVariableStatement> {
+        match &self {
+            JsAnyStatement::JsVariableStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_while_statement(&self) -> Option<&JsWhileStatement> {
+        match &self {
+            JsAnyStatement::JsWhileStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_with_statement(&self) -> Option<&JsWithStatement> {
+        match &self {
+            JsAnyStatement::JsWithStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_declare_function_declaration(&self) -> Option<&TsDeclareFunctionDeclaration> {
+        match &self {
+            JsAnyStatement::TsDeclareFunctionDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_declare_statement(&self) -> Option<&TsDeclareStatement> {
+        match &self {
+            JsAnyStatement::TsDeclareStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_enum_declaration(&self) -> Option<&TsEnumDeclaration> {
+        match &self {
+            JsAnyStatement::TsEnumDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_external_module_declaration(&self) -> Option<&TsExternalModuleDeclaration> {
+        match &self {
+            JsAnyStatement::TsExternalModuleDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_global_declaration(&self) -> Option<&TsGlobalDeclaration> {
+        match &self {
+            JsAnyStatement::TsGlobalDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_import_equals_declaration(&self) -> Option<&TsImportEqualsDeclaration> {
+        match &self {
+            JsAnyStatement::TsImportEqualsDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_interface_declaration(&self) -> Option<&TsInterfaceDeclaration> {
+        match &self {
+            JsAnyStatement::TsInterfaceDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_module_declaration(&self) -> Option<&TsModuleDeclaration> {
+        match &self {
+            JsAnyStatement::TsModuleDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_alias_declaration(&self) -> Option<&TsTypeAliasDeclaration> {
+        match &self {
+            JsAnyStatement::TsTypeAliasDeclaration(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnySwitchClause {
     JsCaseClause(JsCaseClause),
     JsDefaultClause(JsDefaultClause),
+}
+impl JsAnySwitchClause {
+    pub fn as_js_case_clause(&self) -> Option<&JsCaseClause> {
+        match &self {
+            JsAnySwitchClause::JsCaseClause(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_default_clause(&self) -> Option<&JsDefaultClause> {
+        match &self {
+            JsAnySwitchClause::JsDefaultClause(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyTemplateElement {
     JsTemplateChunkElement(JsTemplateChunkElement),
     JsTemplateElement(JsTemplateElement),
 }
+impl JsAnyTemplateElement {
+    pub fn as_js_template_chunk_element(&self) -> Option<&JsTemplateChunkElement> {
+        match &self {
+            JsAnyTemplateElement::JsTemplateChunkElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_template_element(&self) -> Option<&JsTemplateElement> {
+        match &self {
+            JsAnyTemplateElement::JsTemplateElement(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyAttribute {
     JsxAttribute(JsxAttribute),
     JsxSpreadAttribute(JsxSpreadAttribute),
+}
+impl JsxAnyAttribute {
+    pub fn as_jsx_attribute(&self) -> Option<&JsxAttribute> {
+        match &self {
+            JsxAnyAttribute::JsxAttribute(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_spread_attribute(&self) -> Option<&JsxSpreadAttribute> {
+        match &self {
+            JsxAnyAttribute::JsxSpreadAttribute(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyAttributeName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
 }
+impl JsxAnyAttributeName {
+    pub fn as_jsx_name(&self) -> Option<&JsxName> {
+        match &self {
+            JsxAnyAttributeName::JsxName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_namespace_name(&self) -> Option<&JsxNamespaceName> {
+        match &self {
+            JsxAnyAttributeName::JsxNamespaceName(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyAttributeValue {
     JsxAnyTag(JsxAnyTag),
     JsxExpressionAttributeValue(JsxExpressionAttributeValue),
     JsxString(JsxString),
+}
+impl JsxAnyAttributeValue {
+    pub fn as_jsx_any_tag(&self) -> Option<&JsxAnyTag> {
+        match &self {
+            JsxAnyAttributeValue::JsxAnyTag(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_expression_attribute_value(&self) -> Option<&JsxExpressionAttributeValue> {
+        match &self {
+            JsxAnyAttributeValue::JsxExpressionAttributeValue(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_string(&self) -> Option<&JsxString> {
+        match &self {
+            JsxAnyAttributeValue::JsxString(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyChild {
@@ -9510,6 +11058,44 @@ pub enum JsxAnyChild {
     JsxSpreadChild(JsxSpreadChild),
     JsxText(JsxText),
 }
+impl JsxAnyChild {
+    pub fn as_jsx_element(&self) -> Option<&JsxElement> {
+        match &self {
+            JsxAnyChild::JsxElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_expression_child(&self) -> Option<&JsxExpressionChild> {
+        match &self {
+            JsxAnyChild::JsxExpressionChild(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_fragment(&self) -> Option<&JsxFragment> {
+        match &self {
+            JsxAnyChild::JsxFragment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_self_closing_element(&self) -> Option<&JsxSelfClosingElement> {
+        match &self {
+            JsxAnyChild::JsxSelfClosingElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_spread_child(&self) -> Option<&JsxSpreadChild> {
+        match &self {
+            JsxAnyChild::JsxSpreadChild(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_text(&self) -> Option<&JsxText> {
+        match &self {
+            JsxAnyChild::JsxText(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyElementName {
     JsxMemberName(JsxMemberName),
@@ -9517,10 +11103,50 @@ pub enum JsxAnyElementName {
     JsxNamespaceName(JsxNamespaceName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
 }
+impl JsxAnyElementName {
+    pub fn as_jsx_member_name(&self) -> Option<&JsxMemberName> {
+        match &self {
+            JsxAnyElementName::JsxMemberName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_name(&self) -> Option<&JsxName> {
+        match &self {
+            JsxAnyElementName::JsxName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_namespace_name(&self) -> Option<&JsxNamespaceName> {
+        match &self {
+            JsxAnyElementName::JsxNamespaceName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_reference_identifier(&self) -> Option<&JsxReferenceIdentifier> {
+        match &self {
+            JsxAnyElementName::JsxReferenceIdentifier(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
+}
+impl JsxAnyName {
+    pub fn as_jsx_name(&self) -> Option<&JsxName> {
+        match &self {
+            JsxAnyName::JsxName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_namespace_name(&self) -> Option<&JsxNamespaceName> {
+        match &self {
+            JsxAnyName::JsxNamespaceName(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyObjectName {
@@ -9528,21 +11154,93 @@ pub enum JsxAnyObjectName {
     JsxNamespaceName(JsxNamespaceName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
 }
+impl JsxAnyObjectName {
+    pub fn as_jsx_member_name(&self) -> Option<&JsxMemberName> {
+        match &self {
+            JsxAnyObjectName::JsxMemberName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_namespace_name(&self) -> Option<&JsxNamespaceName> {
+        match &self {
+            JsxAnyObjectName::JsxNamespaceName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_reference_identifier(&self) -> Option<&JsxReferenceIdentifier> {
+        match &self {
+            JsxAnyObjectName::JsxReferenceIdentifier(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsxAnyTag {
     JsxElement(JsxElement),
     JsxFragment(JsxFragment),
     JsxSelfClosingElement(JsxSelfClosingElement),
 }
+impl JsxAnyTag {
+    pub fn as_jsx_element(&self) -> Option<&JsxElement> {
+        match &self {
+            JsxAnyTag::JsxElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_fragment(&self) -> Option<&JsxFragment> {
+        match &self {
+            JsxAnyTag::JsxFragment(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_jsx_self_closing_element(&self) -> Option<&JsxSelfClosingElement> {
+        match &self {
+            JsxAnyTag::JsxSelfClosingElement(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyExternalModuleDeclarationBody {
     TsEmptyExternalModuleDeclarationBody(TsEmptyExternalModuleDeclarationBody),
     TsModuleBlock(TsModuleBlock),
 }
+impl TsAnyExternalModuleDeclarationBody {
+    pub fn as_ts_empty_external_module_declaration_body(
+        &self,
+    ) -> Option<&TsEmptyExternalModuleDeclarationBody> {
+        match &self {
+            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(item) => {
+                Some(item)
+            }
+            _ => None,
+        }
+    }
+    pub fn as_ts_module_block(&self) -> Option<&TsModuleBlock> {
+        match &self {
+            TsAnyExternalModuleDeclarationBody::TsModuleBlock(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyIndexSignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsReadonlyModifier(TsReadonlyModifier),
+}
+impl TsAnyIndexSignatureModifier {
+    pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
+        match &self {
+            TsAnyIndexSignatureModifier::JsStaticModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_readonly_modifier(&self) -> Option<&TsReadonlyModifier> {
+        match &self {
+            TsAnyIndexSignatureModifier::TsReadonlyModifier(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyMethodSignatureModifier {
@@ -9551,20 +11249,88 @@ pub enum TsAnyMethodSignatureModifier {
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
 }
+impl TsAnyMethodSignatureModifier {
+    pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
+        match &self {
+            TsAnyMethodSignatureModifier::JsStaticModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_abstract_modifier(&self) -> Option<&TsAbstractModifier> {
+        match &self {
+            TsAnyMethodSignatureModifier::TsAbstractModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
+        match &self {
+            TsAnyMethodSignatureModifier::TsAccessibilityModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
+        match &self {
+            TsAnyMethodSignatureModifier::TsOverrideModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyModuleName {
     TsIdentifierBinding(TsIdentifierBinding),
     TsQualifiedModuleName(TsQualifiedModuleName),
+}
+impl TsAnyModuleName {
+    pub fn as_ts_identifier_binding(&self) -> Option<&TsIdentifierBinding> {
+        match &self {
+            TsAnyModuleName::TsIdentifierBinding(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_qualified_module_name(&self) -> Option<&TsQualifiedModuleName> {
+        match &self {
+            TsAnyModuleName::TsQualifiedModuleName(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyModuleReference {
     TsAnyName(TsAnyName),
     TsExternalModuleReference(TsExternalModuleReference),
 }
+impl TsAnyModuleReference {
+    pub fn as_ts_any_name(&self) -> Option<&TsAnyName> {
+        match &self {
+            TsAnyModuleReference::TsAnyName(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_external_module_reference(&self) -> Option<&TsExternalModuleReference> {
+        match &self {
+            TsAnyModuleReference::TsExternalModuleReference(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsQualifiedName(TsQualifiedName),
+}
+impl TsAnyName {
+    pub fn as_js_reference_identifier(&self) -> Option<&JsReferenceIdentifier> {
+        match &self {
+            TsAnyName::JsReferenceIdentifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_qualified_name(&self) -> Option<&TsQualifiedName> {
+        match &self {
+            TsAnyName::TsQualifiedName(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyPropertyAnnotation {
@@ -9572,16 +11338,70 @@ pub enum TsAnyPropertyAnnotation {
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
 }
+impl TsAnyPropertyAnnotation {
+    pub fn as_ts_definite_property_annotation(&self) -> Option<&TsDefinitePropertyAnnotation> {
+        match &self {
+            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_optional_property_annotation(&self) -> Option<&TsOptionalPropertyAnnotation> {
+        match &self {
+            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_annotation(&self) -> Option<&TsTypeAnnotation> {
+        match &self {
+            TsAnyPropertyAnnotation::TsTypeAnnotation(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyPropertyParameterModifier {
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
     TsReadonlyModifier(TsReadonlyModifier),
 }
+impl TsAnyPropertyParameterModifier {
+    pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
+        match &self {
+            TsAnyPropertyParameterModifier::TsAccessibilityModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
+        match &self {
+            TsAnyPropertyParameterModifier::TsOverrideModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_readonly_modifier(&self) -> Option<&TsReadonlyModifier> {
+        match &self {
+            TsAnyPropertyParameterModifier::TsReadonlyModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyPropertySignatureAnnotation {
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
+}
+impl TsAnyPropertySignatureAnnotation {
+    pub fn as_ts_optional_property_annotation(&self) -> Option<&TsOptionalPropertyAnnotation> {
+        match &self {
+            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_annotation(&self) -> Option<&TsTypeAnnotation> {
+        match &self {
+            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyPropertySignatureModifier {
@@ -9592,16 +11412,88 @@ pub enum TsAnyPropertySignatureModifier {
     TsOverrideModifier(TsOverrideModifier),
     TsReadonlyModifier(TsReadonlyModifier),
 }
+impl TsAnyPropertySignatureModifier {
+    pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
+        match &self {
+            TsAnyPropertySignatureModifier::JsStaticModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_abstract_modifier(&self) -> Option<&TsAbstractModifier> {
+        match &self {
+            TsAnyPropertySignatureModifier::TsAbstractModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
+        match &self {
+            TsAnyPropertySignatureModifier::TsAccessibilityModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_declare_modifier(&self) -> Option<&TsDeclareModifier> {
+        match &self {
+            TsAnyPropertySignatureModifier::TsDeclareModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
+        match &self {
+            TsAnyPropertySignatureModifier::TsOverrideModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_readonly_modifier(&self) -> Option<&TsReadonlyModifier> {
+        match &self {
+            TsAnyPropertySignatureModifier::TsReadonlyModifier(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyReturnType {
     TsAssertsReturnType(TsAssertsReturnType),
     TsPredicateReturnType(TsPredicateReturnType),
     TsType(TsType),
 }
+impl TsAnyReturnType {
+    pub fn as_ts_asserts_return_type(&self) -> Option<&TsAssertsReturnType> {
+        match &self {
+            TsAnyReturnType::TsAssertsReturnType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_predicate_return_type(&self) -> Option<&TsPredicateReturnType> {
+        match &self {
+            TsAnyReturnType::TsPredicateReturnType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type(&self) -> Option<&TsType> {
+        match &self {
+            TsAnyReturnType::TsType(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyTemplateElement {
     TsTemplateChunkElement(TsTemplateChunkElement),
     TsTemplateElement(TsTemplateElement),
+}
+impl TsAnyTemplateElement {
+    pub fn as_ts_template_chunk_element(&self) -> Option<&TsTemplateChunkElement> {
+        match &self {
+            TsAnyTemplateElement::TsTemplateChunkElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_template_element(&self) -> Option<&TsTemplateElement> {
+        match &self {
+            TsAnyTemplateElement::TsTemplateElement(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyTupleTypeElement {
@@ -9609,6 +11501,32 @@ pub enum TsAnyTupleTypeElement {
     TsOptionalTupleTypeElement(TsOptionalTupleTypeElement),
     TsRestTupleTypeElement(TsRestTupleTypeElement),
     TsType(TsType),
+}
+impl TsAnyTupleTypeElement {
+    pub fn as_ts_named_tuple_type_element(&self) -> Option<&TsNamedTupleTypeElement> {
+        match &self {
+            TsAnyTupleTypeElement::TsNamedTupleTypeElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_optional_tuple_type_element(&self) -> Option<&TsOptionalTupleTypeElement> {
+        match &self {
+            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_rest_tuple_type_element(&self) -> Option<&TsRestTupleTypeElement> {
+        match &self {
+            TsAnyTupleTypeElement::TsRestTupleTypeElement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type(&self) -> Option<&TsType> {
+        match &self {
+            TsAnyTupleTypeElement::TsType(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyTypeMember {
@@ -9621,15 +11539,93 @@ pub enum TsAnyTypeMember {
     TsPropertySignatureTypeMember(TsPropertySignatureTypeMember),
     TsSetterSignatureTypeMember(TsSetterSignatureTypeMember),
 }
+impl TsAnyTypeMember {
+    pub fn as_js_unknown_member(&self) -> Option<&JsUnknownMember> {
+        match &self {
+            TsAnyTypeMember::JsUnknownMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_call_signature_type_member(&self) -> Option<&TsCallSignatureTypeMember> {
+        match &self {
+            TsAnyTypeMember::TsCallSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_construct_signature_type_member(&self) -> Option<&TsConstructSignatureTypeMember> {
+        match &self {
+            TsAnyTypeMember::TsConstructSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_getter_signature_type_member(&self) -> Option<&TsGetterSignatureTypeMember> {
+        match &self {
+            TsAnyTypeMember::TsGetterSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_index_signature_type_member(&self) -> Option<&TsIndexSignatureTypeMember> {
+        match &self {
+            TsAnyTypeMember::TsIndexSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_method_signature_type_member(&self) -> Option<&TsMethodSignatureTypeMember> {
+        match &self {
+            TsAnyTypeMember::TsMethodSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_property_signature_type_member(&self) -> Option<&TsPropertySignatureTypeMember> {
+        match &self {
+            TsAnyTypeMember::TsPropertySignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_setter_signature_type_member(&self) -> Option<&TsSetterSignatureTypeMember> {
+        match &self {
+            TsAnyTypeMember::TsSetterSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyTypePredicateParameterName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsThisType(TsThisType),
 }
+impl TsAnyTypePredicateParameterName {
+    pub fn as_js_reference_identifier(&self) -> Option<&JsReferenceIdentifier> {
+        match &self {
+            TsAnyTypePredicateParameterName::JsReferenceIdentifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_this_type(&self) -> Option<&TsThisType> {
+        match &self {
+            TsAnyTypePredicateParameterName::TsThisType(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyVariableAnnotation {
     TsDefiniteVariableAnnotation(TsDefiniteVariableAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
+}
+impl TsAnyVariableAnnotation {
+    pub fn as_ts_definite_variable_annotation(&self) -> Option<&TsDefiniteVariableAnnotation> {
+        match &self {
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_annotation(&self) -> Option<&TsTypeAnnotation> {
+        match &self {
+            TsAnyVariableAnnotation::TsTypeAnnotation(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsType {
@@ -9667,6 +11663,212 @@ pub enum TsType {
     TsUnionType(TsUnionType),
     TsUnknownType(TsUnknownType),
     TsVoidType(TsVoidType),
+}
+impl TsType {
+    pub fn as_ts_any_type(&self) -> Option<&TsAnyType> {
+        match &self {
+            TsType::TsAnyType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_array_type(&self) -> Option<&TsArrayType> {
+        match &self {
+            TsType::TsArrayType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_big_int_literal_type(&self) -> Option<&TsBigIntLiteralType> {
+        match &self {
+            TsType::TsBigIntLiteralType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_bigint_type(&self) -> Option<&TsBigintType> {
+        match &self {
+            TsType::TsBigintType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_boolean_literal_type(&self) -> Option<&TsBooleanLiteralType> {
+        match &self {
+            TsType::TsBooleanLiteralType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_boolean_type(&self) -> Option<&TsBooleanType> {
+        match &self {
+            TsType::TsBooleanType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_conditional_type(&self) -> Option<&TsConditionalType> {
+        match &self {
+            TsType::TsConditionalType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_constructor_type(&self) -> Option<&TsConstructorType> {
+        match &self {
+            TsType::TsConstructorType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_function_type(&self) -> Option<&TsFunctionType> {
+        match &self {
+            TsType::TsFunctionType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_import_type(&self) -> Option<&TsImportType> {
+        match &self {
+            TsType::TsImportType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_indexed_access_type(&self) -> Option<&TsIndexedAccessType> {
+        match &self {
+            TsType::TsIndexedAccessType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_infer_type(&self) -> Option<&TsInferType> {
+        match &self {
+            TsType::TsInferType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_intersection_type(&self) -> Option<&TsIntersectionType> {
+        match &self {
+            TsType::TsIntersectionType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_mapped_type(&self) -> Option<&TsMappedType> {
+        match &self {
+            TsType::TsMappedType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_never_type(&self) -> Option<&TsNeverType> {
+        match &self {
+            TsType::TsNeverType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_non_primitive_type(&self) -> Option<&TsNonPrimitiveType> {
+        match &self {
+            TsType::TsNonPrimitiveType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_null_literal_type(&self) -> Option<&TsNullLiteralType> {
+        match &self {
+            TsType::TsNullLiteralType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_number_literal_type(&self) -> Option<&TsNumberLiteralType> {
+        match &self {
+            TsType::TsNumberLiteralType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_number_type(&self) -> Option<&TsNumberType> {
+        match &self {
+            TsType::TsNumberType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_object_type(&self) -> Option<&TsObjectType> {
+        match &self {
+            TsType::TsObjectType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_parenthesized_type(&self) -> Option<&TsParenthesizedType> {
+        match &self {
+            TsType::TsParenthesizedType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_reference_type(&self) -> Option<&TsReferenceType> {
+        match &self {
+            TsType::TsReferenceType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_string_literal_type(&self) -> Option<&TsStringLiteralType> {
+        match &self {
+            TsType::TsStringLiteralType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_string_type(&self) -> Option<&TsStringType> {
+        match &self {
+            TsType::TsStringType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_symbol_type(&self) -> Option<&TsSymbolType> {
+        match &self {
+            TsType::TsSymbolType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_template_literal_type(&self) -> Option<&TsTemplateLiteralType> {
+        match &self {
+            TsType::TsTemplateLiteralType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_this_type(&self) -> Option<&TsThisType> {
+        match &self {
+            TsType::TsThisType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_tuple_type(&self) -> Option<&TsTupleType> {
+        match &self {
+            TsType::TsTupleType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_operator_type(&self) -> Option<&TsTypeOperatorType> {
+        match &self {
+            TsType::TsTypeOperatorType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_typeof_type(&self) -> Option<&TsTypeofType> {
+        match &self {
+            TsType::TsTypeofType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_undefined_type(&self) -> Option<&TsUndefinedType> {
+        match &self {
+            TsType::TsUndefinedType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_union_type(&self) -> Option<&TsUnionType> {
+        match &self {
+            TsType::TsUnionType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_unknown_type(&self) -> Option<&TsUnknownType> {
+        match &self {
+            TsType::TsUnknownType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_void_type(&self) -> Option<&TsVoidType> {
+        match &self {
+            TsType::TsVoidType(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 impl AstNode for ImportMeta {
     type Language = Language;

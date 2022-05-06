@@ -1,11 +1,11 @@
 use crate::hard_group_elements;
 use crate::{
     format_elements, join_elements_hard_line, space_token, Format, FormatElement, FormatNode,
-    Formatter,
+    Formatter, JsFormatter,
 };
-use rome_formatter::FormatResult;
+use rome_formatter::{hard_line_break, FormatResult};
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, AstNodeList};
 
 impl FormatNode for JsSwitchStatement {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -30,13 +30,16 @@ impl FormatNode for JsSwitchStatement {
             space_token(),
             formatter.format_delimited_block_indent(
                 &l_curly_token?,
-                join_elements_hard_line(
-                    cases
-                        .clone()
-                        .into_iter()
-                        .map(|node| node.syntax().clone())
-                        .zip(formatter.format_nodes(cases)?)
-                ),
+                if cases.is_empty() {
+                    hard_line_break()
+                } else {
+                    join_elements_hard_line(
+                        cases
+                            .iter()
+                            .map(|node| node.syntax().clone())
+                            .zip(formatter.format_all(cases)?),
+                    )
+                },
                 &r_curly_token?
             )?
         ]))

@@ -1405,20 +1405,88 @@ pub enum CssAnyAtMediaQueryFeatureType {
     CssAtMediaQueryFeaturePlain(CssAtMediaQueryFeaturePlain),
     CssAtMediaQueryFeatureRange(CssAtMediaQueryFeatureRange),
 }
+impl CssAnyAtMediaQueryFeatureType {
+    pub fn as_css_at_media_query_feature_boolean(&self) -> Option<&CssAtMediaQueryFeatureBoolean> {
+        match &self {
+            CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeatureBoolean(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_at_media_query_feature_compare(&self) -> Option<&CssAtMediaQueryFeatureCompare> {
+        match &self {
+            CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeatureCompare(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_at_media_query_feature_plain(&self) -> Option<&CssAtMediaQueryFeaturePlain> {
+        match &self {
+            CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeaturePlain(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_at_media_query_feature_range(&self) -> Option<&CssAtMediaQueryFeatureRange> {
+        match &self {
+            CssAnyAtMediaQueryFeatureType::CssAtMediaQueryFeatureRange(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum CssAnyAtMediaQueryType {
     CssAtMediaQueryFeature(CssAtMediaQueryFeature),
     CssIdentifier(CssIdentifier),
+}
+impl CssAnyAtMediaQueryType {
+    pub fn as_css_at_media_query_feature(&self) -> Option<&CssAtMediaQueryFeature> {
+        match &self {
+            CssAnyAtMediaQueryType::CssAtMediaQueryFeature(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_identifier(&self) -> Option<&CssIdentifier> {
+        match &self {
+            CssAnyAtMediaQueryType::CssIdentifier(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum CssAnyAtRule {
     CssAtKeyframes(CssAtKeyframes),
     CssAtMedia(CssAtMedia),
 }
+impl CssAnyAtRule {
+    pub fn as_css_at_keyframes(&self) -> Option<&CssAtKeyframes> {
+        match &self {
+            CssAnyAtRule::CssAtKeyframes(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_at_media(&self) -> Option<&CssAtMedia> {
+        match &self {
+            CssAnyAtRule::CssAtMedia(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum CssAnyRule {
     CssAnyAtRule(CssAnyAtRule),
     CssRule(CssRule),
+}
+impl CssAnyRule {
+    pub fn as_css_any_at_rule(&self) -> Option<&CssAnyAtRule> {
+        match &self {
+            CssAnyRule::CssAnyAtRule(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_rule(&self) -> Option<&CssRule> {
+        match &self {
+            CssAnyRule::CssRule(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum CssAnySelectorPattern {
@@ -1430,6 +1498,50 @@ pub enum CssAnySelectorPattern {
     CssTypeSelectorPattern(CssTypeSelectorPattern),
     CssUniversalSelectorPattern(CssUniversalSelectorPattern),
 }
+impl CssAnySelectorPattern {
+    pub fn as_css_attribute_selector_pattern(&self) -> Option<&CssAttributeSelectorPattern> {
+        match &self {
+            CssAnySelectorPattern::CssAttributeSelectorPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_class_selector_pattern(&self) -> Option<&CssClassSelectorPattern> {
+        match &self {
+            CssAnySelectorPattern::CssClassSelectorPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_combinator_selector_pattern(&self) -> Option<&CssCombinatorSelectorPattern> {
+        match &self {
+            CssAnySelectorPattern::CssCombinatorSelectorPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_id_selector_pattern(&self) -> Option<&CssIdSelectorPattern> {
+        match &self {
+            CssAnySelectorPattern::CssIdSelectorPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_pseudo_class_selector_pattern(&self) -> Option<&CssPseudoClassSelectorPattern> {
+        match &self {
+            CssAnySelectorPattern::CssPseudoClassSelectorPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_type_selector_pattern(&self) -> Option<&CssTypeSelectorPattern> {
+        match &self {
+            CssAnySelectorPattern::CssTypeSelectorPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_universal_selector_pattern(&self) -> Option<&CssUniversalSelectorPattern> {
+        match &self {
+            CssAnySelectorPattern::CssUniversalSelectorPattern(item) => Some(item),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum CssAnyValue {
     CssAnyFunction(CssAnyFunction),
@@ -1439,6 +1551,50 @@ pub enum CssAnyValue {
     CssNumber(CssNumber),
     CssRatio(CssRatio),
     CssString(CssString),
+}
+impl CssAnyValue {
+    pub fn as_css_any_function(&self) -> Option<&CssAnyFunction> {
+        match &self {
+            CssAnyValue::CssAnyFunction(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_custom_property(&self) -> Option<&CssCustomProperty> {
+        match &self {
+            CssAnyValue::CssCustomProperty(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_dimension(&self) -> Option<&CssDimension> {
+        match &self {
+            CssAnyValue::CssDimension(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_identifier(&self) -> Option<&CssIdentifier> {
+        match &self {
+            CssAnyValue::CssIdentifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_number(&self) -> Option<&CssNumber> {
+        match &self {
+            CssAnyValue::CssNumber(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_ratio(&self) -> Option<&CssRatio> {
+        match &self {
+            CssAnyValue::CssRatio(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_css_string(&self) -> Option<&CssString> {
+        match &self {
+            CssAnyValue::CssString(item) => Some(item),
+            _ => None,
+        }
+    }
 }
 impl AstNode for CssAnyFunction {
     type Language = Language;
