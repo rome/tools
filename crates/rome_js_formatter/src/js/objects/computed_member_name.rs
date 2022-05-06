@@ -1,4 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsComputedMemberName;
@@ -12,10 +12,11 @@ impl FormatNode for JsComputedMemberName {
             r_brack_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             l_brack_token.format(formatter)?,
             expression.format(formatter)?,
             r_brack_token.format(formatter)?,
-        ])
+        ]
     }
 }

@@ -1,4 +1,6 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+};
 use rome_formatter::FormatResult;
 
 use crate::utils::format_string_literal_token;
@@ -20,11 +22,12 @@ impl FormatNode for JsImportAssertionEntry {
             _ => key.format(formatter)?,
         };
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             formatted_key,
             colon_token.format(formatter)?,
             space_token(),
             format_string_literal_token(value_token?, formatter),
-        ])
+        ]
     }
 }

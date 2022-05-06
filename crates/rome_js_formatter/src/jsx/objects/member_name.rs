@@ -1,5 +1,5 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::{format_elements, FormatResult};
+use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::{FormatResult};
 use rome_js_syntax::{JsxMemberName, JsxMemberNameFields};
 
 impl FormatNode for JsxMemberName {
@@ -10,10 +10,11 @@ impl FormatNode for JsxMemberName {
             member,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             object.format(formatter)?,
             dot_token.format(formatter)?,
             member.format(formatter)?,
-        ])
+        ]
     }
 }

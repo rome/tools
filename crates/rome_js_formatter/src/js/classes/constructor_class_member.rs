@@ -1,5 +1,6 @@
 use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
+    formatted, hard_group_elements, space_token, Format, FormatElement,
+    FormatNode, Formatter,
 };
 use rome_formatter::FormatResult;
 
@@ -15,13 +16,14 @@ impl FormatNode for JsConstructorClassMember {
             body,
         } = self.as_fields();
 
-        Ok(hard_group_elements(format_elements![
+        Ok(hard_group_elements(formatted![
+            formatter,
             modifiers.format(formatter)?,
             space_token(),
             name.format(formatter)?,
             parameters.format(formatter)?,
             space_token(),
             body.format(formatter)?
-        ]))
+        ]?))
     }
 }

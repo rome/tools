@@ -10,7 +10,7 @@ mod quickcheck_utils;
 
 use crate::format_traits::FormatOptional;
 use crate::{
-    empty_element, empty_line, format_elements, hard_group_elements, space_token, token, Format,
+    empty_element, empty_line, hard_group_elements, space_token, token, Format,
     FormatElement, Formatter, JsFormatter, QuoteStyle, Token,
 };
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
@@ -51,7 +51,7 @@ pub(crate) fn format_initializer_clause(
     initializer: Option<JsInitializerClause>,
 ) -> FormatResult<FormatElement> {
     initializer.format_with_or_empty(formatter, |initializer| {
-        format_elements![space_token(), initializer]
+        formatted![formatter, space_token(), initializer]
     })
 }
 
@@ -61,7 +61,7 @@ pub(crate) fn format_interpreter(
 ) -> FormatResult<FormatElement> {
     interpreter.format_with_or(
         formatter,
-        |interpreter| format_elements![interpreter, empty_line()],
+        |interpreter| formatted![formatter, interpreter, empty_line()],
         empty_element,
     )
 }
@@ -113,24 +113,27 @@ pub(crate) fn format_head_body_statement(
     body: JsAnyStatement,
 ) -> FormatResult<FormatElement> {
     if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-        Ok(hard_group_elements(format_elements![
+        Ok(hard_group_elements(formatted![
+            formatter,
             head,
             space_token(),
             body.format(formatter)?,
-        ]))
+        ]?))
     } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
         // Force semicolon insertion if the body is empty
-        Ok(format_elements![
+        formatted![
+            formatter,
             hard_group_elements(head),
             body.format(formatter)?,
             token(";"),
-        ])
+        ]
     } else {
-        Ok(format_elements![
+        formatted![
+            formatter,
             hard_group_elements(head),
             space_token(),
             body.format(formatter)?,
-        ])
+        ]
     }
 }
 
@@ -449,11 +452,12 @@ impl TemplateElement {
         };
 
         if should_hard_group {
-            Ok(hard_group_elements(format_elements![
+            Ok(hard_group_elements(formatted![
+                formatter,
                 dollar_curly_token.format(formatter)?,
                 middle,
                 r_curly_token.format(formatter)?
-            ]))
+            ]?))
         } else {
             formatter.format_delimited_soft_block_indent(
                 &dollar_curly_token,
@@ -598,7 +602,8 @@ pub(crate) fn format_with_semicolon(
         _ => false,
     };
 
-    Ok(format_elements![
+    formatted![
+        formatter,
         content,
         semicolon.format_or(
             formatter,
@@ -608,7 +613,7 @@ pub(crate) fn format_with_semicolon(
                 || token(";")
             }
         )?
-    ])
+    ]
 }
 
 pub(crate) fn format_string_literal_token(

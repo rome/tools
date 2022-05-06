@@ -27,10 +27,11 @@ impl FormatNode for TsIntersectionType {
             None => if_group_breaks(format_elements![token("&"), space_token()]),
         };
 
-        Ok(group_elements(indent(format_elements![
+        Ok(group_elements(indent(formatted![
+            formatter,
             soft_line_break(),
             leading_separator_token,
             types.format(formatter)?,
-        ])))
+        ]?)))
     }
 }

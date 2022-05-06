@@ -1,4 +1,6 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsNamespaceImportSpecifier;
@@ -16,12 +18,13 @@ impl FormatNode for JsNamespaceImportSpecifier {
         let as_token = as_token.format(formatter)?;
         let local_name = local_name.format(formatter)?;
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             star,
             space_token(),
             as_token,
             space_token(),
             local_name
-        ])
+        ]
     }
 }

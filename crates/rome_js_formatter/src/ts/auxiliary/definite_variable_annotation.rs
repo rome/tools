@@ -1,4 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsDefiniteVariableAnnotation;
 use rome_js_syntax::TsDefiniteVariableAnnotationFields;
@@ -10,9 +10,10 @@ impl FormatNode for TsDefiniteVariableAnnotation {
             type_annotation,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             excl_token.format(formatter)?,
             type_annotation.format(formatter)?,
-        ])
+        ]
     }
 }

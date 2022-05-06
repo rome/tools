@@ -2,7 +2,9 @@ use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
 use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+};
 
 use rome_js_syntax::JsPropertyClassMember;
 use rome_js_syntax::JsPropertyClassMemberFields;
@@ -19,18 +21,19 @@ impl FormatNode for JsPropertyClassMember {
 
         let property_annotation = property_annotation.format_or_empty(formatter)?;
 
-        let init =
-            value.format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
+        let init = value
+            .format_with_or_empty(formatter, |node| formatted![formatter, space_token(), node])?;
 
         format_with_semicolon(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 modifiers.format(formatter)?,
                 space_token(),
                 name.format(formatter)?,
                 property_annotation,
                 init,
-            ],
+            ]?,
             semicolon_token,
         )
     }

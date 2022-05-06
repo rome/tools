@@ -1,4 +1,6 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsExport;
@@ -13,6 +15,6 @@ impl FormatNode for JsExport {
 
         let export_token = export_token.format(formatter)?;
         let export_clause = export_clause.format(formatter)?;
-        Ok(format_elements![export_token, space_token(), export_clause])
+        formatted![formatter, export_token, space_token(), export_clause]
     }
 }

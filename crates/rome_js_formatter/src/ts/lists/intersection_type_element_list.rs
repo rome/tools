@@ -1,5 +1,5 @@
 use crate::{
-    concat_elements, empty_element, format_elements, soft_line_break_or_space, space_token, token,
+    concat_elements, empty_element, soft_line_break_or_space, space_token, token,
     Format, FormatElement, Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
@@ -20,23 +20,29 @@ impl Format for TsIntersectionTypeElementList {
                     if index == last_index {
                         formatter.format_replaced(token, empty_element())
                     } else {
-                        format_elements![
+                        formatted![
+                            formatter,
                             soft_line_break_or_space(),
                             token.format(formatter)?,
                             space_token()
-                        ]
+                        ]?
                     }
                 }
                 None => {
                     if index == last_index {
                         empty_element()
                     } else {
-                        format_elements![soft_line_break_or_space(), token("&"), space_token()]
+                        formatted![
+                            formatter,
+                            soft_line_break_or_space(),
+                            token("&"),
+                            space_token()
+                        ]?
                     }
                 }
             };
 
-            elements.push(format_elements![ty.format(formatter)?, separator])
+            elements.push(formatted![formatter, ty.format(formatter)?, separator]?)
         }
 
         Ok(concat_elements(elements))

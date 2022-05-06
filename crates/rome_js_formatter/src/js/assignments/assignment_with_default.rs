@@ -1,4 +1,6 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsAssignmentWithDefault;
@@ -12,12 +14,13 @@ impl FormatNode for JsAssignmentWithDefault {
             default,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             pattern.format(formatter)?,
             space_token(),
             eq_token.format(formatter)?,
             space_token(),
             default.format(formatter)?,
-        ])
+        ]
     }
 }

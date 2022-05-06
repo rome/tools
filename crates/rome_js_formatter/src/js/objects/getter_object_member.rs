@@ -2,7 +2,8 @@ use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
 use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
+    formatted, hard_group_elements, space_token, Format, FormatElement,
+    FormatNode, Formatter,
 };
 
 use rome_js_syntax::JsGetterObjectMember;
@@ -19,7 +20,8 @@ impl FormatNode for JsGetterObjectMember {
             body,
         } = self.as_fields();
 
-        Ok(hard_group_elements(format_elements![
+        Ok(hard_group_elements(formatted![
+            formatter,
             get_token.format(formatter)?,
             space_token(),
             name.format(formatter)?,
@@ -28,6 +30,6 @@ impl FormatNode for JsGetterObjectMember {
             return_type.format_or_empty(formatter)?,
             space_token(),
             body.format(formatter)?
-        ]))
+        ]?))
     }
 }

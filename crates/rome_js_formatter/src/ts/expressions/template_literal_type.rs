@@ -1,4 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsTemplateLiteralType;
 use rome_js_syntax::TsTemplateLiteralTypeFields;
@@ -11,10 +11,11 @@ impl FormatNode for TsTemplateLiteralType {
             r_tick_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             l_tick_token.format(formatter)?,
             elements.format(formatter)?,
             r_tick_token.format(formatter)?,
-        ])
+        ]
     }
 }

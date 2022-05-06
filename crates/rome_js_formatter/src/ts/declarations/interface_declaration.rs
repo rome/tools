@@ -1,6 +1,6 @@
 use crate::format_traits::FormatOptional;
 use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode,
+    hard_group_elements, space_token, Format, FormatElement, FormatNode,
     Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
@@ -21,14 +21,15 @@ impl FormatNode for TsInterfaceDeclaration {
         let id = id.format(formatter)?;
         let type_parameters = type_parameters.format_or_empty(formatter)?;
         let extends = extends_clause.format_with_or_empty(formatter, |extends| {
-            format_elements![extends, space_token()]
+            formatted![formatter, extends, space_token()]
         })?;
         let members = formatter.format_delimited_block_indent(
             &l_curly_token?,
             members.format(formatter)?,
             &r_curly_token?,
         )?;
-        Ok(hard_group_elements(format_elements![
+        Ok(hard_group_elements(formatted![
+            formatter,
             interface,
             space_token(),
             id,
@@ -36,6 +37,6 @@ impl FormatNode for TsInterfaceDeclaration {
             space_token(),
             extends,
             members
-        ]))
+        ]?))
     }
 }

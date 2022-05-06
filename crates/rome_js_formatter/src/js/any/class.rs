@@ -1,6 +1,7 @@
 use crate::format_traits::FormatOptional;
 use crate::{
-    format_elements, join_elements_hard_line, space_token, FormatElement, Formatter, JsFormatter,
+    formatted, join_elements_hard_line, space_token, FormatElement, Formatter,
+    JsFormatter,
 };
 use crate::{hard_group_elements, Format};
 use rome_formatter::FormatResult;
@@ -11,27 +12,30 @@ impl Format for JsAnyClass {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let abstract_token = self
             .abstract_token()
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+            .format_with_or_empty(formatter, |token| {
+                formatted![formatter, token, space_token()]
+            })?;
 
         let id = self
             .id()
-            .format_with_or_empty(formatter, |id| format_elements![space_token(), id])?;
+            .format_with_or_empty(formatter, |id| formatted![formatter, space_token(), id])?;
 
         let type_parameters = self.type_parameters().format_or_empty(formatter)?;
 
         let extends = self
             .extends_clause()
             .format_with_or_empty(formatter, |extends_clause| {
-                format_elements![space_token(), extends_clause]
+                formatted![formatter, space_token(), extends_clause]
             })?;
 
         let implements_clause = self
             .implements_clause()
             .format_with_or_empty(formatter, |implements_clause| {
-                format_elements![space_token(), implements_clause]
+                formatted![formatter, space_token(), implements_clause]
             })?;
 
-        Ok(hard_group_elements(format_elements![
+        Ok(hard_group_elements(formatted![
+            formatter,
             abstract_token,
             self.class_token().format(formatter)?,
             id,
@@ -49,6 +53,6 @@ impl Format for JsAnyClass {
                 ),
                 &self.r_curly_token()?
             )?
-        ]))
+        ]?))
     }
 }

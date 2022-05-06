@@ -1,7 +1,7 @@
 use crate::format_traits::{FormatOptional, FormatWith};
 use crate::formatter::TrailingSeparator;
 use crate::{
-    format_elements, join_elements, soft_line_break_or_space, space_token, token, FormatElement,
+    join_elements, soft_line_break_or_space, space_token, token, FormatElement,
     FormatNode, Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
@@ -19,12 +19,12 @@ impl FormatNode for TsEnumDeclaration {
         } = self.as_fields();
 
         let const_token = const_token.format_with_or_empty(formatter, |const_token| {
-            format_elements![const_token, space_token()]
+            formatted![formatter, const_token, space_token()]
         })?;
         let enum_token = enum_token.format_with(formatter, |enum_token| {
-            format_elements![enum_token, space_token()]
+            formatted![formatter, enum_token, space_token()]
         })?;
-        let id = id.format_with(formatter, |id| format_elements![id, space_token()])?;
+        let id = id.format_with(formatter, |id| formatted![formatter, id, space_token()])?;
 
         let members =
             formatter.format_separated(&members, || token(","), TrailingSeparator::default())?;
@@ -34,6 +34,6 @@ impl FormatNode for TsEnumDeclaration {
             &r_curly_token?,
         )?;
 
-        Ok(format_elements![const_token, enum_token, id, list])
+        formatted![formatter, const_token, enum_token, id, list]
     }
 }

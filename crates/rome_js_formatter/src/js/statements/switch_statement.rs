@@ -1,8 +1,8 @@
-use crate::hard_group_elements;
 use crate::{
-    format_elements, join_elements_hard_line, space_token, Format, FormatElement, FormatNode,
+    join_elements_hard_line, space_token, Format, FormatElement, FormatNode,
     Formatter, JsFormatter,
 };
+use crate::{formatted, hard_group_elements};
 use rome_formatter::{hard_line_break, FormatResult};
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
 use rome_rowan::{AstNode, AstNodeList};
@@ -19,7 +19,8 @@ impl FormatNode for JsSwitchStatement {
             r_curly_token,
         } = self.as_fields();
 
-        Ok(hard_group_elements(format_elements![
+        Ok(hard_group_elements(formatted![
+            formatter,
             switch_token.format(formatter)?,
             space_token(),
             formatter.format_delimited_soft_block_indent(
@@ -42,6 +43,6 @@ impl FormatNode for JsSwitchStatement {
                 },
                 &r_curly_token?
             )?
-        ]))
+        ]?))
     }
 }

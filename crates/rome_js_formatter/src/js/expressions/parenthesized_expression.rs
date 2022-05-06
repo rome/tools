@@ -1,6 +1,6 @@
 use crate::utils::{is_simple_expression, FormatPrecedence};
 use crate::{
-    empty_element, format_elements, group_elements, hard_group_elements, Format, FormatElement,
+    empty_element, formatted, group_elements, hard_group_elements, Format, FormatElement,
     FormatNode, Formatter, JsFormatter,
 };
 use rome_formatter::FormatResult;
@@ -23,7 +23,8 @@ impl FormatNode for JsParenthesizedExpression {
         let expression = expression?;
 
         if is_simple_parenthesized_expression(self)? {
-            Ok(hard_group_elements(format_elements![
+            Ok(hard_group_elements(formatted![
+                formatter,
                 if parenthesis_can_be_omitted {
                     formatter.format_replaced(&l_paren_token?, empty_element())
                 } else {
@@ -35,14 +36,16 @@ impl FormatNode for JsParenthesizedExpression {
                 } else {
                     r_paren_token.format(formatter)?
                 },
-            ]))
+            ]?))
         } else if parenthesis_can_be_omitted {
             // we mimic the format delimited utility function
-            Ok(format_elements![
+            formatted![
+                formatter,
                 formatter.format_replaced(&l_paren_token?, empty_element()),
                 group_elements(expression.format(formatter)?),
                 formatter.format_replaced(&r_paren_token?, empty_element()),
-            ])
+            ]
+        }
         // if the expression inside the parenthesis is a stringLiteralExpression, we should leave it as is rather than
         // add extra soft_block_indent, for example:
         // ```js
@@ -62,12 +65,13 @@ impl FormatNode for JsParenthesizedExpression {
         // ");
         // ```
         // this is what we want
-        } else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
-            Ok(format_elements![
-                l_paren_token.format(formatter)?,
-                expression.format(formatter)?,
-                r_paren_token.format(formatter)?,
-            ])
+        else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
+            formatted![
+                formatter,
+                l_paren_token.format(),
+                expression.format(),
+                r_paren_token.format(),
+            ]
         } else {
             formatter.format_delimited_soft_block_indent(
                 &l_paren_token?,

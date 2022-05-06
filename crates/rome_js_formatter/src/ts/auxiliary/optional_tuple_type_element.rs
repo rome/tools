@@ -1,4 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::{TsOptionalTupleTypeElement, TsOptionalTupleTypeElementFields};
 
@@ -10,6 +10,6 @@ impl FormatNode for TsOptionalTupleTypeElement {
         } = self.as_fields();
         let ty = ty.format(formatter)?;
         let question_mark = question_mark_token.format(formatter)?;
-        Ok(format_elements![ty, question_mark])
+        formatted![formatter, ty, question_mark]
     }
 }

@@ -1,4 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::{TsPropertyParameter, TsPropertyParameterFields};
 
@@ -9,10 +9,11 @@ impl FormatNode for TsPropertyParameter {
             formal_parameter,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             modifiers.format(formatter)?,
             space_token(),
             formal_parameter.format(formatter)?
-        ])
+        ]
     }
 }

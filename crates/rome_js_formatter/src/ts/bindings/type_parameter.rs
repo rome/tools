@@ -1,5 +1,5 @@
 use crate::format_traits::FormatOptional;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsTypeParameter;
 
@@ -9,11 +9,11 @@ impl FormatNode for TsTypeParameter {
         let constraint = self
             .constraint()
             .format_with_or_empty(formatter, |constraint| {
-                format_elements![space_token(), constraint]
+                formatted![formatter, space_token(), constraint]
             })?;
         let default = self.default().format_with_or_empty(formatter, |default| {
-            format_elements![space_token(), default]
+            formatted![formatter, space_token(), default]
         })?;
-        Ok(format_elements![name, constraint, default])
+        formatted![formatter, name, constraint, default]
     }
 }

@@ -33,14 +33,16 @@ impl FormatNode for TsUnionType {
         // so any potential line break doesn't influence the formatting of the type itself
         let (leading_comments, types, trailing_comments) = types.split_trivia();
 
-        Ok(format_elements![
-            group_elements(indent(format_elements![
+        formatted![
+            formatter,
+            group_elements(indent(formatted![
+                formatter,
                 soft_line_break(),
                 leading_separator_token,
                 leading_comments,
                 types,
-            ])),
+            ]?)),
             trailing_comments
-        ])
+        ]
     }
 }

@@ -1,4 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsPostUpdateExpression;
@@ -11,9 +11,10 @@ impl FormatNode for JsPostUpdateExpression {
             operator_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             operand.format(formatter)?,
             operator_token.format(formatter)?,
-        ])
+        ]
     }
 }

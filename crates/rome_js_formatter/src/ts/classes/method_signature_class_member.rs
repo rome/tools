@@ -1,6 +1,6 @@
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, format_traits::FormatOptional, hard_group_elements, space_token, Format,
+    format_traits::FormatOptional, hard_group_elements, space_token, Format,
     FormatElement, FormatNode, Formatter,
 };
 use rome_formatter::FormatResult;
@@ -19,8 +19,9 @@ impl FormatNode for TsMethodSignatureClassMember {
             semicolon_token,
         } = self.as_fields();
 
-        let async_token = async_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let async_token = async_token.format_with_or_empty(formatter, |token| {
+            formatted![formatter, token, space_token()]
+        })?;
         let name = name.format(formatter)?;
         let type_parameters = type_parameters.format_or_empty(formatter)?;
         let parameters = parameters.format(formatter)?;
@@ -28,7 +29,8 @@ impl FormatNode for TsMethodSignatureClassMember {
 
         Ok(hard_group_elements(format_with_semicolon(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 modifiers.format(formatter)?,
                 async_token,
                 space_token(),
@@ -37,7 +39,7 @@ impl FormatNode for TsMethodSignatureClassMember {
                 type_parameters,
                 parameters,
                 return_type_annotation,
-            ],
+            ]?,
             semicolon_token,
         )?))
     }

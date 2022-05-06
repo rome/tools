@@ -1,7 +1,9 @@
 use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+};
 
 use rome_js_syntax::JsYieldArgument;
 use rome_js_syntax::JsYieldArgumentFields;
@@ -15,10 +17,11 @@ impl FormatNode for JsYieldArgument {
 
         let star_token = star_token.format_or_empty(formatter)?;
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             star_token,
             space_token(),
             expression.format(formatter)?
-        ])
+        ]
     }
 }

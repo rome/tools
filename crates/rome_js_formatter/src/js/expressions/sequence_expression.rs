@@ -1,6 +1,8 @@
 use rome_formatter::{concat_elements, FormatResult};
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+};
 
 use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields};
 use rome_rowan::AstNode;
@@ -39,11 +41,12 @@ impl FormatNode for JsSequenceExpression {
                     right,
                 } = parent_sequence.as_fields();
 
-                formatted.push(format_elements![
+                formatted.push(formatted![
+                    formatter,
                     comma_token.format(formatter)?,
                     space_token(),
                     right.format(formatter)?
-                ]);
+                ]?);
 
                 current = parent_sequence;
             } else {

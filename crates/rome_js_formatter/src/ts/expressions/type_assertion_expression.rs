@@ -1,4 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter, JsFormatter};
+use crate::{Format, FormatElement, FormatNode, Formatter, JsFormatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsTypeAssertionExpression;
 use rome_js_syntax::TsTypeAssertionExpressionFields;
@@ -12,13 +12,14 @@ impl FormatNode for TsTypeAssertionExpression {
             expression,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             formatter.format_delimited_soft_block_indent(
                 &l_angle_token?,
                 ty.format(formatter)?,
                 &r_angle_token?,
             )?,
             expression.format(formatter)?
-        ])
+        ]
     }
 }

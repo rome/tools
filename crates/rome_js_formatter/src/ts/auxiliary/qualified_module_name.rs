@@ -1,4 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsQualifiedModuleName;
 use rome_js_syntax::TsQualifiedModuleNameFields;
@@ -11,10 +11,11 @@ impl FormatNode for TsQualifiedModuleName {
             right,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             left.format(formatter)?,
             dot_token.format(formatter)?,
             right.format(formatter)?,
-        ])
+        ]
     }
 }

@@ -1,5 +1,5 @@
 use crate::{
-    empty_element, format_elements, if_group_breaks, join_elements, soft_line_break_or_space,
+    empty_element, if_group_breaks, join_elements, soft_line_break_or_space,
     token, Format, FormatElement, Formatter,
 };
 use rome_formatter::FormatResult;
@@ -33,7 +33,7 @@ impl Format for TsTypeMemberList {
                     empty_element()
                 };
 
-                Ok(format_elements![formatted_element, separator])
+                formatted![formatter, formatted_element, separator]
             })
             .collect::<FormatResult<Vec<_>>>()?;
 

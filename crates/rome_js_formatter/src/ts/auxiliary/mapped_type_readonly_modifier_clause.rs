@@ -1,4 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsMappedTypeReadonlyModifierClause;
 use rome_js_syntax::TsMappedTypeReadonlyModifierClauseFields;
@@ -9,9 +9,10 @@ impl FormatNode for TsMappedTypeReadonlyModifierClause {
             operator_token,
             readonly_token,
         } = self.as_fields();
-        Ok(format_elements![
+        formatted![
+            formatter,
             operator_token.format(formatter)?,
             readonly_token.format(formatter)?
-        ])
+        ]
     }
 }

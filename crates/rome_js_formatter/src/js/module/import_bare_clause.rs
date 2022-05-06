@@ -1,7 +1,9 @@
 use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+};
 
 use rome_js_syntax::JsImportBareClause;
 use rome_js_syntax::JsImportBareClauseFields;
@@ -12,9 +14,9 @@ impl FormatNode for JsImportBareClause {
 
         let source = source.format(formatter)?;
         let assertion = assertion.format_with_or_empty(formatter, |assertion| {
-            format_elements![space_token(), assertion]
+            formatted![formatter, space_token(), assertion]
         })?;
 
-        Ok(format_elements![source, assertion])
+        formatted![formatter, source, assertion]
     }
 }

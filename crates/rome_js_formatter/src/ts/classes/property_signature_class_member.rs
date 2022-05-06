@@ -1,6 +1,6 @@
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, format_traits::FormatOptional, space_token, Format, FormatElement, FormatNode,
+    format_traits::FormatOptional, space_token, Format, FormatElement, FormatNode,
     Formatter,
 };
 use rome_formatter::FormatResult;
@@ -19,12 +19,13 @@ impl FormatNode for TsPropertySignatureClassMember {
 
         format_with_semicolon(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 modifiers.format(formatter)?,
                 space_token(),
                 name.format(formatter)?,
                 property_annotation,
-            ],
+            ]?,
             semicolon_token,
         )
     }

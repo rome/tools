@@ -36,7 +36,7 @@ pub trait FormatOptional {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token};
+    /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token, formatted};
     /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
     /// use rome_js_syntax::{JsSyntaxTreeBuilder, JsSyntaxKind};
@@ -55,11 +55,11 @@ pub trait FormatOptional {
     /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
     /// let empty_result = empty_token.format_with_or_empty(&formatter, |token| token);
     /// let with_result = syntax_token.format_with_or_empty(&formatter, |token| {
-    ///     format_elements![space_token(), token]
+    ///     formatted![&formatter, space_token(), token]
     /// });
     ///
     /// assert_eq!(Ok(empty_element()), empty_result);
-    /// assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
+    /// assert_eq!(formatted![&formatter, space_token(), token("'abc'")], with_result);
     fn format_with_or_empty<With, WithResult>(
         &self,
         formatter: &Formatter,
@@ -106,7 +106,7 @@ pub trait FormatOptional {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token};
+    /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token, formatted};
     /// use rome_js_syntax::{JsSyntaxToken};
     /// use rome_js_formatter::prelude::*;
     /// use rome_js_syntax::{JsSyntaxTreeBuilder, JsSyntaxKind};
@@ -127,11 +127,11 @@ pub trait FormatOptional {
     ///     token("empty")
     /// });
     /// let with_result = syntax_token.format_with_or(&formatter, |token| {
-    ///     format_elements![space_token(), token]
+    ///     formatted![&formatter, space_token(), token]
     /// }, || empty_element());
     ///
     /// assert_eq!(Ok(token("empty")), empty_result);
-    /// assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
+    /// assert_eq!(formatted![&formatter, space_token(), token("'abc'")], with_result);
     fn format_with_or<With, Or, WithResult, OrResult>(
         &self,
         formatter: &Formatter,
@@ -157,7 +157,7 @@ pub trait FormatWith {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_formatter::{Formatter, token, format_elements, space_token};
+    /// use rome_js_formatter::{Formatter, token, format_elements, space_token, formatted};
     /// use rome_js_syntax::{JsSyntaxNode, JsSyntaxTreeBuilder, JsSyntaxKind};
     /// use rome_js_formatter::prelude::*;
     ///
@@ -171,10 +171,10 @@ pub trait FormatWith {
     /// let formatter = Formatter::default();
     /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
     /// let result = Ok(syntax_token).format_with(&formatter, |token| {
-    ///     format_elements![token.clone(), space_token(), token.clone()]
+    ///     formatted![&formatter, token.clone(), space_token(), token.clone()]
     /// });
     ///
-    /// assert_eq!(Ok(format_elements![token("'abc'"), space_token(), token("'abc'")]), result)
+    /// assert_eq!(formatted![&formatter, token("'abc'"), space_token(), token("'abc'")], result)
     fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,

@@ -1,5 +1,5 @@
 use crate::format_traits::FormatOptional;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::{TsNamedTupleTypeElement, TsNamedTupleTypeElementFields};
 
@@ -17,13 +17,14 @@ impl FormatNode for TsNamedTupleTypeElement {
         let question_mark = question_mark_token.format_or_empty(formatter)?;
         let colon = colon_token.format(formatter)?;
         let ty = ty.format(formatter)?;
-        Ok(format_elements![
+        formatted![
+            formatter,
             dotdotdot,
             name,
             question_mark,
             colon,
             space_token(),
             ty,
-        ])
+        ]
     }
 }

@@ -1,6 +1,7 @@
 use crate::utils::format_head_body_statement;
 use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
+    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
+    JsFormatter,
 };
 use rome_formatter::FormatResult;
 
@@ -19,7 +20,8 @@ impl FormatNode for JsWithStatement {
 
         format_head_body_statement(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 with_token.format(formatter)?,
                 space_token(),
                 formatter.format_delimited_soft_block_indent(
@@ -27,7 +29,7 @@ impl FormatNode for JsWithStatement {
                     object.format(formatter)?,
                     &r_paren_token?,
                 )?,
-            ],
+            ]?,
             body?,
         )
     }

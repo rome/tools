@@ -1,3 +1,4 @@
+mod builders;
 pub mod format_element;
 pub mod format_elements;
 pub mod intersperse;
@@ -6,6 +7,7 @@ pub mod printed_tokens;
 pub mod printer;
 
 use crate::printer::Printer;
+pub use builders::ConcatBuilder;
 pub use format_element::{
     block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
     group_elements, hard_group_elements, hard_line_break, if_group_breaks,
@@ -311,7 +313,7 @@ impl Printed {
 /// Public return type of the formatter
 pub type FormatResult<F> = Result<F, FormatError>;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 /// Series of errors encountered during formatting
 pub enum FormatError {
     /// Node is missing and it should be required for a correct formatting

@@ -1,6 +1,7 @@
 use crate::utils::format_interpreter;
 use crate::{
-    format_elements, hard_line_break, Format, FormatElement, FormatNode, Formatter, JsFormatter,
+    formatted, hard_line_break, Format, FormatElement, FormatNode, Formatter,
+    JsFormatter,
 };
 use rome_formatter::FormatResult;
 
@@ -16,12 +17,13 @@ impl FormatNode for JsScript {
             eof_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             format_interpreter(interpreter_token, formatter)?,
             directives.format(formatter)?,
             formatter.format_list(statements),
             eof_token.format(formatter)?,
             hard_line_break()
-        ])
+        ]
     }
 }

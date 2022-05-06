@@ -1,5 +1,5 @@
 use crate::utils::format_with_semicolon;
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsDebuggerStatement;
@@ -14,7 +14,7 @@ impl FormatNode for JsDebuggerStatement {
 
         format_with_semicolon(
             formatter,
-            format_elements![debugger_token.format(formatter)?],
+            formatted![formatter, debugger_token.format(formatter)?]?,
             semicolon_token,
         )
     }

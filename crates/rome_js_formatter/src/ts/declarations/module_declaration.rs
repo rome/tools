@@ -1,4 +1,4 @@
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 use rome_js_syntax::TsModuleDeclaration;
 use rome_js_syntax::TsModuleDeclarationFields;
@@ -11,12 +11,13 @@ impl FormatNode for TsModuleDeclaration {
             body,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             module_or_namespace.format(formatter)?,
             space_token(),
             name.format(formatter)?,
             space_token(),
             body.format(formatter)?,
-        ])
+        ]
     }
 }

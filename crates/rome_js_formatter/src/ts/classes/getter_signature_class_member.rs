@@ -1,6 +1,6 @@
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, format_traits::FormatOptional, hard_group_elements, space_token, Format,
+    format_traits::FormatOptional, hard_group_elements, space_token, Format,
     FormatElement, FormatNode, Formatter,
 };
 use rome_formatter::FormatResult;
@@ -26,7 +26,8 @@ impl FormatNode for TsGetterSignatureClassMember {
 
         Ok(hard_group_elements(format_with_semicolon(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 modifiers.format(formatter)?,
                 space_token(),
                 get_token,
@@ -35,7 +36,7 @@ impl FormatNode for TsGetterSignatureClassMember {
                 l_paren_token,
                 r_paren_token,
                 return_type,
-            ],
+            ]?,
             semicolon_token,
         )?))
     }

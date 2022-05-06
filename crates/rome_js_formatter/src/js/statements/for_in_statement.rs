@@ -3,8 +3,8 @@ use rome_js_syntax::JsForInStatement;
 
 use crate::utils::format_head_body_statement;
 use crate::{
-    format_elements, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode,
-    Formatter, JsFormatter,
+    formatted, soft_line_break_or_space, space_token, Format, FormatElement,
+    FormatNode, Formatter, JsFormatter,
 };
 use rome_js_syntax::JsForInStatementFields;
 
@@ -27,21 +27,23 @@ impl FormatNode for JsForInStatement {
 
         format_head_body_statement(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 for_token,
                 space_token(),
                 formatter.format_delimited_soft_block_indent(
                     &l_paren_token?,
-                    format_elements![
+                    formatted![
+                        formatter,
                         initializer,
                         soft_line_break_or_space(),
                         in_token,
                         soft_line_break_or_space(),
                         expression,
-                    ],
+                    ]?,
                     &r_paren_token?
                 )?,
-            ],
+            ]?,
             body?,
         )
     }

@@ -1,6 +1,8 @@
 use crate::format_traits::FormatOptional;
 use crate::utils::format_initializer_clause;
-use crate::{format_elements, hard_group_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::{
+    formatted, hard_group_elements, Format, FormatElement, FormatNode, Formatter,
+};
 use rome_formatter::FormatResult;
 use rome_js_syntax::JsVariableDeclarator;
 use rome_js_syntax::JsVariableDeclaratorFields;
@@ -15,10 +17,11 @@ impl FormatNode for JsVariableDeclarator {
 
         let initializer = format_initializer_clause(formatter, initializer)?;
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             hard_group_elements(id.format(formatter)?),
             variable_annotation.format_or_empty(formatter)?,
             initializer
-        ])
+        ]
     }
 }

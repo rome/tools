@@ -6,7 +6,7 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, AstSeparatedList};
 
 use crate::{
-    empty_element, format_elements, format_traits::FormatOptional, if_group_breaks,
+    empty_element, format_traits::FormatOptional, if_group_breaks,
     join_elements_soft_line, token, Format, FormatElement, Formatter, JsFormatter,
 };
 
@@ -52,7 +52,10 @@ where
                 if_group_breaks(token(","))
             };
 
-            Ok((node.syntax().clone(), format_elements![elem, separator]))
+            Ok((
+                node.syntax().clone(),
+                formatted![formatter, elem, separator]?,
+            ))
         })
         .collect::<FormatResult<Vec<_>>>()?;
 

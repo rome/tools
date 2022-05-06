@@ -242,7 +242,7 @@ pub fn generate_formatter() {
     // script to build the module import files
     let mut modules = ModuleIndex::new(project_root().join("crates/rome_js_formatter/src"));
     let mut format_impls =
-        FormatImpls::new(project_root().join("crates/rome_js_formatter/src/format.rs"));
+        FormatImpls::new(project_root().join("crates/rome_js_formatter/src/generated.rs"));
 
     // Build an unified iterator over all the AstNode types
     let names = ast

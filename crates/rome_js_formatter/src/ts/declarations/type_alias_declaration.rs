@@ -1,7 +1,7 @@
 use crate::format_traits::FormatOptional;
 use crate::utils::format_with_semicolon;
 use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
+    hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::{TsTypeAliasDeclaration, TsTypeAliasDeclarationFields};
@@ -25,7 +25,8 @@ impl FormatNode for TsTypeAliasDeclaration {
 
         Ok(hard_group_elements(format_with_semicolon(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 type_token,
                 space_token(),
                 binding_identifier,
@@ -34,7 +35,7 @@ impl FormatNode for TsTypeAliasDeclaration {
                 equal_token,
                 space_token(),
                 ty,
-            ],
+            ]?,
             semicolon_token,
         )?))
     }

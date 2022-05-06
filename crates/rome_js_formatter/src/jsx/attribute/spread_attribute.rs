@@ -1,5 +1,5 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::{format_elements, FormatResult};
+use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
+use rome_formatter::{FormatResult};
 use rome_js_syntax::{JsxSpreadAttribute, JsxSpreadAttributeFields};
 
 impl FormatNode for JsxSpreadAttribute {
@@ -11,11 +11,12 @@ impl FormatNode for JsxSpreadAttribute {
             r_curly_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             l_curly_token.format(formatter)?,
             dotdotdot_token.format(formatter)?,
             argument.format(formatter)?,
             r_curly_token.format(formatter)?,
-        ])
+        ]
     }
 }
