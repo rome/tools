@@ -17,17 +17,15 @@ impl FormatNode for JsStringLiteralExpression {
 
         let needs_parenthesis =
             if let Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT) = parent.clone().map(|p| p.kind()) {
-                // SAFETY: since parent's `kind` is `JsSyntaxKind::JS_EXPRESSION_STATEMENT`, it is not empty.
+                // SAFETY: since parent's `kind` is `JsSyntaxKind::JS_EXPRESSION_STATEMENT`, it would not be `None`.
                 let parent_parent = parent.unwrap().parent();
                 matches!(
                     parent_parent.map(|p| p.kind()),
                     Some(JsSyntaxKind::JS_BLOCK_STATEMENT | JsSyntaxKind::JS_MODULE_ITEM_LIST)
                 )
-            // false
             } else {
                 false
             };
-        // value_token.text().chars().position(|ch| )
         Ok(format_string_literal_token(
             value_token,
             formatter,
