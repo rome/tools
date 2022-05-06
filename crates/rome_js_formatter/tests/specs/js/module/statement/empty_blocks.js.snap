@@ -55,7 +55,6 @@ for (x of []) {
 }
 
 switch ("test") {
-
 }
 
 switch ("test") {
