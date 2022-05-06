@@ -473,25 +473,24 @@ mod test {
     #[ignore]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"let { 'with_underscore': test } = value;
+        let src = r#"xyz.a(b!).a(b!).a(b!)
 
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax.clone());
-        let options = FormatOptions {
-            ..FormatOptions::default()
-        };
-        let result = format_node(options, &tree.syntax()).unwrap().print();
+        let result = format_node(FormatOptions::default(), &tree.syntax())
+            .unwrap()
+            .print();
         check_reformat(CheckReformatParams {
             root: &tree.syntax(),
             text: result.as_code(),
             source_type: syntax,
             file_name: "quick_test",
-            format_options: options,
+            format_options: FormatOptions::default(),
         });
         assert_eq!(
             result.as_code(),
-            r#"type X = { a: string; b: number };
+            r#"(a + (b * c)) > (65 + 5);
 "#
         );
     }
