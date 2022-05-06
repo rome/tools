@@ -1,3 +1,4 @@
+use crate::utils::WrappingElement;
 use crate::{FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
@@ -9,6 +10,10 @@ impl FormatNode for JsModuleSource {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsModuleSourceFields { value_token } = self.as_fields();
 
-        Ok(format_string_literal_token(value_token?, formatter, false))
+        Ok(format_string_literal_token(
+            value_token?,
+            formatter,
+            WrappingElement::None,
+        ))
     }
 }

@@ -1,7 +1,7 @@
 use crate::{Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
-use crate::utils::format_string_literal_token;
+use crate::utils::{format_string_literal_token, WrappingElement};
 use rome_js_syntax::JsLiteralMemberNameFields;
 use rome_js_syntax::{JsLiteralMemberName, JsSyntaxKind};
 
@@ -12,9 +12,11 @@ impl FormatNode for JsLiteralMemberName {
         let value = value?;
 
         match value.kind() {
-            JsSyntaxKind::JS_STRING_LITERAL => {
-                Ok(format_string_literal_token(value, formatter, false))
-            }
+            JsSyntaxKind::JS_STRING_LITERAL => Ok(format_string_literal_token(
+                value,
+                formatter,
+                WrappingElement::None,
+            )),
             _ => value.format(formatter),
         }
     }

@@ -1,7 +1,7 @@
 use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
-use crate::utils::format_string_literal_token;
+use crate::utils::{format_string_literal_token, WrappingElement};
 use rome_js_syntax::JsImportAssertionEntryFields;
 use rome_js_syntax::{JsImportAssertionEntry, JsSyntaxKind};
 
@@ -16,7 +16,9 @@ impl FormatNode for JsImportAssertionEntry {
         let key = key?;
 
         let formatted_key = match key.kind() {
-            JsSyntaxKind::JS_STRING_LITERAL => format_string_literal_token(key, formatter, false),
+            JsSyntaxKind::JS_STRING_LITERAL => {
+                format_string_literal_token(key, formatter, WrappingElement::None)
+            }
             _ => key.format(formatter)?,
         };
 
@@ -24,7 +26,7 @@ impl FormatNode for JsImportAssertionEntry {
             formatted_key,
             colon_token.format(formatter)?,
             space_token(),
-            format_string_literal_token(value_token?, formatter, false),
+            format_string_literal_token(value_token?, formatter, WrappingElement::None),
         ])
     }
 }

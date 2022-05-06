@@ -20,6 +20,8 @@ impl FormatNode for JsParenthesizedExpression {
 
         let parenthesis_can_be_omitted = parenthesis_can_be_omitted(self)?;
 
+        let expression = expression?;
+
         if is_simple_parenthesized_expression(self)? {
             Ok(hard_group_elements(format_elements![
                 if parenthesis_can_be_omitted {
@@ -41,7 +43,8 @@ impl FormatNode for JsParenthesizedExpression {
                 group_elements(expression.format(formatter)?),
                 formatter.format_replaced(&r_paren_token?, empty_element()),
             ])
-        } else if JsStringLiteralExpression::can_cast(expression.clone()?.syntax().kind()) {
+            // This branch aiming to align prettier formatting behavior, see https://github.com/rome/tools/pull/2547 for details
+        } else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
             Ok(format_elements![
                 l_paren_token.format(formatter)?,
                 group_elements(expression.format(formatter)?),

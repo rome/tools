@@ -1,5 +1,7 @@
+use crate::utils::WrappingElement;
 use crate::{FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
+use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::AstNode;
 
@@ -16,15 +18,16 @@ impl FormatNode for JsStringLiteralExpression {
         let parent = syntax_node.parent();
 
         let needs_parenthesis =
-            if let Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT) = parent.clone().map(|p| p.kind()) {
-                // SAFETY: since parent's `kind` is `JsSyntaxKind::JS_EXPRESSION_STATEMENT`, it would not be `None`.
-                let parent_parent = parent.unwrap().parent();
-                matches!(
-                    parent_parent.map(|p| p.kind()),
-                    Some(JsSyntaxKind::JS_BLOCK_STATEMENT | JsSyntaxKind::JS_MODULE_ITEM_LIST)
-                )
+            if let Some(expression_statement) = parent.and_then(JsExpressionStatement::cast) {
+                let great_parent_kind = expression_statement.syntax().parent().map(|p| p.kind());
+                match great_parent_kind {
+                    Some(JsSyntaxKind::JS_BLOCK_STATEMENT | JsSyntaxKind::JS_MODULE_ITEM_LIST) => {
+                        WrappingElement::Parenthesis
+                    }
+                    _ => WrappingElement::None,
+                }
             } else {
-                false
+                WrappingElement::None
             };
         Ok(format_string_literal_token(
             value_token,

@@ -1,3 +1,4 @@
+use crate::utils::WrappingElement;
 use crate::{FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
@@ -9,6 +10,10 @@ impl FormatNode for JsLiteralExportName {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsLiteralExportNameFields { value } = self.as_fields();
 
-        Ok(format_string_literal_token(value?, formatter, false))
+        Ok(format_string_literal_token(
+            value?,
+            formatter,
+            WrappingElement::None,
+        ))
     }
 }

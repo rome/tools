@@ -611,10 +611,16 @@ pub(crate) fn format_with_semicolon(
     ])
 }
 
+#[derive(PartialEq, Eq)]
+pub(crate) enum WrappingElement {
+    Parenthesis,
+    None,
+}
+
 pub(crate) fn format_string_literal_token(
     token: JsSyntaxToken,
     formatter: &Formatter,
-    needs_parenthesis: bool,
+    needs_parenthesis: WrappingElement,
 ) -> FormatElement {
     let quoted = token.text_trimmed();
     let (primary_quote_char, secondary_quote_char) = match formatter.options().quote_style {
@@ -624,13 +630,13 @@ pub(crate) fn format_string_literal_token(
     let content =
         if quoted.starts_with(secondary_quote_char) && !quoted.contains(primary_quote_char) {
             let s = &quoted[1..quoted.len() - 1];
-            let s = if needs_parenthesis {
+            let s = if needs_parenthesis == WrappingElement::Parenthesis {
                 format!("({}{}{})", primary_quote_char, s, primary_quote_char)
             } else {
                 format!("{}{}{}", primary_quote_char, s, primary_quote_char)
             };
             Cow::Owned(normalize_newlines(&s, ['\r']).into_owned())
-        } else if needs_parenthesis {
+        } else if needs_parenthesis == WrappingElement::Parenthesis {
             Cow::Owned(format!("({})", normalize_newlines(quoted, ['\r'])))
         } else {
             normalize_newlines(quoted, ['\r'])
