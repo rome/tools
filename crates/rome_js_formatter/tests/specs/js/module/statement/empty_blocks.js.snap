@@ -1,0 +1,81 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
+expression: empty_blocks.js
+---
+# Input
+// Line break before closing `}`
+if (true) {}
+if (true) {} else {}
+
+for (x in []) {}
+for (x of []) {}
+
+
+
+switch ("test") {}
+
+switch ("test") {
+  case "test": {}
+}
+
+test: {}
+
+try {
+} catch {
+} finally {
+}
+
+// No Line breaks
+class Test {}
+
+function test() {}
+
+for (;;) {}
+while (true) {}
+do {} while (true);
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+// Line break before closing `}`
+if (true) {
+}
+if (true) {
+} else {
+}
+
+for (x in []) {
+}
+for (x of []) {
+}
+
+switch ("test") {
+}
+
+switch ("test") {
+	case "test": {
+	}
+}
+
+test: {
+}
+
+try {
+} catch {
+} finally {
+}
+
+// No Line breaks
+class Test {}
+
+function test() {}
+
+for (;;) {}
+while (true) {}
+do {} while (true);
+

@@ -1,16 +1,11 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
 assertion_line: 242
-expression: with.js
+expression: empty_block.ts
 ---
 # Input
-with (   b)
-
-{
-	5
-}
-
-with({}) {}
+interface X {}
+type X = {};
 =============================
 # Outputs
 ## Output 1
@@ -19,10 +14,6 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 -----
-with (b) {
-	5;
-}
-
-with ({}) {
-}
+interface X {}
+type X = {};
 
