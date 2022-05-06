@@ -81,10 +81,10 @@ export default function DesktopPlayground(
 							<TreeView tree={ast} />
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
+							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
+							<pre className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs">
 								{errors}
 							</pre>
 						</TabPanel>

@@ -91,12 +91,8 @@ impl WriteColor for ErrorOutput {
 /// Results and Vectors. We flatten this nesting to make the JSON easier to read
 fn clean_up_json(json: serde_json::Value) -> serde_json::Value {
     match json {
-        serde_json::Value::Array(mut entries) => {
-            if entries.len() == 1 {
-                clean_up_json(entries.pop().unwrap())
-            } else {
-                serde_json::Value::Array(entries.into_iter().map(clean_up_json).collect())
-            }
+        serde_json::Value::Array(entries) => {
+            serde_json::Value::Array(entries.into_iter().map(clean_up_json).collect())
         }
         serde_json::Value::Object(mut fields) => {
             if fields.len() == 1 && fields.contains_key("Ok") {
