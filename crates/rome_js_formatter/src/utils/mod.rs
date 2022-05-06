@@ -614,6 +614,7 @@ pub(crate) fn format_with_semicolon(
 pub(crate) fn format_string_literal_token(
     token: JsSyntaxToken,
     formatter: &Formatter,
+    needs_parenthesis: bool,
 ) -> FormatElement {
     let quoted = token.text_trimmed();
     let (primary_quote_char, secondary_quote_char) = match formatter.options().quote_style {
@@ -623,8 +624,14 @@ pub(crate) fn format_string_literal_token(
     let content =
         if quoted.starts_with(secondary_quote_char) && !quoted.contains(primary_quote_char) {
             let s = &quoted[1..quoted.len() - 1];
-            let s = format!("{}{}{}", primary_quote_char, s, primary_quote_char);
+            let s = if needs_parenthesis {
+                format!("({}{}{})", primary_quote_char, s, primary_quote_char)
+            } else {
+                format!("{}{}{}", primary_quote_char, s, primary_quote_char)
+            };
             Cow::Owned(normalize_newlines(&s, ['\r']).into_owned())
+        } else if needs_parenthesis {
+            Cow::Owned(format!("({})", normalize_newlines(quoted, ['\r'])))
         } else {
             normalize_newlines(quoted, ['\r'])
         };

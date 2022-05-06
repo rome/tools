@@ -9,6 +9,6 @@ impl FormatNode for JsLiteralExportName {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsLiteralExportNameFields { value } = self.as_fields();
 
-        Ok(format_string_literal_token(value?, formatter))
+        Ok(format_string_literal_token(value?, formatter, false))
     }
 }

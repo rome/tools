@@ -8,6 +8,7 @@ impl FormatNode for TsStringLiteralType {
         Ok(format_string_literal_token(
             self.literal_token()?,
             formatter,
+            false,
         ))
     }
 }

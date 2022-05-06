@@ -5,8 +5,8 @@ use crate::{
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::{
-    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxKind,
-    JsSyntaxNode,
+    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields,
+    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -40,6 +40,12 @@ impl FormatNode for JsParenthesizedExpression {
                 formatter.format_replaced(&l_paren_token?, empty_element()),
                 group_elements(expression.format(formatter)?),
                 formatter.format_replaced(&r_paren_token?, empty_element()),
+            ])
+        } else if JsStringLiteralExpression::can_cast(expression.clone()?.syntax().kind()) {
+            Ok(format_elements![
+                l_paren_token.format(formatter)?,
+                group_elements(expression.format(formatter)?),
+                r_paren_token.format(formatter)?,
             ])
         } else {
             formatter.format_delimited_soft_block_indent(

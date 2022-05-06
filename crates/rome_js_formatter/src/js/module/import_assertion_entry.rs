@@ -16,7 +16,7 @@ impl FormatNode for JsImportAssertionEntry {
         let key = key?;
 
         let formatted_key = match key.kind() {
-            JsSyntaxKind::JS_STRING_LITERAL => format_string_literal_token(key, formatter),
+            JsSyntaxKind::JS_STRING_LITERAL => format_string_literal_token(key, formatter, false),
             _ => key.format(formatter)?,
         };
 
@@ -24,7 +24,7 @@ impl FormatNode for JsImportAssertionEntry {
             formatted_key,
             colon_token.format(formatter)?,
             space_token(),
-            format_string_literal_token(value_token?, formatter),
+            format_string_literal_token(value_token?, formatter, false),
         ])
     }
 }

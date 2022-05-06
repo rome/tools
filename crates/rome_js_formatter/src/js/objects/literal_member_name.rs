@@ -12,7 +12,9 @@ impl FormatNode for JsLiteralMemberName {
         let value = value?;
 
         match value.kind() {
-            JsSyntaxKind::JS_STRING_LITERAL => Ok(format_string_literal_token(value, formatter)),
+            JsSyntaxKind::JS_STRING_LITERAL => {
+                Ok(format_string_literal_token(value, formatter, false))
+            }
             _ => value.format(formatter),
         }
     }
