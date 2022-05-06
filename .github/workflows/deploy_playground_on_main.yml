@@ -32,7 +32,7 @@ jobs:
           version: 7
           run_install: |
             args: [--prefix website/playground]
-      - run: pnpm build --prefix website/playground
+      - run: pnpm --prefix website/playground build
       - name: Publish
         uses: jakejarvis/s3-sync-action@master
         env:
