@@ -1,6 +1,5 @@
-use crate::utils::WrappingElement;
 use crate::{FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use rome_formatter::{format_elements, token, FormatResult};
 use rome_js_syntax::JsExpressionStatement;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::AstNode;
@@ -20,19 +19,23 @@ impl FormatNode for JsStringLiteralExpression {
         let needs_parenthesis =
             if let Some(expression_statement) = parent.and_then(JsExpressionStatement::cast) {
                 let great_parent_kind = expression_statement.syntax().parent().map(|p| p.kind());
-                match great_parent_kind {
-                    Some(JsSyntaxKind::JS_BLOCK_STATEMENT | JsSyntaxKind::JS_MODULE_ITEM_LIST) => {
-                        WrappingElement::Parenthesis
-                    }
-                    _ => WrappingElement::None,
-                }
+                matches!(
+                    great_parent_kind,
+                    Some(JsSyntaxKind::JS_BLOCK_STATEMENT | JsSyntaxKind::JS_MODULE_ITEM_LIST)
+                )
             } else {
-                WrappingElement::None
+                false
             };
-        Ok(format_string_literal_token(
-            value_token,
-            formatter,
-            needs_parenthesis,
-        ))
+        let formatted_element = format_string_literal_token(value_token, formatter);
+        if needs_parenthesis {
+            let (leading_trivia, content, trailing_trivia) = formatted_element.split_trivia();
+            Ok(format_elements![
+                leading_trivia,
+                format_elements![token("("), content, token(")"),],
+                trailing_trivia,
+            ])
+        } else {
+            Ok(formatted_element)
+        }
     }
 }

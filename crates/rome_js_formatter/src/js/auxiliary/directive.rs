@@ -14,11 +14,7 @@ impl FormatNode for JsDirective {
 
         format_with_semicolon(
             formatter,
-            format_string_literal_token(
-                value_token?,
-                formatter,
-                crate::utils::WrappingElement::None,
-            ),
+            format_string_literal_token(value_token?, formatter),
             semicolon_token,
         )
     }
