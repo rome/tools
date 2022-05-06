@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: object_comments.js
 ---
 # Input
@@ -18,7 +17,7 @@ Quote style: Double Quotes
 -----
 let a = {
 	// leading comment
-	type: "bar",
+	"type": "bar",
 	// trailing comment
 };
 

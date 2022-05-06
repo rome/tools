@@ -11,21 +11,20 @@ mod quickcheck_utils;
 use crate::format_traits::FormatOptional;
 use crate::{
     empty_element, empty_line, format_elements, hard_group_elements, space_token, token, Format,
-    FormatElement, Formatter, JsFormatter, QuoteStyle, TextSize, Token,
+    FormatElement, Formatter, JsFormatter, QuoteStyle, Token,
 };
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
 use rome_formatter::{normalize_newlines, FormatResult};
 use rome_js_syntax::{
-    JsAnyClassMemberName, JsAnyExpression, JsAnyFunction, JsAnyObjectMemberName, JsAnyRoot,
-    JsAnyStatement, JsInitializerClause, JsLanguage, JsLiteralMemberName, JsTemplateElement,
-    JsTemplateElementFields, Modifiers, TsTemplateElement, TsTemplateElementFields, TsType,
+    JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause, JsLanguage,
+    JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
+    TsTemplateElementFields, TsType,
 };
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 use std::borrow::Cow;
-use std::ops::Add;
 
 pub(crate) use simple::*;
 
@@ -649,121 +648,4 @@ pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
             | JsAnyExpression::JsImportCallExpression(_)
             | JsAnyExpression::JsCallExpression(_)
     )
-}
-
-/// Data structure used to merge into one the following nodes:
-///
-/// - [JsAnyObjectMemberName]
-/// - [JsAnyClassMemberName]
-/// - [JsLiteralMemberName]
-///
-/// Once merged, the enum is used to get specific members (the literal ones) and elide
-/// the quotes from them, when the algorithm sees fit
-pub(crate) enum MemberName {
-    Object(JsAnyObjectMemberName),
-    Class(JsAnyClassMemberName),
-    Literal(JsLiteralMemberName),
-}
-
-impl From<JsAnyClassMemberName> for MemberName {
-    fn from(node: JsAnyClassMemberName) -> Self {
-        Self::Class(node)
-    }
-}
-
-impl From<JsAnyObjectMemberName> for MemberName {
-    fn from(node: JsAnyObjectMemberName) -> Self {
-        Self::Object(node)
-    }
-}
-
-impl From<JsLiteralMemberName> for MemberName {
-    fn from(literal: JsLiteralMemberName) -> Self {
-        Self::Literal(literal)
-    }
-}
-
-const QUOTES_TO_OMIT: [char; 2] = ['\"', '\''];
-
-pub(crate) enum MemberContext {
-    Type,
-    Member,
-}
-
-impl MemberContext {
-    /// We can change the text only if there alphanumeric or alphabetic characters, depending on the mode
-    fn text_can_be_replaced(&self, text_to_check: &str) -> bool {
-        // Text here is quoteless. If it's empty, it means it is an empty string and we can't
-        // do any transformation
-        if text_to_check.is_empty() {
-            return false;
-        }
-        // we split by the characters that can be considered valid identifiers
-        match self {
-            // TODO: #2405 implement number literals on JS and TS
-            // patterns.all(|sub_text| sub_text.chars().all(char::is_alphabetic))
-            MemberContext::Type => false,
-            MemberContext::Member => {
-                // patterns.all(|sub_text| sub_text.chars().all(char::is_alphanumeric))
-                text_to_check
-                    .chars()
-                    .all(|c| matches!(c, '_' | '$') || c.is_alphanumeric())
-            }
-        }
-    }
-}
-
-/// Function used by the formatter, where we pass a complaint member and it returns a [FormatElement[
-/// where the text has its quotes removed.
-pub(crate) fn format_member_name<Member: Into<MemberName>>(
-    member_name: Member,
-    formatter: &Formatter,
-    checker: MemberContext,
-) -> FormatResult<FormatElement> {
-    fn replace_node(
-        name: JsSyntaxToken,
-        formatter: &Formatter,
-        checker: MemberContext,
-    ) -> FormatResult<FormatElement> {
-        let text = name.text_trimmed();
-
-        if text.starts_with(QUOTES_TO_OMIT) && text.ends_with(QUOTES_TO_OMIT) {
-            let quote_less_text = &text[1..text.len() - 1];
-            if checker.text_can_be_replaced(quote_less_text) {
-                Ok(formatter.format_replaced(
-                    &name,
-                    Token::from_syntax_token_cow_slice(
-                        Cow::Borrowed(quote_less_text),
-                        &name,
-                        // slide the offset of one as we removed a character from the beginning
-                        name.text_trimmed_range().start().add(TextSize::from(1)),
-                    )
-                    .into(),
-                ))
-            } else {
-                Ok(format_string_literal_token(name, formatter))
-            }
-        } else {
-            Ok(format_string_literal_token(name, formatter))
-        }
-    }
-
-    let name = match member_name.into() {
-        MemberName::Object(object) => match object {
-            JsAnyObjectMemberName::JsComputedMemberName(name) => name.format(formatter)?,
-            JsAnyObjectMemberName::JsLiteralMemberName(name) => {
-                replace_node(name.value()?, formatter, checker)?
-            }
-        },
-        MemberName::Class(class) => match class {
-            JsAnyClassMemberName::JsComputedMemberName(node) => node.format(formatter)?,
-            JsAnyClassMemberName::JsLiteralMemberName(node) => {
-                replace_node(node.value()?, formatter, checker)?
-            }
-            JsAnyClassMemberName::JsPrivateClassMemberName(node) => node.format(formatter)?,
-        },
-        MemberName::Literal(literal) => replace_node(literal.value()?, formatter, checker)?,
-    };
-
-    Ok(name)
 }
