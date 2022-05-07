@@ -14,6 +14,10 @@ use rome_rowan::{support, AstNode, SyntaxResult};
 use rome_rowan::{
     AstNodeList, AstNodeListIterator, AstSeparatedList, AstSeparatedListNodesIterator,
 };
+#[cfg(feature = "serde")]
+use serde_crate::ser::SerializeSeq;
+#[cfg(feature = "serde")]
+use serde_crate::{Serialize, Serializer};
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsonArray {
@@ -42,6 +46,16 @@ impl JsonArray {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonArray {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonArrayFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub elements: JsonArrayElementList,
@@ -72,6 +86,16 @@ impl JsonBoolean {
         support::required_token(&self.syntax, 1usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonBoolean {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonBooleanFields {
     pub true_token: SyntaxResult<SyntaxToken>,
     pub false_token: SyntaxResult<SyntaxToken>,
@@ -101,6 +125,16 @@ impl JsonMember {
     }
     pub fn value(&self) -> SyntaxResult<JsonValue> { support::required_node(&self.syntax, 2usize) }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonMemberFields {
     pub key: SyntaxResult<JsonString>,
     pub colon_token: SyntaxResult<SyntaxToken>,
@@ -127,6 +161,16 @@ impl JsonNull {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonNull {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonNullFields {
     pub null_token: SyntaxResult<SyntaxToken>,
 }
@@ -151,6 +195,16 @@ impl JsonNumber {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonNumber {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonNumberFields {
     pub json_number_literal_token: SyntaxResult<SyntaxToken>,
 }
@@ -181,6 +235,16 @@ impl JsonObject {
         support::required_token(&self.syntax, 2usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonObject {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonObjectFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub json_member_list: JsonMemberList,
@@ -207,6 +271,16 @@ impl JsonRoot {
         support::required_node(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonRoot {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonRootFields {
     pub json_value: SyntaxResult<JsonValue>,
 }
@@ -231,10 +305,22 @@ impl JsonString {
         support::required_token(&self.syntax, 0usize)
     }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonString {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize), serde(crate = "serde_crate"))]
 pub struct JsonStringFields {
     pub json_string_literal_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub enum JsonValue {
     JsonArray(JsonArray),
     JsonBoolean(JsonBoolean),
@@ -657,6 +743,8 @@ impl std::fmt::Display for JsonString {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
 pub struct JsonUnknown {
     syntax: SyntaxNode,
 }
@@ -726,6 +814,19 @@ impl AstNode for JsonArrayElementList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
+#[cfg(feature = "serde")]
+impl Serialize for JsonArrayElementList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
+}
 impl AstSeparatedList for JsonArrayElementList {
     type Language = Language;
     type Node = JsonValue;
@@ -777,6 +878,19 @@ impl AstNode for JsonMemberList {
         }
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsonMemberList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.len()))?;
+        for e in self.iter() {
+            seq.serialize_element(&e)?;
+        }
+        seq.end()
+    }
 }
 impl AstSeparatedList for JsonMemberList {
     type Language = Language;
