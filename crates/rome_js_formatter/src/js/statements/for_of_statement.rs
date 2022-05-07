@@ -5,8 +5,8 @@ use crate::format_traits::FormatOptional;
 
 use crate::utils::format_head_body_statement;
 use crate::{
-    formatted, soft_line_break_or_space, space_token, Format, FormatElement,
-    FormatNode, Formatter, JsFormatter,
+    formatted, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode, Formatter,
+    JsFormatter,
 };
 use rome_js_syntax::JsForOfStatementFields;
 
@@ -24,9 +24,8 @@ impl FormatNode for JsForOfStatement {
         } = self.as_fields();
 
         let for_token = for_token.format(formatter)?;
-        let await_token = await_token.format_with_or_empty(formatter, |token| {
-            formatted![formatter, token, space_token()]
-        })?;
+        let await_token =
+            await_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
         let initializer = initializer.format(formatter)?;
         let of_token = of_token.format(formatter)?;
         let expression = expression.format(formatter)?;

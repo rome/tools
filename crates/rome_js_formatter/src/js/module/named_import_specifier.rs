@@ -2,8 +2,7 @@ use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
 use crate::{
-    formatted, soft_line_break_or_space, space_token, Format, FormatElement,
-    FormatNode, Formatter,
+    formatted, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode, Formatter,
 };
 
 use rome_js_syntax::JsNamedImportSpecifier;
@@ -18,9 +17,8 @@ impl FormatNode for JsNamedImportSpecifier {
             local_name,
         } = self.as_fields();
 
-        let type_token = type_token.format_with_or_empty(formatter, |token| {
-            formatted![formatter, token, space_token()]
-        })?;
+        let type_token =
+            type_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
 
         let name = name.format(formatter)?;
         let as_token = as_token.format(formatter)?;

@@ -7,9 +7,8 @@ impl FormatNode for TsMappedTypeAsClause {
     fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         formatted![
             formatter,
-            self.as_token().format_with(formatter, |as_token| {
-                formatted![formatter, as_token, space_token()]
-            })?,
+            self.as_token()
+                .with(|as_token| { formatted![formatter, as_token, space_token()] }),
             self.ty().format(formatter)?
         ]
     }

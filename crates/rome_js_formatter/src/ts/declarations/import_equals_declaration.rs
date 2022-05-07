@@ -23,11 +23,7 @@ impl FormatNode for TsImportEqualsDeclaration {
                 formatter,
                 import_token.format(formatter)?,
                 space_token(),
-                type_token.format_with_or_empty(formatter, |token| formatted![
-                    formatter,
-                    token,
-                    space_token(),
-                ])?,
+                type_token.with_or_empty(|token| formatted![formatter, token, space_token(),]),
                 id.format(formatter)?,
                 space_token(),
                 eq_token.format(formatter)?,

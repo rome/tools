@@ -18,9 +18,8 @@ impl FormatNode for TsInterfaceDeclaration {
         } = self.as_fields();
         let interface = interface_token.format(formatter)?;
         let id = id.format(formatter)?;
-        let extends = extends_clause.format_with_or_empty(formatter, |extends| {
-            formatted![formatter, extends, space_token()]
-        })?;
+        let extends =
+            extends_clause.with_or_empty(|extends| formatted![formatter, extends, space_token()]);
         let members = formatter.format_delimited_block_indent(
             &l_curly_token?,
             members.format(formatter)?,

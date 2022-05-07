@@ -2,8 +2,7 @@ use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
 use crate::{
-    formatted, hard_group_elements, space_token, Format, FormatElement,
-    FormatNode, Formatter,
+    formatted, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
 };
 
 use rome_js_syntax::JsTryFinallyStatement;
@@ -19,9 +18,7 @@ impl FormatNode for JsTryFinallyStatement {
         } = self.as_fields();
 
         let formatted_catch_clause = catch_clause
-            .format_with_or_empty(formatter, |catch_clause| {
-                formatted![formatter, space_token(), catch_clause]
-            })?;
+            .with_or_empty(|catch_clause| formatted![formatter, space_token(), catch_clause]);
 
         Ok(hard_group_elements(formatted![
             formatter,

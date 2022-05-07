@@ -62,12 +62,12 @@ fn format_if_element(
 
     let head = formatted![
         formatter,
-        else_token.format_with_or_empty(formatter, |token| formatted![
+        else_token.with_or_empty(|token| formatted![
             formatter,
             space_token(),
             token,
             space_token(),
-        ])?,
+        ]),
         if_token.format(formatter)?,
         space_token(),
         formatter.format_delimited_soft_block_indent(

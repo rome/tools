@@ -15,8 +15,7 @@ impl FormatNode for JsNewExpression {
             arguments,
         } = self.as_fields();
 
-        let arguments =
-            arguments.format_or(formatter, || formatted![formatter, token("("), token(")")])?;
+        let arguments = arguments.or_format(|| formatted![formatter, token("("), token(")")]);
 
         formatted![
             formatter,

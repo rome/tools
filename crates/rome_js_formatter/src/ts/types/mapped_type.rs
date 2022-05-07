@@ -13,7 +13,7 @@ impl FormatNode for TsMappedType {
             property_name,
             in_token,
             keys_type,
-            as_clause: _,
+            as_clause,
             r_brack_token,
             optional_modifier,
             mapped_type,
@@ -21,16 +21,14 @@ impl FormatNode for TsMappedType {
             r_curly_token,
         } = self.as_fields();
 
-        let readonly = readonly_modifier.format_with_or_empty(formatter, |readonly| {
-            formatted![formatter, readonly, space_token()]
-        })?;
+        let readonly = readonly_modifier
+            .with_or_empty(|readonly| formatted![formatter, readonly, space_token()]);
         let l_square = l_brack_token.format(formatter)?;
         let property_name = property_name.format(formatter)?;
         let in_token = in_token.format(formatter)?;
         let keys = keys_type.format(formatter)?;
-        let as_clause = self.as_clause().format_with_or_empty(formatter, |clause| {
-            formatted![formatter, space_token(), clause]
-        })?;
+        let as_clause =
+            as_clause.with_or_empty(|clause| formatted![formatter, space_token(), clause]);
         let r_square = r_brack_token.format(formatter)?;
 
         formatter.format_delimited_block_indent(

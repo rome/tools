@@ -2,8 +2,8 @@ use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
 use crate::{
-    formatted, hard_group_elements, space_token, token, Format, FormatElement,
-    FormatNode, Formatter, JsFormatter,
+    formatted, hard_group_elements, space_token, token, Format, FormatElement, FormatNode,
+    Formatter, JsFormatter,
 };
 
 use rome_js_syntax::JsDoWhileStatementFields;
@@ -33,7 +33,7 @@ impl FormatNode for JsDoWhileStatement {
                 test.format(formatter)?,
                 &r_paren_token?,
             )?,
-            semicolon_token.format_or(formatter, || token(";"))?
+            semicolon_token.or_format(|| token(";"))
         ]?;
 
         let body = body?;

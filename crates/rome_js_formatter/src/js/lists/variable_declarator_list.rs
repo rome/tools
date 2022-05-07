@@ -1,7 +1,6 @@
 use crate::{
-    concat_elements, empty_element, format_traits::FormatOptional, formatted,
-    group_elements, indent, join_elements, soft_line_break_or_space, token, Format, FormatElement,
-    Formatter,
+    concat_elements, empty_element, format_traits::FormatOptional, formatted, group_elements,
+    indent, join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter,
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::JsVariableDeclaratorList;
@@ -16,8 +15,8 @@ impl Format for JsVariableDeclaratorList {
             .enumerate()
             .map(|(index, element)| {
                 let node = element.node().format(formatter)?;
-                let separator = element.trailing_separator().format_with_or(
-                    formatter,
+                let separator = element.trailing_separator();
+                let separator = separator.with_or(
                     |separator| {
                         if index == last_index {
                             Ok(empty_element())
@@ -32,7 +31,7 @@ impl Format for JsVariableDeclaratorList {
                             Ok(token(","))
                         }
                     },
-                )?;
+                );
 
                 formatted![formatter, node, separator]
             })

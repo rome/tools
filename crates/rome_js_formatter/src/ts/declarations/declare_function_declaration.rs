@@ -17,9 +17,8 @@ impl FormatNode for TsDeclareFunctionDeclaration {
             semicolon_token,
         } = self.as_fields();
 
-        let async_token = async_token.format_with_or_empty(formatter, |async_token| {
-            formatted![formatter, async_token, space_token()]
-        })?;
+        let async_token = async_token
+            .with_or_empty(|async_token| formatted![formatter, async_token, space_token()]);
 
         let function_token = function_token.format(formatter)?;
         let id = id.format(formatter)?;

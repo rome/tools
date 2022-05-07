@@ -19,11 +19,7 @@ impl FormatNode for TsImportType {
 
         formatted![
             formatter,
-            typeof_token.format_with_or_empty(formatter, |token| formatted![
-                formatter,
-                token,
-                space_token()
-            ])?,
+            typeof_token.with_or_empty(|token| formatted![formatter, token, space_token()]),
             import_token.format(formatter)?,
             l_paren_token.format(formatter)?,
             format_string_literal_token(argument_token?, formatter),

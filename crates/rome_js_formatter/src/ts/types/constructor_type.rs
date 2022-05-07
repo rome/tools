@@ -14,9 +14,8 @@ impl FormatNode for TsConstructorType {
             fat_arrow_token,
             return_type,
         } = self.as_fields();
-        let abstract_token = abstract_token.format_with_or_empty(formatter, |element| {
-            formatted![formatter, element, space_token()]
-        })?;
+        let abstract_token =
+            abstract_token.with_or_empty(|element| formatted![formatter, element, space_token()]);
 
         formatted![
             formatter,

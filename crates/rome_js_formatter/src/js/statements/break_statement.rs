@@ -1,8 +1,6 @@
 use crate::format_traits::FormatOptional;
 use crate::utils::format_with_semicolon;
-use crate::{
-    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
-};
+use crate::{formatted, space_token, Format, FormatElement, FormatNode, Formatter};
 use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsBreakStatement;
@@ -16,9 +14,7 @@ impl FormatNode for JsBreakStatement {
             semicolon_token,
         } = self.as_fields();
 
-        let label = label_token.format_with_or_empty(formatter, |label| {
-            formatted![formatter, space_token(), label]
-        })?;
+        let label = label_token.with_or_empty(|label| formatted![formatter, space_token(), label]);
 
         format_with_semicolon(
             formatter,

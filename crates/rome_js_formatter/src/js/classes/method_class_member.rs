@@ -21,9 +21,8 @@ impl FormatNode for JsMethodClassMember {
             body,
         } = self.as_fields();
 
-        let async_token = async_token.format_with_or_empty(formatter, |token| {
-            formatted![formatter, token, space_token()]
-        })?;
+        let async_token =
+            async_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
 
         let name = name.format(formatter)?;
         let params = parameters.format(formatter)?;

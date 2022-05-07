@@ -17,8 +17,7 @@ impl FormatNode for JsPropertyClassMember {
             semicolon_token,
         } = self.as_fields();
 
-        let init = value
-            .format_with_or_empty(formatter, |node| formatted![formatter, space_token(), node])?;
+        let init = value.with_or_empty(|node| formatted![formatter, space_token(), node]);
 
         format_with_semicolon(
             formatter,

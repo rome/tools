@@ -2,10 +2,7 @@ use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
 use crate::utils::format_with_semicolon;
-use crate::{
-    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
-    JsFormatter,
-};
+use crate::{formatted, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter};
 
 use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;
@@ -20,9 +17,8 @@ impl FormatNode for JsExportNamedClause {
             semicolon_token,
         } = self.as_fields();
 
-        let type_token = type_token.format_with_or_empty(formatter, |token| {
-            formatted![formatter, token, space_token()]
-        })?;
+        let type_token =
+            type_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
 
         let specifiers = specifiers.format(formatter)?;
 

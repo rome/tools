@@ -15,23 +15,22 @@ impl Format for JsAnyFunction {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let mut tokens = vec![];
 
-        tokens.push(
+        tokens.push(formatted![
+            formatter,
             self.async_token()
-                .format_with_or_empty(formatter, |token| {
-                    formatted![formatter, token, space_token()]
-                })?,
-        );
+                .with_or_empty(|token| { formatted![formatter, token, space_token()] })
+        ]?);
 
         tokens.push(self.function_token().format(formatter)?);
         tokens.push(self.star_token().format(formatter)?);
 
         tokens.push(match self {
             JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
-            _ => self.id().format_with_or(
+            _ => formatted![
                 formatter,
-                |id| formatted![formatter, space_token(), id],
-                space_token,
-            )?,
+                self.id()
+                    .with_or(|id| formatted![formatter, space_token(), id], space_token,)
+            ]?,
         });
 
         tokens.push(self.type_parameters().format(formatter)?);

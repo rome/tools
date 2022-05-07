@@ -2,9 +2,7 @@ use crate::format_traits::FormatOptional;
 use rome_formatter::FormatResult;
 
 use crate::utils::format_with_semicolon;
-use crate::{
-    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
-};
+use crate::{formatted, space_token, Format, FormatElement, FormatNode, Formatter};
 
 use rome_js_syntax::JsExportFromClause;
 use rome_js_syntax::JsExportFromClauseFields;
@@ -22,14 +20,12 @@ impl FormatNode for JsExportFromClause {
 
         let star = star_token.format(formatter)?;
 
-        let export_as = export_as.format_with_or_empty(formatter, |as_token| {
-            formatted![formatter, as_token, space_token()]
-        })?;
+        let export_as =
+            export_as.with_or_empty(|as_token| formatted![formatter, as_token, space_token()]);
         let from = from_token.format(formatter)?;
         let source = source.format(formatter)?;
-        let assertion = assertion.format_with_or_empty(formatter, |assertion| {
-            formatted![formatter, space_token(), assertion]
-        })?;
+        let assertion =
+            assertion.with_or_empty(|assertion| formatted![formatter, space_token(), assertion]);
 
         format_with_semicolon(
             formatter,
