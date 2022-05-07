@@ -2,7 +2,7 @@
 edition = "2021"
 name = "rome_js_syntax"
 version = "0.1.4"
-authors = ["RSLint developers"]
+authors = ["Rome Tools"]
 description = "SyntaxKind and common rowan definitions for rome_js_parser"
 license = "MIT"
 repository = "https://github.com/rome/tools"
