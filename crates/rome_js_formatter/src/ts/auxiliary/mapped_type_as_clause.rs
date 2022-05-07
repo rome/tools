@@ -1,6 +1,4 @@
-use crate::format_traits::FormatWith;
-use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsMappedTypeAsClause;
 
 impl FormatNode for TsMappedTypeAsClause {

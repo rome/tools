@@ -1,5 +1,4 @@
-use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsObjectBindingPatternRest;
 use rome_js_syntax::JsObjectBindingPatternRestFields;

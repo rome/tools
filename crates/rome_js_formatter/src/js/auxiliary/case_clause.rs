@@ -1,11 +1,6 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::JsAnyStatement;
 use rome_rowan::AstNodeList;
-
-use crate::{
-    formatted, hard_line_break, indent, space_token, Format, FormatElement,
-    FormatNode, Formatter, JsFormatter,
-};
 
 use rome_js_syntax::JsCaseClause;
 use rome_js_syntax::JsCaseClauseFields;

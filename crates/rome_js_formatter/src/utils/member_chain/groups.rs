@@ -1,9 +1,7 @@
+use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::simple_argument::SimpleArgument;
-use crate::Formatter;
-use rome_formatter::{
-    concat_elements, hard_line_break, join_elements, soft_line_break, FormatElement,
-};
+
 use rome_js_syntax::{JsAnyCallArgument, JsAnyExpression, JsCallExpression};
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 use std::mem;

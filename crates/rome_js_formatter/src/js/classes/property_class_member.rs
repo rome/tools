@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+use crate::format_extensions::FormatOptional;
 use rome_formatter::FormatResult;
 
 use crate::utils::format_with_semicolon;

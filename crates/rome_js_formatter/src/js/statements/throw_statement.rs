@@ -1,8 +1,5 @@
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{
-    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsThrowStatement;
 use rome_js_syntax::JsThrowStatementFields;

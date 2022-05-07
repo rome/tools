@@ -1,9 +1,6 @@
-use rome_formatter::FormatResult;
-use rome_js_syntax::JsForVariableDeclaration;
+use crate::prelude::*;
 
-use crate::{
-    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
-};
+use rome_js_syntax::JsForVariableDeclaration;
 use rome_js_syntax::JsForVariableDeclarationFields;
 
 impl FormatNode for JsForVariableDeclaration {

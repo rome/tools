@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+use crate::format_extensions::FormatOptional;
 use crate::utils::is_simple_expression;
 use crate::{
     concat_elements, empty_element, formatted, group_elements, hard_group_elements,

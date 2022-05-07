@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+use crate::format_extensions::FormatOptional;
 use crate::{formatted, hard_group_elements, Format};
 use rome_formatter::FormatResult;
 

@@ -1,7 +1,6 @@
-
+use crate::prelude::*;
 use crate::utils::format_initializer_clause;
-use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+
 use rome_js_syntax::JsFormalParameter;
 use rome_js_syntax::JsFormalParameterFields;
 

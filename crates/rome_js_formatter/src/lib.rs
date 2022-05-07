@@ -1,7 +1,7 @@
 //! Rome's official JavaScript formatter.
 
 mod cst;
-mod format_traits;
+mod format_extensions;
 mod formatter;
 mod js;
 mod jsx;

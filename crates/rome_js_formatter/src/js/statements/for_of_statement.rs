@@ -1,13 +1,8 @@
-use rome_formatter::FormatResult;
 use rome_js_syntax::JsForOfStatement;
 
-use crate::format_traits::FormatOptional;
-
+use crate::prelude::*;
 use crate::utils::format_head_body_statement;
-use crate::{
-    formatted, soft_line_break_or_space, space_token, Format, FormatElement, FormatNode, Formatter,
-    JsFormatter,
-};
+
 use rome_js_syntax::JsForOfStatementFields;
 
 impl FormatNode for JsForOfStatement {

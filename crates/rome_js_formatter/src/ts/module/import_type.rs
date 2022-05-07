@@ -1,7 +1,5 @@
-use crate::format_traits::FormatOptional;
+use crate::prelude::*;
 use crate::utils::format_string_literal_token;
-use crate::{space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 use rome_js_syntax::TsImportType;
 use rome_js_syntax::TsImportTypeFields;
 

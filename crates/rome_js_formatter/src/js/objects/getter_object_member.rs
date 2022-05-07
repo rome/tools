@@ -1,9 +1,4 @@
-
-use rome_formatter::FormatResult;
-
-use crate::{
-    formatted, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
+use crate::prelude::*;
 
 use rome_js_syntax::JsGetterObjectMember;
 use rome_js_syntax::JsGetterObjectMemberFields;

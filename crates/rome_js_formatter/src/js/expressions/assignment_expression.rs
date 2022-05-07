@@ -1,8 +1,4 @@
-use crate::{
-    formatted, group_elements, soft_line_indent_or_space, space_token, Format,
-    FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsAssignmentExpression;
 use rome_js_syntax::JsAssignmentExpressionFields;

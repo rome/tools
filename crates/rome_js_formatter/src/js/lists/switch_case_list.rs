@@ -1,5 +1,4 @@
-use crate::{Format, FormatElement, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::JsSwitchCaseList;
 impl Format for JsSwitchCaseList {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

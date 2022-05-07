@@ -1,6 +1,4 @@
-
-use crate::{hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsFunctionType;
 use rome_js_syntax::TsFunctionTypeFields;
 

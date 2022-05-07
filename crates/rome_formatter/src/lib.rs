@@ -2,6 +2,7 @@ mod builders;
 pub mod format_element;
 pub mod format_elements;
 pub mod intersperse;
+pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;

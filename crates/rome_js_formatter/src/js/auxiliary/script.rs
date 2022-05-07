@@ -1,9 +1,5 @@
+use crate::prelude::*;
 use crate::utils::format_interpreter;
-use crate::{
-    formatted, hard_line_break, Format, FormatElement, FormatNode, Formatter,
-    JsFormatter,
-};
-use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsScript;
 use rome_js_syntax::JsScriptFields;

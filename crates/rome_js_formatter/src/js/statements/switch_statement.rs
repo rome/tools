@@ -1,9 +1,4 @@
-use crate::{
-    join_elements_hard_line, space_token, Format, FormatElement, FormatNode,
-    Formatter, JsFormatter,
-};
-use crate::{formatted, hard_group_elements};
-use rome_formatter::{hard_line_break, FormatResult};
+use crate::prelude::*;
 use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
 use rome_rowan::{AstNode, AstNodeList};
 

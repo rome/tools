@@ -1,5 +1,5 @@
 use crate::{
-    concat_elements, empty_element, format_traits::FormatOptional, formatted, group_elements,
+    concat_elements, empty_element, format_extensions::FormatOptional, formatted, group_elements,
     indent, join_elements, soft_line_break_or_space, token, Format, FormatElement, Formatter,
 };
 use rome_formatter::FormatResult;

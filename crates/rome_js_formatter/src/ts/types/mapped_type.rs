@@ -1,7 +1,5 @@
-use crate::format_traits::FormatOptional;
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
 use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
 
 impl FormatNode for TsMappedType {

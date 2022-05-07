@@ -1,6 +1,4 @@
-
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::TsReferenceType;
 
 impl FormatNode for TsReferenceType {

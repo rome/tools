@@ -1,10 +1,7 @@
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::AstNode;
 
-use crate::{
-    formatted, group_elements, token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsStaticMemberExpression;
 use rome_js_syntax::JsStaticMemberExpressionFields;

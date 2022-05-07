@@ -1,6 +1,5 @@
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsDebuggerStatement;
 use rome_js_syntax::JsDebuggerStatementFields;

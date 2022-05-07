@@ -1,9 +1,5 @@
+use crate::prelude::*;
 use crate::utils::format_head_body_statement;
-use crate::{
-    formatted, space_token, Format, FormatElement, FormatNode, Formatter,
-    JsFormatter,
-};
-use rome_formatter::FormatResult;
 
 use rome_js_syntax::JsWithStatement;
 use rome_js_syntax::JsWithStatementFields;

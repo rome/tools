@@ -1,8 +1,5 @@
-use crate::format_traits::FormatOptional;
-use crate::space_token;
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 use rome_js_syntax::TsImportEqualsDeclaration;
 use rome_js_syntax::TsImportEqualsDeclarationFields;
 

@@ -1,9 +1,6 @@
+use crate::prelude::*;
 use crate::utils::{is_simple_expression, FormatPrecedence};
-use crate::{
-    empty_element, formatted, group_elements, hard_group_elements, Format, FormatElement,
-    FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+
 use rome_js_syntax::{
     JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields,
     JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
@@ -68,9 +65,9 @@ impl FormatNode for JsParenthesizedExpression {
         else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
             formatted![
                 formatter,
-                l_paren_token.format(),
-                expression.format(),
-                r_paren_token.format(),
+                &l_paren_token,
+                expression.format(formatter)?,
+                &r_paren_token,
             ]
         } else {
             formatter.format_delimited_soft_block_indent(

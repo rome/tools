@@ -1,14 +1,10 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
+
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
     JsLanguage,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
-
-use crate::{
-    empty_element, format_traits::FormatOptional, if_group_breaks, join_elements_soft_line, token,
-    Format, FormatElement, Formatter, JsFormatter,
-};
 
 /// Utility function to print array-like nodes (array expressions, array bindings and assignment patterns)
 pub(crate) fn format_array_node<N, I>(

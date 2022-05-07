@@ -1,7 +1,6 @@
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::ImportMeta;
 
-use crate::{formatted, Format, FormatElement, FormatNode, Formatter};
 use rome_js_syntax::ImportMetaFields;
 
 impl FormatNode for ImportMeta {

@@ -1,4 +1,4 @@
-use crate::format_traits::FormatOptional;
+use crate::format_extensions::FormatOptional;
 use crate::{
     formatted, join_elements_hard_line, space_token, FormatElement, Formatter, JsFormatter,
 };

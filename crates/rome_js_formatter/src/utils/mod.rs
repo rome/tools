@@ -8,7 +8,7 @@ mod member_chain;
 #[cfg(test)]
 mod quickcheck_utils;
 
-use crate::format_traits::FormatOptional;
+use crate::format_extensions::FormatOptional;
 use crate::{
     empty_element, empty_line, hard_group_elements, space_token, token, Format, FormatElement,
     Formatter, JsFormatter, QuoteStyle, Token,
