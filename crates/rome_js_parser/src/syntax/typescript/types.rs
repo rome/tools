@@ -161,8 +161,8 @@ impl ParseSeparatedList for TsTypeParameterList {
 // test_err ts type_parameter_modifier1
 // 	export default function foo<in T>() {}
 // 	export function foo<out T>() {}
-// 	export function foo1<in T>() {} 
-// 	export function foo2<out T>() {} 
+// 	export function foo1<in T>() {}
+// 	export function foo2<out T>() {}
 // 	let foo: Foo<in T>
 // 	let foo: Foo<out T>
 // 	declare function foo<in T>()
@@ -201,6 +201,15 @@ impl ParseSeparatedList for TsTypeParameterList {
 // type Foo<in out out T> = T
 // function foo<in T>() {}
 // function foo<out T>() {}
+
+// test tsx type_parameter_modifier_tsx
+// <in T></in>
+// // <out T></out>
+// // <in out T></in>
+// // <out in T></out>
+// //<in T extends={true}></in>
+// //<out T extends={true}></out>
+// //<in out T extends={true}></in>
 
 // test ts type_parameter_modifier
 // type Foo<in T> = T
@@ -1466,17 +1475,3 @@ fn parse_ts_type_member_semi(p: &mut Parser) {
 }
 
 // TODO: finish all this testing
-
-// 	expectPrintedTSX(t, "<in T></in>", "/* @__PURE__ */ React.createElement(\"in\", {\n  T: true\n});\n")
-// 	expectPrintedTSX(t, "<out T></out>", "/* @__PURE__ */ React.createElement(\"out\", {\n  T: true\n});\n")
-// 	expectPrintedTSX(t, "<in out T></in>", "/* @__PURE__ */ React.createElement(\"in\", {\n  out: true,\n  T: true\n});\n")
-// 	expectPrintedTSX(t, "<out in T></out>", "/* @__PURE__ */ React.createElement(\"out\", {\n  in: true,\n  T: true\n});\n")
-// 	expectPrintedTSX(t, "<in T extends={true}></in>", "/* @__PURE__ */ React.createElement(\"in\", {\n  T: true,\n  extends: true\n});\n")
-// 	expectPrintedTSX(t, "<out T extends={true}></out>", "/* @__PURE__ */ React.createElement(\"out\", {\n  T: true,\n  extends: true\n});\n")
-// 	expectPrintedTSX(t, "<in out T extends={true}></in>", "/* @__PURE__ */ React.createElement(\"in\", {\n  out: true,\n  T: true,\n  extends: true\n});\n")
-// 	expectParseErrorTSX(t, "<in T,>() => {}", "<stdin>: ERROR: Expected \">\" but found \",\"\n")
-// 	expectParseErrorTSX(t, "<out T,>() => {}", "<stdin>: ERROR: Expected \">\" but found \",\"\n")
-// 	expectParseErrorTSX(t, "<in out T,>() => {}", "<stdin>: ERROR: Expected \">\" but found \",\"\n")
-// 	expectParseErrorTSX(t, "<in T extends any>() => {}", jsxErrorArrow)
-// 	expectParseErrorTSX(t, "<out T extends any>() => {}", jsxErrorArrow)
-// 	expectParseErrorTSX(t, "<in out T extends any>() => {}", jsxErrorArrow)

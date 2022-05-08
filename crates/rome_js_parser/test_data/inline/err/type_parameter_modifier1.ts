@@ -1,7 +1,7 @@
 	export default function foo<in T>() {}
 	export function foo<out T>() {}
-	export function foo1<in T>() {} 
-	export function foo2<out T>() {} 
+	export function foo1<in T>() {}
+	export function foo2<out T>() {}
 	let foo: Foo<in T>
 	let foo: Foo<out T>
 	declare function foo<in T>()
