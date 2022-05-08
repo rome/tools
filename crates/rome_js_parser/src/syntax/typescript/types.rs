@@ -26,7 +26,7 @@ use crate::{
     Absent, CompletedMarker, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
     Parser, Present, SyntaxFeature,
 };
-use rome_diagnostics::{Diagnostic, Span};
+use rome_diagnostics::Span;
 use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rome_js_syntax::T;
 use rome_js_syntax::{JsSyntaxKind::*, *};
@@ -244,7 +244,7 @@ fn parse_ts_type_parameter_modifier(
         } else {
             // TODO: I am not sure if bump here is properly, but it is good for error recover
             let err = p
-                .err_builder(&format!("TypeParameterModifier `in` is not valid here",))
+                .err_builder("TypeParameterModifier `in` is not valid here")
                 .primary(p.cur_range(), "");
             p.error(err);
             p.bump(T![in]);
@@ -257,7 +257,7 @@ fn parse_ts_type_parameter_modifier(
             p.bump(T![out]);
         } else {
             let err = p
-                .err_builder(&format!("TypeParameterModifier `out` is not valid here",))
+                .err_builder("TypeParameterModifier `out` is not valid here")
                 .primary(p.cur_range(), "");
             p.error(err);
             p.bump(T![out]);
