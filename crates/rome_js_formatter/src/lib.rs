@@ -142,13 +142,131 @@ pub trait FormatRule<T> {
     fn format(item: &T, formatter: &Formatter) -> FormatResult<FormatElement>;
 }
 
+/// Trait for an object that formats an object with a specified rule.
+///
+/// Gives access to the underlying item.
+///
+/// Useful in situation where a type itself doesn't implement [Format] (e.g. because of Rust's orphan rule)
+/// but you want to implement some common formatting logic.
+///
+/// ## Examples
+///
+/// This can be useful if you want to format a `SyntaxNode` inside rome_formatter.. `SyntaxNode` doesn't implement [Format]
+/// itself but the language agnostic crate implements `AsFormat` and `IntoFormat` for it and the returned [Format]
+/// implement [FormatWithRule].
+///
+/// ```
+/// use rome_formatter::{FormatElement, FormatOptions, FormatResult};
+/// use rome_js_formatter::{Formatter, FormatWithRule};
+/// use rome_rowan::{Language, SyntaxNode};
+/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>>>(node: F) -> FormatResult<FormatElement> {
+///     let formatter = Formatter::new(FormatOptions::default());
+///
+///     let formatted = node.format(&formatter);
+///     let _syntax = node.item();
+///
+///     // Do something with syntax
+///     formatted
+/// }
+/// ```
+pub trait FormatWithRule: Format {
+    type Item;
+
+    fn item(&self) -> &Self::Item;
+}
+
+/// Formats the referenced `item` with the specified rule.
+pub struct FormatRefWithRule<'a, T, R>
+where
+    R: FormatRule<T>,
+{
+    item: &'a T,
+    rule: PhantomData<R>,
+}
+
+impl<'a, T, R> FormatRefWithRule<'a, T, R>
+where
+    R: FormatRule<T>,
+{
+    pub fn new(item: &'a T) -> Self {
+        Self {
+            item,
+            rule: PhantomData,
+        }
+    }
+}
+
+impl<T, R> FormatWithRule for FormatRefWithRule<'_, T, R>
+where
+    R: FormatRule<T>,
+{
+    type Item = T;
+
+    fn item(&self) -> &Self::Item {
+        self.item
+    }
+}
+
+impl<T, R> Format for FormatRefWithRule<'_, T, R>
+where
+    R: FormatRule<T>,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        R::format(self.item, formatter)
+    }
+}
+
+/// Formats the `item` with the specified rule.
+pub struct FormatOwnedWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    item: T,
+    rule: PhantomData<R>,
+}
+
+impl<T, R> FormatOwnedWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    pub fn new(item: T) -> Self {
+        Self {
+            item,
+            rule: PhantomData,
+        }
+    }
+
+    pub fn into_item(self) -> T {
+        self.item
+    }
+}
+
+impl<T, R> Format for FormatOwnedWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        R::format(&self.item, formatter)
+    }
+}
+
+impl<T, R> FormatWithRule for FormatOwnedWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    type Item = T;
+
+    fn item(&self) -> &Self::Item {
+        &self.item
+    }
+}
+
 // Per Crate
 
 // The following types must pe per crate to work around Rust's orphan rule
 // * `AsFormat` / `IntoFormat / WithFormatRule`: Traits must be crate local to implement them on the JS AST nodes
 // * `FormattedIterExt`: Uses `IntoFormat`
 // * `FormatNodeRule`: Defines language specific node formatting
-// * `FormatWithRule`: To implement it for all traits implementing `AsFormat`.
 // SyntaxNode + SyntaxToken -> Implement with FormatRule too.
 
 // BOILERPLATE
@@ -163,62 +281,6 @@ pub trait FormatRule<T> {
 // impl WithFormatRule for JsMethodModifierList {
 //     type Rule = FormatJsMethodModifierList;
 // }
-
-/// Formats the referenced `item` with the specified rule.
-pub struct FormatWithRule<'a, T, R>
-where
-    R: FormatRule<T>,
-{
-    item: &'a T,
-    rule: PhantomData<R>,
-}
-
-impl<'a, T, R> FormatWithRule<'a, T, R>
-where
-    R: FormatRule<T>,
-{
-    pub fn new(item: &'a T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
-    }
-}
-
-impl<T, R> Format for FormatWithRule<'_, T, R>
-where
-    R: FormatRule<T>,
-{
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        R::format(self.item, formatter)
-    }
-}
-
-/// Formats the `item` with the specified rule.
-pub struct FormatedOwned<T>
-where
-    for<'a> T: AsFormat<'a>,
-{
-    item: T,
-}
-
-impl<T> FormatedOwned<T>
-where
-    for<'a> T: AsFormat<'a>,
-{
-    pub fn new(item: T) -> Self {
-        Self { item }
-    }
-}
-
-impl<T> Format for FormatedOwned<T>
-where
-    for<'a> T: AsFormat<'a>,
-{
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.item.formatted().format(formatter)
-    }
-}
 
 /// Trait implemented by object that have an associated [FormatRule] that knows how to format this object.
 pub trait WithFormatRule: Sized {
@@ -239,10 +301,10 @@ impl<'a, T> AsFormat<'a> for T
 where
     T: WithFormatRule + 'a,
 {
-    type Format = FormatWithRule<'a, T, T::Rule>;
+    type Format = FormatRefWithRule<'a, T, T::Rule>;
 
     fn formatted(&'a self) -> Self::Format {
-        FormatWithRule::new(self)
+        FormatRefWithRule::new(self)
     }
 }
 
@@ -291,12 +353,37 @@ pub trait IntoFormat {
 
 impl<T> IntoFormat for T
 where
-    for<'a> T: AsFormat<'a>,
+    T: WithFormatRule,
 {
-    type Format = FormatedOwned<T>;
+    type Format = FormatOwnedWithRule<T, T::Rule>;
 
     fn into_format(self) -> Self::Format {
-        FormatedOwned::new(self)
+        FormatOwnedWithRule::new(self)
+    }
+}
+
+impl<T> IntoFormat for SyntaxResult<T>
+where
+    T: IntoFormat,
+{
+    type Format = SyntaxResult<T::Format>;
+
+    fn into_format(self) -> Self::Format {
+        self.map(IntoFormat::into_format)
+    }
+}
+
+/// Implement [AsFormat] for [Option] when `T` implements [AsFormat]
+///
+/// Allows to call format on optional AST fields without having to unwrap the field first.
+impl<T> IntoFormat for Option<T>
+where
+    T: IntoFormat,
+{
+    type Format = Option<T::Format>;
+
+    fn into_format(self) -> Self::Format {
+        self.map(IntoFormat::into_format)
     }
 }
 
