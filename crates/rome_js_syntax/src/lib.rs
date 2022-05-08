@@ -58,7 +58,7 @@ impl JsSyntaxKind {
     #[inline]
     pub const fn is_contextual_keyword(self) -> bool {
         (self as u16) >= (JsSyntaxKind::ABSTRACT_KW as u16)
-            && (self as u16) <= (JsSyntaxKind::OF_KW as u16)
+            && (self as u16) <= (JsSyntaxKind::OUT_KW as u16)
     }
 
     /// Returns true for all non-contextual keywords (includes future reserved keywords)

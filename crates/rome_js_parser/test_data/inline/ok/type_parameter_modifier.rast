@@ -75,9 +75,11 @@ JsModule {
                     TsTypeParameter {
                         modifier: TsTypeParameterModifier {
                             in_token: IN_KW@48..51 "in" [] [Whitespace(" ")],
-                            out_token: OUT_KW@51..54 "out" [] [],
+                            out_token: missing (optional),
                         },
-                        name: missing (required),
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@51..54 "out" [] [],
+                        },
                         constraint: missing (optional),
                         default: missing (optional),
                     },
@@ -394,10 +396,11 @@ JsModule {
         0: L_ANGLE@47..48 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@48..54
           0: TS_TYPE_PARAMETER@48..54
-            0: TS_TYPE_PARAMETER_MODIFIER@48..54
+            0: TS_TYPE_PARAMETER_MODIFIER@48..51
               0: IN_KW@48..51 "in" [] [Whitespace(" ")]
-              1: OUT_KW@51..54 "out" [] []
-            1: (empty)
+              1: (empty)
+            1: TS_TYPE_PARAMETER_NAME@51..54
+              0: IDENT@51..54 "out" [] []
             2: (empty)
             3: (empty)
         2: R_ANGLE@54..56 ">" [] [Whitespace(" ")]

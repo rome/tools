@@ -85,13 +85,7 @@ fn parse_ts_call_signature(p: &mut Parser) {
     parse_ts_return_type_annotation(p).ok();
 }
 
-/// in current context, out keyword we count as identifier
 fn parse_ts_type_parameter_name(p: &mut Parser) -> ParsedSyntax {
-    if p.at(T![out]) {
-        let m = p.start();
-        p.bump_remap(T![ident]);
-        return Present(m.complete(p, TS_TYPE_PARAMETER_NAME));
-    }
     parse_identifier(p, TS_TYPE_PARAMETER_NAME)
 }
 
@@ -152,7 +146,7 @@ impl ParseSeparatedList for TsTypeParameterList {
     }
 }
 
-// test_err ts type_parameter_modifier
+// test ts type_parameter_modifier
 // type Foo<in T> = T
 // type Foo<out T> = T
 // type Foo<in out> = T
@@ -163,16 +157,15 @@ impl ParseSeparatedList for TsTypeParameterList {
 // type Foo<out X, out Y extends keyof X> = [X, Y]
 fn parse_ts_type_parameter_modifier(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
-    let mut has_any = false;
-    if p.at(T![in]) {
-        p.expect(T![in]);
-        has_any = true;
+
+    // try to eat `in` modifier
+    let mut has_any_modifier = p.eat(T![in]);
+
+    if p.at(T![out]) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
+        p.bump(T![out]);
+        has_any_modifier = true;
     }
-    if p.at(T![out]) {
-        p.expect(T![out]);
-        has_any = true;
-    }
-    if !has_any {
+    if !has_any_modifier {
         m.abandon(p);
         return Absent;
     }
@@ -180,12 +173,17 @@ fn parse_ts_type_parameter_modifier(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn parse_ts_type_parameter(p: &mut Parser) -> ParsedSyntax {
-    parse_ts_type_parameter_name(p).map(|name| {
-        let m = name.precede(p);
-        parse_ts_type_constraint_clause(p).ok();
-        parse_ts_default_type_clause(p).ok();
-        m.complete(p, TS_TYPE_PARAMETER)
-    })
+    let m = p.start();
+    parse_ts_type_parameter_modifier(p).ok();
+    let name = parse_ts_type_parameter_name(p);
+    parse_ts_type_constraint_clause(p).ok();
+    parse_ts_default_type_clause(p).ok();
+    if name.is_absent() {
+        m.abandon(p);
+        Absent
+    } else {
+        Present(m.complete(p, TS_TYPE_PARAMETER))
+    }
 }
 
 // test ts ts_type_constraint_clause
