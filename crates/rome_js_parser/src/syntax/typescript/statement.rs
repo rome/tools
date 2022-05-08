@@ -208,7 +208,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.expect(T![type]);
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, true).ok();
     p.expect(T![=]);
     parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
 
@@ -298,7 +298,7 @@ pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.expect(T![interface]);
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, true).ok();
     eat_interface_heritage_clause(p);
     p.expect(T!['{']);
     TypeMembers.parse_list(p);

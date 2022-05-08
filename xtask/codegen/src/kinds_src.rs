@@ -160,7 +160,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "bigint",
         "override",
         "of",
-        "out"
+        "out",
     ],
     literals: &[
         "JS_NUMBER_LITERAL",

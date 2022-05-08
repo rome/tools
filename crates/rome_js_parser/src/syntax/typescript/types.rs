@@ -26,7 +26,7 @@ use crate::{
     Absent, CompletedMarker, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
     Parser, Present, SyntaxFeature,
 };
-use rome_diagnostics::Span;
+use rome_diagnostics::{Diagnostic, Span};
 use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rome_js_syntax::T;
 use rome_js_syntax::{JsSyntaxKind::*, *};
@@ -78,8 +78,8 @@ pub(crate) fn parse_ts_return_type_annotation(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_RETURN_TYPE_ANNOTATION))
 }
 
-fn parse_ts_call_signature(p: &mut Parser) {
-    parse_ts_type_parameters(p).ok();
+fn parse_ts_call_signature(p: &mut Parser, could_use_parameter_modifier: bool) {
+    parse_ts_type_parameters(p, could_use_parameter_modifier).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_return_type_annotation(p).ok();
@@ -94,7 +94,10 @@ fn parse_ts_type_parameter_name(p: &mut Parser) -> ParsedSyntax {
 //
 // test_err ts ts_type_parameters_incomplete
 // type A<T
-pub(crate) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_parameters(
+    p: &mut Parser,
+    could_use_parameter_modifier: bool,
+) -> ParsedSyntax {
     if !is_nth_at_ts_type_parameters(p, 0) {
         return Absent;
     }
@@ -104,17 +107,26 @@ pub(crate) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![>]) {
         p.error(expected_ts_type_parameter(p, p.cur_range()));
     }
-    TsTypeParameterList.parse_list(p);
+    TsTypeParameterList::new(could_use_parameter_modifier).parse_list(p);
     p.expect(T![>]);
 
     Present(m.complete(p, TS_TYPE_PARAMETERS))
 }
 
-struct TsTypeParameterList;
+struct TsTypeParameterList {
+    could_use_parameter_modifier: bool,
+}
+impl TsTypeParameterList {
+    pub fn new(could_use_parameter_modifier: bool) -> Self {
+        Self {
+            could_use_parameter_modifier,
+        }
+    }
+}
 
 impl ParseSeparatedList for TsTypeParameterList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_ts_type_parameter(p)
+        parse_ts_type_parameter(p, self.could_use_parameter_modifier)
     }
 
     fn is_at_list_end(&self, p: &mut Parser) -> bool {
@@ -145,6 +157,17 @@ impl ParseSeparatedList for TsTypeParameterList {
         true
     }
 }
+// test_err ts type_parameter_modifier
+// type Foo<i\\u006E T> = T
+// type Foo<ou\\u0074 T> = T
+// type Foo<in in> = T
+// type Foo<out in> = T
+// type Foo<out in T> = T
+// type Foo<public T> = T
+// type Foo<in out in T> = T
+// type Foo<in out out T> = T
+// function foo<in T>() {}
+// function foo<out T>() {}
 
 // test ts type_parameter_modifier
 // type Foo<in T> = T
@@ -155,7 +178,6 @@ impl ParseSeparatedList for TsTypeParameterList {
 // type Foo<in X, out Y> = [X, Y]
 // type Foo<out X, in Y> = [X, Y]
 // type Foo<out X, out Y extends keyof X> = [X, Y]
-//                                       
 // class Foo<in T> {}
 // class Foo<out T> {}
 // export default class Foo<in T> {}
@@ -166,15 +188,38 @@ impl ParseSeparatedList for TsTypeParameterList {
 // declare class Foo<out T> {}
 // declare interface Foo<in T> {}
 // declare interface Foo<out T> {}
-fn parse_ts_type_parameter_modifier(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_type_parameter_modifier(
+    p: &mut Parser,
+    could_use_parameter_modifier: bool,
+) -> ParsedSyntax {
     let m = p.start();
-
+    let mut has_any_modifier = false;
     // try to eat `in` modifier
-    let mut has_any_modifier = p.eat(T![in]);
+    if p.at(T![in]) {
+        has_any_modifier = true;
+        if could_use_parameter_modifier {
+            p.bump(T![in]);
+        } else {
+            // TODO: I am not sure if bump here is properly, but it is good for error recover
+            let err = p
+                .err_builder(&format!("TypeParameterModifier `in` is not valid here",))
+                .primary(p.cur_range(), "");
+            p.error(err);
+            p.bump(T![in]);
+        }
+    }
 
     if p.at(T![out]) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
-        p.bump(T![out]);
         has_any_modifier = true;
+        if could_use_parameter_modifier {
+            p.bump(T![out]);
+        } else {
+            let err = p
+                .err_builder(&format!("TypeParameterModifier `out` is not valid here",))
+                .primary(p.cur_range(), "");
+            p.error(err);
+            p.bump(T![out]);
+        }
     }
     if !has_any_modifier {
         m.abandon(p);
@@ -183,9 +228,9 @@ fn parse_ts_type_parameter_modifier(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_TYPE_PARAMETER_MODIFIER))
 }
 
-fn parse_ts_type_parameter(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_type_parameter(p: &mut Parser, could_use_parameter_modifier: bool) -> ParsedSyntax {
     let m = p.start();
-    parse_ts_type_parameter_modifier(p).ok();
+    parse_ts_type_parameter_modifier(p, could_use_parameter_modifier).ok();
     let name = parse_ts_type_parameter_name(p);
     parse_ts_type_constraint_clause(p).ok();
     parse_ts_default_type_clause(p).ok();
@@ -824,7 +869,7 @@ fn parse_ts_property_or_method_signature_type_member(p: &mut Parser) -> ParsedSy
     p.eat(T![?]);
 
     if p.at(T!['(']) || p.at(T![<]) {
-        parse_ts_call_signature(p);
+        parse_ts_call_signature(p, false);
         parse_ts_type_member_semi(p);
         let method = m.complete(p, TS_METHOD_SIGNATURE_TYPE_MEMBER);
 
@@ -855,7 +900,7 @@ fn parse_ts_call_signature_type_member(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    parse_ts_call_signature(p);
+    parse_ts_call_signature(p, false);
     parse_ts_type_member_semi(p);
     Present(m.complete(p, TS_CALL_SIGNATURE_TYPE_MEMBER))
 }
@@ -871,7 +916,7 @@ fn parse_ts_construct_signature_type_member(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.expect(T![new]);
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, true).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_type_annotation(p).ok();
@@ -1138,7 +1183,7 @@ fn parse_ts_constructor_type(p: &mut Parser) -> ParsedSyntax {
     p.eat(T![abstract]);
     p.expect(T![new]);
 
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, false).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);
@@ -1201,7 +1246,7 @@ fn parse_ts_function_type(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, false).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);
@@ -1389,16 +1434,6 @@ fn parse_ts_type_member_semi(p: &mut Parser) {
 
 // TODO: finish all this testing
 
-// 	expectParseErrorTS(t, "type Foo<i\\u006E T> = T", "<stdin>: ERROR: Expected identifier but found \"i\\\\u006E\"\n")
-// 	expectParseErrorTS(t, "type Foo<ou\\u0074 T> = T", "<stdin>: ERROR: Expected \">\" but found \"T\"\n")
-// 	expectParseErrorTS(t, "type Foo<in in> = T", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n<stdin>: ERROR: Expected identifier but found \">\"\n")
-// 	expectParseErrorTS(t, "type Foo<out in> = T", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n<stdin>: ERROR: Expected identifier but found \">\"\n")
-// 	expectParseErrorTS(t, "type Foo<out in T> = T", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
-// 	expectParseErrorTS(t, "type Foo<public T> = T", "<stdin>: ERROR: Expected \">\" but found \"T\"\n")
-// 	expectParseErrorTS(t, "type Foo<in out in T> = T", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
-// 	expectParseErrorTS(t, "type Foo<in out out T> = T", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
-// 	expectParseErrorTS(t, "function foo<in T>() {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
-// 	expectParseErrorTS(t, "function foo<out T>() {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
 // 	expectParseErrorTS(t, "export default function foo<in T>() {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
 // 	expectParseErrorTS(t, "export default function foo<out T>() {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
 // 	expectParseErrorTS(t, "export default function <in T>() {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")

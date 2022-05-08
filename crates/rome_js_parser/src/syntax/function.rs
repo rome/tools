@@ -207,10 +207,14 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     }
 
     TypeScript
-        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, marker| {
-            p.err_builder("type parameters can only be used in TypeScript files")
-                .primary(marker.range(p), "")
-        })
+        .parse_exclusive_syntax(
+            p,
+            |parser| parse_ts_type_parameters(parser, false),
+            |p, marker| {
+                p.err_builder("type parameters can only be used in TypeScript files")
+                    .primary(marker.range(p), "")
+            },
+        )
         .ok();
 
     let parameter_context = if !kind.is_expression() && TypeScript.is_supported(p) {
@@ -356,7 +360,7 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
 
     p.expect(T![function]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
-    parse_ts_type_parameters(p).ok();
+    parse_ts_type_parameters(p, false).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_return_type_annotation(p).ok();
@@ -459,7 +463,7 @@ fn try_parse_parenthesized_arrow_function_head(
     };
 
     if p.at(T![<]) {
-        parse_ts_type_parameters(p).ok();
+        parse_ts_type_parameters(p, false).ok();
 
         if ambiguity.is_disallowed() && p.last() != Some(T![>]) {
             return Err(m);

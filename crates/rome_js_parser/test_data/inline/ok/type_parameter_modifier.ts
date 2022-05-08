@@ -6,7 +6,6 @@ type Foo<in out out> = T
 type Foo<in X, out Y> = [X, Y]
 type Foo<out X, in Y> = [X, Y]
 type Foo<out X, out Y extends keyof X> = [X, Y]
-                                      
 class Foo<in T> {}
 class Foo<out T> {}
 export default class Foo<in T> {}

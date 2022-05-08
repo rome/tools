@@ -255,7 +255,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     // test_err ts ts_object_getter_type_parameters
     // ({ get a<A>(): A {} });
-    if let Present(type_parameters) = parse_ts_type_parameters(p) {
+    if let Present(type_parameters) = parse_ts_type_parameters(p, false) {
         p.error(ts_accessor_type_parameters_error(p, &type_parameters))
     }
 
@@ -287,7 +287,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     // test_err ts ts_object_setter_type_parameters
     // ({ set a<A>(value: A) {} });
-    if let Present(type_parameters) = parse_ts_type_parameters(p) {
+    if let Present(type_parameters) = parse_ts_type_parameters(p, false) {
         p.error(ts_accessor_type_parameters_error(p, &type_parameters))
     }
 
@@ -429,9 +429,13 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
     TypeScript
-        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
-            ts_only_syntax_error(p, "type parameters", type_parameters.range(p))
-        })
+        .parse_exclusive_syntax(
+            p,
+            |p| parse_ts_type_parameters(p, false),
+            |p, type_parameters| {
+                ts_only_syntax_error(p, "type parameters", type_parameters.range(p))
+            },
+        )
         .ok();
 
     parse_parameter_list(p, ParameterContext::Implementation, flags)

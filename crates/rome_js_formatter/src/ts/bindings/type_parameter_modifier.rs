@@ -10,9 +10,8 @@ impl FormatNode for TsTypeParameterModifier {
             out_token,
         } = self.as_fields();
         Ok(format_elements![
-            empty_element()
-            // in_token.format_or_empty(formatter)?,
-            // out_token.format_or_empty(formatter)?
+            empty_element() // in_token.format_or_empty(formatter)?,
+                            // out_token.format_or_empty(formatter)?
         ])
     }
 }
