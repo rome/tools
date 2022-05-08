@@ -155,6 +155,17 @@ impl ParseSeparatedList for TsTypeParameterList {
 // type Foo<in X, out Y> = [X, Y]
 // type Foo<out X, in Y> = [X, Y]
 // type Foo<out X, out Y extends keyof X> = [X, Y]
+//                                       
+// class Foo<in T> {}
+// class Foo<out T> {}
+// export default class Foo<in T> {}
+// class Foo<out T> {}
+// interface Foo<in T> {}
+// interface Foo<out T> {}
+// declare class Foo<in T> {}
+// declare class Foo<out T> {}
+// declare interface Foo<in T> {}
+// declare interface Foo<out T> {}
 fn parse_ts_type_parameter_modifier(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
 
@@ -1377,19 +1388,6 @@ fn parse_ts_type_member_semi(p: &mut Parser) {
 }
 
 // TODO: finish all this testing
-
-// 	expectPrintedTS(t, "class Foo<in T> {}", "class Foo {\n}\n")
-// 	expectPrintedTS(t, "class Foo<out T> {}", "class Foo {\n}\n")
-// 	expectPrintedTS(t, "export default class Foo<in T> {}", "export default class Foo {\n}\n")
-// 	expectPrintedTS(t, "export default class Foo<out T> {}", "export default class Foo {\n}\n")
-// 	expectPrintedTS(t, "export default class <in T> {}", "export default class {\n}\n")
-// 	expectPrintedTS(t, "export default class <out T> {}", "export default class {\n}\n")
-// 	expectPrintedTS(t, "interface Foo<in T> {}", "")
-// 	expectPrintedTS(t, "interface Foo<out T> {}", "")
-// 	expectPrintedTS(t, "declare class Foo<in T> {}", "")
-// 	expectPrintedTS(t, "declare class Foo<out T> {}", "")
-// 	expectPrintedTS(t, "declare interface Foo<in T> {}", "")
-// 	expectPrintedTS(t, "declare interface Foo<out T> {}", "")
 
 // 	expectParseErrorTS(t, "type Foo<i\\u006E T> = T", "<stdin>: ERROR: Expected identifier but found \"i\\\\u006E\"\n")
 // 	expectParseErrorTS(t, "type Foo<ou\\u0074 T> = T", "<stdin>: ERROR: Expected \">\" but found \"T\"\n")

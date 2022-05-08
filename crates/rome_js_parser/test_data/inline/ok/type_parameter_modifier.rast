@@ -336,14 +336,315 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsClassDeclaration {
+            abstract_token: missing (optional),
+            class_token: CLASS_KW@216..262 "class" [Newline("\n"), Whitespace("                      ..."), Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@262..265 "Foo" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@265..266 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        modifier: TsTypeParameterModifier {
+                            in_token: IN_KW@266..269 "in" [] [Whitespace(" ")],
+                            out_token: missing (optional),
+                        },
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@269..270 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@270..272 ">" [] [Whitespace(" ")],
+            },
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@272..273 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@273..274 "}" [] [],
+        },
+        JsClassDeclaration {
+            abstract_token: missing (optional),
+            class_token: CLASS_KW@274..281 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@281..284 "Foo" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@284..285 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        modifier: TsTypeParameterModifier {
+                            in_token: missing (optional),
+                            out_token: OUT_KW@285..289 "out" [] [Whitespace(" ")],
+                        },
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@289..290 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@290..292 ">" [] [Whitespace(" ")],
+            },
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@292..293 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@293..294 "}" [] [],
+        },
+        JsExport {
+            export_token: EXPORT_KW@294..302 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportDefaultDeclarationClause {
+                default_token: DEFAULT_KW@302..310 "default" [] [Whitespace(" ")],
+                declaration: JsClassExportDefaultDeclaration {
+                    abstract_token: missing (optional),
+                    class_token: CLASS_KW@310..316 "class" [] [Whitespace(" ")],
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@316..319 "Foo" [] [],
+                    },
+                    type_parameters: TsTypeParameters {
+                        l_angle_token: L_ANGLE@319..320 "<" [] [],
+                        items: TsTypeParameterList [
+                            TsTypeParameter {
+                                modifier: TsTypeParameterModifier {
+                                    in_token: IN_KW@320..323 "in" [] [Whitespace(" ")],
+                                    out_token: missing (optional),
+                                },
+                                name: TsTypeParameterName {
+                                    ident_token: IDENT@323..324 "T" [] [],
+                                },
+                                constraint: missing (optional),
+                                default: missing (optional),
+                            },
+                        ],
+                        r_angle_token: R_ANGLE@324..326 ">" [] [Whitespace(" ")],
+                    },
+                    extends_clause: missing (optional),
+                    implements_clause: missing (optional),
+                    l_curly_token: L_CURLY@326..327 "{" [] [],
+                    members: JsClassMemberList [],
+                    r_curly_token: R_CURLY@327..328 "}" [] [],
+                },
+                semicolon_token: missing (optional),
+            },
+        },
+        JsClassDeclaration {
+            abstract_token: missing (optional),
+            class_token: CLASS_KW@328..335 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@335..338 "Foo" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@338..339 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        modifier: TsTypeParameterModifier {
+                            in_token: missing (optional),
+                            out_token: OUT_KW@339..343 "out" [] [Whitespace(" ")],
+                        },
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@343..344 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@344..346 ">" [] [Whitespace(" ")],
+            },
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@346..347 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@347..348 "}" [] [],
+        },
+        TsInterfaceDeclaration {
+            interface_token: INTERFACE_KW@348..359 "interface" [Newline("\n")] [Whitespace(" ")],
+            id: TsIdentifierBinding {
+                name_token: IDENT@359..362 "Foo" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@362..363 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        modifier: TsTypeParameterModifier {
+                            in_token: IN_KW@363..366 "in" [] [Whitespace(" ")],
+                            out_token: missing (optional),
+                        },
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@366..367 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@367..369 ">" [] [Whitespace(" ")],
+            },
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@369..370 "{" [] [],
+            members: TsTypeMemberList [],
+            r_curly_token: R_CURLY@370..371 "}" [] [],
+        },
+        TsInterfaceDeclaration {
+            interface_token: INTERFACE_KW@371..382 "interface" [Newline("\n")] [Whitespace(" ")],
+            id: TsIdentifierBinding {
+                name_token: IDENT@382..385 "Foo" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@385..386 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        modifier: TsTypeParameterModifier {
+                            in_token: missing (optional),
+                            out_token: OUT_KW@386..390 "out" [] [Whitespace(" ")],
+                        },
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@390..391 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@391..393 ">" [] [Whitespace(" ")],
+            },
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@393..394 "{" [] [],
+            members: TsTypeMemberList [],
+            r_curly_token: R_CURLY@394..395 "}" [] [],
+        },
+        TsDeclareStatement {
+            declare_token: DECLARE_KW@395..404 "declare" [Newline("\n")] [Whitespace(" ")],
+            declaration: JsClassDeclaration {
+                abstract_token: missing (optional),
+                class_token: CLASS_KW@404..410 "class" [] [Whitespace(" ")],
+                id: JsIdentifierBinding {
+                    name_token: IDENT@410..413 "Foo" [] [],
+                },
+                type_parameters: TsTypeParameters {
+                    l_angle_token: L_ANGLE@413..414 "<" [] [],
+                    items: TsTypeParameterList [
+                        TsTypeParameter {
+                            modifier: TsTypeParameterModifier {
+                                in_token: IN_KW@414..417 "in" [] [Whitespace(" ")],
+                                out_token: missing (optional),
+                            },
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@417..418 "T" [] [],
+                            },
+                            constraint: missing (optional),
+                            default: missing (optional),
+                        },
+                    ],
+                    r_angle_token: R_ANGLE@418..420 ">" [] [Whitespace(" ")],
+                },
+                extends_clause: missing (optional),
+                implements_clause: missing (optional),
+                l_curly_token: L_CURLY@420..421 "{" [] [],
+                members: JsClassMemberList [],
+                r_curly_token: R_CURLY@421..422 "}" [] [],
+            },
+        },
+        TsDeclareStatement {
+            declare_token: DECLARE_KW@422..431 "declare" [Newline("\n")] [Whitespace(" ")],
+            declaration: JsClassDeclaration {
+                abstract_token: missing (optional),
+                class_token: CLASS_KW@431..437 "class" [] [Whitespace(" ")],
+                id: JsIdentifierBinding {
+                    name_token: IDENT@437..440 "Foo" [] [],
+                },
+                type_parameters: TsTypeParameters {
+                    l_angle_token: L_ANGLE@440..441 "<" [] [],
+                    items: TsTypeParameterList [
+                        TsTypeParameter {
+                            modifier: TsTypeParameterModifier {
+                                in_token: missing (optional),
+                                out_token: OUT_KW@441..445 "out" [] [Whitespace(" ")],
+                            },
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@445..446 "T" [] [],
+                            },
+                            constraint: missing (optional),
+                            default: missing (optional),
+                        },
+                    ],
+                    r_angle_token: R_ANGLE@446..448 ">" [] [Whitespace(" ")],
+                },
+                extends_clause: missing (optional),
+                implements_clause: missing (optional),
+                l_curly_token: L_CURLY@448..449 "{" [] [],
+                members: JsClassMemberList [],
+                r_curly_token: R_CURLY@449..450 "}" [] [],
+            },
+        },
+        TsDeclareStatement {
+            declare_token: DECLARE_KW@450..459 "declare" [Newline("\n")] [Whitespace(" ")],
+            declaration: TsInterfaceDeclaration {
+                interface_token: INTERFACE_KW@459..469 "interface" [] [Whitespace(" ")],
+                id: TsIdentifierBinding {
+                    name_token: IDENT@469..472 "Foo" [] [],
+                },
+                type_parameters: TsTypeParameters {
+                    l_angle_token: L_ANGLE@472..473 "<" [] [],
+                    items: TsTypeParameterList [
+                        TsTypeParameter {
+                            modifier: TsTypeParameterModifier {
+                                in_token: IN_KW@473..476 "in" [] [Whitespace(" ")],
+                                out_token: missing (optional),
+                            },
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@476..477 "T" [] [],
+                            },
+                            constraint: missing (optional),
+                            default: missing (optional),
+                        },
+                    ],
+                    r_angle_token: R_ANGLE@477..479 ">" [] [Whitespace(" ")],
+                },
+                extends_clause: missing (optional),
+                l_curly_token: L_CURLY@479..480 "{" [] [],
+                members: TsTypeMemberList [],
+                r_curly_token: R_CURLY@480..481 "}" [] [],
+            },
+        },
+        TsDeclareStatement {
+            declare_token: DECLARE_KW@481..490 "declare" [Newline("\n")] [Whitespace(" ")],
+            declaration: TsInterfaceDeclaration {
+                interface_token: INTERFACE_KW@490..500 "interface" [] [Whitespace(" ")],
+                id: TsIdentifierBinding {
+                    name_token: IDENT@500..503 "Foo" [] [],
+                },
+                type_parameters: TsTypeParameters {
+                    l_angle_token: L_ANGLE@503..504 "<" [] [],
+                    items: TsTypeParameterList [
+                        TsTypeParameter {
+                            modifier: TsTypeParameterModifier {
+                                in_token: missing (optional),
+                                out_token: OUT_KW@504..508 "out" [] [Whitespace(" ")],
+                            },
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@508..509 "T" [] [],
+                            },
+                            constraint: missing (optional),
+                            default: missing (optional),
+                        },
+                    ],
+                    r_angle_token: R_ANGLE@509..511 ">" [] [Whitespace(" ")],
+                },
+                extends_clause: missing (optional),
+                l_curly_token: L_CURLY@511..512 "{" [] [],
+                members: TsTypeMemberList [],
+                r_curly_token: R_CURLY@512..513 "}" [] [],
+            },
+        },
     ],
-    eof_token: EOF@216..217 "" [Newline("\n")] [],
+    eof_token: EOF@513..514 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..217
+0: JS_MODULE@0..514
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..216
+  2: JS_MODULE_ITEM_LIST@0..513
     0: TS_TYPE_ALIAS_DECLARATION@0..18
       0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@5..8
@@ -581,4 +882,229 @@ JsModule {
             1: (empty)
         2: R_BRACK@215..216 "]" [] []
       5: (empty)
-  3: EOF@216..217 "" [Newline("\n")] []
+    8: JS_CLASS_DECLARATION@216..274
+      0: (empty)
+      1: CLASS_KW@216..262 "class" [Newline("\n"), Whitespace("                      ..."), Newline("\n")] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@262..265
+        0: IDENT@262..265 "Foo" [] []
+      3: TS_TYPE_PARAMETERS@265..272
+        0: L_ANGLE@265..266 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@266..270
+          0: TS_TYPE_PARAMETER@266..270
+            0: TS_TYPE_PARAMETER_MODIFIER@266..269
+              0: IN_KW@266..269 "in" [] [Whitespace(" ")]
+              1: (empty)
+            1: TS_TYPE_PARAMETER_NAME@269..270
+              0: IDENT@269..270 "T" [] []
+            2: (empty)
+            3: (empty)
+        2: R_ANGLE@270..272 ">" [] [Whitespace(" ")]
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@272..273 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@273..273
+      8: R_CURLY@273..274 "}" [] []
+    9: JS_CLASS_DECLARATION@274..294
+      0: (empty)
+      1: CLASS_KW@274..281 "class" [Newline("\n")] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@281..284
+        0: IDENT@281..284 "Foo" [] []
+      3: TS_TYPE_PARAMETERS@284..292
+        0: L_ANGLE@284..285 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@285..290
+          0: TS_TYPE_PARAMETER@285..290
+            0: TS_TYPE_PARAMETER_MODIFIER@285..289
+              0: (empty)
+              1: OUT_KW@285..289 "out" [] [Whitespace(" ")]
+            1: TS_TYPE_PARAMETER_NAME@289..290
+              0: IDENT@289..290 "T" [] []
+            2: (empty)
+            3: (empty)
+        2: R_ANGLE@290..292 ">" [] [Whitespace(" ")]
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@292..293 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@293..293
+      8: R_CURLY@293..294 "}" [] []
+    10: JS_EXPORT@294..328
+      0: EXPORT_KW@294..302 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@302..328
+        0: DEFAULT_KW@302..310 "default" [] [Whitespace(" ")]
+        1: JS_CLASS_EXPORT_DEFAULT_DECLARATION@310..328
+          0: (empty)
+          1: CLASS_KW@310..316 "class" [] [Whitespace(" ")]
+          2: JS_IDENTIFIER_BINDING@316..319
+            0: IDENT@316..319 "Foo" [] []
+          3: TS_TYPE_PARAMETERS@319..326
+            0: L_ANGLE@319..320 "<" [] []
+            1: TS_TYPE_PARAMETER_LIST@320..324
+              0: TS_TYPE_PARAMETER@320..324
+                0: TS_TYPE_PARAMETER_MODIFIER@320..323
+                  0: IN_KW@320..323 "in" [] [Whitespace(" ")]
+                  1: (empty)
+                1: TS_TYPE_PARAMETER_NAME@323..324
+                  0: IDENT@323..324 "T" [] []
+                2: (empty)
+                3: (empty)
+            2: R_ANGLE@324..326 ">" [] [Whitespace(" ")]
+          4: (empty)
+          5: (empty)
+          6: L_CURLY@326..327 "{" [] []
+          7: JS_CLASS_MEMBER_LIST@327..327
+          8: R_CURLY@327..328 "}" [] []
+        2: (empty)
+    11: JS_CLASS_DECLARATION@328..348
+      0: (empty)
+      1: CLASS_KW@328..335 "class" [Newline("\n")] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@335..338
+        0: IDENT@335..338 "Foo" [] []
+      3: TS_TYPE_PARAMETERS@338..346
+        0: L_ANGLE@338..339 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@339..344
+          0: TS_TYPE_PARAMETER@339..344
+            0: TS_TYPE_PARAMETER_MODIFIER@339..343
+              0: (empty)
+              1: OUT_KW@339..343 "out" [] [Whitespace(" ")]
+            1: TS_TYPE_PARAMETER_NAME@343..344
+              0: IDENT@343..344 "T" [] []
+            2: (empty)
+            3: (empty)
+        2: R_ANGLE@344..346 ">" [] [Whitespace(" ")]
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@346..347 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@347..347
+      8: R_CURLY@347..348 "}" [] []
+    12: TS_INTERFACE_DECLARATION@348..371
+      0: INTERFACE_KW@348..359 "interface" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@359..362
+        0: IDENT@359..362 "Foo" [] []
+      2: TS_TYPE_PARAMETERS@362..369
+        0: L_ANGLE@362..363 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@363..367
+          0: TS_TYPE_PARAMETER@363..367
+            0: TS_TYPE_PARAMETER_MODIFIER@363..366
+              0: IN_KW@363..366 "in" [] [Whitespace(" ")]
+              1: (empty)
+            1: TS_TYPE_PARAMETER_NAME@366..367
+              0: IDENT@366..367 "T" [] []
+            2: (empty)
+            3: (empty)
+        2: R_ANGLE@367..369 ">" [] [Whitespace(" ")]
+      3: (empty)
+      4: L_CURLY@369..370 "{" [] []
+      5: TS_TYPE_MEMBER_LIST@370..370
+      6: R_CURLY@370..371 "}" [] []
+    13: TS_INTERFACE_DECLARATION@371..395
+      0: INTERFACE_KW@371..382 "interface" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@382..385
+        0: IDENT@382..385 "Foo" [] []
+      2: TS_TYPE_PARAMETERS@385..393
+        0: L_ANGLE@385..386 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@386..391
+          0: TS_TYPE_PARAMETER@386..391
+            0: TS_TYPE_PARAMETER_MODIFIER@386..390
+              0: (empty)
+              1: OUT_KW@386..390 "out" [] [Whitespace(" ")]
+            1: TS_TYPE_PARAMETER_NAME@390..391
+              0: IDENT@390..391 "T" [] []
+            2: (empty)
+            3: (empty)
+        2: R_ANGLE@391..393 ">" [] [Whitespace(" ")]
+      3: (empty)
+      4: L_CURLY@393..394 "{" [] []
+      5: TS_TYPE_MEMBER_LIST@394..394
+      6: R_CURLY@394..395 "}" [] []
+    14: TS_DECLARE_STATEMENT@395..422
+      0: DECLARE_KW@395..404 "declare" [Newline("\n")] [Whitespace(" ")]
+      1: JS_CLASS_DECLARATION@404..422
+        0: (empty)
+        1: CLASS_KW@404..410 "class" [] [Whitespace(" ")]
+        2: JS_IDENTIFIER_BINDING@410..413
+          0: IDENT@410..413 "Foo" [] []
+        3: TS_TYPE_PARAMETERS@413..420
+          0: L_ANGLE@413..414 "<" [] []
+          1: TS_TYPE_PARAMETER_LIST@414..418
+            0: TS_TYPE_PARAMETER@414..418
+              0: TS_TYPE_PARAMETER_MODIFIER@414..417
+                0: IN_KW@414..417 "in" [] [Whitespace(" ")]
+                1: (empty)
+              1: TS_TYPE_PARAMETER_NAME@417..418
+                0: IDENT@417..418 "T" [] []
+              2: (empty)
+              3: (empty)
+          2: R_ANGLE@418..420 ">" [] [Whitespace(" ")]
+        4: (empty)
+        5: (empty)
+        6: L_CURLY@420..421 "{" [] []
+        7: JS_CLASS_MEMBER_LIST@421..421
+        8: R_CURLY@421..422 "}" [] []
+    15: TS_DECLARE_STATEMENT@422..450
+      0: DECLARE_KW@422..431 "declare" [Newline("\n")] [Whitespace(" ")]
+      1: JS_CLASS_DECLARATION@431..450
+        0: (empty)
+        1: CLASS_KW@431..437 "class" [] [Whitespace(" ")]
+        2: JS_IDENTIFIER_BINDING@437..440
+          0: IDENT@437..440 "Foo" [] []
+        3: TS_TYPE_PARAMETERS@440..448
+          0: L_ANGLE@440..441 "<" [] []
+          1: TS_TYPE_PARAMETER_LIST@441..446
+            0: TS_TYPE_PARAMETER@441..446
+              0: TS_TYPE_PARAMETER_MODIFIER@441..445
+                0: (empty)
+                1: OUT_KW@441..445 "out" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@445..446
+                0: IDENT@445..446 "T" [] []
+              2: (empty)
+              3: (empty)
+          2: R_ANGLE@446..448 ">" [] [Whitespace(" ")]
+        4: (empty)
+        5: (empty)
+        6: L_CURLY@448..449 "{" [] []
+        7: JS_CLASS_MEMBER_LIST@449..449
+        8: R_CURLY@449..450 "}" [] []
+    16: TS_DECLARE_STATEMENT@450..481
+      0: DECLARE_KW@450..459 "declare" [Newline("\n")] [Whitespace(" ")]
+      1: TS_INTERFACE_DECLARATION@459..481
+        0: INTERFACE_KW@459..469 "interface" [] [Whitespace(" ")]
+        1: TS_IDENTIFIER_BINDING@469..472
+          0: IDENT@469..472 "Foo" [] []
+        2: TS_TYPE_PARAMETERS@472..479
+          0: L_ANGLE@472..473 "<" [] []
+          1: TS_TYPE_PARAMETER_LIST@473..477
+            0: TS_TYPE_PARAMETER@473..477
+              0: TS_TYPE_PARAMETER_MODIFIER@473..476
+                0: IN_KW@473..476 "in" [] [Whitespace(" ")]
+                1: (empty)
+              1: TS_TYPE_PARAMETER_NAME@476..477
+                0: IDENT@476..477 "T" [] []
+              2: (empty)
+              3: (empty)
+          2: R_ANGLE@477..479 ">" [] [Whitespace(" ")]
+        3: (empty)
+        4: L_CURLY@479..480 "{" [] []
+        5: TS_TYPE_MEMBER_LIST@480..480
+        6: R_CURLY@480..481 "}" [] []
+    17: TS_DECLARE_STATEMENT@481..513
+      0: DECLARE_KW@481..490 "declare" [Newline("\n")] [Whitespace(" ")]
+      1: TS_INTERFACE_DECLARATION@490..513
+        0: INTERFACE_KW@490..500 "interface" [] [Whitespace(" ")]
+        1: TS_IDENTIFIER_BINDING@500..503
+          0: IDENT@500..503 "Foo" [] []
+        2: TS_TYPE_PARAMETERS@503..511
+          0: L_ANGLE@503..504 "<" [] []
+          1: TS_TYPE_PARAMETER_LIST@504..509
+            0: TS_TYPE_PARAMETER@504..509
+              0: TS_TYPE_PARAMETER_MODIFIER@504..508
+                0: (empty)
+                1: OUT_KW@504..508 "out" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@508..509
+                0: IDENT@508..509 "T" [] []
+              2: (empty)
+              3: (empty)
+          2: R_ANGLE@509..511 ">" [] [Whitespace(" ")]
+        3: (empty)
+        4: L_CURLY@511..512 "{" [] []
+        5: TS_TYPE_MEMBER_LIST@512..512
+        6: R_CURLY@512..513 "}" [] []
+  3: EOF@513..514 "" [Newline("\n")] []
