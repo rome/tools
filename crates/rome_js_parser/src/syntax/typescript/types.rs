@@ -85,7 +85,13 @@ fn parse_ts_call_signature(p: &mut Parser) {
     parse_ts_return_type_annotation(p).ok();
 }
 
+/// in current context, out keyword we count as identifier
 fn parse_ts_type_parameter_name(p: &mut Parser) -> ParsedSyntax {
+    if p.at(T![out]) {
+        let m = p.start();
+        p.bump_remap(T![ident]);
+        return Present(m.complete(p, TS_TYPE_PARAMETER_NAME));
+    }
     parse_identifier(p, TS_TYPE_PARAMETER_NAME)
 }
 
@@ -144,6 +150,33 @@ impl ParseSeparatedList for TsTypeParameterList {
     fn allow_trailing_separating_element(&self) -> bool {
         true
     }
+}
+
+// test_err ts type_parameter_modifier
+// type Foo<in T> = T
+// type Foo<out T> = T
+// type Foo<in out> = T
+// type Foo<out out> = T
+// type Foo<in out out> = T
+// type Foo<in X, out Y> = [X, Y]
+// type Foo<out X, in Y> = [X, Y]
+// type Foo<out X, out Y extends keyof X> = [X, Y]
+fn parse_ts_type_parameter_modifier(p: &mut Parser) -> ParsedSyntax {
+    let m = p.start();
+    let mut has_any = false;
+    if p.at(T![in]) {
+        p.expect(T![in]);
+        has_any = true;
+    }
+    if p.at(T![out]) {
+        p.expect(T![out]);
+        has_any = true;
+    }
+    if !has_any {
+        m.abandon(p);
+        return Absent;
+    }
+    Present(m.complete(p, TS_TYPE_PARAMETER_MODIFIER))
 }
 
 fn parse_ts_type_parameter(p: &mut Parser) -> ParsedSyntax {
@@ -1344,3 +1377,72 @@ fn parse_ts_type_member_semi(p: &mut Parser) {
         p.error(err);
     }
 }
+
+// TODO: finish all this testing
+
+// 	expectPrintedTS(t, "class Foo<in T> {}", "class Foo {\n}\n")
+// 	expectPrintedTS(t, "class Foo<out T> {}", "class Foo {\n}\n")
+// 	expectPrintedTS(t, "export default class Foo<in T> {}", "export default class Foo {\n}\n")
+// 	expectPrintedTS(t, "export default class Foo<out T> {}", "export default class Foo {\n}\n")
+// 	expectPrintedTS(t, "export default class <in T> {}", "export default class {\n}\n")
+// 	expectPrintedTS(t, "export default class <out T> {}", "export default class {\n}\n")
+// 	expectPrintedTS(t, "interface Foo<in T> {}", "")
+// 	expectPrintedTS(t, "interface Foo<out T> {}", "")
+// 	expectPrintedTS(t, "declare class Foo<in T> {}", "")
+// 	expectPrintedTS(t, "declare class Foo<out T> {}", "")
+// 	expectPrintedTS(t, "declare interface Foo<in T> {}", "")
+// 	expectPrintedTS(t, "declare interface Foo<out T> {}", "")
+
+// 	expectParseErrorTS(t, "type Foo<i\\u006E T> = T", "<stdin>: ERROR: Expected identifier but found \"i\\\\u006E\"\n")
+// 	expectParseErrorTS(t, "type Foo<ou\\u0074 T> = T", "<stdin>: ERROR: Expected \">\" but found \"T\"\n")
+// 	expectParseErrorTS(t, "type Foo<in in> = T", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n<stdin>: ERROR: Expected identifier but found \">\"\n")
+// 	expectParseErrorTS(t, "type Foo<out in> = T", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n<stdin>: ERROR: Expected identifier but found \">\"\n")
+// 	expectParseErrorTS(t, "type Foo<out in T> = T", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "type Foo<public T> = T", "<stdin>: ERROR: Expected \">\" but found \"T\"\n")
+// 	expectParseErrorTS(t, "type Foo<in out in T> = T", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "type Foo<in out out T> = T", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "function foo<in T>() {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "function foo<out T>() {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "export default function foo<in T>() {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "export default function foo<out T>() {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "export default function <in T>() {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "export default function <out T>() {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let foo: Foo<in T>", "<stdin>: ERROR: Unexpected \"in\"\n")
+// 	expectParseErrorTS(t, "let foo: Foo<out T>", "<stdin>: ERROR: Expected \">\" but found \"T\"\n")
+// 	expectParseErrorTS(t, "declare function foo<in T>()", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "declare function foo<out T>()", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "declare let foo: Foo<in T>", "<stdin>: ERROR: Unexpected \"in\"\n")
+// 	expectParseErrorTS(t, "declare let foo: Foo<out T>", "<stdin>: ERROR: Expected \">\" but found \"T\"\n")
+// 	expectParseErrorTS(t, "Foo = class <in T> {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "Foo = class <out T> {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "foo = function <in T>() {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "foo = function <out T>() {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "class Foo { foo<in T>(): T {} }", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "class Foo { foo<out T>(): T {} }", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "foo = { foo<in T>(): T {} }", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "foo = { foo<out T>(): T {} }", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "<in T>() => {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "<out T>() => {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "<in T, out T>() => {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: <in T>() => {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: <out T>() => {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: <in T, out T>() => {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: new <in T>() => {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: new <out T>() => {}", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: new <in T, out T>() => {}", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: { y<in T>(): any }", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: { y<out T>(): any }", "<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectParseErrorTS(t, "let x: { y<in T, out T>(): any }", "<stdin>: ERROR: The modifier \"in\" is not valid here:\n<stdin>: ERROR: The modifier \"out\" is not valid here:\n")
+// 	expectPrintedTSX(t, "<in T></in>", "/* @__PURE__ */ React.createElement(\"in\", {\n  T: true\n});\n")
+// 	expectPrintedTSX(t, "<out T></out>", "/* @__PURE__ */ React.createElement(\"out\", {\n  T: true\n});\n")
+// 	expectPrintedTSX(t, "<in out T></in>", "/* @__PURE__ */ React.createElement(\"in\", {\n  out: true,\n  T: true\n});\n")
+// 	expectPrintedTSX(t, "<out in T></out>", "/* @__PURE__ */ React.createElement(\"out\", {\n  in: true,\n  T: true\n});\n")
+// 	expectPrintedTSX(t, "<in T extends={true}></in>", "/* @__PURE__ */ React.createElement(\"in\", {\n  T: true,\n  extends: true\n});\n")
+// 	expectPrintedTSX(t, "<out T extends={true}></out>", "/* @__PURE__ */ React.createElement(\"out\", {\n  T: true,\n  extends: true\n});\n")
+// 	expectPrintedTSX(t, "<in out T extends={true}></in>", "/* @__PURE__ */ React.createElement(\"in\", {\n  out: true,\n  T: true,\n  extends: true\n});\n")
+// 	expectParseErrorTSX(t, "<in T,>() => {}", "<stdin>: ERROR: Expected \">\" but found \",\"\n")
+// 	expectParseErrorTSX(t, "<out T,>() => {}", "<stdin>: ERROR: Expected \">\" but found \",\"\n")
+// 	expectParseErrorTSX(t, "<in out T,>() => {}", "<stdin>: ERROR: Expected \">\" but found \",\"\n")
+// 	expectParseErrorTSX(t, "<in T extends any>() => {}", jsxErrorArrow)
+// 	expectParseErrorTSX(t, "<out T extends any>() => {}", jsxErrorArrow)
+// 	expectParseErrorTSX(t, "<in out T extends any>() => {}", jsxErrorArrow)

@@ -1152,6 +1152,11 @@ impl Format for rome_js_syntax::TsTypeParameterName {
         self.format_node(formatter)
     }
 }
+impl Format for rome_js_syntax::TsTypeParameterModifier {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        self.format_node(formatter)
+    }
+}
 impl Format for rome_js_syntax::TsPredicateReturnType {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         self.format_node(formatter)

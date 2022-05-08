@@ -1150,6 +1150,10 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::TsTypeParameter::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_TYPE_PARAMETER_MODIFIER => {
+                    let $pattern = unsafe { $crate::TsTypeParameterModifier::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_TYPE_PARAMETER_NAME => {
                     let $pattern = unsafe { $crate::TsTypeParameterName::new_unchecked(node) };
                     $body

@@ -6,3 +6,4 @@ mod property_parameter;
 mod this_parameter;
 mod type_parameter;
 mod type_parameters;
+mod type_parameter_modifier;
