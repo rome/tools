@@ -1,7 +1,6 @@
 use crate::{FormatElement, FormatNode, Formatter};
 use rome_formatter::{format_elements, token, FormatResult};
 use rome_js_syntax::JsExpressionStatement;
-use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::AstNode;
 
 use crate::utils::format_string_literal_token;

@@ -43,7 +43,25 @@ impl FormatNode for JsParenthesizedExpression {
                 group_elements(expression.format(formatter)?),
                 formatter.format_replaced(&r_paren_token?, empty_element()),
             ])
-            // This branch aiming to align prettier formatting behavior, see https://github.com/rome/tools/pull/2547 for details
+        // if the expression inside the parenthesis is a stringLiteralExpression, we should leave it as is rather than
+        // add extra soft_block_indent, for example:
+        // ```js
+        // ("escaped carriage return \
+        // ");
+        // ```
+        // if we add soft_block_indent, we will get:
+        // ```js
+        // (
+        // "escaped carriage return \
+        // "
+        // );
+        // ```
+        // which will not match prettier's formatting behavior, if we add this extra branch to handle this case, it become:
+        // ```js
+        // ("escaped carriage return \
+        // ");
+        // ```
+        // this is what we want
         } else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
             Ok(format_elements![
                 l_paren_token.format(formatter)?,

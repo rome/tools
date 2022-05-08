@@ -2,7 +2,6 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 assertion_line: 242
 expression: computed.js
-
 ---
 # Input
 nock(/test/)
@@ -12,6 +11,7 @@ nock(/test/)
     foo: 'bar',
   });
 
+a[("test")]
 =============================
 # Outputs
 ## Output 1
@@ -23,4 +23,6 @@ Quote style: Double Quotes
 nock(/test/)
 	.matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo")
 	.reply(200, { foo: "bar" });
+
+a[("test")];
 
