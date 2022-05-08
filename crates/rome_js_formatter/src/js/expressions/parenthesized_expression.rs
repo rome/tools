@@ -47,7 +47,7 @@ impl FormatNode for JsParenthesizedExpression {
         } else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
             Ok(format_elements![
                 l_paren_token.format(formatter)?,
-                group_elements(expression.format(formatter)?),
+                expression.format(formatter)?,
                 r_paren_token.format(formatter)?,
             ])
         } else {

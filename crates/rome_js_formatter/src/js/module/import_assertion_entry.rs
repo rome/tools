@@ -24,7 +24,7 @@ impl FormatNode for JsImportAssertionEntry {
             formatted_key,
             colon_token.format(formatter)?,
             space_token(),
-            format_string_literal_token(value_token?, formatter,),
+            format_string_literal_token(value_token?, formatter),
         ])
     }
 }

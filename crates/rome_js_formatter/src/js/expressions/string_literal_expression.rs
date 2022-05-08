@@ -16,16 +16,8 @@ impl FormatNode for JsStringLiteralExpression {
         let syntax_node = self.syntax();
         let parent = syntax_node.parent();
 
-        let needs_parenthesis =
-            if let Some(expression_statement) = parent.and_then(JsExpressionStatement::cast) {
-                let great_parent_kind = expression_statement.syntax().parent().map(|p| p.kind());
-                matches!(
-                    great_parent_kind,
-                    Some(JsSyntaxKind::JS_BLOCK_STATEMENT | JsSyntaxKind::JS_MODULE_ITEM_LIST)
-                )
-            } else {
-                false
-            };
+        let needs_parenthesis = parent.and_then(JsExpressionStatement::cast).is_some();
+
         let formatted_element = format_string_literal_token(value_token, formatter);
         if needs_parenthesis {
             let (leading_trivia, content, trailing_trivia) = formatted_element.split_trivia();
