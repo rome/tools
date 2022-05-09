@@ -1,16 +1,17 @@
+use crate::generated::FormatTsTypeMemberList;
 use crate::prelude::*;
 use rome_js_syntax::TsTypeMemberList;
 use rome_rowan::AstNodeList;
 
-impl Format for TsTypeMemberList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let items = self.iter();
+impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
+    fn format(node: &TsTypeMemberList, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 
         let items = items
             .enumerate()
             .map(|(index, element)| {
-                let formatted_element = element.format(formatter)?;
+                let formatted_element = formatted![formatter, element.format()]?;
 
                 let is_verbatim = matches!(
                     formatted_element.last_element(),

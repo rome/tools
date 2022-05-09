@@ -1,16 +1,14 @@
-use crate::{
-    block_indent, concat_elements, empty_element, empty_line, format_elements, formatted,
-    group_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
-    join_elements_hard_line, line_suffix, soft_block_indent, soft_line_break_or_space, space_token,
-    Format, FormatElement, FormatOptions, TextRange, Token, Verbatim,
-};
+use crate::prelude::*;
+
 #[cfg(debug_assertions)]
 use rome_formatter::printed_tokens::PrintedTokens;
-use rome_formatter::{normalize_newlines, FormatResult, LINE_TERMINATORS};
+use rome_formatter::{normalize_newlines, FormatOptions, FormatResult, LINE_TERMINATORS};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 
+use crate::AsFormat;
 use rome_rowan::{
     AstNode, AstNodeList, AstSeparatedList, Language, SyntaxNode, SyntaxToken, SyntaxTriviaPiece,
+    TextRange,
 };
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
@@ -619,7 +617,7 @@ pub(crate) trait JsFormatter {
         trailing_separator: TrailingSeparator,
     ) -> FormatResult<std::vec::IntoIter<FormatElement>>
     where
-        T: AstNode<Language = JsLanguage> + Format,
+        for<'a> T: AstNode<Language = JsLanguage> + AsFormat<'a>,
         L: AstSeparatedList<Language = JsLanguage, Node = T>,
         F: Fn() -> FormatElement,
     {
@@ -628,7 +626,7 @@ pub(crate) trait JsFormatter {
         let formatter = self.as_formatter();
 
         for (index, element) in list.elements().enumerate() {
-            let node = element.node()?.format(formatter)?;
+            let node = formatted![formatter, element.node()?.format()]?;
 
             // Reuse the existing trailing separator or create it if it wasn't in the
             // input source. Only print the last trailing token if the outer group breaks
@@ -640,12 +638,12 @@ pub(crate) trait JsFormatter {
                         // but still print its associated trivias unconditionally
                         self.format_replaced(separator, if_group_breaks(Token::from(separator)))
                     } else if trailing_separator.is_mandatory() {
-                        separator.format(formatter)?
+                        formatted![formatter, separator.format()]?
                     } else {
                         empty_element()
                     }
                 } else {
-                    separator.format(formatter)?
+                    formatted![formatter, separator.format()]?
                 }
             } else if index == last_index {
                 if trailing_separator.is_allowed() {
@@ -672,17 +670,17 @@ pub(crate) trait JsFormatter {
     /// end up separated by hard lines or empty lines.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
-    fn format_list<List, Node: AstNode<Language = JsLanguage> + Format>(
-        &self,
-        list: List,
-    ) -> FormatElement
+    fn format_list<List, Node>(&self, list: &List) -> FormatElement
     where
         List: AstNodeList<Language = JsLanguage, Node = Node>,
+        for<'a> Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
     {
         let formatter = self.as_formatter();
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = formatter.snapshot();
-            let elem = match module_item.format(formatter) {
+            let format = module_item.format();
+
+            let elem = match formatted![formatter, format] {
                 Ok(result) => result,
                 Err(_) => {
                     formatter.restore(snapshot);

@@ -242,7 +242,7 @@ pub fn generate_formatter() {
     // script to build the module import files
     let mut modules = ModuleIndex::new(project_root().join("crates/rome_js_formatter/src"));
     let mut format_impls =
-        FormatImpls::new(project_root().join("crates/rome_js_formatter/src/generated.rs"));
+        BoilerplateImpls::new(project_root().join("crates/rome_js_formatter/src/generated.rs"));
 
     // Build an unified iterator over all the AstNode types
     let names = ast
@@ -279,8 +279,10 @@ pub fn generate_formatter() {
         let path = name_to_path(&kind, &name);
         modules.insert(&repo, &path);
 
-        let id = Ident::new(&name, Span::call_site());
-        format_impls.push(&kind, &id);
+        let node_id = Ident::new(&name, Span::call_site());
+        let format_id = Ident::new(&format!("Format{name}"), Span::call_site());
+
+        format_impls.push(&kind, &node_id, &format_id);
 
         // Union nodes except for AnyFunction and AnyClass have a generated
         // implementation, the codegen will always overwrite any existing file
@@ -303,22 +305,24 @@ pub fn generate_formatter() {
         let tokens = match kind {
             NodeKind::List { separated: false } => quote! {
                 use crate::prelude::*;
-                use rome_js_syntax::#id;
+                use crate::generated::#format_id;
+                use rome_js_syntax::#node_id;
 
-                impl Format for #id {
-                    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-                        Ok(formatter.format_list(self.clone()))
+                impl FormatRule<#node_id> for #format_id {
+                    fn format(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
+                        Ok(formatter.format_list(self))
                     }
                 }
             },
             NodeKind::Node | NodeKind::List { separated: true } => {
                 quote! {
                     use crate::prelude::*;
+                    use crate::generated::#format_id;
                     use rome_rowan::AstNode;
-                    use rome_js_syntax::{#id};
+                    use rome_js_syntax::#node_id;
 
-                    impl FormatNode for #id {
-                        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                    impl FormatNodeRule<#node_id> for #format_id {
+                        fn format_fields(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
                             verbatim_node(self.syntax()).format(formatter)
                         }
                     }
@@ -327,11 +331,12 @@ pub fn generate_formatter() {
             NodeKind::Unknown => {
                 quote! {
                     use crate::prelude::*;
+                    use crate::generated::#format_id;
                     use rome_rowan::AstNode;
-                    use rome_js_syntax::{#id};
+                    use rome_js_syntax::#node_id;
 
-                    impl FormatNode for #id {
-                        fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+                    impl FormatNodeRule<#node_id> for #format_id {
+                        fn format_fields(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
                             unknown_node(self.syntax()).format(formatter)
                         }
                     }
@@ -343,17 +348,18 @@ pub fn generate_formatter() {
                     .into_iter()
                     .map(|variant| {
                         let variant = Ident::new(&variant, Span::call_site());
-                        quote! { Self::#variant(node) => node.format(formatter), }
+                        quote! { #node_id::#variant(node) => formatted![formatter, node.format()], }
                     })
                     .collect();
 
                 quote! {
                     use crate::prelude::*;
-                    use rome_js_syntax::#id;
+                    use crate::generated::#format_id;
+                    use rome_js_syntax::#node_id;
 
-                    impl Format for #id {
-                        fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-                            match self {
+                    impl FormatRule<#node_id> for #format_id {
+                        fn format(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
+                            match node {
                                 #( #match_arms )*
                             }
                         }
@@ -381,12 +387,12 @@ pub fn generate_formatter() {
     repo.stage_paths(&stage);
 }
 
-struct FormatImpls {
+struct BoilerplateImpls {
     path: PathBuf,
     impls: Vec<TokenStream>,
 }
 
-impl FormatImpls {
+impl BoilerplateImpls {
     fn new(file_name: PathBuf) -> Self {
         Self {
             path: file_name,
@@ -394,15 +400,48 @@ impl FormatImpls {
         }
     }
 
-    fn push(&mut self, kind: &NodeKind, id: &Ident) {
-        if matches!(kind, NodeKind::Node | NodeKind::Unknown) {
-            self.impls.push(quote! {
-                impl Format for rome_js_syntax::#id {
-                    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-                        self.format_node(formatter)
+    fn push(&mut self, kind: &NodeKind, node_id: &Ident, format_id: &Ident) {
+        match kind {
+            NodeKind::Node | NodeKind::Unknown => {
+                self.impls.push(quote! {
+                    impl<'a> AsFormat<'a> for rome_js_syntax::#node_id {
+                        type Format = FormatRefWithRule<'a, rome_js_syntax::#node_id, FormatNodeRule<rome_js_syntax::#node_id>>;
+
+                        fn format(&'a self) -> Self::Format {
+                            FormatRefWithRule::new(self)
+                        }
                     }
-                }
-            });
+
+                    impl IntoFormat for rome_js_syntax::#node_id {
+                        type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, FormatNodeRule<rome_js_syntax::#node_id>>;
+
+                        fn into_format(self) -> Self::Format {
+                            FormatOwnedWithRule::new(self)
+                        }
+                    }
+                });
+            }
+            _ => {
+                self.impls.push(quote! {
+                    pub struct #format_id;
+
+                    impl<'a> AsFormat<'a> for rome_js_syntax::#node_id {
+                        type Format = FormatRefWithRule<'a, rome_js_syntax::#node_id, #format_id>;
+
+                        fn format(&'a self) -> Self::Format {
+                            FormatRefWithRule::new(self)
+                        }
+                    }
+
+                    impl IntoFormat for rome_js_syntax::#node_id {
+                        type Format = FormatOwnedWithRule<rome_js_syntax::#node_id, #format_id>;
+
+                        fn into_format(self) -> Self::Format {
+                            FormatOwnedWithRule::new(self)
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -410,7 +449,7 @@ impl FormatImpls {
         let impls = self.impls;
 
         let tokens = quote! {
-            use crate::prelude::*;
+            use crate::{AsFormat, IntoFormat, FormatNodeRule};
 
             #( #impls )*
         };

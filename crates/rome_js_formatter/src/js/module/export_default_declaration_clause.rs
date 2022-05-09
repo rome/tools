@@ -1,13 +1,25 @@
 use crate::prelude::*;
-use rome_js_syntax::JsExportDefaultDeclarationClause;
+use crate::FormatNodeFields;
+use rome_js_syntax::{JsExportDefaultDeclarationClause, JsExportDefaultDeclarationClauseFields};
 
-impl FormatNode for JsExportDefaultDeclarationClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsExportDefaultDeclarationClause>
+    for FormatNodeRule<JsExportDefaultDeclarationClause>
+{
+    fn format_fields(
+        node: &JsExportDefaultDeclarationClause,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let JsExportDefaultDeclarationClauseFields {
+            default_token,
+            declaration,
+            semicolon_token: _,
+        } = node.as_fields();
+
         formatted![
             formatter,
-            self.default_token().format(formatter)?,
+            default_token.format(),
             space_token(),
-            self.declaration().format(formatter)?
+            declaration.format()
         ]
     }
 }

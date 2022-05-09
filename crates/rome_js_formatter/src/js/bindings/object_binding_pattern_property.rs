@@ -1,28 +1,31 @@
-use crate::format_extensions::FormatOptional;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
-use crate::{formatted, space_token, Format, FormatElement, FormatNode, Formatter};
-
+use crate::FormatNodeFields;
 use rome_js_syntax::JsObjectBindingPatternProperty;
 use rome_js_syntax::JsObjectBindingPatternPropertyFields;
 
-impl FormatNode for JsObjectBindingPatternProperty {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsObjectBindingPatternProperty>
+    for FormatNodeRule<JsObjectBindingPatternProperty>
+{
+    fn format_fields(
+        node: &JsObjectBindingPatternProperty,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsObjectBindingPatternPropertyFields {
             member,
             colon_token,
             pattern,
             init,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let init_node = init.with_or_empty(|node| formatted![formatter, space_token(), node]);
         formatted![
             formatter,
-            member.format(formatter)?,
-            colon_token.format(formatter)?,
+            member.format(),
+            colon_token.format(),
             space_token(),
-            pattern.format(formatter)?,
-            init_node,
+            pattern.format(),
+            init.format()
+                .with_or_empty(|node| formatted![formatter, space_token(), node]),
         ]
     }
 }

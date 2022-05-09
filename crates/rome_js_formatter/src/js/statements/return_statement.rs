@@ -1,17 +1,21 @@
 use crate::prelude::*;
 use crate::utils::format_with_semicolon;
+use crate::FormatNodeFields;
 use rome_js_syntax::{JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
-impl FormatNode for JsReturnStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsReturnStatement> for FormatNodeRule<JsReturnStatement> {
+    fn format_fields(
+        node: &JsReturnStatement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsReturnStatementFields {
             return_token,
             argument,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let return_token = return_token.format(formatter)?;
+        let return_token = return_token.format();
 
         let argument = if let Some(argument) = argument {
             if matches!(
@@ -24,12 +28,12 @@ impl FormatNode for JsReturnStatement {
                     group_elements(formatted![
                         formatter,
                         token("("),
-                        soft_block_indent(argument.format(formatter)?),
+                        soft_block_indent(formatted![formatter, argument.format()]?),
                         token(")")
                     ]?),
                 ]?
             } else {
-                formatted![formatter, space_token(), argument.format(formatter)?]?
+                formatted![formatter, space_token(), argument.format()]?
             }
         } else {
             empty_element()

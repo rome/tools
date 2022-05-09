@@ -1,12 +1,16 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsSuperExpression;
 use rome_js_syntax::JsSuperExpressionFields;
 
-impl FormatNode for JsSuperExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsSuperExpressionFields { super_token } = self.as_fields();
+impl FormatNodeFields<JsSuperExpression> for FormatNodeRule<JsSuperExpression> {
+    fn format_fields(
+        node: &JsSuperExpression,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let JsSuperExpressionFields { super_token } = node.as_fields();
 
-        super_token.format(formatter)
+        formatted![formatter, super_token.format()]
     }
 }

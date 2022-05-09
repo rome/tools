@@ -1,19 +1,19 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsImportCallExpression;
 use rome_js_syntax::JsImportCallExpressionFields;
 
-impl FormatNode for JsImportCallExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsImportCallExpression> for FormatNodeRule<JsImportCallExpression> {
+    fn format_fields(
+        node: &JsImportCallExpression,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsImportCallExpressionFields {
             import_token,
             arguments,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        formatted![
-            formatter,
-            import_token.format(formatter)?,
-            arguments.format(formatter)?,
-        ]
+        formatted![formatter, import_token.format(), arguments.format(),]
     }
 }

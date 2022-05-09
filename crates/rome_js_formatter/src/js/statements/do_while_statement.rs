@@ -1,10 +1,14 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsDoWhileStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
 
-impl FormatNode for JsDoWhileStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsDoWhileStatement> for FormatNodeRule<JsDoWhileStatement> {
+    fn format_fields(
+        node: &JsDoWhileStatement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsDoWhileStatementFields {
             do_token,
             body,
@@ -13,21 +17,21 @@ impl FormatNode for JsDoWhileStatement {
             test,
             r_paren_token,
             semicolon_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let head = formatted![formatter, do_token.format(formatter)?, space_token(),]?;
+        let head = formatted![formatter, do_token.format(), space_token(),]?;
 
         let tail = formatted![
             formatter,
             space_token(),
-            while_token.format(formatter)?,
+            while_token.format(),
             space_token(),
             formatter.format_delimited_soft_block_indent(
                 &l_paren_token?,
-                test.format(formatter)?,
+                formatted![formatter, test.format()]?,
                 &r_paren_token?,
             )?,
-            semicolon_token.or_format(|| token(";"))
+            semicolon_token.format().or_format(|| token(";"))
         ]?;
 
         let body = body?;
@@ -35,14 +39,14 @@ impl FormatNode for JsDoWhileStatement {
             Ok(hard_group_elements(formatted![
                 formatter,
                 head,
-                body.format(formatter)?,
+                body.format(),
                 tail,
             ]?))
         } else {
             formatted![
                 formatter,
                 hard_group_elements(head),
-                body.format(formatter)?,
+                body.format(),
                 hard_group_elements(tail),
             ]
         }

@@ -1,10 +1,15 @@
 use crate::prelude::*;
-use rome_js_syntax::TsInferType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsInferType, TsInferTypeFields};
 
-impl FormatNode for TsInferType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let infer = self.infer_token().format(formatter)?;
-        let type_parameter = self.type_parameter().format(formatter)?;
+impl FormatNodeFields<TsInferType> for FormatNodeRule<TsInferType> {
+    fn format_fields(node: &TsInferType, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let TsInferTypeFields {
+            infer_token,
+            type_parameter,
+        } = node.as_fields();
+        let infer = infer_token.format();
+        let type_parameter = type_parameter.format();
         formatted![formatter, infer, space_token(), type_parameter]
     }
 }

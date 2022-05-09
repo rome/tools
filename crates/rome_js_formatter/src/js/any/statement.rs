@@ -1,42 +1,47 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatJsAnyStatement;
 use crate::prelude::*;
 use rome_js_syntax::JsAnyStatement;
-impl Format for JsAnyStatement {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::JsBlockStatement(node) => node.format(formatter),
-            Self::JsBreakStatement(node) => node.format(formatter),
-            Self::JsClassDeclaration(node) => node.format(formatter),
-            Self::JsContinueStatement(node) => node.format(formatter),
-            Self::JsDebuggerStatement(node) => node.format(formatter),
-            Self::JsDoWhileStatement(node) => node.format(formatter),
-            Self::JsEmptyStatement(node) => node.format(formatter),
-            Self::JsExpressionStatement(node) => node.format(formatter),
-            Self::JsForInStatement(node) => node.format(formatter),
-            Self::JsForOfStatement(node) => node.format(formatter),
-            Self::JsForStatement(node) => node.format(formatter),
-            Self::JsIfStatement(node) => node.format(formatter),
-            Self::JsLabeledStatement(node) => node.format(formatter),
-            Self::JsReturnStatement(node) => node.format(formatter),
-            Self::JsSwitchStatement(node) => node.format(formatter),
-            Self::JsThrowStatement(node) => node.format(formatter),
-            Self::JsTryFinallyStatement(node) => node.format(formatter),
-            Self::JsTryStatement(node) => node.format(formatter),
-            Self::JsUnknownStatement(node) => node.format(formatter),
-            Self::JsVariableStatement(node) => node.format(formatter),
-            Self::JsWhileStatement(node) => node.format(formatter),
-            Self::JsWithStatement(node) => node.format(formatter),
-            Self::JsFunctionDeclaration(node) => node.format(formatter),
-            Self::TsEnumDeclaration(node) => node.format(formatter),
-            Self::TsTypeAliasDeclaration(node) => node.format(formatter),
-            Self::TsInterfaceDeclaration(node) => node.format(formatter),
-            Self::TsDeclareFunctionDeclaration(node) => node.format(formatter),
-            Self::TsDeclareStatement(node) => node.format(formatter),
-            Self::TsModuleDeclaration(node) => node.format(formatter),
-            Self::TsExternalModuleDeclaration(node) => node.format(formatter),
-            Self::TsGlobalDeclaration(node) => node.format(formatter),
-            Self::TsImportEqualsDeclaration(node) => node.format(formatter),
+impl FormatRule<JsAnyStatement> for FormatJsAnyStatement {
+    fn format(node: &JsAnyStatement, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match node {
+            JsAnyStatement::JsBlockStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsBreakStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsClassDeclaration(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsContinueStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsDebuggerStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsDoWhileStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsEmptyStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsExpressionStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsForInStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsForOfStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsForStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsIfStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsLabeledStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsReturnStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsSwitchStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsThrowStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsTryFinallyStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsTryStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsUnknownStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsVariableStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsWhileStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsWithStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::JsFunctionDeclaration(node) => formatted![formatter, node.format()],
+            JsAnyStatement::TsEnumDeclaration(node) => formatted![formatter, node.format()],
+            JsAnyStatement::TsTypeAliasDeclaration(node) => formatted![formatter, node.format()],
+            JsAnyStatement::TsInterfaceDeclaration(node) => formatted![formatter, node.format()],
+            JsAnyStatement::TsDeclareFunctionDeclaration(node) => {
+                formatted![formatter, node.format()]
+            }
+            JsAnyStatement::TsDeclareStatement(node) => formatted![formatter, node.format()],
+            JsAnyStatement::TsModuleDeclaration(node) => formatted![formatter, node.format()],
+            JsAnyStatement::TsExternalModuleDeclaration(node) => {
+                formatted![formatter, node.format()]
+            }
+            JsAnyStatement::TsGlobalDeclaration(node) => formatted![formatter, node.format()],
+            JsAnyStatement::TsImportEqualsDeclaration(node) => formatted![formatter, node.format()],
         }
     }
 }

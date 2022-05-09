@@ -1,16 +1,26 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedShorthandSpecifier;
 use rome_js_syntax::JsExportNamedShorthandSpecifierFields;
 
-impl FormatNode for JsExportNamedShorthandSpecifier {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let JsExportNamedShorthandSpecifierFields { type_token, name } = self.as_fields();
+impl FormatNodeFields<JsExportNamedShorthandSpecifier>
+    for FormatNodeRule<JsExportNamedShorthandSpecifier>
+{
+    fn format_fields(
+        node: &JsExportNamedShorthandSpecifier,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let JsExportNamedShorthandSpecifierFields { type_token, name } = node.as_fields();
 
-        let type_token =
-            type_token.with_or_empty(|type_token| formatted![formatter, type_token, space_token()]);
-        let name = name.format(formatter)?;
-
-        formatted![formatter, type_token, name]
+        formatted![
+            formatter,
+            type_token.format().with_or_empty(|type_token| formatted![
+                formatter,
+                type_token,
+                space_token()
+            ]),
+            name.format()
+        ]
     }
 }

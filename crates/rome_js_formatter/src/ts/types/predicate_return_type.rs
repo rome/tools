@@ -1,21 +1,25 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsPredicateReturnType;
 use rome_js_syntax::TsPredicateReturnTypeFields;
 
-impl FormatNode for TsPredicateReturnType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsPredicateReturnType> for FormatNodeRule<TsPredicateReturnType> {
+    fn format_fields(
+        node: &TsPredicateReturnType,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsPredicateReturnTypeFields {
             parameter_name,
             is_token,
             ty,
-        } = self.as_fields();
+        } = node.as_fields();
         formatted![
             formatter,
-            parameter_name.format(formatter)?,
+            parameter_name.format(),
             space_token(),
-            is_token.format(formatter)?,
+            is_token.format(),
             space_token(),
-            ty.format(formatter)?
+            ty.format()
         ]
     }
 }

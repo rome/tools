@@ -39,7 +39,7 @@ impl FormatNode for Buzz {
 
 	```rust
 	fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let l_paren_yes = &self.l_paren_token()?.format(formatter)?; // yes
+		let l_paren_yes = &self.l_paren_token()?.format(); // yes
 		let l_paren_no = toke("("); // no
 	}
 	```

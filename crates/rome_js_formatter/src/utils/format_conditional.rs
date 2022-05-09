@@ -49,15 +49,15 @@ impl Conditional {
     fn format_head(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             Conditional::Expression(expr) => {
-                formatted![formatter, expr.test()?.format(formatter)?, space_token(),]
+                formatted![formatter, expr.test()?.format(), space_token(),]
             }
             Conditional::Type(t) => formatted![
                 formatter,
-                t.check_type()?.format(formatter)?,
+                t.check_type()?.format(),
                 space_token(),
-                t.extends_token()?.format(formatter)?,
+                t.extends_token()?.format(),
                 space_token(),
-                t.extends_type()?.format(formatter)?,
+                t.extends_type()?.format(),
                 space_token(),
             ],
         }
@@ -139,16 +139,16 @@ impl Conditional {
                 if let Some(consequent) = consequent {
                     formatted![
                         formatter,
-                        expr.question_mark_token().format(formatter)?,
+                        expr.question_mark_token().format(),
                         space_token(),
                         consequent
                     ]
                 } else {
                     formatted![
                         formatter,
-                        expr.question_mark_token().format(formatter)?,
+                        expr.question_mark_token().format(),
                         space_token(),
-                        expr.consequent().format(formatter)?
+                        expr.consequent().format()
                     ]
                 }
             }
@@ -156,16 +156,16 @@ impl Conditional {
                 if let Some(consequent) = consequent {
                     formatted![
                         formatter,
-                        ty.question_mark_token().format(formatter)?,
+                        ty.question_mark_token().format(),
                         space_token(),
                         consequent
                     ]
                 } else {
                     formatted![
                         formatter,
-                        ty.question_mark_token().format(formatter)?,
+                        ty.question_mark_token().format(),
                         space_token(),
-                        ty.true_type().format(formatter)?
+                        ty.true_type().format()
                     ]
                 }
             }
@@ -182,16 +182,16 @@ impl Conditional {
                 if let Some(alternate) = alternate {
                     formatted![
                         formatter,
-                        expr.colon_token().format(formatter)?,
+                        expr.colon_token().format(),
                         space_token(),
                         alternate
                     ]
                 } else {
                     formatted![
                         formatter,
-                        expr.colon_token().format(formatter)?,
+                        expr.colon_token().format(),
                         space_token(),
-                        expr.alternate().format(formatter)?
+                        expr.alternate().format()
                     ]
                 }
             }
@@ -199,16 +199,16 @@ impl Conditional {
                 if let Some(alternate) = alternate {
                     formatted![
                         formatter,
-                        ty.colon_token().format(formatter)?,
+                        ty.colon_token().format(),
                         space_token(),
                         alternate
                     ]
                 } else {
                     formatted![
                         formatter,
-                        ty.colon_token().format(formatter)?,
+                        ty.colon_token().format(),
                         space_token(),
-                        ty.false_type().format(formatter)?
+                        ty.false_type().format()
                     ]
                 }
             }

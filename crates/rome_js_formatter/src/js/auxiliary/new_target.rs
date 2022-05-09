@@ -1,21 +1,22 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::NewTarget;
 use rome_js_syntax::NewTargetFields;
 
-impl FormatNode for NewTarget {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<NewTarget> for FormatNodeRule<NewTarget> {
+    fn format_fields(node: &NewTarget, formatter: &Formatter) -> FormatResult<FormatElement> {
         let NewTargetFields {
             new_token,
             dot_token,
             target_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatted![
             formatter,
-            new_token.format(formatter)?,
-            dot_token.format(formatter)?,
-            target_token.format(formatter)?,
+            new_token.format(),
+            dot_token.format(),
+            target_token.format(),
         ]
     }
 }

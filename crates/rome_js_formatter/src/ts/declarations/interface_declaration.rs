@@ -1,8 +1,12 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
-impl FormatNode for TsInterfaceDeclaration {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsInterfaceDeclaration> for FormatNodeRule<TsInterfaceDeclaration> {
+    fn format_fields(
+        node: &TsInterfaceDeclaration,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsInterfaceDeclarationFields {
             interface_token,
             id,
@@ -11,24 +15,24 @@ impl FormatNode for TsInterfaceDeclaration {
             members,
             l_curly_token,
             r_curly_token,
-        } = self.as_fields();
-        let interface = interface_token.format(formatter)?;
-        let id = id.format(formatter)?;
-        let extends =
-            extends_clause.with_or_empty(|extends| formatted![formatter, extends, space_token()]);
+        } = node.as_fields();
         let members = formatter.format_delimited_block_indent(
             &l_curly_token?,
-            members.format(formatter)?,
+            formatted![formatter, members.format()]?,
             &r_curly_token?,
         )?;
         Ok(hard_group_elements(formatted![
             formatter,
-            interface,
+            interface_token.format(),
             space_token(),
-            id,
-            type_parameters,
+            id.format(),
+            type_parameters.format(),
             space_token(),
-            extends,
+            extends_clause.format().with_or_empty(|extends| formatted![
+                formatter,
+                extends,
+                space_token()
+            ]),
             members
         ]?))
     }

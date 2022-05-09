@@ -1,6 +1,8 @@
 use crate::Format;
 use crate::{empty_element, FormatElement, Formatter};
 use rome_formatter::FormatResult;
+use std::borrow::Borrow;
+use std::cell::{Cell, RefCell};
 
 use rome_rowan::SyntaxResult;
 
@@ -282,5 +284,47 @@ where
                 with(inner.format(formatter)?).into_format_result()
             }
         }
+    }
+}
+
+/// Utility trait that allows memorizing the output of a [Format]
+pub trait MemoizeFormat {
+    fn memoized(self) -> Memoized<Self>
+    where
+        Self: Sized + Format,
+    {
+        Memoized::new(self)
+    }
+}
+
+impl<F> MemoizeFormat for F where F: Format {}
+
+pub struct Memoized<F> {
+    inner: F,
+    memory: RefCell<Option<FormatResult<FormatElement>>>,
+}
+
+impl<F: Format> Memoized<F> {
+    fn new(inner: F) -> Self {
+        Self {
+            inner,
+            memory: RefCell::new(None),
+        }
+    }
+}
+
+impl<F> Format for Memoized<F>
+where
+    F: Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        if let Some(memory) = self.memory.borrow().as_ref() {
+            return memory.clone();
+        }
+
+        let formatted = self.inner.format(formatter);
+        *self.memory.borrow_mut() = Some(formatted.clone());
+
+        formatted
     }
 }

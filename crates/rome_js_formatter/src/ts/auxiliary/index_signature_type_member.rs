@@ -1,9 +1,13 @@
 use crate::prelude::*;
 use crate::utils::format_type_member_separator;
+use crate::FormatNodeFields;
 use rome_js_syntax::{TsIndexSignatureTypeMember, TsIndexSignatureTypeMemberFields};
 
-impl FormatNode for TsIndexSignatureTypeMember {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsIndexSignatureTypeMember> for FormatNodeRule<TsIndexSignatureTypeMember> {
+    fn format_fields(
+        node: &TsIndexSignatureTypeMember,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let TsIndexSignatureTypeMemberFields {
             readonly_token,
             l_brack_token,
@@ -11,26 +15,22 @@ impl FormatNode for TsIndexSignatureTypeMember {
             r_brack_token,
             type_annotation,
             separator_token,
-        } = self.as_fields();
-
-        let readonly = readonly_token
-            .with_or_empty(|readonly_token| formatted![formatter, readonly_token, space_token()]);
-
-        let l_bracket = l_brack_token.format(formatter)?;
-        let parameter = parameter.format(formatter)?;
-        let r_bracket = r_brack_token.format(formatter)?;
-
-        let type_annotation = type_annotation.format(formatter)?;
-        let separator = format_type_member_separator(separator_token, formatter);
+        } = node.as_fields();
 
         formatted![
             formatter,
-            readonly,
-            l_bracket,
-            parameter,
-            r_bracket,
-            type_annotation,
-            separator,
+            readonly_token
+                .format()
+                .with_or_empty(|readonly_token| formatted![
+                    formatter,
+                    readonly_token,
+                    space_token()
+                ]),
+            l_brack_token.format(),
+            parameter.format(),
+            r_brack_token.format(),
+            type_annotation.format(),
+            format_type_member_separator(separator_token, formatter),
         ]
     }
 }

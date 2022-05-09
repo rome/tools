@@ -1,25 +1,26 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsDefaultClause;
 use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
 use rome_rowan::AstNodeList;
 
-impl FormatNode for JsDefaultClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsDefaultClause> for FormatNodeRule<JsDefaultClause> {
+    fn format_fields(node: &JsDefaultClause, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsDefaultClauseFields {
             default_token,
             colon_token,
             consequent,
-        } = self.as_fields();
+        } = node.as_fields();
 
         let first_child_is_block_stmt = matches!(
             consequent.iter().next(),
             Some(JsAnyStatement::JsBlockStatement(_))
         );
 
-        let default = default_token.format(formatter)?;
-        let colon = colon_token.format(formatter)?;
-        let statements = formatter.format_list(consequent);
+        let default = default_token.format();
+        let colon = colon_token.format();
+        let statements = formatter.format_list(&consequent);
 
         let formatted_cons = if statements.is_empty() {
             hard_line_break()

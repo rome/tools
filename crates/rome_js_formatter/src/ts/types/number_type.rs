@@ -1,8 +1,11 @@
 use crate::prelude::*;
-use rome_js_syntax::TsNumberType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsNumberType, TsNumberTypeFields};
 
-impl FormatNode for TsNumberType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.number_token().format(formatter)
+impl FormatNodeFields<TsNumberType> for FormatNodeRule<TsNumberType> {
+    fn format_fields(node: &TsNumberType, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let TsNumberTypeFields { number_token } = node.as_fields();
+
+        formatted![formatter, number_token.format()]
     }
 }

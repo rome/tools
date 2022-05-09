@@ -1,8 +1,11 @@
 use crate::prelude::*;
-use rome_js_syntax::TsBigintType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsBigintType, TsBigintTypeFields};
 
-impl FormatNode for TsBigintType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.bigint_token().format(formatter)
+impl FormatNodeFields<TsBigintType> for FormatNodeRule<TsBigintType> {
+    fn format_fields(node: &TsBigintType, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let TsBigintTypeFields { bigint_token } = node.as_fields();
+
+        formatted![formatter, bigint_token.format()]
     }
 }

@@ -3,26 +3,30 @@ use crate::prelude::*;
 use rome_js_syntax::JsAnyStatement;
 use rome_js_syntax::JsBlockStatement;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList};
 
-impl FormatNode for JsBlockStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
+    fn format_fields(
+        node: &JsBlockStatement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsBlockStatementFields {
             l_curly_token,
             statements,
             r_curly_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let stmts = formatter.format_list(statements);
+        let stmts = formatter.format_list(&statements);
 
-        if is_non_collapsable_empty_block(self) {
+        if is_non_collapsable_empty_block(node) {
             formatted![
                 formatter,
-                l_curly_token.format(formatter)?,
+                l_curly_token.format(),
                 hard_line_break(),
-                r_curly_token.format(formatter)?
+                r_curly_token.format()
             ]
         } else {
             formatter.format_delimited_block_indent(&l_curly_token?, stmts, &r_curly_token?)

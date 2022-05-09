@@ -1,12 +1,13 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
 use rome_js_syntax::{JsElseClause, JsIfStatementFields};
 
-impl FormatNode for JsIfStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let (head, mut else_clause) = format_if_element(formatter, None, self)?;
+impl FormatNodeFields<JsIfStatement> for FormatNodeRule<JsIfStatement> {
+    fn format_fields(node: &JsIfStatement, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let (head, mut else_clause) = format_if_element(formatter, None, node)?;
 
         let mut if_chain = vec![head];
         while let Some(clause) = else_clause.take() {
@@ -26,7 +27,7 @@ impl FormatNode for JsIfStatement {
                     if_chain.push(formatted![
                         formatter,
                         space_token(),
-                        else_token.format(formatter)?,
+                        else_token.format(),
                         space_token(),
                         into_block(formatter, alternate)?,
                     ]?);
@@ -55,17 +56,17 @@ fn format_if_element(
 
     let head = formatted![
         formatter,
-        else_token.with_or_empty(|token| formatted![
+        else_token.format().with_or_empty(|token| formatted![
             formatter,
             space_token(),
             token,
             space_token(),
         ]),
-        if_token.format(formatter)?,
+        if_token.format(),
         space_token(),
         formatter.format_delimited_soft_block_indent(
             &l_paren_token?,
-            test.format(formatter)?,
+            formatted![formatter, test.format()]?,
             &r_paren_token?,
         )?,
         space_token(),
@@ -78,7 +79,7 @@ fn format_if_element(
 /// Wraps the statement into a block if its not already a JsBlockStatement
 fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<FormatElement> {
     if matches!(stmt, JsAnyStatement::JsBlockStatement(_)) {
-        return stmt.format(formatter);
+        return formatted![formatter, stmt.format()];
     }
 
     // If the body is an empty statement, force a line break to ensure behavior
@@ -87,7 +88,7 @@ fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<Forma
         return formatted![
             formatter,
             token("{"),
-            stmt.format(formatter)?,
+            stmt.format(),
             hard_line_break(),
             token("}")
         ];
@@ -96,7 +97,7 @@ fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<Forma
     Ok(group_elements(formatted![
         formatter,
         token("{"),
-        block_indent(stmt.format(formatter)?),
+        block_indent(formatted![formatter, stmt.format()]?),
         token("}"),
     ]?))
 }

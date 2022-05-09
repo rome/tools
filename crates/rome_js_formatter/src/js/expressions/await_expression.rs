@@ -1,20 +1,24 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsAwaitExpression;
 use rome_js_syntax::JsAwaitExpressionFields;
 
-impl FormatNode for JsAwaitExpression {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsAwaitExpression> for FormatNodeRule<JsAwaitExpression> {
+    fn format_fields(
+        node: &JsAwaitExpression,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsAwaitExpressionFields {
             await_token,
             argument,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatted![
             formatter,
-            await_token.format(formatter)?,
+            await_token.format(),
             space_token(),
-            argument.format(formatter)?,
+            argument.format(),
         ]
     }
 }

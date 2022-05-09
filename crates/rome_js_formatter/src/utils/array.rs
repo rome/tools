@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::AsFormat;
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
     JsLanguage,
@@ -13,7 +14,7 @@ pub(crate) fn format_array_node<N, I>(
 ) -> FormatResult<FormatElement>
 where
     N: AstSeparatedList<Language = JsLanguage, Node = I>,
-    I: ArrayNodeElement,
+    for<'a> I: ArrayNodeElement + AsFormat<'a>,
 {
     // Specifically do not use format_separated as arrays need separators
     // inserted after holes regardless of the formatting since this makes a
@@ -29,7 +30,7 @@ where
             let is_disallow = matches!(separator_mode, TrailingSeparatorMode::Disallow);
             let is_force = matches!(separator_mode, TrailingSeparatorMode::Force);
 
-            let elem = node.format(formatter)?;
+            let elem = node.format();
             let separator = if is_disallow {
                 // Trailing separators are disallowed, replace it with an empty element
                 if let Some(separator) = element.trailing_separator()? {
@@ -41,7 +42,10 @@ where
                 // In forced separator mode or if this element is not the last in the list, print the separator
                 formatted![
                     formatter,
-                    element.trailing_separator().or_format(|| token(","))
+                    &element
+                        .trailing_separator()
+                        .format()
+                        .or_format(|| token(","))
                 ]?
             } else if let Some(separator) = element.trailing_separator()? {
                 formatter.format_replaced(separator, if_group_breaks(token(",")))
@@ -70,7 +74,7 @@ pub(crate) enum TrailingSeparatorMode {
     Force,
 }
 
-pub(crate) trait ArrayNodeElement: AstNode<Language = JsLanguage> + Format + Clone {
+pub(crate) trait ArrayNodeElement: AstNode<Language = JsLanguage> {
     /// Determines how the trailing separator should be printer for this element
     fn separator_mode(&self) -> TrailingSeparatorMode;
 }

@@ -1,10 +1,15 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsAccessibilityModifier;
 use rome_js_syntax::TsAccessibilityModifierFields;
 
-impl FormatNode for TsAccessibilityModifier {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let TsAccessibilityModifierFields { modifier_token } = self.as_fields();
-        modifier_token.format(formatter)
+impl FormatNodeFields<TsAccessibilityModifier> for FormatNodeRule<TsAccessibilityModifier> {
+    fn format_fields(
+        node: &TsAccessibilityModifier,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let TsAccessibilityModifierFields { modifier_token } = node.as_fields();
+
+        formatted![formatter, modifier_token.format()]
     }
 }

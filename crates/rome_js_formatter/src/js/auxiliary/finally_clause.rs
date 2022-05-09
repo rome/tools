@@ -1,20 +1,21 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsFinallyClause;
 use rome_js_syntax::JsFinallyClauseFields;
 
-impl FormatNode for JsFinallyClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsFinallyClause> for FormatNodeRule<JsFinallyClause> {
+    fn format_fields(node: &JsFinallyClause, formatter: &Formatter) -> FormatResult<FormatElement> {
         let JsFinallyClauseFields {
             finally_token,
             body,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatted![
             formatter,
-            finally_token.format(formatter)?,
+            finally_token.format(),
             space_token(),
-            body.format(formatter)?
+            body.format()
         ]
     }
 }

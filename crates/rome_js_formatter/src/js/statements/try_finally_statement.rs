@@ -1,28 +1,31 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsTryFinallyStatement;
 use rome_js_syntax::JsTryFinallyStatementFields;
 
-impl FormatNode for JsTryFinallyStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsTryFinallyStatement> for FormatNodeRule<JsTryFinallyStatement> {
+    fn format_fields(
+        node: &JsTryFinallyStatement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsTryFinallyStatementFields {
             try_token,
             body,
             catch_clause,
             finally_clause,
-        } = self.as_fields();
-
-        let formatted_catch_clause = catch_clause
-            .with_or_empty(|catch_clause| formatted![formatter, space_token(), catch_clause]);
+        } = node.as_fields();
 
         Ok(hard_group_elements(formatted![
             formatter,
-            try_token.format(formatter)?,
+            try_token.format(),
             space_token(),
-            body.format(formatter)?,
-            formatted_catch_clause,
+            body.format(),
+            catch_clause
+                .format()
+                .with_or_empty(|catch_clause| formatted![formatter, space_token(), catch_clause]),
             space_token(),
-            finally_clause.format(formatter)?
+            finally_clause.format()
         ]?))
     }
 }

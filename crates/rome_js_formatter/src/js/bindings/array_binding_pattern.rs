@@ -1,19 +1,23 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsArrayBindingPattern;
 use rome_js_syntax::JsArrayBindingPatternFields;
 
-impl FormatNode for JsArrayBindingPattern {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsArrayBindingPattern> for FormatNodeRule<JsArrayBindingPattern> {
+    fn format_fields(
+        node: &JsArrayBindingPattern,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsArrayBindingPatternFields {
             l_brack_token,
             elements,
             r_brack_token,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatter.format_delimited_soft_block_indent(
             &l_brack_token?,
-            elements.format(formatter)?,
+            formatted![formatter, elements.format()]?,
             &r_brack_token?,
         )
     }

@@ -1,17 +1,21 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsExportAsClause;
 use rome_js_syntax::JsExportAsClauseFields;
 
-impl FormatNode for JsExportAsClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsExportAsClause> for FormatNodeRule<JsExportAsClause> {
+    fn format_fields(
+        node: &JsExportAsClause,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsExportAsClauseFields {
             as_token,
             exported_name,
-        } = self.as_fields();
+        } = node.as_fields();
 
-        let as_token = as_token.format(formatter)?;
-        let exported_name = exported_name.format(formatter)?;
+        let as_token = as_token.format();
+        let exported_name = exported_name.format();
 
         formatted![formatter, as_token, space_token(), exported_name]
     }

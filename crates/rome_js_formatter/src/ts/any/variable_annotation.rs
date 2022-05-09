@@ -1,12 +1,18 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatTsAnyVariableAnnotation;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyVariableAnnotation;
-impl Format for TsAnyVariableAnnotation {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::TsTypeAnnotation(node) => node.format(formatter),
-            Self::TsDefiniteVariableAnnotation(node) => node.format(formatter),
+impl FormatRule<TsAnyVariableAnnotation> for FormatTsAnyVariableAnnotation {
+    fn format(
+        node: &TsAnyVariableAnnotation,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            TsAnyVariableAnnotation::TsTypeAnnotation(node) => formatted![formatter, node.format()],
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(node) => {
+                formatted![formatter, node.format()]
+            }
         }
     }
 }

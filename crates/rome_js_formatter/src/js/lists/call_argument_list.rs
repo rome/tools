@@ -1,12 +1,13 @@
 use crate::formatter::TrailingSeparator;
+use crate::generated::FormatJsCallArgumentList;
 use crate::prelude::*;
 use rome_js_syntax::JsCallArgumentList;
 
-impl Format for JsCallArgumentList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
+    fn format(node: &JsCallArgumentList, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(join_elements(
             soft_line_break_or_space(),
-            formatter.format_separated(self, || token(","), TrailingSeparator::default())?,
+            formatter.format_separated(node, || token(","), TrailingSeparator::default())?,
         ))
     }
 }

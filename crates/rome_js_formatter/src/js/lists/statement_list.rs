@@ -1,7 +1,9 @@
+use crate::generated::FormatJsStatementList;
 use crate::prelude::*;
 use rome_js_syntax::JsStatementList;
-impl Format for JsStatementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(self.clone()))
+
+impl FormatRule<JsStatementList> for FormatJsStatementList {
+    fn format(node: &JsStatementList, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Ok(formatter.format_list(node))
     }
 }

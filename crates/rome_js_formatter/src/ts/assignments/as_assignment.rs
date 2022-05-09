@@ -1,22 +1,23 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::TsAsAssignment;
 use rome_js_syntax::TsAsAssignmentFields;
 
-impl FormatNode for TsAsAssignment {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsAsAssignment> for FormatNodeRule<TsAsAssignment> {
+    fn format_fields(node: &TsAsAssignment, formatter: &Formatter) -> FormatResult<FormatElement> {
         let TsAsAssignmentFields {
             assignment,
             as_token,
             ty,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatted![
             formatter,
-            assignment.format(formatter)?,
+            assignment.format(),
             space_token(),
-            as_token.format(formatter)?,
+            as_token.format(),
             space_token(),
-            ty.format(formatter)?,
+            ty.format(),
         ]
     }
 }

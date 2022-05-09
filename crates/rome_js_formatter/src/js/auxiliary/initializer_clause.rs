@@ -1,20 +1,24 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsInitializerClause;
 use rome_js_syntax::JsInitializerClauseFields;
 
-impl FormatNode for JsInitializerClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsInitializerClause> for FormatNodeRule<JsInitializerClause> {
+    fn format_fields(
+        node: &JsInitializerClause,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsInitializerClauseFields {
             eq_token,
             expression,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatted![
             formatter,
-            hard_group_elements(eq_token.format(formatter)?),
+            hard_group_elements(formatted![formatter, eq_token.format()]?),
             space_token(),
-            expression.format(formatter)?
+            expression.format()
         ]
     }
 }

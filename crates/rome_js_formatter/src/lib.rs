@@ -28,6 +28,8 @@ use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, TextSize};
 use rome_rowan::{SyntaxResult, TokenAtOffset};
+use std::borrow::{Borrow, BorrowMut};
+use std::cell::Cell;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -263,48 +265,23 @@ where
 
 // Per Crate
 
-// The following types must pe per crate to work around Rust's orphan rule
-// * `AsFormat` / `IntoFormat / WithFormatRule`: Traits must be crate local to implement them on the JS AST nodes
-// * `FormattedIterExt`: Uses `IntoFormat`
-// * `FormatNodeRule`: Defines language specific node formatting
-// SyntaxNode + SyntaxToken -> Implement with FormatRule too.
-
-// BOILERPLATE
-// pub struct FormatJsMethodModifierList;
-//
-// impl FormatRule<JsMethodModifierList> for FormatJsMethodModifierList {
-//     fn format(item: &JsMethodModifierList, formatter: &Formatter) -> FormatResult<FormatElement> {
-//         todo!()
-//     }
-// }
-//
-// impl WithFormatRule for JsMethodModifierList {
-//     type Rule = FormatJsMethodModifierList;
-// }
-
-/// Trait implemented by object that have an associated [FormatRule] that knows how to format this object.
-pub trait WithFormatRule: Sized {
-    /// The rule that can format this object.
-    type Rule: FormatRule<Self>;
-}
-
 /// Used to get an object that knows how to format this object.
 pub trait AsFormat<'a> {
     type Format: Format;
 
     /// Returns an object that is able to format this object.
-    fn formatted(&'a self) -> Self::Format;
+    fn format(&'a self) -> Self::Format;
 }
 
 /// Implement [AsFormat] for all types that have an associated [FormatRule].
-impl<'a, T> AsFormat<'a> for T
+impl<'a, T> AsFormat<'a> for &'a T
 where
-    T: WithFormatRule + 'a,
+    T: AsFormat<'a>,
 {
-    type Format = FormatRefWithRule<'a, T, T::Rule>;
+    type Format = T::Format;
 
-    fn formatted(&'a self) -> Self::Format {
-        FormatRefWithRule::new(self)
+    fn format(&'a self) -> Self::Format {
+        AsFormat::format(&**self)
     }
 }
 
@@ -317,9 +294,9 @@ where
 {
     type Format = SyntaxResult<T::Format>;
 
-    fn formatted(&'a self) -> Self::Format {
+    fn format(&'a self) -> Self::Format {
         match self {
-            Ok(value) => Ok(value.formatted()),
+            Ok(value) => Ok(value.format()),
             Err(err) => Err(*err),
         }
     }
@@ -334,10 +311,10 @@ where
 {
     type Format = Option<T::Format>;
 
-    fn formatted(&'a self) -> Self::Format {
+    fn format(&'a self) -> Self::Format {
         match self {
             None => None,
-            Some(value) => Some(value.formatted()),
+            Some(value) => Some(value.format()),
         }
     }
 }
@@ -349,17 +326,6 @@ pub trait IntoFormat {
     type Format: Format;
 
     fn into_format(self) -> Self::Format;
-}
-
-impl<T> IntoFormat for T
-where
-    T: WithFormatRule,
-{
-    type Format = FormatOwnedWithRule<T, T::Rule>;
-
-    fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule::new(self)
-    }
 }
 
 impl<T> IntoFormat for SyntaxResult<T>
@@ -434,62 +400,70 @@ where
 {
 }
 
-pub trait FormatNodeRule<T>
+// How about making this a struct
+pub struct FormatNodeRule<T>
 where
     T: AstNode<Language = JsLanguage>,
 {
+    node: PhantomData<T>,
+}
+
+impl<N> FormatRule<N> for FormatNodeRule<N>
+where
+    N: AstNode<Language = JsLanguage>,
+    FormatNodeRule<N>: FormatNodeFields<N>,
+{
+    fn format(node: &N, formatter: &Formatter) -> FormatResult<FormatElement> {
+        let syntax = node.syntax();
+        let element = if has_formatter_suppressions(syntax) {
+            suppressed_node(syntax).format(formatter)?
+        } else {
+            Self::format_fields(node, formatter)?
+        };
+
+        Ok(element)
+    }
+}
+
+// TOOD figure out if struct is better or trait
+// Benefit of struct is that there's a single place where one can implement helper functions rather
+// One new type vs plenty
+pub trait FormatNodeFields<T>
+where
+    T: AstNode<Language = JsLanguage>,
+{
+    /// Formats the node's fields.
     fn format_fields(item: &T, formatter: &Formatter) -> FormatResult<FormatElement>;
 }
 
-impl<T, Item> FormatRule<Item> for T
-where
-    T: FormatNodeRule<Item>,
-    Item: AstNode<Language = JsLanguage>,
-{
-    fn format(item: &Item, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let node = item.syntax();
-        let element = if has_formatter_suppressions(node) {
-            suppressed_node(node).format(formatter)?
-        } else {
-            Self::format_fields(item, formatter)?
-        };
-
-        Ok(element)
-    }
-}
-
-/// Formatting trait for JS AST Nodes.
-///
-/// The code-gen generates a [Format] implementation for each `FormatNode` into the `format.rs` file.
-pub trait FormatNode: AstNode<Language = JsLanguage> {
-    /// Formats the node by calling into [FormatNode::format_fields] if the first token has no leading `rome-ignore` suppression comment.
-    ///
-    /// Formats the node "as is" if the node has a suppression comment.
-    fn format_node(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let node = self.syntax();
-        let element = if has_formatter_suppressions(node) {
-            suppressed_node(node).format(formatter)?
-        } else {
-            self.format_fields(formatter)?
-        };
-
-        Ok(element)
-    }
-
-    /// Formats the node's fields.
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
-}
-
 /// Format implementation specific to JavaScript tokens.
-impl Format for JsSyntaxToken {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        formatter.track_token(self);
+pub struct FormatJsSyntaxToken;
+
+impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
+    fn format(token: &JsSyntaxToken, formatter: &Formatter) -> FormatResult<FormatElement> {
+        formatter.track_token(token);
 
         Ok(format_elements![
-            format_leading_trivia(self, formatter::TriviaPrintMode::Full),
-            Token::from(self),
-            format_trailing_trivia(self),
+            format_leading_trivia(token, formatter::TriviaPrintMode::Full),
+            Token::from(token),
+            format_trailing_trivia(token),
         ])
+    }
+}
+
+impl<'a> AsFormat<'a> for JsSyntaxToken {
+    type Format = FormatRefWithRule<'a, JsSyntaxToken, FormatJsSyntaxToken>;
+
+    fn format(&'a self) -> Self::Format {
+        FormatRefWithRule::new(self)
+    }
+}
+
+impl IntoFormat for JsSyntaxToken {
+    type Format = FormatOwnedWithRule<JsSyntaxToken, FormatJsSyntaxToken>;
+
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(self)
     }
 }
 
@@ -510,7 +484,7 @@ pub fn format(options: FormatOptions, root: &dyn Format) -> FormatResult<Formatt
 pub fn format_node(options: FormatOptions, root: &JsSyntaxNode) -> FormatResult<Formatted> {
     tracing::trace_span!("format_node").in_scope(move || {
         let formatter = Formatter::new(options);
-        let element = root.format(&formatter)?;
+        let element = formatted![&formatter, root.format()]?;
 
         formatter.assert_formatted_all_tokens(root);
 

@@ -1,13 +1,20 @@
 use crate::prelude::*;
-use rome_js_syntax::TsTypeOperatorType;
+use crate::FormatNodeFields;
+use rome_js_syntax::{TsTypeOperatorType, TsTypeOperatorTypeFields};
 
-impl FormatNode for TsTypeOperatorType {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<TsTypeOperatorType> for FormatNodeRule<TsTypeOperatorType> {
+    fn format_fields(
+        node: &TsTypeOperatorType,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let TsTypeOperatorTypeFields { operator_token, ty } = node.as_fields();
+
         formatted![
             formatter,
-            self.operator_token()
+            operator_token
+                .format()
                 .with(|operator| { formatted![formatter, operator, space_token()] }),
-            self.ty().format(formatter)?
+            ty.format()
         ]
     }
 }

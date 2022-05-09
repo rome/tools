@@ -1,11 +1,12 @@
+use crate::generated::FormatJsDirectiveList;
 use crate::prelude::*;
 use rome_js_syntax::JsDirectiveList;
 use rome_rowan::{AstNode, AstNodeList};
 
-impl Format for JsDirectiveList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        if !self.is_empty() {
-            let syntax_node = self.syntax();
+impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
+    fn format(node: &JsDirectiveList, formatter: &Formatter) -> FormatResult<FormatElement> {
+        if !node.is_empty() {
+            let syntax_node = node.syntax();
             let next_sibling = syntax_node.next_sibling();
             // if next_sibling's first leading_trivia has more than one new_line, we should add an extra empty line at the end of
             // JsDirectiveList, for example:
@@ -24,7 +25,7 @@ impl Format for JsDirectiveList {
             };
             formatted![
                 formatter,
-                formatter.format_list(self.clone()),
+                formatter.format_list(node),
                 hard_line_break(),
                 if need_extra_empty_line {
                     empty_line()

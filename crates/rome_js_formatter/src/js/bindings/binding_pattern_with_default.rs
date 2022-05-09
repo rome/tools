@@ -1,23 +1,27 @@
 use crate::prelude::*;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsBindingPatternWithDefault;
 use rome_js_syntax::JsBindingPatternWithDefaultFields;
 
-impl FormatNode for JsBindingPatternWithDefault {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsBindingPatternWithDefault> for FormatNodeRule<JsBindingPatternWithDefault> {
+    fn format_fields(
+        node: &JsBindingPatternWithDefault,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsBindingPatternWithDefaultFields {
             pattern,
             eq_token,
             default,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatted![
             formatter,
-            pattern.format(formatter)?,
+            pattern.format(),
             space_token(),
-            eq_token.format(formatter)?,
+            eq_token.format(),
             space_token(),
-            default.format(formatter)?
+            default.format()
         ]
     }
 }

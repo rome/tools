@@ -2,11 +2,15 @@ use crate::prelude::*;
 
 use crate::utils::format_with_semicolon;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsExportNamedFromClause;
 use rome_js_syntax::JsExportNamedFromClauseFields;
 
-impl FormatNode for JsExportNamedFromClause {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsExportNamedFromClause> for FormatNodeRule<JsExportNamedFromClause> {
+    fn format_fields(
+        node: &JsExportNamedFromClause,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsExportNamedFromClauseFields {
             type_token,
             l_curly_token,
@@ -16,35 +20,33 @@ impl FormatNode for JsExportNamedFromClause {
             source,
             assertion,
             semicolon_token,
-        } = self.as_fields();
-
-        let type_token =
-            type_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
-
-        let specifiers = specifiers.format(formatter)?;
+        } = node.as_fields();
 
         let list = formatter.format_delimited_soft_block_spaces(
             &l_curly_token?,
-            specifiers,
+            formatted![formatter, specifiers.format()]?,
             &r_curly_token?,
         )?;
-
-        let from = from_token.format(formatter)?;
-        let source = source.format(formatter)?;
-        let assertion =
-            assertion.with_or_empty(|assertion| formatted![formatter, space_token(), assertion]);
 
         format_with_semicolon(
             formatter,
             formatted![
                 formatter,
-                type_token,
+                type_token.format().with_or_empty(|token| formatted![
+                    formatter,
+                    token,
+                    space_token()
+                ]),
                 list,
                 space_token(),
-                from,
+                from_token.format(),
                 space_token(),
-                source,
-                assertion,
+                source.format(),
+                assertion.format().with_or_empty(|assertion| formatted![
+                    formatter,
+                    space_token(),
+                    assertion
+                ]),
             ]?,
             semicolon_token,
         )

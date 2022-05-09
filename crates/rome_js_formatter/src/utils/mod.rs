@@ -8,15 +8,11 @@ mod member_chain;
 #[cfg(test)]
 mod quickcheck_utils;
 
-use crate::format_extensions::FormatOptional;
-use crate::{
-    empty_element, empty_line, hard_group_elements, space_token, token, Format, FormatElement,
-    Formatter, JsFormatter, QuoteStyle, Token,
-};
+use crate::prelude::*;
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
 pub(crate) use member_chain::format_call_expression;
-use rome_formatter::{normalize_newlines, FormatResult};
+use rome_formatter::{normalize_newlines, QuoteStyle};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyFunction, JsAnyRoot, JsAnyStatement, JsInitializerClause, JsLanguage,
     JsTemplateElement, JsTemplateElementFields, Modifiers, TsTemplateElement,
@@ -53,6 +49,7 @@ pub(crate) fn format_initializer_clause(
     formatted![
         formatter,
         initializer
+            .format()
             .with_or_empty(|initializer| { formatted![formatter, space_token(), initializer] })
     ]
 }
@@ -63,7 +60,7 @@ pub(crate) fn format_interpreter(
 ) -> FormatResult<FormatElement> {
     formatted![
         formatter,
-        interpreter.with_or(
+        interpreter.format().with_or(
             |interpreter| formatted![formatter, interpreter, empty_line()],
             empty_element,
         )
@@ -121,14 +118,14 @@ pub(crate) fn format_head_body_statement(
             formatter,
             head,
             space_token(),
-            body.format(formatter)?,
+            body.format(),
         ]?))
     } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
         // Force semicolon insertion if the body is empty
         formatted![
             formatter,
             hard_group_elements(head),
-            body.format(formatter)?,
+            body.format(),
             token(";"),
         ]
     } else {
@@ -136,7 +133,7 @@ pub(crate) fn format_head_body_statement(
             formatter,
             hard_group_elements(head),
             space_token(),
-            body.format(formatter)?,
+            body.format(),
         ]
     }
 }
@@ -379,7 +376,7 @@ mod tests {
 /// This function consumes a list of modifiers and applies a predictable sorting.
 pub(crate) fn sort_modifiers_by_precedence<List, Node>(list: &List) -> Vec<Node>
 where
-    Node: AstNode<Language = JsLanguage> + Clone,
+    Node: AstNode<Language = JsLanguage>,
     List: AstNodeList<Language = JsLanguage, Node = Node>,
     Modifiers: for<'a> From<&'a Node>,
 {
@@ -435,7 +432,7 @@ impl TemplateElement {
                 } = template_element.as_fields();
 
                 let dollar_curly_token = dollar_curly_token?;
-                let expression = expression.format(formatter)?;
+                let expression = formatted![formatter, expression.format()]?;
                 let r_curly_token = r_curly_token?;
 
                 (dollar_curly_token, expression, r_curly_token)
@@ -448,7 +445,7 @@ impl TemplateElement {
                 } = template_element.as_fields();
 
                 let dollar_curly_token = dollar_curly_token?;
-                let ty = ty.format(formatter)?;
+                let ty = formatted![formatter, ty.format()]?;
                 let r_curly_token = r_curly_token?;
 
                 (dollar_curly_token, ty, r_curly_token)
@@ -458,9 +455,9 @@ impl TemplateElement {
         if should_hard_group {
             Ok(hard_group_elements(formatted![
                 formatter,
-                dollar_curly_token.format(formatter)?,
+                dollar_curly_token.format(),
                 middle,
-                r_curly_token.format(formatter)?
+                r_curly_token.format()
             ]?))
         } else {
             formatter.format_delimited_soft_block_indent(
@@ -609,7 +606,7 @@ pub(crate) fn format_with_semicolon(
     formatted![
         formatter,
         content,
-        semicolon.or_format(if is_unknown {
+        semicolon.format().or_format(if is_unknown {
             empty_element
         } else {
             || token(";")

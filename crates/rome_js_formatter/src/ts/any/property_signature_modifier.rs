@@ -1,16 +1,32 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+use crate::generated::FormatTsAnyPropertySignatureModifier;
 use crate::prelude::*;
 use rome_js_syntax::TsAnyPropertySignatureModifier;
-impl Format for TsAnyPropertySignatureModifier {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Self::TsDeclareModifier(node) => node.format(formatter),
-            Self::TsAccessibilityModifier(node) => node.format(formatter),
-            Self::JsStaticModifier(node) => node.format(formatter),
-            Self::TsReadonlyModifier(node) => node.format(formatter),
-            Self::TsOverrideModifier(node) => node.format(formatter),
-            Self::TsAbstractModifier(node) => node.format(formatter),
+impl FormatRule<TsAnyPropertySignatureModifier> for FormatTsAnyPropertySignatureModifier {
+    fn format(
+        node: &TsAnyPropertySignatureModifier,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        match node {
+            TsAnyPropertySignatureModifier::TsDeclareModifier(node) => {
+                formatted![formatter, node.format()]
+            }
+            TsAnyPropertySignatureModifier::TsAccessibilityModifier(node) => {
+                formatted![formatter, node.format()]
+            }
+            TsAnyPropertySignatureModifier::JsStaticModifier(node) => {
+                formatted![formatter, node.format()]
+            }
+            TsAnyPropertySignatureModifier::TsReadonlyModifier(node) => {
+                formatted![formatter, node.format()]
+            }
+            TsAnyPropertySignatureModifier::TsOverrideModifier(node) => {
+                formatted![formatter, node.format()]
+            }
+            TsAnyPropertySignatureModifier::TsAbstractModifier(node) => {
+                formatted![formatter, node.format()]
+            }
         }
     }
 }

@@ -1,19 +1,23 @@
 use crate::prelude::*;
+use crate::FormatNodeFields;
 use rome_js_syntax::{JsxNamespaceName, JsxNamespaceNameFields};
 
-impl FormatNode for JsxNamespaceName {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsxNamespaceName> for FormatNodeRule<JsxNamespaceName> {
+    fn format_fields(
+        node: &JsxNamespaceName,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsxNamespaceNameFields {
             namespace,
             colon_token,
             name,
-        } = self.as_fields();
+        } = node.as_fields();
 
         formatted![
             formatter,
-            namespace.format(formatter)?,
-            colon_token.format(formatter)?,
-            name.format(formatter)?
+            namespace.format(),
+            colon_token.format(),
+            name.format()
         ]
     }
 }

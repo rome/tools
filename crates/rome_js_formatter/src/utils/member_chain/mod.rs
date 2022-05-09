@@ -2,12 +2,9 @@ mod flatten_item;
 mod groups;
 mod simple_argument;
 
+use crate::prelude::*;
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::groups::{Groups, HeadGroup};
-use crate::{
-    format_elements, group_elements, hard_line_break, indent, Format, FormatElement, FormatResult,
-    Formatter,
-};
 use rome_js_syntax::{
     JsCallExpression, JsComputedMemberExpression, JsExpressionStatement, JsStaticMemberExpression,
 };
@@ -323,11 +320,12 @@ fn flatten_call_expression(
             let call_expression = JsCallExpression::cast(node).unwrap();
             let callee = call_expression.callee()?;
             flatten_call_expression(queue, callee.syntax().clone(), formatter)?;
-            let formatted = vec![
-                formatted!(formatter, call_expression.optional_chain_token())?,
-                formatted!(formatter, call_expression.type_arguments())?,
-                call_expression.arguments().format(formatter)?,
-            ];
+            let formatted = vec![formatted![
+                formatter,
+                call_expression.optional_chain_token().format(),
+                call_expression.type_arguments().format(),
+                call_expression.arguments().format()
+            ]?];
 
             queue.push(FlattenItem::CallExpression(call_expression, formatted));
         }
@@ -335,10 +333,11 @@ fn flatten_call_expression(
             let static_member = JsStaticMemberExpression::cast(node).unwrap();
             let object = static_member.object()?;
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
-            let formatted = vec![
-                static_member.operator_token().format(formatter)?,
-                static_member.member().format(formatter)?,
-            ];
+            let formatted = vec![formatted![
+                formatter,
+                static_member.operator_token().format(),
+                static_member.member().format(),
+            ]?];
             queue.push(FlattenItem::StaticMember(static_member, formatted));
         }
 
@@ -346,12 +345,13 @@ fn flatten_call_expression(
             let computed_expression = JsComputedMemberExpression::cast(node).unwrap();
             let object = computed_expression.object()?;
             flatten_call_expression(queue, object.syntax().clone(), formatter)?;
-            let formatted = vec![
-                formatted!(formatter, computed_expression.optional_chain_token())?,
-                computed_expression.l_brack_token().format(formatter)?,
-                computed_expression.member().format(formatter)?,
-                computed_expression.r_brack_token().format(formatter)?,
-            ];
+            let formatted = vec![formatted!(
+                formatter,
+                computed_expression.optional_chain_token().format(),
+                computed_expression.l_brack_token().format(),
+                computed_expression.member().format(),
+                computed_expression.r_brack_token().format(),
+            )?];
 
             queue.push(FlattenItem::ComputedExpression(
                 computed_expression,
@@ -360,7 +360,7 @@ fn flatten_call_expression(
         }
 
         _ => {
-            let formatted = node.format(formatter)?;
+            let formatted = formatted![formatter, node.format()]?;
             queue.push(FlattenItem::Node(node, formatted));
         }
     }

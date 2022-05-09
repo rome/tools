@@ -3,10 +3,14 @@ use rome_js_syntax::JsForOfStatement;
 use crate::prelude::*;
 use crate::utils::format_head_body_statement;
 
+use crate::FormatNodeFields;
 use rome_js_syntax::JsForOfStatementFields;
 
-impl FormatNode for JsForOfStatement {
-    fn format_fields(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+impl FormatNodeFields<JsForOfStatement> for FormatNodeRule<JsForOfStatement> {
+    fn format_fields(
+        node: &JsForOfStatement,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
         let JsForOfStatementFields {
             for_token,
             await_token,
@@ -16,31 +20,28 @@ impl FormatNode for JsForOfStatement {
             expression,
             r_paren_token,
             body,
-        } = self.as_fields();
-
-        let for_token = for_token.format(formatter)?;
-        let await_token =
-            await_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
-        let initializer = initializer.format(formatter)?;
-        let of_token = of_token.format(formatter)?;
-        let expression = expression.format(formatter)?;
+        } = node.as_fields();
 
         format_head_body_statement(
             formatter,
             formatted![
                 formatter,
-                for_token,
+                for_token.format(),
                 space_token(),
-                await_token,
+                await_token.format().with_or_empty(|token| formatted![
+                    formatter,
+                    token,
+                    space_token()
+                ]),
                 formatter.format_delimited_soft_block_indent(
                     &l_paren_token?,
                     formatted![
                         formatter,
-                        initializer,
+                        initializer.format(),
                         soft_line_break_or_space(),
-                        of_token,
+                        of_token.format(),
                         soft_line_break_or_space(),
-                        expression,
+                        expression.format(),
                     ]?,
                     &r_paren_token?
                 )?,

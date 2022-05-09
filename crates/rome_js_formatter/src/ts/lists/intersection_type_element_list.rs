@@ -1,13 +1,17 @@
+use crate::generated::FormatTsIntersectionTypeElementList;
 use crate::prelude::*;
 use rome_js_syntax::TsIntersectionTypeElementList;
 use rome_rowan::AstSeparatedList;
 
-impl Format for TsIntersectionTypeElementList {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let mut elements = Vec::with_capacity(self.len());
-        let last_index = self.len().saturating_sub(1);
+impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeElementList {
+    fn format(
+        node: &TsIntersectionTypeElementList,
+        formatter: &Formatter,
+    ) -> FormatResult<FormatElement> {
+        let mut elements = Vec::with_capacity(node.len());
+        let last_index = node.len().saturating_sub(1);
 
-        for (index, item) in self.elements().enumerate() {
+        for (index, item) in node.elements().enumerate() {
             let ty = item.node()?;
             let separator = item.trailing_separator()?;
 
@@ -19,7 +23,7 @@ impl Format for TsIntersectionTypeElementList {
                         formatted![
                             formatter,
                             soft_line_break_or_space(),
-                            token.format(formatter)?,
+                            token.format(),
                             space_token()
                         ]?
                     }
@@ -38,7 +42,7 @@ impl Format for TsIntersectionTypeElementList {
                 }
             };
 
-            elements.push(formatted![formatter, ty.format(formatter)?, separator]?)
+            elements.push(formatted![formatter, ty.format(), separator]?)
         }
 
         Ok(concat_elements(elements))
