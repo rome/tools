@@ -1,11 +1,20 @@
-// Define general type for useWindowSize hook, which includes width and height
 import { useEffect, useState } from "react";
 import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
 import { IndentStyle, PlaygroundState, QuoteStyle, SourceType } from "./types";
 
-interface Size { width: number | undefined; height: number | undefined }
+export function classNames(...classes: (string | undefined)[]): string {
+	return classes.filter(Boolean).join(" ");
+}
+
+// Define general type for useWindowSize hook, which includes width and height
+interface Size {
+	width: number | undefined;
+	height: number | undefined;
+}
+
+
 
 // Hook
 export function useWindowSize(): Size {
@@ -15,71 +24,66 @@ export function useWindowSize(): Size {
 		width: undefined,
 		height: undefined,
 	});
-	useEffect(
-		() => {
-			// Handler to call on window resize
-			function handleResize() {
-				// Set window width/height to state
-				setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-			}
-			// Add event listener
-			window.addEventListener("resize", handleResize);
-			// Call handler right away so state gets updated with initial window size
-			handleResize();
-			// Remove event listener on cleanup
-			return () => window.removeEventListener("resize", handleResize);
-		},
-		[],
-	); // Empty array ensures that effect is only run on mount
+	useEffect(() => {
+		// Handler to call on window resize
+		function handleResize() {
+			// Set window width/height to state
+			setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+		}
+		// Add event listener
+		window.addEventListener("resize", handleResize);
+		// Call handler right away so state gets updated with initial window size
+		handleResize();
+		// Remove event listener on cleanup
+		return () => window.removeEventListener("resize", handleResize);
+	}, []); // Empty array ensures that effect is only run on mount
 	return windowSize;
 }
 
 export function usePlaygroundState(): PlaygroundState {
 	const searchParams = new URLSearchParams(window.location.search);
-	const [code, setCode] = useState(
-		() =>
-			window.location.hash !== "#" ? decodeCode(
-				window.location.hash.substring(1),
-			) : "",
+	const [code, setCode] = useState(() =>
+		window.location.hash !== "#"
+			? decodeCode(window.location.hash.substring(1))
+			: ""
 	);
 	const [lineWidth, setLineWidth] = useState(
-		parseInt(searchParams.get("lineWidth") ?? "80"),
+		parseInt(searchParams.get("lineWidth") ?? "80")
 	);
 	const [indentStyle, setIndentStyle] = useState(
-		(searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
+		(searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab
 	);
 	const [quoteStyle, setQuoteStyle] = useState(
-		(searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
+		(searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double
 	);
 	const [indentWidth, setIndentWidth] = useState(
-		parseInt(searchParams.get("indentWidth") ?? "2"),
+		parseInt(searchParams.get("indentWidth") ?? "2")
 	);
 	const [isTypeScript, setIsTypeScript] = useState(
-		searchParams.get("typescript") === "true",
+		searchParams.get("typescript") === "true"
 	);
 	const [isJsx, setIsJsx] = useState(searchParams.get("jsx") === "true");
 	const [sourceType, setSourceType] = useState(
-		(searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
+		(searchParams.get("sourceType") as SourceType) ?? SourceType.Module
 	);
 
-	useEffect(
-		() => {
-			const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&quoteStyle=${quoteStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}&sourceType=${sourceType}#${encodeCode(
-				code,
-			)}`;
-			window.history.pushState({ path: url }, "", url);
-		},
-		[
-			lineWidth,
-			indentStyle,
-			quoteStyle,
-			indentWidth,
-			code,
-			isTypeScript,
-			isJsx,
-			sourceType,
-		],
-	);
+	useEffect(() => {
+		const url = `${window.location.protocol}//${window.location.host}${
+			window.location.pathname
+		}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&quoteStyle=${quoteStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}&sourceType=${sourceType}#${encodeCode(
+			code
+		)}`;
+		window.history.pushState({ path: url }, "", url);
+	}, [
+		lineWidth,
+		indentStyle,
+		quoteStyle,
+		indentWidth,
+		code,
+		isTypeScript,
+		isJsx,
+		sourceType,
+	]);
 
 	return {
 		code,
@@ -141,10 +145,10 @@ function getPrettierParser(language: "js" | "ts"): string {
 	}
 }
 
-export function getLanguage(isJsx: boolean, isTypeScript: boolean):
-	| "jsx"
-	| "typescript"
-	| "js" {
+export function getLanguage(
+	isJsx: boolean,
+	isTypeScript: boolean
+): "jsx" | "typescript" | "js" {
 	if (isTypeScript) {
 		return "typescript";
 	} else if (isJsx) {

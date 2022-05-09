@@ -12,12 +12,14 @@
 		"format": "cargo run -p rome_cli --release -- format --write ./src"
 	},
 	"dependencies": {
+		"@headlessui/react": "^1.6.1",
+		"@heroicons/react": "^1.0.6",
 		"@uiw/react-textarea-code-editor": "^1.4.16",
 		"prettier": "^2.5.1",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-json-view": "^1.21.3",
-		"react-tabs": "^3.2.3"
+		"react-tabs": "^3.2.3",
 	},
 	"devDependencies": {
 		"@tailwindcss/forms": "^0.4.0",
