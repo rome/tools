@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::FormatNodeFields;
-use crate::{Format, FormatElement, Formatter};
+use crate::{FormatElement, Formatter};
 use rome_formatter::{group_elements, FormatResult};
 use rome_js_syntax::{JsxExpressionChild, JsxExpressionChildFields};
 

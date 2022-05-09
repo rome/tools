@@ -1,6 +1,8 @@
+use crate::formatter::TrailingSeparator;
 use crate::generated::FormatJsxChildList;
 use crate::prelude::*;
-use rome_formatter::{group_elements, join_elements, soft_line_break, FormatResult};
+use crate::{FormatElement, Formatter, JsFormatter};
+use rome_formatter::{empty_element, fill_elements, group_elements, FormatResult};
 use rome_js_syntax::JsxChildList;
 
 impl FormatRule<JsxChildList> for FormatJsxChildList {
