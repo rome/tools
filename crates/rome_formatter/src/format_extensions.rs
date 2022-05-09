@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use std::cell::RefCell;
 
+use crate::IntoFormatElement;
 use rome_rowan::SyntaxResult;
 
 /// Utility trait used to simplify the formatting of optional objects that are formattable.
@@ -44,7 +45,7 @@ pub trait FormatOptional {
     ) -> FormatWithOr<With, fn() -> FormatElement, WithResult, FormatElement>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatResult,
+        WithResult: IntoFormatElement,
     {
         self.with_or(with, empty_element)
     }
@@ -77,7 +78,7 @@ pub trait FormatOptional {
     ) -> FormatWithOr<fn(FormatElement) -> FormatElement, Or, FormatElement, OrResult>
     where
         Or: Fn() -> OrResult,
-        OrResult: IntoFormatResult,
+        OrResult: IntoFormatElement,
         Self: Sized,
     {
         self.with_or(|token| token, op)
@@ -125,9 +126,9 @@ pub trait FormatOptional {
     ) -> FormatWithOr<With, Or, WithResult, OrResult>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatResult,
+        WithResult: IntoFormatElement,
         Or: Fn() -> OrResult,
-        OrResult: IntoFormatResult;
+        OrResult: IntoFormatElement;
 }
 
 /// Utility trait for formatting a formattable object with some additional content.
@@ -163,13 +164,13 @@ pub trait FormatWith {
     fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatResult;
+        WithResult: IntoFormatElement;
 }
 
 pub struct FormatItemWith<'a, With, WithResult>
 where
     With: Fn(FormatElement) -> WithResult,
-    WithResult: IntoFormatResult,
+    WithResult: IntoFormatElement,
 {
     with: With,
     inner: &'a dyn Format,
@@ -178,33 +179,12 @@ where
 impl<'a, With, WithResult> Format for FormatItemWith<'a, With, WithResult>
 where
     With: Fn(FormatElement) -> WithResult,
-    WithResult: IntoFormatResult,
+    WithResult: IntoFormatElement,
 {
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let element = self.inner.format(formatter)?;
 
-        (self.with)(element).into_format_result()
-    }
-}
-
-/// Utility trait to convert [crate::FormatElement] to [FormatResult]
-pub trait IntoFormatResult {
-    /// Consumes a [crate::FormatElement] to return a [FormatResult::FormatElement]
-    ///
-    /// This function in important when working with closures and the rest of the traits
-    /// that belong to this module.
-    fn into_format_result(self) -> FormatResult<FormatElement>;
-}
-
-impl IntoFormatResult for FormatElement {
-    fn into_format_result(self) -> FormatResult<FormatElement> {
-        Ok(self)
-    }
-}
-
-impl IntoFormatResult for FormatResult<FormatElement> {
-    fn into_format_result(self) -> FormatResult<FormatElement> {
-        self
+        (self.with)(element).into_format_element(formatter)
     }
 }
 
@@ -212,7 +192,7 @@ impl<F: Format> FormatWith for F {
     fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatResult,
+        WithResult: IntoFormatElement,
     {
         FormatItemWith { with, inner: self }
     }
@@ -226,9 +206,9 @@ impl<F: Format> FormatOptional for SyntaxResult<Option<F>> {
     ) -> FormatWithOr<With, Or, WithResult, OrResult>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatResult,
+        WithResult: IntoFormatElement,
         Or: Fn() -> OrResult,
-        OrResult: IntoFormatResult,
+        OrResult: IntoFormatElement,
     {
         match self {
             Err(_) => FormatWithOr::With { inner: self, with },
@@ -246,9 +226,9 @@ impl<F: Format> FormatOptional for Option<F> {
     ) -> FormatWithOr<With, Or, WithResult, OrResult>
     where
         With: Fn(FormatElement) -> WithResult,
-        WithResult: IntoFormatResult,
+        WithResult: IntoFormatElement,
         Or: Fn() -> OrResult,
-        OrResult: IntoFormatResult,
+        OrResult: IntoFormatElement,
     {
         match self {
             None => FormatWithOr::Or(op),
@@ -261,8 +241,8 @@ pub enum FormatWithOr<'a, With, Or, WithResult, OrResult>
 where
     With: Fn(FormatElement) -> WithResult,
     Or: Fn() -> OrResult,
-    WithResult: IntoFormatResult,
-    OrResult: IntoFormatResult,
+    WithResult: IntoFormatElement,
+    OrResult: IntoFormatElement,
 {
     With { inner: &'a dyn Format, with: With },
     Or(Or),
@@ -272,15 +252,15 @@ impl<'a, With, Or, WithResult, OrResult> Format for FormatWithOr<'a, With, Or, W
 where
     With: Fn(FormatElement) -> WithResult,
     Or: Fn() -> OrResult,
-    WithResult: IntoFormatResult,
-    OrResult: IntoFormatResult,
+    WithResult: IntoFormatElement,
+    OrResult: IntoFormatElement,
 {
     #[inline]
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            FormatWithOr::Or(op) => op().into_format_result(),
+            FormatWithOr::Or(op) => op().into_format_element(formatter),
             FormatWithOr::With { inner, with } => {
-                with(inner.format(formatter)?).into_format_result()
+                with(inner.format(formatter)?).into_format_element(formatter)
             }
         }
     }

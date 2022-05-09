@@ -446,6 +446,13 @@ impl IntoFormatElement for FormatElement {
     }
 }
 
+impl IntoFormatElement for FormatResult<FormatElement> {
+    #[inline]
+    fn into_format_element(self, _: &Formatter) -> FormatResult<FormatElement> {
+        self
+    }
+}
+
 impl<T> IntoFormatElement for T
 where
     T: Format,
