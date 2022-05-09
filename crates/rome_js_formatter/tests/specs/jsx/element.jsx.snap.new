@@ -1,0 +1,24 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+assertion_line: 242
+expression: element.jsx
+---
+# Input
+<div> A Brighter   Summer Day</div>
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+-----
+<div> A Brighter Summer Day</div>;
+
+
+## Unimplemented nodes/tokens
+
+"<div>" => 0..5
+"</div>" => 27..33
+

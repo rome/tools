@@ -4,7 +4,7 @@ mod format_conditional;
 mod simple;
 pub mod string_utils;
 
-mod jsx_utils;
+pub mod jsx_utils;
 mod member_chain;
 #[cfg(test)]
 mod quickcheck_utils;

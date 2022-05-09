@@ -1,5 +1,8 @@
 use crate::prelude::*;
+use crate::utils::jsx_utils::WHITESPACE;
 use crate::FormatNodeFields;
+use crate::{FormatElement, Formatter, JsFormatter};
+use rome_formatter::{FormatResult, Token};
 use rome_js_syntax::{JsxText, JsxTextFields};
 use std::borrow::Cow;
 use std::ops::Range;
@@ -18,24 +21,6 @@ impl FormatNodeFields<JsxText> for FormatNodeRule<JsxText> {
 
         Ok(formatter.format_replaced(&token, FormatElement::from(new_token)))
     }
-}
-
-static WHITESPACE: [char; 4] = [' ', '\n', '\t', '\r'];
-
-pub fn is_meaningful_jsx_text(text: &str) -> bool {
-    let mut has_newline = false;
-    let mut has_non_whitespace = false;
-    for c in text.chars() {
-        // If there is a non-whitespace character
-        if !WHITESPACE.contains(&c) {
-            has_non_whitespace = true;
-        }
-        if c == '\n' {
-            has_newline = true;
-        }
-    }
-
-    has_non_whitespace || !has_newline
 }
 
 struct TextCleaner<'a> {
