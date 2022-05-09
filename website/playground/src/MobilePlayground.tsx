@@ -10,6 +10,12 @@ export function MobilePlayground(
 		playgroundState: { code, setCode, ...settings },
 		prettierOutput,
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+		syntaxTreeRepresentationState: {
+			rawAstRepresentation,
+			rawCstRepresentation,
+			setRawAstRepresentation,
+			setRawCstRepresentation,
+		},
 	}: PlaygroundProps,
 ) {
 	const { isJsx, isTypeScript } = settings;

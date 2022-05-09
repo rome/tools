@@ -119,6 +119,7 @@ pub fn run(
     is_typescript: bool,
     is_jsx: bool,
     source_type: String,
+    raw_representation: bool,
 ) -> RomeOutput {
     let mut simple_files = SimpleFiles::new();
     let main_file_id = simple_files.add("main.js".to_string(), code.clone());
@@ -154,14 +155,20 @@ pub fn run(
         quote_style: quote_style.parse().unwrap_or_default(),
     };
 
-    let cst_json = serde_json::to_value(&syntax)
-        .unwrap_or_else(|_| json!({ "error": "CST could not be serialized" }));
-
     let ast_json = serde_json::to_value(&parse.tree())
         .unwrap_or_else(|_| json!({ "error": "AST could not be serialized" }));
 
-    let cst_json = clean_up_json(cst_json);
     let ast_json = clean_up_json(ast_json);
+
+    let cst = if raw_representation {
+        format!("{:#?}", syntax)
+    } else {
+        let cst_json = serde_json::to_value(&syntax)
+            .unwrap_or_else(|_| json!({ "error": "CST could not be serialized" }));
+
+        let cst_json = clean_up_json(cst_json);
+        cst_json.to_string()
+    };
 
     let formatted = format_node(options, &syntax).unwrap();
     let formatted_code = formatted.print().into_code();
@@ -177,7 +184,7 @@ pub fn run(
     }
 
     RomeOutput {
-        cst: cst_json.to_string(),
+        cst,
         ast: ast_json.to_string(),
         formatted_code,
         formatter_ir,

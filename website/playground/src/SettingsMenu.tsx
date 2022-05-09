@@ -4,7 +4,9 @@ import QuoteStyleSelect from "./QuoteStyleSelect";
 import SourceTypeSelect from "./SourceTypeSelect";
 import { PlaygroundSettings } from "./types";
 
-interface Props { settings: PlaygroundSettings }
+interface Props {
+	settings: PlaygroundSettings;
+}
 
 export function SettingsMenu(
 	{

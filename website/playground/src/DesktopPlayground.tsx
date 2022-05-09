@@ -1,15 +1,22 @@
-import { PlaygroundProps } from "./types";
+import { PlaygroundProps, SyntaxTreeRepresentation } from "./types";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
+import SyntaxTreeRepresentationSelect from "./SyntaxTreeRepresentationSelect";
 
 export default function DesktopPlayground(
 	{
 		playgroundState: { code, setCode, ...settings },
 		prettierOutput,
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+		syntaxTreeRepresentationState: {
+			rawAstRepresentation,
+			rawCstRepresentation,
+			setRawAstRepresentation,
+			setRawCstRepresentation,
+		},
 	}: PlaygroundProps,
 ) {
 	const { isJsx, isTypeScript } = settings;
@@ -37,7 +44,7 @@ export default function DesktopPlayground(
 				</div>
 				<div className="w-1/2 p-5 flex flex-col">
 					<Tabs>
-						<TabList>
+						<TabList style={{ userSelect: "none" }}>
 							<Tab selectedClassName="bg-slate-300">Formatter</Tab>
 							<Tab selectedClassName="bg-slate-300">CST</Tab>
 							<Tab selectedClassName="bg-slate-300">AST</Tab>
@@ -75,10 +82,25 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
-							<TreeView tree={cst} />
+							{/* <div>{cst}</div> */}
+							<SyntaxTreeRepresentationSelect representation={rawCstRepresentation} setSyntaxTreeRepresentation={(repr) => {
+								setRawCstRepresentation(repr)
+							}}/>
+							{rawCstRepresentation === SyntaxTreeRepresentation.Raw && (
+								<pre style={{ width: "100%", overflow: "scroll" }}>{cst}</pre>
+							)}
+							{rawCstRepresentation === SyntaxTreeRepresentation.JsonTree && <TreeView tree={cst} />}
 						</TabPanel>
 						<TabPanel>
-							<TreeView tree={ast} />
+							<SyntaxTreeRepresentationSelect representation={rawAstRepresentation} setSyntaxTreeRepresentation={(repr) => {
+								setRawAstRepresentation(repr)
+							}}/>
+							{rawAstRepresentation === SyntaxTreeRepresentation.JsonTree && <TreeView tree={ast} />}
+							{rawAstRepresentation === SyntaxTreeRepresentation.Raw && (
+								<pre style={{ width: "100%", overflow: "scroll" }}>
+									{JSON.stringify(JSON.parse(ast), null, 2)}
+								</pre>
+							)}
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>

@@ -3,9 +3,18 @@ import { useEffect, useState } from "react";
 import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
-import { IndentStyle, PlaygroundState, QuoteStyle, SourceType } from "./types";
+import {
+	IndentStyle,
+	PlaygroundState,
+	QuoteStyle,
+	SourceType,
+	SyntaxTreeRepresentation,
+} from "./types";
 
-interface Size { width: number | undefined; height: number | undefined }
+interface Size {
+	width: number | undefined;
+	height: number | undefined;
+}
 
 // Hook
 export function useWindowSize(): Size {
@@ -186,4 +195,19 @@ function fromBinary(binary: string) {
 		result += String.fromCharCode(charCodes[i]);
 	}
 	return result;
+}
+
+export function useSyntaxTreeRepresentationState() {
+	const [rawAstRepresentation, setRawAstRepresentation] = useState(
+		SyntaxTreeRepresentation.JsonTree,
+	);
+	const [rawCstRepresentation, setRawCstRepresentation] = useState(
+		SyntaxTreeRepresentation.JsonTree,
+	);
+	return {
+		rawAstRepresentation,
+		rawCstRepresentation,
+		setRawAstRepresentation,
+		setRawCstRepresentation,
+	};
 }

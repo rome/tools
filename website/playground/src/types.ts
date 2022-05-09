@@ -1,8 +1,10 @@
 import { RomeOutput } from "../pkg";
+import { useSyntaxTreeRepresentationState } from "./utils";
 
 export enum IndentStyle { Tab = "tab", Space = "space" }
 export enum SourceType { Module = "module", Script = "script" }
 export enum QuoteStyle { Double = "double", Single = "single" }
+export enum SyntaxTreeRepresentation { JsonTree = "json-tree", Raw = "raw" }
 
 export interface PlaygroundState {
 	code: string;
@@ -27,6 +29,9 @@ export interface PlaygroundProps {
 	playgroundState: PlaygroundState;
 	prettierOutput: string;
 	romeOutput: RomeOutput;
+	syntaxTreeRepresentationState: ReturnType<
+		typeof useSyntaxTreeRepresentationState
+	>;
 }
 
 export type PlaygroundSettings = Pick<
