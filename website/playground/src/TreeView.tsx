@@ -8,7 +8,7 @@ export default function TreeView({ tree }: Props) {
 	return (
 		<div className="overflow-scroll">
 			<TreeStyleSelect />
-			<ReactJson style={{ zIndex: "10 " }} src={JSON.parse(tree)} />
+			<ReactJson style={{ zIndex: "10 " }} src={tree} />
 		</div>
 	);
 }
