@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::FormatNodeFields;
+
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsInExpression,
     JsInstanceofExpression, JsLanguage, JsLogicalExpression, JsLogicalOperator, JsPrivateName,

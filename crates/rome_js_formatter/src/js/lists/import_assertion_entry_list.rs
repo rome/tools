@@ -1,7 +1,7 @@
 use crate::formatter::TrailingSeparator;
 use crate::generated::FormatJsImportAssertionEntryList;
 use crate::prelude::*;
-use rome_js_syntax::{JsImport, JsImportAssertionEntryList};
+use rome_js_syntax::{JsImportAssertionEntryList};
 
 impl FormatRule<JsImportAssertionEntryList> for FormatJsImportAssertionEntryList {
     fn format(

@@ -1,10 +1,12 @@
 use crate::prelude::*;
-use crate::{AsFormat, FormatOwnedWithRule, FormatRefWithRule, IntoFormat};
+use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule};
+
+use crate::{AsFormat, IntoFormat};
 use rome_js_syntax::{map_syntax_node, JsSyntaxNode};
 
 pub struct FormatJsSyntaxNode;
 
-impl FormatRule<JsSyntaxNode> for FormatJsSyntaxNode {
+impl rome_formatter::FormatRule<JsSyntaxNode> for FormatJsSyntaxNode {
     fn format(node: &JsSyntaxNode, formatter: &Formatter) -> FormatResult<FormatElement> {
         map_syntax_node!(node.clone(), node => formatted![formatter, node.format()])
     }

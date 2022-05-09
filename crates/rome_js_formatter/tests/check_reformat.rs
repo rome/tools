@@ -1,6 +1,7 @@
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
+use rome_formatter::FormatOptions;
 
-use rome_js_formatter::{format_node, FormatOptions};
+use rome_js_formatter::format_node;
 use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::JsSyntaxNode;
 

@@ -1,12 +1,15 @@
 mod builders;
 pub mod format_element;
-pub mod format_elements;
+mod format_extensions;
+pub mod formatter;
 pub mod intersperse;
+pub mod macros;
 pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;
 
+use crate::formatter::Formatter;
 use crate::printer::Printer;
 pub use builders::ConcatBuilder;
 pub use format_element::{
@@ -17,9 +20,10 @@ pub use format_element::{
     soft_block_indent, soft_line_break, soft_line_break_or_space, soft_line_indent_or_space,
     space_token, token, FormatElement, Token, Verbatim, LINE_TERMINATORS,
 };
-use rome_rowan::{SyntaxError, TextRange, TextSize};
+use rome_rowan::{SyntaxError, SyntaxResult, TextRange, TextSize};
 use std::error::Error;
-use std::fmt::{self, Display, Formatter};
+use std::fmt;
+use std::marker::PhantomData;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -54,7 +58,7 @@ impl FromStr for IndentStyle {
     }
 }
 
-impl Display for IndentStyle {
+impl fmt::Display for IndentStyle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             IndentStyle::Tab => write!(f, "Tab"),
@@ -94,8 +98,8 @@ pub enum ParseLineWidthError {
     TryFromIntError(LineWidthFromIntError),
 }
 
-impl Display for ParseLineWidthError {
-    fn fmt(&self, fmt: &mut Formatter<'_>) -> fmt::Result {
+impl fmt::Display for ParseLineWidthError {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(fmt, "{self:?}")
     }
 }
@@ -157,7 +161,7 @@ impl FromStr for QuoteStyle {
     }
 }
 
-impl Display for QuoteStyle {
+impl fmt::Display for QuoteStyle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             QuoteStyle::Double => write!(f, "Double Quotes"),
@@ -195,7 +199,7 @@ impl FormatOptions {
     }
 }
 
-impl Display for FormatOptions {
+impl fmt::Display for FormatOptions {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
@@ -327,7 +331,7 @@ pub enum FormatError {
     CapabilityDisabled,
 }
 
-impl Display for FormatError {
+impl fmt::Display for FormatError {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             FormatError::MissingRequiredChild => fmt.write_str("missing required child"),
@@ -351,4 +355,245 @@ impl From<&SyntaxError> for FormatError {
             SyntaxError::MissingRequiredChild => FormatError::MissingRequiredChild,
         }
     }
+}
+
+/// Formatting trait for types that can create a formatted representation. The `rome_formatter` equivalent
+/// to [std::fmt::Display].
+///
+/// ## Example
+/// Implementing `Format` for a custom struct
+///
+/// ```
+/// use rome_formatter::{format, FormatOptions};
+/// use rome_formatter::prelude::*;
+/// use rome_rowan::TextSize;
+///
+/// struct Paragraph(String);
+///
+/// impl Format for Paragraph {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+///         formatted![
+///             formatter,
+///             hard_line_break(),
+///             FormatElement::from(Token::new_dynamic(self.0.clone(), TextSize::from(0))),
+///             hard_line_break(),
+///         ]
+///     }
+/// }
+///
+/// let paragraph = Paragraph(String::from("test"));
+/// let printed = format(FormatOptions::default(), &paragraph).unwrap().print();
+///
+/// assert_eq!("test\n", printed.as_code())
+/// ```
+pub trait Format {
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+impl<T> Format for &T
+where
+    T: ?Sized + Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Format::format(&**self, formatter)
+    }
+}
+
+impl<T> Format for &mut T
+where
+    T: ?Sized + Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Format::format(&**self, formatter)
+    }
+}
+
+impl<T> Format for Option<T>
+where
+    T: Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match self {
+            Some(value) => value.format(formatter),
+            None => Ok(empty_element()),
+        }
+    }
+}
+
+impl<T> Format for SyntaxResult<T>
+where
+    T: Format,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match self {
+            Ok(value) => value.format(formatter),
+            Err(err) => Err(err.into()),
+        }
+    }
+}
+
+/// Implemented by traits that can be converted to a `FormatElement`.
+///
+/// This is similar to [Format] but with the difference that it consumes `self`, allowing it to also
+/// be implemented on [FormatElement].format_elements.rs
+pub trait IntoFormatElement {
+    fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+impl IntoFormatElement for FormatElement {
+    fn into_format_element(self, _: &Formatter) -> FormatResult<FormatElement> {
+        Ok(self)
+    }
+}
+
+impl<T> IntoFormatElement for T
+where
+    T: Format,
+{
+    fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        self.format(formatter)
+    }
+}
+
+/// Rule that knows how to format an object of type [T].
+///
+/// Implementing [Format] on the object itself is preferred over implementing [FormatRule] but
+/// this isn't possible inside of a dependent crate for external type.
+///
+/// For example, the `rome_js_formatter` crate isn't able to implement [Format] on `JsIfStatement`
+/// because both the [Format] trait and `JsIfStatement` are external types (Rust's orphan rule).
+///
+/// That's why the `rome_js_formatter` crate must define a new-type that implements the formatting
+/// of `JsIfStatement`.
+pub trait FormatRule<T> {
+    fn format(item: &T, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+/// Trait for an object that formats an object with a specified rule.
+///
+/// Gives access to the underlying item.
+///
+/// Useful in situation where a type itself doesn't implement [Format] (e.g. because of Rust's orphan rule)
+/// but you want to implement some common formatting logic.
+///
+/// ## Examples
+///
+/// This can be useful if you want to format a `SyntaxNode` inside rome_formatter.. `SyntaxNode` doesn't implement [Format]
+/// itself but the language agnostic crate implements `AsFormat` and `IntoFormat` for it and the returned [Format]
+/// implement [FormatWithRule].
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{FormatOptions, FormatWithRule};
+/// use rome_rowan::{Language, SyntaxNode};
+/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>>>(node: F) -> FormatResult<FormatElement> {
+///     let formatter = Formatter::new(FormatOptions::default());
+///
+///     let formatted = node.format(&formatter);
+///     let _syntax = node.item();
+///
+///     // Do something with syntax
+///     formatted
+/// }
+/// ```
+pub trait FormatWithRule: Format {
+    type Item;
+
+    fn item(&self) -> &Self::Item;
+}
+
+/// Formats the referenced `item` with the specified rule.
+pub struct FormatRefWithRule<'a, T, R>
+where
+    R: FormatRule<T>,
+{
+    item: &'a T,
+    rule: PhantomData<R>,
+}
+
+impl<'a, T, R> FormatRefWithRule<'a, T, R>
+where
+    R: FormatRule<T>,
+{
+    pub fn new(item: &'a T) -> Self {
+        Self {
+            item,
+            rule: PhantomData,
+        }
+    }
+}
+
+impl<T, R> FormatWithRule for FormatRefWithRule<'_, T, R>
+where
+    R: FormatRule<T>,
+{
+    type Item = T;
+
+    fn item(&self) -> &Self::Item {
+        self.item
+    }
+}
+
+impl<T, R> Format for FormatRefWithRule<'_, T, R>
+where
+    R: FormatRule<T>,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        R::format(self.item, formatter)
+    }
+}
+
+/// Formats the `item` with the specified rule.
+pub struct FormatOwnedWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    item: T,
+    rule: PhantomData<R>,
+}
+
+impl<T, R> FormatOwnedWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    pub fn new(item: T) -> Self {
+        Self {
+            item,
+            rule: PhantomData,
+        }
+    }
+
+    pub fn into_item(self) -> T {
+        self.item
+    }
+}
+
+impl<T, R> Format for FormatOwnedWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        R::format(&self.item, formatter)
+    }
+}
+
+impl<T, R> FormatWithRule for FormatOwnedWithRule<T, R>
+where
+    R: FormatRule<T>,
+{
+    type Item = T;
+
+    fn item(&self) -> &Self::Item {
+        &self.item
+    }
+}
+
+/// Formats any value that implements [Format].
+///
+/// Please note that [format_node] is preferred to format a [JsSyntaxNode]
+pub fn format(options: FormatOptions, root: &dyn Format) -> FormatResult<Formatted> {
+    tracing::trace_span!("format").in_scope(move || {
+        let formatter = Formatter::new(options);
+        let element = root.format(&formatter)?;
+        Ok(Formatted::new(element, options))
+    })
 }

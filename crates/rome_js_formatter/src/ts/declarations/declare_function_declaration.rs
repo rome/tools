@@ -1,4 +1,3 @@
-use crate::format_extensions::FormatOptional;
 use crate::prelude::*;
 use crate::utils::format_with_semicolon;
 use crate::FormatNodeFields;

@@ -310,20 +310,32 @@ pub fn generate_formatter() {
 
                 impl FormatRule<#node_id> for #format_id {
                     fn format(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
-                        Ok(formatter.format_list(self))
+                        Ok(formatter.format_list(node))
                     }
                 }
             },
-            NodeKind::Node | NodeKind::List { separated: true } => {
+            NodeKind::List { .. } => quote! {
+                use crate::prelude::*;
+                use crate::formatter::verbatim_node;
+                use crate::generated::#format_id;
+                use rome_js_syntax::#node_id;
+
+                impl FormatRule<#node_id> for #format_id {
+                    fn format(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
+                        verbatim_node(node.syntax()).format(formatter)
+                    }
+                }
+            },
+            NodeKind::Node => {
                 quote! {
                     use crate::prelude::*;
-                    use crate::generated::#format_id;
+                    use crate::{formatter::verbatim_node, FormatNodeFields};
                     use rome_rowan::AstNode;
                     use rome_js_syntax::#node_id;
 
-                    impl FormatNodeRule<#node_id> for #format_id {
+                    impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
                         fn format_fields(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
-                            verbatim_node(self.syntax()).format(formatter)
+                            verbatim_node(node.syntax()).format(formatter)
                         }
                     }
                 }
@@ -331,13 +343,13 @@ pub fn generate_formatter() {
             NodeKind::Unknown => {
                 quote! {
                     use crate::prelude::*;
-                    use crate::generated::#format_id;
+                    use crate::{FormatNodeFields, formatter::unknown_node};
                     use rome_rowan::AstNode;
                     use rome_js_syntax::#node_id;
 
-                    impl FormatNodeRule<#node_id> for #format_id {
+                    impl FormatNodeFields<#node_id> for FormatNodeRule<#node_id> {
                         fn format_fields(node: &#node_id, formatter: &Formatter) -> FormatResult<FormatElement> {
-                            unknown_node(self.syntax()).format(formatter)
+                            unknown_node(node.syntax()).format(formatter)
                         }
                     }
                 }
@@ -449,6 +461,7 @@ impl BoilerplateImpls {
         let impls = self.impls;
 
         let tokens = quote! {
+            use rome_formatter::{FormatRefWithRule, FormatOwnedWithRule};
             use crate::{AsFormat, IntoFormat, FormatNodeRule};
 
             #( #impls )*

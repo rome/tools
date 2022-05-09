@@ -2,7 +2,7 @@ use crate::config::{FormatterWorkspaceSettings, WorkspaceSettings};
 use crate::line_index::{self, LineCol};
 use anyhow::{bail, Result};
 use rome_diagnostics::file::FileId;
-use rome_js_formatter::{FormatOptions, IndentStyle, QuoteStyle};
+use rome_formatter::{FormatOptions, IndentStyle, QuoteStyle};
 use rome_js_parser::{parse, SourceType};
 use rome_js_syntax::{TextRange, TokenAtOffset};
 use std::str::FromStr;

@@ -1,8 +1,5 @@
-use crate::Format;
-use crate::{empty_element, FormatElement, Formatter};
-use rome_formatter::FormatResult;
-use std::borrow::Borrow;
-use std::cell::{Cell, RefCell};
+use crate::prelude::*;
+use std::cell::RefCell;
 
 use rome_rowan::SyntaxResult;
 
@@ -18,31 +15,29 @@ pub trait FormatOptional {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_factory::JsSyntaxTreeBuilder;
-    /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token, formatted};
-    /// use rome_js_syntax::{JsSyntaxToken};
-    /// use rome_js_formatter::prelude::*;
-    /// use rome_js_syntax::JsSyntaxKind;
+    /// use rome_formatter::prelude::*;
+    /// use rome_rowan::TextSize;
+    ///
+    /// struct MyFormat;
+    ///
+    /// impl Format for MyFormat {
+    /// fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///         Ok(token("MyToken"))
+    ///     }
+    /// }
     ///
     /// let formatter = Formatter::default();
-    /// let empty_token: Option<JsSyntaxToken> = None;
     ///
-    /// let mut builder = JsSyntaxTreeBuilder::new();
+    /// let none_token: Option<MyFormat> = None;
+    /// // Returns `empty_element()` for a `None` value
+    /// let none_result = none_token.with_or_empty(|token| token);
+    /// assert_eq!(Ok(empty_element()), formatted![&formatter, none_result]);
     ///
-    /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
-    /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
-    /// builder.finish_node();
-    /// let node = builder.finish();
-    /// let syntax_token = node.first_token();
-    ///
-    /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
-    /// let empty_result = empty_token.with_or_empty(|token| token);
-    /// let with_result = syntax_token.with_or_empty(|token| {
+    /// let some_token = Some(MyFormat);
+    /// let some_result = some_token.with_or_empty(|token| {
     ///     formatted![&formatter, space_token(), token]
     /// });
-    ///
-    /// assert_eq!(Ok(empty_element()), formatted![&formatter, empty_result]);
-    /// assert_eq!(formatted![&formatter, space_token(), token("'abc'")], formatted![&formatter, with_result]);
+    /// assert_eq!(formatted![&formatter, space_token(), token("MyToken")], formatted![&formatter, some_result]);
     fn with_or_empty<With, WithResult>(
         &self,
         with: With,
@@ -60,14 +55,20 @@ pub trait FormatOptional {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_formatter::{formatted, Formatter, token};
-    /// use rome_js_syntax::{JsSyntaxToken};
-    /// use rome_js_formatter::prelude::*;
+    /// use rome_formatter::prelude::*;
+    /// use rome_rowan::TextSize;
+    ///
+    /// struct MyFormat;
+    ///
+    /// impl Format for MyFormat {
+    /// fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///         Ok(token("MyToken"))
+    ///     }
+    /// }
     ///
     /// let formatter = Formatter::default();
-    /// let empty_token: Option<JsSyntaxToken> = None;
-    ///
-    /// let result = empty_token.or_format(|| token(" other result"));
+    /// let none_token: Option<MyFormat> = None;
+    /// let result = none_token.or_format(|| token(" other result"));
     ///
     /// assert_eq!(Ok(token(" other result")), formatted![&formatter, result]);
     fn or_format<Or, OrResult>(
@@ -91,33 +92,32 @@ pub trait FormatOptional {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_factory::JsSyntaxTreeBuilder;
-    /// use rome_js_formatter::{Formatter, empty_element, space_token, format_elements, token, formatted};
-    /// use rome_js_syntax::{JsSyntaxToken};
-    /// use rome_js_formatter::prelude::*;
-    /// use rome_js_syntax::JsSyntaxKind;
+    /// use rome_formatter::prelude::*;
+    /// use rome_rowan::TextSize;
+    ///
+    /// struct MyFormat;
+    ///
+    /// impl Format for MyFormat {
+    /// fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///         Ok(token("MyToken"))
+    ///     }
+    /// }
     ///
     /// let formatter = Formatter::default();
-    /// let empty_token: Option<JsSyntaxToken> = None;
+    /// let none_token: Option<MyFormat> = None;
     ///
-    /// let mut builder = JsSyntaxTreeBuilder::new();
-    ///
-    /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
-    /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
-    /// builder.finish_node();
-    /// let node = builder.finish();
-    /// let syntax_token = node.first_token();
-    ///
-    /// // we wrap the token in [Ok] so we can simulate SyntaxResult.
-    /// let empty_result = empty_token.with_or(|token| token, || {
+    /// // It returns the `or` result if called on `None`
+    /// let none_result = none_token.with_or(|token| token, || {
     ///     token("empty")
     /// });
-    /// let with_result = syntax_token.with_or(|token| {
+    /// assert_eq!(Ok(token("empty")), formatted![&formatter, none_result]);
+    ///
+    /// // Returns the result of the first callback when called with `Some(value)`
+    /// let some_result = Some(MyFormat).with_or(|token| {
     ///     formatted![&formatter, space_token(), token]
     /// }, || empty_element());
     ///
-    /// assert_eq!(Ok(token("empty")), formatted![&formatter, empty_result]);
-    /// assert_eq!(formatted![&formatter, space_token(), token("'abc'")], formatted![&formatter, with_result]);
+    /// assert_eq!(formatted![&formatter, space_token(), token("MyToken")], formatted![&formatter, some_result]);
     fn with_or<With, Or, WithResult, OrResult>(
         &self,
         with: With,
@@ -142,26 +142,24 @@ pub trait FormatWith {
     /// ## Examples
     ///
     /// ```
-    /// use rome_js_factory::JsSyntaxTreeBuilder;
-    /// use rome_js_formatter::{Formatter, token, format_elements, space_token, formatted};
-    /// use rome_js_syntax::{JsSyntaxNode, JsSyntaxKind};
-    /// use rome_js_formatter::prelude::*;
+    /// use rome_formatter::prelude::*;
+    /// use rome_rowan::TextSize;
     ///
-    /// let mut builder = JsSyntaxTreeBuilder::new();
-    /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
-    /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
-    /// builder.finish_node();
-    /// let node = builder.finish();
-    /// let syntax_token = node.first_token().unwrap();
+    /// struct MyFormat;
+    ///
+    /// impl Format for MyFormat {
+    /// fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///         Ok(token("MyToken"))
+    ///     }
+    /// }
+    ///
     /// let formatter = Formatter::default();
     ///
-    /// // Wrap the token in [Ok] so we can simulate SyntaxResult.
-    /// let result = Ok(syntax_token);
-    /// let result = result.with(|string_literal| {
+    /// let result = MyFormat.with(|string_literal| {
     ///     formatted![&formatter, string_literal, space_token(), token("+")]
     /// });
     ///
-    /// assert_eq!(formatted![&formatter, token("'abc'"), space_token(), token("+")], formatted![&formatter, result])
+    /// assert_eq!(formatted![&formatter, token("MyToken"), space_token(), token("+")], formatted![&formatter, result])
     fn with<With, WithResult>(&self, with: With) -> FormatItemWith<With, WithResult>
     where
         With: Fn(FormatElement) -> WithResult,
@@ -287,8 +285,54 @@ where
     }
 }
 
-/// Utility trait that allows memorizing the output of a [Format]
+/// Utility trait that allows memorizing the output of a [Format].
+/// Useful to avoid re-formatting the same object twice.
 pub trait MemoizeFormat {
+    /// Returns a formattable object that memoizes the result of `Format` by cloning.
+    /// Mainly useful if the same sub-tree can appear twice in the formatted output because it's
+    /// used inside of `if_group_breaks` or `if_group_fits_single_line`.
+    ///
+    /// ```
+    /// use std::cell::Cell;
+    /// use rome_formatter::FormatOptions;
+    /// use rome_formatter::prelude::*;
+    /// use rome_rowan::TextSize;
+    ///
+    /// struct MyFormat {
+    ///   value: Cell<u64>
+    /// }
+    ///
+    /// impl MyFormat {
+    ///     pub fn new() -> Self {
+    ///         Self { value: Cell::new(1) }
+    ///     }
+    /// }
+    ///
+    /// impl Format for MyFormat {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+    ///         let value = self.value.get();
+    ///         self.value.set(value + 1);
+    ///
+    ///         Ok(FormatElement::from(Token::new_dynamic(format!("Formatted {value} times."), TextSize::from(0))))
+    ///     }
+    /// }
+    ///
+    /// let formatter = Formatter::new(FormatOptions::default());
+    /// let normal = MyFormat::new();
+    ///
+    /// // Calls `format` for everytime the object gets formatted
+    /// assert_eq!(
+    ///     Ok(format_elements![token("Formatted 1 times."), token("Formatted 2 times.")]),
+    ///     formatted![&formatter, &normal, &normal]
+    /// );
+    ///
+    /// // Memoized memoizes the result and calls `format` only once.
+    /// let memoized = normal.memoized();
+    /// assert_eq!(
+    ///     Ok(format_elements![token("Formatted 3 times."), token("Formatted 3 times.")]),
+    ///     formatted![&formatter, &memoized, &memoized]
+    /// );
+    /// ```
+    ///
     fn memoized(self) -> Memoized<Self>
     where
         Self: Sized + Format,
@@ -299,6 +343,7 @@ pub trait MemoizeFormat {
 
 impl<F> MemoizeFormat for F where F: Format {}
 
+/// Memoizes the output of its inner [Format] to avoid re-formatting a potential expensive object.
 pub struct Memoized<F> {
     inner: F,
     memory: RefCell<Option<FormatResult<FormatElement>>>,

@@ -21,9 +21,9 @@ use rome_diagnostics::{
     file::{FileId, Files, SimpleFile},
     Diagnostic, DiagnosticHeader, Severity,
 };
+use rome_formatter::{FormatOptions, IndentStyle};
 use rome_fs::{AtomicInterner, FileSystem, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_js_formatter::{FormatOptions, IndentStyle};
 use rome_js_parser::{parse, SourceType};
 
 use crate::{CliSession, Termination};

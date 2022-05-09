@@ -9,7 +9,6 @@ edition = "2021"
 rome_js_syntax = { path = "../rome_js_syntax" }
 rome_formatter = { path = "../rome_formatter" }
 rome_rowan = { path = "../rome_rowan" }
-cfg-if = "1.0.0"
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 
 [dev-dependencies]

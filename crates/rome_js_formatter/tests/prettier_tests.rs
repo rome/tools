@@ -13,7 +13,7 @@ use std::{
 };
 
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-use rome_js_formatter::{FormatOptions, IndentStyle};
+use rome_formatter::{FormatOptions, IndentStyle};
 use rome_js_parser::{parse, SourceType};
 
 use crate::check_reformat::CheckReformatParams;

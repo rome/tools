@@ -1,267 +1,27 @@
 //! Rome's official JavaScript formatter.
 
 mod cst;
-mod format_extensions;
-mod formatter;
+pub mod formatter;
 mod js;
 mod jsx;
-#[macro_use]
-pub mod macros;
 pub mod prelude;
 mod ts;
 pub mod utils;
 
 use crate::formatter::suppressed_node;
 use crate::utils::has_formatter_suppressions;
-pub use formatter::Formatter;
 pub(crate) use formatter::{format_leading_trivia, format_trailing_trivia, JsFormatter};
-pub use rome_formatter::{
-    block_indent, comment, concat_elements, empty_element, empty_line, fill_elements,
-    format_element, format_elements, group_elements, hard_group_elements, hard_line_break,
-    if_group_breaks, if_group_fits_on_single_line, indent, join_elements, join_elements_hard_line,
-    join_elements_soft_line, join_elements_with, line_suffix, soft_block_indent, soft_line_break,
-    soft_line_break_or_space, soft_line_indent_or_space, space_token, token, FormatElement,
-    FormatOptions, FormatResult, Formatted, IndentStyle, Printed, QuoteStyle, Token, Verbatim,
-    LINE_TERMINATORS,
+use rome_formatter::prelude::*;
+use rome_formatter::{
+    FormatOptions, FormatOwnedWithRule, FormatRefWithRule, Formatted, IndentStyle, Printed,
 };
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, TextSize};
 use rome_rowan::{SyntaxResult, TokenAtOffset};
-use std::borrow::{Borrow, BorrowMut};
-use std::cell::Cell;
+
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
-
-/// Formatting trait for types that can create a formatted representation. The `rome_formatter` equivalent
-/// to [std::fmt::Display].
-///
-/// ## Example
-/// Implementing `Format` for a custom struct
-///
-/// ```
-/// use rome_formatter::{format_elements, FormatElement, FormatOptions, hard_line_break, Token, FormatResult};
-/// use rome_js_formatter::{Format, format, formatted, Formatter};
-/// use rome_rowan::TextSize;
-///
-/// struct Paragraph(String);
-///
-/// impl Format for Paragraph {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-///         formatted![
-///             formatter,
-///             hard_line_break(),
-///             FormatElement::from(Token::new_dynamic(self.0.clone(), TextSize::from(0))),
-///             hard_line_break(),
-///         ]
-///     }
-/// }
-///
-/// let paragraph = Paragraph(String::from("test"));
-/// let printed = format(FormatOptions::default(), &paragraph).unwrap().print();
-///
-/// assert_eq!("test\n", printed.as_code())
-/// ```
-pub trait Format {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
-}
-
-impl<T> Format for &T
-where
-    T: ?Sized + Format,
-{
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Format::format(&**self, formatter)
-    }
-}
-
-impl<T> Format for &mut T
-where
-    T: ?Sized + Format,
-{
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Format::format(&**self, formatter)
-    }
-}
-
-impl<T> Format for Option<T>
-where
-    T: Format,
-{
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Some(value) => value.format(formatter),
-            None => Ok(empty_element()),
-        }
-    }
-}
-
-impl<T> Format for SyntaxResult<T>
-where
-    T: Format,
-{
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Ok(value) => value.format(formatter),
-            Err(err) => Err(err.into()),
-        }
-    }
-}
-
-/// Implemented by traits that can be converted to a `FormatElement`.
-///
-/// This is similar to [Format] but with the difference that it consumes `self`, allowing it to also
-/// be implemented on [FormatElement].format_elements.rs
-pub trait IntoFormatElement {
-    fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement>;
-}
-
-impl IntoFormatElement for FormatElement {
-    fn into_format_element(self, _: &Formatter) -> FormatResult<FormatElement> {
-        Ok(self)
-    }
-}
-
-impl<T> IntoFormatElement for T
-where
-    T: Format,
-{
-    fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.format(formatter)
-    }
-}
-
-/// Rule that knows how to format an object of type [T].
-///
-/// Implementing [Format] on the object itself is preferred over implementing [FormatRule] but
-/// this isn't possible inside of a dependent crate for external type.
-///
-/// For example, the `rome_js_formatter` crate isn't able to implement [Format] on `JsIfStatement`
-/// because both the [Format] trait and `JsIfStatement` are external types (Rust's orphan rule).
-///
-/// That's why the `rome_js_formatter` crate must define a new-type that implements the formatting
-/// of `JsIfStatement`.
-pub trait FormatRule<T> {
-    fn format(item: &T, formatter: &Formatter) -> FormatResult<FormatElement>;
-}
-
-/// Trait for an object that formats an object with a specified rule.
-///
-/// Gives access to the underlying item.
-///
-/// Useful in situation where a type itself doesn't implement [Format] (e.g. because of Rust's orphan rule)
-/// but you want to implement some common formatting logic.
-///
-/// ## Examples
-///
-/// This can be useful if you want to format a `SyntaxNode` inside rome_formatter.. `SyntaxNode` doesn't implement [Format]
-/// itself but the language agnostic crate implements `AsFormat` and `IntoFormat` for it and the returned [Format]
-/// implement [FormatWithRule].
-///
-/// ```
-/// use rome_formatter::{FormatElement, FormatOptions, FormatResult};
-/// use rome_js_formatter::{Formatter, FormatWithRule};
-/// use rome_rowan::{Language, SyntaxNode};
-/// fn format_node<L: Language, F: FormatWithRule<Item=SyntaxNode<L>>>(node: F) -> FormatResult<FormatElement> {
-///     let formatter = Formatter::new(FormatOptions::default());
-///
-///     let formatted = node.format(&formatter);
-///     let _syntax = node.item();
-///
-///     // Do something with syntax
-///     formatted
-/// }
-/// ```
-pub trait FormatWithRule: Format {
-    type Item;
-
-    fn item(&self) -> &Self::Item;
-}
-
-/// Formats the referenced `item` with the specified rule.
-pub struct FormatRefWithRule<'a, T, R>
-where
-    R: FormatRule<T>,
-{
-    item: &'a T,
-    rule: PhantomData<R>,
-}
-
-impl<'a, T, R> FormatRefWithRule<'a, T, R>
-where
-    R: FormatRule<T>,
-{
-    pub fn new(item: &'a T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
-    }
-}
-
-impl<T, R> FormatWithRule for FormatRefWithRule<'_, T, R>
-where
-    R: FormatRule<T>,
-{
-    type Item = T;
-
-    fn item(&self) -> &Self::Item {
-        self.item
-    }
-}
-
-impl<T, R> Format for FormatRefWithRule<'_, T, R>
-where
-    R: FormatRule<T>,
-{
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        R::format(self.item, formatter)
-    }
-}
-
-/// Formats the `item` with the specified rule.
-pub struct FormatOwnedWithRule<T, R>
-where
-    R: FormatRule<T>,
-{
-    item: T,
-    rule: PhantomData<R>,
-}
-
-impl<T, R> FormatOwnedWithRule<T, R>
-where
-    R: FormatRule<T>,
-{
-    pub fn new(item: T) -> Self {
-        Self {
-            item,
-            rule: PhantomData,
-        }
-    }
-
-    pub fn into_item(self) -> T {
-        self.item
-    }
-}
-
-impl<T, R> Format for FormatOwnedWithRule<T, R>
-where
-    R: FormatRule<T>,
-{
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        R::format(&self.item, formatter)
-    }
-}
-
-impl<T, R> FormatWithRule for FormatOwnedWithRule<T, R>
-where
-    R: FormatRule<T>,
-{
-    type Item = T;
-
-    fn item(&self) -> &Self::Item {
-        &self.item
-    }
-}
 
 // Per Crate
 
@@ -312,10 +72,7 @@ where
     type Format = Option<T::Format>;
 
     fn format(&'a self) -> Self::Format {
-        match self {
-            None => None,
-            Some(value) => Some(value.format()),
-        }
+        self.as_ref().map(|value| value.format())
     }
 }
 
@@ -400,7 +157,6 @@ where
 {
 }
 
-// How about making this a struct
 pub struct FormatNodeRule<T>
 where
     T: AstNode<Language = JsLanguage>,
@@ -425,9 +181,6 @@ where
     }
 }
 
-// TOOD figure out if struct is better or trait
-// Benefit of struct is that there's a single place where one can implement helper functions rather
-// One new type vs plenty
 pub trait FormatNodeFields<T>
 where
     T: AstNode<Language = JsLanguage>,
@@ -465,17 +218,6 @@ impl IntoFormat for JsSyntaxToken {
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(self)
     }
-}
-
-/// Formats any value that implements [Format].
-///
-/// Please note that [format_node] is preferred to format a [JsSyntaxNode]
-pub fn format(options: FormatOptions, root: &dyn Format) -> FormatResult<Formatted> {
-    tracing::trace_span!("format").in_scope(move || {
-        let formatter = Formatter::new(options);
-        let element = root.format(&formatter)?;
-        Ok(Formatted::new(element, options))
-    })
 }
 
 /// Formats a JavaScript (and its super languages) file based on its features.
@@ -702,8 +444,9 @@ pub fn format_sub_tree(options: FormatOptions, root: &JsSyntaxNode) -> FormatRes
 #[cfg(test)]
 mod tests {
 
-    use super::{format_range, FormatOptions};
-    use crate::IndentStyle;
+    use super::format_range;
+
+    use rome_formatter::{FormatOptions, IndentStyle};
     use rome_js_parser::parse_script;
     use rome_rowan::{TextRange, TextSize};
 
@@ -798,7 +541,7 @@ mod generated;
 mod test {
     use crate::check_reformat::{check_reformat, CheckReformatParams};
     use crate::format_node;
-    use crate::FormatOptions;
+    use rome_formatter::FormatOptions;
     use rome_js_parser::{parse, SourceType};
 
     #[test]
