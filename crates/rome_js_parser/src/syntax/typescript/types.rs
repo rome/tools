@@ -213,6 +213,7 @@ impl ParseSeparatedList for TsTypeParameterList {
 
 // test ts type_parameter_modifier
 // type Foo<in T> = T
+// type Foo<out> = out
 // type Foo<out T> = T
 // type Foo<in out> = T
 // type Foo<out out> = T
