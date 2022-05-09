@@ -2,7 +2,6 @@ mod flatten_item;
 mod groups;
 mod simple_argument;
 
-
 use crate::utils::member_chain::flatten_item::FlattenItem;
 use crate::utils::member_chain::groups::{Groups, HeadGroup};
 use crate::{
