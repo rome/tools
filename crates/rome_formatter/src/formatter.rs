@@ -1,7 +1,9 @@
 use crate::prelude::*;
+#[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
 use crate::FormatOptions;
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
+#[cfg(debug_assertions)]
 use std::cell::RefCell;
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
