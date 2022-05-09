@@ -1,8 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@headlessui/react': ^1.6.1
-  '@heroicons/react': ^1.0.6
   '@tailwindcss/forms': ^0.4.0
   '@types/prettier': ^2.4.3
   '@types/react': ^17.0.33
@@ -17,21 +15,17 @@ specifiers:
   react-dom: ^17.0.2
   react-json-view: ^1.21.3
   react-tabs: ^3.2.3
-  solid: link:@heroicons/react/solid
   tailwindcss: ^3.0.19
   typescript: ^4.4.4
   vite: ^2.7.2
 
 dependencies:
-  '@headlessui/react': 1.6.1_sfoxds7t5ydpegc3knd667wn6m
-  '@heroicons/react': 1.0.6_react@17.0.2
   '@uiw/react-textarea-code-editor': 1.4.16_sfoxds7t5ydpegc3knd667wn6m
   prettier: 2.5.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-json-view: 1.21.3_xd63vgjm47lzoal5ybyqmsdesy
   react-tabs: 3.2.3_react@17.0.2
-  solid: link:@heroicons/react/solid
 
 devDependencies:
   '@tailwindcss/forms': 0.4.1_tailwindcss@3.0.19
@@ -322,25 +316,6 @@ packages:
       '@babel/helper-validator-identifier': 7.16.7
       to-fast-properties: 2.0.0
     dev: true
-
-  /@headlessui/react/1.6.1_sfoxds7t5ydpegc3knd667wn6m:
-    resolution: {integrity: sha512-gMd6uIs1U4Oz718Z5gFoV0o/vD43/4zvbyiJN9Dt7PK9Ubxn+TmJwTmYwyNJc5KxxU1t0CmgTNgwZX9+4NjCnQ==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: ^16 || ^17 || ^18
-      react-dom: ^16 || ^17 || ^18
-    dependencies:
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-    dev: false
-
-  /@heroicons/react/1.0.6_react@17.0.2:
-    resolution: {integrity: sha512-JJCXydOFWMDpCP4q13iEplA503MQO3xLoZiKum+955ZCtHINWnx26CUxVxxFQu/uLb4LW3ge15ZpzIkXKkJ8oQ==}
-    peerDependencies:
-      react: '>= 16'
-    dependencies:
-      react: 17.0.2
-    dev: false
 
   /@jridgewell/resolve-uri/3.0.4:
     resolution: {integrity: sha512-cz8HFjOFfUBtvN+NXYSFMHYRdxZMaEl0XypVrhzxBgadKIXhIkRd8aMeHhmF56Sl7SuS8OnUpQ73/k9LE4VnLg==}
