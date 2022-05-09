@@ -1,59 +1,69 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
 import { classNames } from "./utils";
+import { TreeStyle } from "./types";
+import { Dispatch, SetStateAction } from "react";
 
-export default function TreeStyleSelect() {
+interface Props {
+	treeStyle: TreeStyle;
+	setTreeStyle: Dispatch<SetStateAction<TreeStyle>>;
+}
+
+export default function TreeStyleSelect({ treeStyle, setTreeStyle }: Props) {
 	return (
-		<Menu as="div" className="relative inline-block text-left z-[100]">
-			<div>
-				<Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-					Options
-					<ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
-				</Menu.Button>
-			</div>
-
-			<Transition
-				as={Fragment}
-				enter="transition ease-out duration-100"
-				enterFrom="transform opacity-0 scale-95"
-				enterTo="transform opacity-100 scale-100"
-				leave="transition ease-in duration-75"
-				leaveFrom="transform opacity-100 scale-100"
-				leaveTo="transform opacity-0 scale-95"
+		<div
+			className="group p-0.5 rounded-lg flex bg-gray-200 mb-4 m-2"
+			style={{ width: "fit-content" }}
+		>
+			<button
+				type="button"
+				onClick={() => setTreeStyle(TreeStyle.Json)}
+				className={classNames(
+					"flex focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-md focus:outline-none focus-visible:ring-offset-gray-100",
+					treeStyle === TreeStyle.Json &&
+						"bg-white shadow-sm ring-1 ring-black ring-opacity-5"
+				)}
 			>
-				<Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-					<div className="py-1">
-						<Menu.Item>
-							{({ active }) => (
-								<a
-									href="#"
-									className={classNames(
-										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-										"block px-4 py-2 text-sm"
-									)}
-								>
-									Text
-								</a>
-							)}
-						</Menu.Item>
-						<Menu.Item>
-							{({ active }) => (
-								<a
-									href="#"
-									className={classNames(
-										active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-										"block px-4 py-2 text-sm"
-									)}
-								>
-									JSON
-								</a>
-							)}
-						</Menu.Item>
-					</div>
-				</Menu.Items>
-			</Transition>
-		</Menu>
+				<span
+					className={classNames(
+						"p-1.5 lg:pl-2.5 lg:pr-3.5 rounded-md flex items-center text-sm font-medium bg-white shadow-sm ring-1 ring-black ring-opacity-5",
+						treeStyle === TreeStyle.Json &&
+							"bg-white shadow-sm ring-1 ring-black ring-opacity-5"
+					)}
+					style={{ display: "none" }}
+				>
+					<span className="text-gray-900 sr-only lg:not-sr-only">JSON</span>
+				</span>
+				<span
+					className={classNames(
+						"p-1.5 lg:pl-2.5 lg:pr-3.5 rounded-md flex items-center text-sm font-medium",
+						treeStyle === TreeStyle.Json &&
+							"bg-white shadow-sm ring-1 ring-black ring-opacity-5"
+					)}
+				>
+					<span
+						className={classNames(
+							"sr-only lg:not-sr-only text-gray-900",
+							treeStyle === TreeStyle.Json
+								? "text-gray-900"
+								: "text-gray-600 group-hover:text-gray-900"
+						)}
+					>
+						JSON
+					</span>
+				</span>
+			</button>
+			<button
+				type="button"
+				onClick={() => setTreeStyle(TreeStyle.Text)}
+				className={classNames(
+					"ml-0.5 p-1.5 lg:pl-2.5 lg:pr-3.5 rounded-md flex items-center text-sm text-gray-600 font-medium focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 focus:outline-none focus-visible:ring-offset-gray-100",
+					treeStyle === TreeStyle.Text &&
+						"bg-white shadow-sm ring-1 ring-black ring-opacity-5"
+				)}
+			>
+				<span className="sr-only lg:not-sr-only text-gray-600 text-gray-900">
+					Text
+				</span>
+			</button>
+		</div>
 	);
 }

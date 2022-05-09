@@ -7,7 +7,7 @@ import TreeView from "./TreeView";
 
 export default function DesktopPlayground(
 	{
-		playgroundState: { code, setCode, ...settings },
+		playgroundState: { code, setCode, treeStyle, setTreeStyle, ...settings },
 		prettierOutput,
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
@@ -76,10 +76,25 @@ export default function DesktopPlayground(
 							/>
 						</TabPanel>
 						<TabPanel>
+<<<<<<< HEAD
 							<TreeView tree={JSON.parse(cst)} />
 						</TabPanel>
 						<TabPanel>
 							<TreeView tree={JSON.parse(ast)} />
+=======
+							<TreeView
+								treeStyle={treeStyle}
+								setTreeStyle={setTreeStyle}
+								tree={cst}
+							/>
+						</TabPanel>
+						<TabPanel>
+							<TreeView
+								treeStyle={treeStyle}
+								setTreeStyle={setTreeStyle}
+								tree={ast}
+							/>
+>>>>>>> cf4faf5829 (Toggling tree view for json or text)
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>

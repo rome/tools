@@ -1,4 +1,5 @@
 import { RomeOutput } from "../pkg";
+import { Dispatch, SetStateAction } from "react";
 
 export enum IndentStyle { Tab = "tab", Space = "space" }
 export enum SourceType { Module = "module", Script = "script" }
@@ -21,6 +22,8 @@ export interface PlaygroundState {
 	setIsTypeScript: (isTypeScript: boolean) => void;
 	isJsx: boolean;
 	setIsJsx: (isJsx: boolean) => void;
+	treeStyle: TreeStyle;
+	setTreeStyle: Dispatch<SetStateAction<TreeStyle>>;
 }
 
 export interface PlaygroundProps {
@@ -46,3 +49,5 @@ export type PlaygroundSettings = Pick<
 		| "isJsx"
 		| "setIsJsx"
 >;
+
+export enum TreeStyle { Json, Text }
