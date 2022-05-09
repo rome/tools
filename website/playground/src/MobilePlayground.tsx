@@ -5,13 +5,11 @@ import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
 
-export function MobilePlayground(
-	{
-		playgroundState: { code, setCode, ...settings },
-		prettierOutput,
-		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
-	}: PlaygroundProps,
-) {
+export function MobilePlayground({
+	playgroundState: { code, setCode, treeStyle, setTreeStyle, ...settings },
+	prettierOutput,
+	romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+}: PlaygroundProps) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
 	return (
@@ -78,10 +76,18 @@ export function MobilePlayground(
 					/>
 				</TabPanel>
 				<TabPanel>
-					<TreeView tree={JSON.parse(cst)} />
+					<TreeView
+						tree={JSON.parse(cst)}
+						treeStyle={treeStyle}
+						setTreeStyle={setTreeStyle}
+					/>
 				</TabPanel>
 				<TabPanel>
-					<TreeView tree={JSON.parse(ast)} />
+					<TreeView
+						tree={JSON.parse(ast)}
+						treeStyle={treeStyle}
+						setTreeStyle={setTreeStyle}
+					/>
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
