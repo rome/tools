@@ -9,10 +9,7 @@ interface Props {
 
 export default function TreeStyleSelect({ treeStyle, setTreeStyle }: Props) {
 	return (
-		<div
-			className="group p-0.5 rounded-lg flex bg-gray-200 mb-4 m-2"
-			style={{ width: "fit-content" }}
-		>
+		<div className="group p-0.5 rounded-lg flex bg-gray-200 mb-4 m-2 w-fit">
 			<button
 				type="button"
 				onClick={() => setTreeStyle(TreeStyle.Json)}
@@ -22,16 +19,6 @@ export default function TreeStyleSelect({ treeStyle, setTreeStyle }: Props) {
 						"bg-white shadow-sm ring-1 ring-black ring-opacity-5"
 				)}
 			>
-				<span
-					className={classNames(
-						"p-1.5 lg:pl-2.5 lg:pr-3.5 rounded-md flex items-center text-sm font-medium bg-white shadow-sm ring-1 ring-black ring-opacity-5",
-						treeStyle === TreeStyle.Json &&
-							"bg-white shadow-sm ring-1 ring-black ring-opacity-5"
-					)}
-					style={{ display: "none" }}
-				>
-					<span className="text-gray-900 sr-only lg:not-sr-only">JSON</span>
-				</span>
 				<span
 					className={classNames(
 						"p-1.5 lg:pl-2.5 lg:pr-3.5 rounded-md flex items-center text-sm font-medium",
