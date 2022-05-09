@@ -440,6 +440,7 @@ pub trait IntoFormatElement {
 }
 
 impl IntoFormatElement for FormatElement {
+    #[inline]
     fn into_format_element(self, _: &Formatter) -> FormatResult<FormatElement> {
         Ok(self)
     }
@@ -449,6 +450,7 @@ impl<T> IntoFormatElement for T
 where
     T: Format,
 {
+    #[inline]
     fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement> {
         self.format(formatter)
     }
@@ -537,6 +539,7 @@ impl<T, R> Format for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
+    #[inline]
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         R::format(self.item, formatter)
     }
@@ -571,6 +574,7 @@ impl<T, R> Format for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
+    #[inline]
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         R::format(&self.item, formatter)
     }

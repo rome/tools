@@ -275,6 +275,7 @@ where
     WithResult: IntoFormatResult,
     OrResult: IntoFormatResult,
 {
+    #[inline]
     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             FormatWithOr::Or(op) => op().into_format_result(),

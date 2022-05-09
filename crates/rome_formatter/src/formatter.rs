@@ -29,13 +29,12 @@ impl Formatter {
     }
 
     /// Returns the [FormatOptions] specifying how to format the current CST
-    #[inline]
     pub fn options(&self) -> &FormatOptions {
         &self.options
     }
 
     /// Tracks the given token as formatted
-
+    #[inline]
     pub fn track_token<L: Language>(&self, #[allow(unused_variables)] token: &SyntaxToken<L>) {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
@@ -44,6 +43,7 @@ impl Formatter {
         }
     }
 
+    #[inline]
     pub fn assert_formatted_all_tokens<L: Language>(
         &self,
         #[allow(unused_variables)] root: &SyntaxNode<L>,
@@ -59,6 +59,7 @@ impl Formatter {
     /// Formats all items of the iterator and returns the formatted result
     ///
     /// Returns the [Err] of the first item that failed to format.
+    #[inline]
     pub fn format_all<T: Format>(
         &self,
         nodes: impl IntoIterator<Item = T>,
@@ -80,6 +81,7 @@ impl Formatter {
 
 impl Formatter {
     /// Take a snapshot of the state of the formatter
+    #[inline]
     pub fn snapshot(&self) -> FormatterSnapshot {
         FormatterSnapshot {
             #[cfg(debug_assertions)]
@@ -87,15 +89,15 @@ impl Formatter {
         }
     }
 
-    #[cfg(debug_assertions)]
+    #[inline]
     /// Restore the state of the formatter to a previous snapshot
-    pub fn restore(&self, snapshot: FormatterSnapshot) {
-        *self.printed_tokens.borrow_mut() = snapshot.printed_tokens;
+    pub fn restore(&self, #[allow(unused)] snapshot: FormatterSnapshot) {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                *self.printed_tokens.borrow_mut() = snapshot.printed_tokens;
+            }
+        }
     }
-
-    #[cfg(not(debug_assertions))]
-    /// Restore the state of the formatter to a previous snapshot
-    pub fn restore(&self, _: FormatterSnapshot) {}
 }
 
 /// Snapshot of the formatter state  used to handle backtracking if
