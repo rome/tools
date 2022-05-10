@@ -86,14 +86,14 @@ export function MobilePlayground({
 					<TreeView
 						tree={JSON.parse(cst)}
 						treeStyle={treeStyle}
-						setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
+						setPlaygroundState={setPlaygroundState}
 					/>
 				</TabPanel>
 				<TabPanel>
 					<TreeView
 						tree={JSON.parse(ast)}
 						treeStyle={treeStyle}
-						setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
+						setPlaygroundState={setPlaygroundState}
 					/>
 				</TabPanel>
 				<TabPanel>

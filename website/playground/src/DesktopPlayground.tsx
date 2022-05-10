@@ -91,14 +91,14 @@ export default function DesktopPlayground(
 =======
 							<TreeView
 								treeStyle={treeStyle}
-								setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
+								setPlaygroundState={setPlaygroundState}
 								tree={cst}
 							/>
 						</TabPanel>
 						<TabPanel>
 							<TreeView
 								treeStyle={treeStyle}
-								setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
+								setPlaygroundState={setPlaygroundState}
 								tree={ast}
 							/>
 >>>>>>> cf4faf5829 (Toggling tree view for json or text)
