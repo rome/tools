@@ -18,7 +18,9 @@
     Reference {
         name: "Base",
         range: 63..68,
-        declared_at: None,
+        declared_at: Some(
+            6..11,
+        ),
     },
     Declaration {
         name: "priv",

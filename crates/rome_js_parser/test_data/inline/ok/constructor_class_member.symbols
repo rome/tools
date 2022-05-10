@@ -15,12 +15,16 @@
     Reference {
         name: "a",
         range: 40..42,
-        declared_at: None,
+        declared_at: Some(
+            26..27,
+        ),
     },
     Reference {
         name: "a",
         range: 44..45,
-        declared_at: None,
+        declared_at: Some(
+            26..27,
+        ),
     },
     Declaration {
         name: "Bar",
@@ -38,11 +42,15 @@
     Reference {
         name: "b",
         range: 95..97,
-        declared_at: None,
+        declared_at: Some(
+            81..82,
+        ),
     },
     Reference {
         name: "b",
         range: 99..100,
-        declared_at: None,
+        declared_at: Some(
+            81..82,
+        ),
     },
 ]

@@ -10,11 +10,15 @@
     Reference {
         name: "a",
         range: 40..41,
-        declared_at: None,
+        declared_at: Some(
+            14..15,
+        ),
     },
     Reference {
         name: "a",
         range: 102..103,
-        declared_at: None,
+        declared_at: Some(
+            14..15,
+        ),
     },
 ]

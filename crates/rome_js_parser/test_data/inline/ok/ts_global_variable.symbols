@@ -6,7 +6,9 @@
     Reference {
         name: "global",
         range: 11..46,
-        declared_at: None,
+        declared_at: Some(
+            4..10,
+        ),
     },
     Reference {
         name: "console",

@@ -23,12 +23,16 @@
     Reference {
         name: "name",
         range: 108..113,
-        declared_at: None,
+        declared_at: Some(
+            87..91,
+        ),
     },
     Reference {
         name: "name",
         range: 115..119,
-        declared_at: None,
+        declared_at: Some(
+            87..91,
+        ),
     },
     Declaration {
         name: "display",
@@ -52,7 +56,9 @@
     Reference {
         name: "name",
         range: 162..166,
-        declared_at: None,
+        declared_at: Some(
+            52..61,
+        ),
     },
     Declaration {
         name: "my_name",
@@ -66,7 +72,9 @@
     Reference {
         name: "name",
         range: 210..214,
-        declared_at: None,
+        declared_at: Some(
+            52..61,
+        ),
     },
     Declaration {
         name: "my_name",
@@ -84,12 +92,16 @@
     Reference {
         name: "name",
         range: 254..259,
-        declared_at: None,
+        declared_at: Some(
+            241..245,
+        ),
     },
     Reference {
         name: "name",
         range: 261..265,
-        declared_at: None,
+        declared_at: Some(
+            241..245,
+        ),
     },
     Declaration {
         name: "AbstractMembers",

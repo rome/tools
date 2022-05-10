@@ -14,7 +14,9 @@
     Reference {
         name: "I",
         range: 34..35,
-        declared_at: None,
+        declared_at: Some(
+            10..12,
+        ),
     },
     Declaration {
         name: "is",
@@ -31,7 +33,9 @@
     Reference {
         name: "I",
         range: 72..73,
-        declared_at: None,
+        declared_at: Some(
+            10..12,
+        ),
     },
     Declaration {
         name: "asserts",

@@ -91,7 +91,9 @@
     Reference {
         name: "T",
         range: 100..101,
-        declared_at: None,
+        declared_at: Some(
+            95..96,
+        ),
     },
     Reference {
         name: "a",
@@ -109,6 +111,8 @@
     Reference {
         name: "T",
         range: 114..115,
-        declared_at: None,
+        declared_at: Some(
+            106..107,
+        ),
     },
 ]

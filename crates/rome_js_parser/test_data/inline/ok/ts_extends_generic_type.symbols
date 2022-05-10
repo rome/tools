@@ -15,7 +15,9 @@
     Reference {
         name: "IHasVisualizationModel",
         range: 56..78,
-        declared_at: None,
+        declared_at: Some(
+            5..28,
+        ),
     },
     Declaration {
         name: "x",

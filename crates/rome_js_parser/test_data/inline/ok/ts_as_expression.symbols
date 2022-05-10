@@ -10,7 +10,9 @@
     Reference {
         name: "x",
         range: 31..33,
-        declared_at: None,
+        declared_at: Some(
+            4..5,
+        ),
     },
     Declaration {
         name: "z",
@@ -19,7 +21,9 @@
     Reference {
         name: "x",
         range: 52..54,
-        declared_at: None,
+        declared_at: Some(
+            4..5,
+        ),
     },
     Declaration {
         name: "not_an_as_expression",
@@ -28,7 +32,9 @@
     Reference {
         name: "x",
         range: 91..92,
-        declared_at: None,
+        declared_at: Some(
+            4..5,
+        ),
     },
     Reference {
         name: "as",

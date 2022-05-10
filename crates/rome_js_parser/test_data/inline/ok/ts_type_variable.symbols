@@ -6,7 +6,9 @@
     Reference {
         name: "type",
         range: 9..15,
-        declared_at: None,
+        declared_at: Some(
+            4..8,
+        ),
     },
     Reference {
         name: "getFlowTypeInConstructor",

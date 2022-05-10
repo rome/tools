@@ -6,11 +6,15 @@
     Reference {
         name: "foo",
         range: 25..28,
-        declared_at: None,
+        declared_at: Some(
+            10..13,
+        ),
     },
     Reference {
         name: "foo",
         range: 38..41,
-        declared_at: None,
+        declared_at: Some(
+            10..13,
+        ),
     },
 ]

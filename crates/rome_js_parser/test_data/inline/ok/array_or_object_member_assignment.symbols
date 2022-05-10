@@ -24,12 +24,16 @@
     Reference {
         name: "val",
         range: 118..121,
-        declared_at: None,
+        declared_at: Some(
+            96..99,
+        ),
     },
     Reference {
         name: "y",
         range: 129..131,
-        declared_at: None,
+        declared_at: Some(
+            94..95,
+        ),
     },
     Declaration {
         name: "x",
@@ -60,12 +64,16 @@
     Reference {
         name: "val",
         range: 268..271,
-        declared_at: None,
+        declared_at: Some(
+            246..249,
+        ),
     },
     Reference {
         name: "y",
         range: 279..281,
-        declared_at: None,
+        declared_at: Some(
+            244..245,
+        ),
     },
     Declaration {
         name: "x",

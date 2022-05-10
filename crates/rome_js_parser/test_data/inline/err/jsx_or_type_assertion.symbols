@@ -15,7 +15,9 @@
     Reference {
         name: "a",
         range: 32..33,
-        declared_at: None,
+        declared_at: Some(
+            23..25,
+        ),
     },
     Reference {
         name: "JSX",
@@ -29,7 +31,9 @@
     Reference {
         name: "b",
         range: 68..69,
-        declared_at: None,
+        declared_at: Some(
+            56..58,
+        ),
     },
     Declaration {
         name: "c",
@@ -38,12 +42,16 @@
     Reference {
         name: "b",
         range: 108..109,
-        declared_at: None,
+        declared_at: Some(
+            56..58,
+        ),
     },
     Reference {
         name: "a",
         range: 110..111,
-        declared_at: None,
+        declared_at: Some(
+            23..25,
+        ),
     },
     Reference {
         name: "d",
@@ -62,7 +70,9 @@
     Reference {
         name: "a",
         range: 150..151,
-        declared_at: None,
+        declared_at: Some(
+            23..25,
+        ),
     },
     Declaration {
         name: "d",
@@ -71,6 +81,8 @@
     Reference {
         name: "a",
         range: 257..258,
-        declared_at: None,
+        declared_at: Some(
+            23..25,
+        ),
     },
 ]

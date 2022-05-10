@@ -27,12 +27,16 @@
     Reference {
         name: "a",
         range: 42..43,
-        declared_at: None,
+        declared_at: Some(
+            29..30,
+        ),
     },
     Reference {
         name: "b",
         range: 44..45,
-        declared_at: None,
+        declared_at: Some(
+            32..33,
+        ),
     },
     Reference {
         name: "foo",
@@ -42,12 +46,16 @@
     Reference {
         name: "a",
         range: 51..52,
-        declared_at: None,
+        declared_at: Some(
+            29..30,
+        ),
     },
     Reference {
         name: "b",
         range: 53..55,
-        declared_at: None,
+        declared_at: Some(
+            32..33,
+        ),
     },
     Reference {
         name: "foo",
@@ -57,7 +65,9 @@
     Reference {
         name: "b",
         range: 67..68,
-        declared_at: None,
+        declared_at: Some(
+            32..33,
+        ),
     },
     Reference {
         name: "foo",
@@ -67,6 +77,8 @@
     Reference {
         name: "a",
         range: 76..77,
-        declared_at: None,
+        declared_at: Some(
+            29..30,
+        ),
     },
 ]

@@ -6,6 +6,8 @@
     Reference {
         name: "obj",
         range: 21..24,
-        declared_at: None,
+        declared_at: Some(
+            4..8,
+        ),
     },
 ]

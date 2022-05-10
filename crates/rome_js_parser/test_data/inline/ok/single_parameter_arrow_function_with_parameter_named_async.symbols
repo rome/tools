@@ -10,6 +10,8 @@
     Reference {
         name: "async",
         range: 18..23,
-        declared_at: None,
+        declared_at: Some(
+            9..15,
+        ),
     },
 ]

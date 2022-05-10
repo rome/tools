@@ -19,7 +19,9 @@
     Reference {
         name: "foo",
         range: 56..59,
-        declared_at: None,
+        declared_at: Some(
+            44..48,
+        ),
     },
     Reference {
         name: "bar",

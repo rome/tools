@@ -33,7 +33,9 @@
     Reference {
         name: "a",
         range: 103..104,
-        declared_at: None,
+        declared_at: Some(
+            57..58,
+        ),
     },
     Declaration {
         name: "rest2",
@@ -42,7 +44,9 @@
     Reference {
         name: "a",
         range: 126..127,
-        declared_at: None,
+        declared_at: Some(
+            57..58,
+        ),
     },
     Declaration {
         name: "test",
@@ -51,6 +55,8 @@
     Reference {
         name: "a",
         range: 174..175,
-        declared_at: None,
+        declared_at: Some(
+            57..58,
+        ),
     },
 ]

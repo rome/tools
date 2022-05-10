@@ -22,7 +22,9 @@
     Reference {
         name: "Type",
         range: 82..86,
-        declared_at: None,
+        declared_at: Some(
+            51..55,
+        ),
     },
     Declaration {
         name: "CreateMutable",
@@ -39,17 +41,23 @@
     Reference {
         name: "Type",
         range: 160..164,
-        declared_at: None,
+        declared_at: Some(
+            120..124,
+        ),
     },
     Reference {
         name: "Type",
         range: 167..171,
-        declared_at: None,
+        declared_at: Some(
+            120..124,
+        ),
     },
     Reference {
         name: "Property",
         range: 172..180,
-        declared_at: None,
+        declared_at: Some(
+            142..151,
+        ),
     },
     Declaration {
         name: "Concrete",
@@ -66,17 +74,23 @@
     Reference {
         name: "Type",
         range: 231..235,
-        declared_at: None,
+        declared_at: Some(
+            200..204,
+        ),
     },
     Reference {
         name: "Type",
         range: 240..244,
-        declared_at: None,
+        declared_at: Some(
+            200..204,
+        ),
     },
     Reference {
         name: "Property",
         range: 245..253,
-        declared_at: None,
+        declared_at: Some(
+            213..222,
+        ),
     },
     Declaration {
         name: "Getters",
@@ -93,7 +107,9 @@
     Reference {
         name: "Type",
         range: 304..309,
-        declared_at: None,
+        declared_at: Some(
+            271..275,
+        ),
     },
     Reference {
         name: "Capitalize",
@@ -103,16 +119,22 @@
     Reference {
         name: "Property",
         range: 338..346,
-        declared_at: None,
+        declared_at: Some(
+            286..295,
+        ),
     },
     Reference {
         name: "Type",
         range: 358..362,
-        declared_at: None,
+        declared_at: Some(
+            271..275,
+        ),
     },
     Reference {
         name: "Property",
         range: 363..371,
-        declared_at: None,
+        declared_at: Some(
+            286..295,
+        ),
     },
 ]

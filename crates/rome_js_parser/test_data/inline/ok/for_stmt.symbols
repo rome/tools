@@ -6,12 +6,16 @@
     Reference {
         name: "i",
         range: 16..18,
-        declared_at: None,
+        declared_at: Some(
+            9..11,
+        ),
     },
     Reference {
         name: "i",
         range: 24..25,
-        declared_at: None,
+        declared_at: Some(
+            9..11,
+        ),
     },
     Declaration {
         name: "foo",
@@ -41,17 +45,23 @@
     Reference {
         name: "i",
         range: 141..143,
-        declared_at: None,
+        declared_at: Some(
+            127..129,
+        ),
     },
     Reference {
         name: "j",
         range: 145..146,
-        declared_at: None,
+        declared_at: Some(
+            134..136,
+        ),
     },
     Reference {
         name: "j",
         range: 150..151,
-        declared_at: None,
+        declared_at: Some(
+            134..136,
+        ),
     },
     Declaration {
         name: "a",

@@ -25,7 +25,9 @@
     Reference {
         name: "test",
         range: 79..83,
-        declared_at: None,
+        declared_at: Some(
+            57..64,
+        ),
     },
     Reference {
         name: "a",

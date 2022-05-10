@@ -66,7 +66,9 @@
     Reference {
         name: "A",
         range: 183..184,
-        declared_at: None,
+        declared_at: Some(
+            174..175,
+        ),
     },
     Declaration {
         name: "b",
@@ -75,7 +77,9 @@
     Reference {
         name: "B",
         range: 189..190,
-        declared_at: None,
+        declared_at: Some(
+            177..178,
+        ),
     },
     Declaration {
         name: "H",
@@ -88,7 +92,9 @@
     Reference {
         name: "a",
         range: 223..225,
-        declared_at: None,
+        declared_at: Some(
+            212..213,
+        ),
     },
     Declaration {
         name: "I",

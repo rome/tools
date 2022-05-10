@@ -30,7 +30,9 @@
     Reference {
         name: "A",
         range: 81..82,
-        declared_at: None,
+        declared_at: Some(
+            68..69,
+        ),
     },
     Declaration {
         name: "C",
@@ -39,7 +41,9 @@
     Reference {
         name: "A",
         range: 88..89,
-        declared_at: None,
+        declared_at: Some(
+            68..69,
+        ),
     },
     Declaration {
         name: "a",
@@ -48,7 +52,9 @@
     Reference {
         name: "A",
         range: 94..95,
-        declared_at: None,
+        declared_at: Some(
+            68..69,
+        ),
     },
     Declaration {
         name: "b",
@@ -57,7 +63,9 @@
     Reference {
         name: "B",
         range: 100..101,
-        declared_at: None,
+        declared_at: Some(
+            71..73,
+        ),
     },
     Declaration {
         name: "c",
@@ -66,6 +74,8 @@
     Reference {
         name: "C",
         range: 106..107,
-        declared_at: None,
+        declared_at: Some(
+            84..86,
+        ),
     },
 ]

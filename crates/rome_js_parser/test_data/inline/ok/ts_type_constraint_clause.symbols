@@ -10,7 +10,9 @@
     Reference {
         name: "X",
         range: 27..28,
-        declared_at: None,
+        declared_at: Some(
+            7..9,
+        ),
     },
     Declaration {
         name: "B",
@@ -27,6 +29,8 @@
     Reference {
         name: "X",
         range: 71..73,
-        declared_at: None,
+        declared_at: Some(
+            37..39,
+        ),
     },
 ]

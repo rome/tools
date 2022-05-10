@@ -14,7 +14,9 @@
     Reference {
         name: "Prop",
         range: 26..31,
-        declared_at: None,
+        declared_at: Some(
+            12..16,
+        ),
     },
     Declaration {
         name: "B",
@@ -23,7 +25,9 @@
     Reference {
         name: "A",
         range: 53..54,
-        declared_at: None,
+        declared_at: Some(
+            10..11,
+        ),
     },
     Declaration {
         name: "C",
@@ -32,11 +36,15 @@
     Reference {
         name: "A",
         range: 86..87,
-        declared_at: None,
+        declared_at: Some(
+            10..11,
+        ),
     },
     Reference {
         name: "B",
         range: 97..99,
-        declared_at: None,
+        declared_at: Some(
+            43..45,
+        ),
     },
 ]

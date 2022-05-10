@@ -34,6 +34,8 @@
     Reference {
         name: "A",
         range: 55..57,
-        declared_at: None,
+        declared_at: Some(
+            44..46,
+        ),
     },
 ]

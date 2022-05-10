@@ -10,7 +10,9 @@
     Reference {
         name: "V",
         range: 12..14,
-        declared_at: None,
+        declared_at: Some(
+            7..8,
+        ),
     },
     Declaration {
         name: "args",
@@ -28,7 +30,9 @@
     Reference {
         name: "V",
         range: 69..70,
-        declared_at: None,
+        declared_at: Some(
+            7..8,
+        ),
     },
     Reference {
         name: "Function",

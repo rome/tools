@@ -22,7 +22,9 @@
     Reference {
         name: "A",
         range: 34..35,
-        declared_at: None,
+        declared_at: Some(
+            22..23,
+        ),
     },
     Declaration {
         name: "b",
@@ -31,12 +33,16 @@
     Reference {
         name: "B",
         range: 40..41,
-        declared_at: None,
+        declared_at: Some(
+            25..26,
+        ),
     },
     Reference {
         name: "R",
         range: 44..45,
-        declared_at: None,
+        declared_at: Some(
+            28..29,
+        ),
     },
     Declaration {
         name: "test2",

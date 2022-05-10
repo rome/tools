@@ -53,7 +53,9 @@
     Reference {
         name: "x",
         range: 94..96,
-        declared_at: None,
+        declared_at: Some(
+            68..69,
+        ),
     },
     Declaration {
         name: "x",

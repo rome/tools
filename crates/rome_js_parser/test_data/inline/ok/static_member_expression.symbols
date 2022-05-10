@@ -84,11 +84,15 @@
     Reference {
         name: "other",
         range: 120..130,
-        declared_at: None,
+        declared_at: Some(
+            81..86,
+        ),
     },
     Reference {
         name: "other",
         range: 136..146,
-        declared_at: None,
+        declared_at: Some(
+            81..86,
+        ),
     },
 ]

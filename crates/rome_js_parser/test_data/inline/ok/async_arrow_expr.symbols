@@ -30,6 +30,8 @@
     Reference {
         name: "foo",
         range: 78..81,
-        declared_at: None,
+        declared_at: Some(
+            57..60,
+        ),
     },
 ]

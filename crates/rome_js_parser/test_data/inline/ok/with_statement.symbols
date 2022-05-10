@@ -14,7 +14,9 @@
     Reference {
         name: "o",
         range: 37..38,
-        declared_at: None,
+        declared_at: Some(
+            24..25,
+        ),
     },
     Reference {
         name: "console",
@@ -29,6 +31,8 @@
     Reference {
         name: "x",
         range: 58..59,
-        declared_at: None,
+        declared_at: Some(
+            21..22,
+        ),
     },
 ]

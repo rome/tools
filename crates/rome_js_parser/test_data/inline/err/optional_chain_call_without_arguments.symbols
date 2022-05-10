@@ -10,22 +10,30 @@
     Reference {
         name: "a",
         range: 23..25,
-        declared_at: None,
+        declared_at: Some(
+            4..6,
+        ),
     },
     Reference {
         name: "test",
         range: 26..30,
-        declared_at: None,
+        declared_at: Some(
+            10..14,
+        ),
     },
     Reference {
         name: "a",
         range: 33..35,
-        declared_at: None,
+        declared_at: Some(
+            4..6,
+        ),
     },
     Reference {
         name: "test",
         range: 36..40,
-        declared_at: None,
+        declared_at: Some(
+            10..14,
+        ),
     },
     Reference {
         name: "ab",
