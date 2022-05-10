@@ -767,6 +767,17 @@ impl AstNode for JsAnyBinaryLikeExpression {
             JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.syntax(),
         }
     }
+
+    fn into_syntax(self) -> JsSyntaxNode {
+        match self {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => logical.into_syntax(),
+            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.into_syntax(),
+            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => {
+                instanceof.into_syntax()
+            }
+            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => in_expression.into_syntax(),
+        }
+    }
 }
 
 impl JsAnyBinaryLikeExpression {
@@ -839,6 +850,15 @@ impl AstNode for JsAnyBinaryLikeLeftExpression {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => expression.syntax(),
             JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => private_name.syntax(),
+        }
+    }
+
+    fn into_syntax(self) -> JsSyntaxNode {
+        match self {
+            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => expression.into_syntax(),
+            JsAnyBinaryLikeLeftExpression::JsPrivateName(private_name) => {
+                private_name.into_syntax()
+            }
         }
     }
 }

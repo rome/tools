@@ -1,9 +1,13 @@
+use crate::green::{GreenToken, GreenTrivia};
 use crate::syntax::SyntaxTrivia;
 use crate::syntax_token_text::SyntaxTokenText;
-use crate::{cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode};
+use crate::{
+    cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode, TriviaPiece,
+    TriviaPieceKind,
+};
 use std::fmt;
 use std::marker::PhantomData;
-use text_size::TextRange;
+use text_size::{TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxToken<L: Language> {
@@ -12,6 +16,39 @@ pub struct SyntaxToken<L: Language> {
 }
 
 impl<L: Language> SyntaxToken<L> {
+    /// Create a new token detached from any tree
+    ///
+    /// This is mainly useful for creating a small number of individual tokens
+    /// when mutating an existing tree, the bulk of the tokens in a given file
+    /// should be created through the [crate::TreeBuilder] abstraction instead
+    /// as it will efficiently cache and reuse the created tokens
+    pub fn new_detached<Leading, Trailing>(
+        kind: L::Kind,
+        text: &str,
+        leading: Leading,
+        trailing: Trailing,
+    ) -> Self
+    where
+        Leading: IntoIterator<Item = TriviaPiece>,
+        Leading::IntoIter: ExactSizeIterator,
+        Trailing: IntoIterator<Item = TriviaPiece>,
+        Trailing::IntoIter: ExactSizeIterator,
+    {
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                kind.to_raw(),
+                text,
+                GreenTrivia::new(leading),
+                GreenTrivia::new(trailing),
+            )),
+            _p: PhantomData,
+        }
+    }
+
+    pub(super) fn green_token(&self) -> GreenToken {
+        self.raw.green().to_owned()
+    }
+
     pub fn kind(&self) -> L::Kind {
         L::Kind::from_raw(self.raw.kind())
     }
@@ -120,8 +157,73 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.prev_token().map(SyntaxToken::from)
     }
 
-    pub fn detach(&self) {
-        self.raw.detach()
+    /// Return a new version of this token detached from its parent node
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn detach(self) -> Self {
+        Self {
+            raw: self.raw.detach(),
+            _p: PhantomData,
+        }
+    }
+
+    /// Return a new version of this token with its leading trivia replaced with `trivia`
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn with_leading_trivia<'a, I>(self, trivia: I) -> Self
+    where
+        I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
+    {
+        let mut text = String::new();
+        for (_, piece) in trivia.clone() {
+            text.push_str(piece);
+        }
+
+        text.push_str(self.text_trimmed());
+
+        for piece in self.trailing_trivia().pieces() {
+            text.push_str(piece.text());
+        }
+
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                self.kind().to_raw(),
+                &text,
+                GreenTrivia::new(
+                    trivia.map(|(kind, text)| TriviaPiece::new(kind, TextSize::of(text))),
+                ),
+                self.green_token().trailing_trivia().clone(),
+            )),
+            _p: PhantomData,
+        }
+    }
+
+    /// Return a new version of this token with its trailing trivia replaced with `trivia`
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn with_trailing_trivia<'a, I>(self, trivia: I) -> Self
+    where
+        I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
+    {
+        let mut text = String::new();
+        for piece in self.leading_trivia().pieces() {
+            text.push_str(piece.text());
+        }
+
+        text.push_str(self.text_trimmed());
+
+        for (_, piece) in trivia.clone() {
+            text.push_str(piece);
+        }
+
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                self.kind().to_raw(),
+                &text,
+                self.green_token().leading_trivia().clone(),
+                GreenTrivia::new(
+                    trivia.map(|(kind, text)| TriviaPiece::new(kind, TextSize::of(text))),
+                ),
+            )),
+            _p: PhantomData,
+        }
     }
 
     /// Returns the token leading trivia.

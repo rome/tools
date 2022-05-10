@@ -7,7 +7,9 @@ use std::{
     fmt::Write,
     fs::{read_to_string, write},
     ops::Range,
+    os::raw::c_int,
     path::Path,
+    sync::Once,
 };
 
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
@@ -17,8 +19,6 @@ use rome_js_parser::{parse, SourceType};
 use crate::check_reformat::CheckReformatParams;
 
 mod check_reformat;
-
-static REPORTER: DiffReport = DiffReport::new();
 
 tests_macros::gen_tests! {"tests/specs/prettier/**/*.{js,ts,jsx,tsx}", crate::test_snapshot, "script"}
 
@@ -200,7 +200,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             });
 
             let input_file = input_file.to_str().unwrap();
-            REPORTER.report(input_file, formatted, content);
+            DiffReport::get().report(input_file, formatted, content);
         }
     }
 }
@@ -257,10 +257,35 @@ struct DiffReport {
 }
 
 impl DiffReport {
-    const fn new() -> Self {
-        Self {
+    fn get() -> &'static Self {
+        static REPORTER: DiffReport = DiffReport {
             state: const_mutex(Vec::new()),
-        }
+        };
+
+        // Use an atomic Once to register an exit callback the first time any
+        // testing thread requests an instance of the Reporter
+        static ONCE: Once = Once::new();
+        ONCE.call_once(|| {
+            // Import the atexit function from libc
+            extern "C" {
+                fn atexit(f: extern "C" fn()) -> c_int;
+            }
+
+            // Trampoline function into the reporter printing logic with the
+            // correct extern C ABI
+            extern "C" fn print_report() {
+                REPORTER.print();
+            }
+
+            countme::enable(true);
+
+            // Register the print_report function to be called when the process exits
+            unsafe {
+                atexit(print_report);
+            }
+        });
+
+        &REPORTER
     }
 
     fn report(&self, file_name: &'static str, rome: String, prettier: String) {
@@ -268,6 +293,10 @@ impl DiffReport {
     }
 
     fn print(&self) {
+        if let Some(report) = rome_rowan::check_live() {
+            panic!("\n{report}")
+        }
+
         // Only create the report file if the REPORT_PRETTIER
         // environment variable is set to 1
         match env::var("REPORT_PRETTIER") {
@@ -295,9 +324,4 @@ impl DiffReport {
 
         write("report.md", report).unwrap();
     }
-}
-
-#[ctor::dtor]
-fn print_report() {
-    REPORTER.print();
 }

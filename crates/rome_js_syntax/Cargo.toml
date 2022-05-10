@@ -11,5 +11,8 @@ repository = "https://github.com/rome/tools"
 rome_rowan = { path = "../rome_rowan" }
 serde_crate = { package = "serde", version = "1.0.136", features = ["derive"], optional = true }
 
+[dev-dependencies]
+rome_js_factory = { path = "../rome_js_factory" }
+
 [features]
 serde = ["serde_crate", "rome_rowan/serde"]

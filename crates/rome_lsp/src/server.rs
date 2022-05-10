@@ -8,7 +8,6 @@ use crate::requests::syntax_tree::{syntax_tree, SyntaxTreePayload, SYNTAX_TREE_R
 use crate::session::Session;
 use crate::utils;
 use crate::utils::into_lsp_error;
-use rome_analyze::AnalysisServer;
 use serde_json::Value;
 use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};
@@ -98,18 +97,18 @@ impl LanguageServer for LSPServer {
         if !workspace_settings.analysis.enable_code_actions {
             return Ok(None);
         }
+
         let url = params.text_document.uri.clone();
         let doc = self.session.document(&url)?;
+        let diagnostics = params.context.diagnostics;
 
         let line_index = LineIndex::new(&doc.text);
         let cursor_range = crate::utils::text_range(&line_index, params.range);
 
         let file_id = doc.file_id();
-        let mut analysis_server = AnalysisServer::default();
-        analysis_server.set_file_text(file_id, doc.text);
 
         let task = utils::spawn_blocking_task(move || {
-            handlers::analysis::code_actions(analysis_server, file_id, url, cursor_range)
+            handlers::analysis::code_actions(file_id, &doc.text, url, &diagnostics, cursor_range)
         });
         let actions = task.await?;
         Ok(Some(actions))
