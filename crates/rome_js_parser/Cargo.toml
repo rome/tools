@@ -20,10 +20,12 @@ smallvec = { version = "1.8.0", features = ["union", "const_new"] }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 
 [dev-dependencies]
+rome_console = { path = "../rome_console" }
 tests_macros = { path = "../tests_macros" }
 expect-test = "1.2.2"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
+suggest = "0.4.0"
 
 [features]
 serde = ["rome_js_syntax/serde"]
