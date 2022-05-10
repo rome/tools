@@ -6,7 +6,7 @@ use rome_rowan::{AstNode, SyntaxNode};
 use crate::{
     analyzers::*,
     assists::*,
-    categories::{ActionCategory, RuleCategory},
+    categories::{ActionCategories, RuleCategory},
     signals::{AnalyzerSignal, RuleSignal},
     AnalysisFilter,
 };
@@ -88,12 +88,12 @@ pub(crate) trait Rule {
     const CATEGORY: RuleCategory;
 
     /// The type of AstNode this rule is interested in
-    type Query: AstNode + 'static;
+    type Query: AstNode;
     /// A generic type that will be kept in memory between a call to `run` and
     /// subsequent executions of `diagnostic` or `action`, allows the rule to
     /// hold some temporary state between the moment a signal is raised and
     /// when a diagnostic or action needs to be built
-    type State: 'static;
+    type State;
 
     /// This function is called once for each node matching `Query` in the tree
     /// being analyzed. If it returns `Some` the state object will be wrapped
@@ -129,6 +129,6 @@ pub struct RuleDiagnostic {
 pub struct RuleAction {
     /// The category this action belongs to, this will influence how clients
     /// may chose to present this action to the user
-    pub category: ActionCategory,
+    pub category: ActionCategories,
     pub root: JsAnyRoot,
 }

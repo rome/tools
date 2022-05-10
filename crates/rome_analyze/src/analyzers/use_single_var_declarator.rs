@@ -9,7 +9,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, AstNodeListExt, AstSeparatedList};
 
-use crate::{ActionCategory, RuleCategory};
+use crate::{ActionCategories, RuleCategory};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
 
@@ -91,7 +91,7 @@ impl Rule for UseSingleVarDeclarator {
         );
 
         Some(RuleAction {
-            category: ActionCategory::empty(),
+            category: ActionCategories::empty(),
             root: root.replace_node_discard_trivia(prev_parent, next_parent)?,
         })
     }

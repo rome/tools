@@ -21,7 +21,7 @@ bitflags! {
         const ACTION = 1 << RuleCategory::Action as u8;
     }
 
-    pub struct ActionCategory: u8 {
+    pub struct ActionCategories: u8 {
         const SAFE_FIX = 1 << 0;
         const SUGGESTION = 1 << 1;
         const REFACTOR = 1 << 2;

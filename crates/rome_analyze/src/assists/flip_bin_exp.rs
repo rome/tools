@@ -7,7 +7,7 @@ use rome_rowan::AstNodeExt;
 use crate::{
     categories::RuleCategory,
     registry::{Rule, RuleAction},
-    ActionCategory,
+    ActionCategories,
 };
 
 pub(crate) enum FlipBinExp {}
@@ -47,7 +47,7 @@ impl Rule for FlipBinExp {
         let new_node = new_node.replace_node(prev_right, new_right)?;
 
         Some(RuleAction {
-            category: ActionCategory::REFACTOR,
+            category: ActionCategories::REFACTOR,
             root: root.replace_node(node.clone(), new_node)?,
         })
     }

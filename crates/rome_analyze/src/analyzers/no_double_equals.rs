@@ -6,7 +6,7 @@ use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{AstNodeExt, SyntaxResult};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
+use crate::{ActionCategories, RuleCategory};
 
 pub(crate) enum NoDoubleEquals {}
 
@@ -50,7 +50,7 @@ impl Rule for NoDoubleEquals {
         )?;
 
         Some(RuleAction {
-            category: ActionCategory::empty(),
+            category: ActionCategories::empty(),
             root,
         })
     }

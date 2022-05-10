@@ -9,7 +9,7 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::registry::{Rule, RuleAction, RuleDiagnostic};
-use crate::{ActionCategory, RuleCategory};
+use crate::{ActionCategories, RuleCategory};
 
 pub(crate) enum NoDelete {}
 
@@ -54,7 +54,7 @@ impl Rule for NoDelete {
         )?;
 
         Some(RuleAction {
-            category: ActionCategory::empty(),
+            category: ActionCategories::empty(),
             root,
         })
     }

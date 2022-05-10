@@ -7,7 +7,7 @@ mod categories;
 mod registry;
 mod signals;
 
-pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
+pub use crate::categories::{ActionCategories, RuleCategories, RuleCategory};
 use crate::registry::RuleRegistry;
 pub use crate::signals::{AnalyzerAction, AnalyzerDiagnostic, AnalyzerSignal};
 

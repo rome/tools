@@ -4,7 +4,7 @@ use rome_console::MarkupBuf;
 use rome_diagnostics::Severity;
 use rome_js_syntax::{JsAnyRoot, TextRange};
 
-use crate::{registry::Rule, ActionCategory};
+use crate::{registry::Rule, ActionCategories};
 
 /// Event raised by the analyzer when a [Rule](crate::analysis_server::Rule)
 /// emits a diagnostic, a code action, or both
@@ -28,7 +28,7 @@ pub struct AnalyzerDiagnostic {
 #[derive(Debug, PartialEq, Eq)]
 pub struct AnalyzerAction {
     pub rule_name: &'static str,
-    pub category: ActionCategory,
+    pub category: ActionCategories,
     pub root: JsAnyRoot,
 }
 

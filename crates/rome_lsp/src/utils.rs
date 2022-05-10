@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::fmt::Display;
 
 use crate::line_index::{LineCol, LineIndex};
-use rome_analyze::ActionCategory;
+use rome_analyze::ActionCategories;
 use rome_analyze::AnalyzerAction;
 use rome_analyze::AnalyzerDiagnostic;
 use rome_console::fmt::{self, Formatter, Termcolor};
@@ -82,8 +82,8 @@ pub(crate) fn code_fix_to_lsp(
         change_annotations: None,
     };
 
-    let is_safe_fix = action.category.contains(ActionCategory::SAFE_FIX);
-    let is_refactor = action.category.contains(ActionCategory::REFACTOR);
+    let is_safe_fix = action.category.contains(ActionCategories::SAFE_FIX);
+    let is_refactor = action.category.contains(ActionCategories::REFACTOR);
 
     lsp_types::CodeAction {
         title: String::from(action.rule_name),

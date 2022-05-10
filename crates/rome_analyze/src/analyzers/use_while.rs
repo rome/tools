@@ -6,7 +6,7 @@ use rome_rowan::{AstNode, AstNodeExt};
 
 use crate::{
     registry::{Rule, RuleAction, RuleDiagnostic},
-    ActionCategory, RuleCategory,
+    ActionCategories, RuleCategory,
 };
 
 pub(crate) enum UseWhile {}
@@ -80,7 +80,7 @@ impl Rule for UseWhile {
         )?;
 
         Some(RuleAction {
-            category: ActionCategory::empty(),
+            category: ActionCategories::empty(),
             root,
         })
     }
