@@ -201,8 +201,11 @@ impl<'fmt> Formatter<'fmt> {
 /// # Example
 /// Implementing `Display` on a custom struct
 /// ```
+/// use rome_console::{
+///     fmt::{Display, Formatter},
+///     markup,
+/// };
 /// use std::io;
-/// use rome_console::{fmt::{Display, Formatter}, markup};
 ///
 /// struct Warning(String);
 ///

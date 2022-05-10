@@ -27,7 +27,6 @@ struct TextCleaner<'a> {
     ///
     ///  "A  Brighter \n\t Summer  \n\n Day"
     ///    ^^        ^^^^^^      ^^^^^^^
-    ///
     pub whitespace_ranges: Vec<Range<usize>>,
     pub trailing_whitespace_type: Option<WhitespaceType>,
 }

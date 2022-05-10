@@ -436,7 +436,6 @@ fn format_leading_trivia_with_skipped_tokens(
 ///
 /// Returns [Err] if the leading trivia contains any skipped trivia. Returns the formatted
 /// leading trivia otherwise.
-///
 fn format_leading_trivia_pieces<I>(
     pieces: I,
     mut trim_mode: TriviaPrintMode,

@@ -34,13 +34,16 @@ use rome_rowan::{SyntaxResult, TokenAtOffset};
 /// Implementing `Format` for a custom struct
 ///
 /// ```
-/// use rome_formatter::{format_elements, FormatElement, FormatOptions, hard_line_break, Token, FormatResult};
-/// use rome_js_formatter::{Format, format, Formatter};
+/// use rome_formatter::{
+///     format_elements, hard_line_break, FormatElement, FormatOptions, FormatResult, Token,
+/// };
+/// use rome_js_formatter::{format, Format, Formatter};
 /// use rome_rowan::TextSize;
 ///
 /// struct Paragraph(String);
 ///
-/// impl Format for Paragraph {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+/// impl Format for Paragraph {
+///     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 ///         Ok(format_elements![
 ///             hard_line_break(),
 ///             Token::new_dynamic(self.0.clone(), TextSize::from(0)),
@@ -50,7 +53,9 @@ use rome_rowan::{SyntaxResult, TokenAtOffset};
 /// }
 ///
 /// let paragraph = Paragraph(String::from("test"));
-/// let printed = format(FormatOptions::default(), &paragraph).unwrap().print();
+/// let printed = format(FormatOptions::default(), &paragraph)
+///     .unwrap()
+///     .print();
 ///
 /// assert_eq!("test\n", printed.as_code())
 /// ```

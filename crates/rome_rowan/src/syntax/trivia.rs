@@ -223,14 +223,17 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// which returns the text of the whole trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t /**/let \t\t",
-    ///         &[TriviaPiece::whitespace(3), TriviaPiece::single_line_comment(4)],
+    ///         &[
+    ///             TriviaPiece::whitespace(3),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// });
@@ -257,14 +260,17 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// which returns the text length of the whole trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t /**/let \t\t",
-    ///         &[TriviaPiece::whitespace(3), TriviaPiece::single_line_comment(4)],
+    ///         &[
+    ///             TriviaPiece::whitespace(3),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// });
@@ -279,14 +285,17 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// which returns the text range of the whole trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t /**/let \t\t",
-    ///         &[TriviaPiece::whitespace(3), TriviaPiece::single_line_comment(4)],
+    ///         &[
+    ///             TriviaPiece::whitespace(3),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// });
@@ -300,14 +309,18 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// Returns true if this trivia piece is a [SyntaxTriviaPieceNewline].
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t/**/let",
-    ///         &[TriviaPiece::newline(1), TriviaPiece::whitespace(1), TriviaPiece::single_line_comment(4)],
+    ///         &[
+    ///             TriviaPiece::newline(1),
+    ///             TriviaPiece::whitespace(1),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
     ///         &[],
     ///     );
     /// });
@@ -321,14 +334,18 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// Returns true if this trivia piece is a [SyntaxTriviaPieceWhitespace].
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t/**/let",
-    ///         &[TriviaPiece::newline(1), TriviaPiece::whitespace(1), TriviaPiece::single_line_comment(4)],
+    ///         &[
+    ///             TriviaPiece::newline(1),
+    ///             TriviaPiece::whitespace(1),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
     ///         &[],
     ///     );
     /// });
@@ -342,14 +359,18 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// Returns true if this trivia piece is a [SyntaxTriviaPieceComments].
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t/**/let",
-    ///         &[TriviaPiece::newline(1), TriviaPiece::whitespace(1), TriviaPiece::single_line_comment(4)],
+    ///         &[
+    ///             TriviaPiece::newline(1),
+    ///             TriviaPiece::whitespace(1),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
     ///         &[],
     ///     );
     /// });
@@ -371,10 +392,10 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// Cast this trivia piece to [SyntaxTriviaPieceNewline].
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n/**/let \t\t",
@@ -398,14 +419,17 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// Cast this trivia piece to [SyntaxTriviaPieceWhitespace].
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\t /**/let \t\t",
-    ///         &[TriviaPiece::whitespace(2), TriviaPiece::single_line_comment(4)],
+    ///         &[
+    ///             TriviaPiece::whitespace(2),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// });
@@ -425,14 +449,17 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// Cast this trivia piece to [SyntaxTriviaPieceComments].
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
     /// use std::iter::Iterator;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t /**/let \t\t",
-    ///         &[TriviaPiece::whitespace(3), TriviaPiece::single_line_comment(4)],
+    ///         &[
+    ///             TriviaPiece::whitespace(3),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
     /// });
@@ -533,17 +560,20 @@ impl<L: Language> SyntaxTrivia<L> {
     /// Returns all [SyntaxTriviaPiece] of this trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
-    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// use std::iter::Iterator;
     /// use crate::*;
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
-    /// builder.token_with_trivia(
-    ///     RawLanguageKind::LET_TOKEN,
-    ///     "\n\t /**/let \t\t",
-    ///     &[TriviaPiece::whitespace(3), TriviaPiece::single_line_comment(4)],
-    ///     &[TriviaPiece::whitespace(3)],
-    /// );
+    /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+    /// use rome_rowan::*;
+    /// use std::iter::Iterator;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
+    ///     builder.token_with_trivia(
+    ///         RawLanguageKind::LET_TOKEN,
+    ///         "\n\t /**/let \t\t",
+    ///         &[
+    ///             TriviaPiece::whitespace(3),
+    ///             TriviaPiece::single_line_comment(4),
+    ///         ],
+    ///         &[TriviaPiece::whitespace(3)],
+    ///     );
     /// });
     /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
     /// assert_eq!(2, pieces.len());

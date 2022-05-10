@@ -18,7 +18,6 @@ use rome_cli::{run_cli, setup_panic_handler, CliSession, Termination};
 /// ```bash
 ///  cargo run --example run_cli format examples/input.json
 /// ```
-///
 fn main() -> Result<(), Termination> {
     setup_panic_handler();
     run_cli(CliSession::from_env())

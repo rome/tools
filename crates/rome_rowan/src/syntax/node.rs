@@ -39,9 +39,9 @@ impl<L: Language> SyntaxNode<L> {
     /// Returns the text of all descendants tokens combined, including all trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -67,9 +67,9 @@ impl<L: Language> SyntaxNode<L> {
     /// All other trivia is included.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -93,9 +93,9 @@ impl<L: Language> SyntaxNode<L> {
     /// Returns the range corresponding for the text of all descendants tokens combined, including all trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -123,9 +123,9 @@ impl<L: Language> SyntaxNode<L> {
     /// All other trivia is included.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -151,9 +151,9 @@ impl<L: Language> SyntaxNode<L> {
     /// Returns the leading trivia of the [first_token](SyntaxNode::first_token), or [None] if the node does not have any descendant tokens.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -172,7 +172,7 @@ impl<L: Language> SyntaxNode<L> {
     /// assert!(trivia.is_some());
     /// assert_eq!("\n\t ", trivia.unwrap().text());
     ///
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {});
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {});
     /// let trivia = node.first_leading_trivia();
     /// assert!(trivia.is_none());
     /// ```
@@ -183,9 +183,9 @@ impl<L: Language> SyntaxNode<L> {
     /// Returns the trailing trivia of the  [last_token](SyntaxNode::last_token), or [None] if the node does not have any descendant tokens.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
@@ -204,7 +204,7 @@ impl<L: Language> SyntaxNode<L> {
     /// assert!(trivia.is_some());
     /// assert_eq!(" \t\t", trivia.unwrap().text());
     ///
-    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {});
+    /// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {});
     /// let trivia = node.last_trailing_trivia();
     /// assert!(trivia.is_none());
     /// ```
