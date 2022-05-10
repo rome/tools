@@ -1,6 +1,5 @@
 use crate::prelude::*;
 
-
 use crate::FormatNodeFields;
 use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields};
 use rome_rowan::AstNode;

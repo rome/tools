@@ -94,24 +94,24 @@ macro_rules! format_elements {
 /// let formatter = Formatter::new(FormatOptions::default());
 ///
 /// let formatted = formatted![
-///         &formatter,
+///     &formatter,
+///     token("a"),
+///     space_token(),
+///     token("simple"),
+///     space_token(),
+///     TestFormat
+///  ]
+///  .unwrap();
+///
+///  assert_eq!(
+///     formatted,
+///     concat_elements([
 ///         token("a"),
 ///         space_token(),
 ///         token("simple"),
 ///         space_token(),
-///         TestFormat
-///     ]
-///     .unwrap();
-///
-///     assert_eq!(
-///         formatted,
-///         concat_elements([
-///             token("a"),
-///             space_token(),
-///             token("simple"),
-///             space_token(),
-///             token("test")
-///         ])
+///         token("test")
+///     ])
 ///  );
 /// ```
 ///
