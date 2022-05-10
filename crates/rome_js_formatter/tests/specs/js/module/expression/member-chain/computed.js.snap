@@ -10,8 +10,6 @@ nock(/test/)
   .reply(200, {
     foo: 'bar',
   });
-
-a[("test")]
 =============================
 # Outputs
 ## Output 1
@@ -23,6 +21,4 @@ Quote style: Double Quotes
 nock(/test/)
 	.matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo")
 	.reply(200, { foo: "bar" });
-
-a[("test")];
 

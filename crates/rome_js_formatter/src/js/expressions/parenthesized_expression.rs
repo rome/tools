@@ -141,13 +141,10 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
         }
         JsAnyExpression::JsAnyLiteralExpression(
             JsAnyLiteralExpression::JsStringLiteralExpression(_),
-        ) if matches!(
+        ) => Ok(!matches!(
             parent.map(|p| p.kind()),
-            Some(JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION)
-        ) =>
-        {
-            Ok(true)
-        }
+            Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT)
+        )),
         _ => Ok(false),
     }
 }
