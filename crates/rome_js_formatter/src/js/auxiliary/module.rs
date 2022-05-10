@@ -19,7 +19,7 @@ impl FormatNodeFields<JsModule> for FormatNodeRule<JsModule> {
             [
                 format_interpreter(interpreter_token, formatter)?,
                 directives.format(),
-                formatter.format_list(&items),
+                formatter.format_list_with_hard_line(&items),
                 formatter.format_replaced(&eof_token?, empty_element()),
                 hard_line_break()
             ]

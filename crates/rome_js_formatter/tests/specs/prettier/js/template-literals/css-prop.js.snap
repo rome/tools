@@ -50,20 +50,15 @@ function SomeComponent(props) {
       font-size: 20px;
     }
   `}>
-    This will be blue until hovered.
-    <div className="some-class">
-      This font size will be 20px
+      This will be blue until hovered.<div className="some-class">
+        This font size will be 20px
+      </div>
     </div>
-  </div>
   );
 }
 
-const TestComponent = (
-  { children, ...props },
-) => (
-  <div css={`color: white; background: black`}>
-    {children}
-  </div>
+const TestComponent = ({ children, ...props }) => (
+  <div css={`color: white; background: black`}>{children}</div>
 );
 
 ```

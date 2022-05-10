@@ -19,7 +19,7 @@ impl FormatNodeFields<JsBlockStatement> for FormatNodeRule<JsBlockStatement> {
             r_curly_token,
         } = node.as_fields();
 
-        let stmts = formatter.format_list(&statements);
+        let stmts = formatter.format_list_with_hard_line(&statements);
 
         if is_non_collapsable_empty_block(node) {
             formatted![

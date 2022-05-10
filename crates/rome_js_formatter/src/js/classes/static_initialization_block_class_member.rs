@@ -22,11 +22,12 @@ impl FormatNodeFields<JsStaticInitializationBlockClassMember>
         let separated = formatter
             .delimited(
                 &l_curly_token?,
-                formatter.format_list(&statements),
+                formatter.format_list_with_hard_line(&statements),
                 &r_curly_token?,
             )
             .block_indent()
             .finish()?;
+
         formatted![formatter, [static_token, space_token(), separated]]
     }
 }

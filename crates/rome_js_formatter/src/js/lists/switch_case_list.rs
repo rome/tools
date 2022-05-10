@@ -6,6 +6,6 @@ impl FormatRule<JsSwitchCaseList> for FormatJsSwitchCaseList {
     type Context = JsFormatContext;
 
     fn format(node: &JsSwitchCaseList, formatter: &JsFormatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(node))
+        Ok(formatter.format_list_with_hard_line(node))
     }
 }
