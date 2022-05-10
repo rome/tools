@@ -24,6 +24,11 @@ impl<L: Language> SyntaxNode<L> {
         SyntaxNode::from(cursor::SyntaxNode::new_root(green))
     }
 
+    /// Create a new detached (root) node from a syntax kind and an iterator of slots
+    ///
+    /// In general this function should not be used directly but through the
+    /// type-checked factory function / builders generated from the grammar of
+    /// the corresponding language (eg. `rome_js_factory::make`)
     pub fn new_detached<I>(kind: L::Kind, slots: I) -> SyntaxNode<L>
     where
         I: IntoIterator<Item = Option<SyntaxElement<L>>>,

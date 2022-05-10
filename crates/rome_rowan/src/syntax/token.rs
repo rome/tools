@@ -16,7 +16,12 @@ pub struct SyntaxToken<L: Language> {
 }
 
 impl<L: Language> SyntaxToken<L> {
-    /// Create a new detached token
+    /// Create a new token detached from any tree
+    ///
+    /// This is mainly useful for creating a small number of individual tokens
+    /// when mutating an existing tree, the bulk of the tokens in a given file
+    /// should be created through the [crate::TreeBuilder] abstraction instead
+    /// as it will efficiently cache and reuse the created tokens
     pub fn new_detached<Leading, Trailing>(
         kind: L::Kind,
         text: &str,

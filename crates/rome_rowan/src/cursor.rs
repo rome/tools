@@ -31,7 +31,13 @@
 // from that point towards the root have ref count equal to one.
 //
 // `NodeData` which doesn't have a parent (is a root) owns the corresponding
-// green node or token, and is responsible for freeing it.
+// green node or token, and is responsible for freeing it. For child `NodeData`
+// however since they hold a strong reference to their parent node and thus
+// to the root, their corresponding green node is guaranteed to be alive as
+// a reference cycle to is know to exist (child `NodeData` -> root `NodeData`
+// -> root `GreenNode` -> child `GreenNode`) and they can safely use a "weak
+// reference" (raw pointer) to the corresponding green node as an optimization
+// to avoid having to track atomic references on the traversal hot path
 
 mod element;
 mod node;
@@ -90,13 +96,14 @@ enum NodeKind {
     },
 }
 
-/// Child SyntaxNodes use "unsafe" weak pointers to refer to their green node,
-/// unlike the safe [std::sync::Weak] these are just a raw pointer with no
-/// additional semantics meaning the corresponding [ThinArc](crate::arc::ThinArc)
-/// doesn't have to keep a counter of outstanding weak references or defer the
-/// release of the underlying memory until the last `Weak` is dropped. On the
-/// other hand, an outstanding weak reference to a released green node points
-/// to deallocated memory
+/// Child SyntaxNodes use "unsafe" weak pointers to refer to their green node.
+/// Unlike the safe [std::sync::Weak] these are just a raw pointer: the
+/// corresponding [ThinArc](crate::arc::ThinArc) doesn't keep a counter of
+/// outstanding weak references or defer the release of the underlying memory
+/// until the last `Weak` is dropped. On the other hand, a weak reference to a
+/// released green node points to deallocated memory and it is undefined
+/// behavior to dereference it, but in the context of `NodeData` this is
+/// statically known to never happen
 #[derive(Debug, Clone)]
 enum WeakGreenElement {
     Node { ptr: ptr::NonNull<GreenNodeData> },
