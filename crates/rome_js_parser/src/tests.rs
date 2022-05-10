@@ -3,9 +3,10 @@ use expect_test::expect_file;
 use rome_diagnostics::file::SimpleFile;
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::{file::SimpleFiles, Emitter};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxKind};
+use rome_js_syntax::{JsAnyRoot, JsLanguage, JsSyntaxKind};
 use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, SyntaxKind, TextSize};
+use std::fmt::Debug;
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
@@ -162,9 +163,15 @@ fn has_unknown_nodes(node: &JsSyntaxNode) -> bool {
         .any(|descendant| descendant.kind().is_unknown())
 }
 
-fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
+fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path)
+where
+    T: AstNode<Language = JsLanguage> + Debug,
+{
     let syntax = program.syntax();
-    if !program.has_errors() && !has_unknown_nodes(&syntax) {
+    let debug_tree = format!("{:?}", program.tree());
+    let has_missing_children = debug_tree.contains("missing (required)");
+
+    if !program.has_errors() && !has_unknown_nodes(&syntax) && !has_missing_children {
         return;
     }
 

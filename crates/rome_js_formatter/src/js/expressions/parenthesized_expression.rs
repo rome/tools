@@ -6,7 +6,7 @@ use crate::{
 use rome_formatter::FormatResult;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
-    JsParenthesizedExpressionFields, JsSyntaxKind, JsSyntaxNode,
+    JsParenthesizedExpressionFields, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -19,6 +19,8 @@ impl FormatNode for JsParenthesizedExpression {
         } = self.as_fields();
 
         let parenthesis_can_be_omitted = parenthesis_can_be_omitted(self)?;
+
+        let expression = expression?;
 
         if is_simple_parenthesized_expression(self)? {
             Ok(hard_group_elements(format_elements![
@@ -40,6 +42,31 @@ impl FormatNode for JsParenthesizedExpression {
                 formatter.format_replaced(&l_paren_token?, empty_element()),
                 group_elements(expression.format(formatter)?),
                 formatter.format_replaced(&r_paren_token?, empty_element()),
+            ])
+        // if the expression inside the parenthesis is a stringLiteralExpression, we should leave it as is rather than
+        // add extra soft_block_indent, for example:
+        // ```js
+        // ("escaped carriage return \
+        // ");
+        // ```
+        // if we add soft_block_indent, we will get:
+        // ```js
+        // (
+        // "escaped carriage return \
+        // "
+        // );
+        // ```
+        // which will not match prettier's formatting behavior, if we add this extra branch to handle this case, it become:
+        // ```js
+        // ("escaped carriage return \
+        // ");
+        // ```
+        // this is what we want
+        } else if JsStringLiteralExpression::can_cast(expression.syntax().kind()) {
+            Ok(format_elements![
+                l_paren_token.format(formatter)?,
+                expression.format(formatter)?,
+                r_paren_token.format(formatter)?,
             ])
         } else {
             formatter.format_delimited_soft_block_indent(

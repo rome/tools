@@ -70,7 +70,7 @@ const envSpecific = {
       if(env === 'production') 'https://abc.mno.com/';
 else
 if (env === "development") {
-  "http://localhost:4000";
+  ("http://localhost:4000");
 }
 }
 }
