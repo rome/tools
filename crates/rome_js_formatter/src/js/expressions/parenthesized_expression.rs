@@ -5,8 +5,8 @@ use crate::{
 };
 use rome_formatter::FormatResult;
 use rome_js_syntax::{
-    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxKind,
-    JsSyntaxNode,
+    JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
+    JsParenthesizedExpressionFields, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -75,10 +75,23 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
     let parent_precedence = FormatPrecedence::with_precedence_for_parenthesis(parent.as_ref());
     let node_precedence = FormatPrecedence::with_precedence_for_parenthesis(Some(node.syntax()));
 
-    if parent_precedence > node_precedence {
+    // if expression is a StringLiteralExpression, we could not just return false, here is once case:
+    // ```js
+    // a[("test")]
+    // ```
+    // parent_precedence should be `High` due to the parenthesized_expression's parent is ComputedMemberExpression,
+    // and node_precedence should be `Low` due to expression is StringLiteralExpression.
+    // the parenthesis should be omitted.
+    if parent_precedence > node_precedence
+        && !matches!(
+            expression,
+            JsAnyExpression::JsAnyLiteralExpression(
+                JsAnyLiteralExpression::JsStringLiteralExpression(_)
+            )
+        )
+    {
         return Ok(false);
     }
-
     // Here we handle cases where we have binary/logical expressions.
     // We want to remove the parenthesis only in cases where `left` and `right` are not other
     // binary/logical expressions.
@@ -99,6 +112,14 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
 
             Ok(not_binaryish_expression(left.syntax()) && not_binaryish_expression(right.syntax()))
         }
+        JsAnyExpression::JsAnyLiteralExpression(
+            JsAnyLiteralExpression::JsStringLiteralExpression(_),
+        ) if matches!(
+            parent.map(|p| p.kind()),
+            Some(JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION)
+        ) => {
+			Ok(true)
+		}
         _ => Ok(false),
     }
 }
