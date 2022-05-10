@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 
 interface Props {
 	treeStyle: TreeStyle;
-	setTreeStyle: Dispatch<SetStateAction<TreeStyle>>;
+	setTreeStyle: (treeStyle: TreeStyle) => void;
 }
 
 export default function TreeStyleSelect({ treeStyle, setTreeStyle }: Props) {
@@ -28,7 +28,7 @@ export default function TreeStyleSelect({ treeStyle, setTreeStyle }: Props) {
 				>
 					<span
 						className={classNames(
-							"sr-only lg:not-sr-only text-gray-900",
+							"text-gray-900",
 							treeStyle === TreeStyle.Json
 								? "text-gray-900"
 								: "text-gray-600 group-hover:text-gray-900"
@@ -47,9 +47,7 @@ export default function TreeStyleSelect({ treeStyle, setTreeStyle }: Props) {
 						"bg-white shadow-sm ring-1 ring-black ring-opacity-5"
 				)}
 			>
-				<span className="sr-only lg:not-sr-only text-gray-600 text-gray-900">
-					Text
-				</span>
+				<span className="text-gray-900">Text</span>
 			</button>
 		</div>
 	);
