@@ -8,7 +8,6 @@ use crate::requests::syntax_tree::{syntax_tree, SyntaxTreePayload, SYNTAX_TREE_R
 use crate::session::Session;
 use crate::utils;
 use crate::utils::into_lsp_error;
-use rome_analyze::AnalysisServer;
 use serde_json::Value;
 use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};

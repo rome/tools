@@ -12909,11 +12909,8 @@ impl JsAnyExpression {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-<<<<<<< HEAD
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
-=======
->>>>>>> e40e3f41a3 (improving codegen to improve symbol cst navigation)
 pub enum JsAnyForInOrOfInitializer {
     JsAnyAssignmentPattern(JsAnyAssignmentPattern),
     JsForVariableDeclaration(JsForVariableDeclaration),
@@ -12933,11 +12930,8 @@ impl JsAnyForInOrOfInitializer {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-<<<<<<< HEAD
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
-=======
->>>>>>> e40e3f41a3 (improving codegen to improve symbol cst navigation)
 pub enum JsAnyForInitializer {
     JsAnyExpression(JsAnyExpression),
     JsVariableDeclaration(JsVariableDeclaration),
@@ -12957,11 +12951,8 @@ impl JsAnyForInitializer {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-<<<<<<< HEAD
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
-=======
->>>>>>> e40e3f41a3 (improving codegen to improve symbol cst navigation)
 pub enum JsAnyFormalParameter {
     JsFormalParameter(JsFormalParameter),
     JsUnknownParameter(JsUnknownParameter),
@@ -12981,11 +12972,8 @@ impl JsAnyFormalParameter {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-<<<<<<< HEAD
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[cfg_attr(feature = "serde", serde(crate = "serde_crate"))]
-=======
->>>>>>> e40e3f41a3 (improving codegen to improve symbol cst navigation)
 pub enum JsAnyFunction {
     JsArrowFunctionExpression(JsArrowFunctionExpression),
     JsFunctionDeclaration(JsFunctionDeclaration),
