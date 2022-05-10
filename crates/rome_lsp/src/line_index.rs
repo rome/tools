@@ -30,6 +30,24 @@ pub struct LineCol {
     pub col: u32,
 }
 
+impl From<LineCol> for tower_lsp::lsp_types::Position {
+    fn from(linecol: LineCol) -> Self {
+        Self {
+            line: linecol.line,
+            character: linecol.col,
+        }
+    }
+}
+
+impl From<tower_lsp::lsp_types::Position> for LineCol {
+    fn from(pos: tower_lsp::lsp_types::Position) -> Self {
+        Self {
+            line: pos.line,
+            col: pos.character,
+        }
+    }
+}
+
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
 pub(crate) struct Utf16Char {
     /// Start offset of a character inside a line, zero-based
@@ -177,5 +195,12 @@ impl LineIndex {
         }
 
         col.into()
+    }
+
+    pub fn to_lsp_range(&self, range: &TextRange) -> tower_lsp::lsp_types::Range {
+        tower_lsp::lsp_types::Range {
+            start: self.line_col(range.start()).into(),
+            end: self.line_col(range.end()).into(),
+        }
     }
 }
