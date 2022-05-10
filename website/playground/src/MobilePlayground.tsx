@@ -78,18 +78,16 @@ export function MobilePlayground(
 					/>
 				</TabPanel>
 				<TabPanel>
-					<TreeView tree={cst} />
+					<TreeView tree={JSON.parse(cst)} />
 				</TabPanel>
 				<TabPanel>
-					<TreeView tree={ast} />
+					<TreeView tree={JSON.parse(ast)} />
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
 				</TabPanel>
 				<TabPanel>
-					<pre className="h-screen overflow-y-scroll">
-						{JSON.stringify(prettierOutput.ir)}
-					</pre>
+					<TreeView tree={prettierOutput.ir} />
 				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">

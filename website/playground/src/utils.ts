@@ -126,7 +126,9 @@ export function formatWithPrettier(
 		return { code: formattedCode, ir };
 	} catch (err) {
 		console.error(err);
-		return { code: err, ir: { error: "Invalid code" } };
+		//@ts-ignore
+		const code = err.toString();
+		return { code, ir: { error: "Invalid code" } };
 	}
 }
 

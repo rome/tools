@@ -3,17 +3,15 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import { getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
-<<<<<<< HEAD
 import TreeView from "./TreeView";
-=======
-import ReactJson from "react-json-view";
->>>>>>> f60a74b0f4 (Added react-json-view)
 
-export default function DesktopPlayground({
-	playgroundState: { code, setCode, ...settings },
-	prettierOutput,
-	romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
-}: PlaygroundProps) {
+export default function DesktopPlayground(
+	{
+		playgroundState: { code, setCode, ...settings },
+		prettierOutput,
+		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+	}: PlaygroundProps,
+) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
 	return (
@@ -78,18 +76,16 @@ export default function DesktopPlayground({
 							/>
 						</TabPanel>
 						<TabPanel>
-							<TreeView tree={cst} />
+							<TreeView tree={JSON.parse(cst)} />
 						</TabPanel>
 						<TabPanel>
-							<TreeView tree={ast} />
+							<TreeView tree={JSON.parse(ast)} />
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll">{formatter_ir}</pre>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-scroll">
-								{<ReactJson src={prettierOutput.ir} />}
-							</pre>
+							<TreeView tree={prettierOutput.ir} />
 						</TabPanel>
 						<TabPanel>
 							<pre className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs">
