@@ -1,13 +1,14 @@
 import { PlaygroundProps } from "./types";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { getLanguage } from "./utils";
+import { createSetter, getLanguage } from "./utils";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
 
 export default function DesktopPlayground(
 	{
-		playgroundState: { code, setCode, treeStyle, setTreeStyle, ...settings },
+		setPlaygroundState,
+		playgroundState: { code, treeStyle, ...settings },
 		prettierOutput,
 		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 	}: PlaygroundProps,
@@ -17,7 +18,10 @@ export default function DesktopPlayground(
 	return (
 		<div className="divide-y divide-slate-300">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
-			<SettingsMenu settings={settings} />
+			<SettingsMenu
+				settings={settings}
+				setPlaygroundState={setPlaygroundState}
+			/>
 			<div className="box-border flex h-screen divide-x divide-slate-300">
 				<div className="w-1/2 p-5">
 					<CodeEditor
@@ -25,7 +29,10 @@ export default function DesktopPlayground(
 						language={language}
 						placeholder="Enter some code here"
 						onChange={(evn) => {
-							setCode(evn.target.value);
+							setPlaygroundState((state) => ({
+								...state,
+								code: evn.target.value,
+							}));
 						}}
 						style={{
 							fontSize: 12,
@@ -84,14 +91,14 @@ export default function DesktopPlayground(
 =======
 							<TreeView
 								treeStyle={treeStyle}
-								setTreeStyle={setTreeStyle}
+								setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
 								tree={cst}
 							/>
 						</TabPanel>
 						<TabPanel>
 							<TreeView
 								treeStyle={treeStyle}
-								setTreeStyle={setTreeStyle}
+								setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
 								tree={ast}
 							/>
 >>>>>>> cf4faf5829 (Toggling tree view for json or text)

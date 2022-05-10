@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import prettier from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
@@ -46,71 +46,48 @@ export function useWindowSize(): Size {
 	return windowSize;
 }
 
-export function usePlaygroundState(): PlaygroundState {
+export function usePlaygroundState(): [
+	PlaygroundState,
+	Dispatch<SetStateAction<PlaygroundState>>
+] {
 	const searchParams = new URLSearchParams(window.location.search);
-	const [code, setCode] = useState(() =>
-		window.location.hash !== "#"
-			? decodeCode(window.location.hash.substring(1))
-			: ""
-	);
-	const [lineWidth, setLineWidth] = useState(
-		parseInt(searchParams.get("lineWidth") ?? "80")
-	);
-	const [indentStyle, setIndentStyle] = useState(
-		(searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab
-	);
-	const [quoteStyle, setQuoteStyle] = useState(
-		(searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double
-	);
-	const [indentWidth, setIndentWidth] = useState(
-		parseInt(searchParams.get("indentWidth") ?? "2")
-	);
-	const [isTypeScript, setIsTypeScript] = useState(
-		searchParams.get("typescript") === "true"
-	);
-	const [isJsx, setIsJsx] = useState(searchParams.get("jsx") === "true");
-	const [sourceType, setSourceType] = useState(
-		(searchParams.get("sourceType") as SourceType) ?? SourceType.Module
-	);
-	const [treeStyle, setTreeStyle] = useState(TreeStyle.Json);
+	const [playgroundState, setPlaygroundState] = useState({
+		code:
+			window.location.hash !== "#"
+				? decodeCode(window.location.hash.substring(1))
+				: "",
+		lineWidth: parseInt(searchParams.get("lineWidth") ?? "80"),
+		indentStyle:
+			(searchParams.get("indentStyle") as IndentStyle) ?? IndentStyle.Tab,
+		quoteStyle:
+			(searchParams.get("quoteStyle") as QuoteStyle) ?? QuoteStyle.Double,
+		indentWidth: parseInt(searchParams.get("indentWidth") ?? "2"),
+		isTypeScript: searchParams.get("typescript") === "true",
+		isJsx: searchParams.get("jsx") === "true",
+		sourceType:
+			(searchParams.get("sourceType") as SourceType) ?? SourceType.Module,
+		treeStyle: TreeStyle.Json,
+	});
 
 	useEffect(() => {
-		const url = `${window.location.protocol}//${window.location.host}${
-			window.location.pathname
-		}?lineWidth=${lineWidth}&indentStyle=${indentStyle}&quoteStyle=${quoteStyle}&indentWidth=${indentWidth}&typescript=${isTypeScript}&jsx=${isJsx}&sourceType=${sourceType}#${encodeCode(
-			code
-		)}`;
-		window.history.pushState({ path: url }, "", url);
-	}, [
-		lineWidth,
-		indentStyle,
-		quoteStyle,
-		indentWidth,
-		code,
-		isTypeScript,
-		isJsx,
-		sourceType,
-	]);
+		const queryString = new URLSearchParams({
+			...playgroundState,
+			code: encodeCode(playgroundState.code),
+		}).toString();
+		const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}`;
 
-	return {
-		code,
-		setCode,
-		lineWidth,
-		setLineWidth,
-		indentStyle,
-		setIndentStyle,
-		quoteStyle,
-		setQuoteStyle,
-		indentWidth,
-		setIndentWidth,
-		isTypeScript,
-		setIsTypeScript,
-		isJsx,
-		setIsJsx,
-		sourceType,
-		setSourceType,
-		treeStyle,
-		setTreeStyle,
+		window.history.pushState({ path: url }, "", url);
+	}, [playgroundState]);
+
+	return [playgroundState, setPlaygroundState];
+}
+
+export function createSetter(
+	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>,
+	field: keyof PlaygroundState
+) {
+	return function (param: PlaygroundState[typeof field]) {
+		setPlaygroundState((state) => ({ ...state, [field]: param }));
 	};
 }
 

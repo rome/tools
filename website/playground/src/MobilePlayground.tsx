@@ -1,12 +1,13 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { getLanguage } from "./utils";
+import { createSetter, getLanguage } from "./utils";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
 
 export function MobilePlayground({
-	playgroundState: { code, setCode, treeStyle, setTreeStyle, ...settings },
+	setPlaygroundState,
+	playgroundState: { code, treeStyle, ...settings },
 	prettierOutput,
 	romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
 }: PlaygroundProps) {
@@ -34,7 +35,10 @@ export function MobilePlayground({
 						language={language}
 						placeholder="Enter some code here"
 						onChange={(evn) => {
-							setCode(evn.target.value);
+							setPlaygroundState((state) => ({
+								...state,
+								code: evn.target.value,
+							}));
 						}}
 						style={{
 							fontSize: 12,
@@ -45,7 +49,10 @@ export function MobilePlayground({
 					/>
 				</TabPanel>
 				<TabPanel>
-					<SettingsMenu settings={settings} />
+					<SettingsMenu
+						setPlaygroundState={setPlaygroundState}
+						settings={settings}
+					/>
 				</TabPanel>
 				<TabPanel>
 					<h1>Rome</h1>
@@ -79,14 +86,14 @@ export function MobilePlayground({
 					<TreeView
 						tree={JSON.parse(cst)}
 						treeStyle={treeStyle}
-						setTreeStyle={setTreeStyle}
+						setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
 					/>
 				</TabPanel>
 				<TabPanel>
 					<TreeView
 						tree={JSON.parse(ast)}
 						treeStyle={treeStyle}
-						setTreeStyle={setTreeStyle}
+						setTreeStyle={createSetter(setPlaygroundState, "treeStyle")}
 					/>
 				</TabPanel>
 				<TabPanel>
