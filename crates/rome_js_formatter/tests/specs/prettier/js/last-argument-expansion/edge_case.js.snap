@@ -83,13 +83,18 @@ exports.examples =
         function (container, data) {
           return (
             <div>
-            <InlineBlock>
-              <img
-                src={data[1234567890].image.uri}
-                style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
-              />
-            </InlineBlock>
-          </div>
+              <InlineBlock>
+                <img
+                  src={data[1234567890].image.uri}
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                    zIndex: "-1",
+                  }}
+                />
+              </InlineBlock>
+            </div>
           );
         },
       ),
@@ -136,6 +141,6 @@ someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReal
 ```
     2:   SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong,
     5:       SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong: 1,
-   31: someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
+   36: someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
 ```
 

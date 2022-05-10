@@ -374,12 +374,18 @@ where
 ///         .as_code()
 /// )
 /// ```
-pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> FormatElement {
+pub fn fill_elements<TSep: Into<FormatElement>>(
+    separator: TSep,
+    elements: impl IntoIterator<Item = FormatElement>,
+) -> FormatElement {
     let mut list: Vec<_> = elements.into_iter().collect();
     match list.len() {
         0 => empty_element(),
         1 => list.pop().unwrap(),
-        _ => FormatElement::Fill(List::new(list)),
+        _ => FormatElement::Fill {
+            list: List::new(list),
+            separator: Box::new(separator.into()),
+        },
     }
 }
 
@@ -1086,8 +1092,11 @@ pub enum FormatElement {
     /// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
     List(List),
 
-    /// Concatenates multiple elements together with spaces or line breaks to fill the print width. See [fill_elements].
-    Fill(List),
+    /// Concatenates multiple elements together with a given separator or line breaks to fill the print width. See [fill_elements].
+    Fill {
+        list: List,
+        separator: Content,
+    },
 
     /// A token that should be printed as is, see [token] for documentation and examples.
     Token(Token),
@@ -1175,10 +1184,11 @@ impl Debug for FormatElement {
                 write!(fmt, "List ")?;
                 content.fmt(fmt)
             }
-            FormatElement::Fill(content) => {
-                write!(fmt, "Fill ")?;
-                content.fmt(fmt)
-            }
+            FormatElement::Fill { list, separator } => fmt
+                .debug_struct("Fill")
+                .field("list", list)
+                .field("separator", separator)
+                .finish(),
             FormatElement::Token(content) => content.fmt(fmt),
             FormatElement::LineSuffix(content) => {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
@@ -1616,6 +1626,14 @@ impl FormatElement {
         matches!(self, FormatElement::Empty)
     }
 
+    pub fn is_empty_string(&self) -> bool {
+        match self {
+            FormatElement::Empty => true,
+            FormatElement::Token(token) => token.deref() == "",
+            _ => false,
+        }
+    }
+
     /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
     /// This is the case if this format element recursively contains a:
     /// * [empty_line] or [hard_line_break]
@@ -1631,8 +1649,9 @@ impl FormatElement {
             FormatElement::Indent(indent) => indent.content.will_break(),
             FormatElement::Group(group) => group.content.will_break(),
             FormatElement::ConditionalGroupContent(group) => group.content.will_break(),
-            FormatElement::List(list) | FormatElement::Fill(list) => {
-                list.content.iter().any(FormatElement::will_break)
+            FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
+            FormatElement::Fill { list, separator } => {
+                list.content.iter().any(FormatElement::will_break) || separator.will_break()
             }
             FormatElement::Token(token) => token.contains('\n'),
             FormatElement::LineSuffix(_) => false,
@@ -1696,7 +1715,7 @@ impl FormatElement {
     /// a line break or a comment
     pub fn last_element(&self) -> Option<&FormatElement> {
         match self {
-            FormatElement::List(list) | FormatElement::Fill(list) => {
+            FormatElement::List(list) | FormatElement::Fill { list, .. } => {
                 list.iter().rev().find_map(|element| element.last_element())
             }
 

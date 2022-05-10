@@ -126,7 +126,7 @@ Observable.of(process)
 
 // Comments disappear inside of JSX
 <div>
-  {/* Some comment */}
+  { /* Some comment */ }
 </div>;
 
 // Comments in JSX tag are placed in a non optimal way

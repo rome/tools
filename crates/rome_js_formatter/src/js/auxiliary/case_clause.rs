@@ -22,10 +22,11 @@ impl FormatNodeFields<JsCaseClause> for FormatNodeRule<JsCaseClause> {
             consequent.iter().next(),
             Some(JsAnyStatement::JsBlockStatement(_))
         );
+
         let case_word = case_token.format();
         let colon = colon_token.format();
         let test = test.format();
-        let cons = formatter.format_list(&consequent);
+        let cons = formatter.format_list_with_hard_line(&consequent);
 
         let cons = if cons.is_empty() {
             // Skip inserting an indent block is the consequent is empty to print

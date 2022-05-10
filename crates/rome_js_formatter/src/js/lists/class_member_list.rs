@@ -9,6 +9,6 @@ impl FormatRule<JsClassMemberList> for FormatJsClassMemberList {
         node: &JsClassMemberList,
         formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(node))
+        Ok(formatter.format_list_with_hard_line(node))
     }
 }

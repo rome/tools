@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::GroupId;
+use rome_formatter::{FormatResult, GroupId};
 use std::convert::Infallible;
 
 use crate::formatter::FormatSeparatedOptions;
@@ -30,6 +30,7 @@ impl FormatJsArrayElementList {
     ) -> FormatResult<FormatElement> {
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             return Ok(fill_elements(
+                space_token(),
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
                 formatter.format_separated_with_options(
                     node,

@@ -1,11 +1,16 @@
-use crate::utils::format_string_literal_token;
+use crate::options::QuoteStyle;
 use crate::{
-    if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, Formatter, Token,
+    if_group_breaks, if_group_fits_on_single_line, soft_line_break, token, Formatter,
+    JsFormatOptions,
 };
-use rome_formatter::{format_elements, space_token, FormatElement, QuoteStyle};
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsxAnyChild, JsxChildList};
+use rome_formatter::{format_elements, space_token, FormatElement};
+use rome_js_syntax::kind::JsSyntaxKind;
+use rome_js_syntax::{
+    JsAnyExpression, JsAnyLiteralExpression, JsxAnyChild, JsxChildList, JsxElement,
+};
+use rome_rowan::AstNode;
 
-pub fn jsx_space(formatter: &Formatter) -> FormatElement {
+pub fn jsx_space(formatter: &Formatter<JsFormatOptions>) -> FormatElement {
     let jsx_space = match formatter.options().quote_style {
         QuoteStyle::Double => "{{\" \"}}",
         QuoteStyle::Single => "{{\' \'}}",
@@ -93,4 +98,24 @@ pub fn contains_multiple_expressions(children: &JsxChildList) -> bool {
     }
 
     false
+}
+
+pub fn should_wrap_element_in_parens(element: &JsxElement) -> bool {
+    element
+        .syntax()
+        .parent()
+        .map(|parent| {
+            !matches!(
+                parent.kind(),
+                JsSyntaxKind::JS_ARRAY_EXPRESSION
+                    | JsSyntaxKind::JSX_ATTRIBUTE
+                    | JsSyntaxKind::JSX_ELEMENT
+                    | JsSyntaxKind::JSX_EXPRESSION_CHILD
+                    | JsSyntaxKind::JSX_FRAGMENT
+                    | JsSyntaxKind::JS_EXPRESSION_STATEMENT
+                    | JsSyntaxKind::JS_CALL_EXPRESSION
+                    | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
+            )
+        })
+        .unwrap_or(true)
 }

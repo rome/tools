@@ -31,7 +31,7 @@ impl FormatRule<JsDirectiveList> for FormatJsDirectiveList {
             formatted![
                 formatter,
                 [
-                    formatter.format_list(node),
+                    formatter.format_list_with_hard_line(node),
                     hard_line_break(),
                     if need_extra_empty_line {
                         empty_line()

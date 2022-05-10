@@ -4,8 +4,9 @@ use rome_formatter::{normalize_newlines, FormatResult, GroupId, LINE_TERMINATORS
 use rome_js_syntax::{JsLanguage, JsSyntaxNode, JsSyntaxToken};
 
 use crate::{AsFormat, JsFormatOptions};
-use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, Language, SyntaxTriviaPiece, TextRange};
-
+use rome_rowan::{
+    AstNode, AstNodeList, AstSeparatedList, Language, SyntaxNode, SyntaxTriviaPiece, TextRange,
+};
 use std::iter::once;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -569,7 +570,22 @@ pub(crate) trait JsFormatter {
     /// end up separated by hard lines or empty lines.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
-    fn format_list<List, Node>(&self, list: &List) -> FormatElement
+    fn format_list_with_hard_line<List, Node>(&self, list: &List) -> FormatElement
+    where
+        List: AstNodeList<Language = JsLanguage, Node = Node>,
+        for<'a> Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
+    {
+        join_elements_hard_line(self.format_list(list))
+    }
+
+    /// It formats a list of nodes that are not separated. It's an ad-hoc function to
+    /// format lists that implement [rome_js_syntax::AstNodeList].
+    ///
+    /// The elements of the list are joined together using [join_elements_hard_line], which will
+    /// end up separated by hard lines or empty lines.
+    ///
+    /// If the formatter fails to format an element, said element gets printed verbatim.
+    fn format_list<List, Node>(&self, list: &List) -> Vec<(SyntaxNode<JsLanguage>, FormatElement)>
     where
         List: AstNodeList<Language = JsLanguage, Node = Node>,
         for<'a> Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
@@ -577,7 +593,7 @@ pub(crate) trait JsFormatter {
         let formatter = self.as_formatter();
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = formatter.snapshot();
-            let format = module_item.format();
+            let format = formatted![formatter, [module_item.format()]];
 
             let elem = match formatted![formatter, [format]] {
                 Ok(result) => result,
@@ -595,7 +611,8 @@ pub(crate) trait JsFormatter {
 
             (module_item.syntax().clone(), elem)
         });
-        join_elements_hard_line(formatted_list)
+
+        formatted_list.collect()
     }
 }
 

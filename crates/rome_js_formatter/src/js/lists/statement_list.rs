@@ -9,6 +9,6 @@ impl FormatRule<JsStatementList> for FormatJsStatementList {
         node: &JsStatementList,
         formatter: &Formatter<JsFormatOptions>,
     ) -> FormatResult<FormatElement> {
-        Ok(formatter.format_list(node))
+        Ok(formatter.format_list_with_hard_line(node))
     }
 }

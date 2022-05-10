@@ -140,8 +140,8 @@ impl<'a> Printer<'a> {
                 }
             }
 
-            FormatElement::Fill(list) => {
-                self.print_fill(queue, list, args);
+            FormatElement::Fill { list, separator } => {
+                self.print_fill(queue, list, separator, args);
             }
 
             FormatElement::List(list) => {
@@ -325,9 +325,9 @@ impl<'a> Printer<'a> {
         &mut self,
         queue: &mut ElementCallQueue<'a>,
         content: &'a List,
+        separator: &'a FormatElement,
         args: PrintElementArgs,
     ) {
-        const SPACE: &FormatElement = &FormatElement::Space;
         const HARD_LINE_BREAK: &FormatElement = &FormatElement::Line(Line::new(LineMode::Hard));
         let empty_rest = ElementCallQueue::default();
 
@@ -364,7 +364,7 @@ impl<'a> Printer<'a> {
             // otherwise see if both contents fit on the line.
             let current_and_next_fit = current_fits
                 && fits_on_line(
-                    &[SPACE, next_item],
+                    &[separator, next_item],
                     args.with_print_mode(PrintMode::Flat),
                     &empty_rest,
                     self,
@@ -374,7 +374,7 @@ impl<'a> Printer<'a> {
                 // Print Space and next item on the same line
                 self.print_all(
                     queue,
-                    &[SPACE, next_item],
+                    &[separator, next_item],
                     args.with_print_mode(PrintMode::Flat),
                 );
             } else {
@@ -722,13 +722,9 @@ fn fits_element_on_line<'a, 'rest>(
             queue.extend(list.iter().map(|t| PrintElementCall::new(t, args)))
         }
 
-        FormatElement::Fill(content) => {
-            const SPACE: &FormatElement = &FormatElement::Space;
-            queue.queue.0.extend(
-                Intersperse::new(content.iter().rev(), SPACE)
-                    .map(|t| PrintElementCall::new(t, args)),
-            )
-        }
+        FormatElement::Fill { list, separator } => queue.queue.0.extend(
+            Intersperse::new(list.iter().rev(), separator).map(|t| PrintElementCall::new(t, args)),
+        ),
 
         FormatElement::Token(token) => {
             state.line_width += state.pending_indent as usize * options.indent_string.len();
@@ -1075,26 +1071,29 @@ two lines`,
 
     #[test]
     fn test_fill_breaks() {
-        let document = fill_elements(vec![
-            // These all fit on the same line together
-            format_elements![token("1"), token(",")],
-            format_elements![token("2"), token(",")],
-            format_elements![token("3"), token(",")],
-            // This one fits on a line by itself,
-            format_elements![token("723493294"), token(",")],
-            // fits without breaking
-            format_elements![group_elements(format_elements![
-                token("["),
-                soft_block_indent(token("5")),
-                token("],")
-            ])],
-            // this one must be printed in expanded mode to fit
-            group_elements(format_elements![
-                token("["),
-                soft_block_indent(token("123456789")),
-                token("]"),
-            ]),
-        ]);
+        let document = fill_elements(
+            space_token(),
+            vec![
+                // These all fit on the same line together
+                format_elements![token("1"), token(",")],
+                format_elements![token("2"), token(",")],
+                format_elements![token("3"), token(",")],
+                // This one fits on a line by itself,
+                format_elements![token("723493294"), token(",")],
+                // fits without breaking
+                format_elements![group_elements(format_elements![
+                    token("["),
+                    soft_block_indent(token("5")),
+                    token("],")
+                ])],
+                // this one must be printed in expanded mode to fit
+                group_elements(format_elements![
+                    token("["),
+                    soft_block_indent(token("123456789")),
+                    token("]"),
+                ]),
+            ],
+        );
 
         let printed = Printer::new(PrinterOptions::default().with_print_width(LineWidth(10)))
             .print(&document);
@@ -1110,11 +1109,14 @@ two lines`,
         let document = format_elements![
             group_elements(format_elements![
                 token("["),
-                soft_block_indent(format_elements![fill_elements(vec![
-                    format_elements![token("1"), token(",")],
-                    format_elements![token("2"), token(",")],
-                    format_elements![token("3"), if_group_breaks(token(","))]
-                ])]),
+                soft_block_indent(format_elements![fill_elements(
+                    token(", "),
+                    vec![
+                        format_elements![token("1")],
+                        format_elements![token("2")],
+                        format_elements![token("3")]
+                    ]
+                )]),
                 token("]")
             ]),
             token(";"),
