@@ -8,13 +8,17 @@ use crate::requests::syntax_tree::{syntax_tree, SyntaxTreePayload, SYNTAX_TREE_R
 use crate::session::Session;
 use crate::utils;
 use crate::utils::into_lsp_error;
+use rome_analyze::AnalysisServer;
+use rome_js_parser::parse;
+use rome_js_parser::symbols::Symbol;
+use rome_js_syntax::{TextRange, TextSize};
 use serde_json::Value;
 use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::lsp_types::*;
 use tower_lsp::{Client, LanguageServer, LspService, Server};
-use tracing::{error, info, trace};
+use tracing::{debug, error, info, trace};
 
 struct LSPServer {
     client: Client,
@@ -42,6 +46,38 @@ impl LSPServer {
         let result = serde_json::to_value(result).map_err(into_lsp_error)?;
         Ok(Some(result))
     }
+}
+
+pub fn line_starts(source: &'_ str) -> impl '_ + Iterator<Item = TextSize> {
+    std::iter::once(0)
+        .chain(source.match_indices(&['\n', '\r']).filter_map(|(i, _)| {
+            let bytes = source.as_bytes();
+
+            match bytes[i] {
+                // Filter out the `\r` in `\r\n` to avoid counting the line break twice
+                b'\r' if i + 1 < bytes.len() && bytes[i + 1] == b'\n' => None,
+                _ => Some(i + 1),
+            }
+        }))
+        .map(|i| TextSize::try_from(i).expect("integer overflow"))
+}
+
+fn position_to_offset(line_starts: &Vec<TextSize>, position: &Position) -> Option<TextSize> {
+    line_starts[position.line as usize].checked_add(position.character.into())
+}
+
+fn offset_to_position(line_starts: &Vec<TextSize>, offset: &TextSize) -> Option<Position> {
+    let next_line_idx = line_starts
+        .iter()
+        .position(|x| x > offset)
+        .unwrap_or(line_starts.len());
+
+    line_starts
+        .get(next_line_idx - 1)
+        .map(|line_start_offset| Position {
+            line: (next_line_idx - 1) as u32,
+            character: (offset - line_start_offset).into(),
+        })
 }
 
 #[tower_lsp::async_trait]
@@ -203,6 +239,56 @@ impl LanguageServer for LSPServer {
     async fn did_close(&self, params: DidCloseTextDocumentParams) {
         let session = self.session.clone();
         handlers::text_document::did_close(session, params).await;
+    }
+
+    async fn goto_definition(
+        &self,
+        params: GotoDefinitionParams,
+    ) -> tower_lsp::jsonrpc::Result<Option<GotoDefinitionResponse>> {
+        //GotoDefinitionParams { text_document_position_params: TextDocumentPositionParams { text_document: TextDocumentIdentifier { uri: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "/c%3A/myprojects/chatserver/front/chat/main.js", query: None, fragment: None } }, position: Position { line: 3, character: 8 } }, work_done_progress_params: WorkDoneProgressParams { work_done_token: None }, partial_result_params: PartialResultParams { partial_result_token: None } }
+        trace!("Got a textDocument/definition request: {:?}", params);
+
+        let uri = params
+            .text_document_position_params
+            .text_document
+            .uri
+            .clone();
+        let document = self.session.document(&uri)?;
+
+        let text = &document.text;
+        let line_starts = line_starts(text).collect::<Vec<_>>();
+
+        let symbols = tokio::task::spawn_blocking(move || {
+            info!("Goto definition");
+            trace!("Goto definition for: {:?}", document);
+            let text = &document.text;
+            let file_id = document.file_id();
+            let source_type = document.get_source_type();
+            let parse_result = parse(text, file_id, source_type);
+            let symbols =
+                rome_js_parser::symbols::symbols(parse_result.syntax()).collect::<Vec<_>>();
+            symbols
+        })
+        .await
+        .unwrap();
+        debug!("Symbols: {:?}", symbols);
+
+        let offset =
+            position_to_offset(&line_starts, &params.text_document_position_params.position)
+                .unwrap();
+        let symbol = symbols.iter().find(|s| s.range().contains(offset));
+        match symbol {
+            Some(Symbol::Reference { declared_at, .. }) if declared_at.is_some() => {
+                let declared_at = declared_at.unwrap();
+                let start = offset_to_position(&line_starts, &declared_at.start()).unwrap();
+                let end = offset_to_position(&line_starts, &declared_at.end()).unwrap();
+                Ok(Some(GotoDefinitionResponse::Scalar(Location {
+                    uri: uri.clone(),
+                    range: Range { start, end },
+                })))
+            }
+            _ => Ok(None),
+        }
     }
 }
 

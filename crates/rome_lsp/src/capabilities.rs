@@ -16,6 +16,7 @@ pub(crate) fn server_capabilities() -> ServerCapabilities {
             first_trigger_character: String::from("}"),
             more_trigger_character: Some(vec![String::from("]"), String::from(")")]),
         }),
+        definition_provider: Some(OneOf::Left(true)),
         ..Default::default()
     }
 }
