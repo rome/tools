@@ -6,12 +6,14 @@ import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
 import ReactJson from "react-json-view";
 
-export default function DesktopPlayground({
-	setPlaygroundState,
-	playgroundState: { code, treeStyle, ...settings },
-	prettierOutput,
-	romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
-}: PlaygroundProps) {
+export default function DesktopPlayground(
+	{
+		setPlaygroundState,
+		playgroundState: { code, treeStyle, ...settings },
+		prettierOutput,
+		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
+	}: PlaygroundProps,
+) {
 	const { isJsx, isTypeScript } = settings;
 	const language = getLanguage(isJsx, isTypeScript);
 	return (
