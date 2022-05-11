@@ -349,7 +349,7 @@ impl DiffReport {
                 .fold(0, |acc, (_, insert_lines)| {
                     acc + insert_lines.lines().count()
                 });
-            let compatibility_per_file = matched_lines as f64 / rome_lines as f64;
+            let compatibility_per_file = matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
 
             sum_of_per_compatibility_file += compatibility_per_file;
             total_line_of_rome += rome_lines;
