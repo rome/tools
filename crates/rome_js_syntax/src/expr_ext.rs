@@ -23,9 +23,10 @@ impl JsLiteralMemberName {
     /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
-    /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-    ///   builder.token(JsSyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
-    /// });
+    /// let node: JsSyntaxNode =
+    ///     JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+    ///         builder.token(JsSyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
+    ///     });
     ///
     /// let static_member_name = JsLiteralMemberName::unwrap_cast(node);
     ///
@@ -39,9 +40,10 @@ impl JsLiteralMemberName {
     /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
-    /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-    ///   builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, "5");
-    /// });
+    /// let node: JsSyntaxNode =
+    ///     JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+    ///         builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, "5");
+    ///     });
     ///
     /// let static_member_name = JsLiteralMemberName::unwrap_cast(node);
     ///
@@ -55,9 +57,10 @@ impl JsLiteralMemberName {
     /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
-    /// let node: JsSyntaxNode = JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-    ///   builder.token(JsSyntaxKind::IDENT, "abcd");
-    /// });
+    /// let node: JsSyntaxNode =
+    ///     JsSyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+    ///         builder.token(JsSyntaxKind::IDENT, "abcd");
+    ///     });
     ///
     /// let static_member_name = JsLiteralMemberName::unwrap_cast(node);
     ///

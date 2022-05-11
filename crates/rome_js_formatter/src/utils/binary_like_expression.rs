@@ -93,7 +93,6 @@ use std::iter::FusedIterator;
 /// anymore because we passed it to its child. And we can't try to add a new operator.
 /// But this is fine! Because this is want we wanted! By removing the operator, we are left with `happy`
 /// which is what we wanted since the beginning!
-///
 pub(crate) fn format_binary_like_expression(
     expression: JsAnyBinaryLikeExpression,
     formatter: &Formatter,

@@ -589,7 +589,6 @@ impl PrintElementArgs {
 /// ```
 /// The `PrintElementCall` stores the data for a single `print_element` call consisting of the element
 /// and the `args` that's passed to `print_element`.
-///
 #[derive(Debug, Eq, PartialEq, Clone)]
 struct PrintElementCall<'element> {
     element: &'element FormatElement,

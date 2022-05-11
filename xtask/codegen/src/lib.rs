@@ -1,6 +1,5 @@
 //! Codegen tools for generating Syntax and AST definitions. Derived from Rust analyzer's codegen
 //!
-//!
 mod ast;
 mod css_kinds_src;
 mod formatter;
