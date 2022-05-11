@@ -1,9 +1,10 @@
 use rome_js_syntax::{
-    JsComputedMemberExpression, JsLanguage, JsLiteralMemberName, JsReferenceIdentifier,
-    JsSyntaxKind, JsSyntaxNode, TextRange, TsGlobalDeclaration, TsThisParameter, WalkEvent,
+    JsAnyBinding, JsAnyBindingPattern, JsComputedMemberExpression, JsLanguage, JsLiteralMemberName,
+    JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TextRange,
+    TsGlobalDeclaration, TsThisParameter, WalkEvent,
 };
 use rome_rowan::syntax::Preorder;
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 
 #[derive(Debug)]
 pub enum Symbol {
@@ -16,6 +17,10 @@ pub enum Symbol {
         range: TextRange,
         declared_at: Option<TextRange>,
     },
+    Link {
+        range: TextRange,
+        declared_at: TextRange,
+    },
 }
 
 impl Symbol {
@@ -23,6 +28,7 @@ impl Symbol {
         match self {
             Symbol::Declaration { name, .. } => name,
             Symbol::Reference { name, .. } => name,
+            Symbol::Link { .. } => todo!(),
         }
     }
 
@@ -30,6 +36,7 @@ impl Symbol {
         match self {
             Symbol::Declaration { range, .. } => *range,
             Symbol::Reference { range, .. } => *range,
+            Symbol::Link { range, .. } => *range,
         }
     }
 }
@@ -37,8 +44,10 @@ impl Symbol {
 pub struct SymbolIterator {
     iter: Preorder<JsLanguage>,
     current_scope: HashMap<String, TextRange>,
+    hoisting_scope: Vec<HashMap<String, Vec<TextRange>>>,
     items_entered_into_scope: Vec<Vec<String>>,
     items_shadowed: Vec<Vec<(String, TextRange)>>,
+    stash: VecDeque<Symbol>,
 }
 
 fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
@@ -172,12 +181,16 @@ fn extract_symbol(node: JsSyntaxNode) -> Option<Symbol> {
 }
 
 impl SymbolIterator {
-    fn push_new_scope(&mut self) {
+    fn push_new_scope(&mut self, also_hoist_scope: bool) {
         self.items_entered_into_scope.push(vec![]);
         self.items_shadowed.push(vec![]);
+
+        if also_hoist_scope {
+            self.hoisting_scope.push(HashMap::new());
+        }
     }
 
-    fn pop_scope(&mut self) {
+    fn pop_scope(&mut self, also_hoist_scope: bool) {
         if let Some(symbols) = self.items_entered_into_scope.pop() {
             for symbol in symbols {
                 self.current_scope.remove(&symbol);
@@ -187,6 +200,17 @@ impl SymbolIterator {
         if let Some(symbols) = self.items_shadowed.pop() {
             for (symbol, range) in symbols {
                 self.current_scope.insert(symbol, range);
+            }
+        }
+
+        if also_hoist_scope {
+            if let (Some(old), Some(current)) =
+                (self.hoisting_scope.pop(), self.hoisting_scope.last_mut())
+            {
+                for (key, mut v) in old {
+                    let pending_references = current.entry(key).or_default();
+                    pending_references.append(&mut v);
+                }
             }
         }
     }
@@ -207,25 +231,72 @@ impl SymbolIterator {
         }
     }
 
+    fn solve_pending(&mut self, token: &JsSyntaxToken) {
+        if let Some(hoisting_scope) = self.hoisting_scope.last_mut() {
+            let txt = token.text_trimmed();
+            if let Some(being_solved) = hoisting_scope.remove(txt) {
+                for range in being_solved {
+                    self.stash.push_back(Symbol::Link {
+                        range,
+                        declared_at: token.text_range(),
+                    });
+                }
+            }
+        }
+    }
+
+    fn solve_pending_with_binding(&mut self, binding: &JsAnyBinding) {
+        match binding {
+            JsAnyBinding::JsIdentifierBinding(ident) => {
+                let name = ident.name_token().unwrap();
+                self.solve_pending(&name);
+            }
+            JsAnyBinding::JsUnknownBinding(_) => todo!(),
+        }
+    }
+
     fn enter_node(&mut self, node: &JsSyntaxNode) {
         match node.kind() {
-            JsSyntaxKind::JS_FUNCTION_DECLARATION
-            | JsSyntaxKind::JS_BLOCK_STATEMENT
+            JsSyntaxKind::JS_BLOCK_STATEMENT
             | JsSyntaxKind::JS_FUNCTION_BODY
             | JsSyntaxKind::JS_FOR_OF_STATEMENT
             | JsSyntaxKind::JS_FOR_IN_STATEMENT
             | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
             | JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER
             | JsSyntaxKind::JS_GETTER_CLASS_MEMBER
-            | JsSyntaxKind::JS_SETTER_CLASS_MEMBER => self.push_new_scope(),
+            | JsSyntaxKind::JS_SETTER_CLASS_MEMBER => self.push_new_scope(false),
+            JsSyntaxKind::JS_FUNCTION_DECLARATION => {
+                let declaration =
+                    unsafe { rome_js_syntax::JsFunctionDeclaration::new_unchecked(node.clone()) };
+                self.solve_pending_with_binding(&declaration.id().unwrap());
+                self.push_new_scope(true);
+            }
+            JsSyntaxKind::JS_VARIABLE_DECLARATION => {
+                let declaration =
+                    unsafe { rome_js_syntax::JsVariableDeclaration::new_unchecked(node.clone()) };
+                if declaration.is_var() {
+                    for decl in declaration.declarators().into_iter().flatten() {
+                        let id = decl.id().unwrap();
+                        match id {
+                            JsAnyBindingPattern::JsAnyBinding(binding) => {
+                                self.solve_pending_with_binding(&binding)
+                            }
+                            JsAnyBindingPattern::JsArrayBindingPattern(_) => todo!(),
+                            JsAnyBindingPattern::JsObjectBindingPattern(_) => todo!(),
+                        }
+                    }
+                }
+            }
             _ => {}
         }
     }
 
     fn leave_node(&mut self, node: &JsSyntaxNode) {
         match node.kind() {
-            JsSyntaxKind::JS_FUNCTION_DECLARATION
-            | JsSyntaxKind::JS_BLOCK_STATEMENT
+            JsSyntaxKind::JS_FUNCTION_DECLARATION => {
+                self.pop_scope(true);
+            }
+            JsSyntaxKind::JS_BLOCK_STATEMENT
             | JsSyntaxKind::JS_FUNCTION_BODY
             | JsSyntaxKind::JS_FOR_OF_STATEMENT
             | JsSyntaxKind::JS_FOR_IN_STATEMENT
@@ -233,7 +304,7 @@ impl SymbolIterator {
             | JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER
             | JsSyntaxKind::JS_GETTER_CLASS_MEMBER
             | JsSyntaxKind::JS_SETTER_CLASS_MEMBER => {
-                self.pop_scope();
+                self.pop_scope(false);
             }
             _ => {}
         }
@@ -244,6 +315,10 @@ impl Iterator for SymbolIterator {
     type Item = Symbol;
 
     fn next(&mut self) -> Option<Self::Item> {
+        if let Some(from_stash) = self.stash.pop_front() {
+            return Some(from_stash);
+        }
+
         while let Some(e) = self.iter.next() {
             match e {
                 WalkEvent::Enter(node) => {
@@ -255,11 +330,20 @@ impl Iterator for SymbolIterator {
                                 self.push_symbol_to_scope(name, range);
                             }
                             Symbol::Reference {
-                                name, declared_at, ..
+                                name,
+                                range,
+                                declared_at,
                             } => match self.current_scope.get(name) {
                                 Some(target) => *declared_at = Some(*target),
-                                None => {}
+                                None => {
+                                    if let Some(hoisting_scope) = self.hoisting_scope.last_mut() {
+                                        let pending =
+                                            hoisting_scope.entry(name.clone()).or_default();
+                                        pending.push(*range);
+                                    }
+                                }
                             },
+                            _ => {}
                         }
 
                         return Some(s);
@@ -279,10 +363,13 @@ pub fn symbols(root: JsSyntaxNode) -> SymbolIterator {
     let mut i = SymbolIterator {
         iter: root.preorder(),
         current_scope: HashMap::new(),
+        hoisting_scope: vec![],
         items_entered_into_scope: vec![],
         items_shadowed: vec![],
+        stash: VecDeque::new(),
     };
-    i.push_new_scope(); // global scope
+
+    i.push_new_scope(true); // global scope
     i
 }
 
@@ -351,7 +438,23 @@ mod tests {
 
         let mut found_symbols_by_range = HashMap::new();
         for symbol in symbols(r.syntax()) {
-            found_symbols_by_range.insert(symbol.range(), symbol);
+            match &symbol {
+                Symbol::Declaration { range, .. } => {
+                    found_symbols_by_range.insert(*range, symbol);
+                }
+                Symbol::Reference { range, .. } => {
+                    found_symbols_by_range.insert(*range, symbol);
+                }
+                Symbol::Link { range, declared_at } => {
+                    if let Some(Symbol::Reference {
+                        declared_at: ref_declared_at,
+                        ..
+                    }) = found_symbols_by_range.get_mut(range)
+                    {
+                        *ref_declared_at = Some(*declared_at);
+                    }
+                }
+            }
         }
 
         // Extract assertions inside comments
@@ -457,6 +560,7 @@ mod tests {
                             }
                         }
                     }
+                    _ => todo!(),
                 }
             } else {
                 error_reference_attached_to_non_symbol(code, assertion_range, file_name);
@@ -479,6 +583,7 @@ mod tests {
                             range,
                         );
                     }
+                    _ => todo!(),
                 }
             } else {
                 error_declaration_attached_to_non_symbol(code, assertion_range, file_name);
@@ -588,6 +693,7 @@ mod tests {
             range,
             "This reference assertion points to a non-existing declaration assertion.",
         );
+
         let labels: Vec<_> = declarations_assertions.keys().collect();
         let d = if let Some(suggestion) = labels.suggest(&assertion_label) {
             let suggestion = format!("Did you mean \"{suggestion}\"?");
@@ -641,7 +747,7 @@ mod tests {
     }
 
     #[test]
-    pub fn ok_symbol_function() {
+    pub fn ok_symbol_resolution() {
         asserts_references(
             std::file!(),
             std::line!(),
@@ -721,6 +827,27 @@ class Car/*#CAR*/ {
 }
 
 let car = new Car/*@CAR*/();
+
+console.log(f1/*@HOISTED-F1*/);
+console.log(f2/*@HOISTED-F2*/);
+
+function f1/*#HOISTED-F1*/ () {
+    console.log(a/*@HOISTED-A1*/, z/*@HOISTED-Z*/);
+    var a/*#HOISTED-A1*/ = 1;
+
+    console.log(b/*@HOISTED-B*/);
+    if (b == 1) {
+        var b/*#HOISTED-B*/;
+    }
+}
+
+function f2/*#HOISTED-F2*/ () {
+    console.log(a/*@HOISTED-A2*/, z/*@HOISTED-Z2*/);
+    var a/*#HOISTED-A2*/ = 1;
+    var z/*#HOISTED-Z2*/;
+}
+
+var z/*#HOISTED-Z*/ ;
 "#,
         );
     }
