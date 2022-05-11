@@ -63,5 +63,29 @@ pub(crate) fn code_actions(
         }
     });
 
+    // If any actions is marked as fixing a diagnostic, hide other actions
+    // that do not fix anything (refactor opportunities) to reduce noise
+    let has_fixes = result.iter().any(|action| {
+        if let CodeActionOrCommand::CodeAction(action) = action {
+            action.diagnostics.is_some()
+        } else {
+            false
+        }
+    });
+
+    if has_fixes {
+        let mut index = 0;
+        while index < result.len() {
+            if let CodeActionOrCommand::CodeAction(action) = &result[index] {
+                if action.diagnostics.is_none() {
+                    result.remove(index);
+                    continue;
+                }
+            }
+
+            index += 1;
+        }
+    }
+
     Ok(result)
 }

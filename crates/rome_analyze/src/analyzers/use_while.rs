@@ -80,7 +80,8 @@ impl Rule for UseWhile {
         )?;
 
         Some(RuleAction {
-            category: ActionCategories::empty(),
+            category: ActionCategories::SUGGESTION,
+            message: markup! { "Use a while loop" }.to_owned(),
             root,
         })
     }

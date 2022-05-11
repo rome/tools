@@ -8,6 +8,7 @@ pub mod expr_ext;
 pub mod modifier_ext;
 pub mod numbers;
 pub mod stmt_ext;
+pub mod suppression;
 mod syntax_node;
 mod union_ext;
 
