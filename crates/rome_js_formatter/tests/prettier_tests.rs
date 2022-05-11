@@ -300,16 +300,18 @@ impl DiffReport {
         // Only create the report file if the REPORT_PRETTIER
         // environment variable is set to 1
         match env::var("REPORT_PRETTIER") {
-            Ok(value) if value == "1" => {}
+            Ok(value) if value == "1" => {
+                self.report_prettier();
+            }
             _ => return,
         }
 
+    }
+
+    fn report_prettier(&self) {
         let mut report = String::new();
-
         let mut state = self.state.lock();
-
         state.sort_by_key(|(name, ..)| *name);
-
         for (file_name, rome, prettier) in state.iter() {
             writeln!(report, "# {}", file_name).unwrap();
             writeln!(report, "```diff").unwrap();
@@ -321,7 +323,6 @@ impl DiffReport {
 
             writeln!(report, "```").unwrap();
         }
-
         write("report.md", report).unwrap();
     }
 }
