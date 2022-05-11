@@ -1,6 +1,6 @@
 use parking_lot::{const_mutex, Mutex};
 use rome_rowan::{TextRange, TextSize};
-use similar::{utils::diff_lines, Algorithm};
+use similar::{utils::diff_lines, Algorithm, ChangeTag};
 use std::{
     env,
     ffi::OsStr,
@@ -303,9 +303,15 @@ impl DiffReport {
             Ok(value) if value == "1" => {
                 self.report_prettier();
             }
-            _ => return,
+            _ => {}
         }
 
+        match env::var("REPORT_METRIC") {
+            Ok(value) if value == "1" => {
+                self.report_metric();
+            }
+            _ => {}
+        }
     }
 
     fn report_prettier(&self) {
@@ -324,5 +330,55 @@ impl DiffReport {
             writeln!(report, "```").unwrap();
         }
         write("report.md", report).unwrap();
+    }
+
+    fn report_metric(&self) {
+        let mut report = String::new();
+        let mut state = self.state.lock();
+        state.sort_by_key(|(name, ..)| *name);
+        let mut sum_of_per_compatibility_file = 0 as f64;
+        let mut total_line_of_rome = 0;
+        let mut total_matched_line_of_rome = 0;
+        for (file_name, rome, prettier) in state.iter() {
+            writeln!(report, "# {}", file_name).unwrap();
+            let rome_lines = rome.lines().count();
+            let unmatched_rome_line = diff_lines(Algorithm::default(), prettier, rome)
+                .iter()
+                .filter(|(tag, _)| matches!(tag, ChangeTag::Insert))
+                .fold(0, |acc, (_, insert_lines)| {
+                    acc + insert_lines.lines().count()
+                });
+            let matched_lines = rome_lines - unmatched_rome_line;
+
+            let compatibility_per_file = matched_lines as f64 / rome_lines as f64;
+
+            sum_of_per_compatibility_file += compatibility_per_file;
+            total_line_of_rome += rome_lines;
+            total_matched_line_of_rome += matched_lines;
+            writeln!(report, "```bash",).unwrap();
+            writeln!(report, "unmatched_rome_line: {}", unmatched_rome_line).unwrap();
+            writeln!(report, "rome_lines: {}", rome_lines).unwrap();
+            writeln!(
+                report,
+                "compatibility_per_file: {:.2}%",
+                compatibility_per_file * 100 as f64
+            )
+            .unwrap();
+            writeln!(report, "```",).unwrap();
+        }
+        let file_count = state.iter().count();
+        writeln!(
+            report,
+            "file_based_compatibility: {:.2}%",
+            (sum_of_per_compatibility_file / file_count as f64) * 100 as f64
+        )
+        .unwrap();
+        writeln!(
+            report,
+            "line_based_compatibility: {:.2}%",
+            (total_matched_line_of_rome as f64 / total_line_of_rome as f64) * 100 as f64
+        )
+        .unwrap();
+        write("report_metric.md", report).unwrap();
     }
 }
