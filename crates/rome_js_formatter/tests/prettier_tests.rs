@@ -26,6 +26,8 @@ const PRETTIER_IGNORE: &str = "prettier-ignore";
 const ROME_IGNORE: &str = "rome-ignore format: prettier ignore";
 
 fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
+    countme::enable(true);
+
     if input.contains("flow") || input.contains("prepare_tests") {
         return;
     }
@@ -276,8 +278,6 @@ impl DiffReport {
             extern "C" fn print_report() {
                 REPORTER.print();
             }
-
-            countme::enable(true);
 
             // Register the print_report function to be called when the process exits
             unsafe {
