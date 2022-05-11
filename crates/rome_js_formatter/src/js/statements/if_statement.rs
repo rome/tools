@@ -1,11 +1,4 @@
-use crate::format_traits::FormatOptional;
-use crate::{
-    block_indent, concat_elements, group_elements, hard_group_elements, hard_line_break, token,
-    Format, JsFormatter,
-};
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, FormatElement, FormatNode, Formatter};
+use crate::prelude::*;
 
 use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{JsAnyStatement, JsElseClauseFields, JsIfStatement};
@@ -30,12 +23,13 @@ impl FormatNode for JsIfStatement {
                     else_clause = alternate;
                 }
                 alternate => {
-                    if_chain.push(format_elements![
+                    if_chain.push(formatted![
+                        formatter,
                         space_token(),
                         else_token.format(formatter)?,
                         space_token(),
                         into_block(formatter, alternate)?,
-                    ]);
+                    ]?);
                 }
             }
         }
@@ -59,12 +53,14 @@ fn format_if_element(
         else_clause,
     } = stmt.as_fields();
 
-    let head = format_elements![
-        else_token.format_with_or_empty(formatter, |token| format_elements![
+    let head = formatted![
+        formatter,
+        else_token.with_or_empty(|token| formatted![
+            formatter,
             space_token(),
             token,
             space_token(),
-        ])?,
+        ]),
         if_token.format(formatter)?,
         space_token(),
         formatter.format_delimited_soft_block_indent(
@@ -74,7 +70,7 @@ fn format_if_element(
         )?,
         space_token(),
         into_block(formatter, consequent?)?,
-    ];
+    ]?;
 
     Ok((head, else_clause))
 }
@@ -88,17 +84,19 @@ fn into_block(formatter: &Formatter, stmt: JsAnyStatement) -> FormatResult<Forma
     // If the body is an empty statement, force a line break to ensure behavior
     // is coherent with `is_non_collapsable_empty_block`
     if matches!(stmt, JsAnyStatement::JsEmptyStatement(_)) {
-        return Ok(format_elements![
+        return formatted![
+            formatter,
             token("{"),
             stmt.format(formatter)?,
             hard_line_break(),
             token("}")
-        ]);
+        ];
     }
 
-    Ok(group_elements(format_elements![
+    Ok(group_elements(formatted![
+        formatter,
         token("{"),
         block_indent(stmt.format(formatter)?),
         token("}"),
-    ]))
+    ]?))
 }

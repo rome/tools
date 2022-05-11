@@ -1,10 +1,12 @@
 //! Rome's official JavaScript formatter.
 
 mod cst;
-mod format_traits;
+mod format_extensions;
 mod formatter;
 mod js;
 mod jsx;
+#[macro_use]
+pub mod macros;
 pub mod prelude;
 mod ts;
 pub mod utils;
@@ -34,21 +36,19 @@ use rome_rowan::{SyntaxResult, TokenAtOffset};
 /// Implementing `Format` for a custom struct
 ///
 /// ```
-/// use rome_formatter::{
-///     format_elements, hard_line_break, FormatElement, FormatOptions, FormatResult, Token,
-/// };
-/// use rome_js_formatter::{format, Format, Formatter};
+/// use rome_formatter::{format_elements, FormatElement, FormatOptions, hard_line_break, Token, FormatResult};
+/// use rome_js_formatter::{Format, format, formatted, Formatter};
 /// use rome_rowan::TextSize;
 ///
 /// struct Paragraph(String);
 ///
-/// impl Format for Paragraph {
-///     fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-///         Ok(format_elements![
+/// impl Format for Paragraph {fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+///         formatted![
+///             formatter,
 ///             hard_line_break(),
-///             Token::new_dynamic(self.0.clone(), TextSize::from(0)),
+///             FormatElement::from(Token::new_dynamic(self.0.clone(), TextSize::from(0))),
 ///             hard_line_break(),
-///         ])
+///         ]
 ///     }
 /// }
 ///
@@ -104,6 +104,31 @@ where
         }
     }
 }
+
+/// Implemented by traits that can be converted to a `FormatElement`.
+///
+/// This is similar to [Format] but with the difference that it consumes `self`, allowing it to also
+/// be implemented on [FormatElement].format_elements.rs
+pub trait IntoFormatElement {
+    fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+impl IntoFormatElement for FormatElement {
+    fn into_format_element(self, _: &Formatter) -> FormatResult<FormatElement> {
+        Ok(self)
+    }
+}
+
+impl<T> IntoFormatElement for T
+where
+    T: Format,
+{
+    fn into_format_element(self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        self.format(formatter)
+    }
+}
+
+// Per Crate
 
 /// Formatting trait for JS AST Nodes.
 ///
@@ -465,7 +490,7 @@ function() {
 
 #[cfg(test)]
 mod check_reformat;
-mod format;
+mod generated;
 
 #[cfg(test)]
 mod test {

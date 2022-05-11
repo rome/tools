@@ -1,10 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{
-    format_elements, hard_group_elements, space_token, token, Format, FormatElement, FormatNode,
-    Formatter, JsFormatter,
-};
+use crate::prelude::*;
 
 use rome_js_syntax::JsDoWhileStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
@@ -21,9 +15,10 @@ impl FormatNode for JsDoWhileStatement {
             semicolon_token,
         } = self.as_fields();
 
-        let head = format_elements![do_token.format(formatter)?, space_token(),];
+        let head = formatted![formatter, do_token.format(formatter)?, space_token(),]?;
 
-        let tail = format_elements![
+        let tail = formatted![
+            formatter,
             space_token(),
             while_token.format(formatter)?,
             space_token(),
@@ -32,22 +27,24 @@ impl FormatNode for JsDoWhileStatement {
                 test.format(formatter)?,
                 &r_paren_token?,
             )?,
-            semicolon_token.format_or(formatter, || token(";"))?
-        ];
+            semicolon_token.or_format(|| token(";"))
+        ]?;
 
         let body = body?;
         if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-            Ok(hard_group_elements(format_elements![
+            Ok(hard_group_elements(formatted![
+                formatter,
                 head,
                 body.format(formatter)?,
                 tail,
-            ]))
+            ]?))
         } else {
-            Ok(format_elements![
+            formatted![
+                formatter,
                 hard_group_elements(head),
                 body.format(formatter)?,
                 hard_group_elements(tail),
-            ])
+            ]
         }
     }
 }

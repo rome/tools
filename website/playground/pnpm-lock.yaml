@@ -2627,7 +2627,7 @@ packages:
       '@babel/runtime': 7.16.7
       react: 17.0.2
       use-composed-ref: 1.3.0_react@17.0.2
-      use-latest: 1.2.1_a0c521d4794c7ad97f5f4c1c4a7d5818
+      use-latest: 1.2.1_udcsdvdzjr5ns727jqoeu7kyda
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -3267,7 +3267,7 @@ packages:
       react: 17.0.2
     dev: false
 
-  /use-latest/1.2.1_a0c521d4794c7ad97f5f4c1c4a7d5818:
+  /use-latest/1.2.1_udcsdvdzjr5ns727jqoeu7kyda:
     resolution: {integrity: sha512-xA+AVm/Wlg3e2P/JiItTziwS7FK92LWrDB0p+hgXloIMuVCeJJ8v6f0eeHyPZaJrM+usM1FkFfbNCrJGs8A/zw==}
     peerDependencies:
       '@types/react': '*'

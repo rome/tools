@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter, JsFormatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsFunctionBody;
 use rome_js_syntax::JsFunctionBodyFields;
@@ -15,10 +14,11 @@ impl FormatNode for JsFunctionBody {
 
         formatter.format_delimited_block_indent(
             &l_curly_token?,
-            format_elements![
+            formatted![
+                formatter,
                 directives.format(formatter)?,
                 formatter.format_list(statements),
-            ],
+            ]?,
             &r_curly_token?,
         )
     }

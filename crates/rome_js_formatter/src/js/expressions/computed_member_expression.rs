@@ -1,9 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::{
-    concat_elements, group_elements, soft_block_indent, soft_line_break, FormatResult,
-};
-
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
+use crate::prelude::*;
 
 use rome_js_syntax::JsComputedMemberExpression;
 use rome_js_syntax::JsComputedMemberExpressionFields;
@@ -29,16 +24,18 @@ impl FormatNode for JsComputedMemberExpression {
             r_brack_token,
         } = current.as_fields();
 
-        let mut formatted = vec![format_elements![
+        let mut formatted = vec![formatted![
+            formatter,
             object.format(formatter)?,
-            group_elements(format_elements![
-                optional_chain_token.format_or_empty(formatter)?,
+            group_elements(formatted![
+                formatter,
+                optional_chain_token,
                 l_brack_token.format(formatter)?,
                 soft_line_break(),
                 soft_block_indent(member.format(formatter)?),
                 r_brack_token.format(formatter)?,
-            ]),
-        ]];
+            ]?),
+        ]?];
 
         // Traverse upwards again and concatenate the computed expression until we find the first non-computed expression
         while let Some(parent) = current
@@ -59,13 +56,14 @@ impl FormatNode for JsComputedMemberExpression {
                 r_brack_token,
             } = parent.as_fields();
 
-            formatted.push(group_elements(format_elements![
-                optional_chain_token.format_or_empty(formatter)?,
+            formatted.push(group_elements(formatted![
+                formatter,
+                optional_chain_token,
                 l_brack_token.format(formatter)?,
                 soft_line_break(),
                 soft_block_indent(member.format(formatter)?),
                 r_brack_token.format(formatter)?,
-            ]));
+            ]?));
 
             current = parent;
         }

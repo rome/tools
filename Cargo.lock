@@ -236,6 +236,11 @@ name = "countme"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "03746e0c6dd9b5d2d9132ffe0bede35fb5f815604fd371bb42599fd37bc8e483"
+dependencies = [
+ "dashmap 4.0.2",
+ "once_cell",
+ "rustc-hash",
+]
 
 [[package]]
 name = "crc32fast"
@@ -380,6 +385,16 @@ checksum = "ccc0a48a9b826acdf4028595adc9db92caea352f7af011a3034acd172a52a0aa"
 dependencies = [
  "quote",
  "syn",
+]
+
+[[package]]
+name = "dashmap"
+version = "4.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e77a43b28d0668df09411cb0bc9a8c2adc40f9a048afe863e05fd43251e8e39c"
+dependencies = [
+ "cfg-if",
+ "num_cpus",
 ]
 
 [[package]]
@@ -1256,12 +1271,16 @@ dependencies = [
 name = "rome_analyze"
 version = "0.1.0"
 dependencies = [
- "anyhow",
+ "bitflags",
+ "countme",
+ "insta",
+ "rome_console",
  "rome_diagnostics",
+ "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
- "tracing",
+ "tests_macros",
 ]
 
 [[package]]
@@ -1308,11 +1327,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_css_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_css_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_css_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
- "thiserror",
 ]
 
 [[package]]
@@ -1355,10 +1381,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_js_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_js_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_js_formatter"
 version = "0.0.0"
 dependencies = [
  "cfg-if",
+ "countme",
  "ctor",
  "iai",
  "insta",
@@ -1369,6 +1404,7 @@ dependencies = [
  "rome_diagnostics",
  "rome_formatter",
  "rome_fs",
+ "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
  "rome_rowan",
@@ -1392,6 +1428,7 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rome_diagnostics",
+ "rome_js_factory",
  "rome_js_syntax",
  "rome_rowan",
  "smallvec",
@@ -1403,8 +1440,17 @@ dependencies = [
 name = "rome_js_syntax"
 version = "0.1.4"
 dependencies = [
+ "rome_js_factory",
  "rome_rowan",
  "serde",
+]
+
+[[package]]
+name = "rome_json_factory"
+version = "0.1.0"
+dependencies = [
+ "rome_json_syntax",
+ "rome_rowan",
 ]
 
 [[package]]
@@ -1412,7 +1458,6 @@ name = "rome_json_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
- "thiserror",
 ]
 
 [[package]]
@@ -1424,12 +1469,14 @@ dependencies = [
  "indexmap",
  "parking_lot",
  "rome_analyze",
+ "rome_console",
  "rome_diagnostics",
  "rome_flags",
  "rome_fs",
  "rome_js_formatter",
  "rome_js_parser",
  "rome_js_syntax",
+ "rome_rowan",
  "serde",
  "serde_json",
  "tokio",
@@ -1452,6 +1499,8 @@ dependencies = [
 name = "rome_playground"
 version = "0.0.0"
 dependencies = [
+ "rome_analyze",
+ "rome_console",
  "rome_diagnostics",
  "rome_js_formatter",
  "rome_js_parser",
@@ -1472,7 +1521,6 @@ dependencies = [
  "serde",
  "serde_json",
  "text-size",
- "thiserror",
 ]
 
 [[package]]
@@ -1900,7 +1948,7 @@ dependencies = [
  "async-trait",
  "auto_impl",
  "bytes",
- "dashmap",
+ "dashmap 5.2.0",
  "futures",
  "httparse",
  "log",
@@ -2307,6 +2355,7 @@ dependencies = [
  "itertools",
  "pico-args",
  "regex",
+ "rome_analyze",
  "rome_diagnostics",
  "rome_js_formatter",
  "rome_js_parser",

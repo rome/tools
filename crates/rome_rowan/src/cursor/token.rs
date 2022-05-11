@@ -1,29 +1,16 @@
-use crate::cursor::{free, GreenElement, NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
-use crate::{Direction, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
+use crate::cursor::{NodeData, SyntaxElement, SyntaxNode, SyntaxTrivia};
+use crate::green::GreenElementRef;
+use crate::{green, Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText};
 use std::hash::{Hash, Hasher};
-use std::{fmt, iter, ptr};
+use std::rc::Rc;
+use std::{fmt, iter};
 use text_size::{TextRange, TextSize};
 
-#[derive(Debug)]
+use super::{GreenElement, NodeKind, WeakGreenElement};
+
+#[derive(Clone, Debug)]
 pub(crate) struct SyntaxToken {
-    ptr: ptr::NonNull<NodeData>,
-}
-
-impl Clone for SyntaxToken {
-    #[inline]
-    fn clone(&self) -> Self {
-        self.data().inc_rc();
-        SyntaxToken { ptr: self.ptr }
-    }
-}
-
-impl Drop for SyntaxToken {
-    #[inline]
-    fn drop(&mut self) {
-        if self.data().dec_rc() {
-            unsafe { free(self.ptr) }
-        }
-    }
+    ptr: Rc<NodeData>,
 }
 
 impl SyntaxToken {
@@ -33,15 +20,32 @@ impl SyntaxToken {
         index: u32,
         offset: TextSize,
     ) -> SyntaxToken {
-        let mutable = parent.data().mutable;
-        let green = GreenElement::Token { ptr: green.into() };
         SyntaxToken {
-            ptr: NodeData::new(Some(parent), index, offset, green, mutable),
+            ptr: NodeData::new(
+                NodeKind::Child {
+                    green: WeakGreenElement::new(GreenElementRef::Token(green)),
+                    parent: parent.ptr,
+                },
+                index,
+                offset,
+            ),
+        }
+    }
+
+    pub(crate) fn new_detached(green: GreenToken) -> SyntaxToken {
+        SyntaxToken {
+            ptr: NodeData::new(
+                NodeKind::Root {
+                    green: GreenElement::Token(green),
+                },
+                0,
+                TextSize::from(0),
+            ),
         }
     }
 
     #[inline]
-    pub(super) fn green(&self) -> &GreenTokenData {
+    pub(crate) fn green(&self) -> &GreenTokenData {
         match self.data().green().as_token() {
             Some(token) => token,
             None => {
@@ -55,7 +59,12 @@ impl SyntaxToken {
 
     #[inline]
     pub(super) fn data(&self) -> &NodeData {
-        unsafe { self.ptr.as_ref() }
+        self.ptr.as_ref()
+    }
+
+    #[inline]
+    pub(super) fn into_green(self) -> green::GreenElement {
+        self.ptr.into_green()
     }
 
     #[inline]
@@ -149,9 +158,11 @@ impl SyntaxToken {
         }
     }
 
-    pub fn detach(&self) {
-        assert!(self.data().mutable, "immutable tree: {}", self);
-        self.data().detach()
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn detach(self) -> Self {
+        Self {
+            ptr: self.ptr.detach(),
+        }
     }
 
     #[inline]

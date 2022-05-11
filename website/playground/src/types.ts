@@ -25,7 +25,7 @@ export interface PlaygroundState {
 
 export interface PlaygroundProps {
 	playgroundState: PlaygroundState;
-	prettierOutput: string;
+	prettierOutput: { code: string; ir: object };
 	romeOutput: RomeOutput;
 }
 

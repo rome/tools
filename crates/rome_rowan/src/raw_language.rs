@@ -85,6 +85,10 @@ impl AstNode for LiteralExpression {
     fn syntax(&self) -> &SyntaxNode<RawLanguage> {
         &self.node
     }
+
+    fn into_syntax(self) -> SyntaxNode<RawLanguage> {
+        self.node
+    }
 }
 
 #[doc(hidden)]
@@ -104,6 +108,10 @@ impl AstSeparatedList for SeparatedExpressionList {
 
     fn syntax_list(&self) -> &SyntaxList<RawLanguage> {
         &self.syntax_list
+    }
+
+    fn into_syntax_list(self) -> SyntaxList<RawLanguage> {
+        self.syntax_list
     }
 }
 

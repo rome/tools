@@ -1,7 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::prelude::*;
 
 use rome_js_syntax::JsExtendsClause;
 use rome_js_syntax::JsExtendsClauseFields;
@@ -14,11 +11,12 @@ impl FormatNode for JsExtendsClause {
             type_arguments,
         } = self.as_fields();
 
-        Ok(format_elements![
+        Ok(formatted![
+            formatter,
             extends_token.format(formatter)?,
             space_token(),
             super_class.format(formatter)?,
-            type_arguments.format_or_empty(formatter)?,
-        ])
+            type_arguments,
+        ]?)
     }
 }

@@ -1,7 +1,5 @@
-use crate::format_traits::FormatOptional;
+use crate::prelude::*;
 use crate::utils::format_type_member_separator;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 use rome_js_syntax::TsGetterSignatureTypeMember;
 
 impl FormatNode for TsGetterSignatureTypeMember {
@@ -10,10 +8,11 @@ impl FormatNode for TsGetterSignatureTypeMember {
         let name = self.name().format(formatter)?;
         let l_paren = self.l_paren_token().format(formatter)?;
         let r_paren = self.r_paren_token().format(formatter)?;
-        let type_annotation = self.type_annotation().format_or_empty(formatter)?;
+        let type_annotation = self.type_annotation();
         let separator = format_type_member_separator(self.separator_token(), formatter);
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             get,
             space_token(),
             name,
@@ -21,6 +20,6 @@ impl FormatNode for TsGetterSignatureTypeMember {
             r_paren,
             type_annotation,
             separator
-        ])
+        ]
     }
 }

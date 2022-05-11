@@ -1,14 +1,44 @@
-mod analysis_server;
+use rome_js_syntax::{JsAnyRoot, TextRange};
+use rome_rowan::AstNode;
+
 mod analyzers;
 mod assists;
 mod categories;
+mod registry;
 mod signals;
-mod suppressions;
-mod syntax_edit;
 
-pub use analysis_server::{AnalysisServer, FileId};
-pub use analyzers::{Analyzer, AnalyzerContext};
-pub use assists::AssistContext;
-pub use categories::ActionCategory;
-pub use signals::{Action, Analysis, DiagnosticExt, Signal, TextAction};
-pub use syntax_edit::{Indel, SyntaxEdit};
+pub use crate::categories::{ActionCategories, RuleCategories, RuleCategory};
+use crate::registry::RuleRegistry;
+pub use crate::signals::{AnalyzerAction, AnalyzerDiagnostic, AnalyzerSignal};
+
+/// Allows filtering the list of rules that will be executed in a run of the analyzer,
+/// and at what source code range signals (diagnostics or actions) may be raised
+#[derive(Default)]
+pub struct AnalysisFilter<'a> {
+    /// Only allow rules with these categories to emit signals
+    pub categories: RuleCategories,
+    /// Only allow rules with these names to emit signals
+    pub rules: Option<&'a [&'a str]>,
+    /// Only emit signals matching this text range
+    pub range: Option<TextRange>,
+}
+
+/// Run the analyzer on the provided `root`: this process will use the given `filter`
+/// to selectively restrict analysis to specific rules / a specific source range,
+/// then call the `callback` when an analysis rule emits a diagnostic or action
+pub fn analyze<B>(root: &JsAnyRoot, filter: AnalysisFilter, mut callback: B)
+where
+    B: FnMut(&dyn AnalyzerSignal),
+{
+    let registry = RuleRegistry::with_filter(&filter);
+
+    for node in root.syntax().descendants() {
+        if let Some(range) = filter.range {
+            if node.text_range().ordering(range).is_ne() {
+                continue;
+            }
+        }
+
+        registry.analyze(root, node, &mut callback);
+    }
+}

@@ -12,8 +12,11 @@ use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use text_size::TextRange;
 
+mod mutation;
+
 use crate::syntax::{SyntaxSlot, SyntaxSlots};
 use crate::{Language, SyntaxList, SyntaxNode, SyntaxToken};
+pub use mutation::{AstNodeExt, AstNodeListExt, AstSeparatedListExt};
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
@@ -36,6 +39,9 @@ pub trait AstNode {
 
     /// Returns the underlying syntax node.
     fn syntax(&self) -> &SyntaxNode<Self::Language>;
+
+    /// Returns the underlying syntax node.
+    fn into_syntax(self) -> SyntaxNode<Self::Language>;
 
     /// Cast this node to this AST node
     ///
@@ -79,6 +85,9 @@ pub trait AstNodeList {
 
     /// Returns the underlying syntax list
     fn syntax_list(&self) -> &SyntaxList<Self::Language>;
+
+    /// Returns the underlying syntax list
+    fn into_syntax_list(self) -> SyntaxList<Self::Language>;
 
     fn iter(&self) -> AstNodeListIterator<Self::Language, Self::Node> {
         AstNodeListIterator {
@@ -213,6 +222,9 @@ pub trait AstSeparatedList {
 
     /// Returns the underlying syntax list
     fn syntax_list(&self) -> &SyntaxList<Self::Language>;
+
+    /// Returns the underlying syntax list
+    fn into_syntax_list(self) -> SyntaxList<Self::Language>;
 
     /// Returns an iterator over all nodes with their trailing separator
     fn elements(&self) -> AstSeparatedListElementsIterator<Self::Language, Self::Node> {

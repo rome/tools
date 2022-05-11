@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsSpread;
 use rome_js_syntax::JsSpreadFields;
@@ -11,9 +10,10 @@ impl FormatNode for JsSpread {
             argument,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             dotdotdot_token.format(formatter)?,
             argument.format(formatter)?
-        ])
+        ]
     }
 }

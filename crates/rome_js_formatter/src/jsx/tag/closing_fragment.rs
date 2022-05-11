@@ -1,6 +1,4 @@
-use crate::{Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::format_elements;
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 use rome_js_syntax::{JsxClosingFragment, JsxClosingFragmentFields};
 
 impl FormatNode for JsxClosingFragment {
@@ -11,10 +9,11 @@ impl FormatNode for JsxClosingFragment {
             l_angle_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             l_angle_token.format(formatter)?,
             slash_token.format(formatter)?,
             r_angle_token.format(formatter)?
-        ])
+        ]
     }
 }

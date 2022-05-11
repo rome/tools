@@ -110,21 +110,25 @@ export function formatWithPrettier(
 		language: "js" | "ts";
 		quoteStyle: QuoteStyle;
 	},
-) {
+): { code: string; ir: object } {
 	try {
-		return prettier.format(
-			code,
-			{
-				useTabs: options.indentStyle === IndentStyle.Tab,
-				tabWidth: options.indentWidth,
-				printWidth: options.lineWidth,
-				parser: getPrettierParser(options.language),
-				plugins: [parserBabel],
-				singleQuote: options.quoteStyle === QuoteStyle.Single,
-			},
-		);
+		const prettierOptions = {
+			useTabs: options.indentStyle === IndentStyle.Tab,
+			tabWidth: options.indentWidth,
+			printWidth: options.lineWidth,
+			parser: getPrettierParser(options.language),
+			plugins: [parserBabel],
+			singleQuote: options.quoteStyle === QuoteStyle.Single,
+		};
+		const formattedCode = prettier.format(code, prettierOptions);
+		//@ts-ignore
+		const ir = prettier.__debug.printToDoc(code, prettierOptions);
+		return { code: formattedCode, ir };
 	} catch (err) {
-		return code;
+		console.error(err);
+		//@ts-ignore
+		const code = err.toString();
+		return { code, ir: { error: "Invalid code" } };
 	}
 }
 

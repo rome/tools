@@ -2,7 +2,6 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 assertion_line: 242
 expression: computed.js
-
 ---
 # Input
 nock(/test/)
@@ -11,7 +10,6 @@ nock(/test/)
   .reply(200, {
     foo: 'bar',
   });
-
 =============================
 # Outputs
 ## Output 1

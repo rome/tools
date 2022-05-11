@@ -1,6 +1,5 @@
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
 use rome_js_syntax::TsIndexSignatureClassMember;
 use rome_js_syntax::TsIndexSignatureClassMemberFields;
 
@@ -17,14 +16,15 @@ impl FormatNode for TsIndexSignatureClassMember {
 
         format_with_semicolon(
             formatter,
-            format_elements![
+            formatted![
+                formatter,
                 modifiers.format(formatter)?,
                 space_token(),
                 l_brack_token.format(formatter)?,
                 parameter.format(formatter)?,
                 r_brack_token.format(formatter)?,
                 type_annotation.format(formatter)?,
-            ],
+            ]?,
             semicolon_token,
         )
     }

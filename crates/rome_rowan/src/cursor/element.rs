@@ -98,10 +98,11 @@ impl SyntaxElement {
         }
     }
 
-    pub fn detach(&self) {
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn detach(self) -> Self {
         match self {
-            NodeOrToken::Node(it) => it.detach(),
-            NodeOrToken::Token(it) => it.detach(),
+            NodeOrToken::Node(it) => Self::Node(it.detach()),
+            NodeOrToken::Token(it) => Self::Token(it.detach()),
         }
     }
 }

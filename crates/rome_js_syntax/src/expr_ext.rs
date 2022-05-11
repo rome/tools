@@ -19,9 +19,8 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a string literal
     ///
     /// ```
-    /// use rome_js_syntax::{
-    ///     JsLanguage, JsLiteralMemberName, JsSyntaxKind, JsSyntaxNode, JsSyntaxTreeBuilder,
-    /// };
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsLiteralMemberName};
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode =
@@ -37,9 +36,8 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing a number literal
     ///
     /// ```
-    /// use rome_js_syntax::{
-    ///     JsLanguage, JsLiteralMemberName, JsSyntaxKind, JsSyntaxNode, JsSyntaxTreeBuilder,
-    /// };
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsLiteralMemberName};
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode =
@@ -55,9 +53,8 @@ impl JsLiteralMemberName {
     /// Getting the name of a static member containing an identifier
     ///
     /// ```
-    /// use rome_js_syntax::{
-    ///     JsLanguage, JsLiteralMemberName, JsSyntaxKind, JsSyntaxNode, JsSyntaxTreeBuilder,
-    /// };
+    /// use rome_js_syntax::{JsSyntaxKind, JsLanguage, JsSyntaxNode, JsLiteralMemberName};
+    /// use rome_js_factory::JsSyntaxTreeBuilder;
     /// use rome_rowan::AstNode;
     ///
     /// let node: JsSyntaxNode =

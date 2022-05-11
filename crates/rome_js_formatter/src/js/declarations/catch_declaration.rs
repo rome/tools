@@ -1,7 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter, JsFormatter};
+use crate::prelude::*;
 
 use rome_js_syntax::JsCatchDeclaration;
 use rome_js_syntax::JsCatchDeclarationFields;
@@ -17,10 +14,7 @@ impl FormatNode for JsCatchDeclaration {
 
         formatter.format_delimited_soft_block_indent(
             &l_paren_token?,
-            format_elements![
-                binding.format(formatter)?,
-                type_annotation.format_or_empty(formatter)?
-            ],
+            formatted![formatter, binding.format(formatter)?, type_annotation]?,
             &r_paren_token?,
         )
     }

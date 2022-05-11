@@ -1,7 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::prelude::*;
 
 use rome_js_syntax::JsShorthandNamedImportSpecifier;
 use rome_js_syntax::JsShorthandNamedImportSpecifierFields;
@@ -13,11 +10,11 @@ impl FormatNode for JsShorthandNamedImportSpecifier {
             local_name,
         } = self.as_fields();
 
-        let type_token = type_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let type_token =
+            type_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
 
         let local_name = local_name.format(formatter)?;
 
-        Ok(format_elements![type_token, local_name])
+        formatted![formatter, type_token, local_name]
     }
 }

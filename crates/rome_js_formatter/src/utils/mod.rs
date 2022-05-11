@@ -8,10 +8,10 @@ mod member_chain;
 #[cfg(test)]
 mod quickcheck_utils;
 
-use crate::format_traits::FormatOptional;
+use crate::format_extensions::FormatOptional;
 use crate::{
-    empty_element, empty_line, format_elements, hard_group_elements, space_token, token, Format,
-    FormatElement, Formatter, JsFormatter, QuoteStyle, Token,
+    empty_element, empty_line, hard_group_elements, space_token, token, Format, FormatElement,
+    Formatter, JsFormatter, QuoteStyle, Token,
 };
 pub(crate) use binary_like_expression::{format_binary_like_expression, JsAnyBinaryLikeExpression};
 pub(crate) use format_conditional::{format_conditional, Conditional};
@@ -50,20 +50,24 @@ pub(crate) fn format_initializer_clause(
     formatter: &Formatter,
     initializer: Option<JsInitializerClause>,
 ) -> FormatResult<FormatElement> {
-    initializer.format_with_or_empty(formatter, |initializer| {
-        format_elements![space_token(), initializer]
-    })
+    formatted![
+        formatter,
+        initializer
+            .with_or_empty(|initializer| { formatted![formatter, space_token(), initializer] })
+    ]
 }
 
 pub(crate) fn format_interpreter(
     interpreter: Option<JsSyntaxToken>,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
-    interpreter.format_with_or(
+    formatted![
         formatter,
-        |interpreter| format_elements![interpreter, empty_line()],
-        empty_element,
-    )
+        interpreter.with_or(
+            |interpreter| formatted![formatter, interpreter, empty_line()],
+            empty_element,
+        )
+    ]
 }
 
 /// Returns true if this node contains "printable" trivias: comments
@@ -113,24 +117,27 @@ pub(crate) fn format_head_body_statement(
     body: JsAnyStatement,
 ) -> FormatResult<FormatElement> {
     if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-        Ok(hard_group_elements(format_elements![
+        Ok(hard_group_elements(formatted![
+            formatter,
             head,
             space_token(),
             body.format(formatter)?,
-        ]))
+        ]?))
     } else if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
         // Force semicolon insertion if the body is empty
-        Ok(format_elements![
+        formatted![
+            formatter,
             hard_group_elements(head),
             body.format(formatter)?,
             token(";"),
-        ])
+        ]
     } else {
-        Ok(format_elements![
+        formatted![
+            formatter,
             hard_group_elements(head),
             space_token(),
             body.format(formatter)?,
-        ])
+        ]
     }
 }
 
@@ -449,11 +456,12 @@ impl TemplateElement {
         };
 
         if should_hard_group {
-            Ok(hard_group_elements(format_elements![
+            Ok(hard_group_elements(formatted![
+                formatter,
                 dollar_curly_token.format(formatter)?,
                 middle,
                 r_curly_token.format(formatter)?
-            ]))
+            ]?))
         } else {
             formatter.format_delimited_soft_block_indent(
                 &dollar_curly_token,
@@ -598,17 +606,15 @@ pub(crate) fn format_with_semicolon(
         _ => false,
     };
 
-    Ok(format_elements![
+    formatted![
+        formatter,
         content,
-        semicolon.format_or(
-            formatter,
-            if is_unknown {
-                empty_element
-            } else {
-                || token(";")
-            }
-        )?
-    ])
+        semicolon.or_format(if is_unknown {
+            empty_element
+        } else {
+            || token(";")
+        })
+    ]
 }
 
 pub(crate) fn format_string_literal_token(

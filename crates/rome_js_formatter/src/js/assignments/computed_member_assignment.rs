@@ -1,5 +1,4 @@
-use crate::{format_elements, Format, FormatElement, FormatNode, Formatter};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsComputedMemberAssignment;
 use rome_js_syntax::JsComputedMemberAssignmentFields;
@@ -13,11 +12,12 @@ impl FormatNode for JsComputedMemberAssignment {
             r_brack_token,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             object.format(formatter)?,
             l_brack_token.format(formatter)?,
             member.format(formatter)?,
             r_brack_token.format(formatter)?,
-        ])
+        ]
     }
 }

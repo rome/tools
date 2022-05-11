@@ -104,7 +104,9 @@ fn test_format_ci() {
 
     assert_eq!(content, FORMATTED);
 
-    assert_eq!(console.buffer.len(), 1);
+    if console.buffer.len() != 1 {
+        panic!("unexpected console content: {:#?}", console.buffer);
+    }
 }
 
 #[test]

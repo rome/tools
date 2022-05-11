@@ -1,7 +1,4 @@
-use crate::format_traits::FormatOptional;
-use rome_formatter::FormatResult;
-
-use crate::{format_elements, space_token, Format, FormatElement, FormatNode, Formatter};
+use crate::prelude::*;
 
 use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
@@ -17,20 +14,19 @@ impl FormatNode for JsImportNamedClause {
             assertion,
         } = self.as_fields();
 
-        let type_token = type_token
-            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let type_token =
+            type_token.with_or_empty(|token| formatted![formatter, token, space_token()]);
 
         let source = source.format(formatter)?;
 
-        let default = default_specifier.format_with_or_empty(formatter, |specifier| {
-            format_elements![specifier, space_token()]
-        })?;
+        let default = default_specifier
+            .with_or_empty(|specifier| formatted![formatter, specifier, space_token()]);
         let from = from_token.format(formatter)?;
         let name = named_import.format(formatter)?;
-        let assertion = assertion.format_with_or_empty(formatter, |assertion| {
-            format_elements![space_token(), assertion]
-        })?;
-        Ok(format_elements![
+        let assertion =
+            assertion.with_or_empty(|assertion| formatted![formatter, space_token(), assertion]);
+        formatted![
+            formatter,
             type_token,
             default,
             name,
@@ -39,6 +35,6 @@ impl FormatNode for JsImportNamedClause {
             space_token(),
             source,
             assertion
-        ])
+        ]
     }
 }

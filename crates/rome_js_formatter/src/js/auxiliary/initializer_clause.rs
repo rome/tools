@@ -1,7 +1,4 @@
-use crate::{
-    format_elements, hard_group_elements, space_token, Format, FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsInitializerClause;
 use rome_js_syntax::JsInitializerClauseFields;
@@ -13,10 +10,11 @@ impl FormatNode for JsInitializerClause {
             expression,
         } = self.as_fields();
 
-        Ok(format_elements![
+        formatted![
+            formatter,
             hard_group_elements(eq_token.format(formatter)?),
             space_token(),
             expression.format(formatter)?
-        ])
+        ]
     }
 }

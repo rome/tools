@@ -1,9 +1,5 @@
+use crate::prelude::*;
 use crate::utils::format_with_semicolon;
-use crate::{
-    empty_element, format_elements, group_elements, soft_block_indent, space_token, token, Format,
-    FormatElement, FormatNode, Formatter,
-};
-use rome_formatter::FormatResult;
 use rome_js_syntax::{JsReturnStatement, JsReturnStatementFields, JsSyntaxKind};
 use rome_rowan::AstNode;
 
@@ -22,16 +18,18 @@ impl FormatNode for JsReturnStatement {
                 argument.syntax().kind(),
                 JsSyntaxKind::JS_SEQUENCE_EXPRESSION
             ) {
-                format_elements![
+                formatted![
+                    formatter,
                     space_token(),
-                    group_elements(format_elements![
+                    group_elements(formatted![
+                        formatter,
                         token("("),
                         soft_block_indent(argument.format(formatter)?),
                         token(")")
-                    ]),
-                ]
+                    ]?),
+                ]?
             } else {
-                format_elements![space_token(), argument.format(formatter)?]
+                formatted![formatter, space_token(), argument.format(formatter)?]?
             }
         } else {
             empty_element()
@@ -39,7 +37,7 @@ impl FormatNode for JsReturnStatement {
 
         format_with_semicolon(
             formatter,
-            format_elements![return_token, argument],
+            formatted![formatter, return_token, argument]?,
             semicolon_token,
         )
     }

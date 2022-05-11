@@ -1,3 +1,4 @@
+use crate::builders::ConcatBuilder;
 use crate::intersperse::{Intersperse, IntersperseFn};
 use crate::{format_elements, TextRange, TextSize};
 use rome_rowan::{
@@ -319,46 +320,16 @@ pub fn concat_elements<I>(elements: I) -> FormatElement
 where
     I: IntoIterator<Item = FormatElement>,
 {
-    let mut elements = elements.into_iter();
+    let elements = elements.into_iter();
+    let mut builder = ConcatBuilder::new();
 
-    let (lower_bound, upper_bound) = elements.size_hint();
-    let size_hint = upper_bound.unwrap_or(lower_bound);
+    builder.size_hint(elements.size_hint());
 
-    // If the first non empty element is a vec, use it,
-    // otherwise create a new one with the current element
-    let mut concatenated = loop {
-        match elements.next() {
-            Some(FormatElement::Empty) => continue,
-            Some(FormatElement::List(list)) => {
-                let mut v = list.content;
-                v.reserve(size_hint);
-                break v;
-            }
-            Some(element) => {
-                let mut v = Vec::with_capacity(size_hint);
-                v.push(element);
-                break v;
-            }
-            None => return empty_element(),
-        }
-    };
-
-    // continue to the rest of the list
     for element in elements {
-        match element {
-            FormatElement::List(list) => concatenated.extend(list.content),
-            FormatElement::Empty => {}
-            element => concatenated.push(element),
-        }
+        builder.entry(element);
     }
 
-    if concatenated.is_empty() {
-        empty_element()
-    } else if concatenated.len() == 1 {
-        concatenated.pop().unwrap()
-    } else {
-        FormatElement::from(List::new(concatenated))
-    }
+    builder.finish()
 }
 
 /// Concatenates a list of [FormatElement]s with spaces and line breaks to fit
@@ -1217,8 +1188,12 @@ impl Debug for List {
 }
 
 impl List {
-    fn new(content: Vec<FormatElement>) -> Self {
+    pub(crate) fn new(content: Vec<FormatElement>) -> Self {
         Self { content }
+    }
+
+    pub(crate) fn into_vec(self) -> Vec<FormatElement> {
+        self.content
     }
 }
 

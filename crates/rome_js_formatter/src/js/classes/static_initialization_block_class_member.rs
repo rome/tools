@@ -1,7 +1,4 @@
-use crate::{
-    format_elements, space_token, Format, FormatElement, FormatNode, Formatter, JsFormatter,
-};
-use rome_formatter::FormatResult;
+use crate::prelude::*;
 
 use rome_js_syntax::JsStaticInitializationBlockClassMember;
 use rome_js_syntax::JsStaticInitializationBlockClassMemberFields;
@@ -21,6 +18,6 @@ impl FormatNode for JsStaticInitializationBlockClassMember {
             formatter.format_list(statements),
             &r_curly_token?,
         )?;
-        Ok(format_elements![static_token, space_token(), separated])
+        formatted![formatter, static_token, space_token(), separated]
     }
 }
