@@ -3,6 +3,7 @@
 
 use crate::{file::Files, Diagnostic};
 use crate::{SuggestionChange, SuggestionStyle};
+use rome_console::Markup;
 use rome_console::{
     codespan::{Codespan, Label, LabelStyle, Locus, Severity, WithSeverity},
     diff::{Diff, DiffMode},
@@ -97,7 +98,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                 },
                 severity: self.d.severity,
                 code: self.d.code.as_deref().filter(|code| !code.is_empty()),
-                title: &self.d.title,
+                title: markup! { {self.d.title} },
             }}
             "\n"
         })?;
@@ -236,7 +237,7 @@ pub struct DiagnosticHeader<'a> {
     pub locus: Option<Locus<'a>>,
     pub severity: Severity,
     pub code: Option<&'a str>,
-    pub title: &'a str,
+    pub title: Markup<'a>,
 }
 
 impl<'a> Display for DiagnosticHeader<'a> {

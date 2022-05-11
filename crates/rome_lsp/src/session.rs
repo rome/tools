@@ -5,7 +5,7 @@ use crate::{documents::Document, handlers, url_interner::UrlInterner};
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
 use parking_lot::RwLock;
-use rome_analyze::{AnalysisServer, FileId};
+use rome_diagnostics::file::FileId;
 use std::{collections::HashMap, error::Error, fmt::Display};
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::lsp_types;
@@ -115,11 +115,9 @@ impl Session {
 
         let diagnostics = if workspace_settings.analysis.enable_diagnostics {
             let file_id = doc.file_id();
-            let mut analysis_server = AnalysisServer::default();
-            analysis_server.set_file_text(file_id, doc.text);
 
             let handle = tokio::task::spawn_blocking(move || {
-                handlers::analysis::diagnostics(analysis_server, file_id)
+                handlers::analysis::diagnostics(file_id, &doc.text)
             });
 
             handle.await??

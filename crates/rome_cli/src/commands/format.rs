@@ -242,7 +242,7 @@ fn print_messages_to_console(
                         locus: file_name.map(|name| Locus::File { name }),
                         severity: err.severity,
                         code: Some(err.code),
-                        title: &err.message,
+                        title: markup!{ {err.message} },
                     }}
                 });
             }
@@ -274,14 +274,14 @@ fn print_messages_to_console(
                         locus: Some(Locus::File { name: &file_name }),
                         severity: Severity::Error,
                         code: Some("CI"),
-                        title: "File content differs from formatting output",
+                        title: markup! { "File content differs from formatting output" },
                     }
                 } else {
                     DiagnosticHeader {
                         locus: Some(Locus::File { name: &file_name }),
                         severity: Severity::Help,
                         code: Some("Formatter"),
-                        title: "Formatter would have printed the following content:",
+                        title: markup! { "Formatter would have printed the following content:" },
                     }
                 };
 

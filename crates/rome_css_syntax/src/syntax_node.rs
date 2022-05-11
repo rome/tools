@@ -5,8 +5,8 @@
 //!
 //! This is a simple wrapper around the `rowan` crate which does most of the heavy lifting and is language agnostic.
 
-use crate::{CssSyntaxFactory, CssSyntaxKind};
-use rome_rowan::{Language, TreeBuilder};
+use crate::CssSyntaxKind;
+use rome_rowan::Language;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub struct CssLanguage;
@@ -21,5 +21,3 @@ pub type CssSyntaxElement = rome_rowan::SyntaxElement<CssLanguage>;
 pub type CssSyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<CssLanguage>;
 pub type CssSyntaxElementChildren = rome_rowan::SyntaxElementChildren<CssLanguage>;
 pub type CssSyntaxList = rome_rowan::SyntaxList<CssLanguage>;
-
-pub type CssSyntaxTreeBuilder = TreeBuilder<'static, CssLanguage, CssSyntaxFactory>;

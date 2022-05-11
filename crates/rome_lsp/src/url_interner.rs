@@ -3,7 +3,7 @@
 //! Based on `path_interner` from `rust-analyzer`
 
 use indexmap::IndexSet;
-use rome_analyze::FileId;
+use rome_diagnostics::file::FileId;
 use tower_lsp::lsp_types::Url;
 
 /// Structure to map between [`Url`] and [`FileId`].

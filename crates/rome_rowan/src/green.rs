@@ -18,6 +18,10 @@ pub(crate) use self::node_cache::NodeCacheNodeEntryMut;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RawSyntaxKind(pub u16);
 
+pub(crate) fn has_live() -> bool {
+    node::has_live() || token::has_live() || trivia::has_live()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

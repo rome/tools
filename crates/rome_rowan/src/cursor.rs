@@ -8,11 +8,6 @@
 //! and descendants, as well as a cheep access to absolute offset of the node in
 //! file.
 //!
-//! By default `SyntaxNode`s are immutable, but you can get a mutable copy of
-//! the tree by calling `clone_for_update`. Mutation is based on interior
-//! mutability and doesn't need `&mut`. You can have two `SyntaxNode`s pointing
-//! at different parts of the same tree; mutations via the first node will be
-//! reflected in the other.
 
 // Implementation notes:
 //
@@ -36,72 +31,31 @@
 // from that point towards the root have ref count equal to one.
 //
 // `NodeData` which doesn't have a parent (is a root) owns the corresponding
-// green node or token, and is responsible for freeing it.
-//
-// That's mostly it for the immutable subset of the API. Mutation is fun though,
-// you'll like it!
-//
-// Mutability is a run-time property of a tree of `NodeData`. The whole tree is
-// either mutable or immutable. `clone_for_update` clones the whole tree of
-// `NodeData`s, making it mutable (note that the green tree is re-used).
-//
-// If the tree is mutable, then all live `NodeData` are additionally liked to
-// each other via intrusive liked lists. Specifically, there are two pointers to
-// siblings, as well as a pointer to the first child. Note that only live nodes
-// are considered. If the user only has `SyntaxNode`s for  the first and last
-// children of some particular node, then their `NodeData` will point at each
-// other.
-//
-// The links are used to propagate mutations across the tree. Specifically, each
-// `NodeData` remembers it's index in parent. When the node is detached from or
-// attached to the tree, we need to adjust the indices of all subsequent
-// siblings. That's what makes the `for c in node.children() { c.detach() }`
-// pattern work despite the apparent iterator invalidation.
-//
-// This code is encapsulated into the sorted linked list (`sll`) module.
-//
-// The actual mutation consist of functionally "mutating" (creating a
-// structurally shared copy) the green node, and then re-spinning the tree. This
-// is a delicate process: `NodeData` point directly to the green nodes, so we
-// must make sure that those nodes don't move. Additionally, during mutation a
-// node might become or might stop being a root, so we must take care to not
-// double free / leak its green node.
-//
-// Because we can change green nodes using only shared references, handing out
-// references into green nodes in the public API would be unsound. We don't do
-// that, but we do use such references internally a lot. Additionally, for
-// tokens the underlying green token actually is immutable, so we can, and do
-// return `&str`.
-//
-// Invariants [must not leak outside of the module]:
-//    - Mutability is the property of the whole tree. Intermixing elements that
-//      differ in mutability is not allowed.
-//    - Mutability property is persistent.
-//    - References to the green elements' data are not exposed into public API
-//      when the tree is mutable.
-//    - TBD
+// green node or token, and is responsible for freeing it. For child `NodeData`
+// however since they hold a strong reference to their parent node and thus
+// to the root, their corresponding green node is guaranteed to be alive as
+// a reference cycle to is know to exist (child `NodeData` -> root `NodeData`
+// -> root `GreenNode` -> child `GreenNode`) and they can safely use a "weak
+// reference" (raw pointer) to the corresponding green node as an optimization
+// to avoid having to track atomic references on the traversal hot path
 
 mod element;
 mod node;
 mod token;
 mod trivia;
 
-use std::{
-    cell::Cell,
-    mem::{self, ManuallyDrop},
-    ptr,
-};
+use std::{iter, ops};
+use std::{ptr, rc::Rc};
 
 use countme::Count;
 pub(crate) use trivia::{SyntaxTrivia, SyntaxTriviaPiecesIterator};
 
 use crate::cursor::node::Siblings;
 pub(crate) use crate::cursor::token::SyntaxToken;
+use crate::green::{self, GreenElement, GreenNodeData, GreenTokenData};
 use crate::{
-    green::{GreenElementRef, GreenNodeData, GreenTokenData, RawSyntaxKind},
-    sll,
-    utility_types::Delta,
-    GreenNode, GreenToken, NodeOrToken, TextRange, TextSize,
+    green::{GreenElementRef, RawSyntaxKind},
+    NodeOrToken, TextRange, TextSize,
 };
 pub(crate) use element::SyntaxElement;
 pub(crate) use node::{
@@ -109,77 +63,79 @@ pub(crate) use node::{
     SyntaxSlot, SyntaxSlots,
 };
 
-enum GreenElement {
-    Node {
-        ptr: Cell<ptr::NonNull<GreenNodeData>>,
-    },
-    Token {
-        ptr: ptr::NonNull<GreenTokenData>,
-    },
-}
-
+#[derive(Debug)]
 struct _SyntaxElement;
 
+pub(crate) fn has_live() -> bool {
+    countme::get::<_SyntaxElement>().live > 0
+}
+
+#[derive(Debug)]
 struct NodeData {
     _c: Count<_SyntaxElement>,
 
-    rc: Cell<u32>,
-    parent: Cell<Option<ptr::NonNull<NodeData>>>,
-    slot: Cell<u32>,
-    green: GreenElement,
+    kind: NodeKind,
+    slot: u32,
 
-    /// Invariant: never changes after NodeData is created.
-    mutable: bool,
     /// Absolute offset for immutable nodes, unused for mutable nodes.
     offset: TextSize,
-    // The following links only have meaning when `mutable` is true.
-    first: Cell<*const NodeData>,
-    /// Invariant: never null if mutable.
-    next: Cell<*const NodeData>,
-    /// Invariant: never null if mutable.
-    prev: Cell<*const NodeData>,
 }
 
-unsafe impl sll::Elem for NodeData {
-    fn prev(&self) -> &Cell<*const Self> {
-        &self.prev
-    }
-    fn next(&self) -> &Cell<*const Self> {
-        &self.next
-    }
-    fn key(&self) -> &Cell<u32> {
-        &self.slot
-    }
+/// A single NodeData (red node) is either a "root node" (no parent node and
+/// holds a strong reference to the root of the green tree) or a "child node"
+/// (holds a strong reference to its parent red node and a weak reference to its
+/// counterpart green node)
+#[derive(Debug)]
+enum NodeKind {
+    Root {
+        green: GreenElement,
+    },
+    Child {
+        green: WeakGreenElement,
+        parent: Rc<NodeData>,
+    },
 }
 
-#[inline(never)]
-unsafe fn free(mut data: ptr::NonNull<NodeData>) {
-    loop {
-        debug_assert_eq!(data.as_ref().rc.get(), 0);
-        debug_assert!(data.as_ref().first.get().is_null());
-        let node = Box::from_raw(data.as_ptr());
-        match node.parent.take() {
-            Some(parent) => {
-                debug_assert!(parent.as_ref().rc.get() > 0);
-                if node.mutable {
-                    sll::unlink(&parent.as_ref().first, &*node)
-                }
-                if parent.as_ref().dec_rc() {
-                    data = parent;
-                } else {
-                    break;
-                }
+/// Child SyntaxNodes use "unsafe" weak pointers to refer to their green node.
+/// Unlike the safe [std::sync::Weak] these are just a raw pointer: the
+/// corresponding [ThinArc](crate::arc::ThinArc) doesn't keep a counter of
+/// outstanding weak references or defer the release of the underlying memory
+/// until the last `Weak` is dropped. On the other hand, a weak reference to a
+/// released green node points to deallocated memory and it is undefined
+/// behavior to dereference it, but in the context of `NodeData` this is
+/// statically known to never happen
+#[derive(Debug, Clone)]
+enum WeakGreenElement {
+    Node { ptr: ptr::NonNull<GreenNodeData> },
+    Token { ptr: ptr::NonNull<GreenTokenData> },
+}
+
+impl WeakGreenElement {
+    fn new(green: GreenElementRef) -> Self {
+        match green {
+            NodeOrToken::Node(ptr) => Self::Node {
+                ptr: ptr::NonNull::from(ptr),
+            },
+            NodeOrToken::Token(ptr) => Self::Token {
+                ptr: ptr::NonNull::from(ptr),
+            },
+        }
+    }
+
+    fn as_deref(&self) -> GreenElementRef {
+        match self {
+            WeakGreenElement::Node { ptr } => GreenElementRef::Node(unsafe { ptr.as_ref() }),
+            WeakGreenElement::Token { ptr } => GreenElementRef::Token(unsafe { ptr.as_ref() }),
+        }
+    }
+
+    fn to_owned(&self) -> GreenElement {
+        match self {
+            WeakGreenElement::Node { ptr } => {
+                GreenElement::Node(unsafe { ptr.as_ref().to_owned() })
             }
-            None => {
-                match &node.green {
-                    GreenElement::Node { ptr } => {
-                        let _ = GreenNode::from_raw(ptr.get());
-                    }
-                    GreenElement::Token { ptr } => {
-                        let _ = GreenToken::from_raw(*ptr);
-                    }
-                }
-                break;
+            WeakGreenElement::Token { ptr } => {
+                GreenElement::Token(unsafe { ptr.as_ref().to_owned() })
             }
         }
     }
@@ -187,124 +143,66 @@ unsafe fn free(mut data: ptr::NonNull<NodeData>) {
 
 impl NodeData {
     #[inline]
-    fn new(
-        parent: Option<SyntaxNode>,
-        slot: u32,
-        offset: TextSize,
-        green: GreenElement,
-        mutable: bool,
-    ) -> ptr::NonNull<NodeData> {
-        let parent = ManuallyDrop::new(parent);
+    fn new(kind: NodeKind, slot: u32, offset: TextSize) -> Rc<NodeData> {
         let res = NodeData {
             _c: Count::new(),
-            rc: Cell::new(1),
-            parent: Cell::new(parent.as_ref().map(|it| it.ptr)),
-            slot: Cell::new(slot),
-            green,
-
-            mutable,
+            kind,
+            slot,
             offset,
-            first: Cell::new(ptr::null()),
-            next: Cell::new(ptr::null()),
-            prev: Cell::new(ptr::null()),
         };
-        unsafe {
-            if mutable {
-                let res_ptr: *const NodeData = &res;
-                match sll::init(
-                    (*res_ptr).parent().map(|it| &it.first),
-                    res_ptr.as_ref().unwrap(),
-                ) {
-                    sll::AddToSllResult::AlreadyInSll(node) => {
-                        if cfg!(debug_assertions) {
-                            assert_eq!((*node).slot(), (*res_ptr).slot());
-                            match ((*node).green(), (*res_ptr).green()) {
-                                (NodeOrToken::Node(lhs), NodeOrToken::Node(rhs)) => {
-                                    assert!(ptr::eq(lhs, rhs))
-                                }
-                                (NodeOrToken::Token(lhs), NodeOrToken::Token(rhs)) => {
-                                    assert!(ptr::eq(lhs, rhs))
-                                }
-                                it => {
-                                    panic!("node/token confusion: {:?}", it)
-                                }
-                            }
-                        }
 
-                        ManuallyDrop::into_inner(parent);
-                        let res = node as *mut NodeData;
-                        (*res).inc_rc();
-                        return ptr::NonNull::new_unchecked(res);
-                    }
-                    it => {
-                        let res = Box::into_raw(Box::new(res));
-                        it.add_to_sll(res);
-                        return ptr::NonNull::new_unchecked(res);
-                    }
-                }
-            }
-            ptr::NonNull::new_unchecked(Box::into_raw(Box::new(res)))
-        }
-    }
-
-    #[inline]
-    fn inc_rc(&self) {
-        let rc = match self.rc.get().checked_add(1) {
-            Some(it) => it,
-            None => std::process::abort(),
-        };
-        self.rc.set(rc)
-    }
-
-    #[inline]
-    fn dec_rc(&self) -> bool {
-        let rc = self.rc.get() - 1;
-        self.rc.set(rc);
-        rc == 0
+        Rc::new(res)
     }
 
     #[inline]
     fn key(&self) -> (ptr::NonNull<()>, TextSize) {
-        let ptr = match &self.green {
-            GreenElement::Node { ptr } => ptr.get().cast(),
-            GreenElement::Token { ptr } => ptr.cast(),
+        let weak = match &self.kind {
+            NodeKind::Root { green } => WeakGreenElement::new(green.as_deref()),
+            NodeKind::Child { green, .. } => green.clone(),
+        };
+        let ptr = match weak {
+            WeakGreenElement::Node { ptr } => ptr.cast(),
+            WeakGreenElement::Token { ptr } => ptr.cast(),
         };
         (ptr, self.offset())
     }
 
     #[inline]
     fn parent_node(&self) -> Option<SyntaxNode> {
-        let parent = self.parent()?;
-        debug_assert!(matches!(parent.green, GreenElement::Node { .. }));
-        parent.inc_rc();
-        Some(SyntaxNode {
-            ptr: ptr::NonNull::from(parent),
-        })
+        debug_assert!(matches!(
+            self.parent()?.green(),
+            GreenElementRef::Node { .. }
+        ));
+        match &self.kind {
+            NodeKind::Child { parent, .. } => Some(SyntaxNode {
+                ptr: parent.clone(),
+            }),
+            NodeKind::Root { .. } => None,
+        }
     }
 
     #[inline]
     fn parent(&self) -> Option<&NodeData> {
-        self.parent.get().map(|it| unsafe { &*it.as_ptr() })
+        match &self.kind {
+            NodeKind::Child { parent, .. } => Some(&**parent),
+            NodeKind::Root { .. } => None,
+        }
     }
 
     #[inline]
     fn green(&self) -> GreenElementRef<'_> {
-        match &self.green {
-            GreenElement::Node { ptr } => GreenElementRef::Node(unsafe { &*ptr.get().as_ptr() }),
-            GreenElement::Token { ptr } => GreenElementRef::Token(unsafe { &*ptr.as_ref() }),
+        match &self.kind {
+            NodeKind::Root { green } => green.as_deref(),
+            NodeKind::Child { green, .. } => green.as_deref(),
         }
     }
 
     /// Returns an iterator over the siblings of this node. The iterator is positioned at the current node.
     #[inline]
     fn green_siblings(&self) -> Option<Siblings> {
-        match &self.parent()?.green {
-            GreenElement::Node { ptr } => {
-                let parent = unsafe { &*ptr.get().as_ptr() };
-
-                Some(Siblings::new(parent, self.slot()))
-            }
-            GreenElement::Token { .. } => {
+        match &self.parent()?.green() {
+            GreenElementRef::Node(ptr) => Some(Siblings::new(ptr, self.slot())),
+            GreenElementRef::Token(_) => {
                 debug_assert!(
                     false,
                     "A token should never be a parent of a token or node."
@@ -315,34 +213,12 @@ impl NodeData {
     }
     #[inline]
     fn slot(&self) -> u32 {
-        self.slot.get()
+        self.slot
     }
 
     #[inline]
     fn offset(&self) -> TextSize {
-        if self.mutable {
-            self.offset_mut()
-        } else {
-            self.offset
-        }
-    }
-
-    #[cold]
-    fn offset_mut(&self) -> TextSize {
-        let mut res = TextSize::from(0);
-
-        let mut node = self;
-        while let Some(parent) = node.parent() {
-            let green = parent.green().into_node().unwrap();
-            res += green
-                .slots()
-                .nth(node.slot() as usize)
-                .unwrap()
-                .rel_offset();
-            node = parent;
-        }
-
-        res
+        self.offset
     }
 
     #[inline]
@@ -407,99 +283,103 @@ impl NodeData {
         })
     }
 
-    fn detach(&self) {
-        assert!(self.mutable);
-        assert!(self.rc.get() > 0);
-        let parent_ptr = match self.parent.take() {
-            Some(parent) => parent,
-            None => return,
+    fn into_green(self: Rc<Self>) -> GreenElement {
+        match Rc::try_unwrap(self) {
+            Ok(data) => match data.kind {
+                NodeKind::Root { green } => green,
+                NodeKind::Child { green, .. } => green.to_owned(),
+            },
+            Err(ptr) => ptr.green().to_owned(),
+        }
+    }
+
+    /// Return a clone of this subtree detached from its parent
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    fn detach(self: Rc<Self>) -> Rc<Self> {
+        match &self.kind {
+            NodeKind::Child { green, .. } => Self::new(
+                NodeKind::Root {
+                    green: green.to_owned(),
+                },
+                0,
+                0.into(),
+            ),
+            // If this node is already detached, increment the reference count and return a clone
+            NodeKind::Root { .. } => self.clone(),
+        }
+    }
+
+    /// Return a clone of this node with the specified range of slots replaced
+    /// with the elements of the provided iterator
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    fn splice_slots<R, I>(mut self: Rc<Self>, range: R, replace_with: I) -> Rc<Self>
+    where
+        R: ops::RangeBounds<usize>,
+        I: Iterator<Item = Option<green::GreenElement>>,
+    {
+        let new_green = match self.green() {
+            NodeOrToken::Node(green) => green.splice_slots(range, replace_with),
+            NodeOrToken::Token(_) => panic!("called splice_slots on a token node"),
         };
 
-        unsafe {
-            sll::adjust(self, self.slot() + 1, Delta::Sub(1));
-            let parent = parent_ptr.as_ref();
-            sll::unlink(&parent.first, self);
+        // SAFETY: This conversion can only fail on 16-bits systems for nodes with more than 65 535 children
+        let index = usize::try_from(self.slot).expect("integer overflow");
 
-            // Add strong ref to green
-            match self.green().to_owned() {
-                NodeOrToken::Node(it) => {
-                    GreenNode::into_raw(it);
-                }
-                NodeOrToken::Token(it) => {
-                    GreenToken::into_raw(it);
-                }
-            }
+        // Try to reuse the underlying memory allocation if self is the only
+        // outstanding reference to this NodeData
+        match Rc::get_mut(&mut self) {
+            Some(node) => {
+                // We can't just do `*parent = parent.splice_slots()` because `splice_slots` may panic and `parent`
+                // would remain in an inconsistent state (the old value is moved out but the new value isn't yet
+                // moved in), instead this has to be done in multiple steps:
 
-            match parent.green() {
-                NodeOrToken::Node(green) => {
-                    let green = green.remove_slot(self.slot() as usize);
-                    parent.respine(green)
-                }
-                NodeOrToken::Token(_) => unreachable!(),
-            }
+                // 1. Clone the reference to the previous parent if it exists
+                let parent = match &node.kind {
+                    NodeKind::Child { parent, .. } => Some(parent.clone()),
+                    NodeKind::Root { .. } => None,
+                };
 
-            if parent.dec_rc() {
-                free(parent_ptr)
-            }
-        }
-    }
-    fn attach_child(&self, index: usize, child: &NodeData) {
-        assert!(self.mutable && child.mutable && child.parent().is_none());
-        assert!(self.rc.get() > 0 && child.rc.get() > 0);
+                // 2. Unconditionally set the kind to `Root` (to ensure parent is the only outstanding
+                // reference to the parent node)
+                // This also bumps the reference count of new_green temporarily to be able to construct
+                // the (optional) parent tree, in both case the reference will be decremented again (either
+                // the node is a root and the second reference gets dropped, or the node is a child and
+                // node.kind.green gets downgraded to weak)
+                node.kind = NodeKind::Root {
+                    green: GreenElement::Node(new_green.clone()),
+                };
 
-        unsafe {
-            child.slot.set(index as u32);
-            child.parent.set(Some(self.into()));
-            self.inc_rc();
-
-            if !self.first.get().is_null() {
-                sll::adjust(&*self.first.get(), index as u32, Delta::Add(1));
-            }
-
-            match sll::link(&self.first, child) {
-                sll::AddToSllResult::AlreadyInSll(_) => {
-                    panic!("Child already in sorted linked list")
-                }
-                it => it.add_to_sll(child),
-            }
-
-            match self.green() {
-                NodeOrToken::Node(green) => {
-                    // Child is root, so it owns the green node. Steal it!
-                    let child_green = match &child.green {
-                        GreenElement::Node { ptr } => GreenNode::from_raw(ptr.get()).into(),
-                        GreenElement::Token { ptr } => GreenToken::from_raw(*ptr).into(),
+                // 3. Actually call `splice_slots` on the previous parent if it exists and overwrite the
+                // kind to `Child`
+                if let Some(parent) = parent {
+                    node.kind = NodeKind::Child {
+                        green: WeakGreenElement::new(GreenElementRef::Node(&new_green)),
+                        parent: parent.splice_slots(
+                            index..=index,
+                            iter::once(Some(GreenElement::Node(new_green))),
+                        ),
                     };
+                }
 
-                    let green = green.insert_slot(index, Some(child_green));
-                    self.respine(green);
-                }
-                NodeOrToken::Token(_) => unreachable!(),
+                self
             }
-        }
-    }
-    unsafe fn respine(&self, mut new_green: GreenNode) {
-        let mut node = self;
-        loop {
-            let old_green = match &node.green {
-                GreenElement::Node { ptr } => ptr.replace(ptr::NonNull::from(&*new_green)),
-                GreenElement::Token { .. } => unreachable!(),
-            };
-            match node.parent() {
-                Some(parent) => match parent.green() {
-                    NodeOrToken::Node(parent_green) => {
-                        new_green = parent_green
-                            .replace_child(node.slot() as usize, Some(new_green.into()));
-                        node = parent;
-                    }
-                    _ => unreachable!(),
+            None => Rc::new(NodeData {
+                _c: Count::new(),
+                kind: match &self.kind {
+                    NodeKind::Root { .. } => NodeKind::Root {
+                        green: GreenElement::Node(new_green),
+                    },
+                    NodeKind::Child { parent, .. } => NodeKind::Child {
+                        green: WeakGreenElement::new(GreenElementRef::Node(&new_green)),
+                        parent: parent.clone().splice_slots(
+                            index..=index,
+                            iter::once(Some(GreenElement::Node(new_green))),
+                        ),
+                    },
                 },
-                None => {
-                    mem::forget(new_green);
-                    let _ = GreenNode::from_raw(old_green);
-                    break;
-                }
-            }
+                offset: self.offset,
+                slot: self.slot,
+            }),
         }
     }
 }
