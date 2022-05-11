@@ -1,3 +1,4 @@
+use rome_console::markup;
 use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyRoot, JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
@@ -48,6 +49,7 @@ impl Rule for FlipBinExp {
 
         Some(RuleAction {
             category: ActionCategories::REFACTOR,
+            message: markup! { "Flip Binary Expression" }.to_owned(),
             root: root.replace_node(node.clone(), new_node)?,
         })
     }

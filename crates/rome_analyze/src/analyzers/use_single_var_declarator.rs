@@ -91,7 +91,8 @@ impl Rule for UseSingleVarDeclarator {
         );
 
         Some(RuleAction {
-            category: ActionCategories::empty(),
+            category: ActionCategories::SUGGESTION,
+            message: markup! { "Break out into multiple declarations" }.to_owned(),
             root: root.replace_node_discard_trivia(prev_parent, next_parent)?,
         })
     }

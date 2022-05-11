@@ -48,20 +48,30 @@ pub(crate) fn code_actions(
         ..AnalysisFilter::default()
     };
 
+    let mut has_fixes = false;
     let mut result = Vec::new();
     let line_index = LineIndex::new(text);
 
     rome_analyze::analyze(&root, filter, |event| {
         if let Some(action) = event.action() {
-            result.push(CodeActionOrCommand::CodeAction(utils::code_fix_to_lsp(
-                &url,
-                text,
-                &line_index,
-                diagnostics,
-                action,
-            )));
+            let action = utils::code_fix_to_lsp(&url, text, &line_index, diagnostics, action);
+
+            has_fixes |= action.diagnostics.is_some();
+            result.push(CodeActionOrCommand::CodeAction(action));
         }
     });
+
+    // If any actions is marked as fixing a diagnostic, hide other actions
+    // that do not fix anything (refactor opportunities) to reduce noise
+    if has_fixes {
+        result.retain(|action| {
+            if let CodeActionOrCommand::CodeAction(action) = action {
+                action.diagnostics.is_some()
+            } else {
+                true
+            }
+        });
+    }
 
     Ok(result)
 }

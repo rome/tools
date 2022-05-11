@@ -5,8 +5,11 @@ use crate::line_index::{LineCol, LineIndex};
 use rome_analyze::ActionCategories;
 use rome_analyze::AnalyzerAction;
 use rome_analyze::AnalyzerDiagnostic;
-use rome_console::fmt::{self, Formatter, Termcolor};
+use rome_console::fmt::Termcolor;
+use rome_console::fmt::{self, Formatter};
+use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
+use rome_diagnostics::Severity;
 use rome_rowan::AstNode;
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::jsonrpc::Result as LspResult;
@@ -83,11 +86,12 @@ pub(crate) fn code_fix_to_lsp(
     };
 
     let is_safe_fix = action.category.contains(ActionCategories::SAFE_FIX);
+    let is_suggestion = action.category.contains(ActionCategories::SUGGESTION);
     let is_refactor = action.category.contains(ActionCategories::REFACTOR);
 
     lsp_types::CodeAction {
-        title: String::from(action.rule_name),
-        kind: if is_safe_fix {
+        title: print_markup(&action.message),
+        kind: if is_safe_fix || is_suggestion {
             Some(lsp_types::CodeActionKind::QUICKFIX)
         } else if is_refactor {
             Some(lsp_types::CodeActionKind::REFACTOR)
@@ -115,23 +119,33 @@ pub(crate) fn diagnostic_to_lsp(
     diagnostic: AnalyzerDiagnostic,
     line_index: &LineIndex,
 ) -> lsp_types::Diagnostic {
-    let text_range = diagnostic.range;
-    let lsp_range = crate::utils::range(line_index, text_range);
-    let code = tower_lsp::lsp_types::NumberOrString::String(diagnostic.rule_name.into());
-    let source = Some("rome".into());
-
-    let mut message = Vec::new();
-    fmt::Display::fmt(
-        &diagnostic.message,
-        &mut Formatter::new(&mut Termcolor(NoColor::new(&mut message))),
+    Diagnostic::new(
+        range(line_index, diagnostic.range),
+        Some(match diagnostic.severity {
+            Severity::Help => lsp_types::DiagnosticSeverity::HINT,
+            Severity::Note => lsp_types::DiagnosticSeverity::INFORMATION,
+            Severity::Warning => lsp_types::DiagnosticSeverity::WARNING,
+            Severity::Error | Severity::Bug => lsp_types::DiagnosticSeverity::ERROR,
+        }),
+        Some(lsp_types::NumberOrString::String(
+            diagnostic.rule_name.into(),
+        )),
+        Some("rome".into()),
+        print_markup(&diagnostic.message),
+        None,
+        None,
     )
-    // SAFETY: Writing to a memory buffer should never fail
-    .unwrap();
+}
+
+/// Convert a piece of markup into a String
+fn print_markup(markup: &MarkupBuf) -> String {
+    let mut message = Termcolor(NoColor::new(Vec::new()));
+    fmt::Display::fmt(markup, &mut Formatter::new(&mut message))
+        // SAFETY: Writing to a memory buffer should never fail
+        .unwrap();
 
     // SAFETY: Printing uncolored markup never generates non UTF-8 byte sequences
-    let message = String::from_utf8(message).unwrap();
-
-    Diagnostic::new(lsp_range, None, Some(code), source, message, None, None)
+    String::from_utf8(message.0.into_inner()).unwrap()
 }
 
 /// Helper to create a [tower_lsp::jsonrpc::Error] from a message

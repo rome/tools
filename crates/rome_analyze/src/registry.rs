@@ -130,5 +130,6 @@ pub struct RuleAction {
     /// The category this action belongs to, this will influence how clients
     /// may chose to present this action to the user
     pub category: ActionCategories,
+    pub message: MarkupBuf,
     pub root: JsAnyRoot,
 }
