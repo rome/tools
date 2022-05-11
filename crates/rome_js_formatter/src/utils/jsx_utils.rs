@@ -24,14 +24,12 @@ pub fn jsx_space(formatter: &Formatter<JsFormatOptions>) -> FormatElement {
 
 pub fn is_jsx_whitespace_expression(child: JsxAnyChild) -> bool {
     if let JsxAnyChild::JsxExpressionChild(expr_child) = child {
-        if let Some(expr) = expr_child.expression() {
-            if let JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsStringLiteralExpression(string_literal_expr),
-            ) = expr
-            {
-                if let Ok(token) = string_literal_expr.value_token() {
-                    return token.text() == " ";
-                }
+        if let Some(JsAnyExpression::JsAnyLiteralExpression(
+            JsAnyLiteralExpression::JsStringLiteralExpression(string_literal_expr),
+        )) = expr_child.expression()
+        {
+            if let Ok(token) = string_literal_expr.value_token() {
+                return token.text() == " ";
             }
         }
     }
