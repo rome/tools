@@ -353,6 +353,7 @@ function() {
 
 #[cfg(test)]
 mod check_reformat;
+#[rustfmt::skip]
 mod generated;
 
 #[cfg(test)]
