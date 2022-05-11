@@ -68,16 +68,18 @@ impl<L: Language> SyntaxToken<L> {
     /// Returns the text of the token, including all trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
     ///         &[TriviaPiece::whitespace(3)],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
-    /// }).first_token().unwrap();
+    /// })
+    /// .first_token()
+    /// .unwrap();
     /// assert_eq!("\n\t let \t\t", token.text());
     /// ```
     pub fn text(&self) -> &str {
@@ -87,19 +89,27 @@ impl<L: Language> SyntaxToken<L> {
     /// Returns the text of a token, including all trivia as an owned value.
     ///  
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
     ///         &[TriviaPiece::whitespace(3)],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
-    /// }).first_token().unwrap();
+    /// })
+    /// .first_token()
+    /// .unwrap();
     /// assert_eq!("\n\t let \t\t", token.token_text());
-    /// assert_eq!(format!("{}", "\n\t let \t\t"), format!("{}", token.token_text()));
-    /// assert_eq!(format!("{:?}", "\n\t let \t\t"), format!("{:?}", token.token_text()));
+    /// assert_eq!(
+    ///     format!("{}", "\n\t let \t\t"),
+    ///     format!("{}", token.token_text())
+    /// );
+    /// assert_eq!(
+    ///     format!("{:?}", "\n\t let \t\t"),
+    ///     format!("{:?}", token.token_text())
+    /// );
     /// ```
     pub fn token_text(&self) -> SyntaxTokenText {
         self.raw.token_text()
@@ -108,16 +118,18 @@ impl<L: Language> SyntaxToken<L> {
     /// Returns the text of the token, excluding all trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
     ///         &[TriviaPiece::whitespace(3)],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
-    /// }).first_token().unwrap();
+    /// })
+    /// .first_token()
+    /// .unwrap();
     /// assert_eq!("let", token.text_trimmed());
     /// ```
     pub fn text_trimmed(&self) -> &str {
@@ -229,16 +241,18 @@ impl<L: Language> SyntaxToken<L> {
     /// Returns the token leading trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
     ///         &[TriviaPiece::whitespace(3)],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
-    /// }).first_token().unwrap();
+    /// })
+    /// .first_token()
+    /// .unwrap();
     /// assert_eq!("\n\t ", token.leading_trivia().text());
     /// ```
     #[inline]
@@ -249,16 +263,18 @@ impl<L: Language> SyntaxToken<L> {
     /// Returns the token trailing trivia.
     ///
     /// ```
-    /// use rome_rowan::*;
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
-    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
+    /// use rome_rowan::*;
+    /// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
     ///     builder.token_with_trivia(
     ///         RawLanguageKind::LET_TOKEN,
     ///         "\n\t let \t\t",
     ///         &[TriviaPiece::whitespace(3)],
     ///         &[TriviaPiece::whitespace(3)],
     ///     );
-    /// }).first_token().unwrap();
+    /// })
+    /// .first_token()
+    /// .unwrap();
     /// assert_eq!(" \t\t", token.trailing_trivia().text());
     /// ```
     #[inline]

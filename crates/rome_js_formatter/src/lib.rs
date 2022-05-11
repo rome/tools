@@ -53,7 +53,9 @@ use rome_rowan::{SyntaxResult, TokenAtOffset};
 /// }
 ///
 /// let paragraph = Paragraph(String::from("test"));
-/// let printed = format(FormatOptions::default(), &paragraph).unwrap().print();
+/// let printed = format(FormatOptions::default(), &paragraph)
+///     .unwrap()
+///     .print();
 ///
 /// assert_eq!("test\n", printed.as_code())
 /// ```

@@ -27,35 +27,44 @@ pub fn empty_element() -> FormatElement {
 /// Soft line breaks are omitted if the enclosing `Group` fits on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break, FormatOptions};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_line_break, token, FormatOptions, Formatted,
+/// };
 ///
-/// let elements = group_elements(format_elements![
-///   token("a,"),
-///   soft_line_break(),
-///   token("b"),
-/// ]);
+/// let elements = group_elements(format_elements![token("a,"), soft_line_break(), token("b"),]);
 ///
-/// assert_eq!("a,b", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "a,b",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 /// See [soft_line_break_or_space] if you want to insert a space between the elements if the enclosing
 /// `Group` fits on a single line.
 ///
 /// Soft line breaks are emitted if the enclosing `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break, FormatOptions, LineWidth};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_line_break, token, FormatOptions, Formatted,
+///     LineWidth,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("a long word,"),
-///   soft_line_break(),
-///   token("so that the group doesn't fit on a single line"),
+///     token("a long word,"),
+///     soft_line_break(),
+///     token("so that the group doesn't fit on a single line"),
 /// ]);
 ///
 /// let options = FormatOptions {
-///  line_width: LineWidth::try_from(10).unwrap(),
-///  ..FormatOptions::default()
+///     line_width: LineWidth::try_from(10).unwrap(),
+///     ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "a long word,\nso that the group doesn't fit on a single line",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 #[inline]
 pub const fn soft_line_break() -> FormatElement {
@@ -69,16 +78,23 @@ pub const fn soft_line_break() -> FormatElement {
 ///
 /// It forces a line break, even if the enclosing `Group` would otherwise fit on a single line.
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, FormatOptions, hard_line_break};
+/// use rome_formatter::{
+///     format_elements, group_elements, hard_line_break, token, FormatOptions, Formatted,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("a,"),
-///   hard_line_break(),
-///   token("b"),
-///   hard_line_break()
+///     token("a,"),
+///     hard_line_break(),
+///     token("b"),
+///     hard_line_break()
 /// ]);
 ///
-/// assert_eq!("a,\nb\n", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "a,\nb\n",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub const fn hard_line_break() -> FormatElement {
@@ -91,16 +107,23 @@ pub const fn hard_line_break() -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, FormatOptions, empty_line};
+/// use rome_formatter::{
+///     empty_line, format_elements, group_elements, token, FormatOptions, Formatted,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("a,"),
-///   empty_line(),
-///   token("b"),
-///   empty_line()
+///     token("a,"),
+///     empty_line(),
+///     token("b"),
+///     empty_line()
 /// ]);
 ///
-/// assert_eq!("a,\n\nb\n\n", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "a,\n\nb\n\n",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub const fn empty_line() -> FormatElement {
@@ -113,33 +136,46 @@ pub const fn empty_line() -> FormatElement {
 ///
 /// The line breaks are emitted as spaces if the enclosing `Group` fits on a a single line:
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_line_break_or_space, token, FormatOptions, Formatted,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("a,"),
-///   soft_line_break_or_space(),
-///   token("b"),
+///     token("a,"),
+///     soft_line_break_or_space(),
+///     token("b"),
 /// ]);
 ///
-/// assert_eq!("a, b", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "a, b",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// The printer breaks the lines if the enclosing `Group` doesn't fit on a single line:
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, LineWidth};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_line_break_or_space, token, FormatOptions, Formatted,
+///     LineWidth,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("a long word,"),
-///   soft_line_break_or_space(),
-///   token("so that the group doesn't fit on a single line"),
+///     token("a long word,"),
+///     soft_line_break_or_space(),
+///     token("so that the group doesn't fit on a single line"),
 /// ]);
 ///
 /// let options = FormatOptions {
-///  line_width: LineWidth::try_from(10).unwrap(),
-///  ..FormatOptions::default()
+///     line_width: LineWidth::try_from(10).unwrap(),
+///     ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "a long word,\nso that the group doesn't fit on a single line",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 #[inline]
 pub const fn soft_line_break_or_space() -> FormatElement {
@@ -156,10 +192,15 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{token, Formatted, FormatOptions};
+/// use rome_formatter::{token, FormatOptions, Formatted};
 /// let elements = token("Hello World");
 ///
-/// assert_eq!("Hello World", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "Hello World",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// Printing a string literal as a literal requires that the string literal is properly escaped and
@@ -187,11 +228,16 @@ pub const fn token(text: &'static str) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{FormatOptions, token, Formatted, line_suffix, format_elements};
+/// use rome_formatter::{format_elements, line_suffix, token, FormatOptions, Formatted};
 ///
 /// let elements = format_elements![token("a"), line_suffix(token("c")), token("b")];
 ///
-/// assert_eq!("abc", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "abc",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
@@ -206,11 +252,24 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{FormatOptions, token, Formatted, comment, format_elements, group_elements, empty_line, soft_line_break_or_space};
+/// use rome_formatter::{
+///     comment, empty_line, format_elements, group_elements, soft_line_break_or_space, token,
+///     FormatOptions, Formatted,
+/// };
 ///
-/// let elements = group_elements(format_elements![comment(empty_line()), token("a"), soft_line_break_or_space(), token("b")]);
+/// let elements = group_elements(format_elements![
+///     comment(empty_line()),
+///     token("a"),
+///     soft_line_break_or_space(),
+///     token("b")
+/// ]);
 ///
-/// assert_eq!("\na b", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "\na b",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub fn comment(element: impl Into<FormatElement>) -> FormatElement {
@@ -239,10 +298,23 @@ pub const fn space_token() -> FormatElement {
 /// ## Examples
 ///
 /// ```rust
-/// use rome_formatter::{concat_elements, FormatElement, space_token, token, Formatted, FormatOptions};
-/// let expr = concat_elements(vec![token("a"), space_token(), token("+"), space_token(), token("b")]);
+/// use rome_formatter::{
+///     concat_elements, space_token, token, FormatElement, FormatOptions, Formatted,
+/// };
+/// let expr = concat_elements(vec![
+///     token("a"),
+///     space_token(),
+///     token("+"),
+///     space_token(),
+///     token("b"),
+/// ]);
 ///
-/// assert_eq!("a + b", Formatted::new(expr, FormatOptions::default()).print().as_code())
+/// assert_eq!(
+///     "a + b",
+///     Formatted::new(expr, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// )
 /// ```
 pub fn concat_elements<I>(elements: I) -> FormatElement
 where
@@ -266,15 +338,22 @@ where
 /// ## Examples
 ///
 /// ```rust
+/// use rome_formatter::{
+///     fill_elements, space_token, token, FormatElement, FormatOptions, Formatted,
+/// };
 /// use std::str::from_utf8;
-/// use rome_formatter::{fill_elements, FormatElement, space_token, token, Formatted, FormatOptions};
 /// let a = from_utf8(&[b'a'; 30]).unwrap();
 /// let b = from_utf8(&[b'b'; 30]).unwrap();
 /// let c = from_utf8(&[b'c'; 30]).unwrap();
 /// let d = from_utf8(&[b'd'; 30]).unwrap();
 /// let expr = fill_elements([token(a), token(b), token(c), token(d)]);
 ///
-/// assert_eq!(format!("{a} {b}\n{c} {d}"), Formatted::new(expr, FormatOptions::default()).print().as_code())
+/// assert_eq!(
+///     format!("{a} {b}\n{c} {d}"),
+///     Formatted::new(expr, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// )
 /// ```
 pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> FormatElement {
     let mut list: Vec<_> = elements.into_iter().collect();
@@ -292,12 +371,22 @@ pub fn fill_elements(elements: impl IntoIterator<Item = FormatElement>) -> Forma
 /// Joining different tokens by separating them with a comma and a space.
 ///
 /// ```
-/// use rome_formatter::{concat_elements, FormatOptions, join_elements, space_token, token, Formatted};
+/// use rome_formatter::{
+///     concat_elements, join_elements, space_token, token, FormatOptions, Formatted,
+/// };
 ///
 /// let separator = concat_elements(vec![token(","), space_token()]);
-/// let elements = join_elements(separator, vec![token("1"), token("2"), token("3"), token("4")]);
+/// let elements = join_elements(
+///     separator,
+///     vec![token("1"), token("2"), token("3"), token("4")],
+/// );
 ///
-/// assert_eq!("1, 2, 3, 4", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "1, 2, 3, 4",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub fn join_elements<TSep, I>(separator: TSep, elements: I) -> FormatElement
@@ -322,22 +411,27 @@ where
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{format_elements, Formatted, FormatOptions, hard_line_break, block_indent, token, indent};
+/// use rome_formatter::{
+///     block_indent, format_elements, hard_line_break, indent, token, FormatOptions, Formatted,
+/// };
 /// let block = (format_elements![
-///   token("switch {"),
-///   block_indent(format_elements![
-///     token("default:"),
-///     indent(format_elements![ // this is where we want to use a
-///        hard_line_break(),
-///        token("break;"),
-///     ])
-///   ]),
-///   token("}"),
+///     token("switch {"),
+///     block_indent(format_elements![
+///         token("default:"),
+///         indent(format_elements![
+///             // this is where we want to use a
+///             hard_line_break(),
+///             token("break;"),
+///         ])
+///     ]),
+///     token("}"),
 /// ]);
 ///
 /// assert_eq!(
-///   "switch {\n\tdefault:\n\t\tbreak;\n}",
-///   Formatted::new(block, FormatOptions::default()).print().as_code()
+///     "switch {\n\tdefault:\n\t\tbreak;\n}",
+///     Formatted::new(block, FormatOptions::default())
+///         .print()
+///         .as_code()
 /// );
 /// ```
 #[inline]
@@ -361,21 +455,25 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{Formatted, format_elements, token, FormatOptions, hard_line_break, block_indent};
+/// use rome_formatter::{
+///     block_indent, format_elements, hard_line_break, token, FormatOptions, Formatted,
+/// };
 ///
 /// let block = (format_elements![
-///   token("{"),
-///   block_indent(format_elements![
-///     token("let a = 10;"),
-///     hard_line_break(),
-///     token("let c = a + 5;"),
-///   ]),
-///   token("}"),
+///     token("{"),
+///     block_indent(format_elements![
+///         token("let a = 10;"),
+///         hard_line_break(),
+///         token("let c = a + 5;"),
+///     ]),
+///     token("}"),
 /// ]);
 ///
 /// assert_eq!(
-///   "{\n\tlet a = 10;\n\tlet c = a + 5;\n}",
-///   Formatted::new(block, FormatOptions::default()).print().as_code()
+///     "{\n\tlet a = 10;\n\tlet c = a + 5;\n}",
+///     Formatted::new(block, FormatOptions::default())
+///         .print()
+///         .as_code()
 /// );
 /// ```
 #[inline]
@@ -401,46 +499,56 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't fit on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, LineWidth};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_block_indent, soft_line_break_or_space, token,
+///     FormatOptions, Formatted, LineWidth,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("'First string',"),
-///     soft_line_break_or_space(),
-///     token("'second string',"),
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'First string',"),
+///         soft_line_break_or_space(),
+///         token("'second string',"),
+///     ]),
+///     token("]"),
 /// ]);
 ///
 /// let options = FormatOptions {
-///  line_width: LineWidth::try_from(10).unwrap(),
-///  ..FormatOptions::default()
+///     line_width: LineWidth::try_from(10).unwrap(),
+///     ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("[\n\t'First string',\n\t'second string',\n]", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "[\n\t'First string',\n\t'second string',\n]",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 ///
 /// Doesn't change the formatting if the enclosing `Group` fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_block_indent, soft_line_break_or_space, token,
+///     FormatOptions, Formatted,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("5,"),
-///     soft_line_break_or_space(),
-///     token("10"),
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("5,"),
+///         soft_line_break_or_space(),
+///         token("10"),
+///     ]),
+///     token("]"),
 /// ]);
 ///
 /// assert_eq!(
-///   "[5, 10]",
-///   Formatted::new(elements, FormatOptions::default()).print().as_code()
+///     "[5, 10]",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
 /// );
 /// ```
-///
 #[inline]
 pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
     let content = content.into();
@@ -467,48 +575,56 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// fit on a single line. Otherwise, just inserts a space.
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token, LineWidth};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_block_indent, soft_line_indent_or_space, space_token,
+///     token, FormatOptions, Formatted, LineWidth,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("name"),
-///   space_token(),
-///   token("="),
-///   soft_line_indent_or_space(format_elements![
-///     token("firstName"),
+///     token("name"),
 ///     space_token(),
-///     token("+"),
-///     space_token(),
-///     token("lastName"),
-///   ]),
+///     token("="),
+///     soft_line_indent_or_space(format_elements![
+///         token("firstName"),
+///         space_token(),
+///         token("+"),
+///         space_token(),
+///         token("lastName"),
+///     ]),
 /// ]);
 ///
 /// let options = FormatOptions {
-///  line_width: LineWidth::try_from(10).unwrap(),
-///  ..FormatOptions::default()
+///     line_width: LineWidth::try_from(10).unwrap(),
+///     ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("name =\n\tfirstName + lastName", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "name =\n\tfirstName + lastName",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 ///
 /// Only adds a space if the enclosing `Group` fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_block_indent, soft_line_indent_or_space, space_token,
+///     token, FormatOptions, Formatted,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("a"),
-///   space_token(),
-///   token("="),
-///   soft_line_indent_or_space(format_elements![
-///      token("10")
-///   ]),
+///     token("a"),
+///     space_token(),
+///     token("="),
+///     soft_line_indent_or_space(format_elements![token("10")]),
 /// ]);
 ///
 /// assert_eq!(
-///   "a = 10",
-///   Formatted::new(elements, FormatOptions::default()).print().as_code()
+///     "a = 10",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
 /// );
 /// ```
-///
 #[inline]
 pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatElement {
     let content = content.into();
@@ -537,45 +653,59 @@ pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatEl
 /// `Group` that fits on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_block_indent, soft_line_break_or_space, token,
+///     FormatOptions, Formatted,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("1,"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("1,"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///     ]),
+///     token("]"),
 /// ]);
 ///
-/// assert_eq!("[1, 2, 3]", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "[1, 2, 3]",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// The printer breaks the `Group` over multiple lines if its content doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, LineWidth};
+/// use rome_formatter::{
+///     format_elements, group_elements, soft_block_indent, soft_line_break_or_space, token,
+///     FormatOptions, Formatted, LineWidth,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("'Good morning! How are you today?',"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'Good morning! How are you today?',"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///     ]),
+///     token("]"),
 /// ]);
 ///
 /// let options = FormatOptions {
-///   line_width: LineWidth::try_from(20).unwrap(),
-///   ..FormatOptions::default()
+///     line_width: LineWidth::try_from(20).unwrap(),
+///     ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]", Formatted::new(elements, options).print().as_code());
+/// assert_eq!(
+///     "[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]",
+///     Formatted::new(elements, options).print().as_code()
+/// );
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
@@ -600,18 +730,22 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// # Example
 /// ```
 /// use rome_formatter::{
-///   group_elements, Formatted, format_elements, token, hard_group_elements,
-///
-///   FormatOptions, empty_line, if_group_breaks, if_group_fits_on_single_line
+///     empty_line, format_elements, group_elements, hard_group_elements, if_group_breaks,
+///     if_group_fits_on_single_line, token, FormatOptions, Formatted,
 /// };
 ///
 /// let elements = group_elements(hard_group_elements(format_elements![
-///   if_group_breaks(token("not printed")),
-///   empty_line(),
-///   if_group_fits_on_single_line(token("printed")),
+///     if_group_breaks(token("not printed")),
+///     empty_line(),
+///     if_group_fits_on_single_line(token("printed")),
 /// ]));
 ///
-/// assert_eq!("\nprinted", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "\nprinted",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 #[inline]
 pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
@@ -640,44 +774,58 @@ pub fn hard_group_elements<T: Into<FormatElement>>(content: T) -> FormatElement 
 ///
 /// Omits the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks};
+/// use rome_formatter::{
+///     format_elements, group_elements, if_group_breaks, soft_block_indent,
+///     soft_line_break_or_space, token, FormatOptions, Formatted,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("1,"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///     if_group_breaks(token(","))
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("1,"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///         if_group_breaks(token(","))
+///     ]),
+///     token("]"),
 /// ]);
-/// assert_eq!("[1, 2, 3]", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "[1, 2, 3]",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// Prints the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_breaks, LineWidth};
+/// use rome_formatter::{
+///     format_elements, group_elements, if_group_breaks, soft_block_indent,
+///     soft_line_break_or_space, token, FormatOptions, Formatted, LineWidth,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("'A somewhat longer string to force a line break',"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///     if_group_breaks(token(","))
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'A somewhat longer string to force a line break',"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///         if_group_breaks(token(","))
+///     ]),
+///     token("]"),
 /// ]);
 ///
-/// let options = FormatOptions { line_width: LineWidth::try_from(20).unwrap(), ..FormatOptions::default() };
+/// let options = FormatOptions {
+///     line_width: LineWidth::try_from(20).unwrap(),
+///     ..FormatOptions::default()
+/// };
 /// assert_eq!(
-///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3,\n]",
-///   Formatted::new(elements, options).print().as_code()
+///     "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3,\n]",
+///     Formatted::new(elements, options).print().as_code()
 /// );
 /// ```
 #[inline]
@@ -703,44 +851,58 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Adds the trailing comma for the last array element if the `Group` fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line};
+/// use rome_formatter::{
+///     format_elements, group_elements, if_group_fits_on_single_line, soft_block_indent,
+///     soft_line_break_or_space, token, FormatOptions, Formatted,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("1,"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///     if_group_fits_on_single_line(token(","))
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("1,"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///         if_group_fits_on_single_line(token(","))
+///     ]),
+///     token("]"),
 /// ]);
-/// assert_eq!("[1, 2, 3,]", Formatted::new(elements, FormatOptions::default()).print().as_code());
+/// assert_eq!(
+///     "[1, 2, 3,]",
+///     Formatted::new(elements, FormatOptions::default())
+///         .print()
+///         .as_code()
+/// );
 /// ```
 ///
 /// Omits the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, Formatted, format_elements, token, soft_line_break_or_space, FormatOptions, soft_block_indent, if_group_fits_on_single_line, LineWidth};
+/// use rome_formatter::{
+///     format_elements, group_elements, if_group_fits_on_single_line, soft_block_indent,
+///     soft_line_break_or_space, token, FormatOptions, Formatted, LineWidth,
+/// };
 ///
 /// let elements = group_elements(format_elements![
-///   token("["),
-///   soft_block_indent(format_elements![
-///     token("'A somewhat longer string to force a line break',"),
-///     soft_line_break_or_space(),
-///     token("2,"),
-///     soft_line_break_or_space(),
-///     token("3"),
-///     if_group_fits_on_single_line(token(","))
-///   ]),
-///   token("]"),
+///     token("["),
+///     soft_block_indent(format_elements![
+///         token("'A somewhat longer string to force a line break',"),
+///         soft_line_break_or_space(),
+///         token("2,"),
+///         soft_line_break_or_space(),
+///         token("3"),
+///         if_group_fits_on_single_line(token(","))
+///     ]),
+///     token("]"),
 /// ]);
 ///
-/// let options = FormatOptions { line_width: LineWidth::try_from(20).unwrap(), ..FormatOptions::default() };
+/// let options = FormatOptions {
+///     line_width: LineWidth::try_from(20).unwrap(),
+///     ..FormatOptions::default()
+/// };
 /// assert_eq!(
-///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3\n]",
-///   Formatted::new(elements, options).print().as_code()
+///     "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3\n]",
+///     Formatted::new(elements, options).print().as_code()
 /// );
 /// ```
 #[inline]

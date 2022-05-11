@@ -46,15 +46,17 @@ impl<T> Parse<T> {
     ///
     /// ```
     /// use rome_js_parser::parse_script;
-    /// use rome_rowan::{AstNode, AstNodeList};
     /// use rome_js_syntax::{JsIfStatement, JsSyntaxKind};
+    /// use rome_rowan::{AstNode, AstNodeList};
     ///
     /// let parse = parse_script(
-    /// "
+    ///     "
     ///     if (a > 5) {
     ///         /* something */
     ///     }
-    /// ", 0);
+    /// ",
+    ///     0,
+    /// );
     ///
     /// // The first stmt in the root syntax node (Script) is the if statement.
     /// let if_stmt = parse.tree().statements().first().unwrap();
